@@ -273,7 +273,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
         }
 
 
-        public List<ARInvoice> GetDigitalInvoicesByShipmentId(string shipmentId, string cardId, int tenant)
+        public IQueryable<ARInvoice> GetDigitalInvoicesByShipmentId(string shipmentId, string cardId, int tenant)
         {
            var iQuery = (from a in context.ARInvoiceEntities
                                     where a.Tenant == tenant
@@ -284,7 +284,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
             iQuery = FilterInvoicesStatuses(iQuery);
             var cardBillToId = GetCardBillToId(cardId, tenant);
             var list = iQuery.Where(a => a.BillToId.Equals(cardId, StringComparison.InvariantCultureIgnoreCase)
-                                         || cardBillToId.Contains(a.BillToId)).ToList();
+                                         || cardBillToId.Contains(a.BillToId));
 
             return list;
         }

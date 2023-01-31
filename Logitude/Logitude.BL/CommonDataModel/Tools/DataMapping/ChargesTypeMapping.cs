@@ -10,6 +10,9 @@ using Logitude.BL.Security;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Logitude.BL.Helpers;
 
 namespace Logitude.BL.CommonDataModel.Tools.DataMapping
 {
@@ -111,10 +114,29 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ReceivableCreditGLAcountNumber);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.PayableDebitGLAcountLocalName);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.PayableDebitGLAcountNumber);
+            mySearchFields = AddCustomFieldsToSearchFields(entityPM, mySearchFields); 
             entityPM.SearchFields = mySearchFields;
             entityPoco.SearchFields = mySearchFields;
             entityPoco.RecCreditGLAcountLocalName = entityPM.RecCreditGLAcountLocalName;
             entityPoco.PayDebitGLAcountLocalName = entityPM.PayDebitGLAcountLocalName;
+        }
+
+        private static string AddCustomFieldsToSearchFields(ChargesTypePM entityPM, string mySearchFields)
+        {
+            #region Custom Fields
+            List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("ChargesType", entityPM.Tenant).Where(o => o.DataTypeCode != "Decimal").ToList();
+
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(entityPM.Tenant);
+            foreach (ObjectField field in customFields)
+            {
+                object value = customFieldResolver.GetFieldValue(entityPM, field, entityPM.Tenant);
+                if (value != null)
+                {
+                    MethodHelper.AddToSearchFields(ref mySearchFields, value.ToString());
+                }
+            }
+            #endregion
+            return mySearchFields;
         }
 
         private static ChargesTypePM SetChargesTypetGLAccountFields(ChargesTypePM chargesType)

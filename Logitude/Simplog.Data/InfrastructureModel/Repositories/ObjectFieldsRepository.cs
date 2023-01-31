@@ -601,6 +601,17 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return context.ObjectFields.Include("FullNameTextCode").Include("ListTextCode").Where(t => t.Tenant == tenant || t.Tenant == 0);
         }
 
+        public IQueryable<ObjectField> GetDigitalObjectFieldsFromTenanZeroAndMyTenant(int tenant, bool IncludeMetaDataFields = false)
+        {
+            if (IncludeMetaDataFields)
+            {
+                return context.ObjectFieldsDbSet.Include("FullNameTextCode").Include("ListTextCode")
+                    .Where(t => ((t.Tenant == 0 && !t.FieldName.ToLower().StartsWith("Field")) || (t.Tenant == tenant && t.IsCustom == true))
+                                   && t.FieldName.ToLower() != "tenant");
+            }
+            return context.ObjectFields.Include("FullNameTextCode").Include("ListTextCode")
+                .Where(t => (t.Tenant == 0 && !t.FieldName.ToLower().StartsWith("Field")) || (t.Tenant == tenant && t.IsCustom == true));
+        }
 
         public List<ObjectField> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {

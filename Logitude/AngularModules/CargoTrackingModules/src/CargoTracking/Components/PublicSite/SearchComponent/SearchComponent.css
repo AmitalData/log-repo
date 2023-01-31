@@ -598,7 +598,8 @@ li a {
     }
 
     .record-row {
-        height: 210px !important;
+        height: 240px !important;
+        overflow-y: auto;
     }
 
     .info-text {

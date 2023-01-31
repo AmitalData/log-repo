@@ -81,4 +81,3 @@ export class WarehouseEntryList extends CustomFieldList {
 	ConnectedToReferenceNumber: string;
 	
 }
- 

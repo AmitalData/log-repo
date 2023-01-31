@@ -4,9 +4,8 @@ import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { AppTool } from "Infrastructure/Tools";
 import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
 import { Condition } from "Workflow/Models/Condition";
-import { ObjectTablePM } from "Infrastructure/EntityPMs/ObjectTablePM";
-import { ObjectTables } from "Workflow/Models/ObjectTables";
-import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
+import { ObjectTables } from "Workflow/Utilities/ObjectTables";
+import { ObjectTableList } from "Infrastructure/EntityLists/ObjectTableList";
 
 @Component({
     templateUrl: "./ConditionPropertiesComponent.html"
@@ -25,11 +24,10 @@ export class ConditionPropertiesComponent extends BaseComponent {
     public ConditionsOperation: string;
     public IsValidConditions: boolean = true;
     public ValidationErrorsList: string[];
-    public WorkflowEntityTable: ObjectTablePM;
+    public WorkflowEntityTable: ObjectTableList;
 
     public FlowObject: any;
     public CurrentNodeId: string;
-    public FlowObjectFields: ObjectFieldList[];
 
     public CurrentSession = SessionLocator.SelectedSession;
 
@@ -38,7 +36,6 @@ export class ConditionPropertiesComponent extends BaseComponent {
         this.WorkflowEntity = args.WorkflowEntity ? args.WorkflowEntity : null;
         this.FlowObject = args.FlowObject ? args.FlowObject : null;
         this.CurrentNodeId = args.CurrentNodeId ? args.CurrentNodeId : null;
-        this.FlowObjectFields = args.FlowObjectFields ? args.FlowObjectFields : [];
     }
 
     ngOnInit() {
@@ -63,8 +60,13 @@ export class ConditionPropertiesComponent extends BaseComponent {
             this.setWorkflowEntityTable();
 
             this.Name = this.Data["label"] || this.Data["name"] || null;
-            this.MetLabel = this.Data["metLabel"] || null;
-            this.OtherwiseLabel = this.Data["otherwiseLabel"] || null;
+
+            this.MetLabel = this.Data["metLabel"] || "True";
+            this.Data["metLabel"] = this.MetLabel;
+
+            this.OtherwiseLabel = this.Data["otherwiseLabel"] || "False";
+            this.Data["otherwiseLabel"] = this.OtherwiseLabel;
+
             this.Conditions = this.Data["conditions"] || [];
             this.ConditionsOperation = this.Data["conditionsOperation"] || ConditionOperations.And;
 
@@ -135,7 +137,7 @@ export class ConditionPropertiesComponent extends BaseComponent {
             let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
             if (notValidUIProperties.length === 0 && this.IsValidConditions) {
                 this.setConditionsData();
-
+                //console.log(this.Data);
                 this.CurrentSession.CurrentWindow.Close(this.Data);
             } else {
                 let validationErrors = notValidUIProperties.map(t => { return t.ValidationError; });

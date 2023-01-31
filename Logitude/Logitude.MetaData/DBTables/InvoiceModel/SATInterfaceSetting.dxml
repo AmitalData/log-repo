@@ -57,6 +57,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="TransferExpenseCharges"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="SATInterfaceCode"
     ReferencedTable="SATInterfaces"

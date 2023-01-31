@@ -59,9 +59,12 @@ export class ObjectTableList {
 		LovDisplayMemberPathLocal: string;
 		IsTabsHidden: boolean;
 		ParentObjectTableName: string;
-        AvailableInCustomization: boolean;
-        ParentObjectTableId: string;
-        IsCustom: boolean;
-        SupportSubEntity: boolean;
-        NewMechanismForCustomFields: boolean;
+		AvailableInCustomization: boolean;
+		ParentObjectTableId: string;
+		IsCustom: boolean;
+		SupportSubEntity: boolean;
+		ApplyGenericCustomFields: boolean;
+		LookUp1: string;
+		LookUp2: string;
+	
 }

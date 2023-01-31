@@ -8,6 +8,7 @@ using Logitude.Infrastructure.Data.EntityLists;
 using Logitude.SystemLogs;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -63,6 +64,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                                                                                         addCustomFieldRequest.ObjectTableId,
                                                                                                         addCustomFieldRequest.ProfileCode);
 
+                DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+
                 var items = new List<DigitalFeildSecurityObject>();
                 if (customDigitalFieldSecurity == null)
                 {
@@ -76,9 +79,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     {
                         FieldCode = addCustomFieldRequest.FieldCode,
                         CreatedBy = addCustomFieldRequest.CreatedBy,
-                        CreatedOn = DateTime.UtcNow,
+                        CreatedOn = todayDate,
                         ModifiedBy = addCustomFieldRequest.ModifiedBy,
-                        ModifiedOn = DateTime.UtcNow,
+                        ModifiedOn = todayDate,
                         HasPermission = true
                     });
 
@@ -87,8 +90,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         ObjectTableId = addCustomFieldRequest.ObjectTableId,
                         Tenant = tenant,
                         DefaultSettings = JsonConvert.SerializeObject(items),
-                        CreateDate = DateTime.UtcNow,
-                        UpdateDate = DateTime.UtcNow,
+                        CreateDate = todayDate,
+                        UpdateDate = todayDate,
                         ProfileId = addCustomFieldRequest.ProfileId
                     };
                 }
@@ -100,14 +103,14 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     {
                         FieldCode = addCustomFieldRequest.FieldCode,
                         CreatedBy = addCustomFieldRequest.CreatedBy,
-                        CreatedOn = DateTime.UtcNow,
+                        CreatedOn = todayDate,
                         ModifiedBy = addCustomFieldRequest.ModifiedBy,
-                        ModifiedOn = DateTime.UtcNow,
+                        ModifiedOn = todayDate,
                         HasPermission = true
                     });
 
                     customDigitalFieldSecurity.DefaultSettings = JsonConvert.SerializeObject(items);
-                    customDigitalFieldSecurity.UpdateDate = DateTime.UtcNow;
+                    customDigitalFieldSecurity.UpdateDate = todayDate;
                 }
 
                 digitalFieldSecurityQuery.UpdateDigitalFieldSecurity(customDigitalFieldSecurity);
@@ -139,8 +142,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         Tenant = tenant,
                         ProfileId = addCustomFieldRequest.ProfileId,
                         Labels = JsonConvert.SerializeObject(customCodesMappedObject),
-                        CreateDate = DateTime.UtcNow,
-                        UpdateDate = DateTime.UtcNow
+                        CreateDate = todayDate,
+                        UpdateDate = todayDate
                     };
 
                 }
@@ -157,7 +160,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     });
 
                     customTextCodes.Labels = JsonConvert.SerializeObject(customCodesMappedObject);
-                    customTextCodes.UpdateDate = DateTime.UtcNow;
+                    customTextCodes.UpdateDate = todayDate;
                 }
 
                 textCodeQuery.UpdateDigitalTextCodes(customTextCodes);
@@ -289,7 +292,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
                 ObjectFieldRepository objectFieldRepository = new ObjectFieldRepository(MyContext);
-                IQueryable<ObjectField> entityPocos = objectFieldRepository.GetObjectFieldsFromTenanZeroAndMyTenant(authToken.Tenant, true);
+                IQueryable<ObjectField> entityPocos = objectFieldRepository.GetDigitalObjectFieldsFromTenanZeroAndMyTenant(authToken.Tenant, true);
 
                 ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(objectFieldRepository);
 

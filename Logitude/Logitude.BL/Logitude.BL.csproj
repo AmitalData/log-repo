@@ -209,6 +209,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Linq.Dynamic.Core, Version=1.2.20.0, Culture=neutral, PublicKeyToken=0f07ec44de6ac832, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Linq.Dynamic.Core.1.2.20\lib\net46\System.Linq.Dynamic.Core.dll</HintPath>
     </Reference>
@@ -686,6 +687,9 @@
     <Compile Include="InfrastructureModel\EntityQueries\RuleUpdateHistoryQuery.cs" />
     <Compile Include="InfrastructureModel\Services\DeploymentPackageVersionInitializerService.cs" />
     <Compile Include="InfrastructureModel\Services\CustomObjectDefaultMetaDataService.cs" />
+    <Compile Include="InfrastructureModel\Services\DeploymentPackage\DeploymentPackageExtractDetailsService.cs" />
+    <Compile Include="InfrastructureModel\Services\DeploymentPackage\DeploymentPackageDetailsService.cs" />
+    <Compile Include="InfrastructureModel\Services\DeploymentPackage\DeploymentPackageDocumentService.cs" />
     <Compile Include="InfrastructureModel\Services\DeploymentPackage\DeploymentPackageDependienciesService.cs" />
     <Compile Include="InfrastructureModel\Services\DeploymentPackage\DeploymentPackageObjectFieldDependienciesService.cs" />
     <Compile Include="InfrastructureModel\Services\DeploymentPackage\IDeploymentPackageDependiency.cs" />
@@ -785,6 +789,8 @@
     <Compile Include="InvoiceModel\Tools\DataMapping\ARPaymentMapping.Concurrency.cs" />
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\Payment\Complemento.PagosPago.DoctoRelacionados.CreditNotes.cs" />
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\Payment\Complemento.PagosPago.DoctoRelacionados.PagosPagoDoctoRelacionado.cs" />
+    <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\SATInvoiceDifferenceVATCalculationService.cs" />
+    <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\SATInvoiceSenderService.cs" />
     <Compile Include="QuoteModel\CustomFilters\DigitalPortalCustomFilter.cs" />
     <Compile Include="QuoteModel\EntityPMs\QuoteSalesAmountWithVATDetailsPM.cs" />
     <Compile Include="QuoteModel\EntityQueries\QuoteQuery.Digital.cs" />

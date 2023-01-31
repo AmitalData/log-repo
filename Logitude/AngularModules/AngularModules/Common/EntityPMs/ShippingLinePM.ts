@@ -22,7 +22,7 @@ export class ShippingLinePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -426,6 +426,16 @@ export class ShippingLinePM {
     private exportLocalCustomerGroupId: string;
     public get ExportLocalCustomerGroupId() { return this.exportLocalCustomerGroupId; }
     public set ExportLocalCustomerGroupId(newValue: string) { if (this.exportLocalCustomerGroupId != newValue) { this.exportLocalCustomerGroupId = newValue; this.MarkAsDirty("ExportLocalCustomerGroupId"); } }
+       
+	 
+    private isAutomaticRequestsSent: boolean;
+    public get IsAutomaticRequestsSent() { return this.isAutomaticRequestsSent; }
+    public set IsAutomaticRequestsSent(newValue: boolean) { if (this.isAutomaticRequestsSent != newValue) { this.isAutomaticRequestsSent = newValue; this.MarkAsDirty("IsAutomaticRequestsSent"); } }
+       
+	 
+    private isSupportsContainerTracking: boolean;
+    public get IsSupportsContainerTracking() { return this.isSupportsContainerTracking; }
+    public set IsSupportsContainerTracking(newValue: boolean) { if (this.isSupportsContainerTracking != newValue) { this.isSupportsContainerTracking = newValue; this.MarkAsDirty("IsSupportsContainerTracking"); } }
        
 	 
 

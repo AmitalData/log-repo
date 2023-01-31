@@ -6,16 +6,16 @@ export class WorkflowSelectors {
     public static readonly FlowBuilderEditButton = '#Edit';
     public static readonly WorkflowStartNode = "div[data-selector^='start-node-1']";
     public static readonly WorkflowEditNodeButton = "button[class^='edit-button']";
-    public static readonly WorkflowStartNodeObject = "input[data-cy^='start-entity']";
+    public static readonly WorkflowStartNodeObject = ".ant-select-single";
     public static FlowTriggerRadioButton(trigger: string): string {
         return "input[id^='" + trigger.replace(/\s/g, '') + "_TriggerRadio']";
     }
-    public static readonly WorkflowStartOkButton = "button[data-cy^='start-properties-save-button']";
+    public static readonly WorkflowStartOkButton = "[data-cy^='SubmitButton']";
     public static readonly WorkflowName = "#WorkFlow_Name";
     public static readonly NewWorkflow = "#NewButton_WorkFlow";
     public static readonly WorkflowCreateButton = "button[data-cy^='workflow-save-button'";
     public static readonly WorkflowSaveButton = "button[data-cy^='save-workflow-changes-button']";
-    public static readonly WorkflowStartEditButton = ".edit-button";
+    public static readonly WorkflowStartEditButton = ".edit-container";
     public static readonly WorkflowAddCondition = ".link-button";
     public static readonly FlowNameInFlowBuilder = ".TabTitleRow";
     public static readonly BackToWorkflowListButton = ".BackBottun";
@@ -39,18 +39,18 @@ export class WorkflowSelectors {
     public static readonly SingleInstanceActivityListRefreshButton = "[data-cy^='SingleInstanceActivityListRefresh']";
     public static readonly FirstConnectorButton = "[data-selector^='connector-node-1']";
     public static readonly DecisionElementName = "[data-cy^='condition-title']";
-    public static readonly DecisionElementLabel = "[data-cy^='decision-label']";
-    public static readonly WorkflowDecisionOkButton = "[data-cy^='condition-properties-save-button']";
-    public static readonly WorkflowDecisionElement = "[data-selector^='condition-node-1'";
-    public static readonly NodeSettingFooter = ".node-settings-panel-footer";
+    public static readonly DecisionMetLabel = "[data-cy^='met-label']";
+    public static readonly DecisionOtherwiseLabel = "[data-cy^='otherwise-label']";
+    public static readonly WorkflowDecisionOkButton = "[data-cy^='SubmitButton']";
+    public static readonly NodeSettingContainer = ".right-node-template-container";
     public static readonly AddDecisionNode = ".add-condition-node";
-    public static readonly WorkflowEditElementButton = ".edit-button";
+    public static readonly WorkflowEditElementButton = ".edit-label";
     public static readonly WorkflowfieldsListTitle = "nz-tree-node-title";
     public static readonly RunHistoryDatePicker = "[data-cy^='RunHistoryDatePicker']";
     public static readonly RunHistoryExportFile = "[data-cy^='RunHistoryExport']";
     public static readonly DatePickerList = "[data-cy^='RunHistoryDatePickerdropDown']";
     public static readonly DatePickertodayDate = "[data-cy^='TodayDateItem']";
-    public static readonly WorkflowSaveDraft = "#WorkFlowBSaveDraft";
+    public static readonly WorkflowSaveDraft = "[data-cy^='EditWorkFlow_Save']";
     public static readonly WorkflowRunHistory = "#WorkFlowTHRunHistory";
 
     public static RunHistoryHeaderColumnSelector(SortField: string): string {
@@ -93,5 +93,9 @@ export class WorkflowSelectors {
 
     public static WorkflowConditionFieldFromList(index: number): string {
         return "nz-tree-select[data-cy^='ConditionField_" + index.toString() + "']";
+    }
+
+    public static WorkflowDecisionElement(index: number): string {
+        return "[data-selector^='condition-node-" + index.toString() + "']";
     }
 }

@@ -190,6 +190,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     bool hasShippingInstructionsLast7DaysFeature = SecurityUtility.CheckTableContactFeature("Shipment", "ShippingInstructionsLast7Days", tenant);
                     bool hasContainerStatusLast7DaysFeature = SecurityUtility.CheckTableContactFeature("Shipment", "ContainerStatusLast7Days", tenant);
                     bool hasEBookingInProgressFeature = SecurityUtility.CheckTableContactFeature("Shipment", "Shipment.Q.EBookingInProgress", tenant);
+                    bool hasPendingApprovalDocumentsFeature = SecurityUtility.CheckTableContactFeature("Shipment", "Shipment.Q.PendingApprovalDocuments", tenant);
 
                     //ShipmentsSummary myResult= RunStoredProcedureClass.GetShipmentsCounts(tenant, myDirectionId, myTransportModeId, loggedUserEmail, hasETDFeature, hasFollowupsFeature);
 
@@ -203,7 +204,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                     ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
 
-                    myResult = shipmentQuery.GetShipmentsDashBoardSummary(tenant, myDirectionId, myTransportModeId, loggedContactId, hasETDFeature, hasFollowupsFeature, hasExpDepNotTransmittedFeature, hasShippingInstructionsLast7DaysFeature, hasContainerStatusLast7DaysFeature, hasEBookingInProgressFeature);
+                    myResult = shipmentQuery.GetShipmentsDashBoardSummary(tenant, myDirectionId, myTransportModeId, loggedContactId, hasETDFeature, hasFollowupsFeature, hasExpDepNotTransmittedFeature, hasShippingInstructionsLast7DaysFeature, hasContainerStatusLast7DaysFeature, hasEBookingInProgressFeature, hasPendingApprovalDocumentsFeature);
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -3383,7 +3384,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             return new BatchTaskExecutionPM()
             {
-                Subject = "Vizion - Pilot Customer",
+                Subject = "Container Tracking - Pilot Customer",
                 Tenant = myTenant,
                 ChangeSetOp = ChangeSetOperation.Insert,
                 ClassName = "WebFreight.Web.Helpers.VizionPilotCustomerDataGenerator,WebFreight.Web",

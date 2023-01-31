@@ -253,6 +253,7 @@
     <Compile Include="Helpers\CustomFieldsResolver\CustomFieldMultiSetter.cs" />
     <Compile Include="Helpers\CustomFieldsResolver\CustomFieldGetter.cs" />
     <Compile Include="Helpers\CustomFieldsResolver\CustomFieldSingleSetter.cs" />
+    <Compile Include="Helpers\ErrorsLogger.cs" />
     <Compile Include="Helpers\UpdatePortSearchFieldService.cs" />
     <Compile Include="Interfaces\IAddManualTraceEventsHelper.cs" />
     <Compile Include="IQueryableExtensions.cs" />

@@ -1348,7 +1348,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     entityPM.DueDate = entityPM.DueDate.Value.Date;
                 }
             }
-            else {
+            else 
+            {
+                if (entityPM.StatusCode != "DR") return;
+
                 if (entityPM.DueDate == null || (expectedDueDate != null && expectedDueDate != entityPM.DueDate))
                 {
                     entityPM.DueDate = expectedDueDate.Value.Date;

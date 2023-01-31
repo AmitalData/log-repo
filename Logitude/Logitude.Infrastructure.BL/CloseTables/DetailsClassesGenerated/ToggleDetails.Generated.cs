@@ -664,9 +664,9 @@ namespace Logitude.Infrastructure.BL
             all.Add(new ToggleDetails()
             {    
                 Code = "VIP", 
-                Name = "Vizion - Pilot Customer", 
-                SearchFields = "VIP,Vizion - Pilot Customer", 
-                Description = "Vizion - Pilot Customer", 
+                Name = "Container Tracking - Pilot Customer", 
+                SearchFields = "VIP,Container Tracking - Pilot Customer", 
+                Description = "Container Tracking - Pilot Customer", 
 			});
 			 
             all.Add(new ToggleDetails()
@@ -699,14 +699,6 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "QMU,Quote Markup Currency", 
                 Name = "Quote Markup Currency", 
                 Description = "Quote Markup Currency", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
-                Code = "DPB", 
-                Name = "Digital Portal Branding", 
-                Description = "Digital Portal Branding Tab", 
-                SearchFields = "DPB,Digital Portal Branding", 
 			});
 			 
             all.Add(new ToggleDetails()
@@ -844,7 +836,7 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "CXE,Cargo Tracking Excel sheet export features", 
                 Description = "Cargo Tracking Excel sheet export features", 
 			});
-
+			 
             all.Add(new ToggleDetails()
             {    
                 Code = "INU", 
@@ -852,15 +844,23 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "INU, Invoice Concurrency", 
                 Description = "", 
 			});
-			
+			 
             all.Add(new ToggleDetails()
-            {
-                Code = "SKP",
-                Name = "Use synch kafka producer",
-                SearchFields = "SKP,Use synch kafka producer",
-                Description = "Use synch kafka producer",
-            });
-
+            {    
+                Code = "SKP", 
+                Name = "Use synch kafka producer", 
+                SearchFields = "SKP,Use synch kafka producer", 
+                Description = "Use synch kafka producer", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "AVC", 
+                Name = "AR Invoice VATs Calculation per line", 
+                SearchFields = "AVC,AR Invoice VATs Calculation per line", 
+                Description = "AR Invoice VATs Calculation per line", 
+			});
+			
             return all;
        }
 

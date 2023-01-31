@@ -4,11 +4,11 @@ import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
 import { SetValueOperators } from "Workflow/Constants/SetValueOperators";
-import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
-import { ObjectTables } from "Workflow/Models/ObjectTables";
+import { FlowVariablesTreeList } from "Workflow/TreeLists/FlowVariablesTreeList";
+import { ObjectTables } from "Workflow/Utilities/ObjectTables";
 import { SetValue } from "Workflow/Models/SetValue";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
-import { ExpressionValue } from "Workflow/Models/Types";
+import { ExpressionValue } from "Workflow/Types";
 import { GetObjectFieldPipe } from "Workflow/Pipes/GetObjectFieldPipe";
 import { IsNoObjectFieldVariablePipe } from "Workflow/Pipes/IsNoObjectFieldVariablePipe";
 
@@ -21,7 +21,6 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
 
     @Input() SetValues: SetValue[];
     @Input() FlowObject: any;
-    @Input() FlowObjectFields: ObjectFieldList[];
     @Input() CurrentNodeId: string;
     @Input() EntityId: string;
     @Input() IsEntityField: boolean = false;
@@ -55,9 +54,10 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
             ShowRecordsCollectionVariables: false,
             ShowDeclaredCollectionVariables: true,
             OnlyCurrentLoopItemVariables: false,
-            IsObjectVariableSelectable: true
+            IsObjectVariableSelectable: true,
+            IsNoChildrenObjectVariables: false
         };
-        this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, props);
+        this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props);
         this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;
     }
 
@@ -106,6 +106,12 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
                     let objectField = this.getObjectField(field);
                     this.updateSetValueFieldByObjectField(objectField, setValueIndex, field);
                 }
+
+                if (fieldItem && fieldItem.data && fieldItem.data["nodeId"]) {
+                    this.SetValues[setValueIndex].fieldUsedFrom = fieldItem.data["nodeId"];
+                } else {
+                    this.SetValues[setValueIndex].fieldUsedFrom = null;
+                }
             } else {
                 this.resetSetValueField(setValueIndex);
             }
@@ -144,6 +150,8 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         this.SetValues[setValueIndex].operator = SetValueOperators.Equals;
         this.SetValues[setValueIndex].value = null;
         this.SetValues[setValueIndex].fieldChangedToggle = !this.SetValues[setValueIndex].fieldChangedToggle;
+        this.SetValues[setValueIndex].fieldUsedFrom = null;
+        this.SetValues[setValueIndex].valueUsedFrom = null;
     }
 
     updateSetValueOperator(operatorCode: string, setValueIndex: number) {
@@ -156,9 +164,12 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         }
     }
 
-    updateSetValue(value: string, setValueIndex: number) {
+    updateSetValue(value: string, setValueIndex: number, nodeId: string | null = null) {
         if (value !== this.SetValues[setValueIndex]?.value) {
             this.SetValues[setValueIndex].value = value;
+
+            this.SetValues[setValueIndex].valueUsedFrom = nodeId;
+
             this.setValuesChanged();
         }
     }
@@ -198,10 +209,10 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
     }
 
     isNoObjectFieldVariable(field: string) {
-        return new IsNoObjectFieldVariablePipe().transform(field, this.FlowObjectFields);
+        return new IsNoObjectFieldVariablePipe().transform(field);
     }
 
     getObjectField(field: string) {
-        return new GetObjectFieldPipe().transform(field, this.FlowObjectFields);
+        return new GetObjectFieldPipe().transform(field);
     }
 }

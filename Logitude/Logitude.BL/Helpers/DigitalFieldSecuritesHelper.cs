@@ -1,5 +1,4 @@
-﻿using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
-using Logitude.Infrastructure.Data.EntityLists;
+﻿using Logitude.Infrastructure.Data.EntityLists;
 using Logitude.Infrastructure.Data.Repsitories;
 using Newtonsoft.Json;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -15,7 +14,13 @@ namespace Logitude.BL.Helpers
         public List<DigitalFeildSecurityObject> GitDigitalSecuritesFeilds(string objectTableId, string profileCode, int tenant, bool singleApi = true)
         {
             var digitalFieldSecurity = GetDigitalFieldSecurityQuery(0, objectTableId, profileCode);
-            var defaultDigitalFieldSecurity = JsonConvert.DeserializeObject<List<DigitalFeildSecurityObject>>(digitalFieldSecurity.DefaultSettings);
+
+            if (digitalFieldSecurity == null)
+            {
+                return new List<DigitalFeildSecurityObject>();
+            }
+
+            var defaultDigitalFieldSecurity = JsonConvert.DeserializeObject<List<DigitalFeildSecurityObject>>(digitalFieldSecurity?.DefaultSettings);
             var customDigitalFeildSecurityObject = new List<DigitalFeildSecurityObject>();
             var objectTableName = ObjectTableRepository.GetNameById(objectTableId, tenant);
 
@@ -25,7 +30,7 @@ namespace Logitude.BL.Helpers
 
                 if (customDigitalFieldSecurityList != null)
                 {
-                    customDigitalFeildSecurityObject = JsonConvert.DeserializeObject<List<DigitalFeildSecurityObject>>(customDigitalFieldSecurityList.DefaultSettings);
+                    customDigitalFeildSecurityObject = JsonConvert.DeserializeObject<List<DigitalFeildSecurityObject>>(customDigitalFieldSecurityList?.DefaultSettings);
 
                     foreach (var item in customDigitalFeildSecurityObject)
                     {
@@ -34,6 +39,10 @@ namespace Logitude.BL.Helpers
                         if (temp != null)
                         {
                             temp.HasPermission = item.HasPermission;
+                            temp.CreatedBy = item.CreatedBy;
+                            temp.CreatedOn = item.CreatedOn;
+                            temp.ModifiedOn = item.ModifiedOn;
+                            temp.ModifiedBy = item.ModifiedBy;
                             continue;
                         }
                         else
@@ -42,11 +51,33 @@ namespace Logitude.BL.Helpers
                         }
                     }
                 }
+                else
+                {
+                    if (!singleApi)
+                    {
+                        defaultDigitalFieldSecurity = DiscardUnfoundFeildsFromList(defaultDigitalFieldSecurity);
+                    }
+
+                    return defaultDigitalFieldSecurity;
+                }
             }
 
             if (!singleApi && objectTableName.Equals("Shipment", StringComparison.InvariantCultureIgnoreCase))
             {
-                var unfoundFeilds = new List<string>
+                defaultDigitalFieldSecurity = DiscardUnfoundFeildsFromList(defaultDigitalFieldSecurity);
+            }
+
+            if (!customDigitalFeildSecurityObject.Any())
+            {
+                return defaultDigitalFieldSecurity;
+            }
+
+            return defaultDigitalFieldSecurity;
+        }
+
+        private List<DigitalFeildSecurityObject> DiscardUnfoundFeildsFromList(List<DigitalFeildSecurityObject> defaultDigitalFieldSecurity)
+        {
+            var unfoundFeilds = new List<string>
                 {
                     "Shipment.IsFullInvoiced",
                     "Shipment.ContainerNumber",
@@ -125,15 +156,7 @@ namespace Logitude.BL.Helpers
                     "Shipment.OnCarriageVesselName",
                 };
 
-                defaultDigitalFieldSecurity = defaultDigitalFieldSecurity.Where(a => !unfoundFeilds.Contains(a.FieldCode)).ToList();
-            }
-
-            if (!customDigitalFeildSecurityObject.Any())
-            {
-                return defaultDigitalFieldSecurity;
-            }
-
-            return defaultDigitalFieldSecurity;
+             return defaultDigitalFieldSecurity.Where(a => !unfoundFeilds.Contains(a.FieldCode)).ToList();
         }
 
         public DigitalFieldSecurityList GetDigitalFieldSecurityQuery(int tenant, string objectTableId, string profileCode)

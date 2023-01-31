@@ -366,30 +366,30 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 			
 		 }
 	   }
-	  private string statusCode ;
-	  	  
-       
-	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string StatusCode  
-	   {
-	    
-	     get
+		private string statusCode ;
+
+
+		[CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+		[DataMember]
+		public string StatusCode
 		{
-		   return statusCode;
-		 }
-		 set
-		 {
-		   if(statusCode != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusCode",OldValue=statusCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   statusCode=value;
-		   }
-			
-		 }
-	   }
-	  private int totalPieces ;
+
+			get
+			{
+				return statusCode;
+			}
+			set
+			{
+				if(statusCode != value)
+				{
+					NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusCode",OldValue=statusCode,NewValue=value,PropertyType="string"};
+					NotifyPropertyChanged(values);
+					statusCode=value;
+				}
+
+			}
+		}
+		private int totalPieces ;
 	  	  
        
 	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
@@ -1390,6 +1390,29 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool isUpdateByAutomation ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsUpdateByAutomation  
+	   {
+	    
+	     get
+		{
+		   return isUpdateByAutomation;
+		 }
+		 set
+		 {
+		   if(isUpdateByAutomation != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsUpdateByAutomation",OldValue=isUpdateByAutomation,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isUpdateByAutomation=value;
+		   }
+			
+		 }
+	   }
 
 	   private List<CustomChildEntity> customChildEntities;
 	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
@@ -1404,7 +1427,7 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 		   customChildEntities=value;
 		 }
 	   }
-   }
+	    }
    
 }
 	 

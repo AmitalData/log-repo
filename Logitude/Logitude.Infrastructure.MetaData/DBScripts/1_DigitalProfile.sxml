@@ -1,0 +1,5068 @@
+﻿<Script DBType="Main" Module="Infrastructure">
+  <Sql Version="1">
+      <![CDATA[	  
+	  delete from DigitalFieldSecurities where id != ''	  
+  	  delete from DigitalTextCodes where id != ''
+  	  delete from DigitalPortalScreens where id != ''
+	  delete from DigitalProfiles where id != ''
+	  declare @NewEntityId as varchar(15)
+ 
+	   BEGIN
+		   IF NOT EXISTS (SELECT * FROM DigitalProfiles WHERE Name = 'Customer')
+		   BEGIN
+		       EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT, 'DigitalProfile'
+			   INSERT INTO DigitalProfiles (Id, Tenant, CreateDate, UpdateDate,  Name, Code) 
+			   values (@NewEntityId, 0, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, 'Customer', 'CS')
+		   END
+		END
+
+		BEGIN
+		   IF NOT EXISTS (SELECT * FROM DigitalProfiles WHERE Name = 'Agent')
+		   BEGIN
+		       EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT, 'DigitalProfile'
+			   INSERT INTO DigitalProfiles (Id, Tenant, CreateDate, UpdateDate,  Name, Code) 
+			   values (@NewEntityId, 0, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, 'Agent', 'AG')
+		   END
+		END
+		
+		BEGIN
+		   IF NOT EXISTS (SELECT * FROM DigitalProfiles WHERE Name = 'Common')
+		   BEGIN
+		       EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT, 'DigitalProfile'
+			   INSERT INTO DigitalProfiles (Id, Tenant, CreateDate, UpdateDate,  Name, Code) 
+			   values (@NewEntityId, 0, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, 'Common', 'CM')
+		   END
+		END
+
+	  declare @newDigitalFieldEntityId as varchar(15)
+ 	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
+	  declare @insertDateTime as DateTime = GETDATE()
+	  declare @customerProfileId as varchar(15)
+	  set @customerProfileId = (select Id from DigitalProfiles where [Name] = 'Customer' and Tenant = 0 )
+ 	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
+	  declare @shipmentObjectTableId as varchar(15)
+	  set @shipmentObjectTableId = (select Id from ObjectTables where [Name] = 'Shipment' and Tenant = 0 )
+
+	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
+	  values (@newDigitalFieldEntityId, 0, @shipmentObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @customerProfileId, 
+		'[{
+			"FieldCode": "Shipment.RequestedDocumentsCount",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.TransportModeId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.StatusName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.House",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.CreateDateTime",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageETA",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},		
+		{
+			"FieldCode": "Shipment.NotesSharedWithCustomer",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.DescriptionOfGoods",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.StatusDate",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.ConsigneeName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.ShipperName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.IsFullInvoiced",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.IncotermCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.AccountManagerUserName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.SalesmanUserName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.ShipmentLevelName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.NumberOfPackages",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Volume",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.GrossWeight",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.CustomerName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.ChargeableWeight",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.ContainerNumber",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.CarrierLastStatusName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.Reference",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.NumberOfContainers",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.Routing",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.To",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.FlightDate",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.CarrierNumber",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.CustomerReference1",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.CustomerReference2",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.AgentName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.IssuingCarrierAgentId",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.Notify1Id",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.Notify2Id",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.CustomClearancePointId",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.ReleasingAgentId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.ColoaderId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.FreightForwarderId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.TruckerId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.ConsolidatorName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.Events",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.WarehouseLegRemarks",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.ShipmentNumber",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.MainCarriageATD",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+           "FieldCode": "Shipment.DirectionId",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+	    {
+           "FieldCode": "Shipment.ShipmentSubTypeName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+	    {
+            "FieldCode": "Shipment.ShipmentTypeName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+	    },
+	    {
+            "FieldCode": "Shipment.LongMaster",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+	    {
+           "FieldCode": "Shipment.Master",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+	    {
+            "FieldCode": "Shipment.IncotermName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.Id",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageETD",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageFinalDestinationETA",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.InlandDomesticFromTypeCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageFromAddressId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageFromPortCode",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.InlandDomesticFromCity",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.InlandDomesticToTypeCode",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageToAddressId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageToPortCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.InlandDomesticToCity",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.InlandDomesticFromCountryId",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageFromCity",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.FromPortName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.FromCountryCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.Transshipment1ETA",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.Transshipment1ATA",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.Transshipment1ETD",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.Transshipment1ATD",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.Transshipment2ETA",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.Transshipment2ATA",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.Transshipment2ETD",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.Transshipment2ATD",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.Transshipment3ETA",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.Transshipment3ATA",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.Transshipment3ETD",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.Transshipment3ATD",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageToCity",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.ToPortName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.ToCountryCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.IsOperationalClosed",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.IsCustomerArchived",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.IsAccountingClosed",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.ShipmentLevelCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.StatusLocation",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.StatusCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.ShipperCountryCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.ConsigneeCountryCode",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+			"FieldCode": "Shipment.WarehouseLegExpectedEntryDate",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.WarehouseLegExpectedReleaseDate",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.WarehouseLegActualReleaseDate",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.WarehouseLegCutOffDate",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageFromPortId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageFromPortName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageATD",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageETD",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageFromPortCountryCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageATA",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageETA",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageTransportModeId",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageCarrierName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageCarrierNumber",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageVesselName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageFromPortName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.FromPartnerCountryCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageFromPortCountryCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageATA",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.AirlinePrefix",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageCarrierName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageCarrierNumber",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageVesselName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment1FromPortId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment1FromPortName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment1FromPortCountryCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment2FromPortName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment2FromPortCountryCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment3FromPortName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment3FromPortCountryCode",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment1AdditionalMAWBOBLBL",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment1CarrierNumber",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment1VesselName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment2AdditionalMAWBOBLBL",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment2CarrierName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment2CarrierNumber",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment2VesselName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment3AdditionalMAWBOBLBL",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment3CarrierName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment3CarrierNumber",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment3VesselName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageFinalDestinationPortName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.ToPartnerCountryCode",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageFinalDestinationPortCountryCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageFinalDestinationATA",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment3ToPortId",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment1ToPortId",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment2ToPortId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageToPortId",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.AirlinePrefix",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Master",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.OnCarriageFromPortName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.OnCarriageFromPortCountryCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.OnCarriageTransportModeId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.OnCarriageCarrierName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.OnCarriageCarrierNumber",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.OnCarriageVesselName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.InlandDomesticToCountryId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		}]');
+		
+	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
+
+	  declare @invocieObjectTableId as varchar(15)
+	  set @invocieObjectTableId = (select Id from ObjectTables where [Name] = 'ARInvoice' and Tenant = 0)
+
+	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
+	  values (@newDigitalFieldEntityId, 0, @invocieObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @customerProfileId, 
+		'[{
+				"FieldCode": "ARInvoice.StatusName",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.CreateDate",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.DueDate",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.AmountInInvoiceCurrency",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.CustomerRef",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.InvoiceDate",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.MainEntityReference",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.ShipmentsNumbers",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.AmountDue",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.PaymentTermName",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.InvoiceDate",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.PrintNotes",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.Description",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.InvoiceNumber",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.AmountPaid",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.AmountDue",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.AmountInInvoiceCurrency",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.AmountInInvoiceCurrency",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.ShipmentsNumbers",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.MasterNumber",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.HouseNumber",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.MainEntityReference",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.TotalVATs",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.MainEntityReference",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.Description",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.ShipmentsNumbers",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			}]');
+
+ 	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
+
+	  declare @agentProfileId as varchar(15)
+	  set @agentProfileId = (select Id from DigitalProfiles where [Name] = 'Agent' and Tenant = 0 )
+
+ 	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
+	  set @shipmentObjectTableId = (select Id from ObjectTables where [Name] = 'Shipment' and Tenant = 0 )
+	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
+	  values (@newDigitalFieldEntityId, 0, @shipmentObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @agentProfileId, 
+		'[{
+			"FieldCode": "Shipment.RequestedDocumentsCount",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+    	{
+			"FieldCode": "Shipment.TransportModeId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.StatusName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.House",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.CreateDateTime",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageETA",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},		
+		{
+			"FieldCode": "Shipment.NotesSharedWithCustomer",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.DescriptionOfGoods",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.StatusDate",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.ConsigneeName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.ShipperName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.IsFullInvoiced",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.IncotermCode",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.AccountManagerUserName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.SalesmanUserName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.ShipmentLevelName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.NumberOfPackages",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Volume",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.GrossWeight",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.CustomerName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.ChargeableWeight",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.ContainerNumber",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.CarrierLastStatusName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.Reference",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.NumberOfContainers",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.Routing",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.To",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.FlightDate",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.CarrierNumber",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.CustomerReference1",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.CustomerReference2",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.AgentName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.IssuingCarrierAgentId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.Notify1Id",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.Notify2Id",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.CustomClearancePointId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.ReleasingAgentId",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.ColoaderId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.FreightForwarderId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.TruckerId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.ConsolidatorName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.Events",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.WarehouseLegRemarks",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.ShipmentNumber",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode" : "Shipment.MainCarriageATD",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+           "FieldCode": "Shipment.DirectionId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+	    {
+           "FieldCode": "Shipment.ShipmentSubTypeName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+	    {
+            "FieldCode": "Shipment.ShipmentTypeName" ,
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+	    },
+	    {
+            "FieldCode": "Shipment.LongMaster",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+	    {
+           "FieldCode": "Shipment.Master",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+	    {
+            "FieldCode": "Shipment.IncotermName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.Id",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageETD",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageFinalDestinationATA",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageFinalDestinationETA",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.InlandDomesticFromTypeCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageFromAddressId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageFromPortCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.InlandDomesticFromCity",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.InlandDomesticToTypeCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageToAddressId",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageToPortCode",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.InlandDomesticToCity",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.InlandDomesticFromCountryId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageFromCity",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.FromPortName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.FromCountryCode",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.Transshipment1ETA",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.Transshipment1ATA",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.Transshipment1ETD",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.Transshipment1ATD",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.Transshipment2ETA",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.Transshipment2ATA",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.Transshipment2ETD",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.Transshipment2ATD",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.Transshipment3ETA",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.Transshipment3ATA",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.Transshipment3ETD",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.Transshipment3ATD",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageToCity",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.ToPortName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.ToCountryCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.IsOperationalClosed",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.IsCustomerArchived",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.IsAccountingClosed",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.ShipmentLevelCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.StatusLocation",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.StatusCode",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.ShipperCountryCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+            "FieldCode": "Shipment.ConsigneeCountryCode",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+        },
+		{
+			"FieldCode": "Shipment.WarehouseLegExpectedEntryDate",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.WarehouseLegExpectedReleaseDate",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.WarehouseLegActualReleaseDate",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.WarehouseLegCutOffDate",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageFromPortId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageFromPortName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageATD",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageETD",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageFromPortCountryCode",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageATA",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageETA",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageTransportModeId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageCarrierName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageCarrierNumber",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageVesselName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageFromPortName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.FromPartnerCountryCode",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageFromPortCountryCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageATA",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.AirlinePrefix",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageCarrierName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageCarrierNumber",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageVesselName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment1FromPortId",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment1FromPortName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment1FromPortCountryCode",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment2FromPortName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment2FromPortCountryCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment3FromPortName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment3FromPortCountryCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment1AdditionalMAWBOBLBL",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment1CarrierNumber",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment1VesselName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment2AdditionalMAWBOBLBL",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment2CarrierName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment2CarrierNumber",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment2VesselName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment3AdditionalMAWBOBLBL",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment3CarrierName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment3CarrierNumber",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment3VesselName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageFinalDestinationPortName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.ToPartnerCountryCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageFinalDestinationPortCountryCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment3ToPortId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment1ToPortId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Transshipment2ToPortId",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageToPortId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.AirlinePrefix",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.Master",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.OnCarriageFromPortName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.OnCarriageFromPortCountryCode",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.OnCarriageTransportModeId",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.OnCarriageCarrierName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.OnCarriageCarrierNumber",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.OnCarriageVesselName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Shipment.InlandDomesticToCountryId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		}]');
+		
+	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
+	  set @invocieObjectTableId = (select Id from ObjectTables where [Name] = 'ARInvoice' and Tenant = 0)
+
+	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
+	  values (@newDigitalFieldEntityId, 0, @invocieObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @agentProfileId, 
+		'[{
+				"FieldCode": "ARInvoice.StatusName",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.CreateDate",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.DueDate",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.AmountInInvoiceCurrency",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.CustomerRef",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.InvoiceDate",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.MainEntityReference",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.ShipmentsNumbers",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.AmountDue",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.PaymentTermName",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.InvoiceDate",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.PrintNotes",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.Description",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.InvoiceNumber",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.AmountPaid",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.AmountDue",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.AmountInInvoiceCurrency",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.AmountInInvoiceCurrency",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.ShipmentsNumbers",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.MasterNumber",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.HouseNumber",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.MainEntityReference",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.TotalVATs",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.MainEntityReference",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.Description",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ARInvoice.ShipmentsNumbers",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			}]');
+			
+	  declare @shipmentPackageObjectTableId as varchar(15)
+	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
+	  set @shipmentPackageObjectTableId = (select Id from ObjectTables where [Name] = 'ShipmentPackage' and Tenant = 0)
+	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
+	  values (@newDigitalFieldEntityId, 0, @shipmentPackageObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @customerProfileId, 
+		'[{
+				"FieldCode": "ShipmentPackage.ClassNumber",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ContainerNumber",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Description",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.FlashPoint",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Harmonize",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.OriginalShipmentPackageId",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Height",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Id",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.IMDGCode",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Length",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.MarksAndNumbers",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Quantity",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.InUse",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ShipperSeal",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.CarrierSeal",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ShipmentId",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.SOC",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Temperature",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Tenant",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Tare",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.UnNumber",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Ventilation",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Volume",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Weight",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Width",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackagingGroup",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.MaterialDescription",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.IsDangerous",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.VolumetricWeight",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.CommodityId",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.NumberOfInsidePackages",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.NumberOfInsidePackagesDetails",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.VGM",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.MethodUsed",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ShipmentNumber",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeId",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.IsDeliveryFU",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryId",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryETD",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryATD",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryETA",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryATA",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryTo",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryFrom",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.IsEmptyContainerReturnFU",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.EmptyContainerReturnId",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.EmptyContainerReturnETD",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.EmptyContainerReturnATD",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.EmptyContainerReturnETA",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.EmptyContainerReturnATA",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.EmptyContainerReturnTo",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.EmptyContainerReturnFrom",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Reference1",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Reference2",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Reference3",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Reference4",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.CommodityNumber",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.CommodityName",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.CeficClass",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.KelmerCode",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.EMS",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ProperShippingName",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.MarinePollutant",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Notes",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.TemperatureUnitCode",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.FlashPointTemperatureUnitCode",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.NonActiveContainer",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.OnCarriageATA",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.OnCarriageATD",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.OnCarriageETA",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.OnCarriageETD",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.LastStatusCode",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.LastStatusDate",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.LastStatusName",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryTransportModeCode",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ECRTransportModeCode",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.IsMultiHarmonize",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ETD",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ETA",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Routing",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.RoutingIds",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.VoyageTripNumber",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.HasContainerException",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Make",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Year",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Model",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Color",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ChassisNumber",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.RegistrationNumber",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.CountryId",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.WarehouseReleaseNumber",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.HorseId",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.HorseName",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.LCLContainerTypeId",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ContainerEntityId",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ContainerStatusSourceCode",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ContainerStrippedDate",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.InsideShipmentPackages",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ShipmentPackageItems",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ShipmentPackageHarmonizes",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeId",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeCode",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeName",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeLocalName",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeNote",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.PrintAs",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.IsPackageAddedManually",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.IsContainer",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.IsContainerRefrigerated",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeIsInland",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeIsOcean",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeIsAir",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.TEU",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ContainerSize",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeVolume",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.WarehouseLegAddressCity",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.WarehouseLegAddressCountryCode",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.WarehouseLegActualEntryDate",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			}]');
+			
+	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
+	  set @shipmentPackageObjectTableId = (select Id from ObjectTables where [Name] = 'ShipmentPackage' and Tenant = 0)
+	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
+	  values (@newDigitalFieldEntityId, 0, @shipmentPackageObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @agentProfileId, 
+		'[{
+				"FieldCode": "ShipmentPackage.ClassNumber",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ContainerNumber",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Description",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.FlashPoint",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Harmonize",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.OriginalShipmentPackageId",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Height",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Id",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.IMDGCode",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Length",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.MarksAndNumbers",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Quantity",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.InUse",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ShipperSeal",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.CarrierSeal",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ShipmentId",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.SOC",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Temperature",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Tenant",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Tare",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.UnNumber",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Ventilation",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Volume",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Weight",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Width",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackagingGroup",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.MaterialDescription",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.IsDangerous",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.VolumetricWeight",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.CommodityId",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.NumberOfInsidePackages",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.NumberOfInsidePackagesDetails",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.VGM",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.MethodUsed",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ShipmentNumber",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeId",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.IsDeliveryFU",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryId",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryETD",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryATD",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryETA",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryATA",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryTo",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryFrom",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.IsEmptyContainerReturnFU",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.EmptyContainerReturnId",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.EmptyContainerReturnETD",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.EmptyContainerReturnATD",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.EmptyContainerReturnETA",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.EmptyContainerReturnATA",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.EmptyContainerReturnTo",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.EmptyContainerReturnFrom",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Reference1",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Reference2",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Reference3",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Reference4",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.CommodityNumber",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.CommodityName",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.CeficClass",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.KelmerCode",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.EMS",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ProperShippingName",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.MarinePollutant",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Notes",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.TemperatureUnitCode",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.FlashPointTemperatureUnitCode",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.NonActiveContainer",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.OnCarriageATA",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.OnCarriageATD",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.OnCarriageETA",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.OnCarriageETD",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.LastStatusCode",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.LastStatusDate",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.LastStatusName",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryTransportModeCode",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ECRTransportModeCode",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.IsMultiHarmonize",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ETD",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ETA",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Routing",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.RoutingIds",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.VoyageTripNumber",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.HasContainerException",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Make",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Year",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Model",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.Color",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ChassisNumber",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.RegistrationNumber",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.CountryId",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.WarehouseReleaseNumber",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.HorseId",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.HorseName",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.LCLContainerTypeId",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ContainerEntityId",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ContainerStatusSourceCode",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ContainerStrippedDate",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.InsideShipmentPackages",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ShipmentPackageItems",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ShipmentPackageHarmonizes",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeId",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeCode",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeName",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeLocalName",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeNote",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.PrintAs",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.IsPackageAddedManually",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.IsContainer",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.IsContainerRefrigerated",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeIsInland",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeIsOcean",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "", 
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeIsAir",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.TEU",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.ContainerSize",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeVolume",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.WarehouseLegAddressCity",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.WarehouseLegAddressCountryCode",
+				"CreatedBy": "system",
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			},
+			{
+				"FieldCode": "ShipmentPackage.WarehouseLegActualEntryDate",
+				"CreatedBy": "system", 
+				"ModifiedBy": "system",
+				"CreatedOn": "",
+				"ModifiedOn": "",
+				"HasPermission": true
+			}]');
+			
+			
+	  declare @shipmentPickUpDeliveryObjectTableId as varchar(15)
+	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
+	  set @shipmentPickUpDeliveryObjectTableId = (select Id from ObjectTables where [Name] = 'ShipmentPickUpDelivery' and Tenant = 0)
+	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
+	  values (@newDigitalFieldEntityId, 0, @shipmentPickUpDeliveryObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @customerProfileId, 
+	  '[{
+			"FieldCode": "ShipmentPickUpDelivery.PickUpDeliveryTypeCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.PickUpDeliveryNumber",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.ATD",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.ETD",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.TransportModeCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.CarrierId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.CarrierNumber",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.CarrierNumber",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.ATA",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.ETA",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		}]');
+
+	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
+	  set @shipmentPickUpDeliveryObjectTableId = (select Id from ObjectTables where [Name] = 'ShipmentPickUpDelivery' and Tenant = 0)
+	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
+	  values (@newDigitalFieldEntityId, 0, @shipmentPickUpDeliveryObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @agentProfileId, 
+	  '[{
+			"FieldCode": "ShipmentPickUpDelivery.PickUpDeliveryTypeCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.PickUpDeliveryNumber",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.ATD",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.ETD",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.TransportModeCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.CarrierId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.CarrierNumber",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.CarrierNumber",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.ATA",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.ETA",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		}]');
+
+	  declare @truckerObjectTableId as varchar(15)
+	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
+	  set @truckerObjectTableId = (select Id from ObjectTables where [Name] = 'Trucker' and Tenant = 0)
+	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
+	  values (@newDigitalFieldEntityId, 0, @truckerObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @customerProfileId, 
+	  '[{
+			"FieldCode": "Trucker.EnglishName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Trucker.Code",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Trucker.Notes",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Trucker.Addresses",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Trucker.CountryId",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Trucker.CountryCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Trucker.CountryName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Trucker.StateName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Trucker.StateName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		}]');
+
+	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
+	  set @truckerObjectTableId = (select Id from ObjectTables where [Name] = 'Trucker' and Tenant = 0)
+	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
+	  values (@newDigitalFieldEntityId, 0, @truckerObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @agentProfileId, 
+	  '[{
+			"FieldCode": "Trucker.EnglishName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Trucker.Code",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Trucker.Notes",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Trucker.Addresses",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Trucker.CountryId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Trucker.CountryCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Trucker.CountryName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Trucker.StateName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+		{
+			"FieldCode": "Trucker.StateName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"ModifiedOn": "",
+			"CreatedOn": "",
+			"HasPermission": true
+		}]');
+      ]]>
+	</Sql>
+</Script>

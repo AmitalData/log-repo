@@ -38,9 +38,10 @@
         <ConditionGroups [EntityId]="EntityId" [ShowChangedOperator]="ShowChangedOperator" [(Conditions)]="Conditions"
             [IsValidConditions]="IsValidConditions" (ConditionsChangedEvent)="conditionsChanged($event)"
             [ConditionsCounter]="ConditionsCounter" [AtLeastOneCondition]="AtLeastOneCondition"
-            [FlowObject]="FlowObject" [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId"
-            [IsEntityField]="IsEntityField" [IsEntityFieldValue]="IsEntityFieldValue" [EnableAdd]="EnableAdd"
-            [IsOneLevelConditions]="IsOneLevelConditions">
+            [FlowObject]="FlowObject" [CurrentNodeId]="CurrentNodeId" [IsEntityField]="IsEntityField"
+            [IsEntityFieldValue]="IsEntityFieldValue" [EnableAdd]="EnableAdd"
+            [IsOneLevelConditions]="IsOneLevelConditions" [IsDummyField]="IsDummyField"
+            [GetFieldFromFirstCondition]="GetFieldFromFirstCondition">
         </ConditionGroups>
 
     </div>

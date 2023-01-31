@@ -1,11 +1,9 @@
 import { Component } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
-import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
-import { EntitiesTreeList } from "Workflow/Models/EntitiesTreeList";
-import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
-import { SingleEditableEntitiesTreeList } from "Workflow/Models/SingleEditableEntitiesTreeList";
+import { FlowVariablesTreeList } from "Workflow/TreeLists/FlowVariablesTreeList";
+import { SingleEditableEntitiesTreeList } from "Workflow/TreeLists/SingleEditableEntitiesTreeList";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
 @Component({
@@ -22,7 +20,6 @@ export class LoopPropertiesComponent extends BaseComponent {
     public Direction: string = null;
     public FlowObject: any;
     public CurrentNodeId: string;
-    public FlowObjectFields: ObjectFieldList[];
     public FlowVariablesTreeItems: TreeSelectItem[];
     public SingleEditableEntitiesTreeItems: TreeSelectItem[];
     public ValidationErrorsList: string[];
@@ -34,7 +31,6 @@ export class LoopPropertiesComponent extends BaseComponent {
         this.Data = args.Data ? args.Data : {};
         this.FlowObject = args.FlowObject ? args.FlowObject : null;
         this.CurrentNodeId = args.CurrentNodeId ? args.CurrentNodeId : null;
-        this.FlowObjectFields = args.FlowObjectFields ? args.FlowObjectFields : [];
     }
 
     ngOnInit() {
@@ -60,9 +56,10 @@ export class LoopPropertiesComponent extends BaseComponent {
             ShowRecordsCollectionVariables: true,
             ShowDeclaredCollectionVariables: true,
             OnlyCurrentLoopItemVariables: false,
-            IsObjectVariableSelectable: false
+            IsObjectVariableSelectable: false,
+            IsNoChildrenObjectVariables: false
         };
-        this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, props).Items;
+        this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props).Items;
         this.SingleEditableEntitiesTreeItems = new SingleEditableEntitiesTreeList(this.FlowObject, this.CurrentNodeId).Items;
         this.FlowVariablesTreeItems = this.SingleEditableEntitiesTreeItems.concat(this.FlowVariablesTreeItems);
     }
@@ -85,7 +82,7 @@ export class LoopPropertiesComponent extends BaseComponent {
     }
 
     updateName(name: string) {
-        if(this.IsNew){
+        if (this.IsNew) {
             this.Data["name"] = name;
         }
 
@@ -97,12 +94,17 @@ export class LoopPropertiesComponent extends BaseComponent {
 
     updateCollectionVariable(collectionVariableItem: TreeSelectItem) {
         let collectionVariable = collectionVariableItem ? collectionVariableItem.key : null;
+        let isEditableEntity = collectionVariableItem ? (collectionVariableItem.data["isEditableEntity"] || false) : null;
         let isCollectionFilterVariable = collectionVariableItem ? (collectionVariableItem.data["isCollectionFilterVariable"] || false) : null;
         let isDeclaredCollectionVariable = collectionVariableItem ? (collectionVariableItem.data["isDeclaredCollectionVariable"] || false) : null;
+        this.Data["isEditableEntity"] = isEditableEntity;
         this.Data["collectionVariable"] = collectionVariable;
         this.Data["isCollectionFilterVariable"] = isCollectionFilterVariable;
         this.Data["isDeclaredCollectionVariable"] = isDeclaredCollectionVariable;
         this.CollectionVariable = collectionVariable;
+
+        this.Data["collectionUsedFrom"] = collectionVariableItem && collectionVariableItem.data && collectionVariableItem.data["nodeId"] ? collectionVariableItem.data["nodeId"] : null;
+
         this.setUIProperties();
     }
 

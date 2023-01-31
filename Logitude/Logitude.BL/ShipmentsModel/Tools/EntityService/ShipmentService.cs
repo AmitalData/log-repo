@@ -401,10 +401,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 RunAutomationThatDependencyOnLastEntityUpdate();
 
-                AuditLog auditLog = AddAuditLogChanges(entityPoco);
-                if (entityPM != null && (FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant) ||
-                                         SecurityUtility.CheckFeature("WorkFlow", "Module", entityPM.Tenant)))
+                AuditLog auditLog = null;
+                if (entityPM != null && FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant))
                 {
+                    auditLog = AddShipmentAuditLogChanges(entityPoco);
+                    AuditLogRepository.Add(auditLog);
                     AuditLogRepository.SubmitChanges();
                 }
 
@@ -412,7 +413,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     Entity = WorkflowEntities.Shipment,
                     EntityId = entityPM.Id,
-                    AuditLogId = auditLog.Id,
+                    AuditLogId = auditLog?.Id,
                     Tenant = entityPM.Tenant,
                     Type = QueueMessagesTypes.Create
                 }.Produce();
@@ -673,10 +674,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     EntityChangesMessageProducer.ProduceShipmentUpdateMessage(shipmentPocoCopy, shipmentPMCopy);
                 }
 
-                AuditLog auditLog = AddAuditLogChanges(entityPoco);
-                if (entityPM != null && (FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant) || 
-                                         SecurityUtility.CheckFeature("WorkFlow", "Module", entityPM.Tenant)))
+                AuditLog auditLog = null;
+                if (entityPM != null && FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant))
                 {
+                    auditLog = AddShipmentAuditLogChanges(entityPoco);
+                    AuditLogRepository.Add(auditLog);
                     AuditLogRepository.SubmitChanges();
                 }
 
@@ -684,7 +686,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     Entity = WorkflowEntities.Shipment,
                     EntityId = entityPM.Id,
-                    AuditLogId = auditLog.Id,
+                    AuditLogId = auditLog?.Id,
                     Tenant = entityPM.Tenant,
                     Type = QueueMessagesTypes.Update
                 }.Produce();
@@ -694,7 +696,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
-        private AuditLog AddAuditLogChanges(Shipment entityPoco)
+        private AuditLog AddShipmentAuditLogChanges(Shipment entityPoco)
         {
             ObjectTableRepository objecttableRepository = new ObjectTableRepository(entityPoco.Tenant);
             ObjectTable objecttable = objecttableRepository.GetObjectTableByName("Shipment", 0, true);
@@ -708,8 +710,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 ObjectTableId = objecttable.Id,
                 ChangesJson = JsonConvert.SerializeObject(FieldChanges)
             };
-
-            AuditLogRepository.Add(auditLog);
 
             return auditLog;
         }

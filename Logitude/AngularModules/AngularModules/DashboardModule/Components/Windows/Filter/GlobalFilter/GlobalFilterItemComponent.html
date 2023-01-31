@@ -32,7 +32,7 @@
                     [Text]="TextFieldValue" 
                     [IsFreeText]="true"
                     (ValueChanged)="TextBoxValueChange($event)"
-                    [DataContext]="DataContext"
+                    [DataContext]="FilterItem"
                     HideLastColumn="true"
                     HideColumns="true"
                     DontAllowAutoSelect="true"
@@ -48,7 +48,7 @@
                     [NoValidation]="true"
                     [SelectedDateValue]="FilterItem.FieldValue"
                     (ValueChanged)="DatePickerCondationValueChange($event)"
-                    [DataContext]="DataContext"
+                    [DataContext]="FilterItem"
                     *ngIf="ShowFirstDatePicker() && DatesVisable"
                     [ObjectFieldName]="'FieldValue'"
                     [ObjectTableName]="ObjectTableName">
@@ -62,7 +62,7 @@
                     [NoValidation]="true"
                     [SelectedDateValue]="FilterItem.FieldValue2"
                     (ValueChanged)="SecondDatePickerCondationValueChange($event)"
-                    [DataContext]="DataContext"
+                    [DataContext]="FilterItem"
                     *ngIf="ShowSecondDatePicker() && DatesVisable"
                     [ObjectFieldName]="'FieldValue2'"
                     [ObjectTableName]="ObjectTableName">

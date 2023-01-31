@@ -478,7 +478,7 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 				entityPOCO.ConnectedToReferenceNumber = entityPM.ConnectedToReferenceNumber;
 			}
 			
-			new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "WarehouseEntry", Tenant = entityPM.Tenant, Type = "PM", Entities = new List<WarehouseEntryPM> { entityPM }.Cast<object>().ToList() }).Update();
+			new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "WarehouseEntry", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<WarehouseEntryPM> { entityPM }.Cast<object>().ToList() }).Update();
 		 
 			new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = entityPM, ParentEntityId = entityPM.Id, ParentObjectTableName = "WarehouseEntry", Tenant = entityPM.Tenant }).Update();
 		 

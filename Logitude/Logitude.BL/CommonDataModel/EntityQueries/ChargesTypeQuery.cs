@@ -105,7 +105,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);
             entity.ChargeTypeAccountings = chargeTypeAccountingQuery.GetChargeTypeAccountingsForChargeType(entity.Id, tenant).ToList();
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ChargeType", Tenant = tenant, Type = "PM", Entities = new List<ChargesTypePM> { entity }.Cast<object>().ToList() }).Set();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ChargesType", Tenant = tenant, Type = "PM", Entities = new List<ChargesTypePM> { entity }.Cast<object>().ToList() }).Set();
 
             ChargesTypePM securedPm = new ChargesTypePM();
             SecuredMapping.GetMappedPM(entity, securedPm, "ChargesType", tenant);
@@ -185,7 +185,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);
             entity.ChargeTypeAccountings = chargeTypeAccountingQuery.GetChargeTypeAccountingsForChargeType(entity.Id, tenant).ToList();
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ChargeType", Tenant = tenant, Type = "PM", Entities = new List<ChargesTypePM> { entity }.Cast<object>().ToList() }).Set();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ChargesType", Tenant = tenant, Type = "PM", Entities = new List<ChargesTypePM> { entity }.Cast<object>().ToList() }).Set();
 
             ChargesTypePM securedPm = new ChargesTypePM();
             SecuredMapping.GetMappedPM(entity, securedPm, "ChargesType", tenant);
@@ -272,7 +272,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     if (entity != null)
                     {
                         entity.ChargeTypeAccountings = chargeTypeAccountingQuery.GetChargeTypeAccountingsForChargeType(entity.Id, tenant).ToList();
-                        new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ChargeType", Tenant = tenant, Type = "PM", Entities = new List<ChargesTypePM> { entity }.Cast<object>().ToList() }).Set();
+                        new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ChargesType", Tenant = tenant, Type = "PM", Entities = new List<ChargesTypePM> { entity }.Cast<object>().ToList() }).Set();
 
                         string cname = "ChargesTypePM" + entity.Id + entity.Tenant;
 
@@ -366,7 +366,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);
                 entity.ChargeTypeAccountings = chargeTypeAccountingQuery.GetChargeTypeAccountingsForChargeType(entity.Id, tenant).ToList();
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ChargeType", Tenant = tenant, Type = "PM", Entities = new List<ChargesTypePM> { entity }.Cast<object>().ToList() }).Set();
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ChargesType", Tenant = tenant, Type = "PM", Entities = new List<ChargesTypePM> { entity }.Cast<object>().ToList() }).Set();
 
             }
 
@@ -396,7 +396,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                               }).ToList();
 
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ChargeType", Tenant = tenant, Type = "PM", Entities = Entities.Cast<object>().ToList() }).Set();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ChargesType", Tenant = tenant, Type = "PM", Entities = Entities.Cast<object>().ToList() }).Set();
 
             return Entities;
 
@@ -725,7 +725,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    IsActiveInDomestic = f.IsActiveInDomestic,
 
                                                }).FirstOrDefault();
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ChargeType", Tenant = tenant, Type = "List", Entities = new List<ChargesTypeList> { chargesTypeList }.Cast<object>().ToList() }).Set();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ChargesType", Tenant = tenant, Type = "List", Entities = new List<ChargesTypeList> { chargesTypeList }.Cast<object>().ToList() }).Set();
 
             return chargesTypeList;
         }
@@ -895,7 +895,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    IsActiveInDomestic = f.IsActiveInDomestic,
 
                                                }).FirstOrDefault();
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ChargeType", Tenant = tenant, Type = "List", Entities = new List<ChargesTypeList> { chargesTypeList }.Cast<object>().ToList() }).Set();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ChargesType", Tenant = tenant, Type = "List", Entities = new List<ChargesTypeList> { chargesTypeList }.Cast<object>().ToList() }).Set();
 
             return chargesTypeList;
         }

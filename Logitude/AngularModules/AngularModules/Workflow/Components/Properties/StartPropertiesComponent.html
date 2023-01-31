@@ -108,12 +108,9 @@
                     [DataContext]="DataContext"></LogLabel>
             </div>
             <div class="table-row-cell-block entity-list-container">
-                <LogLov [NoObjectField]="true" [ObjectFieldName]="EntityId" [DataContext]="DataContext"
-                    [QueryFilterItems]="'Shipment' | GetObjectTablesQueryFiltersPipe" [LookUpTableName]="'ObjectTable'"
-                    [NoValidation]="true" [IsFreeText]="true" [SelectedValue]="EntityId" [HideColumns]="true"
-                    [HideLastColumn]="true" [DisplayMemberPath]="'Name'" (SelectedItemChanged)="updateEntity($event)"
-                    [DataCy]="'start-entity'">
-                </LogLov>
+                <TreeSelect [Items]="EntitiesTreeItems" [Width]="'300px'" [Value]="Entity" [ShowExpand]="false"
+                    [ShowItem]="ExcludedEntities | ShowEntitiesTreeItemPipe" (ValueChanged)="updateEntity($event)">
+                </TreeSelect>
             </div>
         </td>
     </tr>
@@ -197,8 +194,8 @@
                 <Conditions *ngIf="Conditions && Conditions.length > 0" [EntityId]="EntityId"
                     [ShowChangedOperator]="Trigger !== CreateTrigger"
                     (IsValidConditionsChange)="updateIsValidConditions($event)"
-                    [(ConditionsOperation)]="ConditionsOperation" [(Conditions)]="Conditions"
-                    [FlowObjectFields]="FlowObjectFields" [IsEntityField]="true" [IsEntityFieldValue]="true">
+                    [(ConditionsOperation)]="ConditionsOperation" [(Conditions)]="Conditions" [IsEntityField]="true"
+                    [IsEntityFieldValue]="true">
                 </Conditions>
 
             </div>

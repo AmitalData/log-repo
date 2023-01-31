@@ -34,6 +34,11 @@ namespace CommunicationWorkerRole
         private ShipmentDocsFieldRepository shipmentDocsFieldRepository;
         private IShipmentsContext shipmentContext;
         private ShipmentPM shipmentPM;
+        private DocumentsFilingPM documentsFilingPM;
+        private ShipmentDocsField shipmentDocsField;
+        private bool isShipmentChange = false;
+        private bool isApprovalRequired = false;
+        private bool isUploadShipmentDocs = false;
 
         public override bool OnStart()
         {
@@ -97,6 +102,8 @@ namespace CommunicationWorkerRole
             isDocumentUploaded = bool.Parse(queueResponse.MessageValues["IsDocumentUploaded"].ToString());
             isDocumentDeleted = bool.Parse(queueResponse.MessageValues["IsDocumentDeleted"].ToString());
             recivedDate = DateTime.Parse(queueResponse.MessageValues["RecivedDate"].ToString());
+            isApprovalRequired = queueResponse.MessageValues != null && queueResponse.MessageValues.Keys.Contains("IsApprovalRequired") ? bool.Parse(queueResponse.MessageValues["IsApprovalRequired"].ToString()) : false;
+            isUploadShipmentDocs = queueResponse.MessageValues != null && queueResponse.MessageValues.Keys.Contains("IsUploadShipmentDocs") ? bool.Parse(queueResponse.MessageValues["IsUploadShipmentDocs"].ToString()) : true;
         }
 
         private void InitializeServices()
@@ -113,21 +120,36 @@ namespace CommunicationWorkerRole
             {
                 return;
             }
-            DocumentsFilingPM documentsFilingPM = GetDocumentsFilingPM(documentsFilingId, tenant);
+            documentsFilingPM = GetDocumentsFilingPM(documentsFilingId, tenant);
             if (documentsFilingPM == null)
             {
                 return;
             }
 
-            if (isDocumentDeleted)
+            if (isDocumentDeleted && isUploadShipmentDocs)
             {
                 HandelShipmentFieldsWhenDeletingDocument(documentsFilingPM);
             }
-            else if (isDocumentUploaded)
+            else if (isDocumentUploaded && isUploadShipmentDocs)
             {
                 HandelShipmentFieldsWhenUploadingDocument(documentsFilingPM);
             }
-        }        
+
+            if (isApprovalRequired)
+            {
+                MarkShipmentAsApprovalRequired();
+            }
+
+            UpdateShipment();
+        }
+
+        private void MarkShipmentAsApprovalRequired()
+        {
+            shipmentPM = GetShipment(documentsFilingPM.EntityId , documentsFilingPM.Tenant);
+            if (shipmentPM == null || shipmentPM.IsDocumentsNeedApprove) return;   
+            shipmentPM.IsDocumentsNeedApprove = true;
+            isShipmentChange = true;
+        }
 
         private DocumentsFilingPM GetDocumentsFilingPM(string documentsFilingId, int tenant)
         {
@@ -191,33 +213,56 @@ namespace CommunicationWorkerRole
             }
         }
 
+
+
         private void UpdateShipment(DocumentsFilingPM documentFiling, bool isReceived, DateTime? receivedDate)
         {
             string shipmentId = documentFiling.EntityId;
-            string receivedByUserId = documentFiling.ReceivedByUserId;
             if (string.IsNullOrEmpty(shipmentId))
             {
                 return;
             }
 
-            ContactRepository contactRepository = new ContactRepository(tenant);
-            Contact receivedBy = contactRepository.GetSingleContact(receivedByUserId, tenant);
 
-            ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
-            shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);
+            shipmentPM = GetShipment(shipmentId, tenant);
             if (shipmentPM == null) return;
 
-            ShipmentDocsField shipmentDocsField = this.GetEntity(shipmentId);
+            shipmentDocsField = this.GetEntity(shipmentId);
             if(shipmentDocsField != null)
             {
                 this.HandleShipmentFields(shipmentDocsField, isReceived, receivedDate);
             }
 
             shipmentPM.IsDocsKPIsUpdatedFromWR = true;
+            isShipmentChange = true;
+        }
+
+
+
+        private void UpdateShipment()
+        {
+            if (shipmentPM == null || !isShipmentChange) return;
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            Contact receivedBy = contactRepository.GetSingleContact(documentsFilingPM.ReceivedByUserId, tenant);
             ShipmentService shipmentService = new ShipmentService(shipmentContext, shipmentPM, receivedBy.Email);
-            shipmentService.ShipmentDocsFieldFromWorkerRole = shipmentDocsField;
+           
+            if (shipmentDocsField!=null)
+            {
+                shipmentService.ShipmentDocsFieldFromWorkerRole = shipmentDocsField;
+            }
+
             shipmentService.Update(true);
         }
+
+
+        private ShipmentPM GetShipment(string shipmentId, int tenant)
+        {
+            if (shipmentPM != null) return shipmentPM;
+            shipmentPM = new ShipmentQuery(shipmentRepository).GetSinglePM(shipmentId, tenant);
+            return shipmentPM;
+        }
+
+
 
         private ShipmentDocsField GetEntity(string id)
         {            

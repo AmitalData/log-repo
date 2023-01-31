@@ -1,17 +1,21 @@
 ﻿using Logitude.BL.ExternalService;
 using Logitude.BL.Helpers;
-using Logitude.BL.Security;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours;
 using Logitude.BL.ShipmentsModel.Tools.DataMapping;
 using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
 using Logitude.BL.ShipmentsModel.Tools.Validating;
+using Logitude.BL.Workfkow;
+using Logitude.BL.Workfkow.Constants;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.Data.Models.AuditLog;
+using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.CToolWorkflows;
-using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
+using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -35,14 +39,22 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private IShipmentsContext shipmentsContext;
         private ContainerRepository entityRepository;        
         private Container containerPoco { get; set; }
+
+        private AuditLogRepository AuditLogRepository;
+
         public ContainerService(IShipmentsContext shipmentsContext, int tenant)
         {
+            AuditLogRepository = new AuditLogRepository(tenant);
+
             this.tenant = tenant;
             this.shipmentsContext = shipmentsContext;
             this.entityRepository = new ContainerRepository(shipmentsContext);
         }
+
         public void Create(ContainerPM entityPM)
         {
+            List<FieldChange> FieldChanges = new List<FieldChange>();
+
             this.isNewEntity = true;
             this.containerPm = entityPM;
             this.containerPm.Id = IdCounter.GetNumber("Container", tenant).ToString();
@@ -56,14 +68,32 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             ContainerValidating.Validate(this.containerPm, this.containerPoco, isNewEntity);
             ContainerTracing containerTracing = new ContainerTracing(entityPM, containerPoco, isNewEntity);
             containerTracing.Trace();
-            ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity);
+            ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity, FieldChanges);
             this.GetForeignFields_Status(entityPM, containerPoco);
             entityRepository.Add(containerPoco);
             entityRepository.SubmitChanges();
+
             if (this.containerPm != null && !this.containerPm.FromCTool)
             {
                 EntityChangesMessageProducer.ProduceContainerCreateMessage(containerPoco, containerPm);
             }
+
+            AuditLog auditLog = null;
+            if (entityPM != null && FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant))
+            {
+                auditLog = AddContainerAuditLogChanges(containerPoco, FieldChanges);
+                AuditLogRepository.Add(auditLog);
+                AuditLogRepository.SubmitChanges();
+            }
+
+            new WorkflowEntityQueueMessage()
+            {
+                Entity = WorkflowEntities.Container,
+                EntityId = entityPM.Id,
+                AuditLogId = auditLog?.Id,
+                Tenant = entityPM.Tenant,
+                Type = QueueMessagesTypes.Create
+            }.Produce();
             //AddShipmentUpdateKafkaQueueMessage("CToolContainerCreate");
             MapShipmentConcurrencyFields();
             entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
@@ -71,6 +101,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         public void Update(ContainerPM entityPM, ContainersExternal containersExternal = null)
         {
+            List<FieldChange> FieldChanges = new List<FieldChange>();
+
             this.isNewEntity = false;
             this.containerPm = entityPM;
 
@@ -102,7 +134,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             Container containerPocoCopy = CloneObjectService.Clone(containerPoco);
             ContainerPM containerPMCopy = CloneObjectService.Clone(containerPm);            
-            ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity);
+            ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity, FieldChanges);
             this.GetForeignFields_Status(entityPM, containerPoco);
             entityRepository.Update(containerPoco);
             entityRepository.SubmitChanges();
@@ -111,10 +143,46 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 EntityChangesMessageProducer.ProduceContainerUpdateMessage(containerPocoCopy, containerPMCopy);
             }
+
+            AuditLog auditLog = null;
+            if (entityPM != null && FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant))
+            {
+                auditLog = AddContainerAuditLogChanges(containerPoco, FieldChanges);
+                AuditLogRepository.Add(auditLog);
+                AuditLogRepository.SubmitChanges();
+            }
+
+            new WorkflowEntityQueueMessage()
+            {
+                Entity = WorkflowEntities.Container,
+                EntityId = entityPM.Id,
+                AuditLogId = auditLog?.Id,
+                Tenant = entityPM.Tenant,
+                Type = QueueMessagesTypes.Update
+            }.Produce();
+
             //AddShipmentUpdateKafkaQueueMessage("CToolContainerUpdate");
             MapShipmentConcurrencyFields();
 
         }
+        private AuditLog AddContainerAuditLogChanges(Container entityPoco, List<FieldChange> FieldChanges)
+        {
+            ObjectTableRepository objecttableRepository = new ObjectTableRepository(entityPoco.Tenant);
+            ObjectTable objecttable = objecttableRepository.GetObjectTableByName("Container", 0, true);
+            AuditLog auditLog = new AuditLog()
+            {
+                Id = IdCounter.GetNumber("AuditLog", entityPoco.Tenant).ToString(),
+                Tenant = entityPoco.Tenant,
+                UpdateDate = entityPoco.UpdateDate,
+                UpdatedByUserId = entityPoco.UpdatedByUserId,
+                EntityId = entityPoco.Id,
+                ObjectTableId = objecttable.Id,
+                ChangesJson = JsonConvert.SerializeObject(FieldChanges)
+            };
+
+            return auditLog;
+        }
+
         private void SetUpdatedByUser()
         {
             bool setUser = true;

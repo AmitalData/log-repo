@@ -38,11 +38,13 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                                                            {
                                                                Id = x.Id,
                                                                ObjectTableId = x.ObjectTableId,
+                                                               ObjectTableName = x.ObjectTable.Name,
                                                                Tenant = x.Tenant,
                                                                Labels = x.Labels,
                                                                ProfileId = x.ProfileId,
                                                                CreateDate = x.CreateDate,
-                                                               UpdateDate = x.UpdateDate
+                                                               UpdateDate = x.UpdateDate,
+                                                               ProfileCode = x.DigitalProfile.Code
                                                            })
                                                            .ToList();
 

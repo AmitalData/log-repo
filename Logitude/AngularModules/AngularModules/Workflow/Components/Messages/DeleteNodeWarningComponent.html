@@ -7,8 +7,8 @@
         font-size: 12px;
         white-space: break-spaces;
         overflow: auto;
-        height: 122px;
-        width: 336px;
+        width: 100%;
+        height: 200px;
         position: absolute;
         top: 20px;
     }
@@ -32,45 +32,40 @@
     }
 
     .used-by-header {
-        padding-top: 6px;
+        padding-top: 10px;
+        padding-bottom: 5px;
     }
 
-    .message-row {
-        height: 150px;
-    }
-
-    .used-in-node-name {
-        padding-bottom: 6px;
+    .footer-row {
+        height: 22px;
     }
 </style>
 
 <table>
-    <tr class="message-row">
+    <tr>
         <td class="warning-icon-cell">
             <img class="warning-icon" src="./Images/InfoIcon.png">
         </td>
         <td>
-            <div class="message-container">
-                <div>You can't delete <span class="bold-text">{{NodeNameToDelete}}</span> yet.</div>
+            <div *ngIf="UsedInNodes && UsedInNodes.length > 0" class="message-container">
+                <div>You cannot delete <span class="bold-text">{{NodeNameToDelete}}</span> yet.</div>
 
                 <div>Remove all references for <span class="bold-text">{{NodeNameToDelete}}</span>, and try again.</div>
 
-                <div class="used-by-header">Used by:</div>
+                <div class="used-by-header">Used by elements:</div>
 
-                <div class="used-in-node-name" *ngFor="let UsedInNode of UsedInNodes;">
-                    <span class="bold-text">{{UsedInNode}}</span>
+                <div class="used-in-node-name" *ngFor="let UsedInNode of UsedInNodes">
+                    <span class="bold-text">{{"- " + UsedInNode}}</span>
                 </div>
+            </div>
+
+            <div *ngIf="!(UsedInNodes && UsedInNodes.length > 0)" class="message-container">
+                <div>Cannot delete element</div>
             </div>
         </td>
     </tr>
 
-    <tr>
-        <td colspan="2">
-            <div></div>
-        </td>
-    </tr>
-
-    <tr>
+    <tr class="footer-row">
         <td colspan="2">
             <FooterButtons [ShowSaveOnly]="true" [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="cancelButtonClicked()"
                 [SaveButtonDataCy]="'warning-message-ok-button'">

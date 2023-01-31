@@ -60,7 +60,7 @@
   ApplyDefaultValues="false"
   HasMenuButtons="false"
   ApplyOnPropertyChangedCode="false"
-  HasApiHelper="false"
+  HasApiHelper="true"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
   TenantZeroData="false"

@@ -1021,7 +1021,10 @@ export class AppTool {
                 myResult = "FollowUps";
                 break;
             }
-
+            case "General.MH.Containers": {
+                myResult = "Box";
+                break;
+            }
             case "General.MH.Quotes": {
                 myResult = "Quote";
                 break;

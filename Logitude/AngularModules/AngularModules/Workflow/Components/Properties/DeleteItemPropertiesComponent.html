@@ -93,7 +93,7 @@
             </div>
             <div class="table-row-cell-block">
                 <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'300px'" [Value]="Record"
-                    (ValueChanged)="updateRecord($event)">
+                    [IsReturnedTreeSelectItem]="true" (ValueChanged)="updateRecord($event)">
                 </TreeSelect>
             </div>
             <div class="table-row-cell-block help-text-container">

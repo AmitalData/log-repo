@@ -30,6 +30,45 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         ShipmentRepository shipmentRepository;
         SharedLogisticsSetting sharedLogisticsSetting;
         int tenant;
+
+        public ShipmentPM GetSingleDigitalPM(string id, int tenant, string cardId = null)
+        {
+            if (!string.IsNullOrEmpty(id))
+            {
+                var shipment = repository.context
+                                         .Shipments
+                                         .Include("EntityStatus")
+                                         .Include("ShipmentLevel")
+                                         .Include("ShipmentType")
+                                         .FirstOrDefault(a => a.Id == id
+                                                              && a.Tenant == tenant);
+                if (shipment != null)
+                {
+                    CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+                    customFieldResolver.SetCustomFieldsValues("Shipment", tenant, new List<Shipment> { shipment }.Cast<object>().ToList());
+
+                    var masterData = repository.context
+                                               .ShipmentMasterDatas
+                                               .FirstOrDefault(a => a.Id == shipment.MasterShipmentDataId);
+
+                    ShipmentPM shipmentPM = new ShipmentPM();
+                    shipmentPM.Tenant = shipment.Tenant;
+                    shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true, false, cardId);
+                    ShipmentPM securedPM = new ShipmentPM();
+
+                    securedPM = Simplog.Server.Infrastructure.Helpers.SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
+                    MapShipmentComputedFields(securedPM, masterData);
+                    return securedPM;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            return null;
+        }
+
         public List<ShipmentPartnerPM> GetDigitalShipmentPartners(string shipmentId, int tenant)
         {
             InitializeServices(tenant);

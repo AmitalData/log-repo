@@ -6,14 +6,14 @@ import { BooleanValues } from "Workflow/Constants/BooleanValues";
 import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
 import { DateTimeValueExpressions } from "Workflow/Constants/DateTimeValueExpressions";
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
-import { BooleanValuesList } from "Workflow/Models/BooleanValuesList";
+import { BooleanValuesList } from "Workflow/Lists/BooleanValuesList";
 import { Condition } from "Workflow/Models/Condition";
-import { ConditionOperationsList } from "Workflow/Models/ConditionOperationsList";
-import { ConditionOperatorsListsDictionary } from "Workflow/Models/ConditionOperatorsListsDictionary";
-import { DateTimeValueExpressionsList } from "Workflow/Models/DateTimeValueExpressionsList";
-import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
+import { ConditionOperationsList } from "Workflow/Lists/ConditionOperationsList";
+import { ConditionOperatorsListsDictionary } from "Workflow/Lists/ConditionOperatorsListsDictionary";
+import { DateTimeValueExpressionsList } from "Workflow/Lists/DateTimeValueExpressionsList";
+import { FlowVariablesTreeList } from "Workflow/TreeLists/FlowVariablesTreeList";
 import { ListItem } from "Workflow/Models/ListItem";
-import { ObjectTables } from "Workflow/Models/ObjectTables";
+import { ObjectTables } from "Workflow/Utilities/ObjectTables";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 import { ConditionDisabledPipe } from "Workflow/Pipes/ConditionDisabledPipe";
 import { GetObjectFieldPipe } from "Workflow/Pipes/GetObjectFieldPipe";
@@ -39,10 +39,11 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     @Input() IsEntityField: boolean = false;
     @Input() IsEntityFieldValue: boolean = false;
     @Input() FlowObject: any;
-    @Input() FlowObjectFields: ObjectFieldList[];
     @Input() CurrentNodeId: string;
     @Input() EnableAdd: boolean = true;
     @Input() IsOneLevelConditions: boolean = false;
+    @Input() IsDummyField: boolean = false;
+    @Input() GetFieldFromFirstCondition: boolean = false;
 
     @Output() ConditionsChangedEvent = new EventEmitter();
 
@@ -77,9 +78,10 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
                 ShowRecordsCollectionVariables: false,
                 ShowDeclaredCollectionVariables: false,
                 OnlyCurrentLoopItemVariables: false,
-                IsObjectVariableSelectable: false
+                IsObjectVariableSelectable: false,
+                IsNoChildrenObjectVariables: false
             };
-            this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, props);
+            this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props);
             this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;
         }
     }
@@ -112,6 +114,12 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
                 } else {
                     let objectField = this.getObjectField(field);
                     this.updateConditionFieldByObjectField(objectField, conditionIndex, field);
+                }
+
+                if (fieldItem && fieldItem.data && fieldItem.data["nodeId"]) {
+                    this.Conditions[conditionIndex].fieldUsedFrom = fieldItem.data["nodeId"];
+                } else {
+                    this.Conditions[conditionIndex].fieldUsedFrom = null;
                 }
             } else {
                 this.resetConditionField(conditionIndex);
@@ -157,6 +165,8 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
         this.Conditions[conditionIndex].valueCode = null;
         this.Conditions[conditionIndex].valueExpression = null;
         this.Conditions[conditionIndex].fieldChangedToggle = !this.Conditions[conditionIndex].fieldChangedToggle;
+        this.Conditions[conditionIndex].fieldUsedFrom = null;
+        this.Conditions[conditionIndex].valueUsedFrom = null;
     }
 
     updateConditionOperator(operatorCode: string, conditionIndex: number) {
@@ -189,9 +199,12 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
         this.emitConditionsChanged();
     }
 
-    updateConditionValue(value: string, conditionIndex: number) {
+    updateConditionValue(value: string, conditionIndex: number, nodeId: string | null = null) {
         if (value !== this.Conditions[conditionIndex]?.value) {
             this.Conditions[conditionIndex].value = value ? value.toString() : null;
+
+            this.Conditions[conditionIndex].valueUsedFrom = nodeId;
+
             this.emitConditionsChanged();
         }
     }
@@ -223,6 +236,17 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
 
         if (this.IsValidConditions && this.EnableAdd) {
             let condition = new Condition(isGroup);
+
+            if (this.GetFieldFromFirstCondition && this.Conditions && this.Conditions.length > 0) {
+                let firstCondition = this.Conditions[0];
+                condition.field = firstCondition.field;
+                condition.fieldCode = firstCondition.fieldCode;
+                condition.type = firstCondition.type;
+                condition.lookupType = firstCondition.lookupType;
+                condition.picklistType = firstCondition.picklistType;
+                condition.valueExpression = new IsDateTimeTypePipe().transform(firstCondition.type) ? DateTimeValueExpressions.Date : null;
+            }
+
             condition.id = this.ConditionsCounter;
             if (conditionIndex === null) {
                 this.Conditions.push(condition);
@@ -257,7 +281,7 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     }
 
     isNoObjectFieldVariable(field: string) {
-        return new IsNoObjectFieldVariablePipe().transform(field, this.FlowObjectFields);
+        return new IsNoObjectFieldVariablePipe().transform(field);
     }
 
     isFieldCompareOperator(operatorCode: string) {
@@ -273,6 +297,6 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     }
 
     getObjectField(field: string) {
-        return new GetObjectFieldPipe().transform(field, this.FlowObjectFields);
+        return new GetObjectFieldPipe().transform(field);
     }
 }

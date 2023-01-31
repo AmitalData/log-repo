@@ -1,5 +1,4 @@
-﻿using Logitude.BL.ShipmentsModel.EntityLists;
-using Logitude.BL.ShipmentsModel.EntityQueries;
+﻿using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -26,6 +25,7 @@ using Newtonsoft.Json.Linq;
 using System.Linq.Dynamic.Core;
 using Logitude.BL.Helpers;
 using Logitude.Infrastructure.BL.EntityQueryServices;
+using Simplog.Data.Helpers;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -33,7 +33,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     {
         [HttpGet]
         [Route("DigitalShipment/GetSingle")]
-        public HttpResponseMessage GetSingle(string id, string cardId, string objectTableId, string profileCode = "CS")
+        public HttpResponseMessage GetSingle(string id, string cardId, string objectTableId, string profileCode)
         {
             int tenant = 0;
             string email = "";
@@ -45,7 +45,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     cards = cardId?.Split(',').ToList();
                 }
 
-                string logKey = PerformanceLogger.LogCurrentTime();
                 var digitalPortalAuthenticationHelper = new DigitalPortalAuthenticationHelper();
                 var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, id);
                 id = shipmentIdAndTenant.Item1;
@@ -53,13 +52,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 email = shipmentIdAndTenant.Item3;
 
                 var shipmentQuery = new ShipmentQuery(tenant);
-                var shipmentPM = shipmentQuery.GetSinglePM(id, tenant, cardId);
+                var shipmentPM = shipmentQuery.GetSingleDigitalPM(id, tenant, cardId);
 
                 if (string.IsNullOrWhiteSpace(cardId) || cards.Contains(shipmentPM.CustomerId) || cards.Contains(shipmentPM.AgentId))
                 {
                     shipmentPM.TimeLineData = shipmentQuery.MapVerticalTimeLine(shipmentPM, tenant);
-                    PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-
                     var shipmentPMJson = JsonConvert.SerializeObject(shipmentPM);
                     var textCodeQuery = new DigitalTextCodeQueryService(0);
 
@@ -156,6 +153,18 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var fields = string.Join(",", allowedFieldSecurites);
 
                 var shipments = entityLists.Select("new { " + fields + " }").ToDynamicList();
+
+                var isAllShipmentsQuery = newFilters.AdditionalFilters.Where(a => a.FieldName == "AllShipments").Any();
+                if (isAllShipmentsQuery)
+                {
+                    DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                    var afterOneYearDate = currentDateTime.AddDays(-365);
+                    var afterNinetyDaysDate = currentDateTime.AddDays(-90);
+                    shipments.Where(a => (a.MainCarriageFinalDestinationATA > afterNinetyDaysDate)
+                                       || a.CreateDateTime > afterOneYearDate)
+                            .ToList()
+                            .ForEach(i => i.IsCustomerArchived = true);
+                }
 
                 CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                 customFieldResolver.SetCustomFieldsValues("Shipment", tenant, shipments.Cast<object>().ToList());

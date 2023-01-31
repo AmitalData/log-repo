@@ -43,6 +43,8 @@
                                     </div>
                                 </div>
 
+                                <div class="TextTrimming" *ngIf="FieldName == 'UpdateDate'">{{ Entity[FieldName] | DateTimePipe:'DT' }}</div>
+
                             </div>
                         </td>
                     </tr>

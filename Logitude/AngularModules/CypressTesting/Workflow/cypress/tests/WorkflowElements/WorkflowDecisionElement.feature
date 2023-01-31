@@ -17,8 +17,9 @@ Feature: Workflow add decision element
             | Object           | Shipment            |
             | ConfigureTrigger | A record is updated |
         And add decision element with following details
-            | Title | Ocean or Other transport mode Shipment |
-            | Label | Ocean Shipment                         |
+            | Title          | Ocean or Other transport mode Shipment |
+            | MetLabel       | Ocean Shipment                         |
+            | OtherwiseLabel | Other transport mode Shipment          |
         And add condition group met with 'And' with the following details
             | Field                        | Operation | Value               |
             | Main Carriage Transport Mode | Equals    | Ocean               |

@@ -42,7 +42,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;063f&quot;"
+  Code="&quot;385b&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -802,9 +802,9 @@
       Description="&quot;HTML Editor Style Fixed&quot;" />
     <Record
       Code="&quot;VIP&quot;"
-      Name="&quot;Vizion - Pilot Customer&quot;"
-      SearchFields="&quot;VIP,Vizion - Pilot Customer&quot;"
-      Description="&quot;Vizion - Pilot Customer&quot;" />
+      Name="&quot;Container Tracking - Pilot Customer&quot;"
+      SearchFields="&quot;VIP,Container Tracking - Pilot Customer&quot;"
+      Description="&quot;Container Tracking - Pilot Customer&quot;" />
     <Record
       Code="&quot;SCD&quot;"
       Name="&quot;Second context DB&quot;"
@@ -825,11 +825,6 @@
       SearchFields="&quot;QMU,Quote Markup Currency&quot;"
       Name="&quot;Quote Markup Currency&quot;"
       Description="&quot;Quote Markup Currency&quot;" />
-    <Record
-      Code="&quot;DPB&quot;"
-      Name="&quot;Digital Portal Branding&quot;"
-      Description="&quot;Digital Portal Branding Tab&quot;"
-      SearchFields="&quot;DPB,Digital Portal Branding&quot;" />
     <Record
       Code="&quot;ARS&quot;"
       Name="&quot;ARInvoice Sent Icon&quot;"
@@ -920,11 +915,16 @@
       Name="&quot;Invoice Concurrency&quot;"
       SearchFields="&quot;INU, Invoice Concurrency&quot;"
       Description="&quot;&quot;" />
-	<Record
-	 Code="&quot;SKP&quot;"
-	 Name="&quot;Use synch kafka producer&quot;"
-	 SearchFields="&quot;SKP,Use synch kafka producer&quot;"
-	 Description="&quot;Use synch kafka producer&quot;" />
+    <Record
+      Code="&quot;SKP&quot;"
+      Name="&quot;Use synch kafka producer&quot;"
+      SearchFields="&quot;SKP,Use synch kafka producer&quot;"
+      Description="&quot;Use synch kafka producer&quot;" />
+    <Record
+      Code="&quot;AVC&quot;"
+      Name="&quot;AR Invoice VATs Calculation per line&quot;"
+      SearchFields="&quot;AVC,AR Invoice VATs Calculation per line&quot;"
+      Description="&quot;AR Invoice VATs Calculation per line&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

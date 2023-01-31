@@ -27,6 +27,7 @@ namespace Logitude.Infrastructure.Data
 		 IDbSet<BIReportsType> BIReportsTypes { get; }
 		 IDbSet<BusinessProcessQueue> BusinessProcessQueues { get; }
 		 IDbSet<BusinessRole> BusinessRoles { get; }
+		 IDbSet<ContainerSetting> ContainerSettings { get; }
 		 IDbSet<DigitalFieldSecurity> DigitalFieldSecurities { get; }
 		 IDbSet<DigitalPortalScreen> DigitalPortalScreens { get; }
 		 IDbSet<DigitalPreDefinedComponent> DigitalPreDefinedComponents { get; }

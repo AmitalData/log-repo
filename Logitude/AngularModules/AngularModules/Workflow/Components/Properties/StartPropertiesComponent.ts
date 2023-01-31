@@ -1,12 +1,13 @@
 import { Component } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
-import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
 import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
 import { Condition } from "Workflow/Models/Condition";
-import { ObjectTables } from "Workflow/Models/ObjectTables";
+import { EntitiesTreeList } from "Workflow/TreeLists/EntitiesTreeList";
+import { ObjectTables } from "Workflow/Utilities/ObjectTables";
+import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
 @Component({
     templateUrl: "./StartPropertiesComponent.html"
@@ -23,20 +24,18 @@ export class StartPropertiesComponent extends BaseComponent {
     public ConditionsOperation: string;
     public CreateTrigger: string = "create";
     public ValidationErrorsList: string[];
-
-    public FlowObjectFields: ObjectFieldList[];
-
     public IsValidConditions: boolean = true;
-
+    public EntitiesTreeItems: TreeSelectItem[];
+    public ExcludedEntities: string[] = ["Customer", "User", "Opportunity", "ShipmentStoragePricing"];
     public CurrentSession = SessionLocator.SelectedSession;
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
-        this.FlowObjectFields = args.FlowObjectFields ? args.FlowObjectFields : [];
     }
 
     ngOnInit() {
         this.initializeWindowEvents();
+        this.initializeEntitiesTreeItems();
         this.initialize();
     }
 
@@ -48,6 +47,10 @@ export class StartPropertiesComponent extends BaseComponent {
                 this.cancelButtonClicked();
             }
         });
+    }
+
+    initializeEntitiesTreeItems() {
+        this.EntitiesTreeItems = new EntitiesTreeList("parent").Items;
     }
 
     initialize() {
@@ -99,15 +102,17 @@ export class StartPropertiesComponent extends BaseComponent {
         this.Data["conditionsOperation"] = this.Conditions.length === 0 ? null : this.ConditionsOperation;
     }
 
-    updateEntity(entity: any) {
-        if (this.Data["entity"] !== entity?.Name) {
+    updateEntity(entity: string) {
+        let isEntityChanged = this.Data["entity"] !== entity;
+        this.Data["entity"] = entity;
+        this.Entity = entity;
+        this.EntityId = ObjectTables.getIdByName(entity);
+
+        if (isEntityChanged) {
             this.Conditions = [];
             this.ConditionsOperation = ConditionOperations.And;
         }
 
-        this.Data["entity"] = entity ? entity.Name : null;
-        this.Entity = entity ? entity.Name : null;
-        this.EntityId = ObjectTables.getIdByName(entity ? entity.Name : null);
         this.setUIProperties();
     }
 

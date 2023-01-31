@@ -16,12 +16,14 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
         private GLAccountPM _GLAccountBillTO;
         private JournalPM _JournalARPayment;
         private List<AutoReconcileRecord>  _AutoReconcileRecordList;
+        private string _accountingEntityCode;
 
-        public void InitMust(GLAccountPM glAccountBillTO, JournalPM journalARPayment, List<AutoReconcileRecord> AutoReconcileRecordList)
+        public void InitMust(GLAccountPM glAccountBillTO, JournalPM journalARPayment, List<AutoReconcileRecord> AutoReconcileRecordList, string accountingEntityCode)
         {
             this._GLAccountBillTO = glAccountBillTO;
             this._JournalARPayment = journalARPayment;
             _AutoReconcileRecordList = AutoReconcileRecordList;//theEntityPm.PaymentInvoices.Select(r => r.ARInvoiceId).ToList();
+            _accountingEntityCode = accountingEntityCode;
         }
         
 
@@ -85,7 +87,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
 
             CheckIfAllRowsHaveMinRequiredReference(autoReconcileRecordList);
 
-            FillRowsWithAccountingEntityOnly(autoReconcileRecordList, tenant);
+            FillRowsWithAccountingEntityOnly(autoReconcileRecordList, tenant, _accountingEntityCode);
 
 
 
@@ -248,7 +250,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
             }
         }
 
-        private static void FillRowsWithAccountingEntityOnly(List<AutoReconcileRecord> autoReconcileRecordList, int tenant)
+        private static void FillRowsWithAccountingEntityOnly(List<AutoReconcileRecord> autoReconcileRecordList, int tenant, string accountingEntityCode)
         {
             var rowsWithAccountEntityId = autoReconcileRecordList
                             .Where(r => string.IsNullOrWhiteSpace(r.LedgerTransactionID) && string.IsNullOrWhiteSpace(r.JournalId) && !string.IsNullOrWhiteSpace(r.AccountingEntityId))
@@ -258,7 +260,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
                 var myJournalRepository = new JournalRepository(tenant);
                 var entityIdS = rowsWithAccountEntityId.Select(r => r.AccountingEntityId).ToList();
 
-                var qJournal = myJournalRepository.GetByJournalsAccountingEntityIds(entityIdS, tenant);
+                var qJournal = myJournalRepository.GetByJournalsAccountingEntityIds(entityIdS, tenant, accountingEntityCode);
                 var journalList = qJournal.ToList();
                 journalList.ForEach(j =>
                 {

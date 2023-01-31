@@ -82,6 +82,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     IsLoadDocumentsFilingListsComplete: boolean = false;
     IsLoadDocumentTypeListsComplete: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    IsApprovePendingDocumentsEnabled:boolean = false;
     constructor(public _documentTypeListService: DocumentTypeListService , public _imageLibraryService: ImageLibraryService,public entityArgs: EntityArgs, public _documentTypeListExtendedService: DocumentTypeListExtendedService, public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService) {
         super();
         this.ItemsSource = new ObservableCollection([]);
@@ -126,7 +127,10 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
         if (FeatureLocator.HasFeaturePermession("Shipment", "DOCSINDOWNLOADDOCUMENTS") && this.ObjectTableName == "Shipment") {
             this.DownloadAllVisibile = true;
         }
-            
+        this.IsApprovePendingDocumentsEnabled = this.CheckApprovePendingDocumentsAvailability();
+        if (this.IsApprovePendingDocumentsEnabled) {
+            this.ApprovePendingDocuments = !this.EntityPM.IsDocumentsNeedApprove;
+        }
 
         // Ayman:
         // we need this for Translation
@@ -275,7 +279,20 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     //    });
 
     //}
+    private approvePendingDocuments: boolean;
+    public get ApprovePendingDocuments() { return this.approvePendingDocuments; }
+    public set ApprovePendingDocuments(newValue: boolean) {
+        if (this.approvePendingDocuments != newValue) {
+            this.approvePendingDocuments = newValue;
+            this.EntityPM.IsDocumentsNeedApprove = !this.approvePendingDocuments;
+        }
+    }
 
+    CheckApprovePendingDocumentsAvailability() {
+        if (this.ObjectTableName == "Shipment" || ObjectsLocator.GlobalSetting.WorkEnvironment == "Logitude")
+            return true;
+        return false;
+    }
     LoadAllDocumentTypeList() {
 
         this.DocumentTypes = [];

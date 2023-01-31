@@ -16,7 +16,6 @@ namespace Logitude.Server.Tools.CustomFields
     public class EntityCustomFieldService
     {
         private string objectTableId = string.Empty;
-        private string entityId = string.Empty;
         private int tenant;
         private List<CustomFieldsMainObject> customFieldsMainObjects = null;
         private List<ObjectField> customObjectFields = null;
@@ -28,15 +27,14 @@ namespace Logitude.Server.Tools.CustomFields
 
         public EntityCustomFieldService(EntityCustomFieldServiceArgs entityCustomFieldServiceArgs)
         {
-            objectTableId = ObjectTableRepository.GetObjectTableByName(entityCustomFieldServiceArgs.ObjectTableName);
-            entityId = entityCustomFieldServiceArgs.EntityId;
+            objectTableId = new ObjectTableRepository(entityCustomFieldServiceArgs.Tenant).GetObjectTableIdByName(entityCustomFieldServiceArgs.ObjectTableName, entityCustomFieldServiceArgs.Tenant);
             tenant = entityCustomFieldServiceArgs.Tenant;
             objectTableName = entityCustomFieldServiceArgs.ObjectTableName;
             entities = entityCustomFieldServiceArgs.Entities;
             type = entityCustomFieldServiceArgs.Type;
             customFieldsMainObjectRepository = new CustomFieldsMainObjectRepository(tenant);
             customObjectFields = GetCustomObjectFields();
-            customFieldsMainObjects = GetCustomFieldsMainObjects();
+            customFieldsMainObjects = GetCustomFieldsMainObjects(entityCustomFieldServiceArgs.EntityId);
         }
 
 
@@ -44,13 +42,17 @@ namespace Logitude.Server.Tools.CustomFields
         {
             if (customObjectFields.Count() == 0 || entities == null || entities.Count() == 0) return;
             object entity = entities.FirstOrDefault();
-            CustomFieldsMainObject customFieldsMainObject = GetCustomFieldsMainObject();
+            string entityId = GetPropertyValue(entity, "Id").ToString();
+            CustomFieldsMainObject customFieldsMainObject = GetCustomFieldsMainObject(entityId);
             if (customFieldsMainObject == null) return;
             foreach (ObjectField customObjectField in customObjectFields)
             {
                 SetPropertyValue(customFieldsMainObject, customObjectField.FieldName, (GetPropertyValue(entity, customObjectField.FieldName) as CustomFieldClass)?.Value);
             }
-            customFieldsMainObjectRepository.Update(customFieldsMainObject);
+            if (IsEntityExist(entityId))
+            {
+                customFieldsMainObjectRepository.Update(customFieldsMainObject);
+            }
             customFieldsMainObjectRepository.SubmitChanges();
         }
 
@@ -65,7 +67,7 @@ namespace Logitude.Server.Tools.CustomFields
 
         private void SetCustomFieldValue(object entity)
         {
-            CustomFieldsMainObject customFieldsMainObject = GetCustomFieldsMainObject();
+            CustomFieldsMainObject customFieldsMainObject = GetCustomFieldsMainObject((GetPropertyValue(entity, "Id").ToString()));
             if (entity == null || customFieldsMainObject == null) return;
             foreach (ObjectField customObjectField in customObjectFields)
             {
@@ -82,14 +84,14 @@ namespace Logitude.Server.Tools.CustomFields
         }
 
 
-        private bool IsEntityExist()
+        private bool IsEntityExist(string entityId)
         {
             return customFieldsMainObjects.Where(d => d.EntityId == entityId).Any();
         }
 
-        private CustomFieldsMainObject GetCustomFieldsMainObject()
+        private CustomFieldsMainObject GetCustomFieldsMainObject(string entityId)
         {
-            if (IsEntityExist()) return customFieldsMainObjects.Where(d => d.EntityId == entityId).FirstOrDefault();
+            if (IsEntityExist(entityId)) return customFieldsMainObjects.Where(d => d.EntityId == entityId).FirstOrDefault();
           
             CustomFieldsMainObject customFieldsMainObject =  new CustomFieldsMainObject()
             {
@@ -109,7 +111,7 @@ namespace Logitude.Server.Tools.CustomFields
         }
 
 
-        private List<CustomFieldsMainObject> GetCustomFieldsMainObjects()
+        private List<CustomFieldsMainObject> GetCustomFieldsMainObjects(string entityId)
         {
             if (!string.IsNullOrEmpty(entityId))
             {
@@ -134,6 +136,7 @@ namespace Logitude.Server.Tools.CustomFields
             {
                 return prop.GetValue(obj);
             }
+
             return "";
         }
 

@@ -30,6 +30,8 @@ namespace Logitude.Infrastructure.Data.EntityLists
        public string ObjectTableName  { get; set; }
        [DataMember]
        public string ProfileId  { get; set; }
+       [DataMember]
+       public string ProfileCode  { get; set; }
    }
 
 }

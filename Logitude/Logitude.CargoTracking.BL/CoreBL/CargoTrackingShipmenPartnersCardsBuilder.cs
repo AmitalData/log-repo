@@ -221,14 +221,17 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             if (id != null)
             {
                 var name = GetProperty(shipmentPM, partnerCardMetaData.NameFieldName);
-                if (partnerCardMetaData.SkipIfEmpty && string.IsNullOrEmpty(name))
+                var address = GetPartnerAddress(id);
+                if (partnerCardMetaData.SkipIfEmpty && 
+                    (string.IsNullOrEmpty(name) || name.Equals("---")) &&
+                    (string.IsNullOrEmpty(address) || address.Equals(",")))
                     return;
 
                 partnerCards.Add(new PartnerCard()
                 {
                     Type = partnerCardMetaData.TypeName,
                     Name = name,
-                    Address = GetPartnerAddress(id),
+                    Address = address,
                     PhoneNumber = GetPartnerPhoneNumberFromAddress(id),
                     FaxNumber = GetPartnerFaxNumberFromAddress(id),
                 });

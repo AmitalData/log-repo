@@ -48,7 +48,15 @@ namespace Simplog.Data.InfrastructureModel
             this.Configuration.AutoDetectChangesEnabled = false;
             Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
         }
-
+        public static IWebFreightContext GetSecondaryContext(int tenant)
+        {
+            GlobalDB currentDb;
+            currentDb = GlobalDbHelper.GetGlobalDB(tenant);
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+            DbConnection connection = DatabaseInitializer.GetConnection(dbSeconderyConnectionInfo, null, null);
+            WebFreightContext context = new WebFreightContext(connection);
+            return context;
+        }
         public static IWebFreightContext GetContext(int tenant)
         {
             GlobalDB currentDb;
@@ -60,7 +68,7 @@ namespace Simplog.Data.InfrastructureModel
             string dbConnectionInfo = currentDb.DBConnection;
             string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
             WebFreightContext context = new WebFreightContext(connection);
 
             return context;
@@ -180,7 +188,7 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new ImageDetailMap());
             modelBuilder.Configurations.Add(new ImageLibraryMap());
 
-            
+
             modelBuilder.Configurations.Add(new IncotermMap());
             modelBuilder.Configurations.Add(new InsideShipmentPackageMap());
 
@@ -355,7 +363,7 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new TaskSchedulerHistoryMap());
             modelBuilder.Configurations.Add(new DWObjectTableMap());
             modelBuilder.Configurations.Add(new DWObjectFieldMap());
-            
+
 
             modelBuilder.Configurations.Add(new DWQueryMap());
             modelBuilder.Configurations.Add(new DWSubQueryMap());
@@ -749,7 +757,7 @@ namespace Simplog.Data.InfrastructureModel
             get;
             set;
         }
-    public IDbSet<ImageLibrary> ImageLibraries
+        public IDbSet<ImageLibrary> ImageLibraries
         {
             get;
             set;
@@ -885,9 +893,9 @@ namespace Simplog.Data.InfrastructureModel
         {
             //try
             //{
-                DetectChanges();
+            DetectChanges();
 
-                return base.SaveChanges();
+            return base.SaveChanges();
             //}
             //catch (DbEntityValidationException ex) //itzik
             //{

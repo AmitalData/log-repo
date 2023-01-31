@@ -21,6 +21,9 @@ import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 import { GlobalFilterItem } from 'DashboardModule/Components/Windows/Filter/GlobalFilter/GlobalFilterItem';
 import { AnalyticsFactsFieldsMetaDataPM } from 'DashboardModule/EntityPMs/AnalyticsFactsFieldsMetaDataPM';
 import { GlobalFilterComponent } from 'DashboardModule/Components/Windows/Filter/GlobalFilter/GlobalFilterComponent';
+import * as moment from 'moment';
+import { formatDate } from '@angular/common';
+//import { formatDate, Inject, LOCALE_ID } from '@angular/common';
 
 
 @Component({
@@ -52,6 +55,8 @@ export class DashboardTabComponent implements OnInit {
     public ItemsSource: DashboardList[] = [];
     public CanCopy: boolean;
     public FilterCount: number = 0;
+    public DateRangeLabel: string;
+    public DateRangeNumber: number;
 
     constructor() {
         this.dashboardPMService = new DashboardPMService();
@@ -409,16 +414,171 @@ export class DashboardTabComponent implements OnInit {
 
     ApplyFilters(filters: GlobalFilterItem[]) {
         this.GlobalFilters = filters;
-        for (const item of this.reactWidgetsLayout.lg) {
-            this.ApplyGlobalFilterToWidget(item);
+        this.SetDateRangeForCompareWithPrevious();
+        for (const widget of this.reactWidgetsLayout.lg) {
+            this.ApplyGlobalFilterToWidget(widget);
         }
     }
 
-    private ApplyGlobalFilterToWidget(item: ReactWidgetPM) {
-        var widgetGlobalFilters = this.GetWidgetGlobalFilters(item);
-        if (item.GlobalFilters == widgetGlobalFilters) return;
-        item.GlobalFilters = widgetGlobalFilters;
-        this.DashboardDataBinding.onEditWidget.next(item);
+    SetDateRangeForCompareWithPrevious() {
+        if (!this.GlobalFilters || this.GlobalFilters.length == 0) {
+            this.DateRangeLabel = "";
+            return;
+        }
+        var compareItem = this.GlobalFilters.find((x: any) => x.compareWithPrevious) as any;
+
+        if(!compareItem?.compareWithPrevious){
+            this.DateRangeLabel = "";
+            return;
+        }
+        if (compareItem?.Operator == "Between"){
+            this.DateRangeLabel = this.ParseDateFormat(compareItem.fieldValue) + " - " + this.ParseDateFormat(compareItem.fieldValue2) 
+            + " vs " + this.GetCompareFromDateForBetween(compareItem.fieldValue, compareItem.fieldValue2) + " - " + this.GetCompareToDateForBetween(compareItem.fieldValue);
+            
+        }
+
+        if (compareItem?.Operator == "Previous"){
+            let formattedDate = this.FormatDate(new Date(Date.now()));
+            this.DateRangeLabel = this.GetFromDateForPrevious(compareItem) + " - " + formattedDate
+             +" vs "+ this.GetCompareFromDateForPrevious(compareItem, this.GetFromDateForPrevious(compareItem)) 
+             + " - " + this.GetCompareToDateForPrevious(this.GetFromDateForPrevious(compareItem));
+        }
+    }
+    ParseDateFormat(date: string): string{
+        var year = date.substring(0,4);
+        var month  = date.substring(4, 6);
+        var day = date.substring(6,8);
+
+        var dateString = year + "/" + month + "/" + day;
+        return dateString;
+    }
+
+    GetCompareFromDateForBetween(fieldValue, fieldValue2) : string{
+        let dateFrom = new Date (this.ParseDateFormat(fieldValue));
+        let dateTo = new Date (this.ParseDateFormat(fieldValue2));
+
+        let numberOfDays = Math.floor((Date.UTC(dateTo.getFullYear(), dateTo.getMonth(), dateTo.getDate()) - Date.UTC(dateFrom.getFullYear(), dateFrom.getMonth(), dateFrom.getDate()) ) /(1000 * 60 * 60 * 24));
+
+        dateFrom.setDate(dateFrom.getDate() - numberOfDays);
+        let formattedDate = this.FormatDate(dateFrom);
+        return formattedDate;
+
+    }
+
+    GetCompareToDateForBetween(fieldValue): string {
+        let dateFrom = new Date (this.ParseDateFormat(fieldValue));
+        
+        dateFrom.setDate(dateFrom.getDate() - 1);
+        let formattedDate = this.FormatDate(dateFrom);
+        return formattedDate;
+
+    }
+
+    GetFromDateForPrevious(compareItem : any): string {
+        let dateFrom = new Date(Date.now());
+       
+        let stringPeriod = compareItem.fieldValue3;
+        var numberPeriod: number = +stringPeriod;
+        dateFrom = this.SetDateFromAccordingDateGroupCode(compareItem, dateFrom, numberPeriod);
+        let formattedDate = this.FormatDate(dateFrom);
+        return formattedDate;
+    }
+
+    GetCompareFromDateForPrevious(compareItem: any, dateFrom : any){
+        let dateFromHere = new Date(dateFrom);
+        let stringPeriod = compareItem.fieldValue3;
+        var numberPeriod: number = +stringPeriod;
+        dateFromHere = this.SetDateFromAccordingDateGroupCode(compareItem, dateFromHere, numberPeriod);
+        let formattedDate = this.FormatDate(dateFromHere);
+        return formattedDate;
+    }
+    SetDateFromAccordingDateGroupCode(compareItem: any, dateFromHere: Date, numberPeriod: number) : Date{
+        if(compareItem.dateGroupCode == 'Day'){
+            dateFromHere.setDate(dateFromHere.getDate() - numberPeriod);
+        }
+        if(compareItem.dateGroupCode == 'Week'){
+            dateFromHere.setDate(dateFromHere.getDate() - (7 * numberPeriod));
+        }
+        if(compareItem.dateGroupCode == 'Month'){
+            dateFromHere.setMonth(dateFromHere.getMonth() - numberPeriod);
+        }
+        if(compareItem.dateGroupCode == 'Quarter'){
+            dateFromHere.setMonth(dateFromHere.getMonth() - (3 * numberPeriod));
+        }
+        if(compareItem.dateGroupCode == 'Year'){
+            dateFromHere.setFullYear(dateFromHere.getFullYear() - numberPeriod);
+        }
+
+        return dateFromHere;
+    }
+
+    GetCompareToDateForPrevious(dateFrom: any) {
+        let dateFromHere = new Date (dateFrom);
+        
+        dateFromHere.setDate(dateFromHere.getDate() - 1);
+        let formattedDate = this.FormatDate(dateFromHere);
+        return formattedDate;   
+    }
+
+    FormatDate(date: Date): string{
+        const format = 'yyyy/MM/dd';
+        const locale = 'en-US';
+        const formattedDate = formatDate(date, format, locale);
+        return formattedDate;
+    }
+
+    private ApplyGlobalFilterToWidget(widget: ReactWidgetPM) {
+        var widgetGlobalFilters = this.GetWidgetGlobalFilters(widget);
+        if (!this.WidgetFilterChanged(widget, widget.GlobalFilters, widgetGlobalFilters)) return;
+        widget.GlobalFilters = widgetGlobalFilters;
+        this.DashboardDataBinding.onEditWidget.next(widget);
+    }
+
+    private WidgetFilterChanged(widget: ReactWidgetPM, oldFilterString: string, newFilterString: string): boolean {
+        if (oldFilterString == newFilterString) return false;
+        let oldFitlers: GlobalFilterItem[] = JSON.parse(oldFilterString ?? "[]") ?? [];
+        let newFilters: GlobalFilterItem[] = JSON.parse(newFilterString ?? "[]") ?? [];
+
+        var hasChanges = false;
+        if (oldFitlers.length != newFilters.length) return true;
+        newFilters.forEach(newFilterItem => {
+            hasChanges = this.WidgetFilterItemChanged(widget, oldFitlers, newFilterItem);
+            if (hasChanges) return;
+        });
+
+        if (!hasChanges) {
+            oldFitlers.forEach(oldFilterItem => {
+                this.WidgetFilterItemDeleted(newFilters, oldFilterItem);
+            });
+        }
+        return hasChanges;
+    }
+    WidgetFilterItemDeleted(newFilters: GlobalFilterItem[], oldFilterItem: GlobalFilterItem): boolean {
+        var newFilterItem = newFilters.find(x => x.FieldId == oldFilterItem.FieldId);
+        if (!newFilterItem) {
+            return true;
+        }
+        return false;
+    }
+
+    WidgetFilterItemChanged(widget: ReactWidgetPM, oldFilters: GlobalFilterItem[], newFilterItem: any): boolean {
+        var oldFilterItem = oldFilters.find(x => x.FieldId == newFilterItem.FieldId) as any;
+        if (!oldFilterItem) {
+            return true;
+        }
+
+        if (oldFilterItem.fieldValue != newFilterItem.fieldValue ||
+            oldFilterItem.fieldValue2 != newFilterItem.fieldValue2 ||
+            oldFilterItem.fieldValue3 != newFilterItem.fieldValue3 ||
+            oldFilterItem.dateGroupCode != newFilterItem.dateGroupCode ||
+            oldFilterItem.Operator != newFilterItem.Operator) {
+            return true;
+        }
+
+        if (widget.TypeCode == 'kpi' && oldFilterItem.compareWithPrevious != newFilterItem.compareWithPrevious) {
+            return true;
+        }
+        return false;
     }
 
     GetWidgetGlobalFilters(widget: ReactWidgetPM): string {
@@ -430,7 +590,7 @@ export class DashboardTabComponent implements OnInit {
         });
         if (!widgetFilters || widgetFilters.length == 0) return null;
         return JSON.stringify(widgetFilters, function (key, val) {
-            if (key !== "Component") return val;
+            if (key !== "Component" && key !== "UIProperties") return val;
         });
     }
 

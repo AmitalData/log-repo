@@ -8,16 +8,19 @@ import { WorkFlowPM } from "Workflow/EntityPMs/WorkFlowPM";
 import { WorkFlowPMService } from "Workflow/Services/StandardPMs/WorkFlowPMService";
 import { ServiceResponse } from "Infrastructure/DataContracts/ServiceResponse";
 import { ObjectFieldListService } from "Infrastructure/Services/StandardLists/ObjectFieldListService";
-import { ApiQueryFiltersBuilder } from "Workflow/Models/ApiQueryFiltersBuilder";
-import { FlowReader } from "Workflow/Models/FlowReader";
-import { ObjectFields } from "Workflow/Models/ObjectFields";
+import { ApiQueryFiltersBuilder } from "Workflow/Utilities/ApiQueryFiltersBuilder";
+import { FlowReader } from "Workflow/Utilities/FlowReader";
+import { ObjectFields } from "Workflow/Utilities/ObjectFields";
 import { MessageWindow } from "Controls/Windows/MessageWindow";
-import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
-import { Formatter } from "Workflow/Models/Formatter";
+import { Formatter } from "Workflow/Utilities/Formatter";
 import { EntityArgs } from "Infrastructure/DataContracts/EntityArgs";
 import { AppTool } from "Infrastructure/Tools";
 import { WorkFlowVersionPM } from "Workflow/EntityPMs/WorkFlowVersionPM";
 import { ConfirmWindow } from "Controls/Windows/ConfirmWindow";
+import { FieldTypes } from "Workflow/Constants/FieldTypes";
+import { ObjectTables } from "Workflow/Utilities/ObjectTables";
+import { ObjectTableListService } from "Infrastructure/Services/StandardLists/ObjectTableListService";
+import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 
 @Component({
     templateUrl: "./WorkflowBuilderComponent.html"
@@ -40,7 +43,6 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     public ShowBusyIndicator: boolean = false;
     public BusyIndicatorWidth: number = 200;
     public ValidationErrorsList: string[] = [];
-    public FlowObjectFields: ObjectFieldList[] = [];
     public ReturnPropertiesDataEventKey: string = "returnPropertiesDataEventKey_" + (Date.now())?.toString();
     public returnDeleteNodeConfirmationEventKey: string = "returnDeleteNodeConfirmationEventKey_" + (Date.now())?.toString();
     public HasChanges = false;
@@ -144,9 +146,13 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         this.WorkflowName = this.EntityPM.Name;
         this.WorkflowEntity = this.ValidVersion.Entity;
         this.renderReactFlowModeler();
-        this.loadObjectFields();
-        this.entityArgs.SendMessage("RefreshWorkflowShortTitle");
-        this.entityArgs.SendMessage("RefreshWorkflowButtons");
+
+        this.loadObjectTablesAndFields();
+
+
+        // this.entityArgs.SendMessage("RefreshWorkflowShortTitle");
+        // this.entityArgs.SendMessage("RefreshWorkflowButtons");
+
     }
 
     setCurrentDisplayedVersion(workflowVersion: WorkFlowVersionPM) {
@@ -186,21 +192,40 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         }
     }
 
-    loadObjectFields() {
-        if (ObjectFields.isLoaded()) {
-            this.FlowObjectFields = ObjectFields.getAll();
-            this.stopLoading();
-        } else {
-            let objectFieldListService = new ObjectFieldListService();
-            let apiQueryFilters = ApiQueryFiltersBuilder.getObjectFieldsApiQueryFilters(null, null, null, true);
-            objectFieldListService.getByFilters(apiQueryFilters).subscribe((serviceResponse: ServiceResponse) => {
-                if (!serviceResponse.HasError) {
-                    ObjectFields.set(serviceResponse.Result);
-                    this.FlowObjectFields = ObjectFields.getAll();
+    loadObjectTablesAndFields() {
+        let isLoadedBefore = ObjectTables.isLoaded();
+        let objectTableListService = new ObjectTableListService();
+        let apiQueryFilters = ApiQueryFiltersBuilder.getObjectTablesApiQueryFilters(null, true, (isLoadedBefore ? true : null));
+        objectTableListService.getByFilters(apiQueryFilters).subscribe((serviceResponse: ServiceResponse) => {
+            if (!serviceResponse.HasError) {
+                let objectTables = serviceResponse.Result.filter((o: any) => o.Tenant === 0 || o.Tenant === (SessionLocator.Tenant || 0));
+                if (isLoadedBefore) {
+                    ObjectTables.resetCustom(objectTables);
+                } else {
+                    ObjectTables.set(objectTables);
                 }
-                this.stopLoading();
-            });
-        }
+                ObjectTables.setLoaded();
+            }
+            this.loadObjectFields();
+        });
+    }
+
+    loadObjectFields() {
+        let isLoadedBefore = ObjectFields.isLoaded();
+        let objectFieldListService = new ObjectFieldListService();
+        let apiQueryFilters = ApiQueryFiltersBuilder.getObjectFieldsApiQueryFilters(null, null, null, true, (isLoadedBefore ? true : null));
+        objectFieldListService.getByFilters(apiQueryFilters).subscribe((serviceResponse: ServiceResponse) => {
+            if (!serviceResponse.HasError) {
+                let objectFields = serviceResponse.Result.filter((o: any) => o.Tenant === 0 || o.Tenant === (SessionLocator.Tenant || 0));
+                if (isLoadedBefore) {
+                    ObjectFields.resetCustom(objectFields);
+                } else {
+                    ObjectFields.set(objectFields);
+                }
+                ObjectFields.setLoaded();
+            }
+            this.stopLoading();
+        });
     }
 
     flowChangedEvent(event: any) {
@@ -234,6 +259,8 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
                 version.Entity = startNode ? (startNode.data["entity"] || null) : null;
                 version.Trigger = startNode ? (startNode.data["trigger"] || null) : null;
                 version.FlowJson = JSON.stringify(flowObject);
+
+                this.checkIfFlowActionsAreValid(flowObject, version.Entity,version.Trigger);
             }
         }
     }
@@ -244,134 +271,119 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         }
     }
 
-    confirmDeleteNodeEvent(nodeToDelete: any) {
-        if (nodeToDelete) {
-            let validateNodeDelete = this.validateNodeDelete(nodeToDelete);
-            if (validateNodeDelete.isValid) {
-                this.showConfirmationMessageForDeleteNode();
+    confirmDeleteNodeEvent(deletedNode: any) {
+        if (deletedNode) {
+            let deletedNodeDisplayName = this.getNodeDisplayName(deletedNode);
+            let usedInNodes = this.validateDeleteNode(deletedNode);
+            if (usedInNodes && usedInNodes.length === 0) {
+                this.handleDeleteNode(deletedNodeDisplayName);
             } else {
-                let nodeNameToDelete = nodeToDelete.data["label"] || nodeToDelete.id;
-                this.showDeleteNodeError(nodeNameToDelete, validateNodeDelete.usedInNodes);
+                this.showDeleteNodeWarning(deletedNodeDisplayName, usedInNodes);
             }
         }
     }
 
-    showConfirmationMessageForDeleteNode() {
-        var confirmWindow = new ConfirmWindow();
-        confirmWindow.Width = 450;
-        confirmWindow.Height = 190;
-        confirmWindow.ShowNoButton = false
+    handleDeleteNode(deletedNodeName: string) {
+        let confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 400;
+        confirmWindow.Height = 200;
+        confirmWindow.ShowNoButton = false;
         confirmWindow.ShowCancelButton = true;
         confirmWindow.YesButtonText = "Ok";
-        confirmWindow.Title = "Delete Element"
-        confirmWindow.Show("Are you sure you want to delete this element?");
-
-        confirmWindow.WindowClosed.subscribe((event: any) => {
+        confirmWindow.Title = "Delete Element";
+        confirmWindow.Show("Are you sure to delete element " + deletedNodeName + " ?");
+        confirmWindow.WindowClosed.subscribe(() => {
             if (confirmWindow.Yes) {
                 document.dispatchEvent(new CustomEvent(this.returnDeleteNodeConfirmationEventKey, { detail: true }));
             }
         });
     }
 
-    showDeleteNodeError(nodeNameToDelete: string, usedInNodes: string[]) {
+    showDeleteNodeWarning(deletedNodeName: string, usedInNodes: string[] | null) {
         let deleteNodeErrorWindow = new LogitudeWindow();
         let deleteNodeErrorWindowArgs: any = {
-            NodeNameToDelete: nodeNameToDelete,
+            NodeNameToDelete: deletedNodeName,
             UsedInNodes: usedInNodes
         };
-        deleteNodeErrorWindow.Width = 460;
-        deleteNodeErrorWindow.Height = 220;
+        deleteNodeErrorWindow.Width = 500;
+        deleteNodeErrorWindow.Height = 300;
         deleteNodeErrorWindow.RTL = false;
-        deleteNodeErrorWindow.Title = "Can't delete " + nodeNameToDelete;
+        deleteNodeErrorWindow.Title = "Cannot delete " + deletedNodeName;
         deleteNodeErrorWindow.WindowArgs = deleteNodeErrorWindowArgs;
-
         deleteNodeErrorWindow.Show("./Workflow/Components/Messages/DeleteNodeWarningComponent");
-        deleteNodeErrorWindow.WindowClosed.subscribe((_event: any) => { });
     }
 
-    validateNodeDelete(nodeToDelete: any) {
-        let flowObject = this.getCurrentFlowObject();
-        if (flowObject) {
-            let isValid = true;
-            let usedInNodes: string[] = [];
-            let getRecordNodes = FlowReader.getNodes(flowObject, "getRecordNode");
-            let conditionNodes = FlowReader.getNodes(flowObject, "conditionNode");
-            let setValueNodes = FlowReader.getNodes(flowObject, "setValueNode");
-            let createRecordNodes = FlowReader.getNodes(flowObject, "createRecordNode");
-            let loopNodes = FlowReader.getNodes(flowObject, "loopNode");
-
-            let nodeUsedData = this.getNodeUsedData(nodeToDelete);
-            if (nodeUsedData) {
-                let getRecordStatus = this.validateNodesUsedData(getRecordNodes, "conditions", nodeUsedData);
-                let conditionStatus = this.validateNodesUsedData(conditionNodes, "conditions", nodeUsedData);
-                let setValueStatus = this.validateNodesUsedData(setValueNodes, "setValues", nodeUsedData);
-                let createRecordStatus = this.validateNodesUsedData(createRecordNodes, "setValues", nodeUsedData);
-                let loopStatus = this.validateLoopNodesUsedData(loopNodes, nodeUsedData);
-                usedInNodes = usedInNodes
-                    .concat(getRecordStatus.usedInNodes)
-                    .concat(conditionStatus.usedInNodes)
-                    .concat(setValueStatus.usedInNodes)
-                    .concat(createRecordStatus.usedInNodes)
-                    .concat(loopStatus.usedInNodes);
-
-                usedInNodes = usedInNodes.filter((v, i, a) => a.indexOf(v) === i);
-                isValid = getRecordStatus.isValid && conditionStatus.isValid && setValueStatus.isValid && createRecordStatus.isValid && loopStatus.isValid;
-                return { isValid, usedInNodes };
+    validateDeleteNode(deletedNode: any) {
+        if (deletedNode) {
+            let flowObject = this.getCurrentFlowObject();
+            if (flowObject) {
+                let usedInNodes = [];
+                FlowReader.getNodes(flowObject).filter((n: any) => n.id !== deletedNode.id).forEach((node: any) => {
+                    if (node && node.data) {
+                        let clonedNodeData = JSON.parse(JSON.stringify(node.data));
+                        let clonedNodeDataJson = JSON.stringify(clonedNodeData);
+                        let usedFromDataValues = clonedNodeDataJson.match(/UsedFrom\":\"(.*?)\"/g);
+                        if (usedFromDataValues && usedFromDataValues.length > 0) {
+                            let usedFromElements = usedFromDataValues.map(v => v ? v.replace("UsedFrom\":\"", "").replace("\"", "") : null).filter(v => v !== null);
+                            if (usedFromElements.some(elementId => elementId === deletedNode.id)) {
+                                let usedNode = this.getNodeDisplayName(node);
+                                usedInNodes.push(usedNode);
+                            }
+                        }
+                    }
+                });
+                return usedInNodes;
             }
-
-            return { isValid: true, usedInNodes: [] };
-        }
-        return { isValid: false, usedInNodes: [] };
-    }
-
-    getNodeUsedData(node: any) {
-        if (node.type === "declareVariableNode") {
-            let name = node.data["name"];
-            return name ? ("declaredvariables_" + name) : null;
-        } else if (node.type === "getRecordNode") {
-            let name = node.data["name"];
-            return name ? (Formatter.getCodeFromName(name) + "_") : null;
-        } else if (node.type === "loopNode") {
-            let name = node.data["name"];
-            return name ? (Formatter.getCodeFromName(name) + "_") : null;
         }
         return null;
     }
 
-    validateNodesUsedData(nodes: any, dataKey: string, nodeUsedData: string) {
-        let isValid = true;
-        let usedInNodes: string[] = []
-        nodes.forEach((node: any) => {
-            let nodeLabel = node.data["label"] || node.id;
-            let nodeDataValues = node.data[dataKey] || [];
-            nodeDataValues.forEach((dataValue: any) => {
-                let value = dataValue["value"] || null;
-                let field = dataValue["field"] || null;
-                if (value && field && (value.startsWith(nodeUsedData) || field.startsWith(nodeUsedData))) {
-                    isValid = false;
-                    usedInNodes.push(nodeLabel);
-                }
-            });
-        });
-        return { isValid, usedInNodes };
+    getNodeCode(node: any) {
+        if (node) {
+            switch (node.type) {
+                case "getRecordNode":
+                case "collectionFilterNode":
+                case "loopNode":
+                    return Formatter.getCodeFromName(node.data["name"]);
+                case "declareVariableNode":
+                    let variableCode = node.data["variableCode"] || null;
+                    let variableType = node.data["variableType"] || null;
+                    if (variableCode && variableType) {
+                        let isRecordVariableType = variableType.toString().startsWith(FieldTypes.Record);
+                        return (isRecordVariableType ? "declaredrecordvariables" : "declaredvariables") + "_" + variableCode;
+                    }
+                    return null;
+                default:
+                    return null;
+            }
+        }
+        return null;
     }
 
-    validateLoopNodesUsedData(nodes: any, nodeUsedData: string) {
-        let isValid = true;
-        let usedInNodes: string[] = []
-        nodes.forEach((node: any) => {
-            let nodeLabel = node.data["label"] || node.id;
-            let collectionVariable = node.data["collectionVariable"] || null;
-            if (collectionVariable && collectionVariable === nodeUsedData) {
-                isValid = false;
-                usedInNodes.push(nodeLabel);
-            }
-        });
-        return { isValid, usedInNodes };
+    getNodeDisplayName(node: any) {
+        return node && node.data ? (node.data["label"] || node.data["name"] || "Unknown") : "Unknown";
     }
 
     setReactFlowInstance(reactFlowInstance: any) {
         this.ReactFlowInstance = reactFlowInstance;
+        this.checkIfFlowActionsAreValid(this.getCurrentFlowObject(), this.ValidVersion.Entity,this.ValidVersion.Trigger);
+    }
+
+    checkIfFlowActionsAreValid(flowObject: any, entity: any, trigger: any) {
+        var addedNode = flowObject.nodes.filter(e => e.type != "startNode" && e.type != "connectorNode" && e.type != "endNode")
+        if (entity && trigger && addedNode.length > 0) {
+            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, IsActiveDisabled: false }
+            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, IsNewVersionDisabled: false }
+        } else if (entity && trigger && addedNode.length == 0) {
+            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, IsActiveDisabled: true }
+            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, IsNewVersionDisabled: false }
+        } else {
+            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, IsActiveDisabled: true }
+            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, IsNewVersionDisabled: true }
+        }
+
+        this.entityArgs.SendMessage("RefreshWorkflowButtons");
+        this.entityArgs.SendMessage("RefreshWorkflowShortTitle");
     }
 
     openStartConfiguration() {
@@ -431,8 +443,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
             Data: JSON.parse(JSON.stringify(openPropertiesEventObject.nodeData)),
             WorkflowEntity: this.WorkflowEntity,
             FlowObject: this.getCurrentFlowObject(),
-            CurrentNodeId: openPropertiesEventObject.nodeId,
-            FlowObjectFields: this.FlowObjectFields
+            CurrentNodeId: openPropertiesEventObject.nodeId
         };
         propertiesWindow.Height = openPropertiesEventObject.nodeType == "declareVariableNode" ? 320 : 850;
         propertiesWindow.Width = 985;

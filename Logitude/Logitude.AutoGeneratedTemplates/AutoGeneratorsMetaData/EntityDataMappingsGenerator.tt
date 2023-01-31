@@ -434,7 +434,7 @@ namespace <#= mapnamespacestring #>
 		 if(entity.ApplyGenericCustomFields.ToString() == "true"){
 		 #>
 
-			new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "<#=tableName #>", Tenant = entityPM.Tenant, Type = "PM", Entities = new List<<#=tableName #>PM> { entityPM }.Cast<object>().ToList() }).Update();
+			new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "<#=tableName #>", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<<#=tableName #>PM> { entityPM }.Cast<object>().ToList() }).Update();
 		 <#+
 		 }
 		 if(entity.SupportSubEntity.ToString() == "true"){

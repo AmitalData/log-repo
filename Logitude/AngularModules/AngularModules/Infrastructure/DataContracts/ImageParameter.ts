@@ -1,4 +1,4 @@
-﻿
+
 export class ImageParameter {
 
 
@@ -34,7 +34,8 @@ export class ImageParameter {
     public Position: number;
     public Result: string;
     public KeepOriginalSize:boolean;
-
+    public FileLocation: string = "";
+    public ForceCreateDocument: boolean;
     constructor() {
      
     }
