@@ -316,6 +316,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     _DeclarationPM.PaymentStatusCode = _PaymentOrderPM.PaymentStatusCode;
                     _DeclarationPM.PaymentOrderNumber = _PaymentOrderPM.PaymentNumber;
                     _DeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                    if (_DeclarationPM.PaymentDate == null && customResponse.ResponseContentHeader.TransmitionDateTime != null)
+                    {
+                        _DeclarationPM.PaymentDate = customResponse.ResponseContentHeader.TransmitionDateTime;
+                    }
                     LogMessagingUtil.Instance.AppendLine("Before DeclarationUpdateService: _DeclarationPM.PaymentStatusCode= " + _DeclarationPM.PaymentStatusCode + " _DeclarationPM.PaymentOrderNumber= " + _DeclarationPM.PaymentOrderNumber);
                     try
                     {
@@ -339,8 +343,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 else
                 {
-                    LogMessagingUtil.Instance.AppendLine("NO LP2UB! " + "_PaymentOrderPM.PaymentProcessCode= "+ _PaymentOrderPM.PaymentProcessCode+ " _PaymentOrderPM.PaymentStatusCode= "+ _PaymentOrderPM.PaymentStatusCode);
+                    LogMessagingUtil.Instance.AppendLine("NO LP2UB! " + "_PaymentOrderPM.PaymentProcessCode= " + _PaymentOrderPM.PaymentProcessCode + " _PaymentOrderPM.PaymentStatusCode= " + _PaymentOrderPM.PaymentStatusCode);
                 }
+
+               
+
             }
             _PaymentOrderPM.CustomsRequestsSheetId = requestParams.CustomsRequestsSheetId;
             paymentOrderUpdateService.Update(_PaymentOrderPM, true);
