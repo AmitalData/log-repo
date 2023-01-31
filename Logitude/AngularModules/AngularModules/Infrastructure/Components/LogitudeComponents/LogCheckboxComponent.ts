@@ -1,5 +1,5 @@
 declare var window: any;
-import {Directive, ElementRef, Input, Output, Component, EventEmitter, OnInit, OnChanges, OnDestroy} from '@angular/core';
+import {Directive, ElementRef, Input, Output, Component, EventEmitter, OnInit, OnChanges, OnDestroy, ChangeDetectorRef} from '@angular/core';
 import {BaseComponent} from './BaseComponent';
 import {UIProperty, UIProperties, UIPropertyArgs} from './UIProperties';
 import {ObjectFieldPM} from '../../EntityPMs/ObjectFieldPM';
@@ -141,7 +141,7 @@ export class LogCheckboxComponent implements OnInit, OnDestroy {
    
     @Input() LogitudeForm: FormGroup;
     @Output() ValueChanged = new EventEmitter();
-    constructor() {
+    constructor(private cd: ChangeDetectorRef) {
         this.show = false;
     }
 
@@ -175,13 +175,25 @@ export class LogCheckboxComponent implements OnInit, OnDestroy {
         else {
             baseIdCombination = this.ObjectFieldName;
         }
+        
         if (this.CheckIfExists(baseIdCombination)) {
             this.counterId = ControlsIdCounter.GetNextControlIdCounter(baseIdCombination);
+            if (this.counterId != null) {
+                baseIdCombination = baseIdCombination + '_' + this.counterId.toString();
+            }
+
+            setTimeout(() => { 
+                if (!this.CheckIfExists(baseIdCombination.replace('_' + this.counterId.toString(),''))) {
+                    baseIdCombination = baseIdCombination.replace('_' + this.counterId.toString(),'');
+                    this.SetControlIds(baseIdCombination);
+                    this.cd.detectChanges();
+                }
+            }, 1000) 
         }
 
-        if (this.counterId != null) {
-            baseIdCombination = baseIdCombination + '_' + this.counterId.toString();
-        }
+        // if (this.counterId != null) {
+        //     baseIdCombination = baseIdCombination + '_' + this.counterId.toString();
+        // }
 
         this.SetControlIds(baseIdCombination);
         //if (this.FocusOnMe) {// it means it is inside a grid.
