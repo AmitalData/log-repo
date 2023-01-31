@@ -397,11 +397,6 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         isAllShipments = true;
                         queryableData = queryableData.Where(a => a.ShipmentLevelCode != "C" 
                                                             && a.IsCancelled == false);
-
-                        foreach (var shipment in queryableData)
-                        {
-                            shipment.IsCustomerArchived = true;
-                        }
                     }
 
                     if (item.FieldName == "IsCustomerArchived")
