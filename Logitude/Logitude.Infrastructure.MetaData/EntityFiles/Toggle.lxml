@@ -42,7 +42,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;58dd&quot;"
+  Code="&quot;385b&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -825,11 +825,6 @@
       SearchFields="&quot;QMU,Quote Markup Currency&quot;"
       Name="&quot;Quote Markup Currency&quot;"
       Description="&quot;Quote Markup Currency&quot;" />
-    <Record
-      Code="&quot;DPB&quot;"
-      Name="&quot;Digital Portal Branding&quot;"
-      Description="&quot;Digital Portal Branding Tab&quot;"
-      SearchFields="&quot;DPB,Digital Portal Branding&quot;" />
     <Record
       Code="&quot;ARS&quot;"
       Name="&quot;ARInvoice Sent Icon&quot;"

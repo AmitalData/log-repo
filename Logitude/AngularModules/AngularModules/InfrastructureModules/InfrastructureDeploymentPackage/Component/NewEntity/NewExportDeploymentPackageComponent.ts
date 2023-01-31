@@ -15,7 +15,7 @@ export class NewExportDeploymentPackageComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public DataContext: NewExportDeploymentPackageComponent = this;
     public ObjectTableName: string = "DeploymentPackage";
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.UIProperties.SetRequired("Code", this.ObjectTableName, true);
@@ -80,4 +80,7 @@ export class NewExportDeploymentPackageComponent extends BaseComponent {
 
     }
 
+    public CancelButtonClicked() {
+        this.CurrentSession.CloseCurrentWindow();
+    }
 }

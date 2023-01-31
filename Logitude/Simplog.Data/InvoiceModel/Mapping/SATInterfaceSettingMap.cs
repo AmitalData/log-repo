@@ -46,6 +46,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.IsARInvoiceTransferEnabled).HasColumnName("IsARInvoiceTransferEnabled");
             this.Property(t => t.IsCartaPorteTransferEnabled).HasColumnName("IsCartaPorteTransferEnabled");
             this.Property(t => t.SATCompanyName).HasColumnName("SATCompanyName");
+            this.Property(t => t.TransferExpenseCharges).HasColumnName("TransferExpenseCharges");
 
 
 

@@ -970,6 +970,14 @@
       <Project>{68f57541-574a-4ee9-b3fe-8c535c74456a}</Project>
       <Name>Logitude.TimeManagement.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logitude.WarehouseLib.BL\Logitude.WarehouseLib.BL.csproj">
+      <Project>{7030AB59-9900-4AB9-B37C-59D424576E85}</Project>
+      <Name>Logitude.WarehouseLib.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.WarehouseLib.Data\Logitude.WarehouseLib.Data.csproj">
+      <Project>{54A12A5C-659C-4410-A5E7-949ACD43F3A5}</Project>
+      <Name>Logitude.WarehouseLib.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
       <Name>Simplog.Data</Name>

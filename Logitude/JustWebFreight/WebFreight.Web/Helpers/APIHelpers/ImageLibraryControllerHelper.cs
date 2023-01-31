@@ -59,12 +59,12 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     imageDetailRep.SubmitChanges();
                 }
                 imagedetailid = imagedetail.Id;
-                result = uploaderService.UploadFile(filter.FileName, filter.buffer, filter.FileSize, filter.SentSize, blockIdlist, filter.BufferNumber, null, filter.Tenant, "images", null);
+                result = uploaderService.UploadFile(filter.FileName, filter.buffer, filter.FileSize, filter.SentSize, blockIdlist, filter.BufferNumber, null, filter.Tenant, "images", null,false);
             }
             #region Company Logos
             else if (filter.UploadMode == "CompanyLogos" || string.IsNullOrEmpty(filter.UploadMode))
             {
-                result = uploaderService.UploadFile(filter.FileName, filter.buffer, filter.FileSize, filter.SentSize, blockIdlist, filter.BufferNumber, null, filter.Tenant, "logos", null);
+                result = uploaderService.UploadFile(filter.FileName, filter.buffer, filter.FileSize, filter.SentSize, blockIdlist, filter.BufferNumber, null, filter.Tenant, "logos", null,false);
             }
             return result;
             #endregion
@@ -96,7 +96,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 filter.IsFirstTry = false;
                 filter.BlocksNumber = Math.Ceiling(Convert.ToDouble(filter.FileSize) / filter.Buffersize);
             }
-            filter.Result = uploaderService.UploadFile(filter.EncodedFileName + "." + filter.Extension, filter.buffer, filter.FileSize, filter.SentSize, filter.BlockIdsList.ToArray(), filter.BufferNumber, filter.EntityId, filter.Tenant, "", filter.FileName);
+            filter.Result = uploaderService.UploadFile(filter.EncodedFileName + "." + filter.Extension, filter.buffer, filter.FileSize, filter.SentSize, filter.BlockIdsList.ToArray(), filter.BufferNumber, filter.EntityId, filter.Tenant, filter.FileLocation, filter.FileName, filter.ForceCreateDocument);
             filter.buffer = null;
             return filter;
 

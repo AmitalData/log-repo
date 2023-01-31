@@ -1752,7 +1752,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         }
 
         if (this.LocalFilterFields && this.LocalFilterFields.length > 0 && searchText && searchText.length >= 4 && this.bufferData && this.bufferData.length > 0) {
-            this.ItemsSource = this.bufferData.filter( x => this.LocalFilterFields.some(fl => x[fl].toLowerCase().startsWith(searchText.toLowerCase())));
+            const arr =  Object.assign([], this.bufferData);
+            this.ItemsSource = arr.filter( x => this.LocalFilterFields.some(fl => x[fl].toLowerCase().startsWith(searchText.toLowerCase())));
                 
             if(this.ItemsSource && this.ItemsSource.length > 0) {
                 return;
@@ -3391,7 +3392,9 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     }
 
                     this.ItemsSourceStatic = this.ItemsSource;
-                    this.HighlightSelectedValue();
+                    if(!(this.LocalFilterFields && this.LocalFilterFields.length > 0)) {
+                        this.HighlightSelectedValue();
+                    }
 
                     //turn loading flag off
                     this.isLoading = false;

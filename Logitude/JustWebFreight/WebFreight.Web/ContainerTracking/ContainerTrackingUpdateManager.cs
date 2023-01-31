@@ -33,6 +33,8 @@ namespace WebFreight.Web.ContainerTracking
         private bool isUpdatingShipmentDateFields = false;
         private bool isUpdatingEmptyLeg = false;
         private Tenant myTenant;
+        private readonly ContainerTrackingHelper containerTrackingHelper;
+
         public ContainerTrackingUpdateManager(ContainerUpdatedFields containerUpdatedFields)
         {
             this.containerUpdatedFields = containerUpdatedFields;
@@ -42,8 +44,9 @@ namespace WebFreight.Web.ContainerTracking
             this.portRepository = new PortRepository(tenant);
             this.portQuery = new PortQuery(portRepository);
             this.vesselRepository = new VesselRepository(tenant);
-            this.tenantRepository = new TenantRepository(tenant);            
-        }       
+            this.tenantRepository = new TenantRepository(tenant);
+            containerTrackingHelper = new ContainerTrackingHelper(tenant);
+        }
         public void Update(bool isUpatingContainer, bool isUpdatingShipment)
         {
             if (!isUpatingContainer) return;
@@ -107,7 +110,7 @@ namespace WebFreight.Web.ContainerTracking
         }
         private void MapVizionPreCarriageDates()
         {
-            if (containerPM.PreCarriageLocationPortId != shipmentPM.PreCarriageFromPortId) return;
+            if (!containerTrackingHelper.IsSameLocationUsingId(containerPM.PreCarriageLocationPortId, shipmentPM.PreCarriageFromPortId)) return;
             if (containerUpdatedFields.OriginLocation == null) return;
 
             string portId = this.GetPortId(containerUpdatedFields.OriginLocation);
@@ -115,6 +118,9 @@ namespace WebFreight.Web.ContainerTracking
 
             containerPM.PreCarriageETD = containerUpdatedFields.EstimatedOriginPickup;
             containerPM.PreCarriageATD = containerUpdatedFields.ActualOriginPickup;
+
+            shipmentPM.PreCarriageETD = containerPM.PreCarriageETD;
+            shipmentPM.PreCarriageATD = shipmentPM.PreCarriageATD ?? containerPM.PreCarriageATD;
         }
 
         private void MapVizionOnCarriage()
@@ -134,7 +140,7 @@ namespace WebFreight.Web.ContainerTracking
         }
         private void MapVizionOnCarriageDates()
         {
-            if (containerPM.OnCarriageLocationPortId != shipmentPM.OnCarriageToPortId) return;
+            if (!containerTrackingHelper.IsSameLocationUsingId(containerPM.OnCarriageLocationPortId, shipmentPM.OnCarriageToPortId)) return;
             if (containerUpdatedFields.LIFLocation == null) return;
 
             string portId = this.GetPortId(containerUpdatedFields.LIFLocation);
@@ -142,6 +148,9 @@ namespace WebFreight.Web.ContainerTracking
 
             containerPM.OnCarriageETA = containerUpdatedFields.OnCarriageETA;
             containerPM.OnCarriageATA = containerUpdatedFields.OnCarriageATA;
+
+            shipmentPM.OnCarriageETA = containerPM.OnCarriageETA;
+            shipmentPM.OnCarriageATA = shipmentPM.OnCarriageATA ?? containerPM.OnCarriageATA;
         }
 
         private Port GetPortForVizion(Location portLocation)
@@ -149,7 +158,7 @@ namespace WebFreight.Web.ContainerTracking
             Port port = null;
             if (!string.IsNullOrEmpty(portLocation.unlocode))
                 port = GetPort(portLocation.unlocode);
-            if(port != null)
+            if (port != null)
                 return port;
             var name1 = portLocation.name;
             if (!string.IsNullOrEmpty(name1) && portLocation.name.Contains(','))
@@ -160,11 +169,11 @@ namespace WebFreight.Web.ContainerTracking
         }
         private Port GetPortByNames(string name1, string name2)
         {
-            var port = portRepository.GetOceanPortByNames(name1, name2,containerPM.Tenant);
+            var port = portRepository.GetOceanPortByNames(name1, name2, containerPM.Tenant);
             if (port != null)
                 return port;
             port = portRepository.GetOceanPortByNames(name1, name2, 0);
-            if(port == null)
+            if (port == null)
                 return null;
             var newPort = portQuery.GetPortCopyToCurrentTenantPoco(port.Id, tenant);
             return newPort;
@@ -215,7 +224,7 @@ namespace WebFreight.Web.ContainerTracking
             containerPM.ActualPOLLoaded = containerUpdatedFields.ActualPOLLoaded;
             containerPM.EstimatedPOLVesselDeparture = containerUpdatedFields.EstimatedPOLVesselDeparture;
             containerPM.ActualPOLVesselDeparture = containerUpdatedFields.ActualPOLVesselDeparture;
-            containerPM.TransshipmentCount = containerUpdatedFields.TransshipmentCount; 
+            containerPM.TransshipmentCount = containerUpdatedFields.TransshipmentCount;
             containerPM.Leg5Vessel = containerUpdatedFields.Leg5Vessel;
             containerPM.Leg5VesselId = containerUpdatedFields.Leg5VesselId;
             containerPM.Leg5Voyage = containerUpdatedFields.Leg5Voyage;
@@ -251,8 +260,8 @@ namespace WebFreight.Web.ContainerTracking
         }
         private void MapTransshipments()
         {
-            if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.Vizion)            
-                this.MapVizionTransshipments();                
+            if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.Vizion)
+                this.MapVizionTransshipments();
             else if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.OceanInsights)
                 this.MapOITransshipments();
         }
@@ -339,11 +348,12 @@ namespace WebFreight.Web.ContainerTracking
                 this.FillFieldsNewValues("Leg" + transshipmentLegIndex + "VesselId", vessel?.Id, containerPM);
                 this.FillFieldsNewValues("Leg" + transshipmentLegIndex + "Voyage", updatedFields.Voyage, containerPM);
                 this.SetTransshipmentLegDates(transshipmentLegIndex, updatedFields, transshipmentObject.Key);
+                this.SetShipmentTransshipmentLegDates(transshipmentLegIndex, updatedFields, transshipmentObject.Key, portId);
             }
         }
         private int? GetTransshipmentLegIndex(string portId, string direction)
         {
-            if(direction == "From" && containerPM.ShipmentTransshipment1FromId == portId
+            if (direction == "From" && containerPM.ShipmentTransshipment1FromId == portId
                 || direction == "To" && containerPM.ShipmentTransshipment1ToId == portId)
             {
                 return 1;
@@ -363,9 +373,24 @@ namespace WebFreight.Web.ContainerTracking
 
             return null;
         }
+        private void SetShipmentTransshipmentLegDates(int? transshipmentLegIndex, MilestoneDataUpdatedFields updatedFields, string key, string portId)
+        {
+            if (!containerTrackingHelper.IsSameLocationUsingId((string)GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + "FromPortId"), portId)) return;
+
+            if (key == "VesselArrived")
+            {
+                this.FillFieldsNewValues("Transshipment" + transshipmentLegIndex + "ETA", updatedFields.EstimatedDate, shipmentPM);
+                if (GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + "ATA") == null) this.FillFieldsNewValues("Transshipment" + transshipmentLegIndex + "ATA", updatedFields.ActualDate, shipmentPM);
+            }
+            else if (key == "VesselDeparted")
+            {
+                this.FillFieldsNewValues("Transshipment" + transshipmentLegIndex + "ETD", updatedFields.EstimatedDate, shipmentPM);
+                if (GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + "ATD") == null) this.FillFieldsNewValues("Transshipment" + transshipmentLegIndex + "ATD", updatedFields.ActualDate, shipmentPM);
+            }
+        }
         private void SetTransshipmentLegDates(int? transshipmentLegIndex, MilestoneDataUpdatedFields updatedFields, string key)
         {
-            if(key == "LoadedTransshipment")
+            if (key == "LoadedTransshipment")
             {
                 this.FillFieldsNewValues("EstimatedTransshipment" + transshipmentLegIndex + "Loaded", updatedFields.EstimatedDate, containerPM);
                 this.FillFieldsNewValues("ActualTransshipment" + transshipmentLegIndex + "Loaded", updatedFields.ActualDate, containerPM);
@@ -444,7 +469,7 @@ namespace WebFreight.Web.ContainerTracking
                 delivery.ETA = containerPM.EstimatedEmptyReturn;
                 delivery.ATA = containerPM.ActualEmptyReturn;
             }
-        } 
+        }
         private ShipmentDeliveryPM GetEmptyReturnLeg()
         {
             ShipmentDeliveryPM shipmentDelivery = null;
@@ -555,7 +580,7 @@ namespace WebFreight.Web.ContainerTracking
 
             else if (POLShipmentUpdateIndicator == "Main Carriage")
             {
-                if(containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.Vizion)
+                if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.Vizion)
                     shipmentPM.IsUpdatedVizionMainCarriageDates = true;
                 if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.OceanInsights)
                     shipmentPM.IsUpdatedOceanInsightsMainCarriageDates = true;
@@ -609,7 +634,7 @@ namespace WebFreight.Web.ContainerTracking
         {
             DateTime? myDate = containerPM.ActualPODVesselArrival;
 
-            if(myTenant != null && myTenant.ShipmentATADateIndicator == "Container")
+            if (myTenant != null && myTenant.ShipmentATADateIndicator == "Container")
                 myDate = containerPM.ActualPODDischarge;
 
             this.FillFieldsShipmentNewValues("MainCarriageATA", myDate, shipmentPM);
@@ -653,7 +678,7 @@ namespace WebFreight.Web.ContainerTracking
         }
         private string CopyPortCopyToCurrentTenant(string portCode)
         {
-            string portId = null;            
+            string portId = null;
             Port portZero = portRepository.GetOceanPortByCombinedCode(portCode, 0);
             if (portZero != null)
             {
@@ -699,6 +724,11 @@ namespace WebFreight.Web.ContainerTracking
 
             this.isUpdatingShipmentDateFields = true;
             propertyInfo.SetValue(entity, newValue);
+        }
+
+        public static object GetPropValue(object src, string propName)
+        {
+            return src.GetType().GetProperty(propName).GetValue(src, null);
         }
     }
 }

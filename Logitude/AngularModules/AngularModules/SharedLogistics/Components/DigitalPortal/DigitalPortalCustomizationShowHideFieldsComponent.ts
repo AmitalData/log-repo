@@ -1,19 +1,17 @@
-import { Component, EventEmitter, Output} from '@angular/core';
+import { Component, EventEmitter, Output, OnInit} from '@angular/core';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { DigitalPortalCustomizationMainComponent } from './DigitalPortalCustomizationMainComponent';
-import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 import { DigitalTextService, DigitalFeildSecurityObjectModel, DigitalFeildSecurityUpdateModel, DigitalTextCodeObject, DigitalTextCodeUpdateModel } from '../../../Infrastructure/Services/WebServices/DigitalTextService'
 import { AppTool, DateTool } from '../../../Infrastructure/Tools';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
-
 @Component({
     templateUrl: './DigitalPortalCustomizationShowHideFieldsComponent.html',
 })
 
-export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseComponent {
+export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseComponent implements OnInit {
 
     private digitalTextService: DigitalTextService;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -23,7 +21,14 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
     public ModifiedLables: DigitalFeildSecurityObjectModel;
     public IsModifiedLables = false
     public ModifiedFields: DigitalTextCodeUpdateModel;
-    public IsModifiedFields = false;
+    public IsModifiedFields = false; 
+    public IsChange: boolean = false;
+    public ObjectTableId: string;
+    public ProfileCode: string;
+    public ProfileId: string;
+    public IsWindowMode = false;
+    public IsDirty = false; 
+    public ParentObjectTableId: string;
 
     @Output() LostFocus: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -41,42 +46,22 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
     }
 
     SetWindowArgs(args: any) {
-        this.FillDigitalProfileFiltersList();
-    }
-
-    public ObjectTablesFilterList: CodeNameClass[];
-    private selectedObjectTableItem: CodeNameClass;
-    get SelectedObjectTableItem() { return this.selectedObjectTableItem; }
-    set SelectedObjectTableItem(value: CodeNameClass) {
-        if (this.selectedObjectTableItem != value) {
-            this.selectedObjectTableItem = value;
+        if (Object.keys(args).length > 0) {
+            this.IsWindowMode = true;
+            this.ObjectTableId = args.ObjectTableId;
+            this.ProfileCode = args.ProfileCode;
+            this.ProfileId = args.ProfileId;
+            this.ParentObjectTableId = args.ParentObjectTableId;
             this.BuildItemsSource();
         }
     }
 
-    private FillObjectTablesFiltersList() {
-        this.ObjectTablesFilterList = [];
-        this.digitalTextService.GetDigitalProfilesObjetTables().subscribe((myResult) => {
-            if (!myResult.HasError) {
-                var objectTables = myResult.Result;
-                objectTables.forEach(item => {
-                    this.ObjectTablesFilterList.push(new CodeNameClass(item.ObjectTableName, item.ObjectTableId));
-                });
-
-                this.selectedObjectTableItem = this.ObjectTablesFilterList[0];
-                this.BuildItemsSource();
+    ngOnInit() {
+        this.CurrentSession.SessionEvent.subscribe(($event: any) => {
+            if ($event.Name == "ReloadDigitalPortalPermissions") {
+                this.IsChange = true;
             }
         });
-    }
-
-    public DigitalProfileFilterList: CodeNameClass[];
-    private selectedProfileItem: CodeNameClass;
-    get SelectedProfileItem() { return this.selectedProfileItem; }
-    set SelectedProfileItem(value: CodeNameClass) {
-        if (this.selectedProfileItem != value) {
-            this.selectedProfileItem = value;
-            this.BuildItemsSource();
-        }
     }
 
     private searchText: string = null;
@@ -88,29 +73,12 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
         }
     }
 
-    private FillDigitalProfileFiltersList() {
-        this.DigitalProfileFilterList = [];
-        this.digitalTextService.GetDigitalProfileName(SessionLocator.Tenant).subscribe((myResult) => {
-            if (!myResult.HasError) {
-                var profiles = myResult.Result.filter(a=>a.Code != "CM");
-                profiles.forEach(item => {
-                    this.DigitalProfileFilterList.push(new CodeNameClass(item.Id, item.Name, item.Code));
-                });
-
-                this.selectedProfileItem = this.DigitalProfileFilterList[0];
-                this.FillObjectTablesFiltersList();
-            }
-        });
-    }
-
-    BuildItemsSource() {
+    public BuildItemsSource() {
         this.BuildFields();
     }
 
     BuildFields() {
-        var objectTableId = this.SelectedObjectTableItem.Name;
-        var profileCode = this.SelectedProfileItem.LocalName;
-        this.digitalTextService.GetTextCodesByFilters(null, objectTableId, profileCode).subscribe((myResult) => {
+        this.digitalTextService.GetTextCodesByFilters(null, this.ObjectTableId, this.ProfileCode).subscribe((myResult) => {
             if (!myResult.HasError) {
                 this.loadedFieldsResults = myResult.Result.filter(a => !AppTool.IsNullOrEmpty(a['FieldCode']));
                 this.BuildFieldsPremissions();
@@ -121,9 +89,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
     BuildFieldsPremissions() {
         this.FieldsItemsSource = new ObservableCollection([]);
         var profilesList: ProfileFieldsItem[] = [];
-        var objectTableId = this.SelectedObjectTableItem.Name;
-        var profileCode = this.SelectedProfileItem.LocalName;
-        this.digitalTextService.GetFeildPermissionByFilters(null, objectTableId, profileCode).subscribe((myResult) => {
+        this.digitalTextService.GetFeildPermissionByFilters(null, this.ObjectTableId, this.ProfileCode).subscribe((myResult) => {
             if (!myResult.HasError) {
                 myResult.Result.filter(a => !AppTool.IsNullOrEmpty(a.FieldCode)).forEach(item => {
                     profilesList.push(new ProfileFieldsItem(this, item));
@@ -168,6 +134,10 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
     }
 
     Cancel() {
+        this.IsDirty = false;
+
+        if (this.customizationEditComponent == null) return;
+
         this.customizationEditComponent.IsDirty = false;
         if (this.customizationEditComponent.NewSelectedMenu) {
             this.customizationEditComponent.SelectedMenu = this.customizationEditComponent.NewSelectedMenu;
@@ -177,9 +147,10 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
     Save() {
         this.StartBusyIndicator();
         if (this.IsModifiedLables) {
-            this.ModifiedLables.ObjectTableId = this.SelectedObjectTableItem.Name;
-            this.ModifiedLables.ProfileId = this.SelectedProfileItem.Code;
-            this.ModifiedLables.ProfileCode = this.SelectedProfileItem.LocalName;
+            this.ModifiedLables.ObjectTableId = this.ObjectTableId;
+            this.ModifiedLables.ProfileId = this.ProfileId;
+            this.ModifiedLables.ProfileCode = this.ProfileCode;
+            this.ModifiedLables.ParentObjectTableId = this.ParentObjectTableId;
             var hasHasPermissionList = this.FieldsItemsSource.Collection;
 
             hasHasPermissionList.forEach(item => {
@@ -194,11 +165,15 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
             });
 
             this.digitalTextService.UpdateFeildPermission(this.ModifiedLables).subscribe((myResult) => {
-                this.customizationEditComponent.IsDirty = false;
+             
+                this.IsDirty = false;
                 this.ModifiedLables = new DigitalFeildSecurityObjectModel();
                 this.ModifiedLables.DefaultSettings = [];
                 this.StopBusyIndicator();
                 this.IsModifiedLables = false;
+
+                if (this.customizationEditComponent == null) return;
+                this.customizationEditComponent.IsDirty = false;
                 if (this.customizationEditComponent.NewSelectedMenu) {
                     this.customizationEditComponent.SelectedMenu = this.customizationEditComponent.NewSelectedMenu;
                 }
@@ -213,11 +188,12 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
 
     UpdateModifiedFields() {
         if (this.IsModifiedFields) {
-            this.ModifiedFields.ObjectTableId = this.SelectedObjectTableItem.Name;
-            this.ModifiedFields.ProfileId = this.SelectedProfileItem.Code;
-            this.ModifiedFields.ProfileCode = this.SelectedProfileItem.LocalName;
+            this.ModifiedFields.ObjectTableId = this.ObjectTableId;
+            this.ModifiedFields.ProfileId = this.ProfileId;
+            this.ModifiedFields.ProfileCode = this.ProfileCode;
             this.digitalTextService.UpdateDigitalTextCodes(this.ModifiedFields).subscribe((myResult) => {
-                this.customizationEditComponent.IsDirty = false;
+                if (this.customizationEditComponent != null) this.customizationEditComponent.IsDirty = false;
+                this.IsDirty = false;
                 this.ModifiedFields = new DigitalTextCodeUpdateModel();
                 this.ModifiedFields.Lables = [];
                 this.StopBusyIndicator();
@@ -249,11 +225,9 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
         logWindow.Width = 1000;
         logWindow.Height = 800;
         var windowArgs: any = {};
-        windowArgs.ObjectTableId = this.SelectedObjectTableItem.Name;
-        var profileCode = this.SelectedProfileItem.LocalName;
-        var profileId = this.SelectedProfileItem.Code;
-        windowArgs.ProfileCode = profileCode;
-        windowArgs.ProfileId = profileId;
+        windowArgs.ObjectTableId = this.ObjectTableId;
+        windowArgs.ProfileCode = this.ProfileCode;
+        windowArgs.ProfileId = this.ProfileId;
         logWindow.Title = "Add a field";
         logWindow.WindowArgs = windowArgs;
         logWindow.Show('./SharedLogistics/Components/DigitalPortal/AddDigitalLogitudeFieldComponent');
@@ -269,6 +243,7 @@ export class ProfileFieldsItem extends BaseComponent {
 
     public DataContext: ProfileFieldsItem = this;
     public Background = "transparent";
+    public DefaultTextBackground = "rgba(230, 231, 232, 0.5)";
     constructor(public father: DigitalPortalCustomizationShowHideFieldsComponent, item) {
         super();
         this.hasPermission = item.HasPermission;
@@ -286,6 +261,7 @@ export class ProfileFieldsItem extends BaseComponent {
     SetBackgroundColor() {
         if (this.CreatedBy?.toLowerCase() != "system") {
             this.Background = "rgba(255, 171, 3, 0.6)";
+            this.DefaultTextBackground = "rgba(255, 171, 3, 0.6)";
         }
     }
 
@@ -312,7 +288,8 @@ export class ProfileFieldsItem extends BaseComponent {
         this.father.IsModifiedLables = true;
         this.ModifiedBy = SessionLocator.LoggedUserPM.EnglishName;
         this.ModifiedOn = DateTool.GetCurrentDateTimeAsUtc();
-        this.father.customizationEditComponent.IsDirty = true;
+        this.father.IsDirty = true;
+        if (this.father.customizationEditComponent != null) this.father.customizationEditComponent.IsDirty = true;
     }
 
     HasPermissionClicked(item) {
@@ -379,7 +356,8 @@ export class ProfileFieldsItem extends BaseComponent {
 
         this.father.IsModifiedFields = true;
         this.father.IsModifiedLables = true;
-        this.father.customizationEditComponent.IsDirty = true;
+        this.father.IsDirty = true;
+        if (this.father.customizationEditComponent!= null) this.father.customizationEditComponent.IsDirty = true;
         var label = this.father.ModifiedFields?.Lables?.filter(d => d.FieldCode == this.fieldCode)[0];
         var index = this.father.ModifiedFields?.Lables?.indexOf(label);
         if (index != null && index != -1) {

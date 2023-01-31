@@ -2,8 +2,11 @@
 using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
 using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.StorageService;
+using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
@@ -24,7 +27,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
         public DeploymentPackageDocumentService(int tenant)
         {
-            //deploymentPackageDetailsList = new List<DeploymentPackageDetails>();
             this.tenant = tenant;
             documentRepository = new DocumentRepository(tenant);
         }
@@ -79,6 +81,31 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             return;
         }
 
+        public bool Delete(string documentId, int tenant)
+        {
+            if (string.IsNullOrEmpty(documentId)) return false;
+            Document document = documentRepository.GetSingleDocument(tenant, documentId);
+            if (document == null) return false;
+            DeleteFileFromStorage(document, tenant);
+            documentRepository.Remove(document);
+            documentRepository.SubmitChanges();
+            return true;
+        }
+
+        private static void DeleteFileFromStorage(Document document, int tenant)
+        {
+            BlobFileInfo fileInfo = new BlobFileInfo()
+            {
+                FileName = document.Id,
+                FolderName = document.Folder,
+                Extension = document.Extension,
+                Tenant = tenant,
+                FileSize = document.FileSize,
+
+            };
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            storageservice.Delete(fileInfo);
+        }
     }
 
 }

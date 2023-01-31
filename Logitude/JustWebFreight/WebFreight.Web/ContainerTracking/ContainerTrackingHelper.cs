@@ -9,13 +9,34 @@ namespace WebFreight.Web.ContainerTracking
 {
     public class ContainerTrackingHelper
     {
-        private PortRepository portRepository;
-        private int tenant;
+        private readonly PortRepository portRepository;
+        private readonly int tenant;
 
         public ContainerTrackingHelper(int tenant)
         {
             this.tenant = tenant;
             this.portRepository = new PortRepository(tenant);
+        }
+
+        public bool IsSameLocationUsingId(string entityPortId, string responsePortId)
+        {
+            Port responsePort = GetPortById(responsePortId, tenant);
+            Port responsePort_zero = responsePort == null ? null : GetPortByCode(responsePort.Code, 0);
+            Port entityPort = GetPortById(entityPortId, tenant);
+            Port entityPort_Zero = GetPortByCode(entityPort?.CombinedCode, 0);
+
+            if (responsePort == null) return false;
+
+            if (string.IsNullOrEmpty(entityPortId))
+                return true;
+
+            else if (entityPortId == responsePort.Id)
+                return true;
+
+            else if (responsePort_zero?.PortGroupId != null && entityPort_Zero?.PortGroupId != null && responsePort_zero?.PortGroupId == entityPort_Zero?.PortGroupId)
+                return true;
+
+            return false;
         }
 
         public bool IsSameLocation(string entityPortId, string responsePortCode)

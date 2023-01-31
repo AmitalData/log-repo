@@ -29,16 +29,6 @@
         <!-- Left Sidebar -->
         <td style="width: 215px; border: solid 1px silver">
             <div class="MediaFill">
-                <div style="height: 25px; width: 213px;">
-                    <table>
-                        <tr style="height: 25px;">
-                            <td style="width: 213px;">
-                                <ComboBox style="width: 213px; float: left;" [WaterMark]="'Select Profile'" (SelectedItemChanged)="SelectedProfileItem = $event" [ItemsSource]="DigitalProfileFilterList" [SelectedItem]="SelectedProfileItem" [Binding]="'Name'"></ComboBox>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
                 <div style="padding-top: 5px;" class="SimpleGridView MediaFillAbsolute">
                     <div class="SimpleGridViewHeader">
                         <table>

@@ -53,6 +53,7 @@ using System.Drawing.Drawing2D;
 using WebFreight.Web.Helpers.DataProviderHelpers;
 using Logitude.BL.CommonDataModel.Tools.MixPanelTracker;
 using WebFreight.Web.Helpers.MixPanel;
+using System.Data;
 
 namespace WebFreight.Web
 {
@@ -2232,7 +2233,7 @@ namespace WebFreight.Web
                     Card card = null;
                     string userAgent = !string.IsNullOrEmpty(HttpContext.Current.Request.UserAgent) ? (HttpContext.Current.Request.UserAgent.Length <= 500 ? HttpContext.Current.Request.UserAgent : HttpContext.Current.Request.UserAgent.Substring(0, 500)) : null;
 
-                    ICommonDataContext commonDataContext = CommonDataContext.GetContext(contact.GlobalTenantId);
+                    CommonDataContext commonDataContext = CommonDataContext.GetFullContext(contact.GlobalTenantId);
 
                     if (!isFromCTool)
                     {
@@ -2265,29 +2266,34 @@ namespace WebFreight.Web
                             {
                                 userLog.Browser = userLog.Browser.ToUpper();
                             }
-                            UserLastLogin lastLogin = (from a in commonDataContext.UserLastLogins
-                                                       where a.Id == user.Id
-                                                       select a).FirstOrDefault();
-                            if (lastLogin == null)
+                            using (var scope = commonDataContext.Database.BeginTransaction(IsolationLevel.Snapshot))
                             {
-                                lastLogin = new UserLastLogin()
+                                
+                                UserLastLogin lastLogin = (from a in commonDataContext.UserLastLogins
+                                                           where a.Id == user.Id
+                                                           select a).FirstOrDefault();
+                                if (lastLogin == null)
                                 {
-                                    Id = user.Id,
-                                    Tenant = tenant,
-                                    ComputerId = computerId,
-                                    WorkEnvironment = LogitudeSettingConfigration.GetWorkEnvironment(),
-                                    IP = AuthenticationUtil.GetIP4Address(),
-                                };
+                                    lastLogin = new UserLastLogin()
+                                    {
+                                        Id = user.Id,
+                                        Tenant = tenant,
+                                        ComputerId = computerId,
+                                        WorkEnvironment = LogitudeSettingConfigration.GetWorkEnvironment(),
+                                        IP = AuthenticationUtil.GetIP4Address(),
+                                    };
 
-                                commonDataContext.UserLastLogins.Add(lastLogin);
-                            }
+                                    commonDataContext.UserLastLogins.Add(lastLogin);
+                                }
 
-                            user.LastLoginDateTime = lastLogin.LoginDateTime;
-                            lastLogin.IP = AuthenticationUtil.GetIP4Address();
-                            lastLogin.LoginDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
-                            lastLogin.Tenant = tenant;
-                            commonDataContext.UserLoginLogs.Add(userLog);
-                            commonDataContext.SaveChanges();
+                                user.LastLoginDateTime = lastLogin.LoginDateTime;
+                                lastLogin.IP = AuthenticationUtil.GetIP4Address();
+                                lastLogin.LoginDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                                lastLogin.Tenant = tenant;
+                                commonDataContext.UserLoginLogs.Add(userLog);
+                                commonDataContext.SaveChanges();
+                                scope.Commit();
+                            } 
                         }
                         else
                         {

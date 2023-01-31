@@ -211,7 +211,7 @@ export class AddEditReceivableComponent {
         }
     }
     private AddExpensePayable() {
-        if (this.EntityPM.IsExpense && this.DataContext.IsPayableCharge && SessionLocator.TenantPM.CountryCode == "MX") {
+        if (this.EntityPM.IsExpense && this.DataContext.IsPayableCharge && SessionLocator.TenantPM.CountryCode == "MX" && SessionLocator.SATInterfaceSettings.TransferExpenseCharges) {
             var expensePayable: ShipmentPayablePM = new ShipmentPayablePM(this.DataContext.ShipmentPM);
             expensePayable.ChargesTypeId = this.DataContext.ChargesTypeId;
             expensePayable.IsExpenseCharge = this.DataContext.EntityPM.IsExpenseCharge;

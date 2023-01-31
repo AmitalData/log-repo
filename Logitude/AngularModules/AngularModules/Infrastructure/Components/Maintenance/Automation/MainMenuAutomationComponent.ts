@@ -40,6 +40,7 @@ export class MainMenuAutomationComponent implements OnInit {
 
         if (FeatureLocator.HasFeaturePermession("WorkFlow", "AUTOMATION")) this.AutomationEntityLists.push(new AutomationItemClass("Workflows", "WorkFlow", "Workflow"));
         if (FeatureLocator.HasFeaturePermession("WarehouseEntry", "AUTOMATION")) this.AutomationEntityLists.push(new AutomationItemClass("Cross Dock Entry", "WarehouseEntry", "Cross Dock Entry"));
+        if (FeatureLocator.HasFeaturePermession("WarehouseRelease", "AUTOMATION")) this.AutomationEntityLists.push(new AutomationItemClass("Cross Dock Release", "WarehouseRelease", "Cross Dock Release"));
 
     }
 

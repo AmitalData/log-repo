@@ -16,5 +16,6 @@ export class SATInterfaceSettingList {
 		IsARInvoiceTransferEnabled: boolean;
 		IsCartaPorteTransferEnabled: boolean;
 		SATCompanyName: string;
+		TransferExpenseCharges: boolean;
 	
 }

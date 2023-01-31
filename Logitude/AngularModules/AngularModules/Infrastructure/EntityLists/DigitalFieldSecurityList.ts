@@ -18,6 +18,7 @@ export class DigitalFieldSecurityList {
 	ProfileName: string;
 	ObjectTableName: string;
 	ProfileCode: string;
+	ParentObjectTableId: string;
 	
 }
  

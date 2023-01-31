@@ -2961,6 +2961,7 @@
     <Compile Include="Helpers\DocumentFile.cs" />
     <Compile Include="Helpers\DocumentDownloadTokenService.cs" />
     <Compile Include="Helpers\ContainerStatuses\ContainerStatusesConnecterAnalyzer.cs" />
+    <Compile Include="Helpers\Documents\DocumentsCreator.cs" />
     <Compile Include="Helpers\DocumentTypeCalculateFileNameService.cs" />
     <Compile Include="Helpers\EntityGetReflectorService.cs" />
     <Compile Include="Helpers\EntityPropertyValueService.cs" />

@@ -2,10 +2,13 @@
 using Logitude.Workflow.BL.EntityPMs;
 using Logitude.Workflow.Data.EntityPOCOs;
 using Logitude.Workflow.Data.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Linq;
+using System.Web;
 
 namespace Logitude.Workflow.BL.EntityUpdateServices
 {
@@ -98,6 +101,8 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
                 workflow.Trigger = workFlowVersionPM.Trigger;
                 workflow.FlowJson = workFlowVersionPM.FlowJson;
 
+                UpdateDateWorkflow(workflow);
+
                 workFlowRepository.Update(workflow);
                 workFlowRepository.SubmitChanges();
             }
@@ -115,8 +120,27 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
                 workflow.Trigger = workFlowVersion.Trigger;
                 workflow.FlowJson = workFlowVersion.FlowJson;
 
+                UpdateDateWorkflow(workflow);
+
                 workFlowRepository.Update(workflow);
                 workFlowRepository.SubmitChanges();
+            }
+        }
+
+        private static void UpdateDateWorkflow(WorkFlow workflow)
+        {
+            string email = HttpContext.Current.User.Identity.Name;
+            ContactRepository contactRepository = new ContactRepository(workflow.Tenant);
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, workflow.Tenant);
+            DateTime myDate = TenantServerConfigration.GetCurrentDateTime(workflow.Tenant);
+
+
+            workflow.UpdateDate = myDate;
+
+
+            if (loggedContact != null)
+            {
+                workflow.UpdatedByUserId = loggedContact.Id;
             }
         }
     }

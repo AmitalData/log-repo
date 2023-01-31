@@ -155,8 +155,17 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
                 newFilters.Tenant = authToken.Tenant;
                 var shipmentQuery = new ShipmentQuery(authToken.Tenant);
+                DateTime? currentDateTime = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                var afterOneYearDate = currentDateTime.Value.AddDays(-365);
+                var afterNinetyDaysDate = currentDateTime.Value.AddDays(-90);
+
                 var shipments = shipmentQuery.GetByFilters(newFilters)
-                                             .Where(r => !string.IsNullOrEmpty(r.StatusCode));
+                                             .Where(r => !string.IsNullOrEmpty(r.StatusCode)
+                                                    && r.IsCustomerArchived == false
+                                                    && ((r.MainCarriageFinalDestinationATA == null
+                                                            && System.Data.Entity.DbFunctions.TruncateTime(r.CreateDateTime) > afterOneYearDate)
+                                                        || !(r.MainCarriageFinalDestinationATA <= afterNinetyDaysDate
+                                                            || System.Data.Entity.DbFunctions.TruncateTime(r.CreateDateTime) <= afterOneYearDate)));
 
                 var res = GetDigitalStatusesWithCount(shipments, authToken.Tenant);
 
@@ -188,10 +197,21 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
                 newFilters.Tenant = authToken.Tenant;
                 var shipmentQuery = new ShipmentQuery(authToken.Tenant);
+
+                DateTime? currentDateTime = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                var afterOneYearDate = currentDateTime.Value.AddDays(-365);
+                var afterNinetyDaysDate = currentDateTime.Value.AddDays(-90);
+
                 var shipmentsQuery = shipmentQuery.GetByFilters(newFilters)
-                                                  .Where(r => !string.IsNullOrEmpty(r.StatusCode))
-                                                  .Select(a => new DashboardModelObject() {
-                                                      StatusCode = a.StatusCode, 
+                                                  .Where(r => !string.IsNullOrEmpty(r.StatusCode)
+                                                        && r.IsCustomerArchived == false
+                                                        && ((r.MainCarriageFinalDestinationATA == null
+                                                                && System.Data.Entity.DbFunctions.TruncateTime(r.CreateDateTime) > afterOneYearDate)
+                                                            || !(r.MainCarriageFinalDestinationATA <= afterNinetyDaysDate
+                                                                || System.Data.Entity.DbFunctions.TruncateTime(r.CreateDateTime) <= afterOneYearDate)))
+                                                  .Select(a => new DashboardModelObject()
+                                                  {
+                                                      StatusCode = a.StatusCode,
                                                       StatusWeight = a.StatusWeight,
                                                       TransportModeId = a.TransportModeId
                                                   });
@@ -317,9 +337,16 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var shipmentQuery = new ShipmentQuery(authToken.Tenant);
 
                 DateTime? currentDateTime = TenantServerConfigration.GetCurrentDateTime(newFilters.Tenant).Date;
+                var afterOneYearDate = currentDateTime.Value.AddDays(-365);
+                var afterNinetyDaysDate = currentDateTime.Value.AddDays(-90);
 
                 var resultList = shipmentQuery.GetByFilters(newFilters)
-                                            .Where(r => r.MainCarriageFinalDestinationETA.Value.Year == currentDateTime.Value.Year)
+                                            .Where(r => r.MainCarriageFinalDestinationETA.Value.Year == currentDateTime.Value.Year
+                                                    && r.IsCustomerArchived == false
+                                                    && ((r.MainCarriageFinalDestinationATA == null
+                                                            && System.Data.Entity.DbFunctions.TruncateTime(r.CreateDateTime) > afterOneYearDate)
+                                                        || !(r.MainCarriageFinalDestinationATA <= afterNinetyDaysDate
+                                                            || System.Data.Entity.DbFunctions.TruncateTime(r.CreateDateTime) <= afterOneYearDate)))
                                             .Select(a => new
                                             {
                                                 a.MainCarriageFinalDestinationETA.Value.Month,

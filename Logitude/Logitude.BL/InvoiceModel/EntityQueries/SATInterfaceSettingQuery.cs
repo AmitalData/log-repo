@@ -46,6 +46,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         IsARInvoiceTransferEnabled = a.IsARInvoiceTransferEnabled,
                         IsCartaPorteTransferEnabled = a.IsCartaPorteTransferEnabled,
                         SATCompanyName = a.SATCompanyName,
+                        TransferExpenseCharges = a.TransferExpenseCharges,
                     }).FirstOrDefault();
         }
 
@@ -66,6 +67,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         IsARInvoiceTransferEnabled = a.IsARInvoiceTransferEnabled,
                         IsCartaPorteTransferEnabled = a.IsCartaPorteTransferEnabled,
                         SATCompanyName = a.SATCompanyName,
+                        TransferExpenseCharges = a.TransferExpenseCharges,
                     }).FirstOrDefault();
         }
 
@@ -83,6 +85,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                        IsARInvoiceTransferEnabled = a.IsARInvoiceTransferEnabled,
                        IsCartaPorteTransferEnabled = a.IsCartaPorteTransferEnabled,
                        SATCompanyName = a.SATCompanyName,
+                       TransferExpenseCharges = a.TransferExpenseCharges,
                    };
         }
 
@@ -100,6 +103,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                              IsARInvoiceTransferEnabled = entity.IsARInvoiceTransferEnabled,
                                                              IsCartaPorteTransferEnabled = entity.IsCartaPorteTransferEnabled,
                                                              SATCompanyName = entity.SATCompanyName,
+                                                             TransferExpenseCharges = entity.TransferExpenseCharges,
                                                          };
             return result;
         }
