@@ -48,7 +48,8 @@ using System.Diagnostics;
 using Logitude.Customs.BL.CloseTables;
 using System.Text.RegularExpressions;
 using Logitude.Customs.BL.BL;
-
+using System.Configuration;
+using System.Globalization;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -297,11 +298,21 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             base.UpdateComposition(entityPM);
         }
 
+        private void LogPayment(string msg, DeclarationPM declarationPM)
+        {
+            DateTime stopLogAt = DateTime.MinValue;
+            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20230601T000000.LogUntilDateyyyyMMdd"];
+            if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+                stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None);
+
+            LogitudeSettings.HandleLogMe(msg +" DeclarationUpdateService.OnUpdating = declarationPM.Id: " + declarationPM.Id + ", PaymentOrderPM.PaymentNumber: " + declarationPM.PaymentOrderNumber + declarationPM.PaymentStatusCode + ", courierPaymentStatusCode: " + declarationPM.CourierPaymentStatusCode, false, "CreateUD2LTService", stopLogAt);
+        }
 
         protected override void OnUpdating(DeclarationPM entityPM)
         {
             try
             {
+                LogPayment("1", entityPM);
 
                 //<--- Yuval Chalup 30.12.2015 TASK-18507
                 if (HttpContextUtil.IsCustomDomainService())
@@ -398,7 +409,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
                     }
                 }
-
+                LogPayment("2", entityPM);
 
                     ConsignmentPM consignment = (from a in entityPM.Consignments select a).FirstOrDefault();
                 if (consignment != null) //itzik - due below crash 
@@ -460,7 +471,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         entityPM.ImporterId = null;
                     }
                 }
-
+                LogPayment("3", entityPM);
                 if (!string.IsNullOrEmpty(entityPM.TransferImporterCode))
                 {
                     ClientPM client = clientQueryService.GetClientByCode(entityPM.TransferImporterCode, entityPM.Tenant);
@@ -556,7 +567,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     entityPM.HasConstraint = false;
                 }
-
+                LogPayment("4", entityPM);
                 CustomsHouseTypeQueryService customHouseQuery = new CustomsHouseTypeQueryService(entityPM.Tenant);
                 CustomsHouseTypePM houseType = customHouseQuery.GetHouseTypewithAdditional(entityPM.DeclarationOfficeCode, entityPM.Tenant);
                 //entityPM.TransportModeId = houseType.TransportModeId;
@@ -595,7 +606,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
 
                 }
-
+                LogPayment("4", entityPM);
                 if (!string.IsNullOrEmpty(entityPM.ImporterCode) && entityPM.IsCourierDeclaration)
                 {
 
@@ -637,7 +648,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 if (!string.IsNullOrEmpty(entityPM.CalculatedImporterName) && entityPM.CalculatedImporterName.Length > 35) entityPM.CalculatedImporterName = entityPM.CalculatedImporterName.Substring(0, 35);
                 if (!string.IsNullOrEmpty(entityPM.ImporterName) && entityPM.ImporterName.Length > 35) entityPM.ImporterName = entityPM.ImporterName.Substring(0, 35);
-
+                LogPayment("5", entityPM);
 
                 if (entityPM.Direction == "E" && entityPM.TransportModeId == "O")
                 {
@@ -694,6 +705,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                     }
                 }
+                LogPayment("6", entityPM);
             }
             finally
             {
@@ -711,7 +723,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 //}
                 var mySend2MasofIfNeededService = new Send2MasofIfNeededService();
                 mySend2MasofIfNeededService.Send2Masof(entityPM, CourierStorageSiteChanged, GetDBEntity(entityPM.Id, entityPM.Tenant));
-
+                LogPayment("7", entityPM);
             }
         }
 
