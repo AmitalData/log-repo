@@ -18,26 +18,26 @@
 				<LogColumn width='30'>
 					<LogRow log-class='border-0 margin-0 padding-0'>
 						<LogColumn log-class='display-flex-center'>
-							<LogIcon dp-if='{Shipment.DirectionId}===[I]' code='Import'>
+							<LogIcon log-if='{Shipment.DirectionId}===[I]' code='Import'>
 							</LogIcon>
-							<LogIcon dp-if='{Shipment.DirectionId}===[E]' code='Export'>
+							<LogIcon log-if='{Shipment.DirectionId}===[E]' code='Export'>
 							</LogIcon>
-							<LogIcon dp-if='{Shipment.DirectionId}===[D]' code='Domestic'>
+							<LogIcon log-if='{Shipment.DirectionId}===[D]' code='Domestic'>
 							</LogIcon>
-							<LogIcon dp-if='{Shipment.DirectionId}===[R]' code='Drop'>
+							<LogIcon log-if='{Shipment.DirectionId}===[R]' code='Drop'>
 							</LogIcon>
 							<LogElement type='separator'></LogElement>
-							<LogIcon dp-if='{Shipment.TransportModeId}===[A]' code='Air'></LogIcon>
-							<LogIcon dp-if='{Shipment.TransportModeId}===[O]' code='Ocean'></LogIcon>
-							<LogIcon dp-if='{Shipment.TransportModeId}===[I]' code='Inland'></LogIcon>
+							<LogIcon log-if='{Shipment.TransportModeId}===[A]' code='Air'></LogIcon>
+							<LogIcon log-if='{Shipment.TransportModeId}===[O]' code='Ocean'></LogIcon>
+							<LogIcon log-if='{Shipment.TransportModeId}===[I]' code='Inland'></LogIcon>
             
 							<LogElement type='badge' field-code='Shipment.shipment-type'></LogElement>
-							<LogElement type='separator' dp-if='{Shipment.RequestedDocumentsCount} > [0]'></LogElement>
+							<LogElement type='separator' log-if='{Shipment.RequestedDocumentsCount} > [0]'></LogElement>
 							<LogIcon tooltip='true' field-code='Shipment.RequestedDocumentsCount'
-								dp-if='{Shipment.RequestedDocumentsCount} > [0]' code='RequiredDocument'>
+								log-if='{Shipment.RequestedDocumentsCount} > [0]' code='RequiredDocument'>
 							</LogIcon>
             
-							<LogField width="70" log-class='dp-font-medium' field-code='Shipment.ShipmentNumber'></LogField>
+							<LogField width="70" log-class='log-font-medium' field-code='Shipment.ShipmentNumber'></LogField>
 						</LogColumn>
 					</LogRow>
 					<LogRow log-class='border-0 padding-0 margin-0 margin-top-8px'>
@@ -49,7 +49,7 @@
 							</LogFieldContainer>
 						</LogColumn>
 					</LogRow>
-					<LogRow dp-if='{Shipment.TransportModeId}===[A]'
+					<LogRow log-if='{Shipment.TransportModeId}===[A]'
 						log-class='border-0 padding-0 margin-0 margin-top-8px'>
 						<LogColumn>
 							<LogFieldContainer>
@@ -59,12 +59,12 @@
 							</LogFieldContainer>
 						</LogColumn>
 					</LogRow>
-					<LogRow dp-if='{Shipment.TransportModeId}===[O] || {Shipment.TransportModeId}===[I]' 
+					<LogRow log-if='{Shipment.TransportModeId}===[O] || {Shipment.TransportModeId}===[I]' 
 					log-class='border-0 padding-0 margin-0 margin-top-8px'>
 						<LogColumn>
 							<LogFieldContainer>
-								<LogLabel dp-if='{Shipment.TransportModeId}===[O]' field-code='Shipment.OBL'></LogLabel>
-								<LogLabel dp-if='{Shipment.TransportModeId}===[I]' field-code='Shipment.CMRRWB'></LogLabel>
+								<LogLabel log-if='{Shipment.TransportModeId}===[O]' field-code='Shipment.OBL'></LogLabel>
+								<LogLabel log-if='{Shipment.TransportModeId}===[I]' field-code='Shipment.CMRRWB'></LogLabel>
 								<LogField field-code='Shipment.Master'>
 								</LogField>
 							</LogFieldContainer>
@@ -88,7 +88,7 @@
 						</LogColumn>
 					</LogRow>
 					<LogRow
-						dp-if='{Shipment.NotesSharedWithCustomer}!== [undefined] && {Shipment.NotesSharedWithCustomer}!== [null]'
+						log-if='{Shipment.NotesSharedWithCustomer}!== [undefined] && {Shipment.NotesSharedWithCustomer}!== [null]'
 						log-class='border-0 padding-0 margin-0 margin-top-8px'>
 						<LogColumn>
 							<LogFieldContainer>
@@ -125,13 +125,13 @@
 					</LogFieldContainer>
 				</LogColumn>
 				<LogColumn width='35'>
-					<LogFieldContainer dp-if='{Shipment.DirectionId}!==[I]'>
+					<LogFieldContainer log-if='{Shipment.DirectionId}!==[I]'>
 						<LogLabel field-code='Shipment.ConsigneeName'></LogLabel>
 						<LogIcon code='Shipment.ConsigneeCountryCode'></LogIcon>
 						<LogField tooltip='true' field-code='Shipment.ConsigneeName'></LogField>
 					</LogFieldContainer>
 
-					<LogFieldContainer dp-if='{Shipment.DirectionId}===[I]'>
+					<LogFieldContainer log-if='{Shipment.DirectionId}===[I]'>
 						<LogLabel field-code='Shipment.ShipperName'></LogLabel>
 						<LogIcon code='Shipment.ShipperCountryCode'></LogIcon>
 						<LogField tooltip='true' field-code='Shipment.ShipperName'></LogField>
@@ -144,26 +144,26 @@
 				<LogColumn width='30'>
 					<LogRow log-class='border-0 margin-0 padding-0'>
 						<LogColumn log-class='display-flex-center'>
-							<LogIcon dp-if='{Shipment.DirectionId}===[I]' code='Import'>
+							<LogIcon log-if='{Shipment.DirectionId}===[I]' code='Import'>
 							</LogIcon>
-							<LogIcon dp-if='{Shipment.DirectionId}===[E]' code='Export'>
+							<LogIcon log-if='{Shipment.DirectionId}===[E]' code='Export'>
 							</LogIcon>
-							<LogIcon dp-if='{Shipment.DirectionId}===[D]' code='Domestic'>
+							<LogIcon log-if='{Shipment.DirectionId}===[D]' code='Domestic'>
 							</LogIcon>
-							<LogIcon dp-if='{Shipment.DirectionId}===[R]' code='Drop'>
+							<LogIcon log-if='{Shipment.DirectionId}===[R]' code='Drop'>
 							</LogIcon>
 							<LogElement type='separator'></LogElement>
-							<LogIcon dp-if='{Shipment.TransportModeId}===[A]' code='Air'></LogIcon>
-							<LogIcon dp-if='{Shipment.TransportModeId}===[O]' code='Ocean'></LogIcon>
-							<LogIcon dp-if='{Shipment.TransportModeId}===[I]' code='Inland'></LogIcon>
+							<LogIcon log-if='{Shipment.TransportModeId}===[A]' code='Air'></LogIcon>
+							<LogIcon log-if='{Shipment.TransportModeId}===[O]' code='Ocean'></LogIcon>
+							<LogIcon log-if='{Shipment.TransportModeId}===[I]' code='Inland'></LogIcon>
             
 							<LogElement type='badge' field-code='Shipment.shipment-type'></LogElement>
-							<LogElement type='separator' dp-if='{Shipment.RequestedDocumentsCount} > [0]'></LogElement>
+							<LogElement type='separator' log-if='{Shipment.RequestedDocumentsCount} > [0]'></LogElement>
 							<LogIcon tooltip='true' field-code='Shipment.RequestedDocumentsCount'
-								dp-if='{Shipment.RequestedDocumentsCount} > [0]' code='RequiredDocument'>
+								log-if='{Shipment.RequestedDocumentsCount} > [0]' code='RequiredDocument'>
 							</LogIcon>
             
-							<LogField width="70" log-class='dp-font-medium' field-code='Shipment.ShipmentNumber'></LogField>
+							<LogField width="70" log-class='log-font-medium' field-code='Shipment.ShipmentNumber'></LogField>
 						</LogColumn>
 					</LogRow>
 					<LogRow log-class='border-0 padding-0 margin-0 margin-top-8px'>
@@ -175,7 +175,7 @@
 							</LogFieldContainer>
 						</LogColumn>
 					</LogRow>
-					<LogRow dp-if='{Shipment.TransportModeId}===[A]'
+					<LogRow log-if='{Shipment.TransportModeId}===[A]'
 						log-class='border-0 padding-0 margin-0 margin-top-8px'>
 						<LogColumn>
 							<LogFieldContainer>
@@ -185,12 +185,12 @@
 							</LogFieldContainer>
 						</LogColumn>
 					</LogRow>
-					<LogRow dp-if='{Shipment.TransportModeId}===[O] || {Shipment.TransportModeId}===[I]' 
+					<LogRow log-if='{Shipment.TransportModeId}===[O] || {Shipment.TransportModeId}===[I]' 
 					log-class='border-0 padding-0 margin-0 margin-top-8px'>
 						<LogColumn>
 							<LogFieldContainer>
-								<LogLabel dp-if='{Shipment.TransportModeId}===[O]' field-code='Shipment.OBL'></LogLabel>
-								<LogLabel dp-if='{Shipment.TransportModeId}===[I]' field-code='Shipment.CMRRWB'></LogLabel>
+								<LogLabel log-if='{Shipment.TransportModeId}===[O]' field-code='Shipment.OBL'></LogLabel>
+								<LogLabel log-if='{Shipment.TransportModeId}===[I]' field-code='Shipment.CMRRWB'></LogLabel>
 								<LogField field-code='Shipment.Master'>
 								</LogField>
 							</LogFieldContainer>
@@ -214,7 +214,7 @@
 						</LogColumn>
 					</LogRow>
 					<LogRow
-						dp-if='{Shipment.NotesSharedWithCustomer}!== [undefined] && {Shipment.NotesSharedWithCustomer}!== [null]'
+						log-if='{Shipment.NotesSharedWithCustomer}!== [undefined] && {Shipment.NotesSharedWithCustomer}!== [null]'
 						log-class='border-0 padding-0 margin-0 margin-top-8px'>
 						<LogColumn>
 							<LogFieldContainer>
@@ -251,13 +251,13 @@
 					</LogFieldContainer>
 				</LogColumn>
 				<LogColumn width='35'>
-					<LogFieldContainer dp-if='{Shipment.DirectionId}!==[I]'>
+					<LogFieldContainer log-if='{Shipment.DirectionId}!==[I]'>
 						<LogLabel field-code='Shipment.ConsigneeName'></LogLabel>
 						<LogIcon code='Shipment.ConsigneeCountryCode'></LogIcon>
 						<LogField tooltip='true' field-code='Shipment.ConsigneeName'></LogField>
 					</LogFieldContainer>
 
-					<LogFieldContainer dp-if='{Shipment.DirectionId}===[I]'>
+					<LogFieldContainer log-if='{Shipment.DirectionId}===[I]'>
 						<LogLabel field-code='Shipment.ShipperName'></LogLabel>
 						<LogIcon code='Shipment.ShipperCountryCode'></LogIcon>
 						<LogField tooltip='true' field-code='Shipment.ShipperName'></LogField>
@@ -274,26 +274,26 @@
 				<LogColumn width='30'>
 					<LogRow log-class='border-0 margin-0 padding-0'>
 						<LogColumn log-class='display-flex-center'>
-							<LogIcon dp-if='{Shipment.DirectionId}===[I]' code='Import'>
+							<LogIcon log-if='{Shipment.DirectionId}===[I]' code='Import'>
 							</LogIcon>
-							<LogIcon dp-if='{Shipment.DirectionId}===[E]' code='Export'>
+							<LogIcon log-if='{Shipment.DirectionId}===[E]' code='Export'>
 							</LogIcon>
-							<LogIcon dp-if='{Shipment.DirectionId}===[D]' code='Domestic'>
+							<LogIcon log-if='{Shipment.DirectionId}===[D]' code='Domestic'>
 							</LogIcon>
-							<LogIcon dp-if='{Shipment.DirectionId}===[R]' code='Drop'>
+							<LogIcon log-if='{Shipment.DirectionId}===[R]' code='Drop'>
 							</LogIcon>
 							<LogElement type='separator'></LogElement>
-							<LogIcon dp-if='{Shipment.TransportModeId}===[A]' code='Air'></LogIcon>
-							<LogIcon dp-if='{Shipment.TransportModeId}===[O]' code='Ocean'></LogIcon>
-							<LogIcon dp-if='{Shipment.TransportModeId}===[I]' code='Inland'></LogIcon>
+							<LogIcon log-if='{Shipment.TransportModeId}===[A]' code='Air'></LogIcon>
+							<LogIcon log-if='{Shipment.TransportModeId}===[O]' code='Ocean'></LogIcon>
+							<LogIcon log-if='{Shipment.TransportModeId}===[I]' code='Inland'></LogIcon>
             
 							<LogElement type='badge' field-code='Shipment.shipment-type'></LogElement>
-							<LogElement type='separator' dp-if='{Shipment.RequestedDocumentsCount} > [0]'></LogElement>
+							<LogElement type='separator' log-if='{Shipment.RequestedDocumentsCount} > [0]'></LogElement>
 							<LogIcon tooltip='true' field-code='Shipment.RequestedDocumentsCount'
-								dp-if='{Shipment.RequestedDocumentsCount} > [0]' code='RequiredDocument'>
+								log-if='{Shipment.RequestedDocumentsCount} > [0]' code='RequiredDocument'>
 							</LogIcon>
             
-							<LogField width="70" log-class='dp-font-medium' field-code='Shipment.ShipmentNumber'></LogField>
+							<LogField width="70" log-class='log-font-medium' field-code='Shipment.ShipmentNumber'></LogField>
 						</LogColumn>
 					</LogRow>
 					<LogRow log-class='border-0 padding-0 margin-0 margin-top-8px'>
@@ -305,7 +305,7 @@
 							</LogFieldContainer>
 						</LogColumn>
 					</LogRow>
-					<LogRow dp-if='{Shipment.TransportModeId}===[A]'
+					<LogRow log-if='{Shipment.TransportModeId}===[A]'
 						log-class='border-0 padding-0 margin-0 margin-top-8px'>
 						<LogColumn>
 							<LogFieldContainer>
@@ -315,12 +315,12 @@
 							</LogFieldContainer>
 						</LogColumn>
 					</LogRow>
-					<LogRow dp-if='{Shipment.TransportModeId}===[O] || {Shipment.TransportModeId}===[I]' 
+					<LogRow log-if='{Shipment.TransportModeId}===[O] || {Shipment.TransportModeId}===[I]' 
 					log-class='border-0 padding-0 margin-0 margin-top-8px'>
 						<LogColumn>
 							<LogFieldContainer>
-								<LogLabel dp-if='{Shipment.TransportModeId}===[O]' field-code='Shipment.OBL'></LogLabel>
-								<LogLabel dp-if='{Shipment.TransportModeId}===[I]' field-code='Shipment.CMRRWB'></LogLabel>
+								<LogLabel log-if='{Shipment.TransportModeId}===[O]' field-code='Shipment.OBL'></LogLabel>
+								<LogLabel log-if='{Shipment.TransportModeId}===[I]' field-code='Shipment.CMRRWB'></LogLabel>
 								<LogField field-code='Shipment.Master'>
 								</LogField>
 							</LogFieldContainer>
@@ -344,7 +344,7 @@
 						</LogColumn>
 					</LogRow>
 					<LogRow
-						dp-if='{Shipment.NotesSharedWithCustomer}!== [undefined] && {Shipment.NotesSharedWithCustomer}!== [null]'
+						log-if='{Shipment.NotesSharedWithCustomer}!== [undefined] && {Shipment.NotesSharedWithCustomer}!== [null]'
 						log-class='border-0 padding-0 margin-0 margin-top-8px'>
 						<LogColumn>
 							<LogFieldContainer>
@@ -381,13 +381,13 @@
 					</LogFieldContainer>
 				</LogColumn>
 				<LogColumn width='35'>
-					<LogFieldContainer dp-if='{Shipment.DirectionId}!==[I]'>
+					<LogFieldContainer log-if='{Shipment.DirectionId}!==[I]'>
 						<LogLabel field-code='Shipment.ConsigneeName'></LogLabel>
 						<LogIcon code='Shipment.ConsigneeCountryCode'></LogIcon>
 						<LogField tooltip='true' field-code='Shipment.ConsigneeName'></LogField>
 					</LogFieldContainer>
 
-					<LogFieldContainer dp-if='{Shipment.DirectionId}===[I]'>
+					<LogFieldContainer log-if='{Shipment.DirectionId}===[I]'>
 						<LogLabel field-code='Shipment.ShipperName'></LogLabel>
 						<LogIcon code='Shipment.ShipperCountryCode'></LogIcon>
 						<LogField tooltip='true' field-code='Shipment.ShipperName'></LogField>
@@ -400,26 +400,26 @@
 				<LogColumn width='30'>
 					<LogRow log-class='border-0 margin-0 padding-0'>
 						<LogColumn log-class='display-flex-center'>
-							<LogIcon dp-if='{Shipment.DirectionId}===[I]' code='Import'>
+							<LogIcon log-if='{Shipment.DirectionId}===[I]' code='Import'>
 							</LogIcon>
-							<LogIcon dp-if='{Shipment.DirectionId}===[E]' code='Export'>
+							<LogIcon log-if='{Shipment.DirectionId}===[E]' code='Export'>
 							</LogIcon>
-							<LogIcon dp-if='{Shipment.DirectionId}===[D]' code='Domestic'>
+							<LogIcon log-if='{Shipment.DirectionId}===[D]' code='Domestic'>
 							</LogIcon>
-							<LogIcon dp-if='{Shipment.DirectionId}===[R]' code='Drop'>
+							<LogIcon log-if='{Shipment.DirectionId}===[R]' code='Drop'>
 							</LogIcon>
 							<LogElement type='separator'></LogElement>
-							<LogIcon dp-if='{Shipment.TransportModeId}===[A]' code='Air'></LogIcon>
-							<LogIcon dp-if='{Shipment.TransportModeId}===[O]' code='Ocean'></LogIcon>
-							<LogIcon dp-if='{Shipment.TransportModeId}===[I]' code='Inland'></LogIcon>
+							<LogIcon log-if='{Shipment.TransportModeId}===[A]' code='Air'></LogIcon>
+							<LogIcon log-if='{Shipment.TransportModeId}===[O]' code='Ocean'></LogIcon>
+							<LogIcon log-if='{Shipment.TransportModeId}===[I]' code='Inland'></LogIcon>
             
 							<LogElement type='badge' field-code='Shipment.shipment-type'></LogElement>
-							<LogElement type='separator' dp-if='{Shipment.RequestedDocumentsCount} > [0]'></LogElement>
+							<LogElement type='separator' log-if='{Shipment.RequestedDocumentsCount} > [0]'></LogElement>
 							<LogIcon tooltip='true' field-code='Shipment.RequestedDocumentsCount'
-								dp-if='{Shipment.RequestedDocumentsCount} > [0]' code='RequiredDocument'>
+								log-if='{Shipment.RequestedDocumentsCount} > [0]' code='RequiredDocument'>
 							</LogIcon>
             
-							<LogField width="70" log-class='dp-font-medium' field-code='Shipment.ShipmentNumber'></LogField>
+							<LogField width="70" log-class='log-font-medium' field-code='Shipment.ShipmentNumber'></LogField>
 						</LogColumn>
 					</LogRow>
 					<LogRow log-class='border-0 padding-0 margin-0 margin-top-8px'>
@@ -431,7 +431,7 @@
 							</LogFieldContainer>
 						</LogColumn>
 					</LogRow>
-					<LogRow dp-if='{Shipment.TransportModeId}===[A]'
+					<LogRow log-if='{Shipment.TransportModeId}===[A]'
 						log-class='border-0 padding-0 margin-0 margin-top-8px'>
 						<LogColumn>
 							<LogFieldContainer>
@@ -441,12 +441,12 @@
 							</LogFieldContainer>
 						</LogColumn>
 					</LogRow>
-					<LogRow dp-if='{Shipment.TransportModeId}===[O] || {Shipment.TransportModeId}===[I]' 
+					<LogRow log-if='{Shipment.TransportModeId}===[O] || {Shipment.TransportModeId}===[I]' 
 					log-class='border-0 padding-0 margin-0 margin-top-8px'>
 						<LogColumn>
 							<LogFieldContainer>
-								<LogLabel dp-if='{Shipment.TransportModeId}===[O]' field-code='Shipment.OBL'></LogLabel>
-								<LogLabel dp-if='{Shipment.TransportModeId}===[I]' field-code='Shipment.CMRRWB'></LogLabel>
+								<LogLabel log-if='{Shipment.TransportModeId}===[O]' field-code='Shipment.OBL'></LogLabel>
+								<LogLabel log-if='{Shipment.TransportModeId}===[I]' field-code='Shipment.CMRRWB'></LogLabel>
 								<LogField field-code='Shipment.Master'>
 								</LogField>
 							</LogFieldContainer>
@@ -470,7 +470,7 @@
 						</LogColumn>
 					</LogRow>
 					<LogRow
-						dp-if='{Shipment.NotesSharedWithCustomer}!== [undefined] && {Shipment.NotesSharedWithCustomer}!== [null]'
+						log-if='{Shipment.NotesSharedWithCustomer}!== [undefined] && {Shipment.NotesSharedWithCustomer}!== [null]'
 						log-class='border-0 padding-0 margin-0 margin-top-8px'>
 						<LogColumn>
 							<LogFieldContainer>
@@ -507,13 +507,13 @@
 					</LogFieldContainer>
 				</LogColumn>
 				<LogColumn width='35'>
-					<LogFieldContainer dp-if='{Shipment.DirectionId}!==[I]'>
+					<LogFieldContainer log-if='{Shipment.DirectionId}!==[I]'>
 						<LogLabel field-code='Shipment.ConsigneeName'></LogLabel>
 						<LogIcon code='Shipment.ConsigneeCountryCode'></LogIcon>
 						<LogField tooltip='true' field-code='Shipment.ConsigneeName'></LogField>
 					</LogFieldContainer>
 
-					<LogFieldContainer dp-if='{Shipment.DirectionId}===[I]'>
+					<LogFieldContainer log-if='{Shipment.DirectionId}===[I]'>
 						<LogLabel field-code='Shipment.ShipperName'></LogLabel>
 						<LogIcon code='Shipment.ShipperCountryCode'></LogIcon>
 						<LogField tooltip='true' field-code='Shipment.ShipperName'></LogField>
@@ -528,7 +528,7 @@
  		'<LogTable>
     <LogRow log-class='border-0'>
         <LogColumn>
-            <LogLabel hide-colon='true' log-class='dp-font-medium' field-code='Shipment.GeneralInformation'></LogLabel>
+            <LogLabel hide-colon='true' log-class='log-font-medium' field-code='Shipment.GeneralInformation'></LogLabel>
         </LogColumn>
     </LogRow>
     <LogRow>
@@ -553,9 +553,9 @@
         </LogColumn>
         <LogColumn width='10'>
             <LogLabel field-code='Shipment.IsFullInvoiced'></LogLabel>
-            <LogIcon log-class='dp-margin-left-1' dp-if='{Shipment.IsFullInvoiced}===[true]' code='Checked'>
+            <LogIcon log-class='log-margin-left-1' log-if='{Shipment.IsFullInvoiced}===[true]' code='Checked'>
             </LogIcon>
-            <LogIcon log-class='dp-margin-left-1' dp-if='{Shipment.IsFullInvoiced}===[false]' code='Union'>
+            <LogIcon log-class='log-margin-left-1' log-if='{Shipment.IsFullInvoiced}===[false]' code='Union'>
             </LogIcon>
         </LogColumn>
     </LogRow>
@@ -564,9 +564,9 @@
             <LogFieldContainer>
                 <LogLabel field-code='Shipment.IncotermName'></LogLabel>
                 <LogField disable-copy='true' tooltip='true' field-code='Shipment.IncotermName'></LogField>
-                <span dp-if='{Shipment.IncotermName} !== [undefined] && {Shipment.IncotermName} !== [null]'>(</span>
+                <span log-if='{Shipment.IncotermName} !== [undefined] && {Shipment.IncotermName} !== [null]'>(</span>
                 <LogField disable-copy='true' margin='0' field-code='Shipment.IncotermCode'></LogField>
-                <span dp-if='{Shipment.IncotermName} !== [undefined] && {Shipment.IncotermName} !== [null]'>)</span>
+                <span log-if='{Shipment.IncotermName} !== [undefined] && {Shipment.IncotermName} !== [null]'>)</span>
             </LogFieldContainer>
         </LogColumn>
         <LogColumn width='32'>
@@ -576,13 +576,13 @@
             </LogFieldContainer>
         </LogColumn>
         <LogColumn width='36'>
-            <LogFieldContainer dp-if='{Shipment.DirectionId}!==[I]'>
+            <LogFieldContainer log-if='{Shipment.DirectionId}!==[I]'>
                 <LogLabel field-code='Shipment.ConsigneeName'></LogLabel>
                 <LogIcon code='Shipment.ConsigneeAddressCountryCode'></LogIcon>
                 <LogField tooltip='true' field-code='Shipment.ConsigneeName'></LogField>
             </LogFieldContainer>
 
-            <LogFieldContainer dp-if='{Shipment.DirectionId}===[I]'>
+            <LogFieldContainer log-if='{Shipment.DirectionId}===[I]'>
                 <LogLabel field-code='Shipment.ShipperName'></LogLabel>
                 <LogIcon code='Shipment.ShipperAddressCountryCode'></LogIcon>
                 <LogField tooltip='true' field-code='Shipment.ShipperName'></LogField>
@@ -595,7 +595,7 @@
                 <LogLabel field-code='Shipment.SalesmanUserName'></LogLabel>
                 <LogField disable-copy='true' tooltip='true' field-code='Shipment.SalesmanUserName'></LogField>
 
-                <LogEmail dp-if='{Shipment.SalesmanEmail} !== [undefined] && {Shipment.SalesmanEmail} !== [null]'
+                <LogEmail log-if='{Shipment.SalesmanEmail} !== [undefined] && {Shipment.SalesmanEmail} !== [null]'
                     field-code='Shipment.SalesmanUserName' email-field='SalesmanEmail'
                     email-body-info-field='ShipmentNumber'>
             </LogFieldContainer>
@@ -606,7 +606,7 @@
                 <LogField disable-copy='true' tooltip='true' field-code='Shipment.AccountManagerUserName'></LogField>
 
                 <LogEmail
-                    dp-if='{Shipment.AccountManagerUserEmail} !== [undefined] && {Shipment.AccountManagerUserEmail} !== [null]'
+                    log-if='{Shipment.AccountManagerUserEmail} !== [undefined] && {Shipment.AccountManagerUserEmail} !== [null]'
                     field-code='Shipment.AccountManagerUserName' email-field='AccountManagerUserEmail'
                     email-body-info-field='ShipmentNumber'>
                 </LogEmail>
@@ -621,7 +621,7 @@
             </LogFieldContainer>
         </LogColumn>
     </LogRow>
-    <LogRow dp-if='{Shipment.NotesSharedWithCustomer}!== [undefined] && {Shipment.NotesSharedWithCustomer}!== [null]'
+    <LogRow log-if='{Shipment.NotesSharedWithCustomer}!== [undefined] && {Shipment.NotesSharedWithCustomer}!== [null]'
         log-class='border-0 row-top-border margin-top-8px margin-0 padding-0'>
         <LogColumn log-class='margin-top-8px background-secondary-color'>
             <LogFieldContainer>
@@ -631,7 +631,7 @@
             </LogFieldContainer>
         </LogColumn>
     </LogRow>
-    <LogRow dp-if='{Shipment.RequestedDocumentsCount} > 0' log-class='border-0 margin-0 padding-0'>
+    <LogRow log-if='{Shipment.RequestedDocumentsCount} > 0' log-class='border-0 margin-0 padding-0'>
         <LogColumn width='100'>
             <RequiredDocumentsMessage></RequiredDocumentsMessage>
         </LogColumn>
@@ -640,7 +640,7 @@
 		'<LogTable>
     <LogRow log-class='border-0'>
         <LogColumn>
-            <LogLabel hide-colon='true' log-class='dp-font-medium' field-code='Shipment.GeneralInformation'></LogLabel>
+            <LogLabel hide-colon='true' log-class='log-font-medium' field-code='Shipment.GeneralInformation'></LogLabel>
         </LogColumn>
     </LogRow>
     <LogRow>
@@ -665,9 +665,9 @@
         </LogColumn>
         <LogColumn width='10'>
             <LogLabel field-code='Shipment.IsFullInvoiced'></LogLabel>
-            <LogIcon log-class='dp-margin-left-1' dp-if='{Shipment.IsFullInvoiced}===[true]' code='Checked'>
+            <LogIcon log-class='log-margin-left-1' log-if='{Shipment.IsFullInvoiced}===[true]' code='Checked'>
             </LogIcon>
-            <LogIcon log-class='dp-margin-left-1' dp-if='{Shipment.IsFullInvoiced}===[false]' code='Union'>
+            <LogIcon log-class='log-margin-left-1' log-if='{Shipment.IsFullInvoiced}===[false]' code='Union'>
             </LogIcon>
         </LogColumn>
     </LogRow>
@@ -676,9 +676,9 @@
             <LogFieldContainer>
                 <LogLabel field-code='Shipment.IncotermName'></LogLabel>
                 <LogField disable-copy='true' tooltip='true' field-code='Shipment.IncotermName'></LogField>
-                <span dp-if='{Shipment.IncotermName} !== [undefined] && {Shipment.IncotermName} !== [null]'>(</span>
+                <span log-if='{Shipment.IncotermName} !== [undefined] && {Shipment.IncotermName} !== [null]'>(</span>
                 <LogField disable-copy='true' margin='0' field-code='Shipment.IncotermCode'></LogField>
-                <span dp-if='{Shipment.IncotermName} !== [undefined] && {Shipment.IncotermName} !== [null]'>)</span>
+                <span log-if='{Shipment.IncotermName} !== [undefined] && {Shipment.IncotermName} !== [null]'>)</span>
             </LogFieldContainer>
         </LogColumn>
         <LogColumn width='32'>
@@ -688,13 +688,13 @@
             </LogFieldContainer>
         </LogColumn>
         <LogColumn width='36'>
-            <LogFieldContainer dp-if='{Shipment.DirectionId}!==[I]'>
+            <LogFieldContainer log-if='{Shipment.DirectionId}!==[I]'>
                 <LogLabel field-code='Shipment.ConsigneeName'></LogLabel>
                 <LogIcon code='Shipment.ConsigneeAddressCountryCode'></LogIcon>
                 <LogField tooltip='true' field-code='Shipment.ConsigneeName'></LogField>
             </LogFieldContainer>
 
-            <LogFieldContainer dp-if='{Shipment.DirectionId}===[I]'>
+            <LogFieldContainer log-if='{Shipment.DirectionId}===[I]'>
                 <LogLabel field-code='Shipment.ShipperName'></LogLabel>
                 <LogIcon code='Shipment.ShipperAddressCountryCode'></LogIcon>
                 <LogField tooltip='true' field-code='Shipment.ShipperName'></LogField>
@@ -707,7 +707,7 @@
                 <LogLabel field-code='Shipment.SalesmanUserName'></LogLabel>
                 <LogField disable-copy='true' tooltip='true' field-code='Shipment.SalesmanUserName'></LogField>
 
-                <LogEmail dp-if='{Shipment.SalesmanEmail} !== [undefined] && {Shipment.SalesmanEmail} !== [null]'
+                <LogEmail log-if='{Shipment.SalesmanEmail} !== [undefined] && {Shipment.SalesmanEmail} !== [null]'
                     field-code='Shipment.SalesmanUserName' email-field='SalesmanEmail'
                     email-body-info-field='ShipmentNumber'>
             </LogFieldContainer>
@@ -718,7 +718,7 @@
                 <LogField disable-copy='true' tooltip='true' field-code='Shipment.AccountManagerUserName'></LogField>
 
                 <LogEmail
-                    dp-if='{Shipment.AccountManagerUserEmail} !== [undefined] && {Shipment.AccountManagerUserEmail} !== [null]'
+                    log-if='{Shipment.AccountManagerUserEmail} !== [undefined] && {Shipment.AccountManagerUserEmail} !== [null]'
                     field-code='Shipment.AccountManagerUserName' email-field='AccountManagerUserEmail'
                     email-body-info-field='ShipmentNumber'>
                 </LogEmail>
@@ -733,7 +733,7 @@
             </LogFieldContainer>
         </LogColumn>
     </LogRow>
-    <LogRow dp-if='{Shipment.NotesSharedWithCustomer}!== [undefined] && {Shipment.NotesSharedWithCustomer}!== [null]'
+    <LogRow log-if='{Shipment.NotesSharedWithCustomer}!== [undefined] && {Shipment.NotesSharedWithCustomer}!== [null]'
         log-class='border-0 row-top-border margin-top-8px margin-0 padding-0'>
         <LogColumn log-class='margin-top-8px background-secondary-color'>
             <LogFieldContainer>
@@ -743,7 +743,7 @@
             </LogFieldContainer>
         </LogColumn>
     </LogRow>
-    <LogRow dp-if='{Shipment.RequestedDocumentsCount} > 0' log-class='border-0 margin-0 padding-0'>
+    <LogRow log-if='{Shipment.RequestedDocumentsCount} > 0' log-class='border-0 margin-0 padding-0'>
         <LogColumn width='100'>
             <RequiredDocumentsMessage></RequiredDocumentsMessage>
         </LogColumn>
@@ -756,7 +756,7 @@
  		   '<LogTable>
     <LogRow log-class='border-0'>
         <LogColumn>
-            <LogLabel hide-colon='true' log-class='dp-font-medium' field-code='Shipment.GeneralInformation'></LogLabel>
+            <LogLabel hide-colon='true' log-class='log-font-medium' field-code='Shipment.GeneralInformation'></LogLabel>
         </LogColumn>
     </LogRow>
     <LogRow>
@@ -781,9 +781,9 @@
         </LogColumn>
         <LogColumn width='10'>
             <LogLabel field-code='Shipment.IsFullInvoiced'></LogLabel>
-            <LogIcon log-class='dp-margin-left-1' dp-if='{Shipment.IsFullInvoiced}===[true]' code='Checked'>
+            <LogIcon log-class='log-margin-left-1' log-if='{Shipment.IsFullInvoiced}===[true]' code='Checked'>
             </LogIcon>
-            <LogIcon log-class='dp-margin-left-1' dp-if='{Shipment.IsFullInvoiced}===[false]' code='Union'>
+            <LogIcon log-class='log-margin-left-1' log-if='{Shipment.IsFullInvoiced}===[false]' code='Union'>
             </LogIcon>
         </LogColumn>
     </LogRow>
@@ -792,9 +792,9 @@
             <LogFieldContainer>
                 <LogLabel field-code='Shipment.IncotermName'></LogLabel>
                 <LogField disable-copy='true' tooltip='true' field-code='Shipment.IncotermName'></LogField>
-                <span dp-if='{Shipment.IncotermName} !== [undefined] && {Shipment.IncotermName} !== [null]'>(</span>
+                <span log-if='{Shipment.IncotermName} !== [undefined] && {Shipment.IncotermName} !== [null]'>(</span>
                 <LogField disable-copy='true' margin='0' field-code='Shipment.IncotermCode'></LogField>
-                <span dp-if='{Shipment.IncotermName} !== [undefined] && {Shipment.IncotermName} !== [null]'>)</span>
+                <span log-if='{Shipment.IncotermName} !== [undefined] && {Shipment.IncotermName} !== [null]'>)</span>
             </LogFieldContainer>
         </LogColumn>
         <LogColumn width='32'>
@@ -804,13 +804,13 @@
             </LogFieldContainer>
         </LogColumn>
         <LogColumn width='36'>
-            <LogFieldContainer dp-if='{Shipment.DirectionId}!==[I]'>
+            <LogFieldContainer log-if='{Shipment.DirectionId}!==[I]'>
                 <LogLabel field-code='Shipment.ConsigneeName'></LogLabel>
                 <LogIcon code='Shipment.ConsigneeAddressCountryCode'></LogIcon>
                 <LogField tooltip='true' field-code='Shipment.ConsigneeName'></LogField>
             </LogFieldContainer>
 
-            <LogFieldContainer dp-if='{Shipment.DirectionId}===[I]'>
+            <LogFieldContainer log-if='{Shipment.DirectionId}===[I]'>
                 <LogLabel field-code='Shipment.ShipperName'></LogLabel>
                 <LogIcon code='Shipment.ShipperAddressCountryCode'></LogIcon>
                 <LogField tooltip='true' field-code='Shipment.ShipperName'></LogField>
@@ -823,7 +823,7 @@
                 <LogLabel field-code='Shipment.SalesmanUserName'></LogLabel>
                 <LogField disable-copy='true' tooltip='true' field-code='Shipment.SalesmanUserName'></LogField>
 
-                <LogEmail dp-if='{Shipment.SalesmanEmail} !== [undefined] && {Shipment.SalesmanEmail} !== [null]'
+                <LogEmail log-if='{Shipment.SalesmanEmail} !== [undefined] && {Shipment.SalesmanEmail} !== [null]'
                     field-code='Shipment.SalesmanUserName' email-field='SalesmanEmail'
                     email-body-info-field='ShipmentNumber'>
             </LogFieldContainer>
@@ -834,7 +834,7 @@
                 <LogField disable-copy='true' tooltip='true' field-code='Shipment.AccountManagerUserName'></LogField>
 
                 <LogEmail
-                    dp-if='{Shipment.AccountManagerUserEmail} !== [undefined] && {Shipment.AccountManagerUserEmail} !== [null]'
+                    log-if='{Shipment.AccountManagerUserEmail} !== [undefined] && {Shipment.AccountManagerUserEmail} !== [null]'
                     field-code='Shipment.AccountManagerUserName' email-field='AccountManagerUserEmail'
                     email-body-info-field='ShipmentNumber'>
                 </LogEmail>
@@ -849,7 +849,7 @@
             </LogFieldContainer>
         </LogColumn>
     </LogRow>
-    <LogRow dp-if='{Shipment.NotesSharedWithCustomer}!== [undefined] && {Shipment.NotesSharedWithCustomer}!== [null]'
+    <LogRow log-if='{Shipment.NotesSharedWithCustomer}!== [undefined] && {Shipment.NotesSharedWithCustomer}!== [null]'
         log-class='border-0 row-top-border margin-top-8px margin-0 padding-0'>
         <LogColumn log-class='margin-top-8px background-secondary-color'>
             <LogFieldContainer>
@@ -859,7 +859,7 @@
             </LogFieldContainer>
         </LogColumn>
     </LogRow>
-    <LogRow dp-if='{Shipment.RequestedDocumentsCount} > 0' log-class='border-0 margin-0 padding-0'>
+    <LogRow log-if='{Shipment.RequestedDocumentsCount} > 0' log-class='border-0 margin-0 padding-0'>
         <LogColumn width='100'>
             <RequiredDocumentsMessage></RequiredDocumentsMessage>
         </LogColumn>
@@ -868,7 +868,7 @@
 			'<LogTable>
     <LogRow log-class='border-0'>
         <LogColumn>
-            <LogLabel hide-colon='true' log-class='dp-font-medium' field-code='Shipment.GeneralInformation'></LogLabel>
+            <LogLabel hide-colon='true' log-class='log-font-medium' field-code='Shipment.GeneralInformation'></LogLabel>
         </LogColumn>
     </LogRow>
     <LogRow>
@@ -893,9 +893,9 @@
         </LogColumn>
         <LogColumn width='10'>
             <LogLabel field-code='Shipment.IsFullInvoiced'></LogLabel>
-            <LogIcon log-class='dp-margin-left-1' dp-if='{Shipment.IsFullInvoiced}===[true]' code='Checked'>
+            <LogIcon log-class='log-margin-left-1' log-if='{Shipment.IsFullInvoiced}===[true]' code='Checked'>
             </LogIcon>
-            <LogIcon log-class='dp-margin-left-1' dp-if='{Shipment.IsFullInvoiced}===[false]' code='Union'>
+            <LogIcon log-class='log-margin-left-1' log-if='{Shipment.IsFullInvoiced}===[false]' code='Union'>
             </LogIcon>
         </LogColumn>
     </LogRow>
@@ -904,9 +904,9 @@
             <LogFieldContainer>
                 <LogLabel field-code='Shipment.IncotermName'></LogLabel>
                 <LogField disable-copy='true' tooltip='true' field-code='Shipment.IncotermName'></LogField>
-                <span dp-if='{Shipment.IncotermName} !== [undefined] && {Shipment.IncotermName} !== [null]'>(</span>
+                <span log-if='{Shipment.IncotermName} !== [undefined] && {Shipment.IncotermName} !== [null]'>(</span>
                 <LogField disable-copy='true' margin='0' field-code='Shipment.IncotermCode'></LogField>
-                <span dp-if='{Shipment.IncotermName} !== [undefined] && {Shipment.IncotermName} !== [null]'>)</span>
+                <span log-if='{Shipment.IncotermName} !== [undefined] && {Shipment.IncotermName} !== [null]'>)</span>
             </LogFieldContainer>
         </LogColumn>
         <LogColumn width='32'>
@@ -916,13 +916,13 @@
             </LogFieldContainer>
         </LogColumn>
         <LogColumn width='36'>
-            <LogFieldContainer dp-if='{Shipment.DirectionId}!==[I]'>
+            <LogFieldContainer log-if='{Shipment.DirectionId}!==[I]'>
                 <LogLabel field-code='Shipment.ConsigneeName'></LogLabel>
                 <LogIcon code='Shipment.ConsigneeAddressCountryCode'></LogIcon>
                 <LogField tooltip='true' field-code='Shipment.ConsigneeName'></LogField>
             </LogFieldContainer>
 
-            <LogFieldContainer dp-if='{Shipment.DirectionId}===[I]'>
+            <LogFieldContainer log-if='{Shipment.DirectionId}===[I]'>
                 <LogLabel field-code='Shipment.ShipperName'></LogLabel>
                 <LogIcon code='Shipment.ShipperAddressCountryCode'></LogIcon>
                 <LogField tooltip='true' field-code='Shipment.ShipperName'></LogField>
@@ -935,7 +935,7 @@
                 <LogLabel field-code='Shipment.SalesmanUserName'></LogLabel>
                 <LogField disable-copy='true' tooltip='true' field-code='Shipment.SalesmanUserName'></LogField>
 
-                <LogEmail dp-if='{Shipment.SalesmanEmail} !== [undefined] && {Shipment.SalesmanEmail} !== [null]'
+                <LogEmail log-if='{Shipment.SalesmanEmail} !== [undefined] && {Shipment.SalesmanEmail} !== [null]'
                     field-code='Shipment.SalesmanUserName' email-field='SalesmanEmail'
                     email-body-info-field='ShipmentNumber'>
             </LogFieldContainer>
@@ -946,7 +946,7 @@
                 <LogField disable-copy='true' tooltip='true' field-code='Shipment.AccountManagerUserName'></LogField>
 
                 <LogEmail
-                    dp-if='{Shipment.AccountManagerUserEmail} !== [undefined] && {Shipment.AccountManagerUserEmail} !== [null]'
+                    log-if='{Shipment.AccountManagerUserEmail} !== [undefined] && {Shipment.AccountManagerUserEmail} !== [null]'
                     field-code='Shipment.AccountManagerUserName' email-field='AccountManagerUserEmail'
                     email-body-info-field='ShipmentNumber'>
                 </LogEmail>
@@ -961,7 +961,7 @@
             </LogFieldContainer>
         </LogColumn>
     </LogRow>
-    <LogRow dp-if='{Shipment.NotesSharedWithCustomer}!== [undefined] && {Shipment.NotesSharedWithCustomer}!== [null]'
+    <LogRow log-if='{Shipment.NotesSharedWithCustomer}!== [undefined] && {Shipment.NotesSharedWithCustomer}!== [null]'
         log-class='border-0 row-top-border margin-top-8px margin-0 padding-0'>
         <LogColumn log-class='margin-top-8px background-secondary-color'>
             <LogFieldContainer>
@@ -971,7 +971,7 @@
             </LogFieldContainer>
         </LogColumn>
     </LogRow>
-    <LogRow dp-if='{Shipment.RequestedDocumentsCount} > 0' log-class='border-0 margin-0 padding-0'>
+    <LogRow log-if='{Shipment.RequestedDocumentsCount} > 0' log-class='border-0 margin-0 padding-0'>
         <LogColumn width='100'>
             <RequiredDocumentsMessage></RequiredDocumentsMessage>
         </LogColumn>
