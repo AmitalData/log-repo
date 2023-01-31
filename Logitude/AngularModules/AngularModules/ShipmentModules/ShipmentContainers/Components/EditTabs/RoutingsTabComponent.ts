@@ -13,7 +13,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
     public EntityPM: ContainerPM;
     public ObjectTableName: string = "Container";    
     private CurrentSession = SessionLocator.SelectedSession;
-    public ItemsSource: RoutingItem[];
+    private ItemsSource: RoutingItem[];
     public SelectedLegTitle: string;
     public SelectedLegCode: string;
     public DataContext: ContainerPM;
@@ -60,8 +60,16 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
 
     }
 
+    public ItemsSource1: RoutingItem[];
+    public ItemsSource2: RoutingItem[];
+    public ItemsSource3: RoutingItem[];
+    public ItemsSource4: RoutingItem[];
     private BuildItemsSource() {
         this.ItemsSource = [];
+        this.ItemsSource1 = [];
+        this.ItemsSource2 = [];
+        this.ItemsSource3 = [];
+        this.ItemsSource4 = [];
 
         this.AddRoutingItem("PICK");
         this.AddRoutingItemLine("PREC");
@@ -75,16 +83,14 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         this.AddRoutingItem("TSS");
         this.AddRoutingItemLine("POD");
 
-        ////////////
-        //this.AddRoutingItem("TS1", true);
-        //this.AddRoutingItemLine("TS2", true);
+        this.AddRoutingItem("TS1", true, true);
+        this.AddRoutingItemLine("TS2", true, true);
 
-        //this.AddRoutingItem("TS2", true);
-        //this.AddRoutingItemLine("TS3", true);
+        this.AddRoutingItem("TS2", true, true);
+        this.AddRoutingItemLine("TS3", true, true);
 
-        //this.AddRoutingItem("TS3", true);
-        //this.AddRoutingItemLine("POD", true);
-        ////////////
+        this.AddRoutingItem("TS3", true, true);
+        this.AddRoutingItemLine("POD", true, true);
 
         this.AddRoutingItem("POD");
         this.AddRoutingItemLine("ONC");
@@ -95,22 +101,26 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         this.AddRoutingItem("DELV");
         this.AddRoutingItemLine("EMRT");
 
-        this.AddRoutingItem("EMRT");        
+        this.AddRoutingItem("EMRT");
     }
 
-    private AddRoutingItem(code: string, isHidden: boolean = false) {
+    private AddRoutingItem(code: string, isHidden: boolean = false, isTransshipment: boolean = false) {
         var item: RoutingItem = new RoutingItem(code, this.EntityPM);
         item.IsHidden = isHidden;
+        item.IsTransshipment = isTransshipment;
         this.ItemsSource.push(item);
     }   
-    private AddRoutingItemLine(nextLegCode: string, isHidden: boolean = true) {
+    private AddRoutingItemLine(nextLegCode: string, isHidden: boolean = false, isTransshipment: boolean = false) {
         var item: RoutingItem = new RoutingItem("Line", this.EntityPM);
         item.IsLine = true;
         item.IsHidden = isHidden;
+        item.IsTransshipment = isTransshipment;
+        item.NextLegCode = nextLegCode;
         item.IsContinuousLine = this.CheckNextLegDates(nextLegCode);
         item.IsDashedLine = !item.IsContinuousLine;
         this.ItemsSource.push(item);
     }
+
     private CheckNextLegDates(nextLegCode: string): boolean {
         switch (nextLegCode) {
             case "PREC": {
@@ -227,11 +237,11 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         else if (this.EntityPM.OnCarriageETD != null)
             return true;
 
-        //else if (this.EntityPM.OnCarriageATA != null)
-        //    return true;
+        else if (this.EntityPM.OnCarriageATA != null)
+            return true;
 
-        //else if (this.EntityPM.OnCarriageETA != null)
-        //    return true;
+        else if (this.EntityPM.OnCarriageETA != null)
+            return true;
 
         else
             return false;
@@ -263,15 +273,24 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             return false;
     }
 
-    //private IsLegExists(code: string): boolean {
-    //    var result: boolean = false;
-
-    //    return result;
-    //}
-
     RoutingItemClicked(code: string) {
         if (code == "TSS") {
+            this.SelectedLegCode = "TS1";
+            this.SelectedLegTitle = this.ItemsSource.filter(d => d.Code == "TS1")[0]?.Name;
 
+            this.ItemsSource.forEach(item => {
+                if (item.Code == "TSS")
+                    item.IsHidden = true;
+
+                else if (item.Code == "Line" && !item.IsTransshipment && item.NextLegCode == "POD")
+                    item.IsHidden = true;
+
+                else if (item.IsTransshipment)
+                    item.IsHidden = false;
+
+                else if (item.Code == "Line" && item.IsTransshipment && item.NextLegCode == "POD")
+                    item.IsHidden = false;
+            });
         }
 
         else {
@@ -289,11 +308,13 @@ export class RoutingItem {
         this.Calculate();
     }
 
+    public IsTransshipment: boolean;
     public Code: string;
+    public NextLegCode: string;
     public Name: string;
     public Location: string;
-    public IsHidden: boolean = false;
     public IsLine: boolean = false;
+    public IsHidden: boolean = false;
     public IsDashedLine: boolean = false;
     public IsContinuousLine: boolean = false;
 
@@ -322,25 +343,25 @@ export class RoutingItem {
 
             case "TSS": {
                 name = "Transshipments";
-                //location = this.Container.EmptyPickupLocation;
+                location = this.GetTrnasshipmentLocation();
                 break;
             }
 
             case "TS1": {
                 name = "Transshipment 1";
-                //location = this.Container.EmptyPickupLocation;
+                location = this.Container.Transshipment1LocationName;
                 break;
             }
 
             case "TS2": {
                 name = "Transshipment 2";
-                //location = this.Container.EmptyPickupLocation;
+                location = this.Container.Transshipment2LocationName;
                 break;
             }
 
             case "TS3": {
                 name = "Transshipment 3";
-                //location = this.Container.EmptyPickupLocation;
+                location = this.Container.Transshipment3LocationName;
                 break;
             }
 
@@ -371,5 +392,19 @@ export class RoutingItem {
 
         this.Name = name;
         this.Location = location;
+    }
+
+    private GetTrnasshipmentLocation(): string {
+        if (!AppTool.IsNullOrEmpty(this.Container.Transshipment3LocationName))
+            return this.Container.Transshipment3LocationName;        
+
+        else if (!AppTool.IsNullOrEmpty(this.Container.Transshipment2LocationName))
+            return this.Container.Transshipment2LocationName;        
+
+        else if (!AppTool.IsNullOrEmpty(this.Container.Transshipment1LocationName)) 
+            return this.Container.Transshipment1LocationName;        
+
+        else
+            return null;
     }
 }

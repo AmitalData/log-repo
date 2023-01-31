@@ -7,6 +7,7 @@
         font-size: 13px;
         line-height: 100%;
         color: #292D30;
+        cursor:pointer;
     }
 
     .LegNameSelected {
@@ -30,9 +31,16 @@
         color: #454545;
     }
 
+    .Circle {
+        height: 14px;
+        width: 14px;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
 </style>
 
-<div class="TabHolder">
+<div class="TabHolder" style="overflow-x:auto">
     <table>
         <tr class="TabTitleRow">
             <td>{{'Container.TH.Routings' | TextCodeTranslationPipe}}</td>
@@ -45,27 +53,24 @@
         <tr>
             <td>
                 <table>
-                    <tr style="height: 120px;">
+                    <tr style="height: 100px;">
                         <td>
                             <table>
                                 <tr>
-                                    <td *ngFor="let item of ItemsSource" style="width:140px; max-width:140px;" (click)="RoutingItemClicked(item.Code)">
-                                        <table *ngIf="!item.IsLine">
+                                    <td *ngFor="let item of ItemsSource">
+                                        <table *ngIf="!item.IsLine && !item.IsHidden" style="width:140px; max-width:140px;">
                                             <tr>
                                                 <td style="width:14px;">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                                                        <circle cx="7" cy="7" r="7" fill="#4AC76F"></circle>
-                                                    </svg>
-                                                    <!--<svg xmlns="http://www.w3.org/2000/svg" width="8" height="7" viewBox="0 0 8 7" fill="none">
-                                        <path d="M3.01557 5.05906L7.2809 0.375L7.9375 1.09547L3.01557 6.5L0.0625 3.25738L0.718634 2.53691L3.01557 5.05906Z" fill="white" />
-                                    </svg>-->
+                                                    <span class="Circle" style="background-color: #4AC76F;">
+                                                        <span style="color: white; width:7.88px; height:6.13px" class="TopCenter">&#10003;</span>
+                                                    </span>
                                                 </td>
 
                                                 <td style="width:4px;">
                                                     <div></div>
                                                 </td>
 
-                                                <td class="LegName" [class.LegNameSelected]="item.Code == SelectedLegCode">
+                                                <td class="LegName" [class.LegNameSelected]="item.Code == SelectedLegCode" (click)="RoutingItemClicked(item.Code)">
                                                     {{item.Name}}
                                                 </td>
                                             </tr>
@@ -89,11 +94,11 @@
                                             </tr>
                                         </table>
 
-                                        <table *ngIf="item.IsLine">
+                                        <table *ngIf="item.IsLine && !item.IsHidden" style="width:60px; max-width:60px;">
                                             <tr>
-                                                <td class="TopCenter">
-                                                    <hr *ngIf="item.IsContinuousLine" style="border-top: solid 1px #C7C7C7; width: 56px;"/>
-                                                    <hr *ngIf="item.IsDashedLine" style="border-top: dashed 1px #C7C7C7; width: 56px;"/>
+                                                <td class="TopCenter" style="top:10px;">
+                                                    <hr *ngIf="item.IsContinuousLine" style="border-top: solid 1px #C7C7C7; width: 56px;" />
+                                                    <hr *ngIf="item.IsDashedLine" style="border-top: dashed 1px #C7C7C7; width: 56px;" />
                                                 </td>
                                             </tr>
                                         </table>
