@@ -1001,15 +1001,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             bool pendingRequiresPayment = false;
 
 
-                            if (!string.IsNullOrEmpty(_MyDeclarationCourierStatusPM.CourierPendingReasonList))
+                            if (_MyDeclarationCourierStatusPM.DeclarationPendings.Count > 0)
                             {
-                                var courierPendingReason = _MyDeclarationCourierStatusPM.CourierPendingReasonList.Split(',');
-                                foreach (var item in courierPendingReason)
+                                foreach (var item in _MyDeclarationCourierStatusPM.DeclarationPendings)
                                 {
                                     if (!pendingRequiresPayment)
                                     {
                                         CourierPendingReasonRepository courierPendingReasonRepository = new CourierPendingReasonRepository(_MyDeclarationPM.Tenant);
-                                        CourierPendingReason PendingReason = courierPendingReasonRepository.GetByCode(item, _MyDeclarationPM.Tenant);
+                                        CourierPendingReason PendingReason = courierPendingReasonRepository.GetByCode(item.CourierPendingReasonCode, _MyDeclarationPM.Tenant);
 
                                         if (PendingReason != null && PendingReason.RequiresPayment == true && !PendingReason.Inactive)
                                             pendingRequiresPayment = true;
