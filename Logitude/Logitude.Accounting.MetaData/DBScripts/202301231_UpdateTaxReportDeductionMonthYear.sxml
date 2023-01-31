@@ -1,0 +1,10 @@
+﻿<Script DBType="Main" Module="Accounting" TargetTableName="TaxDeductionReports" Env="local,test,cloud">
+  <Sql Version="1">
+    <![CDATA[
+	   UPDATE TaxDeductionReports
+     SET [Month] = DATEFROMPARTS(TaxYear, MONTH(Month), DAY(Month))
+     where TaxYear is not null and Month is not null 
+     and TaxYear !=YEAR(Month) and TaxYear > 2000
+     ]]>
+ </Sql>
+</Script>
