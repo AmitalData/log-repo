@@ -904,6 +904,7 @@ namespace CommunicationWorkerRole
                                 invoice.TransferError = null;
                                 invoice.TransferStatusCode = "TR";
                                 invoice.IsTransferStarted = false;
+                                invoice.IsTransferStatusSetManually = true;
 
                                 if (QBOId != null)
                                     invoice.ExternalAccountingEntityId = QBOId;
@@ -917,6 +918,7 @@ namespace CommunicationWorkerRole
                                 invoice.TransferError = null;
                                 invoice.TransferStatusCode = "ET";
                                 invoice.IsTransferStarted = false;
+                                invoice.IsTransferStatusSetManually = true;
 
                                 if (QBOId != null)
                                     invoice.ExternalAccountingEntityId = QBOId;
@@ -937,6 +939,7 @@ namespace CommunicationWorkerRole
                                 invoice.TransferError = null;
                                 invoice.TransferStatusCode = "TR";
                                 invoice.IsTransferStarted = false;
+                                invoice.IsTransferStatusSetManually = true;
 
                                 if (!string.IsNullOrEmpty(QBOId))
                                     invoice.ExternalAccountingEntityId = QBOId;
@@ -950,6 +953,8 @@ namespace CommunicationWorkerRole
                                 invoice.TransferError = null;
                                 invoice.TransferStatusCode = "ET";
                                 invoice.IsTransferStarted = false;
+                                invoice.IsTransferStatusSetManually = true;
+
                                 if (!string.IsNullOrEmpty(QBOId))
                                     invoice.ExternalAccountingEntityId = QBOId;
                             }
@@ -970,6 +975,7 @@ namespace CommunicationWorkerRole
                                 payment.TransferError = null;
                                 payment.TransferStatusCode = "TR";
                                 payment.IsTransferStarted = false;
+                                payment.IsTransferStatusSetManually = true;
 
                                 if (!string.IsNullOrEmpty(QBOId))
                                     payment.ExternalAccountingEntityId = QBOId;
@@ -983,6 +989,7 @@ namespace CommunicationWorkerRole
                                 payment.TransferError = null;
                                 payment.TransferStatusCode = "ET";
                                 payment.IsTransferStarted = false;
+                                payment.IsTransferStatusSetManually = true;
 
                                 if (!string.IsNullOrEmpty(QBOId))
                                     payment.ExternalAccountingEntityId = QBOId;
