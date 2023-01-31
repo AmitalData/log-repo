@@ -56,6 +56,8 @@ export class DashboardTabComponent implements OnInit {
     public CanCopy: boolean;
     public FilterCount: number = 0;
     public DateRangeLabel: string;
+    public CompareDateRangeLabel: string;
+    public VSString: string;
     public DateRangeNumber: number;
 
     constructor() {
@@ -423,26 +425,75 @@ export class DashboardTabComponent implements OnInit {
     SetDateRangeForCompareWithPrevious() {
         if (!this.GlobalFilters || this.GlobalFilters.length == 0) {
             this.DateRangeLabel = "";
+            this.CompareDateRangeLabel = "";
             return;
         }
         var compareItem = this.GlobalFilters.find((x: any) => x.compareWithPrevious) as any;
 
         if(!compareItem?.compareWithPrevious){
             this.DateRangeLabel = "";
+            this.CompareDateRangeLabel = "";
             return;
         }
         if (compareItem?.Operator == "Between"){
-            this.DateRangeLabel = this.ParseDateFormat(compareItem.fieldValue) + " - " + this.ParseDateFormat(compareItem.fieldValue2) 
-            + " vs " + this.GetCompareFromDateForBetween(compareItem.fieldValue, compareItem.fieldValue2) + " - " + this.GetCompareToDateForBetween(compareItem.fieldValue);
+            this.DateRangeLabel = this.ParseDateFormat(compareItem.fieldValue) + " - " + this.ParseDateFormat(compareItem.fieldValue2);
+            this.VSString = "vs";
+            this.CompareDateRangeLabel = this.GetCompareFromDateForBetween(compareItem.fieldValue, compareItem.fieldValue2) + " - " + this.GetCompareToDateForBetween(compareItem.fieldValue);
             
         }
 
         if (compareItem?.Operator == "Previous"){
-            let formattedDate = this.FormatDate(new Date(Date.now()));
-            this.DateRangeLabel = this.GetFromDateForPrevious(compareItem) + " - " + formattedDate
-             +" vs "+ this.GetCompareFromDateForPrevious(compareItem, this.GetFromDateForPrevious(compareItem)) 
-             + " - " + this.GetCompareToDateForPrevious(this.GetFromDateForPrevious(compareItem));
+            this.SetPreviousDates(compareItem);
         }
+    }
+    SetPreviousDates(compareItem : any) {
+        var curDate = new Date(Date.now());
+        let formattedDate = this.FormatDate(curDate);
+
+        if(compareItem.dateGroupCode == 'Quarter'){  
+            this.CalcuateDatesForQuarterDateGroup(compareItem, curDate);
+            return;
+        }
+
+        this.DateRangeLabel = this.GetFromDateForPrevious(compareItem) + " - " + formattedDate;
+        this.VSString = "vs";
+        this.CompareDateRangeLabel = this.GetCompareFromDateForPrevious(compareItem, this.GetFromDateForPrevious(compareItem)) 
+        + " - " + this.GetCompareToDateForPrevious(this.GetFromDateForPrevious(compareItem));
+    }
+
+    CalcuateDatesForQuarterDateGroup(compareItem: any, curDate: Date) {
+        var firstDay =  new Date(curDate.getFullYear(), curDate.getMonth(), 1); 
+        var firstDayFormat = this.FormatDate(firstDay);
+        var lastDayInCurQuarter = this.CalculateCurQuarter(compareItem, firstDay);
+        var firstDayInPrevQuarter = this.CalculateFromDatepreviousQuarter(compareItem, firstDay);
+        var lastDayInPrevQuarter = this.CalculateToDatepreviousQuarter(compareItem, new Date(firstDayInPrevQuarter));
+
+        this.DateRangeLabel = firstDayFormat + " - " + lastDayInCurQuarter; 
+        this.VSString = "vs";
+        this.CompareDateRangeLabel = firstDayInPrevQuarter + " - " + lastDayInPrevQuarter;
+    }
+    
+
+    CalculateCurQuarter(compareItem: any, date: Date): string{
+        let stringPeriod = compareItem.fieldValue3;
+        var numberPeriod: number = +stringPeriod;
+        var lastDayInQuarter = new Date (date); 
+        lastDayInQuarter.setMonth(lastDayInQuarter.getMonth() + (3 * numberPeriod)); 
+        lastDayInQuarter.setDate(lastDayInQuarter.getDate() - 1); 
+        let formattedDate = this.FormatDate(lastDayInQuarter);
+        return formattedDate;
+        
+    }
+    CalculateFromDatepreviousQuarter(compareItem: any, date: Date): string {
+        let stringPeriod = compareItem.fieldValue3;
+        var numberPeriod: number = +stringPeriod;
+        date.setMonth(date.getMonth() - (3 * numberPeriod)); 
+        let formattedDate = this.FormatDate(date);
+        return formattedDate; 
+    }
+    CalculateToDatepreviousQuarter(compareItem: any, date: Date): string{
+        var toDate = this.CalculateCurQuarter(compareItem, date);
+        return toDate;
     }
     ParseDateFormat(date: string): string{
         var year = date.substring(0,4);
@@ -476,7 +527,6 @@ export class DashboardTabComponent implements OnInit {
 
     GetFromDateForPrevious(compareItem : any): string {
         let dateFrom = new Date(Date.now());
-       
         let stringPeriod = compareItem.fieldValue3;
         var numberPeriod: number = +stringPeriod;
         dateFrom = this.SetDateFromAccordingDateGroupCode(compareItem, dateFrom, numberPeriod);
@@ -502,16 +552,13 @@ export class DashboardTabComponent implements OnInit {
         if(compareItem.dateGroupCode == 'Month'){
             dateFromHere.setMonth(dateFromHere.getMonth() - numberPeriod);
         }
-        if(compareItem.dateGroupCode == 'Quarter'){
-            dateFromHere.setMonth(dateFromHere.getMonth() - (3 * numberPeriod));
-        }
         if(compareItem.dateGroupCode == 'Year'){
             dateFromHere.setFullYear(dateFromHere.getFullYear() - numberPeriod);
         }
 
         return dateFromHere;
     }
-
+    
     GetCompareToDateForPrevious(dateFrom: any) {
         let dateFromHere = new Date (dateFrom);
         
