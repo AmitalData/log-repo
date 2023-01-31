@@ -467,8 +467,18 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             string email = "";
             try
             {
+                var textCodeQuery = new DigitalTextCodeQueryService(0);
+                var objectTables = textCodeQuery.GetDigitalTextCodesObjetTables(0);
+
                 var digitalFieldSecurityQuery = new DigitalFieldSecurityQueryService(0);
-                var objectTables = digitalFieldSecurityQuery.GetDigitalProfilesObjetTables(0);
+                var objectTablesWithNoParent = digitalFieldSecurityQuery.GetDigitalProfilesObjetTables(0)
+                                                                        .Select(a => a.ObjectTableId)
+                                                                        .ToList();
+
+                objectTables = objectTables.Where(a => objectTablesWithNoParent.Contains(a.ObjectTableId) 
+                                                       || a.ObjectTableName.Equals("General", StringComparison.InvariantCultureIgnoreCase))
+                                           .ToList();
+
                 return Request.CreateResponse(HttpStatusCode.OK, objectTables);
             }
             catch (AutenticationException ex)
