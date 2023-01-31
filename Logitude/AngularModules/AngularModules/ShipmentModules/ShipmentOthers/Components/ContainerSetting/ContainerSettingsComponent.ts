@@ -61,7 +61,7 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
             if (!response.Result) this.IsNew = true;
             else this.EntityPM = response.Result;
             this.ShowDefaults = SessionLocator.Tenant != 0 && (this.IsNew || !this.EntityPM?.AddedManually);
-            this.SetDefaultATADateItem();
+            this.SetDefaultGeneralItem();
             this.LoadTenantZeroShippingLines();
             this.SetDefaultData();
         });
@@ -75,18 +75,15 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
         this.IsDomestic = true;
     }
 
-    private SetDefaultATADateItem() {
+    private SetDefaultGeneralItem() {
         if (!AppTool.IsNullOrEmpty(this.DataContext.ShipmentATADateIndicator)) this.SelectedShipmentATADateItem = this.ShipmentATADateComboList.filter(d => d.Code == this.DataContext.ShipmentATADateIndicator)[0];
         else this.SelectedShipmentATADateItem = this.ShipmentATADateComboList.filter(d => d.Code == "Vessel")[0];
-
-        // if (!AppTool.IsNullOrEmpty(this.DataContext.EmptyReturnClosingDays)) this.EmptyReturnClosingDays = this.DataContext.EmptyReturnClosingDays;
-        // else this.EmptyReturnClosingDays = 5;
-
-        // if (!AppTool.IsNullOrEmpty(this.DataContext.ShipmentATAClosingDays)) this.ShipmentATAClosingDays = this.DataContext.ShipmentATAClosingDays;
-        // else this.ShipmentATAClosingDays = 90;
-
+        if(!this.ShowDefaults) return;
+        this.EmptyReturnClosingDays = 5;
+        this.ShipmentATAClosingDays = 90;
 
     }
+    
 
     private LoadTenantZeroShippingLines() {
         this.TenantZeroShippingLines = [];
