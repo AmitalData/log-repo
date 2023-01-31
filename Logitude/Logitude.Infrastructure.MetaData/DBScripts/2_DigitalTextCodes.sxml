@@ -1,6 +1,8 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="5">
+  <Sql Version="6">
     <![CDATA[
+	
+	  delete from DigitalTextCode where Id != ''
       declare @NewEntityId as varchar(15)
 	  declare @generalObjectTableId as varchar(15)
 	  set @generalObjectTableId = (select Id from ObjectTables where [Name] = 'General' and Tenant = 0 )
@@ -2434,12 +2436,6 @@
 			"TextCode": "Shipment.F.MainCarriageATA",
 			"DefaultText": "Main carriage ATA",
 			"FieldCode": "Shipment.MainCarriageATA",
-		    "DisplayText": ""
-		},
-		{
-			"TextCode": "Shipment.F.AirlinePrefix",
-			"DefaultText": "Airline prefix",
-			"FieldCode": "Shipment.AirlinePrefix",
 		    "DisplayText": ""
 		},
 		{
@@ -5033,12 +5029,6 @@
 			"TextCode": "Shipment.F.MainCarriageATA",
 			"DefaultText": "Main carriage ATA",
 			"FieldCode": "Shipment.MainCarriageATA",
-		    "DisplayText": ""
-		},
-		{
-			"TextCode": "Shipment.F.AirlinePrefix",
-			"DefaultText": "Airline prefix",
-			"FieldCode": "Shipment.AirlinePrefix",
 		    "DisplayText": ""
 		},
 		{
