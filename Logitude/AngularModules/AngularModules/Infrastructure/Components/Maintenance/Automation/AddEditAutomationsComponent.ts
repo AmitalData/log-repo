@@ -1062,6 +1062,11 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 this.ResultCodeList.push(new ResultCode("Docs In F/U Creation", "DOCINFOLLOWUP"));
                 this.ResultCodeList.push(new ResultCode("Set Fields Value", "FIELDSET"));
             }
+
+            //WarehouseEntry
+            if (this.ObjectTableName == "WarehouseEntry") {
+                this.ResultCodeList.push(new ResultCode("Set Fields Value", "FIELDSET"));
+            }
             
             this.ResultCodeSelected = this.ResultCodeList.filter(d => d.Code == this.AutomatedBackupClass.ResultCode)[0];
 
