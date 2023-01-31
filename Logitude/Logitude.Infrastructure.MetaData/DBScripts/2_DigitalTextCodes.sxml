@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="4">
+  <Sql Version="5">
     <![CDATA[
       declare @NewEntityId as varchar(15)
 	  declare @generalObjectTableId as varchar(15)
@@ -1316,12 +1316,6 @@
 		{
 			"TextCode": "General.G.SearchMinNumberOfChars",
 			"DefaultText": "Please enter 3 letters at least to start searching",
-			"FieldCode": "",
-			"DisplayText": ""
-		},
-		{
-			"TextCode": "Shipment.G.References",
-			"DefaultText": "References",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
@@ -3916,12 +3910,6 @@
 		{
 			"TextCode": "General.G.SearchMinNumberOfChars",
 			"DefaultText": "Please enter 3 letters at least to start searching",
-			"FieldCode": "",
-			"DisplayText": ""
-		},
-		{
-			"TextCode": "Shipment.G.References",
-			"DefaultText": "References",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
