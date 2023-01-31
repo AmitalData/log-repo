@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class WarehouseEntryUpdateClass
    {  		
-		public const string HashString = "2823581865f72b939e9136990a5113b9";
+		public const string HashString = "e4edeebc0fa7e7cc9c2e01bf3967e55e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5480,6 +5480,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                  
 			   TextCode WarehouseEntryEventsTextCode_TH7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.TH.Events", DefaultText = "Events",LocalDefaultText = "Events", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature WarehouseEntryEventsFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Tab.Events", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseEntryObjectTable);
+ 
+                 
+			   TextCode WarehouseEntryAuditTextCode_TH8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.TH.Audit", DefaultText = "Audit",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature WarehouseEntryAuditFeature_TH8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Tab.Audit", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntryFeatures.WEAU", NameTextCodeDefaultText = "Audit", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseEntryObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -5500,6 +5504,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COWE",HtmlComponentName = "WarehouseConnectionsTabComponent",HtmlComponentUrl = "./Warehouse/Components/EditTabs/ConnectionsTab/WarehouseConnectionsTabComponent", FeatureId = WarehouseEntryConnectedEntitiesFeature_TH6.Id,FeatureUniqeCode = WarehouseEntryConnectedEntitiesFeature_TH6.FeatureUniqeCode, ControlPath = "./Warehouse/Components/EditTabs/ConnectionsTab/WarehouseConnectionsTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryConnectedEntitiesTextCode_TH6.Id, TabNameTextCodeCode = WarehouseEntryConnectedEntitiesTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EVWE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = WarehouseEntryEventsFeature_TH7.Id,FeatureUniqeCode = WarehouseEntryEventsFeature_TH7.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryEventsTextCode_TH7.Id, TabNameTextCodeCode = WarehouseEntryEventsTextCode_TH7.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "WEAU",HtmlComponentName = "WarehouseEntryAuditTabComponent",HtmlComponentUrl = "./Warehouse/Components/EditTabs/Audit/WarehouseEntryAuditTabComponent", FeatureId = WarehouseEntryAuditFeature_TH8.Id,FeatureUniqeCode = WarehouseEntryAuditFeature_TH8.FeatureUniqeCode, ControlPath = "./Warehouse/Components/EditTabs/Audit/WarehouseEntryAuditTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryAuditTextCode_TH8.Id, TabNameTextCodeCode = WarehouseEntryAuditTextCode_TH8.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

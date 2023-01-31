@@ -6695,6 +6695,18 @@
     FeatureDefaultText="&quot;Events&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Audit&quot;"
+    ObjectTableName="&quot;WarehouseEntry&quot;"
+    Code="&quot;WEAU&quot;"
+    ControlPath="&quot;./Warehouse/Components/EditTabs/Audit/WarehouseEntryAuditTabComponent&quot;"
+    TextCode="&quot;WarehouseEntry.TH.Audit&quot;"
+    IsPackagable="true"
+    IndexOrder="0"
+    HtmlComponentURL="&quot;./Warehouse/Components/EditTabs/Audit/WarehouseEntryAuditTabComponent&quot;"
+    HtmlComponentName="&quot;WarehouseEntryAuditTabComponent&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;CREN&quot;"
