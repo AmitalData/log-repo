@@ -36,9 +36,10 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         queryableData = queryableData.Where(a => a.IsOperationalClosed == false 
                                                             && a.IsAccountingClosed == false 
                                                             && a.IsCustomerArchived == false
-                                                            && ((a.MainCarriageFinalDestinationATA == null && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) > afterOneYearDate)
-                                                            || !(a.MainCarriageFinalDestinationATA <= afterNinetyDaysDate
-                                                            || System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) <= afterOneYearDate)));
+                                                            && ((a.MainCarriageFinalDestinationATA == null 
+                                                                  && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) > afterOneYearDate)
+                                                                || !(a.MainCarriageFinalDestinationATA <= afterNinetyDaysDate
+                                                                    || System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) <= afterOneYearDate)));
                     }
 
                     if (item.FieldName == "InOrigin")
@@ -54,9 +55,10 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                                                             && a.IsOperationalClosed == false 
                                                             && a.IsAccountingClosed == false 
                                                             && a.IsCustomerArchived == false
-                                                            && ((a.MainCarriageFinalDestinationATA == null && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) > afterOneYearDate)
-                                                            || !(a.MainCarriageFinalDestinationATA <= afterNinetyDaysDate
-                                                            || System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) <= afterOneYearDate)));
+                                                            && ((a.MainCarriageFinalDestinationATA == null
+                                                                  && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) > afterOneYearDate)
+                                                                || !(a.MainCarriageFinalDestinationATA <= afterNinetyDaysDate
+                                                                    || System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) <= afterOneYearDate)));
                     }
 
                     if (item.FieldName == "InTransit")
@@ -74,9 +76,10 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                                                             && a.IsOperationalClosed == false 
                                                             && a.IsAccountingClosed == false 
                                                             && a.IsCustomerArchived == false
-                                                            && ((a.MainCarriageFinalDestinationATA == null && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) > afterOneYearDate)
-                                                            || !(a.MainCarriageFinalDestinationATA <= afterNinetyDaysDate
-                                                            || System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) <= afterOneYearDate)));
+                                                            && ((a.MainCarriageFinalDestinationATA == null
+                                                                  && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) > afterOneYearDate)
+                                                                || !(a.MainCarriageFinalDestinationATA <= afterNinetyDaysDate
+                                                                    || System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) <= afterOneYearDate)));
                     }
 
                     if (item.FieldName == "AtDestination")
@@ -91,9 +94,10 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                                                         && a.IsOperationalClosed == false 
                                                         && a.IsAccountingClosed == false 
                                                         && a.IsCustomerArchived == false
-                                                        && ((a.MainCarriageFinalDestinationATA == null && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) > afterOneYearDate)
-                                                        || !(a.MainCarriageFinalDestinationATA <= afterNinetyDaysDate
-                                                        || System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) <= afterOneYearDate)));
+                                                            && ((a.MainCarriageFinalDestinationATA == null
+                                                                  && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) > afterOneYearDate)
+                                                                || !(a.MainCarriageFinalDestinationATA <= afterNinetyDaysDate
+                                                                    || System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) <= afterOneYearDate)));
                     }
 
                     if (item.FieldName == "DigitalPortalSearchFields")
@@ -312,9 +316,10 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         queryableData = queryableData.Where(a => a.IsOperationalClosed == false 
                                                             && a.IsAccountingClosed == false
                                                             && a.IsCustomerArchived == false
-                                                            && ((a.MainCarriageFinalDestinationATA == null && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) > afterOneYearDate)
-                                                            || !(a.MainCarriageFinalDestinationATA <= afterNinetyDaysDate
-                                                            || System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) <= afterOneYearDate)));
+                                                            && ((a.MainCarriageFinalDestinationATA == null
+                                                                  && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) > afterOneYearDate)
+                                                                || !(a.MainCarriageFinalDestinationATA <= afterNinetyDaysDate
+                                                                    || System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) <= afterOneYearDate)));
                     }
 
                     if (item.FieldName == "InOrigin")
@@ -329,9 +334,10 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                                                             && a.IsOperationalClosed == false 
                                                             && a.IsAccountingClosed == false 
                                                             && a.IsCustomerArchived == false
-                                                            && ((a.MainCarriageFinalDestinationATA == null && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) > afterOneYearDate)
-                                                            || !(a.MainCarriageFinalDestinationATA <= afterNinetyDaysDate
-                                                            || System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) <= afterOneYearDate)));
+                                                            && ((a.MainCarriageFinalDestinationATA == null
+                                                                  && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) > afterOneYearDate)
+                                                                || !(a.MainCarriageFinalDestinationATA <= afterNinetyDaysDate
+                                                                    || System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) <= afterOneYearDate)));
                     }
 
                     if (item.FieldName == "InTransit")
@@ -349,9 +355,10 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                                                             && a.IsOperationalClosed == false 
                                                             && a.IsAccountingClosed == false 
                                                             && a.IsCustomerArchived == false
-                                                            && ((a.MainCarriageFinalDestinationATA == null && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) > afterOneYearDate)
-                                                            || !(a.MainCarriageFinalDestinationATA <= afterNinetyDaysDate
-                                                            || System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) <= afterOneYearDate)));
+                                                            && ((a.MainCarriageFinalDestinationATA == null
+                                                                  && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) > afterOneYearDate)
+                                                                || !(a.MainCarriageFinalDestinationATA <= afterNinetyDaysDate
+                                                                    || System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) <= afterOneYearDate)));
                     }
 
                     if (item.FieldName == "AtDestination")
@@ -366,9 +373,10 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                                                             && a.IsOperationalClosed == false
                                                             && a.IsAccountingClosed == false
                                                             && a.IsCustomerArchived == false
-                                                            && ((a.MainCarriageFinalDestinationATA == null && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) > afterOneYearDate)
-                                                            || !(a.MainCarriageFinalDestinationATA <= afterNinetyDaysDate
-                                                            || System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) <= afterOneYearDate)));
+                                                            && ((a.MainCarriageFinalDestinationATA == null
+                                                                  && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) > afterOneYearDate)
+                                                                || !(a.MainCarriageFinalDestinationATA <= afterNinetyDaysDate
+                                                                    || System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) <= afterOneYearDate)));
                     }
 
                     if (item.FieldName == "DigitalPortalSearchFields")

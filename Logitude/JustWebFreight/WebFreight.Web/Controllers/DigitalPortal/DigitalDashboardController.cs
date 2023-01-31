@@ -162,9 +162,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var shipments = shipmentQuery.GetByFilters(newFilters)
                                              .Where(r => !string.IsNullOrEmpty(r.StatusCode)
                                                     && r.IsCustomerArchived == false
-                                                    && ((r.MainCarriageFinalDestinationATA == null && System.Data.Entity.DbFunctions.TruncateTime(r.CreateDateTime) > afterOneYearDate)
-                                                    || !(r.MainCarriageFinalDestinationATA <= afterNinetyDaysDate
-                                                    || System.Data.Entity.DbFunctions.TruncateTime(r.CreateDateTime) <= afterOneYearDate)));
+                                                    && ((r.MainCarriageFinalDestinationATA == null
+                                                            && System.Data.Entity.DbFunctions.TruncateTime(r.CreateDateTime) > afterOneYearDate)
+                                                        || !(r.MainCarriageFinalDestinationATA <= afterNinetyDaysDate
+                                                            || System.Data.Entity.DbFunctions.TruncateTime(r.CreateDateTime) <= afterOneYearDate)));
 
                 var res = GetDigitalStatusesWithCount(shipments, authToken.Tenant);
 
@@ -204,9 +205,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var shipmentsQuery = shipmentQuery.GetByFilters(newFilters)
                                                   .Where(r => !string.IsNullOrEmpty(r.StatusCode)
                                                         && r.IsCustomerArchived == false
-                                                        && ((r.MainCarriageFinalDestinationATA == null && System.Data.Entity.DbFunctions.TruncateTime(r.CreateDateTime) > afterOneYearDate)
-                                                        || !(r.MainCarriageFinalDestinationATA <= afterNinetyDaysDate
-                                                        || System.Data.Entity.DbFunctions.TruncateTime(r.CreateDateTime) <= afterOneYearDate)))
+                                                        && ((r.MainCarriageFinalDestinationATA == null
+                                                                && System.Data.Entity.DbFunctions.TruncateTime(r.CreateDateTime) > afterOneYearDate)
+                                                            || !(r.MainCarriageFinalDestinationATA <= afterNinetyDaysDate
+                                                                || System.Data.Entity.DbFunctions.TruncateTime(r.CreateDateTime) <= afterOneYearDate)))
                                                   .Select(a => new DashboardModelObject()
                                                   {
                                                       StatusCode = a.StatusCode,
@@ -341,9 +343,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var resultList = shipmentQuery.GetByFilters(newFilters)
                                             .Where(r => r.MainCarriageFinalDestinationETA.Value.Year == currentDateTime.Value.Year
                                                     && r.IsCustomerArchived == false
-                                                    && ((r.MainCarriageFinalDestinationATA == null && System.Data.Entity.DbFunctions.TruncateTime(r.CreateDateTime) > afterOneYearDate)
-                                                    || !(r.MainCarriageFinalDestinationATA <= afterNinetyDaysDate
-                                                    || System.Data.Entity.DbFunctions.TruncateTime(r.CreateDateTime) <= afterOneYearDate)))
+                                                    && ((r.MainCarriageFinalDestinationATA == null
+                                                            && System.Data.Entity.DbFunctions.TruncateTime(r.CreateDateTime) > afterOneYearDate)
+                                                        || !(r.MainCarriageFinalDestinationATA <= afterNinetyDaysDate
+                                                            || System.Data.Entity.DbFunctions.TruncateTime(r.CreateDateTime) <= afterOneYearDate)))
                                             .Select(a => new
                                             {
                                                 a.MainCarriageFinalDestinationETA.Value.Month,
