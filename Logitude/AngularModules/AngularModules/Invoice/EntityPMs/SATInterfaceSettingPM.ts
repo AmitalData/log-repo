@@ -70,6 +70,11 @@ export class SATInterfaceSettingPM {
     public set SATCompanyName(newValue: string) { if (this.sATCompanyName != newValue) { this.sATCompanyName = newValue; this.MarkAsDirty("SATCompanyName"); } }
        
 	 
+    private transferExpenseCharges: boolean;
+    public get TransferExpenseCharges() { return this.transferExpenseCharges; }
+    public set TransferExpenseCharges(newValue: boolean) { if (this.transferExpenseCharges != newValue) { this.transferExpenseCharges = newValue; this.MarkAsDirty("TransferExpenseCharges"); } }
+       
+	 
 
     public OldEntityPM: SATInterfaceSettingPM;
 		
