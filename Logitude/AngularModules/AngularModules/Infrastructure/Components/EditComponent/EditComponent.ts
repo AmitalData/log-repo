@@ -293,7 +293,7 @@ export class EditComponent implements OnDestroy {
     private SetEntityPMAfterLoadIt(result)
     {
         this.EntityPM = result;
-        //this.ClonedEntityPM = CloneEntityPM(this.EntityPM);
+
         this.ClonedEntityPM = CloneDeep(this.EntityPM);
 
         if (this.EntityFields) {
@@ -1594,9 +1594,10 @@ export class EditComponent implements OnDestroy {
                             this.SaveDraftVersion(isClosing);
 
                             this.SaveAndCloseCompleted.emit(true);
-
+                            
+                            
+                            this.ClonedEntityPM = CloneDeep(this.EntityPM);
                         }
-                        this.ClonedEntityPM = CloneDeep(this.EntityPM);
 
                     }, error => {
                         this.OnSavingFailed();
@@ -1658,10 +1659,9 @@ export class EditComponent implements OnDestroy {
                                 }
 
                             }
+                            
+                            this.ClonedEntityPM = CloneDeep(this.EntityPM);
                         }
-
-                        //this.ClonedEntityPM = CloneEntityPM(this.EntityPM);
-                        this.ClonedEntityPM = CloneDeep(this.EntityPM);
 
                     }, error => {
                         this.OnSavingFailed();
