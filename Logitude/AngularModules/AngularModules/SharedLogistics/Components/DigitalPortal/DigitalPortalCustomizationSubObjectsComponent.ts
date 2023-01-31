@@ -42,6 +42,7 @@ export class DigitalPortalCustomizationSubObjectsComponent {
         windowArgs.ObjectTableId = subObjectsItem.objectTableId;
         windowArgs.ProfileId = this.ProfileId;
         windowArgs.ProfileCode = this.ProfileCode;
+        windowArgs.ParentObjectTableId = this.ObjectTableId;
         var logWindow = new LogitudeWindow();
         logWindow.IsFullScreen = true;
         logWindow.ShowCloseButton = true;

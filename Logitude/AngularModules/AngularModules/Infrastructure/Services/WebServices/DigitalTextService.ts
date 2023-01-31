@@ -146,6 +146,7 @@ export class DigitalFeildSecurityObjectModel {
     public CardId: string;
     public ProfileId: string;
     public ProfileCode: string;
+    public ParentObjectTableId: string;
     public DefaultSettings: DigitalFeildSecurityUpdateModel[];
 }
 

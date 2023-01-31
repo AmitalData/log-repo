@@ -44,7 +44,8 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                                                                          CreateDate = x.CreateDate,
                                                                          UpdateDate = x.UpdateDate,
                                                                          ProfileId = x.ProfileId,
-                                                                         ProfileCode = x.DigitalProfile.Code
+                                                                         ProfileCode = x.DigitalProfile.Code,
+                                                                         ParentObjectTableId = x.ParentObjectTableId,
                                                                      })
                                                                      .ToList();
             return digitalFieldSecurity;
@@ -61,7 +62,8 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                     DefaultSettings = digitalFieldSecurityList.DefaultSettings,
                     CreateDate = digitalFieldSecurityList.CreateDate,
                     UpdateDate = digitalFieldSecurityList.UpdateDate,
-                    ProfileId = digitalFieldSecurityList.ProfileId
+                    ProfileId = digitalFieldSecurityList.ProfileId,
+                    ParentObjectTableId = digitalFieldSecurityList.ParentObjectTableId
                 };
 
                 entityPm.ChangeSetOp = ChangeSetOperation.Insert;
@@ -79,7 +81,8 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                     DefaultSettings = digitalFieldSecurityList.DefaultSettings,
                     CreateDate = digitalFieldSecurityList.CreateDate,
                     UpdateDate = digitalFieldSecurityList.UpdateDate,
-                    ProfileId = digitalFieldSecurityList.ProfileId
+                    ProfileId = digitalFieldSecurityList.ProfileId,
+                    ParentObjectTableId = digitalFieldSecurityList.ParentObjectTableId
                 };
 
                 var contextData = InfrastructureContext.GetContext(entityPm.Tenant);

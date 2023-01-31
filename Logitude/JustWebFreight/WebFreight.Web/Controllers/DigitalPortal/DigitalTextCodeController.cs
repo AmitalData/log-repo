@@ -96,7 +96,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                                              .Select(a => a.Id)
                                                              .FirstOrDefault(),
                             CreateDate = DateTime.UtcNow,
-                            UpdateDate = DateTime.UtcNow
+                            UpdateDate = DateTime.UtcNow,
+                            ParentObjectTableId = item.ParentObjectTableId
                         });
                     }
 
@@ -208,7 +209,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         DefaultSettings = JsonConvert.SerializeObject(digitalFeildSecurityObjectModel.DefaultSettings),
                         CreateDate = todayDate,
                         UpdateDate = todayDate,
-                        ProfileId = digitalFeildSecurityObjectModel.ProfileId
+                        ProfileId = digitalFeildSecurityObjectModel.ProfileId,
+                        ParentObjectTableId = digitalFeildSecurityObjectModel.ParentObjectTableId
                     };
                 }
 
