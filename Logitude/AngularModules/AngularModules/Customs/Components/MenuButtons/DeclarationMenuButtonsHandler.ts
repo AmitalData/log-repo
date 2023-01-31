@@ -474,7 +474,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
 
                     if (button.EventCode == "Cancel Declaration Closure") {
-                        if(this.EntityPM.Direction!="E"){
+                        if (this.EntityPM.Direction != "E") {
                             if (!this.EntityPM.IsClose) {
                                 button.IsHidden = true;
                             }
@@ -482,14 +482,14 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                                 button.IsHidden = false;
                             }
                         }
-                        else{
-                            button.IsHidden=true;
-                            button.IsDisabled=true;
+                        else {
+                            button.IsHidden = true;
+                            button.IsDisabled = true;
                         }
-                       
+
                     }
                     if (button.EventCode == "CancelOperationalClosure") {
-                        if(this.EntityPM.Direction=="E"){
+                        if (this.EntityPM.Direction == "E") {
                             if (!this.EntityPM.IsClose) {
                                 button.IsHidden = true;
                             }
@@ -497,11 +497,11 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                                 button.IsHidden = false;
                             }
                         }
-                        else{
-                            button.IsDisabled=true;
-                            button.IsHidden=true;
+                        else {
+                            button.IsDisabled = true;
+                            button.IsHidden = true;
                         }
-                        
+
                     }
                     if (button.EventCode == "Declaration Customs Requests") {
                         if (this.EntityPM.AmendmentDontDisplayInList == false && this.EntityPM.IsAmendment == true) {
@@ -734,6 +734,11 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         break;
                     }
                 case "Cancel Declaration Closure":
+                    {
+                        this.CancelDeclarationClosureMethod();
+                        break;
+                    }
+                case "CancelOperationalClosure":
                     {
                         this.CancelDeclarationClosureMethod();
                         break;
