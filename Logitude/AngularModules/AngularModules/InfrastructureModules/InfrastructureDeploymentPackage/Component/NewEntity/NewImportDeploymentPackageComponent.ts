@@ -43,6 +43,7 @@ export class NewImportDeploymentPackageComponent extends BaseComponent {
     private documentsFilingExtendedPMService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
     File: any;
     filterImageParameter: ImageParameter;
+    public FileData: number;
 
     private uploadedDocumentId: string;
     public ImportedPackageDetailsCollection = new ObservableCollection([]);
