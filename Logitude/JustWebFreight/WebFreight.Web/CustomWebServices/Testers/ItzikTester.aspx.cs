@@ -1,7 +1,9 @@
 ﻿
 using Logitude.Customs.BL.BL;
 using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
 using Logitude.Customs.BL.Messaging.U2L.ImportDeclaration;
+using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.Server.Tools.ExternalServices;
@@ -30,11 +32,20 @@ namespace WebFreight.Web.CustomWebServices.Testers
             try
             {
                 Response.Clear();
-                var serverNamesRestartServiceScriptService = new ServerNamesRestartServiceScriptService();
 
-                string script = serverNamesRestartServiceScriptService.GetScript();
-                //Response.Write(script);
-                //Old();
+                var req = new GenericRequestParams()
+                {
+                    Tenant = 7,
+
+                    InterfaceTypeCode = "2750",
+
+                    RequestName = "Declaration Request",
+                    ResponseName = "Declaration Response",
+
+                };
+                var courierForceSignService = new CourierForceSignService();
+                courierForceSignService.ApplyForceSign(ref req);
+
 
             }
             catch (Exception eee)
