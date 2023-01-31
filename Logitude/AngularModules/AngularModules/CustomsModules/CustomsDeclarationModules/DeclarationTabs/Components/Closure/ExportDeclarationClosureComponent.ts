@@ -189,7 +189,7 @@ export class ExportDeclarationClosureComponent extends BaseComponent {
             this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
                 this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
                     if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
-                        if (tabCode == "DCCR") {
+                        if (tabCode == "CloD") {
                             //this.DisplayOnlyCheck();
                             this.ReloadDeclarationCorrection();
                         }

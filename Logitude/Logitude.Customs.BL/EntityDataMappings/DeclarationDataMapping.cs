@@ -188,13 +188,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             else if (entityPOCO.IsAmendment != true)
             {
-                if (new string[] { "6", "7", "8", "10", "11" }.Contains(entityPOCO.ExportCloseAmendmentStatus))
-                {
-                    entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.General.O.ClosingProcessStatus", entityPOCO.Tenant, true) + ' ' + entityPM.ExportCloseAmendStatusName;
-                    entityPM.IsAmendmentDisplayOnly = true;
-                }
-                else
-                {
+               
                     var declarations = declarationQuery//.GetDeclarationAmendmentsById_Cache/*Cache*/(entityPOCO.Tenant, entityPOCO.Id);
 
                 .GetAllDeclarationPOCOs(entityPOCO.Tenant, entityPOCO.CustomFileNo, entityPOCO.Direction) ?? new List<Data.EntityLists.DeclarationList>();
@@ -234,12 +228,22 @@ namespace Logitude.Customs.BL.EntityDataMappings
                     //{
                     //    entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", entityPOCO.Tenant , true);
                     //}
-                }
+                 
             }
 
+            if (new string[] { "6", "7", "8", "10", "11" }.Contains(entityPOCO.ExportCloseAmendmentStatus))
+            {
+                if (!string.IsNullOrEmpty(entityPM.AmendmentMessage))
+                    entityPM.AmendmentMessage += ", ";
 
-            //CardRepository rep = new CardRepository(entityPM.Tenant);
-            Card customerCard = CardRepository.GetSingleCard(entityPOCO.CustomerId, entityPOCO.Tenant, true);
+                entityPM.AmendmentMessage += TranslateTextsClass.Translate("Customs.General.O.ClosingProcessStatus", entityPOCO.Tenant, true) + ' ' + entityPM.ExportCloseAmendStatusName;
+                entityPM.IsAmendmentDisplayOnly = true;
+            }
+            
+
+
+                //CardRepository rep = new CardRepository(entityPM.Tenant);
+                Card customerCard = CardRepository.GetSingleCard(entityPOCO.CustomerId, entityPOCO.Tenant, true);
             if (customerCard != null)
             {
                 entityPM.CustomerName = customerCard.LocalName != null ? customerCard.LocalName : customerCard.EnglishName;
