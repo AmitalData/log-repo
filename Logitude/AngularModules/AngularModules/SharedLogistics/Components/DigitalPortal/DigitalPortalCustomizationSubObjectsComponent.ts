@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 import { DigitalTextService } from '../../../Infrastructure/Services/WebServices/DigitalTextService'
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
     templateUrl: './DigitalPortalCustomizationSubObjectsComponent.html',
@@ -13,6 +14,7 @@ export class DigitalPortalCustomizationSubObjectsComponent {
     public ObjectTableId: string;
     public ItemsSource: ObservableCollection;
     private digitalTextService: DigitalTextService;
+    private CurrentSession = SessionLocator.SelectedSession;
 
     constructor() {
         this.ItemsSource = new ObservableCollection([]);
@@ -24,6 +26,7 @@ export class DigitalPortalCustomizationSubObjectsComponent {
     }
 
     public BuildItemsSource() {
+        this.CurrentSession.StartBusyIndicatorLoading();
         var objectTablesFilterList = [];
         this.digitalTextService.GetDigitalSubObjectsProfilesObjetTables(this.ObjectTableId).subscribe((myResult) => {
             if (!myResult.HasError) {
@@ -33,6 +36,7 @@ export class DigitalPortalCustomizationSubObjectsComponent {
                 });
 
                 this.ItemsSource.InsertCollection(objectTablesFilterList);
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
