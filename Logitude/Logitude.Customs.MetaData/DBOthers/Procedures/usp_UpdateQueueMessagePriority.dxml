@@ -54,7 +54,7 @@
   BEGIN
      update  QueueMessages
 		  set TenantPriority=v_TenantPriority
-		  where Tenant = v_Tenant and InterfaceTypeCode = v_InterfaceTypeCode and NextRunDateTime <= sysdate and EntityId in (
+		  where Tenant = v_Tenant and InterfaceTypeCode = v_InterfaceTypeCode  and EntityId in (
 							select 	Id from CustomsRequestsSheets	where Tenant = v_Tenant	and	(RequestStatusCode = '5' or RequestStatusCode = '1' or
                                                       RequestStatusCode = '2' or RequestStatusCode = '21') and RequestCreateDate >= sysdate-7 and ((ObjectTableId1 = '1-343' and EntityId1 in (
 													  select DeclarationId from CourierDeclarations
