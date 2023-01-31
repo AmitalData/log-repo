@@ -473,7 +473,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     }
                     if (this.EntityPM.AmendmentDontDisplayInList == true) {
                         parentButton = menuButtons.filter(x => x.EventCode == "Actions")[0];
-                        if (parentButton.Id == button.ParentMenuButtonId)
+                        if (parentButton.Id == button.ParentMenuButtonId && button.EventCode != "ExportStorageDecleration")
                             button.IsDisabled = true;
                     }
                     if (button.EventCode == "ExportStorageDecleration") {
