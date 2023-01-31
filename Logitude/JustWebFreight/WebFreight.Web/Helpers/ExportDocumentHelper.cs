@@ -186,7 +186,7 @@ namespace WebFreight.Web.Helpers
             DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(tenant);
             if (documentType.Code == "FTDT")
             {
-                //throw new Exception("This is a failure test document!");
+                throw new Exception("This is a failure test document!");
             }
 
             bool isJsonBody = false;
