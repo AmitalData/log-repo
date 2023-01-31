@@ -55,7 +55,7 @@ namespace Logitude.BL.Helpers
                 {
                     if (!singleApi)
                     {
-                        DiscardUnfoundFeildsFromList(defaultDigitalFieldSecurity);
+                        defaultDigitalFieldSecurity = DiscardUnfoundFeildsFromList(defaultDigitalFieldSecurity);
                     }
 
                     return defaultDigitalFieldSecurity;
@@ -64,7 +64,7 @@ namespace Logitude.BL.Helpers
 
             if (!singleApi && objectTableName.Equals("Shipment", StringComparison.InvariantCultureIgnoreCase))
             {
-                DiscardUnfoundFeildsFromList(defaultDigitalFieldSecurity);
+                defaultDigitalFieldSecurity = DiscardUnfoundFeildsFromList(defaultDigitalFieldSecurity);
             }
 
             if (!customDigitalFeildSecurityObject.Any())
@@ -75,7 +75,7 @@ namespace Logitude.BL.Helpers
             return defaultDigitalFieldSecurity;
         }
 
-        private void DiscardUnfoundFeildsFromList(List<DigitalFeildSecurityObject> defaultDigitalFieldSecurity)
+        private List<DigitalFeildSecurityObject> DiscardUnfoundFeildsFromList(List<DigitalFeildSecurityObject> defaultDigitalFieldSecurity)
         {
             var unfoundFeilds = new List<string>
                 {
@@ -156,7 +156,7 @@ namespace Logitude.BL.Helpers
                     "Shipment.OnCarriageVesselName",
                 };
 
-            defaultDigitalFieldSecurity = defaultDigitalFieldSecurity.Where(a => !unfoundFeilds.Contains(a.FieldCode)).ToList();
+             return defaultDigitalFieldSecurity.Where(a => !unfoundFeilds.Contains(a.FieldCode)).ToList();
         }
 
         public DigitalFieldSecurityList GetDigitalFieldSecurityQuery(int tenant, string objectTableId, string profileCode)
