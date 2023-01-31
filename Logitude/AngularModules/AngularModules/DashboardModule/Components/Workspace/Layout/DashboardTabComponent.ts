@@ -56,8 +56,6 @@ export class DashboardTabComponent implements OnInit {
     public CanCopy: boolean;
     public FilterCount: number = 0;
     public DateRangeLabel: string;
-    public CompareDateRangeLabel: string;
-    public VSString: string;
     public DateRangeNumber: number;
 
     constructor() {
@@ -425,21 +423,16 @@ export class DashboardTabComponent implements OnInit {
     SetDateRangeForCompareWithPrevious() {
         if (!this.GlobalFilters || this.GlobalFilters.length == 0) {
             this.DateRangeLabel = "";
-            this.CompareDateRangeLabel = "";
             return;
         }
         var compareItem = this.GlobalFilters.find((x: any) => x.compareWithPrevious) as any;
 
         if(!compareItem?.compareWithPrevious){
             this.DateRangeLabel = "";
-            this.CompareDateRangeLabel = "";
             return;
         }
         if (compareItem?.Operator == "Between"){
-            this.DateRangeLabel = this.ParseDateFormat(compareItem.fieldValue) + " - " + this.ParseDateFormat(compareItem.fieldValue2);
-            this.VSString = "vs";
-            this.CompareDateRangeLabel = this.GetCompareFromDateForBetween(compareItem.fieldValue, compareItem.fieldValue2) + " - " + this.GetCompareToDateForBetween(compareItem.fieldValue);
-            
+            this.DateRangeLabel = this.ParseDateFormat(compareItem.fieldValue) + " - " + this.ParseDateFormat(compareItem.fieldValue2) + "    vs    " + this.GetCompareFromDateForBetween(compareItem.fieldValue, compareItem.fieldValue2) + " - " + this.GetCompareToDateForBetween(compareItem.fieldValue);            
         }
 
         if (compareItem?.Operator == "Previous"){
@@ -455,9 +448,7 @@ export class DashboardTabComponent implements OnInit {
             return;
         }
 
-        this.DateRangeLabel = this.GetFromDateForPrevious(compareItem) + " - " + formattedDate;
-        this.VSString = "vs";
-        this.CompareDateRangeLabel = this.GetCompareFromDateForPrevious(compareItem, this.GetFromDateForPrevious(compareItem)) 
+        this.DateRangeLabel = this.GetFromDateForPrevious(compareItem) + " - " + formattedDate + "    vs    " + this.GetCompareFromDateForPrevious(compareItem, this.GetFromDateForPrevious(compareItem)) 
         + " - " + this.GetCompareToDateForPrevious(this.GetFromDateForPrevious(compareItem));
     }
 
@@ -468,9 +459,7 @@ export class DashboardTabComponent implements OnInit {
         var firstDayInPrevQuarter = this.CalculateFromDatepreviousQuarter(compareItem, firstDay);
         var lastDayInPrevQuarter = this.CalculateToDatepreviousQuarter(compareItem, new Date(firstDayInPrevQuarter));
 
-        this.DateRangeLabel = firstDayFormat + " - " + lastDayInCurQuarter; 
-        this.VSString = "vs";
-        this.CompareDateRangeLabel = firstDayInPrevQuarter + " - " + lastDayInPrevQuarter;
+        this.DateRangeLabel = firstDayFormat + " - " + lastDayInCurQuarter + "    vs    " + firstDayInPrevQuarter + " - " + lastDayInPrevQuarter; 
     }
     
 
