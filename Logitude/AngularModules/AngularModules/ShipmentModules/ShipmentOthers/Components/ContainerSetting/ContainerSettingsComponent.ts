@@ -78,6 +78,14 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
     private SetDefaultATADateItem() {
         if (!AppTool.IsNullOrEmpty(this.DataContext.ShipmentATADateIndicator)) this.SelectedShipmentATADateItem = this.ShipmentATADateComboList.filter(d => d.Code == this.DataContext.ShipmentATADateIndicator)[0];
         else this.SelectedShipmentATADateItem = this.ShipmentATADateComboList.filter(d => d.Code == "Vessel")[0];
+
+        // if (!AppTool.IsNullOrEmpty(this.DataContext.EmptyReturnClosingDays)) this.EmptyReturnClosingDays = this.DataContext.EmptyReturnClosingDays;
+        // else this.EmptyReturnClosingDays = 5;
+
+        // if (!AppTool.IsNullOrEmpty(this.DataContext.ShipmentATAClosingDays)) this.ShipmentATAClosingDays = this.DataContext.ShipmentATAClosingDays;
+        // else this.ShipmentATAClosingDays = 90;
+
+
     }
 
     private LoadTenantZeroShippingLines() {
