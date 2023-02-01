@@ -269,6 +269,7 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
                 if (isSave == 1) {
                     SessionLocator.SelectedSession.StartBusyIndicatorSaving();
                     this._DeclarationCourierStatusPMService.update(this.DeclarationCourierStatus).subscribe((response: ServiceResponse) => {
+                        this.InitTab();
                         SessionLocator.SelectedSession.StopBusyIndicator();
                         SessionLocator.SelectedSession.CloseCurrentWindow();
                     });
