@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.BL.InfrastructureModel.Services.DeploymentPackage
+namespace Logitude.BL.InfrastructureModel.Services.DeploymentPackage.Dependiencies
 {
     public interface IDeploymentPackageDependiency
     {
-        void Validate(DeploymentPackageDependiencyContext deploymentPackageDependiency);
+        void Validate(DeploymentPackageDependiencyContext deploymentPackageDependiencyContext);
     }
 
     public class DeploymentPackageDependiencyContext

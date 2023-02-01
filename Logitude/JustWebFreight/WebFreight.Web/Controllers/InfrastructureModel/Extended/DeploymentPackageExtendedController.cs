@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Services.DeploymentPackage;
+using Logitude.BL.InfrastructureModel.Services.DeploymentPackage.Dependiencies;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityQueryServices;
