@@ -164,7 +164,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         FromCountryId, 
 	         ToCountryId, 
 	         MasterShipmentNumber, 
-	         ConnectedToReferenceNumber,
+	         ConnectedToReferenceNumber, 
+	         IsUpdateByAutomation,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

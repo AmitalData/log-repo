@@ -1735,6 +1735,29 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool isUpdateByAutomation ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsUpdateByAutomation  
+	   {
+	    
+	     get
+		{
+		   return isUpdateByAutomation;
+		 }
+		 set
+		 {
+		   if(isUpdateByAutomation != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsUpdateByAutomation",OldValue=isUpdateByAutomation,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isUpdateByAutomation=value;
+		   }
+			
+		 }
+	   }
 
 	   private List<CustomChildEntity> customChildEntities;
 	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]

@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Services.DeploymentPackage;
+using Logitude.BL.InfrastructureModel.Services.DeploymentPackage.Dependiencies.ObjectFields;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
@@ -13,7 +14,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.BL.InfrastructureModel.Tools.EntityService
+namespace Logitude.BL.InfrastructureModel.Services.DeploymentPackage.Dependiencies
 {
     public class DeploymentPackageDependienciesService
     {
@@ -34,7 +35,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         public DeploymentPackageDependiency Validate()
         {
             DeploymentPackageDependiencyContext deploymentPackageDependiencyContext = BuildDeploymentPackageDependiencyContext(deploymentPackageDependiency);
-            List<IDeploymentPackageDependiency> deploymentPackageDependiencies = BuildDeploymentPackageDependiencies();
+            List<IDeploymentPackageDependiency> deploymentPackageDependiencies = BuildDeploymentPackageDependiencies(deploymentPackageDependiencyContext);
             foreach (IDeploymentPackageDependiency deploymentPackage in deploymentPackageDependiencies)
             {
                 deploymentPackage.Validate(deploymentPackageDependiencyContext);
@@ -55,7 +56,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 CustomObjectTables = customObjectTables
             };
         }
-        private List<IDeploymentPackageDependiency> BuildDeploymentPackageDependiencies()
+        private List<IDeploymentPackageDependiency> BuildDeploymentPackageDependiencies(DeploymentPackageDependiencyContext deploymentPackageDependiencyContext)
         {
             List<IDeploymentPackageDependiency> deploymentPackageDependiencies = new List<IDeploymentPackageDependiency>
             {

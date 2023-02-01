@@ -13193,7 +13193,7 @@
     DefaultText="&quot;CreditUsed&quot;"
     ListFieldLable="&quot;CreditUsedListLable&quot;"
     ListLableDefaultText="&quot;CreditUsed&quot;"
-    ListLocalDefaultText="&quot;מסגרת אשראי&quot;"
+    ListLocalDefaultText="&quot;מצב אשראי&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"

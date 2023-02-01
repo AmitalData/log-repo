@@ -1353,7 +1353,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                             {
                                                 Id = a.Id,
                                                 IsEquipment = a.IsEquipment,
-
+                                                InvoiceNumber = a.InvoiceNumber
                                             }).ToList();
 
             return invoicePMs;

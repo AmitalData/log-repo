@@ -337,6 +337,8 @@
     <Content Include="Images\Menu\AutomationBlueIcon.Gray.png" />
     <Content Include="Images\Menu\AutomationBlueIcon.png" />
     <Content Include="Images\Menu\AutomationBlueIcon.Selected.png" />
+    <Content Include="Images\Menu\Containers.Selected.png" />
+    <Content Include="Images\Menu\Containers.png" />
     <Content Include="Images\PrivateLabel\MainImage.png" />
     <Content Include="Images\PrivateLabel\LogBoxLogo.png" />
     <Content Include="Images\PrivateLabel\Background.png" />
@@ -448,6 +450,7 @@
     <Content Include="TasksApp\Components\TasksAppComponent.html" />
     <Content Include="TasksApp\Scripts\tasks-app.js" />
     <Content Include="Warehouse\Components\ChooseWarehouseEntryComponent.html" />
+    <Content Include="Warehouse\Components\EditTabs\Audit\WarehouseEntryAuditTabComponent.html" />
     <Content Include="Warehouse\Components\EditTabs\Audit\WarehouseReleaseAuditTabComponent.html" />
     <Content Include="Warehouse\Components\SelectionAddChooseWarehouseEntryComponent.html" />
     <Content Include="Workflow\Components\WorkflowBuilder\WorkflowBuilderComponent.html" />
@@ -8118,6 +8121,7 @@
     <TypeScriptCompile Include="SharedLogistics\DataContracts\CustomerTenantAccessRequestStatusCount.ts" />
     <TypeScriptCompile Include="Warehouse\Components\ChoosePackagesFromWarehousePackageReleasesComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\CopyFromReleasesPackagesComponent.ts" />
+    <TypeScriptCompile Include="Warehouse\Components\EditTabs\Audit\WarehouseEntryAuditTabComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\EditTabs\Audit\WarehouseReleaseAuditTabComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\EditTabs\ConnectionsTab\WarehouseConnectionsTabComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\EditTabs\DocsIn\WarehouseDocsInTabComponent.ts" />

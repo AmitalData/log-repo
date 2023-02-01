@@ -427,6 +427,11 @@ export class WarehouseEntryPM extends ObjectCustomFieldPM {
     public set ConnectedToReferenceNumber(newValue: string) { if (this.connectedToReferenceNumber != newValue) { this.connectedToReferenceNumber = newValue; this.MarkAsDirty("ConnectedToReferenceNumber"); } }
        
 	 
+    private isUpdateByAutomation: boolean;
+    public get IsUpdateByAutomation() { return this.isUpdateByAutomation; }
+    public set IsUpdateByAutomation(newValue: boolean) { if (this.isUpdateByAutomation != newValue) { this.isUpdateByAutomation = newValue; this.MarkAsDirty("IsUpdateByAutomation"); } }
+       
+	 
     private customChildEntities: CustomChildEntity[];
     public get CustomChildEntities() { return this.customChildEntities; }
     public set CustomChildEntities(newValue: CustomChildEntity[]) { if (this.customChildEntities != newValue) { this.customChildEntities = newValue; this.MarkAsDirty("CustomChildEntities"); } }

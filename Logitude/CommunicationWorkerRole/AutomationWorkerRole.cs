@@ -922,6 +922,10 @@ namespace CommunicationWorkerRole
                 UpdateContainer(theEntity);
             }
 
+            else if (tableName == "WarehouseEntry")
+            {
+                UpdateWarehouseEntry(theEntity);
+            }
             else if (tableName == "WarehouseRelease")
             {
                 UpdateWarehouseRelease(theEntity);
@@ -936,6 +940,16 @@ namespace CommunicationWorkerRole
             containerPM.IsUpdateByAutomation = true;
             service.Update(containerPM);
         }
+
+        private static void UpdateWarehouseEntry(object theEntity)
+        {
+            WarehouseEntryPM WarehouseEntryPM = (WarehouseEntryPM)theEntity;
+            IWarehouseContext warehouseContext = WarehouseContext.GetContext(0);
+            WarehouseEntryUpdateService service = new WarehouseEntryUpdateService(warehouseContext, new Dictionary<string, IContext>(), WarehouseEntryPM.Tenant);
+            WarehouseEntryPM.IsUpdateByAutomation = true;
+            service.Update(WarehouseEntryPM, true);
+        }
+
         private static void UpdateWarehouseRelease(object theEntity)
         {
             WarehouseReleasePM warehouseReleasePM = (WarehouseReleasePM)theEntity;

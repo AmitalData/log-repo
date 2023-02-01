@@ -170,6 +170,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Logitude.SystemLogs\bin\Debug\Logitude.SystemLogs.dll</HintPath>
     </Reference>
+    <Reference Include="Logitude.WarehouseLib.BL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Logitude.WarehouseLib.BL\bin\Debug\Logitude.WarehouseLib.BL.dll</HintPath>
+    </Reference>
+    <Reference Include="Logitude.WarehouseLib.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Logitude.WarehouseLib.Data\bin\Debug\Logitude.WarehouseLib.Data.dll</HintPath>
+    </Reference>
     <Reference Include="Logitude.XSD, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\JustWebFreight\WebFreight.Web\bin\Logitude.XSD.dll</HintPath>
