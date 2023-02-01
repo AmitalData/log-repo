@@ -1,5 +1,7 @@
 ﻿using Logitude.BL.ExternalService;
 using Logitude.BL.Helpers;
+using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Logitude.BL.Security;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours;
@@ -68,6 +70,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             ContainerValidating.Validate(this.containerPm, this.containerPoco, isNewEntity);
             ContainerTracing containerTracing = new ContainerTracing(entityPM, containerPoco, isNewEntity);
             containerTracing.Trace();
+            SaveChildEntities();
             ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity, FieldChanges);
             this.GetForeignFields_Status(entityPM, containerPoco);
             entityRepository.Add(containerPoco);
@@ -122,7 +125,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             ContainerValidating.Validate(this.containerPm, this.containerPoco, isNewEntity);
             ContainerTracing containerTracing = new ContainerTracing(entityPM, containerPoco, isNewEntity);
             containerTracing.Trace();
-
+            SaveChildEntities();
             if (!entityPM.IsUpdateByAutomation)
             {
                 EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = containerPoco, EntityPM = entityPM, OldEntityPM = new ContainerPM(), AutomationType = "OnUpdate", ObjectTableName = "Container", Tenant = entityPM.Tenant, EntityId = entityPM.Id, EntityReference = entityPM.ContainerNumber });
@@ -181,6 +184,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             };
 
             return auditLog;
+        }
+        private void SaveChildEntities()
+        {
+            new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = containerPm, ParentEntityId = containerPm.Id, ParentObjectTableName = "Container", Tenant = tenant }).Update();
         }
 
         private void SetUpdatedByUser()

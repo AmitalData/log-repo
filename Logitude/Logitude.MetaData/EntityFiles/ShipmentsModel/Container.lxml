@@ -10,7 +10,7 @@
   HasCustomFilter="true"
   HasCustomFields="true"
   AvailableInCustomization="true"
-  SupportSubEntity="false"
+  SupportSubEntity="true"
   ApplyGenericCustomFields="false"
   HasHelper="true"
   HasShortTitle="true"

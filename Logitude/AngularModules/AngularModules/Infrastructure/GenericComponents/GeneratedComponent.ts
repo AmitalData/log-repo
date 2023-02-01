@@ -238,7 +238,7 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
     private isScreenEnabled: boolean = true;
     private BuildScreenSections(screen: ScreenPM, fireEmit: any)
     {
-        //this.CurrentSession.StartBusyIndicator("Loading...");
+        this.CurrentSession.StartBusyIndicator("Loading...");
         this.GetScreenSections(screen)
             .subscribe(response =>
             {

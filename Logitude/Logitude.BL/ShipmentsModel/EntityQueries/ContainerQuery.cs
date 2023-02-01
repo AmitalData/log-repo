@@ -10,6 +10,7 @@ using Simplog.Server.Infrastructure.DataContracts;
 using System.Threading.Tasks;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Helpers;
+using Logitude.BL.InfrastructureModel.Tools.EntityService;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -305,6 +306,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     containerPM.StatusWeight = container.EntityStatus.StatusWeight;
                 }
                 MapCustomFields(containerPM, container);
+                new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = containerPM, ParentEntityId = containerPM.Id, ParentObjectTableName = "Container", Tenant = containerPM.Tenant }).Set();
             }
 
             return containerPM;
