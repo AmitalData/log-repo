@@ -860,6 +860,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "AVC,AR Invoice VATs Calculation per line", 
                 Description = "AR Invoice VATs Calculation per line", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "SSP", 
+                Name = "Stimulsoft Printing", 
+                SearchFields = "SSP,Stimulsoft Printing", 
+                Description = "Stimulsoft Printing", 
+			});
 			
             return all;
        }
