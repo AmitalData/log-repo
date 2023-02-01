@@ -34,6 +34,7 @@ namespace WebFreight.Web.ContainerTracking
         private bool isUpdatingEmptyLeg = false;
         private Tenant myTenant;
         private readonly ContainerTrackingHelper containerTrackingHelper;
+        
 
         public ContainerTrackingUpdateManager(ContainerUpdatedFields containerUpdatedFields)
         {
@@ -108,6 +109,7 @@ namespace WebFreight.Web.ContainerTracking
             containerPM.PreCarriageLocationPortId = port.Id;
             containerPM.PreCarriageLocation = port.CombinedCode;
         }
+        
         private void MapVizionPreCarriageDates()
         {
             if (!containerTrackingHelper.IsSameLocationUsingId(containerPM.PreCarriageLocationPortId, shipmentPM.PreCarriageFromPortId)) return;
@@ -140,14 +142,15 @@ namespace WebFreight.Web.ContainerTracking
         }
         private void MapVizionOnCarriageDates()
         {
-            if (!containerTrackingHelper.IsSameLocationUsingId(containerPM.OnCarriageLocationPortId, shipmentPM.OnCarriageToPortId)) return;
-            if (containerUpdatedFields.LIFLocation == null) return;
+            if (containerUpdatedFields.OnCarriageLocation == null) return;
 
-            string portId = this.GetPortId(containerUpdatedFields.LIFLocation);
-            if (portId != containerPM.OnCarriageLocationPortId) return;
+            string portId = this.GetPortId(containerUpdatedFields.OnCarriageLocation);
+            if (!containerTrackingHelper.IsSameLocationUsingId(portId, containerPM.OnCarriageLocationPortId)) return;
 
             containerPM.OnCarriageETA = containerUpdatedFields.OnCarriageETA;
             containerPM.OnCarriageATA = containerUpdatedFields.OnCarriageATA;
+
+            if (!containerTrackingHelper.IsSameLocationUsingId(containerPM.OnCarriageLocationPortId, shipmentPM.OnCarriageToPortId)) return;
 
             shipmentPM.OnCarriageETA = containerPM.OnCarriageETA;
             shipmentPM.OnCarriageATA = shipmentPM.OnCarriageATA ?? containerPM.OnCarriageATA;
