@@ -666,8 +666,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 if (declarationPM != null)
                 {
-                    var maxCounter = consignmentQueryService.GetMaxCounterKey(declarationPM.Id, tenant) ?? 0;
-                    consignmentPM.SequenceNumeric = maxCounter + 1;
+                    /*var maxCounter = consignmentQueryService.GetMaxCounterKey(declarationPM.Id, tenant) ?? 0;
+                    consignmentPM.SequenceNumeric = maxCounter + 1;*/
+                    
+                    consignmentPM.SequenceNumeric = Convert.ToInt32(consignment.SequenceNumeric);
                 }
                 if (consignment.TransportContractDocument != null)
                 {
