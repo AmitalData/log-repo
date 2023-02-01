@@ -255,7 +255,7 @@ namespace WebFreight.Web.ContainerTracking
         {
             if (IsCarrierMilestoneSentWithinResponse(VizionMilestoneDescriptionCodes.VesselArrived))
             {
-                MapMilestoneLocationField(VizionMilestoneDescriptionCodes.VesselArrived, ref containerUpdatedFields.LIFLocation);
+                MapMilestoneLocationField(VizionMilestoneDescriptionCodes.VesselArrived, ref containerUpdatedFields.OnCarriageLocation);
                 MapMilestoneDateField(VizionMilestoneDescriptionCodes.VesselArrived, ref containerUpdatedFields.OnCarriageETA, true);
                 MapMilestoneDateField(VizionMilestoneDescriptionCodes.VesselArrived, ref containerUpdatedFields.OnCarriageATA);
             }
