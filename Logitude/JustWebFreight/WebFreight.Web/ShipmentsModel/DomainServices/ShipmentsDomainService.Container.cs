@@ -14,6 +14,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.CustomFilters;
+using Logitude.BL.Helpers;
 
 namespace WebFreight.Web.ShipmentsModel.DomainServices
 {
@@ -106,7 +107,11 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
 
             query2 = query2.Skip(skippedPorts);
             query2 = query2.Take(queryOperations.PageSize);
-            return query2;
+            List<ContainerList> listQuery = query2.ToList(); 
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            customFieldResolver.SetCustomFieldsValues("Container", tenant, listQuery.Cast<object>().ToList()); 
+
+            return listQuery.AsQueryable();
         }
 
         public int GetContainerFiltersCount(byte[] xmlFilters, int tenant)
