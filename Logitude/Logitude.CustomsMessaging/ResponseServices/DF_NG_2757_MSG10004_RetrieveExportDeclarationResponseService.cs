@@ -134,7 +134,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //Yuval Chalup 13.05.2015 TASK-11915 --->
         }
 
-
+            }
         public override DeclarationRestoreResponseData GetResponse(DF_NG_2757_MSG10004_ExportDeclarationResponse customResponse, DeclarationRestoreRequestParams requestParams)
         {
             if (_DF_NG_2754_MSG10004_ExportDeclarationResponseService == null || _DF_NG_2754_MSG10004_ExportDeclarationResponseService.MyResponseData == null)
