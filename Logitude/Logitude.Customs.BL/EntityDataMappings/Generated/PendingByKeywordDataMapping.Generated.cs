@@ -28,7 +28,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         KeywordsList, 
 	         SearchFields, 
 	         SearchByFieldCode, 
-	         SearchType,
+	         SearchType, 
+	         ExceptKeywords,
 	      }
 
 
@@ -44,7 +45,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SearchByFieldCode, 
 	         SearchByFieldName, 
 	         SearchType, 
-	         SearchTypesName,
+	         SearchTypesName, 
+	         ExceptKeywords,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -81,6 +83,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchType))
             {
 				entityPOCO.SearchType = entityPM.SearchType;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExceptKeywords))
+            {
+				entityPOCO.ExceptKeywords = entityPM.ExceptKeywords;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -124,6 +131,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.SearchType = entityPOCO.SearchType;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExceptKeywords))
+            {
+					entityPM.ExceptKeywords = entityPOCO.ExceptKeywords;
+            }
+
 		}
 
 		public void PMToOldPM(PendingByKeywordPM entityPM, PendingByKeywordPM oldEntityPM)
@@ -160,6 +172,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.SearchType = entityPM.SearchType;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExceptKeywords))
+            {
+                oldEntityPM.ExceptKeywords = entityPM.ExceptKeywords;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(PendingByKeywordPM entityPM)
@@ -176,6 +193,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ExceptKeywords)) //T4 find type == nText 
+            {
+                entityPM.ExceptKeywords = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ExceptKeywords));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

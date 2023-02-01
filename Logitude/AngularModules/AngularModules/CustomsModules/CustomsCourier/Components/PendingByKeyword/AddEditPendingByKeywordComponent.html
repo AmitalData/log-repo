@@ -91,7 +91,17 @@
                     </td>
                     <td></td>
                 </tr>
-
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'ExceptKeywords'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'ExceptKeywords'" [ObjectTableName]="ObjectTableName" [Text]="ExceptKeywords"
+                                    [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'"></LogTextBox>
+                    </td>
+                    <td></td>
+                </tr>
                 <tr>
                     <td></td>
                 </tr>

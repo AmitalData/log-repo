@@ -19,6 +19,7 @@ export class PendingByKeywordList {
 	SearchType: string;
 	SearchTypesName: string;
 	Remove: string;
+	ExceptKeywords: string;
 	
 }
  
