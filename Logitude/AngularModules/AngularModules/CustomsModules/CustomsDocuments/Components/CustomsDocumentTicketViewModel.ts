@@ -1261,16 +1261,19 @@ export class CustomsDocumentTicketViewModel {
     }
 
     OnAddEditWindowClosed(event) {
-       
+       debugger
         if (event != 'cancel' && this.isDisplayOnly && !this.customsDocumentsTicketPM.RequestedCustomsDocId) {
             var messageWindow = new MessageWindow();
             messageWindow.Width = 400;
             messageWindow.Height = 200;
             messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-            if(this.DataContext.DisplayOnlyMessage="לתצוגה בלבד - םילוץ םושר")
-               messageWindow.Show(" םילוץ םושר - לם ניתן לקשר מסמכים חדשים");
+            if(this.DataContext.DisplayOnlyMessage=="לתצוגה בלבד - אילוץ םושר")
+               messageWindow.Show(TextCodeTranslator.Translate("Customs.General.O.HappinessConstraintDocumentsCannotBeLinked"));
+            if(this.DataContext.DisplayOnlyMessage=="הצהרה סגורה"){
+                messageWindow.Show(TextCodeTranslator.Translate("Customs.General.O.HappinessConstraintDocumentsCannotBeLinked"));
+            }
             else
-               messageWindow.Show("ההצהרה כבר הוגשה - לם ניתן לקשר מסמכים חדשים");
+               messageWindow.Show(TextCodeTranslator.Translate("Customs.General.O.DeclarationSubmittedDocumentsCannotBeLinked"));
             messageWindow.WindowClosed.subscribe((event: any) => {
 
                 messageWindow.Close();
