@@ -112,15 +112,15 @@ namespace WebFreight.Web.ContainerTracking
         
         private void MapVizionPreCarriageDates()
         {
-            if (!containerTrackingHelper.IsSameLocationUsingId(containerPM.PreCarriageLocationPortId, shipmentPM.PreCarriageFromPortId)) return;
             if (containerUpdatedFields.OriginLocation == null) return;
-
             string portId = this.GetPortId(containerUpdatedFields.OriginLocation);
-            if (portId != containerPM.PreCarriageLocationPortId) return;
+            if (!containerTrackingHelper.IsSameLocationUsingId(portId, containerPM.PreCarriageLocationPortId)) return;
 
             containerPM.PreCarriageETD = containerUpdatedFields.EstimatedOriginPickup;
             containerPM.PreCarriageATD = containerUpdatedFields.ActualOriginPickup;
 
+            if (!containerTrackingHelper.IsSameLocationUsingId(containerPM.PreCarriageLocationPortId, shipmentPM.PreCarriageFromPortId)) return;
+            
             shipmentPM.PreCarriageETD = containerPM.PreCarriageETD;
             shipmentPM.PreCarriageATD = shipmentPM.PreCarriageATD ?? containerPM.PreCarriageATD;
         }
@@ -143,7 +143,6 @@ namespace WebFreight.Web.ContainerTracking
         private void MapVizionOnCarriageDates()
         {
             if (containerUpdatedFields.OnCarriageLocation == null) return;
-
             string portId = this.GetPortId(containerUpdatedFields.OnCarriageLocation);
             if (!containerTrackingHelper.IsSameLocationUsingId(portId, containerPM.OnCarriageLocationPortId)) return;
 
