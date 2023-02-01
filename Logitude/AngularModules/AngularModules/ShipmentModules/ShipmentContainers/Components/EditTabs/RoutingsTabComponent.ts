@@ -4,6 +4,8 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { ContainerPM } from 'Shipment/EntityPMs/ContainerPM';
 import { AppTool } from '../../../../Infrastructure/Tools';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { DateTimeToDatePipe } from '../../../../Controls/Pipes/DateTimeToDatePipe';
 
 @Component({
     templateUrl: './RoutingsTabComponent.html',
@@ -13,7 +15,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
     public EntityPM: ContainerPM;
     public ObjectTableName: string = "Container";    
     private CurrentSession = SessionLocator.SelectedSession;
-    private ItemsSource: RoutingItem[];
+    public ItemsSource: RoutingItem[];
     public SelectedLegTitle: string;
     public SelectedLegCode: string;
     public DataContext: ContainerPM;
@@ -60,16 +62,8 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
 
     }
 
-    public ItemsSource1: RoutingItem[];
-    public ItemsSource2: RoutingItem[];
-    public ItemsSource3: RoutingItem[];
-    public ItemsSource4: RoutingItem[];
     private BuildItemsSource() {
         this.ItemsSource = [];
-        this.ItemsSource1 = [];
-        this.ItemsSource2 = [];
-        this.ItemsSource3 = [];
-        this.ItemsSource4 = [];
 
         this.AddRoutingItem("PICK");
         this.AddRoutingItemLine("PREC");
@@ -313,6 +307,7 @@ export class RoutingItem {
     public NextLegCode: string;
     public Name: string;
     public Location: string;
+    public Date: string;
     public IsLine: boolean = false;
     public IsHidden: boolean = false;
     public IsDashedLine: boolean = false;
@@ -321,77 +316,231 @@ export class RoutingItem {
     private Calculate() {
         var name: string = null;
         var location: string = null;
+        var date: string = null;
 
         switch (this.Code) {
             case "PICK": {
                 name = "Empty Pickup";
                 location = this.Container.EmptyPickupLocationName;
+                date = this.GetDate_EmptyPickup();
                 break;
             }
 
             case "PREC": {
                 name = "Pre Carriage";
                 location = this.Container.PreCarriageLocationName;
+                date = this.GetDate_PreCarriage();
                 break;
             }
 
             case "POL": {
                 name = "POL";
                 location = this.Container.POLLocationName;
+                date = this.GetDate_POL();
                 break;
             }
 
             case "TSS": {
                 name = "Transshipments";
                 location = this.GetTrnasshipmentLocation();
+                date = this.GetTrnasshipmentDate();
                 break;
             }
 
             case "TS1": {
                 name = "Transshipment 1";
                 location = this.Container.Transshipment1LocationName;
+                date = this.GetDate_TS1();
                 break;
             }
 
             case "TS2": {
                 name = "Transshipment 2";
                 location = this.Container.Transshipment2LocationName;
+                date = this.GetDate_TS2();
                 break;
             }
 
             case "TS3": {
                 name = "Transshipment 3";
                 location = this.Container.Transshipment3LocationName;
+                date = this.GetDate_TS3();
                 break;
             }
 
             case "POD": {
                 name = "POD";
                 location = this.Container.PODLocationName;
+                date = this.GetDate_POD();
                 break;
             }
 
             case "ONC": {
                 name = "On Carriage";
                 location = this.Container.OnCarriageLocationName;
+                date = this.GetDate_OnCarriage();
                 break;
             }
 
             case "DELV": {
                 name = "Delivery";
                 //location = this.Container.delivery;
+                date = this.GetDate_Delivery();
                 break;
             }
 
             case "EMRT": {
                 name = "Empty Return";
                 location = this.Container.EmptyReturnLocationName;
+                date = this.GetDate_EmptyReturn();
                 break;
             }
         }
 
         this.Name = name;
         this.Location = location;
+        this.Date = date;
+    }
+
+    private GetDate_EmptyPickup(): string {
+        if (this.Container.EstimatedEmptyPickupDate != null)
+            return this.GetDateString("Container.F.EstimatedEmptyPickupDate", this.Container.EstimatedEmptyPickupDate);
+
+        else if (this.Container.ActualEmptyPickupDate != null)
+            return this.GetDateString("Container.F.ActualEmptyPickupDate", this.Container.ActualEmptyPickupDate);
+
+        else
+            return null;
+    }
+    private GetDate_PreCarriage(): string {
+        if (this.Container.PreCarriageATD != null)
+            return this.GetDateString("Container.F.PreCarriageATD", this.Container.PreCarriageATD);
+
+        else if (this.Container.PreCarriageETD != null)
+            return this.GetDateString("Container.F.PreCarriageETD", this.Container.PreCarriageETD);
+
+        else if (this.Container.PreCarriageGateIn != null)
+            return this.GetDateString("Container.F.PreCarriageGateIn", this.Container.PreCarriageGateIn);
+
+        else
+            return null;
+    }
+    private GetDate_POL(): string {
+        if (this.Container.ActualPOLVesselDeparture != null)
+            return this.GetDateString("Container.F.ActualPOLVesselDeparture", this.Container.ActualPOLVesselDeparture);
+
+        else if (this.Container.EstimatedPOLVesselDeparture != null)
+            return this.GetDateString("Container.F.EstimatedPOLVesselDeparture", this.Container.EstimatedPOLVesselDeparture);
+
+        else if (this.Container.ActualPOLLoaded != null)
+            return this.GetDateString("Container.F.ActualPOLLoaded", this.Container.ActualPOLLoaded);
+
+        else if (this.Container.EstimatedPOLLoaded != null)
+            return this.GetDateString("Container.F.EstimatedPOLLoaded", this.Container.EstimatedPOLLoaded);
+
+        else if (this.Container.GateIn != null)
+            return this.GetDateString("Container.F.GateIn", this.Container.GateIn);
+
+        else
+            return null;
+    }
+    private GetDate_TS1(): string {
+        if (this.Container.ActualTrans1VesselDeparture != null)
+            return this.GetDateString("Container.F.ActualTrans1VesselDeparture", this.Container.ActualTrans1VesselDeparture);
+
+        else if (this.Container.EstimatedTrans1VesselDeparture != null)
+            return this.GetDateString("Container.F.EstimatedTrans1VesselDeparture", this.Container.EstimatedTrans1VesselDeparture);
+
+        else if (this.Container.ActualTransshipment1VesselArrival != null)
+            return this.GetDateString("Container.F.ActualTransshipment1VesselArrival", this.Container.ActualTransshipment1VesselArrival);
+
+        else if (this.Container.EstimatedTrans1VesselArrival != null)
+            return this.GetDateString("Container.F.EstimatedTrans1VesselArrival", this.Container.EstimatedTrans1VesselArrival);
+
+        else if (this.Container.ActualTransshipment1Loaded != null)
+            return this.GetDateString("Container.F.ActualTransshipment1Loaded", this.Container.ActualTransshipment1Loaded);
+
+        else if (this.Container.EstimatedTransshipment1Loaded != null)
+            return this.GetDateString("Container.F.EstimatedTransshipment1Loaded", this.Container.EstimatedTransshipment1Loaded);
+
+        else
+            return null;
+    }
+    private GetDate_TS2(): string {
+        if (this.Container.ActualTrans2VesselDeparture != null)
+            return this.GetDateString("Container.F.ActualTrans2VesselDeparture", this.Container.ActualTrans2VesselDeparture);
+
+        else if (this.Container.EstimatedTrans2VesselDeparture != null)
+            return this.GetDateString("Container.F.EstimatedTrans2VesselDeparture", this.Container.EstimatedTrans2VesselDeparture);
+
+        else if (this.Container.ActualTransshipment2VesselArrival != null)
+            return this.GetDateString("Container.F.ActualTransshipment2VesselArrival", this.Container.ActualTransshipment2VesselArrival);
+
+        else if (this.Container.EstimatedTrans2VesselArrival != null)
+            return this.GetDateString("Container.F.EstimatedTrans2VesselArrival", this.Container.EstimatedTrans2VesselArrival);
+
+        else if (this.Container.ActualTransshipment2Loaded != null)
+            return this.GetDateString("Container.F.ActualTransshipment2Loaded", this.Container.ActualTransshipment2Loaded);
+
+        else if (this.Container.EstimatedTransshipment2Loaded != null)
+            return this.GetDateString("Container.F.EstimatedTransshipment2Loaded", this.Container.EstimatedTransshipment2Loaded);
+
+        else
+            return null;
+    }
+    private GetDate_TS3(): string {
+        if (this.Container.ActualTrans3VesselDeparture != null)
+            return this.GetDateString("Container.F.ActualTrans3VesselDeparture", this.Container.ActualTrans3VesselDeparture);
+
+        else if (this.Container.EstimatedTrans3VesselDeparture != null)
+            return this.GetDateString("Container.F.EstimatedTrans3VesselDeparture", this.Container.EstimatedTrans3VesselDeparture);
+
+        else if (this.Container.ActualTransshipment3VesselArrival != null)
+            return this.GetDateString("Container.F.ActualTransshipment3VesselArrival", this.Container.ActualTransshipment3VesselArrival);
+
+        else if (this.Container.EstimatedTrans3VesselArrival != null)
+            return this.GetDateString("Container.F.EstimatedTrans3VesselArrival", this.Container.EstimatedTrans3VesselArrival);
+
+        else if (this.Container.ActualTransshipment3Loaded != null)
+            return this.GetDateString("Container.F.ActualTransshipment3Loaded", this.Container.ActualTransshipment3Loaded);
+
+        else if (this.Container.EstimatedTransshipment3Loaded != null)
+            return this.GetDateString("Container.F.EstimatedTransshipment3Loaded", this.Container.EstimatedTransshipment3Loaded);
+
+        else
+            return null;
+    }
+    private GetDate_POD(): string {
+        if (this.Container.GateOut != null)
+            return this.GetDateString("Container.F.", this.Container.);
+
+        else if (this.Container.ActualPODDischarge != null)
+            return this.GetDateString("Container.F.", this.Container.);
+
+        else if (this.Container.EstimatedPODDischarge != null)
+            return this.GetDateString("Container.F.", this.Container.);
+
+        else if (this.Container.ActualPODVesselArrival != null)
+            return this.GetDateString("Container.F.", this.Container.);
+
+        else if (this.Container.EstimatedPODVesselArrival != null)
+            return this.GetDateString("Container.F.", this.Container.);
+
+        else
+            return null;
+    }
+    private GetDate_OnCarriage(): string {
+        throw new Error('Method not implemented.');
+    }
+    private GetDate_Delivery(): string {
+        throw new Error('Method not implemented.');
+    }
+    private GetDate_EmptyReturn(): string {
+        throw new Error('Method not implemented.');
+    }
+
+    private GetDateString(fieldTextCode: string, fieldValue: Date): string {        
+        return TextCodeTranslator.Translate(fieldTextCode) + ": " + DateTimeToDatePipe.Pipe(fieldValue);
     }
 
     private GetTrnasshipmentLocation(): string {
@@ -403,6 +552,20 @@ export class RoutingItem {
 
         else if (!AppTool.IsNullOrEmpty(this.Container.Transshipment1LocationName)) 
             return this.Container.Transshipment1LocationName;        
+
+        else
+            return null;
+    }
+
+    private GetTrnasshipmentDate(): string {
+        if (!AppTool.IsNullOrEmpty(this.Container.Transshipment3LocationName))
+            return this.Container.Transshipment3LocationName;
+
+        else if (!AppTool.IsNullOrEmpty(this.Container.Transshipment2LocationName))
+            return this.Container.Transshipment2LocationName;
+
+        else if (!AppTool.IsNullOrEmpty(this.Container.Transshipment1LocationName))
+            return this.Container.Transshipment1LocationName;
 
         else
             return null;

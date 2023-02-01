@@ -7,7 +7,8 @@
         font-size: 13px;
         line-height: 100%;
         color: #292D30;
-        cursor:pointer;
+        cursor: pointer;
+        left: 4px;
     }
 
     .LegNameSelected {
@@ -57,12 +58,12 @@
                         <td>
                             <table>
                                 <tr>
-                                    <td *ngFor="let item of ItemsSource">
+                                    <td style="width:1px;" *ngFor="let item of ItemsSource">
                                         <table *ngIf="!item.IsLine && !item.IsHidden" style="width:140px; max-width:140px;">
                                             <tr>
                                                 <td style="width:14px;">
                                                     <span class="Circle" style="background-color: #4AC76F;">
-                                                        <span style="color: white; width:7.88px; height:6.13px" class="TopCenter">&#10003;</span>
+                                                        <span style="color: white; width: 7.88px; height: 6.13px;" class="TopCenter">&#10003;</span>
                                                     </span>
                                                 </td>
 
@@ -90,18 +91,40 @@
                                             </tr>
 
                                             <tr>
+                                                <td style="width:14px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width:4px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td class="LegLocation TextTrimming" style="max-width:120px;">
+                                                    {{item.Date}}
+                                                </td>
+                                            </tr>
+
+                                            <tr>
                                                 <td colspan="3"><div></div></td>
                                             </tr>
                                         </table>
 
-                                        <table *ngIf="item.IsLine && !item.IsHidden" style="width:60px; max-width:60px;">
+                                        <table *ngIf="item.IsLine && !item.IsHidden" style="width:76px; max-width: 76px;">
                                             <tr>
-                                                <td class="TopCenter" style="top:10px;">
-                                                    <hr *ngIf="item.IsContinuousLine" style="border-top: solid 1px #C7C7C7; width: 56px;" />
-                                                    <hr *ngIf="item.IsDashedLine" style="border-top: dashed 1px #C7C7C7; width: 56px;" />
+                                                <td style="width:10px;"><div></div></td>
+
+                                                <td style="width: 56px;">
+                                                    <hr *ngIf="item.IsContinuousLine" style="border-top: solid 1px #C7C7C7;" />
+                                                    <hr *ngIf="item.IsDashedLine" style="border-top: dashed 1px #C7C7C7;" />
                                                 </td>
+
+                                                <td style="width:10px;"><div></div></td>
                                             </tr>
                                         </table>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
                                     </td>
                                 </tr>
                             </table>
