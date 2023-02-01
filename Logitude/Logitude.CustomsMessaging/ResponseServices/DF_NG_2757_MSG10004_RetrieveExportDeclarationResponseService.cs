@@ -48,12 +48,25 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (string.IsNullOrEmpty(requestParams.DeclarationId)|| !string.IsNullOrEmpty(requestParams.DeclarationId) && requestParams.IsUpdateDB) { //declaration not exits in db
 
 
-                var declarationqueryService = new DeclarationQueryService(requestParams.Tenant);
+            var declarationqueryService = new DeclarationQueryService(requestParams.Tenant);
+            if (string.IsNullOrEmpty(requestParams.DeclarationId)) { //declaration not exits in db
+               
                 var decId = declarationqueryService.GetIdByDeclarationNumber(requestParams.DeclarationNumber, requestParams.Tenant);
                 if (customResponse.Response != null && customResponse.Response.Declaration != null && (string.IsNullOrEmpty(decId)|| requestParams.IsUpdateDB)) 
                    CreateDeclarationFromResponse(customResponse.Response.Declaration, requestParams.Tenant,  customResponse, requestParams.IsUpdateDB, requestParams.DeclarationId);                                  
+              
             }
-           
+            else
+            {
+                if (customResponse?.Response?.Status[0]?.NameCode?.Value == "36")
+                {
+                    var declaration = declarationqueryService.GetSingle(requestParams.DeclarationId, false, false);
+                    if(!declaration.IsConvertedDeclaration && (declaration.DeclarationStatusTypeCode!= customResponse.Response.Status[0].NameCode.Value))
+                    {
+                        RaiseEvent(declaration, null, status_id: "CLS");
+                    }
+                }
+            }
             if (customResponse.ResponseContentHeader != null &&
                 customResponse.Response == null &&
                 customResponse.AddAGlobalScannedAttachmentToEntityResponse == null &&
@@ -1516,7 +1529,42 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return declarationTaxPMList;
         }
 
+        private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id)
+        {
+            //primary_number = $"{dirtyDeclarationPM.CustomFileNo},{dirtyDeclarationPM.TransportModeId == "A" ? "EFIFILEM" : "MFIFILEM" }",
+            string primary_number = $"{dirtyDeclarationPM.CustomFileNo},EFIFILEM";
+            if (dirtyDeclarationPM.TransportModeId != "A")
+            {
+                primary_number = $"{dirtyDeclarationPM.CustomFileNo},MFIFILEM";
+            }
 
+            var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+            {
+                Tenant = dirtyDeclarationPM.Tenant,
+                objectTableName = "Customs.Declaration",
+                EventCode = status_id,
+                notes = "",
+                CommunicationLoggingEntityReference = dirtyDeclarationPM.DeclarationNumber,
+                EntityId = dirtyDeclarationPM.Id,
+                UserId = loggingUserId,
+
+                CommunicationSubject = "FU Status " + status_id + " from logitude",
+                MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                {
+                    entname = dirtyDeclarationPM.Direction == "E" ? "BFIFILE" : "CFIFILEM",
+                    primary_number = primary_number,
+                    status = "new",
+                    xml_status = "new",
+                    status_id = status_id,
+                    status_DateTime = DateTime.Now,
+                    comments = "",
+                }
+            };
+
+            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true);
+
+
+        }
 
 
         #region Helpers

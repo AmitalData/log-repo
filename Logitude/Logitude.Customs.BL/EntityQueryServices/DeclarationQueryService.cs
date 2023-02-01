@@ -465,6 +465,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
 
 
+
+
         public string GetIdByExternalDeclarationNumber(string externalDeclarationNumber, int tenant)
         {
             if (String.IsNullOrWhiteSpace(externalDeclarationNumber)) return "";
@@ -2278,7 +2280,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     AmendmentStatus = item.AmendmentStatus,
                     AmendmentOriginalDeclartation = item.AmendmentOriginalDeclartation,
                     AmendmentissueDate = item.AmendmentissueDate,
-
                     IsAmendment=item.IsAmendment,
                     AmedmentType = item.AmedmentType,
                     ExportCloseAmendRequestNumber = item.ExportCloseAmendRequestNumber,
