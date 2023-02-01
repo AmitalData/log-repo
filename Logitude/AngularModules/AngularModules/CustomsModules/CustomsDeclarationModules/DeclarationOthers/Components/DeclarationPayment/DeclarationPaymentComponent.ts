@@ -3145,7 +3145,7 @@ export class PaymentMethodModel extends BaseComponent {
 
 
     //#region Properties
-
+    public _ComboBoxSelectedBankChanged: boolean = false;
     selectedBank: CustomBankList;
     get SelectedBank() { return this.selectedBank; }
     set SelectedBank(value: CustomBankList) {
@@ -3230,18 +3230,20 @@ export class PaymentMethodModel extends BaseComponent {
             this.methodPM.BankCode = value;
         }
     }
-
+    _UsingDsvPayKupa: boolean = false;
     get InternalBankId() { return this.methodPM.InternalBankId; }
     set InternalBankId(value: string) {
-        if (this.methodPM.InternalBankId != value) {        
+
+        if (this.methodPM.InternalBankId != value) {
             this.methodPM.InternalBankId = value;
+            console.log("set InternalBankId-" + value);
 
             this.customBankListService.getAllFromCache().subscribe(async (responseBankFromCache: ServiceResponse) => {
                 if (responseBankFromCache) {
                     if (!responseBankFromCache.HasError) {
                         if (!this.BankIsNull) {
                             let usingCustomBank_ImporterMasav: boolean = false;
-                            let usingDsvPayKupa: boolean = false;
+                            
 
                             var customBank: CustomBankList = responseBankFromCache.Result.filter(d => d.Id == value)[0];
 
@@ -3293,15 +3295,25 @@ export class PaymentMethodModel extends BaseComponent {
 
                                 }
                                 else {
-                                    this.methodPM.BankCode = customBank.BankCode;
-                                    this.methodPM.BranchCode = customBank.BranchCode;
-                                    this.methodPM.CustomsBranchId = customBank.CustomsBranchId;
-                                    this.methodPM.AccountNumber = customBank.AccountNumber;
-                                    this.methodPM.PayerActivityTypeCode = customBank.PayerTypeCode;
-                                    this.PayerActivityTypeName = customBank.PayerTypeName;
-                                    if (!AppTool.IsNullOrEmpty(this.methodPM.BankCode)) {
-                                        usingCustomBank_ImporterMasav = true;
-                                        console.log("DefaultPaymentMethod-fromCache??->מסב הכנסה- יבואן");
+                                    if (this.methodPM.MethodTypeCode == "2"/*קופה*/
+                                        ||
+                                        this.methodPM.MethodTypeCode == "79"/*ניצול העברת זהב*/
+                                    ) {
+                                        console.log("אם קופה או ניצול העברת זהב - שדה בנק לאפס ");
+                                        this.methodPM.BankCode = null;
+                                        this.methodPM.InternalBankName = null; 
+                                    } else {
+
+                                        this.methodPM.BankCode = customBank.BankCode;
+                                        this.methodPM.BranchCode = customBank.BranchCode;
+                                        this.methodPM.CustomsBranchId = customBank.CustomsBranchId;
+                                        this.methodPM.AccountNumber = customBank.AccountNumber;
+                                        this.methodPM.PayerActivityTypeCode = customBank.PayerTypeCode;
+                                        this.PayerActivityTypeName = customBank.PayerTypeName;
+                                        if (!AppTool.IsNullOrEmpty(this.methodPM.BankCode)) {
+                                            ///usingCustomBank_ImporterMasav = true;
+                                            console.log("DefaultPaymentMethod-fromCache??->מסב הכנסה- סוכן !");
+                                        }
                                     }
 
 
@@ -3322,7 +3334,7 @@ export class PaymentMethodModel extends BaseComponent {
                             }
 
                             if (this.parent.BetweenMinAndMax && this.methodPM.PayerActivityTypeCode == "3" && this.parent.PaymentMethodsList.Length == 0) {
-                                usingDsvPayKupa = true;
+                                this._UsingDsvPayKupa = true;
                                 console.log("DefaultPaymentMethod-->קופה DSV");
                                 this.methodPM.MethodTypeCode = "2";
                                 this.methodPM.PayerActivityTypeCode = "3";
@@ -3341,7 +3353,7 @@ export class PaymentMethodModel extends BaseComponent {
                             if (customBank == null && this.BanksList.length > 0) {
                                 for (let bank of this.BanksList) {
                                     if (this.parent.BetweenMinAndMax && bank.PayerTypeCode == "3" && this.parent.PaymentMethodsList.Length == 0) {
-                                        usingDsvPayKupa = true;
+                                        this._UsingDsvPayKupa = true;
                                         console.log("DefaultPaymentMethod-->קופה DSV");
                                         this.methodPM.MethodTypeCode = "2";
                                         this.methodPM.PayerActivityTypeCode = "3";
@@ -3365,9 +3377,11 @@ export class PaymentMethodModel extends BaseComponent {
                                 }
                                 // this.parent.PaymentMethodsList.Insert(this.methodPM);
                             }
-                            if (!this.parent.IsLoadedGoldPaymentMethodes && !usingCustomBank_ImporterMasav /*&& !usingDsvPayKupa*/) {
-                                this.parent.IsLoadedGoldPaymentMethodes = true;
-                                this.maximumAgentPaymentMethod(usingDsvPayKupa);
+                            
+                            if (!this._ComboBoxSelectedBankChanged //!this.parent.IsLoadedGoldPaymentMethodes
+                                && !usingCustomBank_ImporterMasav /*&& !this._UsingDsvPayKupa*/) {
+                                //this.parent.IsLoadedGoldPaymentMethodes = true;
+                                this.maximumAgentPaymentMethod();
                             }
 
                         }
@@ -3381,7 +3395,7 @@ export class PaymentMethodModel extends BaseComponent {
 
 
     }
-    maximumAgentPaymentMethod(usingDsvPayKupa: boolean) {
+    maximumAgentPaymentMethod() {
         ///old:///Feature 170339: ניצול העברת זהב - מסך הגשת תשלום
         //new://Feature 175382: ניצול העברת זהב - מסך הגשת תשלום
 
@@ -3410,9 +3424,14 @@ export class PaymentMethodModel extends BaseComponent {
                 "0" //יבואן / יצואן
             );
         }
-        else if (usingDsvPayKupa) {
+        else if (this._UsingDsvPayKupa) {
             //already set
             console.log("DefaultPaymentMethod-->קופה טווח 20,000 - 40,000 (ולא מוגדר ניצול העברת זהב - כל סכום)  == DSVKUPA");
+
+            console.log("אם קופה או ניצול העברת זהב - שדה בנק לאפס ");
+            this.methodPM.BankCode = null;
+            this.methodPM.InternalBankName = null; 
+
 
         }
         //3.2
@@ -3502,6 +3521,14 @@ export class PaymentMethodModel extends BaseComponent {
 
         this.methodPM.PayerActivityTypeCode = payerActivityTypeCode
         this.methodPM.Amount = this.parent.DeclarationPM.TotalTax;
+        if (methodTypeCode == "2"/*קופה*/
+            || 
+            methodTypeCode == "79"/*ניצול העברת זהב*/
+        ) {
+            console.log("אם קופה או ניצול העברת זהב - שדה בנק לאפס ");
+            this.methodPM.BankCode = null;
+            this.methodPM.InternalBankName = null; 
+        }
         this.parent.paymentMethodTypeListService.getSingleFromCache(this.methodPM.MethodTypeCode).subscribe((response: ServiceResponse) => {
             this.methodPM.MethodTypeName = response.Result.LocalName;
             this.MethodTypeName = response.Result.LocalName;
