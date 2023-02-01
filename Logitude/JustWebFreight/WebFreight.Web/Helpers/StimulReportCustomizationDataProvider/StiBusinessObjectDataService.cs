@@ -1,6 +1,7 @@
 ﻿using Logitude.Accounting.BL.DataContract;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.Server.Tools.Helpers;
 using Stimulsoft.Report.Dictionary;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,8 @@ namespace WebFreight.Web.Helpers.StimulReportCustomizationDataProvider
 
         public List<StiBusinessObjectData> Get(DocumentTypeTemplatePM documentTypeTemplatePM)
         {
+            if (!FeatureToggleHelper.HasFeatureToggle("SSP", documentTypeTemplatePM.Tenant))
+                return new List<StiBusinessObjectData>();
             List<StiBusinessObjectData> businessObjects = new List<StiBusinessObjectData>();
             DocumentDataProviderArgs documentDataProviderArgs = null;
             switch (documentTypeTemplatePM.DocumentTypeCode)

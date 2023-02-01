@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections;
@@ -28,6 +29,9 @@ namespace WebFreight.Web.Helpers.StimulReportCustomizationDataProvider
 
         public DocumentDataProvider Create(bool withData = false)
         {
+            int tenant = documentDataProviderArgs.DocumentTypeTemplatePM.Tenant;
+            if (!FeatureToggleHelper.HasFeatureToggle("SSP", tenant))
+                return new DocumentDataProvider() { Type = documentDataProviderArgs.Type, Name = documentDataProviderArgs.Type.Name.Split('_')[0], BusinessObjectValue = documentDataProviderArgs.DataProvider };
             fields = GetFields();
             Type type = GenericClassCreator.Create(documentDataProviderArgs.Type.Name, fields);
             if(!withData) return new DocumentDataProvider() { Type = type , Name = type.Name.Split('_')[0] };
