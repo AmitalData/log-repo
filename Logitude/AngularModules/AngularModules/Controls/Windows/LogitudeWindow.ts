@@ -39,6 +39,7 @@ export class LogitudeWindow {
     public IsFillScreen_115: boolean = false;
     LayoutDirection: string = 'ltr';
     public ZIndex: number = 0;
+    public ZIndexModified: boolean;
     public IsFillScreen_90: boolean = false;
     public SuppressBusyIndicator: boolean = false;
     public IsHideWindowMargin: boolean = false;
@@ -276,6 +277,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
     public IsHideWindowMargin: boolean = false;
     LayoutDirection: string = 'ltr';
     public ZIndex: number = 0;
+    public ZIndexModified: boolean;
     leftPadding: number = 0;
     public IsOverAll: boolean = false;
     public IsViewMode: boolean = false;
@@ -322,6 +324,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.IsShowAutomationDelayTitle = logWindow.IsShowAutomationDelayTitle;
         this.ShowHelpIcon = logWindow.ShowHelpIcon;
         this.ZIndex = logWindow.ZIndex;
+        this.ZIndexModified = logWindow.ZIndexModified;
         this.ChildComponentPath = myComponentPath;
         this.HelpText = logWindow.HelpText;
         this.RTL = logWindow.RTL;
@@ -360,6 +363,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.IsShowAutomationDelayTitle = logWindow.IsShowAutomationDelayTitle;
         this.ShowHelpIcon = logWindow.ShowHelpIcon;
         this.ZIndex = logWindow.ZIndex;
+        this.ZIndexModified = logWindow.ZIndexModified;
         this.NotifyOnClose = logWindow.NotifyOnClose;
         this.BottomBorderForTitle = logWindow.BottomBorderForTitle;
         this.IsHideWindowMargin = logWindow.IsHideWindowMargin;
