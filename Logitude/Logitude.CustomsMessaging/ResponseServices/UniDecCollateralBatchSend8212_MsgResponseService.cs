@@ -79,6 +79,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             RequestVIA = SendRequestVIA.WebServiceBatch,
                             CustomCollateralId = collateral.CustomsCollateralId,
                             LoggingEntityId2 = "Test",
+                            ParentId = requestParams.CustomsRequestsSheetId,
                             CustomsCollateralsAnswers = new List<CustomsCollateralsAnswerParams>()
                             {
                                 new CustomsCollateralsAnswerParams()
@@ -99,7 +100,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                                 }
                             }
-
+                           
 
                         };
                         SBQMessageService.CreateSheetSBQMessage<CollateralRequestParams>(requestParams8212, false);

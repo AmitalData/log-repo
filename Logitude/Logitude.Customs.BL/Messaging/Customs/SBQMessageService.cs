@@ -184,9 +184,9 @@ namespace Logitude.Customs.BL.Messaging.Customs
             queueSendModel.EntityId = correlationId;
 
             queueSendModel.QueueGroupCodeRabbit = currInterfaceTenantDefinition.QueueGroupCode;
-            if (currCustomsRequestsSheet?.TenantPriority>0)
+             if (currCustomsRequestsSheet?.TenantPriority>0)
             {
-                queueSendModel.TenantPriority=currCustomsRequestsSheet.TenantPriority;
+                queueSendModel.TenantPriority = currCustomsRequestsSheet.TenantPriority;
             }
             else if (!string.IsNullOrWhiteSpace(queueSendModel.InterfaceTypeCode) && queueSendModel.TenantPriority == null)
             {

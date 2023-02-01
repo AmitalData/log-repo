@@ -87,7 +87,8 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
         public bool SplitterModeLetCreateMyType { get; set; }
 
         public bool AvoidSign { get; set; }
-        
+        public string ParentId { get; set; }
+
     }
 
     public class TestCase

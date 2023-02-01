@@ -214,6 +214,11 @@ export class CustomsDocumentPM {
     public set IsCustomSendTime(newValue: boolean) { if (this.isCustomSendTime != newValue) { this.isCustomSendTime = newValue; this.MarkAsDirty("IsCustomSendTime"); } }
        
 	 
+    private parentRequestId: string;
+    public get ParentRequestId() { return this.parentRequestId; }
+    public set ParentRequestId(newValue: string) { if (this.parentRequestId != newValue) { this.parentRequestId = newValue; this.MarkAsDirty("ParentRequestId"); } }
+       
+	 
 
     public OldEntityPM: CustomsDocumentPM;
 		

@@ -202,5 +202,6 @@ namespace Logitude.Customs.BL.Utils
         public bool DebugCreateNew { get; set; }
 
         public string DownloadLog { get; set; }
+        public string ParentId { get; set; }
     }
 }
