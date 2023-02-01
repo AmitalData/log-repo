@@ -440,7 +440,6 @@ namespace Logitude.Customs.Data.EntityLists
        public string CasualImporterCountry  { get; set; }
        [DataMember]
        public string IntegratorName  { get; set; }
-
    }
 
 }
