@@ -31,7 +31,13 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
 
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
+    private PropertyChangedEvent: any = null;
     private Listen() {
+        if (this.PropertyChangedEvent) {
+            AppTool.KillEventEmitter(this.PropertyChangedEvent);
+            this.PropertyChangedEvent = null;
+        }
+
         if (this.entityArgs.EditComponent) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
@@ -41,21 +47,34 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
-                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;                    
                 }
             });
 
+            this.PropertyChangedEvent = this.EntityPM.PropertyChanged.subscribe(s => {
+                if (s) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.Refresh();
+                }
+            });
         }
     }
 
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
+        AppTool.KillEventEmitter(this.PropertyChangedEvent);
     }
 
     ngOnInit() {
 
+    }
+
+    private Refresh() {
+        this.ItemsSource.forEach(item => {
+            item.IsContinuousLine = this.CheckNextLegDates(item.NextLegCode);
+            item.IsDashedLine = !item.IsContinuousLine;
+        });
     }
 
     private SetUIProperties() {
@@ -65,48 +84,21 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
     private BuildItemsSource() {
         this.ItemsSource = [];
 
-        this.AddRoutingItem("PICK");
-        this.AddRoutingItemLine("PREC");
-
-        this.AddRoutingItem("PREC");
-        this.AddRoutingItemLine("POL");
-
-        this.AddRoutingItem("POL");
-        this.AddRoutingItemLine("TS1");
-
-        this.AddRoutingItem("TSS");
-        this.AddRoutingItemLine("POD");
-
-        this.AddRoutingItem("TS1", true, true);
-        this.AddRoutingItemLine("TS2", true, true);
-
-        this.AddRoutingItem("TS2", true, true);
-        this.AddRoutingItemLine("TS3", true, true);
-
-        this.AddRoutingItem("TS3", true, true);
-        this.AddRoutingItemLine("POD", true, true);
-
-        this.AddRoutingItem("POD");
-        this.AddRoutingItemLine("ONC");
-
-        this.AddRoutingItem("ONC");
-        this.AddRoutingItemLine("DELV");
-
-        this.AddRoutingItem("DELV");
-        this.AddRoutingItemLine("EMRT");
-
-        this.AddRoutingItem("EMRT");
+        this.AddRoutingItem("PICK", "PREC");
+        this.AddRoutingItem("PREC", "POL");
+        this.AddRoutingItem("POL", "TS1");
+        this.AddRoutingItem("TSS", "POD");
+        this.AddRoutingItem("TS1", "TS2", true, true);
+        this.AddRoutingItem("TS2", "TS3", true, true);
+        this.AddRoutingItem("TS3", "POD", true, true);
+        this.AddRoutingItem("POD", "ONC");
+        this.AddRoutingItem("ONC", "DELV");
+        this.AddRoutingItem("DELV", "EMRT");
+        this.AddRoutingItem("EMRT", null);
     }
 
-    private AddRoutingItem(code: string, isHidden: boolean = false, isTransshipment: boolean = false) {
+    private AddRoutingItem(code: string, nextLegCode: string, isHidden: boolean = false, isTransshipment: boolean = false) {
         var item: RoutingItem = new RoutingItem(code, this.EntityPM);
-        item.IsHidden = isHidden;
-        item.IsTransshipment = isTransshipment;
-        this.ItemsSource.push(item);
-    }   
-    private AddRoutingItemLine(nextLegCode: string, isHidden: boolean = false, isTransshipment: boolean = false) {
-        var item: RoutingItem = new RoutingItem("Line", this.EntityPM);
-        item.IsLine = true;
         item.IsHidden = isHidden;
         item.IsTransshipment = isTransshipment;
         item.NextLegCode = nextLegCode;
@@ -384,7 +376,7 @@ export class RoutingItem {
 
             case "DELV": {
                 name = "Delivery";
-                //location = this.Container.delivery;
+                location = !AppTool.IsNullOrEmpty(this.Container.ShipmentDeliveryFrom) ? this.Container.ShipmentDeliveryFrom + " , " + this.Container.ShipmentDeliveryTo : null;
                 date = this.GetDate_Delivery();
                 break;
             }
@@ -512,31 +504,67 @@ export class RoutingItem {
     }
     private GetDate_POD(): string {
         if (this.Container.GateOut != null)
-            return this.GetDateString("Container.F.", this.Container.);
+            return this.GetDateString("Container.F.GateOut", this.Container.GateOut);
 
         else if (this.Container.ActualPODDischarge != null)
-            return this.GetDateString("Container.F.", this.Container.);
+            return this.GetDateString("Container.F.ActualPODDischarge", this.Container.ActualPODDischarge);
 
         else if (this.Container.EstimatedPODDischarge != null)
-            return this.GetDateString("Container.F.", this.Container.);
+            return this.GetDateString("Container.F.EstimatedPODDischarge", this.Container.EstimatedPODDischarge);
 
         else if (this.Container.ActualPODVesselArrival != null)
-            return this.GetDateString("Container.F.", this.Container.);
+            return this.GetDateString("Container.F.ActualPODVesselArrival", this.Container.ActualPODVesselArrival);
 
         else if (this.Container.EstimatedPODVesselArrival != null)
-            return this.GetDateString("Container.F.", this.Container.);
+            return this.GetDateString("Container.F.EstimatedPODVesselArrival", this.Container.EstimatedPODVesselArrival);
 
         else
             return null;
     }
     private GetDate_OnCarriage(): string {
-        throw new Error('Method not implemented.');
+        if (this.Container.OnCarriageGateOut != null)
+            return this.GetDateString("Container.F.OnCarriageGateOut", this.Container.OnCarriageGateOut);
+
+        else if (this.Container.OnCarriageATD != null)
+            return this.GetDateString("Container.F.OnCarriageATD", this.Container.OnCarriageATD);
+
+        else if (this.Container.OnCarriageETD != null)
+            return this.GetDateString("Container.F.OnCarriageETD", this.Container.OnCarriageETD);
+
+        else if (this.Container.OnCarriageATA != null)
+            return this.GetDateString("Container.F.OnCarriageATA", this.Container.OnCarriageATA);
+
+        else if (this.Container.OnCarriageETA != null)
+            return this.GetDateString("Container.F.OnCarriageETA", this.Container.OnCarriageETA);
+
+        else
+            return null;
     }
     private GetDate_Delivery(): string {
-        throw new Error('Method not implemented.');
+        if (this.Container.ShipmentDeliveryATA != null)
+            return this.GetDateString("Container.F.ShipmentDeliveryATA", this.Container.ShipmentDeliveryATA);
+
+        else if (this.Container.ShipmentDeliveryETA != null)
+            return this.GetDateString("Container.F.ShipmentDeliveryETA", this.Container.ShipmentDeliveryETA);
+
+        else if (this.Container.ShipmentDeliveryATD != null)
+            return this.GetDateString("Container.F.ShipmentDeliveryATD", this.Container.ShipmentDeliveryATD);
+
+        else if (this.Container.ShipmentDeliveryETD != null)
+            return this.GetDateString("Container.F.ShipmentDeliveryETD", this.Container.ShipmentDeliveryETD);
+
+        else
+            return null;
     }
     private GetDate_EmptyReturn(): string {
-        throw new Error('Method not implemented.');
+        if (this.Container.ActualEmptyReturn != null)
+            return this.GetDateString("Container.F.ActualEmptyReturn", this.Container.ActualEmptyReturn);
+
+        else if (this.Container.EstimatedEmptyReturn != null)
+            return this.GetDateString("Container.F.EstimatedEmptyReturn", this.Container.EstimatedEmptyReturn);
+
+        else
+            return null;
     }
 
     private GetDateString(fieldTextCode: string, fieldValue: Date): string {        
