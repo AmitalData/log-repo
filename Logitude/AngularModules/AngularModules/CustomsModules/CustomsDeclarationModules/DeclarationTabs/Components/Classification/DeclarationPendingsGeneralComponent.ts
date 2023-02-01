@@ -7,6 +7,7 @@ import { DeclarationPendingPM } from 'Customs/EntityPMs/DeclarationPendingPM';
 import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
 import { DeclarationExtendedListService } from 'Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { DeclarationCourierStatusPMService } from 'Customs/Services/StandardPMs/DeclarationCourierStatusPMService';
+import { DeclarationEventManager } from 'Customs/Utilities/DeclarationEventManager';
 import { KeyValuePair } from 'CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
@@ -67,6 +68,14 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
                  }
              })
          );
+
+         this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+            DeclarationEventManager.SavePendingAfterDeclarationSaved.subscribe(data => {
+                this.OkButtonClicked();
+            }));
+
+
+            
     }
     InitTab(){
 
@@ -84,7 +93,7 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
                 windowArgs.DeclarationId = this.decPM.Id;
                 windowArgs.CourierHawb = this.decPM.MAWBCourierMaster;
                 this.SetWindowArgs(windowArgs);
-              
+                   
             }
         });
     }
@@ -110,45 +119,13 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
                 this.IsDisplayOnly = args.IsDisplayOnly;
                 this.parent = args.parent;
                 var table = window.ObjectTables.filter(d => d.Name === 'Customs.DeclarationPending')[0];
-              
             });
 
           
         }
     }
-    /*
-    //#region Properties
-    private _CourierHawb: string;
-    public get CourierHawb() { return this._CourierHawb; }
-    public set CourierHawb(newValue: string) {
-        this._CourierHawb = newValue;
-    }
-
-    private _CourierPendingReasonCode: string;
-    public get CourierPendingReasonCode() { return this._CourierPendingReasonCode; }
-    public set CourierPendingReasonCode(newValue: string) {
-        this._CourierPendingReasonCode = newValue;
-    }
-
-    private _CourierPendingReasonName: string;
-    public get CourierPendingReasonName() { return this._CourierPendingReasonName; }
-    public set CourierPendingReasonName(newValue: string) {
-        this._CourierPendingReasonName = newValue;
-    }
-
-    private _PendingRemarks: string;
-    public get PendingRemarks() { return this._PendingRemarks; }
-    public set PendingRemarks(newValue: string) {
-        this._PendingRemarks = newValue;
-    }
-
-    private _Status: string;
-    public get Status() { return this._Status; }
-    public set Status(newValue: string) {
-        this._Status = newValue;
-    }
-    */
-    //#endregion
+   
+  
 
     Add() {
         if (!this.IsDisplayOnly) {
@@ -163,6 +140,7 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
             //if (!this.DeclarationPendingsList.includes(item)) {
             var item1 = new DeclarationPendingLine(item, this);
             this.DeclarationPendingItemsSource.Insert(item1);
+            this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = true;
             //}
         }
     }
@@ -179,6 +157,7 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
                 if (confirmWindow.Yes) { // YES
                     this.DeclarationPendingItemsSource.Remove(item);
                     this.DeclarationCourierStatus.RemoveDeclarationPending(item.entityPM);
+                    this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = true
                 }
             });
            
@@ -199,7 +178,6 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
     hasRequest: boolean;
     notMandatoryIsNotEmpty: boolean = false;
     OkButtonClicked() {
-        
         this.ValidationErrorsList = [];
         var errors: string[] = [];
         this.isValid = true;
@@ -262,6 +240,7 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
                                 //declarationPendingPM.DeclarationID = this.declarationPM.Id;
                                 //declarationPendingPM.Tenant = this.declarationPM.Tenant;
                                 //this.declarationPendingPMService.update(declarationPendingPM).subscribe((response: ServiceResponse) => {
+                                    this.InitTab();
                                 SessionLocator.SelectedSession.StopBusyIndicator();
                                 SessionLocator.SelectedSession.CloseCurrentWindow();
                             });
@@ -336,6 +315,8 @@ export class DeclarationPendingLine extends BaseComponent {
     public declaration: DeclarationPM;
     public parent: DeclarationPendingsGeneralComponent;
     _StatusItems: KeyValuePair[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor(EntityPM: DeclarationPendingPM, Parent: DeclarationPendingsGeneralComponent) {
         super();
         this.entityPM = EntityPM;
@@ -370,6 +351,8 @@ export class DeclarationPendingLine extends BaseComponent {
     set CourierPendingReasonCode(value: string) {
         if (this.entityPM.CourierPendingReasonCode != value) {
             this.entityPM.CourierPendingReasonCode = value;
+            this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = true;
+
 
         }
     }
@@ -378,6 +361,8 @@ export class DeclarationPendingLine extends BaseComponent {
     set CourierPendingReasonName(value: string) {
         if (this.entityPM.CourierPendingReasonName != value) {
             this.entityPM.CourierPendingReasonName = value;
+            this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = true;
+
 
         }
     }
@@ -386,6 +371,8 @@ export class DeclarationPendingLine extends BaseComponent {
     set CourierPendingRequireApr(value: boolean) {
         if (this.entityPM.CourierPendingRequireApr != value) {
             this.entityPM.CourierPendingRequireApr = value;
+            this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = true;
+
         }
     }
     
@@ -393,6 +380,8 @@ export class DeclarationPendingLine extends BaseComponent {
     set WasApproved(value: boolean) {
         if (this.entityPM.WasApproved != value) {
             this.entityPM.WasApproved = value;
+            this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = true;
+
         }    }
 
     courierPendingReason: CourierPendingReasonPM;
@@ -400,6 +389,8 @@ export class DeclarationPendingLine extends BaseComponent {
     set CourierPendingReason(value: CourierPendingReasonPM) {
         if (this.CourierPendingReason != value) {
             this.CourierPendingReason = value;
+            this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = true;
+
         }
         if (!AppTool.IsNullOrEmpty(value)) {
             this.CourierPendingReasonName = value.LocalName;
@@ -415,6 +406,8 @@ export class DeclarationPendingLine extends BaseComponent {
     set PendingRemarks(value: string) {
         if (this.entityPM.PendingRemarks != value) {
             this.entityPM.PendingRemarks = value;
+            this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = true;
+
 
         }
     }
@@ -423,6 +416,7 @@ export class DeclarationPendingLine extends BaseComponent {
     set Status(value: string) {
         if (this.entityPM.Status != value) {
             this.entityPM.Status = value;
+            this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = true;
 
         }
     }
@@ -431,6 +425,7 @@ export class DeclarationPendingLine extends BaseComponent {
     set Approval(value: boolean) {
         if (this.entityPM.Approval != value) {
             this.entityPM.Approval = value;
+            this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = true;
 
         }
     }
