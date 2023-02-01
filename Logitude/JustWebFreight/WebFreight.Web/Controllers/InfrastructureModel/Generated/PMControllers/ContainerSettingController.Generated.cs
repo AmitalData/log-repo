@@ -59,8 +59,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("ContainerSetting", "READ", authToken.Tenant);
-	                
+                
                 IInfrastructureContext MyContext = InfrastructureContext.GetContext(authToken.Tenant);
                 ContainerSettingQueryService containerSettingQuery = new ContainerSettingQueryService(MyContext);
 				containerSettingQuery.InitializeSettings();
@@ -92,9 +91,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("ContainerSetting", "NEW", authToken.Tenant);
-	                        SecurityUtility.AuthenticationOnEntityTenant("ContainerSetting", entityPM.Tenant, authToken.Tenant);
-	                    
+                    
                         IInfrastructureContext MyContext = InfrastructureContext.GetContext(entityPM.Tenant);
                         ContainerSettingUpdateService service = new ContainerSettingUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
@@ -140,9 +137,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("ContainerSetting", "UPDATE", authToken.Tenant);
-	                        SecurityUtility.AuthenticationOnEntityTenant("ContainerSetting", entityPM.Tenant, authToken.Tenant);
-	
+
                         IInfrastructureContext MyContext = InfrastructureContext.GetContext(entityPM.Tenant);
                         ContainerSettingUpdateService service = new ContainerSettingUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 						service.InitializeEntityPM(entityPM);
