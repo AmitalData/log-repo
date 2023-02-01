@@ -548,12 +548,11 @@ export class OtherChargesTabComponent extends BaseComponent {
     public UpdateQuantitiesMessageWidth: number = 0;
     public IsUpdateQuantitiesVisible: boolean = false;
     CheckUpdateQuantities() {
-        var updateMessage = null;
-        var activeLines: AWBWizardOtherChargeItem[] = this.ItemsSource;
-        this.FilterPayablesLines(activeLines);
-        this.FilterReceivablesLines(activeLines);        
-        activeLines = activeLines.filter(d => d.UnitPrice != null);
-
+        var updateMessage = null;        
+        var payablesLine: AWBWizardOtherChargeItem[] = this.FilterPayablesLines(this.ItemsSource);
+        var receivablesLine: AWBWizardOtherChargeItem[] = this.FilterReceivablesLines(this.ItemsSource);
+        var activeLines: AWBWizardOtherChargeItem[] = payablesLine.concat(receivablesLine);
+        
         if (activeLines.length > 0) {
             var isDifferentOrders: boolean = false;
             var isDifferentPRVL: boolean = false;
@@ -702,48 +701,33 @@ export class OtherChargesTabComponent extends BaseComponent {
         this.Wizard.IsUpdateQuantitiesVisible = this.IsUpdateQuantitiesVisible;
         this.FireWizardEvent();
     }    
-    FilterPayablesLines(activeLines: AWBWizardOtherChargeItem[]) {
-        activeLines = activeLines.filter(d => d.TypeName == "Payable");
-        activeLines = activeLines.filter(d => d.PayablePM.ShipmentPayableParentId == null);
-        activeLines = activeLines.filter(d => d.PayablePM.ShipmentPayableAmountTypeCode != "NEXP");
-        activeLines = activeLines.filter(d => d.PayablePM.ShipmentPayableLineStatusCode != "ACCT");
-        activeLines = activeLines.filter(d => d.PayablePM.ShipmentPayableLineStatusCode != "PACC");        
+    FilterPayablesLines(activeLines: AWBWizardOtherChargeItem[]): AWBWizardOtherChargeItem[] {
+        var myList: AWBWizardOtherChargeItem[] = [];
+        myList = activeLines.filter(d => d.TypeName == "Payable"
+            && d.UnitPrice != null
+            && d.PayablePM.ShipmentPayableParentId == null
+            && d.PayablePM.ShipmentPayableAmountTypeCode != "NEXP"
+            && d.PayablePM.ShipmentPayableLineStatusCode != "ACCT"
+            && d.PayablePM.ShipmentPayableLineStatusCode != "PACC");
+
+        return myList;
     }
-    FilterReceivablesLines(activeLines: AWBWizardOtherChargeItem[]) {
-        activeLines = activeLines.filter(d => d.TypeName == "Receivable");
-        activeLines = activeLines.filter(d => d.ReceivablePM.ShipmentReceivableParentId == null);
-        activeLines = activeLines.filter(d => d.ReceivablePM.ARInvoiceId == null);        
+    FilterReceivablesLines(activeLines: AWBWizardOtherChargeItem[]): AWBWizardOtherChargeItem[] {
+        var myList: AWBWizardOtherChargeItem[] = [];
+        myList = activeLines.filter(d => d.TypeName == "Receivable"
+            && d.UnitPrice != null
+            && d.ReceivablePM.ShipmentReceivableParentId == null
+            && d.ReceivablePM.ARInvoiceId == null);
+
+        return myList;
     }
     
     UpdateQuantitiesClicked() {        
-        var activeLines: AWBWizardOtherChargeItem[] = this.ItemsSource;
-        var activeFreightLines: AWBWizardOtherChargeItem[] = this.AllItemsSource.filter(f => f.ChargesGroupCode == "FRT");
-        this.FilterPayablesLines(activeLines);
-        this.FilterReceivablesLines(activeLines);        
-        this.FilterPayablesLines(activeFreightLines);
-        this.FilterReceivablesLines(activeFreightLines);
+        var payablesLine: AWBWizardOtherChargeItem[] = this.FilterPayablesLines(this.ItemsSource);
+        var receivablesLine: AWBWizardOtherChargeItem[] = this.FilterReceivablesLines(this.ItemsSource);
+        var activeLines: AWBWizardOtherChargeItem[] = payablesLine.concat(receivablesLine);
 
-        activeFreightLines.filter(d => d.MeasurementCode != "PRFR" && d.MeasurementCode != "PFCL").forEach((item: AWBWizardOtherChargeItem) => {
-            item.SetQuantity();
-        });
-
-        activeLines.filter(d => d.MeasurementCode != "PRFR" && d.MeasurementCode != "PFCL").forEach((item: AWBWizardOtherChargeItem) => {
-            item.SetQuantity();
-        });
-
-        activeLines.filter(d => d.MeasurementCode == "PRFR").forEach((item: AWBWizardOtherChargeItem) => {
-            item.SetQuantity();
-        });
-
-        activeFreightLines.filter(d => d.MeasurementCode == "PRFR").forEach((item: AWBWizardOtherChargeItem) => {
-            item.SetQuantity();
-        });
-
-        activeLines.filter(d => d.MeasurementCode == "PFCL").forEach((item: AWBWizardOtherChargeItem) => {
-            item.SetQuantity();
-        });
-
-        activeFreightLines.filter(d => d.MeasurementCode == "PFCL").forEach((item: AWBWizardOtherChargeItem) => {
+        activeLines.forEach((item: AWBWizardOtherChargeItem) => {
             item.SetQuantity();
         });
 
