@@ -487,8 +487,8 @@
                                                 <div *ngIf="logcelltemplate.IsEditMode">
                                                     <ComboBox [ItemsSource]="item.BanksList" [FocusOnMe]="true"
                                                               [SelectedItem]="item.SelectedBank"
-                                                              (SelectedItemChanged)="item.SelectedBank = $event"
-                                                              (ComboBoxDropDownClicked)="item.ComboBoxClicked()"
+                                                              (SelectedItemChanged)="item._ComboBoxSelectedBankChanged=true;item.SelectedBank = $event"
+                                                              (ComboBoxDropDownClicked)="item._ComboBoxSelectedBankChanged=true;item.ComboBoxClicked()"
                                                               [Binding]="'Name'"></ComboBox>
                                                 </div>
                                             </log-cell-template>
