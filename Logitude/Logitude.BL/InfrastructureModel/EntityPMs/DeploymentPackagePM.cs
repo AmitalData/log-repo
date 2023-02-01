@@ -54,7 +54,8 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool IsRequiered { get; set; }
         public bool DisplayOnly { get; set; }
         public bool MultiLine { get; set; }
-        
+        public string DefaultAdditionalFilters { get; set; }
+
     }
     public class CustomPickListItem
     {
