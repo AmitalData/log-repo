@@ -86,7 +86,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    public class DeclarationUpdateClass
    {  		
 
-		public const string HashString = "5bafd3edf8b6ed3bb4e3a8a41f8e39c6";
+		public const string HashString = "536f6e6cf0a173ee9f0795c6ea44bfd8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -20041,6 +20041,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB611.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton DeclarationMenuButton612 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "CancelOperationalClosure",
+						Index = 14, 
+						IsActive = true,
+						LabelTextCodeCode = "Declaration.B.CancelOperationalClosure",
+						LabelTextCodeDefaultText = "Cancel Operational Closure",
+						Tenant = 0,
+						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
+						ParentMenuButtonId = DeclarationMenuButton6.Id,
+						ObjectTableId = DeclarationObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  DeclarationFeature_MB612.Id,
+						Style = null,
+						LocalDefaultText = "ביטול סגירה תפעולית",
+                        HtmlComponentPath=null,
+                        Width=0,
+						FeatureUniqeCode=  DeclarationFeature_MB612.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton DeclarationMenuButton612 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()

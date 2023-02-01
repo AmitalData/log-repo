@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "4bd07973b5f598a01bc2e098eba79896";
+		public const string HashString = "81aa06724d343e1aefb3baaa53dcbc49";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "d942",
+			      				    Code =  "34c1",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2135,6 +2135,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsExpOrImpDeclarationDataQueryFDeclarationData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExpOrImpDeclarationDataQuery.F.DeclarationData", DefaultText = "Declaration Data",LocalDefaultText = @"נתוני הצהרת יצוא/יבוא", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsDeclarationOOperationallyClosed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.OperationallyClosed", DefaultText = "Display Only - Declaration was operationally closed",LocalDefaultText = @"הנתונים לתצוגה בלבד - ההצהרה סגורה תפעולית", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOHappinessConstraintDocumentsCannotBeLinked = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.HappinessConstraintDocumentsCannotBeLinked", DefaultText = "happiness constraint - new documents cannot be linked",LocalDefaultText = @"אילוץ אושר - לא ניתן לקשר מסמכים חדשים", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOClosedDeclarationCustomsGeneralOHappinessConstraintDocumentsCannotBeLinked = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ClosedDeclarationCustoms.General.O.HappinessConstraintDocumentsCannotBeLinked", DefaultText = "Closed Declaration- documents cannot be uploaded",LocalDefaultText = @"הצהרה סגורה - לא ניתן לעלות מסמכים", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralODeclarationSubmittedDocumentsCannotBeLinked = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.DeclarationSubmittedDocumentsCannotBeLinked", DefaultText = "The declaration has already been submitted - new documents cannot be linked",LocalDefaultText = @"ההצהרה כבר הוגשה - לא ניתן לקשר מסמכים חדשים", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
