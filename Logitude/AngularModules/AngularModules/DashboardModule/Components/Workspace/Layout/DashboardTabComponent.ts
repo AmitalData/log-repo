@@ -427,42 +427,56 @@ export class DashboardTabComponent implements OnInit {
         }
         var compareItem = this.GlobalFilters.find((x: any) => x.compareWithPrevious) as any;
 
-        if(!compareItem?.compareWithPrevious){
+        if (!compareItem?.compareWithPrevious) {
             this.DateRangeLabel = "";
             return;
         }
-        if (compareItem?.Operator == "Between"){
-            this.DateRangeLabel = this.ParseDateFormat(compareItem.fieldValue) + " - " + this.ParseDateFormat(compareItem.fieldValue2) + "    vs    " + this.GetCompareFromDateForBetween(compareItem.fieldValue, compareItem.fieldValue2) + " - " + this.GetCompareToDateForBetween(compareItem.fieldValue);            
+        if (compareItem?.Operator == "Between") {
+            this.DateRangeLabel = this.ParseDateFormat(compareItem.fieldValue) + " - " + this.ParseDateFormat(compareItem.fieldValue2) + "    vs    " + this.GetCompareFromDateForBetween(compareItem.fieldValue, compareItem.fieldValue2) + " - " + this.GetCompareToDateForBetween(compareItem.fieldValue);
         }
 
-        if (compareItem?.Operator == "Previous"){
+        if (compareItem?.Operator == "Previous") {
             this.SetPreviousDates(compareItem);
         }
     }
-    SetPreviousDates(compareItem : any) {
-        var curDate = new Date(Date.now());
-        var firstDayDate =  new Date(curDate.getFullYear(), curDate.getMonth(), 1); 
-        firstDayDate.setDate(firstDayDate.getDate() - 1);
-        let formattedDate = this.FormatDate(firstDayDate);
 
-        this.DateRangeLabel = this.GetFromDateForPrevious(compareItem) + " - " + formattedDate + "    vs    " + this.GetCompareFromDateForPrevious(compareItem, this.GetFromDateForPrevious(compareItem)) 
-        + " - " + this.GetCompareToDateForPrevious(this.GetFromDateForPrevious(compareItem));
+    SetPreviousDates(compareItem: any) {
+        var curDate = new Date(Date.now());
+        let formattedDate = this.FormatDate(curDate);
+        
+        if (compareItem.dateGroupCode == "Quarter"){
+            this.GetDateRangeLabelForQuarter(compareItem);
+            return;
+        }
+        
+        this.DateRangeLabel = this.GetFromDateForPrevious(compareItem) + " - " + formattedDate + "    vs    " + this.GetCompareFromDateForPrevious(compareItem, this.GetFromDateForPrevious(compareItem))
+            + " - " + this.GetCompareToDateForPrevious(this.GetFromDateForPrevious(compareItem));
     }
 
-    ParseDateFormat(date: string): string{
-        var year = date.substring(0,4);
-        var month  = date.substring(4, 6);
-        var day = date.substring(6,8);
+    GetDateRangeLabelForQuarter(compareItem: any){
+       
+        var numberPeriod = +compareItem.fieldValue3;
+        var FromDate = this.GetFromDateForPrevious(compareItem);
+        var CompareFromDate = this.GetCompareFromDateForQuarter(new Date (FromDate), numberPeriod);
+
+        this.DateRangeLabel = FromDate + " - " + this.GetEndOfQuarter(new Date(FromDate), numberPeriod) + "    vs    " + CompareFromDate
+        + " - " + this.GetEndOfQuarter(new Date (CompareFromDate), numberPeriod);
+    }
+
+    ParseDateFormat(date: string): string {
+        var year = date.substring(0, 4);
+        var month = date.substring(4, 6);
+        var day = date.substring(6, 8);
 
         var dateString = year + "/" + month + "/" + day;
         return dateString;
     }
 
-    GetCompareFromDateForBetween(fieldValue, fieldValue2) : string{
-        let dateFrom = new Date (this.ParseDateFormat(fieldValue));
-        let dateTo = new Date (this.ParseDateFormat(fieldValue2));
+    GetCompareFromDateForBetween(fieldValue, fieldValue2): string {
+        let dateFrom = new Date(this.ParseDateFormat(fieldValue));
+        let dateTo = new Date(this.ParseDateFormat(fieldValue2));
 
-        let numberOfDays = Math.floor((Date.UTC(dateTo.getFullYear(), dateTo.getMonth(), dateTo.getDate()) - Date.UTC(dateFrom.getFullYear(), dateFrom.getMonth(), dateFrom.getDate()) ) /(1000 * 60 * 60 * 24));
+        let numberOfDays = Math.floor((Date.UTC(dateTo.getFullYear(), dateTo.getMonth(), dateTo.getDate()) - Date.UTC(dateFrom.getFullYear(), dateFrom.getMonth(), dateFrom.getDate())) / (1000 * 60 * 60 * 24));
 
         dateFrom.setDate(dateFrom.getDate() - numberOfDays);
         let formattedDate = this.FormatDate(dateFrom);
@@ -471,15 +485,15 @@ export class DashboardTabComponent implements OnInit {
     }
 
     GetCompareToDateForBetween(fieldValue): string {
-        let dateFrom = new Date (this.ParseDateFormat(fieldValue));
-        
+        let dateFrom = new Date(this.ParseDateFormat(fieldValue));
+
         dateFrom.setDate(dateFrom.getDate() - 1);
         let formattedDate = this.FormatDate(dateFrom);
         return formattedDate;
 
     }
 
-    GetFromDateForPrevious(compareItem : any): string {
+    GetFromDateForPrevious(compareItem: any): string {
         let dateFrom = new Date(Date.now());
         let stringPeriod = compareItem.fieldValue3;
         var numberPeriod: number = +stringPeriod;
@@ -488,7 +502,7 @@ export class DashboardTabComponent implements OnInit {
         return formattedDate;
     }
 
-    GetCompareFromDateForPrevious(compareItem: any, dateFrom : any){
+    GetCompareFromDateForPrevious(compareItem: any, dateFrom: any) {
         let dateFromHere = new Date(dateFrom);
         let stringPeriod = compareItem.fieldValue3;
         var numberPeriod: number = +stringPeriod;
@@ -496,37 +510,67 @@ export class DashboardTabComponent implements OnInit {
         let formattedDate = this.FormatDate(dateFromHere);
         return formattedDate;
     }
-    SetDateFromAccordingDateGroupCode(compareItem: any, dateFromHere: Date, numberPeriod: number) : Date{
-        if(compareItem.dateGroupCode == 'Day'){
+    
+    SetDateFromAccordingDateGroupCode(compareItem: any, dateFromHere: Date, numberPeriod: number): Date {
+        if (compareItem.dateGroupCode == 'Day') {
             dateFromHere.setDate(dateFromHere.getDate() - numberPeriod);
         }
-        if(compareItem.dateGroupCode == 'Week'){
+        if (compareItem.dateGroupCode == 'Week') {
             dateFromHere.setDate(dateFromHere.getDate() - (7 * numberPeriod));
         }
-        if(compareItem.dateGroupCode == 'Month'){
+        if (compareItem.dateGroupCode == 'Month') {
             dateFromHere.setMonth(dateFromHere.getMonth() - numberPeriod);
         }
-        if(compareItem.dateGroupCode == 'Quarter'){
-            var firstDay =  new Date(dateFromHere.getFullYear(), dateFromHere.getMonth(), 1); 
-            dateFromHere = firstDay;
-            dateFromHere.setMonth(dateFromHere.getMonth() - (3 * numberPeriod)); 
+        if (compareItem.dateGroupCode == 'Quarter') {
+            var month = this.GetStartCurrentQuarter(dateFromHere); 
+            dateFromHere.setMonth(month);
+            dateFromHere = new Date(dateFromHere.getFullYear(), dateFromHere.getMonth(), 1);
+            dateFromHere.setMonth(dateFromHere.getMonth() - (3 * numberPeriod));
         }
-        if(compareItem.dateGroupCode == 'Year'){
+
+        if (compareItem.dateGroupCode == 'Year') {
             dateFromHere.setFullYear(dateFromHere.getFullYear() - numberPeriod);
         }
 
         return dateFromHere;
     }
-    
-    GetCompareToDateForPrevious(dateFrom: any) {
-        let dateFromHere = new Date (dateFrom);
-        
-        dateFromHere.setDate(dateFromHere.getDate() - 1);
-        let formattedDate = this.FormatDate(dateFromHere);
-        return formattedDate;   
+    GetEndOfQuarter(date: Date, numberPeriod: number): string {
+
+        var lastDayInQuarter = new Date (date); 
+        lastDayInQuarter.setMonth(lastDayInQuarter.getMonth() + (3 * numberPeriod)); 
+        lastDayInQuarter.setDate(lastDayInQuarter.getDate() - 1); 
+        let formattedDate = this.FormatDate(lastDayInQuarter);
+        return formattedDate;
     }
 
-    FormatDate(date: Date): string{
+    GetCompareFromDateForQuarter(date: Date, numberPeriod: number){
+        date = new Date(date.getFullYear(), date.getMonth(), 1);
+        date.setMonth(date.getMonth() - (3 * numberPeriod));
+        let formattedDate = this.FormatDate(date);
+        return formattedDate;
+    }
+
+    GetStartCurrentQuarter(date : Date): number
+    {
+        if (date.getMonth() >= 4 && date.getMonth() <= 6)
+            return 3;
+        else if (date.getMonth() >= 7 && date.getMonth() <= 9)
+            return 6;
+        else if (date.getMonth() >= 10 && date.getMonth() <= 12)
+            return 9;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        else
+            return 0;
+    }
+
+    GetCompareToDateForPrevious(dateFrom: any) {
+        let dateFromHere = new Date(dateFrom);
+
+        dateFromHere.setDate(dateFromHere.getDate() - 1);
+        let formattedDate = this.FormatDate(dateFromHere);
+        return formattedDate;
+    }
+
+    FormatDate(date: Date): string {
         const format = 'yyyy/MM/dd';
         const locale = 'en-US';
         const formattedDate = formatDate(date, format, locale);
