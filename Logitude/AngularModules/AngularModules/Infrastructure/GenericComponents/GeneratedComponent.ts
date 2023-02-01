@@ -105,6 +105,10 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
         this.BuildScreen(true);
     }
 
+    IsFocused(objectField: any) {
+        if (objectField.Id == this.ScreenSections[0]?.ScreenColumns[0]?.ObjectFields[0]?.Id) return true;
+        return false;
+    }
 
     BuildScreen(fireEmit: boolean = false) {
         let selectedScreen = this.GetSelectedScreen();

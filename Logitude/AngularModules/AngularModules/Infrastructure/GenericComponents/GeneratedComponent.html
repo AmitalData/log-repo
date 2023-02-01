@@ -44,7 +44,8 @@
                                     <div *ngIf="objectField.DataTypeCode == 'Text' || objectField.DataTypeCode == 'nText' || objectField.DataTypeCode == 'Integer' || objectField.DataTypeCode == 'Double' ||objectField.DataTypeCode == 'Decimal'">
                                         <LogTextBox *ngIf="objectField.IsCustom" [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM" [Text]="EntityPM[objectField.FieldName]" [IsNewEntityCall]="IsNewEntityCall"
                                                     [HideColumns]="HideColumns"
-                                                    [HideLastColumn]="HideLastColumn">
+                                                    [HideLastColumn]="HideLastColumn"
+                                                    [FocusOnMe]="IsFocused(objectField)">
 
                                         </LogTextBox>
                                         <LogTextBox *ngIf="!objectField.IsCustom" [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [Text]="EntityPM[objectField.FieldName]" [DataContext]="EntityPM" [IsNewEntityCall]="IsNewEntityCall"
@@ -60,7 +61,8 @@
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="EntityPM[objectField.FieldName]" [DataContext]="EntityPM"
                                                                    [HideColumns]="true"
-                                                                   [HideLastColumn]="HideLastColumn">
+                                                                   [HideLastColumn]="HideLastColumn"
+                                                                   [FocusOnMe]="IsFocused(objectField)">
 
                                                     </LogDatePicker>
                                                 </td>
