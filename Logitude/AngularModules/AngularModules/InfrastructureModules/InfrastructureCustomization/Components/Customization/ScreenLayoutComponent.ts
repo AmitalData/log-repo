@@ -718,7 +718,11 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
         confirmWindow.Show("This Screen has unsaved changes. Do you want to save it?");
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                this.OkClicked(false);
+                if (this.IsGridScreenColumnsValid()) {
+                    this.OkClicked(false);
+                    return;
+                }
+                this.ShowMessageWindow("You have to add at least one field to the grid");
                 return;
             }
             if (confirmWindow.No) {
@@ -729,6 +733,12 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
             }
             this.SelectedItem = this.OldItem;
         });
+    }
+
+    IsGridScreenColumnsValid() {
+        if (!this.IsGridScreen) return true;
+        if (this.GridScreenSelectedFields.length != 0) return true;
+        return false;
     }
 
     NewScreenButtonClicked() {
@@ -917,7 +927,8 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
         });
     }
     Save() {
-        if (this.IsGridScreen && this.GridScreenSelectedFields.length == 0) {
+
+        if (!this.IsGridScreenColumnsValid()) {
             this.ShowMessageWindow("You have to add at least one field to the grid");
             return;
         }
