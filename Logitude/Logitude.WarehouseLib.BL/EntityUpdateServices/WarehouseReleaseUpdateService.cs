@@ -33,10 +33,19 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
                 entityPM.Id = IdCounter.GetNumber("WarehouseRelease", entityPM.Tenant);
                 entityPM.ReleaseNumber = TableCounter.GetNumber(entityPM.Tenant, "WARC", null, null).ToString();
                 this.BuildActivityLog("N", entityPM);
+
+                new MainEntityChangeService(new EntityChangeArgs()
+                {
+                    EntityPM = entityPM,
+                    ProcessType = "OnCreate",
+                    ObjectTableName = "WarehouseRelease",
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    StartDate = DateTime.Now,
+                    EntityReference = entityPM.ReleaseNumber
+                }).AddEntityChange();
             }
-            new MainEntityChangeService(new EntityChangeArgs() {
-                EntityPM = entityPM, ProcessType = "OnCreate", ObjectTableName = "WarehouseRelease", EntityId = entityPM.Id, Tenant = entityPM.Tenant, StartDate = DateTime.Now, EntityReference = entityPM.ReleaseNumber 
-            }).AddEntityChange();
+           
         }
 
         protected override void OnUpdating(WarehouseReleasePM entityPM)
@@ -68,6 +77,8 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
       
         protected override void OnUpdating(WarehouseReleasePM entityPM, WarehouseRelease entityPOCO)
         {
+            if (entityPM.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Update) return;
+
             AddTraceEvents(entityPM, entityPOCO);
 
 
