@@ -146,7 +146,9 @@ export class DashboardTabComponent implements OnInit {
 
         widgets.forEach(item => {
             item.Key = item.Id ?? item.Key;
-            reactWidgets.push(DashboardMapping.GetReactWidget(item));
+            var reactWidget = DashboardMapping.GetReactWidget(item);
+            reactWidget.GlobalFilters = this.GetWidgetGlobalFilters(reactWidget);
+            reactWidgets.push(reactWidget);
         });
         return { lg: reactWidgets };
     }
@@ -213,8 +215,8 @@ export class DashboardTabComponent implements OnInit {
         });
     }
 
-    SaveDashboard(fromUI: boolean = false) {
-        if (fromUI) MixPanelLocator.PostDashboardAction({ ActionName: "Submit Dashboard Save Click", DashboardId: this.SelectedDashboard?.Id });
+    SaveDashboard() {
+        MixPanelLocator.PostDashboardAction({ ActionName: "Submit Dashboard Save Click", DashboardId: this.SelectedDashboard?.Id });
 
         this.CurrentSession.StartBusyIndicatorSaving();
         this.dashboardPMService.update(this.SelectedDashboard).subscribe((myResponse: ServiceResponse) => {
