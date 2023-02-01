@@ -138,7 +138,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
 
                 // if accountId is same for credit & debit tranasction, we get only credit tranasctions
-                if (newLTranListOfAccountID.Count == _NewLedgerTransactionsWithCounters.Count)
+                if (newLTranListOfAccountID.Count == _NewLedgerTransactionsWithCounters.Count && totalNewLedgerOpenAmount != totalAmountFromJournalReconciliation)
                 {
                     newLTranListOfAccountID = newLTranListOfAccountID.Where(r => r.LocalAmountCredit > 0).ToList();
                 }
