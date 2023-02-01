@@ -108,7 +108,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             query2 = query2.Skip(skippedPorts);
             query2 = query2.Take(queryOperations.PageSize);
             List<ContainerList> listQuery = query2.ToList(); 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("Container", tenant, listQuery.Cast<object>().ToList()); 
 
             return listQuery.AsQueryable();
