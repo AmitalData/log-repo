@@ -31,7 +31,8 @@ export class AddCustomFieldsComponent extends BaseComponent {
     private generalDomainService: GeneralDomainService;
     public ValidationErrorsList: string[] = [];
     private customPickListItems: CustomPickListItem[];
-
+    private isEdit: boolean = false;
+    private editedCustomField: CustomFields;
     constructor() {
         super();
         this.ValidationErrorsList = [];
@@ -39,10 +40,19 @@ export class AddCustomFieldsComponent extends BaseComponent {
 
     SetWindowArgs(args: any) {
         this.customFieldsTabComponent = args.CustomFieldsTabComponent;
+        this.isEdit = args.IsEdit;
+        this.editedCustomField = args.EditedCustomField;
         this.generalDomainService = new GeneralDomainService();
         this.InitLOVFilters();
         this.IsLogLovReady = true;
         this.SetSelectedCustomFields();
+        this.SetSelectedObjectTable();
+    }
+
+    SetSelectedObjectTable() {
+        if (!this.isEdit) return;
+        let objectTable = window.ObjectTables.filter(objectTable => objectTable.Name == this.editedCustomField.ObjectTableName)[0];
+        this.SelectedObjectTableId = objectTable?.Id;
     }
 
     InitLOVFilters() {

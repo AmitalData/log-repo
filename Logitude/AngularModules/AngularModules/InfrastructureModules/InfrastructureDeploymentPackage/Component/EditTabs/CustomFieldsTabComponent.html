@@ -7,8 +7,11 @@
                     <tr>
                         <td>{{'DeploymentPackage.O.CustomFields' | TextCodeTranslationPipe}}</td>
 
-                        <td style="width: 1px;">
+                        <td style="width: 25px;">
                             <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddCustomFields()"></IconButton>
+                        </td>
+                        <td style="width: 50px;">
+                            <button class="Button" (click)="DeleteAllCustomFields()">Delete All</button>
                         </td>
                     </tr>
                 </table>
@@ -24,7 +27,8 @@
                                 <td style="width: 150px; min-width: 150px; max-width: 150px;">{{'DeploymentPackage.O.CustomField.Name' | TextCodeTranslationPipe}}</td>
                                 <td style="width: 150px; min-width: 150px; max-width: 150px;">{{'DeploymentPackage.O.CustomField.DataType' | TextCodeTranslationPipe}}</td>
                                 <td style="width: 150px; min-width: 150px; max-width: 150px;">{{'DeploymentPackage.O.CustomField.ParentEntity' | TextCodeTranslationPipe}}</td>
-                                <td style="width: 25px; max-width:25px;max-width:25px"></td>
+                                <td style="width: 30px; max-width:30px;max-width:30px"></td>
+                                <td style="width: 30px; max-width:30px;max-width:30px"></td>
                                 <td> </td>
                             </tr>
                         </table>
@@ -45,7 +49,24 @@
                                 <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px; ">
                                     {{item.ObjectTableName}}
                                 </td>
-
+                                <!-- Edit Icon -->
+                                <td class="GridViewCell" style="width: 30px; min-width: 30px; max-width: 30px; ">
+                                    <IconButton [DataCy]="item.FieldCode"
+                                                [Name]="'edit'"
+                                                [IsSmall]="true"
+                                                style="display: block; float: left; margin-left:3px; margin-top:4px;"
+                                                (click)="EditCustomField(item)">
+                                    </IconButton>
+                                </td>
+                                <!-- Delete Icon -->
+                                <td class="GridViewCell" style="width: 30px; min-width: 30px; max-width: 30px; ">
+                                    <IconButton [DataCy]="item.FieldCode"
+                                                [Name]="'Delete'"
+                                                [IsSmall]="true"
+                                                style="display: block; float: left; margin-left:3px; margin-top:4px;"
+                                                (click)="DeleteCustomField(item)">
+                                    </IconButton>
+                                </td>
                                 <td class="GridViewCell"></td>
 
                             </tr>

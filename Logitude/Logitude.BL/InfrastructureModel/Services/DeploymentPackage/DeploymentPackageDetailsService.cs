@@ -57,6 +57,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         {
             DeploymentPackageDetails deploymentPackageDetails = GetDeploymentPackageDetailsByObjectName(customField.ObjectTableName);
             deploymentPackageDetails.CustomFields.Add(customField);
+            if (string.IsNullOrEmpty(customField.CustomPickListCode)) return;
             var isExistCustomPickList = deploymentPackageDetails.CustomPickLists.Where(d => d.Code == customField.CustomPickListCode).Any();
             if (!isExistCustomPickList)
             {
