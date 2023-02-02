@@ -421,7 +421,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         PhysicalCheckName, 
 	         ReleaseStatusTypeCode, 
 	         ReferentUserName, 
-	         ExportDecWithoutRelease, 
 	         ClosingXml, 
 	         ExportCloseAmendRequestNumber, 
 	         ExportCloseAmendmentStatus, 
