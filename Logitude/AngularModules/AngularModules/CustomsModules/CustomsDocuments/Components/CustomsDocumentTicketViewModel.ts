@@ -1267,10 +1267,10 @@ export class CustomsDocumentTicketViewModel {
             messageWindow.Width = 400;
             messageWindow.Height = 200;
             messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-            if(this.DataContext.DisplayOnlyMessage=="לתצוגה בלבד - אילוץ םושר")
+            if(this.DataContext.DisplayOnlyMessage=="לתצוגה בלבד - אילוץ אושר")
                messageWindow.Show(TextCodeTranslator.Translate("Customs.General.O.HappinessConstraintDocumentsCannotBeLinked"));
             if(this.DataContext.DisplayOnlyMessage=="הצהרה סגורה"){
-                messageWindow.Show(TextCodeTranslator.Translate("Customs.General.O.HappinessConstraintDocumentsCannotBeLinked"));
+                messageWindow.Show(TextCodeTranslator.Translate("Customs.General.O.ClosedDeclarationDocumentsCannotBeLinked"));
             }
             else
                messageWindow.Show(TextCodeTranslator.Translate("Customs.General.O.DeclarationSubmittedDocumentsCannotBeLinked"));
