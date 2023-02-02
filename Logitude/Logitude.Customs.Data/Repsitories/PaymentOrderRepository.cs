@@ -51,7 +51,24 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).ToList();
         }
 
-   }
+        public string GetDecIdOfCustomFileByPaymentNumber(string PaymentNumber, int tenant)
+        {
+
+           var CustomFiles =  (from a in context.PaymentOrders
+                    where a.PaymentNumber == PaymentNumber && a.Tenant == tenant
+                    select a).FirstOrDefault()?.CustomFiles;
+
+            if(CustomFiles != null)
+            {
+                CustomFiles = CustomFiles.Replace("*", "");
+                return (from a in context.Declarations
+                    where a.CustomFileNo == CustomFiles && a.Tenant == tenant && a.AmendmentDontDisplayInList == false
+                    select a).FirstOrDefault()?.Id;
+            }
+           return null;
+        }
+
+    }
 
 }
    
