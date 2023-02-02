@@ -18582,7 +18582,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             ToggleRepository toggleRepository = new ToggleRepository(0);
             Dictionary<string, Toggle> TenantToggle = toggleRepository.GetAll().ToDictionary(d => d.Code, a => a);
-
+            AddClosedTables.AddToggle(new ToggleDetails() { Code = "CFS", Name = "Courier Force Sign", Description = "Courier Force Sign" }, toggleRepository);
             AddClosedTables.AddToggle(new ToggleDetails() { Code = "FSN", Name = "Force Sign",Description = "Force Sign" }, toggleRepository);
 
             toggleRepository.SubmitChanges();

@@ -346,12 +346,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8235T", // תיקון שטעון
             };
 
-            var settingPm = CustomsSettingQueryService.GetSettingByTenant(requestInProgressParams.Tenant);
-            if (settingPm.IsConnectedToUniFreight && 
-                settingPm.CompanyType == "C")//elisheva +itzik 
-            {
-                intrefaceTypeList.Add("8302");//בקשה לטופס הצהרה
-            }
+            //var settingPm = CustomsSettingQueryService.GetSettingByTenant(requestInProgressParams.Tenant);
+            //if (settingPm.IsConnectedToUniFreight && 
+            //    settingPm.CompanyType == "C")//elisheva +itzik 
+            //{
+            //    intrefaceTypeList.Add("8302");//בקשה לטופס הצהרה
+            //}
 
 
             string[] intrefaceTypeListDisplayOnly = GetintrefaceTypeListDisplayOnly();
