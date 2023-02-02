@@ -378,7 +378,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     //}
                     CnameRecord = new CnameRecord()
                     {
-                       Cname = "digital.logitudeworld.com"
+                       Cname = LogitudeSettings.DeploymentStage.ToLower() == "simplog" ? "digital.logitudeworld.com" : "digital951.logitudeworld.com"
                     }
                 };
 
