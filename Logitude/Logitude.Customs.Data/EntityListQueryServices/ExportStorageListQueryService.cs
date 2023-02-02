@@ -100,7 +100,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        StorageSiteCode = en.StorageSiteCode,
                                                        StorageStatusName = en.StorageStatus,
                                                        MarksNumbers=en.MarksNumbers,
-
+                                                       ConnectedDeclaration=en.DeclarationId!=null?true :false,
                                                    });// ;
             return query;
         }
