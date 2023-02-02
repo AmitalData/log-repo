@@ -2,9 +2,11 @@
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.BL.Security;
+using Logitude.BL.ShipmentsModel.APIDataContract;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours;
+using Logitude.BL.ShipmentsModel.Tools.ContainerTracking;
 using Logitude.BL.ShipmentsModel.Tools.DataMapping;
 using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
 using Logitude.BL.ShipmentsModel.Tools.Validating;
@@ -100,8 +102,25 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             //AddShipmentUpdateKafkaQueueMessage("CToolContainerCreate");
             MapShipmentConcurrencyFields();
             entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
-
+            new GeneralContainerTrackingService(GetGeneralContainerTrackingArgs(entityPM)).AutomaticTrackContainer();
         }
+
+        private GeneralContainerTrackingArgs GetGeneralContainerTrackingArgs(ContainerPM entityPM)
+        {
+            return new GeneralContainerTrackingArgs
+            {
+                ContainerId = entityPM.Id,
+                ContainerNumber = entityPM.ContainerNumber,
+                IsFromContainer = true,
+                ShipmentId = entityPM.ShipmentId,
+                Tenant = entityPM.Tenant,
+                IsSimulator = false,
+                Data = null,
+                ContainerStatusSourceCode = "VZN",
+                DirectionId = this.GetShipment()?.DirectionId
+            };
+        }
+
         public void Update(ContainerPM entityPM, ContainersExternal containersExternal = null)
         {
             List<FieldChange> FieldChanges = new List<FieldChange>();
@@ -166,7 +185,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             //AddShipmentUpdateKafkaQueueMessage("CToolContainerUpdate");
             MapShipmentConcurrencyFields();
-
+            new GeneralContainerTrackingService(GetGeneralContainerTrackingArgs(entityPM)).AutomaticTrackContainer();
         }
         private AuditLog AddContainerAuditLogChanges(Container entityPoco, List<FieldChange> FieldChanges)
         {

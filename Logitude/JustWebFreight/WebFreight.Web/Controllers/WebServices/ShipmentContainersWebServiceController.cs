@@ -77,7 +77,7 @@ namespace WebFreight.Web.Controllers.WebServices
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 ShipmentContainerSimulator shipmentContainerSimulator = new ShipmentContainerSimulator();
                 GeneralContainerTrackingService containerTrackingService = new GeneralContainerTrackingService(simulatorArgs);
-                containerTrackingService.GeneralContainerStatus();
+                containerTrackingService.TrackContainer();
 
                 return Request.CreateResponse(HttpStatusCode.OK, simulatorArgs);
             }
