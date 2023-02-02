@@ -219,9 +219,9 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
 
             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
             ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("WarehouseEntry", 0, true);
-            string email = HttpContext.Current.User.Identity.Name;
+            string email = GetLoggedUserEmail(entityPM);
             ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
-            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant,true);
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant, true);
             if (loggedContact != null)
             {
                 ActivityLogger.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, typeCode, loggedContact.Id);
@@ -229,6 +229,14 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
 
 
             }
+        }
+
+        private string GetLoggedUserEmail(WarehouseEntryPM entityPM)
+        {
+            if (HttpContext.Current != null) return HttpContext.Current.User.Identity.Name;
+            UserRepository userRepository = new UserRepository(entityPM.Tenant);
+            User loggedUser = userRepository.GetSingleUserById(entityPM.UpdatedByUserId);
+            return loggedUser?.Contact?.Email;
         }
         private void ValidatePorts(WarehouseEntryPM entityPM)
         {

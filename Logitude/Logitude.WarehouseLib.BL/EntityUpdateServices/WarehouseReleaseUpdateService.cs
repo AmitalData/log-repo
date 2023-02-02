@@ -112,7 +112,7 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
         {
             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
             ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("WarehouseRelease", 0, true);
-            string email = HttpContext.Current.User.Identity.Name;
+            string email = GetLoggedUserEmail(entityPM);
             ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
             Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
             if (loggedContact != null)
@@ -123,7 +123,13 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
 
             }
         }
-
+        private string GetLoggedUserEmail(WarehouseReleasePM entityPM)
+        {
+            if (HttpContext.Current != null) return HttpContext.Current.User.Identity.Name;
+            UserRepository userRepository = new UserRepository(entityPM.Tenant);
+            User loggedUser = userRepository.GetSingleUserById(entityPM.UpdatedByUserId);
+            return loggedUser?.Contact?.Email;
+        }
         private void ComputeTotalQuantities(WarehouseReleasePM entityPM)
         {
             if (entityPM != null && entityPM.WarehouseReleasePackages != null && entityPM.WarehouseReleasePackages.Count() > 0)
