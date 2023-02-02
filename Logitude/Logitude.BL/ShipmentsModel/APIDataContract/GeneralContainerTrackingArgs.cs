@@ -23,6 +23,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract
         public List<string> Errors { get; set; }
         public string Master { get; internal set; }
         public string SourceCode { get; set; }
+        public string DirectionId { get; set; }
 
         public GeneralContainerTrackingArgs()
         {
