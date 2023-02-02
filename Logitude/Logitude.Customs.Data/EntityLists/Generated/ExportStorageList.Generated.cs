@@ -100,6 +100,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string ExportLoadingPortName  { get; set; }
        [DataMember]
        public string StorageStatusName  { get; set; }
+       [DataMember]
+       public bool? ConnectedDeclaration  { get; set; }
    }
 
 }
