@@ -76,17 +76,12 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 theEntityPm.NameTextCodeCode = textCode.Code;
 
                 string tenantCodesListName = "tenanttextcodes" + theEntityPm.Tenant;
-                string zeroCodeslistName = "tenantzerotextcodes";
 
                 if (HttpContext.Current != null)
                 {
                     if (CacheManager.CacheWrapper.Get(tenantCodesListName) != null)
                     {
                         CacheManager.CacheWrapper.Invalidate(tenantCodesListName);
-                    }
-                    if (CacheManager.CacheWrapper.Get(zeroCodeslistName) != null)
-                    {
-                        CacheManager.CacheWrapper.Invalidate(zeroCodeslistName);
                     }
                 }
             }
@@ -130,17 +125,12 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 textCodeRep.SubmitChanges();
 
                 string tenantCodesListName = "tenanttextcodes" + theEntityPm.Tenant;
-                string zeroCodeslistName = "tenantzerotextcodes";
 
                 if (HttpContext.Current != null)
                 {
                     if (CacheManager.CacheWrapper.Get(tenantCodesListName) != null)
                     {
                         CacheManager.CacheWrapper.Invalidate(tenantCodesListName);
-                    }
-                    if (CacheManager.CacheWrapper.Get(zeroCodeslistName) != null)
-                    {
-                        CacheManager.CacheWrapper.Invalidate(zeroCodeslistName);
                     }
                 }
             }
