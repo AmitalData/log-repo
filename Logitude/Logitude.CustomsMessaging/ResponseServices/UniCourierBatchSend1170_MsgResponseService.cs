@@ -268,7 +268,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 DeclarationId = itemPM.DeclarationId,
                 LoggingEntityReference = itemPM.DeclarationId,
                 //ImportManifest =""
-
+                ParentId = requestParams.CustomsRequestsSheetId,
             };
 
             SBQMessageService.CreateSheetSBQMessage<MANIFESTRequestRequestParams>(requestParams1170, false);

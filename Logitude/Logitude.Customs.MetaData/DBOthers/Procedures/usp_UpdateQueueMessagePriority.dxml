@@ -19,21 +19,21 @@
   BEGIN
      update  QueueMessages
 		  set TenantPriority=v_TenantPriority
-		  where Tenant = v_Tenant and InterfaceTypeCode = v_InterfaceTypeCode and NextRunDateTime <= sysdate and EntityId in (
+		  where Tenant = v_Tenant and InterfaceTypeCode = v_InterfaceTypeCode  and EntityId in (
 							select 	Id from CustomsRequestsSheets	where Tenant = v_Tenant	and	(RequestStatusCode = '5' or RequestStatusCode = '1' or
-                                                      RequestStatusCode = '2' or RequestStatusCode = '21') and RequestCreateDate >= sysdate-7 and ObjectTableId1 = '1-343' and EntityId1 in (
+                                                      RequestStatusCode = '2' or RequestStatusCode = '21') and RequestCreateDate >= sysdate-7 and ((ObjectTableId1 = '1-343' and EntityId1 in (
 													  select DeclarationId from CourierDeclarations
 													   where Tenant = v_Tenant and  CourierMasterId = v_CourierMasterId
-													  )
+													 ) ) or (ObjectTableId1 = '1-655' and  EntityId1 = v_CourierMasterId) )
 
                                                      );
 													 
           update  CustomsRequestsSheets
 		  set TenantPriority=v_TenantPriority
 		  where Tenant = v_Tenant	and	(RequestStatusCode = '5' or RequestStatusCode = '1' or
-                                                      RequestStatusCode = '2' or RequestStatusCode = '21') and RequestCreateDate >= sysdate-7 and ObjectTableId1 = '1-343' and EntityId1 in (
+                                                      RequestStatusCode = '2' or RequestStatusCode = '21') and RequestCreateDate >= sysdate-7 and (( ObjectTableId1 = '1-343' and EntityId1 in (
 													  select DeclarationId from CourierDeclarations
-													   where Tenant = v_Tenant and  CourierMasterId = v_CourierMasterId
+													   where Tenant = v_Tenant and  CourierMasterId = v_CourierMasterId) or (ObjectTableId1 = '1-655' and  EntityId1 = v_CourierMasterId) )
 													 
 
                                                      );

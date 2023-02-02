@@ -81,7 +81,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             var qGroupIt = query.GroupBy(q =>new { q.InterfaceTypeName, q.InterfaceTypeCode }).Select(g => new PriorityRequestsSheetSummary
             {
                 Id = new Guid(),
-                count = g.Where(y => y.ObjectTableId1 == "1-343" && query1.Contains(y.EntityId1)).Select(x => x.InterfaceTypeCode).Count(),
+                count = g.Where(y => (y.ObjectTableId1 == "1-343" && query1.Contains(y.EntityId1))||(y.ObjectTableId1== "1-655"&& y.EntityId1== courierMasterId)).Select(x => x.InterfaceTypeCode).Count(),
                 totalCount=g.Select(x => x.InterfaceTypeCode).Count(),
                 InterfaceTypeName = g.Key.InterfaceTypeName,
                 InterfaceTypeCode = g.Key.InterfaceTypeCode

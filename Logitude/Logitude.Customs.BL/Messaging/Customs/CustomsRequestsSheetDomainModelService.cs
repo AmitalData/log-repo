@@ -183,7 +183,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
 
 
                     this.CreateNewComm();
-                    this.CreateNewRequestSheet();
+                    this.CreateNewRequestSheet(requestParams);
                     this.BuildSteps();
 
                     requestParams.CustomsRequestsSheetId = this._MyCustomsRequestsSheetPM.Id;
@@ -739,7 +739,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
 
 
 
-        CustomsRequestsSheetDomainModelService(string customsRequestsSheetId, int tenant, OverrideControllerModel debugModel = null)
+        CustomsRequestsSheetDomainModelService(string customsRequestsSheetId, int tenant, OverrideControllerModel debugModel = null,string parentId=null)
             : this(tenant, debugModel)//,requestParams.InterfaceTypeCode )
         {
 
@@ -756,6 +756,18 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 if (MyCustomsRequestsSheetPM == null)
                 {
                     throw new Exception("Not found customsRequestsSheetId =" + customsRequestsSheetId);
+                }
+                else
+                {
+                    CustomsRequestsSheet currCustomsRequestsSheet = null;
+                  
+                        var customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(tenant);
+                        currCustomsRequestsSheet = customsRequestsSheetQueryService.GetTenantPriorityByEntityID(parentId, tenant);
+                    if (currCustomsRequestsSheet != null)
+                    {
+                        MyCustomsRequestsSheetPM.TenantPriority = currCustomsRequestsSheet.TenantPriority;
+                    }
+                    
                 }
                 if (MyCustomsRequestsSheetPM.RequestStatusEnum == SheetStatusEnum.Analyzed)
                 {
@@ -839,7 +851,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             out CustomsRequestsSheetDomainModelService<TRequestParams> customsRequestsSheetService,
             OverrideControllerModel debugModel = null,
             bool DcaReceivedCustomResponseCorrelation = false,
-            RequestSheetParam reqSheetDetails = null)
+            RequestSheetParam reqSheetDetails = null, string parentId = null)
         /*
 
 select * 
@@ -869,7 +881,7 @@ CommunicationLogSteps.CommunicationLogId= CommunicationLogs.id
                     false //true
                     );
                 if (customsRequestsSheetService.MyCustomsRequestsSheetPM != null)
-                {
+                {                   
                     Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.Append("Is DCA Callback ???found customsRequestsSheetService.MyCustomsRequestsSheetPM");
                     if (customsRequestsSheetService.MyCustomsRequestsSheetPM.Tenant != tenant)
                     {
@@ -930,6 +942,7 @@ After that Remove file  from DCA  .. ");
                 {
                     if (defaultRequestParamsFromCustomsResponse != null)
                     {
+                        defaultRequestParamsFromCustomsResponse.ParentId = parentId;
                         customsRequestsSheetService.Dispose();
                         Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("DCA Recived - not callback  ");
                         //var reqSheetDetials = CustomsRequestsSheetService<TRequestParams>.GetSheetDetailsFromRequestParam(defaultRequestParamsFromCustomsResponse);
@@ -944,9 +957,18 @@ After that Remove file  from DCA  .. ");
                 {
                     Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("DCA Return - Callback  ");
                 }
-                customsRequestsSheetService = new CustomsRequestsSheetDomainModelService<TRequestParams>(customsRequestsSheetId, tenant, debugModel);
+                customsRequestsSheetService = new CustomsRequestsSheetDomainModelService<TRequestParams>(customsRequestsSheetId, tenant, debugModel,parentId);
                 Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("retieve success CustomsRequestsSheetService:" + customsRequestsSheetService.MyCustomsRequestsSheetPM.Id);
+                if(parentId != null&& customsRequestsSheetService?.MyCustomsRequestsSheetPM?.InterfaceTypeCode=="2715"&& customsRequestsSheetService?.MyCustomsRequestsSheetPM?.TenantPriority>0)
+                {
+                    ICustomContext _CustomContext = CustomContext.GetContext(tenant);
 
+                    CustomsRequestsSheetUpdateService _CustomsRequestsSheetUpdateService= new CustomsRequestsSheetUpdateService(_CustomContext, new Dictionary<string, IContext>(), tenant);
+                    customsRequestsSheetService.MyCustomsRequestsSheetPM.ChangeSetOp = ChangeSetOperation.Update;
+                    _CustomsRequestsSheetUpdateService.Update(customsRequestsSheetService.MyCustomsRequestsSheetPM, true);
+                }
+              
+              
 
             }
             catch (CustomsRequestsSheetDomainModelServiceException)
@@ -1418,6 +1440,11 @@ After that Remove file  from DCA  .. ");
             }
 
 
+
+        }
+        public void SetTenantPriority(int? _TenantPriority)
+        {
+            MyCustomsRequestsSheetPM.TenantPriority = _TenantPriority;
 
         }
         public void SetCorrelationId(string _CorrelationId)
@@ -2283,7 +2310,7 @@ After that Remove file  from DCA  .. ");
             return subject.ToString();
         }
 
-        private void CreateNewRequestSheet()
+        private void CreateNewRequestSheet(TRequestParams requestParams)
         {
             if (MyCustomsRequestsSheetPM != null)
             {
@@ -2296,7 +2323,12 @@ After that Remove file  from DCA  .. ");
             //Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("selectedFile =" + selectedFile);
             //string externalId = "";// GetExternalId(selectedFile);
 
-
+            CustomsRequestsSheet currCustomsRequestsSheet = null;
+            if (requestParams != null)
+            {
+                var customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(this._Tenant);
+                currCustomsRequestsSheet = customsRequestsSheetQueryService.GetTenantPriorityByEntityID(requestParams.ParentId, this._Tenant);
+            }
             MyCustomsRequestsSheetPM = new CustomsRequestsSheetPM()
             {
                 ChangeSetOp = ChangeSetOperation.Insert,
@@ -2310,7 +2342,7 @@ After that Remove file  from DCA  .. ");
                 RequestStatusEnum = SheetStatusEnum.Created,
                 RequestComminicationId = _CommunicationLog.Id,
                 //CustomFileNo = GetCustomFileNo(RequestParams)
-
+                TenantPriority= currCustomsRequestsSheet?.TenantPriority
             };
 
             MyCustomsRequestsSheetPM.Id = RequestParams.PBId;//GUID 

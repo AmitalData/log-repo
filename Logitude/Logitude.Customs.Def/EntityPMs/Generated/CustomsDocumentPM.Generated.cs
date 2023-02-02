@@ -768,6 +768,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string parentRequestId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ParentRequestId  
+	   {
+	    
+	     get
+		{
+		   return parentRequestId;
+		 }
+		 set
+		 {
+		   if(parentRequestId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ParentRequestId",OldValue=parentRequestId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   parentRequestId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

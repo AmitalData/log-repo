@@ -158,7 +158,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             //LoggingEntityReference = declarationNumber,
                             LoggingUserId = requestParams.LoggingUserId,
                             RequestVIA = SendRequestVIA.WebServiceBatch,
-
+                            ParentId = requestParams.CustomsRequestsSheetId,
                         };
 
                         SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2750, false);

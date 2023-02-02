@@ -65,7 +65,8 @@ namespace Logitude.CustomsMessaging.Utils
                 ourRef = anaO.DcaReceivedCustomResponseCorrelation(InterfaceManagementPM, requestParams.Tenant, new Customs.BL.Utils.DCAFileModel()
                 {
                     SelectedFileDownload = fileName,
-                    TimStamp = transmitionDateTime
+                    TimStamp = transmitionDateTime,
+                    ParentId = requestParams.CustomsRequestsSheetId
 
                 }, xmlESBResponseXmlClass);
 
