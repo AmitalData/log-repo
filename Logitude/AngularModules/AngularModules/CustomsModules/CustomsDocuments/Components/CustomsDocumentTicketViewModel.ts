@@ -1270,7 +1270,7 @@ export class CustomsDocumentTicketViewModel {
             if(this.DataContext.DisplayOnlyMessage=="לתצוגה בלבד - םילוץ םושר")
                messageWindow.Show(TextCodeTranslator.Translate("Customs.General.O.HappinessConstraintDocumentsCannotBeLinked"));
             if(this.DataContext.DisplayOnlyMessage=="הצהרה סגורה"){
-                messageWindow.Show(TextCodeTranslator.Translate("Customs.General.O.HappinessConstraintDocumentsCannotBeLinked"));
+                messageWindow.Show(TextCodeTranslator.Translate("Customs.General.O.ClosedDeclarationDocumentsCannotBeLinked"));
             }
             else
                messageWindow.Show(TextCodeTranslator.Translate("Customs.General.O.DeclarationSubmittedDocumentsCannotBeLinked"));
