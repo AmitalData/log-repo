@@ -2645,6 +2645,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = "1171",
                 InterfaceType = "B",
+                SignatureTypeCode = "C",
             });
 
             all.Add(new InterfaceManagementDetails()
