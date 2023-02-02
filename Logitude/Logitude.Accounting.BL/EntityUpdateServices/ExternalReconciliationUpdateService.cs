@@ -345,11 +345,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         private void ReturnChequeToBankAccount(int tenant, string chequeId)
         {
             ARPaymentChequePM chequePM = GetARPaymentCheque(tenant, chequeId);
-
-            ARPaymentChequeUpdateService arpChequeUpdateService = new ARPaymentChequeUpdateService(MainContext, AdditionalContexts, tenant);
-            chequePM.ChangeSetOp = ChangeSetOperation.Update;
-            chequePM.StatusCode = ARPaymentChequeStatusValues.InBankAccount;
-            arpChequeUpdateService.Update(chequePM, true);
+            if (chequePM.StatusCode == ARPaymentChequeStatusValues.Redeemed)
+            {
+                ARPaymentChequeUpdateService arpChequeUpdateService = new ARPaymentChequeUpdateService(MainContext, AdditionalContexts, tenant);
+                chequePM.ChangeSetOp = ChangeSetOperation.Update;
+                chequePM.StatusCode = ARPaymentChequeStatusValues.InBankAccount;
+                arpChequeUpdateService.Update(chequePM, true);
+            }
         }
 
         private static ARPaymentChequePM GetARPaymentCheque(int tenant, string id)
