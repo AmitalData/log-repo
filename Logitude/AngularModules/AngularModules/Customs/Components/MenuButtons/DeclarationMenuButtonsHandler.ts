@@ -233,7 +233,10 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                                 button.IsDisabled = false
                             else
                                 button.IsDisabled = true
-                        } else {
+                        }
+                        else if(this.EntityPM.Direction == "E" && this.EntityPM.AmendmentDontDisplayInList && this.EntityPM.IsExportClosed) button.IsHidden = false;   
+
+                        else {
                             button.IsHidden = true;
                         }
                     }
