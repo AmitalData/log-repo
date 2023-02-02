@@ -351,6 +351,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                                                     ContainersNumbersAndTypesArray = shipmentComputed.ContainersNumbersAndTypesArray,
                                                                     TruckNumber = myShipment.TruckNumber,
                                                                     DirectionId = myShipment.DirectionId,
+                                                                    ForeignCurrency = myItem.Currency.Code,
+                                                                    Payables_ACCTInForeignCurrency = myItem.AccountedAmount,
+                                                                    Payables_OPENInForeignCurrency = myItem.OpenAmount,
                                                                 }).ToList();
                     if (myResult.Count > 0)
                     {
@@ -372,16 +375,22 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             myRecord.ChargesType = item.ChargeTypeName;
                             myRecord.FinalArrivalDate = item.FinalArrivalDate;
                             myRecord.TruckContainerNumber = this.GetContainerNumbers(item);
+                            myRecord.ForeignCurrency = item.ForeignCurrency;
                             if (IncludeAccountedOnly)
                             {
                                 myRecord.OpenAmount = null;
+                                myRecord.OpenAmountInForeignCurrency = null;
+
                             }
                             else
                             {
                                 myRecord.OpenAmount = item.Payables_OPEN;
+                                myRecord.OpenAmountInForeignCurrency = item.Payables_OPENInForeignCurrency;
                             }
 
                             myRecord.AccountedAmount = item.Payables_ACCT;
+                            myRecord.AccountedAmountInForeignCurrency = item.Payables_ACCTInForeignCurrency;
+                            
                             myRecord.Notes = item.Notes;
 
                             if (!string.IsNullOrEmpty(item.ShipmentType))
@@ -586,5 +595,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         public double? Payables_ACCT { get; set; }
         public string Notes { get; set; }
         public DateTime? FinalArrivalDate { get; set; }
+
+        public double? Payables_ACCTInForeignCurrency { get; set; }
+        public double? Payables_OPENInForeignCurrency { get; set; }
+        public string ForeignCurrency { get; set; }
+        public double? Rate { get; set; }
     }
 }
