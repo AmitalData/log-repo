@@ -50,7 +50,8 @@
                                         </LogTextBox>
                                         <LogTextBox *ngIf="!objectField.IsCustom" [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [Text]="EntityPM[objectField.FieldName]" [DataContext]="EntityPM" [IsNewEntityCall]="IsNewEntityCall"
                                                     [HideColumns]="HideColumns"
-                                                    [HideLastColumn]="HideLastColumn">
+                                                    [HideLastColumn]="HideLastColumn"
+                                                    [FocusOnMe]="IsFocused(objectField)">
 
                                         </LogTextBox>
                                     </div>
@@ -82,7 +83,7 @@
                                     </div>
 
                                     <div *ngIf="((objectField.DataTypeCode == 'DateTime' && objectField.IsCustom == false) || objectField.DataTypeCode == 'Date')">
-                                        <LogDatePicker [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="EntityPM[objectField.FieldName]" [DataContext]="EntityPM" [HideColumns]="HideColumns"></LogDatePicker>
+                                        <LogDatePicker [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="EntityPM[objectField.FieldName]" [DataContext]="EntityPM" [HideColumns]="HideColumns" [FocusOnMe]="IsFocused(objectField)"></LogDatePicker>
                                     </div>
 
                                     <div *ngIf="objectField.DataTypeCode == 'LookUp'">
@@ -92,7 +93,8 @@
                                                 [DataContext]="EntityPM"
                                                 [LookUpTableName]="objectField.ObjectTable_LookUpTableName"
                                                 [HideColumns]="HideColumns"
-                                                [HideLastColumn]="HideLastColumn">
+                                                [HideLastColumn]="HideLastColumn"
+                                                [FocusOnMe]="IsFocused(objectField)">
                                         </LogLov>
                                     </div>
                                     <div *ngIf="objectField.DataTypeCode == 'PickList'">
@@ -102,7 +104,8 @@
                                                   [DataContext]="EntityPM"
                                                   [PlaceHolder]="EntityPM[objectField.FieldName]!=null?EntityPM[objectField.FieldName].Code:''"
                                                   [HideColumns]="HideColumns"
-                                                  [HideLastColumn]="HideLastColumn">
+                                                  [HideLastColumn]="HideLastColumn"
+                                                  [FocusOnMe]="IsFocused(objectField)">
                                         </PickList>
                                     </div>
 
@@ -117,7 +120,8 @@
                                     <div *ngIf="objectField.DataTypeCode == 'Text' || objectField.DataTypeCode == 'nText'" style="height: 80px; padding-left: 10px;">
                                         <LogTextBox [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [Text]="EntityPM[objectField.FieldName]" [DataContext]="EntityPM" [IsNewEntityCall]="IsNewEntityCall" [IsMultiline]="true"
                                                     [HideColumns]="HideColumns"
-                                                    [HideLastColumn]="HideLastColumn">
+                                                    [HideLastColumn]="HideLastColumn"
+                                                    [FocusOnMe]="IsFocused(objectField)">
 
                                         </LogTextBox>
                                     </div>

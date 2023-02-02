@@ -106,6 +106,8 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
     }
 
     IsFocused(objectField: any) {
+        if (!this.IsFromGrid) return false;
+        if (this.ScreenSections[0]?.Type == "Summary") return false;
         if (objectField.Id == this.ScreenSections[0]?.ScreenColumns[0]?.ObjectFields[0]?.Id) return true;
         return false;
     }

@@ -31,6 +31,7 @@ export class PickListComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() ObjectTableName: string;
     @Input() DataContext: any;
     @Input() HideColumns: boolean;
+    @Input() FocusOnMe: boolean;
     @Input() HideLastColumn: boolean;
     @Input() NoValidation: boolean;    
     @Input() PlaceHolder: string;
@@ -106,7 +107,6 @@ export class PickListComponent implements OnInit, AfterViewInit, OnDestroy {
     IsDropDownVisible: boolean;
     public IsOpen: boolean;
     searchTextChanged: boolean = false;
-    FocusOnMe: boolean = false;
     private timerToken: any;
     showPopup: boolean = false;
     deleteSearchText: boolean;
