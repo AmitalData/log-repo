@@ -175,7 +175,7 @@
                                 <td style="height: 22px;">
                                     <table>
                                         <tr>
-                                            <td style="width:95px">
+                                            <td style="width:95px;" [class.Disabled]="IsNew==false">
                                                 <LogTextBox [InputType]="'integer'" [ObjectFieldName]="'NumberOfDigits'" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                             </td>
 
@@ -189,7 +189,7 @@
                                                     Decimal Digits:
                                                 </label>
                                             </td>
-                                            <td style="width:95px">
+                                            <td style="width:95px" [class.Disabled]="IsNew==false">
                                                 <LogTextBox [InputType]="'integer'" [ObjectFieldName]="'DigitsAfterPoint'" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                             </td>
 

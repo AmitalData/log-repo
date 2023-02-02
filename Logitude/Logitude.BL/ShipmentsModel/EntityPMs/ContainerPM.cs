@@ -1,4 +1,5 @@
-﻿using Simplog.Server.Infrastructure.DataContracts;
+﻿using Logitude.BL.InfrastructureModel.EntityPMs;
+using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -464,5 +465,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string MainCarriageToCountryCode { get; set; }
         public DateTime? OnCarriageETA { get; set; }
         public DateTime? OnCarriageATA { get; set; }
+        public List<CustomChildEntity> CustomChildEntities { get; set; }
+
     }
 }

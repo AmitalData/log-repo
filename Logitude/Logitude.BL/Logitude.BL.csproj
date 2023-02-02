@@ -687,12 +687,14 @@
     <Compile Include="InfrastructureModel\EntityQueries\RuleUpdateHistoryQuery.cs" />
     <Compile Include="InfrastructureModel\Services\DeploymentPackageVersionInitializerService.cs" />
     <Compile Include="InfrastructureModel\Services\CustomObjectDefaultMetaDataService.cs" />
+    <Compile Include="InfrastructureModel\Services\DeploymentPackage\Dependiencies\ObjectFields\DeploymentPackageObjectFieldDependienciesService.AdditionalFilters.cs" />
+    <Compile Include="InfrastructureModel\Services\DeploymentPackage\Dependiencies\ObjectFields\DeploymentPackageObjectFieldDependienciesService.LookUpCustomTables.cs" />
     <Compile Include="InfrastructureModel\Services\DeploymentPackage\DeploymentPackageExtractDetailsService.cs" />
     <Compile Include="InfrastructureModel\Services\DeploymentPackage\DeploymentPackageDetailsService.cs" />
     <Compile Include="InfrastructureModel\Services\DeploymentPackage\DeploymentPackageDocumentService.cs" />
-    <Compile Include="InfrastructureModel\Services\DeploymentPackage\DeploymentPackageDependienciesService.cs" />
-    <Compile Include="InfrastructureModel\Services\DeploymentPackage\DeploymentPackageObjectFieldDependienciesService.cs" />
-    <Compile Include="InfrastructureModel\Services\DeploymentPackage\IDeploymentPackageDependiency.cs" />
+    <Compile Include="InfrastructureModel\Services\DeploymentPackage\Dependiencies\DeploymentPackageDependienciesService.cs" />
+    <Compile Include="InfrastructureModel\Services\DeploymentPackage\Dependiencies\ObjectFields\DeploymentPackageObjectFieldDependienciesService.cs" />
+    <Compile Include="InfrastructureModel\Services\DeploymentPackage\Dependiencies\IDeploymentPackageDependiency.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\CustomChildObjectMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\CustomFieldsMainObjectMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DeploymentPackagesVersionMapping.cs" />

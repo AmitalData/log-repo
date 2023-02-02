@@ -29,6 +29,7 @@ export class CustomFields {
     public IsRequiered: boolean;
     public DisplayOnly: boolean;
     public MultiLine: boolean;
+    public DefaultAdditionalFilters: string;
 
     constructor(objectField: ObjectFieldPM) {
         this.Code = objectField.Code;
@@ -49,6 +50,7 @@ export class CustomFields {
         this.IsRequiered = objectField.IsRequiered;
         this.DisplayOnly = objectField.DisplayOnly;
         this.MultiLine = objectField.MultiLine;
+        this.DefaultAdditionalFilters = objectField.DefaultAdditionalFilters;
     }
   
 }

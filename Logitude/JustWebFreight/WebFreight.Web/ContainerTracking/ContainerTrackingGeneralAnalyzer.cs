@@ -643,7 +643,8 @@ namespace WebFreight.Web.ContainerTracking
         public MilestoneData VesselArrived;
         public MilestoneData VesselDeparted;
         public MilestoneData DischargedTransshipment;
-        
+        public string OnCarriageLocation;
+
 
         public Location VisionPreCarriage { get; set; }
         public Location VisionOnCarriage { get; set; }

@@ -14,6 +14,7 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { CustomChildEntity } from '../../Infrastructure/EntityPMs/CustomChildEntity';
 
 
 export class ContainerPM {
@@ -1600,7 +1601,10 @@ export class ContainerPM {
     public get OnCarriageATA() { return this.onCarriageATA; }
     public set OnCarriageATA(newValue: Date) { if (this.onCarriageATA != newValue) { this.onCarriageATA = newValue; this.MarkAsDirty("OnCarriageATA"); } }
        
-	 
+    private customChildEntities: CustomChildEntity[];
+    public get CustomChildEntities() { return this.customChildEntities; }
+    public set CustomChildEntities(newValue: CustomChildEntity[]) { if (this.customChildEntities != newValue) { this.customChildEntities = newValue; this.MarkAsDirty("CustomChildEntities"); } }
+
 
     public OldEntityPM: ContainerPM;
 		
@@ -1629,4 +1633,4 @@ export class ContainerPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
