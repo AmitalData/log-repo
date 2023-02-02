@@ -425,11 +425,15 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             this.AfterViewInitialized = false;
             this.RunComponentTimer();
         }
+        var debounceTimeVal = 400;
 
+        if(this.LocalFilterFields && this.LocalFilterFields.length > 0) {
+            debounceTimeVal = 30;
+        }
         if (this.AfterViewInitialized) {
             this._KeyDownSubscribe =
                 fromEvent(input, 'keydown').pipe(
-                    debounceTime(400))
+                    debounceTime(debounceTimeVal))
                     .subscribe(keyboardEvent => {
                         var TABKEY = 9;
                         var ENTERKEY = 13;
