@@ -830,6 +830,16 @@ namespace CommunicationWorkerRole
                 pmtype = blAssembly.GetType(typePath);
             }
 
+            if (type == null)
+            {
+                Assembly assembly = Assembly.Load("Logitude.WarehouseLib.BL");
+                typePath = "Logitude.WarehouseLib.BL.EntityQueryServices." + entityName + "QueryService";
+                type = assembly.GetType(typePath);
+
+                pmtypePath = "Logitude.WarehouseLib.BL.EntityPMs." + entityName + "PM";
+                pmtype = blAssembly.GetType(typePath);
+            }
+
             if (type != null)
             {
                 entityQuery = Activator.CreateInstance(type, tenant);
@@ -943,11 +953,12 @@ namespace CommunicationWorkerRole
 
         private static void UpdateWarehouseEntry(object theEntity)
         {
-            WarehouseEntryPM WarehouseEntryPM = (WarehouseEntryPM)theEntity;
+            WarehouseEntryPM warehouseEntryPM = (WarehouseEntryPM)theEntity;
             IWarehouseContext warehouseContext = WarehouseContext.GetContext(0);
-            WarehouseEntryUpdateService service = new WarehouseEntryUpdateService(warehouseContext, new Dictionary<string, IContext>(), WarehouseEntryPM.Tenant);
-            WarehouseEntryPM.IsUpdateByAutomation = true;
-            service.Update(WarehouseEntryPM, true);
+            WarehouseEntryUpdateService service = new WarehouseEntryUpdateService(warehouseContext, new Dictionary<string, IContext>(), warehouseEntryPM.Tenant);
+            warehouseEntryPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+            warehouseEntryPM.IsUpdateByAutomation = true;
+            service.Update(warehouseEntryPM, true);
         }
 
         private static void UpdateWarehouseRelease(object theEntity)
@@ -955,6 +966,7 @@ namespace CommunicationWorkerRole
             WarehouseReleasePM warehouseReleasePM = (WarehouseReleasePM)theEntity;
             IWarehouseContext warehouseContext = WarehouseContext.GetContext(0);
             WarehouseReleaseUpdateService service = new WarehouseReleaseUpdateService(warehouseContext, new Dictionary<string, IContext>(), warehouseReleasePM.Tenant);
+            warehouseReleasePM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             warehouseReleasePM.IsUpdateByAutomation = true;
             service.Update(warehouseReleasePM, true);
         }
