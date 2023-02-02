@@ -20,10 +20,10 @@ export class DigitalButtonComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     private digitalCustomizationService: DigitalCustomizationService;
     private objectTableId: string;
-    private objectTableName: string;
+    private parentObjectTableId: string;
     private profileId: string;
     private profileCode: string;
-
+     
     constructor(private CD: ChangeDetectorRef, private _entityListService: EntityListService) {
         this.TenantPM = InfraSettings.TenantPM;
         this.digitalCustomizationService = new DigitalCustomizationService();
@@ -34,7 +34,7 @@ export class DigitalButtonComponent {
         this.fieldName = fieldName;
         this.fieldName = fieldName.split(",");
         this.objectTableId = this.fieldName[0];
-        this.objectTableName = this.fieldName[1];
+        this.parentObjectTableId = this.fieldName[1];
         this.profileId = this.fieldName[2];
         this.profileCode = this.fieldName[3];
 
@@ -67,6 +67,7 @@ export class DigitalButtonComponent {
     AddObjectField() {
         var newField = new AddCustomFieldRequest();
         newField.ObjectTableId = this.objectTableId;
+        newField.ParentObjectTableId = this.parentObjectTableId;
         newField.ProfileId = this.profileId;
         newField.ProfileCode = this.profileCode;
         newField.FieldCode = this.rowData.FieldCode;

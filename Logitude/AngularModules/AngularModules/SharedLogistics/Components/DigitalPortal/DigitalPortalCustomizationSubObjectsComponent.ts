@@ -21,10 +21,6 @@ export class DigitalPortalCustomizationSubObjectsComponent {
         this.digitalTextService = new DigitalTextService();
     }
 
-    SetWindowArgs(args: any) {
-
-    }
-
     public BuildItemsSource() {
         this.CurrentSession.StartBusyIndicatorLoading();
         var objectTablesFilterList = [];
@@ -48,6 +44,7 @@ export class DigitalPortalCustomizationSubObjectsComponent {
         windowArgs.ProfileCode = this.ProfileCode;
         windowArgs.ParentObjectTableId = this.ObjectTableId;
         var logWindow = new LogitudeWindow();
+        logWindow.Title = "Fields Management";
         logWindow.IsFullScreen = true;
         logWindow.ShowCloseButton = true;
         logWindow.WindowArgs = windowArgs;
@@ -68,5 +65,4 @@ export class SubObjectsItem {
 
     private objectTableId: string = null;
     public get ObjectTableId() { return this.objectTableId; }
-  
 }

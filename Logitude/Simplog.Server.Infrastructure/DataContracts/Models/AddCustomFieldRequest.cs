@@ -3,6 +3,7 @@
     public class AddCustomFieldRequest
     {
         public string ObjectTableId { get; set; }
+        public string ParentObjectTableId { get; set; }
         public string ProfileId { get; set; }
         public string ProfileCode { get; set; }
         public string FieldCode { get; set; }

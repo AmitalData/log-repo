@@ -29,6 +29,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
     public IsWindowMode = false;
     public IsDirty = false; 
     public ParentObjectTableId: string;
+    public IsDataReady: boolean = false;
 
     @Output() LostFocus: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -78,6 +79,8 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
     }
 
     BuildFields() {
+        this.IsDataReady = false; 
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.digitalTextService.GetTextCodesByFilters(null, this.ObjectTableId, this.ProfileCode).subscribe((myResult) => {
             if (!myResult.HasError) {
                 this.loadedFieldsResults = myResult.Result.filter(a => !AppTool.IsNullOrEmpty(a['FieldCode']));
@@ -97,6 +100,8 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
 
                 this.loadedResults = profilesList;
                 this.FieldsItemsSource.InsertCollection(profilesList);
+                this.CurrentSession.StopBusyIndicator();
+                this.IsDataReady = true;
             }
         });
     }
@@ -226,6 +231,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
         logWindow.Height = 800;
         var windowArgs: any = {};
         windowArgs.ObjectTableId = this.ObjectTableId;
+        windowArgs.ParentObjectTableId = this.ParentObjectTableId;
         windowArgs.ProfileCode = this.ProfileCode;
         windowArgs.ProfileId = this.ProfileId;
         logWindow.Title = "Add a field";

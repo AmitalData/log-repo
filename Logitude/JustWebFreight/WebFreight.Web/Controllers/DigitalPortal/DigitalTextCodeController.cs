@@ -29,6 +29,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             int defaultTenantNumber = 0;
             try
             {
+                DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                 var digitalProfileQuery = new DigitalProfileQueryService(defaultTenantNumber);
                 var tenantDigitalProfiles = digitalProfileQuery.GetDigitalProfileQuery(tenant);
 
@@ -43,8 +44,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                             Name = item.Name,
                             Tenant = tenant,
                             Code = item.Code,
-                            CreateDate = DateTime.UtcNow,
-                            UpdateDate = DateTime.UtcNow
+                            CreateDate = todayDate,
+                            UpdateDate = todayDate
                         });
                     }
 
@@ -61,8 +62,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                 Labels = item.Labels,
                                 ObjectTableId = item.ObjectTableId,
                                 ProfileId = tenantDigitalProfiles.Where(a => a.Code == item.ProfileCode).Select(a => a.Id).FirstOrDefault(),
-                                CreateDate = DateTime.UtcNow,
-                                UpdateDate = DateTime.UtcNow
+                                CreateDate = todayDate,
+                                UpdateDate = todayDate
                             });
                         }
                         else
@@ -76,8 +77,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                                                              && !a.Code.Equals("CM"))
                                                                  .Select(a => a.Id)
                                                                  .FirstOrDefault(),
-                                CreateDate = DateTime.UtcNow,
-                                UpdateDate = DateTime.UtcNow
+                                CreateDate = todayDate,
+                                UpdateDate = todayDate
                             });
                         }
                     }
@@ -95,8 +96,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                                                          && !a.Code.Equals("CM"))
                                                              .Select(a => a.Id)
                                                              .FirstOrDefault(),
-                            CreateDate = DateTime.UtcNow,
-                            UpdateDate = DateTime.UtcNow,
+                            CreateDate = todayDate,
+                            UpdateDate = todayDate,
                             ParentObjectTableId = item.ParentObjectTableId
                         });
                     }
@@ -118,8 +119,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                                                          && !a.Code.Equals("CM"))
                                                              .Select(a => a.Id)
                                                              .FirstOrDefault(),
-                            CreateDate = DateTime.UtcNow,
-                            UpdateDate = DateTime.UtcNow
+                            CreateDate = todayDate,
+                            UpdateDate = todayDate
                         });
                     }
                 }
@@ -179,7 +180,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, digitalFeildSecurityObjectModel.CardId);
 
-                DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
                 var textCodeQuery = new DigitalTextCodeQueryService(0);
                 var generalObjectTableId = textCodeQuery.GetDigitalTextCodesObjetTables(0)
@@ -310,6 +311,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             string email = "";
             try
             {
+                DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
                 var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
                 tenant = authToken.Tenant;
                 email = authToken.Email;
@@ -345,7 +347,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     }
 
                     customTextCodes.Labels = JsonConvert.SerializeObject(customCodesMappedObject);
-                    customTextCodes.UpdateDate = DateTime.UtcNow;
+                    customTextCodes.UpdateDate = todayDate;
                 }
                 else
                 {
@@ -355,8 +357,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         Tenant = digitalTextCodeUpdateModel.Tenant,
                         ProfileId = digitalTextCodeUpdateModel.ProfileId,
                         Labels = JsonConvert.SerializeObject(digitalTextCodeUpdateModel.Lables),
-                        CreateDate = DateTime.UtcNow,
-                        UpdateDate = DateTime.UtcNow
+                        CreateDate = todayDate,
+                        UpdateDate = todayDate
                     };
                 }
 

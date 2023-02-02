@@ -181,6 +181,7 @@ export class DigitalPortalScreenUpdateModel {
 
 export class AddCustomFieldRequest {
     public ObjectTableId: string;
+    public ParentObjectTableId: string;
     public ProfileId: string;
     public ProfileCode: string;
     public FieldCode: string;

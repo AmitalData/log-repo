@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
@@ -16,7 +16,7 @@ import { DigitalTextService } from '../../../Infrastructure/Services/WebServices
     templateUrl: './DigitalPortalCustomizationMainComponent.html',
 })
 
-export class DigitalPortalCustomizationMainComponent {
+export class DigitalPortalCustomizationMainComponent implements OnInit {
 
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     @ViewChild("CUSTOMFIELD", { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
@@ -34,14 +34,76 @@ export class DigitalPortalCustomizationMainComponent {
     public IsDirty: boolean = false;
     public NewSelectedMenu: CustomizationMainMenuItem;
     public IsObjectTablesFilterVisible: boolean = false;
+    ObjectTablesFilterFullList: { id: number, name: string }[] = [];
+    DigitalProfileFilterFullList: { id: number, name: string, code: string }[] = [];
+    ObjectTablesFilterList: { id: number, name: string }[] = [];
+    DigitalProfileFilterList: { id: number, name: string, code: string }[] = [];
 
     constructor() {
-        this.DigitalProfileFilterList = [];
-        this.ObjectTablesFilterList = [];
-        this.digitalTextService = new DigitalTextService();
+        this.Initialize();
         this.RunComponent();
         this.LayoutDirection = ObjectsLocator.GlobalSetting.LayoutDirection == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         this.BuildCustomizationMainMenuItems();
+    }
+
+    Initialize() {
+        this.DigitalProfileFilterFullList = [];
+        this.ObjectTablesFilterFullList = [];
+        this.DigitalProfileFilterList = [];
+        this.ObjectTablesFilterList = [];
+        this.digitalTextService = new DigitalTextService();
+    }
+
+    ngOnInit() {
+        this.FillDigitalProfiles();
+    }
+    private FillDigitalProfiles() {
+        this.digitalTextService.GetDigitalProfileName(SessionLocator.Tenant).subscribe((myResult) => {
+            if (!myResult.HasError) {
+                this.DigitalProfileFilterFullList = [];
+                var profiles = myResult.Result;
+                
+                profiles.forEach(item => {
+                    this.DigitalProfileFilterFullList.push({ "id": item.Id, "name": item.Name, "code": item.Code });
+                });
+
+                this.DigitalProfileFilterList = this.DigitalProfileFilterFullList;
+                this.selectedProfileItem = this.DigitalProfileFilterFullList[0];
+                if (this.SelectedMenu.Page) {
+                    this.SelectedMenu.Page.ProfileId = this.selectedProfileItem.id;
+                    this.SelectedMenu.Page.ProfileCode = this.selectedProfileItem.code;
+                }
+
+                if (this.SelectedMenu.Code == "ScreenLayout" && this.SelectedMenu.Page) {
+                    this.SelectedMenu.Page.GetDefaultScreens();
+                }
+                else {
+                    this.FillObjectTables();
+                }
+            }
+        });
+    }
+
+    private FillObjectTables() {
+        this.digitalTextService.GetDigitalProfilesObjetTables().subscribe((myResult) => {
+            if (!myResult.HasError) {
+                this.ObjectTablesFilterFullList = [];
+                var objectTables = myResult.Result;
+                if (this.SelectedMenu.Code != "ChageLabels") {
+                    objectTables = objectTables.filter(a => a.ObjectTableName != "General");
+                }
+                objectTables.forEach(item => {
+                    this.ObjectTablesFilterFullList.push({ "id": item.ObjectTableId, "name": item.ObjectTableName});
+                });
+
+                this.ObjectTablesFilterList = this.ObjectTablesFilterFullList;
+                this.selectedObjectTableItem = this.ObjectTablesFilterFullList[0];
+                if (this.SelectedMenu.Page) {
+                    this.SelectedMenu.Page.ObjectTableId = this.selectedObjectTableItem.id;
+                    this.SelectedMenu.Page.BuildItemsSource();
+                }
+            }
+        });
     }
 
     BuildCustomizationMainMenuItems() {
@@ -149,10 +211,9 @@ export class DigitalPortalCustomizationMainComponent {
             this.IsObjectTablesFilterVisible = true;
         }
 
-       
-        this.FillDigitalProfileFiltersList();
-
         if (!this.SelectedMenu || !this.isLoaderReady) return;
+
+        this.FillDigitalProfileFiltersList();
 
         if (this.SelectedMenu.ComponentPath == null || (this.SelectedMenu.Page && !this.SelectedMenu.Page.IsChange)) return;
 
@@ -170,7 +231,7 @@ export class DigitalPortalCustomizationMainComponent {
             .then(cmpRef => {
                 this.SelectedMenu.Page = cmpRef.instance;
                 cmpRef.instance.customizationEditComponent = this;
-                cmpRef.instance.SetWindowArgs(this.SelectedMenu.screenArgs);
+                this.FillDigitalProfileFiltersList();
             });
     }
 
@@ -214,47 +275,39 @@ export class DigitalPortalCustomizationMainComponent {
         this.SelectedMenu.Page.Save();
     }
 
-    public ObjectTablesFilterList: CodeNameClass[];
-    private selectedObjectTableItem: CodeNameClass;
+   
+    private selectedObjectTableItem: any;
     get SelectedObjectTableItem() { return this.selectedObjectTableItem; }
-    set SelectedObjectTableItem(value: CodeNameClass) {
+    set SelectedObjectTableItem(value) {
         if (this.selectedObjectTableItem != value) {
             this.selectedObjectTableItem = value;
-            this.SelectedMenu.Page.ObjectTableId = value.Name;
+            this.SelectedMenu.Page.ObjectTableId = value.id;
             this.SelectedMenu.Page.BuildItemsSource();
         }
     }
 
     private FillObjectTablesFiltersList() {
-        this.digitalTextService.GetDigitalTextCodesObjetTables
-        this.digitalTextService.GetDigitalProfilesObjetTables().subscribe((myResult) => {
-            if (!myResult.HasError) {
-                this.ObjectTablesFilterList = [];
-                var objectTables = myResult.Result;
-                if (this.SelectedMenu.Code != "ChageLabels") {
-                    objectTables = objectTables.filter(a => a.ObjectTableName != "General");
-                }
-                objectTables.forEach(item => {
-                    this.ObjectTablesFilterList.push(new CodeNameClass(item.ObjectTableName, item.ObjectTableId));
-                });
+        this.ObjectTablesFilterList = this.ObjectTablesFilterFullList;
+        if (this.SelectedMenu.Code != "ChageLabels") {
+            this.ObjectTablesFilterList = this.ObjectTablesFilterFullList.filter(a => a.name != "General");
+        }
 
-                this.selectedObjectTableItem = this.ObjectTablesFilterList[0];
-                if (this.SelectedMenu.Page) {
-                    this.SelectedMenu.Page.ObjectTableId = this.selectedObjectTableItem.Name;
-                    this.SelectedMenu.Page.BuildItemsSource();
-                }
-            }
-        });
+        this.selectedObjectTableItem = this.ObjectTablesFilterList[0];
+
+        if (this.SelectedMenu.Page) {
+            this.SelectedMenu.Page.ObjectTableId = this.selectedObjectTableItem.id;
+            this.SelectedMenu.Page.BuildItemsSource();
+        }
     }
 
-    public DigitalProfileFilterList: CodeNameClass[];
-    private selectedProfileItem: CodeNameClass;
+   
+    private selectedProfileItem: any;
     get SelectedProfileItem() { return this.selectedProfileItem; }
-    set SelectedProfileItem(value: CodeNameClass) {
+    set SelectedProfileItem(value) {
         if (this.selectedProfileItem != value) {
             this.selectedProfileItem = value;
-            this.SelectedMenu.Page.ProfileId = value.Code;
-            this.SelectedMenu.Page.ProfileCode = value.LocalName;
+            this.SelectedMenu.Page.ProfileId = value.id;
+            this.SelectedMenu.Page.ProfileCode = value.code;
 
             if (this.SelectedMenu.Code == "ScreenLayout") {
                 this.SelectedMenu.Page.GetDefaultScreens();
@@ -266,32 +319,25 @@ export class DigitalPortalCustomizationMainComponent {
     }
 
     private FillDigitalProfileFiltersList() {
-        this.digitalTextService.GetDigitalProfileName(SessionLocator.Tenant).subscribe((myResult) => {
-            if (!myResult.HasError) {
-                this.DigitalProfileFilterList = [];
-                var profiles = myResult.Result;
-                if (this.SelectedMenu.Code != "ChageLabels") {
-                    profiles = profiles.filter(a => a.Code != "CM");
-                }
-         
-                profiles.forEach(item => {
-                    this.DigitalProfileFilterList.push(new CodeNameClass(item.Id, item.Name, item.Code));
-                });
+        this.DigitalProfileFilterList = this.DigitalProfileFilterFullList;
+        if (this.SelectedMenu.Code != "ChageLabels") {
+            this.DigitalProfileFilterList = this.DigitalProfileFilterFullList.filter(a => a.code != "CM");
+        }
 
-                this.selectedProfileItem = this.DigitalProfileFilterList[0];
-                if (this.SelectedMenu.Page) {
-                    this.SelectedMenu.Page.ProfileId = this.selectedProfileItem.Code;
-                    this.SelectedMenu.Page.ProfileCode = this.selectedProfileItem.LocalName;
-                }
-               
-                if (this.SelectedMenu.Code == "ScreenLayout" && this.SelectedMenu.Page) {
-                        this.SelectedMenu.Page.GetDefaultScreens();
-                }
-                else {
-                    this.FillObjectTablesFiltersList();
-                }
-            }
-        });
+        this.selectedProfileItem = this.DigitalProfileFilterList[0];
+
+        if (this.SelectedMenu.Page) {
+            this.SelectedMenu.Page.ProfileId = this.selectedProfileItem.id;
+            this.SelectedMenu.Page.ProfileCode = this.selectedProfileItem.code;
+        }
+
+        if (this.SelectedMenu.Code == "ScreenLayout" && this.SelectedMenu.Page) {
+            this.SelectedMenu.Page.GetDefaultScreens();
+        }
+        else {
+            this.FillObjectTablesFiltersList();
+        }
+
     }
 }
 
