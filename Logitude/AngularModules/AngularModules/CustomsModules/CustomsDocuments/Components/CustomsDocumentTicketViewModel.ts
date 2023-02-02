@@ -1261,7 +1261,7 @@ export class CustomsDocumentTicketViewModel {
     }
 
     OnAddEditWindowClosed(event) {
-       debugger
+       
         if (event != 'cancel' && this.isDisplayOnly && !this.customsDocumentsTicketPM.RequestedCustomsDocId) {
             var messageWindow = new MessageWindow();
             messageWindow.Width = 400;
