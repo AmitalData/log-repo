@@ -4099,11 +4099,14 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         }
         if (this.Parent.IsChecked) {
 
-            if(this.QunatityTypeCode != null){
+            if (this.InvoiceQuantityType == null && this.QunatityTypeCode != null) {
                 var s = this.QunatityTypeCode.slice(1, this.QunatityTypeCode.length - 1);
-                if(this.InvoiceQuantityType == null || this.InvoiceQuantityType != s)
-                    this.InvoiceQuantityType=s
+
+
+                this.InvoiceQuantityType = s;
+
             }
+
 
 
         }
