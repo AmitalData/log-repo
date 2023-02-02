@@ -51,6 +51,7 @@ export class ExportStorageList {
 	ActionName: string;
 	ExportLoadingPortName: string;
 	StorageStatusName: string;
+	ConnectedDeclaration: boolean;
 	
 }
  
