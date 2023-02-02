@@ -15,7 +15,7 @@
                                 </td>
 
                                 <td style="width: 180px;">
-                                    <ComboBox style="width:250px;float:left;" [WaterMark]="'Select Profile'" (SelectedItemChanged)="SelectedProfileItem = $event" [ItemsSource]="DigitalProfileFilterList" [SelectedItem]="SelectedProfileItem" [Binding]="'Name'"></ComboBox>
+                                    <ComboBox style="width:250px;float:left;" [WaterMark]="'Select Profile'" (SelectedItemChanged)="SelectedProfileItem = $event" [ItemsSource]="DigitalProfileFilterList" [SelectedItem]="SelectedProfileItem" [Binding]="'name'"></ComboBox>
                                 </td>
 
                                 <td style="width: 5px;">
@@ -23,7 +23,7 @@
                                 </td>
 
                                 <td *ngIf="IsObjectTablesFilterVisible" style="width: 250px;">
-                                    <ComboBox style="width:250px;float:left;" [WaterMark]="'Select entity to show fields'" (SelectedItemChanged)="SelectedObjectTableItem = $event" [ItemsSource]="ObjectTablesFilterList" [SelectedItem]="SelectedObjectTableItem" [Binding]="'Code'"></ComboBox>
+                                    <ComboBox style="width:250px;float:left;" [WaterMark]="'Select entity to show fields'" (SelectedItemChanged)="SelectedObjectTableItem = $event" [ItemsSource]="ObjectTablesFilterList" [SelectedItem]="SelectedObjectTableItem" [Binding]="'name'"></ComboBox>
                                 </td>
 
                                 <td>

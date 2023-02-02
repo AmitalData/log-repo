@@ -27,18 +27,13 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
     public editorOptions = { theme: '', language: 'html', validate: 'true' };
     CurrentTenantScreen: DigitalPortalScreenList;
     constructor() {
-        
-    }
-
-    SetWindowArgs(args: any) {
         this.Screens = [];
         this.ModifiedScreenData = new DigitalPortalScreenUpdateModel();
         this.digitalCustomizationService = new DigitalCustomizationService();
-       
     }
 
-
     public GetDefaultScreens() {
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.Screens = [];
         this.digitalCustomizationService.GetDigitalPortalScreenNames(this.ProfileCode).subscribe((myResult) => {
             if (!myResult.HasError) {
@@ -48,6 +43,8 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
                     this.GetHTMLText();
                 }
             }
+
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 

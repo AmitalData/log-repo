@@ -11,7 +11,4 @@ export class DigitalPortalCustomizationTranslateLabelsComponent {
 
     }
 
-    SetWindowArgs(args: any) {
-
-    }
 }

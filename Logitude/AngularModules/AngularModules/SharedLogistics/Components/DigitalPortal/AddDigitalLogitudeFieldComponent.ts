@@ -3,7 +3,6 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { ApiQueryFilters, FilterItem} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
 import { DigitalCustomizationService} from '../../../Infrastructure/Services/WebServices/DigitalCustomizationService';
@@ -18,6 +17,7 @@ export class AddDigitalLogitudeFieldComponent extends BaseComponent implements O
     public SearchText: string = "Search";
     public DataContext: AddDigitalLogitudeFieldComponent = this;
     public ObjectTableId: string;
+    public ParentObjectTableId: string;
     public ProfileCode: string;
     public ProfileId: string;
     public ObjectTableName: string;
@@ -34,7 +34,7 @@ export class AddDigitalLogitudeFieldComponent extends BaseComponent implements O
     public items: any[] = [];
     @Output() DigitalPortalQueryChangeEvent = new EventEmitter();
 
-    constructor(private _entityListService: EntityListService) {
+    constructor() {
         super();
         this.TenantPM = SessionLocator.TenantPM;
         this.digitalCustomizationService = new DigitalCustomizationService();
@@ -42,6 +42,7 @@ export class AddDigitalLogitudeFieldComponent extends BaseComponent implements O
 
     SetWindowArgs(args) {
         this.ObjectTableId = args.ObjectTableId;
+        this.ParentObjectTableId = args.ParentObjectTableId;
         this.ProfileCode = args.ProfileCode;
         this.ProfileId = args.ProfileId;
     }
@@ -124,7 +125,7 @@ export class AddDigitalLogitudeFieldComponent extends BaseComponent implements O
         });
  
         this.columns.push({
-            FieldName: this.ObjectTableId + "," + this.ObjectTableName + "," + this.ProfileId + "," + this.ProfileCode,
+            FieldName: this.ObjectTableId + "," + this.ParentObjectTableId + "," + this.ProfileId + "," + this.ProfileCode,
             DataTypeCode: 'String',
             Display: '',
             IsCustomTemplate: true,

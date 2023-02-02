@@ -82,7 +82,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         CreatedOn = todayDate,
                         ModifiedBy = addCustomFieldRequest.ModifiedBy,
                         ModifiedOn = todayDate,
-                        HasPermission = true
+                        HasPermission = true,
                     });
 
                     customDigitalFieldSecurity = new DigitalFieldSecurityList
@@ -92,7 +92,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         DefaultSettings = JsonConvert.SerializeObject(items),
                         CreateDate = todayDate,
                         UpdateDate = todayDate,
-                        ProfileId = addCustomFieldRequest.ProfileId
+                        ProfileId = addCustomFieldRequest.ProfileId,
+                        ParentObjectTableId = addCustomFieldRequest.ParentObjectTableId
                     };
                 }
                 else
@@ -106,7 +107,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         CreatedOn = todayDate,
                         ModifiedBy = addCustomFieldRequest.ModifiedBy,
                         ModifiedOn = todayDate,
-                        HasPermission = true
+                        HasPermission = true,
                     });
 
                     customDigitalFieldSecurity.DefaultSettings = JsonConvert.SerializeObject(items);

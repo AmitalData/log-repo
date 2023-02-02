@@ -1,5 +1,5 @@
 
-<div [style.margin]="'auto'"
+<div *ngIf="IsDataReady" [style.margin]="'auto'"
      [style.position]="'absolute'"
      [style.padding]="IsWindowMode ? '5px' : '0'"
      [style.top.px]="IsWindowMode ? '10' : '0'"
@@ -129,7 +129,6 @@
                             </div>
                         </td>
                     </tr>
-
 
                     <tr *ngIf="IsWindowMode" style="height:25px">
                         <td>

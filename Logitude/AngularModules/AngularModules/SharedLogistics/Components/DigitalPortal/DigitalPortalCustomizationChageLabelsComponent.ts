@@ -31,10 +31,6 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
         this.IsModifiedLables = false;
     }
 
-    SetWindowArgs(args: any) {
-        
-    }
-
     ngOnInit() {
         this.CurrentSession.SessionEvent.subscribe(($event: any) => {
             if ($event.Name == "ReloadDigitalPortalLabels") {
