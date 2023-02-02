@@ -19,7 +19,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
     {
 
         protected override void OnCreating(SupplierInvoiceItemsPricePM entityPM, SupplierInvoiceItemPM entityParentPM)
-        {
+         {
             entityPM.DeclarationId = entityParentPM.DeclarationId;
             entityPM.InvoiceCounterKey = entityParentPM.CounterKey;
             entityPM.InvoiceItemLineNumber = entityParentPM.LineNumber;
