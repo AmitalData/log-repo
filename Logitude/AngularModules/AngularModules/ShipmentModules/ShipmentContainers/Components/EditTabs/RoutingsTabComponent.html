@@ -8,7 +8,6 @@
         line-height: 100%;
         color: #292D30;
         cursor: pointer;
-        left: 4px;
     }
 
     .LegNameSelected {
@@ -59,16 +58,14 @@
                             <table>
                                 <tr>
                                     <td style="width:1px;" *ngFor="let item of ItemsSource">
-                                        <table *ngIf="!item.IsHidden" style="width:140px; max-width:140px;">
-                                            <tr>
+                                        <table *ngIf="!item.IsHidden" style="width:170px; max-width:170px;">
+                                            <tr style="height:25px;">
                                                 <td style="width:14px;">
-                                                    <span class="Circle" style="background-color: #4AC76F;">
+                                                    <span *ngIf="item.IsGreenCircle" class="Circle" style="background-color: #4AC76F;">
                                                         <span style="color: white; width: 7px; height: 6px;" class="TopCenter">&#10003;</span>
                                                     </span>
-                                                </td>
 
-                                                <td *ngIf="false" style="width:14px;">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 14" fill="none">
+                                                    <svg *ngIf="item.IsOrangeCircle" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                                                         <path d="M7 14C3.1339 14 0 10.8661 0 7C0 3.1339 3.1339 0 7 0C10.8661 0 14 3.1339 14 7C14 10.8661 10.8661 14 7 14ZM7.7 7V3.5H6.3V8.4H10.5V7H7.7Z" fill="#F3942F" />
                                                     </svg>
                                                 </td>
@@ -78,11 +75,20 @@
                                                 </td>
 
                                                 <td class="LegName" [class.LegNameSelected]="item.Code == SelectedLegCode" (click)="RoutingItemClicked(item.Code)">
-                                                    <div style="display: flex; flex-direction: row;place-content: center flex-start; align-items: center;">
-                                                        {{item.Name}}
-                                                        <hr *ngIf="item.IsContinuousLine && item.Code !='EMRT'" style="border-top: solid 1px #C7C7C7; width: 56px; left: 10px;" />
-                                                        <hr *ngIf="item.IsDashedLine && item.Code !='EMRT'" style="border-top: dashed 1px #C7C7C7; width: 56px; left: 10px; " />
-                                                    </div>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:1px;">{{item.Name}}</td>
+
+                                                            <td style="width:60px; left:5px; ">
+                                                                <hr *ngIf="item.IsContinuousLine && item.Code !='EMRT'" style="border-top: solid 1px #C7C7C7;" />
+                                                                <hr *ngIf="item.IsDashedLine && item.Code !='EMRT'" style="border-top: dashed 1px #C7C7C7;" />
+                                                            </td>
+
+                                                            <td style="width:8px;">
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </td>
                                             </tr>
 
@@ -153,7 +159,8 @@
                                                             [SelectedValue]="EmptyPickupLocationPortId"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
-                                                            [LookUpTableName]="'Port'">
+                                                            [LookUpTableName]="'Port'"
+                                                            (SelectedItemChanged)="EmptyPickupLocationPort = $event">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -229,7 +236,8 @@
                                                             [SelectedValue]="PreCarriageLocationPortId"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
-                                                            [LookUpTableName]="'Port'">
+                                                            [LookUpTableName]="'Port'"
+                                                            (SelectedItemChanged)="PreCarriageLocationPort = $event">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -325,7 +333,8 @@
                                                             [SelectedValue]="POLLocationPortId"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
-                                                            [LookUpTableName]="'Port'">
+                                                            [LookUpTableName]="'Port'"
+                                                            (SelectedItemChanged)="POLLocationPort = $event">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -429,7 +438,12 @@
                             </table>
 
                             <!--Transshipment 1-->
-                            <table *ngIf="SelectedLegCode == 'TS1'">
+                            <div style="height:10px;" *ngIf="SelectedLegCode == 'TSS'"></div>
+                            <div class="BlueTitle" *ngIf="SelectedLegCode == 'TSS'">
+                                Transshipment 1
+                            </div>
+
+                            <table *ngIf="SelectedLegCode == 'TSS'">
                                 <tr>
                                     <td style="width:400px;">
                                         <table>
@@ -443,7 +457,8 @@
                                                             [SelectedValue]="Transshipment1LocationPortId"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
-                                                            [LookUpTableName]="'Port'">
+                                                            [LookUpTableName]="'Port'"
+                                                            (SelectedItemChanged)="Transshipment1LocationPort = $event">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -547,7 +562,12 @@
                             </table>
 
                             <!--Transshipment 2-->
-                            <table *ngIf="SelectedLegCode == 'TS2'">
+                            <div style="height:10px;" *ngIf="SelectedLegCode == 'TSS'"></div>
+                            <div class="BlueTitle" *ngIf="SelectedLegCode == 'TSS'">
+                                Transshipment 2
+                            </div>
+
+                            <table *ngIf="SelectedLegCode == 'TSS'">
                                 <tr>
                                     <td style="width:400px;">
                                         <table>
@@ -561,7 +581,8 @@
                                                             [SelectedValue]="Transshipment2LocationPortId"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
-                                                            [LookUpTableName]="'Port'">
+                                                            [LookUpTableName]="'Port'"
+                                                            (SelectedItemChanged)="Transshipment2LocationPort = $event">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -665,7 +686,12 @@
                             </table>
 
                             <!--Transshipment 3-->
-                            <table *ngIf="SelectedLegCode == 'TS3'">
+                            <div style="height:10px;" *ngIf="SelectedLegCode == 'TSS'"></div>
+                            <div class="BlueTitle" *ngIf="SelectedLegCode == 'TSS'">
+                                Transshipment 3
+                            </div>
+
+                            <table *ngIf="SelectedLegCode == 'TSS'">
                                 <tr>
                                     <td style="width:400px;">
                                         <table>
@@ -679,7 +705,8 @@
                                                             [SelectedValue]="Transshipment3LocationPortId"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
-                                                            [LookUpTableName]="'Port'">
+                                                            [LookUpTableName]="'Port'"
+                                                            (SelectedItemChanged)="Transshipment3LocationPort = $event">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -797,7 +824,8 @@
                                                             [SelectedValue]="PODLocationPortId"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
-                                                            [LookUpTableName]="'Port'">
+                                                            [LookUpTableName]="'Port'"
+                                                            (SelectedItemChanged)="PODLocationPort = $event">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -1009,7 +1037,8 @@
                                                             [SelectedValue]="OnCarriageLocationPortId"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
-                                                            [LookUpTableName]="'Port'">
+                                                            [LookUpTableName]="'Port'"
+                                                            (SelectedItemChanged)="OnCarriageLocationPort = $event">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -1264,7 +1293,8 @@
                                                             [SelectedValue]="EmptyReturnLocationPortId"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
-                                                            [LookUpTableName]="'Port'">
+                                                            [LookUpTableName]="'Port'"
+                                                            (SelectedItemChanged)="EmptyReturnLocationPort = $event">
                                                     </LogLov>
                                                 </td>
                                             </tr>
