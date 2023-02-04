@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="6">
+  <Sql Version="7">
     <![CDATA[
 	
 	  delete from DigitalTextCodes where Id != ''
@@ -2313,15 +2313,15 @@
 		    "DisplayText": ""
 		},
 		{
-			"TextCode": "Shipment.G.ShipperCountryCode",
+			"TextCode": "Shipment.G.ShipperAddressCountryCode",
 			"DefaultText": "Shipper Country Code",
-			"FieldCode": "Shipment.ShipperCountryCode",
+			"FieldCode": "Shipment.ShipperAddressCountryCode",
 		    "DisplayText": ""
 		},
 		{
-			"TextCode": "Shipment.G.ConsigneeCountryCode",
+			"TextCode": "Shipment.G.ConsigneeAddressCountryCode",
 			"DefaultText": "Consignee Country Code",
-			"FieldCode": "Shipment.ConsigneeCountryCode",
+			"FieldCode": "Shipment.ConsigneeAddressCountryCode",
 		    "DisplayText": ""
 		},
 		{
@@ -4906,15 +4906,15 @@
 		    "DisplayText": ""
 		},
 		{
-			"TextCode": "Shipment.G.ShipperCountryCode",
+			"TextCode": "Shipment.G.ShipperAddressCountryCode",
 			"DefaultText": "Shipper Country Code",
-			"FieldCode": "Shipment.ShipperCountryCode",
+			"FieldCode": "Shipment.ShipperAddressCountryCode",
 		    "DisplayText": ""
 		},
 		{
-			"TextCode": "Shipment.G.ConsigneeCountryCode",
+			"TextCode": "Shipment.G.ConsigneeAddressCountryCode",
 			"DefaultText": "Consignee Country Code",
-			"FieldCode": "Shipment.ConsigneeCountryCode",
+			"FieldCode": "Shipment.ConsigneeAddressCountryCode",
 		    "DisplayText": ""
 		},
 		{

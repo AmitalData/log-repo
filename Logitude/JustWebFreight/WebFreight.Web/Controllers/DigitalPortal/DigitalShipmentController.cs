@@ -131,7 +131,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 email = authToken.Email;
                 newFilters.Tenant = authToken.Tenant;
                 var shipmentQuery = new ShipmentQuery(authToken.Tenant);
-                var entityLists = shipmentQuery.GetOldByFilters(newFilters);
+                var entityLists = shipmentQuery.GetByFilters(newFilters);
 
                 var response = new ServiceResponse();
 
@@ -161,9 +161,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     var afterOneYearDate = currentDateTime.AddDays(-365);
                     var afterNinetyDaysDate = currentDateTime.AddDays(-90);
                     shipments.Where(a => ((a.MainCarriageFinalDestinationATA != null
-                                                                  && a.CreateDateTime < afterOneYearDate)
-                                                                  || (a.MainCarriageFinalDestinationATA <= afterNinetyDaysDate
-                                                                    || a.CreateDateTime <= afterOneYearDate)))
+                                            && a.CreateDateTime < afterOneYearDate)
+                                          || (a.MainCarriageFinalDestinationATA <= afterNinetyDaysDate
+                                          || a.CreateDateTime <= afterOneYearDate)))
                             .ToList()
                             .ForEach(i => i.IsCustomerArchived = true);
                 }
