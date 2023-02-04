@@ -81,14 +81,6 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         this.Refresh_Previous();        
     }
     Refresh_Previous() {
-        //this.ItemsSource.forEach(item => {
-        //    var previousItem = this.ItemsSource.filter(d => d.Code == item.PreviousLegCode)[0];
-        //    if (previousItem && item.IsGreenCircle) {
-        //        previousItem.IsGreenCircle = item.IsGreenCircle;
-        //        previousItem.IsOrangeCircle = item.IsOrangeCircle;
-        //    }
-        //});
-
         this.ItemsSource.forEach(item => {
             this.ItemsSource.filter(d => d.Index < item.Index).forEach(previousItem => {
                 if (item.IsGreenCircle) {
@@ -105,16 +97,8 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
 
     private BuildItemsSource() {
         this.ItemsSource = [];
-        //this.AddRoutingItem("PICK", "PREC", null);
-        //this.AddRoutingItem("PREC", "POL", "PICK");
-        //this.AddRoutingItem("POL", "TSS", "PREC");
-        //this.AddRoutingItem("TSS", "POD", "POL");
-        //this.AddRoutingItem("POD", "ONC", "TSS");
-        //this.AddRoutingItem("ONC", "DELV", "POD");
-        //this.AddRoutingItem("DELV", "EMRT", "ONC");
-        //this.AddRoutingItem("EMRT", null, "DELV");
 
-         this.AddRoutingItem("PICK", "PREC", 1);
+        this.AddRoutingItem("PICK", "PREC", 1);
         this.AddRoutingItem("PREC", "POL", 2);
         this.AddRoutingItem("POL", "TSS", 3);
         this.AddRoutingItem("TSS", "POD", 4);
