@@ -1592,6 +1592,56 @@ export class ContainerPM {
     public set MainCarriageToCountryCode(newValue: string) { if (this.mainCarriageToCountryCode != newValue) { this.mainCarriageToCountryCode = newValue; this.MarkAsDirty("MainCarriageToCountryCode"); } }
        
 	 
+    private emptyPickupLocationName: string;
+    public get EmptyPickupLocationName() { return this.emptyPickupLocationName; }
+    public set EmptyPickupLocationName(newValue: string) { if (this.emptyPickupLocationName != newValue) { this.emptyPickupLocationName = newValue; this.MarkAsDirty("EmptyPickupLocationName"); } }
+       
+	 
+    private preCarriageLocationName: string;
+    public get PreCarriageLocationName() { return this.preCarriageLocationName; }
+    public set PreCarriageLocationName(newValue: string) { if (this.preCarriageLocationName != newValue) { this.preCarriageLocationName = newValue; this.MarkAsDirty("PreCarriageLocationName"); } }
+       
+	 
+    private pODLocationName: string;
+    public get PODLocationName() { return this.pODLocationName; }
+    public set PODLocationName(newValue: string) { if (this.pODLocationName != newValue) { this.pODLocationName = newValue; this.MarkAsDirty("PODLocationName"); } }
+       
+	 
+    private pOLLocationName: string;
+    public get POLLocationName() { return this.pOLLocationName; }
+    public set POLLocationName(newValue: string) { if (this.pOLLocationName != newValue) { this.pOLLocationName = newValue; this.MarkAsDirty("POLLocationName"); } }
+       
+	 
+    private onCarriageLocationName: string;
+    public get OnCarriageLocationName() { return this.onCarriageLocationName; }
+    public set OnCarriageLocationName(newValue: string) { if (this.onCarriageLocationName != newValue) { this.onCarriageLocationName = newValue; this.MarkAsDirty("OnCarriageLocationName"); } }
+       
+	 
+    private transshipment1LocationName: string;
+    public get Transshipment1LocationName() { return this.transshipment1LocationName; }
+    public set Transshipment1LocationName(newValue: string) { if (this.transshipment1LocationName != newValue) { this.transshipment1LocationName = newValue; this.MarkAsDirty("Transshipment1LocationName"); } }
+       
+	 
+    private transshipment2LocationName: string;
+    public get Transshipment2LocationName() { return this.transshipment2LocationName; }
+    public set Transshipment2LocationName(newValue: string) { if (this.transshipment2LocationName != newValue) { this.transshipment2LocationName = newValue; this.MarkAsDirty("Transshipment2LocationName"); } }
+       
+	 
+    private transshipment3LocationName: string;
+    public get Transshipment3LocationName() { return this.transshipment3LocationName; }
+    public set Transshipment3LocationName(newValue: string) { if (this.transshipment3LocationName != newValue) { this.transshipment3LocationName = newValue; this.MarkAsDirty("Transshipment3LocationName"); } }
+       
+	 
+    private transshipment4LocationName: string;
+    public get Transshipment4LocationName() { return this.transshipment4LocationName; }
+    public set Transshipment4LocationName(newValue: string) { if (this.transshipment4LocationName != newValue) { this.transshipment4LocationName = newValue; this.MarkAsDirty("Transshipment4LocationName"); } }
+       
+	 
+    private emptyReturnLocationName: string;
+    public get EmptyReturnLocationName() { return this.emptyReturnLocationName; }
+    public set EmptyReturnLocationName(newValue: string) { if (this.emptyReturnLocationName != newValue) { this.emptyReturnLocationName = newValue; this.MarkAsDirty("EmptyReturnLocationName"); } }
+       
+	 
     private onCarriageETA: Date;
     public get OnCarriageETA() { return this.onCarriageETA; }
     public set OnCarriageETA(newValue: Date) { if (this.onCarriageETA != newValue) { this.onCarriageETA = newValue; this.MarkAsDirty("OnCarriageETA"); } }

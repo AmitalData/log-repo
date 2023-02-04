@@ -463,6 +463,17 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string MainCarriageToCountryName { get; set; }
         public string MainCarriageFromCountryCode { get; set; }
         public string MainCarriageToCountryCode { get; set; }
+
+        public string EmptyPickupLocationName { get; set; }
+        public string PreCarriageLocationName { get; set; }
+        public string PODLocationName { get; set; }
+        public string POLLocationName { get; set; }
+        public string OnCarriageLocationName { get; set; }
+        public string Transshipment1LocationName { get; set; }
+        public string Transshipment2LocationName { get; set; }
+        public string Transshipment3LocationName { get; set; }
+        public string Transshipment4LocationName { get; set; }
+        public string EmptyReturnLocationName { get; set; }
         public DateTime? OnCarriageETA { get; set; }
         public DateTime? OnCarriageATA { get; set; }
         public List<CustomChildEntity> CustomChildEntities { get; set; }
