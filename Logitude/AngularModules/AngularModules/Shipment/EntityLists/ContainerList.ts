@@ -307,5 +307,7 @@ export class ContainerList {
 		Field40: string;
 		OnCarriageETA: Date;
 		OnCarriageATA: Date;
+		RequestDate: Date;
+		RecentResponseDate: Date;
 	
 }

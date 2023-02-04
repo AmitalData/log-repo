@@ -444,6 +444,7 @@
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\PrivateLabelApprovePaymentComponent.html" />
     <Content Include="Shipment\Components\Helpers\ContainerHelperComponent.html" />
     <Content Include="Shipment\Components\UnassigedData\UpdateUnassigedDataComponent.html" />
+    <Content Include="Shipment\Components\Workspaces\ContainerComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\CustomChargesVersionTabComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\LocalChargesVersionTabComponent.html" />
     <Content Include="TariffModule\Components\Workspaces\SaleWorkspaceComponent.html" />
@@ -7844,6 +7845,7 @@
     <TypeScriptCompile Include="Shipment\Components\TabsBuilder\ShipmentTabsBuilder.ts" />
     <TypeScriptCompile Include="Shipment\Components\UnassigedData\UpdateUnassigedDataComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\Workspaces\AMANACComponent.ts" />
+    <TypeScriptCompile Include="Shipment\Components\Workspaces\ContainerComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\Workspaces\ContainersFUsComponent.ts" />
     <TypeScriptCompile Include="Shipment\DataContract\LogboxShipmentExportExcelArgs.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\ContainerFollowUpList.ts" />
