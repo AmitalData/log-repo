@@ -1489,6 +1489,11 @@ export class DeclarationPM {
     public set ExportDecWithoutRelease(newValue: string) { if (this.exportDecWithoutRelease != newValue) { this.exportDecWithoutRelease = newValue; this.MarkAsDirty("ExportDecWithoutRelease"); } }
        
 	 
+    private casualImporterCountry: string;
+    public get CasualImporterCountry() { return this.casualImporterCountry; }
+    public set CasualImporterCountry(newValue: string) { if (this.casualImporterCountry != newValue) { this.casualImporterCountry = newValue; this.MarkAsDirty("CasualImporterCountry"); } }
+       
+	 
     private exportCloseAmendStatusName: string;
     public get ExportCloseAmendStatusName() { return this.exportCloseAmendStatusName; }
     public set ExportCloseAmendStatusName(newValue: string) { if (this.exportCloseAmendStatusName != newValue) { this.exportCloseAmendStatusName = newValue; this.MarkAsDirty("ExportCloseAmendStatusName"); } }

@@ -176,7 +176,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ReleaseStatusTypeCode, 
 	         ClosingXml, 
 	         ExportCloseAmendRequestNumber, 
-	         ExportCloseAmendmentStatus,
+	         ExportCloseAmendmentStatus, 
+	         CasualImporterCountry,
 	      }
 
 
@@ -425,6 +426,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExportCloseAmendRequestNumber, 
 	         ExportCloseAmendmentStatus, 
 	         ExportDecWithoutRelease, 
+	         CasualImporterCountry, 
 	         ExportCloseAmendStatusName,
 	      }
 
@@ -1202,6 +1204,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportCloseAmendmentStatus))
             {
 				entityPOCO.ExportCloseAmendmentStatus = entityPM.ExportCloseAmendmentStatus;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CasualImporterCountry))
+            {
+				entityPOCO.CasualImporterCountry = entityPM.CasualImporterCountry;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1985,6 +1992,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ExportCloseAmendmentStatus = entityPOCO.ExportCloseAmendmentStatus;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CasualImporterCountry))
+            {
+					entityPM.CasualImporterCountry = entityPOCO.CasualImporterCountry;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -2759,6 +2771,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportCloseAmendmentStatus))
             {
                 oldEntityPM.ExportCloseAmendmentStatus = entityPM.ExportCloseAmendmentStatus;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CasualImporterCountry))
+            {
+                oldEntityPM.CasualImporterCountry = entityPM.CasualImporterCountry;
             }
 			
 		}
