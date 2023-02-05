@@ -26,6 +26,7 @@ import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { ConnectedToItem } from './ConnectedToItem';
 import { ICustomsDocumentsController } from './ICustomsDocumentsController';
 import { CustomDocumentNewVersionService } from '../services/CustomDocumentNewVersion.service';
+import { CustomsDocumentsTicketsExtendedService } from 'Customs/Services/ExtendedPMs/CustomsDocumentsTicketsExtendedService';
 
 @Component({
 
@@ -550,12 +551,16 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         //*********************** task 32398 new version button********************//
 
         if (this.CustomsDocument) {
-
             var statusCodes = ['1', '7'];
             if (statusCodes.indexOf(this.CustomsDocument.DocumentStatusCode) > -1 && !AppTool.IsNullOrEmpty(this.CustomsDocument.CustomsDocId)
-                && this.CustomsDocumentsTicket && AppTool.IsNullOrEmpty(this.CustomsDocumentsTicket.RequestedCustomsDocId)
-                && !this.IsEntityDisplayOnly && this.CustomsDocument.CurrentEntityId == this.ParentEntityId) {
-                this.IsActionButtonsEnabled = true;
+            && this.CustomsDocumentsTicket && AppTool.IsNullOrEmpty(this.CustomsDocumentsTicket.RequestedCustomsDocId)
+            && !this.IsEntityDisplayOnly) {
+                new CustomsDocumentsTicketsExtendedService().GetDocConnectTicket(this.CustomsDocument.DocumentsFilingId, this.ParentEntityId, SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
+                    const anotherDeclarationConnect: string[] = response.Result.decConnect;
+
+                    if (anotherDeclarationConnect.length === 0)
+                        this.IsActionButtonsEnabled = true;
+                })            
             }
             else {
                 if (this.CustomsDocument.DocumentStatusCode == '2') {

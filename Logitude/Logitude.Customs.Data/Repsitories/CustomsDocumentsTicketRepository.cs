@@ -211,16 +211,26 @@ FROM ( SELECT DISTINCT
             //              select a.ParentEntityId).ToList();
             return query;
         }
-        public List<string> GetDocConnectTicket(string documentsfilingid, string entityId)
+        public List<string> GetDocConnectTicket(string documentsfilingid, string entityId, int tenant)
         {
-            var query = (from a in context.CustomsDocumentsTickets
-                         where a.DocumentsFilingId == documentsfilingid
-                         select a.Id).ToList();
+            var query = (
+                from tickets in context.CustomsDocumentsTickets
+                join pointers in context.CustomsDocumentPointers on tickets.Id equals pointers.CustomsDocumentsTicketId
+                join d1 in context.Declarations on pointers.ParentEntityId equals d1.Id
+                join d2 in context.Declarations on entityId equals d2.Id
+                where tickets.Tenant == tenant
+                && pointers.Tenant == tenant
+                && d1.Tenant == tenant
+                && d2.Tenant == tenant
+                && tickets.DocumentsFilingId == documentsfilingid
+                && d1.Id != entityId
+                && d2.CustomFileNo != d1.CustomFileNo
+                select d1.Id
+            );
 
-            var query1 = (from a in context.CustomsDocumentPointers
-                          where query.Contains(a.CustomsDocumentsTicketId) && entityId != a.ParentEntityId
-                          select a.ParentEntityId).ToList();
-            return query1;
+            List<string> result = query.ToList();
+
+            return result;
         }
 
         public List<CustomsDocumentsTicket> GetCustomsDocumentsTicketsByDocumentsFilingId(string documentsFilingId, int tenant)

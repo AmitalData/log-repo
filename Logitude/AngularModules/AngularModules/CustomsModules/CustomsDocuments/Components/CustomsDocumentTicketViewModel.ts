@@ -818,7 +818,7 @@ export class CustomsDocumentTicketViewModel {
     private async GetDocConnectTicket(DocumentsFilingId): Promise<boolean>{
         var customsDocumentsTicketPMService: CustomsDocumentsTicketsExtendedService = new CustomsDocumentsTicketsExtendedService();
         const res = await new Promise<boolean>((resolve, reject) => {        
-              customsDocumentsTicketPMService.GetDocConnectTicket(DocumentsFilingId,this.EntityPM.id).subscribe((response: ServiceResponse) => {
+              customsDocumentsTicketPMService.GetDocConnectTicket(DocumentsFilingId, this.EntityPM.id, SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
                 if (!response.HasError) {
                     if(response.Result.decConnect.length>0){
 
