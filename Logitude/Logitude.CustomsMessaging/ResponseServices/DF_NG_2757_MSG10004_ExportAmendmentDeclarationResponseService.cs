@@ -1280,7 +1280,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var AdditionalPriceTypeCodes = supplierInvoiceItemsPriceQueryService.GetSupplierInvoiceItemsPriceByDeclarationId(declarationId, tenant);
             
             if (governmentAgencyGoodsItem != null && governmentAgencyGoodsItem.DMExtensions.GoodsItemAmount != null)
-           { 
+            { 
                 var cur = declaration.GoodsShipment[0].Invoice.DMExtensions.InvoiceAmount.currencyID.ToString();
                 foreach (var GoodsItemAmount in governmentAgencyGoodsItem.DMExtensions.GoodsItemAmount)
                 {
@@ -1291,18 +1291,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         SupplierInvoiceItemsPricePM supplierInvoiceItemsPrice = new SupplierInvoiceItemsPricePM();
 
-                        if (!isFromImporter && AdditionalPriceTypeCodes.Contains(AdditionalPriceTypeCode))
-                        {
-                            supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Update;
-                        }
-                        else if(isFromImporter)
-                        {
+                        //if (!isFromImporter && AdditionalPriceTypeCodes.Contains(AdditionalPriceTypeCode))
+                        //{
+                        //    supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Update;
+                        //}
+                        //else if(isFromImporter)
+                        //{
                             supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Insert;
-                        }
-                        else
-                        {
-                            continue;
-                        }
+                  //      }
+                        //else
+                        //{
+                        //    continue;
+                        //}
                        
                         supplierInvoiceItemsPrice.DeclarationId = declarationId;
                        

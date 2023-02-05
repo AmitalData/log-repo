@@ -87,7 +87,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 var firstRelatedEntity = customResponse.RelatedEntity.FirstOrDefault();
                 if (customResponse.RelatedEntity != null &&
-                    (firstRelatedEntity.entityType == 1055 || firstRelatedEntity.entityType == 11157 || firstRelatedEntity.entityType == 11184 || firstRelatedEntity.entityType == 11185 || firstRelatedEntity.entityType == 12414 || firstRelatedEntity.entityType == 11188 || firstRelatedEntity.entityType == 12397 || firstRelatedEntity.entityType == 12396)) //1055 or 11157 = Declaration //11184 = SupplierInvoice //11185 = SupplierInvoiceItem
+                    (firstRelatedEntity.entityType == 1055 || firstRelatedEntity.entityType == 11157 || firstRelatedEntity.entityType == 10404 || firstRelatedEntity.entityType == 11184 || firstRelatedEntity.entityType == 11185 || firstRelatedEntity.entityType == 12414 || firstRelatedEntity.entityType == 11188 || firstRelatedEntity.entityType == 12397 || firstRelatedEntity.entityType == 12396)) //1055 or 11157 = Declaration //11184 = SupplierInvoice //11185 = SupplierInvoiceItem
                 {
                     //Search Declaration by entityIdKey1
                     if (customResponse.RequiredDocumentDetails.requiredDocumentMessageType == 1)
