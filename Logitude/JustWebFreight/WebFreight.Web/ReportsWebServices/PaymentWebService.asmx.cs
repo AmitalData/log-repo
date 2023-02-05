@@ -195,6 +195,8 @@ namespace WebFreight.Web.ReportsWebServices
                         paymentDataProvider.IRSPlace = billToCard.IRSPlace;
                         paymentDataProvider.IRSNumber = billToCard.IRSNumber;
                         paymentDataProvider.BillToWebsite = billToCard.Website != null ? billToCard.Website  : "";
+                        paymentDataProvider.BillToBankAccountNumber = billToCard.AccountNumber != null ? billToCard.AccountNumber : "";
+                        paymentDataProvider.BillToBankName = billToCard.BankName != null ? billToCard.BankName : "";
 
                         Address address = addressRepository.GetSingleAddress(currentPayment.BillToAddressId, tenant);
 
