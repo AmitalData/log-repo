@@ -17,14 +17,14 @@ using UnifreightIIG.Common.TheGateway;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
-        public class MN_MSG1_MANIFESTMessagingService
-        : MessagingServiceBase<
-        MANIFESTRequestRequestParams, 
-        MANIFESTRequestResponseData,
-        MN_MSG1_MANIFEST, 
-        MN_MSG4_SendManifestFeedBack_Message,
-        MN_MSG1_MANIFESTRequestService, MN_MSG4_SendManifestFeedBack_MessageResponseService, 
-        RequestHeader>
+    public class MN_MSG1_MANIFESTMessagingService
+    : MessagingServiceBase<
+    MANIFESTRequestRequestParams,
+    MANIFESTRequestResponseData,
+    MN_MSG1_MANIFEST,
+    MN_MSG4_SendManifestFeedBack_Message,
+    MN_MSG1_MANIFESTRequestService, MN_MSG4_SendManifestFeedBack_MessageResponseService,
+    RequestHeader>
     {
         public override string MainInterfaceCode
         {
@@ -36,7 +36,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             try
             {
                 var responseContentHeader = customsResponse.GetResponseContentHeader() as IResponseContentHeader;
-                ThrowIIGBLException(_ResponseHeader,responseContentHeader);
+                ThrowIIGBLException(_ResponseHeader, responseContentHeader);
             }
             catch (System.ServiceModel.FaultException<UnifreightIIGFault> myUnifreightIIGFault)
             {
@@ -97,7 +97,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             if (requestParams.TestCase != null)
             {
-                var Fake  = new Fake_1770_MN_MSG1_MANIFESTResponse(requestParams);
+                var Fake = new Fake_1770_MN_MSG1_MANIFESTResponse(requestParams);
                 _ResponseHeader = Fake.CallWS(requestParams, out response);
 
 
