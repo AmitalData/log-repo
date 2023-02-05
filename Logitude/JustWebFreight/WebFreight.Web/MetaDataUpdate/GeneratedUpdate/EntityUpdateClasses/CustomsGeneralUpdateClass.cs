@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "27fd6ae658f40fa56b381be6b3e4ded8";
+		public const string HashString = "f9839b9cf347820dcfc6b19c0a9caa69";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "c452",
+			      				    Code =  "084f",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2137,6 +2137,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOClosedDeclarationDocumentsCannotBeLinked = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ClosedDeclarationDocumentsCannotBeLinked", DefaultText = "Closed Declaration- documents cannot be uploaded",LocalDefaultText = @"הצהרה סגורה - לא ניתן לעלות מסמכים", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralODeclarationSubmittedDocumentsCannotBeLinked = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.DeclarationSubmittedDocumentsCannotBeLinked", DefaultText = "The declaration has already been submitted - new documents cannot be linked",LocalDefaultText = @"ההצהרה כבר הוגשה - לא ניתן לקשר מסמכים חדשים", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOCannotDetachDocumentWithCustomsDocId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CannotDetachDocumentWithCustomsDocId", DefaultText = "Cannot detach a document with CustomsDocId - declaration for display only",LocalDefaultText = @"לא ניתן לנתק מסמך עם סימוכין - הצהרה לתצוגה בלבד", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
