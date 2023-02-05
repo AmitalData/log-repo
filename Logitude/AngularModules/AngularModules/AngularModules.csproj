@@ -384,6 +384,8 @@
     <Content Include="Infrastructure\Components\LoginComponent\PrivateLabelComponents\PrivateLabelLoginProcessComponent.html" />
     <Content Include="Infrastructure\Components\LoginComponent\CustomLoginComponents\HybridLabels\Components\HybridLoginProcessComponent.css" />
     <Content Include="Infrastructure\Components\LoginComponent\CustomLoginComponents\HybridLabels\Components\HybridLoginProcessComponent.html" />
+    <Content Include="Infrastructure\Components\LogitudeComponents\Customization\Screen\Section\AddEditChildEntityComponent.html" />
+    <Content Include="Infrastructure\Components\LogitudeComponents\Customization\Screen\Section\GridScreenSectionComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationConditionsDetailsComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\AdvancedAutomationSendInterfaceDetailsComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\CreateTaskResultComponent.html" />
@@ -2078,6 +2080,8 @@
     <TypeScriptCompile Include="Infrastructure\Components\ExportBI2ExcelControl\ExportBI2ExcelControl.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\HomeComponent\NewChargifyAWBStockComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LoginComponent\PrivateLabelComponents\PrivateLabelLoginProcessComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\Customization\Screen\Section\AddEditChildEntityComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\Customization\Screen\Section\GridScreenSectionComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\DropdownMenuComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\DWDateComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\DWLovComponent.ts" />

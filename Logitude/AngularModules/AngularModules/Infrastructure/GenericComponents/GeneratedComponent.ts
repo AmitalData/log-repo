@@ -294,8 +294,10 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
 
     private LoadAllChildEntityResourcesCompleted(childEntityResourcesArgs: ChildEntityResourcesArgs) {
         const screenFields = GetScreenFields(childEntityResourcesArgs.Screen, childEntityResourcesArgs.Sections);
-        if (screenFields.length == 0)
+        if (screenFields.length == 0) {
+            this.CurrentSession.StopBusyIndicator();
             return this.ShowNoFieldsText = true;
+        }
 
         childEntityResourcesArgs.Sections.forEach(section => this.BuildScreenSection(childEntityResourcesArgs.Screen, section, screenFields, this.GetObjectFields()));
 
