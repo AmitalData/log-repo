@@ -1005,6 +1005,14 @@
 			"ModifiedOn": "",
 			"HasPermission": true
 		},
+    {
+			"FieldCode": "Shipment.Transshipment1CarrierName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
 		{
 			"FieldCode": "Shipment.Transshipment1CarrierNumber",
 			"CreatedBy": "system",
@@ -2412,6 +2420,14 @@
 			"CreatedBy": "system",
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+    {
+			"FieldCode": "Shipment.Transshipment1CarrierName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
 			"ModifiedOn": "",
 			"HasPermission": true
 		},
