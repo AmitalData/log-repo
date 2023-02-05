@@ -127,7 +127,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        public HttpResponseMessage GetIsConnectTicket(string documentsfilingid, string entityId)
+        public HttpResponseMessage GetIsConnectTicket(string documentsfilingid, string entityId, int tenant)
         {
             if (ModelState.IsValid)
             {
@@ -136,16 +136,15 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    int tenant = authToken.Tenant;
-                    SecurityUtility.AuthenticationOnTenant(tenant);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
 
 
                     ICustomContext MyContext = CustomContext.GetContext(tenant);
                     CustomsDocumentsTicketQueryService queryService = new CustomsDocumentsTicketQueryService(MyContext);
+                    
 
-
-                    List<string> decConnect = queryService.GetDocConnectTicket(documentsfilingid, entityId);
+                    List<string> decConnect = queryService.GetDocConnectTicket(documentsfilingid, entityId, tenant);
                     var conDec = new ConnectedDeclarations();
                     conDec.decConnect = decConnect;
 

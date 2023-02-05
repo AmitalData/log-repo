@@ -81,7 +81,7 @@ export class CustomsDocumentsTicketsExtendedService {
         );
 
     }
-    GetDocConnectTicket(documentsfilingid: string,entityId:string) {
+    GetDocConnectTicket(documentsfilingid: string,entityId:string, tenant: number) {
     
         return defer(() => {
 
@@ -96,7 +96,7 @@ export class CustomsDocumentsTicketsExtendedService {
 
             var mappedEntity: CustomsDocumentsTicketPM;
             // mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-            return this._http.get(this._apiUrl + '/GetIsConnectTicket/?' + 'documentsfilingid=' + documentsfilingid.replace(/\+/gi, '%2B')+'&entityId=' + entityId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetIsConnectTicket/?' + 'documentsfilingid=' + documentsfilingid.replace(/\+/gi, '%2B')+'&entityId=' + entityId+'&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse.Result = response;
