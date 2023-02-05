@@ -92,10 +92,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     {
                         temp.Descendants()
                         .OfType<JProperty>()
-                        .Where(attr => item.Value.Contains($"{item.Key}.{tenant}.{attr.Name}") 
-                                       ||  item.Value.Contains($"{item.Key}.{attr.Name}"))
+                        .Where(attr => (item.Value.Contains($"{item.Key}.{tenant}.{attr.Name}") 
+                                           || item.Value.Contains($"{item.Key}.{attr.Name}"))
+                                        ||(attr.Name.Contains(".") && item.Value.Contains($"{attr.Name}")))
                         .ToList()
-                        .ForEach(attr => attr.Remove());
+                        .ForEach(attr => attr.Value ="");
                     }
                     
                     var json = JsonConvert.SerializeObject(temp);

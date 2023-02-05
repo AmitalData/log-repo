@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="6">
+  <Sql Version="7">
     <![CDATA[
 	
 	  delete from DigitalTextCodes where Id != ''
@@ -1220,6 +1220,66 @@
 	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, Labels) 
 	  values (@NewEntityId, 0, @shipmentObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @customerProfileId,
 	  '[{
+			"TextCode": "Shipment.G.PickUp",
+			"DefaultText": "Pick up",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+    {
+			"TextCode": "Shipment.G.TerminalHub",
+			"DefaultText": "Terminal hub",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+    {
+			"TextCode": "Shipment.G.PreCarriage",
+			"DefaultText": "Pre carriage",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+    {
+			"TextCode": "Shipment.G.Transshipment1Port",
+			"DefaultText": "Transshipment 1 port",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+    {
+			"TextCode": "Shipment.G.Transshipment2Port",
+			"DefaultText": "Transshipment 2 port",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+    {
+			"TextCode": "Shipment.G.Transshipment3Port",
+			"DefaultText": "Transshipment 3 port",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+    {
+			"TextCode": "Shipment.G.DischargePort",
+			"DefaultText": "Discharge port",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+    {
+			"TextCode": "Shipment.G.OnCarriage",
+			"DefaultText": "On carriage",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+    {
+			"TextCode": "Shipment.G.Delivery",
+			"DefaultText": "Delivery",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+    {
+			"TextCode": "Shipment.G.StorageDays",
+			"DefaultText": "Storage days",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+    {
 			"TextCode": "Shipment.F.ShipmentNumber",
 			"DefaultText": "Shipment number",
 			"FieldCode": "Shipment.ShipmentNumber",
@@ -1702,6 +1762,12 @@
 		{
 			"TextCode": "Shipment.G.VoyageNumber",
 			"DefaultText": "Voyage number",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+    {
+			"TextCode": "Shipment.G.VoyageNo",
+			"DefaultText": "Voyage no",
 			"FieldCode" : "",
 			"DisplayText": ""
 		},
@@ -2344,7 +2410,7 @@
 		},
 		{
 			"TextCode": "Shipment.F.WarehouseLegCutOffDate",
-			"DefaultText": "Warehouse leg cutOff date",
+			"DefaultText": "Warehouse cut off date",
 			"FieldCode": "Shipment.WarehouseLegCutOffDate",
 		    "DisplayText": ""
 		},
@@ -2398,19 +2464,19 @@
 		},
 		{
 			"TextCode": "Shipment.F.PreCarriageCarrierName",
-			"DefaultText": "PreCarriage carrier name",
+			"DefaultText": "Carrier",
 			"FieldCode": "Shipment.PreCarriageCarrierName",
 		    "DisplayText": ""
 		},
 		{
 			"TextCode": "Shipment.F.PreCarriageCarrierNumber",
-			"DefaultText": "PreCarriage carrier number",
+			"DefaultText": "Carrier No",
 			"FieldCode": "Shipment.PreCarriageCarrierNumber",
 		    "DisplayText": ""
 		},
 		{
 			"TextCode": "Shipment.F.PreCarriageVesselName",
-			"DefaultText": "PreCarriage vessel name",
+			"DefaultText": "Vessel",
 			"FieldCode": "Shipment.PreCarriageVesselName",
 		    "DisplayText": ""
 		},
@@ -2452,7 +2518,7 @@
 		},
 		{
 			"TextCode": "Shipment.F.MainCarriageVesselName",
-			"DefaultText": "Main carriage vessel name",
+			"DefaultText": "Vessel",
 			"FieldCode": "Shipment.MainCarriageVesselName",
 		    "DisplayText": ""
 		},
@@ -2512,7 +2578,7 @@
 		},
 		{
 			"TextCode": "Shipment.F.Transshipment1VesselName",
-			"DefaultText": "Transshipment1 vessel name",
+			"DefaultText": "Vessel",
 			"FieldCode": "Shipment.Transshipment1VesselName",
 		    "DisplayText": ""
 		},
@@ -2536,7 +2602,7 @@
 		},
 		{
 			"TextCode": "Shipment.F.Transshipment2VesselName",
-			"DefaultText": "Transshipment2 vessel name",
+			"DefaultText": "Vessel",
 			"FieldCode": "Shipment.Transshipment2VesselName",
 		    "DisplayText": ""
 		},
@@ -2560,7 +2626,7 @@
 		},
 		{
 			"TextCode": "Shipment.F.Transshipment3VesselName",
-			"DefaultText": "Transshipment3 vessel name",
+			"DefaultText": "Vessel",
 			"FieldCode": "Shipment.Transshipment3VesselName",
 		    "DisplayText": ""
 		},
@@ -2638,19 +2704,19 @@
 		},
 		{
 			"TextCode": "Shipment.F.OnCarriageCarrierName",
-			"DefaultText": "OnCarriage carrier name",
+			"DefaultText": "Carrier",
 			"FieldCode": "Shipment.OnCarriageCarrierName",
 		    "DisplayText": ""
 		},
 		{
 			"TextCode": "Shipment.F.OnCarriageCarrierNumber",
-			"DefaultText": "OnCarriage carrier number",
+			"DefaultText": "Carrier No",
 			"FieldCode": "Shipment.OnCarriageCarrierNumber",
 		    "DisplayText": ""
 		},
 		{
 			"TextCode": "Shipment.F.OnCarriageVesselName",
-			"DefaultText": "OnCarriage vessel name",
+			"DefaultText": "Vessel",
 			"FieldCode": "Shipment.OnCarriageVesselName",
 		    "DisplayText": ""
 		},
@@ -3808,6 +3874,60 @@
 	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, Labels) 
 	  values (@NewEntityId, 0, @shipmentObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @agentProfileId,
 	  '[{
+			"TextCode": "Shipment.G.PickUp",
+			"DefaultText": "Pick up",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+    {
+			"TextCode": "Shipment.G.TerminalHub",
+			"DefaultText": "Terminal hub",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+    {
+			"TextCode": "Shipment.G.PreCarriage",
+			"DefaultText": "Pre carriage",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+    {
+			"TextCode": "Shipment.G.Transshipment1Port",
+			"DefaultText": "Transshipment 1 port",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+    {
+			"TextCode": "Shipment.G.Transshipment2Port",
+			"DefaultText": "Transshipment 2 port",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+    {
+			"TextCode": "Shipment.G.Transshipment3Port",
+			"DefaultText": "Transshipment 3 port",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+    {
+			"TextCode": "Shipment.G.DischargePort",
+			"DefaultText": "Discharge port",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+    {
+			"TextCode": "Shipment.G.OnCarriage",
+			"DefaultText": "On carriage",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+    {
+			"TextCode": "Shipment.G.Delivery",
+			"DefaultText": "Delivery",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+    {
 			"TextCode": "Shipment.F.ShipmentNumber",
 			"DefaultText": "Shipment number",
 			"FieldCode": "Shipment.ShipmentNumber",
@@ -4290,6 +4410,12 @@
 		{
 			"TextCode": "Shipment.G.VoyageNumber",
 			"DefaultText": "Voyage number",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+    {
+			"TextCode": "Shipment.G.VoyageNo",
+			"DefaultText": "Voyage no",
 			"FieldCode" : "",
 			"DisplayText": ""
 		},
@@ -4937,7 +5063,7 @@
 		},
 		{
 			"TextCode": "Shipment.F.WarehouseLegCutOffDate",
-			"DefaultText": "Warehouse leg cutOff date",
+			"DefaultText": "Warehouse cut off date",
 			"FieldCode": "Shipment.WarehouseLegCutOffDate",
 		    "DisplayText": ""
 		},
@@ -4991,19 +5117,19 @@
 		},
 		{
 			"TextCode": "Shipment.F.PreCarriageCarrierName",
-			"DefaultText": "PreCarriage carrier name",
+			"DefaultText": "Carrier",
 			"FieldCode": "Shipment.PreCarriageCarrierName",
 		    "DisplayText": ""
 		},
 		{
 			"TextCode": "Shipment.F.PreCarriageCarrierNumber",
-			"DefaultText": "PreCarriage carrier number",
+			"DefaultText": "Carrier No",
 			"FieldCode": "Shipment.PreCarriageCarrierNumber",
 		    "DisplayText": ""
 		},
 		{
 			"TextCode": "Shipment.F.PreCarriageVesselName",
-			"DefaultText": "PreCarriage vessel name",
+			"DefaultText": "Vessel",
 			"FieldCode": "Shipment.PreCarriageVesselName",
 		    "DisplayText": ""
 		},
@@ -5045,7 +5171,7 @@
 		},
 		{
 			"TextCode": "Shipment.F.MainCarriageVesselName",
-			"DefaultText": "Main carriage vessel name",
+			"DefaultText": "Vessel",
 			"FieldCode": "Shipment.MainCarriageVesselName",
 		    "DisplayText": ""
 		},
@@ -5105,7 +5231,7 @@
 		},
 		{
 			"TextCode": "Shipment.F.Transshipment1VesselName",
-			"DefaultText": "Transshipment1 vessel name",
+			"DefaultText": "Vessel",
 			"FieldCode": "Shipment.Transshipment1VesselName",
 		    "DisplayText": ""
 		},
@@ -5129,7 +5255,7 @@
 		},
 		{
 			"TextCode": "Shipment.F.Transshipment2VesselName",
-			"DefaultText": "Transshipment2 vessel name",
+			"DefaultText": "Vessel",
 			"FieldCode": "Shipment.Transshipment2VesselName",
 		    "DisplayText": ""
 		},
@@ -5153,7 +5279,7 @@
 		},
 		{
 			"TextCode": "Shipment.F.Transshipment3VesselName",
-			"DefaultText": "Transshipment3 vessel name",
+			"DefaultText": "Vessel",
 			"FieldCode": "Shipment.Transshipment3VesselName",
 		    "DisplayText": ""
 		},
@@ -5225,19 +5351,19 @@
 		},
 		{
 			"TextCode": "Shipment.F.OnCarriageCarrierName",
-			"DefaultText": "OnCarriage carrier name",
+			"DefaultText": "Carrier",
 			"FieldCode": "Shipment.OnCarriageCarrierName",
 		    "DisplayText": ""
 		},
 		{
 			"TextCode": "Shipment.F.OnCarriageCarrierNumber",
-			"DefaultText": "OnCarriage carrier number",
+			"DefaultText": "Carrier No",
 			"FieldCode": "Shipment.OnCarriageCarrierNumber",
 		    "DisplayText": ""
 		},
 		{
 			"TextCode": "Shipment.F.OnCarriageVesselName",
-			"DefaultText": "OnCarriage vessel name",
+			"DefaultText": "Vessel",
 			"FieldCode": "Shipment.OnCarriageVesselName",
 		    "DisplayText": ""
 		},
@@ -7154,6 +7280,12 @@
 				"FieldCode": "",
 				"DisplayText": ""
 			},
+      {
+				"TextCode": "Trucker.F.TruckerNo",
+				"DefaultText": "Trucker no",
+				"FieldCode": "",
+				"DisplayText": ""
+			},
 			{
 				"TextCode": "Trucker.F.Code",
 				"DefaultText": "Trucker code",
@@ -7215,6 +7347,12 @@
 			{
 				"TextCode": "Trucker.F.TruckerNumber",
 				"DefaultText": "Trucker number",
+				"FieldCode": "",
+				"DisplayText": ""
+			},
+      {
+				"TextCode": "Trucker.F.TruckerNo",
+				"DefaultText": "Trucker no",
 				"FieldCode": "",
 				"DisplayText": ""
 			},
