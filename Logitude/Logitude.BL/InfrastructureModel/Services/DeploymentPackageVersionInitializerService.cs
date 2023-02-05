@@ -35,11 +35,11 @@ namespace Logitude.BL.InfrastructureModel.Services
             documentrepository = new DocumentRepository(deploymentPackagePM.Tenant);
             deploymentPackagesVersionService = new DeploymentPackagesVersionService(iWebFreightContext, deploymentPackagePM.Tenant);
             deploymentPackagesVersionQuery = new DeploymentPackagesVersionQuery(deploymentPackagePM.Tenant);
-            deploymentPackageDocumentService = new DeploymentPackageDocumentService(deploymentPackagePM.Tenant);
+            deploymentPackageDocumentService = new DeploymentPackageDocumentService(deploymentPackagePM.Tenant, deploymentPackagePM);
         }
         public DeploymentPackagesVersionPM Create()
         {
-            var documentId = deploymentPackageDocumentService.Create(deploymentPackagePM.DeploymentPackageDetails);
+            var documentId = deploymentPackageDocumentService.Create();
             deploymentPackagesVersionPM.DocumentId = documentId;
             deploymentPackagesVersionPM.DeploymentPackageID = deploymentPackagePM.Id;
             deploymentPackagesVersionPM.Tenant = deploymentPackagePM.Tenant;
