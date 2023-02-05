@@ -158,12 +158,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 if (isAllShipmentsQuery)
                 {
                     DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
-                    var afterOneYearDate = currentDateTime.AddDays(-365);
-                    var afterNinetyDaysDate = currentDateTime.AddDays(-90);
-                    shipments.Where(a => ((a.MainCarriageFinalDestinationATA != null
-                                            && a.CreateDateTime < afterOneYearDate)
-                                          || (a.MainCarriageFinalDestinationATA <= afterNinetyDaysDate
-                                          || a.CreateDateTime <= afterOneYearDate)))
+                    var lastOneYearDate = currentDateTime.AddDays(-365);
+                    var lastNinetyDaysDate = currentDateTime.AddDays(-90);
+                    shipments.Where(a => a.CreateDateTime < lastOneYearDate
+                                         && a.MainCarriageFinalDestinationATA < lastNinetyDaysDate)
                             .ToList()
                             .ForEach(i => i.IsCustomerArchived = true);
                 }
