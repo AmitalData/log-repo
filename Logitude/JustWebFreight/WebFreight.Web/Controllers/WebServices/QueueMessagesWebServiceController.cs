@@ -47,16 +47,16 @@ namespace WebFreight.Web.Controllers.WebServices
         {
             try
             {
-                //using (TransactionScope scope = TransactionFactory.GetTransaction())
-                //{
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                CustomsStoredProcedures.UpdateQueueMessageTenantPriority(tenantId, CourierMasterId, InterfaceTypeCode, TenantPriority);
-              
-                //scope.Complete();
-                return Request.CreateResponse(HttpStatusCode.OK, "Ok");
-                //}
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                  string token = HttpContext.Current.Request.Headers["Token"];
+                  AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                  int tenant = authToken.Tenant;
+                  CustomsStoredProcedures.UpdateQueueMessageTenantPriority(tenantId, CourierMasterId, InterfaceTypeCode, TenantPriority);
+                  
+                  scope.Complete();
+                  return Request.CreateResponse(HttpStatusCode.OK, "Ok");
+                }
             }
 
             catch (Exception ex)
