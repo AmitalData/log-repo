@@ -92,6 +92,8 @@ namespace WebFreight.Web.DataProviders
         public string ARPaymentField8 { get; set; }
         public string ARPaymentField9 { get; set; }
         public string ARPaymentField10 { get; set; }
+        public string BillToBankAccountNumber { get; set; }
+        public string BillToBankName { get; set; }
 
         public class InvoicePayments
         {
