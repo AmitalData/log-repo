@@ -118,7 +118,7 @@
                 <div class="set-value-field-container">
 
                     <LogLov *ngIf="IsEntityField" [NoObjectField]="true" [DataContext]="DataContext"
-                        [QueryFilterItems]="(null | GetObjectFieldsQueryFiltersPipe : EntityId)"
+                        [QueryFilterItems]="(null | ObjectFieldsQueryFiltersPipe : EntityId)"
                         [IsFreeText]="true" [LookUpTableName]="'ObjectField'" [NoValidation]="true" [HideColumns]="true"
                         [SelectedValue]="setValue.fieldCode" [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
                         [ForceDisabled]="setValue.isDisabled"
@@ -176,14 +176,14 @@
                     class="set-value-value-container">
 
                     <FieldValue *ngIf="setValue.fieldChangedToggle"
-                        [ObjectField]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? null : (setValue.fieldCode | GetObjectFieldPipe)"
+                        [ObjectField]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? null : (setValue.fieldCode | ObjectFieldPipe)"
                         [DataType]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? setValue.type : null"
                         [Name]="'setValue_'" [CurrentValue]="setValue.value" [IsDisabled]="setValue.isDisabled"
                         (ValueChanged)="updateSetValue($event, setValueIndex)">
                     </FieldValue>
 
                     <FieldValue *ngIf="!setValue.fieldChangedToggle"
-                        [ObjectField]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? null : (setValue.fieldCode | GetObjectFieldPipe)"
+                        [ObjectField]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? null : (setValue.fieldCode | ObjectFieldPipe)"
                         [DataType]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? setValue.type : null"
                         [Name]="'setValue_'" [CurrentValue]="setValue.value" [IsDisabled]="setValue.isDisabled"
                         (ValueChanged)="updateSetValue($event, setValueIndex)">

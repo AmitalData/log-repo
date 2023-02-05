@@ -15,7 +15,6 @@ export class JsonPatchBuilder {
         "UIProperties",
         "UIProperty",
         "PropertyChanged",
-        "isNotValid",
         "UniqueKey",
         "$id",
         "undefined"
@@ -55,16 +54,30 @@ export class JsonPatchBuilder {
 
     private isValidOperation(operation: Operation) {
         if (operation && operation.op && operation.path && operation.path !== "") {
-
-            if (/customchildentities\/([0-9]\d*)\/changesetop/.test(operation.path.toLowerCase())) {
+            if (!this.isValidOperationPath(operation.path)) {
                 return false;
             }
-
             let operationPathProperties = operation.path.toLowerCase().split("/");
             let isInvalidOperation = operationPathProperties.some(p => this.InvalidProperties.includes(p));
             if (!isInvalidOperation) {
                 return true;
             }
+        }
+        return false;
+    }
+
+    private isValidOperationPath(operationPath: string) {
+        if (operationPath && operationPath !== "") {
+            if (/customchildentities\/([0-9]\d*)\/changesetop/.test(operationPath.toLowerCase())) {
+                return false;
+            }
+            if (/field([1-9]\d*)\/isnotvalid/.test(operationPath.toLowerCase())) {
+                return false;
+            }
+            if (/field([1-9]\d*)\/ischange/.test(operationPath.toLowerCase())) {
+                return false;
+            }
+            return true;
         }
         return false;
     }

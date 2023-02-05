@@ -352,7 +352,7 @@
                                 <div class="table-row-cell-block">
                                     <LogLov [NoObjectField]="true" [ObjectFieldName]="'SortBy'"
                                         [DataContext]="DataContext"
-                                        [QueryFilterItems]="(null | GetObjectFieldsQueryFiltersPipe : EntityId)"
+                                        [QueryFilterItems]="(null | ObjectFieldsQueryFiltersPipe : EntityId)"
                                         [IsFreeText]="true" [LookUpTableName]="'ObjectField'" [NoValidation]="true"
                                         [HideColumns]="true" [SelectedValue]="SortBy"
                                         [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
@@ -389,7 +389,7 @@
                                             <LogLov [NoObjectField]="true"
                                                 [ObjectFieldName]="'SelectedCoulmn_' + fieldIndex"
                                                 [DataContext]="DataContext"
-                                                [QueryFilterItems]="(null | GetObjectFieldsQueryFiltersPipe : EntityId)"
+                                                [QueryFilterItems]="(null | ObjectFieldsQueryFiltersPipe : EntityId)"
                                                 [IsFreeText]="true" [LookUpTableName]="'ObjectField'"
                                                 [NoValidation]="true" [SelectedValue]="returnedField.fieldCode"
                                                 [HideColumns]="true" [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
