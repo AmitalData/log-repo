@@ -5918,6 +5918,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string casualImporterCountry ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CasualImporterCountry  
+	   {
+	    
+	     get
+		{
+		   return casualImporterCountry;
+		 }
+		 set
+		 {
+		   if(casualImporterCountry != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CasualImporterCountry",OldValue=casualImporterCountry,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   casualImporterCountry=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

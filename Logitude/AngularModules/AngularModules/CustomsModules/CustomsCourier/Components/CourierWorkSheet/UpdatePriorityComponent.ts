@@ -55,11 +55,17 @@ export class UpdatePriorityComponent extends BaseComponent {
             var myResponse: ServiceResponse = myResult;
 
             if (!myResponse.HasError) {
-                SessionLocator.SelectedSession.CurrentWindow.Close("0");
-            
+                            
             }
         });
 
+        var Message = new MessageWindow()
+        Message.RTL = true;
+        Message.Show("העדכון יבוצע בתהליך רקע");
+        Message.WindowClosed.subscribe(($event: any) => {
+            SessionLocator.SelectedSession.CurrentWindow.Close("0");
+        });
+         
 
 
 

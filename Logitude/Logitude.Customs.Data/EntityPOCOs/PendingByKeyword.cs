@@ -36,6 +36,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string SearchByFieldCode { get; set; }
         [Column("SearchType")]
 	    public string SearchType { get; set; }
+        [Column("ExceptKeywords")]
+	    public string ExceptKeywords { get; set; }
     }
 }
 	 

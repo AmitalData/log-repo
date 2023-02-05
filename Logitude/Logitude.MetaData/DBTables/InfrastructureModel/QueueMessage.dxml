@@ -185,7 +185,9 @@
 	<Index
   Columns="EntityCode,EntityId"
    />
-
+	<Index
+  Columns="Tenant,InterfaceTypeCode,EntityId,NextRunDateTime"
+   />
 
 
 </Table>

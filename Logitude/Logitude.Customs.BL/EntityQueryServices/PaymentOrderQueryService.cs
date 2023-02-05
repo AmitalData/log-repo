@@ -63,6 +63,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             return orderPMs;
         }
+        public string GetDecIdOfCustomFileByPaymentNumber(string PaymentNumber,int tenant) 
+        {
+
+            return repository.GetDecIdOfCustomFileByPaymentNumber(PaymentNumber, tenant);
+
+
+        }
+
 
     }
 }

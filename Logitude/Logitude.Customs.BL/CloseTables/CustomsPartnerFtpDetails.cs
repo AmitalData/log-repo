@@ -1,6 +1,7 @@
 ﻿using Logitude.Customs.BL.Messaging;
 using Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue;
 using Logitude.Customs.BL.Messaging.ILOVS;
+using Logitude.Customs.BL.Messaging.ILSWS;
 using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Server.Tools.Utils;
 using System;
@@ -264,9 +265,10 @@ namespace Logitude.Customs.BL.CloseTables
                 TypeCode = TypeCode_In,
                 Partner = PartnerCode_ILSWS,
                 ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-                AnalyzeQueueService= AnalyzeQueueServiceEnum.SwissPortQHAWBService,
                 Subject="ש.מ.ב  מסוויספורט",
+                AnalyzeQueueService= AnalyzeQueueServiceEnum.SwissPortQHAWBService,
                 ServerInternalDef= true,
+
 
             },
               new InterfaceDetails() // real
@@ -276,7 +278,7 @@ namespace Logitude.Customs.BL.CloseTables
                 TypeCode = TypeCode_In,
                 Partner = PartnerCode_ILSWS,
                 ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-                AnalyzeQueueService= AnalyzeQueueServiceEnum.SwissPortQHAWBService,
+                AnalyzeQueueService= AnalyzeQueueServiceEnum.SwissPortQHAWBSpliterService,
                 Subject="ש.מ.ב מסוויספורט",
 
             },
@@ -367,8 +369,10 @@ namespace Logitude.Customs.BL.CloseTables
                     break;
                 case AnalyzeQueueServiceEnum.OVSHAWBService:
                     return new CourierOVSHAWBQService(@interface);
+                case AnalyzeQueueServiceEnum.SwissPortQHAWBSpliterService:
+                    return new ILSWSQHAWBSplitterService(@interface);
                 case AnalyzeQueueServiceEnum.SwissPortQHAWBService:
-                    return new ILSWSQHAWBService(@interface);
+                    return new ILSWSQHAWBQService(@interface);
                 case AnalyzeQueueServiceEnum.OVSSpecialActionService:
                     return new CourierOVSSpecialActionQService(@interface);
                 case AnalyzeQueueServiceEnum.SWSSpecialActionService:
@@ -386,7 +390,6 @@ namespace Logitude.Customs.BL.CloseTables
                 case AnalyzeQueueServiceEnum.MamanQSPCLService:
                     return new MamanQSPCLService(@interface);
                 default:
-
                     throw new Exception("No analyze service define " + @interface.Code);
                     break;
             }
@@ -437,7 +440,8 @@ namespace Logitude.Customs.BL.CloseTables
         MamanQHAWBService,
         MamanQSPCLService,
         SwissPortQHAWBService,
-        SWSSpecialActionService
+        SWSSpecialActionService,
+        SwissPortQHAWBSpliterService,
     }
     public enum CourierWEBAPICredentialType
     {

@@ -95,6 +95,8 @@ using Logitude.Accounting.Data.Repositories;
 using Logitude.Update.SandBox;
 using Logitude.BL.InfrastructureModel.APIDataContract.Messages;
 using WebFreight.Web.Security;
+using System.Runtime.Remoting.Contexts;
+
 namespace Logitude.Update
 {
     public partial class Form1 : Form
@@ -4747,6 +4749,37 @@ User/Pass",
         {
             MappUnifreightTables mappUnifreightTables = new MappUnifreightTables();
             mappUnifreightTables.ShowDialog(this);
+        }
+
+        private void UpdatePendingKeyword_Click(object sender, EventArgs e)
+        {
+            ICustomContext context = CustomContext.GetContext(1);
+            var PendingByKeywordRepository = new PendingByKeywordRepository(context);
+            var PendingByKeywordQueryService = new PendingByKeywordQueryService(context);
+            var PendingByKeywordUpdateService = new PendingByKeywordUpdateService(context, new Dictionary<string, IContext>(), 3);
+
+            var list = PendingByKeywordRepository.GetAll(1).ToList();
+            foreach(var item in list)
+            {
+                if (!string.IsNullOrWhiteSpace(item.KeywordsList))
+                {
+                    var KeywordsList = item.KeywordsList.Split(',').ToList();
+                    KeywordsList.RemoveAll(s => string.IsNullOrWhiteSpace(s));
+                    foreach (var word in KeywordsList)
+                    {
+                        var newEntity = new PendingByKeywordPM();
+                        newEntity.KeywordsList = word;
+                        newEntity.SearchFields = word;
+                        newEntity.SearchByFieldCode = item.SearchByFieldCode;
+                        newEntity.CourierPendingReasonCode = item.CourierPendingReasonCode;
+                        newEntity.SearchType = item.SearchType;
+                        newEntity.Tenant = item.Tenant;
+                        newEntity.ChangeSetOp = ChangeSetOperation.Insert;
+                        PendingByKeywordUpdateService.Update(newEntity, true);
+                    }
+                    PendingByKeywordRepository.Remove(item);
+                }
+            }
         }
     }
 

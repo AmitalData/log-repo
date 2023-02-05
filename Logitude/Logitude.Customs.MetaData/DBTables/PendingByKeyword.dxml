@@ -56,6 +56,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="ExceptKeywords"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CourierPendingReasonCode"
     ReferencedTable="CourierPendingReasons"

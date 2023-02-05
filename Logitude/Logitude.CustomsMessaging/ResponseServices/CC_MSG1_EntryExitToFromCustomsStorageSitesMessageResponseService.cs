@@ -67,9 +67,27 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this.MyResponseData.ApplicationID = declaration.Id;
                     this.MyRequestSheetParam.EntityId1 = declaration.Id;
                     this.MyRequestSheetParam.CustomFileNo = declaration.CustomFileNo ;
-                    
-                    
-                        SendEXT(requestParams.Tenant, declaration, customResponse);
+
+
+                    DeliverySiteTypeQueryService deliverySiteTypeQueryService = new DeliverySiteTypeQueryService(requestParams.Tenant);
+                    var deliverySiteType = deliverySiteTypeQueryService.GetSingle(customResponse.ReportingDetails.exitEntrySiteNumber, false, true);
+                    var storageSite = deliverySiteType?.LocalName;
+
+                    var commentsStorageSite = !string.IsNullOrEmpty(storageSite) ? " שם אתר: " + storageSite + " " : "";
+                    var commentsContainerNumber = !string.IsNullOrEmpty(customResponse.ReportingDetails.containerNumber) ? ", מכולה: " + customResponse.ReportingDetails.containerNumber : "";
+                    var commentsExpectedArrivalSiteNumber = !string.IsNullOrEmpty(customResponse.ReportingDetails.expectedArrivalSiteNumber) ? ", אתר הגעה צפוי: " + customResponse.ReportingDetails.expectedArrivalSiteNumber : "";
+                    var commentsDriverName = !string.IsNullOrEmpty(customResponse.TransferDetails.driverName) ? ", שם נהג: " + customResponse.TransferDetails.driverName : "";
+                    var commentsDriverIdentityNumber = !string.IsNullOrEmpty(customResponse.TransferDetails.driverIdentityNumber) ? ", ת.ז נהג: " + customResponse.TransferDetails.driverIdentityNumber : "";
+                    var commentsVehicleNumber = !string.IsNullOrEmpty(customResponse.TransferDetails.vehicleNumber) ? ", מספר משאית: " + customResponse.TransferDetails.vehicleNumber : "";
+                    var comments = commentsStorageSite + commentsContainerNumber + commentsExpectedArrivalSiteNumber + commentsDriverName + commentsDriverIdentityNumber + commentsVehicleNumber;
+
+
+
+
+                    RaiseEvent(requestParams.Tenant, "EXT", "Exit From Storage Site", declaration, customResponse, comments);
+                    if (customResponse.ReportingDetails.isLastExiOrLasttEntry == true)
+                        RaiseEvent(requestParams.Tenant, "LEX", "Last Exit From Storage Site", declaration, customResponse, comments);
+
                     
                 }
                 else
@@ -87,12 +105,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         }
 
-        private void SendEXT(int Tanent, Declaration declaration, CC_MSG1_EntryExitToFromCustomsStorageSitesMessage customResponse)
+
+
+
+        private void RaiseEvent(int Tanent, string code, string notes, Declaration declaration, CC_MSG1_EntryExitToFromCustomsStorageSitesMessage customResponse, string comments)
         {
             try
             {
-
-                //ICustomContext dbContext = CustomContext.GetContext(Tanent);
 
                 UserRepository userRepository = new UserRepository();
                 var user = userRepository.GetSingleUserByCode("MEHES", Tanent, true);
@@ -114,34 +133,26 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 var commentsDriverIdentityNumber = !string.IsNullOrEmpty(customResponse.TransferDetails.driverIdentityNumber) ? ", ת.ז נהג: " + customResponse.TransferDetails.driverIdentityNumber : "";
                 var commentsVehicleNumber = !string.IsNullOrEmpty(customResponse.TransferDetails.vehicleNumber)  ? ", מספר משאית: " + customResponse.TransferDetails.vehicleNumber : "";
 
-
-
-                //var declarationQueryService = new DeclarationQueryService(dbContext);
-                //DeclarationPM connectedDeclarationPM = declarationQueryService.GetSingle(declaration.Id, false, false);
-                //if (connectedDeclarationPM.IsCourierDeclaration) return;
+              
                 var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                 {
                     Tenant = Tanent,
                     objectTableName = "Customs.Declaration",
-                    EventCode = "EXT",
-                    notes = "Exit from storage site",
+                    EventCode = code,
+                    notes = notes,
                     CommunicationLoggingEntityReference = declaration.DeclarationNumber,
                     EntityId = declaration.Id,
                     UserId = loggingUserId,
-                    //   UServerDelayTime = TimeSpan.FromMinutes(5),
-                    CommunicationSubject = "FU Status EXT from logitude",
+                    CommunicationSubject = "FU Status " + code + " from logitude",
                     MyFUStatus = new AmitalEventTracerModel.FUStatus()
                     {
                         entname = "CFIFILEM",
                         primary_number = declaration.CustomFileNo,
                         status = "new",
                         xml_status = "new",
-                        status_id = "EXT",
+                        status_id = code,
                         status_DateTime = customResponse.General.entryExitDateTime != null ? customResponse.General.entryExitDateTime : DateTime.Now  ,
-                        //status_place = "FRA",
-                        //status_save = "no_fail",
-                        comments = commentsStorageSite + commentsContainerNumber + commentsExpectedArrivalSiteNumber + commentsDriverName + commentsDriverIdentityNumber + commentsVehicleNumber,
-                        //מספ]ר מכולה  + אתר אחסון לשלוף מטבלת מכס , לקחת מהקאש
+                        comments = comments,
                     }
                 };
                 AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);

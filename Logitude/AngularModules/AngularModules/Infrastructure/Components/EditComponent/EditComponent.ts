@@ -26,6 +26,7 @@ import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator'
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 import { HeaderScreenDataResult } from '../../Interface/IHeaderScreenService';
 import { AmitalGatewayUtil } from 'Infrastructure/Utilities/AmitalGatewayUtil';
+import { DeclarationEventManager } from 'Customs/Utilities/DeclarationEventManager';
 
 import { CustomsSettingListService } from 'Customs/Services/StandardLists/CustomsSettingListService';
 import { CustomsSettingPM } from 'Customs/EntityPMs/CustomsSettingPM';
@@ -1572,6 +1573,8 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                         }
 
                         else {
+                            DeclarationEventManager.SavePendingAfterDeclarationSaved.emit(null);;
+
                             this.EntityPM = myResponse.Result;
                             this.entityArgs.EntityPM = this.EntityPM;
                             this.isEntityChange = true;

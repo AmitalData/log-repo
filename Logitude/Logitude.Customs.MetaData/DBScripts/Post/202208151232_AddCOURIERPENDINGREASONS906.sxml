@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs" Pre="true">
+  <Sql Version="1">
+
+	  <![CDATA[
+        IF NOT EXISTS 
+    (   SELECT  1
+        FROM    customs.COURIERPENDINGREASONS 
+        WHERE   code ='906' 
+        
+    )
+    BEGIN
+        Insert into 
+		customs.COURIERPENDINGREASONS (CODE,LOCALNAME,SEARCHFIELDS,ENGLISHNAME,INACTIVE,ERRORPLACE,TENANT,UNIFREIGHTSTATUSCODE,ID) 
+		values ('906', 'לקוח מסחרי' ,'לקוח מסחרי,Commercial Customer,906','Commercial Customer',0,null,1,null,'906');
+
+
+    END
+        ]]>
+  </Sql>
+
+  <Oracle Version="1">
+    <![CDATA[
+ declare
+ n int := 0;
+begin
+  select count(*) into n
+  from COURIERPENDINGREASONS
+ where code='906';
+ if n = 0 then
+ 
+Insert into 
+COURIERPENDINGREASONS (CODE,LOCALNAME,SEARCHFIELDS,ENGLISHNAME,INACTIVE,ERRORPLACE,TENANT,UNIFREIGHTSTATUSCODE,ID) 
+values ('906', 'לקוח מסחרי' ,'לקוח מסחרי,Commercial Customer,906','Commercial Customer',0,null,1,null,'906');
+
+
+commit;
+  end if;
+end;
+
+    ]]>
+  </Oracle>
+</Script>

@@ -1,4 +1,4 @@
- 
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,75 +9,84 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
+using System.Text.RegularExpressions;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Logitude.Customs.Data.Repsitories
 {
-   public partial class PendingByKeywordRepository:IRepository<PendingByKeyword>
-   {
-        
-		public List<PendingByKeyword> GetMulti(EntityKeyFields entityKeys)
+    public partial class PendingByKeywordRepository : IRepository<PendingByKeyword>
+    {
+
+        public List<PendingByKeyword> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+
+            throw new NotImplementedException();
         }
 
-        public List<string> GetCourierPendingReasonCodeBykeyWords(string keyWordsList,string SearchByFieldCode, int tenant)
+        public List<string> GetCourierPendingReasonCodeBykeyWords(string keyWord, string SearchByFieldCode, int tenant)
         {
-            if (String.IsNullOrWhiteSpace(keyWordsList))
+            if (String.IsNullOrWhiteSpace(keyWord))
             {
                 return new List<string>();
             }
-            keyWordsList = keyWordsList.ToLower();
-            keyWordsList = keyWordsList.Replace(" ", ",");
-            char[] BAD_CHARS = new char[] { '!', '@', '#', '$', '%', '_' , ')' , '(' , '-' , '*', '&', '^', '~', '.', '"', ';', '\'', '\\', '/', '<', '>', '{', '}', '[', ']','\n' };
-            keyWordsList = string.Concat(keyWordsList.Split(BAD_CHARS, StringSplitOptions.RemoveEmptyEntries));
-            while (keyWordsList.Contains(",,"))
+            // split the input "keyword"
+            var splittedkeyWord = keyWord.ToLower().Replace(" ", ",");
+            char[] BAD_CHARS = new char[] { '!', '@', '#', '$', '%', '_', ')', '(', '-', '*', '&', '^', '~', '.', '"', ';', '\'', '\\', '/', '<', '>', '{', '}', '[', ']', '\n' };
+            splittedkeyWord = string.Concat(splittedkeyWord.Split(BAD_CHARS, StringSplitOptions.RemoveEmptyEntries));
+            while (splittedkeyWord.Contains(",,"))
             {
-                keyWordsList = keyWordsList.Replace(",,", ",");
+                splittedkeyWord = splittedkeyWord.Replace(",,", ",");
             }
+            List<string> keyWordSplittedIntoList = splittedkeyWord.Split(',').ToList();
+
             List<string> pendingReasonCodeList = new List<string>();
-            List<string> keyWordsList2 = keyWordsList.Split(',').ToList();
             var PendingByKeywords = (from a in context.PendingByKeywords
                                      where a.Tenant == tenant && a.SearchByFieldCode == SearchByFieldCode
                                      select a).ToList();
-            foreach (string word in keyWordsList2)
+
+            foreach (string word in keyWordSplittedIntoList)
             {
-                string wordtemp = "," + word + ",";
                 var pendingByKeyword = new List<PendingByKeyword>();
-                PendingByKeywords.ForEach(r => {
+                PendingByKeywords.ForEach(r =>
+                {
                     if (!string.IsNullOrWhiteSpace(r.KeywordsList))
                     {
                         if (r.SearchType == "2")
                         {
-                            var tempList = r.KeywordsList.ToLower().Split(',').ToList();
-                            tempList.RemoveAll(s => string.IsNullOrWhiteSpace(s));
-
-                            if (tempList.FirstOrDefault(x=>word.Contains(x)) != null){
-                                pendingByKeyword.Add(r);
+                            if (word.Contains(r.KeywordsList.ToLower()))
+                            {
+                                if (r.ExceptKeywords == null || !keyWord.Contains(r.ExceptKeywords))
+                                {
+                                    pendingByKeyword.Add(r);
+                                }
                             }
                         }
                         else
                         {
-                            if(r.KeywordsList.ToLower().Contains(wordtemp)) { pendingByKeyword.Add(r); }
+                            if (r.KeywordsList.ToLower().Contains(word))
+                            {
+                                if (r.ExceptKeywords == null || !keyWord.Contains(r.ExceptKeywords))
+                                {
+                                    pendingByKeyword.Add(r);
+                                }
+                            }
                         }
+
                     }
                 });
+
                 //if (pendingByKeyword != null && !String.IsNullOrWhiteSpace(pendingByKeyword.CourierPendingReasonCode)) pendingReasonCodeList.Add(pendingByKeyword.CourierPendingReasonCode);
-                var courierPendingReasonCodes= pendingByKeyword.Where(r => !String.IsNullOrWhiteSpace(r.CourierPendingReasonCode)).Select(r => r.CourierPendingReasonCode).ToHashSet();
+                var courierPendingReasonCodes = pendingByKeyword.Where(r => !String.IsNullOrWhiteSpace(r.CourierPendingReasonCode)).Select(r => r.CourierPendingReasonCode).ToHashSet();
                 if (courierPendingReasonCodes.Count > 0)
                 {
                     pendingReasonCodeList.AddRange(courierPendingReasonCodes);
                 }
-
-
-
             }
+
             return pendingReasonCodeList;
+
+
         }
 
-
-
     }
-
 }
-   

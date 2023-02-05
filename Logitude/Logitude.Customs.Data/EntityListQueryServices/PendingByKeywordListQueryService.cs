@@ -33,17 +33,18 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           KeywordsList = a.KeywordsList, 
                                                            SearchByFieldCode = a.SearchByFieldCode,
                                                             SearchByFieldName = a.SearchByFieldCode!=null ? (a.SearchByFieldCode=="1" ?
-                                                            "ъаеш иебйп"//"ъаеш иебйп" 
+                                                            "пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ"//"пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ" 
                                                             :
-                                                            "щн йбеап"///"щн йбеап"
+                                                            "пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ"///"пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ"
                                                             ) :null,
                                                             SearchType=a.SearchType,
                                                           SearchTypesName = a.SearchType != null ? (a.SearchType == "1" ?
-                                                            "оймд" 
+                                                            "пїЅпїЅпїЅпїЅ" 
                                                             :
-                                                            "змч ооймд"
+                                                            "пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ"
                                                             ) : null,
                                                           Remove = "",
+                                                          ExceptKeywords=a.ExceptKeywords,
 
                                                       });
             return query;

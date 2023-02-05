@@ -265,6 +265,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
   }
 
   OpenMultiUpdateWindow() {
+
     if (!this._CourierWorksheetSharedDataService._SelectedItems?.Collection?.length && !this._CourierWorksheetSharedDataService.connectedSelectAll)
       return new MessageWindow().Show(TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.O.NotCheckDeclarations"));
 
@@ -644,8 +645,10 @@ export class BulkFeedPendingComponent extends BaseComponent {
   OnNoneBtnClickedNot() {
 
     this._CourierWorksheetSharedDataService.connectedSelectAll = false;
+  
     this._CourierWorksheetSharedDataService._UnSelectedItems.Clear();
     this._CourierWorksheetSharedDataService._SelectedItems.Clear();
+
 
     this.RefreshList();
 

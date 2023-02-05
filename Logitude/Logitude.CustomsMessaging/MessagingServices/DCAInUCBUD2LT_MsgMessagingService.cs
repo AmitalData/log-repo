@@ -453,7 +453,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     }
                     else
                     {
-                        if(!shouldCreateDCAComm) shouldCreateDCAComm = CheckIsTicketByDocType(logData);
                         LogitudeSettings.HandleLogMe("Not Diamond Declaration " + logData, false, "CreateUD2LTService", stopLogAt);
 
                         if (CheckIsSendByDocType(logData))
@@ -461,12 +460,14 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             LogitudeSettings.HandleLogMe("if (CheckIsSendByDocType(logData)) " + logData, false, "CreateUD2LTService", stopLogAt);
                             shouldCreateDCAComm = true;
                         }
+
+                       
                         else
                         {
                             LogitudeSettings.HandleLogMe("Not Connect To Ticket " + logData, false, "CreateUD2LTService", stopLogAt);
                         }
-
                     }
+
 
                 }
                 if (!shouldCreateDCAComm)
@@ -541,41 +542,48 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         }
 
-        private bool CheckIsTicketByDocType(string logData)
+
+        private bool CheckIsSendByDocType(string logData)
         {
-            bool IsTicketByDocType = false;
+            bool IsSendByDocType = false;
             string CustomsDocumentUpload = "";
             try
             {
-                DocumentTypeCustomsDataQueryService documentTypeCustomsDataQueryService = new DocumentTypeCustomsDataQueryService(_DocumentsFilingPM.Tenant);
-                DocumentTypeCustomsDataPM documentTypeCustomsDataPM = documentTypeCustomsDataQueryService.GetSingle(_DocumentsFilingPM.DocumentTypeId, false, true);
+                DocumentTypeQueryService documentTypeQueryService = new DocumentTypeQueryService(_DocumentsFilingPM.Tenant);
+                DocumentTypePM documentTypePM = documentTypeQueryService.GetDocumentTypeCodeById(_DocumentsFilingPM.DocumentTypeId, _DocumentsFilingPM.Tenant);
 
-                if (documentTypeCustomsDataPM != null && !String.IsNullOrWhiteSpace(documentTypeCustomsDataPM.CustomsDoucumentTypeCode))
+                if (documentTypePM != null && !String.IsNullOrWhiteSpace(documentTypePM.Code))
                 {
-                    CustomDocumentTypeQueryService customDocumentTypeQueryService = new CustomDocumentTypeQueryService(_DocumentsFilingPM.Tenant);
-                    CustomDocumentTypePM customDocumentTypePM = customDocumentTypeQueryService.GetSingle(documentTypeCustomsDataPM.CustomsDoucumentTypeCode, false, true);
+                    DocumentTypeCustomsDataQueryService documentTypeCustomsDataQueryService = new DocumentTypeCustomsDataQueryService(_DocumentsFilingPM.Tenant);
+                    DocumentTypeCustomsDataPM documentTypeCustomsDataPM = documentTypeCustomsDataQueryService.GetSingle(documentTypePM.Code, false, true);
 
-                    if (customDocumentTypePM != null && !String.IsNullOrEmpty(customDocumentTypePM.CustomsDocumentUpload))
+                    if (documentTypeCustomsDataPM != null && !String.IsNullOrWhiteSpace(documentTypeCustomsDataPM.CustomsDoucumentTypeCode))
                     {
-                        CustomsDocumentUpload = customDocumentTypePM.CustomsDocumentUpload;
-                        if (customDocumentTypePM.CustomsDocumentUpload == "C")
+                        CustomDocumentTypeQueryService customDocumentTypeQueryService = new CustomDocumentTypeQueryService(_DocumentsFilingPM.Tenant);
+                        CustomDocumentTypePM customDocumentTypePM = customDocumentTypeQueryService.GetSingle(documentTypeCustomsDataPM.CustomsDoucumentTypeCode, false, false);
+
+                        if (customDocumentTypePM != null && !String.IsNullOrEmpty(customDocumentTypePM.CustomsDocumentUpload))
                         {
-                            IsTicketByDocType = true;
+                            CustomsDocumentUpload = customDocumentTypePM.CustomsDocumentUpload;
+                            if (customDocumentTypePM.CustomsDocumentUpload == "C")
+                            {
+                                IsSendByDocType = true;
+                            }
                         }
                     }
                 }
             }
             catch (Exception ee)
             {
-                logData += $"CheckIsTicketByDocType:error:{ee.Message}";
+                logData += $"CheckIsSendByDocType:error:{ee.Message}";
             }
             finally
             {
 
-                logData += $"CheckIsTicketByDocType:CustomsDocumentUpload:{CustomsDocumentUpload}";
+                logData += $"CheckIsSendByDocType:CustomsDocumentUpload:{CustomsDocumentUpload}";
 
             }
-            return IsTicketByDocType;
+            return IsSendByDocType;
 
         }
         private bool CheckIsSendByDocType(string logData)

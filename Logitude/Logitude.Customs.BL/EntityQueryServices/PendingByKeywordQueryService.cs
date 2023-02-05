@@ -38,5 +38,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 scope.Complete();
             }
         }
+
+        public List<PendingByKeyword> GetAll(int tenant)
+        {
+            return repository.GetAll(tenant).ToList();
+        }
     }
 }

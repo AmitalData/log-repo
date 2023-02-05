@@ -328,4 +328,7 @@
     Columns="ControllerStatus" />
   <Index
     Columns="ClassificationStatus" />
+	
+  <Index
+	Columns="Tenant,DeclarationIdToDisplay" />	
 </Table>

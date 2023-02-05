@@ -467,6 +467,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ExportCloseAmendmentStatus { get; set; }
 	      
         public virtual AmendmentRequestStatus AmendmentRequestStatus { get; set; }
+        [Column("CasualImporterCountry")]
+	    public string CasualImporterCountry { get; set; }
     }
 }
 	 

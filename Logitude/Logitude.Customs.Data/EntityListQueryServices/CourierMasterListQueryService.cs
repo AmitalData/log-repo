@@ -30,37 +30,37 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         private IQueryable<CourierMasterList> GetIqueryableList(IQueryable<CourierMaster> iQueryable)
         {
 
-            SetQuantity();
+           //SetQuantity();
 
             var today = DateTime.Now.Date;
 
             IQueryable<CourierMasterList> query = (from a in iQueryable.Include("CustomsAirline").Include("MAWBType").Include("OriginPort").Include("GatewayPort").Include("Card")
 
-                                                   join recHawbQuantityNoDocuments in qHawbQuantityNoDocuments
-                                               on a.Id equals recHawbQuantityNoDocuments.CourierMasterId
-                                                into joingHawbQuantityNoDocuments
-                                                   from recHawbQuantityNoDocuments in joingHawbQuantityNoDocuments.DefaultIfEmpty()
+                                                       //    join recHawbQuantityNoDocuments in qHawbQuantityNoDocuments
+                                                       //on a.Id equals recHawbQuantityNoDocuments.CourierMasterId
+                                                       // into joingHawbQuantityNoDocuments
+                                                       //    from recHawbQuantityNoDocuments in joingHawbQuantityNoDocuments.DefaultIfEmpty()
 
-                                                   join recIsCourierMissingClassification in qIsCourierMissingClassification
-                                                on a.Id equals recIsCourierMissingClassification.CourierMasterId
-                                                into joingIsCourierMissingClassification
-                                                   from recIsCourierMissingClassification in joingIsCourierMissingClassification.DefaultIfEmpty()
+                                                       //    join recIsCourierMissingClassification in qIsCourierMissingClassification
+                                                       // on a.Id equals recIsCourierMissingClassification.CourierMasterId
+                                                       // into joingIsCourierMissingClassification
+                                                       //    from recIsCourierMissingClassification in joingIsCourierMissingClassification.DefaultIfEmpty()
 
-                                                   join recHawbQuantityNoTransManifest in qHawbQuantityNoTransManifest
-                                                on a.Id equals recHawbQuantityNoTransManifest.CourierMasterId
-                                                into joingHawbQuantityNoTransManifest
-                                                   from recHawbQuantityNoTransManifest in joingHawbQuantityNoTransManifest.DefaultIfEmpty()
+                                                       //    join recHawbQuantityNoTransManifest in qHawbQuantityNoTransManifest
+                                                       // on a.Id equals recHawbQuantityNoTransManifest.CourierMasterId
+                                                       // into joingHawbQuantityNoTransManifest
+                                                       //    from recHawbQuantityNoTransManifest in joingHawbQuantityNoTransManifest.DefaultIfEmpty()
 
 
-                                                   join recHawbQuantityNoTransDeclaration in qHawbQuantityNoTransDeclaration
-                                                                                                    on a.Id equals recHawbQuantityNoTransDeclaration.CourierMasterId
-                                                                                                    into joingHawbQuantityNoTransDeclaration
-                                                   from recHawbQuantityNoTransDeclaration in joingHawbQuantityNoTransDeclaration.DefaultIfEmpty()
+                                                       //    join recHawbQuantityNoTransDeclaration in qHawbQuantityNoTransDeclaration
+                                                       //                                                     on a.Id equals recHawbQuantityNoTransDeclaration.CourierMasterId
+                                                       //                                                     into joingHawbQuantityNoTransDeclaration
+                                                       //    from recHawbQuantityNoTransDeclaration in joingHawbQuantityNoTransDeclaration.DefaultIfEmpty()
 
-                                                   join recHawbQuantityNoTransPayment in qHawbQuantityNoTransPayment
-                                                on a.Id equals recHawbQuantityNoTransPayment.CourierMasterId
-                                                 into joingHawbQuantityNoTransPayment
-                                                   from recHawbQuantityNoTransPayment in joingHawbQuantityNoTransPayment.DefaultIfEmpty()
+                                                       //    join recHawbQuantityNoTransPayment in qHawbQuantityNoTransPayment
+                                                       // on a.Id equals recHawbQuantityNoTransPayment.CourierMasterId
+                                                       //  into joingHawbQuantityNoTransPayment
+                                                       //    from recHawbQuantityNoTransPayment in joingHawbQuantityNoTransPayment.DefaultIfEmpty()
 
                                                    select new CourierMasterList()
                                                    {
@@ -113,13 +113,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        NoOfCourierHawbwWithoutHatara = a.NoOfCourierHawbwWithoutHatara,
                                                        LandingDateDateOnly = a.LandingDate,
                                                        LandingDateTimeOnly = (DateTime)a.LandingDate,
-                                                       HawbQuantityNoTransDeclaration = recHawbQuantityNoTransDeclaration.HawbQuantityNoTransDeclaration!=0? recHawbQuantityNoTransDeclaration.HawbQuantityNoTransDeclaration: recHawbQuantityNoTransDeclaration.Status,
-                                                       HawbQuantityNoTransManifest = recHawbQuantityNoTransManifest.HawbQuantityNoTransManifest!=0? recHawbQuantityNoTransManifest.HawbQuantityNoTransManifest: recHawbQuantityNoTransManifest.Status,
-                                                       HawbQuantityNoClassification = recIsCourierMissingClassification.HawbQuantityNoClassification!=0? recIsCourierMissingClassification.HawbQuantityNoClassification: recIsCourierMissingClassification.Status,
-                                                       HawbQuantityNoDocuments= recHawbQuantityNoDocuments.HawbQuantityNoDocuments!=0? recHawbQuantityNoDocuments.HawbQuantityNoDocuments: recHawbQuantityNoDocuments.Status,
-                                                       HawbQuantityNoTransPayment = recHawbQuantityNoTransPayment.HawbQuantityNoTransPayment!=0? recHawbQuantityNoTransPayment.HawbQuantityNoTransPayment: recHawbQuantityNoTransPayment.Status,
+                                                       HawbQuantityNoTransDeclaration = 0 ,//recHawbQuantityNoTransDeclaration.HawbQuantityNoTransDeclaration != 0 ? recHawbQuantityNoTransDeclaration.HawbQuantityNoTransDeclaration : recHawbQuantityNoTransDeclaration.Status,
+                                                       HawbQuantityNoTransManifest = 0, // recHawbQuantityNoTransManifest.HawbQuantityNoTransManifest != 0 ? recHawbQuantityNoTransManifest.HawbQuantityNoTransManifest : recHawbQuantityNoTransManifest.Status,
+                                                       HawbQuantityNoClassification = 0, // recIsCourierMissingClassification.HawbQuantityNoClassification != 0 ? recIsCourierMissingClassification.HawbQuantityNoClassification : recIsCourierMissingClassification.Status,
+                                                       HawbQuantityNoDocuments = 0 ,// recHawbQuantityNoDocuments.HawbQuantityNoDocuments != 0 ? recHawbQuantityNoDocuments.HawbQuantityNoDocuments : recHawbQuantityNoDocuments.Status,
+                                                       HawbQuantityNoTransPayment = 0,// recHawbQuantityNoTransPayment.HawbQuantityNoTransPayment != 0 ? recHawbQuantityNoTransPayment.HawbQuantityNoTransPayment : recHawbQuantityNoTransPayment.Status,
 
-                                                   });
+                                                   }); ;
 
 
            
@@ -130,7 +130,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         private void SetQuantity()
         {
             var qHawbQuantity =
-                     (from cd in context.CourierDeclarations
+                     ( from cd in context.CourierDeclarations
                       join cds in context.DeclarationCourierStatuses
                           .Where(r => r.IsClosedForFollowUp == false)
 
@@ -268,6 +268,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             public int IsMissingImporterId { get; set; }
             public int IsPendingCustoms { get; set; }
             public int IsSuspendedDeclarations { get; set; }
+            public int HawbQuantityNoDocuments { get; set; }
+            public int NoDocumentsStatusI { get; set; }
+            public int NoDocumentsStatusR { get; set; }
+            public int NoDocumentsStatusV { get; set; }
         }
 
         public List<CourierMasterList> AddCalcFields(List<CourierMasterList> entityLists)
@@ -305,6 +309,17 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                           && r.myDeclarationCourierStatuses.IsClosedForFollowUp == false),
                       IsPendingCustoms = g.Count(r => r.myDeclarations.CourierCustomStatusCode == "2" && r.myDeclarationCourierStatuses.IsClosedForFollowUp == false),
                       IsSuspendedDeclarations = g.Count(r => r.myDeclarationCourierStatuses.IsClosedForFollowUp == false && r.myDeclarations.CourierCustomStatusCode == "2"),
+
+                      HawbQuantityNoDocuments = g.Count(s => s.myDeclarationCourierStatuses.IsClosedForFollowUp == false && s.myDeclarationCourierStatuses.DocumentStatusCode == "M"
+                      || s.myDeclarationCourierStatuses.IsClosedForFollowUp == false && s.myDeclarationCourierStatuses.DocumentStatusCode == "X"),
+
+                      NoDocumentsStatusR = g.Count(s => s.myDeclarationCourierStatuses.IsClosedForFollowUp == false && s.myDeclarationCourierStatuses.CourierDeclarationStatusCode == "R"),
+                      NoDocumentsStatusI = g.Count(s => s.myDeclarationCourierStatuses.IsClosedForFollowUp == false && s.myDeclarationCourierStatuses.CourierDeclarationStatusCode == "I"),
+                      NoDocumentsStatusV = g.Count(s => s.myDeclarationCourierStatuses.IsClosedForFollowUp == false && s.myDeclarationCourierStatuses.CourierDeclarationStatusCode == "V"),
+
+                      //NoDocumentsStatus = g.All(s => s.myDeclarationCourierStatuses.IsClosedForFollowUp == false && s.myDeclarationCourierStatuses.CourierDeclarationStatusCode == "R") ? -2 :
+                      //                    g.Any(s => s.myDeclarationCourierStatuses.IsClosedForFollowUp == false && s.myDeclarationCourierStatuses.CourierDeclarationStatusCode == "I") ? -3 :
+                      //                    g.All(s => s.myDeclarationCourierStatuses.IsClosedForFollowUp == false && s.myDeclarationCourierStatuses.CourierDeclarationStatusCode == "V") ? -4 : 0,
 
                   }
                   ).ToList();
@@ -358,6 +373,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 CalcSuspendedDeclarations = qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id) != null ? qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id).IsSuspendedDeclarations : 0,
                 NoOfCourierHawbWithoutDelivery = string.IsNullOrWhiteSpace(a.NoOfCourierHawbWithoutDelivery) ? "0" : a.NoOfCourierHawbWithoutDelivery,
                 NoOfCourierHawbwWithoutHatara = string.IsNullOrWhiteSpace(a.NoOfCourierHawbwWithoutHatara) ? "0" : a.NoOfCourierHawbwWithoutHatara,
+
+                HawbQuantityNoDocuments = qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id) == null ? 0 :
+                                            qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id).HawbQuantityNoDocuments > 0 ? qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id).HawbQuantityNoDocuments
+                                            : qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id).NoDocumentsStatusR == qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id).IsClosedForFollowUp0 ? -2
+                                            : qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id).NoDocumentsStatusI > 0 ? -3
+                                            : qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id).NoDocumentsStatusV == qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id).IsClosedForFollowUp0 ? -4 : 0,
+
+
             }).ToList();
 
             return entityLists;

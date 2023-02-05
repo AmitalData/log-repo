@@ -227,6 +227,7 @@ export class DeclarationList {
 	ExportCloseAmendmentStatus: string;
 	IntegratorName: string;
 	ExportCloseAmendStatusName: string;
+	CasualImporterCountry: string;
 	
 }
  

@@ -220,12 +220,32 @@ export class AddEditInterfaceManagementComponent
     get TenantSendOptionsCode() { return this.entityPM != null ? this.entityPM.TenantSendOptionsCode : null; }
     set TenantSendOptionsCode(value) { this.entityPM.TenantSendOptionsCode = value; }
 
-    get SendTime() { return this.entityPM != null ? this.entityPM.SendTime : null; }
-    set SendTime(value) { this.entityPM.SendTime = value; }
+    get SendTime() 
+    { 
+        if(this.entityPM.SendTime != null)
+        {
+            var sendTime = "2022-10-30T02:00:00.000Z"
+
+            var time = sendTime.replace("02:00:00",this.entityPM.SendTime);
+            return time;    
+        }
+        return  null;
+    
+    }
+
+    set SendTime(value) 
+    {
+        if(AppTool.IsNullOrEmpty(value))
+            this.entityPM.SendTime = value
+        else{
+            var isoDateString = new Date(value).toISOString();
+            this.entityPM.SendTime =  isoDateString.substring(11,19);
+        }
+        
+    }
 
     //#endregion
-
-
+   
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
