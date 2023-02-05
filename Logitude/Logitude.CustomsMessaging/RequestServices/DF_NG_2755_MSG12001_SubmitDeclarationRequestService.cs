@@ -45,7 +45,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             var declarationPaymentsPM = DeclarationPaymentQueryService.GetSingle(requestParams.AppicationId, true, false);
             if (requestParams.RequestVIA == SendRequestVIA.Default)
             {
-                requestParams.RequestVIA = DefaultMessageController.Via(requestParams.Tenant, requestParams.MainInterfaceCode, requestParams.RequestVIA);
+                requestParams.RequestVIA = DefaultMessageController.Via(requestParams.Tenant, requestParams.MainInterfaceCode ?? "2755", requestParams.RequestVIA);
             }
 
             var srverTime = (new DualQueryService(AmitalContext.GetContext(requestParams.Tenant))).GetServerDateTime();
