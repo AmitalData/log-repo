@@ -55,14 +55,15 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
             }
         }
         [HttpGet]
-        public HttpResponseMessage GetDeploymentPackageDetailsByDocumentId(string documentId)
+        public HttpResponseMessage GetDeploymentPackageDetailsListByDocumentId(string documentId)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                DeploymentPackageDetails deploymentPackageDetails = new DeploymentPackageExtractDetailsService().ExtractDeploymentPackageDetailsByDocumentId(documentId, authToken.Tenant);
+                List<DeploymentPackageDetailsList> deploymentPackageDetails = new DeploymentPackageDetailsListService(authToken.Tenant).GetDeploymentPackageDetailsListByDocumentId(documentId);
+                
                 return Request.CreateResponse(HttpStatusCode.OK, deploymentPackageDetails);
             }
             catch (Exception ex)
@@ -78,7 +79,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                bool result = new DeploymentPackageDocumentService(authToken.Tenant).Delete(documentId, authToken.Tenant);
+                bool result = new DeploymentPackageDocumentService(authToken.Tenant, null).Delete(documentId, authToken.Tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
 
             }

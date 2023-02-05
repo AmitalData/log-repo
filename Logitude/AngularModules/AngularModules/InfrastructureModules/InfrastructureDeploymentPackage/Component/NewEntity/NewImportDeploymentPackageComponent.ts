@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 import { ImageLibraryService } from '../../../../Common/Services/Others/ImageLibraryService';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ImageParameter } from '../../../../Infrastructure/DataContracts/ImageParameter';
@@ -46,14 +47,13 @@ export class NewImportDeploymentPackageComponent extends BaseComponent {
     public FileData: number;
 
     private uploadedDocumentId: string;
-    public ImportedPackageDetailsCollection = new ObservableCollection([]);
-    private importedPackageDetailsList: Array <ImportedPackageDetails>;
-
+    public DeploymentPackageDetailsCollection = new ObservableCollection([]);
+    private deploymentPackageDetailsList: Array<DeploymentPackageDetailsList>;
 
     constructor() {
         super();
         this.UploadFileId = Guid.NewRandomString();
-        this.importedPackageDetailsList = [];
+        this.deploymentPackageDetailsList = [];
     }
 
     Run() {
@@ -246,8 +246,6 @@ export class NewImportDeploymentPackageComponent extends BaseComponent {
         }
     }
 
-
-    deploymentPackageDetails: DeploymentPackageDetails;
     NextButtonClicked() {
         if (AppTool.IsNullOrEmpty(this.uploadedDocumentId)) {
             this.ShowMessage("File not uploaded yet!");
@@ -255,35 +253,13 @@ export class NewImportDeploymentPackageComponent extends BaseComponent {
         }
         this.IsNextClicked = true;
         this.CurrentSession.StartBusyIndicatorLoading();
-        this.deploymentPackageExtendedPMService.GetDeploymentPackageDetailsByDocumentId(this.uploadedDocumentId).subscribe((response: ServiceResponse) => {
+        this.deploymentPackageExtendedPMService.GetDeploymentPackageDetailsListByDocumentId(this.uploadedDocumentId).subscribe((response: ServiceResponse) => {
             if (response.HasError) return;
-            this.deploymentPackageDetails = response.Result;
-            this.BuildImportedList();
+            if (!response.Result) return;
+            this.deploymentPackageDetailsList = response.Result;
+            this.DeploymentPackageDetailsCollection = new ObservableCollection(this.deploymentPackageDetailsList);
             this.CurrentSession.StopBusyIndicator();
         });
-    }
-
-    private BuildImportedList() {
-        this.importedPackageDetailsList = [];
-        this.BuildCustomFields();
-        // this.BuildCustomPickLists();
-        this.ImportedPackageDetailsCollection = new ObservableCollection(this.importedPackageDetailsList);
-    }
-    
-    private BuildCustomFields() {
-        this.deploymentPackageDetails.CustomFields.forEach(customField => {
-            let importedPackageDetailsItem = this.GetImportedPackageDetailsItem(customField.DefaultText, "Custom Field", customField.ObjectTableName);
-            this.importedPackageDetailsList.push(importedPackageDetailsItem);
-        });
-    }
-
-
-    private GetImportedPackageDetailsItem(componentName: string, type: string, entity: string) {
-        let importedPackageItemDetails = new ImportedPackageDetails();
-        importedPackageItemDetails.ComponentName = componentName;
-        importedPackageItemDetails.Type = type;
-        importedPackageItemDetails.Entity = entity;
-        return importedPackageItemDetails;
     }
 
     public CancelButtonClicked() {
@@ -307,17 +283,26 @@ export class NewImportDeploymentPackageComponent extends BaseComponent {
     }
 
     public DeployButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
+
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show("Once you deploy this package, the new changes are permanent. All components that are shown in the list will be added to the listed objects");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                //start deploying
+                this.CurrentSession.CloseCurrentWindow();
+            }
+        });
+
     }
 
 }
 
-class ImportedPackageDetails {
+class DeploymentPackageDetailsList {
     public ComponentName: string;
     public Type: string;
     public Entity: string;
 
-    public ImportedPackageDetails() {
+    public DeploymentPackageDetailsList() {
 
     }
 }
