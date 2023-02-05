@@ -323,11 +323,13 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             DateTime maxDate = listDates.Max();
 
             var allDates = new List<DateTime>();
-            for (; maxDate.CompareTo(minDate) > 0; minDate = ApplyDateAddition(minDate))
+            for (; maxDate.CompareTo(minDate) >= 0; minDate = ApplyDateAddition(minDate))
             {
                 allDates.Add(minDate);
             }
-            if (_Widget.MaximumGrouping == null) allDates.Select(x => x.ToString("yyyy/MM/dd")).ToList();
+            if (_Widget.MaximumGrouping == null) return allDates.Select(x => x.ToString("yyyy/MM/dd")).ToList();
+
+            allDates = _Widget.SortDirection == "asc" ? allDates.OrderBy(x => x).ToList() : allDates.OrderByDescending(x => x).ToList();
             return allDates.Take(_Widget.MaximumGrouping.Value).Select(x => x.ToString("yyyy/MM/dd")).ToList();
         }
 
