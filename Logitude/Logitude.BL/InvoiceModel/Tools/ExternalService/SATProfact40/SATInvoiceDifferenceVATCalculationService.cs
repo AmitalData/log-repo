@@ -1,4 +1,6 @@
-﻿using Logitude.BL.InvoiceModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Profact.TimbraCFDI40;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -16,7 +18,8 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
     public class SATInvoiceDifferenceVATCalculationService
     {
         const int maxRoundedDigits = 2;
-        public static List<ARInvoiceLinePM> CorrectARInvoiceLinesPM(SATInvoiceDifferenceVATCalculationServiceArgs args)
+        private ARInvoicePM arInvoicePM;
+        public List<ARInvoiceLinePM> CorrectARInvoiceLinesPM(SATInvoiceDifferenceVATCalculationServiceArgs args)
         {
             List<ARInvoiceLinePM> correctedLinesVatAmounts = new List<ARInvoiceLinePM>();
             
@@ -31,14 +34,14 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             throw new Exception("Due to the SAT Invoice Transmission we calculate the VAT amount per line. There is a difference between the lines VAT sum and the total VAT (" + args.SATVatAmount + ") at the invoice level. You are not allowed to approve the invoice unless you adjust the lines with the following VAT : " + precentage.ToString().TrimEnd('0').TrimEnd('.') + "%");
         }
 
-        private static List<ARInvoiceLinePM> GetCorrectedLinesVatAmounts(SATInvoiceDifferenceVATCalculationServiceArgs args)
+        private List<ARInvoiceLinePM> GetCorrectedLinesVatAmounts(SATInvoiceDifferenceVATCalculationServiceArgs args)
         {
             string tasaOCuota = args.TasaOCuota;
             decimal sATVatAmount = args.SATVatAmount;
-            ARInvoicePM arInvoicePM = args.ARInvoicePM;
+            arInvoicePM = args.ARInvoicePM;
             double vatPrecentage = (double)(decimal.Parse(tasaOCuota.TrimEnd('0')) * 100);
             ARInvoiceLineRepository aRInvoiceLineRepository = new ARInvoiceLineRepository(arInvoicePM.Tenant);
-            List<ARInvoiceLinePM> aRInvoiceLinePMs = GetARInvoiceLinePMs(args, arInvoicePM, vatPrecentage);
+            List<ARInvoiceLinePM> aRInvoiceLinePMs = GetARInvoiceLinePMs(args, vatPrecentage);
             double totalSumLogitudeVatAmountPerLines = GetTotalSumLogitudeVatAmountPerLines(aRInvoiceLinePMs);
 
             CorrectedVatAmountArgs correctedVatAmountArgs = new CorrectedVatAmountArgs
@@ -59,7 +62,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             return correctedLinesVatAmounts;
         }
 
-        private static List<ARInvoiceLinePM> CalcualteCorrectedLinesVatAmountsByOneLine(List<ARInvoiceLinePM> aRInvoiceLinePMs, CorrectedVatAmountArgs correctedVatAmountArgs)
+        private List<ARInvoiceLinePM> CalcualteCorrectedLinesVatAmountsByOneLine(List<ARInvoiceLinePM> aRInvoiceLinePMs, CorrectedVatAmountArgs correctedVatAmountArgs)
         {
             List<ARInvoiceLinePM> correctedLinesVatAmounts = new List<ARInvoiceLinePM>();
             foreach (ARInvoiceLinePM firstARInvoiceLinePM in aRInvoiceLinePMs)
@@ -72,7 +75,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             return correctedLinesVatAmounts;
         }
 
-        private static List<ARInvoiceLinePM> CalcualteCorrectedLinesVatAmountsByTwoLines(List<ARInvoiceLinePM> aRInvoiceLinePMs, CorrectedVatAmountArgs correctedVatAmountArgs)
+        private List<ARInvoiceLinePM> CalcualteCorrectedLinesVatAmountsByTwoLines(List<ARInvoiceLinePM> aRInvoiceLinePMs, CorrectedVatAmountArgs correctedVatAmountArgs)
         {
             List<ARInvoiceLinePM> correctedLinesVatAmounts = new List<ARInvoiceLinePM>();
             int firstLineIndex = 0;
@@ -97,23 +100,23 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             return correctedLinesVatAmounts;
         }
 
-        private static List<ARInvoiceLinePM> CalcualteCorrectedLinesVatAmounts(CorrectedVatAmountArgs correctedVatAmountArgs)
+        private List<ARInvoiceLinePM> CalcualteCorrectedLinesVatAmounts(CorrectedVatAmountArgs correctedVatAmountArgs)
         {
             correctedVatAmountArgs.StartedAddedVatAmount = -0.01;
-            correctedVatAmountArgs.EndedAddedVatAmount = -0.1;
+            correctedVatAmountArgs.EndedAddedVatAmount = -0.3;
             correctedVatAmountArgs.AddIncrementalVatAmountBy = -0.01;
             List<ARInvoiceLinePM> correctedLinesVatAmounts = GetCorrectedLineVatAmountsPerLine(correctedVatAmountArgs);
             if (correctedLinesVatAmounts.Count() > 0) return correctedLinesVatAmounts;
 
             correctedVatAmountArgs.StartedAddedVatAmount = 0.01;
-            correctedVatAmountArgs.EndedAddedVatAmount = 0.1;
+            correctedVatAmountArgs.EndedAddedVatAmount = 0.3;
             correctedVatAmountArgs.AddIncrementalVatAmountBy = 0.01;
             correctedLinesVatAmounts = GetCorrectedLineVatAmountsPerLine(correctedVatAmountArgs);
 
             return correctedLinesVatAmounts;
         }
 
-        private static List<ARInvoiceLinePM> GetCorrectedLineVatAmountsPerLine(CorrectedVatAmountArgs correctedVatAmountArgs)
+        private List<ARInvoiceLinePM> GetCorrectedLineVatAmountsPerLine(CorrectedVatAmountArgs correctedVatAmountArgs)
         {
             double startedAddedVatAmount = correctedVatAmountArgs.StartedAddedVatAmount;
             double endedAddedVatAmount = correctedVatAmountArgs.EndedAddedVatAmount;
@@ -138,7 +141,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             return correctedLinesVatAmounts;
         }
 
-        private static List<ARInvoiceLinePM> GetCorrectedLineVatAmountsPerAddedVatAmountLine(CorrectedVatAmountArgs correctedVatAmountArgs)
+        private List<ARInvoiceLinePM> GetCorrectedLineVatAmountsPerAddedVatAmountLine(CorrectedVatAmountArgs correctedVatAmountArgs)
         {
             decimal sATVatAmount = correctedVatAmountArgs.sATVatAmount;
             double vatPrecentage = correctedVatAmountArgs.vatPrecentage;
@@ -162,7 +165,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             return correctedLines;
         }
 
-        private static List<ARInvoiceLinePM> GetARInvoiceCorrectedLines(ARInvoiceLinePM firstARInvoiceLinePM, ARInvoiceLinePM secondARInvoiceLinePM, double addedVatAmount)
+        private List<ARInvoiceLinePM> GetARInvoiceCorrectedLines(ARInvoiceLinePM firstARInvoiceLinePM, ARInvoiceLinePM secondARInvoiceLinePM, double addedVatAmount)
         {
             List<ARInvoiceLinePM> correctedLines = new List<ARInvoiceLinePM>();
             firstARInvoiceLinePM.InvoiceCurrencyAmount = MethodHelper.Roundd(firstARInvoiceLinePM.InvoiceCurrencyAmount + addedVatAmount, maxRoundedDigits);
@@ -178,7 +181,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             return correctedLines;
         }
 
-        private static double GetInvoiceLineCurrencyAmount(double vatPrecentage, ARInvoiceLinePM aRInvoiceLinePM)
+        private double GetInvoiceLineCurrencyAmount(double vatPrecentage, ARInvoiceLinePM aRInvoiceLinePM)
         {
             if (aRInvoiceLinePM == null) return 0.0;
             double invoiceLineCurrencyAmount = MethodHelper.Roundd(aRInvoiceLinePM.InvoiceCurrencyAmount, maxRoundedDigits);
@@ -186,18 +189,94 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             return roundedInvoiceLineCurrencyAmount;
         }
 
-        private static List<ARInvoiceLinePM> GetARInvoiceLinePMs(SATInvoiceDifferenceVATCalculationServiceArgs args, ARInvoicePM arInvoicePM, double vatPrecentage)
+        private List<ARInvoiceLinePM> GetARInvoiceLinePMs(SATInvoiceDifferenceVATCalculationServiceArgs args, double vatPrecentage)
         {
-            return arInvoicePM.InvoiceLines.Where(d => !IsExpenseLineWithoutPayableVendor(args.AllExpenseShipmentReceivables, d) && d.VatTypeId != null && d.VatPercentage == vatPrecentage)
+            double invoiceLinesVatPercentage = args.IsNegativeTax ? (vatPrecentage * -1) : vatPrecentage;
+            if (!arInvoicePM.InvoiceLines.Where(invoiceLine => invoiceLine.VatIsMultiPercentage).Any())
+            {
+                return arInvoicePM.InvoiceLines.Where(invoiceLine => IsARInvoiceLineWithSamePercentage(args, invoiceLine, invoiceLinesVatPercentage))
                 .OrderByDescending(a => a.InvoiceCurrencyAmount).ToList();
+            }
+
+            List<ARInvoiceLinePM> aRInvoiceLinePMs = arInvoicePM.InvoiceLines.Where(invoiceLine => IsARInvoiceLineWithSamePercentage(args, invoiceLine, invoiceLinesVatPercentage)).ToList();
+
+            List<string> multiVatPercetnageIds = arInvoicePM.InvoiceLines.Where(invoiceLine => invoiceLine.VatIsMultiPercentage).GroupBy(line => line.VatTypeId).Select(line => line.Key).ToList();
+            List<VatTypePM> vatTypePMs = GetSelectedVatTypePMs(multiVatPercetnageIds);
+
+            arInvoicePM.InvoiceLines.ForEach(line =>
+            {
+                AddLineToMultVatPercentageARInvoiceLines(new MultVatTypePercentageARInvoiceLineAdder {
+                    AllExpenseShipmentReceivables = args.AllExpenseShipmentReceivables,
+                    line = line,
+                    invoiceLinesVatPercentage = invoiceLinesVatPercentage,
+                    aRInvoiceLinePMs = aRInvoiceLinePMs,
+                    vatTypePMs = vatTypePMs
+                });
+            });
+
+            return aRInvoiceLinePMs.OrderByDescending(a => a.InvoiceCurrencyAmount).ToList();
         }
 
-        private static double GetTotalSumLogitudeVatAmountPerLines(List<ARInvoiceLinePM> aRInvoiceLinePMs)
+        private void AddLineToMultVatPercentageARInvoiceLines(MultVatTypePercentageARInvoiceLineAdder multVatTypePercentageARInvoiceLineAdder)
+        {
+            ARInvoiceLinePM line = multVatTypePercentageARInvoiceLineAdder.line;
+            if (IsExpenseLineWithoutPayableVendor(multVatTypePercentageARInvoiceLineAdder.AllExpenseShipmentReceivables, line) || line.VatTypeId == null || !line.VatIsMultiPercentage) return;
+
+            VatTypePM vatTypePM = multVatTypePercentageARInvoiceLineAdder.vatTypePMs.Where(vatType => vatType.Id == line.VatTypeId).FirstOrDefault();
+            if (vatTypePM == null || vatTypePM.VatTypePercentages == null) return;
+
+            if (vatTypePM.VatTypePercentages.Any(vatTypePercentage => vatTypePercentage.Percentage == multVatTypePercentageARInvoiceLineAdder.invoiceLinesVatPercentage))
+            {
+                multVatTypePercentageARInvoiceLineAdder.aRInvoiceLinePMs.Add(line);
+            }
+        }
+
+        private List<VatTypePM> GetSelectedVatTypePMs(List<string> multiVatPercetnageIds)
+        {
+            VatTypeQuery vatTypeQuery = new VatTypeQuery(arInvoicePM.Tenant);
+            List<VatTypePM> VatTypePMs = new List<VatTypePM>();
+            multiVatPercetnageIds.ForEach(multiVatPercetnageId =>
+            {
+                VatTypePM vatTypePM = AddVatTypePercentagesToMultiVat(multiVatPercetnageId, vatTypeQuery);
+                if (vatTypePM != null) VatTypePMs.Add(vatTypePM);
+            });
+            return VatTypePMs;
+        }
+
+        private VatTypePM AddVatTypePercentagesToMultiVat(string multiVatPercetnageId, VatTypeQuery vatTypeQuery)
+        {
+            VatTypePM multiVatTypePM = vatTypeQuery.GetSinglePM(multiVatPercetnageId, arInvoicePM.Tenant);
+            if (multiVatTypePM == null) return null;
+            if (multiVatTypePM.VatTypeGroups == null) return multiVatTypePM;
+            if (multiVatTypePM.VatTypePercentages == null) multiVatTypePM.VatTypePercentages = new List<VatTypePercentagePM>();
+
+            multiVatTypePM.VatTypeGroups.ForEach(vatType =>
+            {
+                AddSingleVatTypePercentagesToMultiVatTypePercentages(vatTypeQuery, vatType, multiVatTypePM);
+            });
+            return multiVatTypePM;
+        }
+
+        private void AddSingleVatTypePercentagesToMultiVatTypePercentages(VatTypeQuery vatTypeQuery, VATTypesGroupPM vatType, VatTypePM multiVatTypePM)
+        {
+            VatTypePM singleVatTypePM = vatTypeQuery.GetSinglePM(vatType.SingleVATTypeId, arInvoicePM.Tenant);
+            if (singleVatTypePM == null) return;
+            if (singleVatTypePM.VatTypePercentages == null) return;
+
+            multiVatTypePM.VatTypePercentages = multiVatTypePM.VatTypePercentages.Concat(singleVatTypePM.VatTypePercentages).ToList();
+        }
+
+        private bool IsARInvoiceLineWithSamePercentage(SATInvoiceDifferenceVATCalculationServiceArgs args, ARInvoiceLinePM invoiceLine, double invoiceLinesVatPercentage)
+        {
+            return !IsExpenseLineWithoutPayableVendor(args.AllExpenseShipmentReceivables, invoiceLine) && invoiceLine.VatTypeId != null && invoiceLine.VatPercentage == invoiceLinesVatPercentage;
+        }
+
+        private double GetTotalSumLogitudeVatAmountPerLines(List<ARInvoiceLinePM> aRInvoiceLinePMs)
         {
             return MethodHelper.Roundd((double)aRInvoiceLinePMs.Sum(aRInvoiceLinePM => aRInvoiceLinePM.InvoiceCurrencyAmount), maxRoundedDigits);
         }
 
-        private static bool IsExpenseLineWithoutPayableVendor(List<ShipmentReceivable>  allExpenseShipmentReceivables, ARInvoiceLinePM line)
+        private bool IsExpenseLineWithoutPayableVendor(List<ShipmentReceivable>  allExpenseShipmentReceivables, ARInvoiceLinePM line)
         {
             return allExpenseShipmentReceivables.Where(receivable => receivable.Id == line.ReceivableId && string.IsNullOrEmpty(receivable.PayableVendorId)).Any();
         }
@@ -211,6 +290,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         public string TasaOCuota { get; set; }
         public List<ShipmentReceivable> AllExpenseShipmentReceivables {get;set; }
         public bool CorrectARInvoiceLinesVatAmount { get; set; }
+        public bool IsNegativeTax { get; set; }
     }
 
     public class CorrectedVatAmountArgs
@@ -225,5 +305,14 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         public double StartedAddedVatAmount { get; set; }
         public double EndedAddedVatAmount { get; set; }
         public double AddIncrementalVatAmountBy { get; set; }
+    }
+
+    public class MultVatTypePercentageARInvoiceLineAdder
+    {
+        public ARInvoiceLinePM line { get; set; }
+        public double invoiceLinesVatPercentage { get; set; }
+        public List<ARInvoiceLinePM> aRInvoiceLinePMs { get; set; }
+        public List<VatTypePM> vatTypePMs { get; set; }
+        public List<ShipmentReceivable> AllExpenseShipmentReceivables { get; set; }
     }
 }
