@@ -65,8 +65,7 @@ namespace CommunicationWorkerRole
 							commonContext = CommonDataContext.GetContext(tenant);
 							communicationLogRep = new CommunicationLogRepository(commonContext);
 							communicationLog = communicationLogRep.GetSingleCommunicationLog(communicationLogId, tenant);
-							isConcurrencyToggleEnabled = FeatureToggleHelper.HasFeatureToggle("INU", tenant);
-
+							isConcurrencyToggleEnabled = FeatureToggleHelper.HasFeatureToggle("INU", tenant);							
 							this.Initialize();
 
 							bool processEnebled = true;
@@ -944,7 +943,7 @@ namespace CommunicationWorkerRole
 				if (satSetting != null)
 				{
 					if (satSetting.SATInterfaceCode == "PROF40")
-						SATInvoiceProfact40CancellationService.SendRequest(new SATInvoiceProfact40CancellationServiceArgs { WaitingCommLog = communicationLog, CommunicationLogRep = communicationLogRep, ARInvoice = invoicePOCO, ARInvoiceRep = arInvoiceRepository, SatSetting = satSetting });
+						SATInvoiceProfact40CancellationService.SendRequest(new SATInvoiceProfact40CancellationServiceArgs { WaitingCommLog = communicationLog, CommunicationLogRep = communicationLogRep, ARInvoice = invoicePOCO, ARInvoicePM = invoice, ARInvoiceRep = arInvoiceRepository, SatSetting = satSetting });
 					else
 						SendProfactCancellation33(invoice, satSetting);
 				}
@@ -1114,7 +1113,7 @@ namespace CommunicationWorkerRole
 				if (satSetting != null)
 				{
 					if (satSetting.SATInterfaceCode == "PROF40")
-						SATPaymentProfact40CancellationService.SendRequest(new SATPaymentProfact40CancellationServiceArgs { WaitingCommLog = communicationLog, CommunicationLogRep = communicationLogRep, ARPaymentRep = arPaymentRepository, ARPayment = paymentPOCO, ARInvoiceRep = arInvoiceRepository, SatSetting = satSetting });
+						SATPaymentProfact40CancellationService.SendRequest(new SATPaymentProfact40CancellationServiceArgs { WaitingCommLog = communicationLog, CommunicationLogRep = communicationLogRep, ARPaymentRep = arPaymentRepository, ARPayment = paymentPOCO, ARPaymentPM =  payment,  ARInvoiceRep = arInvoiceRepository, SatSetting = satSetting });
 					else
 						SendPaymentProfactCancellation33(payment, satSetting);
 				}
