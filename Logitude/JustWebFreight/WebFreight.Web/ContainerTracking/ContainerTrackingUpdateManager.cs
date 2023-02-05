@@ -433,6 +433,7 @@ namespace WebFreight.Web.ContainerTracking
         }
         private void SaveContainer()
         {
+            containerPM.RecentResponseDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             ContainerService containerService = new ContainerService(containerUpdatedFields.ShipmentContext, tenant);
             containerService.Update(containerPM, containerUpdatedFields.ContainersExternal);
         }

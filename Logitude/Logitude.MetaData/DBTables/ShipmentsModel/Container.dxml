@@ -1797,6 +1797,18 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="RequestDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RecentResponseDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

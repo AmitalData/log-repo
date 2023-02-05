@@ -477,6 +477,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? OnCarriageETA { get; set; }
         public DateTime? OnCarriageATA { get; set; }
         public List<CustomChildEntity> CustomChildEntities { get; set; }
-
+        public DateTime? RequestDate { get; set; }
+        public DateTime? RecentResponseDate { get; set; }
     }
 }
