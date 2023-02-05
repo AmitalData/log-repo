@@ -365,7 +365,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private void UpdateEmptyReturnLeg(ShipmentDeliveryPM emptyReturn)
         {
             emptyReturn.ETA = containerPm.EstimatedEmptyReturn;
-            emptyReturn.ATA = containerPm.ActualEmptyReturn;
+            emptyReturn.ATA = emptyReturn.ATA ?? containerPm.ActualEmptyReturn;
             emptyReturn.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
         }
         private ShipmentDeliveryPM CreateEmptyReturnLeg(ShipmentPackagePM shipmentPackage, ShipmentPM shipmentPM)

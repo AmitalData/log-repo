@@ -469,7 +469,7 @@ namespace WebFreight.Web.ContainerTracking
                 this.isUpdatingEmptyLeg = true;
                 delivery.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                 delivery.ETA = containerPM.EstimatedEmptyReturn;
-                delivery.ATA = containerPM.ActualEmptyReturn;
+                delivery.ATA = delivery.ATA ?? containerPM.ActualEmptyReturn;
             }
         }
         private ShipmentDeliveryPM GetEmptyReturnLeg()
