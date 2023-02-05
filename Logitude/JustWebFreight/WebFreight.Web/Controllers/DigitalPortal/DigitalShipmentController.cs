@@ -131,7 +131,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 email = authToken.Email;
                 newFilters.Tenant = authToken.Tenant;
                 var shipmentQuery = new ShipmentQuery(authToken.Tenant);
-                var entityLists = shipmentQuery.GetByFilters(newFilters);
+                var entityLists = shipmentQuery.GetByFilterWithSortingFilter(newFilters);
 
                 var response = new ServiceResponse();
 

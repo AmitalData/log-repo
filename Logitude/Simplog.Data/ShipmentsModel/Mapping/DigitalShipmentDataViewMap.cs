@@ -422,8 +422,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CustomerContactEmail).HasMaxLength(70).IsUnicode(false);
             this.Property(t => t.TruckerId).HasMaxLength(15).IsUnicode(false);
 
-            // Table & Column Mappings
-            this.ToTable("ShipmentDataView");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.IsCustomerArchived).HasColumnName("IsCustomerArchived");
             this.Property(t => t.NotesSharedWithCustomer).HasColumnName("NotesSharedWithCustomer");
