@@ -3058,7 +3058,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                 }
                 case "Customs.PendingByKeyword": {
                     logWindow.Width = 430;
-                    logWindow.Height = 300;
+                    logWindow.Height = 350;
                     logWindow.ShowCloseButton = true;
                     break;
                 }
