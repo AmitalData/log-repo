@@ -1938,10 +1938,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         #region Shipment Vertical TimeLine
 
-        public VerticalTimeLineData MapVerticalTimeLine(ShipmentPM shipment, int tenant, string profileCode = "CS")
+        public VerticalTimeLineData MapVerticalTimeLine(ShipmentPM shipment,  Dictionary<string, List<string>> blockedFields, string profileCode = "CS")
         {
+            int tenant = shipment.Tenant;
             InitializeServices(tenant);
-            FillBlockedFields(profileCode);
+            this.blockedFields = blockedFields;
+
             // Build All Legs 
             var shipmentPickUpDeliveries = repository.context
                                                        .ShipmentPickUpDeliveries
@@ -1976,35 +1978,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             this.FillDeliveryVerticalTimeLine(VerticalTimeLineData, shipmentPickUpDeliveries);
 
             return VerticalTimeLineData;
-        }
-
-        private void FillBlockedFields(string profileCode)
-        {
-            var allowedTableNames = new List<string> { "Trucker", "Shipment", "ShipmentPackage", "ShipmentPickUpDelivery" };
-
-            var objectFieldIds = ObjectTableRepository.GetObjectTablesWithTenantZero(0)
-                                              .Where(a => allowedTableNames.Contains(a.Name))
-                                              .Select(a => new
-                                              {
-                                                  a.Id,
-                                                  a.Name
-                                              })
-                                              .ToList();
-
-            blockedFields = new Dictionary<string, List<string>>();
-            var helper = new DigitalFieldSecuritesHelper();
-            foreach (var item in objectFieldIds)
-            {
-                var objectTableBlockedFields = helper.GitDigitalSecuritesFeilds(item.Id, profileCode, tenant)
-                                                  .Where(a => !a.HasPermission)
-                                                  .Select(a => a.FieldCode)
-                                                  .ToList();
-
-                if (objectTableBlockedFields.Any())
-                {
-                    blockedFields.Add(item.Name, objectTableBlockedFields);
-                }
-            }
         }
 
         private bool CheckIsPermissonField(string objectTbaleName, string fieldCode)

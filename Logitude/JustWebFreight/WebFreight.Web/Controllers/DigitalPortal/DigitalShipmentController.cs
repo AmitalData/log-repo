@@ -56,8 +56,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 if (string.IsNullOrWhiteSpace(cardId) || cards.Contains(shipmentPM.CustomerId) || cards.Contains(shipmentPM.AgentId))
                 {
-                    shipmentPM.TimeLineData = shipmentQuery.MapVerticalTimeLine(shipmentPM, tenant, profileCode);
-                    var shipmentPMJson = JsonConvert.SerializeObject(shipmentPM);
                     var textCodeQuery = new DigitalTextCodeQueryService(0);
 
                     var allowedTableNames = new List<string> { "Trucker", "Shipment", "ShipmentPackage", "ShipmentPickUpDelivery" };
@@ -86,6 +84,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         }
                     }
 
+                    shipmentPM.TimeLineData = shipmentQuery.MapVerticalTimeLine(shipmentPM, fields, profileCode);
+                    var shipmentPMJson = JsonConvert.SerializeObject(shipmentPM);
                     var temp = (JObject)JsonConvert.DeserializeObject(shipmentPMJson);
 
                     foreach (var item in fields)
