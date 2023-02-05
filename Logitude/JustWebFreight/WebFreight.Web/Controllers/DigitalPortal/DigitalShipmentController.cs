@@ -56,7 +56,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 if (string.IsNullOrWhiteSpace(cardId) || cards.Contains(shipmentPM.CustomerId) || cards.Contains(shipmentPM.AgentId))
                 {
-                    shipmentPM.TimeLineData = shipmentQuery.MapVerticalTimeLine(shipmentPM, tenant);
+                    shipmentPM.TimeLineData = shipmentQuery.MapVerticalTimeLine(shipmentPM, tenant, profileCode);
                     var shipmentPMJson = JsonConvert.SerializeObject(shipmentPM);
                     var textCodeQuery = new DigitalTextCodeQueryService(0);
 
