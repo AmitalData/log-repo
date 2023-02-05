@@ -112,13 +112,8 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                     if (item.FieldName == "AllShipments")
                     {
-                        DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
-                        var afterOneYearDate = currentDateTime.AddDays(-365);
-                        var afterNinetyDaysDate = currentDateTime.AddDays(-90);
-                        isAllShipments = true;
                         queryableData = queryableData.Where(a => a.ShipmentLevelCode != "C"
-                                                            && a.IsCancelled == false);
-
+                                                                 && a.IsCancelled == false);
                     }
 
                     if (item.FieldName == "IsCustomerArchived")
@@ -134,7 +129,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                         List<string> transportModes = !string.IsNullOrWhiteSpace(transportModesString)
                                                       ? transportModesString.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                                                                          .ToList()
+                                                                            .ToList()
                                                       : new List<string>();
 
                         List<string> shipmentTypes = !string.IsNullOrWhiteSpace(shipmentTypesString) 
@@ -147,9 +142,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                                                                                 .ToList()
                                                         : new List<string>();
                         var values = new List<string>();
-
                         var subTypesList = new List<ShipmentSubType>();
-
                         if (shipmentSubTypes.Any())
                         {
                             subTypesList = GetShipmentTypes(_tenant);
@@ -184,7 +177,6 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                                 {
                                     values.Add($"A:Air");
                                 }
-
                             }
                             else if (tm.Equals("o", StringComparison.InvariantCultureIgnoreCase))
                             {

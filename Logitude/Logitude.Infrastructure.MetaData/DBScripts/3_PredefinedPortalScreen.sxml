@@ -122,12 +122,12 @@
 				<LogColumn width=''35%''>
 					<LogFieldContainer log-if=''{Shipment.DirectionId}!==[I]''>
 						<LogLabel field-code=''Shipment.ConsigneeName''></LogLabel>
-						<LogIcon code=''Shipment.ConsigneeCountryCode''></LogIcon>
+						<LogIcon code=''Shipment.ConsigneeAddressCountryCode''></LogIcon>
 						<LogField tooltip=''true'' field-code=''Shipment.ConsigneeName''></LogField>
 					</LogFieldContainer>
 					<LogFieldContainer log-if=''{Shipment.DirectionId}===[I]''>
 						<LogLabel field-code=''Shipment.ShipperName''></LogLabel>
-						<LogIcon code=''Shipment.ShipperCountryCode''></LogIcon>
+						<LogIcon code=''Shipment.ShipperAddressCountryCode''></LogIcon>
 						<LogField tooltip=''true'' field-code=''Shipment.ShipperName''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
@@ -242,12 +242,12 @@
 				<LogColumn width=''35%''>
 					<LogFieldContainer log-if=''{Shipment.DirectionId}!==[I]''>
 						<LogLabel field-code=''Shipment.ConsigneeName''></LogLabel>
-						<LogIcon code=''Shipment.ConsigneeCountryCode''></LogIcon>
+						<LogIcon code=''Shipment.ConsigneeAddressCountryCode''></LogIcon>
 						<LogField tooltip=''true'' field-code=''Shipment.ConsigneeName''></LogField>
 					</LogFieldContainer>
 					<LogFieldContainer log-if=''{Shipment.DirectionId}===[I]''>
 						<LogLabel field-code=''Shipment.ShipperName''></LogLabel>
-						<LogIcon code=''Shipment.ShipperCountryCode''></LogIcon>
+						<LogIcon code=''Shipment.ShipperAddressCountryCode''></LogIcon>
 						<LogField tooltip=''true'' field-code=''Shipment.ShipperName''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
@@ -366,12 +366,12 @@
 				<LogColumn width=''35%''>
 					<LogFieldContainer log-if=''{Shipment.DirectionId}!==[I]''>
 						<LogLabel field-code=''Shipment.ConsigneeName''></LogLabel>
-						<LogIcon code=''Shipment.ConsigneeCountryCode''></LogIcon>
+						<LogIcon code=''Shipment.ConsigneeAddressCountryCode''></LogIcon>
 						<LogField tooltip=''true'' field-code=''Shipment.ConsigneeName''></LogField>
 					</LogFieldContainer>
 					<LogFieldContainer log-if=''{Shipment.DirectionId}===[I]''>
 						<LogLabel field-code=''Shipment.ShipperName''></LogLabel>
-						<LogIcon code=''Shipment.ShipperCountryCode''></LogIcon>
+						<LogIcon code=''Shipment.ShipperAddressCountryCode''></LogIcon>
 						<LogField tooltip=''true'' field-code=''Shipment.ShipperName''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
@@ -486,12 +486,12 @@
 				<LogColumn width=''35%''>
 					<LogFieldContainer log-if=''{Shipment.DirectionId}!==[I]''>
 						<LogLabel field-code=''Shipment.ConsigneeName''></LogLabel>
-						<LogIcon code=''Shipment.ConsigneeCountryCode''></LogIcon>
+						<LogIcon code=''Shipment.ConsigneeAddressCountryCode''></LogIcon>
 						<LogField tooltip=''true'' field-code=''Shipment.ConsigneeName''></LogField>
 					</LogFieldContainer>
 					<LogFieldContainer log-if=''{Shipment.DirectionId}===[I]''>
 						<LogLabel field-code=''Shipment.ShipperName''></LogLabel>
-						<LogIcon code=''Shipment.ShipperCountryCode''></LogIcon>
+						<LogIcon code=''Shipment.ShipperAddressCountryCode''></LogIcon>
 						<LogField tooltip=''true'' field-code=''Shipment.ShipperName''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
