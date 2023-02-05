@@ -543,49 +543,49 @@ namespace Logitude.CustomsMessaging.MessagingServices
         }
 
 
-        private bool CheckIsSendByDocType(string logData)
-        {
-            bool IsSendByDocType = false;
-            string CustomsDocumentUpload = "";
-            try
-            {
-                DocumentTypeQueryService documentTypeQueryService = new DocumentTypeQueryService(_DocumentsFilingPM.Tenant);
-                DocumentTypePM documentTypePM = documentTypeQueryService.GetDocumentTypeCodeById(_DocumentsFilingPM.DocumentTypeId, _DocumentsFilingPM.Tenant);
+        //private bool CheckIsSendByDocType(string logData)
+        //{
+        //    bool IsSendByDocType = false;
+        //    string CustomsDocumentUpload = "";
+        //    try
+        //    {
+        //        DocumentTypeQueryService documentTypeQueryService = new DocumentTypeQueryService(_DocumentsFilingPM.Tenant);
+        //        DocumentTypePM documentTypePM = documentTypeQueryService.GetDocumentTypeCodeById(_DocumentsFilingPM.DocumentTypeId, _DocumentsFilingPM.Tenant);
 
-                if (documentTypePM != null && !String.IsNullOrWhiteSpace(documentTypePM.Code))
-                {
-                    DocumentTypeCustomsDataQueryService documentTypeCustomsDataQueryService = new DocumentTypeCustomsDataQueryService(_DocumentsFilingPM.Tenant);
-                    DocumentTypeCustomsDataPM documentTypeCustomsDataPM = documentTypeCustomsDataQueryService.GetSingle(documentTypePM.Code, false, true);
+        //        if (documentTypePM != null && !String.IsNullOrWhiteSpace(documentTypePM.Code))
+        //        {
+        //            DocumentTypeCustomsDataQueryService documentTypeCustomsDataQueryService = new DocumentTypeCustomsDataQueryService(_DocumentsFilingPM.Tenant);
+        //            DocumentTypeCustomsDataPM documentTypeCustomsDataPM = documentTypeCustomsDataQueryService.GetSingle(documentTypePM.Code, false, true);
 
-                    if (documentTypeCustomsDataPM != null && !String.IsNullOrWhiteSpace(documentTypeCustomsDataPM.CustomsDoucumentTypeCode))
-                    {
-                        CustomDocumentTypeQueryService customDocumentTypeQueryService = new CustomDocumentTypeQueryService(_DocumentsFilingPM.Tenant);
-                        CustomDocumentTypePM customDocumentTypePM = customDocumentTypeQueryService.GetSingle(documentTypeCustomsDataPM.CustomsDoucumentTypeCode, false, false);
+        //            if (documentTypeCustomsDataPM != null && !String.IsNullOrWhiteSpace(documentTypeCustomsDataPM.CustomsDoucumentTypeCode))
+        //            {
+        //                CustomDocumentTypeQueryService customDocumentTypeQueryService = new CustomDocumentTypeQueryService(_DocumentsFilingPM.Tenant);
+        //                CustomDocumentTypePM customDocumentTypePM = customDocumentTypeQueryService.GetSingle(documentTypeCustomsDataPM.CustomsDoucumentTypeCode, false, false);
 
-                        if (customDocumentTypePM != null && !String.IsNullOrEmpty(customDocumentTypePM.CustomsDocumentUpload))
-                        {
-                            CustomsDocumentUpload = customDocumentTypePM.CustomsDocumentUpload;
-                            if (customDocumentTypePM.CustomsDocumentUpload == "C")
-                            {
-                                IsSendByDocType = true;
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ee)
-            {
-                logData += $"CheckIsSendByDocType:error:{ee.Message}";
-            }
-            finally
-            {
+        //                if (customDocumentTypePM != null && !String.IsNullOrEmpty(customDocumentTypePM.CustomsDocumentUpload))
+        //                {
+        //                    CustomsDocumentUpload = customDocumentTypePM.CustomsDocumentUpload;
+        //                    if (customDocumentTypePM.CustomsDocumentUpload == "C")
+        //                    {
+        //                        IsSendByDocType = true;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ee)
+        //    {
+        //        logData += $"CheckIsSendByDocType:error:{ee.Message}";
+        //    }
+        //    finally
+        //    {
 
-                logData += $"CheckIsSendByDocType:CustomsDocumentUpload:{CustomsDocumentUpload}";
+        //        logData += $"CheckIsSendByDocType:CustomsDocumentUpload:{CustomsDocumentUpload}";
 
-            }
-            return IsSendByDocType;
+        //    }
+        //    return IsSendByDocType;
 
-        }
+        //}
         private bool CheckIsSendByDocType(string logData)
         {
             DateTime stopLogAt = DateTime.MinValue; //new DateTime(2022, 01, 01);
