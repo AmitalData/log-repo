@@ -17,14 +17,14 @@ using UnifreightIIG.Common.TheGateway;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
-        public class MN_MSG1_MANIFESTMessagingService
-        : MessagingServiceBase<
-        MANIFESTRequestRequestParams, 
-        MANIFESTRequestResponseData,
-        MN_MSG1_MANIFEST, 
-        MN_MSG4_SendManifestFeedBack_Message,
-        MN_MSG1_MANIFESTRequestService, MN_MSG4_SendManifestFeedBack_MessageResponseService, 
-        RequestHeader>
+    public class MN_MSG1_MANIFESTMessagingService
+    : MessagingServiceBase<
+    MANIFESTRequestRequestParams,
+    MANIFESTRequestResponseData,
+    MN_MSG1_MANIFEST,
+    MN_MSG4_SendManifestFeedBack_Message,
+    MN_MSG1_MANIFESTRequestService, MN_MSG4_SendManifestFeedBack_MessageResponseService,
+    RequestHeader>
     {
         public override string MainInterfaceCode
         {
@@ -36,7 +36,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             try
             {
                 var responseContentHeader = customsResponse.GetResponseContentHeader() as IResponseContentHeader;
-                ThrowIIGBLException(_ResponseHeader,responseContentHeader);
+                ThrowIIGBLException(_ResponseHeader, responseContentHeader);
             }
             catch (System.ServiceModel.FaultException<UnifreightIIGFault> myUnifreightIIGFault)
             {
@@ -71,6 +71,24 @@ namespace Logitude.CustomsMessaging.MessagingServices
             return null;
         }
 
+        protected override MN_MSG4_SendManifestFeedBack_Message CallWSSigned(byte[] customRequestSignedByteArry, MANIFESTRequestRequestParams requestParams, out string exceptionMessage)
+        {
+            exceptionMessage = null;
+            var response = new MN_MSG4_SendManifestFeedBack_Message();
+
+            using (var uifreightSdkGateway = new UnifreightSdkGateway(base.CustomsSetting.IIGServiceAddress))
+            {
+                _ResponseHeader = uifreightSdkGateway.GetChannel<IMANIFESTRequestOperation>()
+                    .MANIFESTRequestOperationSign(
+                    this.RequestsSheetExternalId,
+                    base.CustomsSetting.CustomsAgentId,
+                    new ESBRequestSigned() { SignedByteArry = customRequestSignedByteArry },
+                    ref this._IIGGatewayMoreParams,
+                    out response);
+            }
+
+            return response;
+        }
 
         protected override MN_MSG4_SendManifestFeedBack_Message CallWS(MN_MSG1_MANIFEST customRequest, MANIFESTRequestRequestParams requestParams, out string exceptionMessage)
         {
@@ -79,7 +97,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             if (requestParams.TestCase != null)
             {
-                var Fake  = new Fake_1770_MN_MSG1_MANIFESTResponse(requestParams);
+                var Fake = new Fake_1770_MN_MSG1_MANIFESTResponse(requestParams);
                 _ResponseHeader = Fake.CallWS(requestParams, out response);
 
 
