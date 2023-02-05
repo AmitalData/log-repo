@@ -1,0 +1,8 @@
+﻿<Script DBType="Main" Module="Infrastructure">
+	<Sql Version="1">
+		<![CDATA[
+		update ObjectTables set FullNameTextCodeId = (Select top(1)Id From TextCodes where TextCodeTypeCode='T' and code not like '%Description' and ObjectTableId = ObjectTables.Id)
+update ObjectTables set FullNameTextCodeCode = (Select top(1)Code From TextCodes where TextCodeTypeCode='T' and code not like '%Description' and ObjectTableId = ObjectTables.Id)
+    ]]>
+	</Sql> 
+</Script>
