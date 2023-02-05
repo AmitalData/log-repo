@@ -164,7 +164,7 @@
 
                         <LogLov *ngIf="IsEntityField" [NoObjectField]="true"
                             [ObjectFieldName]="'ConditionField_' + Condition.id" [DataContext]="DataContext"
-                            [QueryFilterItems]="(null | GetObjectFieldsQueryFiltersPipe : EntityId)" [IsFreeText]="true"
+                            [QueryFilterItems]="(null | ObjectFieldsQueryFiltersPipe : EntityId)" [IsFreeText]="true"
                             [LookUpTableName]="'ObjectField'" [NoValidation]="true"
                             [SelectedValue]="Condition.fieldCode" [HideColumns]="true"
                             [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
@@ -192,8 +192,7 @@
 
                     <div class="condition-operator-container">
 
-                        <ComboBox
-                            [ItemsSource]="ConditionOperatorsItemsDictionary[Condition.type] || ConditionOperatorsItemsDictionary['default']"
+                        <ComboBox [ItemsSource]="Condition.type | ConditionOperatorsItemsPipe : ShowChangedOperator"
                             [Binding]="'Name'" [SelectedItem]="Condition.operator | ListItemPipe"
                             (SelectedItemChanged)="updateConditionOperator($event.Code, conditionIndex)" [ListType]="''"
                             [IsDisabled]="Condition.disabled | ConditionDisabledPipe : 'o'"
@@ -221,7 +220,7 @@
                         [ngClass]="{'condition-date-value-container': (Condition.type | IsDateTimeTypePipe)}">
 
                         <FieldValue *ngIf="Condition.fieldChangedToggle"
-                            [ObjectField]="(Condition.fieldCode | IsNoObjectFieldVariablePipe) ? null : (Condition.fieldCode | GetObjectFieldPipe)"
+                            [ObjectField]="(Condition.fieldCode | IsNoObjectFieldVariablePipe) ? null : (Condition.fieldCode | ObjectFieldPipe)"
                             [DataType]="(Condition.fieldCode | IsNoObjectFieldVariablePipe) ? Condition.type : null"
                             [Name]="'ConditionValue_' + Condition.id"
                             [IsIntegerNumberInput]="(Condition.type | IsDateTimeTypePipe) && Condition.valueExpression === DateTimeValueExpressions.PlusMinusToday"
@@ -231,7 +230,7 @@
                         </FieldValue>
 
                         <FieldValue *ngIf="!Condition.fieldChangedToggle"
-                            [ObjectField]="(Condition.fieldCode | IsNoObjectFieldVariablePipe) ? null : (Condition.fieldCode | GetObjectFieldPipe)"
+                            [ObjectField]="(Condition.fieldCode | IsNoObjectFieldVariablePipe) ? null : (Condition.fieldCode | ObjectFieldPipe)"
                             [DataType]="(Condition.fieldCode | IsNoObjectFieldVariablePipe) ? Condition.type : null"
                             [Name]="'ConditionValue_' + Condition.id"
                             [IsIntegerNumberInput]="(Condition.type | IsDateTimeTypePipe) && Condition.valueExpression === DateTimeValueExpressions.PlusMinusToday"
@@ -247,7 +246,7 @@
 
                         <LogLov *ngIf="Condition.fieldChangedToggle" [NoObjectField]="true"
                             [ObjectFieldName]="'ConditionFieldValue_' + Condition.id" [DataContext]="DataContext"
-                            [QueryFilterItems]="(Condition.fieldCode | GetObjectFieldsQueryFiltersPipe : EntityId)"
+                            [QueryFilterItems]="(Condition.fieldCode | ObjectFieldsQueryFiltersPipe : EntityId)"
                             [IsFreeText]="true" [LookUpTableName]="'ObjectField'" [NoValidation]="true"
                             [SelectedValue]="Condition.valueCode" [HideColumns]="true"
                             [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
@@ -258,7 +257,7 @@
 
                         <LogLov *ngIf="!Condition.fieldChangedToggle" [NoObjectField]="true"
                             [ObjectFieldName]="'ConditionFieldValue_' + Condition.id" [DataContext]="DataContext"
-                            [QueryFilterItems]="(Condition.fieldCode | GetObjectFieldsQueryFiltersPipe : EntityId)"
+                            [QueryFilterItems]="(Condition.fieldCode | ObjectFieldsQueryFiltersPipe : EntityId)"
                             [IsFreeText]="true" [LookUpTableName]="'ObjectField'" [NoValidation]="true"
                             [SelectedValue]="Condition.valueCode" [HideColumns]="true"
                             [DisplayMemberPath]="'FullNameTextCodeDefaultText'"

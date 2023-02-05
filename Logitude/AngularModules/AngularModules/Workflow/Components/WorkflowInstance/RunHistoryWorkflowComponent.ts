@@ -121,7 +121,7 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
         var versionsIdList = this.EntityPM.WorkFlowVersions.map(v => v.Id);
 
         let businessKeyFilterValue = !AppTool.IsNullOrEmpty(this.SearchText) ? (AppTool.IsNullOrEmpty(this.SearchText.trim()) ? null : this.SearchText) : null;
-        this.Filters = ApiQueryFiltersBuilder.getWorkflowInstancesByVersionApiQueryFilters(versionsIdList, businessKeyFilterValue);
+        this.Filters = ApiQueryFiltersBuilder.getWorkflowInstanceFilters(versionsIdList.join(','), businessKeyFilterValue);
 
         if (this.IsDateFilter) {
             this.Filters.addAdditionalFilter(this.StartTimeObjectfield.FieldName, this.FilterValue1, this.FilterValue2, null, this.FilterOperator, false, false, false, this.StartTimeObjectfield.dataTypeCode)

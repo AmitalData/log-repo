@@ -433,6 +433,7 @@ namespace WebFreight.Web.ContainerTracking
         }
         private void SaveContainer()
         {
+            containerPM.RecentResponseDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             ContainerService containerService = new ContainerService(containerUpdatedFields.ShipmentContext, tenant);
             containerService.Update(containerPM, containerUpdatedFields.ContainersExternal);
         }
@@ -469,7 +470,7 @@ namespace WebFreight.Web.ContainerTracking
                 this.isUpdatingEmptyLeg = true;
                 delivery.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                 delivery.ETA = containerPM.EstimatedEmptyReturn;
-                delivery.ATA = containerPM.ActualEmptyReturn;
+                delivery.ATA = delivery.ATA ?? containerPM.ActualEmptyReturn;
             }
         }
         private ShipmentDeliveryPM GetEmptyReturnLeg()

@@ -58,7 +58,7 @@ export class WorkflowInstanceActivityComponent extends BaseComponent {
     }
 
     LoadActivityData() {
-        let filters = ApiQueryFiltersBuilder.getWorkflowInstanceActivities(this.EntityId, true);
+        let filters = ApiQueryFiltersBuilder.getWorkflowInstanceActivityOrVariableFilters(this.EntityId, true);
         
         this.WorkFlowInstanceActivityListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
@@ -72,7 +72,7 @@ export class WorkflowInstanceActivityComponent extends BaseComponent {
     }
 
     LoadVariablesData() {
-        let filters = ApiQueryFiltersBuilder.getWorkflowInstanceActivities(this.EntityId, true);
+        let filters = ApiQueryFiltersBuilder.getWorkflowInstanceActivityOrVariableFilters(this.EntityId, true);
         
         this.WorkFlowInstanceVariableListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {

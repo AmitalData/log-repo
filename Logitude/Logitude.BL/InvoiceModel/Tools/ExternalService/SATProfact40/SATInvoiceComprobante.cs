@@ -1208,7 +1208,12 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
                         if (traslado != null && (traslado.Importe != SATBaseProfact40Service.GetDecimalWithMatchCurrencyDigitsAfterPoint(totalTraslados, invoiceCurrencyCode)))
                         {
-                            correctedARInvoiceTrasladoLines = CorrectARInvoiceLinePM(traslado.Importe, SATBaseProfact40Service.GetDecimalWithMatchCurrencyDigitsAfterPoint(totalTraslados, invoiceCurrencyCode), traslado.TasaOCuota);
+                            correctedARInvoiceTrasladoLines = CorrectARInvoiceLinePM(new CorrectARInvoiceLineVatAmountsArgs
+                            {
+                                LogitudeVatAmount = traslado.Importe,
+                                SatVatAmount = SATBaseProfact40Service.GetDecimalWithMatchCurrencyDigitsAfterPoint(totalTraslados, invoiceCurrencyCode),
+                                TaxPercentageAmount = traslado.TasaOCuota
+                            });
                         }
                         //traslado.Importe = SATBaseProfact40Service.GetDecimalWithMatchCurrencyDigitsAfterPoint(totalTraslados, invoiceCurrencyCode);
                     }
@@ -1235,7 +1240,13 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                             ComprobanteConceptoImpuestosRetencion conceptoRetencion = concepto.Impuestos.Retenciones.FirstOrDefault();
                             if (conceptoRetencion != null)
                             {
-                                correctedARInvoiceRetencionLines = CorrectARInvoiceLinePM(retencion.Importe, SATBaseProfact40Service.GetDecimalWithMatchCurrencyDigitsAfterPoint(totalRetenciones, invoiceCurrencyCode), conceptoRetencion.TasaOCuota.ToString());
+                                correctedARInvoiceRetencionLines = CorrectARInvoiceLinePM(new CorrectARInvoiceLineVatAmountsArgs
+                                {
+                                    LogitudeVatAmount = retencion.Importe,
+                                    SatVatAmount = SATBaseProfact40Service.GetDecimalWithMatchCurrencyDigitsAfterPoint(totalRetenciones, invoiceCurrencyCode),
+                                    TaxPercentageAmount = conceptoRetencion.TasaOCuota.ToString(),
+                                    IsNegativeTax = true
+                                });
                             }
                         }
                     }
@@ -1257,7 +1268,13 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                             ComprobanteConceptoImpuestosRetencion conceptoRetencion = concepto.Impuestos.Retenciones.FirstOrDefault();
                             if (conceptoRetencion != null)
                             {
-                                correctedARInvoiceRetencionDRLines = CorrectARInvoiceLinePM(retencion.Importe, SATBaseProfact40Service.GetDecimalWithMatchCurrencyDigitsAfterPoint(totalRetenciones, invoiceCurrencyCode), conceptoRetencion.TasaOCuota.ToString());
+                                correctedARInvoiceRetencionDRLines = CorrectARInvoiceLinePM(new CorrectARInvoiceLineVatAmountsArgs
+                                {
+                                    LogitudeVatAmount = retencion.Importe,
+                                    SatVatAmount = SATBaseProfact40Service.GetDecimalWithMatchCurrencyDigitsAfterPoint(totalRetenciones, invoiceCurrencyCode),
+                                    TaxPercentageAmount = conceptoRetencion.TasaOCuota.ToString(),
+                                    IsNegativeTax = true
+                                });
                             }
                         }
                     }
@@ -1275,13 +1292,14 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             return null;
         }
 
-        private List<ARInvoiceLinePM> CorrectARInvoiceLinePM(decimal logitudeVatAmount, decimal satVatAmount, string taxPercentageAmount)
+        private List<ARInvoiceLinePM> CorrectARInvoiceLinePM(CorrectARInvoiceLineVatAmountsArgs correctARInvoiceLineVatAmountsArgs)
         {
-            return SATInvoiceDifferenceVATCalculationService.CorrectARInvoiceLinesPM(new SATInvoiceDifferenceVATCalculationServiceArgs
+            return new SATInvoiceDifferenceVATCalculationService().CorrectARInvoiceLinesPM(new SATInvoiceDifferenceVATCalculationServiceArgs
             {
-                SATVatAmount = satVatAmount,
-                LogitudeVatAmount = logitudeVatAmount,
-                TasaOCuota = taxPercentageAmount,
+                SATVatAmount = correctARInvoiceLineVatAmountsArgs.SatVatAmount,
+                LogitudeVatAmount = correctARInvoiceLineVatAmountsArgs.LogitudeVatAmount,
+                TasaOCuota = correctARInvoiceLineVatAmountsArgs.TaxPercentageAmount,
+                IsNegativeTax = correctARInvoiceLineVatAmountsArgs.IsNegativeTax,
                 AllExpenseShipmentReceivables = allExpenseShipmentReceivables,
                 ARInvoicePM = arInvoicePM,
                 CorrectARInvoiceLinesVatAmount = CorrectARInvoiceLinesVATAmount
@@ -1354,5 +1372,13 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
     {
         public decimal Total { get; set; }
         public decimal SubTotal { get; set; }
+    }
+
+    public class CorrectARInvoiceLineVatAmountsArgs
+    {
+        public decimal LogitudeVatAmount { get; set; }
+        public decimal SatVatAmount { get; set; }
+        public string TaxPercentageAmount { get; set; }
+        public bool IsNegativeTax { get; set; }
     }
 }

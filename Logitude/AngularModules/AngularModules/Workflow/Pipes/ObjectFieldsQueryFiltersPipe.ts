@@ -5,19 +5,19 @@ import { Formatter } from "Workflow/Utilities/Formatter";
 import { ObjectFields } from "Workflow/Utilities/ObjectFields";
 
 @Pipe({
-    name: "GetObjectFieldsQueryFiltersPipe"
+    name: "ObjectFieldsQueryFiltersPipe"
 })
 
-export class GetObjectFieldsQueryFiltersPipe implements PipeTransform {
+export class ObjectFieldsQueryFiltersPipe implements PipeTransform {
 
     transform(field: string | null, entityId: string | null) {
         let fieldCode = Formatter.getFieldCode(field);
         let objectField = ObjectFields.getByCode(fieldCode);
         if (objectField) {
             let lookupTableIdFilterValue = objectField.DataTypeCode === FieldTypes.LookUp ? objectField.LookUpTableId : null;
-            return ApiQueryFiltersBuilder.getObjectFieldsApiQueryFilters(entityId, objectField.DataTypeCode, lookupTableIdFilterValue);
+            return ApiQueryFiltersBuilder.getObjectFieldFilters(entityId, objectField.DataTypeCode, lookupTableIdFilterValue);
         }
-        return ApiQueryFiltersBuilder.getObjectFieldsApiQueryFilters(entityId, null, null);
+        return ApiQueryFiltersBuilder.getObjectFieldFilters(entityId, null, null);
     }
 
 }

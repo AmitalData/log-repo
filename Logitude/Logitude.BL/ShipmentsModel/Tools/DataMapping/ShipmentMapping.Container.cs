@@ -583,6 +583,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             FieldChange.Add(container.OnCarriageATA, containerPM.OnCarriageATA, nameof(containerPM.OnCarriageATA), fieldChanges);
             container.OnCarriageATA = containerPM.OnCarriageATA;
+
+            FieldChange.Add(container.RequestDate, containerPM.RequestDate, nameof(containerPM.RequestDate), fieldChanges);
+            container.RequestDate = containerPM.RequestDate;
+
+            FieldChange.Add(container.RecentResponseDate, containerPM.RecentResponseDate, nameof(containerPM.RecentResponseDate), fieldChanges);
+            container.RecentResponseDate = containerPM.RecentResponseDate;
         }
 
         private static string SetUpdatedByPartner(ContainerPM entityPM)

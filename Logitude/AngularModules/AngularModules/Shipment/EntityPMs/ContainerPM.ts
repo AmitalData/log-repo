@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+
 import {ContainerPMCustomCode} from '../EntityPMCustomCode/ContainerPMCustomCode';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -15,7 +16,6 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 import { CustomChildEntity } from '../../Infrastructure/EntityPMs/CustomChildEntity';
-
 
 export class ContainerPM {
 
@@ -1651,10 +1651,32 @@ export class ContainerPM {
     public get OnCarriageATA() { return this.onCarriageATA; }
     public set OnCarriageATA(newValue: Date) { if (this.onCarriageATA != newValue) { this.onCarriageATA = newValue; this.MarkAsDirty("OnCarriageATA"); } }
        
-    private customChildEntities: CustomChildEntity[];
-    public get CustomChildEntities() { return this.customChildEntities; }
-    public set CustomChildEntities(newValue: CustomChildEntity[]) { if (this.customChildEntities != newValue) { this.customChildEntities = newValue; this.MarkAsDirty("CustomChildEntities"); } }
+	 
+     
+	private customChildEntities: CustomChildEntity[];
+    get  CustomChildEntities() {
+        if (this.customChildEntities == null) {
+            this.customChildEntities = [];
+        }
 
+        return this.customChildEntities;
+    }
+    set  CustomChildEntities(newValue: CustomChildEntity[]) {
+        if (this.customChildEntities != newValue) {
+            this.customChildEntities = newValue;
+        }
+    }
+    //public CustomChildEntities: Array<CustomChildEntityPM>= [];
+     private requestDate: Date;
+    public get RequestDate() { return this.requestDate; }
+    public set RequestDate(newValue: Date) { if (this.requestDate != newValue) { this.requestDate = newValue; this.MarkAsDirty("RequestDate"); } }
+       
+	 
+    private recentResponseDate: Date;
+    public get RecentResponseDate() { return this.recentResponseDate; }
+    public set RecentResponseDate(newValue: Date) { if (this.recentResponseDate != newValue) { this.recentResponseDate = newValue; this.MarkAsDirty("RecentResponseDate"); } }
+       
+	 
 
     public OldEntityPM: ContainerPM;
 		
@@ -1683,4 +1705,4 @@ export class ContainerPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

@@ -143,7 +143,6 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
         }
         protected override void OnUpdating(WarehouseEntryPM entityPM, WarehouseEntry entityPOCO)
         {
-            if (entityPM.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Update) return;
 
             AddTraceEvents(entityPM, entityPOCO);
 
@@ -154,6 +153,7 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
 
             base.OnUpdating(entityPM, entityPOCO);
 
+            if (entityPM.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Update) return;
 
             if (!entityPM.IsUpdateByAutomation)
             {

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Logitude.Accounting.BL;
+using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.BL.Validators;
 
 namespace Logitude.Accounting.BL.CoreBL.Mapping
@@ -57,11 +58,11 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             MyLedgerTransaction.ForeignAmountCredit = System.Math.Round(MyLedgerTransaction.ForeignAmountCredit , 2);
             MyLedgerTransaction.ForeignAmountDebit = System.Math.Round(MyLedgerTransaction.ForeignAmountDebit , 2);
 
-
-
             MyLedgerTransaction.OpenAmount = System.Math.Round(MyLedgerTransaction.OpenAmount, 2);//new Code Not Test
-            
 
+            if (_JournalPM.AccountingEntityCode == AccountingEntityValues.Revaluation &&
+                MyLedgerTransaction.OpenAmount == 0)
+                MyLedgerTransaction.IsReconciled = true;
 
             MyGLAccountTotalByMonth = DefaultMapGLAccountTotalByMounth(MyLedgerTransaction);
             AddGLAccountTotalByMounth(MyGLAccountTotalByMonth, MyLedgerTransaction);
@@ -272,6 +273,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
                 }
             }
             MyLedgerTransaction.IsExternalReconcile = _JournalLine.IsExternalReconcile;
+
         }
 
 

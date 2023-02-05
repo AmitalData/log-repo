@@ -130,6 +130,7 @@ namespace Logitude.BL.Helpers
                     "Shipment.Transshipment3FromPortCountryCode",
                     "Shipment.Transshipment1AdditionalMAWBOBLBL",
                     "Shipment.Transshipment1CarrierNumber",
+                     "Shipment.Transshipment1CarrierName",
                     "Shipment.Transshipment1VesselName",
                     "Shipment.Transshipment2AdditionalMAWBOBLBL",
                     "Shipment.Transshipment2CarrierName",

@@ -3,10 +3,10 @@ import { Formatter } from "Workflow/Utilities/Formatter";
 import { ObjectFields } from "Workflow/Utilities/ObjectFields";
 
 @Pipe({
-    name: "GetObjectFieldPipe"
+    name: "ObjectFieldPipe"
 })
 
-export class GetObjectFieldPipe implements PipeTransform {
+export class ObjectFieldPipe implements PipeTransform {
 
     transform(field: string) {
         if (field) {

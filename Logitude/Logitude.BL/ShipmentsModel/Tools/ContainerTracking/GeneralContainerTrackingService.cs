@@ -20,6 +20,7 @@ using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel;
+using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -84,11 +85,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
                 var document = AddRequstDocument();
                 var commLog = AddRequstCommunicationLog(document);
                 SendCommunicationLogMessage(commLog, generalContainerTrackingArgs.Tenant);
+                this.UpdateContainer();
                 scope.Complete();
             }
         }
-
-
 
         private bool AllowAutomaticTrackContainer()
         {
@@ -329,6 +329,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Container Tracking Status Fail", null, null);
             }
+        }
+        private void UpdateContainer()
+        {
+            if (!generalContainerTrackingArgs.IsFromContainer) return;
+            if (string.IsNullOrEmpty(generalContainerTrackingArgs.ContainerId)) return;
+
+            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(generalContainerTrackingArgs.Tenant);
+            ContainerRepository containerRepository = new ContainerRepository(shipmentsContext);
+            ContainerQuery containerQuery = new ContainerQuery(containerRepository);
+            ContainerPM container = containerQuery.GetSinglePM(generalContainerTrackingArgs.ContainerId, generalContainerTrackingArgs.Tenant);
+
+            if (container == null) return;
+            if (container.RequestDate == null) container.RequestDate = TenantServerConfigration.GetCurrentDateTime(generalContainerTrackingArgs.Tenant);
+            ContainerService containerService = new ContainerService(shipmentsContext, generalContainerTrackingArgs.Tenant);
+            containerService.Update(container);
         }
 
         public UnsubscribeResult UnsubscribeFromVizion()

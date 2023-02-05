@@ -304,7 +304,7 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
             FieldName: this.SourceEntity.Id,
             DataTypeCode: 'String',
             Display: '',
-            Styles: { width: '260px' },
+            Styles: { width: '100px' },
             HtmlListComponentName: 'ActionButtonsListTemplate',
             HtmlListComponentUrl: './Shipment/Components/ListTemplates/ConnectButtonsListTemplate',
             IsCustomTemplate: true,

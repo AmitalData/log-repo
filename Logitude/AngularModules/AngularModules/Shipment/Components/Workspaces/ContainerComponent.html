@@ -49,6 +49,7 @@
                                     <div class="QueriesSection" *ngIf="IsContainersFeatureActivated">
                                         <div>Others</div>
                                         <div>
+                                            <p attr.data-cy="{{'TrackContainersView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('PreviousTrackedContainers')" *ngIf="IsQueryVisible_PreviousTrackedContainers">{{'Container.Q.PreviousTrackedContainers' | TextCodeTranslationPipe}}</p>
                                             <p attr.data-cy="{{'AllContainersView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('All Containers')" *ngIf="IsQueryVisible_AllContainers">{{'Container.Q.AllContainers' | TextCodeTranslationPipe}}</p>
                                             <p attr.data-cy="{{'ClosedContainersView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('Closed Containers')" *ngIf="IsQueryVisible_ClosedContainers">{{'Container.Q.ClosedContainers' | TextCodeTranslationPipe}}</p>
                                             <p attr.data-cy="{{'ExceptionsView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('Exceptions')" *ngIf="IsQueryVisible_ExceptionsView">{{'Container.Q.Exceptions' | TextCodeTranslationPipe}}</p>

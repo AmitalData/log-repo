@@ -16,7 +16,7 @@ export type NodeType =
     "labelNode" |
     null;
 
-export type ConditionDisabled = null | "d,f,o";
+export type ConditionDisabled = null | "d,f,o" | "d,o,v";
 
 export type FlowVariablesTreeListProperties = {
     ShowRecordsVariables: boolean,
