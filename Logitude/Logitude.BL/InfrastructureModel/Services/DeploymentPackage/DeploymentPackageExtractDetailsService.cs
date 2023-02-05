@@ -74,6 +74,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         private void MapCustomField(DeploymentPackageDetails deploymentPackageDetails, CustomFields customField)
         {
             extractedDeploymentPackageDetails.CustomFields.Add(customField);
+            if (string.IsNullOrEmpty(customField.CustomPickListCode)) return;
             var isExistCustomPickList = extractedDeploymentPackageDetails.CustomPickLists.Where(d => d.Code == customField.CustomPickListCode).Any();
             if (!isExistCustomPickList)
             {
