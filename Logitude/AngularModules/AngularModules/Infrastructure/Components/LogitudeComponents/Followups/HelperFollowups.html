@@ -131,7 +131,7 @@
          (mouseleave)="IsMouseOver = false;">
 
         <div class="MediaFillRelative">
-            <div style="height: 6px; width: 38px; background: #F2F4F4; position: absolute; top:-4px; right:0; z-index: 2;"></div>
+            <div style="height: 6px; width: 38px; background: #F2F4F4; position: absolute; top:-4px; right:0; z-index: 1;"></div>
 
             <!-- Normal View -->
             <table *ngIf="IsNormalViewVisible">
@@ -304,7 +304,8 @@
                                                                 [DependencyFilter2Value]="ObjectTableId"
                                                                 [DependencyFilter3Value]="true"
                                                                 (SelectedItemChanged)="AddDataContext.EventTypeChange($event)"
-                                                                [HideColumns]="true">
+                                                                
+                                                                >
                                                         </LogLov>    
                                                     </td>
                                                 </tr>
