@@ -156,7 +156,7 @@
 
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'EmptyPickupLocationPortId'"
-                                                            [SelectedValue]="EmptyPickupLocationPortId"
+                                                            [SelectedValue]="DataContext.EmptyPickupLocationPortId"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'Port'"
@@ -180,7 +180,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'EstimatedEmptyPickupDate'"
-                                                                   [SelectedDateValue]="EstimatedEmptyPickupDate"
+                                                                   [SelectedDateValue]="DataContext.EstimatedEmptyPickupDate"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -202,7 +202,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'ActualEmptyPickupDate'"
-                                                                   [SelectedDateValue]="ActualEmptyPickupDate"
+                                                                   [SelectedDateValue]="DataContext.ActualEmptyPickupDate"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -233,7 +233,7 @@
 
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'PreCarriageLocationPortId'"
-                                                            [SelectedValue]="PreCarriageLocationPortId"
+                                                            [SelectedValue]="DataContext.PreCarriageLocationPortId"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'Port'"
@@ -249,7 +249,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'PreCarriageGateIn'"
-                                                                   [SelectedDateValue]="PreCarriageGateIn"
+                                                                   [SelectedDateValue]="DataContext.PreCarriageGateIn"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -271,7 +271,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'PreCarriageETD'"
-                                                                   [SelectedDateValue]="PreCarriageETD"
+                                                                   [SelectedDateValue]="DataContext.PreCarriageETD"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -296,7 +296,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'PreCarriageATD'"
-                                                                   [SelectedDateValue]="PreCarriageATD"
+                                                                   [SelectedDateValue]="DataContext.PreCarriageATD"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -330,7 +330,7 @@
 
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'POLLocationPortId'"
-                                                            [SelectedValue]="POLLocationPortId"
+                                                            [SelectedValue]="DataContext.POLLocationPortId"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'Port'"
@@ -346,7 +346,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'GateIn'"
-                                                                   [SelectedDateValue]="GateIn"
+                                                                   [SelectedDateValue]="DataContext.GateIn"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -368,7 +368,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'EstimatedPOLLoaded'"
-                                                                   [SelectedDateValue]="EstimatedPOLLoaded"
+                                                                   [SelectedDateValue]="DataContext.EstimatedPOLLoaded"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -382,7 +382,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'ActualPOLLoaded'"
-                                                                   [SelectedDateValue]="ActualPOLLoaded"
+                                                                   [SelectedDateValue]="DataContext.ActualPOLLoaded"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -404,7 +404,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'EstimatedPOLVesselDeparture'"
-                                                                   [SelectedDateValue]="EstimatedPOLVesselDeparture"
+                                                                   [SelectedDateValue]="DataContext.EstimatedPOLVesselDeparture"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -418,7 +418,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'ActualPOLVesselDeparture'"
-                                                                   [SelectedDateValue]="ActualPOLVesselDeparture"
+                                                                   [SelectedDateValue]="DataContext.ActualPOLVesselDeparture"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -454,7 +454,7 @@
 
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'Transshipment1LocationPortId'"
-                                                            [SelectedValue]="Transshipment1LocationPortId"
+                                                            [SelectedValue]="DataContext.Transshipment1LocationPortId"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'Port'"
@@ -470,7 +470,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'ActualTransshipment1Loaded'"
-                                                                   [SelectedDateValue]="ActualTransshipment1Loaded"
+                                                                   [SelectedDateValue]="DataContext.ActualTransshipment1Loaded"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -492,7 +492,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'EstimatedTrans1VesselArrival'"
-                                                                   [SelectedDateValue]="EstimatedTrans1VesselArrival"
+                                                                   [SelectedDateValue]="DataContext.EstimatedTrans1VesselArrival"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -506,7 +506,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'ActualTransshipment1VesselArrival'"
-                                                                   [SelectedDateValue]="ActualTransshipment1VesselArrival"
+                                                                   [SelectedDateValue]="DataContext.ActualTransshipment1VesselArrival"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -528,7 +528,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'EstimatedTrans1VesselDeparture'"
-                                                                   [SelectedDateValue]="EstimatedTrans1VesselDeparture"
+                                                                   [SelectedDateValue]="DataContext.EstimatedTrans1VesselDeparture"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -542,7 +542,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'ActualTrans1VesselDeparture'"
-                                                                   [SelectedDateValue]="ActualTrans1VesselDeparture"
+                                                                   [SelectedDateValue]="DataContext.ActualTrans1VesselDeparture"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -578,7 +578,7 @@
 
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'Transshipment2LocationPortId'"
-                                                            [SelectedValue]="Transshipment2LocationPortId"
+                                                            [SelectedValue]="DataContext.Transshipment2LocationPortId"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'Port'"
@@ -594,7 +594,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'ActualTransshipment2Loaded'"
-                                                                   [SelectedDateValue]="ActualTransshipment2Loaded"
+                                                                   [SelectedDateValue]="DataContext.ActualTransshipment2Loaded"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -616,7 +616,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'EstimatedTrans2VesselArrival'"
-                                                                   [SelectedDateValue]="EstimatedTrans2VesselArrival"
+                                                                   [SelectedDateValue]="DataContext.EstimatedTrans2VesselArrival"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -630,7 +630,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'ActualTransshipment2VesselArrival'"
-                                                                   [SelectedDateValue]="ActualTransshipment2VesselArrival"
+                                                                   [SelectedDateValue]="DataContext.ActualTransshipment2VesselArrival"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -652,7 +652,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'EstimatedTrans2VesselDeparture'"
-                                                                   [SelectedDateValue]="EstimatedTrans2VesselDeparture"
+                                                                   [SelectedDateValue]="DataContext.EstimatedTrans2VesselDeparture"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -666,7 +666,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'ActualTrans2VesselDeparture'"
-                                                                   [SelectedDateValue]="ActualTrans2VesselDeparture"
+                                                                   [SelectedDateValue]="DataContext.ActualTrans2VesselDeparture"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -702,7 +702,7 @@
 
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'Transshipment3LocationPortId'"
-                                                            [SelectedValue]="Transshipment3LocationPortId"
+                                                            [SelectedValue]="DataContext.Transshipment3LocationPortId"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'Port'"
@@ -718,7 +718,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'ActualTransshipment3Loaded'"
-                                                                   [SelectedDateValue]="ActualTransshipment3Loaded"
+                                                                   [SelectedDateValue]="DataContext.ActualTransshipment3Loaded"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -740,7 +740,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'EstimatedTrans3VesselArrival'"
-                                                                   [SelectedDateValue]="EstimatedTrans3VesselArrival"
+                                                                   [SelectedDateValue]="DataContext.EstimatedTrans3VesselArrival"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -754,7 +754,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'ActualTransshipment3VesselArrival'"
-                                                                   [SelectedDateValue]="ActualTransshipment3VesselArrival"
+                                                                   [SelectedDateValue]="DataContext.ActualTransshipment3VesselArrival"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -776,7 +776,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'EstimatedTrans3VesselDeparture'"
-                                                                   [SelectedDateValue]="EstimatedTrans3VesselDeparture"
+                                                                   [SelectedDateValue]="DataContext.EstimatedTrans3VesselDeparture"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -790,7 +790,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'ActualTrans3VesselDeparture'"
-                                                                   [SelectedDateValue]="ActualTrans3VesselDeparture"
+                                                                   [SelectedDateValue]="DataContext.ActualTrans3VesselDeparture"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -821,7 +821,7 @@
 
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'PODLocationPortId'"
-                                                            [SelectedValue]="PODLocationPortId"
+                                                            [SelectedValue]="DataContext.PODLocationPortId"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'Port'"
@@ -837,7 +837,7 @@
 
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'TerminalId'"
-                                                            [SelectedValue]="TerminalId"
+                                                            [SelectedValue]="DataContext.TerminalId"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'Card'">
@@ -852,7 +852,7 @@
 
                                                 <td>
                                                     <LogTextBox [ObjectFieldName]="'TerminalAddress'"
-                                                                [Text]="TerminalAddress"
+                                                                [Text]="DataContext.TerminalAddress"
                                                                 [ObjectTableName]="ObjectTableName"
                                                                 [DataContext]="DataContext">
                                                     </LogTextBox>
@@ -880,7 +880,7 @@
 
                                                 <td>
                                                     <LogTextBox [ObjectFieldName]="'FreeDays'"
-                                                                [Text]="FreeDays"
+                                                                [Text]="DataContext.FreeDays"
                                                                 [ObjectTableName]="ObjectTableName"
                                                                 [DataContext]="DataContext">
                                                     </LogTextBox>
@@ -894,7 +894,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'LastFreeDayDate'"
-                                                                   [SelectedDateValue]="LastFreeDayDate"
+                                                                   [SelectedDateValue]="DataContext.LastFreeDayDate"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -908,7 +908,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'CustomsReleaseDate'"
-                                                                   [SelectedDateValue]="CustomsReleaseDate"
+                                                                   [SelectedDateValue]="DataContext.CustomsReleaseDate"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -922,7 +922,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'AvailablityDate'"
-                                                                   [SelectedDateValue]="AvailablityDate"
+                                                                   [SelectedDateValue]="DataContext.AvailablityDate"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -947,7 +947,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'EstimatedPODVesselArrival'"
-                                                                   [SelectedDateValue]="EstimatedPODVesselArrival"
+                                                                   [SelectedDateValue]="DataContext.EstimatedPODVesselArrival"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -961,7 +961,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'ActualPODVesselArrival'"
-                                                                   [SelectedDateValue]="ActualPODVesselArrival"
+                                                                   [SelectedDateValue]="DataContext.ActualPODVesselArrival"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -975,7 +975,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'EstimatedPODDischarge'"
-                                                                   [SelectedDateValue]="EstimatedPODDischarge"
+                                                                   [SelectedDateValue]="DataContext.EstimatedPODDischarge"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -989,7 +989,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'ActualPODDischarge'"
-                                                                   [SelectedDateValue]="ActualPODDischarge"
+                                                                   [SelectedDateValue]="DataContext.ActualPODDischarge"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -1003,7 +1003,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'GateOut'"
-                                                                   [SelectedDateValue]="GateOut"
+                                                                   [SelectedDateValue]="DataContext.GateOut"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -1034,7 +1034,7 @@
 
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'OnCarriageLocationPortId'"
-                                                            [SelectedValue]="OnCarriageLocationPortId"
+                                                            [SelectedValue]="DataContext.OnCarriageLocationPortId"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'Port'"
@@ -1050,7 +1050,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'OnCarriageGateOut'"
-                                                                   [SelectedDateValue]="OnCarriageGateOut"
+                                                                   [SelectedDateValue]="DataContext.OnCarriageGateOut"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -1072,7 +1072,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'OnCarriageETD'"
-                                                                   [SelectedDateValue]="OnCarriageETD"
+                                                                   [SelectedDateValue]="DataContext.OnCarriageETD"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -1086,7 +1086,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'OnCarriageATD'"
-                                                                   [SelectedDateValue]="OnCarriageATD"
+                                                                   [SelectedDateValue]="DataContext.OnCarriageATD"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -1108,7 +1108,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'OnCarriageETA'"
-                                                                   [SelectedDateValue]="OnCarriageETA"
+                                                                   [SelectedDateValue]="DataContext.OnCarriageETA"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -1122,7 +1122,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'OnCarriageATA'"
-                                                                   [SelectedDateValue]="OnCarriageATA"
+                                                                   [SelectedDateValue]="DataContext.OnCarriageATA"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -1153,7 +1153,7 @@
 
                                                 <td>
                                                     <LogTextBox [ObjectFieldName]="'ShipmentDeliveryFrom'"
-                                                                [Text]="ShipmentDeliveryFrom"
+                                                                [Text]="DataContext.ShipmentDeliveryFrom"
                                                                 [ObjectTableName]="ObjectTableName"
                                                                 [DataContext]="DataContext">
                                                     </LogTextBox>
@@ -1167,7 +1167,7 @@
 
                                                 <td>
                                                     <LogTextBox [ObjectFieldName]="'ShipmentDeliveryTo'"
-                                                                [Text]="ShipmentDeliveryTo"
+                                                                [Text]="DataContext.ShipmentDeliveryTo"
                                                                 [ObjectTableName]="ObjectTableName"
                                                                 [DataContext]="DataContext">
                                                     </LogTextBox>
@@ -1181,7 +1181,7 @@
 
                                                 <td>
                                                     <LogTextBox [ObjectFieldName]="'ShipmentDeliveryTruckerName'"
-                                                                [Text]="ShipmentDeliveryTruckerName"
+                                                                [Text]="DataContext.ShipmentDeliveryTruckerName"
                                                                 [ObjectTableName]="ObjectTableName"
                                                                 [DataContext]="DataContext">
                                                     </LogTextBox>
@@ -1203,7 +1203,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'ShipmentDeliveryETD'"
-                                                                   [SelectedDateValue]="ShipmentDeliveryETD"
+                                                                   [SelectedDateValue]="DataContext.ShipmentDeliveryETD"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -1217,7 +1217,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'ShipmentDeliveryATD'"
-                                                                   [SelectedDateValue]="ShipmentDeliveryATD"
+                                                                   [SelectedDateValue]="DataContext.ShipmentDeliveryATD"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -1242,7 +1242,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'ShipmentDeliveryETA'"
-                                                                   [SelectedDateValue]="ShipmentDeliveryETA"
+                                                                   [SelectedDateValue]="DataContext.ShipmentDeliveryETA"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -1256,7 +1256,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'ShipmentDeliveryATA'"
-                                                                   [SelectedDateValue]="ShipmentDeliveryATA"
+                                                                   [SelectedDateValue]="DataContext.ShipmentDeliveryATA"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -1290,7 +1290,7 @@
 
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'EmptyReturnLocationPortId'"
-                                                            [SelectedValue]="EmptyReturnLocationPortId"
+                                                            [SelectedValue]="DataContext.EmptyReturnLocationPortId"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'Port'"
@@ -1314,7 +1314,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'EstimatedEmptyReturn'"
-                                                                   [SelectedDateValue]="EstimatedEmptyReturn"
+                                                                   [SelectedDateValue]="DataContext.EstimatedEmptyReturn"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -1336,7 +1336,7 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'ActualEmptyReturn'"
-                                                                   [SelectedDateValue]="ActualEmptyReturn"
+                                                                   [SelectedDateValue]="DataContext.ActualEmptyReturn"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
