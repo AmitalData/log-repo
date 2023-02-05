@@ -16,6 +16,11 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
         public void ApplyForceSign<TRequestParams>(ref TRequestParams requestParams) where TRequestParams : RequestParamsBase
         {
 
+            bool courierForceSign = Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("CFS", requestParams.Tenant);//'Courier Force Sign
+            if (!courierForceSign)
+            {
+                return;
+            }
             if (CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant).CompanyType != "B"//Courier
                                                                                                       )
             {
@@ -64,7 +69,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
             LogMessagingUtil.Instance.AppendLine($"ApplyForceSign:Success={res.Success};{res.ErrorMessage};took={sw.Elapsed}");
             if (!res.Success)
             {
-                throw new Exception(res.ErrorMessage);
+                throw new CourierForceSignException(res.ErrorMessage);
             }
             if (isMulti_CheckOnly)
             {
@@ -74,6 +79,13 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
             requestParams.SignMethodByQueue = SignMethodByQueueEnum.HSMSignQueue.ToString();
             requestParams.SignByPersonalId = res.MySignStationList.PersonId;
             requestParams.SignQueueByCompanyOrPersonal = (isPersonalSign ? SignQueueByType.SignQueueByPersonId : SignQueueByType.SignQueueByCustomsAgentId).ToString();
+        }
+    }
+
+    public class CourierForceSignException : Exception
+    {
+        public CourierForceSignException(string message) : base(message)
+        {
         }
     }
 }

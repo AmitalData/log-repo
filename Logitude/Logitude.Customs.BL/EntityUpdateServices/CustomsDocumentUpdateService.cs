@@ -37,6 +37,7 @@ using Logitude.Server.Tools.Utils;
 using Logitude.Customs.BL.TraceEvents;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.Customs.BL.BL;
+using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -282,9 +283,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 LogitudeSettings.HandleLogMe("after try send update :" + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
 
                 base.OnUpdating(entityPM, entityPOCO);
-                if (entityPM.DocumentStatusCode == "7")
+                if (entityPM.DocumentStatusCode == "7" 
+                    || entityPM.DocumentStatusCode == "2")
                 {
-                    UpdateDeclarationCourierStatus(entityPM, "I");
+                    UpdateDeclarationCourierStatus(entityPM);
                 }
                 if (string.IsNullOrEmpty(entityPM.DocumentStatusCode) && entityPM.ChangeSetOp == ChangeSetOperation.Update)
                 {
@@ -844,11 +846,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     LogitudeSettings.HandleLogMe("start send2:" + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
 
+                    var courierForceSignService = new CourierForceSignService();
+                    courierForceSignService.ApplyForceSign(ref requestParams);
                     SBQMessageService.CreateSheetSBQMessage<Logitude.CustomsMessaging.Common.RequestParams.D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam>(requestParams
                         , false, requestParams.FutureSendDateTime
                         );
                     send = true;
                     Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("send 2715 ");
+                }
+                catch (CourierForceSignException courierForceSignException)
+                {
+                    entityPM.DocumentStatusCode = "2";
                 }
                 catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
                 {
@@ -907,10 +915,23 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
         }
 
-        private void UpdateDeclarationCourierStatus(CustomsDocumentPM entityPM, string status)
+        private void UpdateDeclarationCourierStatus(CustomsDocumentPM entityPM)
         {
+            string status = null;
+            if ( entityPM.DocumentStatusCode == "7")
+            {
+                status = "I";
+            }
+            else if (entityPM.DocumentStatusCode == "2")
+            {
+                status = "X";
+            }
+            if (string.IsNullOrWhiteSpace( status))
+            {
+                return;
+            }
 
-            if (!string.IsNullOrWhiteSpace(entityPM.DeclarationId) && entityPM.DocumentStatusCode == "7")
+            if (!string.IsNullOrWhiteSpace(entityPM.DeclarationId) /*&& entityPM.DocumentStatusCode == "7"*/)
             {
                 ICustomContext context = MainContext as CustomContext;
                 DeclarationPM connectedDeclarationPM = GetConnectedDeclarationPM(entityPM);
