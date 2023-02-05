@@ -101,6 +101,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     public IgnoreCustomFieldCheck: boolean = false;
     public IgnoreFeatureCheck: boolean = false;
     public DataCy: string;
+    private LocalFilterServerSearchTxtLength: number = null;;
     LayoutDirection: string = 'ltr';
     private dataContext: BaseComponent;
     uiProperty: UIProperty;
@@ -426,10 +427,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             this.RunComponentTimer();
         }
         var debounceTimeVal = 400;
-
-        if(this.LocalFilterFields && this.LocalFilterFields.length > 0) {
-            debounceTimeVal = 30;
-        }
+        
         if (this.AfterViewInitialized) {
             this._KeyDownSubscribe =
                 fromEvent(input, 'keydown').pipe(
@@ -456,7 +454,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
 
                         if (this.SearchTextNgModel != undefined) {
-
+                            
                             this.OldSearchInput = this.SearchTextNgModel;
                             this.IsDropDownVisible = true;
                             this.IsOpen = true;
@@ -1742,7 +1740,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     Populate(searchText: string, setFirstAsSelected: boolean = false) {
-
         this.LovMessage = null;
 
         if (!this.IgnoreFeatureCheck && !FeatureLocator.HasFeaturePermession(this.LookUpTableName, "Module") && this.LookUpTable.EnableSecurity) {
@@ -1755,7 +1752,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             return;
         }
 
-        if (this.LocalFilterFields && this.LocalFilterFields.length > 0 && searchText && searchText.length >= 4 && this.bufferData && this.bufferData.length > 0) {
+        if (this.LocalFilterFields && this.LocalFilterFields.length > 0 && searchText && searchText.length >= 4 && this.bufferData && this.bufferData.length > 0
+            && this.LocalFilterServerSearchTxtLength != null && searchText.length >= this.LocalFilterServerSearchTxtLength) {
             const arr =  Object.assign([], this.bufferData);
             this.ItemsSource = arr.filter( x => this.LocalFilterFields.some(fl => x[fl].toLowerCase().startsWith(searchText.toLowerCase())));
                 
@@ -1763,7 +1761,11 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 return;
             }
         }
-
+        
+        if(searchText) {
+            this.LocalFilterServerSearchTxtLength = searchText.length;
+        }
+        
         //reset counters
         this.bufferData = [];
         this.callCount = 0;
