@@ -9,7 +9,7 @@ import { ObjectTables } from "Workflow/Utilities/ObjectTables";
 import { SetValue } from "Workflow/Models/SetValue";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 import { ExpressionValue } from "Workflow/Types";
-import { GetObjectFieldPipe } from "Workflow/Pipes/GetObjectFieldPipe";
+import { ObjectFieldPipe } from "Workflow/Pipes/ObjectFieldPipe";
 import { IsNoObjectFieldVariablePipe } from "Workflow/Pipes/IsNoObjectFieldVariablePipe";
 
 @Component({
@@ -213,6 +213,6 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
     }
 
     getObjectField(field: string) {
-        return new GetObjectFieldPipe().transform(field);
+        return new ObjectFieldPipe().transform(field);
     }
 }

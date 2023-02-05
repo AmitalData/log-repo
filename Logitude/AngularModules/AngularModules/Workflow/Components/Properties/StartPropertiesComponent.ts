@@ -55,19 +55,37 @@ export class StartPropertiesComponent extends BaseComponent {
 
     initialize() {
         this.Entity = this.Data["entity"] || null;
-        this.Trigger = this.Data["trigger"] || null;
+        this.Trigger = this.Data["trigger"] || this.CreateTrigger;
 
         this.Conditions = this.Data["conditions"] || [];
         this.ConditionsOperation = this.Data["conditionsOperation"] || ConditionOperations.And;
 
         this.EntityId = ObjectTables.getIdByName(this.Entity);
+
+        this.initializeConditions();
+
         this.setUIProperties();
     }
 
-    initializeCondition() {
-        if (this.Entity) {
+    initializeConditions(reset: boolean = false, forceAdd: boolean = false) {
+        if (reset) {
+            this.Conditions = [];
+            this.ConditionsOperation = ConditionOperations.And;
+        }
+
+        if (this.Conditions.length === 0 && (forceAdd || this.Trigger !== this.CreateTrigger)) {
             let condition = new Condition();
+            if (this.Trigger !== this.CreateTrigger) {
+                condition.operator = ConditionOperators.Changed;
+                condition.value = "True";
+                condition.disabled = "d,o,v";
+            }
             this.Conditions.push(condition);
+            this.IsValidConditions = false;
+        }
+
+        if (this.Conditions.length === 0 && this.Trigger === this.CreateTrigger) {
+            this.IsValidConditions = true;
         }
     }
 
@@ -79,7 +97,6 @@ export class StartPropertiesComponent extends BaseComponent {
         this.ValidationErrorsList = [];
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
         if (notValidUIProperties.length === 0 && this.IsValidConditions) {
-            this.setNameData();
             this.setConditionsData();
             //console.log(this.Data);
             this.CurrentSession.CurrentWindow.Close(this.Data);
@@ -91,10 +108,6 @@ export class StartPropertiesComponent extends BaseComponent {
                 this.ValidationErrorsList.push("Invalid Conditions");
             }
         }
-    }
-
-    setNameData() {
-        this.Data["name"] = "Start";
     }
 
     setConditionsData() {
@@ -109,19 +122,20 @@ export class StartPropertiesComponent extends BaseComponent {
         this.EntityId = ObjectTables.getIdByName(entity);
 
         if (isEntityChanged) {
-            this.Conditions = [];
-            this.ConditionsOperation = ConditionOperations.And;
+            this.initializeConditions(true);
         }
 
         this.setUIProperties();
     }
 
     updateTrigger(trigger: string) {
+        let shouldInitializeConditions = (this.Data["trigger"] === this.CreateTrigger && trigger !== this.CreateTrigger) || (this.Data["trigger"] !== this.CreateTrigger && trigger === this.CreateTrigger);
+
         this.Data["trigger"] = trigger;
         this.Trigger = trigger;
 
-        if (trigger === this.CreateTrigger) {
-            this.resetConditionsOperatorAndValue();
+        if (shouldInitializeConditions) {
+            this.initializeConditions(true);
         }
 
         this.setUIProperties();
@@ -130,18 +144,6 @@ export class StartPropertiesComponent extends BaseComponent {
     setUIProperties() {
         this.UIProperties.SetRequired("Object", null, AppTool.IsNullOrEmpty(this.Entity));
         this.UIProperties.SetRequired("Trigger", null, AppTool.IsNullOrEmpty(this.Trigger));
-    }
-
-    resetConditionsOperatorAndValue(conditions: Condition[] | null = null) {
-        for (let condition of (conditions || this.Conditions)) {
-            if (condition.operator === ConditionOperators.Changed) {
-                condition.operator = ConditionOperators.Equals;
-                condition.value = null;
-            }
-            if (condition.isGroup && condition.conditions && condition.conditions.length > 0) {
-                this.resetConditionsOperatorAndValue(condition.conditions);
-            }
-        }
     }
 
     updateIsValidConditions(isValidConditions: boolean) {
