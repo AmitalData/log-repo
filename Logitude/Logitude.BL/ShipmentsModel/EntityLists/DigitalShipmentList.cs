@@ -564,14 +564,52 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string INTTRABookingError { get; set; }
         public string INTTRALastBookingResponse { get; set; }
 
-
+        public string Notify1Id { get; set; }
+        public string Notify1AddressId { get; set; }
+        public string Notify1ContactId { get; set; }
         public string Notify1Reference { get; set; }
         public string Notify1Reference2 { get; set; }
+        public string Notify1Name { get; set; }
+        public string Notify1Note { get; set; }
+
+        public string Notify2Id { get; set; }
+        public string Notify2AddressId { get; set; }
+        public string Notify2ContactId { get; set; }
         public string Notify2Reference { get; set; }
+        public string Notify2Name { get; set; }
+        public string Notify2Note { get; set; }
+        public string TruckerId { get; set; }
+
+        public string CustomAgentExportId { get; set; }
+        public string CustomAgentExportAddressId { get; set; }
+        public string CustomAgentExportContactId { get; set; }
+        public string CustomAgentExportReference { get; set; }
+        public string CustomAgentExportName { get; set; }
+        public string CustomAgentExportNote { get; set; }
+
+        public string ConsigneeNotImporterId { get; set; }
+        public string ConsigneeNotImporterAddressId { get; set; }
+        public string ConsigneeNotImporterContactId { get; set; }
+        public string ConsigneeNotImporterName { get; set; }
+        public string ConsigneeNotImporterNote { get; set; }
         public string ShipperNotExporterReference { get; set; }
         public string ConsigneeNotImporterReference { get; set; }
         public string ProjectNumber { get; set; }
         public DateTime? ContainerLastStatusDate { get; set; }
+        public string MainCarriageFinalDestinationCountryCode { get; set; }
+        public string MainCarriageFinalDestinationCountryName { get; set; }
+        public string ColoaderId { get; set; }
+        public string MainCarriageFinalDestinationPortId { get; set; }
+        public string MainCarriageFinalDestinationPortName { get; set; }
+        public string MainCarriageFromPortAddress { get; set; }
+        public string MainCarriageToPortAddress { get; set; }
+
+        public string CustomAgentImportId { get; set; }
+        public string CustomAgentImportAddressId { get; set; }
+        public string CustomAgentImportContactId { get; set; }
+        public string CustomAgentImportReference { get; set; }
+        public string CustomAgentImportName { get; set; }
+        public string CustomAgentImportNote { get; set; }
 
         public string BasicFreightId { get; set; }
         public string DestinationPortChargesId { get; set; }
