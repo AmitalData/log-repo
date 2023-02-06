@@ -35,11 +35,6 @@ namespace Logitude.BL.Helpers
         public void SetCustomFieldsValues(string objectTableName, int tenant, List<object> listQuery)
         {
 
-            if (ObjectTableRepository.IsApplyGenericCustomFields(objectTableName, tenant))
-            {
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = objectTableName, Tenant = tenant, Type = "List", Entities = listQuery }).Set();
-            }
-
             CustomFieldMultiSetter.SetCustomFieldsValues(objectTableName, tenant, listQuery);
         }
 

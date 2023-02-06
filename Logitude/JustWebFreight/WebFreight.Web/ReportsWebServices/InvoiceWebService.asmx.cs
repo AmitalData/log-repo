@@ -46,6 +46,7 @@ using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Def.EntityPMs;
 using General = WebFreight.Web.DataProviders.General;
 using Logitude.Customs.Def.EntityPMs;
+using Logitude.Server.Tools.CustomFields;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -2041,6 +2042,7 @@ namespace WebFreight.Web.ReportsWebServices
                             reportinvoiceline.ChrageTypeCode = chargetype.Code != null ? chargetype.Code : "";
                             reportinvoiceline.ClaveProdServ = chargetype.SATExternalId;
                             reportinvoiceline.ChargeTypeDescription = chargetype.Description == null ? "" : chargetype.Description;
+                            reportinvoiceline.ChargeTypeId = chargetype.Id != null ? chargetype.Id : "";
                         }
 
                         if (foreigncurrency != null && invoicecurrency != null)
@@ -2065,6 +2067,7 @@ namespace WebFreight.Web.ReportsWebServices
                         invoicedataprovider.InvoiceLinesList.Add(reportinvoiceline);
                     }
 
+                    MapChargesTypeCustomFields(tenant, invoicedataprovider);
                     #endregion
 
                     invoicedataprovider.Quantity = String.Format("{0:#,0.##}", totalQuantity);
@@ -2236,6 +2239,7 @@ namespace WebFreight.Web.ReportsWebServices
                             reportinvoiceline.ChrageTypeCode = chargetype.Code != null ? chargetype.Code : "";
                             reportinvoiceline.ClaveProdServ = chargetype.SATExternalId;
                             reportinvoiceline.ChargeTypeDescription = chargetype.Description == null ? "" : chargetype.Description;
+                            reportinvoiceline.ChargeTypeId = chargetype.Id != null ? chargetype.Id : "";
                         }
 
                         if (foreigncurrency != null && invoicecurrency != null)
@@ -2259,6 +2263,7 @@ namespace WebFreight.Web.ReportsWebServices
                         reportinvoiceline.TotalAmount = reportinvoiceline.InvoiceAmount_Double + reportinvoiceline.VatAmountInInvoiceCurrency_Double;
                         invoicedataprovider.InvoiceLinesList.Add(reportinvoiceline);
                     }
+                    MapChargesTypeCustomFields(tenant, invoicedataprovider);
                     #endregion
 
                     invoicedataprovider.Quantity = String.Format("{0:#,0.##}", totalQuantity);
@@ -3432,6 +3437,7 @@ namespace WebFreight.Web.ReportsWebServices
                             reportinvoiceline.ChrageTypeCode = chargetype.Code != null ? chargetype.Code : "";
                             reportinvoiceline.ClaveProdServ = chargetype.SATExternalId;
                             reportinvoiceline.ChargeTypeDescription = chargetype.Description == null ? "" : chargetype.Description;
+                            reportinvoiceline.ChargeTypeId = chargetype.Id != null ? chargetype.Id : "";
                         }
 
                         if (foreigncurrency != null && invoicecurrency != null)
@@ -3455,6 +3461,7 @@ namespace WebFreight.Web.ReportsWebServices
                         reportinvoiceline.TotalAmount = reportinvoiceline.InvoiceAmount_Double + reportinvoiceline.VatAmountInInvoiceCurrency_Double;
                         invoiceDataProvider.InvoiceLinesList.Add(reportinvoiceline);
                     }
+                    MapChargesTypeCustomFields(tenant, invoiceDataProvider);
                     #endregion
 
                     invoiceDataProvider.Quantity = String.Format("{0:#,0.00}", totalQuantity);
@@ -3607,6 +3614,7 @@ namespace WebFreight.Web.ReportsWebServices
                             reportinvoiceline.ChrageTypeCode = chargetype.Code != null ? chargetype.Code : "";
                             reportinvoiceline.ClaveProdServ = chargetype.SATExternalId;
                             reportinvoiceline.ChargeTypeDescription = chargetype.Description == null ? "" : chargetype.Description;
+                            reportinvoiceline.ChargeTypeId = chargetype.Id != null ? chargetype.Id : "";
                         }
 
                         if (foreigncurrency != null && invoicecurrency != null)
@@ -3630,7 +3638,7 @@ namespace WebFreight.Web.ReportsWebServices
                         reportinvoiceline.TotalAmount = reportinvoiceline.InvoiceAmount_Double + reportinvoiceline.VatAmountInInvoiceCurrency_Double;
                         invoiceDataProvider.InvoiceLinesList.Add(reportinvoiceline);
                     }
-
+                    MapChargesTypeCustomFields(tenant, invoiceDataProvider);
                     #endregion
 
                     invoiceDataProvider.Quantity = String.Format("{0:#,0.00}", totalQuantity);
@@ -4918,6 +4926,12 @@ namespace WebFreight.Web.ReportsWebServices
             dataProvider.AutoCreditedInvoiceNumber = dataProvider.OriginalInvoiceNumber;
             dataProvider.AutoCreditedInvoiceNumber_label = dataProvider.OriginalInvoiceNumber_label;
         }
+        private void MapChargesTypeCustomFields(int tenant, InvoiceDataProvider invoicedataprovider)
+        {
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ChargesType", Tenant = tenant, Type = "List", Entities = invoicedataprovider.InvoiceLinesList.Cast<Object>().ToList(), KeyName = "ChargeTypeId" }).Set();
+            new CustomFieldResolver(tenant).SetCustomFieldsValues("ChargesType", tenant, invoicedataprovider.InvoiceLinesList.Cast<Object>().ToList());
+        }
+
     }
 
     public class InvoiceTotalVATItem
