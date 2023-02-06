@@ -112,18 +112,17 @@
             <!-- field -->
             <div class="set-value-field-row">
                 <div *ngIf="isFirstSetValue">
-                    <LogLabel [NoObjectField]="true" [Text]="'Variable'" [HideColumns]="true" [DataContext]="DataContext">
+                    <LogLabel [NoObjectField]="true" [Text]="'Variable'" [HideColumns]="true"
+                        [DataContext]="DataContext">
                     </LogLabel>
                 </div>
                 <div class="set-value-field-container">
 
-                    <LogLov *ngIf="IsEntityField" [NoObjectField]="true" [DataContext]="DataContext"
-                        [QueryFilterItems]="(null | ObjectFieldsQueryFiltersPipe : EntityId)"
-                        [IsFreeText]="true" [LookUpTableName]="'ObjectField'" [NoValidation]="true" [HideColumns]="true"
-                        [SelectedValue]="setValue.fieldCode" [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
-                        [ForceDisabled]="setValue.isDisabled"
-                        (SelectedItemChanged)="updateSetValueEntityField($event, setValueIndex)">
-                    </LogLov>
+                    <TreeSelect *ngIf="IsEntityField" [Items]="ObjectFieldsTreeItems" [Width]="'300px'"
+                        [IsDisabled]="setValue.isDisabled" [Value]="setValue.fieldCode"
+                        [IsReturnedTreeSelectItem]="true" [ShowExpand]="false"
+                        (ValueChanged)="updateSetValueEntityField($event, setValueIndex)">
+                    </TreeSelect>
 
                     <TreeSelect *ngIf="!IsEntityField" [Items]="FlowVariablesTreeItems" [Width]="'300px'"
                         [Value]="setValue.field" [ShowItem]="null | ShowEditableVariablesTreeItemPipe"
@@ -158,15 +157,13 @@
                 <div *ngIf="(setValue.operator | IsFieldOperatorPipe)" class="set-value-value-container">
 
                     <TreeSelect *ngIf="setValue.fieldChangedToggle" [Items]="FlowVariablesTreeItems" [Width]="'300px'"
-                        [Value]="setValue.value"
-                        [ShowItem]="setValue | ShowFlowVariablesTreeItemPipe : FlowVariablesTreeList"
+                        [Value]="setValue.value" [ShowItem]="setValue | ShowFlowVariablesTreeItemPipe"
                         [IsDisabled]="setValue.isDisabled" [IsReturnedTreeSelectItem]="true"
                         (ValueChanged)="updateSetValue(($event ? $event.key : null), setValueIndex, ($event && $event.data ? ($event.data.nodeId || null) : null))">
                     </TreeSelect>
 
                     <TreeSelect *ngIf="!setValue.fieldChangedToggle" [Items]="FlowVariablesTreeItems" [Width]="'300px'"
-                        [Value]="setValue.value"
-                        [ShowItem]="setValue | ShowFlowVariablesTreeItemPipe : FlowVariablesTreeList"
+                        [Value]="setValue.value" [ShowItem]="setValue | ShowFlowVariablesTreeItemPipe"
                         [IsDisabled]="setValue.isDisabled" [IsReturnedTreeSelectItem]="true"
                         (ValueChanged)="updateSetValue(($event ? $event.key : null), setValueIndex, ($event && $event.data ? ($event.data.nodeId || null) : null))">
                     </TreeSelect>
@@ -193,8 +190,7 @@
                 <div *ngIf="(setValue.operator == 'Expression')" class="set-value-value-container">
                     <Expression [CurrentValue]="setValue.expressionValue"
                         (ValueChanged)="updateSetValueExpression($event, setValueIndex)" [FlowObject]="FlowObject"
-                        [CurrentNodeId]="CurrentNodeId"
-                        [IsDisabled]="setValue.isDisabled" [Width]="'300px'">
+                        [CurrentNodeId]="CurrentNodeId" [IsDisabled]="setValue.isDisabled" [Width]="'300px'">
                     </Expression>
                 </div>
             </div>

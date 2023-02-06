@@ -1,7 +1,6 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
-import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
 import { SetValueOperators } from "Workflow/Constants/SetValueOperators";
 import { FlowVariablesTreeList } from "Workflow/TreeLists/FlowVariablesTreeList";
@@ -11,6 +10,7 @@ import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 import { ExpressionValue } from "Workflow/Types";
 import { ObjectFieldPipe } from "Workflow/Pipes/ObjectFieldPipe";
 import { IsNoObjectFieldVariablePipe } from "Workflow/Pipes/IsNoObjectFieldVariablePipe";
+import { ObjectFieldsTreeList } from "Workflow/TreeLists/ObjectFieldsTreeList";
 
 @Component({
     selector: "SetValues",
@@ -30,8 +30,8 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
     public DataContext: any = this;
     public IsValidSetValues: boolean = true;
 
-    public FlowVariablesTreeList: FlowVariablesTreeList;
     public FlowVariablesTreeItems: TreeSelectItem[];
+    public ObjectFieldsTreeItems: TreeSelectItem[];
 
     constructor() {
         super();
@@ -43,7 +43,10 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         this.IsValidSetValuesChange.emit(this.IsValidSetValues);
     }
 
-    ngOnChanges() {
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes && changes.EntityId && changes.EntityId.currentValue !== changes.EntityId.previousValue && this.IsEntityField) {
+            this.ObjectFieldsTreeItems = new ObjectFieldsTreeList(changes.EntityId.currentValue).Items;
+        }
         this.setValuesChanged();
     }
 
@@ -57,8 +60,7 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
             IsObjectVariableSelectable: true,
             IsNoChildrenObjectVariables: false
         };
-        this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props);
-        this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;
+        this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props).Items;
     }
 
     setValuesChanged() {
@@ -84,7 +86,8 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         return result;
     }
 
-    updateSetValueEntityField(objectField: ObjectFieldPM, setValueIndex: number) {
+    updateSetValueEntityField(objectFieldItem: TreeSelectItem, setValueIndex: number) {
+        let objectField = objectFieldItem ? (objectFieldItem.data["objectField"] || null) : null;
         if (objectField?.FieldCode !== this.SetValues[setValueIndex]?.fieldCode) {
             if (objectField) {
                 this.updateSetValueFieldByObjectField(objectField, setValueIndex);
@@ -119,7 +122,7 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         }
     }
 
-    updateSetValueFieldByObjectField(objectField: ObjectFieldPM | ObjectFieldList, setValueIndex: number, field: string | null = null) {
+    updateSetValueFieldByObjectField(objectField: ObjectFieldList, setValueIndex: number, field: string | null = null) {
         this.SetValues[setValueIndex].fieldCode = field ? field : (objectField ? objectField.FieldCode : null);
         this.SetValues[setValueIndex].field = field ? field : (objectField ? objectField.FieldName : null);
         this.SetValues[setValueIndex].type = objectField ? objectField.DataTypeCode : null;

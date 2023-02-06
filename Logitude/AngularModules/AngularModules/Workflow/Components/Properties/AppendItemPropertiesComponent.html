@@ -141,8 +141,7 @@
                             <RadioButton [Name]="'SetRecordFieldsTypeRadio'"
                                 [IsChecked]="SetRecordFieldsType === SetRecordFieldsTypes.SetValues"
                                 (Checked)="updateSetRecordFieldsType(SetRecordFieldsTypes.SetValues)"
-                                [Text]="'Set value'" [Top]="5"
-                                [DataCy]="'set-record-fields-type-setvalues'">
+                                [Text]="'Set value'" [Top]="5" [DataCy]="'set-record-fields-type-setvalues'">
                             </RadioButton>
                         </td>
                     </tr>
@@ -173,13 +172,13 @@
             </div>
 
             <div class="table-row-cell-block">
-                <TreeSelect *ngIf="CollectionChanged" [Items]="VariablesTreeItems" [Width]="'300px'"
-                    [Value]="Variable" [ShowExpand]="false" [ShowItem]="Entity | ShowTreeItemPipe : 'type'"
+                <TreeSelect *ngIf="CollectionChanged" [Items]="VariablesTreeItems" [Width]="'300px'" [Value]="Variable"
+                    [ShowExpand]="false" [ShowItem]="Entity | ShowTreeItemPipe : 'type'"
                     [IsReturnedTreeSelectItem]="true" (ValueChanged)="updateVariable($event)">
                 </TreeSelect>
 
-                <TreeSelect *ngIf="!CollectionChanged" [Items]="VariablesTreeItems" [Width]="'300px'"
-                    [Value]="Variable" [ShowExpand]="false" [ShowItem]="Entity | ShowTreeItemPipe : 'type'"
+                <TreeSelect *ngIf="!CollectionChanged" [Items]="VariablesTreeItems" [Width]="'300px'" [Value]="Variable"
+                    [ShowExpand]="false" [ShowItem]="Entity | ShowTreeItemPipe : 'type'"
                     [IsReturnedTreeSelectItem]="true" (ValueChanged)="updateVariable($event)">
                 </TreeSelect>
             </div>
@@ -196,14 +195,12 @@
 
             <div class="table-row-cell-block">
                 <TreeSelect *ngIf="CollectionChanged" [Items]="FlowVariablesTreeItems" [Width]="'300px'"
-                    [Value]="Variable"
-                    [ShowItem]="DeclareType | ShowFlowVariablesTypeTreeItemPipe : FlowVariablesTreeList"
+                    [Value]="Variable" [ShowItem]="DeclareType | ShowFlowVariablesTypeTreeItemPipe"
                     [IsReturnedTreeSelectItem]="true" (ValueChanged)="updateVariable($event)">
                 </TreeSelect>
 
                 <TreeSelect *ngIf="!CollectionChanged" [Items]="FlowVariablesTreeItems" [Width]="'300px'"
-                    [Value]="Variable"
-                    [ShowItem]="DeclareType | ShowFlowVariablesTypeTreeItemPipe : FlowVariablesTreeList"
+                    [Value]="Variable" [ShowItem]="DeclareType | ShowFlowVariablesTypeTreeItemPipe"
                     [IsReturnedTreeSelectItem]="true" (ValueChanged)="updateVariable($event)">
                 </TreeSelect>
             </div>
