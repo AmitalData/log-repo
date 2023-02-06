@@ -9,29 +9,30 @@ import {
     Injectable,
     HostListener
 } from '@angular/core';
-import {Router, ActivatedRoute, NavigationStart, NavigationEnd} from '@angular/router';
-import {FormBuilder} from '@angular/forms';
-import {CargoTrackingSearchService} from '../../../../Services/Others/CargoTrackingSearchService';
-import {CargoTrackingShipmentList} from '../../../../EntityLists/CargoTrackingShipmentList';
-import {SessionInfo} from '../../../../../Infrastructure/Utilities/SessionInfo';
-import {CdkScrollable, CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
-import {ShipmentDataSource} from '../../../../DataContracts/CargoTrackingShipmentDataSource';
-import {CargoTrackingShipmentSearchInput, MoreFilter} from '../../../../DataContracts/CargoTrackingShipmentFilters';
-import {CargoTrackingBrandingData} from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
-import {CargoTrackingPortService} from '../../../../Services/Others/CargoTrackingPortService';
-import {CargoTrackingShipmentService} from '../../../../Services/Others/CargoTrackingShipmentService';
-import {MessageWindowComponent} from '../../../../../Infrastructure/Components/MessageWindow/MessageWindowComponent';
-import {MatDialog} from '@angular/material/dialog';
-import {RootContext} from 'src/CargoTracking/Utilities/RootContext';
-import {CargoTrackingMilestoneService} from 'src/CargoTracking/Services/Others/CargoTrackingMilestoneService';
-import {MultipleSelectionComponent} from 'src/Infrastructure/Components/MultipleSelection/MultipleSelectionComponent';
-import {filter} from 'rxjs/operators';
-import {ShipmentDirections} from '../ShipmentDetails/ShipmentDetailsComponent';
-import {ReplaySubject} from 'rxjs';
-import {SharedService} from 'src/CargoTracking/Services/Others/SharedService';
-import {QueryColumnPM} from 'src/CargoTracking/Services/Others/QueryColumnPM';
-import {ApiQueryFilters} from 'src/CargoTracking/Services/Others/ApiQueryFilters';
-import {LogitudeGridExportToExcelService} from 'src/CargoTracking/Services/Others/LogitudeGridExportToExcelComponent';
+import { Router, ActivatedRoute, NavigationStart, NavigationEnd } from '@angular/router';
+import { FormBuilder } from '@angular/forms';
+import { CargoTrackingSearchService } from '../../../../Services/Others/CargoTrackingSearchService';
+import { CargoTrackingShipmentList } from '../../../../EntityLists/CargoTrackingShipmentList';
+import { SessionInfo } from '../../../../../Infrastructure/Utilities/SessionInfo';
+import { CdkScrollable, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { ShipmentDataSource } from '../../../../DataContracts/CargoTrackingShipmentDataSource';
+import { CargoTrackingShipmentSearchInput, MoreFilter } from '../../../../DataContracts/CargoTrackingShipmentFilters';
+import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
+import { CargoTrackingPortService } from '../../../../Services/Others/CargoTrackingPortService';
+import { CargoTrackingShipmentService } from '../../../../Services/Others/CargoTrackingShipmentService';
+import { MessageWindowComponent } from '../../../../../Infrastructure/Components/MessageWindow/MessageWindowComponent';
+import { MatDialog } from '@angular/material/dialog';
+import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
+import { CargoTrackingMilestoneService } from 'src/CargoTracking/Services/Others/CargoTrackingMilestoneService';
+import { MultipleSelectionComponent } from 'src/Infrastructure/Components/MultipleSelection/MultipleSelectionComponent';
+import { filter } from 'rxjs/operators';
+import { ShipmentDirections } from '../ShipmentDetails/ShipmentDetailsComponent';
+import { ReplaySubject } from 'rxjs';
+import { SharedService } from 'src/CargoTracking/Services/Others/SharedService';
+import { QueryColumnPM } from 'src/CargoTracking/Services/Others/QueryColumnPM';
+import { ApiQueryFilters } from 'src/CargoTracking/Services/Others/ApiQueryFilters';
+import { LogitudeGridExportToExcelService } from 'src/CargoTracking/Services/Others/LogitudeGridExportToExcelComponent';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
     selector: 'ShipmentsListComponent',
@@ -96,7 +97,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     get enableExportToExcel() {
         return CargoTrackingBrandingData.EnableExportToExcel;
     }
-
+    
     FiltersSelectedInvitedCustoms: any[] = [];
     ShipmentSearchInput: CargoTrackingShipmentSearchInput = new CargoTrackingShipmentSearchInput();
     MilestonesStatus: any[] = [];
@@ -107,16 +108,16 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     MoreFilterMobileValue: MoreFilter = new MoreFilter();
 
     constructor(private router: Router,
-                private route: ActivatedRoute,
-                private formBuilder: FormBuilder,
-                private changeDetector: ChangeDetectorRef,
-                private cargoTrackingPortService: CargoTrackingPortService,
-                private cargoTrackingShipmentService: CargoTrackingShipmentService,
-                public dialog: MatDialog,
-                private searchService: CargoTrackingSearchService,
-                private milestonesService: CargoTrackingMilestoneService,
-                public sharedService: SharedService,
-                private logitudeGridExportToExcelService: LogitudeGridExportToExcelService) {
+        private route: ActivatedRoute,
+        private formBuilder: FormBuilder,
+        private changeDetector: ChangeDetectorRef,
+        private cargoTrackingPortService: CargoTrackingPortService,
+        private cargoTrackingShipmentService: CargoTrackingShipmentService,
+        public dialog: MatDialog,
+        private searchService: CargoTrackingSearchService,
+        private milestonesService: CargoTrackingMilestoneService,
+        public sharedService: SharedService,
+        private logitudeGridExportToExcelService: LogitudeGridExportToExcelService) {
         this.InitComponent();
         this.SetDefaultBackgroundColor();
 
@@ -311,7 +312,12 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         }
         this.LoadScreenData();
     }
-
+    private timerToken: any;
+    onSearchChange(){
+        
+        this.timerToken = setTimeout(() => this.LoadScreenData(), 500);
+        this.ShipmentSearchInput;
+    }
     sortBySelectionChangedHandler(event) {
         switch (event) {
             case SortOptions.ASC:
@@ -346,7 +352,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.LoadScreenData();
         this.showMobileSortMenu = false;
     }
-
+    
     DeselectTransportModeFilter(code) {
         RootContext.ShipmentsScrollPosition = 0;
         this.ShipmentSearchInput.TransportModeCodes = this.ShipmentSearchInput.TransportModeCodes.filter(e => e != code)
@@ -519,7 +525,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         if (shipment.ShipmentLevelCode === 'D') {
             return 'Direct';
         } else if (shipment.ShipmentLevelCode === 'H') {
-            return  'House';
+            return 'House';
         } else if (shipment.ShipmentTypeCode === 'FCL') {
             return 'FCL';
         } else if (shipment.ShipmentTypeCode === 'LCL') {
@@ -609,6 +615,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     ShipmentsCounter: CargoTrackingShipmentsCounter = new CargoTrackingShipmentsCounter();
 
     LoadScreenData() {
+        
         if (this.tenant) {
             this.ShipmentSearchInput.Tenant = this.tenant;
             var shipmentFilters = this.BuildShipmentFilters();
