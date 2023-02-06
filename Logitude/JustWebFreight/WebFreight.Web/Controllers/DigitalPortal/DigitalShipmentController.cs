@@ -74,7 +74,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     var helper = new DigitalFieldSecuritesHelper();
                     foreach (var item in objectFieldIds)
                     {
-                        var blockedFields = helper.GitDigitalSecuritesFeilds(item.ObjectTableId, profileCode, tenant)
+                        var blockedFields = helper.GitDigitalSecuritesFeilds(item.ObjectTableId, profileCode, tenant, true)
                                                           .Where(a => !a.HasPermission)
                                                           .Select(a => a.FieldCode)
                                                           .ToList();

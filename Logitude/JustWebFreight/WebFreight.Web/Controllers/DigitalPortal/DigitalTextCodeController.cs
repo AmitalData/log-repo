@@ -152,7 +152,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
                 var helper = new DigitalFieldSecuritesHelper();
-                var defaultDigitalFieldSecurity = helper.GitDigitalSecuritesFeilds(objectTableId, profileCode, tenant);
+                var defaultDigitalFieldSecurity = helper.GitDigitalSecuritesFeilds(objectTableId, profileCode, tenant, false, true);
                 return Request.CreateResponse(HttpStatusCode.OK, defaultDigitalFieldSecurity);
             }
             catch (AutenticationException ex)
@@ -184,8 +184,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 var textCodeQuery = new DigitalTextCodeQueryService(0);
                 var generalObjectTableId = textCodeQuery.GetDigitalTextCodesObjetTables(0)
-                                                   .Where(a => a.ObjectTableName.Equals("General"))
-                                                   .FirstOrDefault();
+                                                        .Where(a => a.ObjectTableName.Equals("general", StringComparison.InvariantCultureIgnoreCase))
+                                                        .FirstOrDefault();
 
                 if (generalObjectTableId.Equals(digitalFeildSecurityObjectModel.ObjectTableId))
                 {

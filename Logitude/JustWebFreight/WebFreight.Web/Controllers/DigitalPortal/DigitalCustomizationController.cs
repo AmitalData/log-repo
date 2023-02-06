@@ -83,6 +83,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         ModifiedBy = addCustomFieldRequest.ModifiedBy,
                         ModifiedOn = todayDate,
                         HasPermission = true,
+                        IsList = addCustomFieldRequest.IsList,
+                        IsPm = addCustomFieldRequest.IsPm
                     });
 
                     customDigitalFieldSecurity = new DigitalFieldSecurityList
@@ -108,6 +110,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         ModifiedBy = addCustomFieldRequest.ModifiedBy,
                         ModifiedOn = todayDate,
                         HasPermission = true,
+                        IsList = addCustomFieldRequest.IsList,
+                        IsPm = addCustomFieldRequest.IsPm
                     });
 
                     customDigitalFieldSecurity.DefaultSettings = JsonConvert.SerializeObject(items);

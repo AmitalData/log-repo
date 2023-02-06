@@ -11,7 +11,7 @@ namespace Logitude.BL.Helpers
 {
     public class DigitalFieldSecuritesHelper
     {
-        public List<DigitalFeildSecurityObject> GitDigitalSecuritesFeilds(string objectTableId, string profileCode, int tenant, bool singleApi = true)
+        public List<DigitalFeildSecurityObject> GitDigitalSecuritesFeilds(string objectTableId, string profileCode, int tenant, bool singleApi = true, bool isAll = false)
         {
             var digitalFieldSecurity = GetDigitalFieldSecurityQuery(0, objectTableId, profileCode);
 
@@ -22,7 +22,6 @@ namespace Logitude.BL.Helpers
 
             var defaultDigitalFieldSecurity = JsonConvert.DeserializeObject<List<DigitalFeildSecurityObject>>(digitalFieldSecurity?.DefaultSettings);
             var customDigitalFeildSecurityObject = new List<DigitalFeildSecurityObject>();
-            var objectTableName = ObjectTableRepository.GetNameById(objectTableId, tenant);
 
             if (tenant != 0)
             {
@@ -43,6 +42,8 @@ namespace Logitude.BL.Helpers
                             temp.CreatedOn = item.CreatedOn;
                             temp.ModifiedOn = item.ModifiedOn;
                             temp.ModifiedBy = item.ModifiedBy;
+                            temp.IsPm = item.IsPm;
+                            temp.IsList = item.IsList;
                             continue;
                         }
                         else
@@ -53,18 +54,32 @@ namespace Logitude.BL.Helpers
                 }
                 else
                 {
-                    if (!singleApi)
+                    if (!isAll)
                     {
-                        defaultDigitalFieldSecurity = DiscardUnfoundFeildsFromList(defaultDigitalFieldSecurity);
+                        if (!singleApi)
+                        {
+                            defaultDigitalFieldSecurity = DiscardUnfoundFeildsFromList(defaultDigitalFieldSecurity);
+                        }
+                        else
+                        {
+                            defaultDigitalFieldSecurity = DiscardUnfoundFeildsFromObject(defaultDigitalFieldSecurity);
+                        }
                     }
 
                     return defaultDigitalFieldSecurity;
                 }
             }
 
-            if (!singleApi && objectTableName.Equals("Shipment", StringComparison.InvariantCultureIgnoreCase))
+            if (!isAll)
             {
-                defaultDigitalFieldSecurity = DiscardUnfoundFeildsFromList(defaultDigitalFieldSecurity);
+                if (!singleApi)
+                {
+                    defaultDigitalFieldSecurity = DiscardUnfoundFeildsFromList(defaultDigitalFieldSecurity);
+                }
+                else
+                {
+                    defaultDigitalFieldSecurity = DiscardUnfoundFeildsFromObject(defaultDigitalFieldSecurity);
+                }
             }
 
             if (!customDigitalFeildSecurityObject.Any())
@@ -73,91 +88,6 @@ namespace Logitude.BL.Helpers
             }
 
             return defaultDigitalFieldSecurity;
-        }
-
-        private List<DigitalFeildSecurityObject> DiscardUnfoundFeildsFromList(List<DigitalFeildSecurityObject> defaultDigitalFieldSecurity)
-        {
-            var unfoundFeilds = new List<string>
-                {
-                    "Shipment.IsFullInvoiced",
-                    "Shipment.ContainerNumber",
-                    "Shipment.CarrierLastStatusName",
-                    "Shipment.Reference",
-                    "Shipment.NumberOfContainers",
-                    "Shipment.Routing",
-                    "Shipment.FlightDate",
-                    "Shipment.IssuingCarrierAgentId",
-                    "Shipment.Notify1Id",
-                    "Shipment.Notify2Id",
-                    "Shipment.CustomClearancePointId",
-                    "Shipment.ReleasingAgentId",
-                    "Shipment.ColoaderId",
-                    "Shipment.FreightForwarderId",
-                    "Shipment.TruckerId",
-                    "Shipment.Events",
-                    "Shipment.ConsolidatorName",
-                    "Shipment.WarehouseLegRemarks",
-                    "Shipment.IncotermName",
-                    "Shipment.WarehouseLegExpectedEntryDate",
-                    "Shipment.WarehouseLegExpectedReleaseDate",
-                    "Shipment.WarehouseLegActualReleaseDate",
-                    "Shipment.WarehouseLegCutOffDate",
-                    "Shipment.PreCarriageFromPortId",
-                    "Shipment.PreCarriageFromPortName",
-                    "Shipment.PreCarriageATD",
-                    "Shipment.PreCarriageETD",
-                    "Shipment.PreCarriageFromPortCountryCode",
-                    "Shipment.PreCarriageATA",
-                    "Shipment.PreCarriageETA",
-                    "Shipment.PreCarriageTransportModeId",
-                    "Shipment.PreCarriageCarrierName",
-                    "Shipment.PreCarriageCarrierNumber",
-                    "Shipment.PreCarriageVesselName",
-                    "Shipment.MainCarriageFromPortName",
-                    "Shipment.FromPartnerCountryCode",
-                    "Shipment.MainCarriageFromPortCountryCode",
-                    "Shipment.MainCarriageATA",
-                    "Shipment.AirlinePrefix",
-                    "Shipment.MainCarriageCarrierName",
-                    "Shipment.MainCarriageCarrierNumber",
-                    "Shipment.MainCarriageVesselName",
-                    "Shipment.Transshipment1FromPortId",
-                    "Shipment.Transshipment1FromPortName",
-                    "Shipment.Transshipment1FromPortCountryCode",
-                    "Shipment.Transshipment2FromPortName",
-                    "Shipment.Transshipment2FromPortCountryCode",
-                    "Shipment.Transshipment3FromPortName",
-                    "Shipment.Transshipment3FromPortCountryCode",
-                    "Shipment.Transshipment1AdditionalMAWBOBLBL",
-                    "Shipment.Transshipment1CarrierNumber",
-                     "Shipment.Transshipment1CarrierName",
-                    "Shipment.Transshipment1VesselName",
-                    "Shipment.Transshipment2AdditionalMAWBOBLBL",
-                    "Shipment.Transshipment2CarrierName",
-                    "Shipment.Transshipment2CarrierNumber",
-                    "Shipment.Transshipment2VesselName",
-                    "Shipment.Transshipment3AdditionalMAWBOBLBL",
-                    "Shipment.Transshipment3CarrierName",
-                    "Shipment.Transshipment3CarrierNumber",
-                    "Shipment.Transshipment3VesselName",
-                    "Shipment.MainCarriageFinalDestinationPortName",
-                    "Shipment.ToPartnerCountryCode",
-                    "Shipment.MainCarriageFinalDestinationPortCountryCode",
-                    "Shipment.Transshipment3ToPortId",
-                    "Shipment.Transshipment1ToPortId",
-                    "Shipment.Transshipment2ToPortId",
-                    "Shipment.MainCarriageToPortId",
-                    "Shipment.AirlinePrefix",
-                    "Shipment.Master",
-                    "Shipment.OnCarriageFromPortName",
-                    "Shipment.OnCarriageFromPortCountryCode",
-                    "Shipment.OnCarriageTransportModeId",
-                    "Shipment.OnCarriageCarrierName",
-                    "Shipment.OnCarriageCarrierNumber",
-                    "Shipment.OnCarriageVesselName",
-                };
-
-             return defaultDigitalFieldSecurity.Where(a => !unfoundFeilds.Contains(a.FieldCode)).ToList();
         }
 
         public DigitalFieldSecurityList GetDigitalFieldSecurityQuery(int tenant, string objectTableId, string profileCode)
@@ -178,15 +108,14 @@ namespace Logitude.BL.Helpers
             return digitalFieldSecurity;
         }
 
-
         public bool CheckIfFieldInuse(CheckObjectFieldExistenceRequest checkObjectFieldExistenceRequest, int tenant)
         {
             var helper = new DigitalFieldSecuritesHelper();
             var defaultDigitalFieldSecurity = helper.GitDigitalSecuritesFeilds(checkObjectFieldExistenceRequest.ObjectTableId,
-                                                                               checkObjectFieldExistenceRequest.ProfileCode, tenant);
+                                                                               checkObjectFieldExistenceRequest.ProfileCode, tenant, false, true);
 
             var defaultDigitalFieldTenant0 = helper.GitDigitalSecuritesFeilds(checkObjectFieldExistenceRequest.ObjectTableId,
-                                                                               checkObjectFieldExistenceRequest.ProfileCode, 0);
+                                                                               checkObjectFieldExistenceRequest.ProfileCode, 0, false, true);
 
             var res = false;
 
@@ -198,5 +127,19 @@ namespace Logitude.BL.Helpers
 
             return res;
         }
+
+        #region private
+
+        private List<DigitalFeildSecurityObject> DiscardUnfoundFeildsFromList(List<DigitalFeildSecurityObject> defaultDigitalFieldSecurity)
+        {
+            return defaultDigitalFieldSecurity.Where(a => a.IsList).ToList();
+        }
+
+        private List<DigitalFeildSecurityObject> DiscardUnfoundFeildsFromObject(List<DigitalFeildSecurityObject> defaultDigitalFieldSecurity)
+        {
+            return defaultDigitalFieldSecurity.Where(a => a.IsPm).ToList();
+        }
+
+        #endregion private
     }
 }

@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="5">
+  <Sql Version="6">
       <![CDATA[	  
 	  delete from DigitalFieldSecurities where id != ''	  
   	  delete from DigitalTextCodes where id != ''
@@ -51,7 +51,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.TransportModeId",
@@ -59,7 +61,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.StatusName",
@@ -67,7 +71,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.House",
@@ -75,7 +81,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.CreateDateTime",
@@ -83,7 +91,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.MainCarriageETA",
@@ -91,7 +101,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},		
 		{
 			"FieldCode": "Shipment.NotesSharedWithCustomer",
@@ -99,7 +111,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.DescriptionOfGoods",
@@ -107,7 +121,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.StatusDate",
@@ -115,7 +131,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.ConsigneeName",
@@ -123,7 +141,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.ShipperName",
@@ -131,7 +151,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.IsFullInvoiced",
@@ -139,7 +161,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.IncotermCode",
@@ -147,7 +171,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.AccountManagerUserName",
@@ -155,7 +181,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.SalesmanUserName",
@@ -163,7 +191,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.ShipmentLevelName",
@@ -171,7 +201,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.NumberOfPackages",
@@ -179,7 +211,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Volume",
@@ -187,7 +221,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.GrossWeight",
@@ -195,7 +231,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.CustomerName",
@@ -203,7 +241,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.ChargeableWeight",
@@ -211,7 +251,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.ContainerNumber",
@@ -219,7 +261,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.CarrierLastStatusName",
@@ -227,7 +271,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.Reference",
@@ -235,7 +281,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.NumberOfContainers",
@@ -243,7 +291,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.Routing",
@@ -251,7 +301,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.To",
@@ -259,7 +311,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.FlightDate",
@@ -267,7 +321,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false,
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.CarrierNumber",
@@ -275,7 +331,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.CustomerReference1",
@@ -283,7 +341,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.CustomerReference2",
@@ -291,7 +351,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.AgentName",
@@ -299,7 +361,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.IssuingCarrierAgentId",
@@ -307,7 +371,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.Notify1Id",
@@ -315,7 +381,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.Notify2Id",
@@ -323,7 +391,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.CustomClearancePointId",
@@ -331,7 +401,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.ReleasingAgentId",
@@ -339,7 +411,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.ColoaderId",
@@ -347,7 +421,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.FreightForwarderId",
@@ -355,7 +431,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.TruckerId",
@@ -363,7 +441,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.ConsolidatorName",
@@ -371,7 +451,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.Events",
@@ -379,7 +461,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.WarehouseLegRemarks",
@@ -387,7 +471,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.ShipmentNumber",
@@ -395,7 +481,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.MainCarriageATD",
@@ -403,7 +491,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
            "FieldCode": "Shipment.DirectionId",
@@ -411,7 +501,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
         },
 	    {
            "FieldCode": "Shipment.ShipmentSubTypeName",
@@ -419,7 +511,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 	    {
             "FieldCode": "Shipment.ShipmentTypeName",
@@ -427,7 +521,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 	    },
 	    {
             "FieldCode": "Shipment.LongMaster",
@@ -435,15 +531,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
-        },
-	    {
-           "FieldCode": "Shipment.Master",
-			"CreatedBy": "system",
-			"ModifiedBy": "system",
-			"CreatedOn": "",
-			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
         },
 	    {
             "FieldCode": "Shipment.IncotermName",
@@ -451,7 +541,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.Id",
@@ -459,7 +551,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.MainCarriageETD",
@@ -467,7 +561,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.MainCarriageFinalDestinationETA",
@@ -475,7 +571,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.InlandDomesticFromTypeCode",
@@ -483,7 +581,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.MainCarriageFromAddressId",
@@ -491,7 +591,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.MainCarriageFromPortCode",
@@ -499,7 +601,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.InlandDomesticFromCity",
@@ -507,7 +611,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.InlandDomesticToTypeCode",
@@ -515,7 +621,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.MainCarriageToAddressId",
@@ -523,7 +631,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.MainCarriageToPortCode",
@@ -531,7 +641,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.InlandDomesticToCity",
@@ -539,7 +651,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.InlandDomesticFromCountryId",
@@ -547,7 +661,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.MainCarriageFromCity",
@@ -555,7 +671,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.FromPortName",
@@ -563,7 +681,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.FromCountryCode",
@@ -571,7 +691,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.Transshipment1ETA",
@@ -579,7 +701,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.Transshipment1ATA",
@@ -587,7 +711,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.Transshipment1ETD",
@@ -595,7 +721,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.Transshipment1ATD",
@@ -603,7 +731,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.Transshipment2ETA",
@@ -611,7 +741,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.Transshipment2ATA",
@@ -619,7 +751,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.Transshipment2ETD",
@@ -627,7 +761,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.Transshipment2ATD",
@@ -635,7 +771,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.Transshipment3ETA",
@@ -643,7 +781,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.Transshipment3ATA",
@@ -651,7 +791,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.Transshipment3ETD",
@@ -659,7 +801,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.Transshipment3ATD",
@@ -667,7 +811,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.MainCarriageToCity",
@@ -675,7 +821,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.ToPortName",
@@ -683,7 +831,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.ToCountryCode",
@@ -691,7 +841,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.IsOperationalClosed",
@@ -699,7 +851,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.IsCustomerArchived",
@@ -707,7 +861,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.IsAccountingClosed",
@@ -715,7 +871,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.ShipmentLevelCode",
@@ -723,7 +881,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.StatusLocation",
@@ -731,7 +891,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.StatusCode",
@@ -739,7 +901,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.ShipperAddressCountryCode",
@@ -747,7 +911,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.ConsigneeAddressCountryCode",
@@ -755,7 +921,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
 			"FieldCode": "Shipment.WarehouseLegExpectedEntryDate",
@@ -763,7 +931,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.WarehouseLegExpectedReleaseDate",
@@ -771,7 +941,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.WarehouseLegActualReleaseDate",
@@ -779,7 +951,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.WarehouseLegCutOffDate",
@@ -787,7 +961,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": false,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.PreCarriageFromPortId",
@@ -795,7 +971,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.PreCarriageFromPortName",
@@ -803,7 +981,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": false, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.PreCarriageATD",
@@ -811,7 +991,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.PreCarriageETD",
@@ -819,7 +1001,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.PreCarriageFromPortCountryCode",
@@ -827,7 +1011,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.PreCarriageATA",
@@ -835,7 +1021,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.PreCarriageETA",
@@ -843,7 +1031,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.PreCarriageTransportModeId",
@@ -851,7 +1041,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": false,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.PreCarriageCarrierName",
@@ -859,7 +1051,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": false,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.PreCarriageCarrierNumber",
@@ -867,7 +1061,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.PreCarriageVesselName",
@@ -875,7 +1071,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": false, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.MainCarriageFromPortName",
@@ -883,7 +1081,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.FromPartnerCountryCode",
@@ -891,7 +1091,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.MainCarriageFromPortCountryCode",
@@ -899,7 +1101,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.MainCarriageATA",
@@ -907,15 +1111,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
-		},
-		{
-			"FieldCode": "Shipment.AirlinePrefix",
-			"CreatedBy": "system", 
-			"ModifiedBy": "system",
-			"CreatedOn": "", 
-			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.MainCarriageCarrierName",
@@ -923,7 +1121,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.MainCarriageCarrierNumber",
@@ -931,7 +1131,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.MainCarriageVesselName",
@@ -939,7 +1141,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment1FromPortId",
@@ -947,7 +1151,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment1FromPortName",
@@ -955,7 +1161,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment1FromPortCountryCode",
@@ -963,7 +1171,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment2FromPortName",
@@ -971,7 +1181,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment2FromPortCountryCode",
@@ -979,7 +1191,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment3FromPortName",
@@ -987,7 +1201,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment3FromPortCountryCode",
@@ -995,7 +1211,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment1AdditionalMAWBOBLBL",
@@ -1003,15 +1221,19 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
-    {
+        {
 			"FieldCode": "Shipment.Transshipment1CarrierName",
 			"CreatedBy": "system",
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment1CarrierNumber",
@@ -1019,7 +1241,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment1VesselName",
@@ -1027,7 +1251,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment2AdditionalMAWBOBLBL",
@@ -1035,7 +1261,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment2CarrierName",
@@ -1043,7 +1271,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment2CarrierNumber",
@@ -1051,7 +1281,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment2VesselName",
@@ -1059,7 +1291,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment3AdditionalMAWBOBLBL",
@@ -1067,7 +1301,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment3CarrierName",
@@ -1075,7 +1311,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment3CarrierNumber",
@@ -1083,7 +1321,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment3VesselName",
@@ -1091,7 +1331,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": false, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.MainCarriageFinalDestinationPortName",
@@ -1099,7 +1341,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.ToPartnerCountryCode",
@@ -1107,7 +1351,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.MainCarriageFinalDestinationPortCountryCode",
@@ -1115,7 +1361,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.MainCarriageFinalDestinationATA",
@@ -1123,7 +1371,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment3ToPortId",
@@ -1131,7 +1381,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment1ToPortId",
@@ -1139,7 +1391,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment2ToPortId",
@@ -1147,7 +1401,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.MainCarriageToPortId",
@@ -1155,7 +1411,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.AirlinePrefix",
@@ -1163,7 +1421,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Master",
@@ -1171,7 +1431,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.OnCarriageFromPortName",
@@ -1179,7 +1441,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": false, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.OnCarriageFromPortCountryCode",
@@ -1187,7 +1451,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": false, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.OnCarriageTransportModeId",
@@ -1195,7 +1461,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.OnCarriageCarrierName",
@@ -1203,7 +1471,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": false, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.OnCarriageCarrierNumber",
@@ -1211,7 +1481,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.OnCarriageVesselName",
@@ -1219,7 +1491,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.InlandDomesticToCountryId",
@@ -1227,7 +1501,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		}]');
 		
 	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
@@ -1243,7 +1519,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.CreateDate",
@@ -1251,7 +1529,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.DueDate",
@@ -1259,7 +1539,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.AmountInInvoiceCurrency",
@@ -1267,7 +1549,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.CustomerRef",
@@ -1275,7 +1559,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.InvoiceDate",
@@ -1283,7 +1569,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.MainEntityReference",
@@ -1291,7 +1579,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.ShipmentsNumbers",
@@ -1299,7 +1589,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.AmountDue",
@@ -1307,7 +1599,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.PaymentTermName",
@@ -1315,7 +1609,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.InvoiceDate",
@@ -1323,7 +1619,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.PrintNotes",
@@ -1331,7 +1629,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.Description",
@@ -1339,7 +1639,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.InvoiceNumber",
@@ -1347,7 +1649,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.AmountPaid",
@@ -1355,7 +1659,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.AmountDue",
@@ -1363,7 +1669,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.AmountInInvoiceCurrency",
@@ -1371,7 +1679,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.AmountInInvoiceCurrency",
@@ -1379,7 +1689,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.ShipmentsNumbers",
@@ -1387,7 +1699,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.MasterNumber",
@@ -1395,7 +1709,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.HouseNumber",
@@ -1403,7 +1719,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.MainEntityReference",
@@ -1411,7 +1729,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.TotalVATs",
@@ -1419,7 +1739,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.MainEntityReference",
@@ -1427,7 +1749,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.Description",
@@ -1435,7 +1759,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.ShipmentsNumbers",
@@ -1443,7 +1769,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			}]');
 
  	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
@@ -1461,7 +1789,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
     	{
 			"FieldCode": "Shipment.TransportModeId",
@@ -1469,7 +1799,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.StatusName",
@@ -1477,7 +1809,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.House",
@@ -1485,7 +1819,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.CreateDateTime",
@@ -1493,7 +1829,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.MainCarriageETA",
@@ -1501,7 +1839,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},		
 		{
 			"FieldCode": "Shipment.NotesSharedWithCustomer",
@@ -1509,7 +1849,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.DescriptionOfGoods",
@@ -1517,7 +1859,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.StatusDate",
@@ -1525,7 +1869,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.ConsigneeName",
@@ -1533,7 +1879,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.ShipperName",
@@ -1541,7 +1889,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.IsFullInvoiced",
@@ -1549,7 +1899,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.IncotermCode",
@@ -1557,7 +1909,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.AccountManagerUserName",
@@ -1565,7 +1919,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.SalesmanUserName",
@@ -1573,7 +1929,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.ShipmentLevelName",
@@ -1581,7 +1939,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.NumberOfPackages",
@@ -1589,7 +1949,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Volume",
@@ -1597,7 +1959,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.GrossWeight",
@@ -1605,7 +1969,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.CustomerName",
@@ -1613,7 +1979,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.ChargeableWeight",
@@ -1621,7 +1989,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.ContainerNumber",
@@ -1629,7 +1999,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": false, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.CarrierLastStatusName",
@@ -1637,7 +2009,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.Reference",
@@ -1645,7 +2019,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": false, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.NumberOfContainers",
@@ -1653,7 +2029,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.Routing",
@@ -1661,7 +2039,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.To",
@@ -1669,7 +2049,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.FlightDate",
@@ -1677,7 +2059,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.CarrierNumber",
@@ -1685,7 +2069,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.CustomerReference1",
@@ -1693,7 +2079,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.CustomerReference2",
@@ -1701,7 +2089,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.AgentName",
@@ -1709,7 +2099,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.IssuingCarrierAgentId",
@@ -1717,7 +2109,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.Notify1Id",
@@ -1725,7 +2119,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.Notify2Id",
@@ -1733,7 +2129,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.CustomClearancePointId",
@@ -1741,7 +2139,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false,
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.ReleasingAgentId",
@@ -1749,7 +2149,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.ColoaderId",
@@ -1757,7 +2159,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.FreightForwarderId",
@@ -1765,7 +2169,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.TruckerId",
@@ -1773,7 +2179,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.ConsolidatorName",
@@ -1781,7 +2189,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.Events",
@@ -1789,7 +2199,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.WarehouseLegRemarks",
@@ -1797,7 +2209,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.ShipmentNumber",
@@ -1805,7 +2219,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode" : "Shipment.MainCarriageATD",
@@ -1813,7 +2229,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
 		},
 		{
            "FieldCode": "Shipment.DirectionId",
@@ -1821,7 +2239,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
         },
 	    {
            "FieldCode": "Shipment.ShipmentSubTypeName",
@@ -1829,7 +2249,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
         },
 	    {
             "FieldCode": "Shipment.ShipmentTypeName" ,
@@ -1837,7 +2259,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 	    },
 	    {
             "FieldCode": "Shipment.LongMaster",
@@ -1845,7 +2269,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 	    {
            "FieldCode": "Shipment.Master",
@@ -1853,7 +2279,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
         },
 	    {
             "FieldCode": "Shipment.IncotermName",
@@ -1861,7 +2289,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.Id",
@@ -1869,7 +2299,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.MainCarriageETD",
@@ -1877,7 +2309,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.MainCarriageFinalDestinationATA",
@@ -1885,7 +2319,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.MainCarriageFinalDestinationETA",
@@ -1893,7 +2329,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.InlandDomesticFromTypeCode",
@@ -1901,7 +2339,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.MainCarriageFromAddressId",
@@ -1909,7 +2349,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.MainCarriageFromPortCode",
@@ -1917,7 +2359,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.InlandDomesticFromCity",
@@ -1925,7 +2369,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.InlandDomesticToTypeCode",
@@ -1933,7 +2379,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.MainCarriageToAddressId",
@@ -1941,7 +2389,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.MainCarriageToPortCode",
@@ -1949,7 +2399,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.InlandDomesticToCity",
@@ -1957,7 +2409,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.InlandDomesticFromCountryId",
@@ -1965,7 +2419,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.MainCarriageFromCity",
@@ -1973,7 +2429,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.FromPortName",
@@ -1981,7 +2439,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.FromCountryCode",
@@ -1989,7 +2449,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.Transshipment1ETA",
@@ -1997,7 +2459,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.Transshipment1ATA",
@@ -2005,7 +2469,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.Transshipment1ETD",
@@ -2013,7 +2479,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.Transshipment1ATD",
@@ -2021,7 +2489,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.Transshipment2ETA",
@@ -2029,7 +2499,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.Transshipment2ATA",
@@ -2037,7 +2509,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.Transshipment2ETD",
@@ -2045,7 +2519,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.Transshipment2ATD",
@@ -2053,7 +2529,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.Transshipment3ETA",
@@ -2061,7 +2539,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.Transshipment3ATA",
@@ -2069,7 +2549,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.Transshipment3ETD",
@@ -2077,7 +2559,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.Transshipment3ATD",
@@ -2085,7 +2569,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.MainCarriageToCity",
@@ -2093,7 +2579,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.ToPortName",
@@ -2101,7 +2589,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.ToCountryCode",
@@ -2109,7 +2599,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.IsOperationalClosed",
@@ -2117,7 +2609,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.IsCustomerArchived",
@@ -2125,7 +2619,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.IsAccountingClosed",
@@ -2133,7 +2629,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.ShipmentLevelCode",
@@ -2141,7 +2639,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.StatusLocation",
@@ -2149,7 +2649,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.StatusCode",
@@ -2157,7 +2659,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.ShipperAddressCountryCode",
@@ -2165,7 +2669,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
         },
 		{
             "FieldCode": "Shipment.ConsigneeAddressCountryCode",
@@ -2173,7 +2679,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
         },
 		{
 			"FieldCode": "Shipment.WarehouseLegExpectedEntryDate",
@@ -2181,7 +2689,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.WarehouseLegExpectedReleaseDate",
@@ -2189,7 +2699,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.WarehouseLegActualReleaseDate",
@@ -2197,7 +2709,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.WarehouseLegCutOffDate",
@@ -2205,7 +2719,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.PreCarriageFromPortId",
@@ -2213,7 +2729,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.PreCarriageFromPortName",
@@ -2221,7 +2739,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.PreCarriageATD",
@@ -2229,7 +2749,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.PreCarriageETD",
@@ -2237,7 +2759,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.PreCarriageFromPortCountryCode",
@@ -2245,7 +2769,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.PreCarriageATA",
@@ -2253,7 +2779,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.PreCarriageETA",
@@ -2261,7 +2789,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.PreCarriageTransportModeId",
@@ -2269,7 +2799,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": false,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.PreCarriageCarrierName",
@@ -2277,7 +2809,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": false, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.PreCarriageCarrierNumber",
@@ -2285,7 +2819,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.PreCarriageVesselName",
@@ -2293,7 +2829,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.MainCarriageFromPortName",
@@ -2301,7 +2839,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.FromPartnerCountryCode",
@@ -2309,7 +2849,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.MainCarriageFromPortCountryCode",
@@ -2317,7 +2859,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.MainCarriageATA",
@@ -2325,7 +2869,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.AirlinePrefix",
@@ -2333,7 +2879,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.MainCarriageCarrierName",
@@ -2341,7 +2889,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.MainCarriageCarrierNumber",
@@ -2349,7 +2899,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.MainCarriageVesselName",
@@ -2357,7 +2909,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment1FromPortId",
@@ -2365,7 +2919,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment1FromPortName",
@@ -2373,7 +2929,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment1FromPortCountryCode",
@@ -2381,7 +2939,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment2FromPortName",
@@ -2389,7 +2949,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment2FromPortCountryCode",
@@ -2397,7 +2959,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment3FromPortName",
@@ -2405,7 +2969,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment3FromPortCountryCode",
@@ -2413,7 +2979,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment1AdditionalMAWBOBLBL",
@@ -2421,15 +2989,19 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
-    {
+		{
 			"FieldCode": "Shipment.Transshipment1CarrierName",
 			"CreatedBy": "system",
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment1CarrierNumber",
@@ -2437,7 +3009,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment1VesselName",
@@ -2445,7 +3019,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": false,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment2AdditionalMAWBOBLBL",
@@ -2453,7 +3029,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment2CarrierName",
@@ -2461,7 +3039,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment2CarrierNumber",
@@ -2469,7 +3049,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment2VesselName",
@@ -2477,7 +3059,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment3AdditionalMAWBOBLBL",
@@ -2485,7 +3069,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment3CarrierName",
@@ -2493,7 +3079,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment3CarrierNumber",
@@ -2501,7 +3089,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment3VesselName",
@@ -2509,7 +3099,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": false,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.MainCarriageFinalDestinationPortName",
@@ -2517,7 +3109,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.ToPartnerCountryCode",
@@ -2525,7 +3119,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.MainCarriageFinalDestinationPortCountryCode",
@@ -2533,7 +3129,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment3ToPortId",
@@ -2541,7 +3139,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment1ToPortId",
@@ -2549,7 +3149,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.Transshipment2ToPortId",
@@ -2557,7 +3159,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.MainCarriageToPortId",
@@ -2565,23 +3169,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
-		},
-		{
-			"FieldCode": "Shipment.AirlinePrefix",
-			"CreatedBy": "system",
-			"ModifiedBy": "system",
-			"CreatedOn": "",
-			"ModifiedOn": "",
-			"HasPermission": true
-		},
-		{
-			"FieldCode": "Shipment.Master",
-			"CreatedBy": "system", 
-			"ModifiedBy": "system",
-			"CreatedOn": "",
-			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.OnCarriageFromPortName",
@@ -2589,7 +3179,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.OnCarriageFromPortCountryCode",
@@ -2597,7 +3189,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": false,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.OnCarriageTransportModeId",
@@ -2605,7 +3199,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.OnCarriageCarrierName",
@@ -2613,7 +3209,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.OnCarriageCarrierNumber",
@@ -2621,7 +3219,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.OnCarriageVesselName",
@@ -2629,7 +3229,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": false, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Shipment.InlandDomesticToCountryId",
@@ -2637,7 +3239,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		}]');
 		
 	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
@@ -2651,7 +3255,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.CreateDate",
@@ -2659,7 +3265,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.DueDate",
@@ -2667,7 +3275,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.AmountInInvoiceCurrency",
@@ -2675,7 +3285,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.CustomerRef",
@@ -2683,7 +3295,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.InvoiceDate",
@@ -2691,7 +3305,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.MainEntityReference",
@@ -2699,7 +3315,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.ShipmentsNumbers",
@@ -2707,7 +3325,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.AmountDue",
@@ -2715,7 +3335,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.PaymentTermName",
@@ -2723,7 +3345,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.InvoiceDate",
@@ -2731,7 +3355,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.PrintNotes",
@@ -2739,7 +3365,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.Description",
@@ -2747,7 +3375,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.InvoiceNumber",
@@ -2755,7 +3385,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.AmountPaid",
@@ -2763,7 +3395,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.AmountDue",
@@ -2771,7 +3405,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.AmountInInvoiceCurrency",
@@ -2779,7 +3415,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.AmountInInvoiceCurrency",
@@ -2787,7 +3425,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.ShipmentsNumbers",
@@ -2795,7 +3435,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.MasterNumber",
@@ -2803,7 +3445,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.HouseNumber",
@@ -2811,7 +3455,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.MainEntityReference",
@@ -2819,7 +3465,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.TotalVATs",
@@ -2827,7 +3475,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.MainEntityReference",
@@ -2835,7 +3485,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.Description",
@@ -2843,7 +3495,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ARInvoice.ShipmentsNumbers",
@@ -2851,7 +3505,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			}]');
 			
 	  declare @shipmentPackageObjectTableId as varchar(15)
@@ -2865,7 +3521,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ContainerNumber",
@@ -2873,7 +3531,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": false,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Description",
@@ -2881,7 +3541,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.FlashPoint",
@@ -2889,7 +3551,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Harmonize",
@@ -2897,7 +3561,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.OriginalShipmentPackageId",
@@ -2905,7 +3571,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Height",
@@ -2913,7 +3581,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Id",
@@ -2921,7 +3591,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.IMDGCode",
@@ -2929,7 +3601,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Length",
@@ -2937,7 +3611,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.MarksAndNumbers",
@@ -2945,7 +3621,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Quantity",
@@ -2953,7 +3631,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.InUse",
@@ -2961,7 +3641,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ShipperSeal",
@@ -2969,7 +3651,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.CarrierSeal",
@@ -2977,7 +3661,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ShipmentId",
@@ -2985,7 +3671,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.SOC",
@@ -2993,7 +3681,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Temperature",
@@ -3001,7 +3691,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Tenant",
@@ -3009,7 +3701,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Tare",
@@ -3017,7 +3711,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.UnNumber",
@@ -3025,7 +3721,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Ventilation",
@@ -3033,7 +3731,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Volume",
@@ -3041,7 +3741,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Weight",
@@ -3049,7 +3751,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Width",
@@ -3057,7 +3761,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.PackagingGroup",
@@ -3065,7 +3771,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.MaterialDescription",
@@ -3073,7 +3781,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.IsDangerous",
@@ -3081,7 +3791,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.VolumetricWeight",
@@ -3089,7 +3801,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.CommodityId",
@@ -3097,7 +3811,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.NumberOfInsidePackages",
@@ -3105,7 +3821,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.NumberOfInsidePackagesDetails",
@@ -3113,7 +3831,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.VGM",
@@ -3121,7 +3841,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.MethodUsed",
@@ -3129,7 +3851,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ShipmentNumber",
@@ -3137,7 +3861,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.PackageTypeId",
@@ -3145,7 +3871,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.IsDeliveryFU",
@@ -3153,7 +3881,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.DeliveryId",
@@ -3161,7 +3891,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.DeliveryETD",
@@ -3169,7 +3901,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.DeliveryATD",
@@ -3177,7 +3911,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.DeliveryETA",
@@ -3185,7 +3921,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.DeliveryATA",
@@ -3193,7 +3931,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.DeliveryTo",
@@ -3201,7 +3941,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.DeliveryFrom",
@@ -3209,7 +3951,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.IsEmptyContainerReturnFU",
@@ -3217,7 +3961,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.EmptyContainerReturnId",
@@ -3225,7 +3971,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.EmptyContainerReturnETD",
@@ -3233,7 +3981,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.EmptyContainerReturnATD",
@@ -3241,7 +3991,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.EmptyContainerReturnETA",
@@ -3249,7 +4001,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.EmptyContainerReturnATA",
@@ -3257,7 +4011,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.EmptyContainerReturnTo",
@@ -3265,7 +4021,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.EmptyContainerReturnFrom",
@@ -3273,7 +4031,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Reference1",
@@ -3281,7 +4041,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Reference2",
@@ -3289,7 +4051,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Reference3",
@@ -3297,7 +4061,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Reference4",
@@ -3305,7 +4071,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.CommodityNumber",
@@ -3313,7 +4081,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.CommodityName",
@@ -3321,7 +4091,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.CeficClass",
@@ -3329,7 +4101,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.KelmerCode",
@@ -3337,7 +4111,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.EMS",
@@ -3345,7 +4121,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ProperShippingName",
@@ -3353,7 +4131,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.MarinePollutant",
@@ -3361,7 +4141,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Notes",
@@ -3369,7 +4151,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.TemperatureUnitCode",
@@ -3377,7 +4161,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.FlashPointTemperatureUnitCode",
@@ -3385,7 +4171,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.NonActiveContainer",
@@ -3393,7 +4181,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.OnCarriageATA",
@@ -3401,7 +4191,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.OnCarriageATD",
@@ -3409,7 +4201,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.OnCarriageETA",
@@ -3417,7 +4211,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.OnCarriageETD",
@@ -3425,7 +4221,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.LastStatusCode",
@@ -3433,7 +4231,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.LastStatusDate",
@@ -3441,7 +4241,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.LastStatusName",
@@ -3449,7 +4251,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.DeliveryTransportModeCode",
@@ -3457,7 +4261,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ECRTransportModeCode",
@@ -3465,7 +4271,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.IsMultiHarmonize",
@@ -3473,7 +4281,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ETD",
@@ -3481,7 +4291,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ETA",
@@ -3489,7 +4301,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Routing",
@@ -3497,7 +4311,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.RoutingIds",
@@ -3505,7 +4321,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.VoyageTripNumber",
@@ -3513,7 +4331,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.HasContainerException",
@@ -3521,7 +4341,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Make",
@@ -3529,7 +4351,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Year",
@@ -3537,7 +4361,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Model",
@@ -3545,7 +4371,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Color",
@@ -3553,7 +4381,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ChassisNumber",
@@ -3561,7 +4391,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.RegistrationNumber",
@@ -3569,7 +4401,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.CountryId",
@@ -3577,7 +4411,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.WarehouseReleaseNumber",
@@ -3585,7 +4421,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.HorseId",
@@ -3593,7 +4431,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.HorseName",
@@ -3601,7 +4441,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.LCLContainerTypeId",
@@ -3609,7 +4451,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ContainerEntityId",
@@ -3617,7 +4461,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ContainerStatusSourceCode",
@@ -3625,7 +4471,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ContainerStrippedDate",
@@ -3633,7 +4481,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.InsideShipmentPackages",
@@ -3641,7 +4491,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ShipmentPackageItems",
@@ -3649,7 +4501,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ShipmentPackageHarmonizes",
@@ -3657,7 +4511,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.PackageTypeId",
@@ -3665,7 +4521,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.PackageTypeCode",
@@ -3673,7 +4531,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.PackageTypeName",
@@ -3681,7 +4541,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.PackageTypeLocalName",
@@ -3689,7 +4551,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.PackageTypeNote",
@@ -3697,7 +4561,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.PrintAs",
@@ -3705,7 +4571,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.IsPackageAddedManually",
@@ -3713,7 +4581,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.IsContainer",
@@ -3721,7 +4591,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.IsContainerRefrigerated",
@@ -3729,7 +4601,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.PackageTypeIsInland",
@@ -3737,7 +4611,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.PackageTypeIsOcean",
@@ -3745,7 +4621,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.PackageTypeIsAir",
@@ -3753,7 +4631,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.TEU",
@@ -3761,7 +4641,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ContainerSize",
@@ -3769,7 +4651,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.PackageTypeVolume",
@@ -3777,7 +4661,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.WarehouseLegAddressCity",
@@ -3785,7 +4671,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.WarehouseLegAddressCountryCode",
@@ -3793,7 +4681,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.WarehouseLegActualEntryDate",
@@ -3801,7 +4691,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			}]');
 			
 	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
@@ -3814,7 +4706,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ContainerNumber",
@@ -3822,7 +4716,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Description",
@@ -3830,7 +4726,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.FlashPoint",
@@ -3838,7 +4736,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Harmonize",
@@ -3846,7 +4746,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.OriginalShipmentPackageId",
@@ -3854,7 +4756,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Height",
@@ -3862,7 +4766,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Id",
@@ -3870,7 +4776,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.IMDGCode",
@@ -3878,7 +4786,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Length",
@@ -3886,7 +4796,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.MarksAndNumbers",
@@ -3894,7 +4806,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Quantity",
@@ -3902,7 +4816,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.InUse",
@@ -3910,7 +4826,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ShipperSeal",
@@ -3918,7 +4836,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.CarrierSeal",
@@ -3926,7 +4846,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ShipmentId",
@@ -3934,7 +4856,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.SOC",
@@ -3942,7 +4866,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Temperature",
@@ -3950,7 +4876,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Tenant",
@@ -3958,7 +4886,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Tare",
@@ -3966,7 +4896,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.UnNumber",
@@ -3974,7 +4906,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Ventilation",
@@ -3982,7 +4916,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Volume",
@@ -3990,7 +4926,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Weight",
@@ -3998,7 +4936,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Width",
@@ -4006,7 +4946,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.PackagingGroup",
@@ -4014,7 +4956,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.MaterialDescription",
@@ -4022,7 +4966,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.IsDangerous",
@@ -4030,7 +4976,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.VolumetricWeight",
@@ -4038,7 +4986,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.CommodityId",
@@ -4046,7 +4996,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.NumberOfInsidePackages",
@@ -4054,7 +5006,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.NumberOfInsidePackagesDetails",
@@ -4062,7 +5016,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.VGM",
@@ -4070,7 +5026,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.MethodUsed",
@@ -4078,7 +5036,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ShipmentNumber",
@@ -4086,7 +5046,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.PackageTypeId",
@@ -4094,7 +5056,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.IsDeliveryFU",
@@ -4102,7 +5066,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.DeliveryId",
@@ -4110,7 +5076,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.DeliveryETD",
@@ -4118,7 +5086,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.DeliveryATD",
@@ -4126,7 +5096,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.DeliveryETA",
@@ -4134,7 +5106,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.DeliveryATA",
@@ -4142,7 +5116,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.DeliveryTo",
@@ -4150,7 +5126,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.DeliveryFrom",
@@ -4158,7 +5136,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.IsEmptyContainerReturnFU",
@@ -4166,7 +5146,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.EmptyContainerReturnId",
@@ -4174,7 +5156,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.EmptyContainerReturnETD",
@@ -4182,7 +5166,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.EmptyContainerReturnATD",
@@ -4190,7 +5176,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.EmptyContainerReturnETA",
@@ -4198,7 +5186,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.EmptyContainerReturnATA",
@@ -4206,7 +5196,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.EmptyContainerReturnTo",
@@ -4214,7 +5206,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.EmptyContainerReturnFrom",
@@ -4222,7 +5216,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Reference1",
@@ -4230,7 +5226,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Reference2",
@@ -4238,7 +5236,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Reference3",
@@ -4246,7 +5246,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Reference4",
@@ -4254,7 +5256,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.CommodityNumber",
@@ -4262,7 +5266,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.CommodityName",
@@ -4270,7 +5276,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.CeficClass",
@@ -4278,7 +5286,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.KelmerCode",
@@ -4286,7 +5296,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.EMS",
@@ -4294,7 +5306,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ProperShippingName",
@@ -4302,7 +5316,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.MarinePollutant",
@@ -4310,7 +5326,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Notes",
@@ -4318,7 +5336,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.TemperatureUnitCode",
@@ -4326,7 +5346,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.FlashPointTemperatureUnitCode",
@@ -4334,7 +5356,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.NonActiveContainer",
@@ -4342,7 +5366,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.OnCarriageATA",
@@ -4350,7 +5376,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.OnCarriageATD",
@@ -4358,7 +5386,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.OnCarriageETA",
@@ -4366,7 +5396,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.OnCarriageETD",
@@ -4374,7 +5406,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.LastStatusCode",
@@ -4382,7 +5416,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.LastStatusDate",
@@ -4390,7 +5426,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.LastStatusName",
@@ -4398,7 +5436,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.DeliveryTransportModeCode",
@@ -4406,7 +5446,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ECRTransportModeCode",
@@ -4414,7 +5456,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.IsMultiHarmonize",
@@ -4422,7 +5466,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ETD",
@@ -4430,7 +5476,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ETA",
@@ -4438,7 +5486,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Routing",
@@ -4446,7 +5496,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.RoutingIds",
@@ -4454,7 +5506,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.VoyageTripNumber",
@@ -4462,7 +5516,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.HasContainerException",
@@ -4470,7 +5526,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Make",
@@ -4478,7 +5536,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Year",
@@ -4486,7 +5546,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Model",
@@ -4494,7 +5556,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.Color",
@@ -4502,7 +5566,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ChassisNumber",
@@ -4510,7 +5576,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.RegistrationNumber",
@@ -4518,7 +5586,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.CountryId",
@@ -4526,7 +5596,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.WarehouseReleaseNumber",
@@ -4534,7 +5606,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.HorseId",
@@ -4542,7 +5616,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.HorseName",
@@ -4550,7 +5626,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.LCLContainerTypeId",
@@ -4558,7 +5636,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ContainerEntityId",
@@ -4566,7 +5646,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ContainerStatusSourceCode",
@@ -4574,7 +5656,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ContainerStrippedDate",
@@ -4582,7 +5666,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.InsideShipmentPackages",
@@ -4590,7 +5676,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ShipmentPackageItems",
@@ -4598,7 +5686,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ShipmentPackageHarmonizes",
@@ -4606,7 +5696,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.PackageTypeId",
@@ -4614,7 +5706,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.PackageTypeCode",
@@ -4622,7 +5716,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.PackageTypeName",
@@ -4630,7 +5726,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.PackageTypeLocalName",
@@ -4638,7 +5736,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.PackageTypeNote",
@@ -4646,7 +5746,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.PrintAs",
@@ -4654,7 +5756,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.IsPackageAddedManually",
@@ -4662,7 +5766,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.IsContainer",
@@ -4670,7 +5776,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.IsContainerRefrigerated",
@@ -4678,7 +5786,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.PackageTypeIsInland",
@@ -4686,7 +5796,8 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, "IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.PackageTypeIsOcean",
@@ -4694,7 +5805,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "", 
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.PackageTypeIsAir",
@@ -4702,7 +5815,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.TEU",
@@ -4710,7 +5825,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.ContainerSize",
@@ -4718,7 +5835,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.PackageTypeVolume",
@@ -4726,7 +5845,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true, 
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.WarehouseLegAddressCity",
@@ -4734,7 +5855,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true,
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.WarehouseLegAddressCountryCode",
@@ -4742,7 +5865,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			},
 			{
 				"FieldCode": "ShipmentPackage.WarehouseLegActualEntryDate",
@@ -4750,7 +5875,9 @@
 				"ModifiedBy": "system",
 				"CreatedOn": "",
 				"ModifiedOn": "",
-				"HasPermission": true
+				"HasPermission": true, 
+				"IsList": true,
+				"IsPm": true
 			}]');
 			
 			
@@ -4765,7 +5892,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "ShipmentPickUpDelivery.PickUpDeliveryNumber",
@@ -4773,7 +5902,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "ShipmentPickUpDelivery.ATD",
@@ -4781,7 +5912,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "ShipmentPickUpDelivery.ETD",
@@ -4789,7 +5922,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "ShipmentPickUpDelivery.TransportModeCode",
@@ -4797,7 +5932,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "ShipmentPickUpDelivery.CarrierId",
@@ -4805,7 +5942,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "ShipmentPickUpDelivery.CarrierNumber",
@@ -4813,7 +5952,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "ShipmentPickUpDelivery.CarrierNumber",
@@ -4821,7 +5962,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "ShipmentPickUpDelivery.ATA",
@@ -4829,7 +5972,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "ShipmentPickUpDelivery.ETA",
@@ -4837,7 +5982,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		}]');
 
 	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
@@ -4850,7 +5997,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "ShipmentPickUpDelivery.PickUpDeliveryNumber",
@@ -4858,7 +6007,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "ShipmentPickUpDelivery.ATD",
@@ -4866,7 +6017,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "ShipmentPickUpDelivery.ETD",
@@ -4874,7 +6027,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "ShipmentPickUpDelivery.TransportModeCode",
@@ -4882,7 +6037,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "ShipmentPickUpDelivery.CarrierId",
@@ -4890,7 +6047,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "ShipmentPickUpDelivery.CarrierNumber",
@@ -4898,7 +6057,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "ShipmentPickUpDelivery.CarrierNumber",
@@ -4906,7 +6067,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "ShipmentPickUpDelivery.ATA",
@@ -4914,7 +6077,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "ShipmentPickUpDelivery.ETA",
@@ -4922,7 +6087,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
 		}]');
 
 	  declare @truckerObjectTableId as varchar(15)
@@ -4936,7 +6103,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Trucker.Code",
@@ -4944,7 +6113,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Trucker.Notes",
@@ -4952,7 +6123,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Trucker.Addresses",
@@ -4960,7 +6133,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Trucker.CountryId",
@@ -4968,7 +6143,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Trucker.CountryCode",
@@ -4976,7 +6153,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Trucker.CountryName",
@@ -4984,7 +6163,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Trucker.StateName",
@@ -4992,7 +6173,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Trucker.StateName",
@@ -5000,7 +6183,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		}]');
 
 	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
@@ -5013,7 +6198,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Trucker.Code",
@@ -5021,7 +6208,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Trucker.Notes",
@@ -5029,7 +6218,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Trucker.Addresses",
@@ -5037,7 +6228,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Trucker.CountryId",
@@ -5045,7 +6238,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Trucker.CountryCode",
@@ -5053,7 +6248,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Trucker.CountryName",
@@ -5061,7 +6258,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Trucker.StateName",
@@ -5069,7 +6268,9 @@
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
-			"HasPermission": true
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		},
 		{
 			"FieldCode": "Trucker.StateName",
@@ -5077,7 +6278,9 @@
 			"ModifiedBy": "system",
 			"ModifiedOn": "",
 			"CreatedOn": "",
-			"HasPermission": true
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
 		}]');
       ]]>
 	</Sql>
