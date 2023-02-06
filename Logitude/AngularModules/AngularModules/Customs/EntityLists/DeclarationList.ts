@@ -225,9 +225,9 @@ export class DeclarationList {
 	ClosingXml: string;
 	ExportCloseAmendRequestNumber: string;
 	ExportCloseAmendmentStatus: string;
+	CasualImporterCountry: string;
 	IntegratorName: string;
 	ExportCloseAmendStatusName: string;
-	CasualImporterCountry: string;
 	
 }
  

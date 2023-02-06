@@ -5895,29 +5895,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string exportCloseAmendStatusName ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ExportCloseAmendStatusName  
-	   {
-	    
-	     get
-		{
-		   return exportCloseAmendStatusName;
-		 }
-		 set
-		 {
-		   if(exportCloseAmendStatusName != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportCloseAmendStatusName",OldValue=exportCloseAmendStatusName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   exportCloseAmendStatusName=value;
-		   }
-			
-		 }
-	   }
 	  private string casualImporterCountry ;
 	  	  
        
@@ -5937,6 +5914,29 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CasualImporterCountry",OldValue=casualImporterCountry,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   casualImporterCountry=value;
+		   }
+			
+		 }
+	   }
+	  private string exportCloseAmendStatusName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExportCloseAmendStatusName  
+	   {
+	    
+	     get
+		{
+		   return exportCloseAmendStatusName;
+		 }
+		 set
+		 {
+		   if(exportCloseAmendStatusName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportCloseAmendStatusName",OldValue=exportCloseAmendStatusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exportCloseAmendStatusName=value;
 		   }
 			
 		 }
