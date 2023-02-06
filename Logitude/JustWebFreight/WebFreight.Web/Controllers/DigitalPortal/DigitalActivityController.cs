@@ -258,5 +258,81 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        [HttpGet]
+        [Route("DigitalActivity/GetDigitalSharedLogisticsSummaryData")]
+        public HttpResponseMessage GetDigitalSharedLogisticsSummaryData(int tenant)
+        {
+            try
+            {
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                ContactActivityLogRepository contactLogRep = new ContactActivityLogRepository();
+                SharedLogisticsSummary result = new SharedLogisticsSummary();
+                result.Id = 1;
+                IQueryable<ContactActivityLog> allSharedLogisticsList = contactLogRep.GetSharedLogisticsContactLogs(tenant)
+                                                                                     .Where(d => (d.PartnerTypeId == "CS" || d.PartnerTypeId == "AG")
+                                                                                               && d.Module.StartsWith("Digital Portal"));
+
+                if (allSharedLogisticsList.Count() > 0)
+                {
+
+                    DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                    DateTime todayDate1 = todayDate;
+                    DateTime todayDate2 = todayDate.AddHours(23).AddMinutes(59).AddSeconds(59);
+                    DateTime lastWeekDate = todayDate.AddDays(-7);
+                    DateTime yesterdayDate = todayDate.AddDays(-1).AddHours(23).AddMinutes(59).AddSeconds(59);
+                    DateTime lastMonthDate = todayDate.AddDays(-30);
+
+
+                    result.TodayCustomersCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "CS" 
+                                                                                && d.LogDateTime >= todayDate1 
+                                                                                && d.LogDateTime <= todayDate2)
+                                                                       .GroupBy(d => d.CardId)
+                                                                       .Count(); 
+
+                    result.LastWeekCustomersCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "CS" 
+                                                                                   && d.LogDateTime >= lastWeekDate 
+                                                                                   && d.LogDateTime <= yesterdayDate)
+                                                                          .GroupBy(d => d.CardId)
+                                                                          .Count();
+
+                    result.LastMonthCustomersCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "CS" 
+                                                                                    && d.LogDateTime >= lastMonthDate 
+                                                                                    && d.LogDateTime <= yesterdayDate)
+                                                                           .GroupBy(d => d.CardId)
+                                                                           .Count(); 
+
+                    result.TodayAgentsCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "AG" 
+                                                                             && d.LogDateTime >= todayDate1 
+                                                                             && d.LogDateTime <= todayDate2)
+                                                                    .GroupBy(d => d.CardId)
+                                                                    .Count();
+
+                    result.LastWeekAgentsCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "AG" 
+                                                                                && d.LogDateTime >= lastWeekDate 
+                                                                                && d.LogDateTime <= yesterdayDate)
+                                                                       .GroupBy(d => d.CardId)
+                                                                       .Count();
+
+                    result.LastMonthAgentsCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "AG" 
+                                                                                 && d.LogDateTime >= lastMonthDate 
+                                                                                 && d.LogDateTime <= yesterdayDate)
+                                                                        .GroupBy(d => d.CardId)
+                                                                        .Count(); 
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null && ex.InnerException.Message.Contains("Execution Timeout Expired")) 
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, new SharedLogisticsSummary());
+                }
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }

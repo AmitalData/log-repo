@@ -18,6 +18,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         {
             this.entityPM = entityPM;
             this.objectContext = objectContext;
+            this.objectTableRepository = objectTableRepository;
             this.textCodeRepository = new TextCodeRepository(objectContext);
             this.objectTableDefaultFieldsService = new ObjectTableDefaultFieldsService(entityPM, objectContext);
         }

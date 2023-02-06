@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -9,6 +9,7 @@ import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryF
 import { ListComponentArgs } from '../../../Infrastructure/Args';
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList';
+import { ContainerViewsGraphComponent } from '../Templates/ContainerViewsGraphComponent';
 
 
 @Component({
@@ -17,7 +18,7 @@ import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureTo
 })
 
 export class ContainerComponent implements OnInit {
-
+    @ViewChild(ContainerViewsGraphComponent) ContainerViewsGraphComponent: ContainerViewsGraphComponent;
     onUserQueriesBackComplete(arg: any) { }
 
     private myDomainService: ContainersFUDomainService;
@@ -48,6 +49,7 @@ export class ContainerComponent implements OnInit {
 
     RefreshButtonClicked() {
         this.LoadAllScreenData();
+        this.ContainerViewsGraphComponent.GetData();
     }
 
     LoadAllScreenData() {

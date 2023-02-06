@@ -166,6 +166,7 @@ export class AddEditChildEntityComponent extends BaseComponent implements OnInit
     }
     SaveChangesAndOpen() {
         this.OkButtonClicked();
+        if (this.ValidationErrorsList.length != 0) return;
         this.FatherComponent.AddChildEntityClicked();
     }
     private AddCustomChildEntity() {

@@ -528,6 +528,10 @@ export class AddEditImporterDocumentComponent implements OnInit {
                 this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
             }
             if (this.IsNewDocument || this.FileDeletedAfterUpload) {
+                if (!this.IsEmptyDocumentCreated && this.EntityPm.IsDeleted) {
+                    this.StopAndCloseCurrentWindow();
+                    return;
+                }
                 if (!this.IsEmptyDocumentCreated) {
                     this.CreateDocumentMethod(null);
                 }
@@ -603,6 +607,12 @@ export class AddEditImporterDocumentComponent implements OnInit {
             }
 
         }
+    }
+    StopAndCloseCurrentWindow() {
+        if (this.CurrentSession.CurrentWindow != null) {
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+        }
+        this.CurrentSession.CloseCurrentWindow();
     }
     FirstTimeUpload: boolean = true;
     public CreateDocumentMethod(file: any) {

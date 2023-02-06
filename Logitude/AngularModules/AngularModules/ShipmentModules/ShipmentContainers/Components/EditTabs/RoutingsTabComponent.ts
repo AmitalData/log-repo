@@ -7,6 +7,7 @@ import { AppTool } from '../../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { DateTimeToDatePipe } from '../../../../Controls/Pipes/DateTimeToDatePipe';
 import { PortList } from '../../../../Common/EntityLists/PortList';
+import { PropertyChangedArgs } from '../../../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 
 @Component({
     templateUrl: './RoutingsTabComponent.html',
@@ -52,12 +53,43 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 }
             });
 
-            this.PropertyChangedEvent = this.EntityPM.PropertyChanged.subscribe(s => {
-                if (s) {
+            this.PropertyChangedEvent = this.EntityPM.PropertyChanged.subscribe((fieldChanged: PropertyChangedArgs) => {
+                if (fieldChanged) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    this.Refresh();
+                    var index: number = this.GetChangedLegIndex(fieldChanged.PropertyName);
+                    this.Refresh(index);
                 }
             });
+        }
+    }
+    private GetChangedLegIndex(fieldChanged: string): number {
+        if (AppTool.IsNullOrEmpty(fieldChanged))
+            return 0;
+
+        else {
+            if (fieldChanged.toLowerCase().indexOf("pickup") > -1)
+                return 1;
+
+            else if (fieldChanged.toLowerCase().indexOf("precarriage") > -1)
+                return 2;
+
+            else if (fieldChanged.toLowerCase().indexOf("pol") > -1)
+                return 3;
+
+            else if (fieldChanged.toLowerCase().indexOf("trans") > -1)
+                return 4;
+
+            else if (fieldChanged.toLowerCase().indexOf("pod") > -1)
+                return 5;
+
+            else if (fieldChanged.toLowerCase().indexOf("oncarriage") > -1)
+                return 6;
+
+            else if (fieldChanged.toLowerCase().indexOf("delivery") > -1)
+                return 7;
+
+            else if (fieldChanged.toLowerCase().indexOf("return") > -1)
+                return 8;
         }
     }
 
@@ -71,21 +103,27 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
 
     }
 
-    private Refresh() {
+    private Refresh(changedLegIndex: number) {
         this.ItemsSource.forEach(item => {
             item.IsContinuousLine = this.CheckNextLegDates(item.NextLegCode);
             item.IsDashedLine = !item.IsContinuousLine;
             item.Calculate();
         });
 
-        this.Refresh_Previous();        
+        //this.Refresh_Previous(changedLegIndex);
+        this.Set_Previous();
     }
-    Refresh_Previous() {
-        this.ItemsSource.forEach(item => {
+    Refresh_Previous(changedLegIndex: number) {
+        this.ItemsSource.filter(d => d.Index == changedLegIndex).forEach(item => {
             this.ItemsSource.filter(d => d.Index < item.Index).forEach(previousItem => {
                 if (item.IsGreenCircle) {
                     previousItem.IsGreenCircle = item.IsGreenCircle;
                     previousItem.IsOrangeCircle = item.IsOrangeCircle;
+                }
+
+                else if (item.IsOrangeCircle) {
+                    previousItem.IsGreenCircle = true;
+                    previousItem.IsOrangeCircle = false;
                 }
             });
         });
@@ -107,7 +145,22 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         this.AddRoutingItem("DELV", "EMRT", 7);
         this.AddRoutingItem("EMRT", null, 8);
 
-        this.Refresh_Previous();
+        this.Set_Previous();
+    }
+    private Set_Previous() {
+        this.ItemsSource.forEach(item => {
+            this.ItemsSource.filter(d => d.Index < item.Index).forEach(previousItem => {
+                if (item.IsGreenCircle) {
+                    previousItem.IsGreenCircle = item.IsGreenCircle;
+                    previousItem.IsOrangeCircle = item.IsOrangeCircle;
+                }
+
+                else if (item.IsOrangeCircle) {
+                    previousItem.IsGreenCircle = true;
+                    previousItem.IsOrangeCircle = false;
+                }
+            });
+        });
     }
 
     private AddRoutingItem(code: string, nextLegCode: string, index: number) {
@@ -750,17 +803,19 @@ export class RoutingItem {
             this.IsOrangeCircle = false;
     }
     CheckActualDates_Transshipments() {
-        if (!AppTool.IsNullOrEmpty(this.Container.Transshipment3LocationName))
+        this.IsGreenCircle = false;
+        this.IsOrangeCircle = false;
+
+        if (this.Container.ActualTrans3VesselDeparture != null || this.Container.ActualTransshipment3VesselArrival != null || this.Container.ActualTransshipment3Loaded != null)
             this.CheckActualDates_TS3();
 
-        else if (!AppTool.IsNullOrEmpty(this.Container.Transshipment2LocationName))
+        else if (this.Container.ActualTrans2VesselDeparture != null || this.Container.ActualTransshipment2VesselArrival != null || this.Container.ActualTransshipment2Loaded != null)
             this.CheckActualDates_TS2();
 
-        else if (!AppTool.IsNullOrEmpty(this.Container.Transshipment1LocationName))
+        else if (this.Container.ActualTrans1VesselDeparture != null || this.Container.ActualTransshipment1VesselArrival != null || this.Container.ActualTransshipment1Loaded != null)
             this.CheckActualDates_TS1();
     }
     CheckActualDates_TS3() {
-        this.IsGreenCircle = false;
         this.IsOrangeCircle = true;
 
         if (this.Container.ActualTrans3VesselDeparture != null && this.Container.ActualTransshipment3VesselArrival != null && this.Container.ActualTransshipment3Loaded != null) {
@@ -772,7 +827,6 @@ export class RoutingItem {
             this.IsOrangeCircle = false;
     }
     CheckActualDates_TS2() {
-        this.IsGreenCircle = false;
         this.IsOrangeCircle = true;
 
         if (this.Container.ActualTrans2VesselDeparture != null && this.Container.ActualTransshipment2VesselArrival != null && this.Container.ActualTransshipment2Loaded != null) {
@@ -784,7 +838,6 @@ export class RoutingItem {
             this.IsOrangeCircle = false;
     }
     CheckActualDates_TS1() {
-        this.IsGreenCircle = false;
         this.IsOrangeCircle = true;
 
         if (this.Container.ActualTrans1VesselDeparture != null && this.Container.ActualTransshipment1VesselArrival != null && this.Container.ActualTransshipment1Loaded != null) {
