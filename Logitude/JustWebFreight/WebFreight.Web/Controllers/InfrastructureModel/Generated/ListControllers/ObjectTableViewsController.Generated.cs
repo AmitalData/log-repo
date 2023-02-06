@@ -104,7 +104,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
 				ObjectTableQuery objectTableQuery = new ObjectTableQuery(objectTableRepository);
 			    IQueryable<ObjectTableList> entityLists = objectTableQuery.GetIQueryableEntityList(entityPocos);
-				entityLists = entityLists.OrderBy(d => d.Name);
+				entityLists = entityLists.OrderBy(d => d.FullNameTextCodeDefaultText);
 				List<ObjectTableList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 										
@@ -301,7 +301,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                             }
                         default:
                             {
-                                entityLists = entityLists.OrderBy(d => d.Name);
+                                entityLists = entityLists.OrderBy(d => d.FullNameTextCodeDefaultText);
                                 break;
                             }
                     }
@@ -310,7 +310,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
             }					  						
 	       else
             {
-                entityLists = entityLists.OrderBy(d => d.Name);
+                entityLists = entityLists.OrderBy(d => d.FullNameTextCodeDefaultText);
             } 
 
 			ServiceResponse response = new ServiceResponse();
