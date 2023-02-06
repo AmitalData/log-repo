@@ -347,6 +347,11 @@ ul.line-list li.tick {
 .end img {
     width: 22px;
 }
+.start  span img,
+.end  span img{
+    filter:opacity(0.5) drop-shadow(rgba(242, 7, 7, 1) 0 0 0);
+    width: 50px;
+}
 
 .tab-selector>div {
     display: inline-block;
