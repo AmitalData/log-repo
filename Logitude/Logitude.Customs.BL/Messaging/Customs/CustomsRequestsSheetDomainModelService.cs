@@ -47,6 +47,7 @@ using Unifreight.BL.EntityQueryServices;
 
 using Logitude.Customs.BL.Messaging.Customs.PerformanceLogger;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
 
 
 
@@ -139,11 +140,20 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 ThrowIfInterfaceNotActiveOrBelongOurCompanyType();
 
                 SendRequestVIA requestVIA = _RequestParams.RequestVIA;
-               
+
                 bool avoidSign = false;
-                bool notApprovedYet = false;
-                if (!notApprovedYet)
-                {                    
+                bool courierForceSign = Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("CFS", requestParams.Tenant);//'Courier Force Sign
+                if (CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant).CompanyType == "B"//Courier 
+                    && courierForceSign
+                    )
+                {
+                    var courierForceSignService = new CourierForceSignService();
+                    courierForceSignService.ApplyForceSign(ref requestParams);
+                }
+                else
+                {
+
+                    
                     avoidSign = AvoidSign(_RequestParams);
                     if (avoidSign)
                     {
@@ -412,7 +422,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 {
                     return true;
                 }
-
+                
                 if (requestParams.MainInterfaceCode == "2715" //D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityMessagingService
                 &&
                 String.IsNullOrWhiteSpace(requestParams.LoggingEntityId) & string.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId) &&
