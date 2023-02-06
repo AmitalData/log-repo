@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.APIDataContract;
+using Logitude.BL.Security;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -302,10 +304,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     HasTransshipments = container.HasTransshipments,
                     MainCarriageFromCountryId = container.ShipmentMainCarriageFromPort == null ? null : container.ShipmentMainCarriageFromPort.CountryId,
                     MainCarriageToCountryId = container.ShipmentMainCarriageToPort == null ? null : container.ShipmentMainCarriageToPort.CountryId,
-                    MainCarriageFromCountryName = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryName: "",
-                    MainCarriageToCountryName = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryName: "",
-                    MainCarriageFromCountryCode = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryCode: "",
-                    MainCarriageToCountryCode = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryCode: "",
+                    MainCarriageFromCountryName = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryName : "",
+                    MainCarriageToCountryName = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryName : "",
+                    MainCarriageFromCountryCode = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryCode : "",
+                    MainCarriageToCountryCode = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryCode : "",
                     OnCarriageETA = container.OnCarriageETA,
                     OnCarriageATA = container.OnCarriageATA,
                 };
@@ -2332,6 +2334,31 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             MapCustomFields(containerPM, container);
             return containerPM;
+        }
+
+        public ContainerViewsGraphData GetViewsGraphData(int tenant)
+        {
+            var containers = repository.context.Containers;
+            var datas = new List<ContainerViewsGraphDataItem>();
+            var queries = new ContainerViewsQueries().BuilQueries(tenant, repository.context);
+            foreach (var item in queries) datas.Add(GetViewGraphDataByCode(tenant, item));
+            return new ContainerViewsGraphData
+            {
+                Datas = datas.Where(x => x != null).ToList()
+            };
+        }
+
+        private ContainerViewsGraphDataItem GetViewGraphDataByCode(int tenant, ContainerViewsQueries item)
+        {
+            if (!SecurityUtility.CheckFeature("Container", item.FeatureCode, tenant)) return null;
+            return new ContainerViewsGraphDataItem
+            {
+                Label = item.Label,
+                QueryCode = item.QueryCode,
+                Value = item.Query.Count(),
+                ToolTip = item.ToolTip
+                //Value = new Random().Next(200),
+            };
         }
     }
 }
