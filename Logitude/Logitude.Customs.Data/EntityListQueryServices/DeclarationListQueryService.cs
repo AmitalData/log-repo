@@ -628,7 +628,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         }
         private IQueryable<DeclarationList> GetIqueryableListForContainerization(IQueryable<Declaration> iQueryable,int tenant,string containerID, string CargoTypeCode, string ManifestNumber, string SecondCargoID, string ThirdCargoID)
         {
-     
+            var IsNewContainerization = string.IsNullOrEmpty(CargoTypeCode) && string.IsNullOrEmpty(ManifestNumber) && string.IsNullOrEmpty(SecondCargoID) && string.IsNullOrEmpty(ThirdCargoID);
             var qConsignmentNumber = (from a in context.Consignments
                                       where string.IsNullOrEmpty(containerID) || a.ExportContainerizationID==containerID
                                       group a by a.DeclarationId into gConsignments
@@ -636,7 +636,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                       new
                                       {
                                           DeclarationId = gConsignments.Key,
-                                          ConsignmentNumber = 
+                                          ConsignmentNumber = IsNewContainerization? gConsignments.Min(r => r.ConsignmentNumber):
                                           gConsignments.Where(r=>r.Tenant== tenant && r.CargoTypeCode== CargoTypeCode&&r.ManifestNumber == ManifestNumber && r.SecondCargoID == SecondCargoID && r.ThirdCargoID == ThirdCargoID).Select(a=>a.ConsignmentNumber).FirstOrDefault()
                                       });
 
