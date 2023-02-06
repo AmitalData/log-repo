@@ -1,9 +1,6 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-
-  <Sql Version="9">
-
+  <Sql Version="11">
     <![CDATA[
-	
 	  delete from DigitalTextCodes where Id != ''
       declare @NewEntityId as varchar(15)
 	  declare @generalObjectTableId as varchar(15)
@@ -69,18 +66,6 @@
 			"DisplayText": ""
 		},
 		{
-			"TextCode": "General.G.Description",
-			"DefaultText": "Description",
-			"FieldCode": "",
-			"DisplayText": ""
-		},
-		{
-			"TextCode": "Contact.F.Mobile",
-			"DefaultText": "Mobile",
-			"FieldCode": "Contact.Mobile",
-			"DisplayText": ""
-		},
-		{
 			"TextCode": "Contact.F.Password",
 			"DefaultText": "Password",
 			"FieldCode": "Contact.Password",
@@ -129,12 +114,6 @@
 			"DisplayText": ""
 		},
 		{
-			"TextCode": "Contact.G.SaveChangesBtn",
-			"DefaultText": "Save changes",
-			"FieldCode": "",
-			"DisplayText": ""
-		},
-		{
 			"TextCode": "Contact.G.ChangePassword",
 			"DefaultText": "Change password",
 			"FieldCode": "",
@@ -143,24 +122,6 @@
 		{
 			"TextCode": "Contact.G.LogoutBtn",
 			"DefaultText": "Logout",
-			"FieldCode": "",
-			"DisplayText": ""
-		},
-		{
-			"TextCode": "Contact.G.ConfirmLogoutBtn",
-			"DefaultText": "Confirm logout",
-			"FieldCode": "",
-			"DisplayText": ""
-		},
-		{
-			"TextCode": "Contact.G.ConfirmLogoutMsg",
-			"DefaultText": "Are you sure you want to logout?",
-			"FieldCode": "",
-			"DisplayText": ""
-		},
-		{
-			"TextCode": "General.B.Confirm",
-			"DefaultText": "Confirm",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
@@ -261,12 +222,6 @@
 			"DisplayText": ""
 		},
 		{
-			"TextCode": "General.G.DownloadExcel",
-			"DefaultText": "Download Excel",
-			"FieldCode": "",
-			"DisplayText": ""
-		},
-		{
 			"TextCode": "General.G.OnlineViewLoginDirective",
 			"DefaultText": "Login now to view all information about events, documents and more",
 			"FieldCode": "",
@@ -339,56 +294,8 @@
 			"DisplayText": ""
 		},
 		{
-			"TextCode": "General.G.SubmitBtn",
-			"DefaultText": "Submit",
-			"FieldCode": "",
-			"DisplayText": ""
-		},
-		{
-			"TextCode": "General.G.SaveBtn",
-			"DefaultText": "Save",
-			"FieldCode": "",
-			"DisplayText": ""
-		},
-		{
-			"TextCode": "General.G.DownloadAll",
-			"DefaultText": "Download all",
-			"FieldCode": "",
-			"DisplayText": ""
-		},
-		{
-			"TextCode": "General.G.DownloadDataSuccessMSG",
-			"DefaultText": "Done!",
-			"FieldCode" : "",
-			"DisplayText": ""
-		},
-		{
-			"TextCode": "General.G.DownloadDataSuccessMSG2",
-			"DefaultText": "Done",
-			"FieldCode" : "",
-			"DisplayText": ""
-		},
-		{
-			"TextCode": "General.G.DownloadDataPreparing",
-			"DefaultText": "Preparing data...",
-			"FieldCode" : "",
-			"DisplayText": ""
-		},
-		{
-			"TextCode": "General.G.DownloadDataMSG",
-			"DefaultText": "Preparing data for downloading. This may take several seconds. Please, do not refresh the page or close this window.",
-			"FieldCode" : "",
-			"DisplayText": ""
-		},
-		{
 			"TextCode": "General.G.NoInfoAvailableParentMsg",
 			"DefaultText": "You don’t have any information here",
-			"FieldCode" : "",
-			"DisplayText": ""
-		},
-		{
-			"TextCode": "General.G.DownloadData",
-			"DefaultText": "Download data",
 			"FieldCode" : "",
 			"DisplayText": ""
 		},
