@@ -26,6 +26,7 @@ using System.Linq.Dynamic.Core;
 using Logitude.BL.Helpers;
 using Logitude.Infrastructure.BL.EntityQueryServices;
 using Simplog.Data.Helpers;
+using Logitude.BL.ShipmentsModel.EntityPMs;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -308,17 +309,19 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 var routingLegs = shipmentQuery.GetDigitalShipmentRoutingLegs(shipmentId, tenant, fields);
                 var routingLegsJson = JsonConvert.SerializeObject(routingLegs);
-                var temp = (JObject)JsonConvert.DeserializeObject(routingLegsJson);
-
-                foreach (var item in fields)
+                var temp = (JArray)JsonConvert.DeserializeObject(routingLegsJson);
+                foreach (JObject jObject in temp)
                 {
-                    temp.Descendants()
-                    .OfType<JProperty>()
-                    .Where(attr => (item.Value.Contains($"{item.Key}.{tenant}.{attr.Name}")
-                                       || item.Value.Contains($"{item.Key}.{attr.Name}"))
-                                    || (attr.Name.Contains(".") && item.Value.Contains($"{attr.Name}")))
-                    .ToList()
-                    .ForEach(attr => attr.Value = "");
+                    foreach (var item in jObject)
+                    {
+                        temp.Descendants()
+                        .OfType<JProperty>()
+                        .Where(attr => (item.Value.Contains($"{item.Key}.{tenant}.{attr.Name}")
+                                           || item.Value.Contains($"{item.Key}.{attr.Name}"))
+                                        || (attr.Name.Contains(".") && item.Value.Contains($"{attr.Name}")))
+                        .ToList()
+                        .ForEach(attr => attr.Value = "");
+                    }
                 }
 
                 var routingJsonResult = JsonConvert.SerializeObject(temp);
