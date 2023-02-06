@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.APIDataContract;
+using Logitude.BL.Security;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -2337,6 +2339,29 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             MapCustomFields(containerPM, container);
             return containerPM;
+        }
+
+        public ContainerViewsGraphData GetViewsGraphData(int tenant)
+        {
+            var datas = new List<ContainerViewsGraphDataItem>();
+            var queries = new ContainerViewsQueries().BuilQueries(tenant, repository.context);
+            foreach (var item in queries) datas.Add(GetViewGraphDataByCode(tenant, item));
+            return new ContainerViewsGraphData
+            {
+                Datas = datas.Where(x => x != null).ToList()
+            };
+        }
+
+        private ContainerViewsGraphDataItem GetViewGraphDataByCode(int tenant, ContainerViewsQueries item)
+        {
+            if (!SecurityUtility.CheckFeature("Container", item.FeatureCode, tenant)) return null;
+            return new ContainerViewsGraphDataItem
+            {
+                Label = item.Label,
+                QueryCode = item.QueryCode,
+                Value = item.Query.Count(),
+                ToolTip = item.ToolTip
+            };
         }
     }
 }

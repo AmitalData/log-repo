@@ -1,0 +1,11 @@
+<style>
+    .container-fc-holder {
+        border: 1px solid #ccc !important;
+        display: inline-block;
+    }
+</style>
+<div class="container-fc-holder" *ngIf="IsViewsGraphActive">
+    <fusioncharts width="1000" height="400" type="Column2d" [dataSource]="DataSource"
+        (dataplotClick)="DataplotClick($event)" dataEmptyMessage="Please wait data is loading...">
+    </fusioncharts>
+</div>
