@@ -35,6 +35,7 @@ using Logitude.Customs.BL.Messaging.L2U.CustomFile;
 using Logitude.Customs.BL.Messaging.Customs;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Threading.Tasks;
+using Logitude.Customs.Data.EntityPOCOs;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -992,7 +993,29 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
 
                             LogMessagingUtil.Instance.AppendLine("תהליך גביה- במידה ומופעל בדיקה האם להגדיר גבייה = 900");
-                            if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP" && _MyDeclarationPM.TotalTax > 0 && _MyDeclarationPM.DeclarationStatusTypeCode == "13")
+
+                            bool pendingRequiresPayment = false;
+
+
+                            if (_MyDeclarationCourierStatusPM.DeclarationPendings.Count > 0)
+                            {
+                                foreach (var item in _MyDeclarationCourierStatusPM.DeclarationPendings)
+                                {
+                                    if (!pendingRequiresPayment)
+                                    {
+                                        CourierPendingReasonRepository courierPendingReasonRepository = new CourierPendingReasonRepository(_MyDeclarationPM.Tenant);
+                                        CourierPendingReason PendingReason = courierPendingReasonRepository.GetByCode(item.CourierPendingReasonCode, _MyDeclarationPM.Tenant);
+
+                                        if (PendingReason != null && PendingReason.RequiresPayment == true && !PendingReason.Inactive)
+                                            pendingRequiresPayment = true;
+                                    }
+                                    
+
+                                }
+
+                            }
+
+                            if (((_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP" && _MyDeclarationPM.TotalTax > 0) || pendingRequiresPayment) && _MyDeclarationPM.DeclarationStatusTypeCode == "13")
                             {
                                 if (declarationPendingPM_900 == null)
                                 {
