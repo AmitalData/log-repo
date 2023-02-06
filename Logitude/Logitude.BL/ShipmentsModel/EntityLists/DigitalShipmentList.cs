@@ -172,16 +172,18 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string Field69 { get; set; }
         public string Field70 { get; set; }
 
-        public bool NewMessage { get; set; }
-
-        public string FollowUpNotes { get; set; }
-        public bool IsAnyConversation { get; set; }
-        public int NumberOfShipments { get; set; }
         public DateTime? MainCarriageETA { get; set; }
         public DateTime? MainCarriageATD { get; set; }
         public double? ChargeableWeightInKG { get; set; }
         public byte[] LastModified { get; set; }
         public bool hasChanges { get; set; }
+
+        public string ReleasingAgentId { get; set; }
+        public string ReleasingAgentName { get; set; }
+
+        public DateTime? PreCarriageATD { get; set; }
+        public DateTime? PreCarriageETA { get; set; }
+        public DateTime? PreCarriageATA { get; set; }
 
         public string StatusId { get; set; }
         public string StatusName { get; set; }
@@ -383,6 +385,39 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? PreCarriageETD { get; set; }
         public DateTime? PreForwardingETD { get; set; }
         public bool IsException { get; set; }
+        public string Transshipment1FromPortId { get; set; }
+        public string Transshipment1FromPortName { get; set; }
+        public string Transshipment2FromPortId { get; set; }
+        public string Transshipment2FromPortName { get; set; }
+        public string Transshipment3FromPortId { get; set; }
+        public string Transshipment3FromPortName { get; set; }
+
+        public string Transshipment1FromPortCountryCode { get; set; }
+        public string Transshipment1FromPortCountryName { get; set; }
+        public string Transshipment2FromPortCountryCode { get; set; }
+        public string Transshipment2FromPortCountryName { get; set; }
+        public string Transshipment3FromPortCountryCode { get; set; }
+        public string Transshipment3FromPortCountryName { get; set; }
+        public string Transshipment1AdditionalMAWBOBLBL { get; set; }
+        public string Transshipment2AdditionalMAWBOBLBL { get; set; }
+        public string Transshipment3AdditionalMAWBOBLBL { get; set; }
+
+        public string Transshipment1CarrierName { get; set; }
+        public string Transshipment1CarrierCode { get; set; }
+        public string Transshipment2CarrierName { get; set; }
+        public string Transshipment2CarrierCode { get; set; }
+        public string Transshipment3CarrierName { get; set; }
+        public string Transshipment3CarrierCode { get; set; }
+
+        public string Transshipment1CarrierNumber { get; set; }
+        public string Transshipment1CarrierId { get; set; }
+        public string Transshipment2CarrierNumber { get; set; }
+        public string Transshipment2CarrierId { get; set; }
+        public string Transshipment3CarrierNumber { get; set; }
+        public string Transshipment3CarrierId { get; set; }
+        public string PreCarriageToPortId { get; set; }
+
+        public string OnCarriageTransportModeId { get; set; }
 
         public string SalesmanUserName { get; set; }
         public string CreatedByUserName { get; set; }
