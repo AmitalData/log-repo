@@ -67,7 +67,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool AllowedInTicket { get; set; }
         public string LovDisplayMemberPath { get; set; }
         public string LovDisplayMemberPathLocal { get; set; }
-		public string DisplayName { get; set; }
         public bool IsTabsHidden { get; set; }
         public string ParentObjectTableName { get; set; }
         public bool AvailableInCustomization { get; set; }
@@ -78,6 +77,9 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string DefaultTextPlural { get; set; }
         public bool SupportSubEntity { get; set; }
         public bool ApplyGenericCustomFields { get; set; }
+        public string FullNameTextCodeId { get; set; }
+        public string FullNameTextCodeCode { get; set; }
+        public string FullNameTextCodeDefaultText { get; set; }
 
     }
 }

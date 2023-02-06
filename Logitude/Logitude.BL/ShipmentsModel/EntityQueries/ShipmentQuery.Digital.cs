@@ -731,6 +731,92 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             item.CountryName = country?.EnglishName;
             item.CountryCode = country?.Code;
         }
+
+        private string GetCountryNameForFromInlandDomestic(dynamic shipment)
+        {
+            if (shipment.InlandDomesticFromTypeCode == "PART")
+            {
+                return this.GetCountryNameByPartnerId(shipment.MainCarriageFromAddressId);
+            }
+            else if (shipment.InlandDomesticFromTypeCode == "PORT")
+            {
+                return shipment.MainCarriageFromPortCountryName;
+            }
+            else if (shipment.InlandDomesticFromTypeCode == "CASL")
+            {
+                var res = this.GetCountryNameByCASLAddress(shipment.InlandDomesticFromCountryId, tenant);
+
+                if (res != null)
+                {
+                    return res.EnglishName;
+                }
+
+                return "";
+            }
+
+            return null;
+        }
+
+        private string GetCountryNameForToInlandDomestic(dynamic shipment)
+        {
+            if (shipment.InlandDomesticToTypeCode == "PART")
+            {
+                return this.GetCountryNameByPartnerId(shipment.MainCarriageToAddressId);
+            }
+            else if (shipment.InlandDomesticToTypeCode == "PORT")
+            {
+                return shipment.MainCarriageToPortCountryName;
+            }
+            else if (shipment.InlandDomesticToTypeCode == "CASL")
+            {
+                var res = this.GetCountryNameByCASLAddress(shipment.InlandDomesticToCountryId, tenant);
+
+                if (res != null)
+                {
+                    return res.EnglishName;
+                }
+
+                return "";
+
+            }
+
+            return null;
+        }
+
+        private string GetCountryNameByPartnerId(string addressId)
+        {
+            if (string.IsNullOrEmpty(addressId))
+            {
+                return null;
+            }
+
+            Address partnerAddress = addressRepository.GetSingleAddress(addressId, tenant);
+            if (partnerAddress == null)
+            {
+                return null;
+            }
+
+            var country = partnerAddress.City;
+            if (string.IsNullOrEmpty(partnerAddress.Country?.EnglishName))
+            {
+                country = partnerAddress.Country?.EnglishName;
+            }
+
+            return country;
+        }
+
+        private Country GetCountryNameByCASLAddress(string countryId, int tenant)
+        {
+            Country myResult = null;
+
+            if (!string.IsNullOrEmpty(countryId))
+            {
+                myResult = CountryRepository.GetSingleCountry(countryId, tenant, false);
+            }
+
+            return myResult;
+        }
+
         #endregion Private methods
 
         #region Routing 
@@ -1591,7 +1677,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             timeLineData.MainCarriageFrom = new TimeLineStop()
             {
                 City = this.GetCityForFromInlandDomestic(shipment),
-                CountryCode = this.GetCountryForFromInlandDomestic(shipment),
+                CountryCode = this.GetCountryCodeForFromInlandDomestic(shipment),
                 Date = shipment.MainCarriageATD != null ? shipment.MainCarriageATD : shipment.MainCarriageETD,
                 DateType = shipment.MainCarriageATD != null ? "Actual" : (shipment.MainCarriageETD != null ? "Estimated" : null),
             };
@@ -1602,7 +1688,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             timeLineData.MainCarriageTo = new TimeLineStop()
             {
                 City = this.GetCityForToInlandDomestic(shipment),
-                CountryCode = this.GetCountryForToInlandDomestic(shipment),
+                CountryCode = this.GetCountryCodeForToInlandDomestic(shipment),
                 Date = shipment.MainCarriageFinalDestinationATA != null ? shipment.MainCarriageFinalDestinationATA : shipment.MainCarriageFinalDestinationETA,
                 DateType = shipment.MainCarriageFinalDestinationATA != null ? "Actual" : (shipment.MainCarriageFinalDestinationETA != null ? "Estimated" : null),
             };
@@ -1644,19 +1730,19 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return null;
         }
 
-        private string GetCountryForFromInlandDomestic(dynamic shipment)
+        private string GetCountryCodeForFromInlandDomestic(dynamic shipment)
         {
             if (shipment.InlandDomesticFromTypeCode == "PART")
             {
-                return this.GetCountryByPartnerId(shipment.MainCarriageFromAddressId);
+                return this.GetCountryCodeByPartnerId(shipment.MainCarriageFromAddressId);
             }
             else if (shipment.InlandDomesticFromTypeCode == "PORT")
             {
-                return shipment.MainCarriageFromPortCode;
+                return shipment.MainCarriageFromPortCountryCode;
             }
             else if (shipment.InlandDomesticFromTypeCode == "CASL")
             {
-                var res = this.GetCountryByCASLAddress(shipment.InlandDomesticFromCountryId, tenant);
+                var res = this.GetCountryCodeByCASLAddress(shipment.InlandDomesticFromCountryId, tenant);
                 
                 if (res != null)
                 {
@@ -1669,19 +1755,19 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return null;
         }
 
-        private string GetCountryForToInlandDomestic(dynamic shipment)
+        private string GetCountryCodeForToInlandDomestic(dynamic shipment)
         {
             if (shipment.InlandDomesticToTypeCode == "PART")
             {
-                return this.GetCountryByPartnerId(shipment.MainCarriageToAddressId);
+                return this.GetCountryCodeByPartnerId(shipment.MainCarriageToAddressId);
             }
             else if (shipment.InlandDomesticToTypeCode == "PORT")
             {
-                return shipment.MainCarriageToPortCode;
+                return shipment.MainCarriageToPortCountryCode;
             }
             else if (shipment.InlandDomesticToTypeCode == "CASL")
             {
-                var res = this.GetCountryByCASLAddress(shipment.InlandDomesticToCountryId, tenant);
+                var res = this.GetCountryCodeByCASLAddress(shipment.InlandDomesticToCountryId, tenant);
 
                 if (res != null)
                 {
@@ -1695,25 +1781,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return null;
         }
 
-        private string GetCityByPartnerId(string addressId)
-        {
-            if (string.IsNullOrEmpty(addressId))
-            {
-                return null;
-            }
-
-            Address partnerAddress = addressRepository.GetSingleAddress(addressId, tenant);
-            if (partnerAddress == null)
-            {
-                return null;
-            }
-
-            var city = partnerAddress.City;
-
-            return city;
-        }
-
-        private string GetCountryByPartnerId(string addressId)
+        private string GetCountryCodeByPartnerId(string addressId)
         {
             if (string.IsNullOrEmpty(addressId))
             {
@@ -1735,16 +1803,34 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return country;
         }
 
-        private Country GetCountryByCASLAddress(string countryId, int tenant)
+        private Country GetCountryCodeByCASLAddress(string countryId, int tenant)
         {
             Country myResult = null;
 
             if (!string.IsNullOrEmpty(countryId))
             {
-                myResult =  CountryRepository.GetSingleCountry(countryId, tenant, false);
+                myResult = CountryRepository.GetSingleCountry(countryId, tenant, false);
             }
 
             return myResult;
+        }
+
+        private string GetCityByPartnerId(string addressId)
+        {
+            if (string.IsNullOrEmpty(addressId))
+            {
+                return null;
+            }
+
+            Address partnerAddress = addressRepository.GetSingleAddress(addressId, tenant);
+            if (partnerAddress == null)
+            {
+                return null;
+            }
+
+            var city = partnerAddress.City;
+
+            return city;
         }
 
         private TimeLineData FillShipmnetTimeLineForShipment(dynamic shipment)
@@ -1808,7 +1894,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 DateType = shipment.MainCarriageFinalDestinationATA != null ? "Actual" : (shipment.MainCarriageFinalDestinationETA != null ? "Estimated" : null),
             };
         }
-
 
         private void FillPickUpTimeLine(TimeLineData timeLineData, IQueryable<ShipmentPickUpDelivery> shipmentPickUpDeliveries)
         {
@@ -2165,9 +2250,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             VerticalTimeLineData.MainCarriageFrom = new VerticalTimeLineStop()
             {
                 Title = shipment.TransportModeId == "A" ? "Shipment.G.GatewayLable" : "Shipment.G.PortOfLoadingLable",
-                City = shipment.MainCarriageFromPortName,
-                CountryCode = isInlandDomesticShipment ? shipment.FromPartnerCountryCode : shipment.MainCarriageFromPortCountryCode,
-                CountryName = isInlandDomesticShipment ? shipment.FromPartnerCountryName : shipment.MainCarriageFromPortCountryName,
+                City = isInlandDomesticShipment ? GetCityForFromInlandDomestic(shipment) : shipment.MainCarriageFromPortName,
+                CountryCode = isInlandDomesticShipment ? GetCountryCodeForFromInlandDomestic(shipment) : shipment.MainCarriageFromPortCountryCode,
+                CountryName = isInlandDomesticShipment ? GetCountryNameForFromInlandDomestic(shipment) : shipment.MainCarriageFromPortCountryName,
                 Date = shipment.MainCarriageATD != null ? shipment.MainCarriageATD : shipment.MainCarriageETD,
                 DateType = shipment.MainCarriageATD != null ? "Actual" : (shipment.MainCarriageETD != null ? "Estimated" : null),
                 ATDDate = shipment.MainCarriageATD != null ? shipment.MainCarriageATD : shipment.MainCarriageETD,
@@ -2406,9 +2491,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             VerticalTimeLineData.MainCarriageTo = new VerticalTimeLineStop()
             {
                 Title = shipment.TransportModeId == "A" ? "Shipment.G.DestinationLable" : "Shipment.G.DischargePort",
-                City = shipment.MainCarriageFinalDestinationPortName,
-                CountryCode = isInlandDomesticShipment? shipment.ToPartnerCountryCode : shipment.MainCarriageFinalDestinationPortCountryCode,
-                CountryName = isInlandDomesticShipment ? shipment.ToPartnerCountryName : shipment.MainCarriageFinalDestinationPortCountryName,
+                City = isInlandDomesticShipment ? GetCityForToInlandDomestic(shipment) : shipment.MainCarriageFinalDestinationPortName,
+                CountryCode = isInlandDomesticShipment ? GetCountryCodeForToInlandDomestic(shipment) : shipment.MainCarriageFinalDestinationPortCountryCode,
+                CountryName = isInlandDomesticShipment ? GetCountryNameForToInlandDomestic(shipment) : shipment.MainCarriageFinalDestinationPortCountryName,
                 ATADate = shipment.MainCarriageFinalDestinationATA != null ? shipment.MainCarriageFinalDestinationATA : shipment.MainCarriageFinalDestinationETA,
                 ATADateType = shipment.MainCarriageFinalDestinationATA != null ? "Actual" : (shipment.MainCarriageFinalDestinationETA != null ? "Estimated" : null),
                 Date = shipment.MainCarriageFinalDestinationATA != null ? shipment.MainCarriageFinalDestinationATA : shipment.MainCarriageFinalDestinationETA,
@@ -2571,6 +2656,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private string GetCarrierNumberOfDischargeLeg(ShipmentPM shipment)
         {
+            bool isInlandDomesticShipment = (shipment.DirectionId == "D" && shipment.TransportModeId == "I");
+            if (isInlandDomesticShipment)
+            {
+                return shipment.MainCarriageCarrierNumber;
+            }
+
             if (!string.IsNullOrEmpty(shipment.Transshipment3ToPortId))
             {
                 return shipment.Transshipment3CarrierNumber;
@@ -2596,6 +2687,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private string GetCarrierNumberOfDischargeLegTitle(ShipmentPM shipment)
         {
+            bool isInlandDomesticShipment = (shipment.DirectionId == "D" && shipment.TransportModeId == "I");
+            if (isInlandDomesticShipment)
+            {
+                return "Shipment.MainCarriageCarrierNumber";
+            }
+
             if (!string.IsNullOrEmpty(shipment.Transshipment3ToPortId))
             {
                 return "Shipment.Transshipment3CarrierNumber";
