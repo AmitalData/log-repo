@@ -562,7 +562,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         MyResponseData.FinancialStatusCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.FinancialStatusCode;
                         MyResponseData.FinancialStatusText = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.FinancialStatusText;
                         MyResponseData.TaxationDateTime = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.TaxationDateTime.Date.ToString("dd/MM/yyyy");
-                        if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.TaxationDateTime.TimeOfDay.Hours != 0)
+                        if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.TaxationDateTime.TimeOfDay.Hours != 0 ||
+                            declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.TaxationDateTime.TimeOfDay.Minutes != 0 ||
+                            declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.TaxationDateTime.TimeOfDay.Seconds != 0)
                         {
                             MyResponseData.TaxationDateTime = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.TaxationDateTime.TimeOfDay.ToString("hh:mm") + "   " + MyResponseData.TaxationDateTime;
                         }
@@ -572,7 +574,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.ReleaseDateTime.HasValue)
                         {
                             MyResponseData.ReleaseDateTime = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.ReleaseDateTime.Value.Date.ToString("dd/MM/yyyy");
-                            if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.ReleaseDateTime.Value.TimeOfDay.Hours != 0)
+                            if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.ReleaseDateTime.Value.TimeOfDay.Hours != 0 ||
+                                declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.ReleaseDateTime.Value.TimeOfDay.Minutes != 0 ||
+                                declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.ReleaseDateTime.Value.TimeOfDay.Seconds != 0)
                             {
                                 MyResponseData.ReleaseDateTime = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.ReleaseDateTime.Value.TimeOfDay.ToString("hh':'mm") + "   " + MyResponseData.ReleaseDateTime;
                             }
@@ -580,7 +584,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTimeSpecified == true)
                         {
                             MyResponseData.SubmitDateTime = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime.Value.Date.ToString("dd/MM/yyyy");
-                            if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime.Value.TimeOfDay.Hours != 0)
+                            if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime.Value.TimeOfDay.Hours != 0 ||
+                                declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime.Value.TimeOfDay.Minutes != 0 ||
+                                declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime.Value.TimeOfDay.Seconds != 0)
                             {
                                 MyResponseData.SubmitDateTime = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime.Value.TimeOfDay.ToString("hh':'mm") + "   " + MyResponseData.SubmitDateTime;
                             }
