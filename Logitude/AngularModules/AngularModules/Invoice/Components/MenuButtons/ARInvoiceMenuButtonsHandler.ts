@@ -889,6 +889,7 @@ export class ARInvoiceMenuButtonsHandler {
     private OpenValidateApprovalSendToSATErrorWindow(result, ProceedToApproveMessage) {
         const confirmWindow = new ConfirmWindow();
         confirmWindow.Width = 420;
+        confirmWindow.Height = 185;
         confirmWindow.ShowCancelButton = true;
         confirmWindow.CancelButtonText = "Cancel";
         confirmWindow.ShowNoButton = false;
@@ -922,10 +923,6 @@ export class ARInvoiceMenuButtonsHandler {
             if (originalLine) message += "<br>line with amount (" + originalLine.InvoiceCurrencyAmount + ") will be adjusted to (" + line.InvoiceCurrencyAmount + ")";
         });
 
-        result.CorrectedARInvoiceRetencionDRLines.forEach(line => {
-            let originalLine = this.GetOriginalInvoiceLineToBeCorrected(line);
-            if (originalLine) message += "<br>line with amount (" + originalLine.InvoiceCurrencyAmount + ") will be adjusted to (" + line.InvoiceCurrencyAmount + ")";
-        });
         return message;
     }
 
@@ -937,14 +934,11 @@ export class ARInvoiceMenuButtonsHandler {
         result.CorrectedARInvoiceRetencionLines.forEach(line => {
             this.UpdateARInvoiceLineVatAmount(line);
         });
-
-        result.CorrectedARInvoiceRetencionDRLines.forEach(line => {
-            this.UpdateARInvoiceLineVatAmount(line);
-        });
     }
 
     private UpdateARInvoiceLineVatAmount(line: any) {
         let originalLine = this.GetOriginalInvoiceLineToBeCorrected(line);
+        if (!originalLine) return;
         if (originalLine.ForiegnCurrencyAmount == originalLine.InvoiceCurrencyAmount) {
             originalLine.ForiegnCurrencyAmount = line.InvoiceCurrencyAmount;
         }
@@ -952,7 +946,7 @@ export class ARInvoiceMenuButtonsHandler {
     }
 
     GetOriginalInvoiceLineToBeCorrected(line: any) {
-        return this.EntityPM.InvoiceLines.filter(Invoiceline => Invoiceline.ProfitCurrencyAmount == line.ProfitCurrencyAmount && Invoiceline.VatPercentage == line.VatPercentage && Invoiceline.InvoiceCurrencyAmount != line.InvoiceCurrencyAmount)[0];
+        return this.EntityPM.InvoiceLines.filter(Invoiceline => Invoiceline.ProfitCurrencyAmount == line.ProfitCurrencyAmount && Invoiceline.VatTypeId == line.VatTypeId && Invoiceline.InvoiceCurrencyAmount != line.InvoiceCurrencyAmount)[0];
     }
 
     ProceedToApprove(msg: string) {

@@ -2,7 +2,7 @@ import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 
 export class ApiQueryFiltersBuilder {
 
-    static getObjectTablesApiQueryFilters(name: string | null, getAll: boolean = false, isCustom: boolean | null = null) {
+    static getObjectTableFilters(name: string | null, getAll: boolean = false, isCustom: boolean | null = null) {
         let apiQueryFilters = new ApiQueryFilters(getAll);
 
         if (name) {
@@ -16,7 +16,7 @@ export class ApiQueryFiltersBuilder {
         return apiQueryFilters;
     }
 
-    static getObjectFieldsApiQueryFilters(objectTableId: string | null, dataTypeCode: string | null, lookupTableId: string | null, getAll: boolean = false, isCustom: boolean | null = null) {
+    static getObjectFieldFilters(objectTableId: string | null, dataTypeCode: string | null, lookupTableId: string | null, getAll: boolean = false, isCustom: boolean | null = null) {
         let apiQueryFilters = new ApiQueryFilters(getAll);
 
         if (objectTableId) {
@@ -40,11 +40,11 @@ export class ApiQueryFiltersBuilder {
         return apiQueryFilters;
     }
 
-    static getWorkflowInstancesApiQueryFilters(workflowId: string | null, businessKey: string | null, getAll: boolean = false) {
+    static getWorkflowInstanceFilters(workflowVersionId: string | null, businessKey: string | null, getAll: boolean = false) {
         let apiQueryFilters = new ApiQueryFilters(getAll);
 
-        if (workflowId) {
-            apiQueryFilters.addAdditionalFilter("WorkflowId", workflowId, null, null, this.getOperator(workflowId), false, false, false, "Text");
+        if (workflowVersionId) {
+            apiQueryFilters.addAdditionalFilter("WorkFlowVersionId", workflowVersionId, null, null, this.getOperator(workflowVersionId), false, false, false, "Text");
         }
 
         if (businessKey) {
@@ -54,22 +54,7 @@ export class ApiQueryFiltersBuilder {
         return apiQueryFilters;
     }
 
-
-    static getWorkflowInstancesByVersionApiQueryFilters(idsList: string[], businessKey: string | null, getAll: boolean = false) {
-        let apiQueryFilters = new ApiQueryFilters(getAll);
-
-        if (idsList) {
-            apiQueryFilters.addAdditionalFilter("WorkFlowVersionId", idsList.join(','), null, null, "InListExact", false, false, false, "Text");
-        }
-
-        if (businessKey) {
-            apiQueryFilters.addAdditionalFilter("BusinessKey", businessKey, null, null, "Contains", false, false, false, "Text");
-        }
-
-        return apiQueryFilters;
-    }
-
-    static getWorkflowInstanceActivities(workflowInstanceId: string | null, getAll: boolean = false) {
+    static getWorkflowInstanceActivityOrVariableFilters(workflowInstanceId: string | null, getAll: boolean = false) {
         let apiQueryFilters = new ApiQueryFilters(getAll);
 
         if (workflowInstanceId) {
@@ -79,7 +64,7 @@ export class ApiQueryFiltersBuilder {
         return apiQueryFilters;
     }
 
-    static getWorkflowVersionApiQueryFilters(workflowId: string | null, getAll: boolean = false) {
+    static getWorkflowVersionFilters(workflowId: string | null, getAll: boolean = false) {
         let apiQueryFilters = new ApiQueryFilters(getAll);
 
         if (workflowId) {

@@ -2,6 +2,7 @@
 using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
 using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
@@ -23,15 +24,17 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
     {
         private Document document;
         private DocumentRepository documentRepository;
+        private DeploymentPackagePM deploymentPackagePM;
         private int tenant;
 
-        public DeploymentPackageDocumentService(int tenant)
+        public DeploymentPackageDocumentService(int tenant, DeploymentPackagePM deploymentPackagePM)
         {
             this.tenant = tenant;
             documentRepository = new DocumentRepository(tenant);
+            this.deploymentPackagePM = deploymentPackagePM;
         }
 
-        public string Create(DeploymentPackageDetails deploymentPackageDetails)
+        public string Create()
         {
             var deploymentPackageZipFileBytes = ZipFileService.Compress(new Dictionary<string, byte[]>());
             document = GetInstanceOfDocument(deploymentPackageZipFileBytes);
@@ -59,15 +62,18 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 Id = IdCounter.GetNumber("Document", tenant),
                 HasFile = true,
                 Folder = "others",
+                FileName = deploymentPackagePM.Name + "_1.0"
             };
         }
         public void Update(DeploymentPackagePM deploymentPackagePM)
         {
             if (deploymentPackagePM.DocumentId == null) return;
             Document document = new DocumentRepository(deploymentPackagePM.Tenant).GetSingleDocument(deploymentPackagePM.Tenant, deploymentPackagePM.DocumentId);
+            string versionName = new DeploymentPackagesVersionQuery(deploymentPackagePM.Tenant).GetDeploymentPackageVersionNameById(deploymentPackagePM.VersionId, deploymentPackagePM.Tenant);
             var deploymentPackageZipFileDetailsList = new DeploymentPackageDetailsService(deploymentPackagePM).Build();
             var deploymentPackageZipFileDetailsBytes = ZipFileService.Compress(deploymentPackageZipFileDetailsList);
             document.FileSize = deploymentPackageZipFileDetailsBytes.Length;
+            document.FileName = deploymentPackagePM.Name + "_" + versionName;
             documentRepository.Update(document);
             documentRepository.SubmitChanges();
             StorageDataService.WriteFileOnStorage(new StorageDataArgs()

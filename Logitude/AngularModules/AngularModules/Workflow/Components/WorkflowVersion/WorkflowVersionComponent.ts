@@ -87,7 +87,7 @@ export class WorkflowVersionComponent extends BaseComponent {
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
         this.CurrentSession.StartBusyIndicatorLoading();
 
-        var filters = ApiQueryFiltersBuilder.getWorkflowVersionApiQueryFilters(this.EntityPM.Id);
+        var filters = ApiQueryFiltersBuilder.getWorkflowVersionFilters(this.EntityPM.Id);
 
         filters.PageSize = take;
         filters.PageIndex = skip;

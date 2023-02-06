@@ -195,7 +195,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     loadObjectTablesAndFields() {
         let isLoadedBefore = ObjectTables.isLoaded();
         let objectTableListService = new ObjectTableListService();
-        let apiQueryFilters = ApiQueryFiltersBuilder.getObjectTablesApiQueryFilters(null, true, (isLoadedBefore ? true : null));
+        let apiQueryFilters = ApiQueryFiltersBuilder.getObjectTableFilters(null, true, (isLoadedBefore ? true : null));
         objectTableListService.getByFilters(apiQueryFilters).subscribe((serviceResponse: ServiceResponse) => {
             if (!serviceResponse.HasError) {
                 let objectTables = serviceResponse.Result.filter((o: any) => o.Tenant === 0 || o.Tenant === (SessionLocator.Tenant || 0));
@@ -213,7 +213,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     loadObjectFields() {
         let isLoadedBefore = ObjectFields.isLoaded();
         let objectFieldListService = new ObjectFieldListService();
-        let apiQueryFilters = ApiQueryFiltersBuilder.getObjectFieldsApiQueryFilters(null, null, null, true, (isLoadedBefore ? true : null));
+        let apiQueryFilters = ApiQueryFiltersBuilder.getObjectFieldFilters(null, null, null, true, (isLoadedBefore ? true : null));
         objectFieldListService.getByFilters(apiQueryFilters).subscribe((serviceResponse: ServiceResponse) => {
             if (!serviceResponse.HasError) {
                 let objectFields = serviceResponse.Result.filter((o: any) => o.Tenant === 0 || o.Tenant === (SessionLocator.Tenant || 0));

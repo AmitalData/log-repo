@@ -199,8 +199,6 @@ export class DashboardTabComponent implements OnInit {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = "Edit Dashboard";
         logitudeWindow.WindowArgs = { EntityPM: this.SelectedDashboard, };
-        logitudeWindow.ZIndex = 10;
-        logitudeWindow.ZIndexModified = true;
         logitudeWindow.Show('./DashboardModule/Components/Windows/AddEditDashboard/AddEditDashboardComponent');
         logitudeWindow.ComponentLoaded.subscribe(comp => {
             logitudeWindow.WindowClosed.subscribe(s => {
@@ -255,8 +253,6 @@ export class DashboardTabComponent implements OnInit {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 800;
         logitudeWindow.Title = "Add Widget";
-        logitudeWindow.ZIndex = 10;
-        logitudeWindow.ZIndexModified = true;
         logitudeWindow.WindowArgs = { EntityPM: myWidget, IsNew: true, DashboardPM: this.SelectedDashboard };
         logitudeWindow.Show('./DashboardModule/Components/Windows/AddEditWidget/AddEditWidgetComponent');
         logitudeWindow.ComponentLoaded.subscribe(comp => {
@@ -404,8 +400,6 @@ export class DashboardTabComponent implements OnInit {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 800;
         logitudeWindow.Title = "Edit Widget";
-        logitudeWindow.ZIndex = 10;
-        logitudeWindow.ZIndexModified = true;
         logitudeWindow.WindowArgs = { EntityPM: myWidget, IsNew: false, DashboardPM: this.SelectedDashboard };
         logitudeWindow.Show('./DashboardModule/Components/Windows/AddEditWidget/AddEditWidgetComponent');
         logitudeWindow.ComponentLoaded.subscribe(comp => {
@@ -697,8 +691,6 @@ export class DashboardTabComponent implements OnInit {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = "Copy Dashboard";
         logitudeWindow.WindowArgs = { EntityPM: this.SelectedDashboard, };
-        logitudeWindow.ZIndex = 10;
-        logitudeWindow.ZIndexModified = true;
         logitudeWindow.Show('./DashboardModule/Components/Windows/AddEditDashboard/AddEditDashboardComponent');
         logitudeWindow.ComponentLoaded.subscribe(comp => {
             logitudeWindow.WindowClosed.subscribe(s => {

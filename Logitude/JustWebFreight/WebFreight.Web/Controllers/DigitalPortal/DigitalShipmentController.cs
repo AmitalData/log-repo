@@ -56,8 +56,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 if (string.IsNullOrWhiteSpace(cardId) || cards.Contains(shipmentPM.CustomerId) || cards.Contains(shipmentPM.AgentId))
                 {
-                    shipmentPM.TimeLineData = shipmentQuery.MapVerticalTimeLine(shipmentPM, tenant);
-                    var shipmentPMJson = JsonConvert.SerializeObject(shipmentPM);
                     var textCodeQuery = new DigitalTextCodeQueryService(0);
 
                     var allowedTableNames = new List<string> { "Trucker", "Shipment", "ShipmentPackage", "ShipmentPickUpDelivery" };
@@ -86,16 +84,19 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         }
                     }
 
+                    shipmentPM.TimeLineData = shipmentQuery.MapVerticalTimeLine(shipmentPM, fields, profileCode);
+                    var shipmentPMJson = JsonConvert.SerializeObject(shipmentPM);
                     var temp = (JObject)JsonConvert.DeserializeObject(shipmentPMJson);
 
                     foreach (var item in fields)
                     {
                         temp.Descendants()
                         .OfType<JProperty>()
-                        .Where(attr => item.Value.Contains($"{item.Key}.{tenant}.{attr.Name}") 
-                                       ||  item.Value.Contains($"{item.Key}.{attr.Name}"))
+                        .Where(attr => (item.Value.Contains($"{item.Key}.{tenant}.{attr.Name}") 
+                                           || item.Value.Contains($"{item.Key}.{attr.Name}"))
+                                        ||(attr.Name.Contains(".") && item.Value.Contains($"{attr.Name}")))
                         .ToList()
-                        .ForEach(attr => attr.Remove());
+                        .ForEach(attr => attr.Value ="");
                     }
                     
                     var json = JsonConvert.SerializeObject(temp);
@@ -131,7 +132,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 email = authToken.Email;
                 newFilters.Tenant = authToken.Tenant;
                 var shipmentQuery = new ShipmentQuery(authToken.Tenant);
-                var entityLists = shipmentQuery.GetOldByFilters(newFilters);
+                var entityLists = shipmentQuery.GetByFilterWithSortingFilter(newFilters);
 
                 var response = new ServiceResponse();
 
@@ -158,12 +159,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 if (isAllShipmentsQuery)
                 {
                     DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
-                    var afterOneYearDate = currentDateTime.AddDays(-365);
-                    var afterNinetyDaysDate = currentDateTime.AddDays(-90);
-                    shipments.Where(a => ((a.MainCarriageFinalDestinationATA != null
-                                                                  && a.CreateDateTime < afterOneYearDate)
-                                                                  || (a.MainCarriageFinalDestinationATA <= afterNinetyDaysDate
-                                                                    || a.CreateDateTime <= afterOneYearDate)))
+                    var lastOneYearDate = currentDateTime.AddDays(-365);
+                    var lastNinetyDaysDate = currentDateTime.AddDays(-90);
+                    shipments.Where(a => a.CreateDateTime < lastOneYearDate
+                                         && a.MainCarriageFinalDestinationATA < lastNinetyDaysDate)
                             .ToList()
                             .ForEach(i => i.IsCustomerArchived = true);
                 }

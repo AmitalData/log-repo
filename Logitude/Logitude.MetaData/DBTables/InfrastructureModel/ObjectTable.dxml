@@ -480,9 +480,24 @@
   </Column>
   <Column
     Name="ApplyGenericCustomFields"
+    OldNames="NewMechanismForCustomFields"
     Type="bit">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="FullNameTextCodeId"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FullNameTextCodeCode"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="HeaderScreenId"
@@ -508,6 +523,12 @@
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="NewButtonTextCodeId"
+    ReferencedTable="TextCodes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
+  <Relation
+    ForeignKeyColumn="FullNameTextCodeId"
     ReferencedTable="TextCodes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo"

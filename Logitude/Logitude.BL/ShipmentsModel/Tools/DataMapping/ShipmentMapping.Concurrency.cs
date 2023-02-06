@@ -91,6 +91,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     entityMasterData.PreCarriageATD = entityPM.PreCarriageATD;
                     entityMasterData.OnCarriageETA = entityPM.OnCarriageETA;
                     entityMasterData.OnCarriageATA = entityPM.OnCarriageATA;
+
+                    entityMasterData.Transshipment1ETA = entityPM.Transshipment1ETA;
+                    entityMasterData.Transshipment1ATA = entityPM.Transshipment1ATA;
+                    entityMasterData.Transshipment1ETD = entityPM.Transshipment1ETD;
+                    entityMasterData.Transshipment1ATD = entityPM.Transshipment1ATD;
+
+                    entityMasterData.Transshipment2ETA = entityPM.Transshipment2ETA;
+                    entityMasterData.Transshipment2ATA = entityPM.Transshipment2ATA;
+                    entityMasterData.Transshipment2ETD = entityPM.Transshipment2ETD;
+                    entityMasterData.Transshipment2ATD = entityPM.Transshipment2ATD;
+
+                    entityMasterData.Transshipment3ETA = entityPM.Transshipment3ETA;
+                    entityMasterData.Transshipment3ATA = entityPM.Transshipment3ATA;
+                    entityMasterData.Transshipment3ETD = entityPM.Transshipment3ETD;
+                    entityMasterData.Transshipment3ATD = entityPM.Transshipment3ATD;
                 }
             }
         }

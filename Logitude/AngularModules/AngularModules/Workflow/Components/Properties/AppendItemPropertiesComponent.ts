@@ -289,7 +289,7 @@ export class AppendItemPropertiesComponent extends BaseComponent {
     setDeclareType() {
         this.DeclareType = this.Entity
         this.EntityId = null;
-        this.SetValuesTitleText = "Set value to append"
+        this.SetValuesTitleText = "Set Value to Append"
     }
 
     isEntityCollection(type: string) {

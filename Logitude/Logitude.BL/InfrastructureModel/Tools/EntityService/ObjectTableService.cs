@@ -46,7 +46,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.entityPM = theEntityPm;
             this.entityPM.Id = IdCounter.GetNumber("ObjectTable", tenant).ToString();
 
-            ObjectTableServiceInitializer objectTableServiceInitializer = new ObjectTableServiceInitializer(this.entityPM, this.ObjectContext);
+            ObjectTableServiceInitializer objectTableServiceInitializer = new ObjectTableServiceInitializer(this.entityPM, this.ObjectContext, this.entityRepository);
             objectTableServiceInitializer.Initialize();
 
             this.Poco = new ObjectTable();
@@ -57,10 +57,11 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             ObjectTableValidating.Validate(theEntityPm);
             ObjectTableTracing.Trace(theEntityPm, Poco, isNewEntity);
             ObjectTableMapping.MapEntity(theEntityPm, Poco, isNewEntity);
-            entityRepository.Add(Poco);
+            entityRepository.Add(Poco);            
             new CustomObjectDefaultMetaDataService(this.entityPM, this.ObjectContext).Run();
             this.ObjectContext.SaveChanges();
-            
+
+            objectTableServiceInitializer.InitializeTextCode(this.Poco);
         }
 
         public void Update(ObjectTablePM theEntityPm)

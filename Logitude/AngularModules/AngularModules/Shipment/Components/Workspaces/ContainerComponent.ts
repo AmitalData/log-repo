@@ -89,26 +89,23 @@ export class ContainerComponent implements OnInit {
     public IsQueryVisible_PendingArrivalView: boolean = false;
     public IsQueryVisible_PendingDischargeView: boolean = false;
     public IsQueryVisible_PendingDeliveryView: boolean = false;
-
+    public IsQueryVisible_PreviousTrackedContainers: boolean = false;
     private SetQueriesVisibility() {
         this.IsQueryVisible_MyViewsGroup = FeatureLocator.HasFeaturePermession("General", "BUILDQUERIES") ? true : false;
         this.IsQueryVisible_AllContainers = FeatureLocator.HasFeaturePermession("Container", "Container.Q.AllContainers") ? true : false;
         this.IsQueryVisible_ClosedContainers = FeatureLocator.HasFeaturePermession("Container", "Container.Q.ClosedContainers") ? true : false;
         this.IsQueryVisible_Containers = FeatureLocator.HasFeaturePermession("Container", "Container.Q.Containers") ? true : false;
         this.IsQueryVisible_CancelledContainers = FeatureLocator.HasFeaturePermession("Container", "Container.Q.CancelledContainers") ? true : false;
-
         this.IsQueryVisible_PendingPOLDepartureView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.PendingPOLDeparture") ? true : false;
         this.IsQueryVisible_InTransitNewView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.InTransitNew") ? true : false;
         this.IsQueryVisible_InTransitTransshipmentsView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.InTransitTransshipments") ? true : false;
-
         this.IsQueryVisible_PendingGateOutView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.PendingGateOut") ? true : false;
         this.IsQueryVisible_PendingEmptyReturnView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.PendingEmptyReturn") ? true : false;
         this.IsQueryVisible_ExceptionsView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.Exceptions") ? true : false;
         this.IsQueryVisible_PendingArrivalView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.PendingArrival") ? true : false;
         this.IsQueryVisible_PendingDischargeView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.PendingDischarge") ? true : false;
         this.IsQueryVisible_PendingDeliveryView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.PendingDelivery") ? true : false;
-
-
+        this.IsQueryVisible_PreviousTrackedContainers = FeatureLocator.HasFeaturePermession("Container", "Container.Q.PreviousTrackedContainers") ? true : false;
     }
     public ContainersCount: string;
     LoadQueriesCounts() {
@@ -189,8 +186,10 @@ export class ContainerComponent implements OnInit {
                     ServiceLocator.SendTotangoUserActivity("Container", "PendingDelivery");
                     break;
                 }
-
-
+                case "PreviousTrackedContainers": {
+                    ServiceLocator.SendTotangoUserActivity("Container", "PreviousTrackedContainers");
+                    break;
+                }
             }
 
             var listArgs = new ListComponentArgs();

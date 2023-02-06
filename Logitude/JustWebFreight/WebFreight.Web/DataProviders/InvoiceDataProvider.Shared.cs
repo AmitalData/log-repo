@@ -875,7 +875,7 @@ namespace WebFreight.Web.DataProviders
         public DateTime? FinalMainCarriageATA { get; set; }
     }
 
-    public class ReportInvoiceLine
+    public class ReportInvoiceLine : CustomFieldDataProviedr
     {
         public string Description { get; set; }
         public string Quantity { get; set; }
@@ -938,6 +938,7 @@ namespace WebFreight.Web.DataProviders
         public bool IsRegionalTax { get; set; }
         public string ChargeTypeDescription { get; set; }
         public double? TotalAmount { get; set; }
+        public string ChargeTypeId { get; set; }
     }
 
     public class TotalVat

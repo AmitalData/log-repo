@@ -95,8 +95,7 @@
         <td class="table-row-cell">
             <div class="table-row-cell-block">
                 <div class="select-entity-label">Select Object</div>
-                <div>Select the object whose records trigger the flow when they're created or updated
-                </div>
+                <div>Select the object whose records trigger the flow when they're created or updated</div>
             </div>
         </td>
     </tr>
@@ -180,12 +179,35 @@
     </tr>
 
     <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <p class="Label" style="white-space: pre-wrap">
+                    Specify entry conditions to reduce the number of records that trigger the flow and the number of
+                    times the flow is executed.<br />
+                    Minimizing unnecessary flow executions helps to conserve your tenant's resources
+                </p>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <p class="Label" style="white-space: pre-wrap">
+                    If you create a flow when the record is that's triggered when a record is updated, we recommend
+                    first defining entry condition by triggering the flow when a field value is changed
+                </p>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
         <td>
             <div class="table-row-cell-block start-conditions-container"
                 [ngClass]="{'min-start-conditions-container': (ValidationErrorsList != null && ValidationErrorsList.length > 0)}">
 
                 <div *ngIf="Conditions && Conditions.length === 0">
-                    <span class="link-button" [ngClass]="{'disabled': !EntityId}" (click)="initializeCondition()"
+                    <span class="link-button" [ngClass]="{'disabled': !EntityId}" (click)="initializeConditions(true, true)"
                         [attr.data-cy]="'AddConditionButton'">
                         <span class="plus-sign">+</span><span>Add Condition</span>
                     </span>

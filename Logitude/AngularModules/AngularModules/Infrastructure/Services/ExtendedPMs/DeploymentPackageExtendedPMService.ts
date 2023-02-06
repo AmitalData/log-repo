@@ -28,9 +28,9 @@ export class DeploymentPackageExtendedPMService {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
-    GetDeploymentPackageDetailsByDocumentId(documentId: string) {
+    GetDeploymentPackageDetailsListByDocumentId(documentId: string) {
         return defer(() => {
-            return this.httpClient.get(this.apiUrl + '/GetDeploymentPackageDetailsByDocumentId?' + 'documentId=' + documentId, ServiceHelper.GetHttpHeaders())
+            return this.httpClient.get(this.apiUrl + '/GetDeploymentPackageDetailsListByDocumentId?' + 'documentId=' + documentId, ServiceHelper.GetHttpHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {
                         let serviceResponse: ServiceResponse = new ServiceResponse();

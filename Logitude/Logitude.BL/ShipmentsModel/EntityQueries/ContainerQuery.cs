@@ -181,17 +181,27 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentStatusId = container.ShipmentStatusId,
                     ShipmentStatusName = container.ShipmentEntityStatus?.Name,
                     EmptyPickupLocationPortId = container.EmptyPickupLocationPortId,
+                    EmptyPickupLocationName = container.EmptyPickupLocationPort == null ? null : container.EmptyPickupLocationPort.EnglishName,
                     PreCarriageLocationPortId = container.PreCarriageLocationPortId,
+                    PreCarriageLocationName = container.PreCarriageLocationPort == null ? null : container.PreCarriageLocationPort.EnglishName,
                     EmptyReturnLocationPortId = container.EmptyReturnLocationPortId,
+                    EmptyReturnLocationName = container.EmptyReturnLocationPort == null ? null : container.EmptyReturnLocationPort.EnglishName,
                     AvailabilityLocationPortId = container.AvailabilityLocationPortId,
                     OnCarriageLocationPortId = container.OnCarriageLocationPortId,
+                    OnCarriageLocationName = container.OnCarriageLocationPort == null ? null : container.OnCarriageLocationPort.EnglishName,
                     LIFLocationPortId = container.LIFLocationPortId,
                     POLLocationPortId = container.POLLocationPortId,
+                    POLLocationName = container.POLLocationPort == null ? null : container.POLLocationPort.EnglishName,
                     PODLocationPortId = container.PODLocationPortId,
+                    PODLocationName = container.PODLocationPort == null ? null : container.PODLocationPort.EnglishName,
                     Transshipment1LocationPortId = container.Transshipment1LocationPortId,
                     Transshipment2LocationPortId = container.Transshipment2LocationPortId,
                     Transshipment3LocationPortId = container.Transshipment3LocationPortId,
                     Transshipment4LocationPortId = container.Transshipment4LocationPortId,
+                    Transshipment1LocationName = container.Transshipment1LocationPort == null ? null : container.Transshipment1LocationPort.EnglishName,
+                    Transshipment2LocationName = container.Transshipment2LocationPort == null ? null : container.Transshipment2LocationPort.EnglishName,
+                    Transshipment3LocationName = container.Transshipment3LocationPort == null ? null : container.Transshipment3LocationPort.EnglishName,
+                    Transshipment4LocationName = container.Transshipment4LocationPort == null ? null : container.Transshipment4LocationPort.EnglishName,
                     TerminalId = container.TerminalId,
                     TerminalAddress = container.TerminalAddress,
                     TerminalName = container.TerminalCard != null ? container.TerminalCard.EnglishName : "",
@@ -292,12 +302,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     HasTransshipments = container.HasTransshipments,
                     MainCarriageFromCountryId = container.ShipmentMainCarriageFromPort == null ? null : container.ShipmentMainCarriageFromPort.CountryId,
                     MainCarriageToCountryId = container.ShipmentMainCarriageToPort == null ? null : container.ShipmentMainCarriageToPort.CountryId,
-                    MainCarriageFromCountryName = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryName: "",
-                    MainCarriageToCountryName = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryName: "",
-                    MainCarriageFromCountryCode = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryCode: "",
-                    MainCarriageToCountryCode = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryCode: "",
+                    MainCarriageFromCountryName = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryName : "",
+                    MainCarriageToCountryName = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryName : "",
+                    MainCarriageFromCountryCode = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryCode : "",
+                    MainCarriageToCountryCode = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryCode : "",
                     OnCarriageETA = container.OnCarriageETA,
                     OnCarriageATA = container.OnCarriageATA,
+                    RequestDate = container.RequestDate,
+                    RecentResponseDate = container.RecentResponseDate,
                 };
 
                 if (container.EntityStatus != null)
@@ -630,6 +642,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         MainCarriageToCountryName = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryName : "",
                         MainCarriageFromCountryCode = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryCode : "",
                         MainCarriageToCountryCode = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryCode : "",
+                        RequestDate = container.RequestDate,
+                        RecentResponseDate = container.RecentResponseDate,
                     }).ToList();
         }
 
@@ -941,7 +955,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    MainCarriageToCountryCode = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryCode : "",
                                                    OnCarriageETA = container.OnCarriageETA,
                                                    OnCarriageATA = container.OnCarriageATA,
-
+                                                   RequestDate = container.RequestDate,
+                                                   RecentResponseDate = container.RecentResponseDate,
                                                };
             return result;
         }

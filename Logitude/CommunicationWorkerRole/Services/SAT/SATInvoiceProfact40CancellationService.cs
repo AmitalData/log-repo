@@ -1,5 +1,7 @@
 ﻿using Logitude.BL.DataContracts;
+using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools;
+using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
@@ -7,6 +9,7 @@ using Profact.TimbraCFDI;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
 using System;
@@ -51,8 +54,11 @@ namespace CommunicationWorkerRole.Services.SAT
 					string folioSustitucion = GetRelatedInvoiceUUID(invoice, motivoCancelacion);
 
 					ResultadoCancelacion resultadoCancelacion = conector.CancelaCFDI40(rfcEmisor, folioFiscal, motivoCancelacion, folioSustitucion);
+                    bool isConcurrencyToggleEnabled = FeatureToggleHelper.HasFeatureToggle("INU", invoice.Tenant);
+                    string SATTransferStatusCode = null;
+                    string transmissionError = null;
 
-					if (resultadoCancelacion.Exitoso)
+                    if (resultadoCancelacion.Exitoso)
 					{
 						waitingCommLog.CommunicationStatusTypeCode = "D";
 						waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
@@ -62,16 +68,13 @@ namespace CommunicationWorkerRole.Services.SAT
 						communicationLogRep.Update(waitingCommLog);
 						communicationLogRep.SubmitChanges();
 
-						invoice.SATTransferStatusCode = "TD";
-						invoice.TransmissionError = null;
-						arinvoiceRep.Update(invoice);
-						arinvoiceRep.SubmitChanges();
+						SATTransferStatusCode = "TD";
+						transmissionError = null;
 					}
 					else
                     {
                         string transError = resultadoCancelacion.Descripcion;
                         if (IsWaitingToCancelledFromSAT(resultadoCancelacion))
-
                         {
                             waitingCommLog.CommunicationStatusTypeCode = "D";
                             waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
@@ -81,9 +84,7 @@ namespace CommunicationWorkerRole.Services.SAT
                             communicationLogRep.Update(waitingCommLog);
                             communicationLogRep.SubmitChanges();
 
-                            invoice.SATTransferStatusCode = "CS";
-                            arinvoiceRep.Update(invoice);
-                            arinvoiceRep.SubmitChanges();
+                            SATTransferStatusCode = "CS";
                         }
                         else
                         {
@@ -98,10 +99,8 @@ namespace CommunicationWorkerRole.Services.SAT
                                     }
                                     if (transError != invoice.TransmissionError || invoice.SATTransferStatusCode != "TE")
                                     {
-                                        invoice.SATTransferStatusCode = "TE";
-                                        invoice.TransmissionError = transError;
-                                        arinvoiceRep.Update(invoice);
-                                        arinvoiceRep.SubmitChanges();
+                                        SATTransferStatusCode = "TE";
+                                        transmissionError = transError;
                                     }
                                 }
                             }
@@ -109,7 +108,26 @@ namespace CommunicationWorkerRole.Services.SAT
                             throw new Exception("Failed," + transError);
                         }
                     }
-                }
+
+					if (isConcurrencyToggleEnabled)
+					{
+						args.ARInvoicePM.IsUpdatedBySAT = true;
+						args.ARInvoicePM.SATTransferStatusCode = SATTransferStatusCode;
+						args.ARInvoicePM.TransmissionError = transmissionError;
+
+						IInvoiceContext invoiceContext = InvoiceContext.GetContext(invoice.Tenant);
+						ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, invoice.Tenant);
+						invoiceService.Update(args.ARInvoicePM);
+					}
+
+					else
+					{
+						invoice.SATTransferStatusCode = SATTransferStatusCode;
+						invoice.TransmissionError = transmissionError;
+						arinvoiceRep.Update(invoice);
+						arinvoiceRep.SubmitChanges();
+					}
+				}
 			}
 		}
 
@@ -174,6 +192,7 @@ namespace CommunicationWorkerRole.Services.SAT
 		public CommunicationLogRepository CommunicationLogRep { get; set; }
 		public Simplog.Data.InvoiceModel.EntityPOCOs.SATInterfaceSetting SatSetting { get; set; }
 		public Simplog.Data.InvoiceModel.EntityPOCOs.ARInvoice ARInvoice { get; set; }
-		public ARInvoiceRepository ARInvoiceRep { get; set; }
+        public ARInvoicePM ARInvoicePM { get; set; }
+        public ARInvoiceRepository ARInvoiceRep { get; set; }
 	}
 }
