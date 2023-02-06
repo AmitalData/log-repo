@@ -148,6 +148,8 @@ namespace CommunicationWorkerRole
             shipmentPM = GetShipment(documentsFilingPM.EntityId , documentsFilingPM.Tenant);
             if (shipmentPM == null || shipmentPM.IsDocumentsNeedApprove) return;   
             shipmentPM.IsDocumentsNeedApprove = true;
+            shipmentPM.IsDocsKPIsUpdatedFromWR = true;
+
             isShipmentChange = true;
         }
 
