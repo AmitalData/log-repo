@@ -194,7 +194,7 @@ export class AddCustomObjectComponent extends BaseComponent {
 
     LoadData(objectTable: ObjectTablePM) {
         window.ObjectTables.push(objectTable);
-        this.objectTablePM.Name = objectTable.Name;
+        this.objectTablePM.Name = objectTable?.Name;
         this.GetObjectFields();
         this.GetScreens();
         this.GetTabs();
