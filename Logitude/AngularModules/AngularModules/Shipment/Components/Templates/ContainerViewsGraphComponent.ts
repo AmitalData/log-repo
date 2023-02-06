@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { ServiceResponse } from "Infrastructure/DataContracts/ServiceResponse";
+import { FeatureLocator } from "Infrastructure/Utilities/FeatureLocator";
 import { ContainerPMExtendedService } from "Shipment/Services/ExtendedPMs/ContainerPMExtendedService";
 
 @Component({
@@ -12,11 +13,13 @@ export class ContainerViewsGraphComponent extends BaseComponent implements OnIni
     @Output() OnViewClick = new EventEmitter<string>();
     private ContainerPMExtendedService: ContainerPMExtendedService;
     public DataSource: any = {};
+    public IsViewsGraphActive: boolean;
 
     constructor() {
         super()
         this.ContainerPMExtendedService = new ContainerPMExtendedService();
         this.BuildChartInfo();
+        this.IsViewsGraphActive = FeatureLocator.HasFeaturePermession("Container", "VIEWSGRAPH");
     }
 
     BuildChartInfo() {
@@ -55,6 +58,8 @@ export class ContainerViewsGraphComponent extends BaseComponent implements OnIni
     }
 
     public GetData() {
+        if (!this.IsViewsGraphActive) return;
+
         this.DataSource.data = null;
         this.ContainerPMExtendedService.GetViewsGraphData().subscribe((myResult: any) => {
             var pmResponse: ServiceResponse = myResult;

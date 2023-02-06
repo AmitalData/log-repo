@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ContainerUpdateClass
    {  		
-		public const string HashString = "ffdc9a222ae994ba2771ebda64f4b707";
+		public const string HashString = "e2402dd3c512eb3fc2813016a82b16f2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -17699,6 +17699,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "EmptyPickupLocationName",
 					  						ListPropertyPath =  "EmptyPickupLocationName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -17757,6 +17758,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "PreCarriageLocationName",
 					  						ListPropertyPath =  "PreCarriageLocationName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -17815,6 +17817,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "PODLocationName",
 					  						ListPropertyPath =  "PODLocationName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -17873,6 +17876,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "POLLocationName",
 					  						ListPropertyPath =  "POLLocationName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -17931,6 +17935,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "OnCarriageLocationName",
 					  						ListPropertyPath =  "OnCarriageLocationName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -17989,6 +17994,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Transshipment1LocationName",
 					  						ListPropertyPath =  "Transshipment1LocationName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -18047,6 +18053,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Transshipment2LocationName",
 					  						ListPropertyPath =  "Transshipment2LocationName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -18105,6 +18112,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Transshipment3LocationName",
 					  						ListPropertyPath =  "Transshipment3LocationName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -18163,6 +18171,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Transshipment4LocationName",
 					  						ListPropertyPath =  "Transshipment4LocationName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -18221,6 +18230,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "EmptyReturnLocationName",
 					  						ListPropertyPath =  "EmptyReturnLocationName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -19249,6 +19259,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 		   Feature ContainerFeature_TABSCUSTOMIZATION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TABSCUSTOMIZATION", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Container.Features.TABSCUSTOMIZATION", NameTextCodeDefaultText = @"Tabs Customization" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContainerObjectTable);
 
 		   Feature ContainerFeature_MULTIUPDATE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MULTIUPDATE", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Container.Features.MULTIUPDATECONTAINER", NameTextCodeDefaultText = @"Multi Update" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContainerObjectTable);
+
+		   Feature ContainerFeature_VIEWSGRAPH = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VIEWSGRAPH", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Container.Features.VIEWSGRAPH", NameTextCodeDefaultText = @"Views Graph" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContainerObjectTable);
 
    
 	    
