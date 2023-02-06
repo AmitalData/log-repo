@@ -6,5 +6,6 @@ export class DeclarationEventManager {
     static ConsignmentsChanged: EventEmitter<any> = new EventEmitter();
     static DeclarationAmendmentCancelled: EventEmitter<any> = new EventEmitter();
     static AddDeclarationToContainerization: EventEmitter<any> = new EventEmitter();
+    static SavePendingAfterDeclarationSaved: EventEmitter<any> = new EventEmitter();
 
 }
