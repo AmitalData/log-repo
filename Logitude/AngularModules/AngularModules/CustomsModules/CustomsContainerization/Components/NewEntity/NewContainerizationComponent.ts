@@ -508,7 +508,7 @@ export class NewContainerizationComponent extends BaseComponent {
 
                      var ConnectedDeclarations =""  ;
                     res.Result.forEach(a=>ConnectedDeclarations+=(a+","));
-                    this.entityPM.ConnectedDeclarations = ConnectedDeclarations;
+                    this.entityPM.ConnectedDeclarations += ConnectedDeclarations;
                     this.entityPM.OperationMode = "2";
                     this.entityPM.IsChange = true;
                     SessionLocator.SelectedSession.CurrentEditComponent.EntityPM = this.entityPM;

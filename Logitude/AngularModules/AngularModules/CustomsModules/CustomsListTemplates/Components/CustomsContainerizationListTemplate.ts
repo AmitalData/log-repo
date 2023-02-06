@@ -50,7 +50,8 @@ export class CustomsContainerizationListTemplate {
     BuildDeclarationsCheckBox() {
         this.IsConnectedDeclarationChecked = false;
         if(this.rowData.IsSubmitDeclaration){
-         if (this.entityPM.ConnectedDeclarations && this.entityPM.Id != null && !this._containerizationExtendedListService.connectedSelectAll) {
+         if (AppTool.IsNullOrEmpty(this._containerizationExtendedListService.ConnectedDeclarations)&&this.entityPM.ConnectedDeclarations 
+         && this.entityPM.Id != null && !this._containerizationExtendedListService.connectedSelectAll) {
                this._containerizationExtendedListService.ConnectedDeclarations = this.entityPM.ConnectedDeclarations;
            }
            if (!this._containerizationExtendedListService.ConnectedDeclarations) {
@@ -69,7 +70,7 @@ export class CustomsContainerizationListTemplate {
            }
            if (!this._containerizationExtendedListService.AllDeclarations.includes(this.rowData.Id)) {
                this._containerizationExtendedListService.AllDeclarations = this._containerizationExtendedListService.AllDeclarations + this.rowData.Id + ",";
-           }               
+           }       
            let sConnectedDeclarations = this._containerizationExtendedListService.ConnectedDeclarations as string;
            if (!AppTool.IsNullOrEmpty(sConnectedDeclarations)) {
                let ConnectedDeclarations = sConnectedDeclarations.split(',')
