@@ -366,6 +366,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         PortPM mainCarriageFromPort = portQuery.GetSinglePM(shipmentPM.MainCarriageFromPortId, masterData.Tenant);
                         shipmentPM.MainCarriageFromPortCode = mainCarriageFromPort?.Code;
                         shipmentPM.MainCarriageFromPortName = mainCarriageFromPort?.EnglishName;
+                        shipmentPM.MainCarriageFromPortCountryCode = mainCarriageFromPort.CountryCode;
+                        shipmentPM.MainCarriageFromPortCountryName = mainCarriageFromPort.CountryName;
                     }
 
                     if (!string.IsNullOrEmpty(shipmentPM.MainCarriageToPortId))
@@ -373,6 +375,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         PortPM mainCarriageToPort = portQuery.GetSinglePM(shipmentPM.MainCarriageToPortId, masterData.Tenant);
                         shipmentPM.MainCarriageToPortCode = mainCarriageToPort?.Code;
                         shipmentPM.MainCarriageToPortName = mainCarriageToPort?.EnglishName;
+                        shipmentPM.MainCarriageToPortCountryCode = mainCarriageToPort.CountryCode;
+                        shipmentPM.MainCarriageToPortCountryName = mainCarriageToPort.CountryName;
                     }
 
                     shipmentPM.MainCarriageFromPartnerId = masterData.MainCarriageFromPartnerId;
@@ -2702,7 +2706,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             else if (shipmentPM.InlandDomesticFromTypeCode == "CASL")
             {
                 shipmentPM.FromLocation = shipmentPM.InlandDomesticFromCity;
-                Country country = GetCountryByCASLAddress(shipmentPM.InlandDomesticFromCountryId, tenant);
+                Country country = GetCountryCodeByCASLAddress(shipmentPM.InlandDomesticFromCountryId, tenant);
                 if (country != null)
                 {
                     shipmentPM.FromPartnerCountryCode = country.Code;
@@ -2724,7 +2728,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             else if (shipmentPM.InlandDomesticToTypeCode == "CASL")
             {
                 shipmentPM.ToLocation = shipmentPM.InlandDomesticToCity;
-                Country country = GetCountryByCASLAddress(shipmentPM.InlandDomesticToCountryId, tenant);
+                Country country = GetCountryCodeByCASLAddress(shipmentPM.InlandDomesticToCountryId, tenant);
                 if (country != null)
                 {
                     shipmentPM.ToPartnerCountryCode = country.Code;
