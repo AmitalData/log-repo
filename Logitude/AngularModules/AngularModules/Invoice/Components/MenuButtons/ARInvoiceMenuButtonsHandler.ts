@@ -938,6 +938,7 @@ export class ARInvoiceMenuButtonsHandler {
 
     private UpdateARInvoiceLineVatAmount(line: any) {
         let originalLine = this.GetOriginalInvoiceLineToBeCorrected(line);
+        if (!originalLine) return;
         if (originalLine.ForiegnCurrencyAmount == originalLine.InvoiceCurrencyAmount) {
             originalLine.ForiegnCurrencyAmount = line.InvoiceCurrencyAmount;
         }
