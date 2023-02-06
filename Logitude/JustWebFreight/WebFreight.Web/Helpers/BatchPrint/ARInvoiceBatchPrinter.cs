@@ -45,6 +45,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
         }
         public override void AfterPrint(PrintEntityKeys item)
         {
+            if (isPrintedPreviously) return;
             ARInvoicePrintDetailsService aRInvoicePrintDetailsService = new ARInvoicePrintDetailsService(_batchPrinterArgs.Tenant, item.EntityId, _batchPrinterArgs.Email);
             aRInvoicePrintDetailsService.Update();
         }

@@ -114,6 +114,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
             documentOut.Issued = true;
             documentOut.IssuedDate = TenantServerConfigration.GetCurrentDateTime(_batchPrinterArgs.Tenant);
             documentOut.IssuedByUserId = userId;
+            documentOut.NeedsRebuild = false;
             return documentOut;
         }
         private void IncresePrograse()
@@ -172,7 +173,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
             byte[] ByteData = memoryStream.ToArray();
             DocumentRepository documentRepository = new DocumentRepository(tenant);
-            string fileName = "Documents_MultiPrint" + DateTime.Now.ToString("dd-MM-yyy");
+            string fileName = "Documents_MultiPrint" + DateTime.Now.ToString("dd-MM-yyy")+ "here try from invoice";
             Document document = new Document()
             {
                 FileName = fileName,
@@ -214,6 +215,8 @@ namespace WebFreight.Web.Helpers.BatchPrint
                 result.DocumentStream = stream;
                 result.IsSuccessfullyPrinted = true;
 
+                
+
                 AfterPrint(item);
                 return result;
             }
@@ -233,6 +236,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
             documentOutPM.Issued = true;
             documentOutPM.IssuedByUserId = printedBy.Id;
             documentOutPM.IsChangeIssuedDate = true;
+           
             ICommonDataContext objectContext = CommonDataContext.GetContext(documentOutPM.Tenant);
             DocumentOutService service = new DocumentOutService(objectContext, documentOutPM.Tenant);
             service.Update(documentOutPM, documentOutPM.DocumentOutCopies);
@@ -257,11 +261,13 @@ namespace WebFreight.Web.Helpers.BatchPrint
             DocumentHelper documentHelper = new DocumentHelper();
             return documentHelper.CreateDocumentOut(_batchPrinterArgs.DocumentTypeId, item.EntityId, item.ChildEntityId, null, _batchPrinterArgs.ObjectTableId, _batchPrinterArgs.Tenant, printedBy.Id);
         }
+        public bool isPrintedPreviously = false;
         private MemoryStream BuildReportStream(PrintEntityKeys item)
         {
             var printedCopy = GetPrintedCopy(item);
             if (printedCopy != null)
             {
+                isPrintedPreviously = true;
                 var stream = GetReportStreamFromCopy(printedCopy);
                 if(stream != null) return stream;
             }

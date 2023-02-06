@@ -1,5 +1,6 @@
 import { XmlParser } from '@angular/compiler';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { DocumentTypeCopyList } from '../../../Common/EntityLists/DocumentTypeCopyList';
 import { DocumentTypeTemplateList } from '../../../Common/EntityLists/DocumentTypeTemplateList';
 import { DocumentTypeTemplateListExtendedService } from '../../../Common/Services/ExtendedLists/DocumentTypeTemplateListExtendedService';
@@ -355,7 +356,7 @@ export class PrintComponent extends BaseComponent implements OnInit {
         args.ObjectTableId = this.ObjectTableId;
         args.Tenant = SessionInfo.LoggedUserTenant;
         args.EntityIds = [];
-
+        
         this.SelectedRecords.forEach((item) => {
             var key: PrintEntityKeys = new PrintEntityKeys();
             key.EntityId = item.Id;
@@ -406,7 +407,7 @@ export class PrintComponent extends BaseComponent implements OnInit {
     }
 
     timer: any;
-    timerInterval: number = 1000;
+    timerInterval: number = 500;
     StopTimer() {
         if (this.timer) {
             clearInterval(this.timer);
