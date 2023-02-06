@@ -42,6 +42,7 @@ import { SupplierConsigneeListTemplate } from './Components/ListTemplates/Suppli
 import { UpdateUnassigedDataComponent } from './Components/UnassigedData/UpdateUnassigedDataComponent';
 import { ContainerShortTitleComponent } from './Components/ShortTitles/ContainerShortTitleComponent';
 import { ContainerComponent } from './Components/Workspaces/ContainerComponent';
+import { ContainerViewsGraphComponent } from './Components/Templates/ContainerViewsGraphComponent';
 
 export const Components =
     [
@@ -86,7 +87,8 @@ export const Components =
         SupplierConsigneeListTemplate,
         UpdateUnassigedDataComponent,
         ContainerShortTitleComponent,
-        ContainerComponent
+        ContainerComponent,
+        ContainerViewsGraphComponent
     ];
 
 export const ControlsComponents =
@@ -143,6 +145,7 @@ export class ModuleDeclarations {
             case "UpdateUnassigedDataComponent": { myResult = UpdateUnassigedDataComponent; break; }
             case "ContainerShortTitleComponent": { myResult = ContainerShortTitleComponent; break; }
             case "ContainerComponent": { myResult = ContainerComponent; break; }
+            case "ContainerViewsGraphComponent": { myResult = ContainerViewsGraphComponent; break; }
         }
 
         return myResult;

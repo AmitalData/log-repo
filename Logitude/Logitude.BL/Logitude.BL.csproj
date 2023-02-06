@@ -798,6 +798,7 @@
     <Compile Include="QuoteModel\EntityPMs\QuoteSalesAmountWithVATDetailsPM.cs" />
     <Compile Include="QuoteModel\EntityQueries\QuoteQuery.Digital.cs" />
     <Compile Include="ShipmentDigitalFieldQuery.cs" />
+    <Compile Include="ShipmentsModel\APIDataContract\ContainerViewsGraphData.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\GeneralContainerTrackingArgs.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\Shipments.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\VizionModels.cs" />
