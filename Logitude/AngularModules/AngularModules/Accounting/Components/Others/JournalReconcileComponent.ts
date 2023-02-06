@@ -325,7 +325,6 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                     this.AccountingPeriods = myResponse.Result;
-                    this.checkSelectedLinesClosedMonth();
                 }
             }
         });
@@ -437,6 +436,8 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
 
             });
         }
+
+        this.checkSelectedLinesClosedMonth();
     }
     _NewJournalPM: JournalPM;
     _NewJournals: JournalPM[];
