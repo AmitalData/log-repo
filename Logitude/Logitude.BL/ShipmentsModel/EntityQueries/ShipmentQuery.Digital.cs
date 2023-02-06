@@ -735,10 +735,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         #region Routing 
 
-        public List<ShipmentRoutingLeg> GetDigitalShipmentRoutingLegs(string shipmentId, int tenant)
+        public List<ShipmentRoutingLeg> GetDigitalShipmentRoutingLegs(string shipmentId, int tenant, Dictionary<string, List<string>> blockedFields)
         {
             InitializeServices(tenant);
-
+            this.blockedFields = blockedFields;
             var routingLegs = new List<ShipmentRoutingLeg>();
             ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
             ShipmentPM shipment = shipmentQuery.GetSinglePMWithoutComposition(shipmentId, tenant);
@@ -1106,7 +1106,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 DepartureDateType = firstPickup.ATD != null ? "ATD" : (firstPickup.ETD != null ? "ETD" : null),
                 Carrier = trucker?.EnglishName,
                 CarrierNumber = firstPickup.CarrierNumber,
-                CarrierNumberLabel = "Trucker.TruckerNumber",
+                CarrierNumberLabel = "ShipmentPickUpDelivery.PickUpDeliveryNumber",
                 CarrierLabel = "Trucker.EnglishName",
             };
             FillRountingPickUpDeliveryFromPortAndCountry(pickUp, firstPickup, shipment.Tenant);
@@ -1128,8 +1128,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 ArrivalDate = shipment.PreCarriageATA != null ? shipment.PreCarriageATA : shipment.PreCarriageETA,
                 ArrivalDateType = shipment.PreCarriageATA != null ? "ATA" : (shipment.PreCarriageETA != null ? "ETA" : null),
                 Carrier = shipment.PreCarriageCarrierName,
-                CarrierLabel = "Shipment.O.Routings.Carrier",
-                CarrierNumberLabel = "Shipment.O.Routings.CarrierNo",
+                CarrierLabel = "Shipment.PreCarriageCarrierName",
+                CarrierNumberLabel = "Shipment.PreCarriageCarrierNumber",
                 CarrierNumber = shipment.PreCarriageCarrierNumber,
                 VesselName = shipment.PreCarriageTransportModeId == "O" ? shipment.PreCarriageVesselName : null,
             };
@@ -1145,8 +1145,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 LegHeader = "MainCarriage",
                 FromPort = shipment.MainCarriageFromPortName + ", " + shipment.MainCarriageFromPortCountryCode,
                 ToPort = shipment.MainCarriageToPortName + ", " + shipment.MainCarriageToPortCountryCode,
-                Carrier = shipment.MainCarriageCarrierName,
-                CarrierNumber = shipment.MainCarriageCarrierNumber,
                 CarrierLabel = GetCarrierTextCode(shipment),
                 CarrierNumberLabel = GetCarrierNumberTextCode(shipment),
                 VesselName = shipment.TransportModeId == "O" ? shipment.MainCarriageVesselName : null,
@@ -1156,6 +1154,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 ArrivalDateType = shipment.MainCarriageATA != null ? "ATA" : (shipment.MainCarriageETA != null ? "ETA" : null),
                 TransportMode = GetTransportModeName(shipment.TransportModeId),
             };
+
+            if (CheckIsPermissonField("Shipment", "Shipment.MainCarriageCarrierName"))
+            {
+                mainCarriageLeg.Carrier = shipment.MainCarriageCarrierName;
+            }
+
+            if (CheckIsPermissonField("Shipment", "Shipment.MainCarriageCarrierNumber"))
+            {
+                mainCarriageLeg.CarrierNumber = shipment.MainCarriageCarrierNumber;
+            }
+
             return mainCarriageLeg;
         }
 
@@ -1167,8 +1176,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 LegHeader = "Transshipment1",
                 FromPort = shipment.Transshipment1FromPortName + ", " + shipment.Transshipment1FromPortCountryCode,
                 ToPort = shipment.Transshipment1ToPortName + ", " + shipment.Transshipment1ToPortCountryCode,
-                Carrier = shipment.Transshipment1CarrierName,
-                CarrierNumber = shipment.Transshipment1CarrierNumber,
                 CarrierLabel = GetCarrierTextCode(shipment),
                 CarrierNumberLabel = GetCarrierNumberTextCode(shipment),
                 VesselName = shipment.TransportModeId == "O" ? shipment.Transshipment1VesselName : null,
@@ -1178,6 +1185,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 ArrivalDateType = shipment.Transshipment1ATA != null ? "ATA" : (shipment.Transshipment1ETA != null ? "ETA" : null),
                 TransportMode = GetTransportModeName(shipment.TransportModeId),
             };
+
+            if (CheckIsPermissonField("Shipment", "Shipment.Transshipment1CarrierName"))
+            {
+                transshipment1.Carrier = shipment.Transshipment1CarrierName;
+            }
+
+            if (CheckIsPermissonField("Shipment", "Shipment.Transshipment1CarrierNumber"))
+            {
+                transshipment1.CarrierNumber = shipment.Transshipment1CarrierNumber;
+            }
 
             return transshipment1;
         }
@@ -1190,8 +1207,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 LegHeader = "Transshipment2",
                 FromPort = shipment.Transshipment2FromPortName + ", " + shipment.Transshipment2FromPortCountryCode,
                 ToPort = shipment.Transshipment2ToPortName + ", " + shipment.Transshipment2ToPortCountryCode,
-                Carrier = shipment.Transshipment2CarrierName,
-                CarrierNumber = shipment.Transshipment2CarrierNumber,
                 CarrierLabel = GetCarrierTextCode(shipment),
                 CarrierNumberLabel = GetCarrierNumberTextCode(shipment),
                 VesselName = shipment.TransportModeId == "O" ? shipment.Transshipment2VesselName : null,
@@ -1201,6 +1216,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 ArrivalDateType = shipment.Transshipment2ATA != null ? "ATA" : (shipment.Transshipment2ETA != null ? "ETA" : null),
                 TransportMode = GetTransportModeName(shipment.TransportModeId),
             };
+
+            if (CheckIsPermissonField("Shipment", "Shipment.Transshipment2CarrierName"))
+            {
+                transshipment2.Carrier = shipment.Transshipment2CarrierName;
+            }
+
+            if (CheckIsPermissonField("Shipment", "Shipment.Transshipment2CarrierNumber"))
+            {
+                transshipment2.CarrierNumber = shipment.Transshipment2CarrierNumber;
+            }
 
             return transshipment2;
         }
@@ -1213,8 +1238,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 LegHeader = "Transshipment3",
                 FromPort = shipment.Transshipment3FromPortName + ", " + shipment.Transshipment3FromPortCountryCode,
                 ToPort = shipment.Transshipment3ToPortName + ", " + shipment.Transshipment3ToPortCountryCode,
-                Carrier = shipment.Transshipment3CarrierName,
-                CarrierNumber = shipment.Transshipment3CarrierNumber,
                 CarrierLabel = GetCarrierTextCode(shipment),
                 CarrierNumberLabel = GetCarrierNumberTextCode(shipment),
                 VesselName = shipment.TransportModeId == "O" ? shipment.Transshipment3VesselName : null,
@@ -1224,6 +1247,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 ArrivalDateType = shipment.Transshipment3ATA != null ? "ATA" : (shipment.Transshipment3ETA != null ? "ETA" : null),
                 TransportMode = GetTransportModeName(shipment.TransportModeId),
             };
+
+            if (CheckIsPermissonField("Shipment", "Shipment.Transshipment3CarrierName"))
+            {
+                transshipment3.Carrier = shipment.Transshipment3CarrierName;
+            }
+
+            if (CheckIsPermissonField("Shipment", "Shipment.Transshipment3CarrierNumber"))
+            {
+                transshipment3.CarrierNumber = shipment.Transshipment3CarrierNumber;
+            }
 
             return transshipment3;
         }
@@ -1243,8 +1276,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 ArrivalDateType = shipment.OnCarriageATA != null ? "ATA" : (shipment.OnCarriageETA != null ? "ETA" : null),
                 Carrier = shipment.OnCarriageCarrierName,
                 CarrierNumber = shipment.OnCarriageCarrierNumber,
-                CarrierLabel = "Shipment.O.Routings.Carrier",
-                CarrierNumberLabel = "Shipment.O.Routings.CarrierNo",
+                CarrierLabel = "Shipment.OnCarriageCarrierName",
+                CarrierNumberLabel = "Shipment.OnCarriageCarrierNumber",
                 VesselName = shipment.OnCarriageTransportModeId == "O" ? shipment.OnCarriageVesselName : null,
             };
 
@@ -1281,7 +1314,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 ArrivalDateType = finalDelivery.ATA != null ? "ATA" : (finalDelivery.ETA != null ? "ETA" : null),
                 Carrier = trucker?.EnglishName,
                 CarrierNumber = finalDelivery.CarrierNumber,
-                CarrierNumberLabel = "Trucker.TruckerNumber",
+                CarrierNumberLabel = "ShipmentPickUpDelivery.PickUpDeliveryNumber",
                 CarrierLabel = "Trucker.EnglishName",
             };
 
