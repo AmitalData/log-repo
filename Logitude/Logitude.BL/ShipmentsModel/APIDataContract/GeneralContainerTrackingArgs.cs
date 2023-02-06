@@ -24,7 +24,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract
         public string Master { get; internal set; }
         public string SourceCode { get; set; }
         public string DirectionId { get; set; }
-
+        public bool IsUpdatedFromRequest { get; set; }
         public GeneralContainerTrackingArgs()
         {
             Success = true;
