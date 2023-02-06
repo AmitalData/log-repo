@@ -2338,7 +2338,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         public ContainerViewsGraphData GetViewsGraphData(int tenant)
         {
-            var containers = repository.context.Containers;
             var datas = new List<ContainerViewsGraphDataItem>();
             var queries = new ContainerViewsQueries().BuilQueries(tenant, repository.context);
             foreach (var item in queries) datas.Add(GetViewGraphDataByCode(tenant, item));
@@ -2357,7 +2356,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 QueryCode = item.QueryCode,
                 Value = item.Query.Count(),
                 ToolTip = item.ToolTip
-                //Value = new Random().Next(200),
             };
         }
     }
