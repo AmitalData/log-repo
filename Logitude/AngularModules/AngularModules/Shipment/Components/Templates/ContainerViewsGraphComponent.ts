@@ -81,8 +81,8 @@ export class ContainerViewsGraphComponent extends BaseComponent implements OnIni
                 value: e.Value,
                 label: e.Label,
                 id: e.QueryCode,
-                tooltext: e.ToolTip,
-                color: this.GetSeriesColor(index + 1)
+                tooltext: e.Value + " " + e.ToolTip,
+                color: this.GetSeriesPositionColor(index + 1)
             }
             return item;
         });
