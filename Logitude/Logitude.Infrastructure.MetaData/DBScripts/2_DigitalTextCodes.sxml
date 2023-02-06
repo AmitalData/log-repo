@@ -1,7 +1,8 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="11">
+  <Sql Version="12">
     <![CDATA[
 	  delete from DigitalTextCodes where Id != ''
+	  
       declare @NewEntityId as varchar(15)
 	  declare @generalObjectTableId as varchar(15)
 	  set @generalObjectTableId = (select Id from ObjectTables where [Name] = 'General' and Tenant = 0 )
