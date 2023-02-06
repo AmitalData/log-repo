@@ -58,6 +58,15 @@ export class SharedLogisticsService {
         }),catchError(ServiceHelper.HandleServiceError));
     }
 
+    getDigitalSharedLogisticsSummaryData(tenant: number) {
+        return this._http.get(ServiceHelper.GetLogitudeURL() + 'api/DigitalActivity/GetDigitalSharedLogisticsSummaryData/?' + 'tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+            pmresponse.Result = response;
+            return pmresponse;
+        }), catchError(ServiceHelper.HandleServiceError));
+    }
+
     getDigitalCardLogDetails(partnerTypeId: string, dateParameter: string, tenant: number)
     {
         return this._http.get(ServiceHelper.GetLogitudeURL() + 'api/DigitalActivity/GetDigitalCardLogDetails/?' + 'partnerTypeId=' + partnerTypeId + '&dateParameter=' + dateParameter + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
