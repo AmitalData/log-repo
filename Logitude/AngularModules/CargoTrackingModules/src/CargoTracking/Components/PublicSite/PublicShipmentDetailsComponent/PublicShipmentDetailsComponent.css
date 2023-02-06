@@ -350,7 +350,8 @@ ul.line-list li.tick {
 .start  span img,
 .end  span img{
     filter:opacity(0.5) drop-shadow(rgba(242, 7, 7, 1) 0 0 0);
-    width: 50px;
+    width: 40px;
+    
 }
 
 .tab-selector>div {
