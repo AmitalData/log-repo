@@ -173,7 +173,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
             byte[] ByteData = memoryStream.ToArray();
             DocumentRepository documentRepository = new DocumentRepository(tenant);
-            string fileName = "Documents_MultiPrint" + DateTime.Now.ToString("dd-MM-yyy")+ "here try from invoice";
+            string fileName = "Documents_MultiPrint" + DateTime.Now.ToString("dd-MM-yyy");
             Document document = new Document()
             {
                 FileName = fileName,

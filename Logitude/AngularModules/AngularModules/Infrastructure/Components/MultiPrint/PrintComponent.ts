@@ -407,7 +407,7 @@ export class PrintComponent extends BaseComponent implements OnInit {
     }
 
     timer: any;
-    timerInterval: number = 500;
+    timerInterval: number = 1000;
     StopTimer() {
         if (this.timer) {
             clearInterval(this.timer);
