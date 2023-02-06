@@ -17,6 +17,8 @@ export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
     public CurrentSession = SessionLocator.SelectedSession;
     public EntityResourceService: EntityResourceService = new EntityResourceService();
     AllObjectTables: ShortObjectTableDetails[] = [];
+    ObjectTable: any;
+    ParentObjectTable: any;
 
     constructor() {
         super();
@@ -43,8 +45,7 @@ export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
         this.LoadObjectTableEntityResources();
     }
     LoadObjectTableEntityResources() {
-        let objectTable = window.ObjectTables.filter(ob => ob.Name == this.ObjectTableName)[0];
-        if (objectTable && !objectTable.IsCustom) {
+        if (this.ObjectTable && !this.ObjectTable.IsCustom) {
             this.EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response: any) => {
                 this.LoadParentObjectTableEntityResources();
             });
@@ -134,6 +135,7 @@ export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
         }
         if (newValue != this.objectTableName) {
             this.objectTableName = newValue;
+            this.ObjectTable = window.ObjectTables.filter(ob => ob.Name == this.ObjectTableName)[0];
         }
 
         this.FillAllObjectTables();
@@ -144,6 +146,7 @@ export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
     public set ParentObjectTableName(newValue: string) {
         if (newValue != this.parentObjectTableName) {
             this.parentObjectTableName = newValue;
+            this.ParentObjectTable = window.ObjectTables.filter(ob => ob.Name == this.ParentObjectTableName)[0];
         }
 
         this.FillAllObjectTables();
@@ -164,16 +167,14 @@ export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
     }
     
     PushParentObjectTable() {
-        if (!this.ParentObjectTableName) return;
-        let objectTableNameSplitter = this.ParentObjectTableName.split('.');
-        this.AllObjectTables.push(new ShortObjectTableDetails(this.ParentObjectTableName, objectTableNameSplitter[objectTableNameSplitter.length - 1]));
+        if (!this.ParentObjectTable) return;
+        this.AllObjectTables.push(new ShortObjectTableDetails(this.ParentObjectTableName, this.ParentObjectTable.FullNameTextCodeDefaultText));
     }
 
     PushObjectTable() {
-        if (!this.ObjectTableName) return;
+        if (!this.ObjectTable) return;
         if (this.ParentObjectTableName == this.ObjectTableName) return;
-        let objectTableNameSplitter = this.ObjectTableName.split('.');
-        this.AllObjectTables.push(new ShortObjectTableDetails(this.ObjectTableName, objectTableNameSplitter[objectTableNameSplitter.length - 1]));
+        this.AllObjectTables.push(new ShortObjectTableDetails(this.ObjectTableName, this.ObjectTable.FullNameTextCodeDefaultText));
     }
 
     SelectedMainEntityName(item) {

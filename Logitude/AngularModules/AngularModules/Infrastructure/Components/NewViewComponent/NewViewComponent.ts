@@ -183,12 +183,11 @@ export class NewViewComponent {
     }
 
     GetCurrentObjectTableName() {
-        if (!this.ObjectTable.IsCustom) {
-            return this.CurrentObjectTable;
+        if (!this.ObjectTable) {
+            return "";
         }
 
-        let objectTableNameSplitter = this.ObjectTable.Name.split('.');
-        return objectTableNameSplitter[objectTableNameSplitter.length - 1];
+        return this.ObjectTable.FullNameTextCodeDefaultText;
     }
 
     private myUsersList: UserList[] = [];
