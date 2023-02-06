@@ -114,17 +114,17 @@ export class GLAccountMenuButtonsHandler {
                                 break;
                             }
 
-                        case "GLAccountPrintCardIndex":
-                            {
-//                                if (this.EntityPM.Inactive == true) {
-//                                    button.IsDisabled = true;
-//                               }
+//                         case "GLAccountPrintCardIndex":
+//                             {
+// //                                if (this.EntityPM.Inactive == true) {
+// //                                    button.IsDisabled = true;
+// //                               }
 
-//                                else {
-                                    button.IsDisabled = false;
-//                                }
-                                    break;
-                            }
+// //                                else {
+//                                     button.IsDisabled = false;
+// //                                }
+//                                     break;
+//                             }
 
                         case "Reconcile":
                             {
@@ -182,12 +182,12 @@ export class GLAccountMenuButtonsHandler {
                         //    });
                         break;
                     }
-                case "GLAccountPrintCardIndex":
-                    {
-                        this.entityArgs.EditComponent.SaveChanges();
-                        // Here to start the report filter screen
-                        break;
-                    }
+                // case "GLAccountPrintCardIndex":
+                //     {
+                //         this.entityArgs.EditComponent.SaveChanges();
+                //         // Here to start the report filter screen
+                //         break;
+                //     }
                 case "Reconcile":
                     {
                         this.ReconcileButtonClicked();
