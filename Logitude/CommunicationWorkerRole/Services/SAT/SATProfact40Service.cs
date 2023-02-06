@@ -61,6 +61,8 @@ namespace CommunicationWorkerRole.Services.SAT
 			ResultadoTimbre resultadoTimbre = conector.TimbraCFDI(comprobante);
 
 			invoiceContext = InvoiceContext.GetContext(waitingCommLog.Tenant);
+			paymentQuery = new ARPaymentQuery(waitingCommLog.Tenant);
+			invoiceQuery = new ARInvoiceQuery(waitingCommLog.Tenant);
 			ARInvoiceRepository arinvoiceRep = new ARInvoiceRepository(invoiceContext);
 			ARPaymentRepository arpaymentRep = new ARPaymentRepository(invoiceContext);
 			isConcurrencyToggleEnabled = FeatureToggleHelper.HasFeatureToggle("INU", waitingCommLog.Tenant);
