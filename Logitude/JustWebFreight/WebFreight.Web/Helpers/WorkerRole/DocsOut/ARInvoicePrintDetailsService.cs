@@ -21,7 +21,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
         {
             this.tenant = tenant;
             this.aRInvoiceId = aRInvoiceId;
-            this.loggedUserEmail = aRInvoiceId;
+            this.loggedUserEmail = loggedUserEmail;
             this.invoiceContext = InvoiceContext.GetContext(tenant);
             this.aRInvoiceService = new ARInvoiceService(invoiceContext, tenant, loggedUserEmail);
         }
