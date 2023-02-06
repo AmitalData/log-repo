@@ -174,6 +174,7 @@ export class AddCustomObjectComponent extends BaseComponent {
         this.objectTablePM.LastUpdateDate = DateTool.GetCurrentDateTimeAsUtc();
         this.objectTablePM.Name = this.objectTableName;
         this.objectTablePM.DefaultText = this.DisplayLabelSingular;
+        this.objectTablePM.FullNameTextCodeDefaultText = this.DisplayLabelSingular;
         this.objectTablePM.DefaultTextPlural = this.DisplayLabelPlural;
         this.objectTablePM.Description = this.Description;
         this.objectTablePM.ObjectTableTypeCode = this.objectTableTypeCode;
