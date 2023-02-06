@@ -803,6 +803,9 @@ export class RoutingItem {
             this.IsOrangeCircle = false;
     }
     CheckActualDates_Transshipments() {
+        this.IsGreenCircle = false;
+        this.IsOrangeCircle = false;
+
         if (this.Container.ActualTrans3VesselDeparture != null || this.Container.ActualTransshipment3VesselArrival != null || this.Container.ActualTransshipment3Loaded != null)
             this.CheckActualDates_TS3();
 
@@ -813,7 +816,6 @@ export class RoutingItem {
             this.CheckActualDates_TS1();
     }
     CheckActualDates_TS3() {
-        this.IsGreenCircle = false;
         this.IsOrangeCircle = true;
 
         if (this.Container.ActualTrans3VesselDeparture != null && this.Container.ActualTransshipment3VesselArrival != null && this.Container.ActualTransshipment3Loaded != null) {
@@ -825,7 +827,6 @@ export class RoutingItem {
             this.IsOrangeCircle = false;
     }
     CheckActualDates_TS2() {
-        this.IsGreenCircle = false;
         this.IsOrangeCircle = true;
 
         if (this.Container.ActualTrans2VesselDeparture != null && this.Container.ActualTransshipment2VesselArrival != null && this.Container.ActualTransshipment2Loaded != null) {
@@ -837,7 +838,6 @@ export class RoutingItem {
             this.IsOrangeCircle = false;
     }
     CheckActualDates_TS1() {
-        this.IsGreenCircle = false;
         this.IsOrangeCircle = true;
 
         if (this.Container.ActualTrans1VesselDeparture != null && this.Container.ActualTransshipment1VesselArrival != null && this.Container.ActualTransshipment1Loaded != null) {
