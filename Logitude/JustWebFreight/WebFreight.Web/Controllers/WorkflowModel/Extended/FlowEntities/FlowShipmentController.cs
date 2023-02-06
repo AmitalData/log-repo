@@ -131,7 +131,7 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Extended.FlowEntities
         {
             try
             {
-                using (TransactionScope transactionScope = TransactionFactory.GetTransaction())
+                using (TransactionScope transactionScope = TransactionFactory.GetNewReadCommittedTransaction())
                 {
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
