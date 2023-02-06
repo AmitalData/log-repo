@@ -73,6 +73,7 @@ export class CustomFieldsTabComponent extends BaseComponent {
 
 
     DeleteCustomField(item: CustomFields) {
+        if(this.EntityPM.IsExported) return;
         this.OriginalExportCustomFields = this.OriginalExportCustomFields.filter(customField => customField.FieldCode != item.FieldCode);
         this.ExportCustomFields = this.ExportCustomFields.filter(customField => customField.FieldCode != item.FieldCode);
         this.EntityPM.DeploymentPackageDetails.CustomFields = this.EntityPM.DeploymentPackageDetails.CustomFields.filter(customField => customField.FieldCode != item.FieldCode);
@@ -96,6 +97,7 @@ export class CustomFieldsTabComponent extends BaseComponent {
     }
 
     EditCustomField(item: CustomFields) {
+        if(this.EntityPM.IsExported) return;
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Edit Custom Field";
         logWindow.Width = 720;
