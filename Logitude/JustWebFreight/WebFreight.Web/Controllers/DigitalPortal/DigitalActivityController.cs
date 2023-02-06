@@ -273,7 +273,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 result.Id = 1;
                 IQueryable<ContactActivityLog> allSharedLogisticsList = contactLogRep.GetSharedLogisticsContactLogs(tenant)
                                                                                      .Where(d => (d.PartnerTypeId == "CS" || d.PartnerTypeId == "AG")
-                                                                                              && d.Module.StartsWith("Digital Portal"));
+                                                                                               && d.Module.StartsWith("Digital Portal"));
 
                 if (allSharedLogisticsList.Count() > 0)
                 {
@@ -286,26 +286,53 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     DateTime lastMonthDate = todayDate.AddDays(-30);
 
 
-                    result.TodayCustomersCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "CS" && d.LogDateTime >= todayDate1 && d.LogDateTime <= todayDate2).GroupBy(d => d.CardId).Count();  //TodayCustomersList.GroupBy(d => d.CardId).Count();
-                    result.LastWeekCustomersCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "CS" && d.LogDateTime >= lastWeekDate && d.LogDateTime <= yesterdayDate).GroupBy(d => d.CardId).Count();//LastWeekCustomersList.GroupBy(d => d.CardId).Count();
-                    result.LastMonthCustomersCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "CS" && d.LogDateTime >= lastMonthDate && d.LogDateTime <= yesterdayDate).GroupBy(d => d.CardId).Count();  //LastMonthCustomersList.GroupBy(d => d.CardId).Count();
-                    result.TodayAgentsCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "AG" && d.LogDateTime >= todayDate1 && d.LogDateTime <= todayDate2).GroupBy(d => d.CardId).Count(); //TodayAgentsList.GroupBy(d => d.CardId).Count();
-                    result.LastWeekAgentsCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "AG" && d.LogDateTime >= lastWeekDate && d.LogDateTime <= yesterdayDate).GroupBy(d => d.CardId).Count();//LastWeekAgentsList.GroupBy(d => d.CardId).Count();
-                    result.LastMonthAgentsCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "AG" && d.LogDateTime >= lastMonthDate && d.LogDateTime <= yesterdayDate).GroupBy(d => d.CardId).Count(); //LastMonthAgentsList.GroupBy(d => d.CardId).Count();
-                }
+                    result.TodayCustomersCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "CS" 
+                                                                                && d.LogDateTime >= todayDate1 
+                                                                                && d.LogDateTime <= todayDate2)
+                                                                       .GroupBy(d => d.CardId)
+                                                                       .Count(); 
 
+                    result.LastWeekCustomersCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "CS" 
+                                                                                   && d.LogDateTime >= lastWeekDate 
+                                                                                   && d.LogDateTime <= yesterdayDate)
+                                                                          .GroupBy(d => d.CardId)
+                                                                          .Count();
+
+                    result.LastMonthCustomersCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "CS" 
+                                                                                    && d.LogDateTime >= lastMonthDate 
+                                                                                    && d.LogDateTime <= yesterdayDate)
+                                                                           .GroupBy(d => d.CardId)
+                                                                           .Count(); 
+
+                    result.TodayAgentsCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "AG" 
+                                                                             && d.LogDateTime >= todayDate1 
+                                                                             && d.LogDateTime <= todayDate2)
+                                                                    .GroupBy(d => d.CardId)
+                                                                    .Count();
+
+                    result.LastWeekAgentsCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "AG" 
+                                                                                && d.LogDateTime >= lastWeekDate 
+                                                                                && d.LogDateTime <= yesterdayDate)
+                                                                       .GroupBy(d => d.CardId)
+                                                                       .Count();
+
+                    result.LastMonthAgentsCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "AG" 
+                                                                                 && d.LogDateTime >= lastMonthDate 
+                                                                                 && d.LogDateTime <= yesterdayDate)
+                                                                        .GroupBy(d => d.CardId)
+                                                                        .Count(); 
+                }
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)
             {
-                if (ex.InnerException != null && ex.InnerException.Message.Contains("Execution Timeout Expired")) // Added by Rabaia, Temp
+                if (ex.InnerException != null && ex.InnerException.Message.Contains("Execution Timeout Expired")) 
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, new SharedLogisticsSummary());
                 }
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-
         }
     }
 }
