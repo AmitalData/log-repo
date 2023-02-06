@@ -350,6 +350,7 @@
     <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\AddCustomObjectComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\AddEditScreenComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\AddTabComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\CustomizationEditComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\CustomizationQueriesComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\CustomizationTabsComponent.css" />
     <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\CustomizationTabsComponent.html" />
@@ -2023,6 +2024,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\AddCustomObjectComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\AddEditScreenComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\AddTabComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\CustomizationEditComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\CustomizationQueriesComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\CustomizationMenuItems\CustomFieldsMainMenuItem.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\CustomizationMenuItems\CustomizationMainMenuItem.ts" />
