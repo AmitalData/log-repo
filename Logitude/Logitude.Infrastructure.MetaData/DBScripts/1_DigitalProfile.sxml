@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="10">
+  <Sql Version="11">
       <![CDATA[	 
 	  
 	  delete from DigitalFieldSecurities where id != ''	  
@@ -871,6 +871,16 @@
 			"CreatedBy": "system",
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
+        },
+		{
+            "FieldCode": "Shipment.ContainersNumbersandTypesArray",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
 			"ModifiedOn": "",
 			"HasPermission": true,
 			"IsList": true,
@@ -2696,6 +2706,16 @@
         },
 		{
             "FieldCode": "Shipment.Transshipment3ETD",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
+        },
+		{
+            "FieldCode": "Shipment.ContainersNumbersandTypesArray",
 			"CreatedBy": "system",
 			"ModifiedBy": "system",
 			"CreatedOn": "",

@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="14">
+  <Sql Version="11">
     <![CDATA[
 	  delete from DigitalTextCodes where Id != ''
 	  
@@ -2352,6 +2352,12 @@
 			"TextCode": "Shipment.G.IsCustomerArchived",
 			"DefaultText": "Is Customer Archived",
 			"FieldCode": "Shipment.IsCustomerArchived",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.G.ContainersNumbersandTypesArray",
+			"DefaultText": "Containers numbers and types array",
+			"FieldCode": "Shipment.ContainersNumbersandTypesArray",
 		    "DisplayText": ""
 		},
 		{
@@ -5077,6 +5083,12 @@
 			"TextCode": "Shipment.G.IsCustomerArchived",
 			"DefaultText": "Is Customer Archived",
 			"FieldCode": "Shipment.IsCustomerArchived",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.G.ContainersNumbersandTypesArray",
+			"DefaultText": "Containers numbers and types array",
+			"FieldCode": "Shipment.ContainersNumbersandTypesArray",
 		    "DisplayText": ""
 		},
 		{
