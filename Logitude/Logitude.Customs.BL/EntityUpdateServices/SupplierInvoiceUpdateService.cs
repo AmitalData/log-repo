@@ -775,38 +775,42 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 isSubmitChanges = true;
                 int index = 0;
                 var my = new SupplierInvoiceKeys() { DeclarationId = entityPM.DeclarationId, InvoiceCounterKey = entityPM.InvoiceCounterKey };
-                foreach (SupplierInvoice item in supplierInvoices)
+
+                if (defaultDeclarationPM.AmendmentDontDisplayInList != true || defaultDeclarationPM.Direction != "E")
                 {
 
 
-                    index += 1;
-                    if (item.SequenceNumeric == index && !toUpdateClassification) continue;
-                    dirty = true;
-                    item.SequenceNumeric = index;
-                    if (my.GetFullKey() == item.DeclarationId + '_' + item.InvoiceCounterKey)
+                    foreach (SupplierInvoice item in supplierInvoices)
                     {
-                        //update SequenceNumeric Soo the Client will have Accurate PM !!!!!!
-                        entityPM.SequenceNumeric = item.SequenceNumeric;
-                        if (toUpdateClassification)
-                        {
-                            SupplierInvoiceItemRepository invoiceItemRepository = new SupplierInvoiceItemRepository(context);
-                            List<SupplierInvoiceItem> supplierInvoiceItems = invoiceItemRepository.GetMulti(new SupplierInvoiceKeys() { DeclarationId = entityPM.DeclarationId, InvoiceCounterKey = entityPM.InvoiceCounterKey });
-                            foreach (SupplierInvoiceItem SIitem in supplierInvoiceItems)
-                            {
-                                if (string.IsNullOrWhiteSpace(SIitem.ClassificationCode))
-                                {
-                                    SIitem.ClassificationCode = defaultClassificationCode;
-                                    if (string.IsNullOrWhiteSpace(SIitem.InvoiceQuantityType)) SIitem.InvoiceQuantityType = defaultClassificationCodeUnit;
-                                    invoiceItemRepository.Update(SIitem);
-                                    LogMessagingUtil.Instance.AppendLine($"upsdate SIitem.ClassificationCode{SIitem.ClassificationCode} ");
 
+                        index += 1;
+                        if (item.SequenceNumeric == index && !toUpdateClassification) continue;
+                        dirty = true;
+                        item.SequenceNumeric = index;
+                        if (my.GetFullKey() == item.DeclarationId + '_' + item.InvoiceCounterKey)
+                        {
+                            //update SequenceNumeric Soo the Client will have Accurate PM !!!!!!
+                            entityPM.SequenceNumeric = item.SequenceNumeric;
+                            if (toUpdateClassification)
+                            {
+                                SupplierInvoiceItemRepository invoiceItemRepository = new SupplierInvoiceItemRepository(context);
+                                List<SupplierInvoiceItem> supplierInvoiceItems = invoiceItemRepository.GetMulti(new SupplierInvoiceKeys() { DeclarationId = entityPM.DeclarationId, InvoiceCounterKey = entityPM.InvoiceCounterKey });
+                                foreach (SupplierInvoiceItem SIitem in supplierInvoiceItems)
+                                {
+                                    if (string.IsNullOrWhiteSpace(SIitem.ClassificationCode))
+                                    {
+                                        SIitem.ClassificationCode = defaultClassificationCode;
+                                        if (string.IsNullOrWhiteSpace(SIitem.InvoiceQuantityType)) SIitem.InvoiceQuantityType = defaultClassificationCodeUnit;
+                                        invoiceItemRepository.Update(SIitem);
+                                        LogMessagingUtil.Instance.AppendLine($"upsdate SIitem.ClassificationCode{SIitem.ClassificationCode} ");
+
+                                    }
                                 }
                             }
                         }
+
+                        invoiceRepository.Update(item);
                     }
-
-                    invoiceRepository.Update(item);
-
                 }
 
 

@@ -664,13 +664,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 consignmentPM.ConsignmentType = "E";
                 var consignmentQueryService = new ConsignmentQueryService(context);
 
-                if (declarationPM != null)
-                {
+                //if (declarationPM != null)
+                //{
                     /*var maxCounter = consignmentQueryService.GetMaxCounterKey(declarationPM.Id, tenant) ?? 0;
                     consignmentPM.SequenceNumeric = maxCounter + 1;*/
                     
                     consignmentPM.SequenceNumeric = Convert.ToInt32(consignment.SequenceNumeric);
-                }
+                //}
                 if (consignment.TransportContractDocument != null)
                 {
                     consignmentPM.CargoTypeCode = GetValueCodeType(consignment.TransportContractDocument.TypeCode);
