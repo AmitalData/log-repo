@@ -28,6 +28,9 @@ import { HeaderScreenDataResult } from '../../Interface/IHeaderScreenService';
 import { AmitalGatewayUtil } from 'Infrastructure/Utilities/AmitalGatewayUtil';
 import { DeclarationEventManager } from 'Customs/Utilities/DeclarationEventManager';
 
+import { CustomsSettingListService } from 'Customs/Services/StandardLists/CustomsSettingListService';
+import { CustomsSettingPM } from 'Customs/EntityPMs/CustomsSettingPM';
+import { CustomsSettingList } from 'Customs/EntityLists/CustomsSettingList';
 
 @Component({    
     templateUrl: './EditComponent.html',
@@ -89,6 +92,9 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     public IsReloadNeeded: boolean = false;
     public isEntityChange: boolean = false;
      
+    private static _CustomsSettingList:CustomsSettingList=null;
+
+     
 
     constructor(private entityPMService: EntityPMService, private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private _totangoService: TotangoService, private cd: ChangeDetectorRef) {
         this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
@@ -98,6 +104,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         this.EditComponentCellId = "EditComponentCellId_" + this.CurrentSession.SessionIndex + "_" + this.ComponentIndex;
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         this.WorkEnvironment = ObjectsLocator.GlobalSetting == undefined ? "logitude" : ObjectsLocator.GlobalSetting.WorkEnvironment;
+        this.FetchCustomsSetting();
         
     }
 
@@ -1907,7 +1914,12 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         //}
 
         // update opened/closed state
-        LastFilterClass.UpdateFilter("DeclarationEditControl", this.EntityPM.Id, this.IsSplitComponentOpened ? "true" : "false");
+        let entityId=this.EntityPM.Id
+        this.FetchCustomsSetting();
+        if ( EditComponent._CustomsSettingList?.CompanyType == "B") {
+            entityId = "CourierD";//Task =172895
+        }
+        LastFilterClass.UpdateFilter("DeclarationEditControl", entityId, this.IsSplitComponentOpened ? "true" : "false");
 
 
     }
@@ -1934,17 +1946,36 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
 
     }
-
-    SetSplitComponentState() {
-        if (this.IsSplitBtnVisible == false)
-            return;
-
-        // state: opened / closed
-        var defaultFilterCode: string = LastFilterClass.GetFilterValue("DeclarationEditControl", this.EntityPM.Id);
-        if (defaultFilterCode == "true") {
-            if(!this.IsSplitComponentOpened)
-            this.SplitButtonClicked(); // open split section
+    
+    async FetchCustomsSetting(){
+        if (AppTool.IsNullOrEmpty(EditComponent._CustomsSettingList)){
+            const dCustomsSettingListService: CustomsSettingListService = new CustomsSettingListService;
+            const response = await dCustomsSettingListService.getSingleFromCache(SessionLocator.Tenant.toString()).toPromise();
+            EditComponent._CustomsSettingList = response.Result;
         }
+    
+    } 
+    SetSplitComponentState() {
+        if (this.IsSplitBtnVisible == false) {
+            return;
+        }
+
+
+
+
+
+        let entityId = this.EntityPM.Id;
+        this.FetchCustomsSetting();
+        if ( EditComponent._CustomsSettingList?.CompanyType == "B") {
+            entityId = "CourierD";//Task =172895
+        }
+        // state: opened / closed
+        var defaultFilterCode: string = LastFilterClass.GetFilterValue("DeclarationEditControl", entityId);
+        if (defaultFilterCode == "true") {
+            if (!this.IsSplitComponentOpened)
+                this.SplitButtonClicked(); // open split section
+        }
+
 
     }
 
