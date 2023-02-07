@@ -332,9 +332,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public bool DoesUserExist(string email, int tenant)
         {
+            email = email.ToLower();
             return (from a in context.Users
-                    where a.Contact.Email == email.ToLower() && a.Tenant == tenant
-                    select a).Any();
+                       where a.Contact.Email == email && a.Tenant == tenant
+                       select a).Any();
         }
 
         public void Add(User entity)
