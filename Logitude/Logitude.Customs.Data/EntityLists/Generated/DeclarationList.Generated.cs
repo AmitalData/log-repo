@@ -438,6 +438,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string PhysicalCheckName  { get; set; }
        [DataMember]
        public string IntegratorName  { get; set; }
+       [DataMember]
+       public string CasualImporterCountry  { get; set; }
    }
 
 }

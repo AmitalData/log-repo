@@ -220,6 +220,7 @@ export class DeclarationList {
 	ExportLoadingPortCode: string;
 	PhysicalCheckName: string;
 	IntegratorName: string;
+	CasualImporterCountry: string;
 	
 }
  

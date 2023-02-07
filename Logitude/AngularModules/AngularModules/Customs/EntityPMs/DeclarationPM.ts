@@ -1424,6 +1424,11 @@ export class DeclarationPM {
     public set PhysicalCheckName(newValue: string) { if (this.physicalCheckName != newValue) { this.physicalCheckName = newValue; this.MarkAsDirty("PhysicalCheckName"); } }
        
 	 
+    private casualImporterCountry: string;
+    public get CasualImporterCountry() { return this.casualImporterCountry; }
+    public set CasualImporterCountry(newValue: string) { if (this.casualImporterCountry != newValue) { this.casualImporterCountry = newValue; this.MarkAsDirty("CasualImporterCountry"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		
