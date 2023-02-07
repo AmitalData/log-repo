@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure" Env="Logitude,local,test">
-  <Sql Version="2">
+  <Sql Version="3">
     <![CDATA[
 	   DECLARE @Tenant as int
 	   DECLARE @ShipmentATAClosingDays as int
@@ -11,7 +11,6 @@
       	   DECLARE DataCursor CURSOR READ_ONLY
       	   FOR
       	   SELECT 
-		   
 		   Id, 
 		   ShipmentATAClosingDays, 
 		   EmptyReturnClosingDays, 

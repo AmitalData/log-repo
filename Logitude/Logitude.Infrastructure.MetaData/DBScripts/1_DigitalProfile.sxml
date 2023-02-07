@@ -1,7 +1,7 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="11">
+  <Sql Version="12">
       <![CDATA[	 
-	  
+
 	  delete from DigitalFieldSecurities where id != ''	  
   	  delete from DigitalTextCodes where id != ''
   	  delete from DigitalPortalScreens where id != ''
