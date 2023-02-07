@@ -1008,6 +1008,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsContainerTrackingPrepaid"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="GlobalTenants"
@@ -1067,5 +1073,5 @@
     ForeignKeyColumn="BluesnapInttraStockContractId"
     ReferencedTable="BluesnapContracts"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />  
+    ReferencedTableSchema="dbo" />
 </Table>

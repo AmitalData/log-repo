@@ -163,5 +163,6 @@ export class TenantManagementList {
 		ActivatedforDeclarationApprove: boolean;
 		DeclarationMessage: string;
 		ActivatePrivateSite: boolean;
+		IsContainerTrackingPrepaid: boolean;
 	
 }

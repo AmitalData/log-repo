@@ -172,5 +172,6 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public bool ActivatedforDeclarationApprove { get; set; }
         public string DeclarationMessage { get; set; }
         public bool ActivatePrivateSite { get; set; }
+        public bool IsContainerTrackingPrepaid { get; set; }
     }
 }
