@@ -24,6 +24,7 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -64,6 +65,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
 
         public void AutomaticTrackContainer()
         {
+            TenantManagement tenantManagement = GetTenantManagement();
+            if (tenantManagement?.IsContainerTrackingPrepaid != true) return;
             if (generalContainerTrackingArgs.IsUpdatedFromRequest) return;
 
             try
@@ -74,6 +77,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
             }
             catch (Exception) { }
 
+        }
+
+        private TenantManagement GetTenantManagement()
+        {
+            TenantManagement tenantManagement;
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
+                tenantManagement = tenantManagementRepository.GetSingleTenantManagement(tenant);
+                scope.Complete();
+            }
+            return tenantManagement;
         }
 
         private void ValidateAndTrack()
@@ -282,6 +297,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
                 Id = IdCounter.GetNumber("AnalyzeQueue", 0),
                 MessageBody = analyzeQueueMessageBody,
                 Status = "W",
+
                 Retries = 0,
                 ConnectedToEntity = false,
                 ConnectedToTenant = false,
@@ -343,7 +359,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
             ContainerPM container = containerQuery.GetSinglePM(generalContainerTrackingArgs.ContainerId, generalContainerTrackingArgs.Tenant);
 
             if (container == null) return;
-            if (container.RequestDate == null) 
+            if (container.RequestDate == null)
                 container.RequestDate = TenantServerConfigration.GetCurrentDateTime(generalContainerTrackingArgs.Tenant);
 
             container.IsUpdatedFromRequest = true;
