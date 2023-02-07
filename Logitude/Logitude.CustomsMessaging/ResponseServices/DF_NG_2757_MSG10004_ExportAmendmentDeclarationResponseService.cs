@@ -664,13 +664,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 consignmentPM.ConsignmentType = "E";
                 var consignmentQueryService = new ConsignmentQueryService(context);
 
-                if (declarationPM != null)
-                {
+                //if (declarationPM != null)
+                //{
                     /*var maxCounter = consignmentQueryService.GetMaxCounterKey(declarationPM.Id, tenant) ?? 0;
                     consignmentPM.SequenceNumeric = maxCounter + 1;*/
                     
                     consignmentPM.SequenceNumeric = Convert.ToInt32(consignment.SequenceNumeric);
-                }
+                //}
                 if (consignment.TransportContractDocument != null)
                 {
                     consignmentPM.CargoTypeCode = GetValueCodeType(consignment.TransportContractDocument.TypeCode);
@@ -1291,19 +1291,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         SupplierInvoiceItemsPricePM supplierInvoiceItemsPrice = new SupplierInvoiceItemsPricePM();
 
-                        //if (!isFromImporter && AdditionalPriceTypeCodes.Contains(AdditionalPriceTypeCode))
-                        //{
-                        //    supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Update;
-                        //}
-                        //else if(isFromImporter)
-                        //{
+                        if (!isFromImporter && AdditionalPriceTypeCodes.Contains(AdditionalPriceTypeCode))
+                        {
+                            supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Update;
+                        }
+                        else if (isFromImporter)
+                        {
                             supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Insert;
-                  //      }
-                        //else
-                        //{
-                        //    continue;
-                        //}
-                       
+                        }
+                        else
+                        {
+                            continue;
+                        }
+
                         supplierInvoiceItemsPrice.DeclarationId = declarationId;
                        
                         supplierInvoiceItemsPrice.AdditionalPrice = GetValueAmountType(GoodsItemAmount.CustomsValueAmount);
