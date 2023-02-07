@@ -4,7 +4,7 @@
 
     CREATE UNIQUE NONCLUSTERED INDEX IX_ExternalNoAndExternalSystemConstraintIndex
     ON Journals 
-    ( ExternalNo , ExternalSystem )
+    ( ExternalNo , ExternalSystem , Tenant )
     WHERE ExternalNo IS NOT NULL AND  ExternalSystem IS NOT NULL;
 
     ]]>       
