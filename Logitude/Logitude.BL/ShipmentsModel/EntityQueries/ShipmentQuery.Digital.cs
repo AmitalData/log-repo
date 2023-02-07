@@ -1250,7 +1250,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 Title = "Shipment.G.PreCarrigeInformation",
                 LegHeader = "PreCarriage",
-                FromPort = SetPermissonFieldValue("Shipment", "Shipment.PreCarriageFromPortCountryCode", shipment.PreCarriageFromPortName) 
+                FromPort = SetPermissonFieldValue("Shipment", "Shipment.PreCarriageFromPortName", shipment.PreCarriageFromPortName) 
                            + ", " 
                            + SetPermissonFieldValue("Shipment", "Shipment.PreCarriageFromPortCountryCode", shipment.PreCarriageFromPortCountryCode),
 

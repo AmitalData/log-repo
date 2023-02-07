@@ -199,6 +199,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void GetLoggedContact()
         {
+            if (!string.IsNullOrEmpty(loggedContactId)) return;
+
             ContactPM loggedContact = null;
 
             if (entityPM.IsFromConsolidationBatch)

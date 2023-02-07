@@ -33,6 +33,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
         public DocumentTypeTemplatePM template;
         public User printedBy;
         public BatchTaskExecutionUpdateService batchTaskExecutionUpdateService;
+        private string documentOutId = null;
         public BatchPrinter(BatchPrinterArgs batchPrinterArgs)
         {
             _batchPrinterArgs = batchPrinterArgs;
@@ -70,52 +71,60 @@ namespace WebFreight.Web.Helpers.BatchPrint
                 MargePdfs(pdfDoc, itemPrintingResults);
                 MemoryStream memoryStream = GetMemoryStream(pdfDoc);
                 document = UploadPDFToStorage(memoryStream, _batchPrinterArgs.Tenant, "multiprint");
-                documentFiling = BuildDcoumentFiling();
+                //documentFiling = BuildDcoumentFiling();
+                documentFiling = GetDcoumentFiling();
             }
 
             PrintingResult printingResults = CreatePrintResult(document, itemPrintingResults, documentFiling);
 
             return printingResults;
         }
-
-        private DocumentsFiling BuildDcoumentFiling()
+        private DocumentsFiling GetDcoumentFiling()
         {
-            ICommonDataContext objectContext = CommonDataContext.GetContext(_batchPrinterArgs.Tenant);
-            DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(objectContext);
-            DocumentOutRepository documentOutRepository = new DocumentOutRepository(objectContext);
-            var newDocumentFiling = CreateDcoumentFiling();
-            documentsFilingRepository.Add(newDocumentFiling);
-            DocumentOut newDocument = CreateDocumentOutInstance(printedBy.Id, template.Id, documentType.DocumentTypeDefaultHTMLTemplateId);
-            newDocument.Id = newDocumentFiling.Id;
-            documentOutRepository.Add(newDocument);
-            objectContext.SaveChanges();
-            return newDocumentFiling;
-
+            if (string.IsNullOrEmpty(documentOutId)) return null;
+            DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(_batchPrinterArgs.Tenant);
+            return documentsFilingRepository.GetSingleDocumentsFiling(documentOutId, _batchPrinterArgs.Tenant);
         }
 
-        private DocumentsFiling CreateDcoumentFiling()
-        {
-            DocumentsFiling newDocumentFiling = new DocumentsFiling() { DocumentTypeId = documentType.Id, EntityId = null, Tenant = _batchPrinterArgs.Tenant, ObjectTableId = null, ChildEntityId = null, ChildEntityReference = null, DirectionCode = "O" };
-            newDocumentFiling.Id = IdCounter.GetNumber("Document", _batchPrinterArgs.Tenant).ToString();
-            newDocumentFiling.SecurityId = newDocumentFiling.Id + RandomString(10);
-            newDocumentFiling.Code = CodeCounter.GetNumber("DocumentsFiling", _batchPrinterArgs.Tenant).ToString();
-            newDocumentFiling.CreatedByUserId = printedBy.Id;
-            newDocumentFiling.OwnerId = printedBy.Id;
-            newDocumentFiling.UpdatedByUserId = printedBy.Id;
-            newDocumentFiling.UpdateDate = TenantServerConfigration.GetCurrentDateTime(_batchPrinterArgs.Tenant);
-            newDocumentFiling.CreateDate = TenantServerConfigration.GetCurrentDateTime(_batchPrinterArgs.Tenant);
-            newDocumentFiling.SearchFields = newDocumentFiling.Code + "," + newDocumentFiling.DirectionCode;
-            return newDocumentFiling;
-        }
+        //private DocumentsFiling BuildDcoumentFiling()
+        //{
+        //    ICommonDataContext objectContext = CommonDataContext.GetContext(_batchPrinterArgs.Tenant);
+        //    DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(objectContext);
+        //    DocumentOutRepository documentOutRepository = new DocumentOutRepository(objectContext);
+        //    var newDocumentFiling = CreateDcoumentFiling();
+        //    documentsFilingRepository.Add(newDocumentFiling);
+        //    DocumentOut newDocument = CreateDocumentOutInstance(printedBy.Id, template.Id, documentType.DocumentTypeDefaultHTMLTemplateId);
+        //    newDocument.Id = newDocumentFiling.Id;
+        //    documentOutRepository.Add(newDocument);
+        //    objectContext.SaveChanges();
+        //    return newDocumentFiling;
 
-        private DocumentOut CreateDocumentOutInstance(string userId, string documentTemplateId, string emailTemplateId)
-        {
-            DocumentOut documentOut = new DocumentOut() { EmailTemplateId = emailTemplateId, DocumentTemplateId = documentTemplateId, Tenant = _batchPrinterArgs.Tenant, Issued = false };
-            documentOut.Issued = true;
-            documentOut.IssuedDate = TenantServerConfigration.GetCurrentDateTime(_batchPrinterArgs.Tenant);
-            documentOut.IssuedByUserId = userId;
-            return documentOut;
-        }
+        //}
+
+        //private DocumentsFiling CreateDcoumentFiling()
+        //{
+        //    DocumentsFiling newDocumentFiling = new DocumentsFiling() { DocumentTypeId = documentType.Id, EntityId = null, Tenant = _batchPrinterArgs.Tenant, ObjectTableId = null, ChildEntityId = null, ChildEntityReference = null, DirectionCode = "O" };
+        //    newDocumentFiling.Id = IdCounter.GetNumber("Document", _batchPrinterArgs.Tenant).ToString();
+        //    newDocumentFiling.SecurityId = newDocumentFiling.Id + RandomString(10);
+        //    newDocumentFiling.Code = CodeCounter.GetNumber("DocumentsFiling", _batchPrinterArgs.Tenant).ToString();
+        //    newDocumentFiling.CreatedByUserId = printedBy.Id;
+        //    newDocumentFiling.OwnerId = printedBy.Id;
+        //    newDocumentFiling.UpdatedByUserId = printedBy.Id;
+        //    newDocumentFiling.UpdateDate = TenantServerConfigration.GetCurrentDateTime(_batchPrinterArgs.Tenant);
+        //    newDocumentFiling.CreateDate = TenantServerConfigration.GetCurrentDateTime(_batchPrinterArgs.Tenant);
+        //    newDocumentFiling.SearchFields = newDocumentFiling.Code + "," + newDocumentFiling.DirectionCode;
+        //    return newDocumentFiling;
+        //}
+
+        //private DocumentOut CreateDocumentOutInstance(string userId, string documentTemplateId, string emailTemplateId)
+        //{
+        //    DocumentOut documentOut = new DocumentOut() { EmailTemplateId = emailTemplateId, DocumentTemplateId = documentTemplateId, Tenant = _batchPrinterArgs.Tenant, Issued = false };
+        //    documentOut.Issued = true;
+        //    documentOut.IssuedDate = TenantServerConfigration.GetCurrentDateTime(_batchPrinterArgs.Tenant);
+        //    documentOut.IssuedByUserId = userId;
+        //    documentOut.NeedsRebuild = false;
+        //    return documentOut;
+        //}
         private void IncresePrograse()
         {
             _batchPrinterArgs.BatchTaskExecution.ProgressPercentage++;
@@ -214,6 +223,8 @@ namespace WebFreight.Web.Helpers.BatchPrint
                 result.DocumentStream = stream;
                 result.IsSuccessfullyPrinted = true;
 
+                
+
                 AfterPrint(item);
                 return result;
             }
@@ -233,6 +244,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
             documentOutPM.Issued = true;
             documentOutPM.IssuedByUserId = printedBy.Id;
             documentOutPM.IsChangeIssuedDate = true;
+           
             ICommonDataContext objectContext = CommonDataContext.GetContext(documentOutPM.Tenant);
             DocumentOutService service = new DocumentOutService(objectContext, documentOutPM.Tenant);
             service.Update(documentOutPM, documentOutPM.DocumentOutCopies);
@@ -255,18 +267,22 @@ namespace WebFreight.Web.Helpers.BatchPrint
         private DocumentOutPM CreateDcoumentOutPM(PrintEntityKeys item)
         {
             DocumentHelper documentHelper = new DocumentHelper();
-            return documentHelper.CreateDocumentOut(_batchPrinterArgs.DocumentTypeId, item.EntityId, item.ChildEntityId, null, _batchPrinterArgs.ObjectTableId, _batchPrinterArgs.Tenant, printedBy.Id);
+            return documentHelper.CreateDocumentOut(_batchPrinterArgs.DocumentTypeId, item.EntityId, item.ChildEntityId, null, item.ObjectTableId, _batchPrinterArgs.Tenant, printedBy.Id);
         }
+
+       // public bool isPrintedPreviously = false;
         private MemoryStream BuildReportStream(PrintEntityKeys item)
         {
             var printedCopy = GetPrintedCopy(item);
             if (printedCopy != null)
             {
+                item.IsAlreadyPrinted = true;
                 var stream = GetReportStreamFromCopy(printedCopy);
                 if(stream != null) return stream;
             }
               
             var documentOut = BuildDocumentOut(item);
+            documentOutId = documentOut?.Id;
             var reportStream = CreateReportStream(item , documentOut);
             var document = UploadPDFToStorage(reportStream, _batchPrinterArgs.Tenant, "docsout");
             AddDocumentOutCopy(document, item, documentOut);
@@ -301,8 +317,8 @@ namespace WebFreight.Web.Helpers.BatchPrint
             try
             {
                 if (template != null) template.DocumentOutId = documentOut?.Id;
-                StiReport report = exportDocumentHelper.GetReportDocument(template, item.EntityId, _batchPrinterArgs.ObjectTableId, item.EntityId,
-                _batchPrinterArgs.ObjectTableId, documentTypeCopy, template.TemplateBody, _batchPrinterArgs.Tenant, new long(), new long(), new long(), new long(), printedBy.Id);
+                StiReport report = exportDocumentHelper.GetReportDocument(template, item.EntityId, item.ObjectTableId, item.EntityId,
+                item.ObjectTableId, documentTypeCopy, template.TemplateBody, _batchPrinterArgs.Tenant, new long(), new long(), new long(), new long(), printedBy.Id);
                 var stream = new MemoryStream();
                 report.ExportDocument(StiExportFormat.Pdf, stream);
                 return stream;
@@ -382,7 +398,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
             {
                 Tenant = _batchPrinterArgs.Tenant,
                 EntityId = item.EntityId,
-                ObjectTableId = _batchPrinterArgs.ObjectTableId,
+                ObjectTableId = item.ObjectTableId,
                 DocumentTypeCopyId = _batchPrinterArgs.CopyId,
                 DocumentTypeId = _batchPrinterArgs.DocumentTypeId,
                 DocumentTemplateId = _batchPrinterArgs.TemplateId,

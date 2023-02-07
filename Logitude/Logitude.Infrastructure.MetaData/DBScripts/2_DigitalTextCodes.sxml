@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="13">
+  <Sql Version="14">
     <![CDATA[
 	  delete from DigitalTextCodes where Id != ''
 	  
@@ -1274,6 +1274,18 @@
 			"DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.G.TransportModeName",
+			"DefaultText": "Transport mode name",
+			"FieldCode": "Shipment.TransportModeName",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.G.SalesmanEmail",
+			"DefaultText": "Salesman email",
+			"FieldCode": "Shipment.SalesmanEmail",
+			"DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.G.ShipmentStatus",
 			"DefaultText": "Shipment status",
 			"FieldCode": "Shipment.StatusName",
@@ -1445,6 +1457,18 @@
 			"TextCode": "Shipment.F.AccountManagerUserName",
 			"DefaultText": "Account Manager",
 			"FieldCode": "Shipment.AccountManagerUserName",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.AccountManagerUserEmail",
+			"DefaultText": "Account Manager user email",
+			"FieldCode": "Shipment.AccountManagerUserEmail",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.TruckContainerNumber",
+			"DefaultText": "Truck container number",
+			"FieldCode": "Shipment.TruckContainerNumber",
 			"DisplayText": ""
 		},
 		{
@@ -1934,6 +1958,12 @@
 			"DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.F.TruckNumber",
+			"DefaultText": "Trucker number",
+			"FieldCode" : "Shipment.TruckNumber",
+			"DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.F.ConsolidatorName",
 			"DefaultText": "Consolidator",
 			"FieldCode" : "Shipment.ConsolidatorName",
@@ -2088,6 +2118,12 @@
            "TextCode": "Shipment.G.DirectionId",
            "DefaultText": "Direction id",
            "FieldCode": "Shipment.DirectionId",
+		   "DisplayText": ""
+       },
+	   {
+           "TextCode": "Shipment.G.DirectionName",
+           "DefaultText": "Direction name",
+           "FieldCode": "Shipment.DirectionName",
 		   "DisplayText": ""
        },
 	   {
@@ -3958,6 +3994,18 @@
 			"DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.G.TransportModeName",
+			"DefaultText": "Transport mode name",
+			"FieldCode": "Shipment.TransportModeName",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.G.SalesmanEmail",
+			"DefaultText": "Salesman email",
+			"FieldCode": "Shipment.SalesmanEmail",
+			"DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.G.ShipmentStatus",
 			"DefaultText": "Shipment status",
 			"FieldCode": "Shipment.StatusName",
@@ -4135,6 +4183,18 @@
 			"TextCode": "Shipment.F.AccountManagerUserName",
 			"DefaultText": "Account Manager",
 			"FieldCode": "Shipment.AccountManagerUserName",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.AccountManagerUserEmail",
+			"DefaultText": "Account Manager user email",
+			"FieldCode": "Shipment.AccountManagerUserEmail",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.TruckContainerNumber",
+			"DefaultText": "Truck container number",
+			"FieldCode": "Shipment.TruckContainerNumber",
 			"DisplayText": ""
 		},
 		{
@@ -4618,6 +4678,12 @@
 			"DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.F.TruckNumber",
+			"DefaultText": "Trucker number",
+			"FieldCode" : "Shipment.TruckNumber",
+			"DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.F.ConsolidatorName",
 			"DefaultText": "Consolidator",
 			"FieldCode" : "Shipment.ConsolidatorName",
@@ -4771,6 +4837,12 @@
            "TextCode": "Shipment.G.DirectionId",
            "DefaultText": "Direction id",
            "FieldCode": "Shipment.DirectionId",
+		   "DisplayText": ""
+       },
+	   {
+           "TextCode": "Shipment.G.DirectionName",
+           "DefaultText": "Direction name",
+           "FieldCode": "Shipment.DirectionName",
 		   "DisplayText": ""
        },
 	   {

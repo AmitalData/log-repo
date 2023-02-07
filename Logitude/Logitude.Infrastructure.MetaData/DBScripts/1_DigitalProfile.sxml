@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="9">
+  <Sql Version="10">
       <![CDATA[	 
 	  
 	  delete from DigitalFieldSecurities where id != ''	  
@@ -68,6 +68,16 @@
 		},
 		{
 			"FieldCode": "Shipment.TransportModeId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
+		},
+		{
+			"FieldCode": "Shipment.TransportModeName",
 			"CreatedBy": "system",
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
@@ -457,7 +467,47 @@
 			"IsPm": true
 		},
 		{
+			"FieldCode" : "Shipment.TruckNumber",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
+		},
+		{
+			"FieldCode" : "Shipment.SalesmanEmail",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true,
+			"IsList": false,
+			"IsPm": true
+		},
+		{
+			"FieldCode" : "Shipment.AccountManagerUserEmail",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true,
+			"IsList": false,
+			"IsPm": true
+		},
+		{
 			"FieldCode" : "Shipment.ConsolidatorName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
+		},
+		{
+			"FieldCode" : "Shipment.TruckContainerNumber",
 			"CreatedBy": "system", 
 			"ModifiedBy": "system",
 			"CreatedOn": "",
@@ -508,6 +558,16 @@
 		},
 		{
            "FieldCode": "Shipment.DirectionId",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
+        },
+		{
+           "FieldCode": "Shipment.DirectionName",
 			"CreatedBy": "system", 
 			"ModifiedBy": "system",
 			"CreatedOn": "",
@@ -1825,6 +1885,16 @@
 			"IsPm": true
 		},
 		{
+			"FieldCode": "Shipment.TransportModeName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
+		},
+		{
 			"FieldCode": "Shipment.StatusName",
 			"CreatedBy": "system",
 			"ModifiedBy": "system",
@@ -2205,6 +2275,46 @@
 			"IsPm": true
 		},
 		{
+			"FieldCode" : "Shipment.TruckNumber",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
+		},
+		{
+			"FieldCode" : "Shipment.SalesmanEmail",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true,
+			"IsList": false,
+			"IsPm": true
+		},
+		{
+			"FieldCode" : "Shipment.AccountManagerUserEmail",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true,
+			"IsList": false,
+			"IsPm": true
+		},
+		{
+			"FieldCode" : "Shipment.TruckContainerNumber",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
+		},
+		{
 			"FieldCode" : "Shipment.ConsolidatorName",
 			"CreatedBy": "system",
 			"ModifiedBy": "system",
@@ -2262,6 +2372,16 @@
 			"ModifiedOn": "",
 			"HasPermission": true, 
 			"IsList": true, 
+			"IsPm": true
+        },
+		{
+           "FieldCode": "Shipment.DirectionName",
+			"CreatedBy": "system", 
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true, 
+			"IsList": true,
 			"IsPm": true
         },
 	    {

@@ -7,10 +7,8 @@
           <td style="width:16px;">
                <img *ngIf="!rowData.Notes" style="vertical-align: middle; display: block;"
                     src="./Images/Notes_notexists.png" />
-
-               <CellTooltip *ngIf="rowData.Notes" [IconPath]="'./Images/Notes_exists.png'"
-                     [Body]="rowData.Notes"
-                    [Width]="220"[Left]="380" [Height]="40" [MinHeight]="40"></CellTooltip> 
+               <img *ngIf="rowData.Notes" style="vertical-align: middle; display: block;"
+                    src="./Images/Notes_exists.png" />
           </td>
 
           <td style="width:20px;height:16px;padding-left:1px;">

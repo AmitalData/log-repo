@@ -140,7 +140,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("DigitalTextCode/GetFeildPermissionByFilters")]
-        public HttpResponseMessage GetFeildPermissionByFilters(string cardId, string objectTableId, string profileCode)
+        public HttpResponseMessage GetFeildPermissionByFilters(string cardId, string objectTableId, string profileCode, string screenCode = "")
         {
             int tenant = 0;
             string email = "";
@@ -151,8 +151,19 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 email = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
+
+                bool isAll = true;
+                bool isSingle = true;
+
+                if (!string.IsNullOrWhiteSpace(screenCode))
+                {
+                    var listScreenCodes = new List<string> { "SLCI", "SLCIM", "SLCIT" };
+                    isAll = false;
+                    isSingle = !listScreenCodes.Contains(screenCode);
+                }
+
                 var helper = new DigitalFieldSecuritesHelper();
-                var defaultDigitalFieldSecurity = helper.GitDigitalSecuritesFeilds(objectTableId, profileCode, tenant, false, true);
+                var defaultDigitalFieldSecurity = helper.GitDigitalSecuritesFeilds(objectTableId, profileCode, tenant, isSingle, isAll);
                 return Request.CreateResponse(HttpStatusCode.OK, defaultDigitalFieldSecurity);
             }
             catch (AutenticationException ex)

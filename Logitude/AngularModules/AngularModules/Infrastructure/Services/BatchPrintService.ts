@@ -114,6 +114,7 @@ export class PrintEntityKeys {
     public EntityId: string;
     public EntityNumber: string;
     public ChildEntityId: string;
+    public ObjectTableId: string;
 }
 
 export class PrintingResult {
