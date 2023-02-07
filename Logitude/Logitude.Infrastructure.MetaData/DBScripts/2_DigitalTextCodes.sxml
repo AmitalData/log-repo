@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="12">
+  <Sql Version="13">
     <![CDATA[
 	  delete from DigitalTextCodes where Id != ''
 	  
@@ -25,13 +25,37 @@
 			"DisplayText": ""
 		},
 		{
-			"TextCode": "Shipment.G.ShowLoginMsg",
+			"TextCode": "General.g.EmailFormatErrorMsg",
+			"DefaultText": "Email format is not valid.",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.PasswordRequiredMsg",
+			"DefaultText": "Password is required.",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.EmailRequiredMsg",
+			"DefaultText": "Email is required.",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.CapatchaReEnterMsg",
+			"DefaultText": "Please re-enter the characters you see in the image above.",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ShowLoginMsg",
 			"DefaultText": "Login to view more information about this shipment.",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
 		{
-			"TextCode": "Shipment.G.LoginHereBtn",
+			"TextCode": "General.G.LoginHereBtn",
 			"DefaultText": "Login Here",
 			"FieldCode": "",
 			"DisplayText": ""
@@ -463,14 +487,38 @@
 			"DisplayText": ""
 		},
 		{
-			"TextCode": "Shipment.G.ShowLoginMsg",
+			"TextCode": "General.G.ShowLoginMsg",
 			"DefaultText": "Login to view more information about this shipment.",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
 		{
-			"TextCode": "Shipment.G.LoginHereBtn",
+			"TextCode": "General.G.LoginHereBtn",
 			"DefaultText": "Login Here",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.g.EmailFormatErrorMsg",
+			"DefaultText": "Email format is not valid.",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.PasswordRequiredMsg",
+			"DefaultText": "Password is required.",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.EmailRequiredMsg",
+			"DefaultText": "Email is required.",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.CapatchaReEnterMsg",
+			"DefaultText": "Please re-enter the characters you see in the image above.",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
@@ -1135,61 +1183,61 @@
 			"FieldCode": "",
 			"DisplayText": ""
 		},
-    {
+		{
 			"TextCode": "Shipment.G.TerminalHub",
 			"DefaultText": "Terminal hub",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
-    {
+		{
 			"TextCode": "Shipment.G.PreCarriage",
 			"DefaultText": "Pre carriage",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
-    {
+		{
 			"TextCode": "Shipment.G.Transshipment1Port",
 			"DefaultText": "Transshipment 1 port",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
-    {
+		{
 			"TextCode": "Shipment.G.Transshipment2Port",
 			"DefaultText": "Transshipment 2 port",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
-    {
+		{
 			"TextCode": "Shipment.G.Transshipment3Port",
 			"DefaultText": "Transshipment 3 port",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
-    {
+		{
 			"TextCode": "Shipment.G.DischargePort",
 			"DefaultText": "Discharge port",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
-    {
+		{
 			"TextCode": "Shipment.G.OnCarriage",
 			"DefaultText": "On carriage",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
-    {
+		{
 			"TextCode": "Shipment.G.Delivery",
 			"DefaultText": "Delivery",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
-    {
+		{
 			"TextCode": "Shipment.G.StorageDays",
 			"DefaultText": "Storage days",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
-    {
+		{
 			"TextCode": "Shipment.F.ShipmentNumber",
 			"DefaultText": "Shipment number",
 			"FieldCode": "Shipment.ShipmentNumber",
@@ -1451,6 +1499,12 @@
 			"TextCode": "Shipment.G.Customer",
 			"DefaultText": "Customer",
 			"FieldCode": "Shipment.CustomerName",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.MainCarriageToPortCountryCode",
+			"DefaultText": "Main Carriage To Port Country Code",
+			"FieldCode": "Shipment.MainCarriageToPortCountryCode",
 			"DisplayText": ""
 		},
 		{
@@ -3126,14 +3180,38 @@
 			"DisplayText": ""
 		},
 		{
-			"TextCode": "Shipment.G.ShowLoginMsg",
+			"TextCode": "General.G.ShowLoginMsg",
 			"DefaultText": "Login to view more information about this shipment.",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
 		{
-			"TextCode": "Shipment.G.LoginHereBtn",
+			"TextCode": "General.G.LoginHereBtn",
 			"DefaultText": "Login Here",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.g.EmailFormatErrorMsg",
+			"DefaultText": "Email format is not valid.",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.PasswordRequiredMsg",
+			"DefaultText": "Password is required.",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.EmailRequiredMsg",
+			"DefaultText": "Email is required.",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.CapatchaReEnterMsg",
+			"DefaultText": "Please re-enter the characters you see in the image above.",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
@@ -3795,55 +3873,55 @@
 			"FieldCode": "",
 			"DisplayText": ""
 		},
-    {
+		{
 			"TextCode": "Shipment.G.TerminalHub",
 			"DefaultText": "Terminal hub",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
-    {
+		{
 			"TextCode": "Shipment.G.PreCarriage",
 			"DefaultText": "Pre carriage",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
-    {
+		{
 			"TextCode": "Shipment.G.Transshipment1Port",
 			"DefaultText": "Transshipment 1 port",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
-    {
+		{
 			"TextCode": "Shipment.G.Transshipment2Port",
 			"DefaultText": "Transshipment 2 port",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
-    {
+		{
 			"TextCode": "Shipment.G.Transshipment3Port",
 			"DefaultText": "Transshipment 3 port",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
-    {
+		{
 			"TextCode": "Shipment.G.DischargePort",
 			"DefaultText": "Discharge port",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
-    {
+		{
 			"TextCode": "Shipment.G.OnCarriage",
 			"DefaultText": "On carriage",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
-    {
+		{
 			"TextCode": "Shipment.G.Delivery",
 			"DefaultText": "Delivery",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
-    {
+		{
 			"TextCode": "Shipment.F.ShipmentNumber",
 			"DefaultText": "Shipment number",
 			"FieldCode": "Shipment.ShipmentNumber",
@@ -3895,6 +3973,12 @@
 			"TextCode": "Shipment.F.From",
 			"DefaultText": "From",
 			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.MainCarriageToPortCountryCode",
+			"DefaultText": "Main Carriage To Port Country Code",
+			"FieldCode": "Shipment.MainCarriageToPortCountryCode",
 			"DisplayText": ""
 		},
 		{

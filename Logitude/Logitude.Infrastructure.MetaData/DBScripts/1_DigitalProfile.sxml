@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="8">
+  <Sql Version="9">
       <![CDATA[	 
 	  
 	  delete from DigitalFieldSecurities where id != ''	  
@@ -53,6 +53,16 @@
 			"CreatedOn": "", 
 			"ModifiedOn": "",
 			"HasPermission": true, 
+			"IsList": true,
+			"IsPm": true
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageToPortCountryCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true,
 			"IsList": true,
 			"IsPm": true
 		},
@@ -1786,6 +1796,16 @@
 	  values (@newDigitalFieldEntityId, 0, @shipmentObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @agentProfileId, 
 		'[{
 			"FieldCode": "Shipment.RequestedDocumentsCount",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageToPortCountryCode",
 			"CreatedBy": "system",
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
