@@ -30,6 +30,13 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.Tenant == tenant
                     select a).FirstOrDefault();
         }
+
+        public CustomsSetting GetTenantByCustomsAgentId(string customsAgentId)
+        {
+            return (from a in context.CustomsSettings
+                    where a.CustomsAgentId == customsAgentId
+                    select a).FirstOrDefault();
+        }
         public IQueryable<CustomsSetting> GetRealAll()
         {
             return from a in context.CustomsSettings

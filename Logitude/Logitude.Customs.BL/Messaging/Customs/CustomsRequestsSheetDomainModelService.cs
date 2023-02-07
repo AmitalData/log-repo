@@ -170,7 +170,8 @@ namespace Logitude.Customs.BL.Messaging.Customs
 
                 }
 
-                MessageController.BuildRealSteps(InterfaceTenantDefinitionManagement, ref requestVIA, _RequestParams.ForcePersonalSign, avoidSign);
+                MessageController
+                    .BuildRealSteps(InterfaceTenantDefinitionManagement, ref requestVIA, _RequestParams.ForcePersonalSign, avoidSign, requestParams.ForceCompanySign);
                 RequestParams.RequestVIA = requestVIA;
 
 
