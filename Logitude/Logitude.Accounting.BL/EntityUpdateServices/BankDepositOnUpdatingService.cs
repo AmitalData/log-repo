@@ -231,7 +231,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 var list = journalPMs.Where(r => r.AccountingEntityCode == AccountingEntityValues.CashDeposit || r.AccountingEntityCode == AccountingEntityValues.ChequeDeposit).ToList();//why itzik need to fix that ????  6   הפקדת המחאות    Cheque Deposit
                 if (list.Count > 1)
-                    throw new ApplicationException("Find more then 1 Journal for this deposit");
+                    throw new ApplicationException(TextCodesTranslator.TranslateText("BankDeposit.O.CancelOrderInCashbookStatus", tenant, true));
                 journalPM = list.FirstOrDefault();
             }
             else
