@@ -10,6 +10,7 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="true"
+  SupportSubEntity="false"
   HasHelper="false"
   HasShortTitle="true"
   HasFiltersMenu="false"
@@ -57,6 +58,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;aa10&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -2991,6 +2993,12 @@
       Code="&quot;BankDeposit.O.AlreadyDeposited&quot;"
       DefaultText="&quot;There is a cheques was already deposited, please reload the screen&quot;"
       LocalDefaultText="&quot;קיים בהפקדה שיק שכבר הופקד. ( יש לרענן את המסך)&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BankDeposit.O.CancelOrderInCashbookStatus&quot;"
+      DefaultText="&quot;In order to cancel a deposit, all cheqes must be at status &quot;in cashbook&quot;"
+      LocalDefaultText="&quot;על מנת לבטל הפקדה על כל השקים להיות בסטאטוס &quot;בקופה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
