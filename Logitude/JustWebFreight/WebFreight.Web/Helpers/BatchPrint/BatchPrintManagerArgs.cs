@@ -15,7 +15,6 @@ namespace WebFreight.Web.Helpers.BatchPrint
         public string ObjectTableId { get; set; }
         public int Tenant { get; set; }
         public List<PrintEntityKeys> EntityIds { get; set; }
-        public string ChildObjectTableId { get; set; }
         public string Email { get; set; }
     }
     public class PrintEntityKeys
@@ -23,7 +22,8 @@ namespace WebFreight.Web.Helpers.BatchPrint
         public string EntityId { get; set; }
         public string EntityNumber { get; set; }
         public string ChildEntityId { get; set; }
-
+        public string ObjectTableId { get; set; }
+        public bool IsAlreadyPrinted { get; set; }
     }
     public class BatchPrinterArgs: BatchPrintManagerArgs
     {
@@ -35,7 +35,6 @@ namespace WebFreight.Web.Helpers.BatchPrint
             this.Email = batchPrintManagerArgs.Email;
             this.EntityIds = batchPrintManagerArgs.EntityIds;
             this.ObjectTableId = batchPrintManagerArgs.ObjectTableId;
-            this.ChildObjectTableId = batchPrintManagerArgs.ChildObjectTableId;
             this.TemplateId = batchPrintManagerArgs.TemplateId;
             this.Tenant = batchPrintManagerArgs.Tenant;
             this.BatchTaskExecution = BatchTaskExecution;
