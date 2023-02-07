@@ -72,7 +72,9 @@ namespace Logitude.Customs.BL.Messaging.Customs
 
 
        
-        public void BuildRealSteps(InterfaceTenantDefinitionManagementPM InterfaceTenantDefinitionWithManagment,ref SendRequestVIA requestVIA ,bool ForcePersonalSign,bool avoidSign)
+        public void BuildRealSteps(InterfaceTenantDefinitionManagementPM InterfaceTenantDefinitionWithManagment,ref SendRequestVIA requestVIA ,bool ForcePersonalSign,bool avoidSign
+            ,bool ForceCompanySign
+            )
         {
              RealSteps = new List<CustomsStepEnum>(Enum.GetValues(typeof(CustomsStepEnum)).OfType<CustomsStepEnum>());
 
@@ -81,6 +83,11 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 this.SignStepName=SignQueue.CustomRequestSignPersonal ;
                 RealSteps.Remove(CustomsStepEnum.CustomRequestSign);
             }
+            else if (ForceCompanySign)
+            {
+                this.SignStepName = SignQueue.CustomRequestSign;
+                RealSteps.Remove(CustomsStepEnum.CustomRequestSignPersonal);
+            } 
             else
             {
                 switch (InterfaceTenantDefinitionWithManagment.InterfaceManagement.SignatureBy)
@@ -203,7 +210,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
     public interface IMessageController
     {
         bool ToRetry(CustomsStepEnum CustomsProcessState, int retries);
-        void BuildRealSteps(InterfaceTenantDefinitionManagementPM InterfaceTenantDefinitionWithManagment, ref SendRequestVIA requestVIA, bool ForceSign, bool avoidSign);
+        void BuildRealSteps(InterfaceTenantDefinitionManagementPM InterfaceTenantDefinitionWithManagment, ref SendRequestVIA requestVIA, bool ForceSign, bool avoidSign, bool ForceCompanySign);
 
         CustomsCommandEnum ConvertToWR(CustomsStepEnum nxtEnum);
         //SendRequestVIA CalcRequestVIA { get; private set; }

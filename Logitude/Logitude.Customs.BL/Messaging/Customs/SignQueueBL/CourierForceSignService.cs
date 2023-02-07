@@ -35,7 +35,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                 return;
             }
 
-            var hSMSignStationCheckService = new HSMSignStationCheckService();
+            
 
             bool isPersonalSign = false;
             bool isMulti_CheckOnly = false;
@@ -65,19 +65,37 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
             }
             var sw= Stopwatch.StartNew();
             requestParams.ForcePersonalSign = isPersonalSign;//DEFAULT HSM
-            var res = hSMSignStationCheckService.CheckIfHSMIsValid(requestParams.Tenant, isPersonalSign);
-            LogMessagingUtil.Instance.AppendLine($"ApplyForceSign:Success={res.Success};{res.ErrorMessage};took={sw.Elapsed}");
-            if (!res.Success)
+            var signQueueHSMService = new SignQueueHSMService();
+            if (!signQueueHSMService.IsHSMSign_IsOn(requestParams.Tenant))
             {
-                throw new CourierForceSignException(res.ErrorMessage);
+                var dBSignStationCheckService = new DBSignStationCheckService();
+                var signStation = dBSignStationCheckService.GetValidSignStation(requestParams.Tenant, requestParams.LoggingUserId, requestParams.ForcePersonalSign);
+                if (signStation==null)
+                {
+                    throw new CourierForceSignException("NO HSM & NO DBSignStation (even company ?)");
+                }
+                requestParams.ForcePersonalSign = false;
+                requestParams.ForceCompanySign = true;
             }
-            if (isMulti_CheckOnly)
+            else
             {
-                return;
+
+                var hSMSignStationCheckService = new HSMSignStationCheckService();
+                var res = hSMSignStationCheckService.CheckIfHSMIsValid(requestParams.Tenant, isPersonalSign);
+                LogMessagingUtil.Instance.AppendLine($"ApplyForceSign:Success={res.Success};{res.ErrorMessage};took={sw.Elapsed}");
+                if (!res.Success)
+                {
+                    throw new CourierForceSignException(res.ErrorMessage);
+                }
+                if (isMulti_CheckOnly)
+                {
+                    return;
+                }
+                requestParams.SignMethodByQueue = SignMethodByQueueEnum.HSMSignQueue.ToString();
+                requestParams.SignByPersonalId = res.MySignStationList.PersonId;
+
             }
             requestParams.RequestVIAChangeDue = $"Courier- Sign {requestParams.InterfaceTypeCode} ";
-            requestParams.SignMethodByQueue = SignMethodByQueueEnum.HSMSignQueue.ToString();
-            requestParams.SignByPersonalId = res.MySignStationList.PersonId;
             requestParams.SignQueueByCompanyOrPersonal = (isPersonalSign ? SignQueueByType.SignQueueByPersonId : SignQueueByType.SignQueueByCustomsAgentId).ToString();
         }
     }
