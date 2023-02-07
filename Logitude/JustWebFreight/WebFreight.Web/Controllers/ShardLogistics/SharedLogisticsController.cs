@@ -108,7 +108,9 @@ namespace WebFreight.Web.Controllers.ShardLogistics
                 ContactActivityLogRepository contactLogRep = new ContactActivityLogRepository();
                 SharedLogisticsSummary result = new SharedLogisticsSummary();
                 result.Id = 1;
-                IQueryable<ContactActivityLog>allSharedLogisticsList = contactLogRep.GetSharedLogisticsContactLogs(tenant).Where( d=>d.PartnerTypeId == "CS" || d.PartnerTypeId == "AG");
+                IQueryable<ContactActivityLog>allSharedLogisticsList = contactLogRep.GetSharedLogisticsContactLogs(tenant)
+                                                                                    .Where( d=> (d.PartnerTypeId == "CS" || d.PartnerTypeId == "AG")
+                                                                                              && !d.Module.StartsWith("Digital Portal"));
 
                 if (allSharedLogisticsList.Count() > 0)
                 {
@@ -120,13 +122,41 @@ namespace WebFreight.Web.Controllers.ShardLogistics
                     DateTime yesterdayDate = todayDate.AddDays(-1).AddHours(23).AddMinutes(59).AddSeconds(59);
                     DateTime lastMonthDate = todayDate.AddDays(-30);
 
+                    result.TodayCustomersCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "CS"
+                                                                                && d.LogDateTime >= todayDate1
+                                                                                && d.LogDateTime <= todayDate2)
+                                                                       .GroupBy(d => d.CardId)
+                                                                       .Count();
 
-                    result.TodayCustomersCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "CS" && d.LogDateTime >= todayDate1 && d.LogDateTime <= todayDate2).GroupBy(d => d.CardId).Count();  //TodayCustomersList.GroupBy(d => d.CardId).Count();
-                    result.LastWeekCustomersCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "CS" && d.LogDateTime >= lastWeekDate && d.LogDateTime <= yesterdayDate).GroupBy(d => d.CardId).Count();//LastWeekCustomersList.GroupBy(d => d.CardId).Count();
-                    result.LastMonthCustomersCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "CS" && d.LogDateTime >= lastMonthDate && d.LogDateTime <= yesterdayDate).GroupBy(d => d.CardId).Count();  //LastMonthCustomersList.GroupBy(d => d.CardId).Count();
-                    result.TodayAgentsCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "AG" && d.LogDateTime >= todayDate1 && d.LogDateTime <= todayDate2).GroupBy(d => d.CardId).Count(); //TodayAgentsList.GroupBy(d => d.CardId).Count();
-                    result.LastWeekAgentsCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "AG" && d.LogDateTime >= lastWeekDate && d.LogDateTime <= yesterdayDate).GroupBy(d => d.CardId).Count();//LastWeekAgentsList.GroupBy(d => d.CardId).Count();
-                    result.LastMonthAgentsCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "AG" && d.LogDateTime >= lastMonthDate && d.LogDateTime <= yesterdayDate).GroupBy(d => d.CardId).Count(); //LastMonthAgentsList.GroupBy(d => d.CardId).Count();
+                    result.LastWeekCustomersCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "CS"
+                                                                                   && d.LogDateTime >= lastWeekDate
+                                                                                   && d.LogDateTime <= yesterdayDate)
+                                                                          .GroupBy(d => d.CardId)
+                                                                          .Count();
+
+                    result.LastMonthCustomersCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "CS"
+                                                                                    && d.LogDateTime >= lastMonthDate
+                                                                                    && d.LogDateTime <= yesterdayDate)
+                                                                           .GroupBy(d => d.CardId)
+                                                                           .Count();
+
+                    result.TodayAgentsCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "AG"
+                                                                             && d.LogDateTime >= todayDate1
+                                                                             && d.LogDateTime <= todayDate2)
+                                                                    .GroupBy(d => d.CardId)
+                                                                    .Count();
+
+                    result.LastWeekAgentsCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "AG"
+                                                                                && d.LogDateTime >= lastWeekDate
+                                                                                && d.LogDateTime <= yesterdayDate)
+                                                                       .GroupBy(d => d.CardId)
+                                                                       .Count();
+
+                    result.LastMonthAgentsCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "AG"
+                                                                                 && d.LogDateTime >= lastMonthDate
+                                                                                 && d.LogDateTime <= yesterdayDate)
+                                                                        .GroupBy(d => d.CardId)
+                                                                        .Count();
                 }
 
    
@@ -273,7 +303,13 @@ namespace WebFreight.Web.Controllers.ShardLogistics
                 }
 
 
-                List<ContactActivityLog> filterdList = contactLogRep.GetContactActivityLogs(tenant).Where(d => d.IsSharedLogisticsContact && d.PartnerTypeId == partnerTypeId && d.LogDateTime >= date1 && d.LogDateTime <= date2).ToList();
+                List<ContactActivityLog> filterdList = contactLogRep.GetContactActivityLogs(tenant)
+                                                                    .Where(d => d.IsSharedLogisticsContact 
+                                                                             && d.PartnerTypeId == partnerTypeId 
+                                                                             && d.LogDateTime >= date1 
+                                                                             && d.LogDateTime <= date2
+                                                                             && !d.Module.StartsWith("Digital Portal"))
+                                                                    .ToList();
 
 
 
@@ -414,7 +450,13 @@ namespace WebFreight.Web.Controllers.ShardLogistics
                         }
                 }
 
-                List<ContactActivityLog> filterdList = contactLogRep.GetContactActivityLogs(tenant).Where(d => d.IsSharedLogisticsContact && d.PartnerTypeId == partnerTypeId && d.LogDateTime >= date1 && d.LogDateTime <= date2).ToList();
+                List<ContactActivityLog> filterdList = contactLogRep.GetContactActivityLogs(tenant)
+                                                                    .Where(d => d.IsSharedLogisticsContact 
+                                                                             && d.PartnerTypeId == partnerTypeId 
+                                                                             && d.LogDateTime >= date1
+                                                                             && !d.Module.StartsWith("Digital Portal")
+                                                                             && d.LogDateTime <= date2)
+                                                                    .ToList();
 
                 int j = 0;
                 list = (from r in filterdList
