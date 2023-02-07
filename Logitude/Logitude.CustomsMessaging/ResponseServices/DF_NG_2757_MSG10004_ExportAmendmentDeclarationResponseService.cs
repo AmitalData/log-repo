@@ -1291,19 +1291,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         SupplierInvoiceItemsPricePM supplierInvoiceItemsPrice = new SupplierInvoiceItemsPricePM();
 
-                        //if (!isFromImporter && AdditionalPriceTypeCodes.Contains(AdditionalPriceTypeCode))
-                        //{
-                        //    supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Update;
-                        //}
-                        //else if(isFromImporter)
-                        //{
+                        if (!isFromImporter && AdditionalPriceTypeCodes.Contains(AdditionalPriceTypeCode))
+                        {
+                            supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Update;
+                        }
+                       else if (isFromImporter)
+                        {
                             supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Insert;
-                  //      }
-                        //else
-                        //{
-                        //    continue;
-                        //}
-                       
+                        }
+                        else
+                        {
+                            continue;
+                        }
+
                         supplierInvoiceItemsPrice.DeclarationId = declarationId;
                        
                         supplierInvoiceItemsPrice.AdditionalPrice = GetValueAmountType(GoodsItemAmount.CustomsValueAmount);
