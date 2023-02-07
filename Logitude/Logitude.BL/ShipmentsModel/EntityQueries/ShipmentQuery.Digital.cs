@@ -797,7 +797,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
             var country = partnerAddress.City;
-            if (string.IsNullOrEmpty(partnerAddress.Country?.EnglishName))
+            if (!string.IsNullOrEmpty(partnerAddress.Country?.EnglishName))
             {
                 country = partnerAddress.Country?.EnglishName;
             }
@@ -1250,7 +1250,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 Title = "Shipment.G.PreCarrigeInformation",
                 LegHeader = "PreCarriage",
-                FromPort = SetPermissonFieldValue("Shipment", "Shipment.PreCarriageFromPortCountryCode", shipment.PreCarriageFromPortName) 
+                FromPort = SetPermissonFieldValue("Shipment", "Shipment.PreCarriageFromPortName", shipment.PreCarriageFromPortName) 
                            + ", " 
                            + SetPermissonFieldValue("Shipment", "Shipment.PreCarriageFromPortCountryCode", shipment.PreCarriageFromPortCountryCode),
 
@@ -1925,7 +1925,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
             var country = partnerAddress.City;
-            if (string.IsNullOrEmpty(partnerAddress.Country?.Code))
+            if (!string.IsNullOrEmpty(partnerAddress.Country?.Code))
             {
                 country = partnerAddress.Country?.Code;
             }

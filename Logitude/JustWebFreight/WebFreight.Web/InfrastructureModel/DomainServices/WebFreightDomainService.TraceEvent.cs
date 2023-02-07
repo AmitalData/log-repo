@@ -43,7 +43,7 @@ namespace WebFreight.Web.InfrastructureModel.DomainServices
             }
 
             TraceEventService service = new TraceEventService(objectContext, entity.Tenant);
-            service.Create(entity);
+            service.Create(entity); 
         }       
 
         public void UpdateTraceEvent(TraceEventPM currentEntity)

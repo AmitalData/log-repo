@@ -734,24 +734,25 @@ namespace Logitude.Accounting.BL.CoreBL
             //if (reduceDeadlock)
             {
                 //timeOut = TimeSpan.FromSeconds(2);
-                if (myLedgerTransactionsWithCounters.Count < 100)
-                {
-                    iTimeOut = (1);
-                }
-                else if (myLedgerTransactionsWithCounters.Count < 1000)
-                {
-                    iTimeOut = (5);
-                }
-                else if (myLedgerTransactionsWithCounters.Count < 10000)
-                {
-                    iTimeOut = (10);
-                }
+                iTimeOut = (600);
+                //if (myLedgerTransactionsWithCounters.Count < 100)
+                //{
+                //    iTimeOut = (1);
+                //}
+                //else if (myLedgerTransactionsWithCounters.Count < 1000)
+                //{
+                //    iTimeOut = (5);
+                //}
+                //else if (myLedgerTransactionsWithCounters.Count < 10000)
+                //{
+                //    iTimeOut = (10);
+                //}
 
 
-                if (!iTimeOut.HasValue)
-                {
-                    iTimeOut = (20);
-                }
+                //if (!iTimeOut.HasValue)
+                //{
+                //    iTimeOut = (20);
+                //}
                 if (Debugger.IsAttached)
                 {
                     //System.Diagnostics.Debugger.Break();

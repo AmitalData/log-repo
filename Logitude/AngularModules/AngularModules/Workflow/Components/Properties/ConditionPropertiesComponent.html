@@ -68,6 +68,9 @@
     .min-conditions-container {
         height: 285px;
     }
+    .break-space{
+        white-space: break-spaces;
+    }
 </style>
 
 <table>
@@ -116,9 +119,7 @@
     <tr class="table-row">
         <td class="table-row-cell">
             <div class="table-row-cell-block">
-                <p class="Label" style="white-space: pre-wrap">
-                    Specify the conditions that must be met for the workflow to take the true path.
-                </p>
+                <p class="Label break-space" >Specify the conditions that must be met for the workflow to take the true path.</p>
             </div>
         </td>
     </tr>
@@ -148,7 +149,7 @@
     <tr *ngIf="WorkflowEntity != null" class="table-row">
         <td class="table-row-cell">
             <div class="table-row-cell-block">
-                <div class="label">Label If The Condition Is Met</div>
+                <div class="label">Label if the Condition is Met</div>
             </div>
         </td>
     </tr>
