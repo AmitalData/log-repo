@@ -348,7 +348,7 @@ export class PrintComponent extends BaseComponent implements OnInit {
         if (!this.IsPrintValid()) {
             return;
         }
-
+        
         var args: BatchPrintManagerArgs = new BatchPrintManagerArgs();
         args.DocumentTypeId = this.DocumentTypeId;
         args.TemplateId = this.SelectedDocumentTypeTemplate.Code;
@@ -356,20 +356,35 @@ export class PrintComponent extends BaseComponent implements OnInit {
         args.ObjectTableId = this.ObjectTableId;
         args.Tenant = SessionInfo.LoggedUserTenant;
         args.EntityIds = [];
-        
+        this.CurrentSession.StartBusyIndicatorLoading();
+        //this.CurrentSession.StartBusyIndicator("Start Printing... ");
         this.SelectedRecords.forEach((item) => {
             var key: PrintEntityKeys = new PrintEntityKeys();
-            key.EntityId = item.Id;
+            if (this.ObjectTableName == "Shipment") {
+                key.EntityId = item.Id;
+                key.ObjectTableId = this.ObjectTableId;
+            }
+            else {
+                key.ChildEntityId = item.Id;
+
+                if (item.IsConsolidationInvoice || item.IsGeneralInvoice) {
+                    key.EntityId = item.Id;
+                    key.ObjectTableId = this.ObjectTableId;
+                }
+                else {
+                    key.EntityId = item.MainEntityId;
+                    key.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Shipment")[0]?.Id;                    
+                }
+            }
             key.EntityNumber = this.ObjectTableName == "Shipment" ? item.ShipmentNumber : item.InvoiceNumber;
             args.EntityIds.push(key);
             this.selectedEntitiesIds.push(item.Id);
         });
-
+        
         var service: BatchPrintService = new BatchPrintService();
         service.Print(args).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var batchTaskExecutionId: string = myResponse.Result;               
-
                 this.StopTimer();
 
                 this.timer = setInterval(() => {

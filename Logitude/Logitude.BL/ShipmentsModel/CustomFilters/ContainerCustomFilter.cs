@@ -44,12 +44,12 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     {
                        
                         DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(Tenant).Date;
-                        DateTime twoDaysAgoDate = todayDate.AddDays(-2);
+                        DateTime afterTwoDaysDate = todayDate.AddDays(2);
 
                         queryableData = from d in queryableData
                                         where d.ActualPOLVesselDeparture == null 
                                         && d.EstimatedPOLVesselDeparture != null
-                                        && (d.EstimatedPOLVesselDeparture <= twoDaysAgoDate)
+                                        && (d.EstimatedPOLVesselDeparture <= afterTwoDaysDate)
                                         select d;
                     }
                     if (item.FieldName == "InTransitFilter")
