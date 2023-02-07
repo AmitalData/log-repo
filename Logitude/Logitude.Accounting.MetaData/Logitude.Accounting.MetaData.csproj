@@ -133,6 +133,7 @@
     <None Include="DBScripts\202210111701_Update_PRVR_ReportLocalName.sxml" />
     <None Include="DBScripts\20230130_UpdateSearchFieldsForBankDepositsLocalAmountsOnly.sxml" />
     <None Include="DBScripts\20230130_UpdateSearchFieldsForBankDepositsLocalAndForeignAmounts.sxml" />
+    <None Include="DBScripts\20230207_JournalsExternalCodeAndExternalSystemConstraint.sxml" />
     <None Include="DBScripts\20230131_UpdateSearchFieldsForBankDepositsWithNoLine.sxml" />
     <None Include="DBScripts\Post\202103160820_ RebuildGLAccountRecocileDatas.sxml" />
     <None Include="DBScripts\202103180820_ InsertGLAccountAgingDatas.sxml" />
