@@ -119,7 +119,7 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<ScreenSection> ScreenSections { get; }
         IDbSet<TabModification> TabsModifications { get; }
         IDbSet<CustomChildObject> CustomChildObjects { get; }
-
+        DbContextTransaction GetSnapshotTransaction();
         void SetAsModified(object entity);
         void DetectChanges();
         int SaveChanges();
