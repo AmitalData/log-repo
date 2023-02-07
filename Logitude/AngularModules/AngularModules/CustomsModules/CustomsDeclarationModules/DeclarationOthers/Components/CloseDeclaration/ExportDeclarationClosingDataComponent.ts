@@ -133,7 +133,6 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                     this.operationalDataFromUnifreight()
                 this.EntityPM = response.Result;
                 if (this.EntityPM)
-
                     if (response.Result.ChangeSetOp == "1") {
                         this.EntityPM.IsDirty = true;
                         this.IsNew = true;
@@ -711,7 +710,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                         let FlightDate = UnifreightMessageM.GetStringValue(mess, "FlightDate");
                         if (Mawb != null && this.EntityPM != null) {
                             this.MainAWB = Mawb;
-                            if (AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber) && this.DecPM.Direction == 'E' && (this.DecPM.TransportModeId == 'A' || this.DecPM.TransportModeId == 'O')){
+                            if (AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber) && this.IsNew && this.DecPM.Direction == 'E' && (this.DecPM.TransportModeId == 'A' || this.DecPM.TransportModeId == 'O')) {
                                 this.EntityPM.IsDirty = true;
                                 this.EntityPM ? this.EntityPM.FinalManifestNumber = this.EntityPM.MAIN_AWB : null;
                             }
@@ -719,10 +718,15 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                         Hawb ? this.Smp = Hawb : '';
                         if (LoadPort != null) {
                             this.ChargingSite = LoadPort;
-                            this.FinalLoadingSite = LoadPort;
+                            if (this.IsNew) {
+                                this.FinalLoadingSite = LoadPort;
+                            }
                         }
                         if (!AppTool.IsNullOrEmpty(FlightDate)) {
-                            this.FlightDate = this.LoadingDateTime = new Date(Number(FlightDate.substring(0, 4)), Number(FlightDate.substring(4, 6)) - 1, Number(FlightDate.substring(6, 8)), 2, 2, 2);;
+                            this.FlightDate = new Date(Number(FlightDate.substring(0, 4)), Number(FlightDate.substring(4, 6)) - 1, Number(FlightDate.substring(6, 8)), 2, 2, 2);;
+                            if (this.IsNew) {
+                                this.LoadingDateTime = this.FlightDate;
+                            }
                         }
                         SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
                     }
