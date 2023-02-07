@@ -138,6 +138,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         var windowArgs: any = {};
         windowArgs.ObjectTableId = this.SelectedItem.ObjectTableId;
         windowArgs.ProfileCode = this.ProfileCode;
+        windowArgs.ScreenCode = this.SelectedItem.ScreenCode;
         logWindow.Title = "Insert Field";
         logWindow.WindowArgs = windowArgs;
         logWindow.Show('./SharedLogistics/Components/DigitalPortal/AddDigitalFieldCodeComponent');
