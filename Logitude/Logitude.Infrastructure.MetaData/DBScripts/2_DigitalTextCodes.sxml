@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="18">
+  <Sql Version="19">
     <![CDATA[
 	  delete from DigitalTextCodes where Id != ''
 	  
@@ -28,6 +28,24 @@
 		{
 			"TextCode": "General.g.EmailFormatErrorMsg",
 			"DefaultText": "Email format is not valid.",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.Description",
+			"DefaultText": "Description",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.SubmitBtn",
+			"DefaultText": "Submit",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.DownloadAll",
+			"DefaultText": "Download all",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
@@ -2434,6 +2452,12 @@
 		    "DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.F.PreCarriageToPortName",
+			"DefaultText": "PreCarriage to port name",
+			"FieldCode": "Shipment.PreCarriageToPortName",
+		    "DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.F.PreCarriageATD",
 			"DefaultText": "PreCarriage ATD",
 			"FieldCode": "Shipment.PreCarriageATD",
@@ -2449,6 +2473,12 @@
 			"TextCode": "Shipment.F.PreCarriageFromPortCountryCode",
 			"DefaultText": "PreCarriage from port country code",
 			"FieldCode": "Shipment.PreCarriageFromPortCountryCode",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.PreCarriageToPortCountryCode",
+			"DefaultText": "PreCarriage to port country code",
+			"FieldCode": "Shipment.PreCarriageToPortCountryCode",
 		    "DisplayText": ""
 		},
 		{
@@ -2491,6 +2521,12 @@
 			"TextCode": "Shipment.F.MainCarriageFromPortName",
 			"DefaultText": "Main carriage from port name",
 			"FieldCode": "Shipment.MainCarriageFromPortName",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.MainCarriageToPortName",
+			"DefaultText": "Main carriage to port name",
+			"FieldCode": "Shipment.MainCarriageToPortName",
 		    "DisplayText": ""
 		},
 		{
@@ -2542,9 +2578,21 @@
 		    "DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.F.Transshipment1ToPortName",
+			"DefaultText": "Transshipment1 to port name",
+			"FieldCode": "Shipment.Transshipment1ToPortName",
+		    "DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.F.Transshipment1FromPortCountryCode",
 			"DefaultText": "Transshipment1 from port country code",
 			"FieldCode": "Shipment.Transshipment1FromPortCountryCode",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment1ToPortCountryCode",
+			"DefaultText": "Transshipment1 to port country code",
+			"FieldCode": "Shipment.Transshipment1ToPortCountryCode",
 		    "DisplayText": ""
 		},
 		{
@@ -2554,9 +2602,21 @@
 		    "DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.F.Transshipment2ToPortName",
+			"DefaultText": "Transshipment2 to port name",
+			"FieldCode": "Shipment.Transshipment2ToPortName",
+		    "DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.F.Transshipment2FromPortCountryCode",
 			"DefaultText": "Transshipment2 from port country code",
 			"FieldCode": "Shipment.Transshipment2FromPortCountryCode",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment2ToPortCountryCode",
+			"DefaultText": "Transshipment2 to port country code",
+			"FieldCode": "Shipment.Transshipment2ToPortCountryCode",
 		    "DisplayText": ""
 		},
 		{
@@ -2566,9 +2626,21 @@
 		    "DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.F.Transshipment3ToPortName",
+			"DefaultText": "Transshipment3 from port name",
+			"FieldCode": "Shipment.Transshipment3ToPortName",
+		    "DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.F.Transshipment3FromPortCountryCode",
 			"DefaultText": "Transshipment3 from port country code",
 			"FieldCode": "Shipment.Transshipment3FromPortCountryCode",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment3ToPortCountryCode",
+			"DefaultText": "Transshipment3 to port country code",
+			"FieldCode": "Shipment.Transshipment3ToPortCountryCode",
 		    "DisplayText": ""
 		},
 		{
@@ -2577,7 +2649,7 @@
 			"FieldCode": "Shipment.Transshipment1AdditionalMAWBOBLBL",
 		    "DisplayText": ""
 		},
-    {
+		{
 			"TextCode": "Shipment.F.Transshipment1CarrierName",
 			"DefaultText": "Transshipment1 carrier name",
 			"FieldCode": "Shipment.Transshipment1CarrierName",
@@ -2704,9 +2776,21 @@
 		    "DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.F.OnCarriageToPortName",
+			"DefaultText": "OnCarriage to port name",
+			"FieldCode": "Shipment.OnCarriageToPortName",
+		    "DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.F.OnCarriageFromPortCountryCode",
 			"DefaultText": "OnCarriage from port country code",
 			"FieldCode": "Shipment.OnCarriageFromPortCountryCode",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.OnCarriageToPortCountryCode",
+			"DefaultText": "OnCarriage to port country code",
+			"FieldCode": "Shipment.OnCarriageToPortCountryCode",
 		    "DisplayText": ""
 		},
 		{
@@ -5165,6 +5249,12 @@
 		    "DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.F.PreCarriageToPortName",
+			"DefaultText": "PreCarriage to port name",
+			"FieldCode": "Shipment.PreCarriageToPortName",
+		    "DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.F.PreCarriageATD",
 			"DefaultText": "PreCarriage ATD",
 			"FieldCode": "Shipment.PreCarriageATD",
@@ -5180,6 +5270,12 @@
 			"TextCode": "Shipment.F.PreCarriageFromPortCountryCode",
 			"DefaultText": "PreCarriage from port country code",
 			"FieldCode": "Shipment.PreCarriageFromPortCountryCode",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.PreCarriageToPortCountryCode",
+			"DefaultText": "PreCarriage to port country code",
+			"FieldCode": "Shipment.PreCarriageToPortCountryCode",
 		    "DisplayText": ""
 		},
 		{
@@ -5222,6 +5318,12 @@
 			"TextCode": "Shipment.F.MainCarriageFromPortName",
 			"DefaultText": "Main carriage from port name",
 			"FieldCode": "Shipment.MainCarriageFromPortName",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.MainCarriageToPortName",
+			"DefaultText": "Main carriage to port name",
+			"FieldCode": "Shipment.MainCarriageToPortName",
 		    "DisplayText": ""
 		},
 		{
@@ -5273,9 +5375,21 @@
 		    "DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.F.Transshipment1ToPortName",
+			"DefaultText": "Transshipment1 to port name",
+			"FieldCode": "Shipment.Transshipment1ToPortName",
+		    "DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.F.Transshipment1FromPortCountryCode",
 			"DefaultText": "Transshipment1 from port country code",
 			"FieldCode": "Shipment.Transshipment1FromPortCountryCode",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment1ToPortCountryCode",
+			"DefaultText": "Transshipment1 to port country code",
+			"FieldCode": "Shipment.Transshipment1ToPortCountryCode",
 		    "DisplayText": ""
 		},
 		{
@@ -5285,9 +5399,21 @@
 		    "DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.F.Transshipment2ToPortName",
+			"DefaultText": "Transshipment2 to port name",
+			"FieldCode": "Shipment.Transshipment2ToPortName",
+		    "DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.F.Transshipment2FromPortCountryCode",
 			"DefaultText": "Transshipment2 from port country code",
 			"FieldCode": "Shipment.Transshipment2FromPortCountryCode",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment2ToPortCountryCode",
+			"DefaultText": "Transshipment2 to port country code",
+			"FieldCode": "Shipment.Transshipment2ToPortCountryCode",
 		    "DisplayText": ""
 		},
 		{
@@ -5297,9 +5423,21 @@
 		    "DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.F.Transshipment3ToPortName",
+			"DefaultText": "Transshipment3 from port name",
+			"FieldCode": "Shipment.Transshipment3ToPortName",
+		    "DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.F.Transshipment3FromPortCountryCode",
 			"DefaultText": "Transshipment3 from port country code",
 			"FieldCode": "Shipment.Transshipment3FromPortCountryCode",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment3ToPortCountryCode",
+			"DefaultText": "Transshipment3 to port country code",
+			"FieldCode": "Shipment.Transshipment3ToPortCountryCode",
 		    "DisplayText": ""
 		},
 		{
@@ -5308,7 +5446,7 @@
 			"FieldCode": "Shipment.Transshipment1AdditionalMAWBOBLBL",
 		    "DisplayText": ""
 		},
-    {
+		{
 			"TextCode": "Shipment.F.Transshipment1CarrierName",
 			"DefaultText": "Transshipment1 carrier name",
 			"FieldCode": "Shipment.Transshipment1CarrierName",
@@ -5429,9 +5567,21 @@
 		    "DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.F.OnCarriageToPortName",
+			"DefaultText": "OnCarriage to port name",
+			"FieldCode": "Shipment.OnCarriageToPortName",
+		    "DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.F.OnCarriageFromPortCountryCode",
 			"DefaultText": "OnCarriage from port country code",
 			"FieldCode": "Shipment.OnCarriageFromPortCountryCode",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.OnCarriageToPortCountryCode",
+			"DefaultText": "OnCarriage to port country code",
+			"FieldCode": "Shipment.OnCarriageToPortCountryCode",
 		    "DisplayText": ""
 		},
 		{
