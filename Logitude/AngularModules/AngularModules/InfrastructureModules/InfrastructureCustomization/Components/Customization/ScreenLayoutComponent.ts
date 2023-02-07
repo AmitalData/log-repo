@@ -542,7 +542,7 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
                 screenField.Row = position;
                 screenField.DataTypeCode = myitem.DataTypeCode;
                 screenField.ObjectFieldCode = myitem.FieldCode;
-                if (this.IsMuiltSectionScreen) screenField.SectionNumber = section.Number
+                if (this.IsMuiltSectionScreen) screenField.SectionNumber = section?.Number
                 rows.ScreenFieldPMs.splice(position, 0, screenField);
                 rows.ObjectFieldPMs.splice(position, 0, myitem);
 
@@ -553,7 +553,7 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
 
             this.screenLayoutService.ChangeScreenFieldPosition
                 ({
-                    SectionNumber: section.Number,
+                    SectionNumber: section?.Number,
                     ObjectFieldId: objectFieldId,
                     FieldCode: fieldCode,
                     Rows: screenRows.filter(a => a.ColumnIndex == screenRowDetails.ColumnIndex)[0],
