@@ -707,7 +707,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                         let FlightDate = UnifreightMessageM.GetStringValue(mess, "FlightDate");
                         if (Mawb != null && this.EntityPM != null) {
                             this.MainAWB = Mawb;
-                            if (AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber) && this.IsNew && this.DecPM.Direction == 'E' && this.DecPM.TransportModeId == 'A') {
+                            if (AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber) && this.IsNew && this.DecPM.Direction == 'E' && (this.DecPM.TransportModeId == 'A' || this.DecPM.TransportModeId == 'O')) {
                                 this.EntityPM.IsDirty = true;
                                 this.EntityPM ? this.EntityPM.FinalManifestNumber = this.EntityPM.MAIN_AWB : null;
                             }
