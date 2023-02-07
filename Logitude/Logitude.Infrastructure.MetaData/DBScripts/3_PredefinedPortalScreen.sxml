@@ -1,7 +1,6 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-	<Sql Version="15">
+	<Sql Version="16">
       <![CDATA[
-	  
 	    delete from DigitalPortalScreens where Id != ''
 		declare @customerProfileId as varchar(15)
 		set @customerProfileId = (select Id from DigitalProfiles where [Name] = 'Customer' and Tenant = 0 )
@@ -10,6 +9,7 @@
 		declare @shipmentObjectId as varchar(15)
 		set @shipmentObjectId = (select Id from ObjectTables where [Name] = 'Shipment' and Tenant = 0 )
 		declare @EntityId as varchar(15)
+
 		EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
 		INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, ProfileId, Content, DraftContent) 
 		values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Shipment list card item - Desktop & Tablets', 'SLCI', @customerProfileId,
