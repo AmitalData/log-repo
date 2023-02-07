@@ -284,6 +284,26 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         {
             ShipmentQuery shipmentQuery = new ShipmentQuery(cargoShipmentPM.Tenant);
             List<ShipmentPackagePM> shipmentPackages = shipmentQuery.GetPackagesOfShipment(cargoShipmentPM.Tenant, cargoShipmentPM.EntityId);
+
+            if (shipmentPackages.Any(x => x.PackageTypeName == null || x.PackageTypeName == "---" || x.PackageTypeName == "" 
+            || x.ContainerNumber == null || x.ContainerNumber == "---" || x.ContainerNumber == "")
+                && !string.IsNullOrWhiteSpace(cargoShipmentPM.ForwardingShipmentHeaderId) && cargoShipmentPM.EntityType == "C")
+            {
+                List<ShipmentPackagePM> forwardingShipmentPackages = shipmentQuery.GetPackagesOfShipment(cargoShipmentPM.Tenant, cargoShipmentPM.ForwardingShipmentHeaderId);
+
+                foreach (var pkg in shipmentPackages)
+                {
+                    var forwardingPkg = forwardingShipmentPackages.FirstOrDefault(x => x.Quantity == pkg.Quantity && x.Weight == pkg.Weight && x.Volume == pkg.Volume);
+                    if (pkg.PackageTypeName == null || pkg.PackageTypeName == "---" || pkg.PackageTypeName == "")
+                    {
+                        pkg.PackageTypeName = forwardingPkg?.PackageTypeName;
+                    }
+                    if (pkg.ContainerNumber == null || pkg.ContainerNumber == "---" || pkg.ContainerNumber == "")
+                    {
+                        pkg.ContainerNumber = forwardingPkg?.ContainerNumber;
+                    }
+                }
+            }
             return shipmentPackages;
         }
         private void MapShipmentPackage(ShipmentPackagePM package)
