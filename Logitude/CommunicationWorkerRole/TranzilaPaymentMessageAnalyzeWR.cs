@@ -65,16 +65,16 @@ namespace CommunicationWorkerRole
                             //analyzeQueue.Status = "In progress";
                             //analyzeQueueRepository.Update(analyzeQueue);
                             var MsgBody = System.Text.Encoding.UTF8.GetString(analyzeQueue.MessageBody);
-                            //if (MsgBody.Contains("Response=000"))
-                            //{
                             AnalyzeMessage(analyzeQueue);
+                            if (MsgBody.Contains("Response=000"))
+                            {
                             string ShipmentNumber = GetRelatedShipmentNumber(analyzeQueue);
                             if (!string.IsNullOrEmpty(ShipmentNumber))
                             {
                                 UpdateShipmentAdditionalData(ShipmentNumber, analyzeQueue.Tenant);
                             }
+                            }
                             analyzeQueue.Status = "D";
-                            //}
                             //else
                             //{
                             //    analyzeQueue.Status = "F";
