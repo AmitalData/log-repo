@@ -392,7 +392,7 @@ export class PrintComponent extends BaseComponent implements OnInit {
                 }, this.timerInterval);
             }
 
-            this.CurrentSession.StopBusyIndicator();
+           // this.CurrentSession.StopBusyIndicator();
         });
     }
     IsPrintValid(): boolean {
