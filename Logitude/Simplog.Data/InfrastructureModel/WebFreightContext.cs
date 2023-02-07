@@ -73,6 +73,11 @@ namespace Simplog.Data.InfrastructureModel
 
             return context;
         }
+        public DbContextTransaction GetSnapshotTransaction()
+        {
+            return Database.BeginTransaction(System.Data.IsolationLevel.Snapshot);
+
+        }
         public override LogitudeDBSchema LogitudeDBSchema
         {
             get { return Simplog.Server.Infrastructure.LogitudeDBSchema.LOGITUDE_MAIN; }
