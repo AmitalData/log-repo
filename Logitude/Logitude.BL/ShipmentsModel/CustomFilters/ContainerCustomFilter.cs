@@ -55,7 +55,6 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                     else if (item.FieldName == "PendingPOLDepartureFilter")
                     {                       
-                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(Tenant).Date;
                         DateTime afterTwoDaysDate = todayDate.AddDays(2);
 
 
