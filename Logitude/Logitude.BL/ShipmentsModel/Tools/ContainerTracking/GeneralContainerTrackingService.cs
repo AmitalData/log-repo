@@ -64,6 +64,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
 
         public void AutomaticTrackContainer()
         {
+            if (generalContainerTrackingArgs.IsUpdatedFromRequest) return;
+
             try
             {
                 SetArgsFields();
@@ -341,7 +343,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
             ContainerPM container = containerQuery.GetSinglePM(generalContainerTrackingArgs.ContainerId, generalContainerTrackingArgs.Tenant);
 
             if (container == null) return;
-            if (container.RequestDate == null) container.RequestDate = TenantServerConfigration.GetCurrentDateTime(generalContainerTrackingArgs.Tenant);
+            if (container.RequestDate == null) 
+                container.RequestDate = TenantServerConfigration.GetCurrentDateTime(generalContainerTrackingArgs.Tenant);
+
+            container.IsUpdatedFromRequest = true;
             ContainerService containerService = new ContainerService(shipmentsContext, generalContainerTrackingArgs.Tenant);
             containerService.Update(container);
         }

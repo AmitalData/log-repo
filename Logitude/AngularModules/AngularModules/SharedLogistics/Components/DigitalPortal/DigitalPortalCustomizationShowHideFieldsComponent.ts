@@ -166,6 +166,8 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
                 newLabel.HasPermission = item.HasPermission;
                 newLabel.ModifiedBy = item.ModifiedBy;
                 newLabel.ModifiedOn = item.ModifiedOn;
+                newLabel.IsList = item.IsList;
+                newLabel.IsPm = item.IsPm;
                 this.ModifiedLables.DefaultSettings.push(newLabel);
             });
 
@@ -252,6 +254,8 @@ export class ProfileFieldsItem extends BaseComponent {
     public DefaultTextBackground = "rgba(230, 231, 232, 0.5)";
     constructor(public father: DigitalPortalCustomizationShowHideFieldsComponent, item) {
         super();
+        this.isList = item.IsList;
+        this.isPm = item.IsPm;
         this.hasPermission = item.HasPermission;
         this.fieldCode = item.FieldCode;
         var selelectField = father.loadedFieldsResults.filter(a => a['FieldCode'] == this.fieldCode)[0];
@@ -269,6 +273,16 @@ export class ProfileFieldsItem extends BaseComponent {
             this.Background = "rgba(255, 171, 3, 0.6)";
             this.DefaultTextBackground = "rgba(255, 171, 3, 0.6)";
         }
+    }
+
+    private isList: boolean =false;
+    get IsList() {
+        return this.isList;
+    }
+    
+    private isPm: boolean = false;
+    get IsPm() {
+        return this.isPm;
     }
 
     private fieldCode: string = "";

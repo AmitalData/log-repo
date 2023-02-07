@@ -479,5 +479,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public List<CustomChildEntity> CustomChildEntities { get; set; }
         public DateTime? RequestDate { get; set; }
         public DateTime? RecentResponseDate { get; set; }
+        public bool IsUpdatedFromRequest { get; set; }
     }
 }

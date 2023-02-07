@@ -11,6 +11,7 @@ import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {CountryList} from '../../../../Common/EntityLists/CountryList';
 import { CountryListService } from '../../../../Common/Services/StandardLists/CountryListService';
 import { UserPMService } from '../../../../Common/Services/StandardPMs/UserPMService';
+import { CustomerTenantAccessExtendedPMService } from '../../../../Common/Services/ExtendedPMs/CustomerTenantAccessExtendedPMService';
 
 @Component({
     selector: 'CreateTenantComponent',
@@ -30,6 +31,7 @@ export class CreateTenantComponent extends BaseComponent implements OnInit {
     IsCreateLogboxTenantFromCloud: boolean;
     public ValidationErrorsList: string[];
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private customerTenantAccessExtendedPMService: CustomerTenantAccessExtendedPMService = new CustomerTenantAccessExtendedPMService();
     signUpService: SignUpService;
     public IsStardLoadPage: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -133,8 +135,7 @@ export class CreateTenantComponent extends BaseComponent implements OnInit {
     SaveButtonClicked() {
         this.ValidationErrorsList = [];
         this.ValidationFields();
-
-       if( this.ValidationErrorsList.length == 0) this.Buildtenant();
+        if (!this.IsCreateLogboxTenantFromCloud) this.Buildtenant();
     }
 
     ValidationFields() {
@@ -165,13 +166,55 @@ export class CreateTenantComponent extends BaseComponent implements OnInit {
             this.ValidationErrorsList.push("Package Code field is required");
         }
 
-        if (this.IsCreateLogboxTenantFromCloud && AppTool.IsNullOrEmpty(this.VatNumber)) {
+        this.ValidateCreateLogboxTenantFromCloud();
+    }
+
+    private ValidateCreateLogboxTenantFromCloud() {
+        if (!this.IsCreateLogboxTenantFromCloud) return;
+
+        if (AppTool.IsNullOrEmpty(this.VatNumber)) {
             this.ValidationErrorsList.push("Vat Number field is required");
         }
+        else {
+            this.ValidateVatNumberValue();
+        }
 
-        if (this.IsCreateLogboxTenantFromCloud && AppTool.IsNullOrEmpty(this.CountryCode)) {
+        if (AppTool.IsNullOrEmpty(this.CountryCode)) {
             this.ValidationErrorsList.push("Country field is required");
         }
+    }
+
+    private ValidateVatNumberValue() {
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+        this.customerTenantAccessExtendedPMService.GetByCompanyVatNumber(this.VatNumber).subscribe((serviceResponse: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            if (!serviceResponse.HasError) {
+                this.ShowVatNumberValidation(serviceResponse);
+                return;
+            }
+
+            let errorMessage = (serviceResponse.ErrorsArray && serviceResponse.ErrorsArray.length > 0) ? serviceResponse.ErrorsArray[0] : "Error";
+            this.ValidationErrorsList.push(errorMessage);
+            this.ShowMessage(errorMessage, "Error Message");
+        });
+        
+    }
+
+    public ShowMessage(message: string, title: string = "") {
+        if (!message) return;
+        let messageWindow: MessageWindow = new MessageWindow();
+        messageWindow.Title = title;
+        messageWindow.Show(message);
+    }
+
+    private ShowVatNumberValidation(serviceResponse: ServiceResponse) {
+        if (!serviceResponse.Result || !serviceResponse.Result.CustomerTenant) {
+            this.Buildtenant();
+            return;
+        }
+        let validationMessage = "The VAT Number is used on Company ";
+        validationMessage += "[" + serviceResponse.Result.CompanyName + "] (" + serviceResponse.Result.CustomerTenant + ")";
+        this.ValidationErrorsList.push(validationMessage);
     }
 
     CheckIsValidEmail(email: string) {
@@ -195,6 +238,7 @@ export class CreateTenantComponent extends BaseComponent implements OnInit {
     }
 
     Buildtenant() {
+        if (this.ValidationErrorsList.length > 0) return;
         this.CurrentSession.StartBusyIndicatorSaving();
         
         var SignUpInfo: SignUpInfoClass = new SignUpInfoClass();

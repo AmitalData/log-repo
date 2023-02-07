@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-	<Sql Version="10">
+	<Sql Version="12">
       <![CDATA[
 	    delete from DigitalPortalScreens where Id != ''
 		declare @customerProfileId as varchar(15)

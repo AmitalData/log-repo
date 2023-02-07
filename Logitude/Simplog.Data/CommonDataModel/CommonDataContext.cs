@@ -496,6 +496,9 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new MentionMap());
             modelBuilder.Configurations.Add(new CarrierServiceLineMap());
             modelBuilder.Configurations.Add(new HorseGenderMap());
+            modelBuilder.Configurations.Add(new CustomFieldsMainObjectMap());
+
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -1077,6 +1080,11 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<HorseGender> HorseGenders { get; set; }
         public IDbSet<DigitalContactLastSetting> DigitalContactLastSettings { get; set; }
         public IDbSet<PortGroup> PortGroups { get; set; }
+
+        public IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects { get; set; }
+
+
+
 
         public DbConnection GetConnection()
         {

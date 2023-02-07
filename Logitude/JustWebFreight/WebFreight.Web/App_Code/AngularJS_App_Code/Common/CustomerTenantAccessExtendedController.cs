@@ -1,4 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityAMs;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
@@ -41,6 +43,36 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
                         return Request.CreateResponse(HttpStatusCode.OK, "");
                     
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+
+        public HttpResponseMessage GetByCompanyVatNumber(string companyVatNumber)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    string logKey = PerformanceLogger.LogCurrentTime();
+
+
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.CheckContactFeature("CustomerTenantAccess", "READ", authToken.Tenant);
+                    CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(authToken.Tenant);
+                    CustomerTenantAccessPM customerTenantAccessPM = customerTenantAccessQuery.GetCustomerTenantAccessPMsByTenant(authToken.Tenant).Where(customer => customer.CompanyVat == companyVatNumber).FirstOrDefault();
+                    PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+                    return Request.CreateResponse(HttpStatusCode.OK, customerTenantAccessPM);
                 }
 
                 catch (Exception ex)

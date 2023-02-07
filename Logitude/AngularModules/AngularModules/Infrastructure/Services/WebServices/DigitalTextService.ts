@@ -157,4 +157,6 @@ export class DigitalFeildSecurityUpdateModel {
     public ModifiedOn: Date;
     public ModifiedBy: string;
     public HasPermission: boolean;
+    public IsList: boolean;
+    public IsPm: boolean;
 }
