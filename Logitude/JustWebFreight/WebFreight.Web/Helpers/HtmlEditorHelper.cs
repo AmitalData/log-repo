@@ -4471,9 +4471,14 @@ namespace WebFreight.Web.Helpers
             {
                 double db = 0;
                 double.TryParse(value, out db);
+
                 if (digitsAfterPoint == 3)
                 {
                     result = db.ToString("#,##0." + new string('0', 3));
+                }
+                else if (field.DigitsAfterPoint > 0)
+                {
+                    result = db.ToString("#,##0." + new string('0', field.DigitsAfterPoint));
                 }
                 else result = db.ToString("N");
             }
