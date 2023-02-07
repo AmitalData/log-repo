@@ -218,7 +218,7 @@ export class ShipmentsComponent {
         this.RecentShipmentsList = [];
         this.IsNoDataVisible_RecentShipments = false;
 
-        this.myShipmentDomainService.GetRecentShipments().subscribe((myResponse: ServiceResponse) => {
+        this.myShipmentDomainService.GetRecentShipments1().subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                     this.RecentShipmentsList = myResponse.Result;
