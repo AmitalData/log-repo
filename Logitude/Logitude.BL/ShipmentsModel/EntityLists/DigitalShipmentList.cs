@@ -738,6 +738,17 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string Transshipments { get; set; }
         public TimeLineData TimeLineData { get; set; }
 
+        public string OnCarriageToPortName { get; set; }
+        public string OnCarriageToPortCountryCode { get; set; }
+        public string Transshipment3ToPortName { get; set; }
+        public string Transshipment3ToPortCountryCode { get; set; }
+        public string Transshipment2ToPortName { get; set; }
+        public string Transshipment2ToPortCountryCode { get; set; }
+        public string Transshipment1ToPortName { get; set; }
+        public string Transshipment1ToPortCountryCode { get; set; }
+        public string PreCarriageToPortCountryCode { get; set; }
+        public string PreCarriageToPortName { get; set; } 
+
         public DateTime? Transshipment1ATD { get; set; }
         public DateTime? Transshipment1ATA { get; set; }
         public DateTime? Transshipment1ETD { get; set; }

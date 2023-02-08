@@ -13532,6 +13532,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                            select new DigitalShipmentList()
                            {
                                TruckContainerNumber = "",
+                               OnCarriageToPortName = f.OnCarriageToPortName,
+                               OnCarriageToPortCountryCode = f.OnCarriageToPortCountryCode,
+                               Transshipment3ToPortName = f.OnCarriageToPortCountryCode,
+                               Transshipment3ToPortCountryCode = f.OnCarriageToPortCountryCode,
+                               Transshipment2ToPortName = f.Transshipment2ToPortName,
+                               Transshipment2ToPortCountryCode = f.Transshipment2ToPortCountryCode,
+                               Transshipment1ToPortName = f.Transshipment1ToPortName,
+                               Transshipment1ToPortCountryCode = f.Transshipment1ToPortCountryCode,
+                               MainCarriageToPortName = f.MainCarriageToPortName,
+                               MainCarriageToPortCountryCode = f.MainCarriageToPortCountryCode,
+                               PreCarriageToPortCountryCode = PreCarriageToPortCountryCode,
+                               PreCarriageToPortName = f.PreCarriageToPortName,
                                StatusCode = f.StatusCode,
                                ChargeableWeightInKG = f.ChargeableWeightInKG,
                                GrossWeightInKG = f.GrossWeightInKG,
