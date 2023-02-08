@@ -397,10 +397,9 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                     }
 
                     if (button.EventCode == "ViziionUnsubscribe") {
-                        if (!buttonEnabled) 
-                            button.IsHidden = true;
-                        if(this.EntityPM.ShipmentTypeId != "FCLD")
-                            button.IsHidden = true;
+                        if (!buttonEnabled) button.IsHidden = true;
+                        if(this.EntityPM.ShipmentTypeId != "FCLD") button.IsHidden = true;
+                        if(!SessionLocator.TenantManagementJS.IsContainerTrackingPrepaid) button.IsHidden = true;
                     }
 
 

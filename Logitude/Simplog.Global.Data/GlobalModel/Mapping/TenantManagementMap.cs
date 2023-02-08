@@ -168,6 +168,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.NoPaymentForChildTenants).HasColumnName("NoPaymentForChildTenants");
             this.Property(t => t.ScheduledTasksLimitPerReport).HasColumnName("ScheduledTasksLimitPerReport");
             this.Property(t => t.WhatsAppMessagingPhoneNumber).HasColumnName("WhatsAppMessagingPhoneNumber");
+            this.Property(t => t.IsContainerTrackingPrepaid).HasColumnName("IsContainerTrackingPrepaid");
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

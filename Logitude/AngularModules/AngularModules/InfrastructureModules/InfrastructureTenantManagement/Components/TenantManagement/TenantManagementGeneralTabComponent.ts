@@ -157,6 +157,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.UIProperties.SetEnabled("TTY", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsAWBStockPrepaid", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsINTTRAStockPrepaid", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("IsContainerTrackingPrepaid", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsActive", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsSystemSupportEnabled", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsDistributorSupportEnabled", this.ObjectTableName, false);
@@ -582,6 +583,13 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     set IsINTTRAStockPrepaid(newValue: boolean) {
         if (this.EntityPM.IsINTTRAStockPrepaid != newValue) {
             this.EntityPM.IsINTTRAStockPrepaid = newValue;
+        }
+    }
+
+    get IsContainerTrackingPrepaid() { return this.EntityPM.IsContainerTrackingPrepaid; }
+    set IsContainerTrackingPrepaid(newValue: boolean) {
+        if (this.EntityPM.IsContainerTrackingPrepaid != newValue) {
+            this.EntityPM.IsContainerTrackingPrepaid = newValue;
         }
     }
 
