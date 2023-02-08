@@ -1085,7 +1085,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private string GetLoadingPort(ShipmentPM shipment)
         {
-            string loadingPort = null;
+            string loadingPort;
             if (!string.IsNullOrEmpty(shipment.PreCarriageCarrierId))
             {
                 loadingPort = SetPermissonFieldValue("Shipment", "Shipment.PreCarriageFromPortName", shipment.PreCarriageFromPortName)
@@ -1545,9 +1545,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 case "PART":
                     {
-                        if (!string.IsNullOrEmpty(pickUpDelivery.ToPartnerCardId))
+                        if (SetPermissonFieldValue("ShipmentPickUpDelivery", "ShipmentPickUpDelivery.ToPartnerCardId", pickUpDelivery?.ToPartnerCardId) != null 
+                            && !string.IsNullOrEmpty(pickUpDelivery.ToPartnerCardId))
                         {
-                            if (!string.IsNullOrEmpty(pickUpDelivery.ToAddressId))
+                            if (SetPermissonFieldValue("ShipmentPickUpDelivery", "ShipmentPickUpDelivery.ToAddressId", pickUpDelivery?.ToAddressId) != null 
+                                && !string.IsNullOrEmpty(pickUpDelivery.ToAddressId))
                             {
                                 Address myPartnerAddress = addressRepository.GetSingleAddress(pickUpDelivery.ToAddressId, tenant);
                                 if (myPartnerAddress != null)
@@ -1570,7 +1572,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                 case "PORT":
                     {
-                        if (!string.IsNullOrEmpty(pickUpDelivery.ToPortId))
+                        if (SetPermissonFieldValue("ShipmentPickUpDelivery", "ShipmentPickUpDelivery.ToPortId", pickUpDelivery?.ToPortId) != null 
+                            && !string.IsNullOrEmpty(pickUpDelivery.ToPortId))
                         {
                             PortPM myPort = PortQuery.GetSinglePort(tenant, pickUpDelivery.ToPortId, true);
                             if (myPort != null)
@@ -1584,7 +1587,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                 case "CASL":
                     {
-                        leg.ToPort = pickUpDelivery.ToAddressCity + ", " + pickUpDelivery.ToAddressCountry?.Code;
+                        leg.ToPort = SetPermissonFieldValue("ShipmentPickUpDelivery", "ShipmentPickUpDelivery.ToAddressCity", pickUpDelivery?.ToAddressCity) != null 
+                                      ? $"{pickUpDelivery.ToAddressCity}, " 
+                                          + SetPermissonFieldValue("ShipmentPickUpDelivery", "ShipmentPickUpDelivery.ToAddressCountry", pickUpDelivery?.ToAddressCountry) != null 
+                                            ? pickUpDelivery.ToAddressCountry?.Code
+                                            : ""
+                                      : "";
                         break;
                     }
             }
@@ -1596,9 +1604,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 case "PART":
                     {
-                        if (!string.IsNullOrEmpty(pickUpDelivery.FromPartnerCardId))
+                        if (SetPermissonFieldValue("ShipmentPickUpDelivery", "ShipmentPickUpDelivery.FromPartnerCardId", pickUpDelivery?.FromPartnerCardId) != null 
+                             && !string.IsNullOrEmpty(pickUpDelivery.FromPartnerCardId))
                         {
-                            if (!string.IsNullOrEmpty(pickUpDelivery.FromAddressId))
+                            if (SetPermissonFieldValue("ShipmentPickUpDelivery", "ShipmentPickUpDelivery.FromAddressId", pickUpDelivery?.FromAddressId) != null 
+                                && !string.IsNullOrEmpty(pickUpDelivery.FromAddressId))
                             {
                                 Address myPartnerAddress = addressRepository.GetSingleAddress(pickUpDelivery.FromAddressId, tenant);
                                 if (myPartnerAddress != null)
@@ -1620,7 +1630,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                 case "PORT":
                     {
-                        if (!string.IsNullOrEmpty(pickUpDelivery.FromPortId))
+                        if (SetPermissonFieldValue("ShipmentPickUpDelivery", "ShipmentPickUpDelivery.FromPortId", pickUpDelivery?.FromPortId) != null
+                                && !string.IsNullOrEmpty(pickUpDelivery.FromPortId))
                         {
                             PortPM myPort = PortQuery.GetSinglePort(tenant, pickUpDelivery.FromPortId, true);
                             if (myPort != null)
@@ -1633,7 +1644,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                 case "CASL":
                     {
-                        leg.FromPort = pickUpDelivery.ToAddressCity + ", " + pickUpDelivery.ToAddressCountry?.Code;
+                        leg.FromPort = SetPermissonFieldValue("ShipmentPickUpDelivery", "ShipmentPickUpDelivery.ToAddressCity", pickUpDelivery?.ToAddressCity) != null
+                                      ? $"{pickUpDelivery.ToAddressCity}, "
+                                          + SetPermissonFieldValue("ShipmentPickUpDelivery", "ShipmentPickUpDelivery.ToAddressCountry", pickUpDelivery?.ToAddressCountry) != null
+                                            ? pickUpDelivery.ToAddressCountry?.Code
+                                            : ""
+                                      : "";
                         break;
                     }
             }
@@ -1776,9 +1792,19 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return res;
         }
 
+        public bool DoesPropertyExistInDynamic(dynamic settings, string name)
+        {
+            if (settings is ExpandoObject)
+                return ((IDictionary<string, object>)settings).ContainsKey(name);
+
+            return settings.GetType().GetProperty(name) != null;
+        }
+
         private dynamic FillShipmnetTimeLine(dynamic shipment, int tenant)
         {
-            bool isInlandDomesticShipment = (shipment.DirectionId == "D" && shipment.TransportModeId == "I");
+            bool isInlandDomesticShipment = DoesPropertyExistInDynamic(shipment, "DirectionId") && DoesPropertyExistInDynamic(shipment, "TransportModeId") 
+                                            ? (shipment.DirectionId == "D" && shipment.TransportModeId == "I")
+                                            : false;
 
             dynamic expando = JsonConvert.DeserializeObject<ExpandoObject>(JsonConvert.SerializeObject(shipment));
 
@@ -1808,8 +1834,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 City = this.GetCityForFromInlandDomestic(shipment),
                 CountryCode = this.GetCountryCodeForFromInlandDomestic(shipment),
-                Date = shipment.MainCarriageATD != null ? shipment.MainCarriageATD : shipment.MainCarriageETD,
-                DateType = shipment.MainCarriageATD != null ? "Actual" : (shipment.MainCarriageETD != null ? "Estimated" : null),
+                Date = DoesPropertyExistInDynamic(shipment, "MainCarriageATD") && shipment.MainCarriageATD != null 
+                       ? shipment.MainCarriageATD 
+                       : DoesPropertyExistInDynamic(shipment, "MainCarriageETD") 
+                         ? shipment.MainCarriageETD 
+                         : null,
+                DateType = DoesPropertyExistInDynamic(shipment, "MainCarriageATD") && shipment.MainCarriageATD != null 
+                           ? "Actual" 
+                           : (DoesPropertyExistInDynamic(shipment, "MainCarriageETD") && shipment.MainCarriageETD != null ? "Estimated" : null),
             };
         }
 
@@ -1819,22 +1851,30 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 City = this.GetCityForToInlandDomestic(shipment),
                 CountryCode = this.GetCountryCodeForToInlandDomestic(shipment),
-                Date = shipment.MainCarriageFinalDestinationATA != null ? shipment.MainCarriageFinalDestinationATA : shipment.MainCarriageFinalDestinationETA,
-                DateType = shipment.MainCarriageFinalDestinationATA != null ? "Actual" : (shipment.MainCarriageFinalDestinationETA != null ? "Estimated" : null),
+                Date = DoesPropertyExistInDynamic(shipment, "MainCarriageFinalDestinationATA") && shipment.MainCarriageFinalDestinationATA != null 
+                       ? shipment.MainCarriageFinalDestinationATA 
+                       : DoesPropertyExistInDynamic(shipment, "MainCarriageFinalDestinationETA") 
+                         ?  shipment.MainCarriageFinalDestinationETA 
+                         : null,
+                DateType = DoesPropertyExistInDynamic(shipment, "MainCarriageFinalDestinationATA") && shipment.MainCarriageFinalDestinationATA != null 
+                           ? "Actual" 
+                           : (DoesPropertyExistInDynamic(shipment, "MainCarriageFinalDestinationETA") 
+                              ? shipment.MainCarriageFinalDestinationETA != null ? "Estimated" : null
+                              : null)
             };
         }
 
         private string GetCityForFromInlandDomestic(dynamic shipment)
         {
-            if (shipment.InlandDomesticFromTypeCode == "PART")
+            if (DoesPropertyExistInDynamic(shipment, "InlandDomesticFromTypeCode") && DoesPropertyExistInDynamic(shipment, "MainCarriageFromAddressId") && shipment.InlandDomesticFromTypeCode == "PART")
             {
                 return this.GetCityByPartnerId(shipment.MainCarriageFromAddressId);
             }
-            else if (shipment.InlandDomesticFromTypeCode == "PORT")
+            else if (DoesPropertyExistInDynamic(shipment, "InlandDomesticFromTypeCode") && DoesPropertyExistInDynamic(shipment, "MainCarriageFromPortCode") && shipment.InlandDomesticFromTypeCode == "PORT")
             {
                 return shipment.MainCarriageFromPortCode;
             }
-            else if (shipment.InlandDomesticFromTypeCode == "CASL")
+            else if (DoesPropertyExistInDynamic(shipment, "InlandDomesticFromTypeCode") && DoesPropertyExistInDynamic(shipment, "InlandDomesticFromCity") &&  shipment.InlandDomesticFromTypeCode == "CASL")
             {
                 return shipment.InlandDomesticFromCity;
             }
@@ -1844,15 +1884,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private string GetCityForToInlandDomestic(dynamic shipment)
         {
-            if (shipment.InlandDomesticToTypeCode == "PART")
+            if (DoesPropertyExistInDynamic(shipment, "InlandDomesticToTypeCode") && DoesPropertyExistInDynamic(shipment, "MainCarriageToAddressId") &&  shipment.InlandDomesticToTypeCode == "PART")
             {
                 return this.GetCityByPartnerId(shipment.MainCarriageToAddressId);
             }
-            else if (shipment.InlandDomesticToTypeCode == "PORT")
+            else if (DoesPropertyExistInDynamic(shipment, "InlandDomesticToTypeCode") && DoesPropertyExistInDynamic(shipment, "MainCarriageToPortCode") &&  shipment.InlandDomesticToTypeCode == "PORT")
             {
                 return shipment.MainCarriageToPortCode;
             }
-            else if (shipment.InlandDomesticToTypeCode == "CASL")
+            else if (DoesPropertyExistInDynamic(shipment, "InlandDomesticToTypeCode") && DoesPropertyExistInDynamic(shipment, "InlandDomesticToCity") && shipment.InlandDomesticToTypeCode == "CASL")
             {
                 return shipment.InlandDomesticToCity;
             }
@@ -1862,15 +1902,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private string GetCountryCodeForFromInlandDomestic(dynamic shipment)
         {
-            if (shipment.InlandDomesticFromTypeCode == "PART")
+            if (DoesPropertyExistInDynamic(shipment, "InlandDomesticFromTypeCode") && DoesPropertyExistInDynamic(shipment, "MainCarriageFromAddressId") &&  shipment.InlandDomesticFromTypeCode == "PART")
             {
                 return this.GetCountryCodeByPartnerId(shipment.MainCarriageFromAddressId);
             }
-            else if (shipment.InlandDomesticFromTypeCode == "PORT")
+            else if (DoesPropertyExistInDynamic(shipment, "InlandDomesticFromTypeCode") && DoesPropertyExistInDynamic(shipment, "MainCarriageFromPortCountryCode") &&  shipment.InlandDomesticFromTypeCode == "PORT")
             {
                 return shipment.MainCarriageFromPortCountryCode;
             }
-            else if (shipment.InlandDomesticFromTypeCode == "CASL")
+            else if (DoesPropertyExistInDynamic(shipment, "InlandDomesticFromTypeCode") && DoesPropertyExistInDynamic(shipment, "InlandDomesticFromCountryId") &&  shipment.InlandDomesticFromTypeCode == "CASL")
             {
                 var res = this.GetCountryCodeByCASLAddress(shipment.InlandDomesticFromCountryId, tenant);
                 
@@ -1887,15 +1927,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private string GetCountryCodeForToInlandDomestic(dynamic shipment)
         {
-            if (shipment.InlandDomesticToTypeCode == "PART")
+            if (DoesPropertyExistInDynamic(shipment, "InlandDomesticToTypeCode") && DoesPropertyExistInDynamic(shipment, "MainCarriageToAddressId") &&  shipment.InlandDomesticToTypeCode == "PART")
             {
                 return this.GetCountryCodeByPartnerId(shipment.MainCarriageToAddressId);
             }
-            else if (shipment.InlandDomesticToTypeCode == "PORT")
+            else if (DoesPropertyExistInDynamic(shipment, "InlandDomesticToTypeCode") && DoesPropertyExistInDynamic(shipment, "MainCarriageToPortCountryCode") && shipment.InlandDomesticToTypeCode == "PORT")
             {
                 return shipment.MainCarriageToPortCountryCode;
             }
-            else if (shipment.InlandDomesticToTypeCode == "CASL")
+            else if (DoesPropertyExistInDynamic(shipment, "InlandDomesticToTypeCode") && DoesPropertyExistInDynamic(shipment, "InlandDomesticToCountryId") &&  shipment.InlandDomesticToTypeCode == "CASL")
             {
                 var res = this.GetCountryCodeByCASLAddress(shipment.InlandDomesticToCountryId, tenant);
 
@@ -3146,7 +3186,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 queryOperations.SetFilter("ShipmentLevelCode", shipmentLevelCodeValue, false, "InListExact", null, false);
             }
 
-            var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableNameWithNoIncludes("Shipment", tenant);
+            var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", tenant);
 
             foreach (var filter in newFilters.AdditionalFilters)
             {
@@ -3214,7 +3254,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 var propInfo = typeof(DigitalShipmentList).GetProperty(queryOperations.SortByColumnName);
-                var shipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableNameWithNoIncludes("Shipment", tenant).ToList();
+                var shipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", tenant).ToList();
 
                 var objectField = shipmentObjectFields.FirstOrDefault(a => a.FieldName == queryOperations.SortByColumnName);
 
