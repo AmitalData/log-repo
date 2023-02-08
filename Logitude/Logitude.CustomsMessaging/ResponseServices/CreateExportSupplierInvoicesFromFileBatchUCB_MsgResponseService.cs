@@ -286,7 +286,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
             try
             {
                 var lines = decodedString.Split(new string[] { "\n" }, StringSplitOptions.None).ToList();
-                string[] firstRow = Regex.Split(lines[0], ",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
                
                 InvoiceFromFile currentInvoice = null;
                 for (int i = 2; i < lines.Count; i++)
