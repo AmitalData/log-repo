@@ -249,4 +249,6 @@
     Columns="Code" />
 	<Index
    Columns="Tenant,Code" />
+	<Index
+   Columns="IsExportPoaActive" />
 </Table>

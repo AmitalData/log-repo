@@ -126,4 +126,6 @@
     ReferencedTable="PoaAuthorizationTypeLookups"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
+	<Index
+   Columns="PoaAuthorizationType,EndDate" />
 </Table>

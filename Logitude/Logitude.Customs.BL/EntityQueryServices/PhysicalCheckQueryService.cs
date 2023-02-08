@@ -101,10 +101,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
         public Card GetCustomerNameByDeclartionNo(string declartionNumber, int tenant)
         {
             Card card = new Card();
-            var declaration = context.Declarations.FirstOrDefault(x => x.DeclarationNumber == declartionNumber);
+            var declaration = context.Declarations.FirstOrDefault(x => x.Tenant == tenant && x.DeclarationNumber == declartionNumber);
             if (declaration != null)
             {
-                card = context.Cards.FirstOrDefault(x => x.Id == declaration.CustomerId);
+                card = context.Cards.FirstOrDefault(x => x.Tenant== tenant && x.Id == declaration.CustomerId);
                 if (card != null)
                     return card;
             }
@@ -122,9 +122,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
         public string GetCustomFileNoByCheckId(string Id,int tenant)
         {
             DeclarationQueryService declarationQuery = new DeclarationQueryService(tenant);
-            var declaration = context.Declarations.FirstOrDefault(x => x.DeclarationNumber == Id);
+            var declaration = context.Declarations.FirstOrDefault(x => x.Tenant== tenant && x.DeclarationNumber == Id);
             if (declaration != null)
             {
+                //here
                 return declaration.CustomFileNo;
             }
             return "";
