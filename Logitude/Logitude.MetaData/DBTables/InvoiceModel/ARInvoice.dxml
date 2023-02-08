@@ -195,7 +195,7 @@
     Name="AmountDue"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="ExpectedPaymentDate"
@@ -847,6 +847,13 @@
     Size="15">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="IsSigned"
+    OldNames="is_signed"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="CreditedByARInvoiceId"
