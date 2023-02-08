@@ -14,15 +14,16 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
   
     internal class DBSignStationCheckService
     {
-        private const bool UseCompanySign_AsPersonalDefault = true;
+        private const bool UseCompanySign_AsPersonalDefault = false;
         private const int CacheTimeoutInMinutes = 2;
         private static DateTime LastRetrievedAt = DateTime.MinValue;
         private static List<SignStation> StationLookup = null;
 
         
 
-        private static List<SignStation> GetSignStations(int tenant)
+        private static List<SignStation> GetSignStations()
         {
+            int tenant = 0;
             if (StationLookup == null || DateTime.Now.Subtract(LastRetrievedAt) > TimeSpan.FromMinutes(CacheTimeoutInMinutes))
             {
                 var signStationRepository = new SignStationRepository(tenant);
@@ -36,7 +37,9 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
         public SignStation GetValidSignStation(int tenant, string personId, bool isPersonalSign)
         {
             string customsAgentId = CustomsSettingQueryService.GetSettingByTenant(tenant).CustomsAgentId;
-            List<SignStation> signStations = GetSignStations(tenant);
+
+            
+            List<SignStation> signStations = GetSignStations();
 
             if (UseCompanySign_AsPersonalDefault)//joker !!!-everything gona be all right ?
             {
@@ -47,5 +50,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                 ? signStations.FirstOrDefault(s => s.IsPersonalSignOn && s.CustomsAgentId == customsAgentId && s.PersonId == personId)
                 : signStations.FirstOrDefault(s => s.IsCompanySignOn && s.CustomsAgentId == customsAgentId);
         }
+
+        
     }
 }
