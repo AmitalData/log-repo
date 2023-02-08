@@ -25,136 +25,138 @@ namespace Logitude.Server.Tools.Helpers
                 IWebFreightContext objectContext = WebFreightContext.GetContext(tenant);
 
                 EventTypeRepository eventTypeRepository = new EventTypeRepository(objectContext);
-                EventType eventType = eventTypeRepository.GetSingleEventTypeByCode(args.EventTypeCode, tenant);
-
-                if (eventType == null)
+                using (var scope = objectContext.GetSnapshotTransaction())
                 {
-                    throw new Exception("Event Type is not recognized:" + args.EventTypeCode);
-                }
+                    EventType eventType = eventTypeRepository.GetSingleEventTypeByCode(args.EventTypeCode, tenant);
 
-                else
-                {
-                    ObjectTableRepository objectTabelRepository = new ObjectTableRepository(objectContext);
-                    ObjectTable objectTable = objectTabelRepository.GetObjectTableByName(args.ObjectTableName, 0, true);
-                    ObjectTable childObjectTable = objectTabelRepository.GetObjectTableByName(args.ChildObjectTableName, 0, true);
-
-                    #region User
-                    string myUserId = null;
-                    string myCustomerCareUserEmail = null;
-
-                    if (!string.IsNullOrEmpty(args.UserId))
+                    if (eventType == null)
                     {
-                        myUserId = args.UserId;
+                        throw new Exception("Event Type is not recognized:" + args.EventTypeCode);
+                    }
 
-                        if (tenant != 0)
+                    else
+                    {
+                        ObjectTableRepository objectTabelRepository = new ObjectTableRepository(objectContext);
+                        ObjectTable objectTable = objectTabelRepository.GetObjectTableByName(args.ObjectTableName, 0, true);
+                        ObjectTable childObjectTable = objectTabelRepository.GetObjectTableByName(args.ChildObjectTableName, 0, true);
+
+                        #region User
+                        string myUserId = null;
+                        string myCustomerCareUserEmail = null;
+
+                        if (!string.IsNullOrEmpty(args.UserId))
                         {
-                            if (HttpContext.Current != null && HttpContext.Current.User != null)
-                            {
-                                string email = HttpContext.Current.User.Identity.Name;
-                                if (!string.IsNullOrEmpty(email))
-                                {
-                                    UserRepository userRepository = new UserRepository(0);
-                                    User user = userRepository.GetSingleUserByEmail(email, 0, false);
-                                    if (user != null)
-                                    {
-                                        User systemUser = userRepository.GetSingleUserByEmail("system@tenant" + tenant + ".com", tenant, true);
-                                        if (systemUser != null)
-                                        {
-                                            myUserId = systemUser.Id;
-                                        }
+                            myUserId = args.UserId;
 
-                                        myCustomerCareUserEmail = user.Contact.Email;
+                            if (tenant != 0)
+                            {
+                                if (HttpContext.Current != null && HttpContext.Current.User != null)
+                                {
+                                    string email = HttpContext.Current.User.Identity.Name;
+                                    if (!string.IsNullOrEmpty(email))
+                                    {
+                                        UserRepository userRepository = new UserRepository(0);
+                                        User user = userRepository.GetSingleUserByEmail(email, 0, false);
+                                        if (user != null)
+                                        {
+                                            User systemUser = userRepository.GetSingleUserByEmail("system@tenant" + tenant + ".com", tenant, true);
+                                            if (systemUser != null)
+                                            {
+                                                myUserId = systemUser.Id;
+                                            }
+
+                                            myCustomerCareUserEmail = user.Contact.Email;
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                    #endregion
+                        #endregion
 
-                    #region Dates
-                    if (args.LogDateTime == null)
-                    {
-                        args.LogDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
-                    }
-
-                    else if (args.LogDateTime.Value.Year == 1)
-                    {
-                        args.LogDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
-                    }
-
-                    if (args.EventDateTime == null)
-                    {
-                        args.EventDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
-                    }
-
-                    else if (args.EventDateTime.Value.Year == 1)
-                    {
-                        args.EventDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
-                    }
-
-                    if (args.EventTypeCode == "CWOP" || args.EventTypeCode == "CLOP" || args.EventTypeCode == "CCOP")
-                    {
-                        args.LogDateTime = args.EventDateTime;
-                    }
-
-                    #endregion
-
-                    #region Status Notes
-                    if (args.IsAddedManually)
-                    {
-                        if (!string.IsNullOrEmpty(args.NewStatusId) && !string.IsNullOrEmpty(args.CurrentStatusId))
+                        #region Dates
+                        if (args.LogDateTime == null)
                         {
-                            EntityStatus newStatus = EntityStatusRepository.GetSingleEntityStatus(args.NewStatusId, tenant, true);
-                            EntityStatus currentStatus = EntityStatusRepository.GetSingleEntityStatus(args.CurrentStatusId, tenant, true);
-
-                            Contact user = ContactRepository.GetSingleContact(myUserId, tenant, true);
-                            if (newStatus != null)
-                            {
-                                args.Notes = "Status was changed manually from " + currentStatus.Name + " to " + newStatus.Name + " by " + (user != null ? user.EnglishName : "");
-                            }
-                        }
-                    }
-                    #endregion
-
-                    string myNotes = args.Notes;
-                    if (myNotes != null)
-                    {
-                        string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-                        if (dbms == "oracle")
-                        {
-                            if (myNotes.Length > 2000)
-                            {
-                                myNotes = myNotes.Substring(0, 1999);
-                            }
+                            args.LogDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
                         }
 
-                        else
+                        else if (args.LogDateTime.Value.Year == 1)
                         {
-                            if (myNotes.Length > 4000)
+                            args.LogDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        }
+
+                        if (args.EventDateTime == null)
+                        {
+                            args.EventDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        }
+
+                        else if (args.EventDateTime.Value.Year == 1)
+                        {
+                            args.EventDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        }
+
+                        if (args.EventTypeCode == "CWOP" || args.EventTypeCode == "CLOP" || args.EventTypeCode == "CCOP")
+                        {
+                            args.LogDateTime = args.EventDateTime;
+                        }
+
+                        #endregion
+
+                        #region Status Notes
+                        if (args.IsAddedManually)
+                        {
+                            if (!string.IsNullOrEmpty(args.NewStatusId) && !string.IsNullOrEmpty(args.CurrentStatusId))
                             {
-                                myNotes = myNotes.Substring(0, 3999);
+                                EntityStatus newStatus = EntityStatusRepository.GetSingleEntityStatus(args.NewStatusId, tenant, true);
+                                EntityStatus currentStatus = EntityStatusRepository.GetSingleEntityStatus(args.CurrentStatusId, tenant, true);
+
+                                Contact user = ContactRepository.GetSingleContact(myUserId, tenant, true);
+                                if (newStatus != null)
+                                {
+                                    args.Notes = "Status was changed manually from " + currentStatus.Name + " to " + newStatus.Name + " by " + (user != null ? user.EnglishName : "");
+                                }
                             }
                         }
-                    }
+                        #endregion
 
-                    TraceEvent myTraceEvent = new TraceEvent()
-                    {
-                        Id = Guid.NewGuid().ToString(),
-                        Tenant = tenant,
-                        EntityId = args.EntityId,
-                        EventTypeId = eventType.Id,
-                        ObjectTableId = objectTable.Id,
-                        LogDateTime = args.LogDateTime.Value,
-                        EventDateTime = args.EventDateTime.Value,
-                        ExternalId = args.ExternalId?.Trim(),
-                        IsAddedManually = args.IsAddedManually,
-                        UserId = myUserId,
-                        CustomerCareUserEmail = myCustomerCareUserEmail,
-                        Notes = myNotes,
-                        Location = null,
-                        ChildEntityId = args.ChildEntityId,
-                        ChildObjectTableId = childObjectTable?.Id,
-                    };
+                        string myNotes = args.Notes;
+                        if (myNotes != null)
+                        {
+                            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+                            if (dbms == "oracle")
+                            {
+                                if (myNotes.Length > 2000)
+                                {
+                                    myNotes = myNotes.Substring(0, 1999);
+                                }
+                            }
+
+                            else
+                            {
+                                if (myNotes.Length > 4000)
+                                {
+                                    myNotes = myNotes.Substring(0, 3999);
+                                }
+                            }
+                        }
+
+                        TraceEvent myTraceEvent = new TraceEvent()
+                        {
+                            Id = Guid.NewGuid().ToString(),
+                            Tenant = tenant,
+                            EntityId = args.EntityId,
+                            EventTypeId = eventType.Id,
+                            ObjectTableId = objectTable.Id,
+                            LogDateTime = args.LogDateTime.Value,
+                            EventDateTime = args.EventDateTime.Value,
+                            ExternalId = args.ExternalId?.Trim(),
+                            IsAddedManually = args.IsAddedManually,
+                            UserId = myUserId,
+                            CustomerCareUserEmail = myCustomerCareUserEmail,
+                            Notes = myNotes,
+                            Location = null,
+                            ChildEntityId = args.ChildEntityId,
+                            ChildObjectTableId = childObjectTable?.Id,
+                        };
                     using (var scope = objectContext.GetSnapshotTransaction())
                     {
                         TraceEventRepository traceEventRepository = new TraceEventRepository(objectContext);
@@ -163,16 +165,18 @@ namespace Logitude.Server.Tools.Helpers
                         objectContext.SaveChanges();
                         scope.Commit();
                     }
-                    if (eventType.IsCustomerView)
-                    {
-                        ContactsUnseenEntitiesHelper.AddUnseenEntityRecord(myTraceEvent.Id, tenant);
-                    }
+                        if (eventType.IsCustomerView)
+                        {
+                            ContactsUnseenEntitiesHelper.AddUnseenEntityRecord(myTraceEvent.Id, tenant);
+                        }
 
-                    if (!string.IsNullOrEmpty(eventType.CustomField) && objectTable.AllowCustomFields)
-                    {
+                        if (!string.IsNullOrEmpty(eventType.CustomField) && objectTable.AllowCustomFields)
+                        {
                         EventCustomFieldUpdateService.UpdateEventCustomFieldValue(new UpdateEventCustomFieldArgs() { CustomField = eventType.CustomField, EventDateTime = myTraceEvent.EventDateTime, Entity = args.Entity, EntityId = args.EntityId, ObjectTableName = args.ObjectTableName, Tenant = args.Tenant });
-                    }
+                        }
 
+                    }
+                    scope.Commit();
                 }
 
             }

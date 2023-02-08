@@ -150,7 +150,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         private ObjectTable GetObjectTableById(string objectTableId, int tenant, List<ObjectTable> objectTables)
         {
-            var objectTable = objectTables.Where(d => d.Id == objectTableId).FirstOrDefault();
+            var objectTable = objectTables.Where(d => d.Id == objectTableId)?.FirstOrDefault();
             if (objectTable != null) return objectTable;
             objectTable = ObjectTableRepository.GetSingleObjectTableById(objectTableId, tenant);
             objectTables.Add(objectTable);

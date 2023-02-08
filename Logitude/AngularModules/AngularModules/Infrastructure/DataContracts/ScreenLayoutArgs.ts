@@ -10,4 +10,5 @@ export class ScreenLayoutArgs {
     public ScreenCode: string;
     public SortedType: string;
     public SortedByFieldCode: string;
+    public RelatedScreenCode: string;
 }

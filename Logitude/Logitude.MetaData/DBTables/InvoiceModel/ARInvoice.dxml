@@ -848,6 +848,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsSigned"
+    OldNames="is_signed"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreditedByARInvoiceId"
     ReferencedTable="ARInvoices"
