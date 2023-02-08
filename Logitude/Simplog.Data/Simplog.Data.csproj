@@ -192,6 +192,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\HorseGender.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\HTSCode.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\Mention.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\PortGroup.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\PortTimeZone.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\ProductItem.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CargoTenantMilestoneDefinition.cs" />
@@ -211,6 +212,7 @@
     <Compile Include="CommonDataModel\Repositories\DigitalContactLastSettingRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\HorseGenderRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\MentionRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\PortGroupRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\PostalCodeRepository.cs" />
     <Compile Include="Helpers\DocumentOutCopyArgs.cs" />
     <Compile Include="Helpers\FieldValueValidator.cs" />
@@ -1234,7 +1236,6 @@
     <Compile Include="ShipmentsModel\Repositories\INTTRADocumentTypeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\INTTRASIStatusRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\INTTRAStatusRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\ShipmentAnalyticRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\OBLTypeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\OceanInsightsRequestsCountRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\OceanInsightsStatusesRepository.cs" />

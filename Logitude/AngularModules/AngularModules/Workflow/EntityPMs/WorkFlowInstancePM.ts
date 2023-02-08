@@ -15,11 +15,11 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class WorkFlowInstancePM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+                    this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -92,6 +92,11 @@ export class WorkFlowInstancePM {
     private workFlowVersionId: string;
     public get WorkFlowVersionId() { return this.workFlowVersionId; }
     public set WorkFlowVersionId(newValue: string) { if (this.workFlowVersionId != newValue) { this.workFlowVersionId = newValue; this.MarkAsDirty("WorkFlowVersionId"); } }
+       
+	 
+    private workFlowVersionNumber: number;
+    public get WorkFlowVersionNumber() { return this.workFlowVersionNumber; }
+    public set WorkFlowVersionNumber(newValue: number) { if (this.workFlowVersionNumber != newValue) { this.workFlowVersionNumber = newValue; this.MarkAsDirty("WorkFlowVersionNumber"); } }
        
 	 
 

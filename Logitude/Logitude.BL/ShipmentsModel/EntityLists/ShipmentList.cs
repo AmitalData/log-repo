@@ -22,7 +22,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public double? OpenPayablesInProfitCurrency { get; set; }
         public double? AccountedPayablesInProfitCurrency { get; set; }
         #endregion
-        
+
         public string LocalCustomsTransmissionsStatusCode { get; set; }
         public string LocalCustomsTransmissionsStatusName { get; set; }
         public string LocalCustomsTransmissionsStatusError { get; set; }
@@ -683,23 +683,16 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string InlandDomesticFromTypeCode { get; set; }
         public string InlandDomesticFromCountryId { get; set; }
         public string InlandDomesticToCountryId { get; set; }
+        public string ShippingLine { get; set; }
+        public string PlaceOfDelivery { get; set; }
+        public string PickupPlace { get; set; }
+        public string SealNo { get; set; }
+        public string HSCode { get; set; }
 
-    }
+        public bool IsCustomerArchived { get; set; }
+        public string NotesSharedWithCustomer { get; set; }
+        public double? Volume { get; set; }
+        public bool IsDocumentsNeedApprove { get; set; }
 
-    public class TimeLineData
-    {
-        public TimeLineStop Pickup { get; set; }
-        public TimeLineStop MainCarriageFrom { get; set; }
-        public TimeLineStop MainCarriageTo { get; set; }
-        public TimeLineStop Delivery { get; set; }
-    }
-
-    public class TimeLineStop
-    {
-        public string CountryCode { get; set; }
-        public string City { get; set; }
-        public DateTime? Date { get; set; }
-        public string DateType { get; set; }
-        public bool IsViaPortsDatesFilled { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-import { ExpressionValue } from "./Types";
+import { ExpressionValue } from "Workflow/Types";
 
 export class SetValue {
     public field: string;
@@ -11,6 +11,8 @@ export class SetValue {
     public expressionValue: ExpressionValue;
     public isDisabled: boolean;
     public fieldChangedToggle: boolean;
+    public fieldUsedFrom: string | null;
+    public valueUsedFrom: string | null;
 
     constructor() {
         this.field = null;
@@ -23,5 +25,7 @@ export class SetValue {
         this.expressionValue = null;
         this.isDisabled = false;
         this.fieldChangedToggle = false;
+        this.fieldUsedFrom = null;
+        this.valueUsedFrom = null;
     }
 }

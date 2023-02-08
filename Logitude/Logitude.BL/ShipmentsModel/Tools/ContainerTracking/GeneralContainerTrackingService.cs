@@ -1,11 +1,11 @@
 ﻿using Logitude.BL.DataContracts;
-using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.APIDataContract;
 using Logitude.BL.ShipmentsModel.CloseTables;
-using Logitude.BL.ShipmentsModel.EntityOtherServices;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.QueueService;
@@ -13,9 +13,6 @@ using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Bson;
-using Newtonsoft.Json.Linq;
-using RestSharp;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -23,37 +20,36 @@ using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
 
 namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
 {
     public class GeneralContainerTrackingService
     {
-        private const string GeneralUpdateContainerStatusQueueName = "GeneralUpdateContainerStatus";
-        private const string GeneralRequestUpdateContainerStatusQueueName = "GeneralRequestUpdateContainerStatus";
-        ICommonDataContext CommonContext;
+        private readonly string GeneralRequestUpdateContainerStatusQueueName = "GeneralRequestUpdateContainerStatus";
+        private readonly ICommonDataContext CommonContext;
 
-        private GeneralContainerTrackingArgs generalContainerTrackingArgs;
+        private readonly GeneralContainerTrackingArgs generalContainerTrackingArgs;
         private List<VizionCarrier> supportedCarriers;
-        private int tenant;
+        private readonly int tenant;
+        private readonly ContainerSettingRepository containerSettingRepository;
+
         public GeneralContainerTrackingService(GeneralContainerTrackingArgs simulatorArgs)
         {
             this.generalContainerTrackingArgs = simulatorArgs;
             this.tenant = simulatorArgs.Tenant;
+            CommonContext = CommonDataContext.GetContext(tenant);
+            containerSettingRepository = new ContainerSettingRepository(tenant);
         }
 
         public GeneralContainerTrackingService()
@@ -61,28 +57,85 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
 
         }
 
-        public void GeneralContainerStatus()
+        public void TrackContainer()
         {
-            InitializeContext();
             SetArgsFields();
-            if (!generalContainerTrackingArgs.IsSimulator)
-                supportedCarriers = GetSupportedCarriers();
-            if (!CheckValidation())
-                return;
+            ValidateAndTrack();
+        }
+
+        public void AutomaticTrackContainer()
+        {
+            TenantManagement tenantManagement = GetTenantManagement();
+            if (tenantManagement?.IsContainerTrackingPrepaid != true) return;
+            if (generalContainerTrackingArgs.IsUpdatedFromRequest) return;
+
+            try
+            {
+                SetArgsFields();
+                if (!AllowAutomaticTrackContainer()) return;
+                ValidateAndTrack();
+            }
+            catch (Exception) { }
+
+        }
+
+        private TenantManagement GetTenantManagement()
+        {
+            TenantManagement tenantManagement;
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
+                tenantManagement = tenantManagementRepository.GetSingleTenantManagement(tenant);
+                scope.Complete();
+            }
+            return tenantManagement;
+        }
+
+        private void ValidateAndTrack()
+        {
+            if (!generalContainerTrackingArgs.IsSimulator) supportedCarriers = GetSupportedCarriers();
+            if (!CheckValidation()) return;
             SetCarriarCode();
+
             using (TransactionScope scope = Simplog.Server.Infrastructure.Helpers.TransactionFactory.GetTransaction())
             {
                 var document = AddRequstDocument();
                 var commLog = AddRequstCommunicationLog(document);
                 SendCommunicationLogMessage(commLog, generalContainerTrackingArgs.Tenant);
+                this.UpdateContainer();
                 scope.Complete();
             }
         }
 
+        private bool AllowAutomaticTrackContainer()
+        {
+            var containerSettings = containerSettingRepository.GetAll(tenant).FirstOrDefault();
+            if (containerSettings == null || !containerSettings.AddedManually) return CheckAutomaticTrackContainerFromTenantZero();
+            if (!AutomaticTrackContainerDirectionAllowd(containerSettings, generalContainerTrackingArgs.DirectionId)) return false;
+            return CommonContext.ShippingLines.Any(x => x.Tenant == tenant && x.SCACCode == generalContainerTrackingArgs.ScacCode && x.IsAutomaticRequestsSent);
+        }
+
+        private bool CheckAutomaticTrackContainerFromTenantZero()
+        {
+            return CommonContext.ShippingLines.Any(x => x.Tenant == 0 && x.SCACCode == generalContainerTrackingArgs.ScacCode && x.IsAutomaticRequestsSent);
+        }
+
+        private bool AutomaticTrackContainerDirectionAllowd(ContainerSetting containerSettings, string directionId)
+        {
+            switch (directionId)
+            {
+                case "E": return containerSettings.IsExport;
+                case "I": return containerSettings.IsImport;
+                case "D": return containerSettings.IsDomestic;
+                case "R": return containerSettings.IsDrop;
+                default: return false;
+            }
+
+        }
+
         private void SetCarriarCode()
         {
-            if (generalContainerTrackingArgs.IsSimulator)
-                return;
+            if (generalContainerTrackingArgs.IsSimulator) return;
             var carrier = supportedCarriers.Where(e => e.scac == generalContainerTrackingArgs.ScacCode).FirstOrDefault();
             generalContainerTrackingArgs.CarrierCode = carrier.carrier_code;
         }
@@ -117,37 +170,26 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
 
         private bool CheckValidation()
         {
-            if (string.IsNullOrEmpty(generalContainerTrackingArgs.CarrierId))
-                generalContainerTrackingArgs.Errors.Add("Carrier is missing");
-            if (string.IsNullOrEmpty(generalContainerTrackingArgs.ScacCode))
-                generalContainerTrackingArgs.Errors.Add("Carrier Scac Code is missing");
-            if (string.IsNullOrEmpty(generalContainerTrackingArgs.Data) && generalContainerTrackingArgs.IsSimulator)
-                generalContainerTrackingArgs.Errors.Add("Response is missing");
-            if (generalContainerTrackingArgs.IsFromContainer && string.IsNullOrEmpty(generalContainerTrackingArgs.ContainerNumber))
-                generalContainerTrackingArgs.Errors.Add("Container Number is missing");
-            if (!generalContainerTrackingArgs.IsSimulator)
-                CheckCarrierIsSupported();
-            if (!generalContainerTrackingArgs.IsFromContainer && string.IsNullOrEmpty(generalContainerTrackingArgs.Master))
-                generalContainerTrackingArgs.Errors.Add("Master Number is missing");
-            if (generalContainerTrackingArgs.Errors.Count > 0)
-            {
-                generalContainerTrackingArgs.Success = false;
-            }
+            if (string.IsNullOrEmpty(generalContainerTrackingArgs.CarrierId)) generalContainerTrackingArgs.Errors.Add("Carrier is missing");
+            if (string.IsNullOrEmpty(generalContainerTrackingArgs.ScacCode)) generalContainerTrackingArgs.Errors.Add("Carrier Scac Code is missing");
+            if (string.IsNullOrEmpty(generalContainerTrackingArgs.Data) && generalContainerTrackingArgs.IsSimulator) generalContainerTrackingArgs.Errors.Add("Response is missing");
+            if (generalContainerTrackingArgs.IsFromContainer && string.IsNullOrEmpty(generalContainerTrackingArgs.ContainerNumber)) generalContainerTrackingArgs.Errors.Add("Container Number is missing");
+            if (!generalContainerTrackingArgs.IsSimulator) CheckCarrierIsSupported();
+            if (!generalContainerTrackingArgs.IsFromContainer && string.IsNullOrEmpty(generalContainerTrackingArgs.Master)) generalContainerTrackingArgs.Errors.Add("Master Number is missing");
+            if (generalContainerTrackingArgs.Errors.Count > 0) generalContainerTrackingArgs.Success = false;
             return generalContainerTrackingArgs.Success;
         }
 
         private void CheckCarrierIsSupported()
         {
-            var carrier = supportedCarriers.Where(e => e.scac == generalContainerTrackingArgs.ScacCode).FirstOrDefault();
-            if (carrier == null)
+            if (!CommonContext.ShippingLines.Any(x => x.Tenant == 0 && x.SCACCode == generalContainerTrackingArgs.ScacCode && x.IsSupportsContainerTracking))
             {
                 generalContainerTrackingArgs.Errors.Add("Carrier not supported");
+                return;
             }
+            var carrier = supportedCarriers.Where(e => e.scac == generalContainerTrackingArgs.ScacCode).FirstOrDefault();
+            if (carrier == null) generalContainerTrackingArgs.Errors.Add("Carrier not supported");
         }
-
-
-
-
 
         private Document AddRequstDocument()
         {
@@ -242,7 +284,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
         {
             this.InsertNewAnalyzeQueue(containerStatus);
         }
-        private void InsertNewAnalyzeQueue(object containerStatus)
+        private void InsertNewAnalyzeQueue(VisionContainerStatus containerStatus)
         {
             IGlobalContext globalContext = GlobalContext.GetContext();
             AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository(globalContext);
@@ -255,6 +297,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
                 Id = IdCounter.GetNumber("AnalyzeQueue", 0),
                 MessageBody = analyzeQueueMessageBody,
                 Status = "W",
+
                 Retries = 0,
                 ConnectedToEntity = false,
                 ConnectedToTenant = false,
@@ -302,12 +345,26 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Vizion Update Container Status Fail", null, null);
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Container Tracking Status Fail", null, null);
             }
         }
-        private void InitializeContext()
+        private void UpdateContainer()
         {
-            CommonContext = CommonDataContext.GetContext(tenant);
+            if (!generalContainerTrackingArgs.IsFromContainer) return;
+            if (string.IsNullOrEmpty(generalContainerTrackingArgs.ContainerId)) return;
+
+            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(generalContainerTrackingArgs.Tenant);
+            ContainerRepository containerRepository = new ContainerRepository(shipmentsContext);
+            ContainerQuery containerQuery = new ContainerQuery(containerRepository);
+            ContainerPM container = containerQuery.GetSinglePM(generalContainerTrackingArgs.ContainerId, generalContainerTrackingArgs.Tenant);
+
+            if (container == null) return;
+            if (container.RequestDate == null)
+                container.RequestDate = TenantServerConfigration.GetCurrentDateTime(generalContainerTrackingArgs.Tenant);
+
+            container.IsUpdatedFromRequest = true;
+            ContainerService containerService = new ContainerService(shipmentsContext, generalContainerTrackingArgs.Tenant);
+            containerService.Update(container);
         }
 
         public UnsubscribeResult UnsubscribeFromVizion()

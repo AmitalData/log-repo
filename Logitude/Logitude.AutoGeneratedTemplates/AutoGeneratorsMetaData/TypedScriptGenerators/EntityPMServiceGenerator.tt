@@ -177,6 +177,7 @@ void SaveEntityPMServiceOutput(string outputFileName)
     string listName = tableName + "List";
     string pmName = tableName + "PM";
 	string controllerName = dBTableName.ToLower();
+    int maxNumberOfCustomFields = entity.HasCustomFields == "true" && !String.IsNullOrEmpty(entity.MaxNumberOfCustomFields.ToString()) ? Int32.Parse(entity.MaxNumberOfCustomFields.ToString()) + 1 : 11;
 
    
 	   string importentitytring = Environment.NewLine + "import {"+pmName+"} from '../../EntityPMs/" + pmName + "';";
@@ -475,7 +476,7 @@ if(hasCustomValidator)
         }
 
 		var customFields: Array<string> = [];
-        for (var i = 1; i < 11; i++) {
+        for (var i = 1; i < <#= maxNumberOfCustomFields #>; i++) {
             customFields.push("Field" + i);
         }
             var jsonPMKeys = Object.keys(jsonPM);
@@ -773,7 +774,7 @@ private void GenerateCompositionFieldMap(dynamic entity,dynamic field,bool insid
 	string fieldName = field.FieldName.ToString().Trim('"');
 	string pmname = multitableName + "PM";
 	bool hasCompstionCustomField = false;
-	int numberOfCustomFields = 51;
+	int numberOfCustomFields = entity.HasCustomFields == "true" && !String.IsNullOrEmpty(entity.MaxNumberOfCustomFields.ToString()) ? Int32.Parse(entity.MaxNumberOfCustomFields.ToString()) + 1 : 51;
 
 		string templateDirectory2 = Path.GetDirectoryName(Host.TemplateFile);
        string xmlFilePath2 = Path.Combine(templateDirectory2, SrcFolder) + "/"+multitableName + ".lxml";

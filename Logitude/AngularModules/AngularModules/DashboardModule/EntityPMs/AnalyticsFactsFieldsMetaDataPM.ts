@@ -19,7 +19,7 @@ export class AnalyticsFactsFieldsMetaDataPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+                    this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -107,6 +107,16 @@ export class AnalyticsFactsFieldsMetaDataPM {
     private unit: string;
     public get Unit() { return this.unit; }
     public set Unit(newValue: string) { if (this.unit != newValue) { this.unit = newValue; this.MarkAsDirty("Unit"); } }
+       
+	 
+    private commonFilterCode: string;
+    public get CommonFilterCode() { return this.commonFilterCode; }
+    public set CommonFilterCode(newValue: string) { if (this.commonFilterCode != newValue) { this.commonFilterCode = newValue; this.MarkAsDirty("CommonFilterCode"); } }
+       
+	 
+    private canSecondaryGroup: boolean;
+    public get CanSecondaryGroup() { return this.canSecondaryGroup; }
+    public set CanSecondaryGroup(newValue: boolean) { if (this.canSecondaryGroup != newValue) { this.canSecondaryGroup = newValue; this.MarkAsDirty("CanSecondaryGroup"); } }
        
 	 
 

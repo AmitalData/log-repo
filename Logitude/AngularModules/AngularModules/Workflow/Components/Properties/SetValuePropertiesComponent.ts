@@ -1,6 +1,5 @@
 import { Component } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
-import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { SetValue } from "Workflow/Models/SetValue";
@@ -14,13 +13,11 @@ export class SetValuePropertiesComponent extends BaseComponent {
     public Name: string = null;
     public SetValues: SetValue[];
     public ObjectFieldsDictionary: any = {};
-
     public Data: any;
+    public IsNew: boolean;
     public FlowObject: any;
     public CurrentNodeId: string;
-    public FlowObjectFields: ObjectFieldList[];
     public CurrentSession = SessionLocator.SelectedSession;
-
     public IsValidSetValues: boolean = true;
     public ValidationErrorsList: string[];
 
@@ -32,13 +29,27 @@ export class SetValuePropertiesComponent extends BaseComponent {
         this.Data = args.Data ? args.Data : {};
         this.FlowObject = args.FlowObject ? args.FlowObject : null;
         this.CurrentNodeId = args.CurrentNodeId ? args.CurrentNodeId : null;
-        this.FlowObjectFields = args.FlowObjectFields ? args.FlowObjectFields : [];
+    }
 
+    ngOnInit() {
+        this.initializeWindowEvents();
         this.initialize();
     }
 
+    initializeWindowEvents() {
+        this.CurrentSession.CurrentWindow.FooterButtonsClicked.subscribe((e: any) => {
+            if (e === "submit") {
+                this.saveButtonClicked();
+            } else {
+                this.cancelButtonClicked();
+            }
+        });
+    }
+
     initialize() {
-        this.Name = this.Data["name"] || null;
+        this.IsNew = Object.keys(this.Data).length === 0;
+
+        this.Name = this.Data["label"] || this.Data["name"] || null;
         this.SetValues = this.Data["setValues"] || [];
 
         this.initializeSetValue();
@@ -54,9 +65,14 @@ export class SetValuePropertiesComponent extends BaseComponent {
         }
     }
 
-    updateName(name: any) {
-        this.Data["name"] = name;
+    updateName(name: string) {
+        if (this.IsNew) {
+            this.Data["name"] = name;
+        }
+
+        this.Data["label"] = name;
         this.Name = name;
+
         this.setUIProperties();
     }
 

@@ -1,9 +1,11 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Logitude.CRM.Data.EntityPOCOs
 {
     public class OpportunityAnalytic
     {
+        [Key]
         public string Id { get; set; }
         public int Tenant { get; set; }
         public string OwnerId { get; set; }

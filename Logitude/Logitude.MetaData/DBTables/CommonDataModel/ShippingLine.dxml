@@ -111,6 +111,18 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="IsSupportsContainerTracking"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsAutomaticRequestsSent"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Cards"

@@ -13,17 +13,27 @@
                     <div></div>
                 </td>
 
-                <td style="width: 1px; font-size: 14px; color: #292D30;font-weight: 600;line-height: 21px;">
-                    {{SelectedDashboardName}}
+                <td style="width: 1px; max-width: 400px;">
+                    <div class="TextTrimming">
+                        <span style="font-size: 14px; color: #292D30;font-weight: 600;line-height: 21px;">{{SelectedDashboardName}}</span>
+                      </div>
+                </td>
+
+                <td class="Table-cell10">
+                    <div></div>
+                </td>
+                
+                <td style="width: 1px;">
+                    <IconButton *ngIf="IsEditDashboardButtonVisible" [Left]="3" [Name]="'Edit'" [IsSmall]="true"
+                                (click)="EditDashboardClicked()"></IconButton>
                 </td>
 
                 <td class="Table-cell10">
                     <div></div>
                 </td>
 
-                <td>
-                    <IconButton *ngIf="IsEditDashboardButtonVisible" [Left]="3" [Name]="'Edit'" [IsSmall]="true"
-                                (click)="EditDashboardClicked()"></IconButton>
+                <td style="font-size: 10px; color: #292D30;font-weight: 600; padding-top:2px; white-space: pre">
+                    {{DateRangeLabel}}
                 </td>
 
                 <td>
@@ -36,7 +46,7 @@
                         <span style=" line-height: 19px; vertical-align: middle; margin-left: 17px;">Save</span>
                     </button>
 
-                    <button *ngIf="HasChanges" class="EntityChangesButton" (click)="SaveDashboard(true)">
+                    <button *ngIf="HasChanges" class="EntityChangesButton" (click)="SaveDashboard()">
                         <img src="./Images/Buttons/Save.Red.png" class="LeftCenter" style="margin-left:2px;" />
                         <span style=" line-height: 19px; vertical-align: middle; margin-left: 17px;">Save</span>
                     </button>
@@ -54,17 +64,10 @@
                     <div></div>
                 </td>
 
-                <td style="width: 87px; min-width: 87px; height: 22px;" *ngIf="!IsEditLayoutModeActive">
-                    <button class="TabButton Button" (click)="OpenFilterAreaClick()"
-                            *ngIf="IsGlobalFiltersOpened == false">
+                <td style="width: 87px;min-width: 87px; height: 22px;" *ngIf="!IsEditLayoutModeActive">
+                    <button class="TabButton Button" (click)="this.IsGlobalFiltersOpened = !this.IsGlobalFiltersOpened">
                         <img style="width: 12px; height: 13px;" src="./Images/FilterGrayTrans.png" />
-                        Show filters
-                    </button>
-
-                    <button class="TabButton Button" *ngIf="IsGlobalFiltersOpened == true"
-                            (click)="CloseFilterAreaClick()">
-                        <img style="width: 12px; height: 13px;" src="./Images/FilterGrayTrans.png" />
-                        Hide filters
+                        {{HideShowFilterText}}              
                     </button>
                 </td>
 
@@ -110,8 +113,8 @@
         </table>
     </div>
 
-    <div *ngIf="SelectedDashboard" [hidden]="!IsGlobalFiltersOpened" class="dl-flobal-filter-container"  style="min-width: 1220px;">
-        <GlobalFilter [Dashboard]="SelectedDashboard" (ApplyFilters)="ApplyFilters($event)"></GlobalFilter>
+    <div *ngIf="SelectedDashboard" [hidden]="!IsGlobalFiltersOpened" class="dl-flobal-filter-container">
+        <GlobalFilter [Dashboard]="SelectedDashboard" (ApplyFilters)="ApplyFilters($event)" (ApplyFiltersCountChange)="ApplyFiltersCountChange($event)"></GlobalFilter>
     </div>
 
     <div [hidden]="IsEmptyDashboardVisible" class="custom-layout-container">

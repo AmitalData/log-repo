@@ -21,23 +21,21 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
     TextAreaInputId: string = Guid.newGuid();
     TextAreaInputCurrentPosition: number = 0;
     IsPreviewChanges: boolean = false;
+    public ProfileCode: string;
+    public ProfileId: string;
 
-    public editorOptions = {theme: '', language: 'html'};
+    public editorOptions = { theme: '', language: 'html', validate: 'true' };
     CurrentTenantScreen: DigitalPortalScreenList;
     constructor() {
         this.Screens = [];
         this.ModifiedScreenData = new DigitalPortalScreenUpdateModel();
         this.digitalCustomizationService = new DigitalCustomizationService();
-        this.GetDefaultScreens();
     }
 
-    SetWindowArgs(args: any) {
-
-    }
-
-    GetDefaultScreens() {
+    public GetDefaultScreens() {
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.Screens = [];
-        this.digitalCustomizationService.GetDigitalPortalScreenNames().subscribe((myResult) => {
+        this.digitalCustomizationService.GetDigitalPortalScreenNames(this.ProfileCode).subscribe((myResult) => {
             if (!myResult.HasError) {
                 this.Screens = myResult.Result;
                 if (this.Screens != null) {
@@ -45,6 +43,8 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
                     this.GetHTMLText();
                 }
             }
+
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -88,16 +88,19 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         this.GetHTMLText();
     }
 
-    GetHTMLText() {
+    GetHTMLText(isDraft: boolean = false) {
+        this.CurrentSession.StartBusyIndicatorLoading();
         var objectTableId = this.SelectedItem.ObjectTableId;
         var screenCode = this.SelectedItem.ScreenCode;
-        this.digitalCustomizationService.GetDigitalPortalScreens(objectTableId, screenCode).subscribe((myResult) => {
+
+        this.digitalCustomizationService.GetDigitalPortalScreens(objectTableId, screenCode, this.ProfileCode).subscribe((myResult) => {
             if (!myResult.HasError) {
                 var screen = myResult.Result;
                 this.CurrentTenantScreen = screen;
                 if (screen != null)
-                    this.hTMLEditor = screen.Content;
+                    isDraft == true ? this.hTMLEditor = this.CurrentTenantScreen.DraftContent: this.hTMLEditor = screen.Content;
             }
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -134,14 +137,26 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         logWindow.Height = 600;
         var windowArgs: any = {};
         windowArgs.ObjectTableId = this.SelectedItem.ObjectTableId;
+        windowArgs.ProfileCode = this.ProfileCode;
+        windowArgs.ScreenCode = this.SelectedItem.ScreenCode;
         logWindow.Title = "Insert Field";
         logWindow.WindowArgs = windowArgs;
         logWindow.Show('./SharedLogistics/Components/DigitalPortal/AddDigitalFieldCodeComponent');
-        logWindow.WindowClosed.subscribe(($event: any) => {
-            if ($event) {
-                var htmlField = "<LogContainer>\n<LogLabel field-code='" + $event + "' ></LogLabel>\n:\n<LogField field-code='" + $event + "'></LogField> \n</LogContainer>";
-                this.attachValue(htmlField);
-            }
+        logWindow.ComponentLoaded.subscribe(s => {
+            logWindow.WindowClosed.subscribe(($event: any) => {
+                if ($event) {
+                    var isAddingComponent = s.IsAddingComponent;
+                    var htmlField = "";
+                    if (isAddingComponent) {
+                        htmlField = "<LogFieldContainer >\n<LogLabel field-code='" + $event + "' ></LogLabel>\n\n<LogField field-code='" + $event + "'></LogField> \n</LogFieldContainer >";
+                    }
+                    else {
+                        htmlField = $event;
+                    }
+
+                    this.attachValue(htmlField);
+                }
+            });
         });
     }
 
@@ -156,7 +171,8 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
                 confirm.Close();
                 var objectTableId = this.SelectedItem.ObjectTableId;
                 var screenCode = this.SelectedItem.ScreenCode;
-                this.digitalCustomizationService.GetDefaultScreenLayout(objectTableId, screenCode).subscribe((myResult) => {
+
+                this.digitalCustomizationService.GetDefaultScreenLayout(objectTableId, screenCode, this.ProfileCode).subscribe((myResult) => {
                     if (!myResult.HasError) {
                         var screen = myResult.Result;
                         if (this.Screens != null) {
@@ -167,6 +183,10 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
                 });
             }
         });
+    }
+
+    LoadDraftLayoutClicked() {
+        this.GetHTMLText(true);
     }
 
     PublichChangesClicked(isDraft) {
@@ -191,6 +211,10 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         var screenCode = this.SelectedItem.ScreenCode;
         var name = this.SelectedItem.Name;
         this.ModifiedScreenData.ObjectTableId = objectTableId;
+        var profileId = this.ProfileId;
+        var profileCode = this.ProfileCode;
+        this.ModifiedScreenData.ProfileId = profileId;
+        this.ModifiedScreenData.ProfileCode = profileCode;
         this.ModifiedScreenData.ScreenCode = screenCode;
         this.ModifiedScreenData.Name = name;
         this.ModifiedScreenData.IsDraft = isDraft;
@@ -210,7 +234,6 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
                 this.IsPreviewChanges = false;
                 this.PreviewDigitalPortal();
             }
-            
         });
     }
 
@@ -231,24 +254,12 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
     myEditor : any;
     onInit(editor) {
         editor.onDidBlurEditorText(() => {
-            // const start = editor.getSelection().selectionStartColumn;//.target.selectionStart;
-            // var xx = editor;
-            //var line = editor.getPosition();
             this.myEditor = editor;
             this.myRange = editor.getSelection(); 
         });
-        // editor.onDidChangeCursorPosition((event) => {
-        //     /* column | lineNumber */
-        //     const start = event.position.column;//.target.selectionStart;
-        //     this.TextAreaInputCurrentPosition = start;
-        //     //var xx = editor;
-        // });
-
     }
 
     attachValue(selectedValue: string) {
-        // let patchedValue = this.HTMLEditor.substr(0, this.TextAreaInputCurrentPosition) + selectedValue + this.HTMLEditor.substr(this.TextAreaInputCurrentPosition, this.HTMLEditor.length);
-        // this.HTMLEditor = patchedValue;
             var id = { major: 1, minor: 1 };
             var text = selectedValue;
             var op = { identifier: id, range: this.myRange, text: text, forceMoveMarkers: true };

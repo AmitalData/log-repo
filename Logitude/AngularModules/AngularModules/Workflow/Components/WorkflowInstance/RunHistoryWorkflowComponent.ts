@@ -4,18 +4,14 @@ import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
-import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
-import { ObjectFieldPM } from 'Infrastructure/EntityPMs/ObjectFieldPM';
 import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
 import { ObjectFieldPMExtendedService } from 'Infrastructure/Services/ExtendedPMs/ObjectFieldPMExtendedService';
 import { AppTool } from 'Infrastructure/Tools';
 import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { WorkFlowPM } from 'Workflow/EntityPMs/WorkFlowPM';
-import { ApiQueryFiltersBuilder } from 'Workflow/Models/ApiQueryFiltersBuilder';
-import { ObjectFields } from 'Workflow/Models/ObjectFields';
+import { ApiQueryFiltersBuilder } from 'Workflow/Utilities/ApiQueryFiltersBuilder';
 import { WorkFlowInstanceListService } from 'Workflow/Services/StandardLists/WorkFlowInstanceListService';
-import { WorkFlowVersionService } from 'Workflow/Services/WorkFlowVersionService';
 
 const SearchBoxDelayTime = 700;
 
@@ -125,7 +121,7 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
         var versionsIdList = this.EntityPM.WorkFlowVersions.map(v => v.Id);
 
         let businessKeyFilterValue = !AppTool.IsNullOrEmpty(this.SearchText) ? (AppTool.IsNullOrEmpty(this.SearchText.trim()) ? null : this.SearchText) : null;
-        this.Filters = ApiQueryFiltersBuilder.getWorkflowInstancesByVersionApiQueryFilters(versionsIdList, businessKeyFilterValue);
+        this.Filters = ApiQueryFiltersBuilder.getWorkflowInstanceFilters(versionsIdList.join(','), businessKeyFilterValue);
 
         if (this.IsDateFilter) {
             this.Filters.addAdditionalFilter(this.StartTimeObjectfield.FieldName, this.FilterValue1, this.FilterValue2, null, this.FilterOperator, false, false, false, this.StartTimeObjectfield.dataTypeCode)
@@ -151,6 +147,14 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
             Display: "Business Key",
             IsCustomTemplate: true,
             Styles: { width: '400px' },
+        });
+        this.columns.push({
+            FieldName: 'WorkFlowVersionNumber',
+            DataTypeCode: 'String',
+            Display: "Version Number",
+            IsCustomTemplate: true,
+            Styles: { width: '400px' },
+            ServerSideSortable: true
         });
         this.columns.push({
             FieldName: 'StartTime',

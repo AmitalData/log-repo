@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { WorkFlowPM } from 'Workflow/EntityPMs/WorkFlowPM';
-import { WorkFlowVersionPMService } from 'Workflow/Services/StandardPMs/WorkFlowVersionPMService';
-import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { WorkFlowVersionPM } from 'Workflow/EntityPMs/WorkFlowVersionPM';
 
 @Component({
@@ -13,6 +11,7 @@ export class WorkFlowShortTitleComponent {
     public EntityPM: WorkFlowPM;
     public ValidVersion: WorkFlowVersionPM;
     public WarningErrorsList: string[] = [];
+    public WarningErrorTitle: string = null;
 
     constructor(public entityArgs: EntityArgs) {
     }
@@ -47,9 +46,21 @@ export class WorkFlowShortTitleComponent {
 
     setWarningErrorMessage() {
         var warnings: string[] = [];
+        var IsActiveDisabled: boolean = this.entityArgs.EditComponentArgument?.IsActiveDisabled ? true : false
+        var IsNewVersionDisabled: boolean = this.entityArgs.EditComponentArgument?.IsNewVersionDisabled ? true : false
 
         if (this.ValidVersion.StatusCode != "DRFT") {
-            warnings.push("This version is currently active or was activated at least once. To make changes create a new version.");
+            this.WarningErrorTitle = "This version is currently active or was activated at least once. To make changes create a new version."
+            warnings.push(this.WarningErrorTitle);
+        }
+        if(this.ValidVersion.StatusCode == "DRFT" && IsActiveDisabled && IsNewVersionDisabled  ){
+            this.WarningErrorTitle = "The start element is not configured, you need to select the object whose records trigger the flow."
+            warnings.push(this.WarningErrorTitle);
+        }
+
+        if(this.ValidVersion.StatusCode == "DRFT" && IsActiveDisabled && !IsNewVersionDisabled  ){
+            this.WarningErrorTitle = "To activate the version, connect at least one element to the start element."
+            warnings.push(this.WarningErrorTitle);
         }
 
         this.WarningErrorsList = warnings;

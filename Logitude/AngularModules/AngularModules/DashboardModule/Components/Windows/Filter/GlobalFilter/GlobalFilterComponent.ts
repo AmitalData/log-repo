@@ -1,279 +1,165 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
+import { DashboardGlobalPresetFilterList } from 'DashboardModule/EntityLists/DashboardGlobalPresetFilterList';
 import { DashboardPM } from 'DashboardModule/EntityPMs/DashboardPM';
-import { CodeNameClass } from 'Infrastructure/DataContracts/CodeNameClass';
-import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { DashboardGlobalFilterPM } from 'DashboardModule/EntityPMs/DashboardGlobalFilterPM';
+import { DashboardGlobalPresetFilterListService } from 'DashboardModule/Services/StandardLists/DashboardGlobalPresetFilterListService';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
+import { GlobalFilterItem } from './GlobalFilterItem';
 
 @Component({
     selector: 'GlobalFilter',
-    templateUrl: './GlobalFilterComponent.html'
+    templateUrl: './GlobalFilterComponent.html',
+    styleUrls: ['./GlobalFilter.scss']
 })
 
 export class GlobalFilterComponent implements OnInit {
     @Input() public Dashboard: DashboardPM;
     @Output() ApplyFilters = new EventEmitter<any[]>();
+    @Output() ApplyFiltersCountChange = new EventEmitter<number>();
 
-    public CommonFilters: GlobalFilterItem[];
-    public DatasetFilters: GlobalFilterItem[];
-    public FilterTypes: CodeNameClass[] = [];
-    public CommonFilterFields: CodeNameClass[] = [];
-    public Reset: boolean = null;
+    public FilterItems: GlobalFilterItem[] = [];
+    private DashboardGlobalPresetFilterListService: DashboardGlobalPresetFilterListService;
+    public ShowFilters: boolean = true;
+    private FiltersCount: number = 0;
+    private FilterValueExistItems: string[] = [];
+    private LastApplied: string[] = [];
+    public FilterHasChanges: boolean = false;
 
     constructor() {
-        this.CommonFilters = [];
-        this.DatasetFilters = [];
+        this.DashboardGlobalPresetFilterListService = new DashboardGlobalPresetFilterListService();
     }
 
     ngOnInit() {
-        this.BuildFilterTypesList();
-        this.BuildCommonFilterFieldsList();
-        this.BuildGlobalFilters();
+        this.GetPresetFitlers();
     }
 
-    private BuildFilterTypesList() {
-        this.FilterTypes = [];
-
-        this.FilterTypes.push(new CodeNameClass("COMN", "Common Filter"));
-        this.FilterTypes.push(new CodeNameClass("DATA", "Dataset Filter"));
+    public get HasKpiChart(): boolean {
+        return this.Dashboard?.Widgets?.find(x => x.TypeCode == "kpi") != null;
     }
-    private BuildCommonFilterFieldsList() {
-        this.CommonFilterFields = [];
 
-        this.CommonFilterFields.push(new CodeNameClass("CreateDate", "Create Date", "Date"));
-        this.CommonFilterFields.push(new CodeNameClass("Number", "Number", "Text"));
-    }
-    private BuildGlobalFilters() {
-        this.Dashboard.DashboardGlobalFilters.sort((a, b) => { return a.LineNumber - b.LineNumber }).forEach(item => {
-            if (item.IsCommonFilter)
-                this.CommonFilters.push(new GlobalFilterItem(item, this));
-            else {
-                this.DatasetFilters.push(new GlobalFilterItem(item, this));
-            }
+    GetPresetFitlers() {
+        this.DashboardGlobalPresetFilterListService.getAll().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse || myResponse.HasError) return;
+            this.AddPresetFitlers(myResponse.Result);
         });
+    }
+
+    AddPresetFitlers(filters: DashboardGlobalPresetFilterList[]) {
+        filters.forEach(presetFilter => {
+            var filter = new GlobalFilterItem(this);
+            filter.Id = presetFilter.Code + this.RandomString(5);
+            filter.FieldId = presetFilter.Code;
+            filter.DataTypeCode = presetFilter.DataTypeCode;
+            filter.DisplayName = presetFilter.DisplayName;
+            filter.Operator = "";
+            filter.IsPreset = true;
+            filter.JoinedTableName = presetFilter.JoinedTableName;
+            filter.JoinedTableDisplayField = presetFilter.JoinedTableDisplayField;
+            filter.CanSearch = presetFilter.CanSearch;
+            filter.IsMultiSelect = presetFilter.IsMultiSelect;
+            this.FilterItems.push(filter);
+        })
+    }
+
+
+    FilterExist(): boolean {
+        if (this.FilterItems && this.FilterItems.length > 0) return true;
+        return false;
     }
 
     ClearFiltersClick() {
         if (!this.FilterExist()) return;
-        if (this.CommonFilters) this.CommonFilters.forEach(element => { this.ClearFilter(element); });
-        if (this.DatasetFilters) this.DatasetFilters.forEach(element => { this.ClearFilter(element); });
+        if (this.FilterItems) this.FilterItems.forEach(element => { this.ClearFilter(element); });
+        this.ShowFilters = false;
+        setTimeout(() => {
+            this.ShowFilters = true
+        }, 10);
         this.ApplyFilters.emit(null);
+        this.FilterHasChanges = false;
+        this.LastApplied = [];
     }
 
     private ClearFilter(element: GlobalFilterItem) {
         element.FieldValue = null;
         element.FieldValue2 = null;
         element.FieldValue3 = null;
-    }
-
-    FilterExist(): boolean {
-        if (this.CommonFilters && this.CommonFilters.length > 0) return true;
-        if (this.DatasetFilters && this.DatasetFilters.length > 0) return true;
-        return false;
+        element.DateGroupCode = null;
+        element.Operator = null;
+        element.CompareWithPrevious = false;
     }
 
     ApplyFiltersClick() {
         if (!this.FilterExist()) return;
         var filterItems = [];
-        this.AddFilterItems(this.CommonFilters, filterItems, true);
-        this.AddFilterItems(this.DatasetFilters, filterItems, false);
+        this.AddFilterItems(this.FilterItems, filterItems);
         this.ApplyFilters.emit(filterItems);
+        this.FilterHasChanges = false;
+        this.LastApplied = JSON.parse(JSON.stringify(this.FilterValueExistItems));
     }
 
-    AddFilterItems(filters: GlobalFilterItem[], filterItems: any, isCommon: boolean = false): any {
+    AddFilterItems(filters: GlobalFilterItem[], filterItems: any): any {
         if (!filters || filters.length == 0) return filterItems;
         filters.forEach(element => {
+            this.SetPresetFilterOperator(element);
             if (this.FilterValueEmpty(element)) return;
-            filterItems.push(this.MapFilterToDashboardFilter(element, isCommon));
+            filterItems.push(Object.assign({}, element));
         });
         return filterItems;
     }
 
+    SetPresetFilterOperator(filterItem: GlobalFilterItem) {
+        if (!filterItem.IsPreset) return;
+        if (filterItem.DataTypeCode == "LookUp") {
+            if (filterItem.IsMultiSelect) filterItem.Operator = "InListExact";
+            else filterItem.Operator = "Equal";
+        }
+    }
+
     FilterValueEmpty(element: GlobalFilterItem): boolean {
-        if (element.FilterOperator == "IsEmpty" || element.FilterOperator == "IsNotEmpty") return false;
-        if (element.FilterOperator != "Previous" && element.FilterOperator != "Next" && element.FilterOperator != "Current" && (!element.FieldValue || element.FieldValue == "")) return true;
-        if ((element.FilterOperator == "Previous" || element.FilterOperator == "Next") && (!element.FieldValue3 || element.FieldValue3 == "")) return true;
-        if (element.FilterOperator == "Between" && (!element.FieldValue2 || element.FieldValue2 == "" || element.FieldValue2 <= element.FieldValue)) return true;
+        if (element.Operator == "IsEmpty" || element.Operator == "IsNotEmpty") return false;
+        if (element.Operator != "Previous" && element.Operator != "Next" && element.Operator != "Current" && (!element.FieldValue || element.FieldValue == "")) return true;
+        if ((element.Operator == "Previous" || element.Operator == "Next") && (!element.FieldValue3 || element.FieldValue3 == "")) return true;
+        if ((element.Operator == "Previous" || element.Operator == "Next" || element.Operator == "Current") && (!element.DateGroupCode || element.DateGroupCode == "")) return true;
+        if (element.Operator == "Between" && (!element.FieldValue2 || element.FieldValue2 == "" || element.FieldValue2 <= element.FieldValue)) return true;
         return false;
     }
 
-    MapFilterToDashboardFilter(element: GlobalFilterItem, isCommon: boolean): any {
-        return {
-            FieldId: element.DataSetFieldId,
-            DataSetId: element.DataSetId,
-            FieldName: isCommon ? element.CommonFilterField : element.EntityPM.FieldCode,
-            IsCommon: isCommon,
-            Operator: element.FilterOperator,
-            DateGroupCode: element.DateGroupCode,
-            FieldDataType: element.DataTypeCode,
-            FieldValue: element.FieldValue,
-            FieldValue2: element.FieldValue2,
-            FieldValue3: element.FieldValue3,
+    ValueChanged(filterItem: GlobalFilterItem) {
+        let valuIsEmpty = this.FilterValueEmpty(filterItem);
+        var existItem = this.FilterValueExistItems.find(x => x == filterItem.Id);
+        if (!valuIsEmpty) {
+            if (!existItem) {
+                this.FilterValueExistItems.push(filterItem.Id);
+                this.FilterHasChanges = true;
+            } else this.FilterHasChanges = true;
+        }
+        else {
+            if (existItem) {
+                const index = this.FilterValueExistItems.indexOf(filterItem.Id);
+                if (index > -1) this.FilterValueExistItems.splice(index, 1);
+                this.CheckHasChanges();
+            }
+        }
+
+        this.FiltersCount = this.FilterValueExistItems.length;
+        this.ApplyFiltersCountChange.emit(this.FiltersCount);
+    }
+
+    CheckHasChanges() {
+        if (this.LastApplied.toString() != this.FilterValueExistItems.toString()) {
+            this.FilterHasChanges = true;
+        } else {
+            this.FilterHasChanges = false;
         }
     }
 
-}
-
-export class GlobalFilterItem extends BaseComponent {
-    public EntityPM: DashboardGlobalFilterPM;
-    public Operators: CodeNameClass[] = [];
-    public ObjectTableName: string = "DashboardGlobalFilter";
-    public DataContext = this;
-    public FieldValue: any;
-    public FieldValue2: any;
-    public FieldValue3: any;
-    public DateGroupCode: string;
-
-    constructor(filter: DashboardGlobalFilterPM, public fatherComponent: GlobalFilterComponent) {
-        super();
-        this.EntityPM = filter;
-
-        this.SetUIProperties();
-        this.FillOperators(this.EntityPM.DataTypeCode);
-        this.SetFilterType();
-        this.SetFilterField();
-        this.SetOperator();
-    }
-
-    private SetUIProperties() {
-        this.UIProperties.SetEnabled("DataSetId", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("DataSetFieldId", this.ObjectTableName, false);
-    }
-    private SetFilterType() {
-        this.selectedFilterType = new CodeNameClass();
-        this.selectedFilterType = this.fatherComponent.FilterTypes.filter(d => d.Code == (this.EntityPM.IsCommonFilter ? "COMN" : "DATA"))[0];
-    }
-    private SetFilterField() {
-        if (this.EntityPM.IsCommonFilter) {
-            this.selectedCommonFilterField = new CodeNameClass();
-            this.selectedCommonFilterField = this.fatherComponent.CommonFilterFields.filter(d => d.Code == this.EntityPM.CommonFilterField)[0];
+    RandomString(length: number) {
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for (var i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
         }
-    }
-    private SetOperator() {
-        this.selectedOperator = new CodeNameClass();
-        this.selectedOperator = this.Operators.filter(d => d.Code == this.EntityPM.FilterOperator)[0];
-    }
-
-    private FillOperators(dataTypeCode: string) {
-        this.Operators = [];
-        switch (dataTypeCode) {
-            case "DateTime":
-            case "Date":
-                this.Operators.push(new CodeNameClass("GreaterThan", "After"));
-                this.Operators.push(new CodeNameClass("LessThan", "Before"));
-                this.Operators.push(new CodeNameClass("Previous", "Previous"));
-                this.Operators.push(new CodeNameClass("Current", "Current"));
-                this.Operators.push(new CodeNameClass("Next", "Next"));
-                this.Operators.push(new CodeNameClass("Between", "Between"));
-                break;
-
-            case "Integer":
-            case "Decimal":
-            case "Double":
-                this.Operators.push(new CodeNameClass("Equal", "Equal"));
-                this.Operators.push(new CodeNameClass("NotEqual", "Does Not Equal"));
-                this.Operators.push(new CodeNameClass("GreaterThan", "Greater Than"));
-                this.Operators.push(new CodeNameClass("LessThan", "Less Than"));
-                this.Operators.push(new CodeNameClass("GreaterThanOrEqual", "Greater Than Or Equal"));
-                this.Operators.push(new CodeNameClass("LessThanOrEqual", "Less Than Or Equal"));
-                this.Operators.push(new CodeNameClass("IsEmpty", "Is Empty"));
-                this.Operators.push(new CodeNameClass("IsNotEmpty", "Is not Empty"));
-                break;
-
-            case "Boolean":
-                this.Operators.push(new CodeNameClass("Equal", "Equal"));
-                this.Operators.push(new CodeNameClass("IsEmpty", "Is Empty"));
-                this.Operators.push(new CodeNameClass("IsNotEmpty", "Is not Empty"));
-                break;
-
-            case "LookUp":
-                this.Operators.push(new CodeNameClass("Equal", "Equal"));
-                this.Operators.push(new CodeNameClass("NotEqual", "Does Not Equal"));
-                this.Operators.push(new CodeNameClass("IsEmpty", "Is Empty"));
-                this.Operators.push(new CodeNameClass("IsNotEmpty", "Is not Empty"));
-                break;
-
-            default:
-                this.Operators.push(new CodeNameClass("Equal", "Equal"));
-                this.Operators.push(new CodeNameClass("NotEqual", "Does Not Equal"));
-                this.Operators.push(new CodeNameClass("Contains", "Contains"));
-                this.Operators.push(new CodeNameClass("NotContains", "Does Not Contain"));
-                this.Operators.push(new CodeNameClass("IsEmpty", "Is Empty"));
-                this.Operators.push(new CodeNameClass("IsNotEmpty", "Is not Empty"));
-                break;
-        }
-    }
-
-    private selectedFilterType: CodeNameClass;
-    get SelectedFilterType() { return this.selectedFilterType; }
-    set SelectedFilterType(value: CodeNameClass) {
-        if (this.selectedFilterType != value) {
-            this.selectedFilterType = value;
-        }
-    }
-
-    private selectedCommonFilterField: CodeNameClass;
-    get SelectedCommonFilterField() { return this.selectedCommonFilterField; }
-    set SelectedCommonFilterField(value: CodeNameClass) {
-        if (this.selectedCommonFilterField != value) {
-            this.selectedCommonFilterField = value;
-        }
-    }
-
-    private selectedOperator: CodeNameClass;
-    get SelectedOperator() { return this.selectedOperator; }
-    set SelectedOperator(value: CodeNameClass) {
-        if (this.selectedOperator != value) {
-            this.selectedOperator = value;
-        }
-    }
-
-    get IsCommonFilter() { return this.EntityPM.IsCommonFilter; }
-    set IsCommonFilter(value: boolean) {
-        if (this.EntityPM.IsCommonFilter != value) {
-            this.EntityPM.IsCommonFilter = value;
-        }
-    }
-
-    get CommonFilterField() { return this.EntityPM.CommonFilterField; }
-    set CommonFilterField(value: string) {
-        if (this.EntityPM.CommonFilterField != value) {
-            this.EntityPM.CommonFilterField = value;
-        }
-    }
-
-    get DataSetId() { return this.EntityPM.DataSetId; }
-    set DataSetId(value: string) {
-        if (this.EntityPM.DataSetId != value) {
-            this.EntityPM.DataSetId = value;
-        }
-    }
-
-    get DataSetFieldId() { return this.EntityPM.DataSetFieldId; }
-    set DataSetFieldId(value: string) {
-        if (this.EntityPM.DataSetFieldId != value) {
-            this.EntityPM.DataSetFieldId = value;
-        }
-    }
-
-    get FilterOperator() { return this.EntityPM.FilterOperator; }
-    set FilterOperator(value: string) {
-        if (this.EntityPM.FilterOperator != value) {
-            this.EntityPM.FilterOperator = value;
-        }
-    }
-
-    get DataTypeCode() { return this.EntityPM.DataTypeCode; }
-    set DataTypeCode(value: string) {
-        if (this.EntityPM.DataTypeCode != value) {
-            this.EntityPM.DataTypeCode = value;
-        }
-    }
-
-    get LineNumber() { return this.EntityPM.LineNumber; }
-    set LineNumber(value: number) {
-        if (this.EntityPM.LineNumber != value) {
-            this.EntityPM.LineNumber = value;
-        }
+        return result;
     }
 
 }

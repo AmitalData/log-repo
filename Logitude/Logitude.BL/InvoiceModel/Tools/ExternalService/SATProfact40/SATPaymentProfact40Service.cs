@@ -44,14 +44,14 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 {
     public class SATPaymentProfact40Service
     {
-        private ARPayment arPpayment;
+        private ARPaymentPM arPpayment;
         private XmlElement comprobanteXmlPagos;
         private ARInvoiceRepository arInvoiceRep;
         private int tenant;
         private string paymentId;
         private SATCommunicationLogBuilder sATCommunicationLogBuilder;
 
-        public SATPaymentProfact40Service(ARPayment arPpayment, XmlElement comprobanteXmlPagos, ARInvoiceRepository arInvoiceRep)
+        public SATPaymentProfact40Service(ARPaymentPM arPpayment, XmlElement comprobanteXmlPagos, ARInvoiceRepository arInvoiceRep)
         {
             tenant = arPpayment.Tenant;
             paymentId = arPpayment.Id;

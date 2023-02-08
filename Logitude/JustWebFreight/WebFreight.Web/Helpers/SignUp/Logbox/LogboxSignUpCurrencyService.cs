@@ -30,7 +30,7 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
             commonContext = CommonContext;
             tenant = Tenant;
         }
-        public void UpdateNewTenant(SignUpInfoClass signUpInfoClass, AddressPM TenantAddress, int tenant)
+        public void UpdateNewTenant(SignUpInfoClass signUpInfoClass, AddressPM TenantAddress, string connectedCustomerId)
         {
             int requestTenant = signUpInfoClass.IsCreateLogboxTenantFromCloud ? tenant : signUpInfoClass.Tenant;
             TenantService service = new TenantService(commonContext, tenant);
@@ -50,12 +50,12 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
             newTenant.VatNumber = CrmCustomer.VatNumber;
             newTenant.AddressId = TenantAddress.Id;
             newTenant.IsDocumentsArchive = true;
-            newTenant.CustomerId = signUpInfoClass.CustomerId;
+            newTenant.CustomerId = connectedCustomerId;
             newTenant.AgentId = signUpInfoClass.IsCreateLogboxTenantFromCloud ? GetNewAgentId(signUpInfoClass) : newTenant.AgentId;
             newTenant.CustomerTenantShareImportFile = true;
-            newTenant.AutoArchiveOnInvoice = !string.IsNullOrEmpty(newTenant.PrivateLabelId) ? true : newTenant.AutoArchiveOnInvoice;
-            newTenant.AutoArchiveOnPODExport = !string.IsNullOrEmpty(newTenant.PrivateLabelId) ? true : newTenant.AutoArchiveOnPODExport;
-            newTenant.DocumentShareAsDefault = !string.IsNullOrEmpty(newTenant.PrivateLabelId) ? true : newTenant.DocumentShareAsDefault;
+            newTenant.AutoArchiveOnInvoice = !string.IsNullOrEmpty(newTenant.PrivateLabelId) || signUpInfoClass.IsCreateLogboxTenantFromCloud ? true : newTenant.AutoArchiveOnInvoice;
+            newTenant.AutoArchiveOnPODExport = !string.IsNullOrEmpty(newTenant.PrivateLabelId) || signUpInfoClass.IsCreateLogboxTenantFromCloud ? true : newTenant.AutoArchiveOnPODExport;
+            newTenant.DocumentShareAsDefault = !string.IsNullOrEmpty(newTenant.PrivateLabelId) || signUpInfoClass.IsCreateLogboxTenantFromCloud ? true : newTenant.DocumentShareAsDefault;
             service.Update(newTenant);
         }
 

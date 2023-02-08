@@ -44,7 +44,12 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         FromDate, 
 	         ToDate, 
 	         SecondaryGroupById, 
-	         SecondaryDateGroupCode,
+	         SecondaryDateGroupCode, 
+	         Alignment, 
+	         ThousandSeparator, 
+	         UseNumberAbbreviation, 
+	         DecimalPlaces, 
+	         UseAbbreviationAfter,
 	      }
 
 
@@ -75,7 +80,12 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         ToDate, 
 	         GlobalFilters, 
 	         SecondaryGroupById, 
-	         SecondaryDateGroupCode,
+	         SecondaryDateGroupCode, 
+	         Alignment, 
+	         ThousandSeparator, 
+	         UseNumberAbbreviation, 
+	         DecimalPlaces, 
+	         UseAbbreviationAfter,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -192,6 +202,31 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SecondaryDateGroupCode))
             {
 				entityPOCO.SecondaryDateGroupCode = entityPM.SecondaryDateGroupCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Alignment))
+            {
+				entityPOCO.Alignment = entityPM.Alignment;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ThousandSeparator))
+            {
+				entityPOCO.ThousandSeparator = entityPM.ThousandSeparator;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UseNumberAbbreviation))
+            {
+				entityPOCO.UseNumberAbbreviation = entityPM.UseNumberAbbreviation;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DecimalPlaces))
+            {
+				entityPOCO.DecimalPlaces = entityPM.DecimalPlaces;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UseAbbreviationAfter))
+            {
+				entityPOCO.UseAbbreviationAfter = entityPM.UseAbbreviationAfter;
 			}
 			}
 
@@ -313,6 +348,31 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 					entityPM.SecondaryDateGroupCode = entityPOCO.SecondaryDateGroupCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Alignment))
+            {
+					entityPM.Alignment = entityPOCO.Alignment;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ThousandSeparator))
+            {
+					entityPM.ThousandSeparator = entityPOCO.ThousandSeparator;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UseNumberAbbreviation))
+            {
+					entityPM.UseNumberAbbreviation = entityPOCO.UseNumberAbbreviation;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DecimalPlaces))
+            {
+					entityPM.DecimalPlaces = entityPOCO.DecimalPlaces;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UseAbbreviationAfter))
+            {
+					entityPM.UseAbbreviationAfter = entityPOCO.UseAbbreviationAfter;
+            }
+
 		}
 
 		public void PMToOldPM(WidgetPM entityPM, WidgetPM oldEntityPM)
@@ -427,6 +487,31 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SecondaryDateGroupCode))
             {
                 oldEntityPM.SecondaryDateGroupCode = entityPM.SecondaryDateGroupCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Alignment))
+            {
+                oldEntityPM.Alignment = entityPM.Alignment;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ThousandSeparator))
+            {
+                oldEntityPM.ThousandSeparator = entityPM.ThousandSeparator;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UseNumberAbbreviation))
+            {
+                oldEntityPM.UseNumberAbbreviation = entityPM.UseNumberAbbreviation;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DecimalPlaces))
+            {
+                oldEntityPM.DecimalPlaces = entityPM.DecimalPlaces;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UseAbbreviationAfter))
+            {
+                oldEntityPM.UseAbbreviationAfter = entityPM.UseAbbreviationAfter;
             }
 			
 		}

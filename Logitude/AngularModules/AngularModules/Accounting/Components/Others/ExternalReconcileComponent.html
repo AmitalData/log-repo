@@ -762,7 +762,8 @@
                                                [ColumnsReady]="TransactionColumnsReady"
                                                [MarkIsChecked]="TransactionMarkIsChecked"
                                                (DataLoaded)="TransactiononDataLoaded()"
-                                               (SortInvoked)="OnSortInvoked($event)">
+                                               (SortInvoked)="OnSortInvoked($event)"
+                                               (rowSelectedEvent)="onRowSelected($event)">
                                 </logitude-grid>
                             </div>
                         </td>
@@ -938,7 +939,8 @@
                                                [autoLoad]="true" [QueryChangeEvent]="ExtPageonQueryChangeEvent"
                                                [IsCustomTemplate]="true" [PassAdditionalDataToTemplates]="true"
                                                (CountReady)="onCountReadyExtPage($event)" [ColumnsReady]="ExtPageColumnsReady"
-                                               [MarkIsChecked]="ExtPageMarkIsChecked" (DataLoaded)="ExtPageonDataLoaded()" (SortInvoked)="OnSortInvoked($event)">
+                                               [MarkIsChecked]="ExtPageMarkIsChecked" (DataLoaded)="ExtPageonDataLoaded()" (SortInvoked)="OnSortInvoked($event)"
+                                               (rowSelectedEvent)="onExternalPageRowSelected($event)">
                                 </logitude-grid>
                             </div>
                         </td>

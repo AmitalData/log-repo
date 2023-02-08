@@ -734,14 +734,21 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContainerTracking\ContainerTrackingHelper.cs" />
     <Compile Include="Controllers\AccountingModel\ChartOfAccountsTypesExtendedController.cs" />
+    <Compile Include="Controllers\CommonDataModel\ApiHelpers\ChargesTypeAPiHelper.cs" />
     <Compile Include="Controllers\DashboardModel\Extended\DashboardListExtendedController.cs" />
+    <Compile Include="Controllers\DashboardModel\Generated\ListControllers\DashboardGlobalPresetFilterViewsController.Generated.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\ListControllers\UserPinnedDashboardViewsController.Generated.cs" />
+    <Compile Include="Controllers\DashboardModel\Generated\PMControllers\DashboardGlobalPresetFilterController.Generated.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\PMControllers\UserPinnedDashboardController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountInterestActivationBalanceController.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AddressTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\PortGroupViewsController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\PortGroupController.Generated.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalActivityController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalCustomizationController.cs" />
-    <Compile Include="Controllers\DigitalPortal\Helpers\DigitalFieldSecuritesHelper.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\ContainerSettingsController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\DeploymentPackageExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\AuditLogViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\CustomFieldsMainObjectsViewsController.Generated.cs" />
@@ -753,6 +760,7 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\AuditLogController.Generated.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalTextCodeController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DigitalTextCodeViewsController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\ContainerSettingController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\CustomFieldsMainObjectsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DeploymentPackageController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DigitalFieldSecurityController.Generated.cs" />
@@ -765,6 +773,7 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DataCustomObjectController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\ReferenceCustomObjectController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\ScreenController.Generated.cs" />
+    <Compile Include="Controllers\ShipmentsModel\Extended\ContainersController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AWBAdditionalHandlingInfoViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\AWBAdditionalHandlingInfoController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowCustomerController.cs" />
@@ -1374,6 +1383,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ReferantTeamController.Generated.cs" />
     <Compile Include="DataContracts\PrivateLabelsBrandingData.cs" />
     <Compile Include="DataContracts\PrivateLabelsBrandingDataRequest.cs" />
+    <Compile Include="DataProviders\CustomFieldDataProviedr.cs" />
     <Compile Include="DataProviders\LogitudeCRMReportDataProvider.cs" />
     <Compile Include="DataProviders\ProductItemLine.Shared.cs" />
     <Compile Include="DataProviders\RoutingDataProvider.cs" />
@@ -2954,6 +2964,7 @@
     <Compile Include="Helpers\DocumentFile.cs" />
     <Compile Include="Helpers\DocumentDownloadTokenService.cs" />
     <Compile Include="Helpers\ContainerStatuses\ContainerStatusesConnecterAnalyzer.cs" />
+    <Compile Include="Helpers\Documents\DocumentsCreator.cs" />
     <Compile Include="Helpers\DocumentTypeCalculateFileNameService.cs" />
     <Compile Include="Helpers\EntityGetReflectorService.cs" />
     <Compile Include="Helpers\EntityPropertyValueService.cs" />
@@ -3297,6 +3308,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\PaymentGatewayPartnerUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\PaymentTermDateTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\PaymentTermUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\PortGroupUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\PortTimeZoneUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\PortUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\PostalCodeUpdateClass.cs" />
@@ -3431,6 +3443,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ClientDrivingLicenseTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ClientDrivingLicenseUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ConsignmentPackDangerUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContainerSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContinuousRequestTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CourierCustomStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CourierDeclarationStatusUpdateClass.cs" />
@@ -3451,6 +3464,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsPaymentTermUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsShipUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DashboardGlobalFilterUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DashboardGlobalPresetFilterUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DashboardSharedUserUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DashboardUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DBMigrationLineUpdateClass.cs" />
@@ -6483,6 +6497,7 @@
       <DependentUpon>SendGridWebPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Services\LogitudeAuthenticationService.cs" />
+    <Compile Include="Helpers\ReportMemoryStreamService.cs" />
     <Compile Include="SharedDocuments.aspx.cs">
       <DependentUpon>SharedDocuments.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

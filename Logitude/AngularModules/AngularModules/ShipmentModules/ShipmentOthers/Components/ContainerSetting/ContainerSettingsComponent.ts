@@ -1,35 +1,53 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { TenantPM } from '../../../../Common/EntityPMs/TenantPM';
-import { TenantPMService } from '../../../../Common/Services/StandardPMs/TenantPMService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { InfraSettings } from '../../../../Infrastructure/Utilities/InfraSettings';
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 import { AppTool } from '../../../../Infrastructure/Tools';
+import { ContainerSettingPMService } from 'Infrastructure/Services/StandardPMs/ContainerSettingPMService';
+import { ContainerSettingPM } from 'Infrastructure/EntityPMs/ContainerSettingPM';
+import { ContainerSettingExtendedService } from 'Infrastructure/Services/ExtendedPMs/ContainerSettingExtendedService';
+import { ShippingLineExtendedPMService } from 'Common/Services/ExtendedPMs/ShippingLineExtendedPMService';
+import { ShippingLinePM } from 'Common/EntityPMs/ShippingLinePM';
 
 @Component({
     templateUrl: './ContainerSettingsComponent.html',
+    styleUrls: ['./ContainerSettingsComponent.scss']
 })
 
 export class ContainerSettingsComponent extends BaseComponent implements OnInit {
-    public DataContext: ContainerSettingsComponent = this;
-    public ObjectTableName: string = "Tenant";
-    public tenant: TenantPM = new TenantPM();
-    public IsVisible = false;
+    public ObjectTableName: string = "ContainerSetting";
     private CurrentSession = SessionLocator.SelectedSession;
     public ValidationErrorsList: string[];
     public reloadingTranslation: boolean;
     public ClosingContainerToolTipMessage: string = "How many days after the Actual Empty Return Date to wait before automatically closing the container.";
     public ShipmentATADateComboList: Array<CodeNameClass>;
+    public SelectedTabCode: string = "G";
+    public ContainerSettingPMService: ContainerSettingPMService;
+    public ContainerSettingExtendedService: ContainerSettingExtendedService;
+    private ShippingLineExtendedPMService: ShippingLineExtendedPMService;
+    public EntityPM: ContainerSettingPM = new ContainerSettingPM();
+    public DataContext: ContainerSettingsComponent = this;
+    private IsNew: boolean = false;
+    public Loaded: boolean = false;
+    private TenantZeroShippingLines: ShippingLinePM[] = [];
+    private UserTenantShippingLines: ShippingLinePM[] = [];
+    public ShippingLines: ShippingLineItem[];
+    private ShowDefaults: boolean;
+    public IsContainerTrackingPrepaid: boolean;
+
     constructor() {
         super();
+        this.ContainerSettingPMService = new ContainerSettingPMService();
+        this.ContainerSettingExtendedService = new ContainerSettingExtendedService();
+        this.ShippingLineExtendedPMService = new ShippingLineExtendedPMService();
+        this.IsContainerTrackingPrepaid = SessionLocator.TenantManagementJS.IsContainerTrackingPrepaid
     }
 
     ngOnInit() {
-        this.GetCurrentTenant();
         this.FillShipmentATADateComboList();
+        this.GetSettings();
     }
 
     FillShipmentATADateComboList() {
@@ -38,86 +56,278 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
         this.ShipmentATADateComboList.push(new CodeNameClass("Container", "First Container Discharged"));
     }
 
-    private selectedShipmentATADateItem: CodeNameClass;
-    get SelectedShipmentATADateItem() { return this.selectedShipmentATADateItem; }
-    set SelectedShipmentATADateItem(value: CodeNameClass) {
-        if (this.selectedShipmentATADateItem != value) {
-            this.selectedShipmentATADateItem = value;
-
-            if (value) {
-                this.ShipmentATADateIndicator = value.Code;
-            }
-
-            else {
-                this.ShipmentATADateIndicator = null;
-            }
-        }
-    }
-
-    private GetCurrentTenant() {
-        var myService: TenantPMService = new TenantPMService();
-        myService.get(SessionLocator.TenantPM.Id).subscribe((response: ServiceResponse) => {
-            this.tenant = response.Result;
-            this.IsVisible = true;
-
-            if (!AppTool.IsNullOrEmpty(this.tenant.ShipmentATADateIndicator))
-                this.SelectedShipmentATADateItem = this.ShipmentATADateComboList.filter(d => d.Code == this.tenant.ShipmentATADateIndicator)[0];
-            else
-                this.SelectedShipmentATADateItem = this.ShipmentATADateComboList.filter(d => d.Code == "Vessel")[0];
+    private GetSettings() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.ContainerSettingExtendedService.GetSingleSetting().subscribe((response: ServiceResponse) => {
+            if (!response || response.HasError) return this.StopIndicator();
+            if (!response.Result) this.IsNew = true;
+            else this.EntityPM = response.Result;
+            this.ShowDefaults = SessionLocator.Tenant != 0 && (this.IsNew || !this.EntityPM?.AddedManually);
+            this.SetDefaultGeneralItem();
+            this.LoadTenantZeroShippingLines();
+            this.SetDefaultData();
         });
     }
 
-    get EmptyReturnClosingDays() { return this.tenant.EmptyReturnClosingDays; }
-    set EmptyReturnClosingDays(value: number) {
-        if (this.tenant.EmptyReturnClosingDays != value) {
-            this.tenant.EmptyReturnClosingDays = value;
-        }
+    SetDefaultData() {
+        if (!this.ShowDefaults) return;
+        this.IsExport = true;
+        this.IsImport = true;
+        this.IsDrop = true;
+        this.IsDomestic = true;
     }
 
-    get ShipmentATAClosingDays() { return this.tenant.ShipmentATAClosingDays; }
-    set ShipmentATAClosingDays(value: number) {
-        if (this.tenant.ShipmentATAClosingDays != value) {
-            this.tenant.ShipmentATAClosingDays = value;
-        }
+    private SetDefaultGeneralItem() {
+        if (!AppTool.IsNullOrEmpty(this.DataContext.ShipmentATADateIndicator)) this.SelectedShipmentATADateItem = this.ShipmentATADateComboList.filter(d => d.Code == this.DataContext.ShipmentATADateIndicator)[0];
+        else this.SelectedShipmentATADateItem = this.ShipmentATADateComboList.filter(d => d.Code == "Vessel")[0];
+        if (!this.ShowDefaults) return;
+        this.EmptyReturnClosingDays = 5;
+        this.ShipmentATAClosingDays = 90;
+
     }
 
-    get ShipmentATADateIndicator() { return this.tenant.ShipmentATADateIndicator; }
-    set ShipmentATADateIndicator(value: string) {
-        if (this.tenant.ShipmentATADateIndicator != value) {
-            this.tenant.ShipmentATADateIndicator = value;
-        }
+
+    private LoadTenantZeroShippingLines() {
+        this.TenantZeroShippingLines = [];
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.ShippingLineExtendedPMService.GetShippingLinesForTenant(0).subscribe((response: ServiceResponse) => {
+            if (response.HasError) return this.StopIndicator();
+            this.TenantZeroShippingLines = response.Result;
+            if (SessionLocator.Tenant == 0) {
+                this.BuildShippingLines();
+                return this.StopIndicator();
+            }
+            this.LoadCurrenctTenantShippingLines();
+        });
     }
 
-    // Commands 
+    private LoadCurrenctTenantShippingLines() {
+        this.UserTenantShippingLines = [];
+        this.ShippingLineExtendedPMService.GetShippingLinesForTenant(SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                this.UserTenantShippingLines = response.Result;
+                this.BuildShippingLines();
+            }
+            this.StopIndicator();
+        });
+    }
+
+    BuildShippingLines() {
+        this.ShippingLines = [];
+        let itemSource: ShippingLinePM[] = SessionLocator.Tenant == 0 ? this.TenantZeroShippingLines : this.UserTenantShippingLines;
+        itemSource = this.SortItemSource(itemSource);
+        itemSource.forEach((item) => {
+            var shippingLineItem = this.BuildShippingLineItem(item);
+            if (shippingLineItem) this.ShippingLines.push(shippingLineItem);
+        });
+    }
+
+    private BuildShippingLineItem(shippingLine: ShippingLinePM): ShippingLineItem {
+        var tenantZeroItem = this.TenantZeroShippingLines.filter(t => t.SCACCode == shippingLine.SCACCode)[0];
+        if (tenantZeroItem != null) {
+            if (this.ShowDefaults) this.SetShippingLineDefaultVaues(shippingLine, tenantZeroItem);
+            return new ShippingLineItem(tenantZeroItem, shippingLine);
+        }
+        else if (shippingLine.AddedManually) return new ShippingLineItem(null, shippingLine);
+        return null;
+    }
+
+    private SetShippingLineDefaultVaues(shippingLine: ShippingLinePM, tenantZeroItem: ShippingLinePM) {
+        shippingLine.IsAutomaticRequestsSent = tenantZeroItem.IsAutomaticRequestsSent;
+    }
+
+    private SortItemSource(items: ShippingLinePM[]) {
+        items.sort((a, b) => {
+            if (a.EnglishName.toLowerCase() < b.EnglishName.toLowerCase()) return -1;
+            if (a.EnglishName.toLowerCase() > b.EnglishName.toLowerCase()) return 1;
+            else return 0;
+
+        });
+        return items;
+    }
+
+    private StopIndicator() {
+        this.CurrentSession.StopBusyIndicator();
+        this.Loaded = true;
+    }
+
     CancelButtonClicked() {
-        this.tenant= null;
         this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
         var errors: string[] = [];
-        Validator.TryValidateObject(this.DataContext.tenant, this.DataContext.ObjectTableName, errors);
+        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
-            this.SaveTenant();
+            this.SubmitSave();
         }
     }
 
-    SaveTenant() {
-        this.CurrentSession.StartBusyIndicator("Saving...");
-        var myService: TenantPMService = new TenantPMService();
-        myService.update(this.tenant).subscribe((myResponse: ServiceResponse) => {
-            if (myResponse) {
-                if (!myResponse.HasError) {
-                    InfraSettings.TenantPM = this.tenant;
-                    this.CurrentSession.CloseCurrentWindowEmit("ok");
+    SubmitSave() {
+        this.EntityPM.Tenant = SessionLocator.Tenant;
+        this.EntityPM.AddedManually = true;
+        this.CurrentSession.StartBusyIndicatorSaving();
+        if (this.IsNew) this.InsertEntity();
+        else this.UpdateEntity()
+    }
+
+    private InsertEntity() {
+        this.ContainerSettingPMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+            this.HandleSaveResponse(myResponse);
+        });
+    }
+
+    private UpdateEntity() {
+        this.ContainerSettingPMService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+            this.HandleSaveResponse(myResponse);
+        });
+    }
+
+    private HandleSaveResponse(myResponse: ServiceResponse) {
+        if (!myResponse) return;
+        if (!myResponse.HasError) return this.SaveShippingLines();
+        this.ValidationErrorsList = myResponse.ErrorsArray;
+        this.CurrentSession.StopBusyIndicator();
+    }
+
+    SaveShippingLines() {
+        var changedShippingLines: ShippingLinePM[] = [];
+        this.BuildChangedShippingLines(changedShippingLines);
+
+        if (changedShippingLines.length == 0) {
+            this.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.CloseCurrentWindow();
+            return;
+        }
+
+        this.ShippingLineExtendedPMService.Update(changedShippingLines).subscribe((response: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            if (response.HasError) this.ValidationErrorsList = response.ErrorsArray;
+            else this.CurrentSession.CloseCurrentWindow();
+        });
+    }
+
+    private BuildChangedShippingLines(savedList: ShippingLinePM[]) {
+        this.ShippingLines.forEach((item) => {
+            if (SessionLocator.Tenant == 0) {
+                if (item.EntityZero.IsDirty) {
+                    savedList.push(item.EntityZero);
                 }
-                else {
-                    this.ValidationErrorsList = myResponse.ErrorsArray;
-                    this.CurrentSession.StopBusyIndicator();
+            }
+            else {
+                if (item.Entity.IsDirty) {
+                    savedList.push(item.Entity);
                 }
             }
         });
     }
 
+    private selectedShipmentATADateItem: CodeNameClass;
+    get SelectedShipmentATADateItem() { return this.selectedShipmentATADateItem; }
+    set SelectedShipmentATADateItem(value: CodeNameClass) {
+        if (this.selectedShipmentATADateItem != value) {
+            this.selectedShipmentATADateItem = value;
+            this.DataContext.ShipmentATADateIndicator = value?.Code;
+        }
+    }
+
+    get EmptyReturnClosingDays() { return this.EntityPM.EmptyReturnClosingDays; }
+    set EmptyReturnClosingDays(value: number) {
+        if (this.EntityPM.EmptyReturnClosingDays != value) {
+            this.EntityPM.EmptyReturnClosingDays = value;
+        }
+    }
+
+    get ShipmentATAClosingDays() { return this.EntityPM.ShipmentATAClosingDays; }
+    set ShipmentATAClosingDays(value: number) {
+        if (this.EntityPM.ShipmentATAClosingDays != value) {
+            this.EntityPM.ShipmentATAClosingDays = value;
+        }
+    }
+
+    get ShipmentATADateIndicator() { return this.EntityPM.ShipmentATADateIndicator; }
+    set ShipmentATADateIndicator(value: string) {
+        if (this.EntityPM.ShipmentATADateIndicator != value) {
+            this.EntityPM.ShipmentATADateIndicator = value;
+        }
+    }
+
+    get IsImport() { return this.EntityPM.IsImport; }
+    set IsImport(value: boolean) {
+        if (this.EntityPM.IsImport != value) {
+            this.EntityPM.IsImport = value;
+        }
+    }
+
+    get IsExport() { return this.EntityPM.IsExport; }
+    set IsExport(value: boolean) {
+        if (this.EntityPM.IsExport != value) {
+            this.EntityPM.IsExport = value;
+        }
+    }
+
+    get IsDomestic() { return this.EntityPM.IsDomestic; }
+    set IsDomestic(value: boolean) {
+        if (this.EntityPM.IsDomestic != value) {
+            this.EntityPM.IsDomestic = value;
+        }
+    }
+
+    get IsDrop() { return this.EntityPM.IsDrop; }
+    set IsDrop(value: boolean) {
+        if (this.EntityPM.IsDrop != value) {
+            this.EntityPM.IsDrop = value;
+        }
+    }
+}
+
+export class ShippingLineItem extends BaseComponent {
+    public EntityZero: ShippingLinePM;
+    public Entity: ShippingLinePM;
+    public DataContext: ShippingLineItem = this;
+    public Tenant: number = 0;
+
+    constructor(zeroEntity: ShippingLinePM, currentEntity: ShippingLinePM) {
+        super();
+        this.EntityZero = zeroEntity;
+        this.Entity = currentEntity;
+        this.Tenant = SessionLocator.Tenant;
+    }
+
+    public get Code(): string {
+        if (SessionLocator.Tenant == 0) return this.EntityZero.Code;
+        return this.Entity.Code;
+    }
+
+    public get SCACCode(): string {
+        if (SessionLocator.Tenant == 0) return this.EntityZero.SCACCode;
+        return this.Entity.SCACCode;
+    }
+
+    public get Name(): string {
+        if (SessionLocator.Tenant == 0) return this.EntityZero.EnglishName;
+        return this.Entity.EnglishName;
+    }
+
+    public set IsSupportsContainerTracking(value: boolean) {
+        if (this.Tenant == 0 && this.Entity) {
+            this.Entity.IsSupportsContainerTracking = value;
+            if (!value) this.IsAutomaticRequestsSent = false;
+        }
+    }
+    public get IsSupportsContainerTracking() {
+        if (this.Tenant == 0) return this.Entity?.IsSupportsContainerTracking ?? false;
+        else return this.EntityZero?.IsSupportsContainerTracking ?? false;
+    }
+
+    public set IsAutomaticRequestsSent(value: boolean) { if (this.Entity) this.Entity.IsAutomaticRequestsSent = value; }
+    public get IsAutomaticRequestsSent() {
+        if (this.Entity) return this.Entity.IsAutomaticRequestsSent;
+        else return false;
+    }
+
+    public get IsAutomaticRequestsSentEnabled() {
+        return this.EntityZero?.IsSupportsContainerTracking;
+    }
 }

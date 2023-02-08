@@ -14,6 +14,7 @@ using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
+using Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40;
 using Logitude.BL.InvoiceModel.Tools.Validating;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
@@ -1826,6 +1827,39 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, connectedInvoices);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+
+        public HttpResponseMessage PutARInvoiceSATValidation(ARInvoicePM aRInvoicePM)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        int tenant = authToken.Tenant;
+                        SecurityUtility.AuthenticationOnTenant(tenant);
+
+                        SATInvoiceSenderService sATInvoiceSenderService = new SATInvoiceSenderService();
+                        InvoiceComprobanteBuilderResultArgs invoiceComprobanteValidationResult = sATInvoiceSenderService.ValidateApprovalSendToSAT(aRInvoicePM);
+
+                        scope.Complete();
+                        return Request.CreateResponse(HttpStatusCode.OK, invoiceComprobanteValidationResult);
                     }
                 }
 

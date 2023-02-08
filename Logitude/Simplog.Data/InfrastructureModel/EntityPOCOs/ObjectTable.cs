@@ -105,5 +105,11 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string ParentObjectTableId { get; set; }
         public bool IsCustom { get; set; }
         public bool SupportSubEntity { get; set; }
+        public bool ApplyGenericCustomFields { get; set; }
+        public string FullNameTextCodeId { get; set; }
+        public string FullNameTextCodeCode { get; set; }
+        [ForeignKey("FullNameTextCodeId")]
+        public virtual TextCode FullNameTextCode { get; set; }
+
     }
 }

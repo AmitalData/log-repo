@@ -1,6 +1,5 @@
 import { compare, Operation } from 'fast-json-patch';
 import { CloneDeep } from './LodashClone';
-//import { CloneEntityPM, CloneObject } from './SafeCloneDeep';
 
 export class JsonPatchBuilder {
     private LeftObject: any;
@@ -16,9 +15,9 @@ export class JsonPatchBuilder {
         "UIProperties",
         "UIProperty",
         "PropertyChanged",
-        "isNotValid",
         "UniqueKey",
-        "$id"
+        "$id",
+        "undefined"
     ];
 
     constructor(leftObject: any, rightObject: any) {
@@ -33,8 +32,6 @@ export class JsonPatchBuilder {
 
     public build() {
         if (this.LeftObject && this.RightObject) {
-            // let clonedLeftObject = CloneEntityPM(this.LeftObject);
-            // let clonedRightObject = CloneEntityPM(this.RightObject);
             let clonedLeftObject = CloneDeep(this.LeftObject);
             let clonedRightObject = CloneDeep(this.RightObject);
             let patch = compare(clonedLeftObject, clonedRightObject);
@@ -57,11 +54,30 @@ export class JsonPatchBuilder {
 
     private isValidOperation(operation: Operation) {
         if (operation && operation.op && operation.path && operation.path !== "") {
+            if (!this.isValidOperationPath(operation.path)) {
+                return false;
+            }
             let operationPathProperties = operation.path.toLowerCase().split("/");
             let isInvalidOperation = operationPathProperties.some(p => this.InvalidProperties.includes(p));
             if (!isInvalidOperation) {
                 return true;
             }
+        }
+        return false;
+    }
+
+    private isValidOperationPath(operationPath: string) {
+        if (operationPath && operationPath !== "") {
+            if (/customchildentities\/([0-9]\d*)\/changesetop/.test(operationPath.toLowerCase())) {
+                return false;
+            }
+            if (/field([1-9]\d*)\/isnotvalid/.test(operationPath.toLowerCase())) {
+                return false;
+            }
+            if (/field([1-9]\d*)\/ischange/.test(operationPath.toLowerCase())) {
+                return false;
+            }
+            return true;
         }
         return false;
     }
@@ -92,7 +108,6 @@ export class JsonPatchBuilder {
     private buildPatchTestOperations(patch: Operation[]) {
         if (patch && patch.length > 0) {
             let testOperations: Operation[] = [];
-            //let clonedPatch: Operation[] = CloneObject(patch);
             let clonedPatch: Operation[] = CloneDeep(patch);
             clonedPatch.forEach((operation: Operation) => {
                 let pathIndexRegex = /\/(\d+)/;
@@ -133,10 +148,14 @@ export class JsonPatchBuilder {
     }
 
     private getPathPropertyKeyFields(pathProperty: string) {
-        switch (pathProperty?.toLowerCase()) {
-            case "shipmentpackageitems": { return ["packageId", "lineNumber"]; }
-            default: { return ["id"]; }
+        if (pathProperty) {
+            switch (pathProperty.toLowerCase()) {
+                case "shipmentpackageitems": { return ["packageId", "lineNumber"]; }
+                case "customchildentities": { return ["name"]; }
+                default: { return ["id"]; }
+            }
         }
+        return [];
     }
 
     private isIntegerNumber(value: string | number) {

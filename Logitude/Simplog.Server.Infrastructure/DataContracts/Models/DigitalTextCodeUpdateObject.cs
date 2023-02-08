@@ -5,6 +5,6 @@
         public string DefaultText { get; set; }
         public string TextCode { get; set; }
         public string FieldCode { get; set; }
-        public string ProfileId { get; set; }
+        public string DisplayText { get; set; }
     }
 }

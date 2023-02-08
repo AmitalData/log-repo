@@ -57,6 +57,10 @@ namespace Logitude.DashboardModule.Data.EntityPOCOs
 	    public bool HasUnit { get; set; }
         [Column("Unit")]
 	    public string Unit { get; set; }
+        [Column("CommonFilterCode")]
+	    public string CommonFilterCode { get; set; }
+        [Column("CanSecondaryGroup")]
+	    public bool CanSecondaryGroup { get; set; }
     }
 }
 	 

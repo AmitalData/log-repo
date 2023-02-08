@@ -262,7 +262,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         public List<ObjectFieldPM> GetCustomFieldsBytableID(string tableId, int tenant, int currenttenant)
         {
-            List<ObjectFieldPM> objectFields = (from a in repository.context.ObjectFields.Include("ObjectTable").Include("DataType")
+            List<ObjectFieldPM> objectFields = (from a in repository.context.ObjectFields.Include("ObjectTable").Include("DataType").Include("HelpTextCode")
                                                 where a.Tenant == tenant
                                                 && a.ObjectTableId == tableId
                                                 && a.IsCustom == true && a.InActive == false
@@ -368,7 +368,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     IsForeignKey = a.IsForeignKey,
                                                     ForeignEntity = a.ForeignEntity,
                                                     NavigationPropertyName = a.NavigationPropertyName,
-
+                                                    HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
+                                                    DefaultAdditionalFilters = a.DefaultAdditionalFilters
                                                 }).ToList();
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);
@@ -3253,9 +3254,25 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     });
         }
 
-
-
-
-
+        public IQueryable<ObjectFieldPM> GetObjectFieldPMs()
+        {
+            return (from a in repository.context.ObjectFields.Include("FullNameTextCode").Include("ObjectTable").Include("ObjectTable_LookUpTable")
+                    where !a.InActive
+                    select new ObjectFieldPM()
+                    {
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        FieldCode = a.FieldCode,
+                        FieldName = a.FieldName,
+                        FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : "",
+                        DataTypeCode = a.DataTypeCode,
+                        DisplayOnly = a.DisplayOnly,
+                        ObjectTableId = a.ObjectTableId,
+                        ObjectTableName = a.ObjectTable.Name,
+                        IsCustom = a.IsCustom,
+                        LookUpTableId = a.LookUpTableId,
+                        ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
+                    });
+        }
     }
 }

@@ -107,7 +107,7 @@ namespace WebFreight.Web.Helpers
                 GeneralContainerTrackingArgs myArgs = this.CreateGeneralContainerTrackingArgs(shipmentId);
                 automaticRequest.ContainerNumber = myArgs.ContainerNumber;
                 GeneralContainerTrackingService containerTrackingService = new GeneralContainerTrackingService(myArgs);
-                containerTrackingService.GeneralContainerStatus();
+                containerTrackingService.TrackContainer();
                 this.CheckForErrorsAfterSending(myArgs.Errors, automaticRequest);
             }
 

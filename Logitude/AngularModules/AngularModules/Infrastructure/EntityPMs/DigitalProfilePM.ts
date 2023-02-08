@@ -15,11 +15,11 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class DigitalProfilePM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+                    this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -47,6 +47,11 @@ export class DigitalProfilePM {
     private name: string;
     public get Name() { return this.name; }
     public set Name(newValue: string) { if (this.name != newValue) { this.name = newValue; this.MarkAsDirty("Name"); } }
+       
+	 
+    private code: string;
+    public get Code() { return this.code; }
+    public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
        
 	 
 

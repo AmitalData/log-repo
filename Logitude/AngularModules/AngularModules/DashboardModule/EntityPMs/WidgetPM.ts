@@ -21,7 +21,7 @@ export class WidgetPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-	                  this.EntityParentPM = _entityParentPM;
+	  		                        this.EntityParentPM = _entityParentPM;
                 this.UIProperties = new UIProperties(this);
                 this.IsDirty = false;
       }
@@ -185,6 +185,31 @@ export class WidgetPM {
     private secondaryDateGroupCode: string;
     public get SecondaryDateGroupCode() { return this.secondaryDateGroupCode; }
     public set SecondaryDateGroupCode(newValue: string) { if (this.secondaryDateGroupCode != newValue) { this.secondaryDateGroupCode = newValue; this.MarkAsDirty("SecondaryDateGroupCode"); } }
+       
+	 
+    private alignment: string;
+    public get Alignment() { return this.alignment; }
+    public set Alignment(newValue: string) { if (this.alignment != newValue) { this.alignment = newValue; this.MarkAsDirty("Alignment"); } }
+       
+	 
+    private thousandSeparator: boolean;
+    public get ThousandSeparator() { return this.thousandSeparator; }
+    public set ThousandSeparator(newValue: boolean) { if (this.thousandSeparator != newValue) { this.thousandSeparator = newValue; this.MarkAsDirty("ThousandSeparator"); } }
+       
+	 
+    private useNumberAbbreviation: boolean;
+    public get UseNumberAbbreviation() { return this.useNumberAbbreviation; }
+    public set UseNumberAbbreviation(newValue: boolean) { if (this.useNumberAbbreviation != newValue) { this.useNumberAbbreviation = newValue; this.MarkAsDirty("UseNumberAbbreviation"); } }
+       
+	 
+    private decimalPlaces: number;
+    public get DecimalPlaces() { return this.decimalPlaces; }
+    public set DecimalPlaces(newValue: number) { if (this.decimalPlaces != newValue) { this.decimalPlaces = newValue; this.MarkAsDirty("DecimalPlaces"); } }
+       
+	 
+    private useAbbreviationAfter: string;
+    public get UseAbbreviationAfter() { return this.useAbbreviationAfter; }
+    public set UseAbbreviationAfter(newValue: string) { if (this.useAbbreviationAfter != newValue) { this.useAbbreviationAfter = newValue; this.MarkAsDirty("UseAbbreviationAfter"); } }
        
 	 
 

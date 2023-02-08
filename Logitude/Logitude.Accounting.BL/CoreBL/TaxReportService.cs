@@ -69,7 +69,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public static List<TaxReportLinePM> CreateTaxReportLines(TaxReportPM taxReport, int tenant)
         {
-
+            
             GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
             FullAccountingSetting setting = GetTenantFullAccountingSetting(tenant);
             JournalQueryService journalQueryService = new JournalQueryService(tenant);
@@ -286,6 +286,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
 
                     inputReportLine.LineTypeCode = "R";
+                    inputReportLine.Reference = "000000000";
+                    inputReportLine.ReferecneGroup = "0000";
+                    inputReportLine.VatNumber = aPInvoicePM.InvoiceNumber;
 
                 }
                 else if (card != null && card.IsAutonomy)

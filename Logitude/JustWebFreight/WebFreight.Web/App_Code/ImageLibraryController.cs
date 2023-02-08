@@ -294,15 +294,24 @@ namespace WebFreight.Web.App_Code
 
         public HttpResponseMessage GetCancelUpload(string documentId, int tenant)
         {
-            string token = System.Web.HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            SecurityUtility.AuthenticationOnTenant(tenant);
+            try
+            {
+                string token = System.Web.HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
-            Uploader uploaderService = new Uploader();
-            uploaderService.CancelUpload(documentId, "", tenant);
+                Uploader uploaderService = new Uploader();
+                uploaderService.CancelUpload(documentId, "", tenant);
 
-            return Request.CreateResponse(HttpStatusCode.OK, "");
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "");
+
+            }
+
 
         }
 

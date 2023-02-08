@@ -15,12 +15,14 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 import { CustomChildEntity } from '../../Infrastructure/EntityPMs/CustomChildEntity';
+import { ObjectCustomFieldPM } from '../../Infrastructure/EntityPMs/ObjectCustomFieldPM';
 
-export class WarehouseEntryPM {
-
+export class WarehouseEntryPM extends ObjectCustomFieldPM {
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
+          super("WarehouseEntry");
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
@@ -423,6 +425,11 @@ export class WarehouseEntryPM {
     private connectedToReferenceNumber: string;
     public get ConnectedToReferenceNumber() { return this.connectedToReferenceNumber; }
     public set ConnectedToReferenceNumber(newValue: string) { if (this.connectedToReferenceNumber != newValue) { this.connectedToReferenceNumber = newValue; this.MarkAsDirty("ConnectedToReferenceNumber"); } }
+       
+	 
+    private isUpdateByAutomation: boolean;
+    public get IsUpdateByAutomation() { return this.isUpdateByAutomation; }
+    public set IsUpdateByAutomation(newValue: boolean) { if (this.isUpdateByAutomation != newValue) { this.isUpdateByAutomation = newValue; this.MarkAsDirty("IsUpdateByAutomation"); } }
        
 	 
     private customChildEntities: CustomChildEntity[];

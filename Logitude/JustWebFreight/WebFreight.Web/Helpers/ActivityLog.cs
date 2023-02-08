@@ -21,36 +21,86 @@ using System.Net;
 using Logitude.SystemLogs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using System.Data.SqlClient;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using System.Data.Common;
+using Logitude.BL.DataContracts;
+using System.Data;
+using System.IdentityModel.Metadata;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.Helpers
 {
     public class ActivityLog
     {
+        private static string GetConnection(int tenant)
+        {
+            GlobalDBRepository globalDbRep;
+            GlobalDB currentDb;
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                //GlobalDBRep = new GlobalDBRepository();
+                currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
+
+            }
+
+            string dbConnectionInfo = currentDb.DBConnection;
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
+            WebFreightContext context = new WebFreightContext(connection);
+
+            return context.Database.Connection.ConnectionString;// entityBuilder.ConnectionString;
+        }
+  
         public static void AddAcitivityLog(object entityId,string objectTableId,int tenant,string activityTypeCode,string userId)
         {
             try
             {
+                string strConnString = GetConnection(tenant);
+
                 if (entityId != null)
                 {
-                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())//new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions() { IsolationLevel = IsolationLevel.Snapshot }))
+                    string query = "INSERT INTO EntityLastActivities (Id, ActivityDate, ActivityTypeCode, EntityId, ObjectTableId, Tenant,UserId) " +
+                  "VALUES (@Id, @ActivityDate, @ActivityTypeCode, @EntityId, @ObjectTableId, @Tenant, @UserId) ";
+
+                    using (SqlConnection cn = new SqlConnection(strConnString))
                     {
-                        EntityLastActivityRepository entityLastActivityRepository = new EntityLastActivityRepository(tenant);
-                        EntityLastActivity activity = new EntityLastActivity()
-                        {
-                            ActivityDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                            Id = IdCounter.GetNumber("EntityLastActivity", tenant),
-                            ActivityTypeCode = activityTypeCode,
-                            EntityId = entityId.ToString(),
-                            ObjectTableId = objectTableId,
-                            Tenant = tenant,
-                            UserId = userId,
-                        };
-                        entityLastActivityRepository.Add(activity);
-                        entityLastActivityRepository.SubmitChanges();
-
-
-                        scope.Complete();
+                        SqlCommand cmd = new SqlCommand(query, cn);
+                        cmd.Parameters.Add("@Id", SqlDbType.VarChar, 50).Value = IdCounter.GetNumber("EntityLastActivity", tenant);
+                        cmd.Parameters.Add("@ActivityDate", SqlDbType.DateTime).Value = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        cmd.Parameters.Add("@ActivityTypeCode", SqlDbType.VarChar, 50).Value = activityTypeCode;
+                        cmd.Parameters.Add("@EntityId", SqlDbType.VarChar, 50).Value = entityId.ToString();
+                        cmd.Parameters.Add("@ObjectTableId", SqlDbType.VarChar, 50).Value = objectTableId;
+                        cmd.Parameters.Add("@Tenant", SqlDbType.Int).Value = tenant;
+                        cmd.Parameters.Add("@UserId", SqlDbType.VarChar, 50).Value = userId;
+                        cmd.CommandType = CommandType.Text;
+                        cmd.CommandTimeout = 5;
+                        cn.Open();
+                        var output = cmd.ExecuteNonQuery();
+                        cn.Close();
                     }
+
+                    //using (TransactionScope scope = TransactionFactory.GetNewTransaction(TimeSpan.FromSeconds(5)))//new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions() { IsolationLevel = IsolationLevel.Snapshot }))
+                    //{
+                    //    EntityLastActivityRepository entityLastActivityRepository = new EntityLastActivityRepository(tenant);
+                    //    EntityLastActivity activity = new EntityLastActivity()
+                    //    {
+                    //        ActivityDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                    //        Id = IdCounter.GetNumber("EntityLastActivity", tenant),
+                    //        ActivityTypeCode = activityTypeCode,
+                    //        EntityId = entityId.ToString(),
+                    //        ObjectTableId = objectTableId,
+                    //        Tenant = tenant,
+                    //        UserId = userId,
+                    //    };
+                    //    entityLastActivityRepository.Add(activity);
+                    //    entityLastActivityRepository.SubmitChanges();
+
+
+                    //    scope.Complete();
+                    //}
                 }
             }
             catch { }
@@ -201,24 +251,26 @@ namespace WebFreight.Web.Helpers
         {
             try
             {
-                ContactActivityLogRepository contactActivityLogRepository = new ContactActivityLogRepository();
-                ContactActivityLog log = new ContactActivityLog()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    ContactId = contactId,
-                    Module = module,
-                    Activity = activity,
-                    LogDateTime = TenantServerConfigration.GetCurrentDateTime(tenant),
-                    GMTLogDateTime = DateTime.Now,
-                    Tenant = tenant,
-                    IsSharedLogisticsContact = isSharedLogisticsContact,
-                    CardId = cardId,
-                    PartnerTypeId = partnerTypeId,
-                    Via = via,
-                };
+                TotangoActivityLogger.AddContactActivityLog(cardId, partnerTypeId, contactId, module, activity, tenant, isSharedLogisticsContact,via);
+               
+                //ContactActivityLogRepository contactActivityLogRepository = new ContactActivityLogRepository();
+                //ContactActivityLog log = new ContactActivityLog()
+                //{
+                //    Id = Guid.NewGuid().ToString(),
+                //    ContactId = contactId,
+                //    Module = module,
+                //    Activity = activity,
+                //    LogDateTime = TenantServerConfigration.GetCurrentDateTime(tenant),
+                //    GMTLogDateTime = DateTime.Now,
+                //    Tenant = tenant,
+                //    IsSharedLogisticsContact = isSharedLogisticsContact,
+                //    CardId = cardId,
+                //    PartnerTypeId = partnerTypeId,
+                //    Via = via,
+                //};
 
-                contactActivityLogRepository.Add(log);
-                contactActivityLogRepository.SubmitChanges();
+                //contactActivityLogRepository.Add(log);
+                //contactActivityLogRepository.SubmitChanges();
             }
             catch (Exception ex)
             {

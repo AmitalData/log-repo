@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { DigitalPortalCustomizationMainComponent } from './DigitalPortalCustomizationMainComponent';
-import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 import { DigitalTextService, DigitalTextCodeUpdateModel, DigitalTextCodeObject } from '../../../Infrastructure/Services/WebServices/DigitalTextService'
@@ -19,6 +18,9 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
     public ModifiedLables: DigitalTextCodeUpdateModel;
     public IsModifiedLables = false;
     public IsChange: boolean = false;
+    public ObjectTableId: string;
+    public ProfileCode: string;
+    public ProfileId: string;
 
     constructor() {
         super();
@@ -29,10 +31,6 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
         this.IsModifiedLables = false;
     }
 
-    SetWindowArgs(args: any) {
-        this.FillDigitalProfileFiltersList();
-    }
-
     ngOnInit() {
         this.CurrentSession.SessionEvent.subscribe(($event: any) => {
             if ($event.Name == "ReloadDigitalPortalLabels") {
@@ -41,68 +39,17 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
         });
     }
 
-    public DigitalProfileFilterList: CodeNameClass[];
-    private selectedProfileItem: CodeNameClass;
-    get SelectedProfileItem() { return this.selectedProfileItem; }
-    set SelectedProfileItem(value: CodeNameClass) {
-        if (this.selectedProfileItem != value) {
-            this.selectedProfileItem = value;
-            this.BuildItemsSource();
-        }
-    }
-
-    private FillDigitalProfileFiltersList() {
-        this.DigitalProfileFilterList = [];
-        this.digitalTextService.GetDigitalProfileName().subscribe((myResult) => {
-            if (!myResult.HasError) {
-                var objectTables = myResult.Result;
-                objectTables.forEach(item => {
-                    this.DigitalProfileFilterList.push(new CodeNameClass(item.Id, item.Name));
-                });
-
-                this.selectedProfileItem = this.DigitalProfileFilterList[0];
-                this.FillObjectTablesFiltersList();
-            }
-        });
-    }
-
-    public ObjectTablesFilterList: CodeNameClass[];
-    private selectedObjectTableItem: CodeNameClass;
-    get SelectedObjectTableItem() { return this.selectedObjectTableItem; }
-    set SelectedObjectTableItem(value: CodeNameClass) {
-        if (this.selectedObjectTableItem != value) {
-            this.selectedObjectTableItem = value;
-            this.BuildItemsSource();
-        }
-    }
-
-    private FillObjectTablesFiltersList() {
-        this.ObjectTablesFilterList = [];
-        this.digitalTextService.GetDigitalTextCodesObjetTables().subscribe((myResult) => {
-            if (!myResult.HasError) {
-                var objectTables = myResult.Result;
-                objectTables.forEach(item => {
-                    this.ObjectTablesFilterList.push(new CodeNameClass(item.ObjectTableName, item.ObjectTableId));
-                });
-
-                this.selectedObjectTableItem = this.ObjectTablesFilterList[0];
-                this.BuildItemsSource();
-            }
-        });
-    }
-
-
-    BuildItemsSource() {
+    public BuildItemsSource() {
         this.LabelsItemsSource = new ObservableCollection([]);
-        var labelsList: CustomizationLabelItem[] = [];
-        var objectTableId = this.SelectedObjectTableItem.Name;
-        var profileId = this.SelectedProfileItem.Code;
-        this.digitalTextService.GetTextCodesByFilters(null, objectTableId, profileId).subscribe((myResult) => {
+        var labelsList = [];
+        
+        this.digitalTextService.GetTextCodesByFilters(null, this.ObjectTableId, this.ProfileCode).subscribe((myResult) => {
             if (!myResult.HasError) {
                 var data = myResult.Result;
                 this.loadedResults = data;
                 if (!AppTool.IsNullOrEmpty(this.SearchText)) {
                     data = data.filter(f =>
+                        (!AppTool.IsNullOrEmpty(f.TextCode) && f.TextCode.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1) ||
                         (!AppTool.IsNullOrEmpty(f.FieldCode) && f.FieldCode.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1) ||
                         (!AppTool.IsNullOrEmpty(f.DisplayText) && f.DisplayText.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1 )||
                         (!AppTool.IsNullOrEmpty(f.DefaultText) && f.DefaultText.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1));
@@ -126,10 +73,11 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
 
     loadedResults: CustomizationLabelItem[] = [];
     BuildSearchItems() {
-        var labelsList: CustomizationLabelItem[] = [];
+        var labelsList = [];
         if (!AppTool.IsNullOrEmpty(this.SearchText)) {
             var data = this.loadedResults;
             data = data.filter(f =>
+                (!AppTool.IsNullOrEmpty(f.TextCode) && f.TextCode.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1) ||
                 (!AppTool.IsNullOrEmpty(f.FieldCode) && f.FieldCode.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1) ||
                 (!AppTool.IsNullOrEmpty(f.DisplayText) && f.DisplayText.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1) ||
                 (!AppTool.IsNullOrEmpty(f.DefaultText) && f.DefaultText.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1));
@@ -142,7 +90,9 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
         }
         else {
             this.LabelsItemsSource = new ObservableCollection([]);
-            labelsList = this.loadedResults;
+            this.loadedResults.forEach(item => {
+                labelsList.push(new CustomizationLabelItem(this, item));
+            });
             this.LabelsItemsSource.InsertCollection(labelsList);
         }
     }
@@ -154,12 +104,14 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
     Save() {
         if (this.IsModifiedLables) {
             this.CurrentSession.StartBusyIndicatorLoading();
-            this.ModifiedLables.ObjectTableId = this.SelectedObjectTableItem.Name;
-            this.ModifiedLables.ProfileId = this.SelectedProfileItem.Code;
+            this.ModifiedLables.ObjectTableId = this.ObjectTableId;
+            this.ModifiedLables.ProfileId = this.ProfileId;
+            this.ModifiedLables.ProfileCode = this.ProfileCode;
             this.digitalTextService.UpdateDigitalTextCodes(this.ModifiedLables).subscribe((myResult) => {
                 this.customizationEditComponent.IsDirty = false;
                 this.ModifiedLables = new DigitalTextCodeUpdateModel();
                 this.CurrentSession.StopBusyIndicator();
+                this.BuildItemsSource();
                 if (this.customizationEditComponent.NewSelectedMenu) {
                     this.customizationEditComponent.SelectedMenu = this.customizationEditComponent.NewSelectedMenu;
                 }
@@ -231,8 +183,8 @@ export class CustomizationLabelItem extends BaseComponent {
         var newLabel = new DigitalTextCodeObject();
         newLabel.TextCode = this.textCode;
         newLabel.FieldCode = this.fieldCode;
-        newLabel.DefaultText = newValue;
-        newLabel.DisplayText = this.displayText;
+        newLabel.DefaultText = this.defaultText; 
+        newLabel.DisplayText = newValue;
         this.father.ModifiedLables.Lables.push(newLabel);
     }
 

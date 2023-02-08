@@ -91,7 +91,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
         {
             IInvoiceContext MyContext = InvoiceContext.GetContext(invoice.Tenant);
             invoice.DocumentFilingId = invoiceAdditionalData.DocumentFilingId;
-
+            if (invoice.IsFullAccounting && invoice.IsExternalEntity && invoice.DocumentFilingId != null)
+            {
+                invoice.IsPrinted = true;
+            }
             ARInvoiceService service = new ARInvoiceService(MyContext, invoice.Tenant);
             service.Update(invoice, true);
         }

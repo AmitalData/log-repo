@@ -94,7 +94,7 @@
             </div>
             <div class="table-row-cell-block">
                 <TreeSelect [Items]="EditableRecordsTreeItems" [Width]="'300px'" [Value]="Record" [ShowExpand]="false"
-                    (ValueChanged)="updateRecord($event)">
+                    [IsReturnedTreeSelectItem]="true" (ValueChanged)="updateRecord($event)">
                 </TreeSelect>
             </div>
         </td>
@@ -103,18 +103,6 @@
     <tr>
         <td>
             <div></div>
-        </td>
-    </tr>
-
-    <tr class="table-row">
-        <td>
-
-            <FooterButtons [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="saveButtonClicked()"
-                (CancelButtonClicked)="cancelButtonClicked()"
-                [SaveButtonDataCy]="'update-record-properties-save-button'"
-                [CancelButtonDataCy]="'update-record-properties-cancel-button'">
-            </FooterButtons>
-
         </td>
     </tr>
 

@@ -35,7 +35,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         }
         public DocumentOutCopy GetDocumentOutCopy(DocumentOutCopyArgs args)
         {
-            return context.DocumentOutCopies.Include("DocumentTypeCopy")
+            DocumentOutCopy documentOutCopy = context.DocumentOutCopies.Include("DocumentTypeCopy")
                 .Include("DocumentOut.DocumentsFiling")
                 .Where(e => e.DocumentTypeCopyId == args.DocumentTypeCopyId
                     && e.DocumentTypeCopy.DocumentTypeId == args.DocumentTypeId
@@ -44,6 +44,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     && e.Tenant == args.Tenant
                     && e.DocumentOut.DocumentTemplateId == args.DocumentTemplateId)
                 .FirstOrDefault();
+
+            return documentOutCopy;
         }
 
         public DocumentOutCopy GetSingleDocumentOutCopyByTenant(string id,int tenant)

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "b5bf44e093136abdd73e799a7c318986";
+		public const string HashString = "03ed91e508424cd73c780a780e08519d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -101,6 +101,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  true,
 			      				    SupportSubEntity =  true,
+			      				    ApplyGenericCustomFields =  false,
 			      				    HasHelper =  true,
 			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  true,
@@ -60175,7 +60176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
@@ -88721,6 +88722,560 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "ShippingLine",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  30,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  30,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ShippingLine",
+					  						ListPropertyPath =  "ShippingLine",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Shipment",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ShippingLine",
+					  						DefaultText =  "Shipping Line",
+					  						ListFieldLable =  "ShippingLineListLable",
+					  						ListLableDefaultText =  "Shipping Line",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "PlaceOfDelivery",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  30,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  30,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "PlaceOfDelivery",
+					  						ListPropertyPath =  "PlaceOfDelivery",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Shipment",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "PlaceOfDelivery",
+					  						DefaultText =  "Place Of Delivery",
+					  						ListFieldLable =  "PlaceOfDeliveryListLable",
+					  						ListLableDefaultText =  "Place Of Delivery",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "PickupPlace",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  30,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  30,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "PickupPlace",
+					  						ListPropertyPath =  "PickupPlace",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Shipment",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "PickupPlace",
+					  						DefaultText =  "Pickup Place ",
+					  						ListFieldLable =  "PickupPlaceListLable",
+					  						ListLableDefaultText =  "Pickup Place ",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "HSCode",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  30,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  30,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "HSCode",
+					  						ListPropertyPath =  "HSCode",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Shipment",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "HSCode",
+					  						DefaultText =  "HS/UN code",
+					  						ListFieldLable =  "HSCodeListLable",
+					  						ListLableDefaultText =  "HS/UN code",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "SealNo",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  30,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  30,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "SealNo",
+					  						ListPropertyPath =  "SealNo",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Shipment",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "SealNo",
+					  						DefaultText =  "Seal No",
+					  						ListFieldLable =  "SealNoListLable",
+					  						ListLableDefaultText =  "Seal No",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Weight1",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "Double",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Weight1",
+					  						ListPropertyPath =  "Weight1",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Weight1",
+					  						DefaultText =  "Weight1",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Weight2",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "Double",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Weight2",
+					  						ListPropertyPath =  "Weight2",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Weight2",
+					  						DefaultText =  "Weight2",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Weight3",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "Double",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Weight3",
+					  						ListPropertyPath =  "Weight3",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Weight3",
+					  						DefaultText =  "Weight3",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Weight4",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "Double",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Weight4",
+					  						ListPropertyPath =  "Weight4",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Weight4",
+					  						DefaultText =  "Weight4",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "GrossWeightInLB",
 					  						ObjectTableName =  "Shipment",
 					  						FieldsDataType =  "Double",
@@ -88742,6 +89297,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "GrossWeightInLB",
 					  						ListPropertyPath =  "GrossWeightInLB",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -88802,6 +89358,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "VolumeInCBF",
 					  						ListPropertyPath =  "VolumeInCBF",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -88862,6 +89419,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ChargeableWeightInLB",
 					  						ListPropertyPath =  "ChargeableWeightInLB",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -88881,6 +89439,69 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChargeableWeightInLB",
 					  						DefaultText =  "ChargeableWeightInLB",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IsDocumentsNeedApprove",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IsDocumentsNeedApprove",
+					  						ListPropertyPath =  "IsDocumentsNeedApprove",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Shipment",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IsDocumentsNeedApprove",
+					  						DefaultText =  "Approve Pending Documents",
+					  						ListFieldLable =  "IsDocumentsNeedApproveListLable",
+					  						ListLableDefaultText =  "Approve Pending Documents",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -89000,6 +89621,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			   TextCode ShipmentTextCode_19 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.SharedLogisticShipment", DefaultText = @"Shipments Report",LocalDefaultText = "Shipments Report", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ShipmentFeature_19 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Q.SharedLogisticShipment", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentFeatures.SharedLogisticShipment", NameTextCodeDefaultText = "SharedLogisticShipment", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ShipmentObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode ShipmentTextCode_20 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.PendingApprovalDocuments", DefaultText = @"Pending Approval Documents",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ShipmentFeature_20 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Q.PendingApprovalDocuments", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentFeatures.PendingApprovalDocuments", NameTextCodeDefaultText = "Pending Approval Documents", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,ShipmentObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
@@ -89635,6 +90260,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			 QueryColumn SharedLogisticShipmentQueryColumn_18 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticShipmentQuery.Id,QueryCode = SharedLogisticShipmentQuery.UniqueCode, IndexOrder = 18, ObjectFieldCode = "Shipment.ValueOfGoods" , ColumnWidth = 100 }, addedQueryColumns);
 
 			 QueryColumn SharedLogisticShipmentQueryColumn_19 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticShipmentQuery.Id,QueryCode = SharedLogisticShipmentQuery.UniqueCode, IndexOrder = 19, ObjectFieldCode = "Shipment.DescriptionOfGoods" , ColumnWidth = 132 }, addedQueryColumns);
+  
+	      
+
+			  Query PendingApprovalDocumentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_20.Id, NameTextCodeCode = ShipmentTextCode_20.Code, ObjectTableName = "Shipment", Code = "Pending Approval Documents",  QueryGroupCode = "SHIP", IndexOrder = 20, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_20.Id,FeatureUniqeCode= ShipmentFeature_20.FeatureUniqeCode, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+	
+			 QueryColumn PendingApprovalDocumentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingApprovalDocumentsQuery.Id,QueryCode = PendingApprovalDocumentsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Shipment.TransportModeId" , ColumnWidth = 25 }, addedQueryColumns);
+
+			 QueryColumn PendingApprovalDocumentsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingApprovalDocumentsQuery.Id,QueryCode = PendingApprovalDocumentsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Shipment.DirectionId" , ColumnWidth = 25 }, addedQueryColumns);
+
+			 QueryColumn PendingApprovalDocumentsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingApprovalDocumentsQuery.Id,QueryCode = PendingApprovalDocumentsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Shipment.CreateDateTime" , ColumnWidth = 90 }, addedQueryColumns);
+
+			 QueryColumn PendingApprovalDocumentsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingApprovalDocumentsQuery.Id,QueryCode = PendingApprovalDocumentsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Shipment.ShipmentNumber" , ColumnWidth = 90 }, addedQueryColumns);
+
+			 QueryColumn PendingApprovalDocumentsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingApprovalDocumentsQuery.Id,QueryCode = PendingApprovalDocumentsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Shipment.ShipmentType" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn PendingApprovalDocumentsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingApprovalDocumentsQuery.Id,QueryCode = PendingApprovalDocumentsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Shipment.CustomerName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn PendingApprovalDocumentsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingApprovalDocumentsQuery.Id,QueryCode = PendingApprovalDocumentsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Shipment.Routing" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn PendingApprovalDocumentsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingApprovalDocumentsQuery.Id,QueryCode = PendingApprovalDocumentsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Shipment.LongMaster" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn PendingApprovalDocumentsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingApprovalDocumentsQuery.Id,QueryCode = PendingApprovalDocumentsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Shipment.House" , ColumnWidth = 80 }, addedQueryColumns);
+
+			 QueryColumn PendingApprovalDocumentsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingApprovalDocumentsQuery.Id,QueryCode = PendingApprovalDocumentsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Shipment.StatusName" , ColumnWidth = 80 }, addedQueryColumns);
+
+			 QueryColumn PendingApprovalDocumentsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingApprovalDocumentsQuery.Id,QueryCode = PendingApprovalDocumentsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Shipment.MainCarriageETA" , ColumnWidth = 90 }, addedQueryColumns);
+
+             AdvancedQueryFilter PendingApprovalDocumentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.IsDocumentsNeedApprove", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = PendingApprovalDocumentsQuery.Id,QueryCode = PendingApprovalDocumentsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -90037,7 +90691,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 		   Feature ShipmentFeature_NewCreditNote = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NewCreditNote", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.NewCreditNote", NameTextCodeDefaultText = @"New Credit Note" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ShipmentObjectTable);
 
-		   Feature ShipmentFeature_VizionRequestStatus = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VizionRequestStatus", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.VisionRequestStatus", NameTextCodeDefaultText = @"Vizion Request Status" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ShipmentObjectTable);
+		   Feature ShipmentFeature_VizionRequestStatus = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VizionRequestStatus", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.VisionRequestStatus", NameTextCodeDefaultText = @"Container Tracking Request Status" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ShipmentObjectTable);
 
 		   Feature ShipmentFeature_TABSCUSTOMIZATION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TABSCUSTOMIZATION", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.TABSCUSTOMIZATION", NameTextCodeDefaultText = @"Tabs Customization" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ShipmentObjectTable);
 
@@ -92726,8 +93380,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "VZSU",
-                EnglishName =  "Vizion Shipment Update",
-                LocalName =  "Vizion Shipment Update",
+                EnglishName =  "Container Tracker Shipment Update",
+                LocalName =  "Container Tracker Shipment Update",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,
@@ -92786,7 +93440,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
              			   Feature ShipmentFeature_MB017 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SplitShipment", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.SplitShipment", NameTextCodeDefaultText = "Split Shipment", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
              			   Feature ShipmentFeature_MB018 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendToAMANAC", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.SendtoAMANAC", NameTextCodeDefaultText = "Send to AMANAC", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
              			   Feature ShipmentFeature_MB019 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendCartaPorte", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.TransmittoSAT", NameTextCodeDefaultText = "Transmit to SAT", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
-             			   Feature ShipmentFeature_MB020 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ViziionUnsubscribe", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ViziionUnsubscribe", NameTextCodeDefaultText = "Viziion Unsubscribe", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
+             			   Feature ShipmentFeature_MB020 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ViziionUnsubscribe", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ContainerTrackingUnsubscribe", NameTextCodeDefaultText = "Container Tracking Unsubscribe", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -93283,8 +93937,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						EventCode = "ViziionUnsubscribe",
 						Index = 26, 
 						IsActive = true,
-						LabelTextCodeCode = "Shipment.B.ViziionUnsubscribe",
-						LabelTextCodeDefaultText = "Viziion Unsubscribe",
+						LabelTextCodeCode = "Shipment.B.ContainerTrackingUnsubscribe",
+						LabelTextCodeDefaultText = "Container Tracking Unsubscribe",
 						Tenant = 0,
 						MenuButtonGroupId = ShipmentMenuButtonGroup.Id,
 						ParentMenuButtonId = ShipmentMenuButton0.Id,
@@ -93292,7 +93946,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						MenuButtonType = "menuitem",
 						FeatureId=  ShipmentFeature_MB020.Id,
 						Style = null,
-						LocalDefaultText = "Viziion Unsubscribe",
+						LocalDefaultText = "Container Tracking Unsubscribe",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  ShipmentFeature_MB020.FeatureUniqeCode,

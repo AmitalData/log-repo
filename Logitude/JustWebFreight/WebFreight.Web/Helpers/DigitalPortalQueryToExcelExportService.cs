@@ -1,8 +1,5 @@
-﻿using Logitude.BL.InvoiceModel.CustomFilters;
-using Logitude.BL.InvoiceModel.EntityLists;
+﻿using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityQueries;
-using Logitude.BL.ShipmentsModel.CustomFilters;
-using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
@@ -14,12 +11,6 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InvoiceModel;
-using Simplog.Data.InvoiceModel.Repositories;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using Simplog.Data.ShipmentsModel.Repositories;
-using Simplog.Server.Infrastructure.DataContracts;
-using Simplog.Server.Infrastructure.Helpers;
 using Syncfusion.XlsIO;
 using System;
 using System.Collections.Generic;
@@ -27,15 +18,19 @@ using System.Data;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using WebFreight.Web.Controllers.DigitalPortal.Models;
-using WebFreight.Web.Controllers.InvoiceModel.ApiHelpers;
-using WebFreight.Web.Controllers.ShipmentsModel.ApiHelpers;
 using WebFreight.Web.Security;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.DataMapping;
+using Logitude.BL.Helpers;
+using System.Linq.Dynamic.Core;
+using Newtonsoft.Json.Linq;
+using System.Linq;
+using Logitude.BL.ShipmentsModel.EntityLists;
+using Microsoft.VisualStudio.Services.Common;
+using System.Dynamic;
 
 namespace WebFreight.Web.Helpers
 {
@@ -159,7 +154,7 @@ namespace WebFreight.Web.Helpers
             return mappedFileName + "_" + DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss");
         }
 
-        private byte[] DigitalPortalShipmentExportToExcel(List<DigitalShipmentList> digitalShipmentLists, bool showMultiUnitsOfMeasurements)
+        private byte[] DigitalPortalShipmentExportToExcel(List<dynamic> digitalShipmentLists, bool showMultiUnitsOfMeasurements)
         {
             var excelEngine = new ExcelEngine();
             IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
@@ -196,7 +191,7 @@ namespace WebFreight.Web.Helpers
                 sheet1.Range["A3:V3"].Borders[ExcelBordersIndex.EdgeRight].LineStyle = ExcelLineStyle.Thin;
                 sheet1.Range["A3:V3"].Borders[ExcelBordersIndex.EdgeTop].LineStyle = ExcelLineStyle.Thin;
                 sheet1.Range["A3:V3"].Borders[ExcelBordersIndex.EdgeBottom].LineStyle = ExcelLineStyle.Thin;
-                                 
+
                 sheet1.Range["A3:V3"].AutofitRows();
                 sheet1.Range["A3:V3"].AutofitColumns();
 
@@ -266,28 +261,28 @@ namespace WebFreight.Web.Helpers
 
                     DataRow row = table.NewRow();
 
-                    row[0] = item.ShipmentNumber;
-                    row[1] = item.TransportModeName;
-                    row[2] = item.DirectionName;
-                    row[3] = item.MainCarriageFromPortName + ", " + item.MainCarriageToPortName;
-                    row[4] = item.MainCarriageATD?.ToString("dd MMM yyyy", CultureInfo.InvariantCulture);
-                    row[5] = item.MainCarriageATA?.ToString("dd MMM yyyy", CultureInfo.InvariantCulture);
-                    row[6] = item.Master;
-                    row[7] = item.ShipperName;
-                    row[8] = item.ConsigneeName;
-                    row[9] = item.ShipmentTypeName;
-                    row[10] = item.StatusName;
-                    row[11] = item.TruckContainerNumber;
-                    row[12] = item.NumberOfPackages;
-                    row[13] = item.GrossWeightInKG;  
-                    row[14] = ShipmentMapping.GetWeightInLB(item.GrossWeightInKG);
-                    row[15] = item.ChargeableWeightInKG;
-                    row[16] = ShipmentMapping.GetWeightInLB(item.ChargeableWeightInKG);
-                    row[17] = item.IncotermCode;
-                    row[18] = ShipmentMapping.GetVolumeInCBF(item.VolumeInCBM);
-                    row[19] = item.VolumeInCBM;
-                    row[20] = item.ValueOfGoods;
-                    row[21] = item.DescriptionOfGoods;
+                    row[0] = DoesPropertyExistInDynamic(item, "ShipmentNumber") ? item.ShipmentNumber : null;
+                    row[1] = DoesPropertyExistInDynamic(item, "TransportModeName") ? item.TransportModeName : null;
+                    row[2] = DoesPropertyExistInDynamic(item, "DirectionName") ? item.DirectionName : null;
+                    row[3] = DoesPropertyExistInDynamic(item, "MainCarriageFromPortName" ) ? $"{item.MainCarriageFromPortName}, " : "" + DoesPropertyExistInDynamic(item, "MainCarriageToPortName") ? item.MainCarriageToPortName : "";
+                    row[4] = DoesPropertyExistInDynamic(item, "MainCarriageATD") ? item.MainCarriageATD?.ToString("dd MMM yyyy", CultureInfo.InvariantCulture) : null;
+                    row[5] = DoesPropertyExistInDynamic(item, "MainCarriageATA") ? item.MainCarriageATA?.ToString("dd MMM yyyy", CultureInfo.InvariantCulture) : null; ;
+                    row[6] = DoesPropertyExistInDynamic(item, "Master") ? item.Master : null;
+                    row[7] = DoesPropertyExistInDynamic(item, "ShipperName") ? item.ShipperName : null;
+                    row[8] = DoesPropertyExistInDynamic(item, "ConsigneeName") ? item.ConsigneeName : null;
+                    row[9] = DoesPropertyExistInDynamic(item, "ShipmentTypeName") ? item.ShipmentTypeName : null;
+                    row[10] = DoesPropertyExistInDynamic(item, "StatusName") ? item.StatusName : null;
+                    row[11] = DoesPropertyExistInDynamic(item, "TruckContainerNumber") ? item.TruckContainerNumber : null;
+                    row[12] = DoesPropertyExistInDynamic(item, "NumberOfPackages") ? item.NumberOfPackages : null;
+                    row[13] = DoesPropertyExistInDynamic(item, "GrossWeightInKG") ? item.GrossWeightInKG : null;
+                    row[14] = DoesPropertyExistInDynamic(item, "GrossWeightInKG") ? ShipmentMapping.GetWeightInLB(item.GrossWeightInKG) : null;
+                    row[15] = DoesPropertyExistInDynamic(item, "ChargeableWeightInKG") ? item.ChargeableWeightInKG : null;
+                    row[16] = DoesPropertyExistInDynamic(item, "ChargeableWeightInKG") ? ShipmentMapping.GetWeightInLB(item.ChargeableWeightInKG) : null;
+                    row[17] = DoesPropertyExistInDynamic(item, "IncotermCode") ? item.IncotermCode : null;
+                    row[18] = DoesPropertyExistInDynamic(item, "VolumeInCBM") ? ShipmentMapping.GetVolumeInCBF(item.VolumeInCBM) : null;
+                    row[19] = DoesPropertyExistInDynamic(item, "VolumeInCBM") ? item.VolumeInCBM : null;
+                    row[20] = DoesPropertyExistInDynamic(item, "ValueOfGoods") ? item.ValueOfGoods : null;
+                    row[21] = DoesPropertyExistInDynamic(item, "DescriptionOfGoods") ? item.DescriptionOfGoods : null;
 
                     table.Rows.Add(row);
                     index++;
@@ -363,25 +358,25 @@ namespace WebFreight.Web.Helpers
                     sheet1.Range[$"S{index}:S{index}"].NumberFormat = "#,##0.00";
 
                     DataRow row = table.NewRow();
-                    row[0] = item.ShipmentNumber;
-                    row[1] = item.TransportModeName;
-                    row[2] = item.DirectionName;
+                    row[0] = DoesPropertyExistInDynamic(item, "ShipmentNumber") ? item.ShipmentNumber : null;
+                    row[1] = DoesPropertyExistInDynamic(item, "TransportModeName") ? item.TransportModeName : null;
+                    row[2] = DoesPropertyExistInDynamic(item, "DirectionName") ? item.DirectionName : null;
                     row[3] = item.MainCarriageFromPortName + ", " + item.MainCarriageToPortName;
-                    row[4] = item.MainCarriageATD?.ToString("dd MMM yyyy", CultureInfo.InvariantCulture);
-                    row[5] = item.MainCarriageATA?.ToString("dd MMM yyyy", CultureInfo.InvariantCulture);
-                    row[6] = item.Master;
-                    row[7] = item.ShipperName;
-                    row[8] = item.ConsigneeName;
-                    row[9] = item.ShipmentTypeName;
-                    row[10] = item.StatusName;
-                    row[11] = item.TruckContainerNumber;
-                    row[12] = item.NumberOfPackages;
-                    row[13] = item.GrossWeight;
-                    row[14] = item.ChargeableWeight;
-                    row[15] = item.IncotermCode;
-                    row[16] = item.Volume;
-                    row[17] = item.ValueOfGoods;
-                    row[18] = item.DescriptionOfGoods;
+                    row[4] = DoesPropertyExistInDynamic(item, "MainCarriageATD") ? item.MainCarriageATD?.ToString("dd MMM yyyy", CultureInfo.InvariantCulture) : null;
+                    row[5] = DoesPropertyExistInDynamic(item, "MainCarriageATA") ? item.MainCarriageATA?.ToString("dd MMM yyyy", CultureInfo.InvariantCulture) : null; ;
+                    row[6] = DoesPropertyExistInDynamic(item, "Master") ? item.Master : null;
+                    row[7] = DoesPropertyExistInDynamic(item, "ShipperName") ? item.ShipperName : null;
+                    row[8] = DoesPropertyExistInDynamic(item, "ConsigneeName") ? item.ConsigneeName : null;
+                    row[9] = DoesPropertyExistInDynamic(item, "ShipmentTypeName") ? item.ShipmentTypeName : null;
+                    row[10] = DoesPropertyExistInDynamic(item, "StatusName") ? item.StatusName : null;
+                    row[11] = DoesPropertyExistInDynamic(item, "TruckContainerNumber") ? item.TruckContainerNumber : null;
+                    row[12] = DoesPropertyExistInDynamic(item, "NumberOfPackages") ? item.NumberOfPackages : null;
+                    row[13] = DoesPropertyExistInDynamic(item, "GrossWeight") ? item.GrossWeight : null;
+                    row[14] = DoesPropertyExistInDynamic(item, "ChargeableWeight") ? item.ChargeableWeight : null;
+                    row[15] = DoesPropertyExistInDynamic(item, "IncotermCode") ? item.IncotermCode : null;
+                    row[16] = DoesPropertyExistInDynamic(item, "Volume") ? item.Volume : null;
+                    row[17] = DoesPropertyExistInDynamic(item, "ValueOfGoods") ? item.ValueOfGoods : null;
+                    row[18] = DoesPropertyExistInDynamic(item, "DescriptionOfGoods") ? item.DescriptionOfGoods : null;
 
                     table.Rows.Add(row);
                     index++;
@@ -494,6 +489,7 @@ namespace WebFreight.Web.Helpers
 
         private DigitalXslExportResult GetFileInfo(DigitalExportQueryToExcelArgs args)
         {
+            var helper = new DigitalFieldSecuritesHelper();
             var queryFilters = args.QueryFilters;
             int tenant = (int)queryFilters.Tenant;
             string ObjectTableName = queryFilters.ObjectTableName.Replace("Customs.", "");
@@ -517,14 +513,25 @@ namespace WebFreight.Web.Helpers
                         showMultiUnitsOfMeasurements = tenantObject.ShowMultiUnitsOfMeasurements;
                     }
 
-                    var shipmentData = shipmentQuery.GetByFilters(args.QueryFilters).ToList();
-                    FillContainerNumbers(shipmentData);
-                    data = DigitalPortalShipmentExportToExcel(shipmentData, showMultiUnitsOfMeasurements);
+                    var shipmentData = shipmentQuery.GetByFilters(args.QueryFilters);
+
+                    var allowedShipmentsFieldSecurites = helper.GitDigitalSecuritesFeilds(args.QueryFilters.ObjectTableId, args.QueryFilters.ProfileCode, tenant, false)
+                                                      .Where(a => a.HasPermission)
+                                                      .Select(a => a.FieldCode.Replace("Shipment.", ""))
+                                                      .ToList();
+
+                    var shipmentsFields = string.Join(",", allowedShipmentsFieldSecurites);
+                    var shipmentsDynamicData = shipmentData.Select("new { " + shipmentsFields + " }").ToDynamicList();
+
+                    FillContainerNumbers(shipmentsDynamicData);
+                    data = DigitalPortalShipmentExportToExcel(shipmentsDynamicData, showMultiUnitsOfMeasurements);
+
                     break;
                 case "DigitalInvoice":
                     var aRInvoiceQuery = new ARInvoiceQuery(args.QueryFilters.Tenant);
                     var invoiceData = aRInvoiceQuery.GetByFilters(args.QueryFilters).ToList();
                     data = DigitalPortalInvoiceExportToExcel(invoiceData);
+
                     break;
                 default:
                     break;
@@ -546,12 +553,21 @@ namespace WebFreight.Web.Helpers
             };
         }
 
-        private void FillContainerNumbers(List<DigitalShipmentList> listQuery)
+        public bool DoesPropertyExistInDynamic(dynamic settings, string name)
+        {
+            if (settings is ExpandoObject)
+                return ((IDictionary<string, object>)settings).ContainsKey(name);
+
+            return settings.GetType().GetProperty(name) != null;
+        }
+
+        private void FillContainerNumbers(List<dynamic> listQuery)
         {
             listQuery.ForEach(shipment =>
             {
                 bool isInlandDomesticShipment = (shipment.DirectionId == "D" && shipment.TransportModeId == "I");
-                if (shipment.TransportModeId != "O" || !string.IsNullOrEmpty(shipment.ContainersNumbersandTypesArray))
+                if (DoesPropertyExistInDynamic(shipment, "ContainersNumbersandTypesArray") 
+                    && (shipment.TransportModeId != "O" || !string.IsNullOrEmpty(shipment.ContainersNumbersandTypesArray)))
                 {
                     shipment.TruckContainerNumber = shipment.TransportModeId == "O"
                                                     ? Regex.Replace(shipment.ContainersNumbersandTypesArray, "(\\[.*?\\])", "")

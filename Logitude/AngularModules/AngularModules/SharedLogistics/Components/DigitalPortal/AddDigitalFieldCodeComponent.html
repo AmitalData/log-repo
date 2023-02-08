@@ -44,9 +44,14 @@
                         <div></div>
                     </td>
                     <td style="width: 100px;">
+                        <button id="{{'CloseBtn' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="AddFieldComponentClicked()">Add Field Component</button>
+                    </td>
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+                    <td style="width: 100px;">
                         <button id="{{'CloseBtn' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="AddFieldCodeClicked()">Add Field Code</button>
                     </td>
-
                 </tr>
             </table>
         </td>

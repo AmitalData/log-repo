@@ -33,8 +33,8 @@ export class ContainerHelperComponent implements OnDestroy {
 
         if (this.EntityPM) {
             this.IsSimulatorVisible = FeatureLocator.HasFeaturePermession("Shipment", "ContainerStatusSimulator");
-            this.IsGeneralSimulatorVisible = FeatureLocator.HasFeaturePermession("Shipment", "VisionContainerStatusSimulator");
-            this.IsVisionRequestStatus = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "VIP")[0] == null && FeatureLocator.HasFeaturePermession("Shipment", "VizionRequestStatus");
+            this.IsGeneralSimulatorVisible = FeatureLocator.HasFeaturePermession("Shipment", "VisionContainerStatusSimulator") && SessionLocator.TenantManagementJS.IsContainerTrackingPrepaid;
+            this.IsVisionRequestStatus = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "VIP")[0] == null && FeatureLocator.HasFeaturePermession("Shipment", "VizionRequestStatus") && SessionLocator.TenantManagementJS.IsContainerTrackingPrepaid;
             this.IsContainersRequestStatusVisible = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0] != null;
             this.Listen();
         }

@@ -18,6 +18,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Xml;
 using System.Xml.Serialization;
+using static Stimulsoft.Report.StiOptions.Export;
 
 namespace WebFreight.Web.Helpers
 {
@@ -436,11 +437,12 @@ namespace WebFreight.Web.Helpers
                         sheet.Range["A2:Z2"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
                         sheet.Range["A3:Z3"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
 
-
-                        foreach (QueryColumnPM column in queryColumns)
+                        if (!FeatureToggleHelper.HasFeatureToggle("CXE", tenant))
                         {
-                            sheet.AutofitColumn(column.IndexOrder + 1);
-
+                            foreach (QueryColumnPM column in queryColumns)
+                            {
+                                sheet.AutofitColumn(column.IndexOrder + 1);
+                            }
                         }
 
                         XmlReader reader = XmlReader.Create(new StringReader(xmlData));
@@ -635,6 +637,18 @@ namespace WebFreight.Web.Helpers
 
                         //Saving the workbook to disk.
 
+
+                        if (FeatureToggleHelper.HasFeatureToggle("CXE", tenant))
+                        {
+                            int i = 1;
+
+                            foreach (QueryColumnPM _ in queryColumns)
+                            {
+                                sheet.AutofitColumn(i);
+                                i++;
+                            }
+                        }
+
                         workbook.SaveAs(memory, ExcelSaveType.SaveAsXLS);
 
                         //No exception will be thrown if there are unsaved workbooks.
@@ -689,12 +703,6 @@ namespace WebFreight.Web.Helpers
             IWorksheet sheet;
             sheet = InitializeExcelFile(out excelEngine, out workbook);
             CreateSheetHeader(dummyQuery, sheet);
-
-            foreach (QueryColumnPM column in args.QueryColumns)
-            {
-                sheet.AutofitColumn(column.IndexOrder + 1);
-            }
-
             return sheet;
         }
 

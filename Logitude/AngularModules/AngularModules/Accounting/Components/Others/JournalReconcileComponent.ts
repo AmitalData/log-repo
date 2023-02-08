@@ -3,39 +3,26 @@ import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRe
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
-import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
 import {GLAccountPM} from '../../EntityPMs/GLAccountPM';
-import {ReconciliationPM} from '../../EntityPMs/ReconciliationPM';
 import {JournalPM} from '../../EntityPMs/JournalPM';
-
 import {ReconciliationLinePM} from '../../EntityPMs/ReconciliationLinePM';
-import {LedgerTransactionList} from '../../EntityLists/LedgerTransactionList';
-import {AutomaticReconcileMethodList} from '../../EntityLists/AutomaticReconcileMethodList';
-import {LedgerTransactionPM} from '../../EntityPMs/LedgerTransactionPM';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {EntityListService} from '../../../Infrastructure/Services/EntityListService';
 import {ApiQueryFilters, FilterItem} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ObservableCollection} from '../../../Infrastructure/Utilities/ObservableCollection';
 import {AppTool} from '../../../Infrastructure/Tools';
-import {ReconcileEventManager} from '../../Utilities/ReconcileEventManager';
 import {ReconciliationExtendedPMService} from '../../Services/ExtendedPMs/ReconciliationExtendedPMService';
-import {LedgerTransactionExtendedListService} from '../../Services/ExtendedLists/LedgerTransactionExtendedListService';
-import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
-import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {AccountingPeriodListService} from '../../Services/StandardLists/AccountingPeriodListService';
 import {AccountingPeriodList} from '../../EntityLists/AccountingPeriodList';
-import { FullAccountingSettingListService } from '../../Services/StandardLists/FullAccountingSettingListService';
-import { FullAccountingSettingList } from '../../EntityLists/FullAccountingSettingList';
-import { GLAccountPMService } from '../../Services/StandardPMs/GLAccountPMService';
-
-
+import {FullAccountingSettingListService} from '../../Services/StandardLists/FullAccountingSettingListService';
+import {FullAccountingSettingList} from '../../EntityLists/FullAccountingSettingList';
+import {GLAccountPMService} from '../../Services/StandardPMs/GLAccountPMService';
+import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 
 @Component({
-    
+
     templateUrl: './JournalReconcileComponent.html',
-    
+
 })
 
 export class JournalReconcileComponent extends BaseComponent implements OnInit {
@@ -76,11 +63,11 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
                             if (!myResponse.HasError) {
                                 var res = myResponse.Result;
                                 this.GLAccount = res;
-                                
+
                             }
                             });
                     }
-                   
+
                 }
             }
         });
@@ -93,13 +80,13 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
 
         if (this.AccountingDate == null)
             this.AccountingDate = new Date();
-        
-        //this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, true);
-        
-    }
-    
 
-    
+        //this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, true);
+
+    }
+
+
+
     public get IsCustomerCare() {
         return SessionLocator.LoggedUserPM.IsCustomerCare;
     }
@@ -129,8 +116,8 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
             this.UIProperties.SetRequired("GLAccountId", this.ObjectTableName, true);
         }
 
-    }    
-       
+    }
+
 
     txt_Reference: string = TextCodeTranslator.Translate("Accounting.General.O.Reference");
     txt_Amount: string = TextCodeTranslator.Translate("JournalLine.F.LocalAmount");
@@ -141,22 +128,24 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
                 var isDestroyed: boolean = this.CD['destroyed'];
                 if (!isDestroyed) {
                     this.CD.detectChanges();
-                    //console.log("AfterLostFocus");
                 }
             }
         });
-        
+
         this.GetAccountingPeriods();
-        //set focus on accounting date
-        var t = setTimeout(() => { this.forceFocus = true; }, 1);
+
+        const t = setTimeout(() => {
+            this.forceFocus = true;
+        }, 1);
     }
+
 
     //#region Properties
     reference1: string="";
     get Reference1() { return this.reference1; }
     set Reference1(value: string) {
         if (this.reference1 != value) {
-          
+
             this.reference1 = value;
 
         }
@@ -166,7 +155,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     get Reference2() { return this.reference2; }
     set Reference2(value: string) {
         if (this.reference2 != value) {
-            
+
             this.reference2 = value;
 
         }
@@ -176,7 +165,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     get Reference3() { return this.reference3; }
     set Reference3(value: string) {
         if (this.reference3 != value) {
-          
+
             this.reference3 = value;
 
         }
@@ -186,7 +175,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     get Notes() { return this.notes; }
     set Notes(value: string) {
         if (this.notes != value) {
-            
+
             this.notes = value;
 
         }
@@ -196,7 +185,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     get DueDate() { return this.dueDate; }
     set DueDate(value: Date) {
         if (this.dueDate != value) {
-            
+
             this.dueDate = value;
         }
     }
@@ -205,19 +194,73 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     get RefDate() { return this.refDate; }
     set RefDate(value: Date) {
         if (this.refDate != value) {
-            
+
             this.refDate = value;
         }
     }
 
     _AccountingDate: Date;
-    get AccountingDate() { return this._AccountingDate; }
+    get AccountingDate() {
+        return this._AccountingDate;
+    }
+
+    checkSelectedLinesClosedMonth()
+    {
+        let errorMessage = '';
+
+        for (let i = 0; i < this._SelectedLines.Length; i++) {
+            const selectedTransaction = this._SelectedLines.Collection[i];
+            if (this.checkClosedMonth(new Date(selectedTransaction.AccountingDate))) {
+
+                errorMessage += 'This line is closed ' +
+                    new Date(selectedTransaction.AccountingDate).toDateString() + ', ' +
+                    new Date(selectedTransaction.DocumentDate).toDateString() + ', ' +
+                    new Date(selectedTransaction.DueDate).toDateString() + ', ' +
+                    selectedTransaction.Source + ', ' +
+                    selectedTransaction.OriginalAmount + ', ' +
+                    selectedTransaction.OpenAmount + ', ';
+                if (selectedTransaction.Reference1 != null) {
+                    errorMessage += selectedTransaction.Reference1;
+                }
+                if (selectedTransaction.Reference2 != null) {
+                    errorMessage += selectedTransaction.Reference2;
+                }
+                if (selectedTransaction.Reference3 != null) {
+                    errorMessage += selectedTransaction.Reference3;
+                }
+
+                errorMessage += '\n';
+            }
+
+        }
+
+        if (errorMessage !== '') {
+            const messageWindow = new MessageWindow();
+            messageWindow.Width = 600;
+            messageWindow.Height = 300;
+            messageWindow.IsMessageMultiLine = true;
+            messageWindow.Show(errorMessage);
+        }
+    }
+
+    checkClosedMonth(value: Date): boolean {
+        if (value != null) {
+            const accountingPeriod = this.AccountingPeriods.find(d => d.Year === value.getFullYear());
+            if (accountingPeriod) {
+                const month = value.getMonth() + 1;
+
+                if (month > accountingPeriod.ClosedMonth && month <= accountingPeriod.OpenMonth) { // valid (open month)
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        }
+    }
+
     set AccountingDate(value: Date) {
         if (this._AccountingDate != value) {
-
-
             if (value != null) {
-
                 // Get Accounting Period by year
                 var accountingPeriod = this.AccountingPeriods.find(d => d.Year == value.getFullYear());
 
@@ -232,17 +275,13 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
                         this.ValidationErrorsList = []; // empty errors list
 
                     } else { // invalid (closed month)
-
                         // push the error to errors list
                         this.ValidationErrorsList.push("Closed Month!");
                         this._AccountingDate = value;
                         return;
-
                     }
                 }
-
             }
-
             this._AccountingDate = value;
             if (!AppTool.IsNullOrEmpty(this._AccountingDate)) {
                 this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, false);
@@ -267,31 +306,31 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         }
     }
 
-    
+
     //#endregion
 
-    
+
     DetectChanges() {
         this.CD.detectChanges();
     }
 
- 
-  
+
+
     GetAccountingPeriods() {
-        var filters = new ApiQueryFilters(true);
-        filters.addAdditionalFilter("PeriodTypeCode", "1", null, null, "Equals", false, false, false, "string"); // 1-Regular
+        const filters = new ApiQueryFilters(true);
+        filters.addAdditionalFilter('PeriodTypeCode', '1', null, null,
+            'Equals', false, false, false, 'string'); // 1-Regular
 
         this._AccountingPeriodListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                     this.AccountingPeriods = myResponse.Result;
-                    console.log(">>Accounting Periods: ", myResponse.Result);
                 }
             }
         });
     }
 
-  
+
     lastDay(year, month) {
         return new Date(year, month + 1, 0).getDate();
     }
@@ -318,7 +357,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         else if (AppTool.IsNullOrEmpty( this.AccountingDate )) {
 
             this.ValidationErrorsList.push("Accounting Date is Required");
-        
+
         } else {
             this.ValidationErrorsList = [];
 
@@ -363,19 +402,19 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
                 this.reference1, this.reference2, this.reference3, this.Notes)
                 .subscribe(
                 (res:ServiceResponse) => {
-    
+
                     this.CurrentSession.StopBusyIndicator();
                     if (res.HasError) {
                         this.ValidationErrorsList = res.ErrorsArray;
-    
+
                     } else {
                         var journalsArray: JournalPM[];
                         journalsArray = res.Result;
                         this._NewJournals = journalsArray;
                     }
-    
+
                 });
-            
+
         } else {
             this._ReconciliationExtendedPMService.CreateJournalReconcile(
             myReconciliationLines,
@@ -397,6 +436,8 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
 
             });
         }
+
+        this.checkSelectedLinesClosedMonth();
     }
     _NewJournalPM: JournalPM;
     _NewJournals: JournalPM[];
@@ -421,12 +462,12 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         var item = document.getElementById("adjustbutton");
         var itemRect = item.getBoundingClientRect();
 
-        let DDLHeight =22.5;//    height: 22px; * 3 +30 
-        let Extra = 22 + 1 + 1; //    height: 22px; +1 UP +1 DOWN 
-        if (itemRect.bottom + DDLHeight < this.getScreenHeight()) {//this.PaintTop = true                
+        let DDLHeight =22.5;//    height: 22px; * 3 +30
+        let Extra = 22 + 1 + 1; //    height: 22px; +1 UP +1 DOWN
+        if (itemRect.bottom + DDLHeight < this.getScreenHeight()) {//this.PaintTop = true
             document.getElementById("dropdowmenu").style.top = (itemRect.bottom - DDLHeight - Extra) + 'px';
         }
-      
+
         if (this.dropdownDisplay == 'none') {
             this.dropdownDisplay = 'block';
         }

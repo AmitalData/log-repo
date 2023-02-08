@@ -112,7 +112,7 @@
         </tr>
         <tr style="height: 100%">
             <td colspan="4">
-                <logitude-edit-grid GridWidth="100%" [HeaderHeight]="25" GridHeight="100%" [ItemSource]="InterestTransactions" [UseVirtuallization]="true">
+                <logitude-edit-grid GridWidth="600px" [HeaderHeight]="25" GridHeight="100%" [ItemSource]="InterestTransactions" [UseVirtuallization]="true">
 
                     <!-- InterestEntityTypeCode -->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="InterestEntityTypeCodeHeader">
@@ -172,6 +172,38 @@
                                     {{item.JournalNumber}}
                                 </a>
                             </div>
+                        </log-cell-template>
+                        </ng-template>
+                    </log-column>
+
+                    <!--Notes-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'80'" [header]="InterestTransactionNotes">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate>
+                            <table>
+                                <tr>
+                                    <td style="width:5px;">
+                                        <div></div>
+                                    </td>
+                                    <td style="width:16px;">
+                                        <img *ngIf="!item.Notes" style="vertical-align: middle; display: block;" src="./Images/Notes_notexists.png" />
+                                        <CellTooltip *ngIf="item.Notes" [IconPath]="'./Images/Notes_exists.png'"
+                                         [Body]="item.Notes"></CellTooltip>
+                                         
+                                    </td>
+                                    <td style="width:5px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width:20px;height:20px;padding-left:1px;">
+                                        <IconButton [Name]="'Edit'" [IsSmall]="true"  [Left]="3" (click)="OpenInterestTransactionNote(item)"></IconButton>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                               </tr>
+                            </table>
                         </log-cell-template>
                         </ng-template>
                     </log-column>

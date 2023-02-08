@@ -155,12 +155,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
 
             //(showLocals ? xxxxx.LocalName: xxxxx.EnglishName);
-            if (!SuppressFetchOpenReconcilation)
-            {
-                LedgerTransactionRepository LedgerTransactionreop = new LedgerTransactionRepository(entityPOCO.Tenant);
-                entityPM.ReconcilationCount = LedgerTransactionreop.getRecoCount(entityPM.Id);
+            //if (!SuppressFetchOpenReconcilation)
+            //{
+            //    LedgerTransactionRepository LedgerTransactionreop = new LedgerTransactionRepository(entityPOCO.Tenant);
+            //    entityPM.ReconcilationCount = LedgerTransactionreop.getRecoCount(entityPM.Id);
 
-            }
+            //}
 
             if (entityPOCO.AccountTypeCode != null)
             {

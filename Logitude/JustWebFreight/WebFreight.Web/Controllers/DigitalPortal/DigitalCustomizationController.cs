@@ -1,11 +1,14 @@
-﻿using Logitude.BL.InfrastructureModel.CustomFilters;
+﻿using Logitude.BL.Helpers;
+using Logitude.BL.InfrastructureModel.CustomFilters;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.Data.EntityLists;
 using Logitude.SystemLogs;
+using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -31,6 +34,156 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     public class DigitalCustomizationController : ApiController
     {
         [HttpPost]
+        [Route("DigitalCustomization/AddCustomField")]
+        public HttpResponseMessage AddCustomField(AddCustomFieldRequest addCustomFieldRequest)
+        {
+            int tenant = 0;
+            string email = "";
+
+            try
+            {
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                var helper = new DigitalFieldSecuritesHelper();
+
+                if (helper.CheckIfFieldInuse(new CheckObjectFieldExistenceRequest 
+                                             { 
+                                                 FieldCode = addCustomFieldRequest.FieldCode, 
+                                                 ProfileCode = addCustomFieldRequest.ProfileCode, 
+                                                 ObjectTableId = addCustomFieldRequest.ObjectTableId
+                                             }, tenant))
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, $"Field {addCustomFieldRequest.FieldCode} already exist in your tenant");
+                }
+
+                var digitalFieldSecurityQuery = new DigitalFieldSecurityQueryService(tenant);
+                var customDigitalFieldSecurity = digitalFieldSecurityQuery.GetDigitalFieldSecurityQuery(tenant, 
+                                                                                                        addCustomFieldRequest.ObjectTableId,
+                                                                                                        addCustomFieldRequest.ProfileCode);
+
+                DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+
+                var items = new List<DigitalFeildSecurityObject>();
+                if (customDigitalFieldSecurity == null)
+                {
+                    var defaultDigitalFieldSecurity = digitalFieldSecurityQuery.GetDigitalFieldSecurityQuery(0,
+                                                                                         addCustomFieldRequest.ObjectTableId,
+                                                                                         addCustomFieldRequest.ProfileCode);
+
+                    items = JsonConvert.DeserializeObject<List<DigitalFeildSecurityObject>>(defaultDigitalFieldSecurity.DefaultSettings);
+
+                    items.Add(new DigitalFeildSecurityObject
+                    {
+                        FieldCode = addCustomFieldRequest.FieldCode,
+                        CreatedBy = addCustomFieldRequest.CreatedBy,
+                        CreatedOn = todayDate,
+                        ModifiedBy = addCustomFieldRequest.ModifiedBy,
+                        ModifiedOn = todayDate,
+                        HasPermission = true,
+                        IsList = addCustomFieldRequest.IsList,
+                        IsPm = addCustomFieldRequest.IsPm
+                    });
+
+                    customDigitalFieldSecurity = new DigitalFieldSecurityList
+                    {
+                        ObjectTableId = addCustomFieldRequest.ObjectTableId,
+                        Tenant = tenant,
+                        DefaultSettings = JsonConvert.SerializeObject(items),
+                        CreateDate = todayDate,
+                        UpdateDate = todayDate,
+                        ProfileId = addCustomFieldRequest.ProfileId,
+                        ParentObjectTableId = addCustomFieldRequest.ParentObjectTableId
+                    };
+                }
+                else
+                {
+                    items = JsonConvert.DeserializeObject<List<DigitalFeildSecurityObject>>(customDigitalFieldSecurity.DefaultSettings);
+
+                    items.Add(new DigitalFeildSecurityObject
+                    {
+                        FieldCode = addCustomFieldRequest.FieldCode,
+                        CreatedBy = addCustomFieldRequest.CreatedBy,
+                        CreatedOn = todayDate,
+                        ModifiedBy = addCustomFieldRequest.ModifiedBy,
+                        ModifiedOn = todayDate,
+                        HasPermission = true,
+                        IsList = addCustomFieldRequest.IsList,
+                        IsPm = addCustomFieldRequest.IsPm
+                    });
+
+                    customDigitalFieldSecurity.DefaultSettings = JsonConvert.SerializeObject(items);
+                    customDigitalFieldSecurity.UpdateDate = todayDate;
+                }
+
+                digitalFieldSecurityQuery.UpdateDigitalFieldSecurity(customDigitalFieldSecurity);
+
+                var textCodeQuery = new DigitalTextCodeQueryService(tenant);
+                var customTextCodes = textCodeQuery.GetDigitalTextCodesQuery(tenant,
+                                                                             addCustomFieldRequest.ObjectTableId,
+                                                                             addCustomFieldRequest.ProfileCode);
+
+                if (customTextCodes == null)
+                {
+                    var defaultTextCodes = textCodeQuery.GetDigitalTextCodesQuery(0,
+                                                                                  addCustomFieldRequest.ObjectTableId,
+                                                                                  addCustomFieldRequest.ProfileCode);
+
+                    var customCodesMappedObject = JsonConvert.DeserializeObject<List<DigitalTextCodeUpdateObject>>(defaultTextCodes.Labels);
+
+                    customCodesMappedObject.Add(new DigitalTextCodeUpdateObject
+                    {
+                        DisplayText = addCustomFieldRequest.DisplayText,
+                        DefaultText = addCustomFieldRequest.DefaultText, 
+                        TextCode = addCustomFieldRequest.TextCode,
+                        FieldCode = addCustomFieldRequest.FieldCode
+                    });
+
+                    customTextCodes = new DigitalTextCodeList
+                    {
+                        ObjectTableId = addCustomFieldRequest.ObjectTableId,
+                        Tenant = tenant,
+                        ProfileId = addCustomFieldRequest.ProfileId,
+                        Labels = JsonConvert.SerializeObject(customCodesMappedObject),
+                        CreateDate = todayDate,
+                        UpdateDate = todayDate
+                    };
+
+                }
+                else
+                {
+                    var customCodesMappedObject = JsonConvert.DeserializeObject<List<DigitalTextCodeUpdateObject>>(customTextCodes.Labels);
+
+                    customCodesMappedObject.Add(new DigitalTextCodeUpdateObject
+                    {
+                        DisplayText = addCustomFieldRequest.DisplayText,
+                        DefaultText = addCustomFieldRequest.DefaultText,
+                        TextCode = addCustomFieldRequest.TextCode,
+                        FieldCode = addCustomFieldRequest.FieldCode
+                    });
+
+                    customTextCodes.Labels = JsonConvert.SerializeObject(customCodesMappedObject);
+                    customTextCodes.UpdateDate = todayDate;
+                }
+
+                textCodeQuery.UpdateDigitalTextCodes(customTextCodes);
+
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        [HttpPost]
         [Route("DigitalCustomization/CheckIfFieldInuse")]
         public HttpResponseMessage CheckIfFieldInuse(CheckObjectFieldExistenceRequest checkObjectFieldExistenceRequest)
         {
@@ -44,16 +197,14 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 email = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                var helper = new DigitalFieldSecuritesHelper();
-                var defaultDigitalFieldSecurity = helper.GitDigitalSecuritesFeilds(checkObjectFieldExistenceRequest.ObjectTableId, checkObjectFieldExistenceRequest.ProfileId, tenant);
-
-                var res = false;
-
-                if (defaultDigitalFieldSecurity.Any(a => a.FieldCode.Equals(checkObjectFieldExistenceRequest.FieldCode, StringComparison.InvariantCultureIgnoreCase)))
+                if (checkObjectFieldExistenceRequest.ProfileCode == null)
                 {
-                    res = true;
+                    var digitalProfileQueryService = new DigitalProfileQueryService(tenant);
+                    checkObjectFieldExistenceRequest.ProfileCode = digitalProfileQueryService.GetDigitalProfileByName(tenant, "Customer").Code;
                 }
 
+                var helper = new DigitalFieldSecuritesHelper();
+                var res = helper.CheckIfFieldInuse(checkObjectFieldExistenceRequest, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, res);
             }
             catch (AutenticationException ex)
@@ -65,8 +216,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-
-            return null;
         }
 
         [HttpGet]
@@ -148,8 +297,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
                 ObjectFieldRepository objectFieldRepository = new ObjectFieldRepository(MyContext);
-                var IncludeMetaDataFields = queryOperations.QueryFilterItems.Where(a => a.FieldName == "IncludeMetaDataFields").FirstOrDefault() != null;
-                IQueryable<ObjectField> entityPocos = objectFieldRepository.GetObjectFieldsFromTenanZeroAndMyTenant(tenant, IncludeMetaDataFields);
+                IQueryable<ObjectField> entityPocos = objectFieldRepository.GetDigitalObjectFieldsFromTenanZeroAndMyTenant(authToken.Tenant, true);
 
                 ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(objectFieldRepository);
 
@@ -158,12 +306,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 
-                if (listQueryOperation.QueryFilterItems != null)
-                {
-                    var queryFilter = listQueryOperation.QueryFilterItems.Where(d => d.FieldName == "FullNameTextCodeDefaultText").FirstOrDefault();
-                    if (queryFilter != null) queryFilter.Operator = "Contains";
-                }
-
+               
                 entityPocos = genericFilter.GetFilteredQuery(nonListQueryOperation, entityPocos);
 
                 ObjectFieldCustomFilter customfilters = new ObjectFieldCustomFilter(tenant);
@@ -187,7 +330,22 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     entityLists = entityLists.Take(queryOperations.PageSize);
                 }
 
-                List<ObjectFieldList> listResult = entityLists.ToList();
+                List<ObjectFieldList> listResult = entityLists.Where(a => !string.IsNullOrEmpty(a.FullNameTextCodeDefaultText)).ToList();
+
+                var helper = new DigitalFieldSecuritesHelper();
+
+                var defaultData = helper.GitDigitalSecuritesFeilds(filters.ObjectTableId, filters.ProfileCode, 0);
+                var customData = helper.GitDigitalSecuritesFeilds(filters.ObjectTableId, filters.ProfileCode, authToken.Tenant);
+
+                foreach (var item in listResult)
+                {
+                    if(defaultData.Any(a => a.FieldCode.Equals(item.FieldCode))
+                        || customData.Any(a => a.FieldCode.Equals(item.FieldCode)))
+                    {
+                        item.InUse = true;
+                    }
+                }
+
                 response.Result = listResult;
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
                 return reponseMessage;
@@ -247,14 +405,14 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("DigitalCustomization/GetDigitalPortalScreenNames")]
-        public HttpResponseMessage GetDigitalPortalScreenNames()
+        public HttpResponseMessage GetDigitalPortalScreenNames(string profileCode)
         {
             int tenant = 0;
             string email = "";
             try
             {
                 var screenQueryService = new DigitalPortalScreenQueryService(tenant);
-                var digitalPortalScreens = screenQueryService.GetDigitalPortalScreenNamesQuery(tenant);
+                var digitalPortalScreens = screenQueryService.GetDigitalPortalScreenNamesQuery(tenant, profileCode);
                 return Request.CreateResponse(HttpStatusCode.OK, digitalPortalScreens);
             }
             catch (Exception ex)
@@ -266,7 +424,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("DigitalCustomization/GetDigitalPortalScreens")]
-        public HttpResponseMessage GetDigitalPortalScreens(string objectTableId, string screenCode = "")
+        public HttpResponseMessage GetDigitalPortalScreens(string objectTableId, string screenCode = "", string profileCode = "")
         {
             int tenant = 0;
             string email = "";
@@ -294,7 +452,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 }
 
                 var screenQueryService = new DigitalPortalScreenQueryService(tenant);
-                var digitalPortalScreens = screenQueryService.GetDigitalPortalScreensQuery(tenant, objectTableId, screenCode);
+                var digitalPortalScreens = screenQueryService.GetDigitalPortalScreensQuery(tenant, objectTableId, screenCode, profileCode);
                 var data = digitalPortalScreens.FirstOrDefault(a => a.Tenant == tenant);
 
                 if (data != null)
@@ -356,15 +514,21 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 var digitalPreDefinedComponentQueryService = new DigitalPortalScreenQueryService(tenant);
 
-                var tenantDigitalPortalScreen = digitalPreDefinedComponentQueryService.GetDigitalPortalScreensQuery(tenant, digitalPortalScreenUpdateModel.ObjectTableId, digitalPortalScreenUpdateModel.ScreenCode)
+                var tenantDigitalPortalScreen = digitalPreDefinedComponentQueryService.GetDigitalPortalScreensQuery(tenant, 
+                                                                                                                    digitalPortalScreenUpdateModel.ObjectTableId,
+                                                                                                                    digitalPortalScreenUpdateModel.ScreenCode,
+                                                                                                                    digitalPortalScreenUpdateModel.ProfileCode)
                                                                                       .FirstOrDefault(a => a.Tenant == tenant);
 
                 DigitalPortalScreenList defaultTenantDigitalPortalScreen = null;
 
                 if (digitalPortalScreenUpdateModel.IsDraft && string.IsNullOrEmpty(digitalPortalScreenUpdateModel.Content))
                 {
-                     defaultTenantDigitalPortalScreen = digitalPreDefinedComponentQueryService.GetDigitalPortalScreensQuery(tenant, digitalPortalScreenUpdateModel.ObjectTableId, digitalPortalScreenUpdateModel.ScreenCode)
-                                                                      .FirstOrDefault(a => a.Tenant == 0);
+                     defaultTenantDigitalPortalScreen = digitalPreDefinedComponentQueryService.GetDigitalPortalScreensQuery(tenant,
+                                                                                                                            digitalPortalScreenUpdateModel.ObjectTableId,
+                                                                                                                            digitalPortalScreenUpdateModel.ScreenCode,
+                                                                                                                            digitalPortalScreenUpdateModel.ProfileCode)
+                                                                                              .FirstOrDefault(a => a.Tenant == 0);
                 }
 
 
@@ -379,6 +543,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                  : digitalPortalScreenUpdateModel.Content,
                         DraftContent =  digitalPortalScreenUpdateModel.DraftContent,
                         Tenant = tenant,
+                        ProfileId = digitalPortalScreenUpdateModel.ProfileId,
                         ScreenCode = digitalPortalScreenUpdateModel.ScreenCode,
                         ObjectTableId = digitalPortalScreenUpdateModel.ObjectTableId,
                         CreateDate = DateTime.UtcNow,
@@ -416,7 +581,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("DigitalCustomization/GetDefaultScreenLayout")]
-        public HttpResponseMessage GetDefaultScreenLayout(string objectTableId, string screenCode)
+        public HttpResponseMessage GetDefaultScreenLayout(string objectTableId, string screenCode, string profileCode = "")
         {
             int tenant = 0;
             string email = "";
@@ -428,7 +593,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 var digitalPreDefinedComponentQueryService = new DigitalPortalScreenQueryService(tenant);
 
-                var allScreens = digitalPreDefinedComponentQueryService.GetDigitalPortalScreensQuery(tenant, objectTableId, screenCode);
+                var allScreens = digitalPreDefinedComponentQueryService.GetDigitalPortalScreensQuery(tenant, objectTableId, screenCode, profileCode);
                 var defaultDisgitalPortalScreen = allScreens.FirstOrDefault(a => a.Tenant == 0);
                 var tenantDigitalPortalScreen = allScreens.FirstOrDefault(a => a.Tenant == tenant);
 

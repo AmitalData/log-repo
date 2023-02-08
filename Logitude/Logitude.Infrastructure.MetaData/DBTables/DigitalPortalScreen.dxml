@@ -65,9 +65,21 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ProfileId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ObjectTableId"
     ReferencedTable="ObjectTables"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ProfileId"
+    ReferencedTable="DigitalProfiles"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

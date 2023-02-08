@@ -1,0 +1,25 @@
+﻿<Script DBType="Main" Module="Dashboard">
+  <Sql Version="3">
+    <![CDATA[
+	
+	 if not exists (select Code from DashboardGlobalPresetFilters where Code = 'TransportMode')
+	 begin
+		insert into DashboardGlobalPresetFilters(Code, DisplayName, DataTypeCode, IsMultiSelect, JoinedTableName, Sort, JoinedTableDisplayField)
+		values ('TransportMode', 'Transport mode', 'LookUp', 1 ,'TransportMode', '1', 'Name')
+	 end
+	 
+	 if not exists (select Code from DashboardGlobalPresetFilters where Code = 'Direction')
+	 begin
+		insert into DashboardGlobalPresetFilters(Code, DisplayName, DataTypeCode, IsMultiSelect, JoinedTableName, Sort, JoinedTableDisplayField)
+		values ('Direction', 'Direction', 'LookUp', 1 ,'Direction', '2', 'Name')
+	 end
+     
+     if not exists (select Code from DashboardGlobalPresetFilters where Code = 'CreateDate')
+	 begin
+		insert into DashboardGlobalPresetFilters(Code, DisplayName, DataTypeCode, Sort)
+		values ('CreateDate', 'Create date', 'DateTime', 3)
+	 end
+	  
+    ]]>       
+  </Sql>
+</Script>

@@ -734,24 +734,25 @@ namespace Logitude.Accounting.BL.CoreBL
             //if (reduceDeadlock)
             {
                 //timeOut = TimeSpan.FromSeconds(2);
-                if (myLedgerTransactionsWithCounters.Count < 100)
-                {
-                    iTimeOut = (1);
-                }
-                else if (myLedgerTransactionsWithCounters.Count < 1000)
-                {
-                    iTimeOut = (5);
-                }
-                else if (myLedgerTransactionsWithCounters.Count < 10000)
-                {
-                    iTimeOut = (10);
-                }
+                iTimeOut = (600);
+                //if (myLedgerTransactionsWithCounters.Count < 100)
+                //{
+                //    iTimeOut = (1);
+                //}
+                //else if (myLedgerTransactionsWithCounters.Count < 1000)
+                //{
+                //    iTimeOut = (5);
+                //}
+                //else if (myLedgerTransactionsWithCounters.Count < 10000)
+                //{
+                //    iTimeOut = (10);
+                //}
 
 
-                if (!iTimeOut.HasValue)
-                {
-                    iTimeOut = (20);
-                }
+                //if (!iTimeOut.HasValue)
+                //{
+                //    iTimeOut = (20);
+                //}
                 if (Debugger.IsAttached)
                 {
                     //System.Diagnostics.Debugger.Break();
@@ -1111,8 +1112,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
             LogMessagingUtil.Instance.AppendLine(message?.MessageId?.ToString() + " " + ex.ToString());
             ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "AccountingJournalApproveWR", "AccountingJournalApproveWR: ProcessMessage() Method", null);
-            if (message.RetryNumber >= 2 && message.RetryNumber <= 5) {
-                    myDbQueueService.Delay(new TimeSpan(0, 0, 0, 30));
+            if (message.RetryNumber >= 2 && message.RetryNumber <= 7) {
+                    myDbQueueService.Delay(new TimeSpan(0, 0, 0, 50));
             }
             if (message == null || message.RetryNumber > 5)
             {

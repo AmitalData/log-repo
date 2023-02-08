@@ -126,6 +126,8 @@ namespace WarehouseData.Helper
                 SqlDataReader reader = commandSourceData.ExecuteReader();
                 objectFieldsTable.Load(reader);
                 reader.Close();
+                sourceConnection.Close();
+
             }
 
             return objectFieldsTable;
@@ -142,6 +144,8 @@ namespace WarehouseData.Helper
                 SqlDataReader reader = commandSourceData.ExecuteReader();
                 objectTablesLists.Load(reader);
                 reader.Close();
+                sourceConnection.Close();
+
             }
             return objectTablesLists;
         }
@@ -223,6 +227,8 @@ namespace WarehouseData.Helper
                 SqlDataReader reader = commandSourceData.ExecuteReader();
                 dWObjectFieldsMetaData.Load(reader);
                 reader.Close();
+                sourceConnection.Close();
+
 
             }
             return dWObjectFieldsMetaData;

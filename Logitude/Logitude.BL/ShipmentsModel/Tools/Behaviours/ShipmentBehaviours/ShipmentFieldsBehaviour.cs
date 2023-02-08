@@ -115,7 +115,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             }
             else if (entityPM.IsUpdatedVizionAnalyzer)
             {
-                entityPM.UpdatedByPartner = "Vizion";
+                entityPM.UpdatedByPartner = "Container Tracker";
             }
 
             else

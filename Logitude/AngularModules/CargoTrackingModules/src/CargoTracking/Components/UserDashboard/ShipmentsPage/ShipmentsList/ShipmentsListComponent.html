@@ -139,10 +139,11 @@
                 <span class="filter-close-btn">×</span>
             </li>
 
-            <li *ngFor="let customerId of ShipmentSearchInput.CustomersIds" (click)="UnselectCustomer(customerId)">
-                {{InvitedCustomersDictionary[customerId].Name}}
+            <li *ngFor="let customer of ShipmentSearchInput.Customers" (click)="UnselectCustomer(customer.CustomerId)">
+                {{customer.CustomerName}}
                 <span class="filter-close-btn">×</span>
             </li>
+
             <li *ngIf="ShipmentSearchInput.HasException" (click)="ClearHasExceptionChanged(false)"> Exceptions Only
                 <span class="filter-close-btn">×</span>
             </li>
@@ -455,37 +456,6 @@
                         </div>
                         <div class="column seperator"></div>
 
-
-
-                        <!-- Pickup -->
-                        <!--<div class="column col-md-2 hide-mobile" style="width: 14%;">
-        <div>
-            <div class="subtitle">Pickup</div>
-            <div class="value uppercase">
-                <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.PickupDone }}
-            </div>
-
-            <div class="subtitle">Delivery Location</div>
-            <div class="value uppercase">
-                <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.Delivery }}
-            </div>
-
-        </div>
-    </div>-->
-                        <!-- From -->
-                        <!-- <div class="column col-md-2">
-        <div>
-            <div class="header subtitle">From</div>
-            {{ shipment.From | date: " MMMM d, y, h:mm" }}
-        </div>
-    </div> -->
-                        <!-- To -->
-                        <!-- <div class="column col-md-2">
-        <div>
-            <div class="header subtitle">To</div>
-            {{ shipment.To | date: " MMMM d, y, h:mm" }}
-        </div>
-    </div> -->
                         <!-- Status -->
                         <div class="column col-md-1 status" style="width: 13%;">
                             <div>

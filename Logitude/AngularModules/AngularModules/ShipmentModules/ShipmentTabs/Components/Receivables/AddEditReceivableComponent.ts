@@ -120,7 +120,7 @@ export class AddEditReceivableComponent {
 
     private BuildQueryFilters() {
         this.MeasurementsQueryFilters = new ApiQueryFilters();
-        this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "NotContains", false, false, false, "string", false, true, true);
+        this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "Exclude", false, false, false, "string", false, true, true);
 
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
@@ -211,7 +211,7 @@ export class AddEditReceivableComponent {
         }
     }
     private AddExpensePayable() {
-        if (this.EntityPM.IsExpense && this.DataContext.IsPayableCharge && SessionLocator.TenantPM.CountryCode == "MX") {
+        if (this.EntityPM.IsExpense && this.DataContext.IsPayableCharge && SessionLocator.TenantPM.CountryCode == "MX" && SessionLocator.SATInterfaceSettings.TransferExpenseCharges) {
             var expensePayable: ShipmentPayablePM = new ShipmentPayablePM(this.DataContext.ShipmentPM);
             expensePayable.ChargesTypeId = this.DataContext.ChargesTypeId;
             expensePayable.IsExpenseCharge = this.DataContext.EntityPM.IsExpenseCharge;

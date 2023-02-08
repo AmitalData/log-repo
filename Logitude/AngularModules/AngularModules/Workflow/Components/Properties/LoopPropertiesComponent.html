@@ -36,6 +36,10 @@
         width: 320px;
         padding-top: 4px;
     }
+
+    .break-space{
+        white-space: break-spaces;
+    }
 </style>
 
 <table>
@@ -49,6 +53,14 @@
     <tr class="first-split-table-row">
         <td class="table-row-cell">
             <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <p class="Label break-space">Start a loop path for iterating over items in a collection variable. For each iteration, the flow temporarily stores the item in the loop variable.</p>
+            </div>
         </td>
     </tr>
 
@@ -138,15 +150,6 @@
     <tr>
         <td>
             <div></div>
-        </td>
-    </tr>
-
-    <tr class="table-row">
-        <td>
-            <FooterButtons [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="saveButtonClicked()"
-                (CancelButtonClicked)="cancelButtonClicked()" [SaveButtonDataCy]="'loop-properties-save-button'"
-                [CancelButtonDataCy]="'loop-properties-cancel-button'">
-            </FooterButtons>
         </td>
     </tr>
 

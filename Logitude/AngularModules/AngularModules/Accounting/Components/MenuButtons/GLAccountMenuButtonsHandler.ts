@@ -38,10 +38,10 @@ export class GLAccountMenuButtonsHandler {
         this.EntityPM = entityArgs.EntityPM;
 
         this.GetCards();
-
         this.Listen();
     }
     accountCardlist: CardList[];
+    reconcilationCount: number;
 
 
     private SaveCompletedEvent: any = null;
@@ -128,15 +128,18 @@ export class GLAccountMenuButtonsHandler {
 
                         case "Reconcile":
                             {
-                                button.DisplayText = TextCodeTranslator.Translate("GLAccount.B.Reconcile") + " (" + this.EntityPM.ReconcilationCount + ")";
-
-
-                                       if (this.EntityPM.IsControlAccount == true || this.EntityPM.ReconcilationCount==0 ) {
-                                           button.IsDisabled = true;
-
-
+                                this._GLAccountExtendedPMService.GetGLAReconcilationCount(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+                                    this.reconcilationCount = myResponse.Result
+                                    const reconcileMenuButton = menuButtons.filter(x=>x.EventCode == 'Reconcile')[0];
+                                    reconcileMenuButton.DisplayText = TextCodeTranslator.Translate("GLAccount.B.Reconcile") + " (" + this.reconcilationCount + ")";
+                                       if (this.EntityPM.IsControlAccount == true || this.reconcilationCount==0 ) {
+                                        reconcileMenuButton.IsDisabled = true;
 
                                     }
+                        
+                                });
+
+                                
 
 
 

@@ -3,7 +3,7 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { DeploymentPackagePM } from '../../../../Infrastructure/EntityPMs/DeploymentPackagePM';
 import { AddNewDeploymentPackageComponent } from './AddNewDeploymentPackageComponent';
-import { DateTool } from '../../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 
 @Component({
 
@@ -15,7 +15,7 @@ export class NewExportDeploymentPackageComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public DataContext: NewExportDeploymentPackageComponent = this;
     public ObjectTableName: string = "DeploymentPackage";
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.UIProperties.SetRequired("Code", this.ObjectTableName, true);
@@ -52,6 +52,7 @@ export class NewExportDeploymentPackageComponent extends BaseComponent {
     public set Name(value: string) {
         if (this.EntityPM.Name == value) return;
         this.EntityPM.Name = value;
+        this.Code = this.Code = AppTool.Replace(value?.toLowerCase(), " ", "_");
     }
 
     public get Description() { return this.EntityPM.Description }
@@ -80,4 +81,7 @@ export class NewExportDeploymentPackageComponent extends BaseComponent {
 
     }
 
+    public CancelButtonClicked() {
+        this.CurrentSession.CloseCurrentWindow();
+    }
 }

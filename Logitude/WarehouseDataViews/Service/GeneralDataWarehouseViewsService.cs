@@ -70,6 +70,7 @@ namespace WarehouseDataViews.Service
                 SqlDataReader reader = commandSourceData.ExecuteReader();
                 result.Load(reader);
                 reader.Close();
+                sourceConnection.Close();
 
             }
             return result;
@@ -83,6 +84,8 @@ namespace WarehouseDataViews.Service
                 SqlCommand commandSourceData = new SqlCommand(sqlString, sourceConnection);
                 SqlDataReader reader = commandSourceData.ExecuteReader();
                 reader.Close();
+                sourceConnection.Close();
+
             }
         }
 

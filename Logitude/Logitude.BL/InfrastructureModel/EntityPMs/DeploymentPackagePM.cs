@@ -32,9 +32,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
 
     public class DeploymentPackageDetails
     {
-        public string Name { get; set; }
-        public string Code { get; set; }
-        public string Description { get; set; }
         public List<CustomFields> CustomFields { get; set; }
        public List<CustomPickListItem> CustomPickLists { get; set; }
     }
@@ -49,7 +46,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string ObjectTableName { get; set; }
         public string LookUpTableName { get; set; }
         public string HelpText { get; set; }
-        public string SearchFields { get; set; }
         public string CustomPickListCode { get; set; }
         public int NumberOfDigits { get; set; }
         public int DigitsAfterPoint { get; set; }
@@ -58,7 +54,8 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool IsRequiered { get; set; }
         public bool DisplayOnly { get; set; }
         public bool MultiLine { get; set; }
-        
+        public string DefaultAdditionalFilters { get; set; }
+
     }
     public class CustomPickListItem
     {

@@ -68,14 +68,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                     {
                         contactPM = new ContactPM();
                         contactPM.IsAPIContact = true;
-                        contactPM.IsCreatedWithPartner = true;
-
-                        //contactPM = query.GetSinglePMByEmail(item.Email, tenant);
-
-                        //if (contactPM == null)                        
-                        //    contactPM = new ContactPM();                            
-
-                        //throw new ApplicationException("Contact with Email " + item.Email + " doesn't exist");                        
+                        contactPM.IsCreatedWithPartner = true;                       
                     }
                    
                     contactPM.Id = item.Id;
@@ -88,6 +81,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                     contactPM.Mobile = item.Mobile;
                     contactPM.BusinessPhone = item.BusinessPhone;
                     contactPM.ExternalId = item.Code;
+                    contactPM.SetAsPrimaryForCard = item.IsPrimaryContact;
                     contacts.Add(contactPM);
                 }
 

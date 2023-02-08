@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { ConditionDisabled } from "Workflow/Models/Types";
+import { ConditionDisabled } from "Workflow/Types";
 
 @Pipe({
     name: "ConditionDisabledPipe"

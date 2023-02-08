@@ -409,7 +409,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             
             FieldChange.Add(entityPoco.IsCancelled, entityPM.IsCancelled, nameof(entityPM.IsCancelled), fieldChanges);
             entityPoco.IsCancelled = entityPM.IsCancelled;
-            
+
             FieldChange.Add(entityPoco.IsOperationalClosed, entityPM.IsOperationalClosed, nameof(entityPM.IsOperationalClosed), fieldChanges);
             entityPoco.IsOperationalClosed = entityPM.IsOperationalClosed;
             
@@ -1202,6 +1202,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             
             FieldChange.Add(entityPoco.IsINTTRAFROB, entityPM.IsINTTRAFROB, nameof(entityPM.IsINTTRAFROB), fieldChanges);
             entityPoco.IsINTTRAFROB = entityPM.IsINTTRAFROB;
+            entityPoco.ShippingLine = entityPM.ShippingLine;
+            entityPoco.PlaceOfDelivery = entityPM.PlaceOfDelivery;
+            entityPoco.PickupPlace = entityPM.PickupPlace;
+            entityPoco.SealNo = entityPM.SealNo;
+            entityPoco.HSCode = entityPM.HSCode;
 
             BuildSearchField(entityPM, entityPoco, entityMasterData, myPackagesList);
             if (!LBcurrentTenant.IsDocumentsArchive)
@@ -3683,6 +3688,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.AMSBL);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.WarehouseLegReference);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.WarehouseLeg2Reference);
+
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ShippingLine);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.PlaceOfDelivery);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.PickupPlace);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.SealNo);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.HSCode);
+
+
             if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
             {
                 AddressRepository addressRepository = new AddressRepository(entityPoco.Tenant);
@@ -4004,6 +4017,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 entityPoco.SearchFields = mySearchFields;
             }
 
+
         }
 
         public static string GetFormattedSearchFields(string OrigionalString)
@@ -4054,6 +4068,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             AddFieldChangedProperties(changeTrackingPM, "MainCarriageFinalDestinationATA", changeTrackingPM.MainCarriageFinalDestinationATA, pm.MainCarriageFinalDestinationATA, "DateTime?", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "CutoffDate", changeTrackingPM.CutoffDate, pm.CutoffDate, "DateTime?", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "IsCancelled", changeTrackingPM.IsCancelled, pm.IsCancelled, "bool", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "IsDocumentsNeedApprove", changeTrackingPM.IsDocumentsNeedApprove, pm.IsDocumentsNeedApprove, "bool", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "FirstARInvoiceApprovalDate", changeTrackingPM.FirstARInvoiceApprovalDate, pm.FirstARInvoiceApprovalDate, "DateTime?", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "ActualFinalArrivalDate", changeTrackingPM.ActualFinalArrivalDate, pm.ActualFinalArrivalDate, "DateTime?", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "EstimatedFinalArrivalDate", changeTrackingPM.EstimatedFinalArrivalDate, pm.EstimatedFinalArrivalDate, "DateTime?", notifyPropertyChangeValuesList);
@@ -4253,6 +4268,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             shipmentPM.CustomerContactId = houseShipment.CustomerContactId;
             shipmentPM.AgentContactId = houseShipment.AgentContactId;
             shipmentPM.IsCancelled = houseShipment.IsCancelled;
+            shipmentPM.IsDocumentsNeedApprove = houseShipment.IsDocumentsNeedApprove;
             shipmentPM.FirstARInvoiceApprovalDate = houseShipment.FirstARInvoiceApprovalDate;
             shipmentPM.ActualFinalArrivalDate = houseShipment.ActualFinalArrivalDate;
             shipmentPM.EstimatedFinalArrivalDate = houseShipment.EstimatedFinalArrivalDate;

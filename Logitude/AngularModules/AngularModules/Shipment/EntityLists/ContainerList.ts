@@ -269,6 +269,12 @@ export class ContainerList {
 		AdditionalReference3: string;
 		AdditionalReference4: string;
 		HasTransshipments: boolean;
+		MainCarriageFromCountryId: string;
+		MainCarriageToCountryId: string;
+		MainCarriageFromCountryName: string;
+		MainCarriageToCountryName: string;
+		MainCarriageFromCountryCode: string;
+		MainCarriageToCountryCode: string;
 		Field11: string;
 		Field12: string;
 		Field13: string;
@@ -299,5 +305,9 @@ export class ContainerList {
 		Field38: string;
 		Field39: string;
 		Field40: string;
+		OnCarriageETA: Date;
+		OnCarriageATA: Date;
+		RequestDate: Date;
+		RecentResponseDate: Date;
 	
 }

@@ -16,26 +16,6 @@
                             <tr>
                                 <td style="width:365px;">
                                     <table>
-                                        <tr class="FormFieldRow">
-                                            <td [style.width.px]="120">
-                                                <table style="table-layout: fixed;">
-                                                    <tr>
-                                                        <td style="width:10px; vertical-align: middle;">
-                                                            <div *ngIf="!Code" style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
-                                                        </td>
-                                                        <td class="TextTrimming" style="text-align: left; vertical-align:middle;">
-                                                            <label class="Label" [style.color]="Code ? '#6E7172':'red'" style="color:#6E7172">Code:</label>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-
-                                            <td [style.width.px]="300">
-                                                <LogTextBox [ObjectFieldName]="'Code'" [Text]="Code" [DataContext]="DataContext"></LogTextBox>
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
 
                                         <tr class="FormFieldRow">
                                             <td [style.width.px]="120">
@@ -53,6 +33,27 @@
 
                                             <td [style.width.px]="300">
                                                 <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td [style.width.px]="120">
+                                                <table style="table-layout: fixed;">
+                                                    <tr>
+                                                        <td style="width:10px; vertical-align: middle;">
+                                                            <div *ngIf="!Code" style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+                                                        </td>
+                                                        <td class="TextTrimming" style="text-align: left; vertical-align:middle;">
+                                                            <label class="Label" [style.color]="Code ? '#6E7172':'red'" style="color:#6E7172">Code:</label>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+
+                                            <td [style.width.px]="300">
+                                                <LogTextBox [ObjectFieldName]="'Code'" [Text]="Code" [DataContext]="DataContext"></LogTextBox>
                                             </td>
                                             <td>
                                             </td>

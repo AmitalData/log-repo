@@ -49,7 +49,7 @@ import { ObjectFieldListService } from "Infrastructure/Services/StandardLists/Ob
         'PlaceHolder', 'DependencyFilter1Value', 'DependencyFilter2Value', 'DependencyFilter3Value', "HideColumns", "HideLastColumn", "DependencyFilter1IsList",
         "DependencyFilter2IsList", "DependencyFilter3IsList", "DependencyFilter1IsListExact", "DependencyFilter2IsListExact", "DependencyFilter3IsListExact",
         "AutoFocus", "IsTenantZeroSearch", "ShowInActive", "FocusOnMe", "IsFreeText", "AlwaysEnabled", "IgnoreCustomFieldCheck", "IsDecendingSort", "CustomizedWidth",
-        "ShowInActivePopUpWindow", "IgnoreFeatureCheck", "DataCy", "ForceDisabled", "ObjectFieldCode"],
+        "ShowInActivePopUpWindow", "IgnoreFeatureCheck", "DataCy", "ForceDisabled", "ObjectFieldCode", "DefaultPageSize", "LocalFilterFields"],
 })
 
 export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
@@ -71,6 +71,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     CopyValueSubs: any;
     public ForceShowValidation: boolean = false;
     public ShowHelp: boolean = false;
+    public DefaultPageSize: number = null;
+    public LocalFilterFields: string[] = null;
     public ObjectField: ObjectFieldPM;
     public ObjectFieldName: string = null;
     public ObjectFieldHelp: string = null;
@@ -99,6 +101,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     public IgnoreCustomFieldCheck: boolean = false;
     public IgnoreFeatureCheck: boolean = false;
     public DataCy: string;
+    private LocalFilterServerSearchTxtLength: number = null;;
     LayoutDirection: string = 'ltr';
     private dataContext: BaseComponent;
     uiProperty: UIProperty;
@@ -423,11 +426,12 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             this.AfterViewInitialized = false;
             this.RunComponentTimer();
         }
-
+        var debounceTimeVal = 400;
+        
         if (this.AfterViewInitialized) {
             this._KeyDownSubscribe =
                 fromEvent(input, 'keydown').pipe(
-                    debounceTime(400))
+                    debounceTime(debounceTimeVal))
                     .subscribe(keyboardEvent => {
                         var TABKEY = 9;
                         var ENTERKEY = 13;
@@ -450,7 +454,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
 
                         if (this.SearchTextNgModel != undefined) {
-
+                            
                             this.OldSearchInput = this.SearchTextNgModel;
                             this.IsDropDownVisible = true;
                             this.IsOpen = true;
@@ -1736,7 +1740,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     Populate(searchText: string, setFirstAsSelected: boolean = false) {
-
         this.LovMessage = null;
 
         if (!this.IgnoreFeatureCheck && !FeatureLocator.HasFeaturePermession(this.LookUpTableName, "Module") && this.LookUpTable.EnableSecurity) {
@@ -1749,7 +1752,20 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             return;
         }
 
-
+        if (this.LocalFilterFields && this.LocalFilterFields.length > 0 && searchText && searchText.length >= 4 && this.bufferData && this.bufferData.length > 0
+            && this.LocalFilterServerSearchTxtLength != null && searchText.length >= this.LocalFilterServerSearchTxtLength) {
+            const arr =  Object.assign([], this.bufferData);
+            this.ItemsSource = arr.filter( x => this.LocalFilterFields.some(fl => x[fl].toLowerCase().startsWith(searchText.toLowerCase())));
+                
+            if(this.ItemsSource && this.ItemsSource.length > 0) {
+                return;
+            }
+        }
+        
+        if(searchText) {
+            this.LocalFilterServerSearchTxtLength = searchText.length;
+        }
+        
         //reset counters
         this.bufferData = [];
         this.callCount = 0;
@@ -3243,7 +3259,11 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     CallDataFromServer(searchText: string, filters: ApiQueryFilters) {
 
         if (!this.LookUpTable.AutoCompleteSearchWindow) {
-            filters.PageSize = 50;
+            if(this.DefaultPageSize) {
+                filters.PageSize = this.DefaultPageSize;
+            } else {
+                filters.PageSize = 50;
+            }
         }
         else {
             if (!this.IsAllDataVisible) {
@@ -3378,7 +3398,9 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     }
 
                     this.ItemsSourceStatic = this.ItemsSource;
-                    this.HighlightSelectedValue();
+                    if(!(this.LocalFilterFields && this.LocalFilterFields.length > 0)) {
+                        this.HighlightSelectedValue();
+                    }
 
                     //turn loading flag off
                     this.isLoading = false;

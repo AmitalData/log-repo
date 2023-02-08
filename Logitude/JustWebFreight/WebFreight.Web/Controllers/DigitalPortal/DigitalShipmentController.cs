@@ -1,5 +1,4 @@
-﻿using Logitude.BL.ShipmentsModel.EntityLists;
-using Logitude.BL.ShipmentsModel.EntityQueries;
+﻿using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -25,6 +24,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Linq.Dynamic.Core;
 using Logitude.BL.Helpers;
+using Logitude.Infrastructure.BL.EntityQueryServices;
+using Simplog.Data.Helpers;
+using Logitude.BL.ShipmentsModel.EntityPMs;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -32,7 +34,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     {
         [HttpGet]
         [Route("DigitalShipment/GetSingle")]
-        public HttpResponseMessage GetSingle(string id, string cardId, string objectTableId = "1-4", string profileId = "1-5")
+        public HttpResponseMessage GetSingle(string id, string cardId, string objectTableId, string profileCode)
         {
             int tenant = 0;
             string email = "";
@@ -41,10 +43,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 List<string> cards = new List<string>();
                 if (!string.IsNullOrWhiteSpace(cardId))
                 {
-                    cards = cardId?.Split(',').ToList<string>();
+                    cards = cardId?.Split(',').ToList();
                 }
 
-                string logKey = PerformanceLogger.LogCurrentTime();
                 var digitalPortalAuthenticationHelper = new DigitalPortalAuthenticationHelper();
                 var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, id);
                 id = shipmentIdAndTenant.Item1;
@@ -52,30 +53,54 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 email = shipmentIdAndTenant.Item3;
 
                 var shipmentQuery = new ShipmentQuery(tenant);
-                var shipmentPM = shipmentQuery.GetSinglePM(id, tenant, cardId);
+                var shipmentPM = shipmentQuery.GetSingleDigitalPM(id, tenant, cardId);
 
                 if (string.IsNullOrWhiteSpace(cardId) || cards.Contains(shipmentPM.CustomerId) || cards.Contains(shipmentPM.AgentId))
                 {
-                    shipmentPM.TimeLineData = shipmentQuery.MapVerticalTimeLine(shipmentPM, tenant);
-                    PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+                    var textCodeQuery = new DigitalTextCodeQueryService(0);
 
-                    var shipmentPMJson = JsonConvert.SerializeObject(shipmentPM);
-                    var helper = new DigitalFieldSecuritesHelper();
-                    var blockedFieldSecurites = helper.GitDigitalSecuritesFeilds(objectTableId, profileId, tenant)
-                                                      .Where(a => !a.HasPermission)
-                                                      .Select(a => a.FieldCode)
+                    var allowedTableNames = new List<string> { "Trucker", "Shipment", "ShipmentPackage", "ShipmentPickUpDelivery" };
+
+                    var objectFieldIds = textCodeQuery.GetDigitalTextCodesObjetTables(0)
+                                                      .Where(a => allowedTableNames.Contains(a.ObjectTableName))
+                                                      .Select(a => new 
+                                                      {
+                                                          a.ObjectTableId,
+                                                          a.ObjectTableName 
+                                                      })
                                                       .ToList();
 
+                    var fields = new Dictionary<string, List<string>>();
+                    var helper = new DigitalFieldSecuritesHelper();
+                    foreach (var item in objectFieldIds)
+                    {
+                        var blockedFields = helper.GitDigitalSecuritesFeilds(item.ObjectTableId, profileCode, tenant, true)
+                                                          .Where(a => !a.HasPermission)
+                                                          .Select(a => a.FieldCode)
+                                                          .ToList();
+
+                        if (blockedFields.Any())
+                        {
+                            fields.Add(item.ObjectTableName, blockedFields);
+                        }
+                    }
+
+                    shipmentPM.TimeLineData = shipmentQuery.MapVerticalTimeLine(shipmentPM, fields, profileCode);
+                    var shipmentPMJson = JsonConvert.SerializeObject(shipmentPM);
                     var temp = (JObject)JsonConvert.DeserializeObject(shipmentPMJson);
+
+                    foreach (var item in fields)
+                    {
+                        temp.Descendants()
+                        .OfType<JProperty>()
+                        .Where(attr => (item.Value.Contains($"{item.Key}.{tenant}.{attr.Name}") 
+                                           || item.Value.Contains($"{item.Key}.{attr.Name}"))
+                                        ||(attr.Name.Contains(".") && item.Value.Contains($"{attr.Name}")))
+                        .ToList()
+                        .ForEach(attr => attr.Value ="");
+                    }
                     
-                    temp.Descendants()
-                     .OfType<JProperty>()
-                     .Where(attr => blockedFieldSecurites.Contains($"Shipment.{attr.Name}"))
-                     .ToList()
-                     .ForEach(attr => attr.Remove());
-
                     var json = JsonConvert.SerializeObject(temp);
-
                     return Request.CreateResponse(HttpStatusCode.OK, json);
                 }
 
@@ -108,7 +133,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 email = authToken.Email;
                 newFilters.Tenant = authToken.Tenant;
                 var shipmentQuery = new ShipmentQuery(authToken.Tenant);
-                var entityLists = shipmentQuery.GetByFilters(newFilters);
+                var entityLists = shipmentQuery.GetByFilterWithSortingFilter(newFilters);
 
                 var response = new ServiceResponse();
 
@@ -121,14 +146,27 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 entityLists = QueryableExtensions.Take(entityLists, () => newFilters.PageSize);
 
                 var helper = new DigitalFieldSecuritesHelper();
-                var allowedFieldSecurites = helper.GitDigitalSecuritesFeilds(newFilters.ObjectTableId, newFilters.ProfileId, tenant, false)
+                var allowedFieldSecurites = helper.GitDigitalSecuritesFeilds(newFilters.ObjectTableId, newFilters.ProfileCode, tenant, false)
                                                   .Where(a => a.HasPermission)
-                                                  .Select(a => a.FieldCode.Replace("Shipment.", ""))
+                                                  .Select(a => a.FieldCode.Replace($"Shipment.{tenant}.", ""))
+                                                  .Select(a => a.Replace("Shipment.", ""))
                                                   .ToList();
 
                 var fields = string.Join(",", allowedFieldSecurites);
 
                 var shipments = entityLists.Select("new { " + fields + " }").ToDynamicList();
+
+                var isAllShipmentsQuery = newFilters.AdditionalFilters.Where(a => a.FieldName == "AllShipments").Any();
+                if (isAllShipmentsQuery)
+                {
+                    DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                    var lastOneYearDate = currentDateTime.AddDays(-365);
+                    var lastNinetyDaysDate = currentDateTime.AddDays(-90);
+                    shipments.Where(a => a.CreateDateTime < lastOneYearDate
+                                         && a.MainCarriageFinalDestinationATA < lastNinetyDaysDate)
+                            .ToList()
+                            .ForEach(i => i.IsCustomerArchived = true);
+                }
 
                 CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                 customFieldResolver.SetCustomFieldsValues("Shipment", tenant, shipments.Cast<object>().ToList());
@@ -227,7 +265,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("DigitalShipment/GetShipmentRoutingLegs")]
-        public HttpResponseMessage GetShipmentRoutingLegs(string shipmentId, string cardId)
+        public HttpResponseMessage GetShipmentRoutingLegs(string shipmentId, string cardId, string profileCode)
         {
             int tenant = 0;
             string email = "";
@@ -240,8 +278,55 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 tenant = shipmentIdAndTenant.Item2;
                 email = shipmentIdAndTenant.Item3;
                 var shipmentQuery = new ShipmentQuery(tenant);
-                var routingLegs = shipmentQuery.GetDigitalShipmentRoutingLegs(shipmentId, tenant);
-                return Request.CreateResponse(HttpStatusCode.OK, routingLegs);
+                
+                var textCodeQuery = new DigitalTextCodeQueryService(0);
+
+                var allowedTableNames = new List<string> { "Trucker", "Shipment", "ShipmentPackage", "ShipmentPickUpDelivery" };
+
+                var objectFieldIds = textCodeQuery.GetDigitalTextCodesObjetTables(0)
+                                                  .Where(a => allowedTableNames.Contains(a.ObjectTableName))
+                                                  .Select(a => new
+                                                  {
+                                                      a.ObjectTableId,
+                                                      a.ObjectTableName
+                                                  })
+                                                  .ToList();
+
+                var fields = new Dictionary<string, List<string>>();
+                var helper = new DigitalFieldSecuritesHelper();
+                foreach (var item in objectFieldIds)
+                {
+                    var blockedFields = helper.GitDigitalSecuritesFeilds(item.ObjectTableId, profileCode, tenant)
+                                                      .Where(a => !a.HasPermission)
+                                                      .Select(a => a.FieldCode)
+                                                      .ToList();
+
+                    if (blockedFields.Any())
+                    {
+                        fields.Add(item.ObjectTableName, blockedFields);
+                    }
+                }
+
+                var routingLegs = shipmentQuery.GetDigitalShipmentRoutingLegs(shipmentId, tenant, fields);
+                var routingLegsJson = JsonConvert.SerializeObject(routingLegs);
+                var temp = (JArray)JsonConvert.DeserializeObject(routingLegsJson);
+                foreach (JObject jObject in temp)
+                {
+                    foreach (var item in jObject)
+                    {
+                        temp.Descendants()
+                        .OfType<JProperty>()
+                        .Where(attr => (item.Value.Contains($"{item.Key}.{tenant}.{attr.Name}")
+                                           || item.Value.Contains($"{item.Key}.{attr.Name}"))
+                                        || (attr.Name.Contains(".") && item.Value.Contains($"{attr.Name}")))
+                        .ToList()
+                        .ForEach(attr => attr.Value = "");
+                    }
+                }
+
+                var routingJsonResult = JsonConvert.SerializeObject(temp);
+                return Request.CreateResponse(HttpStatusCode.OK, routingJsonResult);
+
             }
             catch (AutenticationException ex)
             {

@@ -22,6 +22,8 @@ export class AddEditContactComponent {
     public ValidationErrorsList: string[] = [];
     public DomainService: PartnersDomainService;
     public IsHasExternalId = false;
+    public IsFromCustomerEdit = false;
+
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
@@ -52,6 +54,7 @@ export class AddEditContactComponent {
     SetWindowArgs(args: any) {
         if (args) {
             this.ShowSecondPartOfWindow = args.ShowSecondPartOfWindow;
+            this.IsFromCustomerEdit = args.IsFromCustomerEdit;
         }
     }
 
@@ -211,7 +214,7 @@ export class AddEditContactComponent {
             else {
                 this.DataContext.EntityPM = myResponse.Result.Contact;
 
-                if (!this.CurrentSession.CurrentEditComponent) {
+                if (!this.CurrentSession.CurrentEditComponent || this.IsFromCustomerEdit ) {
                     if (this.DataContext.IsNewEntity) {
                         this.DataContext.IsNewEntity = false;
                     }

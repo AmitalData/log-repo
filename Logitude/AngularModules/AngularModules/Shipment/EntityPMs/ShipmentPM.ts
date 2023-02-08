@@ -55,6 +55,9 @@ export class ShipmentPM {
     public get IsMultiUpdate() { return this.ismultiUpdate; }
     public set IsMultiUpdate(newValue: boolean) { if (this.ismultiUpdate != newValue) { this.ismultiUpdate = newValue; this.MarkAsDirty("IsMultiUpdate"); } }
 
+    private isDocumentsNeedApprove: boolean;
+    public get IsDocumentsNeedApprove() { return this.isDocumentsNeedApprove; }
+    public set IsDocumentsNeedApprove(newValue: boolean) { if (this.isDocumentsNeedApprove != newValue) { this.isDocumentsNeedApprove = newValue; this.MarkAsDirty("IsDocumentsNeedApprove"); } }
 
     private baseShipmentNumber: string;
     public get BaseShipmentNumber() { return this.baseShipmentNumber; }
@@ -5459,6 +5462,42 @@ export class ShipmentPM {
     private isINTTRAFROB: boolean;
     public get IsINTTRAFROB() { return this.isINTTRAFROB; }
     public set IsINTTRAFROB(newValue: boolean) { if (this.isINTTRAFROB != newValue) { this.isINTTRAFROB = newValue; this.MarkAsDirty("IsINTTRAFROB"); } }
+
+    private shippingLine: string;
+    public get ShippingLine() { return this.shippingLine; }
+    public set ShippingLine(newValue: string) { if (this.shippingLine != newValue) { this.shippingLine = newValue; this.MarkAsDirty("ShippingLine"); } }
+
+    private placeOfDelivery: string;
+    public get PlaceOfDelivery() { return this.placeOfDelivery; }
+    public set PlaceOfDelivery(newValue: string) { if (this.placeOfDelivery != newValue) { this.placeOfDelivery = newValue; this.MarkAsDirty("PlaceOfDelivery"); } }
+
+    private pickupPlace: string;
+    public get PickupPlace() { return this.pickupPlace; }
+    public set PickupPlace(newValue: string) { if (this.pickupPlace != newValue) { this.pickupPlace = newValue; this.MarkAsDirty("PickupPlace"); } }
+
+    private sealNo: string;
+    public get SealNo() { return this.sealNo; }
+    public set SealNo(newValue: string) { if (this.sealNo != newValue) { this.sealNo = newValue; this.MarkAsDirty("SealNo"); } }
+
+    private hSCode: string;
+    public get HSCode() { return this.hSCode; }
+    public set HSCode(newValue: string) { if (this.hSCode != newValue) { this.hSCode = newValue; this.MarkAsDirty("HSCode"); } }
+
+    private weight1: number;
+    public get Weight1() { return this.weight1; }
+    public set Weight1(newValue: number) { if (this.weight1 != newValue) { this.weight1 = newValue; this.MarkAsDirty("Weight1"); } }
+
+    private weight2: number;
+    public get Weight2() { return this.weight2; }
+    public set Weight2(newValue: number) { if (this.weight2 != newValue) { this.weight2 = newValue; this.MarkAsDirty("Weight2"); } }
+
+    private weight3: number;
+    public get Weight3() { return this.weight3; }
+    public set Weight3(newValue: number) { if (this.weight3 != newValue) { this.weight3 = newValue; this.MarkAsDirty("Weight3"); } }
+
+    private weight4: number;
+    public get Weight4() { return this.weight4; }
+    public set Weight4(newValue: number) { if (this.weight4 != newValue) { this.weight4 = newValue; this.MarkAsDirty("Weight4"); } }
 
 
     public OldEntityPM: ShipmentPM;

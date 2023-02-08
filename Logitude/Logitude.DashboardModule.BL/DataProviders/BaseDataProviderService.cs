@@ -4,6 +4,7 @@ using Logitude.DashboardModule.Data;
 using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.DashboardModule.Data.Repositories;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.TreeFilterQuery;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
@@ -16,16 +17,19 @@ using System.Linq;
 namespace Logitude.DashboardModule.BL.DataProviders
 {
     public abstract class BaseDataProviderService
-    {
+    {   
         internal WidgetPM _Widget;
         internal AnalyticsFactsMetaData _Entity;
         internal Dictionary<string, AnalyticsFactsFieldsMetaData> _EntityFields;
         private AnalyticsFactsFieldsMetaDataRepository analyticsFactsFieldsMetaDataRepository;
         private string[] Months = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+        internal GlobalFilterService.GlobalQueryFilterItem compareWithPreviousFilterItem;
 
         protected BaseDataProviderService(WidgetPM widget, AnalyticsFactsMetaData entity)
         {
-            widget.Filters = new GlobalFilterService(widget, entity).AddGlobalFilters();
+            var globalFilterService = new GlobalFilterService(widget, entity, widget.TypeCode);
+            widget.Filters = globalFilterService.AddGlobalFilters();
+            this.compareWithPreviousFilterItem = globalFilterService.compareWithPreviousFilterItem;
             this._Widget = widget;
             this._Entity = entity;
             analyticsFactsFieldsMetaDataRepository = new AnalyticsFactsFieldsMetaDataRepository(0);
@@ -61,6 +65,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
         }
         private string GetDayFormat(string label)
         {
+            if (label == null) return label;
             var dateparts = label.Split('/');
             var month = GetMonthName(dateparts[1]);
 
@@ -68,6 +73,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
         }
         private string GetMonthFormat(string label)
         {
+            if (label == null) return label;
             var dateparts = label.Split('/');
             var month = GetMonthName(dateparts[1]);
 
@@ -75,6 +81,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
         }
         private string GetYearFormat(string label)
         {
+            if (label == null) return label;
             var dateparts = label.Split('/');
             return $"{dateparts[0]}";
         }
@@ -208,7 +215,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
                      {BuildQueryJoins(columns)}
                      {BuildQueryStatment(groupByField, widgetPartArguments.GroupByValue, groupByFieldsec, widgetPartArguments.GroupBySecValue)} ";
 
-            if (_Widget.TypeCode == "kpi" && _Widget.TimeOverTime)
+            if (_Widget.TypeCode == "kpi" && compareWithPreviousFilterItem != null && compareWithPreviousFilterItem.CompareWithPrevious)
             {
                 return queryString + CheckComparisonOperator();
             }
@@ -219,11 +226,14 @@ namespace Logitude.DashboardModule.BL.DataProviders
         }
         private string CheckComparisonOperator()
         {
-            if (_Widget.ComparisonOperator == "Between")
+            if (compareWithPreviousFilterItem.Operator == "Between")
             {
-                return $@" where data.{GeteComparsionDate()} Between '{_Widget.FromDate.Value}' AND '{_Widget.ToDate.Value}'";
+                var fromDate = FieldValueResolver.ConvertToDate(compareWithPreviousFilterItem.FieldValue.ToString());
+                var toDate = FieldValueResolver.ConvertToDate(compareWithPreviousFilterItem.FieldValue2.ToString());
+                return $@" where data.{GeteComparsionDate()} Between '{fromDate}' AND '{toDate}'";
             }
-            return $@" where data.{GeteComparsionDate()} Between dateadd ({_Widget.ComparisonDateGroup}, {-_Widget.ComparisonPeriod}, cast(getDate() as DateTime)) AND cast(getDate() as DateTime)";
+            var FieldValue3 = Convert.ToInt32(compareWithPreviousFilterItem.FieldValue3);
+            return $@" where data.{GeteComparsionDate()} Between dateadd ({compareWithPreviousFilterItem.DateGroupCode}, {-FieldValue3}, cast(getDate() as Date)) AND cast(getDate() as Date)";
         }
 
         private string GeteComparsionDate()

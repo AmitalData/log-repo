@@ -20,18 +20,18 @@ import { FooterButtonsComponent } from "./Components/Base/FooterButtonsComponent
 import { TreeSelectComponent } from "./Components/Base/TreeSelectComponent";
 import { SetValuesComponent } from "./Components/Base/SetValuesComponent";
 import { DeleteNodeWarningComponent } from "./Components/Messages/DeleteNodeWarningComponent";
-import { GetObjectFieldPipe } from "./Pipes/GetObjectFieldPipe";
-import { GetObjectFieldsQueryFiltersPipe } from "./Pipes/GetObjectFieldsQueryFiltersPipe";
+import { ObjectFieldPipe } from "./Pipes/ObjectFieldPipe";
+import { ObjectFieldsQueryFiltersPipe } from "./Pipes/ObjectFieldsQueryFiltersPipe";
 import { ListItemPipe } from "./Pipes/ListItemPipe";
 import { IsDateTimeTypePipe } from "./Pipes/IsDateTimeTypePipe";
 import { IsNoObjectFieldVariablePipe } from "./Pipes/IsNoObjectFieldVariablePipe";
 import { IsFieldOperatorPipe } from "./Pipes/IsFieldOperatorPipe";
 import { IsNoValueOperatorPipe } from "./Pipes/IsNoValueOperatorPipe";
 import { ShowFlowVariablesTreeItemPipe } from "./Pipes/ShowFlowVariablesTreeItemPipe";
+import { ShowFlowVariablesTypeTreeItemPipe } from "./Pipes/ShowFlowVariablesTypeTreeItemPipe";
 import { ShowEntitiesTreeItemPipe } from "./Pipes/ShowEntitiesTreeItemPipe";
 import { ShowExpressionTreeItemPipe } from "./Pipes/ShowExpressionTreeItemPipe";
 import { EntityLabelPipe } from "./Pipes/EntityLabelPipe";
-import { GetObjectTablesQueryFiltersPipe } from "./Pipes/GetObjectTablesQueryFiltersPipe";
 import { ConditionDisabledPipe } from "./Pipes/ConditionDisabledPipe";
 import { ExpressionComponent } from "./Components/Base/ExpressionComponent";
 import { ExpressionBuilderComponent } from "./Components/Base/ExpressionBuilderComponent";
@@ -41,6 +41,7 @@ import { IsCollectionTypePipe } from "./Pipes/IsCollectionTypePipe";
 import { SetValuesOperatorsItemsPipe } from "./Pipes/SetValuesOperatorsItemsPipe";
 import { ShowTreeItemPipe } from "./Pipes/ShowTreeItemPipe";
 import { ExpressionPipe } from "./Pipes/ExpressionPipe";
+import { ConditionOperatorsItemsPipe } from "./Pipes/ConditionOperatorsItemsPipe";
 import { WorkflowVersionComponent } from './Components/WorkflowVersion/WorkflowVersionComponent';
 import { CreateWorkflowVersionComponent } from './Components/WorkflowVersion/CreateWorkflowVersionComponent';
 import { WorkFlowShortTitleComponent } from './Components/ShortTitles/WorkFlowShortTitleComponent';
@@ -84,9 +85,8 @@ export const Components = [
 ];
 
 export const Pipes = [
-    GetObjectFieldPipe,
-    GetObjectFieldsQueryFiltersPipe,
-    GetObjectTablesQueryFiltersPipe,
+    ObjectFieldPipe,
+    ObjectFieldsQueryFiltersPipe,
     ListItemPipe,
     IsDateTimeTypePipe,
     IsNoObjectFieldVariablePipe,
@@ -95,6 +95,7 @@ export const Pipes = [
     ShowEntitiesTreeItemPipe,
     ShowExpressionTreeItemPipe,
     ShowFlowVariablesTreeItemPipe,
+    ShowFlowVariablesTypeTreeItemPipe,
     EntityLabelPipe,
     ConditionDisabledPipe,
     ShowEditableVariablesTreeItemPipe,
@@ -102,7 +103,8 @@ export const Pipes = [
     IsCollectionTypePipe,
     SetValuesOperatorsItemsPipe,
     ShowTreeItemPipe,
-    ExpressionPipe
+    ExpressionPipe,
+    ConditionOperatorsItemsPipe
 ];
 
 export class ModuleDeclarations {

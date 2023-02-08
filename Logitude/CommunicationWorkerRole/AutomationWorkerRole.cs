@@ -27,6 +27,9 @@ using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
+using Logitude.WarehouseLib.BL.EntityPMs;
+using Logitude.WarehouseLib.BL.EntityUpdateServices;
+using Logitude.WarehouseLib.Data;
 using Microsoft.Practices.Unity;
 using Microsoft.ServiceBus.Messaging;
 using Newtonsoft.Json;
@@ -827,6 +830,16 @@ namespace CommunicationWorkerRole
                 pmtype = blAssembly.GetType(typePath);
             }
 
+            if (type == null)
+            {
+                Assembly assembly = Assembly.Load("Logitude.WarehouseLib.BL");
+                typePath = "Logitude.WarehouseLib.BL.EntityQueryServices." + entityName + "QueryService";
+                type = assembly.GetType(typePath);
+
+                pmtypePath = "Logitude.WarehouseLib.BL.EntityPMs." + entityName + "PM";
+                pmtype = blAssembly.GetType(typePath);
+            }
+
             if (type != null)
             {
                 entityQuery = Activator.CreateInstance(type, tenant);
@@ -918,6 +931,15 @@ namespace CommunicationWorkerRole
             {
                 UpdateContainer(theEntity);
             }
+
+            else if (tableName == "WarehouseEntry")
+            {
+                UpdateWarehouseEntry(theEntity);
+            }
+            else if (tableName == "WarehouseRelease")
+            {
+                UpdateWarehouseRelease(theEntity);
+            }
         }
 
         private static void UpdateContainer(object theEntity)
@@ -927,6 +949,26 @@ namespace CommunicationWorkerRole
             ContainerService service = new ContainerService(shipmentsContext, containerPM.Tenant);
             containerPM.IsUpdateByAutomation = true;
             service.Update(containerPM);
+        }
+
+        private static void UpdateWarehouseEntry(object theEntity)
+        {
+            WarehouseEntryPM warehouseEntryPM = (WarehouseEntryPM)theEntity;
+            IWarehouseContext warehouseContext = WarehouseContext.GetContext(0);
+            WarehouseEntryUpdateService service = new WarehouseEntryUpdateService(warehouseContext, new Dictionary<string, IContext>(), warehouseEntryPM.Tenant);
+            warehouseEntryPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+            warehouseEntryPM.IsUpdateByAutomation = true;
+            service.Update(warehouseEntryPM, true);
+        }
+
+        private static void UpdateWarehouseRelease(object theEntity)
+        {
+            WarehouseReleasePM warehouseReleasePM = (WarehouseReleasePM)theEntity;
+            IWarehouseContext warehouseContext = WarehouseContext.GetContext(0);
+            WarehouseReleaseUpdateService service = new WarehouseReleaseUpdateService(warehouseContext, new Dictionary<string, IContext>(), warehouseReleasePM.Tenant);
+            warehouseReleasePM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+            warehouseReleasePM.IsUpdateByAutomation = true;
+            service.Update(warehouseReleasePM, true);
         }
 
         public void SubmitChanges()

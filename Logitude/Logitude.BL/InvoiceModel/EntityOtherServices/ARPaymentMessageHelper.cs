@@ -20,6 +20,7 @@ using Logitude.Server.Tools.StorageService;
 using System.Web;
 using Logitude.SystemLogs;
 using Logitude.BL.Helpers;
+using Simplog.Data.InvoiceModel.Repositories;
 
 namespace Logitude.BL.InvoiceModel.EntityOtherServices
 {
@@ -101,7 +102,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         {
             ARPaymentRoot log = new ARPaymentRoot();
             log.Paymnets = new List<ARPaymnetElement>();
-            
+
             IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
             List<string> allPaymentIds = allEntities.Select(s => s.Id).ToList();
             List<CreditCardType> creditCardTypes = (from d in invoiceContext.CreditCardTypes where d.Tenant == tenant select d).ToList();
@@ -114,9 +115,9 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                                                           select d).ToList();
 
             List<ARInvoice> allInvoices = (from d in invoiceContext.ARInvoicePayments
-                                                          where d.Tenant == tenant
-                                                          && allPaymentIds.Contains(d.ARPaymentId)
-                                                          select d.ARInvoice).ToList();
+                                           where d.Tenant == tenant
+                                           && allPaymentIds.Contains(d.ARPaymentId)
+                                           select d.ARInvoice).ToList();
 
             ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
             List<string> allAddressesId = allEntities.Select(s => s.BillToAddressId).ToList();
@@ -179,7 +180,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 if (billTo != null)
                 {
                     AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
-                    paymentElement.Card.AccountingCard = accountingSystemHelper.GetGenericCreditAccount(billTo.Id,item.PaymentCurrencyId, tenant, false);
+                    paymentElement.Card.AccountingCard = accountingSystemHelper.GetGenericCreditAccount(billTo.Id, item.PaymentCurrencyId, tenant, false);
                     paymentElement.Card.IntercompanyCode = billTo.ExternalId2;
                     paymentElement.Card.Name = billTo.EnglishName;
                     paymentElement.Card.Code = billTo.Code;
@@ -204,15 +205,16 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 paymentElement.Invoices = new List<ARPaymentInvoiceElement>();
                 List<string> myInvoicesIds = allInvoicesPayments.Where(d => d.ARPaymentId == item.Id).Select(s => s.ARInvoiceId).ToList();
 
-                foreach (ARInvoice myline in allInvoices.Where(d=> myInvoicesIds.Contains(d.Id)))
+                foreach (ARInvoice myline in allInvoices.Where(d => myInvoicesIds.Contains(d.Id)))
                 {
                     string lineType = invoiceTypes.Where(d => d.Code == myline.ARInvoiceTypeCode).FirstOrDefault().Name;
 
                     double linePaidAmount = 0;
 
                     ARInvoicePayment myARInvoicePayment = allInvoicesPayments.Where(d => d.ARPaymentId == item.Id && d.ARInvoiceId == myline.Id).FirstOrDefault();
-                    if(myARInvoicePayment != null) {
-                        if(myARInvoicePayment.ForeignAmount != null)
+                    if (myARInvoicePayment != null)
+                    {
+                        if (myARInvoicePayment.ForeignAmount != null)
                         {
                             linePaidAmount = Math.Round(myARInvoicePayment.ForeignAmount.Value, 2);
                         }
@@ -229,6 +231,18 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                     paymentElement.Invoices.Add(invoiceElement);
                 }
 
+                #endregion
+
+                #region BankAccount
+                BankAccountLiteRepository bankAccountRepository = new BankAccountLiteRepository(tenant);
+                paymentElement.PaymentBankAccount = new ARPaymnetBankAccountElement();
+                BankAccountLite bankAccount = bankAccountRepository.GetSingleBankAccountLite(item.BankAccountLiteId, tenant);
+                if (bankAccount != null)
+                {
+                    paymentElement.PaymentBankAccount.AccountNumber = bankAccount.AccountNumber;
+                    paymentElement.PaymentBankAccount.BankName = bankAccount.EnglishName;
+                    paymentElement.PaymentBankAccount.BankCode = bankAccount.BankCode;
+                }
                 #endregion
 
                 log.Paymnets.Add(paymentElement);
@@ -405,6 +419,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
 
         [XmlElement(ElementName = "BillTo")]
         public ARPaymnetCardElement Card { get; set; }
+        public ARPaymnetBankAccountElement PaymentBankAccount { get; set; }
 
         [XmlArray("Invoices")]
         [XmlArrayItem("Invoice")]
@@ -431,6 +446,13 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string InvoiceType { get; set; }
         public string InvoiceNumber { get; set; }
         public double PaidAmount { get; set; }
+    }
+
+    public class ARPaymnetBankAccountElement
+    {
+        public string AccountNumber { get; set; }
+        public string BankName { get; set; }
+        public string BankCode { get; set; }
     }
     #endregion
 }

@@ -227,7 +227,53 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
-   }
+	  private string profileId ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ProfileId  
+	   {
+	    
+	     get
+		{
+		   return profileId;
+		 }
+		 set
+		 {
+		   if(profileId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProfileId",OldValue=profileId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   profileId=value;
+		   }
+			
+		 }
+	   }
+	  private string profileCode ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ProfileCode  
+	   {
+	    
+	     get
+		{
+		   return profileCode;
+		 }
+		 set
+		 {
+		   if(profileCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProfileCode",OldValue=profileCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   profileCode=value;
+		   }
+			
+		 }
+	   }
+	    }
    
 }
 	 

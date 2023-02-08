@@ -39,6 +39,9 @@ import {WarehouseReleaseRoutingsTabComponent} from './Components/EditTabs/Routin
 import {ChoosePackagesFromWarehousePackageReleasesComponent} from './Components/ChoosePackagesFromWarehousePackageReleasesComponent';
 
 import { WarehouseEntryHelperComponent } from './Components/Helpers/WarehouseEntryHelperComponent';
+import { WarehouseReleaseAuditTabComponent } from './Components/EditTabs/Audit/WarehouseReleaseAuditTabComponent';
+import { WarehouseEntryAuditTabComponent } from './Components/EditTabs/Audit/WarehouseEntryAuditTabComponent';
+
 
 
 export const Components =
@@ -72,6 +75,8 @@ export const Components =
         WarehouseEntryHelperComponent,
         SelectionAddChooseWarehouseEntryComponent,
         ChooseWarehouseEntryComponent,
+        WarehouseReleaseAuditTabComponent,
+        WarehouseEntryAuditTabComponent,
     ];
 
 export class ModuleDeclarations {
@@ -110,7 +115,8 @@ export class ModuleDeclarations {
             case "WarehouseEntryHelperComponent": { myResult = WarehouseEntryHelperComponent; break; }
             case "SelectionAddChooseWarehouseEntryComponent": { myResult = SelectionAddChooseWarehouseEntryComponent; break; }
             case "ChooseWarehouseEntryComponent": { myResult = ChooseWarehouseEntryComponent; break; }
-
+            case "WarehouseReleaseAuditTabComponent": { myResult = WarehouseReleaseAuditTabComponent; break; }
+            case "WarehouseEntryAuditTabComponent": { myResult = WarehouseEntryAuditTabComponent; break; }
         }
 
 

@@ -34,5 +34,10 @@ namespace Logitude.BL.ShipmentsModel.EntityAMs
         public double? Weight { get; set; }
         public double? Volume { get; set; }
         public List<Packages> ShipmentPackages { get; set; }
+        public string ShippingLine { get; set; }
+        public string PlaceOfDelivery { get; set; }
+        public string PickupPlace { get; set; }
+        public string SealNo { get; set; }
+        public string HSCode { get; set; }
     }
 }

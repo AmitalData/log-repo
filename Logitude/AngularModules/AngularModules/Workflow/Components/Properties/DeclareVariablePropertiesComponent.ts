@@ -3,9 +3,9 @@ import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/Base
 import { AppTool, FormatTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
-import { DataTypesList } from "Workflow/Models/DataTypesList";
-import { EntitiesTreeList } from "Workflow/Models/EntitiesTreeList";
-import { Formatter } from "Workflow/Models/Formatter";
+import { DataTypesList } from "Workflow/Lists/DataTypesList";
+import { EntitiesTreeList } from "Workflow/TreeLists/EntitiesTreeList";
+import { Formatter } from "Workflow/Utilities/Formatter";
 import { ListItem } from "Workflow/Models/ListItem";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
@@ -17,36 +17,48 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
 
     public DataContext: any = this;
     public Data: any;
+    public IsNew: boolean;
     public VariableName: string = null;
     public VariableType: string = null;
     public VariableValue: string = null;
     public RecordType: string = null;
     public IsCollectionVariable: boolean = false;
     public ValidationErrorsList: string[];
-    public IsNew: boolean;
     public VariableTypeChangedToggle: boolean = false;
     public DataTypesItems: ListItem[] = new DataTypesList().Items;
     public EntitiesTreeItems: TreeSelectItem[];
-    public ExcludedEntities: string[] = ["Shipment.Container", "Shipment.ARInvoice", "Shipment.APInvoice"];
+    public ExcludedEntities: string[] = ["Container", "ARInvoice", "APInvoice"];
     public FieldTypes = FieldTypes;
     public CurrentSession = SessionLocator.SelectedSession;
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
+    }
 
+    ngOnInit() {
+        this.initializeWindowEvents();
         this.initialize();
         this.initializeEntitiesTreeItems();
+    }
+
+    initializeWindowEvents() {
+        this.CurrentSession.CurrentWindow.FooterButtonsClicked.subscribe((e: any) => {
+            if (e === "submit") {
+                this.saveButtonClicked();
+            } else {
+                this.cancelButtonClicked();
+            }
+        });
     }
 
     initialize() {
         this.IsNew = Object.keys(this.Data).length === 0;
 
-        let variableNameData = this.Data["variableName"];
         let variableTypeData = this.Data["variableType"];
         let variableValueData = this.Data["variableValue"];
         let recordTypeData = this.Data["recordType"];
 
-        this.VariableName = variableNameData || null;
+        this.VariableName = this.Data["label"] || this.Data["name"] || this.Data["variableName"] || null;
         this.VariableType = this.formatVariableType(variableTypeData);
         this.VariableValue = variableValueData || null;
         this.RecordType = recordTypeData || null;
@@ -63,9 +75,13 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
     }
 
     updateVariableName(variableName: string) {
-        this.Data["name"] = variableName;
-        this.Data["variableName"] = variableName;
-        this.Data["variableCode"] = Formatter.getCodeFromName(variableName);
+        if (this.IsNew) {
+            this.Data["name"] = variableName;
+            this.Data["variableName"] = variableName;
+            this.Data["variableCode"] = Formatter.getCodeFromName(variableName);
+        }
+
+        this.Data["label"] = variableName;
         this.VariableName = variableName;
 
         this.setUIProperties();

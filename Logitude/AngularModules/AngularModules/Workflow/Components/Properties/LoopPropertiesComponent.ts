@@ -1,9 +1,9 @@
 import { Component } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
-import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
-import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
+import { FlowVariablesTreeList } from "Workflow/TreeLists/FlowVariablesTreeList";
+import { SingleEditableEntitiesTreeList } from "Workflow/TreeLists/SingleEditableEntitiesTreeList";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
 @Component({
@@ -14,30 +14,39 @@ export class LoopPropertiesComponent extends BaseComponent {
 
     public DataContext: any = this;
     public Data: any;
+    public IsNew: boolean;
     public Name: string = null;
     public CollectionVariable: string = null;
     public Direction: string = null;
-
     public FlowObject: any;
     public CurrentNodeId: string;
-    public FlowObjectFields: ObjectFieldList[];
-
     public FlowVariablesTreeItems: TreeSelectItem[];
-
+    public SingleEditableEntitiesTreeItems: TreeSelectItem[];
     public ValidationErrorsList: string[];
-
     public FirstToLastDirection = { Code: "FirstToLast", Name: "First item to last item" };
     public LastToFirstDirection = { Code: "LastToFirst", Name: "Last item to first item" };
-
     public CurrentSession = SessionLocator.SelectedSession;
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
         this.FlowObject = args.FlowObject ? args.FlowObject : null;
         this.CurrentNodeId = args.CurrentNodeId ? args.CurrentNodeId : null;
-        this.FlowObjectFields = args.FlowObjectFields ? args.FlowObjectFields : [];
+    }
+
+    ngOnInit() {
+        this.initializeWindowEvents();
         this.initializeFlowVariablesTree();
         this.initialize();
+    }
+
+    initializeWindowEvents() {
+        this.CurrentSession.CurrentWindow.FooterButtonsClicked.subscribe((e: any) => {
+            if (e === "submit") {
+                this.saveButtonClicked();
+            } else {
+                this.cancelButtonClicked();
+            }
+        });
     }
 
     initializeFlowVariablesTree() {
@@ -47,13 +56,18 @@ export class LoopPropertiesComponent extends BaseComponent {
             ShowRecordsCollectionVariables: true,
             ShowDeclaredCollectionVariables: true,
             OnlyCurrentLoopItemVariables: false,
-            IsObjectVariableSelectable: false
+            IsObjectVariableSelectable: false,
+            IsNoChildrenObjectVariables: false
         };
-        this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, props).Items;
+        this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props).Items;
+        this.SingleEditableEntitiesTreeItems = new SingleEditableEntitiesTreeList(this.FlowObject, this.CurrentNodeId).Items;
+        this.FlowVariablesTreeItems = this.SingleEditableEntitiesTreeItems.concat(this.FlowVariablesTreeItems);
     }
 
     initialize() {
-        this.Name = this.Data["name"] || null;
+        this.IsNew = Object.keys(this.Data).length === 0;
+
+        this.Name = this.Data["label"] || this.Data["name"] || null;
         this.CollectionVariable = this.Data["collectionVariable"] || null;
         this.Direction = this.Data["direction"] ? this.Data["direction"] : this.FirstToLastDirection.Code;
 
@@ -67,20 +81,30 @@ export class LoopPropertiesComponent extends BaseComponent {
         this.UIProperties.SetRequired("Collection_Variable", null, AppTool.IsNullOrEmpty(this.CollectionVariable));
     }
 
-    updateName(Name: any) {
-        this.Data["name"] = Name;
-        this.Name = Name;
+    updateName(name: string) {
+        if (this.IsNew) {
+            this.Data["name"] = name;
+        }
+
+        this.Data["label"] = name;
+        this.Name = name;
+
         this.setUIProperties();
     }
 
     updateCollectionVariable(collectionVariableItem: TreeSelectItem) {
         let collectionVariable = collectionVariableItem ? collectionVariableItem.key : null;
+        let isEditableEntity = collectionVariableItem ? (collectionVariableItem.data["isEditableEntity"] || false) : null;
         let isCollectionFilterVariable = collectionVariableItem ? (collectionVariableItem.data["isCollectionFilterVariable"] || false) : null;
         let isDeclaredCollectionVariable = collectionVariableItem ? (collectionVariableItem.data["isDeclaredCollectionVariable"] || false) : null;
+        this.Data["isEditableEntity"] = isEditableEntity;
         this.Data["collectionVariable"] = collectionVariable;
         this.Data["isCollectionFilterVariable"] = isCollectionFilterVariable;
         this.Data["isDeclaredCollectionVariable"] = isDeclaredCollectionVariable;
         this.CollectionVariable = collectionVariable;
+
+        this.Data["collectionUsedFrom"] = collectionVariableItem && collectionVariableItem.data && collectionVariableItem.data["nodeId"] ? collectionVariableItem.data["nodeId"] : null;
+
         this.setUIProperties();
     }
 

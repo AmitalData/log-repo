@@ -72,7 +72,7 @@ namespace CommunicationWorkerRole.Services.SAT
             if (oldARPaymentStatus == arPayment.SATTransferStatusCode) return;
             XmlElement comprobanteComplementoXMLElement = ARPaymentService.GetcomprobanteComplementoXMLElement(arPayment.SATXML);
             SATInterfaceHelper sATInterfaceHelper = new SATInterfaceHelper();
-            sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(arPayment, comprobanteComplementoXMLElement, aRInvoiceRepository, aRPaymentRepository);
+            sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(arPayment.Id, arPayment.Tenant, comprobanteComplementoXMLElement, aRInvoiceRepository, aRPaymentRepository);
         }
 
         private static IEnumerable<List<T>> SplitListIntoNList<T>(List<T> fullList, int nSize)

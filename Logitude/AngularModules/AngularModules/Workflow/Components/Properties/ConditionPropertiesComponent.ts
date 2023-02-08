@@ -4,9 +4,8 @@ import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { AppTool } from "Infrastructure/Tools";
 import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
 import { Condition } from "Workflow/Models/Condition";
-import { ObjectTablePM } from "Infrastructure/EntityPMs/ObjectTablePM";
-import { ObjectTables } from "Workflow/Models/ObjectTables";
-import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
+import { ObjectTables } from "Workflow/Utilities/ObjectTables";
+import { ObjectTableList } from "Infrastructure/EntityLists/ObjectTableList";
 
 @Component({
     templateUrl: "./ConditionPropertiesComponent.html"
@@ -16,20 +15,20 @@ export class ConditionPropertiesComponent extends BaseComponent {
 
     public DataContext: any = this;
     public Data: any;
+    public IsNew: boolean;
     public WorkflowEntity: string;
-
     public Name: string = null;
-    public ConditionLabel:  string = null;
+    public MetLabel: string = null;
+    public OtherwiseLabel: string = null;
     public Conditions: Condition[];
     public ConditionsOperation: string;
     public IsValidConditions: boolean = true;
     public ValidationErrorsList: string[];
-    public WorkflowEntityTable: ObjectTablePM;
+    public WorkflowEntityTable: ObjectTableList;
 
     public FlowObject: any;
     public CurrentNodeId: string;
-    public FlowObjectFields: ObjectFieldList[];
-    
+
     public CurrentSession = SessionLocator.SelectedSession;
 
     SetWindowArgs(args: any) {
@@ -37,27 +36,46 @@ export class ConditionPropertiesComponent extends BaseComponent {
         this.WorkflowEntity = args.WorkflowEntity ? args.WorkflowEntity : null;
         this.FlowObject = args.FlowObject ? args.FlowObject : null;
         this.CurrentNodeId = args.CurrentNodeId ? args.CurrentNodeId : null;
-        this.FlowObjectFields = args.FlowObjectFields ? args.FlowObjectFields : [];
-        
+    }
+
+    ngOnInit() {
+        this.initializeWindowEvents();
         this.initialize();
     }
 
+    initializeWindowEvents() {
+        this.CurrentSession.CurrentWindow.FooterButtonsClicked.subscribe((e: any) => {
+            if (e === "submit") {
+                this.saveButtonClicked();
+            } else {
+                this.cancelButtonClicked();
+            }
+        });
+    }
+
     initialize() {
+        this.IsNew = Object.keys(this.Data).length === 0;
+
         if (this.WorkflowEntity) {
             this.setWorkflowEntityTable();
 
-            this.Name = this.Data["name"] || null;
-            this.ConditionLabel = this.Data["conditionLabel"] || null;
-    
+            this.Name = this.Data["label"] || this.Data["name"] || null;
+
+            this.MetLabel = this.Data["metLabel"] || "True";
+            this.Data["metLabel"] = this.MetLabel;
+
+            this.OtherwiseLabel = this.Data["otherwiseLabel"] || "False";
+            this.Data["otherwiseLabel"] = this.OtherwiseLabel;
+
             this.Conditions = this.Data["conditions"] || [];
             this.ConditionsOperation = this.Data["conditionsOperation"] || ConditionOperations.And;
-    
+
             if (this.Conditions.length == 0) {
                 this.IsValidConditions = false;
                 let condition = new Condition();
                 this.Conditions.push(condition);
             }
-    
+
             this.setUIProperties();
         }
         else {
@@ -75,15 +93,26 @@ export class ConditionPropertiesComponent extends BaseComponent {
     }
 
     updateName(name: string) {
-        this.Data["name"] = name;
+        if (this.IsNew) {
+            this.Data["name"] = name;
+        }
+
+        this.Data["label"] = name;
         this.Name = name;
 
         this.setUIProperties();
     }
 
-    updateConditionLabel(conditionLabel: string) {
-        this.Data["conditionLabel"] = conditionLabel;
-        this.ConditionLabel = conditionLabel;
+    updateMetLabel(metLabel: string) {
+        this.Data["metLabel"] = metLabel;
+        this.MetLabel = metLabel;
+
+        this.setUIProperties();
+    }
+
+    updateOtherwiseLabel(otherwiseLabel: string) {
+        this.Data["otherwiseLabel"] = otherwiseLabel;
+        this.OtherwiseLabel = otherwiseLabel;
 
         this.setUIProperties();
     }
@@ -94,7 +123,8 @@ export class ConditionPropertiesComponent extends BaseComponent {
 
     setUIProperties() {
         this.UIProperties.SetRequired("Name", null, AppTool.IsNullOrEmpty(this.Name));
-        this.UIProperties.SetRequired("ConditionLabel", null, AppTool.IsNullOrEmpty(this.ConditionLabel));
+        this.UIProperties.SetRequired("MetLabel", null, AppTool.IsNullOrEmpty(this.MetLabel));
+        this.UIProperties.SetRequired("OtherwiseLabel", null, AppTool.IsNullOrEmpty(this.OtherwiseLabel));
     }
 
     cancelButtonClicked() {
@@ -107,13 +137,13 @@ export class ConditionPropertiesComponent extends BaseComponent {
             let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
             if (notValidUIProperties.length === 0 && this.IsValidConditions) {
                 this.setConditionsData();
-    
+                //console.log(this.Data);
                 this.CurrentSession.CurrentWindow.Close(this.Data);
             } else {
                 let validationErrors = notValidUIProperties.map(t => { return t.ValidationError; });
                 this.ValidationErrorsList = validationErrors;
-    
-                if (!this.IsValidConditions) 
+
+                if (!this.IsValidConditions)
                     this.ValidationErrorsList.push("Invalid Conditions");
             }
         }

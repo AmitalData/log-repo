@@ -46,6 +46,20 @@ declare @DIM_AddressesCountryNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_AddressesCountryNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection,UseUnitSelection) Values(@DIM_AddressesCountryNewId,0,'DIM_Addresses','[Country]','Country','Text','false',0,120,'false','false','true','false','false','false','false','false','false')  
 ------------------------------------------------------------------------------------
+declare @DIM_ARInvoiceTransferStatusNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_ARInvoiceTransferStatusNewId OUTPUT,'DWObjectTable' 
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn,HasCustomFields,MaxNumberOfCustomFields) Values(@DIM_ARInvoiceTransferStatusNewId,0,'','DIM_ARInvoiceTransferStatus','DIM_ARInvoiceTransferStatus','Dimension','true','[Name]','false','false',0)  
+--Fields --
+declare @DIM_ARInvoiceTransferStatusCodeNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_ARInvoiceTransferStatusCodeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,LOVAdditionalColumns,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection,UseUnitSelection) Values(@DIM_ARInvoiceTransferStatusCodeNewId,0,'DIM_ARInvoiceTransferStatus','[Code]','Code','Text','true',0,2,'false','false','true','[Name]','false','false','false','false','false','false')  
+declare @DIM_ARInvoiceTransferStatusNameNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_ARInvoiceTransferStatusNameNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,LOVAdditionalColumns,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection,UseUnitSelection) Values(@DIM_ARInvoiceTransferStatusNameNewId,0,'DIM_ARInvoiceTransferStatus','[Name]','Name','Text','true',0,20,'true','false','true','[Code]','false','false','false','false','false','false')  
+declare @DIM_ARInvoiceTransferStatusAutomaticLastUpdateDateNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_ARInvoiceTransferStatusAutomaticLastUpdateDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection,UseUnitSelection) Values(@DIM_ARInvoiceTransferStatusAutomaticLastUpdateDateNewId,0,'DIM_ARInvoiceTransferStatus','[Automatic Last Update Date]','Last Update Date','DateTime','false',0,0,'false','false','false','false','false','false','false','false','false')  
+------------------------------------------------------------------------------------
 declare @DIM_BranchesNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_BranchesNewId OUTPUT,'DWObjectTable' 
 insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn,HasCustomFields,MaxNumberOfCustomFields) Values(@DIM_BranchesNewId,0,'','DIM_Branches','DIM_Branches','Dimension','false','[Name]','false','false',0)  
@@ -1249,6 +1263,9 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ARInvoicesLineChargeTypeNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ARInvoicesLineChargeTypeNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection,UseUnitSelection) Values(@Fact_ARInvoicesLineChargeTypeNewId,0,'Fact_ARInvoices','[Line Charge Type]','Line Charge Type','Dimension','false',0,0,'DIM_ChargesTypes','false','false','true','InvoiceLines','false','false','false','ARInvoiceLine.ChargesTypeId','false','false','false')  
+declare @Fact_ARInvoicesTransferStatusNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ARInvoicesTransferStatusNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection,UseUnitSelection) Values(@Fact_ARInvoicesTransferStatusNewId,0,'Fact_ARInvoices','[Transfer Status]','Transfer Status','Dimension','false',0,2,'DIM_ARInvoiceTransferStatus','false','false','true','InvoiceGeneralDetails','true','false','false','ARInvoice.TransferStatusCode','false','false','false')  
 ------------------------------------------------------------------------------------
 declare @Fact_ChargesNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesNewId OUTPUT,'DWObjectTable' 
@@ -3548,3 +3565,9 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ShipmentsMainCarriageFinalDestinationNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsMainCarriageFinalDestinationNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection,UseUnitSelection,RecordType) Values(@Fact_ShipmentsMainCarriageFinalDestinationNewId,0,'Fact_Shipments','[Main Carriage Final Destination]','Main Carriage Final Destination','Dimension','false',0,0,'DIM_Ports','false','false','true','Routings','false','false','false','Master.MainCarriageFinalDestinationPortId','false','false','false','Shipment,Master')  
+declare @Fact_ShipmentsAccountedProfitNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsAccountedProfitNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection,UseUnitSelection,RecordType) Values(@Fact_ShipmentsAccountedProfitNewId,0,'Fact_Shipments','[Accounted Profit]','Accounted Profit','Decimal','false',0,0,'false','true','SUM','true','Money','false','false','false','false','false','false','Shipment,ARInvoicesFact')  
+declare @Fact_ShipmentsAccountedProfitLocalNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsAccountedProfitLocalNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection,UseUnitSelection,RecordType) Values(@Fact_ShipmentsAccountedProfitLocalNewId,0,'Fact_Shipments','[Accounted Profit(Local)]','Accounted Profit(Local)','Decimal','false',0,0,'false','true','SUM','true','Money','false','false','false','false','false','false','Shipment,ARInvoicesFact')  

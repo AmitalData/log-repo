@@ -1512,9 +1512,13 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
             using (MemoryStream memStream = new MemoryStream())
             {
                 report.ExportDocument(StiExportFormat.Pdf, memStream, pdfSettings);
-                reprotPdfData = memStream.ToArray(); ;
+                reprotPdfData = memStream.ToArray();
+                if (FeatureToggleHelper.HasFeatureToggle("DMS", tenant))
+                {
+                    memStream.Dispose();
+                    memStream.Close();
+                }
             }
-
             return reprotPdfData;
 
 

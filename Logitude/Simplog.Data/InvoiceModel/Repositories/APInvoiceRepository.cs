@@ -226,38 +226,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
      
         public void Add(APInvoice entity)
         {
-            //AddFromAPInvoice(entity);
             context.APInvoices.Add(entity);
-        }
-        public void AddFromAPInvoice(APInvoice entity)
-        {
-            var apInvoiceAnalytic = Map<APInvoiceAnalytic>(entity);
-            context.APInvoiceAnalytics.Add(apInvoiceAnalytic);
-        }
-        internal void UpdateFromAPInvoice(APInvoice entity)
-        {
-            var apInvoiceAnalytic = Map<APInvoiceAnalytic>(entity);
-            if (context.APInvoiceAnalytics.Any(e => e.Id == apInvoiceAnalytic.Id)) 
-            {
-                context.APInvoiceAnalytics.Attach(apInvoiceAnalytic);
-                context.SetAsModified(apInvoiceAnalytic);
-            } 
-            else AddFromAPInvoice(entity);
-        }
-        private T Map<T>(APInvoice from) where T : new()
-        {
-
-            var toPropes = typeof(T).GetProperties();
-            var fromPropes = from.GetType().GetProperties().ToDictionary(e => e.Name, e => e);
-            var to = new T();
-            foreach (var item in toPropes)
-            {
-                if (fromPropes.ContainsKey(item.Name))
-                {
-                    item.SetValue(to, fromPropes[item.Name].GetValue(from));
-                }
-            }
-            return to;
         }
 
         public void Remove(APInvoice entity)
@@ -270,7 +239,6 @@ namespace Simplog.Data.InvoiceModel.Repositories
         {
             try
             {
-                //UpdateFromAPInvoice(entity);
                 context.APInvoices.Attach(entity);
             }
             catch { }
@@ -298,7 +266,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
                                     where a.Tenant == tenant
                                     && a.EntityId == shipmentId
                                     && (a.ObjectTable.Name == "Shipment" || a.ObjectTable.Name == "Master")
-                                    select a.APInvoice).ToList();
+                                    select a.APInvoice).OrderBy(a => a.Id).ToList();
             return list;
         }
 

@@ -62,6 +62,7 @@ using System.Transactions;
 using System.Web;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.BL.Security;
+using Logitude.BL.AnalyticTableServices;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -340,17 +341,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.ComputeAgentComputed(entityPM, entityPoco);
                 this.ComputeETAAndETDHouseFields();
 
-                new ShipmentAnalyticRepository(objectContext).AddFromShipment(entityPoco, entityMasterData);
-
+               
                 entityRepository.Add(entityPoco);
                 entityRepository.SubmitChanges();
 
                 entityPM.IsConnectToMasterShipment = entityMasterData != null ? true : false;
                 shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
-                shipmentBehaviourFacade.Handle();
+                shipmentBehaviourFacade.Handle(FieldChanges);
                 shipmentBehaviourFacade.HandleShipmentDigitalFields(shipmentDigitalFields);
 
                 shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
+
+                new ShipmentAnalyticTableService(objectContext.GetActiveDbContext()).AddUpdate(entityPoco);
 
                 if (!string.IsNullOrEmpty(entityPM.MasterCreatedFromHouseId))
                 {
@@ -399,10 +401,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 RunAutomationThatDependencyOnLastEntityUpdate();
 
-                AuditLog auditLog = AddAuditLogChanges(entityPoco);
-                if (entityPM != null && (FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant) ||
-                                         SecurityUtility.CheckFeature("WorkFlow", "Module", entityPM.Tenant)))
+                AuditLog auditLog = null;
+                if (entityPM != null && FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant))
                 {
+                    auditLog = AddShipmentAuditLogChanges(entityPoco);
+                    AuditLogRepository.Add(auditLog);
                     AuditLogRepository.SubmitChanges();
                 }
 
@@ -410,7 +413,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     Entity = WorkflowEntities.Shipment,
                     EntityId = entityPM.Id,
-                    AuditLogId = auditLog.Id,
+                    AuditLogId = auditLog?.Id,
                     Tenant = entityPM.Tenant,
                     Type = QueueMessagesTypes.Create
                 }.Produce();
@@ -556,7 +559,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     entityPM.IsConnectToMasterShipment = entityMasterData != null ? true : false;
                     shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
-                    shipmentBehaviourFacade.Handle();
+                    shipmentBehaviourFacade.Handle(FieldChanges);
 
                     shipmentBehaviourFacade.HandleShipmentDigitalFields(shipmentDigitalFields);
 
@@ -610,6 +613,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     shipmentAdditionalCloudDataRepository.SubmitChanges();
                     followUpRepository.SubmitChanges();
                     shipmentPickUpDeliveryRepository.SubmitChanges();
+                    new ShipmentAnalyticTableService(objectContext.GetActiveDbContext()).AddUpdate(entityPoco);
 
                     if (entityPM.IsStandalonePickupDelivery)
                     {
@@ -670,10 +674,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     EntityChangesMessageProducer.ProduceShipmentUpdateMessage(shipmentPocoCopy, shipmentPMCopy);
                 }
 
-                AuditLog auditLog = AddAuditLogChanges(entityPoco);
-                if (entityPM != null && (FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant) || 
-                                         SecurityUtility.CheckFeature("WorkFlow", "Module", entityPM.Tenant)))
+                AuditLog auditLog = null;
+                if (entityPM != null && FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant))
                 {
+                    auditLog = AddShipmentAuditLogChanges(entityPoco);
+                    AuditLogRepository.Add(auditLog);
                     AuditLogRepository.SubmitChanges();
                 }
 
@@ -681,7 +686,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     Entity = WorkflowEntities.Shipment,
                     EntityId = entityPM.Id,
-                    AuditLogId = auditLog.Id,
+                    AuditLogId = auditLog?.Id,
                     Tenant = entityPM.Tenant,
                     Type = QueueMessagesTypes.Update
                 }.Produce();
@@ -691,7 +696,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
-        private AuditLog AddAuditLogChanges(Shipment entityPoco)
+        private AuditLog AddShipmentAuditLogChanges(Shipment entityPoco)
         {
             ObjectTableRepository objecttableRepository = new ObjectTableRepository(entityPoco.Tenant);
             ObjectTable objecttable = objecttableRepository.GetObjectTableByName("Shipment", 0, true);
@@ -705,8 +710,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 ObjectTableId = objecttable.Id,
                 ChangesJson = JsonConvert.SerializeObject(FieldChanges)
             };
-
-            AuditLogRepository.Add(auditLog);
 
             return auditLog;
         }
@@ -6060,11 +6063,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.CheckReceivableStatus(itemPM);
 
             // Ayman: we need this for the:IsBackToBack
-            if (string.IsNullOrEmpty(itemPM.Id))
-            {
-                itemPM.Id = IdCounter.GetNumber("ShipmentReceivable", tenant).ToString();
-            }
+            //if (string.IsNullOrEmpty(itemPM.Id))
+            //{
+            //    itemPM.Id = IdCounter.GetNumber("ShipmentReceivable", tenant).ToString();
+            //}
 
+            itemPM.Id = IdCounter.GetNumber("ShipmentReceivable", tenant).ToString();
             itemPM.ShipmentId = entityPM.Id;
             itemPM.Tenant = tenant;
 

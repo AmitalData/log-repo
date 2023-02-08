@@ -40,7 +40,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         throw new AutenticationException("Sorry! this user is not authorized!");
                     }
               
-                    if (blobInfo.BlobChunk.Length > 100000)
+                    if (!blobInfo.UploadAsOneBlock && blobInfo.BlobChunk !=null && blobInfo.BlobChunk.Length > 100000)
                     {
                         throw new ApplicationException("Blob chunk must not be larger than 100 KB");
                     }

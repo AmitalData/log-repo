@@ -29,6 +29,8 @@ using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.CRM.BL.AnalyticTableServices;
+using Logitude.Server.Tools;
 
 namespace Logitude.CRM.BL.EntityUpdateServices
 {
@@ -105,7 +107,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                         loggeduser = userRepository.GetSingleUserByEmail("system@tenant" + entityPM.Tenant + ".com", entityPM.Tenant);
                     }
                     ActivityLogger.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "N", loggeduser.Id);
-                }
+                }         
             }
         }
 
@@ -139,8 +141,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                     }
                     ActivityLogger.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggeduser.Id);
                     entityPM.UpdatedByUserId = loggeduser.Id;
-                }
-
+                }          
             }
         }
 
@@ -206,6 +207,11 @@ namespace Logitude.CRM.BL.EntityUpdateServices
 
             OpportunityAdditionalServiceUpdateService additionalServiceUpdateService = new OpportunityAdditionalServiceUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             additionalServiceUpdateService.UpdateMulti(entityPM.OpportunityAdditionalServices, entityPM.DeletedOpportunityAdditionalServices, entityPM, false);
+        }
+
+        protected override void UpdateCalculatedFields(OpportunityPM entityPM, EntityPM entityParentPM, Opportunity entityPOCO)
+        {
+            new OpportunityAnalyticTableService(MainContext.GetActiveDbContext()).AddUpdate(entityPOCO);
         }
 
         protected override void Trace(OpportunityPM entityPM, Opportunity entityPOCO, string changesXml)

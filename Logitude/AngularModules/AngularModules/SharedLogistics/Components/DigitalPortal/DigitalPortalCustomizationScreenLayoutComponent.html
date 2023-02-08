@@ -27,28 +27,31 @@
 <table>
     <tr>
         <!-- Left Sidebar -->
-        <td style="width: 155px; border: solid 1px silver">
-            <div class="SimpleGridView MediaFillAbsolute">
-                <div class="SimpleGridViewHeader">
-                    <table>
-                        <tr>
-                            <td style="width: 135px; min-width: 135px; max-width: 135px; ">Screen Name</td>
-                        </tr>
-                    </table>
-                </div>
+        <td style="width: 215px; border: solid 1px silver">
+            <div class="MediaFill">
+                <div class="SimpleGridView MediaFillAbsolute">
+                    <div class="SimpleGridViewHeader">
+                        <table>
+                            <tr>
+                                <td style="width: 200px; min-width: 200px; max-width: 200px; ">Screen Name</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="SimpleGridViewBody">
+                        <table>
 
-                <div class="SimpleGridViewBody">
-                    <table>
-                        <tr class="SimpleGridViewRow" *ngFor="let item of Screens" (click)="SelectionChanged(item)" [class.Selected]="item == SelectedItem">
-                            <td [attr.data-cy]="item.Name">
-                                <div [attr.title]="item.Name" class="GridViewCell" style="width: 135px; min-width: 135px; max-width: 135px; font-size: 11px ">
-                                    {{item.Name}}
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
+                            <tr class="SimpleGridViewRow" *ngFor="let item of Screens" (click)="SelectionChanged(item)" [class.Selected]="item == SelectedItem">
+                                <td [attr.data-cy]="item.Name">
+                                    <div [attr.title]="item.Name" class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px; font-size: 11px ">
+                                        {{item.Name}}
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
+
         </td>
 
         <td style="width: 10px;">
@@ -71,7 +74,7 @@
                                 </td>
 
                                 <td style="width: 100px;">
-                                    <button class="Button" (click)="AddFieldCodesClicked()">Add Field Codes </button>
+                                    <button class="Button" (click)="AddFieldCodesClicked()">Add Field</button>
                                 </td>
 
                                 <td>
@@ -117,10 +120,19 @@
                                 <td style="width: 150px;">
                                     <button class="Button" (click)="RestoreDefaultLayoutClicked()">Restore Default Layout </button>
                                 </td>
+
+                                <td style="width: 3px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 150px;">
+                                    <button class="Button" (click)="LoadDraftLayoutClicked()">Load Draft </button>
+                                </td>
+
                                 <td>
                                     <div></div>
                                 </td>
-                               
+
                                 <td style="width: 100px;">
                                     <button id="{{ 'SaveBtn' | IdGeneratorAsyncPipe | async}}" *ngIf="!IsModified" class="Button" (click)="PublichChangesClicked(false)">
                                         <img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.png" />
@@ -150,7 +162,7 @@
                     </td>
                 </tr>
 
-               
+
             </table>
         </td>
     </tr>

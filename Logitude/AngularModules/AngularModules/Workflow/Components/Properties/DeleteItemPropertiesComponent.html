@@ -93,7 +93,7 @@
             </div>
             <div class="table-row-cell-block">
                 <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'300px'" [Value]="Record"
-                    (ValueChanged)="updateRecord($event)">
+                    [IsReturnedTreeSelectItem]="true" (ValueChanged)="updateRecord($event)">
                 </TreeSelect>
             </div>
             <div class="table-row-cell-block help-text-container">
@@ -106,17 +106,6 @@
     <tr>
         <td>
             <div></div>
-        </td>
-    </tr>
-
-    <tr class="table-row">
-        <td>
-
-            <FooterButtons [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="saveButtonClicked()"
-                (CancelButtonClicked)="cancelButtonClicked()" [SaveButtonDataCy]="'delete-item-properties-save-button'"
-                [CancelButtonDataCy]="'delete-item-properties-cancel-button'">
-            </FooterButtons>
-
         </td>
     </tr>
 

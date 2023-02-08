@@ -1,9 +1,7 @@
-declare var window: any;
 import { MenuButtonPM } from '../../../Infrastructure/EntityPMs/MenuButtonPM'
 import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { WorkFlowPM } from 'Workflow/EntityPMs/WorkFlowPM';
 import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
-import { WorkFlowPMService } from 'Workflow/Services/StandardPMs/WorkFlowPMService';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { WorkFlowVersionPM } from 'Workflow/EntityPMs/WorkFlowVersionPM';
@@ -23,6 +21,9 @@ export class WorkFlowMenuButtonsHandler {
 
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
         this.MenuButtons = menuButtons;
+        this.MenuButtons.forEach(btn => {
+            btn.IsDisabled = true;
+        });
 
         if (this.EntityPM != null) {
             if (this.entityArgs.EditComponent != null) {
@@ -44,6 +45,8 @@ export class WorkFlowMenuButtonsHandler {
 
     public SetButtonStates(menuButtons) {
         var HasChanges: boolean = this.entityArgs.EditComponentArgument?.HasChanges ? true : false
+        var IsActiveDisabled: boolean = this.entityArgs.EditComponentArgument?.IsActiveDisabled ? true : false
+        var IsNewVersionDisabled: boolean = this.entityArgs.EditComponentArgument?.IsNewVersionDisabled ? true : false
         var CurrentDisplayedVersionId = this.entityArgs.EditComponentArgument?.CurrentDisplayedVersionId
         var version = this.EntityPM.WorkFlowVersions.find(v => v.Id == CurrentDisplayedVersionId);
 
@@ -51,21 +54,14 @@ export class WorkFlowMenuButtonsHandler {
             var button = menuButtons[i];
             button.IsDisabled = true;
             switch (button.EventCode) {
-                case "SaveDraft":
-                    {
-                        if ((this.isDraftVersion(version.StatusCode) && HasChanges)) {
-                            button.IsDisabled = false;
-                        }
-                        break;
-                    }
                 case "NewVersion":
                     {
-                        button.IsDisabled = false;
+                        button.IsDisabled = IsNewVersionDisabled;
                         break;
                     }
                 case "Activate":
                     {
-                        if (!HasChanges) {
+                        if (!HasChanges && !IsActiveDisabled) {
                             if (this.isActiveVersion(version.StatusCode)) {
                                 button.IsDisabled = false;
                                 button.DisplayText = "Deactivate";
@@ -84,11 +80,6 @@ export class WorkFlowMenuButtonsHandler {
 
     public MenuButtonClick(menuButton: MenuButtonPM) {
         switch (menuButton.EventCode) {
-            case "SaveDraft":
-                {
-                    this.SaveDraftVersion();
-                    break;
-                }
             case "NewVersion":
                 {
                     this.CreateNewVersion();
@@ -99,23 +90,6 @@ export class WorkFlowMenuButtonsHandler {
                     this.ActivateDeactiveVersion();
                     break;
                 }
-        }
-    }
-
-    SaveDraftVersion() {
-        var CurrentDisplayedVersionId = this.entityArgs.EditComponentArgument?.CurrentDisplayedVersionId
-        var version = this.EntityPM.WorkFlowVersions.find(v => v.Id == CurrentDisplayedVersionId);
-
-        this.StartBusyIndicator("Saving ...");
-
-        this.WorkFlowVersionPMService.update(version).subscribe((serviceResponse: ServiceResponse) => { this.handleSaveDraftVersionResponse(serviceResponse); });
-    }
-
-    handleSaveDraftVersionResponse(serviceResponse: ServiceResponse) {
-        if (!serviceResponse.HasError) {
-            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, HasChanges: false }
-            this.SetButtonStates(this.MenuButtons);
-            this.StopBusyIndicator();
         }
     }
 

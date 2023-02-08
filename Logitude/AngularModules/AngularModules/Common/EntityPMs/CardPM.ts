@@ -194,6 +194,11 @@ export class CardPM {
     public set BillingAddressId(newValue: string) { if (this.billingAddressId != newValue) { this.billingAddressId = newValue; this.MarkAsDirty("BillingAddressId"); } }
        
 	 
+    private pickupDeliveryAddressId: string;
+    public get PickupDeliveryAddressId() { return this.pickupDeliveryAddressId; }
+    public set PickupDeliveryAddressId(newValue: string) { if (this.pickupDeliveryAddressId != newValue) { this.pickupDeliveryAddressId = newValue; this.MarkAsDirty("PickupDeliveryAddressId"); } }
+       
+	 
     private website: string;
     public get Website() { return this.website; }
     public set Website(newValue: string) { if (this.website != newValue) { this.website = newValue; this.MarkAsDirty("Website"); } }
@@ -287,6 +292,11 @@ export class CardPM {
     private leadSourceId: string;
     public get LeadSourceId() { return this.leadSourceId; }
     public set LeadSourceId(newValue: string) { if (this.leadSourceId != newValue) { this.leadSourceId = newValue; this.MarkAsDirty("LeadSourceId"); } }
+       
+	 
+    private customerSizeId: string;
+    public get CustomerSizeId() { return this.customerSizeId; }
+    public set CustomerSizeId(newValue: string) { if (this.customerSizeId != newValue) { this.customerSizeId = newValue; this.MarkAsDirty("CustomerSizeId"); } }
        
 	 
     private customAgent: any;

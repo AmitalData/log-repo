@@ -50,7 +50,7 @@
     <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'GroupHash'">{{ rowData[fieldName] }}</div>
 
     <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'JournalNumber'">
-        <a href="javascript:;" (click)="OpenJournal(rowData['JournalId'])">
+        <a href="javascript:;" (click)="$event.stopPropagation();OpenJournal(rowData['JournalId'])">
             {{ rowData['JournalNumber'] }}
         </a>
     </div>
@@ -69,7 +69,7 @@
               [class]="'SourceTypeIcon color-' + rowData['SourceTypeCode']"
               (click)="OpenSource(rowData['SourceId'])">{{rowData['IconCode']}}</span>
 
-        <a href="javascript:;" (click)="OpenSource(rowData['SourceId'])">
+        <a href="javascript:;" (click)="$event.stopPropagation();OpenSource(rowData['SourceId'])">
             {{rowData['SourceNumber']}}
         </a>
     </div>

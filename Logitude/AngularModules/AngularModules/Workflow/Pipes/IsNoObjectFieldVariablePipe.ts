@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { Formatter } from "Workflow/Models/Formatter";
+import { Formatter } from "Workflow/Utilities/Formatter";
+import { ObjectFields } from "Workflow/Utilities/ObjectFields";
 
 @Pipe({
     name: "IsNoObjectFieldVariablePipe"
@@ -7,19 +8,10 @@ import { Formatter } from "Workflow/Models/Formatter";
 
 export class IsNoObjectFieldVariablePipe implements PipeTransform {
 
-    // transform(field: string) {
-    //     if (field) {
-    //         let isNoObjectFieldVariable = (field.toString().startsWith("declaredvariables_")) ||
-    //             (field.toString().startsWith("declaredrecordvariables_") && field.toString().split("_").length === 2);
-    //         return isNoObjectFieldVariable;
-    //     }
-    //     return false;
-    // }
-
-    transform(field: string, objectFields: any) {
-        if (field && objectFields) {
+    transform(field: string) {
+        if (field) {
             let fieldCode = Formatter.getFieldCode(field);
-            return fieldCode ? !objectFields.some((o: any) => o.FieldCode === fieldCode) : false;
+            return fieldCode ? !ObjectFields.getAll().some((o: any) => o.FieldCode === fieldCode) : false;
         }
         return false;
     }

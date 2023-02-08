@@ -12,10 +12,10 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
 {
     public partial class DigitalTextCodeQueryService
     {
-        public DigitalTextCodeList GetDigitalTextCodesQuery(int tenant, string objectTableId, string profileId = "")
+        public DigitalTextCodeList GetDigitalTextCodesQuery(int tenant, string objectTableId, string profileCode = "")
         {
             DigitalTextCodeRepository digitalTextCodeRepository = new DigitalTextCodeRepository(tenant);
-            var defaultTextCode = digitalTextCodeRepository.GetDigitalTextCodes(tenant, objectTableId, profileId)
+            var defaultTextCode = digitalTextCodeRepository.GetDigitalTextCodes(tenant, objectTableId, profileCode)
                                                             .Select(x => new DigitalTextCodeList
                                                             {
                                                                 Id = x.Id,
@@ -30,11 +30,33 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
             return defaultTextCode;
         }
 
-        public List<DigitalTextCodeList> GetDigitalTextCodesObjetTables(int tenant)
+        public List<DigitalTextCodeList> GetDigitalTextCodesTenant0()
         {
+            DigitalTextCodeRepository digitalTextCodeRepository = new DigitalTextCodeRepository(0);
+            var defaultTextCode = digitalTextCodeRepository.GetDigitalTextCodesTenant0()
+                                                           .Select(x => new DigitalTextCodeList
+                                                           {
+                                                               Id = x.Id,
+                                                               ObjectTableId = x.ObjectTableId,
+                                                               ObjectTableName = x.ObjectTable.Name,
+                                                               Tenant = x.Tenant,
+                                                               Labels = x.Labels,
+                                                               ProfileId = x.ProfileId,
+                                                               CreateDate = x.CreateDate,
+                                                               UpdateDate = x.UpdateDate,
+                                                               ProfileCode = x.DigitalProfile.Code
+                                                           })
+                                                           .ToList();
+
+            return defaultTextCode;
+        }
+        
+        public List<DigitalTextCodeList> GetDigitalTextCodesObjetTables(int tenant)
+        { 
             var objetTables = context.DigitalTextCodes
                                      .Include("ObjectTable")
-                                     .Where(a => a.Tenant == tenant).GroupBy(a => a.ObjectTable)
+                                     .Where(a => a.Tenant == tenant)
+                                     .GroupBy(a => a.ObjectTable)
                                      .Select(a => new DigitalTextCodeList
                                      {
                                          ObjectTableId = a.Key.Id,

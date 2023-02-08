@@ -6,7 +6,7 @@ import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { WorkFlowInstanceActivityList } from 'Workflow/EntityLists/WorkFlowInstanceActivityList';
-import { ApiQueryFiltersBuilder } from 'Workflow/Models/ApiQueryFiltersBuilder';
+import { ApiQueryFiltersBuilder } from 'Workflow/Utilities/ApiQueryFiltersBuilder';
 import { WorkFlowInstanceActivityListService } from 'Workflow/Services/StandardLists/WorkFlowInstanceActivityListService';
 import { WorkFlowInstanceVariableListService } from 'Workflow/Services/StandardLists/WorkFlowInstanceVariableListService';
 
@@ -58,7 +58,7 @@ export class WorkflowInstanceActivityComponent extends BaseComponent {
     }
 
     LoadActivityData() {
-        let filters = ApiQueryFiltersBuilder.getWorkflowInstanceActivities(this.EntityId, true);
+        let filters = ApiQueryFiltersBuilder.getWorkflowInstanceActivityOrVariableFilters(this.EntityId, true);
         
         this.WorkFlowInstanceActivityListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
@@ -72,7 +72,7 @@ export class WorkflowInstanceActivityComponent extends BaseComponent {
     }
 
     LoadVariablesData() {
-        let filters = ApiQueryFiltersBuilder.getWorkflowInstanceActivities(this.EntityId, true);
+        let filters = ApiQueryFiltersBuilder.getWorkflowInstanceActivityOrVariableFilters(this.EntityId, true);
         
         this.WorkFlowInstanceVariableListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {

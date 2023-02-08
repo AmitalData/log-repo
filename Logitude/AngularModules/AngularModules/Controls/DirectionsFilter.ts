@@ -1,10 +1,11 @@
 import { Component, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { SessionLocator } from '../Infrastructure/Utilities/SessionLocator';
 import { FeatureLocator } from '../Infrastructure/Utilities/FeatureLocator';
+import { AppTool } from '../Infrastructure/Tools';
 
 @Component({
     selector: 'DirectionsFilter',
-    inputs: ['SelectedValue', 'HideCustomsImport', 'HideImportDomistic', 'HideAMANACFilters', 'ShowCustomFilter', 'HideExport'],
+    inputs: ['SelectedValue', 'HideCustomsImport', 'HideImportDomistic', 'HideAMANACFilters', 'ShowCustomFilter', 'HideExport', 'Width'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 
     template:
@@ -68,6 +69,15 @@ export class DirectionsFilter {
         this.SetVisibilityImportShipments();
         this.SetVisibilityImportDomistic();
 
+    }
+
+
+    private width: number;
+    public get Width() { return this.width; }
+    public set Width(value: number) {
+        if (this.width == value) return;
+        this.width = value;
+        this.DirectionWidth = AppTool.IsNullOrEmpty(value) ? this.DirectionWidth : value;
     }
 
 

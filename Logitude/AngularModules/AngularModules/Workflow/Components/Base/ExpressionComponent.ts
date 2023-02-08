@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { LogitudeWindow } from "Controls/Windows/LogitudeWindow";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
-import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
-import { ExpressionValue } from "Workflow/Models/Types";
+import { ExpressionValue } from "Workflow/Types";
 
 @Component({
     selector: "Expression",
@@ -13,7 +12,6 @@ export class ExpressionComponent extends BaseComponent implements OnInit {
 
     @Input() CurrentValue: ExpressionValue;
     @Input() FlowObject: any;
-    @Input() FlowObjectFields: ObjectFieldList[];
     @Input() CurrentNodeId: string;
     @Input() IsDisabled: boolean = false;
     @Input() Width: string = "300px";
@@ -54,7 +52,6 @@ export class ExpressionComponent extends BaseComponent implements OnInit {
         let expressionBuilderWindowArgs: any = {
             FlowObject: this.FlowObject,
             CurrentNodeId: this.CurrentNodeId,
-            FlowObjectFields: this.FlowObjectFields,
             ExpressionValue: this.ExpressionValue
         };
         expressionBuilderWindow.Width = 900;

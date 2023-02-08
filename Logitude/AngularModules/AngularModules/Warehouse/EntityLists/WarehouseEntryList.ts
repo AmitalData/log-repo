@@ -5,8 +5,9 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+import { CustomFieldList } from '../../Infrastructure/EntityLists/CustomFieldList';
 
-export class WarehouseEntryList {
+export class WarehouseEntryList extends CustomFieldList {
    
 	Id: string;
 	Tenant: number;
@@ -80,4 +81,3 @@ export class WarehouseEntryList {
 	ConnectedToReferenceNumber: string;
 	
 }
- 

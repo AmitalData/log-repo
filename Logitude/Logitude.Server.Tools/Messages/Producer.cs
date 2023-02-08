@@ -1,15 +1,20 @@
 ﻿using Confluent.Kafka;
+using Dropbox.Api.Sharing;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
+using Microsoft.AspNet.SignalR.Messaging;
 using Simplog.Server.Infrastructure;
+using System;
 using System.Threading.Tasks;
+using static Confluent.Kafka.ConfigPropertyNames;
 
 namespace Logitude.Server.Tools.Messages
 {
-    public class Producer
+    public class Producer : IDisposable
     {
         public IProducer<long, string> ProducerBuilder { get; set; }
         public IProducer<long, string> TestingProducer { get; set; }
-
-
+       
         public Producer()
         {
             KafkaCredentials.SetEventHubConfigurations();
@@ -68,8 +73,17 @@ namespace Logitude.Server.Tools.Messages
             return config;
         }
 
-        public DeliveryResult<long, string> Produce(string topic, long key, string logitudeUpdateMessage)
+        public DeliveryResult<long, string> Produce(string topic, long key, string logitudeUpdateMessage,bool useSync = false)
         {
+            if (useSync)
+            {
+                if (IsProductionEnvironment())
+                {
+                    TestingProducer.Produce(topic, new Message<long, string> { Key = key, Value = logitudeUpdateMessage });
+                }
+                ProducerBuilder.Produce(topic, new Message<long, string> { Key = key, Value = logitudeUpdateMessage });
+                return new DeliveryResult<long, string>();
+            }
             if (IsProductionEnvironment())
             {
                 TestingProducer.ProduceAsync(topic, new Message<long, string> { Key = key, Value = logitudeUpdateMessage }).GetAwaiter().GetResult();
@@ -77,8 +91,17 @@ namespace Logitude.Server.Tools.Messages
             return ProducerBuilder.ProduceAsync(topic, new Message<long, string> { Key = key, Value = logitudeUpdateMessage }).GetAwaiter().GetResult();
         }
 
-        public DeliveryResult<long, string> Produce(TopicPartition topicPartition, long key, string logitudeUpdateMessage)
+        public DeliveryResult<long, string> Produce(TopicPartition topicPartition, long key, string logitudeUpdateMessage, bool useSync = false)
         {
+            if (useSync)
+            {
+                if (IsProductionEnvironment())
+                {
+                    TestingProducer.Produce(topicPartition, new Message<long, string> { Key = key, Value = logitudeUpdateMessage });
+                }
+                ProducerBuilder.Produce(topicPartition, new Message<long, string> { Key = key, Value = logitudeUpdateMessage });
+                return new DeliveryResult<long, string>();
+            }
             if (IsProductionEnvironment())
             {
                 TestingProducer.ProduceAsync(topicPartition, new Message<long, string> { Key = key, Value = logitudeUpdateMessage }).GetAwaiter().GetResult();

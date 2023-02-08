@@ -11,6 +11,7 @@ using System.Linq;
 using System.Web;
 using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
+using WebFreight.Web.Services;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
 {
@@ -143,17 +144,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
         public byte[] GetData()
         {
             OpportunityMonthlyConversionDataProvider myDataProvider = new OpportunityMonthlyConversionDataProvider();
-
             myDataProvider = this.LoadDataProvider();
-
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(OpportunityMonthlyConversionDataProvider));
-            MemoryStream memoryStream = new MemoryStream();
-            xmlSerializer.Serialize(memoryStream, myDataProvider);
-            memoryStream.Seek(0, SeekOrigin.Begin);
-            StreamReader streamReader = new StreamReader(memoryStream);
-            string content = streamReader.ReadToEnd();
-            byte[] bytearray = memoryStream.ToArray();
-            return bytearray;
+            return new ReportMemoryStreamService().Convert(myDataProvider, typeof(OpportunityMonthlyConversionDataProvider), tenant);
         }
 
         private OpportunityMonthlyConversionDataProvider LoadDataProvider()

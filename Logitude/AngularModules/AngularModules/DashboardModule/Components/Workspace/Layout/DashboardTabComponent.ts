@@ -4,7 +4,7 @@ import { WidgetPM } from '../../../../DashboardModule/EntityPMs/WidgetPM';
 import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
 import { DashboardPMService } from '../../../../DashboardModule/Services/StandardPMs/DashboardPMService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
+import { AppTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { DashboardMapping } from 'DashboardModule/Tools/DashboardMapping';
 import { DashboardDataBinding } from 'logitude-dashboard-library/dist/types/DashboardDataBinding';
@@ -14,14 +14,13 @@ import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { DashboardAnalyticsService } from '../../../../DashboardModule/Services/DashboardAnalyticsService';
-import { WidgetMeasurePM } from 'DashboardModule/EntityPMs/WidgetMeasurePM';
-import { DashboardSharedUserPM } from 'DashboardModule/EntityPMs/DashboardSharedUserPM';
-import { DashboardGlobalFilterPM } from 'DashboardModule/EntityPMs/DashboardGlobalFilterPM';
 import { DashboardListService } from '../../../../DashboardModule/Services/StandardLists/DashboardListService';
 import { DashboardList } from '../../../../DashboardModule/EntityLists/DashboardList';
 import { DashboardCopyService } from 'DashboardModule/Tools/DashboardCopyService';
 import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
-
+import { GlobalFilterItem } from 'DashboardModule/Components/Windows/Filter/GlobalFilter/GlobalFilterItem';
+import { AnalyticsFactsFieldsMetaDataPM } from 'DashboardModule/EntityPMs/AnalyticsFactsFieldsMetaDataPM';
+import { formatDate } from '@angular/common';
 
 @Component({
     templateUrl: 'DashboardTabComponent.html',
@@ -31,11 +30,13 @@ import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 export class DashboardTabComponent implements OnInit {
     @Input() DashboardId: string = null;
     @Input() OpenEditLayout: boolean = false;
+    @Input() PresetFilters: AnalyticsFactsFieldsMetaDataPM[];
     @Output() DashboardDeleted = new EventEmitter<string>();
     @Output() DashboardChanged = new EventEmitter<DashboardPM>();
     @Output() TabHasChanges = new EventEmitter<boolean>();
     @Output() DashboardEntity = new EventEmitter<DashboardPM>();
     @Output() RefreshAfterCopy = new EventEmitter<DashboardPM>();
+
     public SelectedDashboardName: string = null;
     public SelectedDashboard: DashboardPM;
     private dashboardPMService: DashboardPMService;
@@ -45,10 +46,13 @@ export class DashboardTabComponent implements OnInit {
     public newWidgetWidth = 3;
     public newWidgetHeight = 5;
     public CloneDashboardLayout: WidgetPM[];
-    public GlobalFilters: any[];
+    public GlobalFilters: GlobalFilterItem[];
     private DashboardListService: DashboardListService;
     public ItemsSource: DashboardList[] = [];
     public CanCopy: boolean;
+    public FilterCount: number = 0;
+    public DateRangeLabel: string;
+    public DateRangeNumber: number;
 
     constructor() {
         this.dashboardPMService = new DashboardPMService();
@@ -92,26 +96,23 @@ export class DashboardTabComponent implements OnInit {
     public IsEditDashboardButtonVisible: boolean = false;
     public IsEditLayoutButtonVisible: boolean = !this.IsEditLayoutModeActive && !AppTool.IsNullOrEmpty(this.DashboardId);
 
-    private LoadSelectedDashboard() {
+    private LoadSelectedDashboard(refreshWidgets: boolean = false) {
         this.dashboardPMService.get(this.DashboardId).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.SelectedDashboard = myResponse.Result;
-                this.IsEditLayoutButtonVisible = !this.IsEditLayoutModeActive
-                    && this.SelectedDashboard
-                    && this.SelectedDashboard.Tenant == SessionLocator.Tenant
-                    && (this.SelectedDashboard.CreatedByUserId == SessionLocator.LoggedUserId || SessionLocator.LoggedUserPM.IsCustomerCare);
-
-                if (this.SelectedDashboard) {
-                    this.applyWDashboard();
-                }
-
-                else {
-                    this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone({ lg: [] }));
-                }
-
-                this.CurrentSession.StopBusyIndicator();
-            }
+            this.CurrentSession.StopBusyIndicator();
+            if (myResponse.HasError) return;
+            this.SelectedDashboard = myResponse.Result;
+            this.SetIsEditLayoutButtonVisible();
+            if (this.SelectedDashboard) this.applyWDashboard();
+            else this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone({ lg: [] }));
+            if (refreshWidgets) this.RefreshWidgets();
         });
+    }
+
+    private SetIsEditLayoutButtonVisible() {
+        this.IsEditLayoutButtonVisible = !this.IsEditLayoutModeActive
+            && this.SelectedDashboard
+            && this.SelectedDashboard.Tenant == SessionLocator.Tenant
+            && (this.SelectedDashboard.CreatedByUserId == SessionLocator.LoggedUserId || SessionLocator.LoggedUserPM.IsCustomerCare);
     }
 
     get IsEmptyDashboardVisible() {
@@ -138,7 +139,9 @@ export class DashboardTabComponent implements OnInit {
 
         widgets.forEach(item => {
             item.Key = item.Id ?? item.Key;
-            reactWidgets.push(DashboardMapping.GetReactWidget(item));
+            var reactWidget = DashboardMapping.GetReactWidget(item);
+            reactWidget.GlobalFilters = this.GetWidgetGlobalFilters(reactWidget);
+            reactWidgets.push(reactWidget);
         });
         return { lg: reactWidgets };
     }
@@ -176,7 +179,13 @@ export class DashboardTabComponent implements OnInit {
     }
 
     RefreshLayoutClicked() {
+        if (!this.SelectedDashboard) return;
+        this.CurrentSession.StartBusyIndicatorLoading();
         MixPanelLocator.PostDashboardAction({ ActionName: "Refresh Click", DashboardId: this.SelectedDashboard?.Id });
+        this.LoadSelectedDashboard(true);
+    }
+
+    RefreshWidgets() {
         for (const item of this.reactWidgetsLayout.lg) {
             item.GlobalFilters = this.GetWidgetGlobalFilters(item);
             this.DashboardDataBinding.onEditWidget.next(item);
@@ -205,8 +214,8 @@ export class DashboardTabComponent implements OnInit {
         });
     }
 
-    SaveDashboard(fromUI: boolean = false) {
-        if (fromUI) MixPanelLocator.PostDashboardAction({ ActionName: "Submit Dashboard Save Click", DashboardId: this.SelectedDashboard?.Id });
+    SaveDashboard() {
+        MixPanelLocator.PostDashboardAction({ ActionName: "Submit Dashboard Save Click", DashboardId: this.SelectedDashboard?.Id });
 
         this.CurrentSession.StartBusyIndicatorSaving();
         this.dashboardPMService.update(this.SelectedDashboard).subscribe((myResponse: ServiceResponse) => {
@@ -286,12 +295,14 @@ export class DashboardTabComponent implements OnInit {
         var behaviorSubject = new BehaviorSubject<{ StartPotistion: string, EndPosition: string }>(this.GetDefaultPosition());
         return behaviorSubject;
     }
+
     GetDefaultPosition() {
         var position = this.EvaluateNewWidgetPosition(this.newWidgetWidth, this.newWidgetHeight);
         var startPotistion = `${position.x},${position.y}`;
         var endPosition = `${position.w},${position.h}`;
         return { StartPotistion: startPotistion, EndPosition: endPosition };
     }
+
     GetWidgetPosition(myWidget: WidgetPM, numberOfGroup) {
         if (myWidget.TypeCode == "line") {
             if (numberOfGroup > 25)
@@ -315,6 +326,7 @@ export class DashboardTabComponent implements OnInit {
         }
         return this.GetPosition(this.newWidgetWidth, this.newWidgetHeight);
     }
+
     GetPosition(w, h) {
         var position = this.EvaluateNewWidgetPosition(w, h);
         var startPotistion = `${position.x},${position.y}`;
@@ -401,57 +413,274 @@ export class DashboardTabComponent implements OnInit {
         });
     }
 
-    ApplyFilters(filters: any[]) {
+    ApplyFilters(filters: GlobalFilterItem[]) {
         this.GlobalFilters = filters;
-        for (const item of this.reactWidgetsLayout.lg) {
-            this.ApplyGlobalFilterToWidget(item);
+        this.SetDateRangeForCompareWithPrevious();
+        for (const widget of this.reactWidgetsLayout.lg) {
+            this.ApplyGlobalFilterToWidget(widget);
         }
     }
 
-    private ApplyGlobalFilterToWidget(item: ReactWidgetPM) {
-        var widgetGlobalFilters = this.GetWidgetGlobalFilters(item);
-        if (item.GlobalFilters == widgetGlobalFilters) return;
-        item.GlobalFilters = widgetGlobalFilters;
-        this.DashboardDataBinding.onEditWidget.next(item);
+    SetDateRangeForCompareWithPrevious() {
+        if (!this.GlobalFilters || this.GlobalFilters.length == 0) {
+            this.DateRangeLabel = "";
+            return;
+        }
+        var compareItem = this.GlobalFilters.find((x: any) => x.compareWithPrevious) as any;
+
+        if (!compareItem?.compareWithPrevious) {
+            this.DateRangeLabel = "";
+            return;
+        }
+        if (compareItem?.Operator == "Between") {
+            this.DateRangeLabel = this.ParseDateFormat(compareItem.fieldValue) + " - " + this.ParseDateFormat(compareItem.fieldValue2) + "    vs    " + this.GetCompareFromDateForBetween(compareItem.fieldValue, compareItem.fieldValue2) + " - " + this.GetCompareToDateForBetween(compareItem.fieldValue);
+        }
+
+        if (compareItem?.Operator == "Previous") {
+            this.SetPreviousDates(compareItem);
+        }
+    }
+
+    SetPreviousDates(compareItem: any) {
+        var curDate = new Date(Date.now());
+        let formattedDate = this.FormatDate(curDate);
+
+        if (compareItem.dateGroupCode == "Quarter") {
+            this.GetDateRangeLabelForQuarter(compareItem);
+            return;
+        }
+
+        this.DateRangeLabel = this.GetFromDateForPrevious(compareItem) + " - " + formattedDate + "    vs    " + this.GetCompareFromDateForPrevious(compareItem, this.GetFromDateForPrevious(compareItem))
+            + " - " + this.GetCompareToDateForPrevious(this.GetFromDateForPrevious(compareItem));
+    }
+
+    GetDateRangeLabelForQuarter(compareItem: any) {
+
+        var numberPeriod = +compareItem.fieldValue3;
+        var FromDate = this.GetFromDateForPrevious(compareItem);
+        var CompareFromDate = this.GetCompareFromDateForQuarter(new Date(FromDate), numberPeriod);
+
+        this.DateRangeLabel = FromDate + " - " + this.GetEndOfQuarter(new Date(FromDate), numberPeriod) + "    vs    " + CompareFromDate
+            + " - " + this.GetEndOfQuarter(new Date(CompareFromDate), numberPeriod);
+    }
+
+    ParseDateFormat(date: string): string {
+        var year = date.substring(0, 4);
+        var month = date.substring(4, 6);
+        var day = date.substring(6, 8);
+
+        var dateString = year + "/" + month + "/" + day;
+        return dateString;
+    }
+
+    GetCompareFromDateForBetween(fieldValue, fieldValue2): string {
+        let dateFrom = new Date(this.ParseDateFormat(fieldValue));
+        let dateTo = new Date(this.ParseDateFormat(fieldValue2));
+
+        let numberOfDays = Math.floor((Date.UTC(dateTo.getFullYear(), dateTo.getMonth(), dateTo.getDate()) - Date.UTC(dateFrom.getFullYear(), dateFrom.getMonth(), dateFrom.getDate())) / (1000 * 60 * 60 * 24));
+
+        dateFrom.setDate(dateFrom.getDate() - numberOfDays);
+        let formattedDate = this.FormatDate(dateFrom);
+        return formattedDate;
+
+    }
+
+    GetCompareToDateForBetween(fieldValue): string {
+        let dateFrom = new Date(this.ParseDateFormat(fieldValue));
+
+        dateFrom.setDate(dateFrom.getDate() - 1);
+        let formattedDate = this.FormatDate(dateFrom);
+        return formattedDate;
+
+    }
+
+    GetFromDateForPrevious(compareItem: any): string {
+        let dateFrom = new Date(Date.now());
+        let stringPeriod = compareItem.fieldValue3;
+        var numberPeriod: number = +stringPeriod;
+        dateFrom = this.SetDateFromAccordingDateGroupCode(compareItem, dateFrom, numberPeriod);
+        let formattedDate = this.FormatDate(dateFrom);
+        return formattedDate;
+    }
+
+    GetCompareFromDateForPrevious(compareItem: any, dateFrom: any) {
+        let dateFromHere = new Date(dateFrom);
+        let stringPeriod = compareItem.fieldValue3;
+        var numberPeriod: number = +stringPeriod;
+        dateFromHere = this.SetDateFromAccordingDateGroupCode(compareItem, dateFromHere, numberPeriod);
+        let formattedDate = this.FormatDate(dateFromHere);
+        return formattedDate;
+    }
+
+    SetDateFromAccordingDateGroupCode(compareItem: any, dateFromHere: Date, numberPeriod: number): Date {
+        if (compareItem.dateGroupCode == 'Day') {
+            dateFromHere.setDate(dateFromHere.getDate() - numberPeriod);
+        }
+        if (compareItem.dateGroupCode == 'Week') {
+            dateFromHere.setDate(dateFromHere.getDate() - (7 * numberPeriod));
+        }
+        if (compareItem.dateGroupCode == 'Month') {
+            dateFromHere.setMonth(dateFromHere.getMonth() - numberPeriod);
+        }
+        if (compareItem.dateGroupCode == 'Quarter') {
+            var month = this.GetStartCurrentQuarter(dateFromHere);
+            dateFromHere.setMonth(month);
+            dateFromHere = new Date(dateFromHere.getFullYear(), dateFromHere.getMonth(), 1);
+            dateFromHere.setMonth(dateFromHere.getMonth() - (3 * numberPeriod));
+        }
+
+        if (compareItem.dateGroupCode == 'Year') {
+            dateFromHere.setFullYear(dateFromHere.getFullYear() - numberPeriod);
+        }
+
+        return dateFromHere;
+    }
+    GetEndOfQuarter(date: Date, numberPeriod: number): string {
+
+        var lastDayInQuarter = new Date(date);
+        lastDayInQuarter.setMonth(lastDayInQuarter.getMonth() + (3 * numberPeriod));
+        lastDayInQuarter.setDate(lastDayInQuarter.getDate() - 1);
+        let formattedDate = this.FormatDate(lastDayInQuarter);
+        return formattedDate;
+    }
+
+    GetCompareFromDateForQuarter(date: Date, numberPeriod: number) {
+        date = new Date(date.getFullYear(), date.getMonth(), 1);
+        date.setMonth(date.getMonth() - (3 * numberPeriod));
+        let formattedDate = this.FormatDate(date);
+        return formattedDate;
+    }
+
+    GetStartCurrentQuarter(date: Date): number {
+        if (date.getMonth() >= 4 && date.getMonth() <= 6)
+            return 3;
+        else if (date.getMonth() >= 7 && date.getMonth() <= 9)
+            return 6;
+        else if (date.getMonth() >= 10 && date.getMonth() <= 12)
+            return 9;
+        else
+            return 0;
+    }
+
+    GetCompareToDateForPrevious(dateFrom: any) {
+        let dateFromHere = new Date(dateFrom);
+
+        dateFromHere.setDate(dateFromHere.getDate() - 1);
+        let formattedDate = this.FormatDate(dateFromHere);
+        return formattedDate;
+    }
+
+    FormatDate(date: Date): string {
+        const format = 'yyyy/MM/dd';
+        const locale = 'en-US';
+        const formattedDate = formatDate(date, format, locale);
+        return formattedDate;
+    }
+
+    private ApplyGlobalFilterToWidget(widget: ReactWidgetPM) {
+        var widgetGlobalFilters = this.GetWidgetGlobalFilters(widget);
+        if (!this.WidgetFilterChanged(widget, widget.GlobalFilters, widgetGlobalFilters)) return;
+        widget.GlobalFilters = widgetGlobalFilters;
+        this.DashboardDataBinding.onEditWidget.next(widget);
+    }
+
+    private WidgetFilterChanged(widget: ReactWidgetPM, oldFilterString: string, newFilterString: string): boolean {
+        if (oldFilterString == newFilterString) return false;
+        let oldFitlers: GlobalFilterItem[] = JSON.parse(oldFilterString ?? "[]") ?? [];
+        let newFilters: GlobalFilterItem[] = JSON.parse(newFilterString ?? "[]") ?? [];
+
+        var hasChanges = false;
+        if (oldFitlers.length != newFilters.length) return true;
+        newFilters.forEach(newFilterItem => {
+            hasChanges = this.WidgetFilterItemChanged(widget, oldFitlers, newFilterItem);
+            if (hasChanges) return;
+        });
+
+        if (!hasChanges) {
+            oldFitlers.forEach(oldFilterItem => {
+                this.WidgetFilterItemDeleted(newFilters, oldFilterItem);
+            });
+        }
+        return hasChanges;
+    }
+    WidgetFilterItemDeleted(newFilters: GlobalFilterItem[], oldFilterItem: GlobalFilterItem): boolean {
+        var newFilterItem = newFilters.find(x => x.FieldId == oldFilterItem.FieldId);
+        if (!newFilterItem) {
+            return true;
+        }
+        return false;
+    }
+
+    WidgetFilterItemChanged(widget: ReactWidgetPM, oldFilters: GlobalFilterItem[], newFilterItem: any): boolean {
+        var oldFilterItem = oldFilters.find(x => x.FieldId == newFilterItem.FieldId) as any;
+        if (!oldFilterItem) {
+            return true;
+        }
+
+        if (oldFilterItem.fieldValue != newFilterItem.fieldValue ||
+            oldFilterItem.fieldValue2 != newFilterItem.fieldValue2 ||
+            oldFilterItem.fieldValue3 != newFilterItem.fieldValue3 ||
+            oldFilterItem.dateGroupCode != newFilterItem.dateGroupCode ||
+            oldFilterItem.Operator != newFilterItem.Operator) {
+            return true;
+        }
+
+        if (widget.TypeCode == 'kpi' && oldFilterItem.compareWithPrevious != newFilterItem.compareWithPrevious) {
+            return true;
+        }
+        return false;
     }
 
     GetWidgetGlobalFilters(widget: ReactWidgetPM): string {
         if (!this.GlobalFilters || this.GlobalFilters.length == 0) return null;
         var widgetFilters = [];
         this.GlobalFilters.forEach(item => {
-            if ((item.IsCommon || item.DataSetId == widget.EntityId))
-                widgetFilters.push(item);
+            if ((!item.IsPreset && item.DataSetId == widget.EntityId)) widgetFilters.push(item);
+            this.HandlePresetFilter(item, widget, widgetFilters);
         });
         if (!widgetFilters || widgetFilters.length == 0) return null;
-        return JSON.stringify(widgetFilters);
+        return JSON.stringify(widgetFilters, function (key, val) {
+            if (key !== "Component" && key !== "UIProperties") return val;
+        });
     }
-    CopyDashboardClicked(){
+
+    private HandlePresetFilter(item: GlobalFilterItem, widget: ReactWidgetPM, widgetFilters: any[]) {
+        if (!item.IsPreset) return;
+        var field = this.PresetFilters.find(x => x.CommonFilterCode == item.FieldId && x.AnalyticsFactsMetaDataId == widget.EntityId);
+        if (!field) return;
+
+        item.FieldName = field.FieldCode;
+        item.DataTypeCode = field.DataTypeCode;
+        widgetFilters.push(item);
+    }
+
+    CopyDashboardClicked() {
         this.CopyDashboard();
     }
-    CopyDashboard(){
+
+    CopyDashboard() {
         var dashboardPM = DashboardCopyService.CopyDashboard(this.SelectedDashboard);
         this.CreateCopiedDashBoard(dashboardPM);
     }
 
-    CreateCopiedDashBoard(dashboardPM: DashboardPM){
+    CreateCopiedDashBoard(dashboardPM: DashboardPM) {
         this.dashboardPMService.insert(dashboardPM)
-        .subscribe((myResponse: ServiceResponse) => {            
-            this.ChangeToCopyDashborad(myResponse);            
-        });
+            .subscribe((myResponse: ServiceResponse) => {
+                this.ChangeToCopyDashborad(myResponse);
+            });
     }
-   
-    ChangeToCopyDashborad(myResponse: ServiceResponse){        
-            this.SelectedDashboard = myResponse.Result;
+
+    ChangeToCopyDashborad(myResponse: ServiceResponse) {
+        this.SelectedDashboard = myResponse.Result;
         if (this.SelectedDashboard) {
-               // this.EditDashboardClicked();
-                this.OpenEditDashboardWindowForCopiedDashboard();             
-            }
+            this.OpenEditDashboardWindowForCopiedDashboard();
+        }
 
-            else {
-                this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone({ lg: [] }));
-            }
+        else {
+            this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone({ lg: [] }));
+        }
 
-            this.CurrentSession.StopBusyIndicator();      
+        this.CurrentSession.StopBusyIndicator();
     }
 
     OpenEditDashboardWindowForCopiedDashboard() {
@@ -470,12 +699,21 @@ export class DashboardTabComponent implements OnInit {
                     else {
                         this.SelectedDashboardName = this.SelectedDashboard.Name;
                         this.RefreshAfterCopy.emit(this.SelectedDashboard);
-                        //this.DashboardChanged.emit(this.SelectedDashboard);
                     }
                 }
             });
         });
 
+    }
+
+    public ApplyFiltersCountChange(count: number) {
+        this.FilterCount = count;
+    }
+
+    public get HideShowFilterText(): string {
+        var countText = (!this.FilterCount || this.FilterCount == 0) ? "" : "(" + this.FilterCount + ")";
+        if (this.IsGlobalFiltersOpened) return "Hide filters" + countText;
+        return "Show filters" + countText;
     }
 
 }

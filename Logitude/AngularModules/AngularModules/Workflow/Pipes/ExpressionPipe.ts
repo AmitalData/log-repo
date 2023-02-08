@@ -1,6 +1,7 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { Formatter } from "Workflow/Models/Formatter";
-import { ObjectTables } from "Workflow/Models/ObjectTables";
+import { Formatter } from "Workflow/Utilities/Formatter";
+import { ObjectFields } from "Workflow/Utilities/ObjectFields";
+import { ObjectTables } from "Workflow/Utilities/ObjectTables";
 
 @Pipe({
     name: "ExpressionPipe"
@@ -8,7 +9,7 @@ import { ObjectTables } from "Workflow/Models/ObjectTables";
 
 export class ExpressionPipe implements PipeTransform {
 
-    transform(expression: string, objectFields: any) {
+    transform(expression: string) {
         if (expression) {
             let expressionVariables = expression.match(/\{(.*?)\}/g);
             if (expressionVariables && expressionVariables.length > 0) {
@@ -18,9 +19,7 @@ export class ExpressionPipe implements PipeTransform {
 
                         let fieldCode = Formatter.getFieldCode(variableCode);
 
-                        let customObjectField = objectFields ?
-                            (objectFields.find((o: any) => o.FieldCode === fieldCode && o.IsCustom) || null) :
-                            null;
+                        let customObjectField = ObjectFields.getAll().find((o: any) => o.FieldCode === fieldCode && o.IsCustom) || null
 
                         let customObjectFieldName = customObjectField ?
                             (customObjectField.FullNameTextCodeDefaultText || null) : null;

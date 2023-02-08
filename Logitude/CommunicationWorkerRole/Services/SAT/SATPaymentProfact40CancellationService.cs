@@ -1,11 +1,14 @@
 ﻿using Logitude.BL.DataContracts;
+using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools;
+using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Profact.TimbraCFDI;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -25,6 +28,7 @@ namespace CommunicationWorkerRole.Services.SAT
 			Simplog.Data.InvoiceModel.Repositories.ARPaymentRepository arPaymentRep = args.ARPaymentRep;
 			Simplog.Data.InvoiceModel.EntityPOCOs.ARPayment payment = args.ARPayment;
 			ARInvoiceRepository arInvoiceRep = args.ARInvoiceRep;
+			bool isConcurrencyToggleEnabled = FeatureToggleHelper.HasFeatureToggle("INU", payment.Tenant);
 
 			SATInterfaceHelper sATInterfaceHelper = new SATInterfaceHelper();
 
@@ -50,6 +54,9 @@ namespace CommunicationWorkerRole.Services.SAT
 
 					ResultadoCancelacion resultadoCancelacion = conector.CancelaCFDI40(rfcEmisor, folioFiscal, motivoCancelaOperation, "");
 
+					string SATTransferStatusCode = null;
+					string transmissionError = null;
+
 					if (resultadoCancelacion.Exitoso)
 					{
 						waitingCommLog.CommunicationStatusTypeCode = "D";
@@ -60,13 +67,10 @@ namespace CommunicationWorkerRole.Services.SAT
 						communicationLogRep.Update(waitingCommLog);
 						communicationLogRep.SubmitChanges();
 
-						payment.SATTransferStatusCode = "TD";
-						payment.TransmissionError = null;
-						arPaymentRep.Update(payment);
-						arPaymentRep.SubmitChanges();
+						SATTransferStatusCode = "TD";
+						transmissionError = null;
 
-						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment, comprobanteDetails.ComplementoAny[0], arInvoiceRep, arPaymentRep);
-
+						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment.Id, waitingCommLog.Tenant, comprobanteDetails.ComplementoAny[0], arInvoiceRep, arPaymentRep);
 					}
 					else
 					{
@@ -81,10 +85,10 @@ namespace CommunicationWorkerRole.Services.SAT
 							communicationLogRep.Update(waitingCommLog);
 							communicationLogRep.SubmitChanges();
 
-							payment.SATTransferStatusCode = "CS";
-							arPaymentRep.Update(payment);
-							arPaymentRep.SubmitChanges();
+							SATTransferStatusCode = "CS";
+							transmissionError = null;
 						}
+
 						else
 						{
 							if (waitingCommLog.Retries == 4)
@@ -98,17 +102,33 @@ namespace CommunicationWorkerRole.Services.SAT
 									}
 									if (transError != payment.TransmissionError || payment.SATTransferStatusCode != "TE")
 									{
-										payment.SATTransferStatusCode = "TE";
-										payment.TransmissionError = transError;
-
-										arPaymentRep.Update(payment);
-										arPaymentRep.SubmitChanges();
+										SATTransferStatusCode = "TE";
+										transmissionError = transError;
 									}
 								}
 							}
 
 							throw new Exception("Failed," + transError);
 						}
+					}
+
+					if (isConcurrencyToggleEnabled)
+					{
+						args.ARPaymentPM.IsUpdatedBySAT = true;
+						args.ARPaymentPM.SATTransferStatusCode = SATTransferStatusCode;
+						args.ARPaymentPM.TransmissionError = transmissionError;
+
+						IInvoiceContext invoiceContext = InvoiceContext.GetContext(payment.Tenant);
+						ARPaymentService aRPaymentService = new ARPaymentService(invoiceContext, payment.Tenant);
+						aRPaymentService.Update(args.ARPaymentPM);
+					}
+
+					else
+					{
+						payment.SATTransferStatusCode = SATTransferStatusCode;
+						payment.TransmissionError = transmissionError;
+						arPaymentRep.Update(payment);
+						arPaymentRep.SubmitChanges();
 					}
 				}
 			}
@@ -122,6 +142,7 @@ namespace CommunicationWorkerRole.Services.SAT
 		public Simplog.Data.InvoiceModel.EntityPOCOs.SATInterfaceSetting SatSetting { get; set; }
 		public Simplog.Data.InvoiceModel.Repositories.ARPaymentRepository ARPaymentRep { get; set; }
 		public Simplog.Data.InvoiceModel.EntityPOCOs.ARPayment ARPayment { get; set; }
+		public ARPaymentPM ARPaymentPM { get; set; }
 		public ARInvoiceRepository ARInvoiceRep { get; set; }
 	}
 }

@@ -17,6 +17,8 @@ export class DigitalPortalScreenList {
 	Name: string;
 	Content: string;
 	DraftContent: string;
+	ProfileId: string;
+	ProfileCode: string;
 	
 }
  

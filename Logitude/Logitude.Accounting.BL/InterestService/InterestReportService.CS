@@ -293,7 +293,7 @@ namespace Logitude.Accounting.BL.InterestService
         private InterestTransactionList FillDataInterestTransaction(InterestTransactionList interestTransactionLists, List<string> JournalNumbers, List<string> CurencyCodes)
         {
             InterestEntityResult entityResult = GetInterestEntityResultByInterestTransaction(interestTransactionLists);
-         
+        
             interestTransactionLists.JournalNumber = GetSingleJournalnumberByInterestTransaction(entityResult, interestTransactionLists, JournalNumbers);
             interestTransactionLists.InterestEntityNumber = entityResult.EntityNumber;
             interestTransactionLists.InterestEntityType = entityResult.EntityType;
@@ -301,7 +301,7 @@ namespace Logitude.Accounting.BL.InterestService
             interestTransactionLists.JournalId = entityResult.JournalId;
             interestTransactionLists.AccountEntityCode = entityResult.AccountCode;
             interestTransactionLists.CurrencyCode = GetSingleCurrencyCodeByInterestTransaction(interestTransactionLists, CurencyCodes);
-  
+
             return interestTransactionLists;
         }
 
@@ -480,6 +480,8 @@ namespace Logitude.Accounting.BL.InterestService
                                                                             where a.Tenant == Tenant  &&a.InterestReportId == ReportId && a.InterestTransaction.GLAccountId !=null && a.InterestTransaction.GLAccount.ActiveForInterest ==true   && a.InterestTransaction.IsCancelled == false
                                                                             select new InterestTransactionList()
                                                                             {
+                                                                                Id=a.InterestTransactionId,
+
                                                                                 Tenant = a.Tenant,
 
                                                                                 CurrencyId = a.InterestTransaction.CurrencyId,
@@ -493,6 +495,8 @@ namespace Logitude.Accounting.BL.InterestService
                                                                                 ForeignAmount = a.InterestTransaction.ForeignAmount,
 
                                                                                 InterestValueDate = a.InterestTransaction.InterestValueDate,
+
+                                                                                Notes=a.InterestTransaction.Notes,
 
                                                                             });
             return interestTransactionLists;

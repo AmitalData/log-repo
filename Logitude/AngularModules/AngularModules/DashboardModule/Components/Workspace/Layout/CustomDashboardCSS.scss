@@ -186,7 +186,26 @@
     background: linear-gradient(180deg, #F8FAFB 20.94%, #C9D5E4 77.13%);
     border: 1px solid #708197;
     border-radius: 4px;
+}
 
+.TabButton_orange {
+    font-size: 12px;
+    color: #46494A;
+    font-style: normal;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px 4px;
+    gap: 4px;
+    height: 22px;
+    background: -moz-linear-gradient(50% 0% -90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0, rgba(255, 255, 255, 1)), color-stop(1, rgba(237, 192, 147, 1)));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    border: 1px solid #708197;
+    border-radius: 4px;
 }
 
 .Dashboard-create-button {
@@ -207,16 +226,17 @@
 }
 
 .dl-flobal-filter-container {
-    background: #FFFADC;
-    border: 1px solid #BABABA;
+    background: #FFFFFF;
+    border: 1px solid #F0F0F0;
     border-radius: 3px;
     -webkit-border-radius: 3px;
-    width: calc(100%-2px);
-    height: 150px;
-    margin-top: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
+    height: 80px;
+    margin-top: 12px;
+    margin-left: 12px;
+    margin-right: 11px;
     flex: 0 0 auto;
+    min-width: 1220px;
+    padding: 12px;
 }
 
 .dl-tab-container {
@@ -282,6 +302,7 @@ Dashboard-menu-oneRow {
     padding-top: 4px;
     padding-left: 8px;
     padding-bottom: 2px;
+    width: 100%;
 }
 
 .dl-tab-text {
@@ -289,4 +310,17 @@ Dashboard-menu-oneRow {
     font-weight: 500;
     font-size: 11px;
     font-family: 'Manrope';
+}
+
+.dl-tab-exit-container {
+    width: 8px;
+    min-width: 8px;
+    max-width: 8px;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 1200px) {
+    .dl-tab-exit-container {
+        display: none;
+    }
 }

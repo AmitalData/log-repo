@@ -755,6 +755,42 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             }
         });
     }
+
+    onRowSelected($event) {
+        if($event) {
+            const row = $event.rowData;
+            const rowId = row.Id;
+            const RowIndex = $event.rowIndex;
+            const index = this.TransactionSelectedLines.Collection.findIndex(c => c.Id == row.Id);
+            if(index < 0) {
+
+                this.PushLine(row, RowIndex);
+                this.TransactionFireCheckBoxChecked.emit({ rowData: row, IsChecked: true , RowIndex: RowIndex });
+            } else {
+                this.PopLine(rowId);
+                this.TransactionFireCheckBoxChecked.emit({ rowData: row, IsChecked: false, RowIndex: RowIndex,ById : true });
+            }
+        }
+    }
+
+    onExternalPageRowSelected($event) {
+        if($event) {
+            const row = $event.rowData;
+            const rowId = row.Id;
+            const RowIndex = $event.rowIndex;
+            const index = this.ExtPageSelectedLines.Collection.findIndex(c => c.Id == row.Id);
+            if(index < 0) {
+                this.ExtPagePushLine(row, RowIndex);
+                this.FireCheckBoxChecked.emit({ rowData: row, IsChecked: true , RowIndex: RowIndex });
+            } else {
+                this.ExtPagePopLine(rowId);
+                this.ExtPageFireCheckBoxChecked.emit({ rowData: row, IsChecked: false, RowIndex: RowIndex,ById : true });
+            }
+        }
+    }
+
+    
+
     TransactiononDataLoaded() {
 
         //this.TransactionsCheckBoxFilterChanged.emit({ UseFilteredCheckBox: true, FilteredRecordsCheckedFieldName: "Mark", FilteredRecordsCheckedFieldValue: true, IsAutoRecClicked: this.IsAutoRecClicked});

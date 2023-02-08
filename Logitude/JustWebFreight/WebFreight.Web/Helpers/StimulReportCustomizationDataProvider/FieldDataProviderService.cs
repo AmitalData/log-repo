@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -73,7 +74,8 @@ namespace WebFreight.Web.Helpers.StimulReportCustomizationDataProvider
 
         private void AddCustomEntityField(ObjectTable objectTable)
         {
-            Field customEntityField = new Field() {IsChild = true, Name = AddCustomPrefixDisplyName(objectTable.Name.Split('.')[2]), Code = objectTable.Name  ,IsList = true,IsCustom =true, AdditinalDetails = new AdditionalDetails() { Fields = new List<Field>() } };
+            string objectTableName = TranslateTextsClass.Translate(objectTable.FullNameTextCodeCode, objectTable.Tenant)?.Replace(" ", "");
+            Field customEntityField = new Field() {IsChild = true, Name = AddCustomPrefixDisplyName(objectTableName), Code = objectTable.Name  ,IsList = true,IsCustom =true, AdditinalDetails = new AdditionalDetails() { Fields = new List<Field>() } };
             List<ObjectFieldList> objectFields = new ObjectFieldQuery(objectTable.Tenant).GetObjectFields().Where(d => d.ObjectTableId == objectTable.Id && d.Tenant == objectTable.Tenant).ToList();
             if (objectFields.Count() == 0) return;
             foreach (ObjectFieldList objectField in objectFields)

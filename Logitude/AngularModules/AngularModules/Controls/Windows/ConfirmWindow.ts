@@ -4,6 +4,8 @@ import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
 
 export class ConfirmWindow {
+    public Top = '50%';
+    public Left = '50%';
     public Width: number = 320;
     public Height: number = 170;
     public Message: string = null;
@@ -19,6 +21,8 @@ export class ConfirmWindow {
     public CancelButtonText: string;
     public IsOverAll: boolean = false;
     public ShowWarningImage: boolean = false;
+    public MultipleMessages: string[] = null;
+    public IsMultipleMessages: boolean = false;
     LayoutDirection: string = 'ltr';
     @Output() WindowClosed = new EventEmitter();
     public IsChecked: boolean = false;
@@ -37,6 +41,9 @@ export class ConfirmWindow {
     private InstanceComponent: ConfirmWindowTemplateComponent = null;
     public Show(message: string) {
         this.Message = message;
+        if (this.IsMultipleMessages) {
+            this.MultipleMessages = this.Message.split('<br>');
+        }
 
         var viewContainerRefLocation: ViewContainerRef = this.CurrentSession.SessionLocation.viewContainerRef;
 
@@ -78,15 +85,14 @@ export class ConfirmWindow {
         }
 
         this.InstanceComponent = null;
-    } 
-    
-   
+    }
+
+
 }
 
 @Component({
     selector: 'ConfirmWindow',
-    
-    templateUrl: "./ConfirmWindow.html",
+    templateUrl: './ConfirmWindow.html',
 })
 
 export class ConfirmWindowTemplateComponent implements AfterViewInit {
@@ -108,6 +114,8 @@ export class ConfirmWindowTemplateComponent implements AfterViewInit {
     public CancelButtonText: string = "Cancel";
     public IsOverAll: boolean = false;
     public ShowWarningImage: boolean = false;
+    public MultipleMessages: string[] = null;
+    public IsMultipleMessages: boolean = false;
     LayoutDirection: string = 'ltr';
     public ShowCheckBox: boolean = false;
     public IsYesEnabled: boolean = true;
@@ -127,11 +135,12 @@ export class ConfirmWindowTemplateComponent implements AfterViewInit {
         this.Focus();
     }
 
-    private ConfirmWindow: ConfirmWindow
+    private ConfirmWindow: ConfirmWindow;
     public InjectWindowComponent(myWindow: ConfirmWindow) {
 
         this.CreateDynamicIds();
-
+        this.Top = myWindow.Top;
+        this.Left = myWindow.Left;
         this.ConfirmWindow = myWindow;
         this.Title = myWindow.Title;
         this.Message = myWindow.Message;
@@ -141,6 +150,8 @@ export class ConfirmWindowTemplateComponent implements AfterViewInit {
         this.YesButtonText = myWindow.YesButtonText;
         this.IsOverAll = myWindow.IsOverAll;
         this.ShowWarningImage = myWindow.ShowWarningImage;
+        this.MultipleMessages = myWindow.MultipleMessages;
+        this.IsMultipleMessages = myWindow.IsMultipleMessages;
         this.ShowCheckBox = myWindow.ShowCheckBox;
         this.IsYesEnabled = myWindow.IsYesEnabled;
         this.StringColor = myWindow.StringColor;

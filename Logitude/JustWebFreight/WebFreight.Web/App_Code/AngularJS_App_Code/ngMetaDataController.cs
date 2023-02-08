@@ -48,6 +48,7 @@ using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityQueryServices;
 using WebFreight.Web.Helpers.APIHelpers;
 using Logitude.Server.Tools.Helpers;
+using Logitude.BL.InfrastructureModel.Tools.EntityService;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
@@ -620,8 +621,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     loggeduser = query.GetSingleUserPMByEmail(useremail, tenant, false);
                 }
             }
-
-            loggeduser.DisableCachedData = FeatureToggleHelper.HasFeatureToggle("DCS", tenant);
+            if (loggeduser != null)
+            {
+                loggeduser.DisableCachedData = FeatureToggleHelper.HasFeatureToggle("DCS", tenant);
+            }
             return loggeduser;
         }
 
@@ -665,22 +668,21 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
         [OperationContract]
-        [WebGet(UriTemplate = "getquerycolumnpms/{tenant}/{queryCode}/{objecttableid}/{userid}")]
-        public List<QueryColumnPM> GetQueryColumnPMs(int tenant, string queryCode, string objecttableid, string userid)
+        [WebGet(UriTemplate = "getquerycolumnpms/{tenant}/{queryCode}/{objecttableid}/{userid}/{getfromsystemlevel}")]
+        public List<QueryColumnPM> GetQueryColumnPMs(int tenant, string queryCode, string objecttableid, string userid, bool getfromsystemlevel)
         {
             QueryColumnRepository queryColumnRepository = new QueryColumnRepository(tenant);
             QueryColumnQuery queryColumnQuery = new QueryColumnQuery(queryColumnRepository);
-            var querycolumns = queryColumnQuery.GetQueryColumnsByQueryCodeAndUser(tenant, userid, queryCode);
+            var querycolumns = getfromsystemlevel ? null : queryColumnQuery.GetQueryColumnsByQueryCodeAndUser(tenant, userid, queryCode);
 
             if (querycolumns != null && querycolumns.Count() > 0)
             {
                 return querycolumns.OrderBy(a => a.IndexOrder).ToList();
             }
-            else
-            {
-                var querycolumns2 = queryColumnQuery.GetQueryColumnsByQueryCodeAndUserAngular(0, null, queryCode);
-                return querycolumns2.OrderBy(a => a.IndexOrder).ToList();
-            }
+
+            IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
+            QueryColumnService queryColumnService = new QueryColumnService(webFreightContext, tenant);
+            return queryColumnService.GetSystemMetaDataQueryColumns(objecttableid, tenant, queryCode);
         }
 
         [OperationContract]

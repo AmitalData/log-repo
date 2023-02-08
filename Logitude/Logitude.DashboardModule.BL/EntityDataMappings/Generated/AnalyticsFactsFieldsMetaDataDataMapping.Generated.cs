@@ -37,7 +37,9 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         SearchFields, 
 	         JoinedTableDBName, 
 	         HasUnit, 
-	         Unit,
+	         Unit, 
+	         CommonFilterCode, 
+	         CanSecondaryGroup,
 	      }
 
 
@@ -60,7 +62,9 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         JoinedTableDBName, 
 	         ObjectTableName, 
 	         HasUnit, 
-	         Unit,
+	         Unit, 
+	         CommonFilterCode, 
+	         CanSecondaryGroup,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -142,6 +146,16 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Unit))
             {
 				entityPOCO.Unit = entityPM.Unit;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CommonFilterCode))
+            {
+				entityPOCO.CommonFilterCode = entityPM.CommonFilterCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CanSecondaryGroup))
+            {
+				entityPOCO.CanSecondaryGroup = entityPM.CanSecondaryGroup;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -230,6 +244,16 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 					entityPM.Unit = entityPOCO.Unit;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CommonFilterCode))
+            {
+					entityPM.CommonFilterCode = entityPOCO.CommonFilterCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CanSecondaryGroup))
+            {
+					entityPM.CanSecondaryGroup = entityPOCO.CanSecondaryGroup;
+            }
+
 		}
 
 		public void PMToOldPM(AnalyticsFactsFieldsMetaDataPM entityPM, AnalyticsFactsFieldsMetaDataPM oldEntityPM)
@@ -309,6 +333,16 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Unit))
             {
                 oldEntityPM.Unit = entityPM.Unit;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CommonFilterCode))
+            {
+                oldEntityPM.CommonFilterCode = entityPM.CommonFilterCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CanSecondaryGroup))
+            {
+                oldEntityPM.CanSecondaryGroup = entityPM.CanSecondaryGroup;
             }
 			
 		}

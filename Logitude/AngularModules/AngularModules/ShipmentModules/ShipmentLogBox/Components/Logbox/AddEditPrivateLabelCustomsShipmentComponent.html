@@ -179,9 +179,9 @@
                                 </td>
                             </tr>
 
-                            <tr>
+                            <!--<tr>
                                 <td></td>
-                            </tr>
+                            </tr>-->
 
 
                         </table>
@@ -201,7 +201,7 @@
                                                     <li (click)="transportItemClicked('O')" (mouseover)="transportItemMouseOver('O')" (mouseleave)="transportItemMouseLeave('O')" [class.SelectedFilter]="TransportModeId === 'O'" title="Ocean">
                                                         <img [attr.id]="FilterId_O" class="CenterCenter" src="./_Resources/Images/Icons/TransportModes/Filters/O_g.png" style="top: 1px;" />
                                                     </li>
-                                                    <li *ngIf="IsDSVTenant" (click)="transportItemClicked('I')" (mouseover)="transportItemMouseOver('I')" (mouseleave)="transportItemMouseLeave('I')" [class.SelectedFilter]="TransportModeId === 'I'" title="Inland">
+                                                    <li (click)="transportItemClicked('I')" (mouseover)="transportItemMouseOver('I')" (mouseleave)="transportItemMouseLeave('I')" [class.SelectedFilter]="TransportModeId === 'I'" title="Inland">
                                                         <img [attr.id]="FilterId_I" class="CenterCenter" src="./_Resources/Images/Icons/TransportModes/Filters/I_g.png" style="top: 1px;" />
                                                     </li>
                                                 </ul>
@@ -223,7 +223,7 @@
 
                             <tr style="height: 33px;">
                                 <td style="height: 22px;">
-                                    <LogTextBox [ObjectFieldName]="'CustomerReference3'" [DataContext]="DataContext"></LogTextBox>
+                                    <LogTextBox [ObjectFieldName]="'CustomerReference3'" [Text]="CustomerReference3" [ObjectTableName]="'Shipment'" [DataContext]="DataContext"></LogTextBox>
                                 </td>
                             </tr>
 
@@ -468,10 +468,10 @@
 
 
                     <td style="width:7px;">
-                        <div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+                        <div *ngIf="!HideDocumentSection" style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
 
                     </td>
-                    <td>
+                    <td *ngIf="!HideDocumentSection">
                         <button id="{{'AddLogboxDocument' | IdGeneratorAsyncPipe | async}}" class="IconButton" style="width:114px;height:26px;margin-right:5px;margin-left:10px" (click)="AddDocumentClick()">
                             <img src="./Images/LogBox/Add.png" style="visibility:inherit;left:-2px;vertical-align:middle;position:relative;" />
                             <span style="vertical-align:middle;">Add Document</span>
@@ -479,7 +479,7 @@
                     </td>
 
 
-                    <td style="width:100px"></td>
+                    <td *ngIf="!HideDocumentSection" style="width:100px"></td>
                     <td *ngIf="TransportModeId === 'O'" [class.Disabled]="!TransportModeId || TransportModeId != 'O'">
                         <table>
                             <tr>
@@ -489,7 +489,7 @@
 
                                 </td>
 
-                                <td style="height: 22px;width:100px;">
+                                <td [style.width.px]="HideDocumentSection ? '141' : '100'" style="height: 22px;">
                                     <label style="padding-left:5px;color: rgb(110, 113, 114);">
                                         Package Type
                                     </label>
@@ -523,8 +523,11 @@
 
     </tr>
 
+    <tr *ngIf="!IsDSVTenant && HideDocumentSection" style="height: 100%">
+        <td></td>
+    </tr>
 
-    <tr style="height:100px" *ngIf="!IsDSVTenant">
+    <tr style="height:100px" *ngIf="!IsDSVTenant && !HideDocumentSection">
 
         <td class="CellStretch">
             <div class="SimpleGridView">

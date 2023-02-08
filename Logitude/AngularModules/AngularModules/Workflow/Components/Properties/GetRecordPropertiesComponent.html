@@ -61,6 +61,7 @@
         width: 936px;
         height: 220px;
         margin-bottom: 6px;
+        pointer-events: auto !important;
     }
 
     .min-get-records-conditions-container {
@@ -122,6 +123,7 @@
     .get-record-properties-container {
         height: calc(100% - 35px);
         overflow: auto;
+        pointer-events: auto !important;
     }
 </style>
 <table>
@@ -209,7 +211,7 @@
                     <tr *ngIf="RecordsType" class="table-row">
                         <td class="table-row-cell">
                             <div class="table-row-cell-block">
-                                <div class="label-container">Get Records Of This Object</div>
+                                <div class="label-container">Get Records of This Object</div>
                             </div>
                         </td>
                     </tr>
@@ -259,7 +261,7 @@
                                     [ShowChangedOperator]="false" [AtLeastOneCondition]="true"
                                     (IsValidConditionsChange)="updateIsValidConditions($event)"
                                     [(ConditionsOperation)]="ConditionsOperation" [(Conditions)]="Conditions"
-                                    [FlowObject]="FlowObject" [FlowObjectFields]="FlowObjectFields"
+                                    [FlowObject]="FlowObject"
                                     [CurrentNodeId]="CurrentNodeId" [IsEntityField]="true"
                                     [EnableAdd]="EnableAddConditions" [ShowConditionsOperation]="ShowConditionsOperation">
                                 </Conditions>
@@ -277,7 +279,7 @@
                     <tr *ngIf="EntityId && RecordsType === GetRecordTypes.ReadOnly" class="table-row">
                         <td class="table-row-cell">
                             <div class="table-row-cell-block">
-                                <div class="label-container">How Many Records To Store</div>
+                                <div class="label-container">How Many Records to Store</div>
                             </div>
                         </td>
                     </tr>
@@ -350,7 +352,7 @@
                                 <div class="table-row-cell-block">
                                     <LogLov [NoObjectField]="true" [ObjectFieldName]="'SortBy'"
                                         [DataContext]="DataContext"
-                                        [QueryFilterItems]="(null | GetObjectFieldsQueryFiltersPipe : FlowObjectFields : EntityId)"
+                                        [QueryFilterItems]="(null | ObjectFieldsQueryFiltersPipe : EntityId)"
                                         [IsFreeText]="true" [LookUpTableName]="'ObjectField'" [NoValidation]="true"
                                         [HideColumns]="true" [SelectedValue]="SortBy"
                                         [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
@@ -372,7 +374,7 @@
                     <tr *ngIf="EntityId && RecordsType === GetRecordTypes.ReadOnly" class="table-row">
                         <td class="table-row-cell">
                             <div class="table-row-cell-block">
-                                <div class="label-container">Select Fields To Store</div>
+                                <div class="label-container">Select Fields to Store</div>
                             </div>
                         </td>
                     </tr>
@@ -387,7 +389,7 @@
                                             <LogLov [NoObjectField]="true"
                                                 [ObjectFieldName]="'SelectedCoulmn_' + fieldIndex"
                                                 [DataContext]="DataContext"
-                                                [QueryFilterItems]="(null | GetObjectFieldsQueryFiltersPipe : FlowObjectFields : EntityId)"
+                                                [QueryFilterItems]="(null | ObjectFieldsQueryFiltersPipe : EntityId)"
                                                 [IsFreeText]="true" [LookUpTableName]="'ObjectField'"
                                                 [NoValidation]="true" [SelectedValue]="returnedField.fieldCode"
                                                 [HideColumns]="true" [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
@@ -422,16 +424,6 @@
 
                 </table>
             </div>
-        </td>
-    </tr>
-    <tr class="table-row">
-        <td>
-
-            <FooterButtons [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="saveButtonClicked()"
-                (CancelButtonClicked)="cancelButtonClicked()" [SaveButtonDataCy]="'get-record-properties-save-button'"
-                [CancelButtonDataCy]="'get-record-properties-cancel-button'">
-            </FooterButtons>
-
         </td>
     </tr>
 </table>

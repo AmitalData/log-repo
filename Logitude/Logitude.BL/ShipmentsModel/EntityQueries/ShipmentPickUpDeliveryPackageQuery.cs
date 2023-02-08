@@ -56,7 +56,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                   RegistrationNumber = a.RegistrationNumber,
                                                                   CountryId = a.CountryId,
                                                                   ContainerEntityId = a.ContainerEntityId,
-                                                              }).ToList();
+                                                              }).OrderBy(a => a.Id).ToList();
 
             foreach (ShipmentPickUpDeliveryPackagePM package in packages)
             {

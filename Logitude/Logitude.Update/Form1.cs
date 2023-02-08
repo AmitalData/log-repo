@@ -93,6 +93,8 @@ using WebFreight.Web.MetaDataUpdate.SendBox;
 using WebFreight.Web.WebServices;
 using Logitude.Server.Tools.TreeFilterQuery;
 using Newtonsoft.Json;
+using Simplog.Data.InvoiceModel.Repositories;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
 
 namespace Logitude.Update
 {
@@ -6495,7 +6497,7 @@ User/Pass",
             excelListView.Columns.Add("Port Code", 100);
             excelListView.Columns.Add("State Code", 100);
 
-            if(updateAllUSTenantsCheckBox.Checked)
+            if (updateAllUSTenantsCheckBox.Checked)
             {
                 List<int> USTenantsIds = (from myTenant in myCommonContext.Tenants
                                           join address in myCommonContext.Addresses
@@ -6505,7 +6507,7 @@ User/Pass",
                                           where country.Code == "US"
                                           select myTenant.Id).ToList();
 
-                foreach(int tenantId in USTenantsIds)
+                foreach (int tenantId in USTenantsIds)
                 {
                     StartUpdatingPortsStates(allDataLines, myCommonContext, tenantId);
                 }
@@ -6588,6 +6590,236 @@ User/Pass",
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;
             SetControlPropertyValue(portsStatesLabel, "Text", "Done in " + ts.ToString());
+        }
+
+        private void ComputeDueDateButton_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(paymentTermTenantTextBox.Text))
+            {
+                MessageBox.Show("Please insert tenant");
+                return;
+            }
+
+            this.UploadInvoiceExcelFile();
+        }
+        private void UploadInvoiceExcelFile()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = false;
+            openFileDialog.Filter = "csv|*.csv";
+            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Stream stream = openFileDialog.OpenFile();
+                StreamReader streamReader = new StreamReader(stream);
+                this.ReadInvoicesMethod(streamReader);
+            }
+        }
+        private List<ExcelInvoice> invoiceItems;
+        private IInvoiceContext invoiceContext;
+        private ARInvoiceRepository invoiceRepository;
+        private void ReadInvoicesMethod(StreamReader streamReader)
+        {
+            List<ExcelInvoice> allDataLines = new List<ExcelInvoice>();
+
+            string line = "";
+            string[] lineParts = null;
+            while ((line = streamReader.ReadLine()) != null)
+            {
+                lineParts = line.Split(',');
+
+                string invoiceNumber = this.GetText(lineParts, 0);
+                string status = this.GetText(lineParts, 1);
+                string paymentTerm = this.GetText(lineParts, 2);
+                string invoiceDate = this.GetText(lineParts, 3);
+                string dueDate = this.GetText(lineParts, 4);
+
+                if (!string.IsNullOrEmpty(invoiceNumber) && !string.IsNullOrEmpty(paymentTerm) && !string.IsNullOrEmpty(invoiceDate))
+                {
+                    ExcelInvoice myDataItem = new ExcelInvoice();
+                    myDataItem.Number = invoiceNumber;
+                    myDataItem.Status = status;
+                    myDataItem.PaymentTerm = paymentTerm;
+                    myDataItem.InvoiceDate = invoiceDate;
+                    myDataItem.WrongDueDate = dueDate;
+                    allDataLines.Add(myDataItem);
+                }
+            }
+
+            invoiceItems = allDataLines.GroupBy(p => new { p.Number }).Select(g => g.Last()).ToList();
+            Thread thread = new Thread(() => this.ComputeInvoiceDueDate());
+            thread.IsBackground = true;
+            thread.Start();
+        }
+        private void ComputeInvoiceDueDate()
+        {
+            if (invoiceItems.Count == 0)
+                return;
+
+            excelListView.Items.Clear();
+            excelListView.Columns.Clear();
+            excelListView.View = View.Details;
+            excelListView.GridLines = true;
+            excelListView.FullRowSelect = true;
+            excelListView.Columns.Add("Invoice Number", 100);
+            excelListView.Columns.Add("Status", 100);
+            excelListView.Columns.Add("Payment Term", 100);
+            excelListView.Columns.Add("End of Month", 100);
+            excelListView.Columns.Add("Invoice Date", 100);
+            excelListView.Columns.Add("Wrong Due Date", 100);
+            excelListView.Columns.Add("Correct Due Date", 100);
+            excelListView.Columns.Add("Update", 100);
+
+            SetControlPropertyValue(invoiceDueDateLabel, "Text", "Computing...");
+
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            int tenant = Convert.ToInt32(paymentTermTenantTextBox.Text);
+            invoiceContext = InvoiceContext.GetContext(tenant);
+            invoiceRepository = new ARInvoiceRepository(invoiceContext);
+            PaymentTermRepository paymentTermRepository = new PaymentTermRepository(tenant);
+
+            string[] invoicesArray = new string[8];
+            foreach (ExcelInvoice item in invoiceItems)
+            {
+                ARInvoice invoice = invoiceRepository.GetARInvoiceByInvoiceNumber(tenant, item.Number);
+                if (invoice != null)
+                {
+                    item.MyInvoice = invoice;
+
+                    invoicesArray[0] = item.Number;
+                    invoicesArray[1] = item.Status;
+                    invoicesArray[2] = item.PaymentTerm;
+
+                    if (!string.IsNullOrEmpty(invoice.PaymentTermId))
+                    {
+                        PaymentTerm paymentTerm = paymentTermRepository.GetSinglePaymentTerm(invoice.PaymentTermId, tenant);
+                        if (paymentTerm != null && paymentTerm.EndOfMonth)
+                            invoicesArray[3] = "true";
+                    }
+
+                    invoicesArray[4] = item.InvoiceDate;
+                    invoicesArray[5] = item.WrongDueDate;
+
+                    item.CorrectDueDate = this.ComputeInvoiceDueDate(invoice);
+                    invoicesArray[6] = item.CorrectDueDate?.ToString();
+
+                    if (item.MyInvoice.DueDate != item.CorrectDueDate)
+                        invoicesArray[7] = "true";
+
+                    excelListView.Items.Add(new ListViewItem(invoicesArray));
+                }
+            }          
+
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+            SetControlPropertyValue(invoiceDueDateLabel, "Text", "Done in " + ts.ToString());
+        }
+        private DateTime? ComputeInvoiceDueDate(ARInvoice invoice)
+        {
+            DateTime? dueDate = null;
+
+            if (string.IsNullOrEmpty(invoice.PaymentTermId))
+                dueDate = invoice.InvoiceDate;
+
+            else
+            {
+                PaymentTermRepository paymentTermRepository = new PaymentTermRepository(invoice.Tenant);
+                PaymentTerm myPaymentTerm = paymentTermRepository.GetSinglePaymentTerm(invoice.PaymentTermId, invoice.Tenant);
+
+                if (myPaymentTerm != null)
+                {
+                    if (myPaymentTerm.IsManuallySet)
+                    {
+                        dueDate = null;
+                    }
+
+                    else
+                    {
+                        DateTime? myComparativeDate = null;
+
+                        if (invoice.IsConsolidationInvoice)
+                        {
+                            myComparativeDate = invoice.InvoiceDate;
+                        }
+
+                        else
+                        {
+                            if (myPaymentTerm.FromDateTypeCode == "SHI")
+                            {
+                                myComparativeDate = invoice.OperationalDate;
+
+                                if (myComparativeDate == null)
+                                {
+                                    myComparativeDate = invoice.InvoiceDate;
+                                }
+                            }
+
+                            else
+                            {
+                                myComparativeDate = invoice.InvoiceDate;
+                            }
+                        }
+
+                        if (myComparativeDate != null)
+                        {
+                            if (myPaymentTerm.EndOfMonth)
+                            {
+                                int year = myComparativeDate.Value.Year;
+                                int month = myComparativeDate.Value.Month;
+                                int daysInMonth = DateTime.DaysInMonth(year, month);
+
+                                myComparativeDate = new DateTime(year, month, daysInMonth, 0, 0, 0);
+                            }
+
+                            myComparativeDate = myComparativeDate.Value.AddDays(Convert.ToDouble(myPaymentTerm.Days));
+                            dueDate = myComparativeDate.Value.Date;
+                        }
+                    }
+                }
+            }
+
+            return dueDate;
+        }
+
+        private void UpdateDueDateButton_Click(object sender, EventArgs e)
+        {
+            if (invoiceItems.Count == 0)
+                return;
+
+            SetControlPropertyValue(invoiceDueDateLabel, "Text", "Updating...");
+
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            int myCount = 0;
+            bool isUpdated = false;
+            foreach (ExcelInvoice item in invoiceItems.Where(d => d.MyInvoice != null))
+            {
+                if (item.MyInvoice.DueDate != item.CorrectDueDate)
+                {
+                    isUpdated = true;
+                    item.MyInvoice.DueDate = item.CorrectDueDate;
+                    invoiceRepository.Update(item.MyInvoice);
+
+                    if (myCount == 100)
+                    {
+                        if (isUpdated)
+                        {
+                            invoiceRepository.SubmitChanges();
+                        }
+                        myCount = 0;
+                        isUpdated = false;
+                    }
+
+                    myCount++;
+                }
+            }
+
+            invoiceRepository.SubmitChanges();
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+            SetControlPropertyValue(invoiceDueDateLabel, "Text", "Done in " + ts.ToString());
         }
     }
 
@@ -6822,5 +7054,16 @@ User/Pass",
         public DateTime? availability_date { get; set; }
         public string availability_locode { get; set; }
         public string availability_timezone { get; set; }
+    }
+
+    public class ExcelInvoice
+    {
+        public string Number { get; set; }
+        public string Status { get; set; }
+        public string PaymentTerm { get; set; }
+        public string InvoiceDate { get; set; }
+        public string WrongDueDate { get; set; }
+        public DateTime? CorrectDueDate { get; set; }
+        public ARInvoice MyInvoice { get; set; }
     }
 }

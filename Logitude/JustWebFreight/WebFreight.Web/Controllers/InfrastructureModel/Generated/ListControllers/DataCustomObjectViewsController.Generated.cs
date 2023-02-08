@@ -76,8 +76,13 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				    entityList = iQueryableEntityList.FirstOrDefault();
 
 			    }
-
-				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
+                if (entityList != null)
+                {
+                    string objectTableName = ObjectTableRepository.GetNameById(entityList.ObjectTableId, entityList.Tenant);
+                    CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                    customFieldResolver.SetCustomFieldsValues(objectTableName, authToken.Tenant, new List<DataCustomObjectList> { entityList }.Cast<object>().ToList());
+                }
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 				               
                 return Request.CreateResponse(HttpStatusCode.OK,  entityList);
             }
@@ -104,7 +109,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
 				DataCustomObjectQuery dataCustomObjectQuery = new DataCustomObjectQuery(dataCustomObjectRepository);
 			    IQueryable<DataCustomObjectList> entityLists = dataCustomObjectQuery.GetIQueryableEntityList(entityPocos);
-				entityLists = entityLists.OrderBy(d => d.Id);
+				entityLists = entityLists.OrderBy(d => d.CreateDate);
 				List<DataCustomObjectList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 										
@@ -115,8 +120,40 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        
-		[HttpGet]
+
+        public HttpResponseMessage GetAll(string objectTableId)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
+                DataCustomObjectRepository dataCustomObjectRepository = new DataCustomObjectRepository(MyContext);
+                IQueryable<DataCustomObject> entityPocos = dataCustomObjectRepository.GetDataCustomObjectsByObjectTableId(authToken.Tenant, objectTableId);
+                
+                ObjectTable objectTable = MyContext.ObjectTables.Where(d => d.Id == objectTableId).FirstOrDefault();
+
+                DataCustomObjectQuery dataCustomObjectQuery = new DataCustomObjectQuery(dataCustomObjectRepository);
+                IQueryable<DataCustomObjectList> entityLists = dataCustomObjectQuery.GetIQueryableEntityList(entityPocos);
+                entityLists = entityLists.OrderBy(d => d.CreateDate);
+                List<DataCustomObjectList> listResult = entityLists.ToList();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                customFieldResolver.SetCustomFieldsValues(objectTable.Name, authToken.Tenant, listResult.Cast<object>().ToList());
+
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                return Request.CreateResponse(HttpStatusCode.OK, listResult);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        [HttpGet]
         public HttpResponseMessage GetByFilters([FromUri] ApiQueryFilters filters)
         {
             try
@@ -126,19 +163,27 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 				int tenant = authToken.Tenant;
-				
+                List<QueryFilterItem> filters_list = null;
+                string objectTableName = string.Empty;
+                if (!string.IsNullOrEmpty(filters.AdditionalFilters))
+                {
+                    filters_list = new JavaScriptSerializer().Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
+                    objectTableName = filters_list.Where(d => d.FieldName == "ObjectTableName").FirstOrDefault()?.FieldValue?.ToString();
+                    filters_list = filters_list.Where(d => d.FieldName != "ObjectTableName").ToList();
+                }
+
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "DataCustomObject",
+                    ObjectTableName = objectTableName,
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "DataCustomObjects",
+                    QuerySection = objectTableName+"s",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
                 };
 
-				List<ObjectField> DataCustomObjectObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("DataCustomObject",tenant);
+				List<ObjectField> DataCustomObjectObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName(objectTableName, tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
@@ -181,11 +226,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
                 }
 
-              if (!string.IsNullOrEmpty(filters.AdditionalFilters))
+                if (filters_list != null && filters_list.Count() > 0)
                 {
-                    JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
-                    var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
-
                     foreach (QueryFilterItem filter in filters_list)
                     {
                         ObjectField field = DataCustomObjectObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
@@ -211,12 +253,12 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
 
                 GenericFilter genericFilter = new GenericFilter();
-                GenericSort sortClass = new GenericSort();
+                GenericSort sortClass = new GenericSort(tenant);
                 
                 TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
                  { 
                      AdditionalTreeFilter = filters.TreeFilters,
-                     ObjectTableName = "DataCustomObject",
+                     ObjectTableName = objectTableName,
                      ParentEntityId = filters.ParentEntityId,
                      ParentObjectTableName = filters.ParentObjectTableName, 
                      Tenant = tenant ,
@@ -226,7 +268,9 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 								
                 IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
                 DataCustomObjectRepository  dataCustomObjectRepository = new DataCustomObjectRepository(MyContext);
-                IQueryable<DataCustomObject> entityPocos = dataCustomObjectRepository.GetDataCustomObjects(tenant);
+                ObjectTable objectTable = MyContext.ObjectTables.Where(d => d.Name == objectTableName).FirstOrDefault();
+
+                IQueryable<DataCustomObject> entityPocos = dataCustomObjectRepository.GetDataCustomObjectsByObjectTableId(tenant, objectTable.Id);
 
                 DataCustomObjectQuery dataCustomObjectQuery = new DataCustomObjectQuery(dataCustomObjectRepository);
                 
@@ -301,7 +345,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                             }
                         default:
                             {
-                                entityLists = entityLists.OrderBy(d => d.Id);
+                                entityLists = entityLists.OrderBy(d => d.CreateDate);
                                 break;
                             }
                     }
@@ -310,7 +354,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
             }					  						
 	       else
             {
-                entityLists = entityLists.OrderBy(d => d.Id);
+                entityLists = entityLists.OrderBy(d => d.CreateDate);
             } 
 
 			ServiceResponse response = new ServiceResponse();
@@ -327,8 +371,10 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
 				}
 			   List<DataCustomObjectList> listResult = entityLists.ToList();
+               CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+               customFieldResolver.SetCustomFieldsValues(objectTableName, authToken.Tenant, listResult.Cast<object>().ToList());
 
-               response.Result = listResult;
+                response.Result = listResult;
 			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 			   PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
                

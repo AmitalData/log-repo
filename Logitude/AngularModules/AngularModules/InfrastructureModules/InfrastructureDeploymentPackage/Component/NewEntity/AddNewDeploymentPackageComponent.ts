@@ -93,6 +93,17 @@ export class AddNewDeploymentPackageComponent extends BaseComponent {
 
     public SelectedDirectionComponent: any;
 
+    get IsDirectionSelectionDisabled() {
+        return this.SelectedDirectionComponent && (this.SelectedDirectionComponent.IsUploadInProgress || this.SelectedDirectionComponent.UploadedSuccessfully);
+    }
+
+    get IsControlButtonsDisabled() {
+        return this.SelectedDirectionComponent && this.SelectedDirectionComponent.IsUploadInProgress;
+    }
+
+    get IsNextButtonClicked() {
+        return this.SelectedDirectionComponent && this.SelectedDirectionComponent.IsNextClicked;
+    }
     get DirectionId() { return this.EntityPM.DirectionId; }
     set DirectionId(newValue: string) {
         if (this.EntityPM.DirectionId == newValue) return;
@@ -102,7 +113,7 @@ export class AddNewDeploymentPackageComponent extends BaseComponent {
 
 
     CancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
+        this.SelectedDirectionComponent.CancelButtonClicked();
     }
 
     CreateButtonClicked() {
@@ -118,15 +129,24 @@ export class AddNewDeploymentPackageComponent extends BaseComponent {
             if (!response.HasError) {
                 this.CurrentSession.StopBusyIndicator();
                 this.CurrentSession.CloseCurrentWindow();
-                return;  
+                return;
             }
             if (response.ErrorsArray && response.ErrorsArray.length > 0) {
                 this.SelectedDirectionComponent.ValidationErrorsList.push(response.ErrorsArray[0]);
                 this.CurrentSession.StopBusyIndicator();
             }
-            
+
         });
 
     }
 
+    NextButtonClicked() {
+        if (!this.SelectedDirectionComponent) return;
+        this.SelectedDirectionComponent.NextButtonClicked();
+    }
+
+    DeployButtonClicked() {
+        if (!this.SelectedDirectionComponent) return;
+        this.SelectedDirectionComponent.DeployButtonClicked();
+    }
 }

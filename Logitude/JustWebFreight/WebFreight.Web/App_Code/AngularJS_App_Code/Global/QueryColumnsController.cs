@@ -82,7 +82,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 QueryColumnService service = new QueryColumnService(objectContext, entityPM.Tenant);
                 QueryColumnRepository Repo = new QueryColumnRepository(entityPM.Tenant);
                 var temp = Repo.GetSingleQueryColumn(entityPM.Id, entityPM.Tenant);
-                if (temp == null)
+                if (temp == null || (String.IsNullOrEmpty(temp.UserId) && !String.IsNullOrEmpty(entityPM.UserId)))
                 {
                     service.Create(entityPM);
                 }

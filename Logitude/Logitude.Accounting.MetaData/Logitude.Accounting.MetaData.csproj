@@ -131,6 +131,10 @@
     <None Include="DBScripts\202103311233_BankAccountSearchFields.sxml" />
     <None Include="DBScripts\202104111142_PaymentChequesSearchFields.sxml" />
     <None Include="DBScripts\202210111701_Update_PRVR_ReportLocalName.sxml" />
+    <None Include="DBScripts\20230130_UpdateSearchFieldsForBankDepositsLocalAmountsOnly.sxml" />
+    <None Include="DBScripts\20230130_UpdateSearchFieldsForBankDepositsLocalAndForeignAmounts.sxml" />
+    <None Include="DBScripts\20230207_JournalsExternalCodeAndExternalSystemConstraint.sxml" />
+    <None Include="DBScripts\20230131_UpdateSearchFieldsForBankDepositsWithNoLine.sxml" />
     <None Include="DBScripts\Post\202103160820_ RebuildGLAccountRecocileDatas.sxml" />
     <None Include="DBScripts\202103180820_ InsertGLAccountAgingDatas.sxml" />
     <None Include="DBScripts\202103240820_usp_AccountingStreamingTypes.sxml" />
@@ -395,6 +399,8 @@
     </Content>
     <Content Include="DBScripts\202209270000_AddInterestForARPayments_PartnerTypeNotCustomer.axml" />
     <Content Include="DBScripts\202209131224_AddInterestForReturnedToCustomerCheques.axml" />
+    <None Include="DBScripts\202301231_UpdateTaxReportDeductionMonthYear.sxml" />
+    <None Include="DBScripts\202302011610_UpdateARInvoicesIsPrintedColumn.sxml" />
     <Content Include="DBScripts\20221227_AddInterestsForClosedARPayments.axml" />
     <Content Include="ElasticDemoModel\ElasticDemoGen.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

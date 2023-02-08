@@ -13,6 +13,9 @@ import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 import { Guid } from 'Infrastructure/Utilities/Guid';
 import { WidgetFilterItem } from '../Filter/WidgetFilter/WidgetFilterItem';
+import { Type } from '@angular/compiler';
+import { AnalyticsFactsFieldsMetaDataListService } from 'DashboardModule/Services/StandardLists/AnalyticsFactsFieldsMetaDataListService';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
     templateUrl: './AddEditWidgetComponent.html',
@@ -39,22 +42,26 @@ export class AddEditWidgetComponent extends BaseComponent {
     public SortByDirections = [{ name: 'Ascending', code: 'asc' }, { name: 'Descending', code: 'desc' }];
     public IncreaseDecreases = ['Positive', 'Negative'];
     public GroupByQueryFilters: ApiQueryFilters;
+    public SecondaryGroupByQueryFilters: ApiQueryFilters;
     public isGroupByVisible: boolean = true;
     public isSortByVisible: boolean = true;
-    public isMaximumGroupingVisible: boolean = true;
-    public isAdvancedSettingLinkVisible: boolean = true;
-    public isAdvancedSettingForKPI: boolean = false;
-    public isAdvancedSettingForChart: boolean = false;
     public IsBetweenDatesVisible: boolean = false;
     public IsAddNewGroupVisible: boolean = true;
     public IsSecondaryGroupByVisible: boolean = false;
     public IsDeleteGroupByVisible: boolean = false;
     public MeasureRenderList = [];
     public ImgWitdh: number = 0;
+    public Alignments = ['Left', 'Center'];
+    public Abbreviations = ['1k', '10k', '100k', '1M', '10M', '100M'];
+    public isMeasureNumber: boolean = false;
+    public IsDisplaySettingVisibile: boolean = false;
+    public IsTimeOverTimeVisible: boolean = false;
+    public analyticFieldListService: AnalyticsFactsFieldsMetaDataListService;
 
     constructor() {
         super();
         this.WidgetMeasuresList = [];
+        this.analyticFieldListService = new AnalyticsFactsFieldsMetaDataListService();
     }
 
     SetWindowArgs(windowArgs: any) {
@@ -64,10 +71,6 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.FirstTime = this.isNew != true;
         this.FirstTimeForSecondaryGrouping = this.isNew != true;
         this.DataContext = this;
-        if (this.isNew) {
-            this.isAdvancedSettingLinkVisible = false;
-        }
-
         this.ComputeChartImageSrc();
         this.SetMeasureRenderList();
         this.BuildMeasures();
@@ -79,10 +82,9 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.CheckGroupAddVisiblity();
         this.BuildSecondaryGroup();
         this.SetUIProperties();
-        this.SetAdvanceSettingItems();
         this.SetTimeOverTimeValue();
         this.SetUIForOperator();
-        this.SetAdvanceSettingVisibleForTimeOverTime();
+        this.CompareDisplaySettingWithDefaultValue();
     }
 
     SetUIProperties() {
@@ -91,7 +93,10 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (this.MaximumGrouping < 1 || this.MaximumGrouping > 50) {
             this.UIProperties.SetValidity("MaximumGrouping", this.ObjectTableName, false, "Maximum Grouping must be Greater Than 1 and Less Than 50");
         }
-
+        this.UIProperties.SetValidity("DecimalPlaces", this.ObjectTableName, true, "");
+        if (this.DecimalPlaces < 0 || this.DecimalPlaces > 2) {
+            this.UIProperties.SetValidity("DecimalPlaces", this.ObjectTableName, false, "Decimal Places must be Greater Than or Equal to 0 and Less than or Equal to 2");
+        }
         this.UIProperties.SetEnabled("ComparisonPeriod", this.ObjectTableName, this.TimeOverTime);
 
         this.UIProperties.SetEnabled("GroupById", this.ObjectTableName, !AppTool.IsNullOrEmpty(this.EntityId));
@@ -100,12 +105,16 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.WidgetMeasuresList.forEach(item => {
             item.SetUIProperties();
         });
-       
+        //this.SetUIProprtiesForDisplaySettings();
     }
 
     BuildQueryFilters() {
         this.GroupByQueryFilters = new ApiQueryFilters();
         this.GroupByQueryFilters.addAdditionalFilter("DataTypeCode", "PickList,LookUp,DateTime,Date", null, null, "InList", false, true, false, "string", false, true, true);
+
+        this.SecondaryGroupByQueryFilters = new ApiQueryFilters();
+        this.SecondaryGroupByQueryFilters.addAdditionalFilter("DataTypeCode", "PickList,LookUp", null, null, "InList", false, true, false, "string", false, true, true);
+        this.SecondaryGroupByQueryFilters.addAdditionalFilter("CanSecondaryGroup", true, null, null, "Equals", false, false, false, "Boolean");
     }
 
     GetFilters() {
@@ -260,17 +269,17 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.ComputeChartImageSrc();
             this.CheckMeasureAddVisiblity();
             this.InitView();
-            this.SetMaximumGrouping();
-            this.SetAdvanceSettingItems();
             this.SetTimeOverTimeDefaultValue();
             this.SetTimeOverTimeValue();
             this.CheckGroupAddVisiblity();
+            this.SetMaximumGrouping();
             this.SetMeasureRenderList();
             this.WidgetMeasuresList.forEach(item => {
                 item.FilterMeasureFields();
             });
+            this.SetDefaultValuesForDisplaySettings();
+            this.SetUIProprtiesForDisplaySettings();
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Type Change ", Message: "Changed To" + this.EntityPM.TypeCode, DashboardId: this.DashboardPM?.Id });
-            this.isAdvancedSettingLinkVisible = true;
         }
     }
 
@@ -290,13 +299,6 @@ export class AddEditWidgetComponent extends BaseComponent {
     private SetTimeOverTimeDefaultValue() {
         if (this.TypeCode != "kpi") {
             this.TimeOverTime = false;
-        }
-    }
-
-    private SetAdvanceSettingVisibleForTimeOverTime() {
-        if (this.TimeOverTime) {
-            this.isAdvancedSettingVisible = true;
-            this.isAdvancedSettingForKPI = true;
         }
     }
 
@@ -320,42 +322,73 @@ export class AddEditWidgetComponent extends BaseComponent {
         }
     }
 
-    private isAdvancedSettingVisible: boolean = false;
-    get IsAdvancedSettingVisible() { return this.isAdvancedSettingVisible; }
-    set IsAdvancedSettingVisible(value: boolean) {
-        if (this.isAdvancedSettingVisible != value) {
-            this.isAdvancedSettingVisible = value;
-            this.SetAdvanceSettingItems();
-        }
-    }
-
-
-    public SetAdvanceSettingItems() {
-        if (!AppTool.IsNullOrEmpty(this.TypeCode) && this.TypeCode == "kpi" && this.IsAdvancedSettingVisible) {
-            this.isAdvancedSettingForKPI = true;
-            this.isAdvancedSettingForChart = false;
-        }
-
-        else if (!AppTool.IsNullOrEmpty(this.TypeCode) && this.TypeCode != "kpi" && this.IsAdvancedSettingVisible) {
-            this.isAdvancedSettingForChart = true;
-            this.isAdvancedSettingForKPI = false;
-        }
-    }
-
     private SetMaximumGrouping() {
         if (!AppTool.IsNullOrEmpty(this.TypeCode) && this.TypeCode != "kpi") {
             if (AppTool.IsNullOrZero(this.MaximumGrouping))
                 this.MaximumGrouping = 10;
         }
-        else
-            this.MaximumGrouping = null;
+        else this.MaximumGrouping = null;
+
     }
 
+    SetDefaultValuesForDisplaySettings() {
+        this.ThousandSeparator = false;
+        this.UseNumberAbbreviation = false;
+        this.UseAbbreviationAfter = null;
+        this.DecimalPlaces = null;
+
+        if (this.TypeCode == "kpi" && (this.WidgetMeasuresList[0].MeasureFieldId == null || this.WidgetMeasuresList[0].IsNumeric)) {
+            this.ThousandSeparator = true;
+            this.UseNumberAbbreviation = true;
+            this.UseAbbreviationAfter = "100k";
+            this.DecimalPlaces = 2;
+            this.Alignment = "Center";
+        }
+    }
+    SetDisplaySettingsDefaultsForKpiAndMeasureCode() {
+        this.Alignment = "Center";
+        this.ThousandSeparator = true;
+        this.UseNumberAbbreviation = true;
+        this.UseAbbreviationAfter = "100k";
+        this.DecimalPlaces = 2;
+
+    }
+
+    SetUIProprtiesForDisplaySettings() {
+        if (!this.WidgetMeasuresList[0].IsNumeric) {
+            this.UIProperties.SetEnabled("DecimalPlaces", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("UseNumberAbbreviation", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("ThousandSeparator", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("UseAbbreviationAfter", this.ObjectTableName, false);
+            return;
+        }
+
+
+        this.UIProperties.SetEnabled("DecimalPlaces", this.ObjectTableName, true);
+        this.UIProperties.SetEnabled("UseNumberAbbreviation", this.ObjectTableName, true);
+        this.UIProperties.SetEnabled("ThousandSeparator", this.ObjectTableName, true);
+        this.UIProperties.SetEnabled("UseAbbreviationAfter", this.ObjectTableName, this.UseNumberAbbreviation);
+    }
+
+    CompareDisplaySettingWithDefaultValue() {
+        if (this.isNew) return;
+        if (this.Alignment != "Center") {
+            this.IsDisplaySettingVisibile = true;
+            return;
+        }
+
+        if (this.ThousandSeparator == null || this.UseNumberAbbreviation == null || this.DecimalPlaces == null) return;
+
+        if (this.ThousandSeparator == false || this.UseNumberAbbreviation == false || (this.UseNumberAbbreviation == true && this.UseAbbreviationAfter != "100k") || this.DecimalPlaces != 2) {
+            this.IsDisplaySettingVisibile = true;
+            return;
+        }
+        this.IsDisplaySettingVisibile = false;
+    }
 
     InitView() {
         this.isGroupByVisible = this.TypeCode != "kpi";
         this.isSortByVisible = this.TypeCode != "kpi";
-        this.isMaximumGroupingVisible = this.TypeCode != "kpi";
 
         if (!this.isGroupByVisible) {
             this.GroupById = null;
@@ -367,10 +400,9 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.SortBy = null;
             this.SortDirection = null;
         }
-        if (!this.isMaximumGroupingVisible) {
+        if (this.TypeCode == "kpi") {
             this.MaximumGrouping = null;
         }
-
     }
 
     get GroupById() { return this.EntityPM.GroupById; }
@@ -443,6 +475,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.EntityPM.MaximumGrouping = value;
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Maximum Grouping Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
             this.SetUIProperties();
+
         }
     }
 
@@ -546,31 +579,57 @@ export class AddEditWidgetComponent extends BaseComponent {
             return;
         }
         this.EntityPM.SecondaryDateGroupCode = (value?.DataTypeCode == 'DateTime' || value?.DataTypeCode == 'Date') ? this.DateGroupCodes[0] : null;
-        this.SetDefaultSortBySecondaryGroupField();
         this.FirstTimeForSecondaryGrouping = false;
         MixPanelLocator.PostDashboardAction({ ActionName: "Widget Secondary Group Change", Message: "Changed To " + this.selectedSecondaryGroupField?.DisplayName, DashboardId: this.DashboardPM?.Id });
 
+    }
+
+    get Alignment() { return this.EntityPM.Alignment; }
+    set Alignment(value: string) {
+        if (this.EntityPM.Alignment != value) {
+            this.EntityPM.Alignment = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Alignment Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+        }
+    }
+    get ThousandSeparator() { return this.EntityPM.ThousandSeparator; }
+    set ThousandSeparator(value: boolean) {
+        if (this.EntityPM.ThousandSeparator != value) {
+            this.EntityPM.ThousandSeparator = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Thousand Separator Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+        }
+    }
+    get UseNumberAbbreviation() { return this.EntityPM.UseNumberAbbreviation; }
+    set UseNumberAbbreviation(value: boolean) {
+        if (this.EntityPM.UseNumberAbbreviation != value) {
+            this.EntityPM.UseNumberAbbreviation = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Use Number Abbreviation Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+        }
+    }
+    get UseAbbreviationAfter() { return this.EntityPM.UseAbbreviationAfter; }
+    set UseAbbreviationAfter(value: string) {
+        if (this.EntityPM.UseAbbreviationAfter != value) {
+            this.EntityPM.UseAbbreviationAfter = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget UseAbbreviationAfter Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+        }
+    }
+    get DecimalPlaces() { return this.EntityPM.DecimalPlaces; }
+    set DecimalPlaces(value: number) {
+        if (this.EntityPM.DecimalPlaces != value) {
+            this.EntityPM.DecimalPlaces = value;
+            this.SetUIProperties();
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget DecimalPlaces Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+        }
     }
 
     SetDefaultSortByField() {
         if (!this.selectedGroupField) return;
         if (this.selectedGroupField.DataTypeCode == "DateTime" || this.selectedGroupField.DataTypeCode == 'Date') {
             this.SortBy = null;
-            this.SortDirection = "desc";
+            this.SortDirection = "asc";
             return;
         }
         this.SortBy = 1;
-        this.SortDirection = "asc";
-    }
-    SetDefaultSortBySecondaryGroupField() {
-        if (!this.selectedSecondaryGroupField) return;
-        if (this.selectedSecondaryGroupField.DataTypeCode == "DateTime" || this.selectedSecondaryGroupField.DataTypeCode == 'Date') {
-            this.SortBy = null;
-            this.SortDirection = "desc";
-            return;
-        }
-        this.SortBy = 3;
-        this.SortDirection = "asc";
+        this.SortDirection = "desc";
     }
 
     CancelButtonClicked() {
@@ -615,13 +674,13 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (this.GroupByDateIsNotValid()) {
             errors.push("Date Group Type Field is Required");
         }
-        if (this.isMaximumGroupingVisible && !this.MaximumGrouping && this.MaximumGrouping != 0) {
+        if (this.TypeCode != "kpi" && !this.MaximumGrouping && this.MaximumGrouping != 0) {
             errors.push("Maximum Grouping Field is Required");
         }
-        if (this.isMaximumGroupingVisible && this.MaximumGrouping && (this.MaximumGrouping < 1 || this.MaximumGrouping > 50)) {
+        if (this.TypeCode != "kpi" && this.MaximumGrouping && (this.MaximumGrouping < 1 || this.MaximumGrouping > 50)) {
             errors.push("Maximum Grouping must be greater than or equal 1 and less than or equal 50");
         }
-        if (this.isMaximumGroupingVisible && this.MaximumGrouping == 0) {
+        if (this.TypeCode != "kpi" && this.MaximumGrouping == 0) {
             errors.push("Maximum Grouping must be greater than or equal 1 and less than or equal 50");
         }
         if (this.isSortByVisible && !this.SortDirection) {
@@ -634,7 +693,27 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.ValidateTimeOverTime(errors);
         this.ValidateMeasures(errors);
         this.ValidateSort(errors);
+        this.ValidateDisplaySettings(errors);
         if (this.RootFilter && this.RootFilter.QueryFilterItems && this.RootFilter.QueryFilterItems.length != 0) this.ValidateFilters(errors, this.RootFilter);
+    }
+    private ValidateDisplaySettings(errors: string[]) {
+        if (this.TypeCode != "kpi") return;
+        if (!this.Alignment) {
+            errors.push("Alignment Field is Required");
+        }
+        if (!this.WidgetMeasuresList[0].IsNumeric) return;
+
+        if (this.UseNumberAbbreviation && !this.UseAbbreviationAfter) {
+            errors.push("Use Abbreviation After Field is Required");
+        }
+
+        if (this.DecimalPlaces && (this.DecimalPlaces < 0 || this.DecimalPlaces > 2)) {
+            errors.push("Decimal Places must be Greater Than or Equal to 0 and Less than or Equal to 2");
+        }
+
+        if (!this.DecimalPlaces && this.DecimalPlaces != 0) {
+            errors.push("Decimal Places Field is Required");
+        }
     }
     private ValidateTimeOverTime(errors: string[]) {
 
@@ -737,7 +816,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.myCloner = new Cloner(this.DataContext);
         this.myCloner.AddField('Title');
         this.myCloner.AddField('TypeCode');
-        this.myCloner.AddField('GroupBy');
+        this.myCloner.AddField('GroupById');
         this.myCloner.AddField('StartPotistion');
         this.myCloner.AddField('EndPosition');
         this.myCloner.AddField('EntityId');
@@ -754,6 +833,11 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.myCloner.AddField('ToDate');
         this.myCloner.AddField('SecondaryGroupById');
         this.myCloner.AddField('SecondaryDateGroupCode');
+        this.myCloner.AddField('Alignment');
+        this.myCloner.AddField('ThousandSeparator');
+        this.myCloner.AddField('UseNumberAbbreviation');
+        this.myCloner.AddField('UseAbbreviationAfter');
+        this.myCloner.AddField('DecimalPlaces');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DashboardPM);
 
@@ -809,6 +893,27 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.SecondaryDateGroupCode = null;
         this.SelectedSecondaryGroupField = null;
     }
+
+
+    get IsMaximumGrouping(): boolean {
+        return this.TypeCode && this.TypeCode != 'kpi';
+    }
+
+    get IsKpi(): boolean {
+        return this.TypeCode == 'kpi';
+    }
+
+    get IsUseAbbreviationAfterDisabled(): boolean {
+        if (!this.UseNumberAbbreviation) return true;
+        if (this.WidgetMeasuresList[0].MeasureCode != 'Count' && !this.WidgetMeasuresList[0].MeasureFieldId) return true;
+        if (this.WidgetMeasuresList[0].MeasureCode != 'Count' && !this.WidgetMeasuresList[0].IsNumeric) return true;
+
+        return false;
+    }
+
+    public get CanSort(): boolean {
+        return this.SelectedGroupField && (this.SelectedGroupField.DataTypeCode != "DateTime" && this.SelectedGroupField.DataTypeCode != 'Date');
+    }
 }
 
 export class WidgetMeasureItem extends BaseComponent {
@@ -817,9 +922,13 @@ export class WidgetMeasureItem extends BaseComponent {
     public Widget: WidgetPM;
     public DataContext: WidgetMeasureItem = this;
     public IsNew: boolean = false;
+    public FielHasOldValue: boolean = false;
     public IsDeleteMeasureVisible: boolean = false;
     public FieldQueryFilters: ApiQueryFilters;
     public DashboardPM: DashboardPM;
+    private selectedField: AnalyticsFactsFieldsMetaDataList;
+
+
 
     public get DefaultRender(): any {
         return this.fatherComponent?.MeasureRenderList?.find(x => x.code == this.RenderAs);
@@ -830,6 +939,7 @@ export class WidgetMeasureItem extends BaseComponent {
         this.EntityPM = entityPM;
         this.Widget = fatherComponent.EntityPM;
         this.IsNew = isNew;
+        this.FielHasOldValue = isNew == false;
         this.DashboardPM = fatherComponent?.DashboardPM;
         this.FilterMeasureFields();
     }
@@ -853,6 +963,7 @@ export class WidgetMeasureItem extends BaseComponent {
         if (this.EntityPM.MeasureFieldId != value) {
             this.EntityPM.MeasureFieldId = value;
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Field Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+            if (!value) this.FieldChanged(null);
         }
     }
 
@@ -864,6 +975,8 @@ export class WidgetMeasureItem extends BaseComponent {
         this.EntityPM.MeasureCode = value;
         this.MeasureFieldId = null;
         this.FilterMeasureFields();
+        this.fatherComponent.SetUIProprtiesForDisplaySettings();
+        this.fatherComponent.SetDefaultValuesForDisplaySettings()
     }
 
     get RenderAs() { return this.EntityPM.RenderAs; }
@@ -873,10 +986,18 @@ export class WidgetMeasureItem extends BaseComponent {
         MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Show as Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
     }
 
+    get SelectedField() { return this.selectedField; }
+    set SelectedField(value: AnalyticsFactsFieldsMetaDataList) {
+        if (this.selectedField != value) {
+            this.selectedField = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Field Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+        }
+    }
+
     FilterMeasureFields() {
         this.FieldQueryFilters = new ApiQueryFilters();
 
-        if(this.fatherComponent.TypeCode != "kpi"){
+        if (this.fatherComponent.TypeCode != "kpi") {
             this.FieldQueryFilters.addAdditionalFilter("DataTypeCode", "Integer,Decimal", null, null, "InList", false, true, false, "string", false, true, true);
             return;
         }
@@ -912,4 +1033,27 @@ export class WidgetMeasureItem extends BaseComponent {
         this.fatherComponent.CheckMeasureAddVisiblity();
     }
 
+    FieldChanged(field: AnalyticsFactsFieldsMetaDataList) {
+        if (this.FielHasOldValue) {
+            this.FielHasOldValue = false;
+            this.selectedField = field;
+            if(!this.isNumericType(this.selectedField?.DataTypeCode)) this.fatherComponent.SetDefaultValuesForDisplaySettings();
+            this.fatherComponent.SetUIProprtiesForDisplaySettings();
+            return;
+        }
+         
+        var typeChange = this.selectedField == null || this.isNumericType(this.selectedField?.DataTypeCode) != this.isNumericType(field?.DataTypeCode);
+        this.selectedField = field;
+        this.fatherComponent.SetUIProprtiesForDisplaySettings();
+        if (typeChange || this.MeasureCode == "Count") this.fatherComponent.SetDefaultValuesForDisplaySettings();
+    }
+
+
+    get IsNumeric(): boolean {
+        return this.isNumericType(this.selectedField?.DataTypeCode);
+    }
+
+    isNumericType(typeCode: string): boolean {
+        return typeCode == "Integer" || typeCode == "Decimal" || this.MeasureCode == "Count";
+    }
 }

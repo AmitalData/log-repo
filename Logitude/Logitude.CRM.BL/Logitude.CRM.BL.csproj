@@ -87,6 +87,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnalyticTableServices\OpportunityAnalyticTableService.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ActivityPriorityDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ActivityStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ActivityTimeTypeDetails.Generated.cs" />

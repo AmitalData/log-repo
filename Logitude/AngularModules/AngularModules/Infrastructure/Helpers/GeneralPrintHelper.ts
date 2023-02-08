@@ -37,7 +37,7 @@ export class GeneralPrintHelper {
     documentTypePM: DocumentTypePM;
     documentTypePMService: DocumentTypePMExtendedService;
     documentOutPMService: DocumentOutPMService;
-    public IsLoadPrintControl: boolean = false;
+    public IsLoadPrintControl: boolean = true;
     public IsStartPrint: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(objecttablename: string, documentTypeCode: string, entityId: string, childEntityId: string, childReference:string ,childObjectTableId:string ) {
@@ -58,41 +58,47 @@ export class GeneralPrintHelper {
 
         this.documentTypePMService = new DocumentTypePMExtendedService();
         this.documentOutPMService = new DocumentOutPMService();
-        var documentTypeListService = new DocumentTypeListService();
+       
 
-        var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
-        apiQueryFilters.GetAll = true;
-        apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
-
-        documentTypeListService.getAllFromCache(apiQueryFilters).subscribe((res:any) => {
-            var pmResponse: ServiceResponse = res;
-            if (!pmResponse.HasError) {
-                var myResult = pmResponse.Result;
-                  this.documentTypeList = myResult.filter(d => d.Code.toUpperCase() == this.DocumentTypeCode)[0];
-                if (this.documentTypeList) {
-                    if (this.documentTypeList.DocumentTypeDefaultReportTemplateId) {
-                        this.IsLoadPrintControl = true;
-
-                    }
-                    else this.ShowMessage("Document type of code " + this.DocumentTypeCode + " has no default template");
-                }
-
-                else {
-                    if (this.ObjectTableName == "APPayment") {
-                        this.ShowMessage("There is no document type for A/P Payment please go to maintenance and add it!");
-                    }
-                    else if (this.ObjectTableName == "ARPayment") {
-                        this.ShowMessage("There is no document type for A/R Payment please go to maintenance and add it!");
-                    }
-
-                    else this.ShowMessage("Document type of code " + this.DocumentTypeCode + " not exists");
-                } 
-            }
-        });
     }
 
-    ShowPrintControl(documentTypeTemplate:string = null) {
-        if (this.IsLoadPrintControl && !this.IsStartPrint) {
+
+    ShowPrintControl(documentTypeTemplate: string = null) {
+        if (this.IsStartPrint) return;
+            let apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
+            apiQueryFilters.GetAll = true;
+            apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
+            let documentTypeListService = new DocumentTypeListService();
+            documentTypeListService.getAllFromCache(apiQueryFilters).subscribe((res: any) => {
+                var pmResponse: ServiceResponse = res;
+                if (!pmResponse.HasError) {
+                    var myResult = pmResponse.Result;
+                    this.documentTypeList = myResult.filter(d => d.Code.toUpperCase() == this.DocumentTypeCode)[0];
+                    if (this.documentTypeList) {
+                        if (this.documentTypeList.DocumentTypeDefaultReportTemplateId) {
+                            this.GetDocumentOut(documentTypeTemplate);
+
+                        }
+                        else this.ShowMessage("Document type of code " + this.DocumentTypeCode + " has no default template");
+                    }
+
+                    else {
+                        if (this.ObjectTableName == "APPayment") {
+                            this.ShowMessage("There is no document type for A/P Payment please go to maintenance and add it!");
+                        }
+                        else if (this.ObjectTableName == "ARPayment") {
+                            this.ShowMessage("There is no document type for A/R Payment please go to maintenance and add it!");
+                        }
+
+                        else this.ShowMessage("Document type of code " + this.DocumentTypeCode + " not exists");
+                    }
+                }
+            });
+        
+    }
+
+    GetDocumentOut(documentTypeTemplate:string = null) {
+        if (this.IsStartPrint) return;
             this.IsStartPrint = true;
             this.CurrentSession.StartBusyIndicatorLoading();
             this.documentOutPMService.getDocumentOutByDocumentTypeEntityAndChild(this.EntityId, SessionInfo.LoggedUserTenant, this.ChildEntityId, this.documentTypeList.Id).subscribe((res:any) => {
@@ -129,7 +135,7 @@ export class GeneralPrintHelper {
                     this.CurrentSession.StopBusyIndicator();
                 }
             });
-        }
+        
     }
 
     LoadDocumentTypePm() {

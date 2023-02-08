@@ -27,6 +27,7 @@ namespace Logitude.BL.InfrastructureModel.Services
         private DocumentRepository documentrepository;
         DeploymentPackagesVersionService deploymentPackagesVersionService;
         DeploymentPackagesVersionQuery deploymentPackagesVersionQuery;
+        DeploymentPackageDocumentService deploymentPackageDocumentService;
         public DeploymentPackageVersionInitializerService(DeploymentPackagePM deploymentPackagePM, IWebFreightContext iWebFreightContext)
         {
             this.deploymentPackagePM = deploymentPackagePM;
@@ -34,11 +35,12 @@ namespace Logitude.BL.InfrastructureModel.Services
             documentrepository = new DocumentRepository(deploymentPackagePM.Tenant);
             deploymentPackagesVersionService = new DeploymentPackagesVersionService(iWebFreightContext, deploymentPackagePM.Tenant);
             deploymentPackagesVersionQuery = new DeploymentPackagesVersionQuery(deploymentPackagePM.Tenant);
+            deploymentPackageDocumentService = new DeploymentPackageDocumentService(deploymentPackagePM.Tenant, deploymentPackagePM);
         }
         public DeploymentPackagesVersionPM Create()
         {
-            CreateDocument();
-            deploymentPackagesVersionPM.DocumentId = document.Id;
+            var documentId = deploymentPackageDocumentService.Create();
+            deploymentPackagesVersionPM.DocumentId = documentId;
             deploymentPackagesVersionPM.DeploymentPackageID = deploymentPackagePM.Id;
             deploymentPackagesVersionPM.Tenant = deploymentPackagePM.Tenant;
             deploymentPackagesVersionService.Create(deploymentPackagesVersionPM, false);
@@ -46,77 +48,12 @@ namespace Logitude.BL.InfrastructureModel.Services
         }
         public DeploymentPackagesVersionPM Update()
         {
-            UpdateDocument(deploymentPackagePM);
+            deploymentPackageDocumentService.Update(deploymentPackagePM);
             deploymentPackagesVersionPM = deploymentPackagesVersionQuery.GetSinglePM(deploymentPackagePM.VersionId, deploymentPackagePM.Tenant);
             deploymentPackagesVersionPM.IsExported = deploymentPackagePM.IsExported;
             deploymentPackagesVersionService.Update(deploymentPackagesVersionPM);
             return deploymentPackagesVersionPM;
         }
-
-        public void CreateDocument()
-        {
-            deploymentPackagePM.DeploymentPackageDetails = GetInstanceOfDeploymentPackageDetails();
-            var deploymentPackageDetailsBytes = Encoding.ASCII.GetBytes(JsonSerializer.Serialize(deploymentPackagePM.DeploymentPackageDetails));
-            document = GetInstanceOfDocument(deploymentPackageDetailsBytes);
-            documentrepository.Add(document);
-            documentrepository.SubmitChanges();
-            StorageDataService.WriteFileOnStorage(new StorageDataArgs()
-            {
-                FileName = document.Id,
-                FolderName = document.Folder,
-                Tenant = document.Tenant,
-                FileData = deploymentPackageDetailsBytes,
-                Extension = document.Extension
-            });
-        }
-
-        private Document GetInstanceOfDocument(byte[] deploymentPackageDetailsBytes)
-        {
-           return new Document()
-            {
-                CreateDate = DateTime.Now,
-                Extension = "json",
-                FileSize = deploymentPackageDetailsBytes.Length,
-                Tenant = Convert.ToInt32(deploymentPackagePM.Tenant),
-                Id = IdCounter.GetNumber("Document", deploymentPackagePM.Tenant),
-                HasFile = true,
-                Folder = "others",
-            };
-        }
-
-        private DeploymentPackageDetails GetInstanceOfDeploymentPackageDetails()
-        {
-            return new DeploymentPackageDetails
-            {
-                Name = deploymentPackagePM.Name,
-                Code = deploymentPackagePM.Code,
-                Description = deploymentPackagePM.Description,
-                CustomFields = new List<CustomFields>(),
-                CustomPickLists = new List<CustomPickListItem>()
-            };
-        }
-
-        private void UpdateDocument(DeploymentPackagePM deploymentPackagePM)
-        {
-            if (deploymentPackagePM.DocumentId == null) return;
-            Document document = new DocumentRepository(deploymentPackagePM.Tenant).GetSingleDocument(deploymentPackagePM.Tenant, deploymentPackagePM.DocumentId);
-            var deploymentPackageDetailsBytes = Encoding.ASCII.GetBytes(JsonSerializer.Serialize(deploymentPackagePM.DeploymentPackageDetails));
-            document.FileSize = deploymentPackageDetailsBytes.Length;
-            DocumentRepository documentrepository = new DocumentRepository(deploymentPackagePM.Tenant);
-            documentrepository.Update(document);
-            documentrepository.SubmitChanges();
-            StorageDataService.WriteFileOnStorage(new StorageDataArgs()
-            {
-                FileName = document.Id,
-                FolderName = document.Folder,
-                Tenant = document.Tenant,
-                FileData = deploymentPackageDetailsBytes,
-                Extension = document.Extension
-            });
-        }
-
-
-
 
     }
 }

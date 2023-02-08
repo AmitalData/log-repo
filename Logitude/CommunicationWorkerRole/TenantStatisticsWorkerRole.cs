@@ -130,7 +130,7 @@ namespace CommunicationWorkerRole
             {
                 ShipmentRepository shipmentRepository = new ShipmentRepository(tenantManagement.Id);
                 QuoteRepository quoteRepository = new QuoteRepository(tenantManagement.Id);
-                CustomerRepository customerRepository = new CustomerRepository(tenantManagement.Id);
+                CardRepository cardRepository = new CardRepository(tenantManagement.Id);
                 ARInvoiceRepository arInvoiceRepository = new ARInvoiceRepository(tenantManagement.Id);
                 APInvoiceRepository apInvoiceRepository = new APInvoiceRepository(tenantManagement.Id);
                 TenantRepository tenantRepository = new TenantRepository(tenantManagement.Id);
@@ -168,7 +168,7 @@ namespace CommunicationWorkerRole
                 IQueryable<Quote> quotes = quoteRepository.GetQuotes(tenantManagement.Id);
                 IQueryable<ARInvoice> arInvoices = arInvoiceRepository.GetIQueryableInvoices(tenantManagement.Id);
                 IQueryable<APInvoice> apInvoices = apInvoiceRepository.GetIQueryableInvoices(tenantManagement.Id);
-                IQueryable<Customer> customers = customerRepository.GetCustomers(tenantManagement.Id);
+                IQueryable<Card> customers = cardRepository.GetCustomerCards(tenantManagement.Id);
                 IQueryable<Booking> bookings = bookingRepository.GetAll(tenantManagement.Id);
                 IQueryable<Activity> myActivities = myActivityRepository.GetAll(tenantManagement.Id);
                 IQueryable<Opportunity> myOpportunities = myOpportunityRepository.GetAll(tenantManagement.Id);
@@ -281,15 +281,15 @@ namespace CommunicationWorkerRole
                 {
                     if (tenantManagement.CustomerLastDate == null)
                     {
-                        tenantManagement.CustomerLastDate = customers.Max(s => s.Card.CreateDate);
+                        tenantManagement.CustomerLastDate = customers.Max(s => s.CreateDate);
                     }
                     else
                     {
-                        tenantManagement.CustomerLastDate = customers.Where(d => d.Card.CreateDate >= tenantManagement.CustomerLastDate).Max(s => s.Card.CreateDate);
+                        tenantManagement.CustomerLastDate = customers.Where(d => d.CreateDate >= tenantManagement.CustomerLastDate).Max(s => s.CreateDate);
                     }
 
-                    tenantManagement.CustomerTotalLastWeek = customers.Where(s => s.Card.CreateDate >= lastweek).Count();
-                    tenantManagement.CustomerTotalLastMonth = customers.Where(s => s.Card.CreateDate >= lastmonth).Count();
+                    tenantManagement.CustomerTotalLastWeek = customers.Where(s => s.CreateDate >= lastweek).Count();
+                    tenantManagement.CustomerTotalLastMonth = customers.Where(s => s.CreateDate >= lastmonth).Count();
                 }
 
                 if (bookings.Count() > 0)

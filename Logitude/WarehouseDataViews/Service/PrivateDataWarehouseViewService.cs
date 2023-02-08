@@ -91,10 +91,12 @@ namespace WarehouseDataViews.Service
         }
         private void GrantView(string viewName, PrivateViewArgs privateViewArgs)
         {
-            //string sqlstring = "GRANT SELECT  ON [UnicargoDW].[dbo].[" + viewName + "] TO [UnicargoDBUser]"; // Pre
-            // string sqlstring = "GRANT SELECT  ON [T570Unicargo].[dbo].[" + viewName + "] TO [U570gmxaU]";   //Online 
-            string sqlstring = "GRANT SELECT  ON [" + privateViewArgs.Catalog + "].[dbo].[" + viewName + "] TO [" + privateViewArgs.UserName + "]"; // Pre
-            RunSql(privateViewArgs.ConnectionString, sqlstring);
+            if (string.IsNullOrEmpty(privateViewArgs.UserName)) return;
+            List<string> privateUserNames = privateViewArgs.UserName.Split(',').Where(d=>!string.IsNullOrEmpty(d)).ToList();
+            foreach (string userName in privateUserNames)
+            {
+                RunSql(privateViewArgs.ConnectionString, ("GRANT SELECT  ON [" + privateViewArgs.Catalog + "].[dbo].[" + viewName + "] TO [" + userName + "]"));
+            }
         }
 
 

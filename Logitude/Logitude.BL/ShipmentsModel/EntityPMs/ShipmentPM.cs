@@ -1405,6 +1405,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string MoveTypeName { get; set; }
 
         public bool IsCreatedFromAgentSharedManifest { get; set; }
+        public bool IsDocumentsNeedApprove { get; set; }
 
         public string AMSBL { get; set; }
         public string CustomFileId { get; set; }
@@ -2063,6 +2064,11 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string PackageTypeId3 { get; set; }
         public string PackageTypeId4 { get; set; }
         public string PackageTypeId5 { get; set; }
+
+        public double? Weight1 { get; set; }
+        public double? Weight2 { get; set; }
+        public double? Weight3 { get; set; }
+        public double? Weight4 { get; set; }
         #endregion
         public string NewConcurrencyGUID { get; set; }
 
@@ -3002,6 +3008,13 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public double? GrossWeightInLB { get; set; }
         public double? VolumeInCBF { get; set; }
         public double? ChargeableWeightInLB { get; set; }
+        public string ShippingLine { get; set; }
+        public string PlaceOfDelivery { get; set; }
+        public string PickupPlace { get; set; }
+        public string SealNo { get; set; }
+        public string HSCode { get; set; }
+        public string OrderNumber { get; set; }
+
     }
 
     public class TransshipmentLeg
@@ -3059,6 +3072,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
     {
         [DataMember]
         public string Title { get; set; }
+        [DataMember]
+        public string CountryName { get; set; }
         [DataMember]
         public string CountryCode { get; set; }
         [DataMember]

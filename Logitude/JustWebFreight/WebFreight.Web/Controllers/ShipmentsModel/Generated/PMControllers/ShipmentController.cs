@@ -40,6 +40,7 @@ using WebFreight.Web.Controllers.ShipmentsModel.ApiHelpers;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using Marvin.JsonPatch;
+using Marvin.JsonPatch.Exceptions;
 
 namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 {
@@ -241,7 +242,13 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                     transactionScope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, updatedShipmentPM);
                 }
-            } catch (Exception exception) {
+            }
+            catch (JsonPatchException exception)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildJsonPatchException(exception, id, shipmentJsonPatch));
+            }
+            catch (Exception exception) 
+            {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(exception));
             }
         }

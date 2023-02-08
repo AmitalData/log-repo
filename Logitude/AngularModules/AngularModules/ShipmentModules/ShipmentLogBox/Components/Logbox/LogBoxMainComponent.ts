@@ -26,6 +26,7 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { SystemEnvironmentService } from '../../../../Infrastructure/Utilities/SystemEnvironmentService';
 import { CustomerTenantAccessRequestExtendedPMService } from '../../../../Common/Services/ExtendedPMs/CustomerTenantAccessRequestExtendedPMService';
 import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
+import { AddEditLogboxShipmentService } from '../../Services/AddEditLogboxShipmentService';
 
 @Component({
     templateUrl: './LogBoxMainComponent.html',
@@ -50,6 +51,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     public _UserLastSettingsExtendedPMService: UserLastSettingsExtendedPMService;
     RefTemplateWidth: string = '220px';
     public IsLongAgentName: boolean = false;
+    public CustomerTenantAccessRequestPartner: any;
     public AgentLabelClass = {
         "ShortName": true,
         "LongName": false
@@ -166,6 +168,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     }
 
     private SetDitections(res: any) {
+        this.CustomerTenantAccessRequestPartner = res.Result;
         this.IsCustomsActivated = (res.Result.IsCustoms && this.IsPrivateLabelCustomsActivated);
         this.IsExportActivated = (res.Result.IsExport && this.IsPrivateLabelExportActivated);
         this.SetDirectionsFilters();
@@ -1093,48 +1096,18 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     }
 
     AddNewEntity() {
-        let NewShip = new ShipmentPM();
-        NewShip.Tenant = SessionLocator.Tenant;
-        let windowArgs: any = {};
-        windowArgs.IsNew = true;
-        let newWindow = new LogitudeWindow();
-        let newWindowComponentPath = './ShipmentModules/ShipmentLogBox/Components/Logbox/';
-        newWindow.WindowArgs = windowArgs;
-        newWindow.Title = "Create New Shipment";
-        windowArgs.IsCustomsActivated = this.IsCustomsActivated;
-        windowArgs.IsExportActivate = this.IsExportActivated
+        let addEditLogboxShipmentService: AddEditLogboxShipmentService = new AddEditLogboxShipmentService(this.CustomerTenantAccessRequestPartner);
+        let newWindowArgs: any = [];
+        let newWindow: LogitudeWindow = addEditLogboxShipmentService.GetNewShipmentWindow(newWindowArgs);
+        this.HandleWindowClosed(newWindow);
+    }
 
-        newWindowComponentPath = this.GetWindowComponentPath(newWindowComponentPath, newWindow);
-        newWindow.Show(newWindowComponentPath);
-        newWindow.WindowClosed.subscribe(($event: any) => {
+    private HandleWindowClosed(logitudeWindow: LogitudeWindow) {
+        logitudeWindow.WindowClosed.subscribe(($event: any) => {
             if ($event == "MyShipmentAdded") {
                 this.MenuFiltersClicked('My Shipments', 'myShipment');
             }
         });
-    }
-
-    private GetWindowComponentPath(newWindowComponentPath: string, newWindow: LogitudeWindow) {
-
-
-        if (this.hasExportShipmentOption()) {
-
-
-            newWindowComponentPath = this.LoadNewAddShipmentComponent(newWindow, newWindowComponentPath);
-        } else {
-            newWindowComponentPath = this.LoadAddEditComponent(newWindow, newWindowComponentPath);
-        }
-        return newWindowComponentPath;
-    }
-
-    private hasExportShipmentOption() {
-        return !this.isLogbox && (this.IsExportActivated);
-    }
-
-    private LoadAddEditComponent(newWindow: LogitudeWindow, newWindowComponentPath: string) {
-        newWindow.Width = 600;
-        newWindow.Height = this.isPrivateLabel ? (this.IsDSV ? 376 : 420) : 350;
-        newWindowComponentPath += this.isPrivateLabel ? 'AddEditPrivateLabelCustomsShipmentComponent' : 'AddEditImporterShipmentComponent';
-        return newWindowComponentPath;
     }
 
     LoadEntityResource(objectTableName: string) {
@@ -1142,13 +1115,6 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         this.entityResourceService.getEntityResourceByTableName(objectTableName).subscribe((response: any) => {
 
         });
-    }
-
-    private LoadNewAddShipmentComponent(newWindow: LogitudeWindow, newWindowComponentPath: string) {
-        newWindow.Width = this.isPrivateLabel ? 960 : 600;
-        newWindow.Height = this.isPrivateLabel ? 600 : 350;
-        newWindowComponentPath += this.isPrivateLabel ? 'AddEditPrivateLabelShipmentComponent' : 'AddEditImporterShipmentComponent';
-        return newWindowComponentPath;
     }
 
     onSearchTextChangeEvent(event) {

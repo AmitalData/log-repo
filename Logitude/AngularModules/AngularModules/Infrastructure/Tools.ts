@@ -1021,7 +1021,6 @@ export class AppTool {
                 myResult = "FollowUps";
                 break;
             }
-
             case "General.MH.Quotes": {
                 myResult = "Quote";
                 break;
@@ -1122,6 +1121,10 @@ export class AppTool {
                 break;
             }
 
+            case "General.MH.Containers": {
+                myResult = "Containers";
+                break;
+            }
 
             default: {
                 myResult = "Person";

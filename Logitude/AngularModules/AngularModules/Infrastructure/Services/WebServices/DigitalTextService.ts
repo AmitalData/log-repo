@@ -14,11 +14,11 @@ export class DigitalTextService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DigitalTextCode';
     }
 
-    public GetDigitalProfileName() {
+    public GetDigitalProfileName(tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetDigitalProfileName?', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetDigitalProfileName?tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -42,6 +42,22 @@ export class DigitalTextService {
         });
     }
 
+    public GetDigitalSubObjectsProfilesObjetTables(objectTableId) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetDigitalSubObjectsProfilesObjetTables?objectTableId=' + objectTableId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    
+
     public GetDigitalTextCodesObjetTables() {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -56,11 +72,12 @@ export class DigitalTextService {
         });
     }
 
-    public GetFeildPermissionByFilters(cardId: string, objectTableId: string, profileId: string) {
+    public GetFeildPermissionByFilters(cardId: string, objectTableId: string, profileCode: string, screenCode: string = null) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetFeildPermissionByFilters?cardId=' + cardId + "&objectTableId=" + objectTableId + "&profileId=" + profileId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetFeildPermissionByFilters?cardId=' + cardId + "&objectTableId=" + objectTableId + "&profileCode=" + profileCode
+                + "&screenCode=" + screenCode , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -70,11 +87,11 @@ export class DigitalTextService {
         });
     }
 
-    public GetTextCodesByFilters(cardId: string, objectTableId: string, profileId: string) {
+    public GetTextCodesByFilters(cardId: string, objectTableId: string, profileCode: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetTextCodesByFilters?cardId=' + cardId + "&objectTableId=" + objectTableId + "&profileId=" + profileId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetTextCodesByFilters?cardId=' + cardId + "&objectTableId=" + objectTableId + "&profileCode=" + profileCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -114,6 +131,7 @@ export class DigitalTextCodeUpdateModel {
     public ObjectTableId: string;
     public CardId: string;
     public ProfileId: string;
+    public ProfileCode: string;
     public Lables: DigitalTextCodeObject[];
 }
 
@@ -128,9 +146,18 @@ export class DigitalFeildSecurityObjectModel {
     public ObjectTableId: string;
     public CardId: string;
     public ProfileId: string;
+    public ProfileCode: string;
+    public ParentObjectTableId: string;
     public DefaultSettings: DigitalFeildSecurityUpdateModel[];
 }
 
 export class DigitalFeildSecurityUpdateModel {
     public FieldCode: string;
+    public CreatedBy: string;
+    public CreatedOn: Date;
+    public ModifiedOn: Date;
+    public ModifiedBy: string;
+    public HasPermission: boolean;
+    public IsList: boolean;
+    public IsPm: boolean;
 }

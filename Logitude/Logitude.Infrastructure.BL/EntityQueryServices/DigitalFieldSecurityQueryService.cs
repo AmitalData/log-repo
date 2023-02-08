@@ -4,6 +4,7 @@ using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.Data.EntityLists;
 using Logitude.Infrastructure.Data.Repsitories;
 using Simplog.Server.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -12,10 +13,10 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
 {
     public partial class DigitalFieldSecurityQueryService
     {
-        public DigitalFieldSecurityList GetDigitalFieldSecurityQuery(int tenant, string objectTableId, string profileId)
+        public DigitalFieldSecurityList GetDigitalFieldSecurityQuery(int tenant, string objectTableId, string profileCode)
         {
             DigitalFieldSecurityRepository digitalFieldSecurityRepository = new DigitalFieldSecurityRepository(tenant);
-            var digitalFieldSecurity = digitalFieldSecurityRepository.GetDigitalFieldSecurity(tenant, objectTableId, profileId)
+            var digitalFieldSecurity = digitalFieldSecurityRepository.GetDigitalFieldSecurity(tenant, objectTableId, profileCode)
                                                                      .Select(x => new DigitalFieldSecurityList
                                                                      {
                                                                          Id = x.Id,
@@ -24,9 +25,30 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                                                                          DefaultSettings = x.DefaultSettings,
                                                                          CreateDate = x.CreateDate,
                                                                          UpdateDate = x.UpdateDate,
-                                                                         ProfileId = x.ProfileId
+                                                                         ProfileId = x.ProfileId,
+                                                                         ParentObjectTableId = x.ParentObjectTableId
                                                                      })
                                                                      .FirstOrDefault();
+            return digitalFieldSecurity;
+        }
+        
+        public List<DigitalFieldSecurityList> GetDigitalFieldSecurityQueryTenant0()
+        {
+            DigitalFieldSecurityRepository digitalFieldSecurityRepository = new DigitalFieldSecurityRepository(0);
+            var digitalFieldSecurity = digitalFieldSecurityRepository.GetDigitalFieldSecurityTenant0()
+                                                                     .Select(x => new DigitalFieldSecurityList
+                                                                     {
+                                                                         Id = x.Id,
+                                                                         ObjectTableId = x.ObjectTableId,
+                                                                         Tenant = x.Tenant,
+                                                                         DefaultSettings = x.DefaultSettings,
+                                                                         CreateDate = x.CreateDate,
+                                                                         UpdateDate = x.UpdateDate,
+                                                                         ProfileId = x.ProfileId,
+                                                                         ProfileCode = x.DigitalProfile.Code,
+                                                                         ParentObjectTableId = x.ParentObjectTableId,
+                                                                     })
+                                                                     .ToList();
             return digitalFieldSecurity;
         }
         
@@ -41,7 +63,8 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                     DefaultSettings = digitalFieldSecurityList.DefaultSettings,
                     CreateDate = digitalFieldSecurityList.CreateDate,
                     UpdateDate = digitalFieldSecurityList.UpdateDate,
-                    ProfileId = digitalFieldSecurityList.ProfileId
+                    ProfileId = digitalFieldSecurityList.ProfileId,
+                    ParentObjectTableId = digitalFieldSecurityList.ParentObjectTableId
                 };
 
                 entityPm.ChangeSetOp = ChangeSetOperation.Insert;
@@ -59,7 +82,8 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                     DefaultSettings = digitalFieldSecurityList.DefaultSettings,
                     CreateDate = digitalFieldSecurityList.CreateDate,
                     UpdateDate = digitalFieldSecurityList.UpdateDate,
-                    ProfileId = digitalFieldSecurityList.ProfileId
+                    ProfileId = digitalFieldSecurityList.ProfileId,
+                    ParentObjectTableId = digitalFieldSecurityList.ParentObjectTableId
                 };
 
                 var contextData = InfrastructureContext.GetContext(entityPm.Tenant);
@@ -73,13 +97,29 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
         {
             var objetTables = context.DigitalFieldSecurities
                                      .Include("ObjectTable")
-                                     .Where(a => a.Tenant == tenant).GroupBy(a => a.ObjectTable)
+                                     .Where(a => a.Tenant == tenant && a.ParentObjectTableId == null)
+                                     .GroupBy(a => a.ObjectTable)
                                      .Select(a => new DigitalFieldSecurityList
                                      {
                                          ObjectTableId = a.Key.Id,
                                          ObjectTableName = a.Key.Name,
                                      }).ToList();
                                     
+            return objetTables;
+        }
+
+        public List<DigitalFieldSecurityList> GetDigitalSubObjectsProfilesObjetTables(string objectTbaleId, int tenant)
+        {
+            var objetTables = context.DigitalFieldSecurities
+                                     .Include("ObjectTable")
+                                     .Where(a => a.Tenant == tenant && a.ParentObjectTableId == objectTbaleId)
+                                     .GroupBy(a => a.ObjectTable)
+                                     .Select(a => new DigitalFieldSecurityList
+                                     {
+                                         ObjectTableId = a.Key.Id,
+                                         ObjectTableName = a.Key.Name,
+                                     }).ToList();
+
             return objetTables;
         }
 

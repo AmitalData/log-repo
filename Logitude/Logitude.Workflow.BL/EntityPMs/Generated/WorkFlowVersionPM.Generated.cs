@@ -365,7 +365,30 @@ namespace Logitude.Workflow.BL.EntityPMs
 			
 		 }
 	   }
-   }
+	  private DateTime? activatedDate ;
+	  	  
+       
+	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? ActivatedDate  
+	   {
+	    
+	     get
+		{
+		   return activatedDate;
+		 }
+		 set
+		 {
+		   if(activatedDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ActivatedDate",OldValue=activatedDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   activatedDate=value;
+		   }
+			
+		 }
+	   }
+	    }
    
 }
 	 

@@ -305,5 +305,13 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ExportLocalCustomerGroupId { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public bool IsAutomaticRequestsSent { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public bool IsSupportsContainerTracking { get; set; }
     }
 }

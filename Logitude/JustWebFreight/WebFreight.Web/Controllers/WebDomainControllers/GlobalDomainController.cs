@@ -38,6 +38,22 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 {
     public class GlobalDomainController : ApiController
     {
+        public HttpResponseMessage GetCheckDigitalPortalAddsOn(int tenant)
+        {
+            try
+            {
+                TenantAddOnRepository tenantAddOnRepository = new TenantAddOnRepository(tenant);
+                var digitalPortalPackageCode = "DGP";
+                var addOn = tenantAddOnRepository.GetSingleTenantAddOnByPackageCode(digitalPortalPackageCode, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, addOn);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetCheckInttraAddsOn()
         {
             try
@@ -623,6 +639,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         BluesnapInttraStockContractQTY = entityPM.BluesnapInttraStockContractQTY,
                         MainAdditionalPackageApplied = entityPM.MainAdditionalPackageApplied,
                         CustomerURL = entityPM.CustomerURL,
+                        IsContainerTrackingPrepaid = entityPM.IsContainerTrackingPrepaid,
                     };
 
                     if (entityPM.PaymentFailure)
@@ -869,6 +886,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string TemporalPackageCode { get; set; }
         public string CountryName { get; set; }
         public bool MainAdditionalPackageApplied { get; set; }
+        public bool IsContainerTrackingPrepaid { get; set; }
         public string CustomerURL { get; set; }
 
 

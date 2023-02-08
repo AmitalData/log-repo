@@ -1,8 +1,10 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
+using Logitude.Infrastructure.Data.Models.AuditLog;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
+using System.Collections.Generic;
 
 namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
 {
@@ -28,7 +30,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
             shipmentDigitalFieldsRepository = new ShipmentDigitalFieldRepository(context);
         }
 
-        public void Handle()
+        public void Handle(List<FieldChange> fieldChanges = null)
         {
             GetEntity();
             MapEntity();

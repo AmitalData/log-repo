@@ -117,7 +117,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly PartnersTab = '#ShipmentTHPartners';
   public static readonly ShipmentsTab = '#ShipmentTHConsolidation';
   public static readonly PackagesTab = '[id="ShipmentTHPackages"]';
-  public static readonly PackagesTab_Number = '[id="ShipmentTHPackages_1"]'
+  public static readonly PackagesTab_Number = '[id^=ShipmentTHPackages]'
   public static readonly ReceivablesTab = '#ShipmentTHReceivables';
   public static readonly RoutingsTab = '#ShipmentTHRoutings';
   public static readonly RoutingsTab_Number = '[id^=ShipmentTHRoutings]'

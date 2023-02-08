@@ -14,8 +14,6 @@ using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -280,9 +278,11 @@ namespace Logitude.Accounting.BL.CoreBL
                                                  }
                                );
                     var journalReconcileRepository = new JournalReconcileRepository(accountingContext);
-                    var existingJournalsReconcilies = journalReconcileRepository.GetJournalReconcilesByLedgerTransactionsIds(listJournalReconciles.Select(x => x.LedgerTransactionId).ToList());
-                    foreach (var item in existingJournalsReconcilies) {
-                        if (listJournalReconciles.Any(x => x.LedgerTransactionId == item.LedgerTransactionId && x.ReconciliationAmount == item.ReconciliationAmount)) {
+                    var existingReconciliationLines = journalReconcileRepository.GetReconciliationLinesByLedgerTransactionsIds(listJournalReconciles.Select(x => x.LedgerTransactionId).ToList());
+                    foreach (var item in existingReconciliationLines)
+                    {
+                        if (listJournalReconciles.Any(x => x.LedgerTransactionId == item.TransactionId && x.ReconciliationAmount == item.ReconciliationAmount))
+                        {
                             throw new ApplicationException("There is already journal reconciliation has been created");
                         }
                     }
@@ -311,7 +311,7 @@ namespace Logitude.Accounting.BL.CoreBL
             List<ReconciliationLinePM> ReconciliationLines,
             string TheAccountId,
             string AdjustAccountId,
-            DateTime AccountDate,
+            DateTime? AccountDate,
             DateTime? DueDate,
             DateTime? RefDate,
             string Ref1,
@@ -324,10 +324,6 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 using (var scope = TransactionFactory.GetTransaction())
                 {
-                    DateTime dueDate = new DateTime();
-                    DateTime refDate = new DateTime();
-                    dueDate = DueDate != null ? DueDate.Value : AccountDate;
-                    refDate = RefDate != null ? RefDate.Value : AccountDate;
                     _AccountingContext = accountingContext;
                     var usrid = AuthenticationUtil.ResolveUserId(tenant);
                     ValidateTotalReconciliationAmount(ReconciliationLines);
@@ -357,7 +353,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     List<JournalPM> addedJournalPMs = new List<JournalPM>();
                     ReconciliationLines.ForEach(reconciliationLine =>
                     {
-                        JournalPM journal = CreateJournalForReconciliationLine(reconciliationLine, TheAccountId, AdjustAccountId, dueDate, refDate, theCurrencyId, rate, Ref1, Ref2, Ref3, Remarks,
+                        JournalPM journal = CreateJournalForReconciliationLine(reconciliationLine, TheAccountId, AdjustAccountId, DueDate, RefDate, theCurrencyId, rate, Ref1, Ref2, Ref3, Remarks,
                             tenant, @now, usrid, AccountDate, adjustmentAccountingEntityDetails.Code);
                         var JournalUP = new JournalUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
                         JournalUP.Update(journal, true);
@@ -371,32 +367,46 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
         private JournalPM CreateJournalForReconciliationLine(ReconciliationLinePM reconciliationLine, string TheAccountId, string AdjustAccountId,
-            DateTime dueDate, DateTime refDate, string theCurrencyId, RatesTablePM rate, string Ref1, string Ref2, string Ref3, string Remarks,
-            int tenant, DateTime @now, string usrid, DateTime AccountDate, string accountingEntityCode)
+            DateTime? dueDate, DateTime? refDate, string theCurrencyId, RatesTablePM rate, string Ref1, string Ref2, string Ref3, string Remarks,
+            int tenant, DateTime @now, string userid, DateTime? accountDate, string accountingEntityCode)
         {
+            DateTime accountingDate;
+            if (accountDate == null)
+            {
+                JournalRepository repo = new JournalRepository(tenant);
+                accountingDate = repo.GetSingleJournalByNumber(reconciliationLine.JournalNumber, tenant).AccountingDate;
+            }
+            else
+            {
+                accountingDate = (DateTime)accountDate;
+            }
+
+            DateTime due = dueDate ?? accountingDate;
+            DateTime referenceDate = refDate ?? accountingDate;
+
             JournalPM journal = new JournalPM()
             {
                 ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                 Tenant = tenant,
                 CreateDate = @now,
-                AccountingDate = AccountDate,
+                AccountingDate = accountingDate,
                 TypeCode = RegularTypeCode,
                 StatusCode = ApprovedStatusCode,
-                AccountingEntityCode = accountingEntityCode, // adjustmentAccountingEntityDetails.Code, //Adjustment
+                AccountingEntityCode = accountingEntityCode,
                 AccountingEntityId = null,
                 AccountingEntityReference = null,
-                DueDate = dueDate,
+                DueDate = due,
                 DocumentDate = refDate,
                 UpdateDate = @now,
                 ApproveDate = @now,
-                CreatedByUserId = usrid,
-                ApprovedByUserId = usrid,
+                CreatedByUserId = userid,
+                ApprovedByUserId = userid,
                 ExternalNo = null,
                 ExternalSystem = null,
                 OriginalJournalId = null
             };
-            AddJournalLines(journal, reconciliationLine, TheAccountId, AdjustAccountId, dueDate, refDate, theCurrencyId, rate, Ref1, Ref2, Ref3, Remarks);
-            var JournalReconcile = new JournalReconcilePM()
+            AddJournalLines(journal, reconciliationLine, TheAccountId, AdjustAccountId, due, referenceDate, theCurrencyId, rate, Ref1, Ref2, Ref3, Remarks);
+            var journalReconcile = new JournalReconcilePM()
             {
                 ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                 Tenant = journal.Tenant,
@@ -408,7 +418,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 IsPartial = reconciliationLine.IsPartial,
 
             };
-            journal.JournalReconciles.Add(JournalReconcile);
+            journal.JournalReconciles.Add(journalReconcile);
             return journal;
         }
 

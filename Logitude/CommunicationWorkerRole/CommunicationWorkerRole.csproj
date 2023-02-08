@@ -170,6 +170,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Logitude.SystemLogs\bin\Debug\Logitude.SystemLogs.dll</HintPath>
     </Reference>
+    <Reference Include="Logitude.WarehouseLib.BL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Logitude.WarehouseLib.BL\bin\Debug\Logitude.WarehouseLib.BL.dll</HintPath>
+    </Reference>
+    <Reference Include="Logitude.WarehouseLib.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Logitude.WarehouseLib.Data\bin\Debug\Logitude.WarehouseLib.Data.dll</HintPath>
+    </Reference>
     <Reference Include="Logitude.XSD, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\JustWebFreight\WebFreight.Web\bin\Logitude.XSD.dll</HintPath>
@@ -407,6 +415,7 @@
     <Compile Include="Services\Logbox\APICredentialsAuthenticationService.cs" />
     <Compile Include="Services\Logbox\CustomerTenantAccessUpdaterService.cs" />
     <Compile Include="Services\Logbox\CustomerTenantAccessCreatorService.cs" />
+    <Compile Include="Services\SAT\SATUpdateEntityHelper.cs" />
     <Compile Include="Services\Scheduler\ConnectionStringConfiguration.cs" />
     <Compile Include="Services\SignUp\QueueMessageCloudToLogboxSender.cs" />
     <Compile Include="Tasks\DeleteOldBIReportsExecutionLogsTask.cs" />
@@ -961,6 +970,14 @@
     <ProjectReference Include="..\Logitude.TimeManagement.Data\Logitude.TimeManagement.Data.csproj">
       <Project>{68f57541-574a-4ee9-b3fe-8c535c74456a}</Project>
       <Name>Logitude.TimeManagement.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.WarehouseLib.BL\Logitude.WarehouseLib.BL.csproj">
+      <Project>{7030AB59-9900-4AB9-B37C-59D424576E85}</Project>
+      <Name>Logitude.WarehouseLib.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.WarehouseLib.Data\Logitude.WarehouseLib.Data.csproj">
+      <Project>{54A12A5C-659C-4410-A5E7-949ACD43F3A5}</Project>
+      <Name>Logitude.WarehouseLib.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>

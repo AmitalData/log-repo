@@ -80,6 +80,16 @@ namespace Logitude.DashboardModule.Data.EntityPOCOs
         public virtual AnalyticsFactsFieldsMetaData SecondaryGroupFieldsMetaData { get; set; }
         [Column("SecondaryDateGroupCode")]
 	    public string SecondaryDateGroupCode { get; set; }
+        [Column("Alignment")]
+	    public string Alignment { get; set; }
+        [Column("ThousandSeparator")]
+	    public bool? ThousandSeparator { get; set; }
+        [Column("UseNumberAbbreviation")]
+	    public bool? UseNumberAbbreviation { get; set; }
+        [Column("DecimalPlaces")]
+	    public int? DecimalPlaces { get; set; }
+        [Column("UseAbbreviationAfter")]
+	    public string UseAbbreviationAfter { get; set; }
     }
 }
 	 

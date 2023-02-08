@@ -4,16 +4,11 @@ import { ObjectFieldPM } from "./ObjectFieldPM";
 
 export class DeploymentPackageDetails {
 
-    public Name: string;
-    public Code: string;
-    public Description: string;
     public CustomFields: Array<CustomFields>;
     public CustomPickLists: Array<CustomPickListItem>;
     constructor() {
-        this.Name = "";
-        this.Code = "";
-        this.Description = "";
         this.CustomFields = [];
+        this.CustomPickLists = [];
     }
 
 }
@@ -26,7 +21,6 @@ export class CustomFields {
     public ObjectTableName: string;
     public LookUpTableName: string;
     public HelpText: string;
-    public SearchFields: string;
     public CustomPickListCode: string;
     public NumberOfDigits: number;
     public DigitsAfterPoint: number;
@@ -35,6 +29,7 @@ export class CustomFields {
     public IsRequiered: boolean;
     public DisplayOnly: boolean;
     public MultiLine: boolean;
+    public DefaultAdditionalFilters: string;
 
     constructor(objectField: ObjectFieldPM) {
         this.Code = objectField.Code;
@@ -45,7 +40,6 @@ export class CustomFields {
         this.ObjectTableName = objectField.ObjectTableName;
         this.LookUpTableName = objectField.ObjectTable_LookUpTableName;
         this.HelpText = objectField.HelpTextCodeDefaultText;
-        this.SearchFields = objectField.SearchFields;
         this.CustomPickListCode = objectField.CustomPickListCode;
 
         this.NumberOfDigits = objectField.NumberOfDigits;
@@ -56,6 +50,7 @@ export class CustomFields {
         this.IsRequiered = objectField.IsRequiered;
         this.DisplayOnly = objectField.DisplayOnly;
         this.MultiLine = objectField.MultiLine;
+        this.DefaultAdditionalFilters = objectField.DefaultAdditionalFilters;
     }
   
 }

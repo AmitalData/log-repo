@@ -4,6 +4,8 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.Data.Repsitories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
@@ -24,8 +26,7 @@ namespace CommunicationWorkerRole.Services
         ContainerService containerService;
         ContainerPM containerPM;
         IQueryable<Container> allContainers;
-        Tenant currentTenant;
-        TenantRepository tenantRepository;
+
         public ContainerSchedulerTaskService(TaskManagerBase task)
         {
             this.currentTask = task;
@@ -49,25 +50,25 @@ namespace CommunicationWorkerRole.Services
         }
 
         private void ManageClosedContainer(Container container)
-        {           
-            this.GetCurrentTenant(container.Tenant);
-            if (currentTenant == null) return;
-            else if (this.currentTenant.EmptyReturnClosingDays == null && this.currentTenant.ShipmentATAClosingDays == null) return;
-           
-            bool isClosingByEmptyReturn = this.currentTenant.EmptyReturnClosingDays != null && container.ActualEmptyReturn != null;
-            bool isClosingByShipmentATA = this.currentTenant.ShipmentATAClosingDays != null && container.ShipmentMainCarriageATA != null;
+        {
+            var containerSetting = new ContainerSettingRepository(container.Tenant).GetAll(container.Tenant).FirstOrDefault();
+            if (containerSetting == null) containerSetting = GetDefaultContainerSetting();
+            else if (containerSetting.EmptyReturnClosingDays == null && containerSetting.ShipmentATAClosingDays == null) return;
+
+            bool isClosingByEmptyReturn = containerSetting.EmptyReturnClosingDays != null && container.ActualEmptyReturn != null;
+            bool isClosingByShipmentATA = containerSetting.ShipmentATAClosingDays != null && container.ShipmentMainCarriageATA != null;
             bool isUpdatingContainer = false;
 
             if (isClosingByEmptyReturn)
             {
-                double emptyReturnDays = Convert.ToDouble(this.currentTenant.EmptyReturnClosingDays);
+                double emptyReturnDays = Convert.ToDouble(containerSetting.EmptyReturnClosingDays);
                 DateTime? emptyReturnDate = container.ActualEmptyReturn.Value.AddDays(emptyReturnDays);
                 if (emptyReturnDate.Value.Date <= todayDate.Date) isUpdatingContainer = true;
             }
 
             if (isClosingByShipmentATA)
             {
-                double shipmentATADays = Convert.ToDouble(this.currentTenant.ShipmentATAClosingDays);
+                double shipmentATADays = Convert.ToDouble(containerSetting.ShipmentATAClosingDays);
                 DateTime? ShipmentATADate = container.ShipmentMainCarriageATA.Value.AddDays(shipmentATADays);
                 if (ShipmentATADate.Value.Date <= todayDate.Date) isUpdatingContainer = true;
             }
@@ -76,6 +77,16 @@ namespace CommunicationWorkerRole.Services
             {
                 this.UpdateClosedContainer(container);
             }
+        }
+
+        private ContainerSetting GetDefaultContainerSetting()
+        {
+            return new ContainerSetting
+            {
+                EmptyReturnClosingDays = 5,
+                ShipmentATAClosingDays = 90,
+                ShipmentATADateIndicator = "Vessel"
+            };
         }
 
         private void UpdateClosedContainer(Container container)
@@ -89,13 +100,6 @@ namespace CommunicationWorkerRole.Services
             containerPM.ClosedDate = TenantServerConfigration.GetCurrentDateTime(container.Tenant);
             containerService.Update(containerPM);
         }
-
-        private void GetCurrentTenant(int tenant)
-        {
-            this.tenantRepository = new TenantRepository(tenant);
-            this.currentTenant = tenantRepository.GetSingleTenantWithOutIncluded(tenant);
-        }
-
         private string GetSystemUser(int tenant)
         {
             var email = "system@tenant" + tenant + ".com";

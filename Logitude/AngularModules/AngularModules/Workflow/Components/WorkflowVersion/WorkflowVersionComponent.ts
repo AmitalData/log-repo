@@ -2,12 +2,11 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
-import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { AppTool } from 'Infrastructure/Tools';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { WorkFlowPM } from 'Workflow/EntityPMs/WorkFlowPM';
 import { WorkFlowVersionPM } from 'Workflow/EntityPMs/WorkFlowVersionPM';
-import { ApiQueryFiltersBuilder } from 'Workflow/Models/ApiQueryFiltersBuilder';
+import { ApiQueryFiltersBuilder } from 'Workflow/Utilities/ApiQueryFiltersBuilder';
 import { WorkFlowVersionListService } from 'Workflow/Services/StandardLists/WorkFlowVersionListService';
 import { WorkFlowPMService } from 'Workflow/Services/StandardPMs/WorkFlowPMService';
 import { WorkFlowVersionPMService } from 'Workflow/Services/StandardPMs/WorkFlowVersionPMService';
@@ -88,7 +87,7 @@ export class WorkflowVersionComponent extends BaseComponent {
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
         this.CurrentSession.StartBusyIndicatorLoading();
 
-        var filters = ApiQueryFiltersBuilder.getWorkflowVersionApiQueryFilters(this.EntityPM.Id);
+        var filters = ApiQueryFiltersBuilder.getWorkflowVersionFilters(this.EntityPM.Id);
 
         filters.PageSize = take;
         filters.PageIndex = skip;
@@ -140,6 +139,17 @@ export class WorkflowVersionComponent extends BaseComponent {
             HtmlListComponentUrl: './Workflow/Components/Templates/FieldTemplateComponent',
             IsCustomTemplate: true,
             Styles: { width: '400px' },
+        });
+        this.columns.push({
+            FieldName: 'ActivatedDate',
+            DataTypeCode: 'Date',
+            Display: "Last Activated Date",
+            IsCustomTemplate: true,
+            Styles: { width: '400px' },
+            AdditionalDataCustom: this.ObjectTableName,
+            HtmlListComponentName: 'FieldTemplateComponent',
+            HtmlListComponentUrl: './Workflow/Components/Templates/FieldTemplateComponent',
+            ServerSideSortable: true
         });
     }
 

@@ -2,6 +2,7 @@
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.Helpers;
 using Logitude.WarehouseLib.BL.EntityPMs;
 using Logitude.WarehouseLib.BL.Helpers;
@@ -35,7 +36,18 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
                 entityPM.EntryNumber = TableCounter.GetNumber(entityPM.Tenant, "WAEC", null, null).ToString();
                 this.BuildActivityLog("N", entityPM);
 
+                new MainEntityChangeService(new EntityChangeArgs()
+                {
+                    EntityPM = entityPM,
+                    ProcessType = "OnCreate",
+                    ObjectTableName = "WarehouseEntry",
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    StartDate = DateTime.Now,
+                    EntityReference = entityPM.EntryNumber
+                }).AddEntityChange();
             }
+            
         }
 
         private void UpdateShipment(WarehouseEntryPM entityPM)
@@ -131,6 +143,7 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
         }
         protected override void OnUpdating(WarehouseEntryPM entityPM, WarehouseEntry entityPOCO)
         {
+
             AddTraceEvents(entityPM, entityPOCO);
 
             if (entityPM.StatusCode != entityPOCO.StatusCode)
@@ -139,6 +152,23 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
             }
 
             base.OnUpdating(entityPM, entityPOCO);
+
+            if (entityPM.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Update) return;
+
+            if (!entityPM.IsUpdateByAutomation)
+            {
+                new MainEntityChangeService(new EntityChangeArgs()
+                {
+                    EntityPM = entityPM,
+                    OldEntityPM = this.OldEntityPM,
+                    ProcessType = "OnUpdate",
+                    EntityChangeFieldXml = this.EntityChangeFieldXml,
+                    ObjectTableName = "WarehouseEntry",
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    EntityReference = entityPM.EntryNumber
+                }).AddEntityChange();
+            }
         }
 
         private void AddTraceEvents(WarehouseEntryPM entityPM, WarehouseEntry entityPOCO)
@@ -189,9 +219,9 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
 
             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
             ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("WarehouseEntry", 0, true);
-            string email = HttpContext.Current.User.Identity.Name;
+            string email = GetLoggedUserEmail(entityPM);
             ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
-            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant,true);
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant, true);
             if (loggedContact != null)
             {
                 ActivityLogger.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, typeCode, loggedContact.Id);
@@ -199,6 +229,14 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
 
 
             }
+        }
+
+        private string GetLoggedUserEmail(WarehouseEntryPM entityPM)
+        {
+            if (HttpContext.Current != null) return HttpContext.Current.User.Identity.Name;
+            UserRepository userRepository = new UserRepository(entityPM.Tenant);
+            User loggedUser = userRepository.GetSingleUserById(entityPM.UpdatedByUserId);
+            return loggedUser?.Contact?.Email;
         }
         private void ValidatePorts(WarehouseEntryPM entityPM)
         {

@@ -309,6 +309,11 @@ export class ContactPM {
     public set IsCreatedWithPartner(newValue: boolean) { if (this.isCreatedWithPartner != newValue) { this.isCreatedWithPartner = newValue; this.MarkAsDirty("IsCreatedWithPartner"); } }
        
 	 
+    private isAPIContact: boolean;
+    public get IsAPIContact() { return this.isAPIContact; }
+    public set IsAPIContact(newValue: boolean) { if (this.isAPIContact != newValue) { this.isAPIContact = newValue; this.MarkAsDirty("IsAPIContact"); } }
+       
+	 
     private companyName: string;
     public get CompanyName() { return this.companyName; }
     public set CompanyName(newValue: string) { if (this.companyName != newValue) { this.companyName = newValue; this.MarkAsDirty("CompanyName"); } }
@@ -409,6 +414,16 @@ export class ContactPM {
      private oldSimilarInactiveContactId: string;
     public get OldSimilarInactiveContactId() { return this.oldSimilarInactiveContactId; }
     public set OldSimilarInactiveContactId(newValue: string) { if (this.oldSimilarInactiveContactId != newValue) { this.oldSimilarInactiveContactId = newValue; this.MarkAsDirty("OldSimilarInactiveContactId"); } }
+       
+	 
+    private digitalPortalCardId: string;
+    public get DigitalPortalCardId() { return this.digitalPortalCardId; }
+    public set DigitalPortalCardId(newValue: string) { if (this.digitalPortalCardId != newValue) { this.digitalPortalCardId = newValue; this.MarkAsDirty("DigitalPortalCardId"); } }
+       
+	 
+    private timeZone: string;
+    public get TimeZone() { return this.timeZone; }
+    public set TimeZone(newValue: string) { if (this.timeZone != newValue) { this.timeZone = newValue; this.MarkAsDirty("TimeZone"); } }
        
 	 
 

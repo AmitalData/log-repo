@@ -39,6 +39,11 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public string ProfileId { get; set; }
 	      
         public virtual DigitalProfile DigitalProfile { get; set; }
+        [ForeignKey("ParentObjectTable")]
+        [Column("ParentObjectTableId")]
+	    public string ParentObjectTableId { get; set; }
+	      
+        public virtual ObjectTable ParentObjectTable { get; set; }
     }
 }
 	 

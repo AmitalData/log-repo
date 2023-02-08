@@ -1,4 +1,6 @@
-﻿using Simplog.Data.InvoiceModel.EntityPOCOs;
+﻿using Logitude.BL.InfrastructureModel.EntityLists;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Simplog.Data.Helpers;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -25,6 +27,75 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
             {
                 if (item.IsCustom)
                 {
+                    if (item.FieldName == "InProgress")
+                    {
+                        DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
+                        var lastOneYearDate = currentDateTime.AddDays(-365);
+                        var lastNinetyDaysDate = currentDateTime.AddDays(-90);
+
+                        queryableData = queryableData.Where(a => a.IsOperationalClosed == false 
+                                                            && a.IsAccountingClosed == false 
+                                                            && a.IsCustomerArchived == false
+                                                            && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) >= lastOneYearDate
+                                                            && (a.MainCarriageFinalDestinationATA >= lastNinetyDaysDate
+                                                                    || a.MainCarriageFinalDestinationATA == null));
+                    }
+
+                    if (item.FieldName == "InOrigin")
+                    {
+                        DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
+                        var lastOneYearDate = currentDateTime.AddDays(-365);
+                        var lastNinetyDaysDate = currentDateTime.AddDays(-90);
+                        var allStatuses = GetAllDigitalAllowedStatus(_tenant);
+                        var allowedStatusCode = allStatuses.Select(a => a.Code).ToList();
+                        var departedCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SDEP")?.StatusWeight;
+                        queryableData = queryableData.Where(a => allowedStatusCode.Contains(a.StatusCode)
+                                                                 && a.StatusWeight < departedCodeWeight
+                                                                 && a.IsOperationalClosed == false 
+                                                                 && a.IsAccountingClosed == false 
+                                                                 && a.IsCustomerArchived == false
+                                                                 && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) >= lastOneYearDate
+                                                                 && (a.MainCarriageFinalDestinationATA >= lastNinetyDaysDate
+                                                                      || a.MainCarriageFinalDestinationATA == null));
+                    }
+
+                    if (item.FieldName == "InTransit")
+                    {
+                        DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
+                        var lastOneYearDate = currentDateTime.AddDays(-365);
+                        var lastNinetyDaysDate = currentDateTime.AddDays(-90);
+                        var allStatuses = GetAllDigitalAllowedStatus(_tenant);
+                        var allowedStatusCode = allStatuses.Select(a => a.Code).ToList();
+                        var departedCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SDEP")?.StatusWeight;
+                        var arrivedAtDestinationCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SARR")?.StatusWeight;
+
+                        queryableData = queryableData.Where(a => allowedStatusCode.Contains(a.StatusCode) && a.StatusWeight >= departedCodeWeight
+                                                            && a.StatusWeight < arrivedAtDestinationCodeWeight
+                                                            && a.IsOperationalClosed == false 
+                                                            && a.IsAccountingClosed == false 
+                                                            && a.IsCustomerArchived == false
+                                                            && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) >= lastOneYearDate
+                                                            && (a.MainCarriageFinalDestinationATA >= lastNinetyDaysDate
+                                                                 || a.MainCarriageFinalDestinationATA == null));
+                    }
+
+                    if (item.FieldName == "AtDestination")
+                    {
+                        DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
+                        var lastOneYearDate = currentDateTime.AddDays(-365);
+                        var lastNinetyDaysDate = currentDateTime.AddDays(-90);
+                        var allStatuses = GetAllDigitalAllowedStatus(_tenant); 
+                        var allowedStatusCode = allStatuses.Select(a => a.Code).ToList();
+                        var arrivedAtDestinationCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SARR")?.StatusWeight;
+                        queryableData = queryableData.Where(a => allowedStatusCode.Contains(a.StatusCode) && a.StatusWeight >= arrivedAtDestinationCodeWeight
+                                                        && a.IsOperationalClosed == false 
+                                                        && a.IsAccountingClosed == false 
+                                                        && a.IsCustomerArchived == false
+                                                        && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) >= lastOneYearDate
+                                                        && (a.MainCarriageFinalDestinationATA >= lastNinetyDaysDate
+                                                             || a.MainCarriageFinalDestinationATA == null));
+                    }
+
                     if (item.FieldName == "DigitalPortalSearchFields")
                     {
                         queryableData = ApplyDigitalPortalSearchFilter(item, queryableData);
@@ -37,8 +108,8 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                     if (item.FieldName == "AllShipments")
                     {
-                        isAllShipments = true;
-                        queryableData = queryableData.Where(d => d.ShipmentLevelCode != "C" && d.IsCancelled == false);
+                        queryableData = queryableData.Where(a => a.ShipmentLevelCode != "C"
+                                                                 && a.IsCancelled == false);
                     }
 
                     if (item.FieldName == "IsCustomerArchived")
@@ -54,7 +125,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                         List<string> transportModes = !string.IsNullOrWhiteSpace(transportModesString)
                                                       ? transportModesString.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                                                                          .ToList()
+                                                                            .ToList()
                                                       : new List<string>();
 
                         List<string> shipmentTypes = !string.IsNullOrWhiteSpace(shipmentTypesString) 
@@ -67,9 +138,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                                                                                 .ToList()
                                                         : new List<string>();
                         var values = new List<string>();
-
                         var subTypesList = new List<ShipmentSubType>();
-
                         if (shipmentSubTypes.Any())
                         {
                             subTypesList = GetShipmentTypes(_tenant);
@@ -104,7 +173,6 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                                 {
                                     values.Add($"A:Air");
                                 }
-
                             }
                             else if (tm.Equals("o", StringComparison.InvariantCultureIgnoreCase))
                             {
@@ -226,7 +294,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
             return queryableData;
         }
-
+        
         public static IQueryable<DigitalShipmentsDataView> ApplyDigitalPortalSearchFilter(QueryFilterItem item, IQueryable<DigitalShipmentsDataView> queryableData)
         {
             string digitalPortalSearchFields = item.FieldValue as string;
@@ -261,6 +329,14 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
             ShipmentSubTypeRepository shipmentSubTypeRepository = new ShipmentSubTypeRepository(context);
             IQueryable<ShipmentSubType> shipmentSubTypes = shipmentSubTypeRepository.GetShipmentSubTypes(tenant);
             return shipmentSubTypes?.ToList();
+        }
+
+        private static List<EntityStatusList> GetAllDigitalAllowedStatus(int tenant)
+        {
+            var entityStatusQuery = new EntityStatusQuery(tenant);
+            var allStatuses = entityStatusQuery.GetDigitalPortalActiveStatuses(tenant)
+                                               .ToList();
+            return allStatuses;
         }
     }
 }

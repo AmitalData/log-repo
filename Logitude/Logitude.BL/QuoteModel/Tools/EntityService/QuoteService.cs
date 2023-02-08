@@ -45,6 +45,7 @@ using Simplog.Data.InfrastructureModel;
 using System.Reflection;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.Server.Tools.CustomFields;
+using Logitude.BL.AnalyticTableServices;
 
 namespace Logitude.BL.QuoteModel.Tools.EntityService
 {
@@ -195,6 +196,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             ObjectTable objecttable = objecttableRepository.GetObjectTableByName("Quote", 0, true);
             ActivityLogger.AddAcitivityLog(entityPM.Id, objecttable.Id, entityPM.Tenant, "N", initializer.LoggedContactId);
             entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
+
+            new QuoteAnalyticTableService(initializer.Context.GetActiveDbContext()).AddUpdate(entityPoco);
         }
 
         private void SaveChildEntitiesCustomFields()
@@ -293,7 +296,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
                 TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Quote");
                 ActivityLogger.AddAcitivityLog(entityPM.Id, objecttable.Id, entityPM.Tenant, "U", initializer.LoggedContactId);
-
+                new QuoteAnalyticTableService(initializer.Context.GetActiveDbContext()).AddUpdate(entityPoco);
             }
 
             else

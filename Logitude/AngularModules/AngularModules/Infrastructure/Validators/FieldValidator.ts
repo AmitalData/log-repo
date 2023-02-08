@@ -19,7 +19,7 @@ export class FieldValidator {
         var requiredErrorCode: string = "General.M.FieldIsRequired";
         var minmaxErrorCode: string = "General.M.MinMax";
         var translatedRequiredError: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-       
+
         var objectTable = window.ObjectTables.filter(x => x.Name === objectTableName)[0];
         if (objectTable) {
 
@@ -61,16 +61,6 @@ export class FieldValidator {
                         case "SigDouble":
                         case "UnsDecimal":
                         case "UnsInteger":
-                            {
-                                if (AppTool.IsNullOrEmpty(value)) {
-                                    var fieldName: string = TextCodeTranslator.Translate(objectfield.FullNameTextCodeCode);
-                                    var fieldError: string = translatedRequiredError.replace("%FieldName", fieldName);
-                                    errorsArray.push(fieldError);
-                                }
-
-                                break;
-                            }
-
                         case "Text":
                         case "nText":
                         case "LookUp":
@@ -82,6 +72,17 @@ export class FieldValidator {
                                     errorsArray.push(fieldError);
                                 }
 
+                                break;
+                            }
+                        case "Date":
+                        case "PickList":
+                        case "Time":
+                            {
+                                if (objectfield.IsCustom && AppTool.IsNullOrEmpty(value)) {
+                                    var fieldName: string = TextCodeTranslator.Translate(objectfield.FullNameTextCodeCode);
+                                    var fieldError: string = translatedRequiredError.replace("%FieldName", fieldName);
+                                    errorsArray.push(fieldError);
+                                }
                                 break;
                             }
                     }
@@ -263,7 +264,7 @@ export class FieldValidator {
     private IsValidDecimalDigitsValue(objectfield: ObjectFieldPM, value: any) {
         return value.length <= objectfield.DigitsAfterPoint;
     }
-    
+
     public IsValid(entityPM) {
         var isValid: boolean;
 

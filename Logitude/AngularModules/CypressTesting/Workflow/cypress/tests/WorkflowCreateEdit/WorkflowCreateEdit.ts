@@ -2,6 +2,7 @@ import * as Actions from "../../actions/Actions";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import * as Assists from "../../.../../../../Base/cypress/assists/Assists";
 import { WorkflowDetails } from "../../models/WorkflowDetails";
+import { StartNodeDetails } from "../../models/StartNodeDetails";
 
 Given("the user logged in and navigates to automation workspace", () => {
     cy.Login();
@@ -23,6 +24,12 @@ When("create flow", () => {
 
 Then("the flow should create successfully", () => {
     Actions.AssertCreateWorkflow();
+});
+
+Given("edit start configration with following details", (dataTable) => {
+    let startNodeDetails = Assists.CreateInstance<StartNodeDetails>(dataTable, true);
+    Actions.FillEditFlowStartNodeDetails(startNodeDetails);
+    Actions.CloseEditStartNodeWindow();
 });
 
 Given("edit workflow general inforamtion with following details", (dataTable) => {

@@ -42,6 +42,14 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours;
 using Logitude.BL.Resolvers;
+using Logitude.BL.AnalyticTableServices;
+using Simplog.Server.Infrastructure.Helpers;
+using System.Data.SqlClient;
+using System.Data;
+using System.Transactions;
+using System.Data.Common;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -190,7 +198,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.RunStoredProcedures();
             }
             entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
-
+            new APInvoiceAnalyticTableService(initializer.Context.GetActiveDbContext()).AddUpdate(invoice);
 
         }
 
@@ -537,6 +545,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 this.RunStoredProcedures();
             }
+
+            new APInvoiceAnalyticTableService(initializer.Context.GetActiveDbContext()).AddUpdate(invoice);
         }
 
         private void UpdatePaidDate()
@@ -1359,9 +1369,28 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
         }
+        private string GetConnection(int tenant)
+        {
+            GlobalDBRepository globalDbRep;
+            GlobalDB currentDb;
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                //GlobalDBRep = new GlobalDBRepository();
+                currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
 
+            }
+
+            string dbConnectionInfo = currentDb.DBConnection;
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
+            WebFreightContext context = new WebFreightContext(connection);
+
+            return context.Database.Connection.ConnectionString;// entityBuilder.ConnectionString;
+        }
         private void UpdateAllPayablesAccountedAmountAndStatus()
         {
+            string strConnString = GetConnection(tenant);
             if (!initializer.Flags.IsAlreadyVoided)
             {
                 if (allPayables.Count > 0)
@@ -1391,13 +1420,37 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             myChild.ShipmentPayableLineStatusCode = myPayable.ShipmentPayableLineStatusCode;
                             shipmentPayableRepository.Remove(myChild);
                         }
-
-                        List<PayableProratedAmount> payableProratedAmounts = payableProratedAmountRepository.GetPayableProratedAmountsByPayablesIds(payablesId, tenant);
-                        foreach (PayableProratedAmount item in payableProratedAmounts)
+                        if (payablesId != null && payablesId.Count > 0)
                         {
-                            payableProratedAmountRepository.Remove(item);
+                            string payableToBeDeletedIds = "";
+                            foreach (var id in payablesId)
+                            {
+                                payableToBeDeletedIds += "'" + id + "',";
+                            }
+                            //if (payablesId != null && payablesId.Count > 0)
+                            //{
+                            //    payableToBeDeletedIds = "''";
+                            //}
+                            payableToBeDeletedIds = "(" + payableToBeDeletedIds.TrimEnd(',') + ")";
+                            using (SqlConnection cn = new SqlConnection(strConnString))
+                            {
+                                SqlCommand cmd = new SqlCommand("delete from PayableProratedAmounts where PayableId in " + payableToBeDeletedIds + " and tenant = " + tenant, cn);
+                                cmd.CommandType = CommandType.Text;
+                                cmd.CommandTimeout = 30;
+                                cn.Open();
+                                var output = cmd.ExecuteNonQuery();
+                                cn.Close();
+                            }
                         }
-                        payableProratedAmountRepository.SubmitChanges();
+                        
+                        //List<PayableProratedAmount> payableProratedAmounts = payableProratedAmountRepository.GetPayableProratedAmountsByPayablesIds(payablesId, tenant);
+                        //foreach (PayableProratedAmount item in payableProratedAmounts)
+                        //{
+                        //    item.Tenant = -1;
+                        //    item.PayableId = null;
+                        //    payableProratedAmountRepository.Update(item);
+                        //}
+                        //payableProratedAmountRepository.SubmitChanges();
                     }
 
                     shipmentPayableRepository.SubmitChanges();

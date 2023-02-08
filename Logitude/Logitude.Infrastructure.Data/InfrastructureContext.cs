@@ -86,6 +86,8 @@ namespace Logitude.Infrastructure.Data
 	
             modelBuilder.Configurations.Add(new BusinessRoleMap());
 	
+            modelBuilder.Configurations.Add(new ContainerSettingMap());
+	
             modelBuilder.Configurations.Add(new DigitalFieldSecurityMap());
 	
             modelBuilder.Configurations.Add(new DigitalPortalScreenMap());
@@ -446,6 +448,12 @@ namespace Logitude.Infrastructure.Data
 	 }
 	
 	 public IDbSet<BusinessRole> BusinessRoles 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ContainerSetting> ContainerSettings 
 	 {
 	      get; set;
 	 

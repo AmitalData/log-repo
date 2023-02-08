@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Services.DeploymentPackage;
+using Logitude.BL.InfrastructureModel.Services.DeploymentPackage.Dependiencies;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityQueryServices;
@@ -47,6 +48,40 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 DeploymentPackageDependiency deploymentPackageDependiency = deploymentPackageDependienciesService.Validate();
                 
                 return Request.CreateResponse(HttpStatusCode.OK, deploymentPackageDependiency);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        [HttpGet]
+        public HttpResponseMessage GetDeploymentPackageDetailsListByDocumentId(string documentId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                List<DeploymentPackageDetailsList> deploymentPackageDetails = new DeploymentPackageDetailsListService(authToken.Tenant).GetDeploymentPackageDetailsListByDocumentId(documentId);
+                
+                return Request.CreateResponse(HttpStatusCode.OK, deploymentPackageDetails);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        [HttpGet]
+        public HttpResponseMessage DeleteImportedDocumentById(string documentId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                bool result = new DeploymentPackageDocumentService(authToken.Tenant, null).Delete(documentId, authToken.Tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+
             }
             catch (Exception ex)
             {

@@ -44,6 +44,16 @@ namespace Logitude.DashboardModule.MetaDataTool.Models.FieldModels
             }
         }
 
+        private bool canSecondaryGroup;
+        public bool CanSecondaryGroup
+        {
+            get { return canSecondaryGroup; }
+            set
+            {
+                canSecondaryGroup = value; FirePropertyChanged("CanSecondaryGroup");
+            }
+        }
+
 
         private string fieldCode;
         public string FieldCode
@@ -137,6 +147,16 @@ namespace Logitude.DashboardModule.MetaDataTool.Models.FieldModels
             set
             {
                 unit = value; FirePropertyChanged("Unit");
+            }
+        }
+
+        private string commonFilterCode;
+        public string CommonFilterCode
+        {
+            get { return commonFilterCode; }
+            set
+            {
+                commonFilterCode = value; FirePropertyChanged("CommonFilterCode");
             }
         }
 

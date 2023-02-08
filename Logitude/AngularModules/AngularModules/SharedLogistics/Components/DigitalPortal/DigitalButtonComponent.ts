@@ -1,26 +1,30 @@
 declare var window: any;
-import { Component, ViewContainerRef, OnInit, ViewChildren, QueryList, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
 import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
-import { DigitalCustomizationService, CheckObjectFieldExistenceRequest } from '../../../Infrastructure/Services/WebServices/DigitalCustomizationService';
+import { DigitalCustomizationService, AddCustomFieldRequest } from '../../../Infrastructure/Services/WebServices/DigitalCustomizationService';
+import { AppTool } from '../../../Infrastructure/Tools';
 
 @Component({
     selector: 'DigitalButtonComponent',
     templateUrl: './DigitalButtonComponent.html',
 })
 
-export class DigitalButtonComponent implements OnInit {
+export class DigitalButtonComponent {
 
     public rowData: any;
     public fieldName: any;
     public TenantPM: TenantPM;
-    public entityId: string;
     public InUseVisibile: boolean = true;
     private CurrentSession = SessionLocator.SelectedSession;
-    digitalCustomizationService: DigitalCustomizationService;
-
+    private digitalCustomizationService: DigitalCustomizationService;
+    private objectTableId: string;
+    private parentObjectTableId: string;
+    private profileId: string;
+    private profileCode: string;
+     
     constructor(private CD: ChangeDetectorRef, private _entityListService: EntityListService) {
         this.TenantPM = InfraSettings.TenantPM;
         this.digitalCustomizationService = new DigitalCustomizationService();
@@ -29,70 +33,56 @@ export class DigitalButtonComponent implements OnInit {
     setVariables(rowData: any, fieldName: string) {
         this.rowData = rowData;
         this.fieldName = fieldName;
+        this.fieldName = fieldName.split(",");
+        this.objectTableId = this.fieldName[0];
+        this.parentObjectTableId = this.fieldName[1];
+        this.profileId = this.fieldName[2];
+        this.profileCode = this.fieldName[3];
+
         this.InUseVisibile = this.rowData.InUse;
-
         var isDestroyed: boolean = this.CD['destroyed'];
         if (!isDestroyed) {
             this.CD.detectChanges();
         }
     }
 
-    ngOnInit() {
-
+    AddObjectFieldClicked() {
+        this.StartBusyIndicator("Adding field to your list");
+        this.AddObjectField();
     }
 
-    Check() {
-        this.GetInUseObjectField(this.rowData);
-    }
-
-    DoItClick() {
-        this.entityId = this.rowData.Id;
-        this.StartBusyIndicator("Updating" + this.fieldName + " to your list");
-        this.GetObjectField();
-    }
-
-    RefreshDate() {
-        this.InUseVisibile = true;
-
-        var isDestroyed: boolean = this.CD['destroyed'];
-        if (!isDestroyed) {
-            this.CD.detectChanges();
-        }
-        if (this.IsCompleted) {
-            this.FireEvent("TenantImport");
-        }
-    }
 
     RefreshDateUpdated() {
-
+        this.InUseVisibile = true;
         var isDestroyed: boolean = this.CD['destroyed'];
         if (!isDestroyed) {
             this.CD.detectChanges();
         }
-        if (this.IsCompleted) {
-            this.FireEvent("TenantImport");
-        }
+        this.CurrentSession.SessionEvent.emit({ Name: "ReloadDigitalPortalPermissions" });
     }
 
     public FireEvent(eventArgs: any) {
         this.CurrentSession.SessionEvent.emit(eventArgs);
     }
 
-
-    private IsCompleted: boolean = false;
-    GetObjectField() {
-        
-    }
-
-    GetInUseObjectField(rowData) {
-        var record = new CheckObjectFieldExistenceRequest();
-        record.ObjectTableId = record.ObjectTableId;
-        record.FieldCode = record.FieldCode;
-
-        this.digitalCustomizationService.CheckIfFieldInuse(record).subscribe((myResult) => {
-            this.InUseVisibile = myResult.Result;
+    AddObjectField() {
+        var newField = new AddCustomFieldRequest();
+        newField.ObjectTableId = this.objectTableId;
+        newField.ParentObjectTableId = this.parentObjectTableId;
+        newField.ProfileId = this.profileId;
+        newField.ProfileCode = this.profileCode;
+        newField.FieldCode = this.rowData.FieldCode;
+        newField.TextCode = this.rowData.FullNameTextCodeCode;
+        newField.DefaultText = this.rowData.FullNameTextCodeDefaultText;
+        newField.DisplayText = this.rowData.FullNameTextCodeDefaultText;
+        newField.CreatedBy = SessionLocator.LoggedUserPM.EnglishName;
+        newField.ModifiedBy = SessionLocator.LoggedUserPM.EnglishName;
+        newField.IsList = this.rowData.DisplayInList;
+        newField.IsPm = !AppTool.IsNullOrEmpty(this.rowData.PMPropertyPath);
+        this.digitalCustomizationService.AddCustomField(newField).subscribe((myResult) => {
+            this.RefreshDateUpdated();
+            this.StopBusyIndicator();
         });
-
     }
 
     private StartBusyIndicator(message: string) {

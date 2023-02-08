@@ -44,12 +44,7 @@
                         <table>
                             <tr>
                                 <td (click)="TabSelectionChanged(item)" class="dl-tab-text TextTrimming">{{item.Name}}</td>
-
-                                <td *ngIf="!item.IsPinned" style="width:8px; max-width:8px;">
-                                    <div></div>
-                                </td>
-
-                                <td *ngIf="!item.IsPinned" style="width:8px; min-width:8px; max-width:8px; cursor:pointer;" (click)="CloseDashboardTabClicked(item)">
+                                <td *ngIf="!item.IsPinned" class="dl-tab-exit-container" (click)="CloseDashboardTabClicked(item)">
                                     <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
                                         <path class="CloseDashboardTabBtn" opacity="0.8" d="M4 3.11125L7.11125 0L8 0.888749L4.88875 4L8 7.11125L7.11125 8L4 4.88875L0.888749 8L0 7.11125L3.11125 4L0 0.888749L0.888749 0L4 3.11125Z" />
                                     </svg>
@@ -71,6 +66,7 @@
             <div *ngIf="dashbaordCount > 0 && SelectedDashboard && ShowDashboardTab" style="height: 100%;">
                 <dashboard-tab [DashboardId]="SelectedDashboard.Id"
                                [OpenEditLayout]="OpenEditLayout"
+                               [PresetFilters]="PresetFilters"
                                (DashboardDeleted)="RefreshTabsAfterDelete($event)"
                                (DashboardChanged)="DashboardChanged($event)"
                                (RefreshAfterCopy)="RefreshAfterCopy($event)"
@@ -101,7 +97,7 @@
                     </div>
                 </div>
 
-                <div class="dl-info-center-div" style="margin-top: 12px;" *ngIf="dashbaordCount == 0">
+                <div class="dl-info-center-div" style="margin-top: 12px;">
                     <button class="Button" (click)="AddDashboardClicked()">
                         <svg width="20" height="20" viewBox="0 0 5 5"
                              style="display: inline-block; vertical-align: middle;">

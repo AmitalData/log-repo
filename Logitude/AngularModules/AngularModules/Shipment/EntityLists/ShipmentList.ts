@@ -21,6 +21,7 @@ export class ShipmentList {
 		AccountedPayablesInLocalCurrency: number;
 		OpenPayablesInProfitCurrency: number;
 		AccountedPayablesInProfitCurrency: number;
+		IsDocumentsNeedApprove: boolean;
 		LocalCustomsTransmissionsStatusCode: string;
 		LocalCustomsTransmissionsStatusName: string;
 		LocalCustomsTransmissionsStatusError: string;
@@ -587,11 +588,20 @@ export class ShipmentList {
 		InlandDomesticFromTypeCode: string;
 		InlandDomesticFromCountryId: string;
 		InlandDomesticToCountryId: string;
+		ShippingLine: string;
+		PlaceOfDelivery: string;
+		PickupPlace: string;
+		SealNo: string;
+		HSCode: string;
+		IsCustomerArchived: boolean;
+		NotesSharedWithCustomer: string;
+		Volume: number;
 		Pickup: string;
 		MainCarriageFrom: string;
 		MainCarriageTo: string;
 		Delivery: string;
 		CountryCode: string;
+		CountryName: string;
 		City: string;
 		Date: Date;
 		DateType: string;

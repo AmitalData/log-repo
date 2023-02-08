@@ -14,5 +14,9 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public DateTime UpdateDate { get; set; }
         public bool IsCancelled { get; set; }
         public string StatusId { get; set; }
+        public string SearchFields { get; set; }
+        public string CreatedByUserName { get; set; }
+        public string UpdatedByUserName { get; set; }
+
     }
 }

@@ -18,5 +18,7 @@ export class DataCustomObjectList extends CustomFieldList{
 		UpdateDate: Date;
 		IsCancelled: boolean;
 		StatusId: string;
-	
+        SearchFields: string;
+        CreatedByUserName: string;
+        UpdatedByUserName: string;
 }

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class WorkFlowUpdateClass
    {  		
-		public const string HashString = "dc26a982fe03cc35e5fd7085c857b587";
+		public const string HashString = "bd68867e846faf9d1f899b7ccf16f8a0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -101,6 +101,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  false,
 			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  false,
@@ -286,7 +287,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
@@ -349,7 +350,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
@@ -413,7 +414,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
@@ -456,7 +457,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
@@ -476,7 +477,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
@@ -602,7 +603,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  200,
@@ -664,11 +665,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  1000,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						MultiLine =  true,
@@ -684,6 +685,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "WorkFlow",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -694,6 +696,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Description",
 					  						DefaultText =  "Description",
+					  						ListFieldLable =  "DescriptionListLable",
+					  						ListLableDefaultText =  "Description",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -724,7 +728,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
@@ -789,7 +793,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  4,
@@ -853,7 +857,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  30,
@@ -1160,7 +1164,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  50,
@@ -1219,7 +1223,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  50,
@@ -1361,13 +1365,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn AllWorkflowsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllWorkflowsQuery.Id,QueryCode = AllWorkflowsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "WorkFlow.Name" , ColumnWidth = 400 }, addedQueryColumns);
 
-			 QueryColumn AllWorkflowsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllWorkflowsQuery.Id,QueryCode = AllWorkflowsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "WorkFlow.OwnerName" , ColumnWidth = 350 }, addedQueryColumns);
+			 QueryColumn AllWorkflowsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllWorkflowsQuery.Id,QueryCode = AllWorkflowsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "WorkFlow.Description" , ColumnWidth = 350 }, addedQueryColumns);
 
-			 QueryColumn AllWorkflowsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllWorkflowsQuery.Id,QueryCode = AllWorkflowsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "WorkFlow.StatusName" , ColumnWidth = 350 }, addedQueryColumns);
+			 QueryColumn AllWorkflowsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllWorkflowsQuery.Id,QueryCode = AllWorkflowsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "WorkFlow.OwnerName" , ColumnWidth = 350 }, addedQueryColumns);
 
-			 QueryColumn AllWorkflowsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllWorkflowsQuery.Id,QueryCode = AllWorkflowsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "WorkFlow.UpdateDate" , ColumnWidth = 350 }, addedQueryColumns);
+			 QueryColumn AllWorkflowsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllWorkflowsQuery.Id,QueryCode = AllWorkflowsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "WorkFlow.StatusName" , ColumnWidth = 350 }, addedQueryColumns);
 
-			 QueryColumn AllWorkflowsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllWorkflowsQuery.Id,QueryCode = AllWorkflowsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "WorkFlow.UpdatedByUserName" , ColumnWidth = 350 }, addedQueryColumns);
+			 QueryColumn AllWorkflowsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllWorkflowsQuery.Id,QueryCode = AllWorkflowsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "WorkFlow.UpdateDate" , ColumnWidth = 350 }, addedQueryColumns);
+
+			 QueryColumn AllWorkflowsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllWorkflowsQuery.Id,QueryCode = AllWorkflowsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "WorkFlow.UpdatedByUserName" , ColumnWidth = 350 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -1491,15 +1497,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable WorkFlowObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "WorkFlow" && d.Tenant == 0).FirstOrDefault();       
     
-			   Feature WorkFlowFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SaveDraft", ObjectTableId = WorkFlowObjectTable.Id, Tenant = 0, NameTextCodeCode = "WorkFlow.Features.SaveDraft", NameTextCodeDefaultText = "Save Draft", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WorkFlowObjectTable);
+			   Feature WorkFlowFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NewVersion", ObjectTableId = WorkFlowObjectTable.Id, Tenant = 0, NameTextCodeCode = "WorkFlow.Features.NewVersion", NameTextCodeDefaultText = "New Version", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WorkFlowObjectTable);
 
       
     
-			   Feature WorkFlowFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NewVersion", ObjectTableId = WorkFlowObjectTable.Id, Tenant = 0, NameTextCodeCode = "WorkFlow.Features.NewVersion", NameTextCodeDefaultText = "New Version", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WorkFlowObjectTable);
-
-      
-    
-			   Feature WorkFlowFeature_MB2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Activate", ObjectTableId = WorkFlowObjectTable.Id, Tenant = 0, NameTextCodeCode = "WorkFlow.Features.Activate", NameTextCodeDefaultText = "Activate", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WorkFlowObjectTable);
+			   Feature WorkFlowFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Activate", ObjectTableId = WorkFlowObjectTable.Id, Tenant = 0, NameTextCodeCode = "WorkFlow.Features.Activate", NameTextCodeDefaultText = "Activate", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WorkFlowObjectTable);
 
  
 
@@ -1515,11 +1517,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    
 			   MenuButton WorkFlowMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
-						EventCode = "SaveDraft",
+						EventCode = "NewVersion",
 						Index = 0, 
 						IsActive = true,
-						LabelTextCodeCode = "WorkFlow.B.SaveDraft",
-						LabelTextCodeDefaultText = "Save Draft",
+						LabelTextCodeCode = "WorkFlow.B.NewVersion",
+						LabelTextCodeDefaultText = "New Version",
 						Tenant = 0,
 						MenuButtonGroupId = WorkFlowMenuButtonGroup.Id,
 						ObjectTableId = WorkFlowObjectTable.Id,
@@ -1535,26 +1537,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    
 			   MenuButton WorkFlowMenuButton1 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
-						EventCode = "NewVersion",
-						Index = 0, 
-						IsActive = true,
-						LabelTextCodeCode = "WorkFlow.B.NewVersion",
-						LabelTextCodeDefaultText = "New Version",
-						Tenant = 0,
-						MenuButtonGroupId = WorkFlowMenuButtonGroup.Id,
-						ObjectTableId = WorkFlowObjectTable.Id,
-						MenuButtonType = "button",
-						FeatureId = WorkFlowFeature_MB1.Id,
-						Style = null,
-						LocalDefaultText = null,
-						FeatureUniqeCode = WorkFlowFeature_MB1.FeatureUniqeCode,
-						HtmlComponentPath = null,
-						Width = 0,
-					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
-       
-   
-			   MenuButton WorkFlowMenuButton2 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
-					{
 						EventCode = "Activate",
 						Index = 0, 
 						IsActive = true,
@@ -1564,10 +1546,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonGroupId = WorkFlowMenuButtonGroup.Id,
 						ObjectTableId = WorkFlowObjectTable.Id,
 						MenuButtonType = "button",
-						FeatureId = WorkFlowFeature_MB2.Id,
+						FeatureId = WorkFlowFeature_MB1.Id,
 						Style = null,
 						LocalDefaultText = null,
-						FeatureUniqeCode = WorkFlowFeature_MB2.FeatureUniqeCode,
+						FeatureUniqeCode = WorkFlowFeature_MB1.FeatureUniqeCode,
 						HtmlComponentPath = null,
 						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);

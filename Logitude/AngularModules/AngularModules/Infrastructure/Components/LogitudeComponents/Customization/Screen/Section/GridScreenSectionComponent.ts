@@ -28,7 +28,7 @@ export class GridScreenSectionComponent extends BaseComponent implements OnInit,
     ParentEntityPM: any
     ParentObjectTableName: string;
     ObjectTable: any;
-    IsReady: boolean;
+    IsReady: boolean = false;
     public Direction: string = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
     public TextAlign = this.Direction == 'rtl' ? 'right' : 'left';
     public DataSource: ObservableCollection;
@@ -86,9 +86,7 @@ export class GridScreenSectionComponent extends BaseComponent implements OnInit,
     }
 
     ngAfterViewInit(): void {
-        this.SetScreen();
-        this.LoadData();
-        this.IsReady = true;
+
     }
 
     SetScreen() {
@@ -113,6 +111,9 @@ export class GridScreenSectionComponent extends BaseComponent implements OnInit,
     }
 
     ngOnInit() {
+        this.SetScreen();
+        this.LoadData();
+        this.IsReady = true;
     }
 
     SetWindowArgs(args: any) {

@@ -21,6 +21,20 @@ export class GlobalDomainService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/GlobalDomain';
     }
 
+    CheckDigitalPortalAddsOn(tenant) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/GetCheckDigitalPortalAddsOn?tenant=' + tenant;
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+                var itemJason: Boolean = response.body;
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = itemJason;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
     CheckInttraAddsOn() {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -484,6 +498,7 @@ export class GlobalDomainService {
         myResult.PackagesCodes_BS = entityPM.PackagesCodes_BS;
         myResult.TenantManagementLicenses = entityPM.TenantManagementLicenses;
         myResult.CustomerURL = entityPM.CustomerURL;
+        myResult.IsContainerTrackingPrepaid = entityPM.IsContainerTrackingPrepaid;
         ObjectsUpdater.UpdateTenantManagementJS(myResult);
     }
 

@@ -150,6 +150,9 @@ export class CellTooltip implements OnInit, AfterViewInit {
         }
     }
 
+
+
+    
     SetTooltipSize() {
         if (this.TooltipId) {
             var item = document.getElementById(this.TooltipId);

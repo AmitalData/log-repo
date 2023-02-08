@@ -1596,6 +1596,7 @@ export class ShipmentReceivableItem extends BaseComponent {
         this.UIProperties.SetEnabled("PrepaidCollectId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Notes", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("IsExchangeRateFixed", this.ObjectTableName, isExchangeRateFixedEnabled);
+        this.UIProperties.SetEnabled("PayableVendorId", this.ObjectTableName, this.IsEditingEnabled);
         this.SetUIProperties_AmountProfit();
         this.SetUIProperties_PayableVendor();
     }
@@ -1616,7 +1617,7 @@ export class ShipmentReceivableItem extends BaseComponent {
         var isFieldVisible = false;
 
         if (!AppTool.IsNullOrEmpty(this.ChargesTypeId)) {
-            if (this.EntityPM.IsExpense && SessionLocator.TenantPM.CountryCode == "MX") {
+            if (this.EntityPM.IsExpense && SessionLocator.TenantPM.CountryCode == "MX" && SessionLocator.SATInterfaceSettings.TransferExpenseCharges) {
                 isFieldVisible = true;
             }
         }

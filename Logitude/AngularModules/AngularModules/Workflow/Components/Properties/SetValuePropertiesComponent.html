@@ -28,6 +28,7 @@
     .table-container {
         overflow: auto;
         height: 515px;
+        pointer-events: auto !important;
     }
 
     .label {
@@ -36,6 +37,10 @@
 
     .table-row-cell-label {
         padding-bottom: 6px;
+    }
+
+    .break-space{
+        white-space: break-spaces;
     }
 </style>
 
@@ -85,12 +90,20 @@
     </tr>
 
     <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <p class="Label break-space">Each variable value is modified by the operator and value combination.</p>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
         <td>
             <div class="table-container">
 
                 <SetValues *ngIf="SetValues && SetValues.length > 0" [(SetValues)]="SetValues"
                     (IsValidSetValuesChange)="updateIsValidSetValues($event)" [FlowObject]="FlowObject"
-                    [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId">
+                    [CurrentNodeId]="CurrentNodeId">
                 </SetValues>
 
             </div>
@@ -101,17 +114,6 @@
     <tr>
         <td>
             <div></div>
-        </td>
-    </tr>
-
-    <tr class="table-row">
-        <td>
-
-            <FooterButtons [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="saveButtonClicked()"
-                (CancelButtonClicked)="cancelButtonClicked()" [SaveButtonDataCy]="'set-value-properties-save-button'"
-                [CancelButtonDataCy]="'set-value-properties-cancel-button'">
-            </FooterButtons>
-
         </td>
     </tr>
 

@@ -1,5 +1,9 @@
-﻿using Logitude.BL.InfrastructureModel.EntityPMs;
+﻿using Logitude.BL.Helpers;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
@@ -28,6 +32,35 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.IsCancelled = entityPM.IsCancelled;
             entityPOCO.StatusId = entityPM.StatusId;
             MapCustomFields(entityPM , entityPOCO);
+            BuildSearchFields(entityPM, entityPOCO);
+        }
+        private static void BuildSearchFields(DataCustomObjectPM entityPM, DataCustomObject entityPOCO)
+        {
+            string mySearchFields = "";
+            IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
+            ObjectTable objectTable = MyContext.ObjectTables.Where(d => d.Id == entityPM.ObjectTableId).FirstOrDefault();
+
+            #region Custom Fields
+            List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName(objectTable.Name, entityPM.Tenant).Where(o => o.DataTypeCode != "Decimal").ToList();
+
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(entityPM.Tenant);
+            foreach (ObjectField field in customFields)
+            {
+                object value = customFieldResolver.GetFieldValue(entityPM, field, entityPM.Tenant);
+                if (value != null)
+                {
+                    MethodHelper.AddToSearchFields(ref mySearchFields, value.ToString());
+                }
+            }
+            #endregion
+
+            if (mySearchFields.Length > 1000)
+            {
+                mySearchFields = mySearchFields.Substring(0, 1000);
+            }
+
+            entityPM.SearchFields = mySearchFields;
+            entityPOCO.SearchFields = mySearchFields;
         }
 
         private static void MapCustomFields(DataCustomObjectPM entityPM, DataCustomObject entityPOCO)

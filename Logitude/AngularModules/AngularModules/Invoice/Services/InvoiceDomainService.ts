@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
 import {AppTool} from '../../Infrastructure/Tools';
@@ -18,6 +18,7 @@ import {ARPaymentInvoicePM} from '../EntityPMs/ARPaymentInvoicePM';
 import {APInvoiceMultipleShortPM} from '../EntityPMs/APInvoiceMultipleShortPM';
 import {APInvoiceLinePM} from '../EntityPMs/APInvoiceLinePM';
 import {Guid} from '../../Infrastructure/Utilities/Guid';
+import { ARInvoicePMService } from './StandardPMs/ARInvoicePMService';
 
 @Injectable()
 
@@ -382,7 +383,7 @@ export class InvoiceDomainService {
             var mappedEntity: APInvoiceMultipleShortPM;
             mappedEntity = this.MapJsonToAPInvoiceMultipleShortPM(entityPM, false);
 
-            return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+            return this._http.put(this._apiUrl + "/PutAPInvoiceMultipleShortPM", JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                     var pm = res;
                     if (pm) {
                         var mappedResult: APInvoiceMultipleShortPM;
@@ -1343,6 +1344,27 @@ export class InvoiceDomainService {
             }
         }
     }
+
+    ValidateApprovalSendToSAT(aRInvoicePM: ARInvoicePM) {
+        return defer(() => {
+
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+
+            var mappedEntity: ARInvoicePM;
+            let aRInvoicePMService = new ARInvoicePMService();
+            mappedEntity = aRInvoicePMService.MapJsonToEntityPM(aRInvoicePM, false);
+
+            return this._http.put(this._apiUrl + "/PutARInvoiceSATValidation", JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders()).pipe(map((result: HttpResponse<any>) => {
+                if (result && result.body) {
+                    serviceResponse.Result = result.body;
+                }
+
+                return serviceResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
     public clone(jsonPM: any) {
         var entityPM: any;
         entityPM = {};

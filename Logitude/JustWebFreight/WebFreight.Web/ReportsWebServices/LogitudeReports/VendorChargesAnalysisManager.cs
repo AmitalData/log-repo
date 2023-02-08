@@ -15,6 +15,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
+using WebFreight.Web.Services;
 using WebFreight.Web.WebServices;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports
@@ -169,16 +170,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         public byte[] GetData()
         {
             VendorChargesAnalysisDataProvider myDataProvider = this.LoadDataProvider();
-
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(VendorChargesAnalysisDataProvider));
-            MemoryStream memoryStream = new MemoryStream();
-            xmlSerializer.Serialize(memoryStream, myDataProvider);
-            memoryStream.Seek(0, SeekOrigin.Begin);
-
-            StreamReader streamReader = new StreamReader(memoryStream);
-            string content = streamReader.ReadToEnd();
-            byte[] bytearray = memoryStream.ToArray();
-            return bytearray;
+            return new ReportMemoryStreamService().Convert(myDataProvider, typeof(VendorChargesAnalysisDataProvider), tenant);
         }
 
         private VendorChargesAnalysisDataProvider LoadDataProvider()
@@ -351,6 +343,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                                                     ContainersNumbersAndTypesArray = shipmentComputed.ContainersNumbersAndTypesArray,
                                                                     TruckNumber = myShipment.TruckNumber,
                                                                     DirectionId = myShipment.DirectionId,
+                                                                    ForeignCurrency = myItem.Currency.Code,
+                                                                    Payables_ACCTInForeignCurrency = myItem.AccountedAmount,
+                                                                    Payables_OPENInForeignCurrency = myItem.OpenAmount,
                                                                 }).ToList();
                     if (myResult.Count > 0)
                     {
@@ -372,16 +367,22 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             myRecord.ChargesType = item.ChargeTypeName;
                             myRecord.FinalArrivalDate = item.FinalArrivalDate;
                             myRecord.TruckContainerNumber = this.GetContainerNumbers(item);
+                            myRecord.ForeignCurrency = item.ForeignCurrency;
                             if (IncludeAccountedOnly)
                             {
                                 myRecord.OpenAmount = null;
+                                myRecord.OpenAmountInForeignCurrency = null;
+
                             }
                             else
                             {
                                 myRecord.OpenAmount = item.Payables_OPEN;
+                                myRecord.OpenAmountInForeignCurrency = item.Payables_OPENInForeignCurrency;
                             }
 
                             myRecord.AccountedAmount = item.Payables_ACCT;
+                            myRecord.AccountedAmountInForeignCurrency = item.Payables_ACCTInForeignCurrency;
+                            
                             myRecord.Notes = item.Notes;
 
                             if (!string.IsNullOrEmpty(item.ShipmentType))
@@ -586,5 +587,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         public double? Payables_ACCT { get; set; }
         public string Notes { get; set; }
         public DateTime? FinalArrivalDate { get; set; }
+
+        public double? Payables_ACCTInForeignCurrency { get; set; }
+        public double? Payables_OPENInForeignCurrency { get; set; }
+        public string ForeignCurrency { get; set; }
+        public double? Rate { get; set; }
     }
 }

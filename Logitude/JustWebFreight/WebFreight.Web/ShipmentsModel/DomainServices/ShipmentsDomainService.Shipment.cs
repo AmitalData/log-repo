@@ -92,6 +92,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             bool hasShippingInstructionsLast7DaysFeature = SecurityUtility.CheckTableContactFeature("Shipment", "ShippingInstructionsLast7Days", tenant);
             bool hasContainerStatusLast7DaysFeature = SecurityUtility.CheckTableContactFeature("Shipment", "ContainerStatusLast7Days", tenant);
             bool hasEBookingInProgressFeature = SecurityUtility.CheckTableContactFeature("Shipment", "Shipment.Q.EBookingInProgress", tenant);
+            bool hasPendingApprovalDocumentsFeature = SecurityUtility.CheckTableContactFeature("Shipment", "Shipment.Q.PendingApprovalDocuments.", tenant);
 
             string loggedUserEmail = ServiceContext.User.Identity.Name;
             string loggedContactId = null;
@@ -104,7 +105,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
 
             shipmentQuery = new ShipmentQuery(tenant);
 
-            ShipmentsSummary myResult = shipmentQuery.GetShipmentsDashBoardSummary(tenant, directionId, transportModeId, loggedContactId, hasETDFeature, hasFollowupsFeature, hasExpDepNotTransmittedFeature, hasShippingInstructionsLast7DaysFeature, hasContainerStatusLast7DaysFeature, hasEBookingInProgressFeature);
+            ShipmentsSummary myResult = shipmentQuery.GetShipmentsDashBoardSummary(tenant, directionId, transportModeId, loggedContactId, hasETDFeature, hasFollowupsFeature, hasExpDepNotTransmittedFeature, hasShippingInstructionsLast7DaysFeature, hasContainerStatusLast7DaysFeature, hasEBookingInProgressFeature,hasPendingApprovalDocumentsFeature);
 
             return myResult;
         }

@@ -87,6 +87,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string TransferStatusName { get; set; }
         public bool ReadyForTransfer { get; set; }
         public string ExternalAccountingEntityId { get; set; }
+        public bool IsTransferStatusSetManually { get; set; }
         public string InvoiceNumber { get; set; }
         public string ShipmentNumber { get; set; }
         public string TransmissionError { get; set; }
@@ -258,6 +259,11 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool UpdateAmountAndStatuses { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BillToCode { get; set; }
-
+        public bool IsUpdatedByQBO { get; set; }
+        public bool IsUpdatedBySAT { get; set; }
+        public string SATAdditionalFieldsXML { get; set; }
+        public string TransferStatusCode_Original { get; set; }
+        public bool IsTransferStarted_Original { get; set; }
+        public string TransferError_Original { get; set; }
     }
 }

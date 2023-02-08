@@ -493,9 +493,11 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
 
     GetIdWithoutSpecialCharacters(value: string){
         let specialCharacters = ['/','(',')'];
-        specialCharacters.forEach(ch => {
-            value = value.replace(ch,'');
-        });
+        if(value){
+            specialCharacters.forEach(ch => {
+                value = value.replace(ch,'');
+            });
+        } 
         return value;
     }
 
@@ -700,7 +702,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
         var myCurrentItem = this.SelectedFieldsDataSource.filter(a => a.DisplayName == this.SelectedItem.DisplayName);
 
         if (!this.IsValidToAddMeasurementFactARInvoiceField(item)) {
-            this.ShowValidateFactARInvoicesMessage(item.DisplayName, "column");
+            this.ShowValidationMessage(item);
             return;
         }
 
@@ -709,12 +711,26 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
             this.ClearData();
         }
     }
-
     private IsValidToAddMeasurementFactARInvoiceField(item: any) {
+        if (this.FactTableName == "Fact_ARInvoices" && item.IsMeasurement && this.IsShipmentProfitField(item)) {
+            return this.haveShipmentNumberField();
+        }
         if (this.FactTableName == "Fact_ARInvoices" && item.IsMeasurement) {
             return this.haveInvoiceNumberField();
         }
         return true;
+    }
+
+    private IsShipmentProfitField(item: any) {
+        return item.dWObjectTableCode == "Fact_Shipments" && (item.Code == "[Profit ( Local )]" || item.Code == "[Profit]" || item.Code == "[Accounted Profit]" || item.Code == "[Accounted Profit(Local)]");
+    }
+
+    private ShowValidationMessage(item: any) {
+        if (this.IsShipmentProfitField(item))
+            this.ShowValidateFactARInvoicesMessage(item.DisplayName, "column", "Shipment Number");
+        else
+            this.ShowValidateFactARInvoicesMessage(item.DisplayName, "column", "Invoice Number");
+        return;
     }
 
     private ValidateQuereyFields() {
@@ -788,8 +804,8 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
         }
     }
 
-    private ShowValidateFactARInvoicesMessage(fieldName: string, fieldType: string) {
-        this.ShowValidateMessage("You are not allowed to add " + fieldName + " " + fieldType + " unless you add the Invoice Number column");
+    private ShowValidateFactARInvoicesMessage(fieldName: string, fieldType: string , neededField: string) {
+        this.ShowValidateMessage("You are not allowed to add " + fieldName + " " + fieldType + " unless you add the " + neededField+ " column");
     }
 
     RootGroups: DWObjectFieldsDetails[] = [];
@@ -814,7 +830,10 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
         }
 
         if (!this.IsValidToAddMeasurementFactARInvoiceField(item)) {
-            this.ShowValidateFactARInvoicesMessage(selectedItem.DisplayName, "filter");
+            if (item.DWObjectTableCode == "Fact_Shipments")
+                this.ShowValidateFactARInvoicesMessage(item.DisplayName, "filter", "Shipment Number");
+            else
+                this.ShowValidateFactARInvoicesMessage(item.DisplayName, "filter", "Invoice Number");
             return;
         }
 
@@ -1273,6 +1292,10 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
 
     private haveInvoiceNumberField() {
         return this.SelectedFieldsDataSource.some(a => a.Code == "[Invoice Number]");
+    }
+
+    private haveShipmentNumberField() {
+        return this.SelectedFieldsDataSource.some(a => a.Code == "[Shipment Number]");
     }
 
     private haveMeasurmentFields() {

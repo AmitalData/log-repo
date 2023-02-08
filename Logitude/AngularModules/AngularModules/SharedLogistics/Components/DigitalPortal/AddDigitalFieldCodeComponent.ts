@@ -15,6 +15,9 @@ export class AddDigitalFieldCodeComponent {
     digitalTextService: DigitalTextService;
     SelectedDigitalFieldCode: DigitalTextCodeObject;
     private CurrentSession = SessionLocator.SelectedSession;
+    IsAddingComponent = false;
+    ProfileCode: string;
+    ScreenCode: string;
 
     constructor() {
        
@@ -24,20 +27,26 @@ export class AddDigitalFieldCodeComponent {
         this.LabelsItemsSource = new ObservableCollection([]);
         this.digitalTextService = new DigitalTextService();
         this.ObjectTableId = args.ObjectTableId;
+        this.ProfileCode = args.ProfileCode;
+        this.ScreenCode = args.ScreenCode;
         this.BuildItemsSource();
     }
 
     BuildItemsSource() {
         this.LabelsItemsSource = new ObservableCollection([]);
-        this.digitalTextService.GetTextCodesByFilters(null, this.ObjectTableId, null).subscribe((myResult) => {
+        this.digitalTextService.GetFeildPermissionByFilters(null, this.ObjectTableId, this.ProfileCode, this.ScreenCode).subscribe((myResult) => {
             if (!myResult.HasError) {
-                var data = myResult.Result?.filter(a => !AppTool.IsNullOrEmpty(a.FieldCode));
+                var data = myResult.Result;
+
                 if (!AppTool.IsNullOrEmpty(this.SearchText)) {
-                    data = data.filter(f => f.FieldCode.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1);
+                    data = data.filter(f =>
+                        (!AppTool.IsNullOrEmpty(f.FieldCode) && f.FieldCode.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1) ||
+                        (!AppTool.IsNullOrEmpty(f.DisplayText) && f.DisplayText.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1) ||
+                        (!AppTool.IsNullOrEmpty(f.DefaultText) && f.DefaultText.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1));
                 }
-                
-                this.LabelsItemsSource.InsertCollection(data);
             }
+
+            this.LabelsItemsSource.InsertCollection(data);
         });
     }
 
@@ -50,12 +59,18 @@ export class AddDigitalFieldCodeComponent {
         }
     }
 
-
     Selecting(item) {
         this.SelectedDigitalFieldCode = item;
     }
 
+    AddFieldComponentClicked() {
+        this.IsAddingComponent = true;
+        var fieldcode = this.SelectedDigitalFieldCode?.FieldCode;
+        this.CurrentSession.CloseCurrentWindowEmit(fieldcode);
+    }
+
     AddFieldCodeClicked() {
+        this.IsAddingComponent = false;
         var fieldcode = this.SelectedDigitalFieldCode?.FieldCode;
         this.CurrentSession.CloseCurrentWindowEmit(fieldcode);
     }

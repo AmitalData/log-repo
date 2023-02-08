@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ChargesTypeUpdateClass
    {  		
-		public const string HashString = "eb4c05548799e88be24bd229224b0703";
+		public const string HashString = "a53c91f25496015d36552aa1d296b1c4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -99,8 +99,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTablePlural =  "Charges Types",
 			      				    DescriptionDefaultText =  "Add and maintain the services you use or provide, both for receivable and payable transactions. Define properties for billing and printing on AWB.",
 			      				    HasCustomFilter =  true,
-			      				    HasCustomFields =  false,
+			      				    HasCustomFields =  true,
 			      				    AvailableInCustomization =  true,
+			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  true,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -128,10 +130,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
 			      				    EnableSecurity =  true,
-			      				    AllowCustomFields =  false,
+			      				    AllowCustomFields =  true,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
-			      				    MaxNumberOfCustomFields =  0,
+			      				    MaxNumberOfCustomFields =  50,
 			      				    NewWizardControlName =  "Simplog.FreightLib.Views.ChargesTypes.ChargesTypeWizard.NewChargesTypeControlCommand",
 			      				    DefaultText =  "Charges Type",
 			      				    Code =  "CHTP",

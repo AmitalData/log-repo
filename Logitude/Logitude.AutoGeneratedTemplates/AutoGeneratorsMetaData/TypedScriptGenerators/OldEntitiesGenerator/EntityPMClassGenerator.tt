@@ -219,9 +219,11 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 <#+ if(hasCompstionCustomField){#> import { ChildEntitiesCustomFieldPM } from '../../Infrastructure/EntityPMs/ChildEntitiesCustomFieldPMExtended';<#+}#>
+<#+ if(entity.ApplyGenericCustomFields.ToString() == "true") {#>import { ObjectCustomFieldPM } from '../../Infrastructure/EntityPMs/ObjectCustomFieldPM';
+<#+}#>
 
 
-export class <#=tableName #>PM<#+ if(hasCompstionCustomField){#> extends ChildEntitiesCustomFieldPM<#+}#> {
+export class <#=tableName #>PM<#+ if(hasCompstionCustomField){#> extends ChildEntitiesCustomFieldPM<#+}#><#+ if(entity.ApplyGenericCustomFields.ToString() == "true"){#> extends ObjectCustomFieldPM<#+}#> {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
@@ -243,6 +245,8 @@ if(hasCompstionCustomField)
 }
 else{
 #>
+		  <#+ if(entity.ApplyGenericCustomFields.ToString() == "true"){#>super("<#=tableName #>");
+<#+}#>
           this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
@@ -255,6 +259,8 @@ else{
 }
 else{
 #>constructor() {
+		  <#+ if(entity.ApplyGenericCustomFields.ToString() == "true"){#>super("<#=tableName #>");
+<#+}#>
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }

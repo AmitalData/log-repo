@@ -32,6 +32,8 @@ import { AddDigitalPredefinedComponent } from './Components/DigitalPortal/AddDig
 import { AddDigitalLogitudeFieldComponent } from './Components/DigitalPortal/AddDigitalLogitudeFieldComponent';
 import { DigitalButtonComponent } from './Components/DigitalPortal/DigitalButtonComponent';
 import { DigitalCheckBoxComponent } from './Components/DigitalPortal/DigitalCheckBoxComponent';
+import { DigitalPortalCustomizationSubObjectsComponent } from './Components/DigitalPortal/DigitalPortalCustomizationSubObjectsComponent';
+
 
 export const ControlsComponents =
     [
@@ -80,7 +82,8 @@ export const Components =
         AddDigitalPredefinedComponent,
         AddDigitalLogitudeFieldComponent,
         DigitalButtonComponent,
-        DigitalCheckBoxComponent
+        DigitalCheckBoxComponent,
+        DigitalPortalCustomizationSubObjectsComponent
 
     ];
 
@@ -124,6 +127,7 @@ export class ModuleDeclarations {
             case "AddDigitalLogitudeFieldComponent": { myResult = AddDigitalLogitudeFieldComponent; break; }
             case "DigitalButtonComponent": { myResult = DigitalButtonComponent; break; }
             case "DigitalCheckBoxComponent": { myResult = DigitalCheckBoxComponent; break; }
+            case "DigitalPortalCustomizationSubObjectsComponent": { myResult = DigitalPortalCustomizationSubObjectsComponent; break; }
         }
 
         return myResult;

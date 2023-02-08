@@ -31,7 +31,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                              Tenant = a.Tenant,
                                                              PackageId = a.PackageId,
                                                              Harmonize = a.Harmonize,
-                                                         }).ToList();
+                                                         }).OrderBy(a => a.Id).ToList();
 
             return myResult;
         }

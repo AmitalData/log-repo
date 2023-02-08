@@ -42,7 +42,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                       VolumetricWeight = a.VolumetricWeight,
                                                                       ContainerTypeId = a.PackageTypeId,
                                                                       ContainerNumber = a.ContainerNumber,
-                                                                  }).ToList();
+                                                                  }).OrderBy(a => a.Id).ToList();
 
             foreach (ShipmentOrderPackagePM package in shipmentOrderPackages)
             {

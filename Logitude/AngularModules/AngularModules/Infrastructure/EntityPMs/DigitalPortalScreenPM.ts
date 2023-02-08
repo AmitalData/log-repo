@@ -15,11 +15,11 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class DigitalPortalScreenPM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+                    this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -67,6 +67,16 @@ export class DigitalPortalScreenPM {
     private draftContent: string;
     public get DraftContent() { return this.draftContent; }
     public set DraftContent(newValue: string) { if (this.draftContent != newValue) { this.draftContent = newValue; this.MarkAsDirty("DraftContent"); } }
+       
+	 
+    private profileId: string;
+    public get ProfileId() { return this.profileId; }
+    public set ProfileId(newValue: string) { if (this.profileId != newValue) { this.profileId = newValue; this.MarkAsDirty("ProfileId"); } }
+       
+	 
+    private profileCode: string;
+    public get ProfileCode() { return this.profileCode; }
+    public set ProfileCode(newValue: string) { if (this.profileCode != newValue) { this.profileCode = newValue; this.MarkAsDirty("ProfileCode"); } }
        
 	 
 

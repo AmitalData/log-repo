@@ -6,6 +6,34 @@
                     <td></td>
                 </tr>
 
+                <tr style="height: 1px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width: 10px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 180px;">
+                                    <ComboBox style="width:250px;float:left;" [WaterMark]="'Select Profile'" (SelectedItemChanged)="SelectedProfileItem = $event" [ItemsSource]="DigitalProfileFilterList" [SelectedItem]="SelectedProfileItem" [Binding]="'name'"></ComboBox>
+                                </td>
+
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+
+                                <td *ngIf="IsObjectTablesFilterVisible" style="width: 250px;">
+                                    <ComboBox style="width:250px;float:left;" [WaterMark]="'Select entity to show fields'" (SelectedItemChanged)="SelectedObjectTableItem = $event" [ItemsSource]="ObjectTablesFilterList" [SelectedItem]="SelectedObjectTableItem" [Binding]="'name'"></ComboBox>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
                 <tr>
                     <td>
                         <div class="MediaFillAbsolute MarginAbsolute10" style="background: white;">
@@ -20,7 +48,7 @@
                                                     <td [style.width.px]="MainMenuWidth">
                                                         <div [className]="LayoutDirection == 'rtl' ? 'MediaFill AppLeftMenuBackgroundRTL' : 'MediaFill AppLeftMenuBackground'">
                                                             <table class="PreventSelect">
-                                                                
+
                                                                 <tr style="background: rgba(212, 212, 212, 0.5);">
                                                                     <td>
                                                                         <table>
@@ -62,14 +90,17 @@
                                                             <div class="MediaFillAbsolute MarginAbsolute10" [hidden]="SelectedMenu.Code != 'ChageLabels'">
                                                                 <div LocationDirective Code="ChageLabels"></div>
                                                             </div>
-                                                            <div class="MediaFillAbsolute MarginAbsolute10" [hidden]="SelectedMenu.Code != 'TranslateLabels'">
+                                                            <!--<div class="MediaFillAbsolute MarginAbsolute10" [hidden]="SelectedMenu.Code != 'TranslateLabels'">
                                                                 <div LocationDirective Code="TranslateLabels"></div>
-                                                            </div>
+                                                            </div>-->
                                                             <div class="MediaFillAbsolute MarginAbsolute10" [hidden]="SelectedMenu.Code != 'ShowHideFields'">
                                                                 <div LocationDirective Code="ShowHideFields"></div>
                                                             </div>
                                                             <div class="MediaFillAbsolute MarginAbsolute10" [hidden]="SelectedMenu.Code != 'ScreenLayout'">
                                                                 <div LocationDirective Code="ScreenLayout"></div>
+                                                            </div>
+                                                            <div class="MediaFillAbsolute MarginAbsolute10" [hidden]="SelectedMenu.Code != 'SubObjects'">
+                                                                <div LocationDirective Code="SubObjects"></div>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -82,6 +113,7 @@
                         </div>
                     </td>
                 </tr>
+
                 <tr style="height:25px">
                     <td>
                         <table>
@@ -116,16 +148,16 @@
 
                                 <!-- Save & Close -->
                                 <!--<td style="width: 25px;">
-                                    <button id="{{ 'SaveClose' | IdGeneratorAsyncPipe | async}}" *ngIf="!IsDirty" class="Button" (click)="SaveChangesAndClose()" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe">
-                                        <img class="CenterCenter" src="./Images/Buttons/Save.png" />
-                                        <img src="./Images/RedX2.png" style="width: 7px; height: 7px; position: absolute; top:1px;" />
-                                    </button>
+                        <button id="{{ 'SaveClose' | IdGeneratorAsyncPipe | async}}" *ngIf="!IsDirty" class="Button" (click)="SaveChangesAndClose()" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe">
+                            <img class="CenterCenter" src="./Images/Buttons/Save.png" />
+                            <img src="./Images/RedX2.png" style="width: 7px; height: 7px; position: absolute; top:1px;" />
+                        </button>
 
-                                    <button id="{{ 'SaveClose' | IdGeneratorAsyncPipe | async}}" class="EntityChangesButton" *ngIf="IsDirty" (click)="SaveChangesAndClose()" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe">
-                                        <img class="CenterCenter" src="./Images/Buttons/Save.Red.png" />
-                                        <img src="./Images/RedX2.png" style="width: 7px; height: 7px; position: absolute; top:1px;" />
-                                    </button>
-                                </td>-->
+                        <button id="{{ 'SaveClose' | IdGeneratorAsyncPipe | async}}" class="EntityChangesButton" *ngIf="IsDirty" (click)="SaveChangesAndClose()" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe">
+                            <img class="CenterCenter" src="./Images/Buttons/Save.Red.png" />
+                            <img src="./Images/RedX2.png" style="width: 7px; height: 7px; position: absolute; top:1px;" />
+                        </button>
+                    </td>-->
                                 <td style="width: 12px;">
                                     <div></div>
                                 </td>

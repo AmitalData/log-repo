@@ -39,11 +39,14 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
+using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BL.CommonDataModel.CustomFilters;
+		  
+using WebFreight.Web.Controllers.CommonDataModel.ApiHelpers;
 		  
 namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 { 
@@ -65,20 +68,29 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				ChargesTypeRepository  chargesTypeRepository = new ChargesTypeRepository(MyContext);
-				ChargesTypeList entityList = null;
-				ChargesType entityPoco = chargesTypeRepository.GetSingleChargesType(id , authToken.Tenant);
+                IQueryable<ChargesType> chargesTypes = chargesTypeRepository.GetChargesTypes(authToken.Tenant).Where(d=>d.Id == id);
+                ChargesTypeQuery chargesTypeQuery = new ChargesTypeQuery(chargesTypeRepository);
+                ChargesTypeList entityList = chargesTypeQuery.GetIQueryableEntityList(chargesTypes).FirstOrDefault();
 
-				if (entityPoco != null)
+
+    //            if (entityPoco != null)
+				//{
+				//					List<ChargesType> singleEntityList = new List<ChargesType>();
+				//	singleEntityList.Add(entityPoco);
+
+				//	ChargesTypeQuery chargesTypeQuery = new ChargesTypeQuery(chargesTypeRepository);
+				//	IQueryable<ChargesType> iQueryable = singleEntityList.AsQueryable();
+				//	IQueryable<ChargesTypeList> iQueryableEntityList = chargesTypeQuery.GetIQueryableEntityList(iQueryable);
+				//    entityList = iQueryableEntityList.FirstOrDefault();
+
+			 //   }
+				if (entityList != null)
 				{
-									List<ChargesType> singleEntityList = new List<ChargesType>();
-					singleEntityList.Add(entityPoco);
-
-					ChargesTypeQuery chargesTypeQuery = new ChargesTypeQuery(chargesTypeRepository);
-					IQueryable<ChargesType> iQueryable = singleEntityList.AsQueryable();
-					IQueryable<ChargesTypeList> iQueryableEntityList = chargesTypeQuery.GetIQueryableEntityList(iQueryable);
-				    entityList = iQueryableEntityList.FirstOrDefault();
-
-			    }
+                	CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                	customFieldResolver.SetCustomFieldsValues("ChargesType",  authToken.Tenant, new List<ChargesTypeList> { entityList }.Cast<object>().ToList());
+ 	
+					entityList = ChargesTypeAPiHelper.ApplyFilters(entityList, authToken.Tenant);
+				}
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 				               
@@ -111,6 +123,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				entityLists = entityLists.OrderBy(d => d.Code);
 				List<ChargesTypeList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                customFieldResolver.SetCustomFieldsValues("ChargesType", authToken.Tenant, listResult.Cast<object>().ToList());
 										
 				return Request.CreateResponse(HttpStatusCode.OK, listResult);
             }
@@ -216,6 +230,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 }
 
 
+                ChargesTypeAPiHelper.AddFilters(queryOperations, tenant);
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
                 
@@ -243,7 +258,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				                
 				ChargesTypeCustomFilter customfilters = new ChargesTypeCustomFilter(tenant);
                 entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
-	
+	            entityPocos = ChargesTypeAPiHelper.ApplyFilters(entityPocos, tenant);
+
                 entityPocos = genericFilter.GetFilteredQuery<ChargesType>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
                 IQueryable<ChargesTypeList> entityLists = chargesTypeQuery.GetIQueryableEntityList(entityPocos);
@@ -336,6 +352,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 				}
 			   List<ChargesTypeList> listResult = entityLists.ToList();
+               CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+               customFieldResolver.SetCustomFieldsValues("ChargesType", authToken.Tenant, listResult.Cast<object>().ToList());
 
                response.Result = listResult;
 			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);

@@ -1434,6 +1434,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 isInitializing = true;
             }
 
+            else if (paymentPM.IsTransferStatusSetManually)
+            {
+                isInitializing = false;
+            }
+
             else if (paymentPoco.TransferStatusCode == "TR")
             {
                 isInitializing = false;
@@ -2200,7 +2205,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             XmlElement comprobanteComplementoXMLElement = GetcomprobanteComplementoXMLElement(arPayment.SATXML);
             SATInterfaceHelper sATInterfaceHelper = new SATInterfaceHelper();
-            sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(arPayment, comprobanteComplementoXMLElement, aRInvoiceRepository, aRPaymentRepository);
+            sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(arPayment.Id, tenant, comprobanteComplementoXMLElement, aRInvoiceRepository, aRPaymentRepository);
         }
 
         public static void TryUpdateCanceledARPaymentStatus(ARPayment arPayment, int tenant, ARPaymentRepository aRPaymentRepository)

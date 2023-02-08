@@ -23,6 +23,7 @@ export class WorkFlowVersionList {
 	FlowJson: string;
 	Entity: string;
 	Trigger: string;
+	ActivatedDate: Date;
 	
 }
  

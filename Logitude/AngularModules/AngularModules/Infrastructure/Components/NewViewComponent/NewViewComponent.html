@@ -226,6 +226,13 @@
                                             </div>
                                         </li>
 
+                                        <li *ngIf="IsFromCustomization" [class.Selected]="SelectedTabCode == 'ADV'" [style.float]="RTL == true ? 'right' : 'left'" (click)="SelectedTabCode = 'ADV'" style="width:150px;font-size:13px;color:#45494A;height:25px;border-radius: 7px 7px 0 0;">
+                                            <div class="InnerChild">
+                                                <img [style.float]="RTL == true ? 'right' : 'left'" src="./Images/Icons/Share.png" style="margin-top:1px;" />
+                                                <span class="CenterCenter" [style.left.px]="RTL == true ? 660 : 250" [style.right.px]="RTL == true ? 240 : 120" style="top:2px;">Advanced Settings</span>
+                                            </div>
+                                        </li>
+
                                         <li *ngIf="ShareTabIsVisible" [class.Selected]="SelectedTabCode == 'SHR'" [style.float]="RTL == true ? 'right' : 'left'" (click)="SelectedTabCode = 'SHR'" style="width:109px;font-size:13px;color:#45494A;height:25px;border-radius: 7px 7px 0 0;">
                                             <div class="InnerChild">
                                                 <img [style.float]="RTL == true ? 'right' : 'left'" src="./Images/Icons/Share.png" style="margin-top:1px;" />
@@ -235,8 +242,8 @@
                                     </ul>
                                 </td>
                                 <td></td>
-                                <td style="width:170px" *ngIf="SpotlightFeatureEnabled">
-                                    <table>
+                                <td style="width:170px">
+                                    <table *ngIf="SpotlightFeatureEnabled">
                                         <tr>
                                             <td>
                                                 <label> Show in Spotlight Mode</label>
@@ -559,6 +566,52 @@
                             </div>
                         </div>
 
+                        <!-- Advanced Settings -->
+                        <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'ADV'" [style.float]="RTL == true ? 'right' : 'left'">
+                            <div class="LocationDirective" LocationDirective Code="ADV">
+                                <table style="margin: 7px 20px 7px 7px;">
+                                    <tr>
+                                        <td style="width:500px;">
+                                            <table>
+                                                <tr style="height:5px;">
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="FormFieldRow">
+                                                    <td>
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width:100px" class="Label">
+                                                                    <label> Is Default:</label>
+                                                                </td>
+                                                                <td style="width:20px">
+                                                                    <CheckBox [IsChecked]="IsDefault" (Checked)="IsDefault = $event"></CheckBox>
+                                                                </td>
+                                                                <td style="width:18px;">
+                                                                    <HelpIcon [Text]="'Using field you defining the default view that will be shown when open the ' + CurrentObjectTableName"></HelpIcon>
+                                                                </td>
+                                                                <td></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr style="height:10px;">
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
                         <!-- Share -->
                         <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'SHR'" [style.float]="RTL == true ? 'right' : 'left'">
                             <div class="LocationDirective" LocationDirective Code="SHR">
@@ -596,8 +649,8 @@
                                                                     <Hyperlink [IsEnabled]="IsSaveButtonEnabled" style="margin-left:5px;" (click)="ChooseUsers()" [FontSize]="12" [Text]="'Choose'"></Hyperlink>
                                                                 </td>
                                                                 <!--<td *ngIf="IsChooseUsersVisible">
-                        <div style="margin-left:5px;color: #1E8DC4">( {{ShareWithUsersCount}} selected )</div>
-                    </td>-->
+                                                <div style="margin-left:5px;color: #1E8DC4">( {{ShareWithUsersCount}} selected )</div>
+                                            </td>-->
                                                                 <td>
                                                                     <div></div>
                                                                 </td>
@@ -692,7 +745,7 @@
             <td style="width:100%;" [style.float]="RTL == true ? 'left' : 'right'">
                 <button id="{{'NewButton.View.Create ' | IdGeneratorAsyncPipe | async}}" class="RedButton" [disabled]="!IsSaveButtonEnabled" (click)="btnCreateNewQuery_Click()" [style.float]="RTL == true ? 'left' : 'right'" style="width:72px;">{{CreateBtnText}}</button>
                 <button class="Button" (click)="CancelButtonClicked()" [style.float]="RTL == true ? 'left' : 'right'" [style.marginRight.px]="RTL == true ? 0 : 5" [style.marginLeft.px]="RTL == true ? 5 : 0" style="width:72px;">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
-                <button *ngIf="!IsNew" class="Button" [disabled]="!IsSaveButtonEnabled" (click)="DeleteButtonClicked()" [style.float]="RTL == true ? 'left' : 'right'" [style.marginRight.px]="RTL == true ? 0 : 5" [style.marginLeft.px]="RTL == true ? 5 : 0" style="width:72px;">{{'General.B.Delete' | TextCodeTranslationPipe}}</button>
+                <button *ngIf="!IsNew && !IsFromCustomization" class="Button" [disabled]="!IsSaveButtonEnabled" (click)="DeleteButtonClicked()" [style.float]="RTL == true ? 'left' : 'right'" [style.marginRight.px]="RTL == true ? 0 : 5" [style.marginLeft.px]="RTL == true ? 5 : 0" style="width:72px;">{{'General.B.Delete' | TextCodeTranslationPipe}}</button>
             </td>
         </tr>
     </table>

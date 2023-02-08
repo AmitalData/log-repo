@@ -2,6 +2,7 @@
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,14 +29,14 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public DataCustomObject GetSingleDataCustomObject(string id, int tenant)
         {
-            return (from a in context.DataCustomObjects
+            return (from a in context.DataCustomObjects.Include("CreatedByUser.Contact").Include("UpdatedByUser.Contact")
                     where a.Tenant == tenant && a.Id == id
                     select a).FirstOrDefault();
         }
 
         public List<DataCustomObject> GetByObjectTableId(int tenant, string objectTableId)
         {
-            return (from a in context.DataCustomObjects
+            return (from a in context.DataCustomObjects.Include("CreatedByUser.Contact").Include("UpdatedByUser.Contact")
                     where a.Tenant == tenant && a.ObjectTableId == objectTableId
                     select a).ToList();
         }
@@ -85,6 +86,10 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         public IQueryable<DataCustomObject> GetDataCustomObjects(int tenant)
         {
             return context.DataCustomObjects.Where(d => d.Tenant == tenant);
+        }
+        public IQueryable<DataCustomObject> GetDataCustomObjectsByObjectTableId(int tenant, string objectTableId)
+        {
+            return context.DataCustomObjects.Where(d => d.Tenant == tenant && d.ObjectTableId == objectTableId);
         }
     }
 }

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class WarehouseEntryUpdateClass
    {  		
-		public const string HashString = "278678a5afc857d5f6d5c10d6a886134";
+		public const string HashString = "c17e7dddf00dfc69edb399894a405150";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -98,9 +98,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableSingular =  "WarehouseEntry",
 			      				    ObjectTablePlural =  "WarehouseEntries",
 			      				    HasCustomFilter =  true,
-			      				    HasCustomFields =  false,
+			      				    HasCustomFields =  true,
 			      				    AvailableInCustomization =  true,
 			      				    SupportSubEntity =  true,
+			      				    ApplyGenericCustomFields =  true,
 			      				    HasHelper =  true,
 			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  true,
@@ -123,10 +124,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
 			      				    EnableSecurity =  true,
-			      				    AllowCustomFields =  false,
+			      				    AllowCustomFields =  true,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
-			      				    MaxNumberOfCustomFields =  0,
+			      				    MaxNumberOfCustomFields =  50,
 			      				    DefaultText =  "Warehouse Entry",
 			      				    Code =  "b972",
 			      				    Name =  "WarehouseEntry Query Group",
@@ -324,7 +325,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
@@ -386,8 +387,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
+					  						AllowedinAutomationConditions =  true,
+					  						AutomationEmailRecipient =  true,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
@@ -448,7 +449,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
@@ -510,7 +511,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
@@ -637,9 +638,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -653,7 +654,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ShipmentId",
 					  						ObjectTableName =  "WarehouseEntry",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Shipment",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -701,7 +703,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInAutomationAsEnitity =  true,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -824,9 +826,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -886,9 +888,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -949,9 +951,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
@@ -1012,9 +1014,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -1077,7 +1079,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -1139,7 +1141,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
@@ -1201,7 +1203,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
@@ -1265,7 +1267,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
@@ -1329,7 +1331,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -1391,7 +1393,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
@@ -1455,7 +1457,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -1518,7 +1520,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -1697,7 +1699,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
@@ -2131,7 +2133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -2250,7 +2252,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
@@ -2317,7 +2319,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsFixedLength =  true,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
@@ -2381,9 +2383,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -2445,9 +2447,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -2507,9 +2509,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -2568,7 +2570,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -2630,9 +2632,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -2697,7 +2699,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsFixedLength =  true,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
@@ -2759,7 +2761,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
@@ -2824,7 +2826,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -3482,7 +3484,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
@@ -3664,9 +3666,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -3725,7 +3727,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -3784,7 +3786,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -3843,7 +3845,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -3902,7 +3904,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -4383,7 +4385,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -4445,7 +4447,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
@@ -4744,7 +4746,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -5115,6 +5117,70 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IsUpdateByAutomation",
+					  						ObjectTableName =  "WarehouseEntry",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IsUpdateByAutomation",
+					  						ListPropertyPath =  "IsUpdateByAutomation",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "WarehouseEntry",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IsUpdateByAutomation",
+					  						DefaultText =  "IsUpdateByAutomation",
+					  						FullLocalDefaultText =  "IsUpdateByAutomation",
+					  						ListFieldLable =  "IsUpdateByAutomationListLable",
+					  						ListLableDefaultText =  "IsUpdateByAutomation",
+					  						ListLocalDefaultText =  "IsUpdateByAutomation",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  true,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -5414,6 +5480,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                  
 			   TextCode WarehouseEntryEventsTextCode_TH7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.TH.Events", DefaultText = "Events",LocalDefaultText = "Events", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature WarehouseEntryEventsFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Tab.Events", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseEntryObjectTable);
+ 
+                 
+			   TextCode WarehouseEntryAuditTextCode_TH8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.TH.Audit", DefaultText = "Audit",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature WarehouseEntryAuditFeature_TH8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Tab.Audit", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntryFeatures.WEAU", NameTextCodeDefaultText = "Audit", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseEntryObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -5421,19 +5491,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GWEN",HtmlComponentName = "EditWarehouseEntryComponent",HtmlComponentUrl = " ./Warehouse/Components/EditWarehouseEntryComponent", FeatureId = WarehouseEntryGeneralFeature_TH0.Id,FeatureUniqeCode = WarehouseEntryGeneralFeature_TH0.FeatureUniqeCode, ControlPath = " ./Warehouse/Components/EditWarehouseEntryComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryGeneralTextCode_TH0.Id, TabNameTextCodeCode = WarehouseEntryGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PAEY",HtmlComponentName = "WarehouseEntryPartnersTabComponent",HtmlComponentUrl = " ./Warehouse/Components/EditTabs/PartnersTab/WarehouseEntryPartnersTabComponent", FeatureId = WarehouseEntryPartnersFeature_TH1.Id,FeatureUniqeCode = WarehouseEntryPartnersFeature_TH1.FeatureUniqeCode, ControlPath = " ./Warehouse/Components/EditTabs/PartnersTab/WarehouseEntryPartnersTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryPartnersTextCode_TH1.Id, TabNameTextCodeCode = WarehouseEntryPartnersTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PAEY",HtmlComponentName = "WarehouseEntryPartnersTabComponent",HtmlComponentUrl = " ./Warehouse/Components/EditTabs/PartnersTab/WarehouseEntryPartnersTabComponent", FeatureId = WarehouseEntryPartnersFeature_TH1.Id,FeatureUniqeCode = WarehouseEntryPartnersFeature_TH1.FeatureUniqeCode, ControlPath = " ./Warehouse/Components/EditTabs/PartnersTab/WarehouseEntryPartnersTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryPartnersTextCode_TH1.Id, TabNameTextCodeCode = WarehouseEntryPartnersTextCode_TH1.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PACE",HtmlComponentName = "WarehouseEntryPackagesTabComponent",HtmlComponentUrl = " ./Warehouse/Components/EditTabs/PackagesTab/WarehouseEntryPackagesTabComponent", FeatureId = WarehouseEntryPackagesFeature_TH2.Id,FeatureUniqeCode = WarehouseEntryPackagesFeature_TH2.FeatureUniqeCode, ControlPath = " ./Warehouse/Components/EditTabs/PackagesTab/WarehouseEntryPackagesTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryPackagesTextCode_TH2.Id, TabNameTextCodeCode = WarehouseEntryPackagesTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PACE",HtmlComponentName = "WarehouseEntryPackagesTabComponent",HtmlComponentUrl = " ./Warehouse/Components/EditTabs/PackagesTab/WarehouseEntryPackagesTabComponent", FeatureId = WarehouseEntryPackagesFeature_TH2.Id,FeatureUniqeCode = WarehouseEntryPackagesFeature_TH2.FeatureUniqeCode, ControlPath = " ./Warehouse/Components/EditTabs/PackagesTab/WarehouseEntryPackagesTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryPackagesTextCode_TH2.Id, TabNameTextCodeCode = WarehouseEntryPackagesTextCode_TH2.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ROEY",HtmlComponentName = "WarehouseEntryRoutingsTabComponent",HtmlComponentUrl = " ./Warehouse/Components/EditTabs/RoutingsTab/WarehouseEntryRoutingsTabComponent", FeatureId = WarehouseEntryRoutingsFeature_TH3.Id,FeatureUniqeCode = WarehouseEntryRoutingsFeature_TH3.FeatureUniqeCode, ControlPath = " ./Warehouse/Components/EditTabs/RoutingsTab/WarehouseEntryRoutingsTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryRoutingsTextCode_TH3.Id, TabNameTextCodeCode = WarehouseEntryRoutingsTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ROEY",HtmlComponentName = "WarehouseEntryRoutingsTabComponent",HtmlComponentUrl = " ./Warehouse/Components/EditTabs/RoutingsTab/WarehouseEntryRoutingsTabComponent", FeatureId = WarehouseEntryRoutingsFeature_TH3.Id,FeatureUniqeCode = WarehouseEntryRoutingsFeature_TH3.FeatureUniqeCode, ControlPath = " ./Warehouse/Components/EditTabs/RoutingsTab/WarehouseEntryRoutingsTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryRoutingsTextCode_TH3.Id, TabNameTextCodeCode = WarehouseEntryRoutingsTextCode_TH3.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DOWE",HtmlComponentName = "WarehouseDocsOutTabComponent",HtmlComponentUrl = "./Warehouse/Components/EditTabs/DocsOut/WarehouseDocsOutTabComponent", FeatureId = WarehouseEntryDocsOutFeature_TH4.Id,FeatureUniqeCode = WarehouseEntryDocsOutFeature_TH4.FeatureUniqeCode, ControlPath = "./Warehouse/Components/EditTabs/DocsOut/WarehouseDocsOutTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryDocsOutTextCode_TH4.Id, TabNameTextCodeCode = WarehouseEntryDocsOutTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DOWE",HtmlComponentName = "WarehouseDocsOutTabComponent",HtmlComponentUrl = "./Warehouse/Components/EditTabs/DocsOut/WarehouseDocsOutTabComponent", FeatureId = WarehouseEntryDocsOutFeature_TH4.Id,FeatureUniqeCode = WarehouseEntryDocsOutFeature_TH4.FeatureUniqeCode, ControlPath = "./Warehouse/Components/EditTabs/DocsOut/WarehouseDocsOutTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryDocsOutTextCode_TH4.Id, TabNameTextCodeCode = WarehouseEntryDocsOutTextCode_TH4.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DIWE",HtmlComponentName = "WarehouseDocsInTabComponent",HtmlComponentUrl = "./Warehouse/Components/EditTabs/DocsIn/WarehouseDocsInTabComponent", FeatureId = WarehouseEntryDocsInFeature_TH5.Id,FeatureUniqeCode = WarehouseEntryDocsInFeature_TH5.FeatureUniqeCode, ControlPath = "./Warehouse/Components/EditTabs/DocsIn/WarehouseDocsInTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryDocsInTextCode_TH5.Id, TabNameTextCodeCode = WarehouseEntryDocsInTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DIWE",HtmlComponentName = "WarehouseDocsInTabComponent",HtmlComponentUrl = "./Warehouse/Components/EditTabs/DocsIn/WarehouseDocsInTabComponent", FeatureId = WarehouseEntryDocsInFeature_TH5.Id,FeatureUniqeCode = WarehouseEntryDocsInFeature_TH5.FeatureUniqeCode, ControlPath = "./Warehouse/Components/EditTabs/DocsIn/WarehouseDocsInTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryDocsInTextCode_TH5.Id, TabNameTextCodeCode = WarehouseEntryDocsInTextCode_TH5.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COWE",HtmlComponentName = "WarehouseConnectionsTabComponent",HtmlComponentUrl = "./Warehouse/Components/EditTabs/ConnectionsTab/WarehouseConnectionsTabComponent", FeatureId = WarehouseEntryConnectedEntitiesFeature_TH6.Id,FeatureUniqeCode = WarehouseEntryConnectedEntitiesFeature_TH6.FeatureUniqeCode, ControlPath = "./Warehouse/Components/EditTabs/ConnectionsTab/WarehouseConnectionsTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryConnectedEntitiesTextCode_TH6.Id, TabNameTextCodeCode = WarehouseEntryConnectedEntitiesTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COWE",HtmlComponentName = "WarehouseConnectionsTabComponent",HtmlComponentUrl = "./Warehouse/Components/EditTabs/ConnectionsTab/WarehouseConnectionsTabComponent", FeatureId = WarehouseEntryConnectedEntitiesFeature_TH6.Id,FeatureUniqeCode = WarehouseEntryConnectedEntitiesFeature_TH6.FeatureUniqeCode, ControlPath = "./Warehouse/Components/EditTabs/ConnectionsTab/WarehouseConnectionsTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryConnectedEntitiesTextCode_TH6.Id, TabNameTextCodeCode = WarehouseEntryConnectedEntitiesTextCode_TH6.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EVWE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = WarehouseEntryEventsFeature_TH7.Id,FeatureUniqeCode = WarehouseEntryEventsFeature_TH7.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryEventsTextCode_TH7.Id, TabNameTextCodeCode = WarehouseEntryEventsTextCode_TH7.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EVWE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = WarehouseEntryEventsFeature_TH7.Id,FeatureUniqeCode = WarehouseEntryEventsFeature_TH7.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryEventsTextCode_TH7.Id, TabNameTextCodeCode = WarehouseEntryEventsTextCode_TH7.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "WEAU",HtmlComponentName = "WarehouseEntryAuditTabComponent",HtmlComponentUrl = "./Warehouse/Components/EditTabs/Audit/WarehouseEntryAuditTabComponent", FeatureId = WarehouseEntryAuditFeature_TH8.Id,FeatureUniqeCode = WarehouseEntryAuditFeature_TH8.FeatureUniqeCode, ControlPath = "./Warehouse/Components/EditTabs/Audit/WarehouseEntryAuditTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryAuditTextCode_TH8.Id, TabNameTextCodeCode = WarehouseEntryAuditTextCode_TH8.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -5444,7 +5516,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature WarehouseEntryFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,WarehouseEntryObjectTable);
 		   Feature WarehouseEntryFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,WarehouseEntryObjectTable);
 		   Feature WarehouseEntryFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,WarehouseEntryObjectTable);
-		   Feature WarehouseEntryFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.PackageFeature", NameTextCodeDefaultText = "WarehouseEntry Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,WarehouseEntryObjectTable);    
+		   Feature WarehouseEntryFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.PackageFeature", NameTextCodeDefaultText = "WarehouseEntry Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,WarehouseEntryObjectTable); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature WarehouseEntryFeature_AUTOMATION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUTOMATION", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.AUTOMATION", NameTextCodeDefaultText = @"Automation" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,WarehouseEntryObjectTable);
+
+   
 	    
 		}
 

@@ -39,13 +39,19 @@ export class LogitudeWindow {
     public IsFillScreen_115: boolean = false;
     LayoutDirection: string = 'ltr';
     public ZIndex: number = 0;
+    public ZIndexModified: boolean;
     public IsFillScreen_90: boolean = false;
     public SuppressBusyIndicator: boolean = false;
     public IsHideWindowMargin: boolean = false;
     public EditComponentArguments: any = null;
+    public IsViewMode: boolean = false;
+    public ShowFooterButtons: boolean = false;
+    public SubmitFooterButtonLabel: string | null = null;
+    public CancelFooterButtonLabel: string | null = null;
 
     @Output() WindowClosed: EventEmitter<any> = new EventEmitter();
     @Output() ComponentLoaded: EventEmitter<any> = new EventEmitter();
+    @Output() FooterButtonsClicked: EventEmitter<any> = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.LayoutDirection = Settings.LayoutDirection;
@@ -271,8 +277,13 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
     public IsHideWindowMargin: boolean = false;
     LayoutDirection: string = 'ltr';
     public ZIndex: number = 0;
+    public ZIndexModified: boolean;
     leftPadding: number = 0;
     public IsOverAll: boolean = false;
+    public IsViewMode: boolean = false;
+    public ShowFooterButtons: boolean = false;
+    public SubmitFooterButtonLabel: string | null = null;
+    public CancelFooterButtonLabel: string | null = null;
     private CurrentSession = SessionLocator.SelectedSession;
     @ViewChild(ChildDirective) Child: ChildDirective;
     constructor() {
@@ -313,12 +324,17 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.IsShowAutomationDelayTitle = logWindow.IsShowAutomationDelayTitle;
         this.ShowHelpIcon = logWindow.ShowHelpIcon;
         this.ZIndex = logWindow.ZIndex;
+        this.ZIndexModified = logWindow.ZIndexModified;
         this.ChildComponentPath = myComponentPath;
         this.HelpText = logWindow.HelpText;
         this.RTL = logWindow.RTL;
         this.CustomTitleIcon = logWindow.CustomTitleIcon;
         this.BottomBorderForTitle = logWindow.BottomBorderForTitle;
         this.IsHideWindowMargin = logWindow.IsHideWindowMargin;
+        this.IsViewMode = logWindow.IsViewMode;
+        this.ShowFooterButtons = logWindow.ShowFooterButtons;
+        this.SubmitFooterButtonLabel = logWindow.SubmitFooterButtonLabel;
+        this.CancelFooterButtonLabel = logWindow.CancelFooterButtonLabel;
         this.SetWindowSize();
         this.isChildInjected = true;
         this.LoadChildComponent();
@@ -347,6 +363,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.IsShowAutomationDelayTitle = logWindow.IsShowAutomationDelayTitle;
         this.ShowHelpIcon = logWindow.ShowHelpIcon;
         this.ZIndex = logWindow.ZIndex;
+        this.ZIndexModified = logWindow.ZIndexModified;
         this.NotifyOnClose = logWindow.NotifyOnClose;
         this.BottomBorderForTitle = logWindow.BottomBorderForTitle;
         this.IsHideWindowMargin = logWindow.IsHideWindowMargin;
@@ -354,6 +371,10 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.HelpText = logWindow.HelpText;
         this.RTL = logWindow.RTL;
         this.CustomTitleIcon = logWindow.CustomTitleIcon;
+        this.IsViewMode = logWindow.IsViewMode;
+        this.ShowFooterButtons = logWindow.ShowFooterButtons;
+        this.SubmitFooterButtonLabel = logWindow.SubmitFooterButtonLabel;
+        this.CancelFooterButtonLabel = logWindow.CancelFooterButtonLabel;
         this.SetWindowSize();
         this.isChildInjected = true;
         this.LoadChildComponent();
@@ -608,6 +629,10 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         if (this.ComponentInstance && this.ComponentInstance.OnCTRL_S_HotKeyPressed) {
             this.ComponentInstance.OnCTRL_S_HotKeyPressed();
         }
+    }
+
+    FooterButtonsClicked(event: string){
+        this.logWindow.FooterButtonsClicked.emit(event);
     }
 }
 

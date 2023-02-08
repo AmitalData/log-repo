@@ -1,13 +1,9 @@
 import { Component } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
-import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
-import { FieldTypes } from "Workflow/Constants/FieldTypes";
-import { SetValueOperators } from "Workflow/Constants/SetValueOperators";
-import { Entities } from "Workflow/Models/Entities";
-import { EntitiesTreeList } from "Workflow/Models/EntitiesTreeList";
-import { ObjectTables } from "Workflow/Models/ObjectTables";
+import { EntitiesTreeList } from "Workflow/TreeLists/EntitiesTreeList";
+import { ObjectTables } from "Workflow/Utilities/ObjectTables";
 import { SetValue } from "Workflow/Models/SetValue";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
@@ -19,6 +15,7 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
 
     public DataContext: any = this;
     public Data: any;
+    public IsNew: boolean;
     public Name: string = null;
     public RecordsLimit: string = null;
     public Entity: string = null;
@@ -27,7 +24,6 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
 
     public FlowObject: any;
     public CurrentNodeId: string;
-    public FlowObjectFields: ObjectFieldList[];
 
     public EntitiesTreeList: EntitiesTreeList;
     public EntitiesTreeItems: TreeSelectItem[];
@@ -38,15 +34,28 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
 
     public CurrentSession = SessionLocator.SelectedSession;
 
-    public ExcludedEntities: string[] = ["Customer", "User", "ShipmentStoragePricing", "Shipment.ARInvoice", "Shipment.APInvoice"];
+    public ExcludedEntities: string[] = ["Customer", "User", "ShipmentStoragePricing", "ARInvoice", "APInvoice"];
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
         this.FlowObject = args.FlowObject ? args.FlowObject : null;
         this.CurrentNodeId = args.CurrentNodeId ? args.CurrentNodeId : null;
-        this.FlowObjectFields = args.FlowObjectFields ? args.FlowObjectFields : [];
+    }
+
+    ngOnInit() {
+        this.initializeWindowEvents();
         this.initializeEntitiesTreeItems();
         this.initialize();
+    }
+
+    initializeWindowEvents() {
+        this.CurrentSession.CurrentWindow.FooterButtonsClicked.subscribe((e: any) => {
+            if (e === "submit") {
+                this.saveButtonClicked();
+            } else {
+                this.cancelButtonClicked();
+            }
+        });
     }
 
     initializeEntitiesTreeItems() {
@@ -55,7 +64,9 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
     }
 
     initialize() {
-        this.Name = this.Data["name"] || null;
+        this.IsNew = Object.keys(this.Data).length === 0;
+
+        this.Name = this.Data["label"] || this.Data["name"] || null;
         this.RecordsLimit = this.Data["recordsLimit"] ? this.Data["recordsLimit"] : "One";
         this.Entity = this.Data["entity"] || null;
 
@@ -77,25 +88,25 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
         if (this.SetValues.length === 0) {
             let setValue = new SetValue();
 
-            let isChildEntity = this.Entity ? (this.Entity.indexOf(".") !== -1) : false;
-            if (isChildEntity) {
-                let entities = this.Entity.split(".");
-                let parentEntity = entities[0];
-                let childEntity = entities[1];
-                let childField = Entities.getChildField(parentEntity, childEntity);
-                let fieldCode = childEntity + "." + childField;
-                let objectField = this.FlowObjectFields.find(o => o.FieldCode === fieldCode);
-                let parentEntityObjectTable = ObjectTables.getByName(parentEntity);
+            // let isChildEntity = this.Entity ? (this.Entity.indexOf(".") !== -1) : false;
+            // if (isChildEntity) {
+            //     let entities = this.Entity.split(".");
+            //     let parentEntity = entities[0];
+            //     let childEntity = entities[1];
+            //     let childField = Entities.getChildField(parentEntity, childEntity);
+            //     let fieldCode = childEntity + "." + childField;
+            //     let objectField = ObjectFields.getByCode(fieldCode);
+            //     let parentEntityObjectTable = ObjectTables.getByName(parentEntity);
 
-                setValue.field = childField;
-                setValue.fieldCode = fieldCode;
-                setValue.type = objectField ? objectField.DataTypeCode : null;
-                setValue.lookupType = objectField && objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null;
-                setValue.picklistType = objectField && objectField.DataTypeCode === FieldTypes.PickList ? objectField.CustomPickListCode : null;
-                setValue.value = "triggeringrecord_" + parentEntity + "." + (parentEntityObjectTable ? parentEntityObjectTable.KeyPropertyPath : "Id");
-                setValue.operator = SetValueOperators.EqualsField;
-                setValue.isDisabled = true;
-            }
+            //     setValue.field = childField;
+            //     setValue.fieldCode = fieldCode;
+            //     setValue.type = objectField ? objectField.DataTypeCode : null;
+            //     setValue.lookupType = objectField && objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null;
+            //     setValue.picklistType = objectField && objectField.DataTypeCode === FieldTypes.PickList ? objectField.CustomPickListCode : null;
+            //     setValue.value = "triggeringrecord_" + parentEntity + "." + (parentEntityObjectTable ? parentEntityObjectTable.KeyPropertyPath : "Id");
+            //     setValue.operator = SetValueOperators.EqualsField;
+            //     setValue.isDisabled = true;
+            // }
 
             this.SetValues.push(setValue);
             this.IsValidSetValues = false;
@@ -111,9 +122,13 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
         this.IsValidSetValues = isValidSetValues;
     }
 
-    updateName(Name: any) {
-        this.Data["name"] = Name;
-        this.Name = Name;
+    updateName(name: string) {
+        if(this.IsNew){
+            this.Data["name"] = name;
+        }
+
+        this.Data["label"] = name;
+        this.Name = name;
 
         this.setUIProperties();
     }

@@ -28,6 +28,7 @@
     .table-container {
         overflow: auto;
         height: 420px;
+        pointer-events: auto !important;
     }
 
     .label {
@@ -36,6 +37,16 @@
 
     .table-row-cell-label {
         padding-bottom: 6px;
+    }
+
+    .table-row-cell-block {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .input-container {
+        width: 320px;
+        height: 30px;
     }
 </style>
 
@@ -77,7 +88,7 @@
     <tr class="table-row">
         <td class="table-row-cell-label">
             <div class="table-row-cell-block">
-                <div class="label">Append record to this Collection</div>
+                <div class="label">Append to This Collection</div>
             </div>
         </td>
     </tr>
@@ -90,8 +101,8 @@
             </div>
             <div class="table-row-cell-block">
                 <TreeSelect [Items]="SingleEditableEntitiesTreeItems" [Width]="'300px'" [Value]="Collection"
-                    [ShowItem]="ExcludedEntities | ShowEntitiesTreeItemPipe : false"
-                    (ValueChanged)="updateCollection($event)" [IsReturnedTreeSelectItem]="true">
+                    [ShowItem]="ExcludedEntities | ShowEntitiesTreeItemPipe : false" [IsReturnedTreeSelectItem]="true"
+                    (ValueChanged)="updateCollection($event)">
                 </TreeSelect>
             </div>
         </td>
@@ -103,15 +114,15 @@
         </td>
     </tr>
 
-    <tr *ngIf="EntityId" class="table-row">
+    <tr *ngIf="EntityId || DeclareType" class="table-row">
         <td class="table-row-cell-label">
             <div class="table-row-cell-block">
-                <div class="label">How to Set the Record Fields</div>
+                <div class="label">How to Set The Record Fields</div>
             </div>
         </td>
     </tr>
 
-    <tr *ngIf="EntityId" class="table-row">
+    <tr *ngIf="EntityId || DeclareType " class="table-row">
         <td class="table-row-cell">
             <div class="table-row-cell-block">
                 <table>
@@ -120,7 +131,7 @@
                             <RadioButton [Name]="'SetRecordFieldsTypeRadio'"
                                 [IsChecked]="SetRecordFieldsType === SetRecordFieldsTypes.UseRecord"
                                 (Checked)="updateSetRecordFieldsType(SetRecordFieldsTypes.UseRecord)"
-                                [Text]="'Use all fields values from a record'" [Top]="5"
+                                [Text]="'Use value from variable'" [Top]="5"
                                 [DataCy]="'set-record-fields-type-userecord'">
                             </RadioButton>
                         </td>
@@ -130,7 +141,8 @@
                             <RadioButton [Name]="'SetRecordFieldsTypeRadio'"
                                 [IsChecked]="SetRecordFieldsType === SetRecordFieldsTypes.SetValues"
                                 (Checked)="updateSetRecordFieldsType(SetRecordFieldsTypes.SetValues)"
-                                [Text]="'Set fields values'" [Top]="5" [DataCy]="'set-record-fields-type-setvalues'">
+                                [Text]="'Set value'" [Top]="5"
+                                [DataCy]="'set-record-fields-type-setvalues'">
                             </RadioButton>
                         </td>
                     </tr>
@@ -139,16 +151,16 @@
         </td>
     </tr>
 
-    <tr *ngIf="EntityId && SetRecordFieldsType === SetRecordFieldsTypes.UseRecord" class="table-row">
+    <tr *ngIf="(EntityId || DeclareType) && SetRecordFieldsType === SetRecordFieldsTypes.UseRecord" class="table-row">
         <td class="table-row-cell">
             <div class="split-block"></div>
         </td>
     </tr>
 
-    <tr *ngIf="EntityId && SetRecordFieldsType === SetRecordFieldsTypes.UseRecord" class="table-row">
+    <tr *ngIf="(EntityId || DeclareType) && SetRecordFieldsType === SetRecordFieldsTypes.UseRecord" class="table-row">
         <td class="table-row-cell-label">
             <div class="table-row-cell-block">
-                <div class="label">Select Record to Append</div>
+                <div class="label">Select Variable to Append:</div>
             </div>
         </td>
     </tr>
@@ -156,33 +168,59 @@
     <tr *ngIf="EntityId && SetRecordFieldsType === SetRecordFieldsTypes.UseRecord" class="table-row">
         <td class="table-row-cell">
             <div>
-                <LogLabel [NoObjectField]="true" [Text]="'Record'" [ObjectFieldName]="'Record'"
+                <LogLabel [NoObjectField]="true" [Text]="'Variable'" [ObjectFieldName]="'Variable'"
                     [DataContext]="DataContext"></LogLabel>
             </div>
+
             <div class="table-row-cell-block">
-                <TreeSelect *ngIf="CollectionChanged" [Items]="DeclaredRecordsTreeItems" [Width]="'300px'"
-                    [Value]="Record" [ShowExpand]="false" [ShowItem]="Entity | ShowTreeItemPipe : 'type'"
-                    (ValueChanged)="updateRecord($event)">
+                <TreeSelect *ngIf="CollectionChanged" [Items]="VariablesTreeItems" [Width]="'300px'"
+                    [Value]="Variable" [ShowExpand]="false" [ShowItem]="Entity | ShowTreeItemPipe : 'type'"
+                    [IsReturnedTreeSelectItem]="true" (ValueChanged)="updateVariable($event)">
                 </TreeSelect>
 
-                <TreeSelect *ngIf="!CollectionChanged" [Items]="DeclaredRecordsTreeItems" [Width]="'300px'"
-                    [Value]="Record" [ShowExpand]="false" [ShowItem]="Entity | ShowTreeItemPipe : 'type'"
-                    (ValueChanged)="updateRecord($event)">
+                <TreeSelect *ngIf="!CollectionChanged" [Items]="VariablesTreeItems" [Width]="'300px'"
+                    [Value]="Variable" [ShowExpand]="false" [ShowItem]="Entity | ShowTreeItemPipe : 'type'"
+                    [IsReturnedTreeSelectItem]="true" (ValueChanged)="updateVariable($event)">
                 </TreeSelect>
             </div>
+
         </td>
     </tr>
 
-    <tr *ngIf="EntityId && SetRecordFieldsType === SetRecordFieldsTypes.SetValues" class="table-row">
+    <tr *ngIf="DeclareType && SetRecordFieldsType === SetRecordFieldsTypes.UseRecord" class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Variable'" [ObjectFieldName]="'Variable'"
+                    [DataContext]="DataContext"></LogLabel>
+            </div>
+
+            <div class="table-row-cell-block">
+                <TreeSelect *ngIf="CollectionChanged" [Items]="FlowVariablesTreeItems" [Width]="'300px'"
+                    [Value]="Variable"
+                    [ShowItem]="DeclareType | ShowFlowVariablesTypeTreeItemPipe : FlowVariablesTreeList"
+                    [IsReturnedTreeSelectItem]="true" (ValueChanged)="updateVariable($event)">
+                </TreeSelect>
+
+                <TreeSelect *ngIf="!CollectionChanged" [Items]="FlowVariablesTreeItems" [Width]="'300px'"
+                    [Value]="Variable"
+                    [ShowItem]="DeclareType | ShowFlowVariablesTypeTreeItemPipe : FlowVariablesTreeList"
+                    [IsReturnedTreeSelectItem]="true" (ValueChanged)="updateVariable($event)">
+                </TreeSelect>
+            </div>
+
+        </td>
+    </tr>
+
+    <tr *ngIf="(EntityId || DeclareType) && SetRecordFieldsType === SetRecordFieldsTypes.SetValues" class="table-row">
         <td class="table-row-cell">
             <div class="split-block"></div>
         </td>
     </tr>
 
-    <tr *ngIf="EntityId && SetRecordFieldsType === SetRecordFieldsTypes.SetValues" class="table-row">
+    <tr *ngIf="(EntityId || DeclareType)  && SetRecordFieldsType === SetRecordFieldsTypes.SetValues" class="table-row">
         <td class="table-row-cell-label">
             <div class="table-row-cell-block">
-                <div class="label">Set Fields Values of {{Entity | EntityLabelPipe}}</div>
+                <div class="label">{{SetValuesTitleText}}</div>
             </div>
         </td>
     </tr>
@@ -193,9 +231,27 @@
 
                 <SetValues *ngIf="SetValues && SetValues.length > 0" [(SetValues)]="SetValues" [IsEntityField]="true"
                     [EntityId]="EntityId" (IsValidSetValuesChange)="setIsValidSetValues($event)"
-                    [FlowObject]="FlowObject" [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId">
+                    [FlowObject]="FlowObject" [CurrentNodeId]="CurrentNodeId">
                 </SetValues>
 
+            </div>
+
+        </td>
+    </tr>
+
+    <tr *ngIf="DeclareType && SetRecordFieldsType === SetRecordFieldsTypes.SetValues" class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Value'" [ObjectFieldName]="'Value'"
+                    [DataContext]="DataContext"></LogLabel>
+            </div>
+            <div class="table-container input-container table-row-cell-block">
+                <FieldValue *ngIf="CollectionChanged" [Name]="'defaultValue'" [DataType]="DeclareType"
+                    [CurrentValue]="Value" (ValueChanged)="updateValue($event)">
+                </FieldValue>
+                <FieldValue *ngIf="!CollectionChanged" [Name]="'defaultValue'" [DataType]="DeclareType"
+                    [CurrentValue]="Value" (ValueChanged)="updateValue($event)">
+                </FieldValue>
             </div>
 
         </td>
@@ -204,17 +260,6 @@
     <tr>
         <td>
             <div></div>
-        </td>
-    </tr>
-
-    <tr class="table-row">
-        <td>
-
-            <FooterButtons [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="saveButtonClicked()"
-                (CancelButtonClicked)="cancelButtonClicked()" [SaveButtonDataCy]="'append-item-properties-save-button'"
-                [CancelButtonDataCy]="'append-item-properties-cancel-button'">
-            </FooterButtons>
-
         </td>
     </tr>
 

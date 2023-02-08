@@ -36,6 +36,8 @@ namespace Logitude.DashboardModule.Data.EntityLists
        public string PermissionLevelCode  { get; set; }
        [DataMember]
        public bool LoadedAutomatically  { get; set; }
+       [DataMember]
+       public int? PredefinedOrder  { get; set; }
    }
 
 }

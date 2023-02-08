@@ -976,7 +976,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     {
                         Outstanding = currencyIndex == 1 ? gr.Sum(d => (d.AmountDueInLocalCurrency)) : gr.Sum(d => (d.AmountDueInProfitCurrency)),
                         CreditorName = gr.Key.VendorEnglishName,
-                        Overdue = (from s in gr where s.DueDate <= DateTime.Today.Date select new { overDue1 = currencyIndex == 1 ? s.AmountDueInProfitCurrency : s.AmountDueInLocalCurrency }).Sum(ss => ss.overDue1),
+                        Overdue = (from s in gr where s.DueDate <= DateTime.Today.Date select new { overDue1 = currencyIndex == 1 ? s.AmountDueInLocalCurrency : s.AmountDueInProfitCurrency }).Sum(ss => ss.overDue1),
                         CreditorId = gr.Key.VendorId,
                         CreditorType = gr.Key.VendorPartnerTypeId,
                     }).OrderByDescending(d => d.Outstanding).Take(10).ToList();
@@ -1353,7 +1353,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                             {
                                                 Id = a.Id,
                                                 IsEquipment = a.IsEquipment,
-
+                                                InvoiceNumber = a.InvoiceNumber
                                             }).ToList();
 
             return invoicePMs;

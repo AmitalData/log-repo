@@ -247,6 +247,10 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<Mention> Mentions { get; set; }
         IDbSet<CarrierServiceLine> CarrierServiceLines { get; set; }
         IDbSet<HorseGender> HorseGenders { get; set; }
+        IDbSet<PortGroup> PortGroups { get; set; }
+
+        IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects { get; }
+
         void SetAsModified(object entity);
         void DetectChanges();
         int SaveChanges();

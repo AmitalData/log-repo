@@ -88,6 +88,21 @@ namespace Simplog.Data.CommonDataModel
 
             return context;
         }
+        public static CommonDataContext GetFullContext(int tenant)
+        {
+            GlobalDB currentDb;
+            //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            //{
+            currentDb = GlobalDbHelper.GetGlobalDB(tenant);
+            //}
+            string dbConnectionInfo = currentDb.DBConnection;
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
+            CommonDataContext context = new CommonDataContext(connection);
+
+            return context;
+        }
         public static ICommonDataContext GetSecContext(int tenant)
         {
             GlobalDB currentDb;
@@ -481,6 +496,9 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new MentionMap());
             modelBuilder.Configurations.Add(new CarrierServiceLineMap());
             modelBuilder.Configurations.Add(new HorseGenderMap());
+            modelBuilder.Configurations.Add(new CustomFieldsMainObjectMap());
+
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -1061,6 +1079,12 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<CarrierServiceLine> CarrierServiceLines { get; set; }
         public IDbSet<HorseGender> HorseGenders { get; set; }
         public IDbSet<DigitalContactLastSetting> DigitalContactLastSettings { get; set; }
+        public IDbSet<PortGroup> PortGroups { get; set; }
+
+        public IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects { get; set; }
+
+
+
 
         public DbConnection GetConnection()
         {

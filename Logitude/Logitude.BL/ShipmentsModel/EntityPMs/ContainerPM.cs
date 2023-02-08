@@ -1,4 +1,5 @@
-﻿using Simplog.Server.Infrastructure.DataContracts;
+﻿using Logitude.BL.InfrastructureModel.EntityPMs;
+using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -456,5 +457,28 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field40 { get; set; }
+        public string MainCarriageFromCountryId { get; set; }
+        public string MainCarriageToCountryId { get; set; }
+        public string MainCarriageFromCountryName { get; set; }
+        public string MainCarriageToCountryName { get; set; }
+        public string MainCarriageFromCountryCode { get; set; }
+        public string MainCarriageToCountryCode { get; set; }
+
+        public string EmptyPickupLocationName { get; set; }
+        public string PreCarriageLocationName { get; set; }
+        public string PODLocationName { get; set; }
+        public string POLLocationName { get; set; }
+        public string OnCarriageLocationName { get; set; }
+        public string Transshipment1LocationName { get; set; }
+        public string Transshipment2LocationName { get; set; }
+        public string Transshipment3LocationName { get; set; }
+        public string Transshipment4LocationName { get; set; }
+        public string EmptyReturnLocationName { get; set; }
+        public DateTime? OnCarriageETA { get; set; }
+        public DateTime? OnCarriageATA { get; set; }
+        public List<CustomChildEntity> CustomChildEntities { get; set; }
+        public DateTime? RequestDate { get; set; }
+        public DateTime? RecentResponseDate { get; set; }
+        public bool IsUpdatedFromRequest { get; set; }
     }
 }

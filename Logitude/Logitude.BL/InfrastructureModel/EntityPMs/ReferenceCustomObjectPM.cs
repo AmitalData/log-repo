@@ -18,5 +18,9 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public DateTime UpdateDate { get; set; }
         public bool InActive { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
+        public string SearchFields { get; set; }
+        public string CreatedByUserName { get; set; }
+        public string UpdatedByUserName { get; set; }
+
     }
 }

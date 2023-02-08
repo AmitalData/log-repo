@@ -68,6 +68,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Field48).HasMaxLength(2000).IsUnicode(true);
             this.Property(t => t.Field49).HasMaxLength(2000).IsUnicode(true);
             this.Property(t => t.Field50).HasMaxLength(2000).IsUnicode(true);
+            this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
 
             this.ToTable("DataCustomObjects");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -129,6 +130,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Field48).HasColumnName("Field48");
             this.Property(t => t.Field49).HasColumnName("Field49");
             this.Property(t => t.Field50).HasColumnName("Field50");
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields");
 
             // Relationships
             this.HasRequired(t => t.CreatedByUser).WithMany().HasForeignKey(d => d.CreatedBy);

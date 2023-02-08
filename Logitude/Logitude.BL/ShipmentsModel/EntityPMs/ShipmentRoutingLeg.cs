@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace Logitude.BL.ShipmentsModel.EntityPMs
 {
@@ -15,7 +16,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string CarrierNumberLabel { get; set; }
         public string VesselName { get; set; }
         public DateTime? DepartureDate { get; set; }
-        public string DateType { get; set; }
+        public string DepartureDateType { get; set; }
+        public DateTime? ArrivalDate { get; set; }
+        public string ArrivalDateType { get; set; }
     }
 
     public class MainRouteInformation : ShipmentRoutingLeg

@@ -1,9 +1,8 @@
 import { Component } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
-import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
-import { EditableRecordsTreeList } from "Workflow/Models/EditableRecordsTreeList";
+import { EditableRecordsTreeList } from "Workflow/TreeLists/EditableRecordsTreeList";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
 @Component({
@@ -13,34 +12,42 @@ import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 export class UpdateRecordPropertiesComponent extends BaseComponent {
 
     public DataContext: any = this;
-
     public FlowObject: any;
     public CurrentNodeId: string;
-    public FlowObjectFields: ObjectFieldList[];
-
     public EditableRecordsTreeItems: TreeSelectItem[];
-
     public Data: any;
+    public IsNew: boolean;
     public Name: string = null;
     public Record: string;
     public ValidationErrorsList: string[];
-
     public CurrentSession = SessionLocator.SelectedSession;
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
         this.FlowObject = args.FlowObject ? args.FlowObject : null;
         this.CurrentNodeId = args.CurrentNodeId ? args.CurrentNodeId : null;
-        this.FlowObjectFields = args.FlowObjectFields ? args.FlowObjectFields : [];
     }
 
     ngOnInit() {
+        this.initializeWindowEvents();
         this.initialize();
         this.initializeEditableRecordsTreeItems();
     }
 
+    initializeWindowEvents() {
+        this.CurrentSession.CurrentWindow.FooterButtonsClicked.subscribe((e: any) => {
+            if (e === "submit") {
+                this.saveButtonClicked();
+            } else {
+                this.cancelButtonClicked();
+            }
+        });
+    }
+
     initialize() {
-        this.Name = this.Data["name"] || null;
+        this.IsNew = Object.keys(this.Data).length === 0;
+
+        this.Name = this.Data["label"] || this.Data["name"] || null;
         this.Record = this.Data["record"] || null;
 
         this.setUIProperties();
@@ -51,15 +58,22 @@ export class UpdateRecordPropertiesComponent extends BaseComponent {
     }
 
     updateName(name: string) {
-        this.Data["name"] = name;
+        if (this.IsNew) {
+            this.Data["name"] = name;
+        }
+
+        this.Data["label"] = name;
         this.Name = name;
 
         this.setUIProperties();
     }
 
-    updateRecord(record: string) {
-        this.Record = record || null;
-        this.Data["record"] = record || null;
+    updateRecord(recordItem: TreeSelectItem) {
+        let record = recordItem ? recordItem.key : null;
+        this.Record = record;
+        this.Data["record"] = record;
+
+        this.Data["recordUsedFrom"] = recordItem && recordItem.data && recordItem.data["nodeId"] ? recordItem.data["nodeId"] : null;
 
         this.setUIProperties();
     }

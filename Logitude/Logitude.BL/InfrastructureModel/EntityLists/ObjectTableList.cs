@@ -62,5 +62,11 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string ParentObjectTableId { get; set; }
         public bool IsCustom { get; set; }
         public bool SupportSubEntity { get; set; }
+        public bool ApplyGenericCustomFields { get; set; }
+        public string LookUp1 { get; set; }
+        public string LookUp2 { get; set; }
+        public string FullNameTextCodeId { get; set; }
+        public string FullNameTextCodeCode { get; set; }
+        public string FullNameTextCodeDefaultText { get; set; }
     }
 }

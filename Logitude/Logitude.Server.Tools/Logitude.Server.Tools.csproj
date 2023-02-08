@@ -247,11 +247,13 @@
     <Compile Include="CToolWorkflows\Models\CToolWorkflowMessage.cs" />
     <Compile Include="CToolWorkflows\Models\PropertyChange.cs" />
     <Compile Include="CToolWorkflows\WorkflowEntityChanges.cs" />
+    <Compile Include="CustomFields\EntityCustomFieldService.cs" />
     <Compile Include="EntityChanges\AutomationResult\AutomationOnUpdateDocumentService.cs" />
     <Compile Include="EntityChanges\AutomationResult\AutomationEventCreationService.cs" />
     <Compile Include="Helpers\CustomFieldsResolver\CustomFieldMultiSetter.cs" />
     <Compile Include="Helpers\CustomFieldsResolver\CustomFieldGetter.cs" />
     <Compile Include="Helpers\CustomFieldsResolver\CustomFieldSingleSetter.cs" />
+    <Compile Include="Helpers\ErrorsLogger.cs" />
     <Compile Include="Helpers\UpdatePortSearchFieldService.cs" />
     <Compile Include="Interfaces\IAddManualTraceEventsHelper.cs" />
     <Compile Include="IQueryableExtensions.cs" />

@@ -6,41 +6,20 @@
   Module="Common">
 	<SqlScript>
 		<![CDATA[
-create procedure [dbo].[DeleteOldReportExecutionLogs] as
-IF OBJECT_ID('tempdb..#tblOldReportExecutionLogs') IS NOT NULL
-DROP TABLE #tblOldReportExecutionLogs
-CREATE TABLE #tblOldReportExecutionLogs
-(
-Id varchar(40) NOT NULL PRIMARY KEY
-)
-INSERT #tblOldReportExecutionLogs (Id)
-SELECT Id
-FROM [dbo].[ReportExecutionLogs]
-WHERE CreateDate < DATEADD(MONTH,-6,GETDATE())
-if(@@ROWCOUNT >0 )
-begin
-declare @skiprows int
+CREATE procedure [dbo].[DeleteOldReportExecutionLogs] as
 declare @Rows int
-set @Rows = 1
-set @skiprows = 0
-while (@Rows <> 0)
+set @Rows = 11
+
+while (@Rows >10)
 BEGIN
+
 DELETE
-FROM [dbo].[ReportExecutionLogs]
-where [Id] in (
-select  Id
-from #tblOldReportExecutionLogs
-order by Id
-OFFSET ( @skiprows * 5000) ROWS FETCH NEXT 5000 ROWS ONLY
-)
-SET @Rows = @@ROWCOUNT
-print @Rows
-set @skiprows = @skiprows + 1
-print @skiprows
-WAITFOR DELAY '00:00:02'
+FROM [dbo].[DBA_View_ReportsExecutionLogs_ToBeDeleted]
+
+set @Rows= @@ROWCOUNT
+
+WAITFOR DELAY '00:00:01'
 END
-end
-DROP TABLE #tblOldReportExecutionLogs
 ]]>
 	</SqlScript>
 	<OracleScript>
