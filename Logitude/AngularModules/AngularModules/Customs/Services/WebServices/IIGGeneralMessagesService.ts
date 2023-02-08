@@ -403,6 +403,28 @@ export class IIGGeneralMessagesService {
     }
 
 
+    GetClearCacheItems() {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+
+
+        return defer(() => {
+            return this._http
+                //GetClientProgressBarIndicatorCurrentStage(int tenant, string CustomsRequestsSheetId)
+                .get(this._apiUrl + '/GetClearCacheItems',
+                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+
+                    var serviceResponse: ServiceResponse = new ServiceResponse();
+                    //serviceResponse.Result = response;
+                    serviceResponse.Result = response;
+                    return serviceResponse;
+                }),catchError(ServiceHelper.HandleServiceError));
+        });
+
+
+    }
 
 
     GetResetDeclarationNumber(declarationId: string, tenant: number) {
