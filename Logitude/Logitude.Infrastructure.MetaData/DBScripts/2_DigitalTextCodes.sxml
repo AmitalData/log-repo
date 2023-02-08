@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="19">
+  <Sql Version="20">
     <![CDATA[
 	  delete from DigitalTextCodes where Id != ''
 	  
@@ -16,12 +16,6 @@
 	  '[{
 			"TextCode": "General.G.NoDataDefaultMSG",
 			"DefaultText": "You do not have any information here All information will be displayed here, when it will be added by the forwarder",
-			"FieldCode": "",
-			"DisplayText": ""
-		},
-		{
-			"TextCode": "General.B.DownloadExcel",
-			"DefaultText": "Download Excel",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
@@ -80,12 +74,6 @@
 			"DisplayText": ""
 		},
 		{
-			"TextCode": "General.G.SessionExpired",
-			"DefaultText": "Your session has been expired",
-			"FieldCode": "",
-			"DisplayText": ""
-		},
-		{
 			"TextCode": "Shipment.G.LoginAgainMsg",
 			"DefaultText": "Please, login again to continue.",
 			"FieldCode": "",
@@ -100,12 +88,6 @@
 		{
 			"TextCode": "General.G.LoginBtn2",
 			"DefaultText": "Login",
-			"FieldCode": "",
-			"DisplayText": ""
-		},
-		{
-			"TextCode": "Contact.G.GeneralInformation",
-			"DefaultText": "General information",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
@@ -152,20 +134,8 @@
 			"DisplayText": ""
 		},
 		{
-			"TextCode": "General.B.Cancel",
-			"DefaultText": "Cancel",
-			"FieldCode": "",
-			"DisplayText": ""
-		},
-		{
 			"TextCode": "Contact.G.ChangePassword",
 			"DefaultText": "Change password",
-			"FieldCode": "",
-			"DisplayText": ""
-		},
-		{
-			"TextCode": "Contact.G.LogoutBtn",
-			"DefaultText": "Logout",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
@@ -1896,6 +1866,18 @@
 			"TextCode": "Shipment.G.Qty",
 			"DefaultText": "Qty",
 			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.OnCarriageATA",
+			"DefaultText": "OnCarriage ATA",
+			"FieldCode" : "Shipment.OnCarriageATA",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.OnCarriageETA",
+			"DefaultText": "OnCarriage ETA",
+			"FieldCode" : "Shipment.OnCarriageETA",
 			"DisplayText": ""
 		},
 		{
@@ -4691,6 +4673,18 @@
 			"DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.F.OnCarriageATA",
+			"DefaultText": "OnCarriage ATA",
+			"FieldCode" : "Shipment.OnCarriageATA",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.OnCarriageETA",
+			"DefaultText": "OnCarriage ETA",
+			"FieldCode" : "Shipment.OnCarriageETA",
+			"DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.F.AgentName",
 			"DefaultText": "Agent",
 			"FieldCode" : "Shipment.AgentName",
@@ -7436,6 +7430,60 @@
 				"DefaultText": "ETA",
 				"FieldCode": "ShipmentPickUpDelivery.ETA",
 				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.FromPartnerCardId",
+				"DefaultText": "From Partner Card Id",
+				"FieldCode": "ShipmentPickUpDelivery.FromPartnerCardId",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.FromAddressId",
+				"DefaultText": "From Address Id",
+				"FieldCode": "ShipmentPickUpDelivery.FromAddressId",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.FromPortId",
+				"DefaultText": "From Port Id",
+				"FieldCode": "ShipmentPickUpDelivery.FromPortId",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.ToAddressCity",
+				"DefaultText": "To Address City",
+				"FieldCode": "ShipmentPickUpDelivery.ToAddressCity",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.ToAddressCountry",
+				"DefaultText": "To Address Country",
+				"FieldCode": "ShipmentPickUpDelivery.ToAddressCountry",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.PickUpDeliveryFromTypeCode",
+				"DefaultText": "PickUp Delivery From Type Code",
+				"FieldCode": "ShipmentPickUpDelivery.PickUpDeliveryFromTypeCode",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.PickUpDeliveryToTypeCode",
+				"DefaultText": "PickUp Delivery To Type Code",
+				"FieldCode": "ShipmentPickUpDelivery.PickUpDeliveryToTypeCode",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.ToPartnerCardId",
+				"DefaultText": "To Partner Card Id",
+				"FieldCode": "ShipmentPickUpDelivery.ToPartnerCardId",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.ToPortId",
+				"DefaultText": "To Port Id",
+				"FieldCode": "ShipmentPickUpDelivery.ToPortId",
+				"DisplayText": ""
 			}]');
 			
 			
@@ -7501,6 +7549,60 @@
 				"DefaultText": "ETA",
 				"FieldCode": "ShipmentPickUpDelivery.ETA",
 				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.FromPartnerCardId",
+				"DefaultText": "From Partner Card Id",
+				"FieldCode": "ShipmentPickUpDelivery.FromPartnerCardId",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.FromAddressId",
+				"DefaultText": "From Address Id",
+				"FieldCode": "ShipmentPickUpDelivery.FromAddressId",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.FromPortId",
+				"DefaultText": "From Port Id",
+				"FieldCode": "ShipmentPickUpDelivery.FromPortId",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.ToAddressCity",
+				"DefaultText": "To Address City",
+				"FieldCode": "ShipmentPickUpDelivery.ToAddressCity",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.ToAddressCountry",
+				"DefaultText": "To Address Country",
+				"FieldCode": "ShipmentPickUpDelivery.ToAddressCountry",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.PickUpDeliveryFromTypeCode",
+				"DefaultText": "PickUp Delivery From Type Code",
+				"FieldCode": "ShipmentPickUpDelivery.PickUpDeliveryFromTypeCode",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.PickUpDeliveryToTypeCode",
+				"DefaultText": "PickUp Delivery To Type Code",
+				"FieldCode": "ShipmentPickUpDelivery.PickUpDeliveryToTypeCode",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.ToPartnerCardId",
+				"DefaultText": "To Partner Card Id",
+				"FieldCode": "ShipmentPickUpDelivery.ToPartnerCardId",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.ToPortId",
+				"DefaultText": "To Port Id",
+				"FieldCode": "ShipmentPickUpDelivery.ToPortId",
+				"DisplayText": ""
 			}]');
 			
 			
@@ -7515,7 +7617,7 @@
 				"FieldCode": "Trucker.EnglishName",
 				"DisplayText": ""
 			},
-      {
+			{
 				"TextCode": "Trucker.F.TruckerNo",
 				"DefaultText": "Trucker no",
 				"FieldCode": "",

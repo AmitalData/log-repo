@@ -1928,11 +1928,6 @@ namespace Simplog.Data.InfrastructureModel
             throw new NotImplementedException();
         }
 
-        public DbContextTransaction GetSnapshotTransaction()
-        {
-            throw new NotImplementedException();
-        }
-
         public IDbSet<ObjectTableLastUpdate> ObjectTableLastUpdates
         {
             get { throw new NotImplementedException(); }
