@@ -212,6 +212,14 @@ namespace Logitude.Customs.BL.Messaging.Customs
             {
                 throw;
             }
+            catch (CourierForceSignException e)
+            {
+                NoteClientNoRequestSheet4U(requestParams, e.ToString());
+                throw new
+                    CustomsRequestsSheetDomainModelServiceException(
+                    CustomsRequestsSheetDomainModelServiceException.WhereEnum.CourierForceSignException, CustomsRequestsSheetDomainModelServiceException.What2DoEnum.StopQueue,
+                     e.Message, e);
+            }
             catch (Exception e)
             {
                 NoteClientNoRequestSheet4U(requestParams, e.ToString());
