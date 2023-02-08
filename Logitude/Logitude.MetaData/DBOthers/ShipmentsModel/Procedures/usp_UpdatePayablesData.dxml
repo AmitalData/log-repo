@@ -238,7 +238,8 @@ BEGIN
 			FOR
 			SELECT Id, Quantity, UnitPrice, VendorId, ChargesTypeId, MeasurementId, PrepaidCollectId, DueTypeCode, AWBPrint, CurrencyId, Rate, ProfitCurrencyExchangeRate, ShipmentPayableLineStatusCode, ShipmentPayableAmountTypeCode, CreatedByUserId, UpdateByUserId, CreateDate, UpdateDate, ValueDate, OpenAmount, AccountedAmount, ExpectedAmount, ExpectedAmountLocal, ExpectedAmountInProfitCurrency, IATACodeId, VatAmountLocal, VatAmountProfit, CorrectionAmount
 			FROM ShipmentPayables
-			WHERE Tenant = @Tenant AND ShipmentId = @MasterId AND (MeasurementId != @PRFR_Id OR MeasurementId is null OR MeasurementId != @PFCL_Id)
+			WHERE Tenant = @Tenant AND ShipmentId = @MasterId 
+      AND (MeasurementId is null OR (MeasurementId != @PRFR_Id and MeasurementId != @PFCL_Id))
 			OPEN MasterPayables1Cursor FETCH NEXT FROM MasterPayables1Cursor INTO @MasterPayableId, @MasterPayableQuantity, @MasterPayableUnitPrice, @MasterPayableVendorId, @MasterPayableChargesTypeId, @MasterPayableMeasurementId, @MasterPayablePrepaidCollectId, @MasterPayableDueTypeCode, @MasterPayableAWBPrint, @MasterPayableCurrencyId, @MasterPayableRate, @MasterPayableProfitRate, @MasterPayableLineStatusCode, @MasterPayableAmountTypeCode, @MasterPayableCreatedByUserId, @MasterPayableUpdatedByUserId, @MasterPayableCreateDate, @MasterPayableUpdateDate, @MasterPayableValueDate, @MasterPayableOpenAmount, @MasterPayableAccountedAmount, @MasterPayableExpectedAmount, @MasterPayableExpectedAmount_Local, @MasterPayableExpectedAmount_Profit, @MasterPayableIATACodeId, @MasterPayableVatLocalAmount, @MasterPayableVatProfitAmount, @MasterPayableCorrectionAmount
 			WHILE @@FETCH_STATUS = 0
 			BEGIN
@@ -277,7 +278,7 @@ BEGIN
 								OR @MasterPayableMeasurementId = @CWKG_Id
 								OR @MasterPayableMeasurementId = @VCBM_Id
 								OR @MasterPayableMeasurementId = @SCGW_Id
-								OR @MasterPayableMeasurementId = @PFCL_Id
+								--OR @MasterPayableMeasurementId = @PFCL_Id
 								)
 						BEGIN
 							if not exists (select * from ShipmentPayables where Tenant = @Tenant and ShipmentId = @HouseId and ShipmentPayableParentId = @MasterPayableId and ChargesTypeId = @MasterPayableChargesTypeId)

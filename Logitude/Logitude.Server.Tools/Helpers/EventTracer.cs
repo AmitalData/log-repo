@@ -23,6 +23,7 @@ namespace Logitude.Server.Tools.Helpers
             {
                 int tenant = args.Tenant;
                 IWebFreightContext objectContext = WebFreightContext.GetContext(tenant);
+
                 EventTypeRepository eventTypeRepository = new EventTypeRepository(objectContext);
                 EventType eventType = eventTypeRepository.GetSingleEventTypeByCode(args.EventTypeCode, tenant);
 
@@ -91,7 +92,7 @@ namespace Logitude.Server.Tools.Helpers
                         args.EventDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
                     }
 
-                    if(args.EventTypeCode == "CWOP" || args.EventTypeCode == "CLOP" || args.EventTypeCode == "CCOP")
+                    if (args.EventTypeCode == "CWOP" || args.EventTypeCode == "CLOP" || args.EventTypeCode == "CCOP")
                     {
                         args.LogDateTime = args.EventDateTime;
                     }
@@ -135,7 +136,7 @@ namespace Logitude.Server.Tools.Helpers
                             }
                         }
                     }
-      
+
                     TraceEvent myTraceEvent = new TraceEvent()
                     {
                         Id = Guid.NewGuid().ToString(),
@@ -154,12 +155,14 @@ namespace Logitude.Server.Tools.Helpers
                         ChildEntityId = args.ChildEntityId,
                         ChildObjectTableId = childObjectTable?.Id,
                     };
-
-                    TraceEventRepository traceEventRepository = new TraceEventRepository(objectContext);
-                    traceEventRepository.Add(myTraceEvent);
-                    traceEventRepository.SubmitChanges();
-                    objectContext.SaveChanges();
-
+                    using (var scope = objectContext.GetSnapshotTransaction())
+                    {
+                        TraceEventRepository traceEventRepository = new TraceEventRepository(objectContext);
+                        traceEventRepository.Add(myTraceEvent);
+                        traceEventRepository.SubmitChanges();
+                        objectContext.SaveChanges();
+                        scope.Commit();
+                    }
                     if (eventType.IsCustomerView)
                     {
                         ContactsUnseenEntitiesHelper.AddUnseenEntityRecord(myTraceEvent.Id, tenant);
@@ -167,10 +170,11 @@ namespace Logitude.Server.Tools.Helpers
 
                     if (!string.IsNullOrEmpty(eventType.CustomField) && objectTable.AllowCustomFields)
                     {
-                        EventCustomFieldUpdateService.UpdateEventCustomFieldValue(new UpdateEventCustomFieldArgs() {CustomField = eventType.CustomField, EventDateTime = myTraceEvent.EventDateTime, Entity = args.Entity, EntityId = args.EntityId, ObjectTableName = args.ObjectTableName, Tenant = args.Tenant });
+                        EventCustomFieldUpdateService.UpdateEventCustomFieldValue(new UpdateEventCustomFieldArgs() { CustomField = eventType.CustomField, EventDateTime = myTraceEvent.EventDateTime, Entity = args.Entity, EntityId = args.EntityId, ObjectTableName = args.ObjectTableName, Tenant = args.Tenant });
                     }
 
                 }
+
             }
         }
 
@@ -374,7 +378,7 @@ namespace Logitude.Server.Tools.Helpers
         public DateTime EventDateTime { get; set; }
         public string EventTypeId { get; set; }
 
-        
+
 
     }
 
