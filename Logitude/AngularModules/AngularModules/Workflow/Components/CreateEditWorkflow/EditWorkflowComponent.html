@@ -45,6 +45,37 @@
         margin-bottom: 5px;
         float: right;
     }
+
+    .SectionTitle {
+        height: 20px;
+        line-height: 20px;
+        font-size: 14px;
+        color: #1B90CB;
+        user-select: text;
+        -webkit-user-select: text;
+        margin-left: 10px;
+    }
+
+    .margin-l-10 {
+        margin-left: 10px;
+    }
+
+    .title {
+        height: 20px;
+    }
+
+    .split-row {
+        height: 30px;
+    }
+
+    .clickable {
+        cursor: pointer;
+    }
+
+    .field-name {
+        width: 130px;
+        padding-left: 10px;
+    }
 </style>
 
 <div class="MediaFillAbsolute workflow-builder-wrapper">
@@ -113,6 +144,70 @@
                                     <LogLov [ObjectFieldName]="'OwnerId'" [ObjectTableName]="ObjectTableName"
                                         [SelectedValue]="OwnerId" [DataContext]="DataContext" [LookUpTableName]="'User'"
                                         [HideColumns]="true" [DataCy]="'Workflow_Owner'"></LogLov>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr class="split-row">
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr class="title clickable" (click)="showAdvancedSettings()" *ngIf="!ShowAdvancedSettings">
+                                <td>
+                                    <div class="SectionTitle">
+                                        Show Advanced Settings
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="title" *ngIf="ShowAdvancedSettings">
+                                <td>
+                                    <div class="SectionTitle">
+                                        Advanced Settings
+                                    </div>
+                                    <div class="Label margin-l-10">
+                                        Workflow retry policy:
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow" *ngIf="ShowAdvancedSettings">
+                                <td class="field-name">
+                                    <LogLabel [ObjectFieldName]="'RetriesNumber'" [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext">
+                                    </LogLabel>
+                                </td>
+
+                                <td style="width:230px;">
+                                    <LogTextBox [ObjectFieldName]="'RetriesNumber'" [Text]="RetriesNumber"
+                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                                <td style="width: 18px; float:left;">
+                                    <HelpIcon [HideHeader]="true" [Text]="'Number of retries once the flow fails'">
+                                    </HelpIcon>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow" *ngIf="ShowAdvancedSettings">
+                                <td class="field-name">
+                                    <LogLabel [ObjectFieldName]="'RetriesDelay'" [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext">
+                                    </LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'RetriesDelay'" [Text]="RetriesDelay"
+                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                                <td style="width: 18px; float:left;">
+                                    <HelpIcon [HideHeader]="true" [Text]="'Waiting time before each retry'"></HelpIcon>
                                 </td>
                                 <td>
                                     <div></div>
