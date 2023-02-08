@@ -35,12 +35,14 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
     private UserTenantShippingLines: ShippingLinePM[] = [];
     public ShippingLines: ShippingLineItem[];
     private ShowDefaults: boolean;
+    public IsContainerTrackingPrepaid: boolean;
 
     constructor() {
         super();
         this.ContainerSettingPMService = new ContainerSettingPMService();
         this.ContainerSettingExtendedService = new ContainerSettingExtendedService();
         this.ShippingLineExtendedPMService = new ShippingLineExtendedPMService();
+        this.IsContainerTrackingPrepaid = SessionLocator.TenantManagementJS.IsContainerTrackingPrepaid
     }
 
     ngOnInit() {
@@ -78,12 +80,12 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
     private SetDefaultGeneralItem() {
         if (!AppTool.IsNullOrEmpty(this.DataContext.ShipmentATADateIndicator)) this.SelectedShipmentATADateItem = this.ShipmentATADateComboList.filter(d => d.Code == this.DataContext.ShipmentATADateIndicator)[0];
         else this.SelectedShipmentATADateItem = this.ShipmentATADateComboList.filter(d => d.Code == "Vessel")[0];
-        if(!this.ShowDefaults) return;
+        if (!this.ShowDefaults) return;
         this.EmptyReturnClosingDays = 5;
         this.ShipmentATAClosingDays = 90;
 
     }
-    
+
 
     private LoadTenantZeroShippingLines() {
         this.TenantZeroShippingLines = [];

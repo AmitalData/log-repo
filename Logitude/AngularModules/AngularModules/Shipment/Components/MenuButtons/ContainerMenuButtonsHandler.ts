@@ -123,6 +123,13 @@ export class ContainerMenuButtonsHandler implements OnDestroy {
                             button.IsDisabled = true;
                         }
                     }
+
+                    if (button.EventCode == "ViziionUnsubscribe") {
+                        if(!SessionLocator.TenantManagementJS.IsContainerTrackingPrepaid) button.IsHidden = true;
+                        else  button.IsHidden = false;
+                    }
+
+
                 }
                 return menuButtons;
             }

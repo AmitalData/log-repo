@@ -566,7 +566,8 @@ namespace WebFreight.Web.Helpers
             listQuery.ForEach(shipment =>
             {
                 bool isInlandDomesticShipment = (shipment.DirectionId == "D" && shipment.TransportModeId == "I");
-                if (shipment.TransportModeId != "O" || !string.IsNullOrEmpty(shipment.ContainersNumbersandTypesArray))
+                if (DoesPropertyExistInDynamic(shipment, "ContainersNumbersandTypesArray") 
+                    && (shipment.TransportModeId != "O" || !string.IsNullOrEmpty(shipment.ContainersNumbersandTypesArray)))
                 {
                     shipment.TruckContainerNumber = shipment.TransportModeId == "O"
                                                     ? Regex.Replace(shipment.ContainersNumbersandTypesArray, "(\\[.*?\\])", "")
