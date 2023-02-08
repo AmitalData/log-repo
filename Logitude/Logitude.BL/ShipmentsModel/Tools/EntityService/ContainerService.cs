@@ -318,7 +318,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private void HandleEmptyReturnLeg()
         {
             ShipmentPM shipmentPM = this.GetShipment();
-            if (shipmentPM == null || shipmentPM.DirectionId != "I") return;
+            if (shipmentPM == null || (shipmentPM.DirectionId != "I" && shipmentPM.DirectionId != "R")) return;
 
             ShipmentDeliveryPM emptyReturn = this.GetEmptyReturnLeg(shipmentPM);
             if (emptyReturn != null)
