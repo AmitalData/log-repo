@@ -648,7 +648,21 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     {
                         UpdateDeclarationPending("901");
                     }
-                    if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.CrateNumber != _LogitudeCommDecFile.CrateNumber)
+
+                    if(_LogitudeCommDecFile.Pendings != null)
+                    {
+
+
+                            foreach (var pending in _LogitudeCommDecFile.Pendings.Pending)
+                            {
+
+                                UpdateDeclarationPending(pending.PendingCode);
+                                    
+                                
+                            }
+                        }
+
+                        if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.CrateNumber != _LogitudeCommDecFile.CrateNumber)
                     {
                         currentDeclarationCourierStatusPM.CrateNumber = _LogitudeCommDecFile.CrateNumber;
                         if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
@@ -1858,7 +1872,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
   <COUWTVAL/>
   <CasualImporterAddress1>Dekel 27 2nd avenu 13 ddk</CasualImporterAddress1>
   <CasualImporterAddress2/>
-  <CasualImporterCity>Tel Aviv</CasualImporterCity>
+  <CasualImporterCity>Tel Aviv</CasualImporterCity>651
   <CasualImporterZipCode>6546465</CasualImporterZipCode>
   <CasualImporterFax/>
   <CasualImporterEmail>ven@vendor.com</CasualImporterEmail>
