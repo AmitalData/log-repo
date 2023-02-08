@@ -57,7 +57,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             ReferenceCustomObjectMapping.MapEntity(referenceCustomObjectPM, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
-            InvalidateCache();
         }
 
         public void Update(ReferenceCustomObjectPM referenceCustomObjectPM)
@@ -91,13 +90,5 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.loggedContact = new ContactRepository(tenant).GetSingleContactByEmail(("system@tenant" + tenant.ToString() + ".com"), tenant,true);
         }
 
-        private void InvalidateCache()
-        {
-            string tenantListName = "tenantobjecttables" + tenant;
-            if (CacheManager.CacheWrapper.Get(tenantListName) != null)
-            {
-                CacheManager.CacheWrapper.Invalidate(tenantListName);
-            }
-        }
     }
 }
