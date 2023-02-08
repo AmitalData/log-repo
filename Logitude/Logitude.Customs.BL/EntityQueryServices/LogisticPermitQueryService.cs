@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.Data;
+using Logitude.Customs.BL.EntityDataMappings;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -17,20 +18,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
     {
         public LogisticPermitPM GetSinglePM(int CargoIdentifierType, string CargoIdentifierKey1, string CargoIdentifierKey2, string CargoIdentifierKey3, int tenant)
         {
-            LogisticPermitPM entityPM = null;
-
-            entityPM =
-                (from a in repository.All()
-                 where a.CargoIdentifierType == CargoIdentifierType.ToString() && a.CargoIdentifierKey1 == CargoIdentifierKey1 && a.CargoIdentifierKey2 == CargoIdentifierKey2 && a.CargoIdentifierKey3 == CargoIdentifierKey3 && a.Tenant == tenant
-                 select new LogisticPermitPM()
-                 {
-                     Id = a.Id,
-                     TransmitDate = a.TransmitDate,
-                     ActionCode = a.ActionCode,
-                     Tenant = a.Tenant,
-                 }).FirstOrDefault();
-
-            return entityPM;
+            var LogisticPermit = repository.GetSingleByIdentifierKeys(CargoIdentifierType, CargoIdentifierKey1, CargoIdentifierKey2, CargoIdentifierKey3, tenant);
+            var LogisticPermitPM = new LogisticPermitPM();
+            LogisticPermitDataMapping mapping = new LogisticPermitDataMapping();
+            mapping.CustomPOCOToPM(LogisticPermitPM, LogisticPermit);
+            mapping.POCOToPM(LogisticPermitPM, LogisticPermit);
+            return LogisticPermitPM;
         }
        
     }
