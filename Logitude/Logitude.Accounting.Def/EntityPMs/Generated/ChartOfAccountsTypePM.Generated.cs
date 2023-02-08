@@ -151,14 +151,14 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(order != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Order",OldValue=order,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Order",OldValue=order,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   order=value;
 		   }
 			
 		 }
 	   }
-   }
+	    }
    
 }
 	 

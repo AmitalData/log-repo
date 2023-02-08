@@ -49,7 +49,7 @@ namespace Logitude.Accounting.Data.Repositories
                     where a.ObjectTableId == keys.ObjectTableId && a.EntityId == keys.EntityId
                     select a).FirstOrDefault();
         }
-		         
+		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(ExternalPageAdditionalData entity)
         {

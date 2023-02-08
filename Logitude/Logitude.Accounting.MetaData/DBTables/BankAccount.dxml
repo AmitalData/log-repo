@@ -182,6 +182,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="TotalOpenExternalTransactions"
+    Type="varchar"
+    Size="7">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TotalOpenPagesLines"
+    Type="varchar"
+    Size="7">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

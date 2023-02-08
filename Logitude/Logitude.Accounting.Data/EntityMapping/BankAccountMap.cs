@@ -74,6 +74,10 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.PrintingBranchNumber).HasColumnName("PrintingBranchNumber").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.PrintingAccountNumber).HasColumnName("PrintingAccountNumber").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.TotalOpenExternalTransactions).HasColumnName("TotalOpenExternalTransactions").HasMaxLength(7).IsUnicode(false);
+
+            this.Property(t => t.TotalOpenPagesLines).HasColumnName("TotalOpenPagesLines").HasMaxLength(7).IsUnicode(false);
         }
     }
 }
