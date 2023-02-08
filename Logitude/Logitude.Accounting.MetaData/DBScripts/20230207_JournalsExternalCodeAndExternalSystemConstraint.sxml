@@ -1,4 +1,4 @@
-﻿<Script DBType="Main" Module="Accounting" AOT="true" TargetTableName="Journals" Env="local,test,cloud">
+﻿<Script DBType="Main" Module="Accounting" AOT="false" TargetTableName="Journals" Env="local,test,cloud">
 	<Sql Version="1">
 		<![CDATA[
 
