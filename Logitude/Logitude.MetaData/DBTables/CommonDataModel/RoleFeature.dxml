@@ -70,6 +70,4 @@
     ReferencedTableSchema="dbo" />
   <UniqueConstraint
     Columns="RoleId,FeatureId,Tenant" />
-	<Index
-   Columns="RoleId,Tenant" />
 </Table>
