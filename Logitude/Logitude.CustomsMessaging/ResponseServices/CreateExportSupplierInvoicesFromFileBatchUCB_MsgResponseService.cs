@@ -78,7 +78,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     IncotermCode = invoiceFromDB.IncotermCode,
                     InvoiceNumber = invoiceFromFile.InvoiceNumber,
                     IsPreference = invoiceFromFile.IsPreference,
-                    //InvoiceAmount = invoiceFromFile.InvoiceAmount, todo
+                    InvoiceAmount = invoiceFromFile.SupplierInvoiceItems.Sum(x=>x.InvoiceQuentity.GetValueOrDefault()),
                     BuyerName = invoiceFromDB.BuyerName,
                     BuyerAddress = invoiceFromDB.BuyerAddress,
                     BuyerRoleCode = invoiceFromDB.BuyerRoleCode,
@@ -148,6 +148,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     error += invoice.InvoiceNumber + ":some fields is required. \n";
 
+                }
+                var sum = invoiceFromFile.SupplierInvoiceItems.Where(a => a.TransactionNatureCode == "2").Sum(a => a.InvoiceQuentity.GetValueOrDefault());
+                if (sum > 0)
+                {
+                    invoice.SupplierInvoicePayments = new List<SupplierInvoicePaymentPM>
+                    {
+                        new SupplierInvoicePaymentPM
+                        {
+                            DeclarationId = declarationid,
+                            Tenant = tenant,
+                            ChangeSetOp = ChangeSetOperation.Insert,
+                            PaymentAmount = sum,
+                            PaymentTypeCode = "2"
+                        }
+                    };
                 }
                 invoice.ChangeSetOp = ChangeSetOperation.Insert;
                 invoice.SupplierInvoiceItems = new List<SupplierInvoiceItemPM>();
