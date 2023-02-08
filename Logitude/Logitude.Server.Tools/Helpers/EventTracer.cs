@@ -157,14 +157,16 @@ namespace Logitude.Server.Tools.Helpers
                             ChildEntityId = args.ChildEntityId,
                             ChildObjectTableId = childObjectTable?.Id,
                         };
-                    using (var scope = objectContext.GetSnapshotTransaction())
-                    {
-                        TraceEventRepository traceEventRepository = new TraceEventRepository(objectContext);
-                        traceEventRepository.Add(myTraceEvent);
-                        traceEventRepository.SubmitChanges();
-                        objectContext.SaveChanges();
-                        scope.Commit();
-                    }
+                    
+                        using (var scopeCustom = objectContext.GetSnapshotTransaction())
+                        {
+                            TraceEventRepository traceEventRepository = new TraceEventRepository(objectContext);
+                            traceEventRepository.Add(myTraceEvent);
+                            traceEventRepository.SubmitChanges();
+                            objectContext.SaveChanges();
+                            scopeCustom.Commit();
+                        }
+
                         if (eventType.IsCustomerView)
                         {
                             ContactsUnseenEntitiesHelper.AddUnseenEntityRecord(myTraceEvent.Id, tenant);
