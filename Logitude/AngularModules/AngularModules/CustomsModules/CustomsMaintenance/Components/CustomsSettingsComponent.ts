@@ -26,6 +26,7 @@ import { CustomsSettingPMService } from '../../../Customs/Services/StandardPMs/C
 import { CustomsSettingListService } from '../../../Customs/Services/StandardLists/CustomsSettingListService';
 import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
 import { CustomsSettingExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
+import { IIGGeneralMessagesService } from 'Customs/Services/WebServices/IIGGeneralMessagesService';
 
 
 @Component({
@@ -59,7 +60,7 @@ export class CustomsSettingsComponent
 
     ValidationErrorsList: string[] = [];
     interval: any;
-
+    _IIGGeneralMessagesService : IIGGeneralMessagesService= new IIGGeneralMessagesService();
     constructor() {
         super();
     }
@@ -293,6 +294,9 @@ export class CustomsSettingsComponent
     set HSMToken(value) { this.entityPM.HSMToken = value; }
 
     //#endregion
+    ClearCache(){
+        this._IIGGeneralMessagesService.GetClearCacheItems().subscribe(a=>{});
+    }
 
     ShowRestartServiceScript(){
 
