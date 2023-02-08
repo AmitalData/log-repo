@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="14">
+  <Sql Version="15">
       <![CDATA[
 	  delete from DigitalFieldSecurities where id != ''	  
   	  delete from DigitalTextCodes where id != ''
@@ -72,7 +72,7 @@
 			"CreatedOn": "", 
 			"ModifiedOn": "",
 			"HasPermission": true,
-			"IsList": true,
+			"IsList": false,
 			"IsPm": true
 		},
 		{
@@ -82,7 +82,7 @@
 			"CreatedOn": "", 
 			"ModifiedOn": "",
 			"HasPermission": true,
-			"IsList": true,
+			"IsList": false,
 			"IsPm": true
 		},
 		{
@@ -162,7 +162,7 @@
 			"CreatedOn": "", 
 			"ModifiedOn": "",
 			"HasPermission": true,
-			"IsList": true,
+			"IsList": false,
 			"IsPm": true
 		},
 		{
@@ -172,7 +172,7 @@
 			"CreatedOn": "", 
 			"ModifiedOn": "",
 			"HasPermission": true,
-			"IsList": true,
+			"IsList": false,
 			"IsPm": true
 		},
 		{
