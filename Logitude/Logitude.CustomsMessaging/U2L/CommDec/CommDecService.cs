@@ -1872,7 +1872,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
   <COUWTVAL/>
   <CasualImporterAddress1>Dekel 27 2nd avenu 13 ddk</CasualImporterAddress1>
   <CasualImporterAddress2/>
-  <CasualImporterCity>Tel Aviv</CasualImporterCity>651
+  <CasualImporterCity>Tel Aviv</CasualImporterCity>
   <CasualImporterZipCode>6546465</CasualImporterZipCode>
   <CasualImporterFax/>
   <CasualImporterEmail>ven@vendor.com</CasualImporterEmail>
