@@ -171,8 +171,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             // 7- update totals
             cashBookPM.TotalAmount += chequePM.ForeignAmount;
-            depositPM.ForeignAmount -= chequePM.ForeignAmount;
-            depositPM.LocalDepositAmount -= chequePM.LocalAmount;
+            //// depositPM.ForeignAmount -= chequePM.ForeignAmount;
+            //// depositPM.LocalDepositAmount -= chequePM.LocalAmount;
 
             // 8- update entities
             cashBookPM.ChangeSetOp = ChangeSetOperation.Update;
@@ -496,8 +496,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             // 7- update totals
             cashBookPM.TotalAmount += chequePM.ForeignAmount;
-            depositPM.ForeignAmount -= chequePM.ForeignAmount;
-            depositPM.LocalDepositAmount -= chequePM.LocalAmount;
+            //// depositPM.ForeignAmount -= chequePM.ForeignAmount;
+            //// depositPM.LocalDepositAmount -= chequePM.LocalAmount;
 
             // 8- update entities
             cashBookPM.ChangeSetOp = ChangeSetOperation.Update;
