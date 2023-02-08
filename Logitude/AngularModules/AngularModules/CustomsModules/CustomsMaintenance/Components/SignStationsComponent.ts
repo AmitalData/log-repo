@@ -38,7 +38,7 @@ export class SignStationsComponent
     _BadCardSelectedNum: number = 0;
     _OKNum: number = 0;
     private CurrentSession = SessionLocator.SelectedSession;
-    ValidationErrorsList: string[] = [];
+    
     constructor() {
         super();
         this._entityListService = new EntityListService();
