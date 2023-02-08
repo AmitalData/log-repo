@@ -1713,7 +1713,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             if (shipment.TransportModeId == "I")
             {
-                return "Shipment.G.TruckerNumber";
+                return "Shipment.F.TruckNumber";
             }
 
             return null;
@@ -3146,7 +3146,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 queryOperations.SetFilter("ShipmentLevelCode", shipmentLevelCodeValue, false, "InListExact", null, false);
             }
 
-            var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", tenant);
+            var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableNameWithNoIncludes("Shipment", tenant);
 
             foreach (var filter in newFilters.AdditionalFilters)
             {
@@ -3214,7 +3214,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 var propInfo = typeof(DigitalShipmentList).GetProperty(queryOperations.SortByColumnName);
-                var shipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", tenant).ToList();
+                var shipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableNameWithNoIncludes("Shipment", tenant).ToList();
 
                 var objectField = shipmentObjectFields.FirstOrDefault(a => a.FieldName == queryOperations.SortByColumnName);
 
