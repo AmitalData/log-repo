@@ -88,5 +88,4 @@
     ReferencedTable="Counters"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
-	
 </Table>
