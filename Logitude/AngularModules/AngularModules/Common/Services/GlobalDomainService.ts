@@ -498,6 +498,7 @@ export class GlobalDomainService {
         myResult.PackagesCodes_BS = entityPM.PackagesCodes_BS;
         myResult.TenantManagementLicenses = entityPM.TenantManagementLicenses;
         myResult.CustomerURL = entityPM.CustomerURL;
+        myResult.IsContainerTrackingPrepaid = entityPM.IsContainerTrackingPrepaid;
         ObjectsUpdater.UpdateTenantManagementJS(myResult);
     }
 

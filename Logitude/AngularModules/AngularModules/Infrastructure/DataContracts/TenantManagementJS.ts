@@ -55,6 +55,7 @@ export class TenantManagementJS {
     public PackagesCodes_BS: Array<string> = [];
     public CountryName: string;
     public MainAdditionalPackageApplied: boolean;
+    public IsContainerTrackingPrepaid: boolean;
 
     private tenantManagementLicenses: TenantManagementLicensePM[];
     get TenantManagementLicenses() {

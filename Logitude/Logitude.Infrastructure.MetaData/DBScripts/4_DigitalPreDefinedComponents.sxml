@@ -1,6 +1,6 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-	<Sql Version="2">
-      <![CDATA[	  
+	<Sql Version="4">
+      <![CDATA[
 	  
 		delete from DigitalPreDefinedComponents where id != ''
 		declare @shipmentObjectId as varchar(15)

@@ -24,7 +24,7 @@ export class TenantManagementPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -860,6 +860,11 @@ export class TenantManagementPM {
     public set SecondaryColorOpacity(newValue: string) { if (this.secondaryColorOpacity != newValue) { this.secondaryColorOpacity = newValue; this.MarkAsDirty("SecondaryColorOpacity"); } }
        
 	 
+    private tertiaryColorOpacity: string;
+    public get TertiaryColorOpacity() { return this.tertiaryColorOpacity; }
+    public set TertiaryColorOpacity(newValue: string) { if (this.tertiaryColorOpacity != newValue) { this.tertiaryColorOpacity = newValue; this.MarkAsDirty("TertiaryColorOpacity"); } }
+       
+	 
     private totalNumberOfUsers: number;
     public get TotalNumberOfUsers() { return this.totalNumberOfUsers; }
     public set TotalNumberOfUsers(newValue: number) { if (this.totalNumberOfUsers != newValue) { this.totalNumberOfUsers = newValue; this.MarkAsDirty("TotalNumberOfUsers"); } }
@@ -958,6 +963,11 @@ export class TenantManagementPM {
     private activatePrivateSite: boolean;
     public get ActivatePrivateSite() { return this.activatePrivateSite; }
     public set ActivatePrivateSite(newValue: boolean) { if (this.activatePrivateSite != newValue) { this.activatePrivateSite = newValue; this.MarkAsDirty("ActivatePrivateSite"); } }
+       
+	 
+    private isContainerTrackingPrepaid: boolean;
+    public get IsContainerTrackingPrepaid() { return this.isContainerTrackingPrepaid; }
+    public set IsContainerTrackingPrepaid(newValue: boolean) { if (this.isContainerTrackingPrepaid != newValue) { this.isContainerTrackingPrepaid = newValue; this.MarkAsDirty("IsContainerTrackingPrepaid"); } }
        
 	 
 
