@@ -258,7 +258,7 @@
 
                                     <td style="padding-right: 10px;">
                                         <div style="display: inline-block; width: 110px; vertical-align: bottom;">
-                                            <custom-send-options [IsDisabled]="IsReadOnly"
+                                            <custom-send-options [IsDisabled]="IsReadOnly || (this.DecPM.AmendmentDontDisplayInList  && this.DecPM.IsExportClosed)"
                                                                  [AvoidDoubleClick]="true"
                                                                  [HaveTestCase]="'true'"
                                                                  #MyCustomSendOptionsComponent

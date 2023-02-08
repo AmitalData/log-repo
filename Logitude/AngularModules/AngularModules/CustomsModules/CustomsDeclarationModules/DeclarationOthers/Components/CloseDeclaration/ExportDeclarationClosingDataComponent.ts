@@ -90,13 +90,13 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
 
             this.SetUIProperty();
-            if (this.DecPM.IsExportClosed) {
+            if (this.DecPM.IsExportClosed && (!this.DecPM.AmendmentDontDisplayInList || (this.DecPM.AmendmentDontDisplayInList &&  !AppTool.IsNullOrEmpty(this.DecPM.AmendmentStatus)))) {
                 this.IsReadOnly = true
                 this.setInputsReadOnly();
             }
             else {
                 if (['6', '7', '8', '10', '11'].includes(this.DecPM.ExportCloseAmendmentStatus)) {
-                    this.IsReadOnly = true
+                    this.IsReadOnly = true 
                     this.setInputsReadOnly();
                 }
             }
