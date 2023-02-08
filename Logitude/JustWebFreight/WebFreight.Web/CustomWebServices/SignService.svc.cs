@@ -35,6 +35,7 @@ namespace WebFreight.Web.CustomWebServices
             out String CustomsRequestsSheetId, out string InterfaceTypeCode, out int? currTenant)
         {
 
+            currTenant = null;
             try
             {
                 if (!SignQueue.Instance.TryDequeueReqId(CurrentSignCertificate, isCompanySignOn, isPersonalSignOn, out CustomsRequestsSheetId, out InterfaceTypeCode, out currTenant))
@@ -59,6 +60,23 @@ namespace WebFreight.Web.CustomWebServices
             finally
             {
                 SignQueue.Instance.RefreshDb();
+
+                try
+                {
+
+                    currTenant = currTenant ?? GetTenantBy(CurrentSignCertificate);//on premise- nice to have 
+
+                    var dbSignQueueService = new SignQueueHybridDbService();
+                    dbSignQueueService.UpsertSignStation(CurrentSignCertificate, isPersonalSignOn, isCompanySignOn, currTenant.GetValueOrDefault());
+
+
+                }
+                catch
+                {
+
+
+                }
+
             }
 
 
