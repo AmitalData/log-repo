@@ -27,6 +27,8 @@ import { CustomsSettingListService } from '../../../Customs/Services/StandardLis
 import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
 import { CustomsSettingExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import { IIGGeneralMessagesService } from 'Customs/Services/WebServices/IIGGeneralMessagesService';
+import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
+import { MessageWindow } from 'Controls/Windows/MessageWindow';
 
 
 @Component({
@@ -295,7 +297,27 @@ export class CustomsSettingsComponent
 
     //#endregion
     ClearCache(){
-        this._IIGGeneralMessagesService.GetClearCacheItems().subscribe(a=>{});
+
+        var myConfirmWindow = new ConfirmWindow();
+        myConfirmWindow.Width = 400;
+        myConfirmWindow.Title="כתב ויתור"
+        myConfirmWindow.Show(`ניקוי מטמון יבוצע בשרת הנ"ל בלבד 
+        לא יבוצע ניקוי מטמון לשירותים ברקע ובשרתי ההיבריד
+        ניקוי מטמון מביא להאטה בביצועים
+        האם להמשיך?
+        `);
+        myConfirmWindow.WindowClosed.subscribe(event => {
+            if (myConfirmWindow.Yes) {
+                this._IIGGeneralMessagesService.GetClearCacheItems().subscribe(a=>{
+
+                    var msg = new MessageWindow();
+                    msg.RTL = true;
+                    msg.Show("...אנא שקול אתחול שירותי רקע ");
+                });
+            }
+     
+        });
+        
     }
 
     ShowRestartServiceScript(){
