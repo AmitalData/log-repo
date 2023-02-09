@@ -724,6 +724,11 @@ export class CargoTrackingShipmentPM {
     public set IncotermName(newValue: string) { if (this.incotermName != newValue) { this.incotermName = newValue; this.MarkAsDirty("IncotermName"); } }
        
 	 
+    private showMoneyOrder: boolean;
+    public get ShowMoneyOrder() { return this.showMoneyOrder; }
+    public set ShowMoneyOrder(newValue: boolean) { if (this.showMoneyOrder != newValue) { this.showMoneyOrder = newValue; this.MarkAsDirty("ShowMoneyOrder"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentPM;
 		

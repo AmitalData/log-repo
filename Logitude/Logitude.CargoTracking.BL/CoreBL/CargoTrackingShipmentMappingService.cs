@@ -214,6 +214,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         {
             TenantManagementPM tenantManagment = GetTenantManagement(cargoShipmentPM.Tenant);
             cargoShipmentPM.ActivatedForDeclarationApprove = tenantManagment?.ActivatedforDeclarationApprove ?? false;
+            cargoShipmentPM.ShowMoneyOrder = tenantManagment?.ShowMoneyOrder ?? false;
             cargoShipmentPM.TenantDeclarationMessage = tenantManagment?.DeclarationMessage;
         }
 

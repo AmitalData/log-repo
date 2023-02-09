@@ -433,6 +433,12 @@
                         <td style="text-align:left">
                             <CheckBox [IsEnabled]="true" (Checked)="ActivatedforDeclarationApproveChange($event)" [IsChecked]="ActivatedforDeclarationApprove"></CheckBox>
                         </td>
+                        <td style="width:200px;">
+                            <LogLabel [ObjectFieldName]="'ShowMoneyOrder'" [ObjectTableName]="'TenantManagement'" [Text]="Show Money Order" [DataContext]="EntityPM"></LogLabel>
+                        </td>
+                        <td style="text-align:left">
+                            <CheckBox [IsEnabled]="true" (Checked)="ShowMoneyOrderChange($event)" [IsChecked]="ShowMoneyOrder"></CheckBox>
+                        </td>
                         <td>
                             <div></div>
                         </td>

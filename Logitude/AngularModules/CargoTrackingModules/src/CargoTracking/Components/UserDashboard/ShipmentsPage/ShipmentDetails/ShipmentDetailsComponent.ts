@@ -122,7 +122,8 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
     focusOnPanel;
     baseURL;
     isBrandingDataLoaded;
-
+    IFrameURI: string = "";
+    IsPDF: boolean = false;
     get tenant() {
         return this._tenant || CargoTrackingBrandingData.Tenant;
     }
@@ -135,7 +136,9 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
             && this.cargoTrackingShipmentPM.ActivatedForDeclarationApprove
             && (responseRequired || haveResponse);
     }
-
+    get ShowDocumentMNO() {
+        return this.cargoTrackingShipmentPM.ShowMoneyOrder;
+    }
     get ShowShipmentAsDeclaration() {
         return this.isDeclarationLink && this.DeclarationApprovalEnabled;
     }
@@ -244,7 +247,7 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
     }
 
     private InitializeComponent(result: any) {
-        this.cargoTrackingShipmentPM = result;
+        this.cargoTrackingShipmentPM = result;    
         this.BuildShipmentReferences();
 
         this.SetCustomsOrForwarderFields();
@@ -269,8 +272,51 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
 
 
         this.SetDeclarationMessage();
+        this.SetDocumentPDF();
     }
 
+   
+    private SetDocumentPDF() {
+       
+        var DocumentToShow = this.cargoTrackingShipmentPM.DocumentsFilings.filter(x => x.DocumentTypeCode == "MNO");
+
+        if(DocumentToShow==null||DocumentToShow.length==0) {
+            this.IsPDF=false;
+        }
+        else 
+        {
+         
+            if(DocumentToShow.length>1) DocumentToShow = DocumentToShow.sort((a, b) => <any>new Date(b.CreateDate) - <any>new Date(a.CreateDate));
+
+            this.cargoTrackingShipmentExtendedService.GetFilingAttachPdfReport(DocumentToShow[0].DocumentId,this.tenant).subscribe((response: ServiceResponse) => {
+               if (response) {
+                this.IsPDF=true
+
+                   var buffer = this.base64ToBufferConvertor(response.toString());
+                   var blob = new Blob([buffer], { type: 'application/pdf' });
+                   var objectURL = URL.createObjectURL(blob);
+                   this.IFrameURI = objectURL;
+               }
+            });
+        
+        }
+
+      
+
+
+      
+    }
+    public  base64ToBufferConvertor(str: string) {
+        str = window.atob(str); // creates a ASCII string
+        var buffer = new ArrayBuffer(str.length),
+          view = new Uint8Array(buffer);
+        for (var i = 0; i < str.length; i++) {
+          view[i] = str.charCodeAt(i);
+        }
+    
+        return buffer;
+    
+    }
     private BuildShipmentReferences() {
         this.ShipmentReferences = this.cargoTrackingShipmentPM.CustomerReference ?
             this.cargoTrackingShipmentPM.CustomerReference.split(',').filter(d => d) : [];
