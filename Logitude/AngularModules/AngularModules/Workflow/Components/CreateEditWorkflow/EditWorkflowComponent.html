@@ -76,6 +76,11 @@
         width: 130px;
         padding-left: 10px;
     }
+
+    .title-width {
+        width: 180px;
+        min-width: 180px;
+    }
 </style>
 
 <div class="MediaFillAbsolute workflow-builder-wrapper">
@@ -157,7 +162,7 @@
                             </tr>
 
                             <tr class="title clickable" (click)="showAdvancedSettings()" *ngIf="!ShowAdvancedSettings">
-                                <td>
+                                <td class="title-width">
                                     <div class="SectionTitle">
                                         Show Advanced Settings
                                     </div>
@@ -165,7 +170,7 @@
                             </tr>
 
                             <tr class="title" *ngIf="ShowAdvancedSettings">
-                                <td>
+                                <td class="title-width">
                                     <div class="SectionTitle">
                                         Advanced Settings
                                     </div>
