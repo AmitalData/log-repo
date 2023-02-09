@@ -336,12 +336,16 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
 
         if (!this.screenLayoutService) return;
 
+        if (this.selectedScreenComponent.IsGridScreenComponent) {
+            this.selectedScreenComponent.MapAdvancedSettingsFields();
+        }
+
         this.screenLayoutService.BuildScreenUpdateArgs();
 
         if (!this.IsScreenSectionsValid()) return;
 
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
-
+       
         this.MyArgs.ScreenId = this.OldItem.ScreenPM.Id;
         this.MyArgs.ScreenCode = this.OldItem.ScreenPM.Code;
         this.myGeneralService.updateScreenFields(this.MyArgs).subscribe((myResult: ServiceResponse) => {
@@ -859,6 +863,7 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
 
     }
 
+    private selectedScreenComponent:any;
     LoadScreen(screenType: string) {
 
         if (this.AllLocations && this.AllLocations.length > 0) {
@@ -866,7 +871,10 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
             if (myGeneratedComponentLocation != null) {
                 myGeneratedComponentLocation.viewContainerRef.clear();
                 SessionLocator.DynamicLoader.Load(this.GetScreenComponentPath(screenType), myGeneratedComponentLocation.viewContainerRef)
-                    .then(cmpRef => { cmpRef.instance.Run(this); });
+                    .then(cmpRef => {
+                        this.selectedScreenComponent = cmpRef.instance;
+                        cmpRef.instance.Run(this);
+                    });
             }
         }
     }

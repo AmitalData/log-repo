@@ -46,9 +46,9 @@ export class GridScreenLayoutService implements IScreenLayoutService {
         });
         this.screenComponent.MyArgs.Rows = 0;
         this.screenComponent.MyArgs.Columns = this.screenComponent.GridScreenSelectedFields.length;
-        this.screenComponent.MyArgs.SortedByFieldCode = this.screenComponent.OldItem.ScreenPM.SortedByFieldCode;
-        this.screenComponent.MyArgs.SortedType = this.screenComponent.OldItem.ScreenPM.SortedType;
-        this.screenComponent.MyArgs.RelatedScreenCode = this.screenComponent.OldItem.ScreenPM.RelatedScreenCode;
+        this.screenComponent.MyArgs.SortedByFieldCode = this.screenComponent.SelectedItem.ScreenPM.SortedByFieldCode;
+        this.screenComponent.MyArgs.SortedType = this.screenComponent.SelectedItem.ScreenPM.SortedType;
+        this.screenComponent.MyArgs.RelatedScreenCode = this.screenComponent.SelectedItem.ScreenPM.RelatedScreenCode;
     }
 
     private ReladGridSections() {
