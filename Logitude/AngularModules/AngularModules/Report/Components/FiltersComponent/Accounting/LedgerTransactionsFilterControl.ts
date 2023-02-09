@@ -544,14 +544,17 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
   
         queryFilterItems.push(new QueryFilterItem("UseSecurityLevel", this.fullAccountingSetting.IsSecurityLevelActivated));
 
-        queryFilterItem = new QueryFilterItem();
-        queryFilterItem.FieldName = "BalanceInLocalCurrency";
-        queryFilterItem.FieldValue = this.BalanceInLocalCurrency;
-        if(this.selectedAmountOperator) {
-            queryFilterItem.Operator = this.selectedAmountOperator.Code; //ayed
-            this.selectedAmountOperator 
+
+        if (this.BalanceInLocalCurrency != null) {
+            queryFilterItem = new QueryFilterItem();
+            queryFilterItem.FieldName = "BalanceInLocalCurrency";
+            queryFilterItem.FieldValue = this.BalanceInLocalCurrency;
+            if (this.selectedAmountOperator) {
+                queryFilterItem.Operator = this.selectedAmountOperator.Code; //ayed
+                this.selectedAmountOperator
+            }
+            queryFilterItems.push(queryFilterItem);
         }
-        queryFilterItems.push(queryFilterItem);
         return queryFilterItems;
     }
 
@@ -625,7 +628,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
                     break;
                 case "BalanceInLocalCurrency":
                     this.BalanceInLocalCurrency = queryFilterItem.FieldValue;//ayed
-                    if(this.operatorsList.filter(x => x.Code == queryFilterItem.Operator).length > 0){
+                    if (this.operatorsList.filter(x => x.Code == queryFilterItem.Operator).length > 0) {
                         this.selectedAmountOperator = this.operatorsList.filter(x => x.Code == queryFilterItem.Operator)[0];
                     }
                     break;    
