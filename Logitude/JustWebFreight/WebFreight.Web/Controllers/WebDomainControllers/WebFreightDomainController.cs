@@ -372,13 +372,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 var recordSetParams = new RecordSet
                 {
                     TTL = 3600,
-                    //ARecords = new List<ARecord>
-                    //{
-                    //    new ARecord(DNSIPAddress)
-                    //}
                     CnameRecord = new CnameRecord()
                     {
-                       Cname = LogitudeSettings.DeploymentStage.ToLower() == "simplog" ? "digital.logitudeworld.com" : "digital951.logitudeworld.com"
+                       Cname = GetDomainData()
                     }
                 };
 
@@ -388,6 +384,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 throw e;
             }
+        }
+
+        private static string GetDomainData()
+        {
+            return LogitudeSettings.DeploymentStage.ToLower() == "simplog"
+                   ? "digital.logitudeworld.com" 
+                    : LogitudeSettings.DeploymentStage.ToLower() == "preproduction"
+                     ? "simplogpre.logitudeworld.com"
+                     : LogitudeSettings.DeploymentStage.ToLower() == "test2"
+                        ? "digital951.logitudeworld.com"
+                        : "";
         }
 
         private static bool IsValidDomain(string subDomain)
