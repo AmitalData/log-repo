@@ -204,6 +204,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string DigitalPortalSearchFields { get; set; }
         public Decimal? TotalExamptFortaxReport { get; set; }
         public string DocumentTemplateId { get; set; }
+        public string ConcurrencyGUID { get; set; }
         public double? TotalAmountNotForTaxReport { get; set; }
     }
 }
