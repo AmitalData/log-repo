@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -26,6 +27,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 entityPM.IsReconciled = false;
             }
+           this.UpdateBankAccount(entityPM);
+
         }
 
         protected override void OnUpdating(LedgerTransactionPM entityPM)
@@ -71,6 +74,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         throw new ApplicationException("(entityPOCO.OpenAmount > 0 && entityPM.OpenAmount < 0)");
                     }
                 }
+            }
+            if(entityPM.IsExternalReconcile != entityPOCO.IsExternalReconcile)
+            {
+                this.UpdateBankAccount(entityPM);
             }
             base.OnUpdating(entityPM, entityPOCO);
         }
@@ -119,6 +126,28 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
                 this.UpdateMulti(listPM, new List<LedgerTransactionPM>(), new EntityPM(), true);
                 scope.Complete();
+            }
+        }
+        internal void UpdateBankAccount(LedgerTransactionPM entityPM)
+        {
+            BankAccountQueryService qs = new BankAccountQueryService((MainContext as IAccountingContext));
+            BankAccountUpdateService service = new BankAccountUpdateService(MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+            var bankAccount = qs.GetByGLAccountId(entityPM.AccountId, entityPM.Tenant);
+            if (bankAccount != null)
+            {
+                var totalOpenExternalTransactions = 0;
+                if (entityPM.IsExternalReconcile)
+                {
+                    Int32.TryParse(bankAccount.TotalOpenExternalTransactions, out totalOpenExternalTransactions);
+                    bankAccount.TotalOpenExternalTransactions = totalOpenExternalTransactions--.ToString();
+                }
+                else
+                {
+                    Int32.TryParse(bankAccount.TotalOpenExternalTransactions, out totalOpenExternalTransactions);
+                    bankAccount.TotalOpenExternalTransactions = totalOpenExternalTransactions++.ToString();
+                }
+                bankAccount.ChangeSetOp = ChangeSetOperation.Update;
+                service.Update(bankAccount, true);
             }
         }
         public void UpdateInReconcileProgress(List<String> listTransactionId,int tenant,bool Value_inReconcileProgress)
