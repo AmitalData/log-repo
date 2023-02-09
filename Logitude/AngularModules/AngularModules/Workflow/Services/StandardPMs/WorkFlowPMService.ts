@@ -10,39 +10,39 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
-import { Guid } from '../../../Infrastructure/Utilities/Guid';
-import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
-import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
-import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
-import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFieldClass'
-import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
+import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
+import {Guid} from '../../../Infrastructure/Utilities/Guid';
+import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
+import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
+import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
+import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
+import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 
-import { WorkFlowPM } from '../../EntityPMs/WorkFlowPM';
+import {WorkFlowPM} from '../../EntityPMs/WorkFlowPM';
 
-import { WorkFlowVersionPM } from '../../EntityPMs/WorkFlowVersionPM';
+import {WorkFlowVersionPM} from '../../EntityPMs/WorkFlowVersionPM';
 
 @Injectable()
 
 export class WorkFlowPMService {
-	private _http: HttpClient;
-	private _apiUrl: string;
-	constructor() {
-		this._http = ServiceHelper.HttpClient;
-		this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/workflows';
-	}
+ private _http: HttpClient;
+ private _apiUrl: string;
+ constructor() {
+        this._http = ServiceHelper.HttpClient;
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/workflows';      
+    }
 
-	get(id: string) {
+	get(id: string) {       
 
-		var callTime = new Date();
+		var callTime = new Date();		
 
 		return defer(() => {
 			return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
 				.pipe(
 					map((response: HttpResponse<any>) => {
 						var pm = response.body;
-
+				
 						var entity: WorkFlowPM;
 						if (pm) {
 							entity = this.MapJsonToEntityPM(pm);
@@ -50,33 +50,33 @@ export class WorkFlowPMService {
 
 						var serviceResponse: ServiceResponse = new ServiceResponse();
 						serviceResponse.Result = entity;
-
+              
 						var servertime = response.headers.get('ServerExecutionTime');
 						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WorkFlow", "GetSinglePM", 'id=' + id);
-
+				 
 						return serviceResponse;
 
 					}),
-
+					
 					catchError(ServiceHelper.HandleServiceError));
-		});
+		});                    
 	}
 
 	insert(entityPM: WorkFlowPM) {
-
-		var callTime = new Date();
-
+ 
+		var callTime = new Date();  
+		
 		return defer(() => {
 
 			var serviceResponse: ServiceResponse = new ServiceResponse();
-			var validator: ClassLevelValidator = new ClassLevelValidator();
+			var validator: ClassLevelValidator = new ClassLevelValidator();                
 			var errorsArray = validator.Validate("WorkFlow", entityPM);
 
 
 			if (errorsArray.length == 0) {
 
 				var mappedEntity: WorkFlowPM = this.MapJsonToEntityPM(entityPM, false);
-
+				
 				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
 						map((response: HttpResponse<any>) => {
@@ -85,11 +85,11 @@ export class WorkFlowPMService {
 							if (pm) {
 								var mappedResult: WorkFlowPM = this.MapJsonToEntityPM(pm, true, entityPM);
 								serviceResponse.Result = mappedResult;
-							}
+							}						
 
 							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WorkFlow", "SaveChanges", "");
-
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WorkFlow", "SaveChanges", "");                    
+												                             
 							return serviceResponse;
 						}),
 
@@ -106,38 +106,32 @@ export class WorkFlowPMService {
 
 	update(entityPM: WorkFlowPM) {
 
-		var callTime = new Date();
-
+		var callTime = new Date();     
+		
 		return defer(() => {
 
 			var serviceResponse: ServiceResponse = new ServiceResponse();
-			var validator: ClassLevelValidator = new ClassLevelValidator();
+			var validator: ClassLevelValidator = new ClassLevelValidator();               
 			var errorsArray = validator.Validate("WorkFlow", entityPM);
 
-			if (entityPM.RetriesNumber > 10) {
-				errorsArray.push("The maximum number of retries is 10")
-			}
-			if (entityPM.RetriesDelay > 0 && entityPM.RetriesDelay < 120) {
-				errorsArray.push("The minimum number of retries delay is 120")
-			}
 
 			if (errorsArray.length == 0) {
 
 				var mappedEntity: WorkFlowPM = this.MapJsonToEntityPM(entityPM, false);
-
+				
 				return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
 						map((response: HttpResponse<any>) => {
-
+                 
 							var pm = response.body;
 							if (pm) {
 								var mappedResult: WorkFlowPM = this.MapJsonToEntityPM(pm, true, entityPM);
 								serviceResponse.Result = mappedResult;
 							}
-
+							 
 							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WorkFlow", "SaveChanges", "");
-
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WorkFlow", "SaveChanges", "");                    
+					                           
 							return serviceResponse;
 						}),
 
@@ -152,120 +146,121 @@ export class WorkFlowPMService {
 		});
 	}
 
+   
 
+	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: WorkFlowPM = null) {
 
-	MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: WorkFlowPM = null) {
-
-
-		if (!entityPM) {
-
-			entityPM = new WorkFlowPM();
+         
+        if (!entityPM) {
+            
+            entityPM = new WorkFlowPM();
 			entityPM.DisableMarkAsDirty = true;
-		}
+        }
 
 		var customFields: Array<string> = [];
-		for (var i = 1; i < 11; i++) {
-			customFields.push("Field" + i);
-		}
-		var jsonPMKeys = Object.keys(jsonPM);
+        for (var i = 1; i < 11; i++) {
+            customFields.push("Field" + i);
+        }
+            var jsonPMKeys = Object.keys(jsonPM);
 
-		for (var key in jsonPMKeys) {
-			if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
+            for (var key in jsonPMKeys) {
+			 if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
 
-				continue;
-			}
-			var property = jsonPMKeys[key];
-
-			if (customFields.indexOf(property) > -1) {
-				if (jsonPM[property]) {
-					var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
-					entityPM[property] = customFieldClass;
-				}
-			}
-			else {
-				entityPM[property] = jsonPM[property];
-			}
-
-		}
-
-		this.MapWorkFlowVersions(entityPM, jsonPM, mapParent); // Call composition tables map methods
-
-
+                continue;
+            }
+                var property = jsonPMKeys[key];
+				
+			  if(customFields.indexOf(property) > -1)
+                {
+                if (jsonPM[property]) {
+                    var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
+                    entityPM[property] = customFieldClass;
+                }
+            }
+            else {
+                entityPM[property] = jsonPM[property];
+            }
+                 
+            }
+			
+               this.MapWorkFlowVersions(entityPM, jsonPM, mapParent); // Call composition tables map methods
+			 
+            
 
 		if (mapParent) {
-			entityPM.OldEntityPM = this.clone(entityPM);
-
-			entityPM.OldEntityPM.WorkFlowVersions = [];
-			for (var item in entityPM.WorkFlowVersions) {
-				var myWorkFlowVersionPM = entityPM.WorkFlowVersions[item];
-				var newWorkFlowVersionPM: WorkFlowVersionPM = this.clone(myWorkFlowVersionPM);
-
-
-				entityPM.OldEntityPM.WorkFlowVersions.push(newWorkFlowVersionPM);
-			}
-
+                entityPM.OldEntityPM = this.clone(entityPM);
+			   			   
+            entityPM.OldEntityPM.WorkFlowVersions = [];
+            for (var item in entityPM.WorkFlowVersions) {
+            var myWorkFlowVersionPM = entityPM.WorkFlowVersions[item];
+            var newWorkFlowVersionPM: WorkFlowVersionPM = this.clone(myWorkFlowVersionPM);
+						
+							 
+            entityPM.OldEntityPM.WorkFlowVersions.push(newWorkFlowVersionPM);
+            }
+			   
 		}
-		else {
+        else {
 
-			entityPM.OldEntityPM = null;
-		}
+            entityPM.OldEntityPM = null;
+        }
 		entityPM.IsDirty = false;
-		entityPM.DisableMarkAsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
 
-		return entityPM;
-	}
+        return entityPM;
+    }
 
-	MapWorkFlowVersions(entityPM: WorkFlowPM, jsonPM: any, mapParent: boolean = true) {
+    MapWorkFlowVersions(entityPM: WorkFlowPM, jsonPM: any, mapParent: boolean = true) {
 
-		entityPM.WorkFlowVersions = new Array<WorkFlowVersionPM>();
-		for (var item in jsonPM.WorkFlowVersions) {
+        entityPM.WorkFlowVersions = new Array<WorkFlowVersionPM>();
+        for (var item in jsonPM.WorkFlowVersions) {
 
-			var jItem = jsonPM.WorkFlowVersions[item];
-			if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
-				continue;
-			}
-			var newWorkFlowVersionPM: WorkFlowVersionPM;
-			newWorkFlowVersionPM = new WorkFlowVersionPM();
-			newWorkFlowVersionPM.DisableMarkAsDirty = true;
-			var pmKeysArray = Object.keys(jItem);
-			for (var pmKey in pmKeysArray) {
-
-				if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
-					continue;
-				}
-				var pmProperty = pmKeysArray[pmKey];
-				newWorkFlowVersionPM[pmProperty] = jItem[pmProperty];
-			}
+            var jItem = jsonPM.WorkFlowVersions[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newWorkFlowVersionPM: WorkFlowVersionPM;
+            newWorkFlowVersionPM = new WorkFlowVersionPM();
+		    newWorkFlowVersionPM.DisableMarkAsDirty = true;                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+			
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newWorkFlowVersionPM[pmProperty] = jItem[pmProperty];
+            }
 			newWorkFlowVersionPM.DisableMarkAsDirty = false;
-			newWorkFlowVersionPM.IsDirty = false;
-			entityPM.WorkFlowVersions.push(newWorkFlowVersionPM);
-		}
-	}
+            newWorkFlowVersionPM.IsDirty = false;
+            entityPM.WorkFlowVersions.push(newWorkFlowVersionPM);
+        }
+    }
 
-	public clone(jsonPM: any) {
-		var entityPM: any;
-		entityPM = {};
+	  public clone(jsonPM: any) {
+        var entityPM: any;
+        entityPM = {};
 
-		var jsonPMKeys = Object.keys(jsonPM);
-		for (var key in jsonPMKeys) {
+        var jsonPMKeys = Object.keys(jsonPM);
+        for (var key in jsonPMKeys) {
+            
+            if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged") {
+                continue;
+            }
 
-			if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged") {
-				continue;
-			}
+            var property = jsonPMKeys[key];
+            entityPM[property] = jsonPM[property];
 
-			var property = jsonPMKeys[key];
-			entityPM[property] = jsonPM[property];
+        }
+        return entityPM;
+    }
 
-		}
-		return entityPM;
-	}
-
-	public GetNewEntityPM() {
-		var entityPM: WorkFlowPM;
-		entityPM = new WorkFlowPM();
-		entityPM.Tenant = InfraSettings.TenantPM.Id;
-		return entityPM;
-	}
-
+	  public GetNewEntityPM() {		 
+		    var entityPM: WorkFlowPM;
+			entityPM = new WorkFlowPM();
+			entityPM.Tenant = InfraSettings.TenantPM.Id;
+			return entityPM;
+    }
+		 
 
 }
