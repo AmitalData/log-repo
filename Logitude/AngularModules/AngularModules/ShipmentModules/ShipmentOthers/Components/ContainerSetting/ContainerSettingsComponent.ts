@@ -83,7 +83,6 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
         if (!this.ShowDefaults) return;
         this.EmptyReturnClosingDays = 5;
         this.ShipmentATAClosingDays = 90;
-
     }
 
 
@@ -159,9 +158,13 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
         this.ValidationErrorsList = errors;
-        if (this.ValidationErrorsList.length == 0) {
-            this.SubmitSave();
-        }
+        this.CustomValidation();
+        if (this.ValidationErrorsList.length == 0) this.SubmitSave();
+    }
+    
+    CustomValidation() {
+        if (AppTool.IsNullOrEmpty(this.ActivationDate))
+            this.ValidationErrorsList.push("Activation Date is Required");
     }
 
     SubmitSave() {
@@ -278,6 +281,13 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
     set IsDrop(value: boolean) {
         if (this.EntityPM.IsDrop != value) {
             this.EntityPM.IsDrop = value;
+        }
+    }
+
+    get ActivationDate() { return this.EntityPM.ActivationDate; }
+    set ActivationDate(value: Date) {
+        if (this.EntityPM.ActivationDate != value) {
+            this.EntityPM.ActivationDate = value;
         }
     }
 }

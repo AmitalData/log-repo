@@ -42,6 +42,8 @@ namespace Logitude.Infrastructure.Data.EntityMapping
             this.Property(t => t.IsDrop).HasColumnName("IsDrop");
 
             this.Property(t => t.AddedManually).HasColumnName("AddedManually");
+
+            this.Property(t => t.ActivationDate).HasColumnName("ActivationDate");
         }
     }
 }
