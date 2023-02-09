@@ -12,7 +12,7 @@ import { FieldTemplateComponent } from "./Components/Templates/FieldTemplateComp
 import { CreateWorkflowComponent } from "./Components/CreateEditWorkflow/CreateWorkflowComponent";
 import { EditWorkflowComponent } from "./Components/CreateEditWorkflow/EditWorkflowComponent";
 import { RunHistoryWorkflowComponent } from "./Components/WorkflowInstance/RunHistoryWorkflowComponent";
-import { WorkflowInstanceActivityComponent } from "./Components/WorkflowInstance/WorkflowInstanceActivityComponent";
+import { WorkflowInstanceDetailsComponent } from "./Components/WorkflowInstance/WorkflowInstanceDetailsComponent";
 import { ConditionsComponent } from "./Components/Base/ConditionsComponent";
 import { ConditionGroupsComponent } from "./Components/Base/ConditionGroupsComponent";
 import { FieldValueComponent } from "./Components/Base/FieldValueComponent";
@@ -46,7 +46,7 @@ import { WorkflowVersionComponent } from './Components/WorkflowVersion/WorkflowV
 import { CreateWorkflowVersionComponent } from './Components/WorkflowVersion/CreateWorkflowVersionComponent';
 import { WorkFlowShortTitleComponent } from './Components/ShortTitles/WorkFlowShortTitleComponent';
 import { IsObjectTypePipe } from "./Pipes/IsObjectTypePipe";
-import { WorkflowInstanceVariableObject } from "./Components/WorkflowInstance/WorkflowInstanceVariableObject";
+import { ObjectVariableComponent } from "./Components/Base/ObjectVariableComponent";
 import { AppendItemPropertiesComponent } from './Components/Properties/AppendItemPropertiesComponent';
 import { DeleteItemPropertiesComponent } from './Components/Properties/DeleteItemPropertiesComponent';
 
@@ -72,7 +72,7 @@ export const Components = [
     ConditionGroupsComponent,
     FieldValueComponent,
     FooterButtonsComponent,
-    WorkflowInstanceActivityComponent,
+    WorkflowInstanceDetailsComponent,
     TreeSelectComponent,
     SetValuesComponent,
     DeleteNodeWarningComponent,
@@ -81,7 +81,7 @@ export const Components = [
     WorkflowVersionComponent,
     CreateWorkflowVersionComponent,
     WorkFlowShortTitleComponent,
-    WorkflowInstanceVariableObject,
+    ObjectVariableComponent,
 ];
 
 export const Pipes = [
@@ -132,7 +132,7 @@ export class ModuleDeclarations {
             case "ConditionGroupsComponent": { result = ConditionGroupsComponent; break; }
             case "FieldValueComponent": { result = FieldValueComponent; break; }
             case "FooterButtonsComponent": { result = FooterButtonsComponent; break; }
-            case "WorkflowInstanceActivityComponent": { result = WorkflowInstanceActivityComponent; break; }
+            case "WorkflowInstanceDetailsComponent": { result = WorkflowInstanceDetailsComponent; break; }
             case "TreeSelectComponent": { result = TreeSelectComponent; break; }
             case "SetValuesComponent": { result = SetValuesComponent; break; }
             case "DeleteNodeWarningComponent": { result = DeleteNodeWarningComponent; break; }
@@ -141,7 +141,7 @@ export class ModuleDeclarations {
             case "WorkflowVersionComponent": { result = WorkflowVersionComponent; break; }
             case "CreateWorkflowVersionComponent": { result = CreateWorkflowVersionComponent; break; }
             case "WorkFlowShortTitleComponent": { result = WorkFlowShortTitleComponent; break; }
-            case "WorkflowInstanceVariableObject": { result = WorkflowInstanceVariableObject; break; }
+            case "ObjectVariableComponent": { result = ObjectVariableComponent; break; }
         }
         return result;
     }

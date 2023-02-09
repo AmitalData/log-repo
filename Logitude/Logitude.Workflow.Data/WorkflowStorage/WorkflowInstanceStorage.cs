@@ -1,10 +1,8 @@
-﻿using Logitude.Workflow.Data.EntityLists;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Text;
+using Newtonsoft.Json;
+using Logitude.Workflow.Data.EntityLists;
+using Logitude.Workflow.Data.WorkflowStorage.ArchivedJsonConverters;
 
 namespace Logitude.Workflow.Data.WorkflowStorage
 {
@@ -18,45 +16,11 @@ namespace Logitude.Workflow.Data.WorkflowStorage
             {
                 if (!string.IsNullOrEmpty(workflowInstanceId))
                 {
-                    string zipFileName = string.Format("{0}.{1}.zip", workflowInstanceId, tenant);
-                    string jsonFileName = string.Format("{0}.{1}.json", workflowInstanceId, tenant);
-                    byte[] blobBytes = GetBlobBytes(zipFileName);
-                    if (blobBytes != null)
-                    {
-
-
-
-
-
-                        using (var zippedStream = new MemoryStream(blobBytes))
-                        {
-                            using (var archive = new ZipArchive(zippedStream, ZipArchiveMode.Read))
-                            {
-                                var entry = archive.Entries.FirstOrDefault(x => x.Name.ToLower() == jsonFileName.ToLower());
-
-                                if (entry != null)
-                                {
-                                    using (var unzippedEntryStream = entry.Open())
-                                    {
-                                        using (var ms = new MemoryStream())
-                                        {
-                                            unzippedEntryStream.CopyTo(ms);
-
-                                            var test = Encoding.ASCII.GetString(ms.ToArray());
-
-
-                                        }
-                                    }
-                                }
-
-                                return null;
-                            }
-                        }
-
-
-
-
-                    }
+                    byte[] zipFileBytes = GetWorkFlowInstanceBlobBytes(workflowInstanceId, tenant);
+                    string jsonFileName = GetWorkFlowInstanceJsonFileName(workflowInstanceId, tenant);
+                    ArchivedJsonDeserializer deserializer = new ArchivedJsonDeserializer(zipFileBytes, jsonFileName, null);
+                    List<WorkFlowInstanceActivityList> activities = deserializer.Deserialize<List<WorkFlowInstanceActivityList>>("WorkFlowInstanceActivities");
+                    return activities;
                 }
                 return null;
             }
@@ -66,5 +30,40 @@ namespace Logitude.Workflow.Data.WorkflowStorage
             }
         }
 
+        public List<WorkFlowInstanceVariableList> GetVariables(string workflowInstanceId, int tenant)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(workflowInstanceId))
+                {
+                    byte[] zipFileBytes = GetWorkFlowInstanceBlobBytes(workflowInstanceId, tenant);
+                    string jsonFileName = GetWorkFlowInstanceJsonFileName(workflowInstanceId, tenant);
+                    JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
+                    {
+                        Converters = { new WorkflowInstanceVariableListConverter() }
+                    };
+                    ArchivedJsonDeserializer deserializer = new ArchivedJsonDeserializer(zipFileBytes, jsonFileName, jsonSerializerSettings);
+                    List<WorkFlowInstanceVariableList> variables = deserializer.Deserialize<List<WorkFlowInstanceVariableList>>("WorkFlowInstanceVariables");
+                    return variables;
+                }
+                return null;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        private byte[] GetWorkFlowInstanceBlobBytes(string workflowInstanceId, int tenant)
+        {
+            string zipFileName = string.Format("{0}.{1}.zip", workflowInstanceId, tenant);
+            byte[] zipFileBytes = GetBlobBytes(zipFileName);
+            return zipFileBytes;
+        }
+
+        private string GetWorkFlowInstanceJsonFileName(string workflowInstanceId, int tenant)
+        {
+            return string.Format("{0}.{1}.json", workflowInstanceId, tenant);
+        }
     }
 }

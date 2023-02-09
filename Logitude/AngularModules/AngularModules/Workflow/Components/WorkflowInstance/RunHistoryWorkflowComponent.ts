@@ -206,7 +206,7 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
             windowArgs.EntityId = $event.rowData.Id;
             windowArgs.ObjectTableName = "WorkFlowInstanceActivity";
             logWindow.WindowArgs = windowArgs;
-            logWindow.Show('./Workflow/Components/CreateEditWorkflow/WorkflowInstanceActivityComponent');
+            logWindow.Show('./Workflow/Components/CreateEditWorkflow/WorkflowInstanceDetailsComponent');
         }
     }
 

@@ -59,6 +59,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WindowsAzure.Storage.8.0.1\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -75,8 +76,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="WorkflowStorage\ArchivedJsonConverters\WorkflowInstanceVariableListConverter.cs" />
     <Compile Include="WorkflowStorage\WorkflowAzureStorage.cs" />
-    <Compile Include="WorkflowStorage\WorkflowStorageAccount.cs" />
     <Compile Include="WorkflowStorage\WorkflowStorageContainers.cs" />
     <Compile Include="WorkflowStorage\WorkflowInstanceStorage.cs" />
     <Compile Include="EntityKeys\ExpressionCategoryKeys.cs" />
@@ -186,6 +187,7 @@
     <Compile Include="Repositories\WorkFlowVersionRepository.cs" />
     <Compile Include="Repositories\WorkFlowVersionStatusRepository.cs" />
     <Compile Include="WorkflowContext.cs" />
+    <Compile Include="WorkflowStorage\ArchivedJsonDeserializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">

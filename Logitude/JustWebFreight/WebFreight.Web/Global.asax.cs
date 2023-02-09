@@ -524,6 +524,8 @@ namespace WebFreight.Web
             LogitudeSettings.AzurePrincipalSecretKey = setting.AzurePrincipalSecretKey;
             LogitudeSettings.DNSZone = setting.DNSZone;
             LogitudeSettings.DNSIPAddress = setting.DNSIPAddress;
+            LogitudeSettings.WorkflowStorageAccountName = setting.WorkflowStorageAccountName;
+            LogitudeSettings.WorkflowStorageAccountKey = setting.WorkflowStorageAccountKey;
         }
 
         private void StartSignalRTopicThread()

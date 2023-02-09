@@ -1,19 +1,20 @@
-﻿using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
-using System;
+﻿using System;
 using System.IO;
 using System.Net;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.Workflow.Data.WorkflowStorage
 {
     public class WorkflowAzureStorage
     {
-        private readonly string ContainerName;
+        private readonly CloudBlobContainer CloudBlobContainer;
 
         public WorkflowAzureStorage(string containerName)
         {
-            ContainerName = string.IsNullOrEmpty(containerName) ? null : containerName.ToLower();
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            CloudBlobContainer = GetCloudBlobContainer(containerName);
         }
         
         public byte[] GetBlobBytes(string blobName)
@@ -22,10 +23,8 @@ namespace Logitude.Workflow.Data.WorkflowStorage
             {
                 if (!string.IsNullOrEmpty(blobName))
                 {
-                    CloudBlobContainer cloudBlobContainer = GetCloudBlobContainer();
-                    CloudBlockBlob cloudBlockBlob = GetCloudBlockBlob(cloudBlobContainer, blobName);
-                    byte[] bytes = GetBlobBytes(cloudBlockBlob);
-                    return bytes;
+                    CloudBlockBlob cloudBlockBlob = GetCloudBlockBlob(blobName);
+                    return GetBlobBytes(cloudBlockBlob);
                 }
                 return null;
             }
@@ -35,47 +34,69 @@ namespace Logitude.Workflow.Data.WorkflowStorage
             }
         }
 
-        private CloudBlobContainer GetCloudBlobContainer()
+        private CloudBlobContainer GetCloudBlobContainer(string containerName)
         {
-            if (!string.IsNullOrEmpty(ContainerName))
+            try
             {
-                string storageConnectionString = GetStorageConnectionString();
-                CloudStorageAccount cloudStorageAccount = CloudStorageAccount.Parse(storageConnectionString);
-                CloudBlobClient cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
-                CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference(ContainerName);
-                return cloudBlobContainer != null && cloudBlobContainer.Exists() ? cloudBlobContainer : null;
+                if (!string.IsNullOrEmpty(containerName))
+                {
+                    string storageConnectionString = GetStorageConnectionString();
+                    CloudStorageAccount cloudStorageAccount = CloudStorageAccount.Parse(storageConnectionString);
+                    CloudBlobClient cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
+                    CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference(containerName.ToLower());
+                    return cloudBlobContainer != null && cloudBlobContainer.Exists() ? cloudBlobContainer : null;
+                }
+                return null;
             }
-            return null;
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
-        private CloudBlockBlob GetCloudBlockBlob(CloudBlobContainer cloudBlobContainer, string blobName)
+        private CloudBlockBlob GetCloudBlockBlob(string blobName)
         {
-            if (cloudBlobContainer != null && cloudBlobContainer.Exists() && !string.IsNullOrEmpty(blobName))
+            try
             {
-                CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(blobName);
-                return cloudBlockBlob != null && cloudBlockBlob.Exists() ? cloudBlockBlob : null;
+                if (CloudBlobContainer != null && CloudBlobContainer.Exists() && !string.IsNullOrEmpty(blobName))
+                {
+                    CloudBlockBlob cloudBlockBlob = CloudBlobContainer.GetBlockBlobReference(blobName);
+                    return cloudBlockBlob != null && cloudBlockBlob.Exists() ? cloudBlockBlob : null;
+                }
+                return null;
             }
-            return null;
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         private byte[] GetBlobBytes(CloudBlockBlob cloudBlockBlob)
         {
-            if (cloudBlockBlob != null && cloudBlockBlob.Exists())
+            try
             {
-                using (MemoryStream memoryStream = new MemoryStream())
+                if (cloudBlockBlob != null && cloudBlockBlob.Exists())
                 {
-                    cloudBlockBlob.DownloadToStream(memoryStream);
-                    byte[] bytes = memoryStream.ToArray();
-                    return bytes;
+                    using (MemoryStream memoryStream = new MemoryStream())
+                    {
+                        cloudBlockBlob.DownloadToStream(memoryStream);
+                        return memoryStream.ToArray();
+                    }
                 }
+                return null;
             }
-            return null;
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         private string GetStorageConnectionString()
         {
-            return string.Format("DefaultEndpointsProtocol={0};AccountName={1};AccountKey={2}",
-                WorkflowStorageAccount.DefaultEndpointsProtocol, WorkflowStorageAccount.AccountName, WorkflowStorageAccount.AccountKey);
+            string accountProtocol = "https";
+            string accountName = LogitudeSettings.WorkflowStorageAccountName;
+            string accountKey = LogitudeSettings.WorkflowStorageAccountKey;
+            return string.Format("DefaultEndpointsProtocol={0};AccountName={1};AccountKey={2}", accountProtocol, accountName, accountKey);
         }
     }
 }

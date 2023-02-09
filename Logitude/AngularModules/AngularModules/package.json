@@ -53,7 +53,7 @@
     "fusioncharts": "^3.19.0",
     "lodash.clonedeep": "^4.5.0",
     "logitude-dashboard-library": "^1.4.37",
-    "logitude-workflow": "^1.0.68",
+    "logitude-workflow": "latest",
     "mochawesome-report-generator": "^5.1.0",
     "ng-zorro-antd": "^9.3.0",
     "ngx-monaco-editor": "^9.0.0",
