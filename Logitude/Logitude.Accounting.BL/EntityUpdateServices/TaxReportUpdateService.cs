@@ -167,8 +167,101 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 //entityPM.ChangeSetOp = ChangeSetOperation.Update;
                 //taxReportUpdateService.Update(entityPM, true);
             }
-
+            MarkDuplicateLines(entityPM);
             UpdateReportStatus(entityPM);
+
+        }
+
+
+
+
+        private static List<TaxReportLinePM> GetTaxReportLines(string taxReportId, int tenant)
+        {
+            IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
+            TaxReportQueryService taxReportQuery = new TaxReportQueryService(accountingContext);
+            var taxReportLinesPM = taxReportQuery.GetReportLinesPMs(taxReportId, tenant);
+            return taxReportLinesPM;
+        }
+
+
+        private void MarkDuplicateLines(TaxReportPM taxReportPM)
+        {
+            List<TaxReportLinePM> taxReportLines = GetTaxReportLines(taxReportPM.Id, taxReportPM.Tenant);
+            if (taxReportLines != null && taxReportLines.Count > 0)
+            {
+                var duplicates = taxReportLines.GroupBy(ln =>
+                new
+                {
+                    VatNumber = ln.VatNumber,
+                    Reference = ln.Reference
+                }).OrderByDescending(g => g.Key.VatNumber).ThenBy(g => g.Key.Reference)
+                .Select(g => new
+                {
+                    VatNumber = g.Key.VatNumber,
+                    Reference = g.Key.Reference,
+                    LineNumbers = g.OrderBy(x => x.Line).Select(x => x.Line).ToList()
+                })
+                .Where(g => g.LineNumbers.Count() > 1).ToList();
+                
+                List<TaxReportLinePM> removeDupLines = new List<TaxReportLinePM>();
+                IAccountingContext accountingContext; 
+                TaxReportLineUpdateService taxReportLineUpdateService; 
+
+                if (duplicates != null && duplicates.Count > 0)
+                {
+
+                    List<int> all_dup_line_nos = new List<int>();
+                    foreach (var item in duplicates)
+                    {
+                        all_dup_line_nos.AddRange(item.LineNumbers);
+                    }
+
+                    List<TaxReportLinePM> duplicateLines = new List<TaxReportLinePM>();
+
+                    foreach (var oneLine in taxReportLines)
+                    {
+                        if (all_dup_line_nos.Contains(oneLine.Line))
+                        {
+                            oneLine.ChangeSetOp = ChangeSetOperation.Update;
+                            oneLine.StatusCode = TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference;
+                            duplicateLines.Add(oneLine);
+                        }
+                        else if (oneLine.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference)
+                        {
+                            oneLine.ChangeSetOp = ChangeSetOperation.Update;
+                            oneLine.StatusCode = "6";
+                            removeDupLines.Add(oneLine);
+                        }
+                    }
+
+                    if (duplicateLines.Count > 0 || removeDupLines.Count > 0)
+                    {
+                        accountingContext = AccountingContext.GetContext(taxReportPM.Tenant);
+                        taxReportLineUpdateService = new TaxReportLineUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportPM.Tenant);
+                        if (duplicateLines.Count > 0) taxReportLineUpdateService.UpdateMulti(duplicateLines, new List<TaxReportLinePM>(), taxReportPM, true);
+                        if (removeDupLines.Count > 0) taxReportLineUpdateService.UpdateMulti(removeDupLines, new List<TaxReportLinePM>(), taxReportPM, true);
+                    }
+                }
+                else
+                {
+                    foreach (var linePM in taxReportLines)
+                    {
+                        if (linePM.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference)
+                        {
+                            linePM.ChangeSetOp = ChangeSetOperation.Update;
+                            linePM.StatusCode = "6";
+                            removeDupLines.Add(linePM);
+                        }
+                    }
+                    if (removeDupLines.Count > 0)
+                    {
+                        accountingContext = AccountingContext.GetContext(taxReportPM.Tenant);
+                        taxReportLineUpdateService = new TaxReportLineUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportPM.Tenant);
+                        taxReportLineUpdateService.UpdateMulti(removeDupLines, new List<TaxReportLinePM>(), taxReportPM, true);
+                    }
+
+                }
+            }
 
         }
 

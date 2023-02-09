@@ -274,6 +274,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         }
 
                     }
+                    
                 }
 
                 if (entityPM.VatableInvoiceAmount != null && entityPM.VatableInvoiceAmount != 0)
