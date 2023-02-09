@@ -771,6 +771,10 @@ namespace Logitude.Customs.BL.Validators
             }
 
             string isExport = declaration.Direction == "E" ? "E" : "I";
+            if(declaration.Direction != "E")
+            {
+                return null ;
+            }
 
             DeclarationPaymentQueryService DeclarationPaymentQuery = new DeclarationPaymentQueryService(context);
             DeclarationPaymentPM payment = DeclarationPaymentQuery.GetSingle(declarationId, true, fromCache);
