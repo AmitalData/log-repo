@@ -31,6 +31,8 @@ export class ConstituentPM {
     public get EntityParentPM() { return this.entityParentPM; }
     public set EntityParentPM(newValue: any) { this.entityParentPM = newValue; }
 
+    public ConcurrencyGUID: string;
+
     public UniqueKey: string;
 
     public IsDirty: boolean;
