@@ -962,8 +962,14 @@ h1 {
     font-weight: 600;
     direction: rtl;
 }
+.declaration-approval-document{
+  
+    direction: ltr;
+    padding-bottom: 25px;
+    
+}
 .declaration-approval-toolbar{
-    padding: 20px 0px 15px 0;
+    padding: 20px 0px 15px 0;   
 }
 .declaration-approval-toolbar button{
     border: none;

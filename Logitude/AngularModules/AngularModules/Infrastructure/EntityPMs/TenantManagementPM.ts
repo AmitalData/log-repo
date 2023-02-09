@@ -748,7 +748,10 @@ export class TenantManagementPM {
     public get PrivateLabelId() { return this.privateLabelId; }
     public set PrivateLabelId(newValue: string) { if (this.privateLabelId != newValue) { this.privateLabelId = newValue; this.MarkAsDirty("PrivateLabelId"); } }
        
-	 
+    private showMoneyOrder: boolean;
+    public get ShowMoneyOrder() { return this.showMoneyOrder; }
+    public set ShowMoneyOrder(newValue: boolean) { if (this.showMoneyOrder != newValue) { this.showMoneyOrder = newValue; this.MarkAsDirty("ShowMoneyOrder"); } }
+
 
     public PackagesCodes_PK: Array<string>= [];
 		 
@@ -997,4 +1000,4 @@ export class TenantManagementPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

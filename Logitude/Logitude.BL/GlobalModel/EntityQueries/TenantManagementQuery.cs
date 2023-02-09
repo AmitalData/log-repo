@@ -287,6 +287,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
                                                      CargoTokenTimeout = a.CargoTokenTimeout,
                                                      IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
+                                                     ShowMoneyOrder=a.ShowMoneyOrder
                                                  }).FirstOrDefault();
                     if (tenant != null)
                     {
@@ -493,6 +494,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
                                                   CargoTokenTimeout = a.CargoTokenTimeout,
                                                   IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
+                                                  ShowMoneyOrder = a.ShowMoneyOrder
 
                                               }).FirstOrDefault();
 
@@ -691,6 +693,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
                         CargoTokenTimeout = a.CargoTokenTimeout,
                         IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
+                        ShowMoneyOrder = a.ShowMoneyOrder
 
                     });
         }
@@ -836,6 +839,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     WhatsAppMessagingPhoneNumber = entity.WhatsAppMessagingPhoneNumber,
                     IsContainerTrackingPrepaid = entity.IsContainerTrackingPrepaid,
 
+
+                    ShowMoneyOrder = entity.ShowMoneyOrder
                 };
             }
 
@@ -981,6 +986,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
                        PrivateLabelId = a.GlobalTenant != null ? a.GlobalTenant.PrivateLabelId : "",
                        PrivateLabelName = a.GlobalTenant != null ? a.GlobalTenant.TenantManagmentPrivateLabel != null ? a.GlobalTenant.TenantManagmentPrivateLabel.PrivateLabelName : "" : "",
+                       ShowMoneyOrder = a.ShowMoneyOrder
                    };
         }
 
@@ -1263,8 +1269,10 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              CargoTokenTimeout = a.CargoTokenTimeout,
                                              SecondaryColor = a.SecondaryColor,
                                              TertiaryColor = a.TertiaryColor,
-                                             ComapnylogoId = a.ComapnylogoId,
+
                                              IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid
+                                             ComapnylogoId = a.ComapnylogoId,
+                                             ShowMoneyOrder=a.ShowMoneyOrder
                                          }).FirstOrDefault();
 
             return tenant;
