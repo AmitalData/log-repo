@@ -777,6 +777,11 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string NotesSharedWithCustomer { get; set; }
         public double? Volume { get; set; }
         public bool IsDocumentsNeedApprove { get; set; }
+
+        public DateTime? OnCarriageETD { get; set; }
+        public DateTime? OnCarriageATD { get; set; }
+        public DateTime? OnCarriageETA { get; set; }
+        public DateTime? OnCarriageATA { get; set; }
     }
 
     public class TimeLineData
