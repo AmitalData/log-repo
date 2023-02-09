@@ -20,10 +20,11 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
         {
             string myEntityName = "APPayment";
             APPaymentRepository repository = new APPaymentRepository(entityPM.Tenant);
-
             ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(entityPM.Tenant);
             bool showLocals = !loggedContact.DontShowLocal;
-
+            var oldValue = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals);
+            var newValue = TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals);
+            var notes = "";
 
             if (isNewState)
             {
@@ -87,11 +88,8 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                 var isInternalNotesChanged = entityPM.InternalNotes != payment.InternalNotes;
                 var isPrintNotesChanged = entityPM.PrintNotes != payment.PrintNotes;
                 var isBothChanged = isInternalNotesChanged && isPrintNotesChanged;
-                var oldValue = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals);
-                var newValue = TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals);
                 var InternalNotes = "Internal Notes Updated: " + oldValue + payment.InternalNotes + newValue + entityPM.InternalNotes;
                 var PrintNotes = "Print Notes Updated: " + oldValue + payment.PrintNotes + newValue + entityPM.PrintNotes;
-                var notes = "";
                 if (isBothChanged)
                 {
                     notes = InternalNotes + ", " + PrintNotes;
@@ -117,11 +115,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
             if (entityPM.PaymentCurrencyExchangeRate != payment.PaymentCurrencyExchangeRate)
             {
                 var isPaymentCurrencyExchangeRateChanged = entityPM.PaymentCurrencyExchangeRate != payment.PaymentCurrencyExchangeRate;
-                var oldValue = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals);
-                var newValue = TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals);
                 var PaymentCurrencyExchangeRate = "Payment Currency Exchange Rate Updated: " + oldValue + payment.PaymentCurrencyExchangeRate + newValue + entityPM.PaymentCurrencyExchangeRate;
-                var notes = "";
-
                 if (isPaymentCurrencyExchangeRateChanged)
                 {
                     notes = PaymentCurrencyExchangeRate;
@@ -140,11 +134,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
             if (entityPM.AmountInPaymentCurrency != payment.AmountInPaymentCurrency)
             {
                 var isAmountInPaymentCurrencyChanged = entityPM.AmountInPaymentCurrency != payment.AmountInPaymentCurrency;
-                var oldValue = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals);
-                var newValue = TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals);
                 var AmountInPaymentCurrency = "Amount In Payment Currency Updated: " + oldValue + payment.AmountInPaymentCurrency + newValue + entityPM.AmountInPaymentCurrency;
-                var notes = "";
-
                 if (isAmountInPaymentCurrencyChanged)
                 {
                     notes = AmountInPaymentCurrency;
@@ -163,11 +153,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
             if (entityPM.RegisterDate != payment.RegisterDate)
             {
                 var isRegisterDateChanged = entityPM.RegisterDate != payment.RegisterDate;
-                var oldValue = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals);
-                var newValue = TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals);
                 var RegisterDate = "Register Date Updated: " + oldValue + payment.RegisterDate + newValue + entityPM.RegisterDate;
-                var notes = "";
-
                 if (isRegisterDateChanged)
                 {
                     notes = RegisterDate;
@@ -187,11 +173,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
             {
                 Currency currency = CurrencyRepository.GetSingleCurrency(payment.PaymentCurrencyId, payment.Tenant, true);
                 var isPaymentCurrencyIdChanged = entityPM.PaymentCurrencyId != payment.PaymentCurrencyId;
-                var oldValue = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals);
-                var newValue = TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals);
                 var PaymentCurrencyId = "Payment Currency Updated: " + oldValue + currency.Code + newValue + entityPM.PaymentCurrencyCode;
-                var notes = "";
-
                 if (isPaymentCurrencyIdChanged)
                 {
                     notes = PaymentCurrencyId;
@@ -213,11 +195,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                 Branch oldBranch = rep.GetSingleBranch(payment.BranchId, payment.Tenant);
                 Branch newBranch = rep.GetSingleBranch(entityPM.BranchId, entityPM.Tenant);
                 var isBranchIdChanged = entityPM.BranchId != payment.BranchId;
-                var oldValue = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals);
-                var newValue = TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals);
                 var BranchId = "Branch Updated: " + oldValue + oldBranch.EnglishName + newValue + newBranch.EnglishName;
-                var notes = "";
-
                 if (isBranchIdChanged)
                 {
                     notes = BranchId;
@@ -241,11 +219,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                 var oldMethod = paymentMethodRep.GetSingleAccountingPaymentMethod(payment.AccountingPaymentMethodId, payment.Tenant);
                 var newMethod = paymentMethodRep.GetSingleAccountingPaymentMethod(entityPM.AccountingPaymentMethodId, entityPM.Tenant);
                 var isAccountingPaymentMethodIdChanged = entityPM.AccountingPaymentMethodId != payment.AccountingPaymentMethodId;
-                var oldValue = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals);
-                var newValue = TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals);
                 var AccountingPaymentMethodId = "Payment Method Updated: " + oldValue + oldMethod.Name + newValue + newMethod.Name;
-                var notes = "";
-
                 if (isAccountingPaymentMethodIdChanged)
                 {
                     notes = AccountingPaymentMethodId;
@@ -267,11 +241,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                 Card oldCard = cardRep.GetSingleCard(payment.VendorId, entityPM.Tenant);
                 Card newCard = cardRep.GetSingleCard(entityPM.VendorId, entityPM.Tenant);
                 var isVendorIdChanged = entityPM.VendorId != payment.VendorId;
-                var oldValue = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals);
-                var newValue = TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals);
                 var VendorId = "Vendor Updated: " + oldValue + oldCard.EnglishName + newValue + newCard.EnglishName;
-                var notes = "";
-
                 if (isVendorIdChanged)
                 {
                     notes = VendorId;
@@ -293,11 +263,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                 Address oldAddress = addressRepository.GetSingleAddress(payment.VendorAddressId, payment.Tenant);
                 Address newAddress = addressRepository.GetSingleAddress(entityPM.VendorAddressId, payment.Tenant);
                 var isVendorAddressIdChanged = entityPM.VendorAddressId != payment.VendorAddressId;
-                var oldValue = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals);
-                var newValue = TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals);
                 var VendorAddressId = "Vendor Address Updated: " + oldValue + oldAddress.Description + newValue + newAddress.Description;
-                var notes = "";
-
                 if (isVendorAddressIdChanged)
                 {
                     notes = VendorAddressId;
@@ -316,11 +282,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
             if (entityPM.TaxDeductionLocalAmount != payment.TaxDeductionLocalAmount)
             {
                 var isTaxDeductionLocalAmountChanged = entityPM.TaxDeductionLocalAmount != payment.TaxDeductionLocalAmount;
-                var oldValue = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals);
-                var newValue = TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals);
                 var TaxDeductionLocalAmount = "Tax Deduction  Updated: " + oldValue + payment.TaxDeductionLocalAmount + newValue + entityPM.TaxDeductionLocalAmount;
-                var notes = "";
-
                 if (isTaxDeductionLocalAmountChanged)
                 {
                     notes = TaxDeductionLocalAmount;
@@ -339,11 +301,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
             if (entityPM.TaxDeductionPercentage != payment.TaxDeductionPercentage)
             {
                 var isTaxDeductionPercentageChanged = entityPM.TaxDeductionPercentage != payment.TaxDeductionPercentage;
-                var oldValue = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals);
-                var newValue = TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals);
                 var TaxDeductionPercentage = "Tax Deduction Percentage Updated: " + oldValue + payment.TaxDeductionPercentage + newValue + entityPM.TaxDeductionPercentage;
-                var notes = "";
-
                 if (isTaxDeductionPercentageChanged)
                 {
                     notes = TaxDeductionPercentage;
@@ -361,7 +319,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
             }
             else if (entityPM.DontIncludeInDeductionReport != payment.DontIncludeInDeductionReport)
             {
-                string notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant) + payment.DontIncludeInDeductionReport + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant) + entityPM.DontIncludeInDeductionReport;
+                notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant) + payment.DontIncludeInDeductionReport + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant) + entityPM.DontIncludeInDeductionReport;
 
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
                 {
