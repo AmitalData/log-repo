@@ -28,7 +28,8 @@ export function FillBIFoldertDetails(BifolderDetails: BIfolderDetails) {
 
 export const SearchBIFolder = (BIReportFolderName) => {
     cy.wait(1000)
-    cy.FillLogTextBox(BIReportSelectors.FolderSearch, BIReportFolderName);
+    cy.get('input[placeholder*="Search"]:last').type(BIReportFolderName)
+    //cy.FillLogTextBox(BIReportSelectors.FolderSearch, BIReportFolderName);
     cy.Click(BIReportSelectors.SearchBIReportFolder, null, true);
 }
 

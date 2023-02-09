@@ -22,10 +22,12 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
     public SortedTypes: string[] = [];
     public SelectedSortedByField: ObjectFieldPM;
     public SelectedSortedType: string;
+    public RelatedScreenCode: string;
     public SearchFieldsId: string;
     public AllFields: any[] = [];
     public DataContext = this;
     private relatedNewScreens: any[] = [];
+    public IsGridScreenComponent: boolean = true;
     NewScreenFilterItems: ApiQueryFilters;
     @Output() onSelectedDataLoadedEvent = new EventEmitter();
     @Output() onUnSelectedDataLoadedEvent = new EventEmitter();
@@ -95,14 +97,12 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
     SortedTypeChanged(selectedSortType) {
         if (this.SelectedSortedType == selectedSortType) return;
         this.SelectedSortedType = selectedSortType;
-        this.SelectedScreen.SortedType = selectedSortType;
         this.ScreenLayoutComponent.Modified = true;
     }
 
     SortedByField(selectedSortByObjectField) {
         if (this.SelectedSortedByField == selectedSortByObjectField) return;
         this.SelectedSortedByField = selectedSortByObjectField;
-        this.SelectedScreen.SortedByFieldCode = selectedSortByObjectField?.FieldCode;
         this.ScreenLayoutComponent.Modified = true;
     }
 
@@ -180,18 +180,25 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
 
     public SelectedNewScreenId: string;
     SetSelectedNewScreen() {
-        if (this.SelectedScreen.RelatedScreenCode != null ) {
-            this.SelectedNewScreenId = this.relatedNewScreens.filter(screen => screen.Code == this.SelectedScreen.RelatedScreenCode)[0]?.Id;
+        if (this.SelectedScreen.RelatedScreenCode != null) {
+            this.SetDefaultSelectedNewScreen();
             return;
         }
         this.SelectedNewScreenId = this.SelectedScreen.Id;
-        this.SelectedScreen.RelatedScreenCode = this.SelectedScreen.Code;
+        this.RelatedScreenCode = this.SelectedScreen.Code;
         this.ScreenLayoutComponent.Modified = true;
     }
+    SetDefaultSelectedNewScreen() {
+        let relatedNewScreen = this.relatedNewScreens.filter(screen => screen.Code == this.SelectedScreen.RelatedScreenCode);
+        if (!relatedNewScreen || !relatedNewScreen[0]) return;
+        this.SelectedNewScreenId = relatedNewScreen[0]?.Id;
+        this.RelatedScreenCode = relatedNewScreen[0]?.Code;
+    }
+
     NewScreensSelectionChanged(selectedNewScreen: any) {
         if (!selectedNewScreen) return;
-        if (this.SelectedScreen.RelatedScreenCode == selectedNewScreen.Code) return;
-        this.SelectedScreen.RelatedScreenCode = selectedNewScreen ? selectedNewScreen.Code : "";
+        if (this.RelatedScreenCode == selectedNewScreen.Code) return;
+        this.RelatedScreenCode = selectedNewScreen ? selectedNewScreen.Code : "";
         this.ScreenLayoutComponent.Modified = true;
     }
 
@@ -365,5 +372,11 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
         this.onSelectedDataLoadedEvent.emit(this.SelectedItem);
         this.ScreenLayoutComponent.ReloadGridSections = true;
         this.ScreenLayoutComponent.Modified = true;
+    }
+
+    public MapAdvancedSettingsFields() {
+        this.SelectedScreen.SortedByFieldCode = this.SelectedSortedByField?.FieldCode;
+        this.SelectedScreen.SortedType = this.SelectedSortedType;
+        this.SelectedScreen.RelatedScreenCode = this.RelatedScreenCode;
     }
 }

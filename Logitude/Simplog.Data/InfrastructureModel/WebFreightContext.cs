@@ -73,7 +73,7 @@ namespace Simplog.Data.InfrastructureModel
 
             return context;
         }
-        public DbContextTransaction GetSnapshotTransaction()
+        public  DbContextTransaction GetSnapshotTransaction()
         {
             return Database.BeginTransaction(System.Data.IsolationLevel.Snapshot);
 

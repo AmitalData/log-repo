@@ -14089,6 +14089,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                Transshipment3ToPortId = f.Transshipment3ToPortId,
                                OnCarriageToPortId = f.OnCarriageToPortId,
                                MainCarriageToPortId = f.MainCarriageToPortId,
+                               OnCarriageETD =  f.OnCarriageETD,
+                               OnCarriageATD =  f.OnCarriageATD,
+                               OnCarriageETA =  f.OnCarriageETA,
+                               OnCarriageATA =  f.OnCarriageATA
                            };
 
             return myResult;

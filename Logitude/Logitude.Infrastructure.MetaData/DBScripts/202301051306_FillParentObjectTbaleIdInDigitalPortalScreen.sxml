@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="4">
+  <Sql Version="6">
     <![CDATA[
     declare @shipmentObjectId as varchar(15)
     set @shipmentObjectId = (select Id from ObjectTables where [Name] = 'Shipment' and Tenant = 0 )

@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="15">
+  <Sql Version="17">
       <![CDATA[
 	  delete from DigitalFieldSecurities where id != ''	  
   	  delete from DigitalTextCodes where id != ''
@@ -57,6 +57,16 @@
 		},
 		{
 			"FieldCode": "Shipment.MainCarriageToPortCountryCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
+		},
+		{
+			"FieldCode": "Shipment.ValueOfGoods",
 			"CreatedBy": "system",
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
@@ -703,6 +713,26 @@
 			"ModifiedOn": "",
 			"HasPermission": true, 
 			"IsList": true, 
+			"IsPm": true
+	    },
+		{
+            "FieldCode": "Shipment.OnCarriageATA",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
+	    },
+		{
+            "FieldCode": "Shipment.OnCarriageETA",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true,
+			"IsList": true,
 			"IsPm": true
 	    },
 	    {
@@ -1991,7 +2021,17 @@
 			"IsList": true,
 			"IsPm": true
 		},
-				{
+		{
+			"FieldCode": "Shipment.ValueOfGoods",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
+		},
+		{
 			"FieldCode": "Shipment.OnCarriageToPortName",
 			"CreatedBy": "system",
 			"ModifiedBy": "system",
@@ -2622,7 +2662,27 @@
 			"IsPm": true
         },
 	    {
-            "FieldCode": "Shipment.ShipmentTypeName" ,
+            "FieldCode": "Shipment.ShipmentTypeName",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
+	    },
+		{
+            "FieldCode": "Shipment.OnCarriageATA",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
+	    },
+		{
+            "FieldCode": "Shipment.OnCarriageETA",
 			"CreatedBy": "system",
 			"ModifiedBy": "system",
 			"CreatedOn": "",
@@ -6363,6 +6423,96 @@
 			"HasPermission": true, 
 			"IsList": true, 
 			"IsPm": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.FromPartnerCardId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.FromAddressId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.FromPortId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.ToAddressCity",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.ToAddressCountry",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.PickUpDeliveryFromTypeCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.PickUpDeliveryToTypeCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.ToPartnerCardId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.ToPortId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		}]');
 
 	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
@@ -6467,6 +6617,96 @@
 			"ModifiedOn": "",
 			"HasPermission": true, 
 			"IsList": true,
+			"IsPm": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.FromPartnerCardId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.FromAddressId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.FromPortId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.ToAddressCity",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.ToAddressCountry",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.PickUpDeliveryFromTypeCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.PickUpDeliveryToTypeCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.ToPartnerCardId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.ToPortId",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true, 
+			"IsList": true, 
 			"IsPm": true
 		}]');
 
