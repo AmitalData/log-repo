@@ -141,9 +141,7 @@ export class ARInvoicePMService {
 			}
 
 			if (errorsArray.length == 0) {
-                console.log(entityPM)
 				var mappedEntity: ARInvoicePM = this.MapJsonToEntityPM(entityPM, false);
-                console.log(mappedEntity)
 				return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
 						map((response: HttpResponse<any>) => {
