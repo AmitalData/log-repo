@@ -12,7 +12,7 @@ import { WorkflowRunHistoryFixturePath } from '../fixtures/WorkflowRunHistory/Wo
 import { DecisionElementDetails } from "../models/DecisionElementDetails";
 import { WorkflowlistFixturePath } from "../fixtures/WorkflowList/WorkflowListFixturePath";
 
-let ConditionCounter = 1;
+let ConditionCounter = 2;
 let ConditionGroupButton = 1;
 let SearchworkflowName;
 let InstanceBusinessKey;
@@ -70,7 +70,9 @@ export function FillEditFlowStartNodeDetails(startNodeDetails: StartNodeDetails)
     cy.get(WorkflowSelectors.WorkflowStartNodeObject).find(BaseSelectors.input).click().type(startNodeDetails.Object).then(() => {
         cy.get(WorkflowSelectors.WorkflowfieldsListTitle).contains(startNodeDetails.Object).eq(0).click()
     });
-    cy.ClickRadio(WorkflowSelectors.FlowTriggerRadioButton(startNodeDetails.ConfigureTrigger))
+    cy.ClickRadio(WorkflowSelectors.FlowTriggerRadioButton(startNodeDetails.ConfigureTrigger));
+    cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
+    FillConditionFieldName(false, 1, 'Notes');
 }
 
 export function FillWorkflowDetails(workflowDetails: WorkflowDetails) {
@@ -149,7 +151,7 @@ export function AssertCreateWorkflow() {
 }
 
 export function FillRootConditionsDetails(groupCondition: string, conditionDetailsList: ConditionDetails[]) {
-    cy.Click(WorkflowSelectors.WorkflowFirstAddCondition, null);
+    cy.Click(WorkflowSelectors.WorkflowAddRootCondition, null);
     cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
     cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowRootOperation, groupCondition, 0);
     FillConditionsGroup(conditionDetailsList, true, (ConditionCounter + conditionDetailsList.length), false);
@@ -308,6 +310,7 @@ export function FillDecisionElementDetails(decisionElementDetails: DecisionEleme
     cy.FillLogTextBox(WorkflowSelectors.DecisionElementName, decisionElementDetails.Title);
     cy.FillLogTextBox(WorkflowSelectors.DecisionMetLabel, decisionElementDetails.MetLabel);
     cy.FillLogTextBox(WorkflowSelectors.DecisionOtherwiseLabel, decisionElementDetails.OtherwiseLabel);
+    ConditionCounter = 1;
 }
 
 function AddDecisionElement() {
