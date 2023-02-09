@@ -1,11 +1,15 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.Resolvers;
 using Logitude.BL.Security;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.Repositories;
 using System;
 
 namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
@@ -15,6 +19,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
         public static void Trace(EntityPMs.APPaymentPM entityPM, APPayment payment, bool isNewState)
         {
             string myEntityName = "APPayment";
+            APPaymentRepository repository = new APPaymentRepository(entityPM.Tenant);
 
             ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(entityPM.Tenant);
             bool showLocals = !loggedContact.DontShowLocal;
@@ -77,9 +82,9 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                     });
                 }
             }
-            else if(entityPM.InternalNotes != payment.InternalNotes || entityPM.PrintNotes != payment.PrintNotes)
+            else if (entityPM.InternalNotes != payment.InternalNotes || entityPM.PrintNotes != payment.PrintNotes)
             {
-                var isInternalNotesChanged  = entityPM.InternalNotes != payment.InternalNotes;
+                var isInternalNotesChanged = entityPM.InternalNotes != payment.InternalNotes;
                 var isPrintNotesChanged = entityPM.PrintNotes != payment.PrintNotes;
                 var isBothChanged = isInternalNotesChanged && isPrintNotesChanged;
                 var oldValue = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals);
@@ -109,10 +114,255 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                     Notes = notes
                 });
             }
+            if (entityPM.PaymentCurrencyExchangeRate != payment.PaymentCurrencyExchangeRate)
+            {
+                var isPaymentCurrencyExchangeRateChanged = entityPM.PaymentCurrencyExchangeRate != payment.PaymentCurrencyExchangeRate;
+                var oldValue = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals);
+                var newValue = TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals);
+                var PaymentCurrencyExchangeRate = "Payment Currency Exchange Rate Updated: " + oldValue + payment.PaymentCurrencyExchangeRate + newValue + entityPM.PaymentCurrencyExchangeRate;
+                var notes = "";
+
+                if (isPaymentCurrencyExchangeRateChanged)
+                {
+                    notes = PaymentCurrencyExchangeRate;
+                }
+
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "UPAP",
+                    UserId = loggedContact.Id,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = myEntityName,
+                    Notes = notes
+                });
+            }
+            if (entityPM.AmountInPaymentCurrency != payment.AmountInPaymentCurrency)
+            {
+                var isAmountInPaymentCurrencyChanged = entityPM.AmountInPaymentCurrency != payment.AmountInPaymentCurrency;
+                var oldValue = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals);
+                var newValue = TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals);
+                var AmountInPaymentCurrency = "Amount In Payment Currency Updated: " + oldValue + payment.AmountInPaymentCurrency + newValue + entityPM.AmountInPaymentCurrency;
+                var notes = "";
+
+                if (isAmountInPaymentCurrencyChanged)
+                {
+                    notes = AmountInPaymentCurrency;
+                }
+
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "UPAP",
+                    UserId = loggedContact.Id,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = myEntityName,
+                    Notes = notes
+                });
+            }
+            if (entityPM.RegisterDate != payment.RegisterDate)
+            {
+                var isRegisterDateChanged = entityPM.RegisterDate != payment.RegisterDate;
+                var oldValue = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals);
+                var newValue = TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals);
+                var RegisterDate = "Register Date Updated: " + oldValue + payment.RegisterDate + newValue + entityPM.RegisterDate;
+                var notes = "";
+
+                if (isRegisterDateChanged)
+                {
+                    notes = RegisterDate;
+                }
+
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "UPAP",
+                    UserId = loggedContact.Id,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = myEntityName,
+                    Notes = notes
+                });
+            }
+            if (entityPM.PaymentCurrencyId != payment.PaymentCurrencyId)
+            {
+                Currency currency = CurrencyRepository.GetSingleCurrency(payment.PaymentCurrencyId, payment.Tenant, true);
+                var isPaymentCurrencyIdChanged = entityPM.PaymentCurrencyId != payment.PaymentCurrencyId;
+                var oldValue = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals);
+                var newValue = TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals);
+                var PaymentCurrencyId = "Payment Currency Updated: " + oldValue + currency.Code + newValue + entityPM.PaymentCurrencyCode;
+                var notes = "";
+
+                if (isPaymentCurrencyIdChanged)
+                {
+                    notes = PaymentCurrencyId;
+                }
+
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "UPAP",
+                    UserId = loggedContact.Id,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = myEntityName,
+                    Notes = notes
+                });
+            }
+            if (entityPM.BranchId != payment.BranchId)
+            {
+                BranchRepository rep = new BranchRepository(entityPM.Tenant);
+                Branch oldBranch = rep.GetSingleBranch(payment.BranchId, payment.Tenant);
+                Branch newBranch = rep.GetSingleBranch(entityPM.BranchId, entityPM.Tenant);
+                var isBranchIdChanged = entityPM.BranchId != payment.BranchId;
+                var oldValue = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals);
+                var newValue = TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals);
+                var BranchId = "Branch Updated: " + oldValue + oldBranch.EnglishName + newValue + newBranch.EnglishName;
+                var notes = "";
+
+                if (isBranchIdChanged)
+                {
+                    notes = BranchId;
+                }
+
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "UPAP",
+                    UserId = loggedContact.Id,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = myEntityName,
+                    Notes = notes
+                });
+            }
+
+            if (entityPM.AccountingPaymentMethodId != payment.AccountingPaymentMethodId)
+            {
+
+                AccountingPaymentMethodRepository paymentMethodRep = new AccountingPaymentMethodRepository(repository.context);
+                var oldMethod = paymentMethodRep.GetSingleAccountingPaymentMethod(payment.AccountingPaymentMethodId, payment.Tenant);
+                var newMethod = paymentMethodRep.GetSingleAccountingPaymentMethod(entityPM.AccountingPaymentMethodId, entityPM.Tenant);
+                var isAccountingPaymentMethodIdChanged = entityPM.AccountingPaymentMethodId != payment.AccountingPaymentMethodId;
+                var oldValue = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals);
+                var newValue = TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals);
+                var AccountingPaymentMethodId = "Payment Method Updated: " + oldValue + oldMethod.Name + newValue + newMethod.Name;
+                var notes = "";
+
+                if (isAccountingPaymentMethodIdChanged)
+                {
+                    notes = AccountingPaymentMethodId;
+                }
+
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "UPAP",
+                    UserId = loggedContact.Id,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = myEntityName,
+                    Notes = notes
+                });
+            }
+            if (entityPM.VendorId != payment.VendorId)
+            {
+                CardRepository cardRep = new CardRepository(entityPM.Tenant);
+                Card oldCard = cardRep.GetSingleCard(payment.VendorId, entityPM.Tenant);
+                Card newCard = cardRep.GetSingleCard(entityPM.VendorId, entityPM.Tenant);
+                var isVendorIdChanged = entityPM.VendorId != payment.VendorId;
+                var oldValue = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals);
+                var newValue = TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals);
+                var VendorId = "Vendor Updated: " + oldValue + oldCard.EnglishName + newValue + newCard.EnglishName;
+                var notes = "";
+
+                if (isVendorIdChanged)
+                {
+                    notes = VendorId;
+                }
+
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "UPAP",
+                    UserId = loggedContact.Id,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = myEntityName,
+                    Notes = notes
+                });
+            }
+            if (entityPM.VendorAddressId != payment.VendorAddressId)
+            {
+                AddressRepository addressRepository = new AddressRepository(payment.Tenant);
+                Address oldAddress = addressRepository.GetSingleAddress(payment.VendorAddressId, payment.Tenant);
+                Address newAddress = addressRepository.GetSingleAddress(entityPM.VendorAddressId, payment.Tenant);
+                var isVendorAddressIdChanged = entityPM.VendorAddressId != payment.VendorAddressId;
+                var oldValue = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals);
+                var newValue = TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals);
+                var VendorAddressId = "Vendor Address Updated: " + oldValue + oldAddress.Description + newValue + newAddress.Description;
+                var notes = "";
+
+                if (isVendorAddressIdChanged)
+                {
+                    notes = VendorAddressId;
+                }
+
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "UPAP",
+                    UserId = loggedContact.Id,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = myEntityName,
+                    Notes = notes
+                });
+            }
+            if (entityPM.TaxDeductionLocalAmount != payment.TaxDeductionLocalAmount)
+            {
+                var isTaxDeductionLocalAmountChanged = entityPM.TaxDeductionLocalAmount != payment.TaxDeductionLocalAmount;
+                var oldValue = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals);
+                var newValue = TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals);
+                var TaxDeductionLocalAmount = "Tax Deduction  Updated: " + oldValue + payment.TaxDeductionLocalAmount + newValue + entityPM.TaxDeductionLocalAmount;
+                var notes = "";
+
+                if (isTaxDeductionLocalAmountChanged)
+                {
+                    notes = TaxDeductionLocalAmount;
+                }
+
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "UPAP",
+                    UserId = loggedContact.Id,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = myEntityName,
+                    Notes = notes
+                });
+            }
+            if (entityPM.TaxDeductionPercentage != payment.TaxDeductionPercentage)
+            {
+                var isTaxDeductionPercentageChanged = entityPM.TaxDeductionPercentage != payment.TaxDeductionPercentage;
+                var oldValue = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals);
+                var newValue = TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals);
+                var TaxDeductionPercentage = "Tax Deduction Percentage Updated: " + oldValue + payment.TaxDeductionPercentage + newValue + entityPM.TaxDeductionPercentage;
+                var notes = "";
+
+                if (isTaxDeductionPercentageChanged)
+                {
+                    notes = TaxDeductionPercentage;
+                }
+
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "UPAP",
+                    UserId = loggedContact.Id,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = myEntityName,
+                    Notes = notes
+                });
+            }
             else if (entityPM.DontIncludeInDeductionReport != payment.DontIncludeInDeductionReport)
             {
                 string notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant) + payment.DontIncludeInDeductionReport + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant) + entityPM.DontIncludeInDeductionReport;
-                
+
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
                 {
                     Tenant = entityPM.Tenant,
@@ -123,23 +373,12 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                     Notes = notes
                 });
             }
-            else
-            {
-                EventTracer.CreateTraceEvent(new EventTracerArgs()
-                {
-                    Tenant = entityPM.Tenant,
-                    EventTypeCode = "UPAP",
-                    UserId = loggedContact.Id,
-                    EntityId = entityPM.Id,
-                    ObjectTableName = myEntityName,
-                });
-            }
 
             TraceExternalPayment(entityPM, payment, loggedContact.Id);
         }
 
 
-     
+
 
         private static void TraceExternalPayment(APPaymentPM entityPM, APPayment payment, string loggedContactId)
         {
