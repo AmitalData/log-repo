@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="16">
+  <Sql Version="17">
       <![CDATA[
 	  delete from DigitalFieldSecurities where id != ''	  
   	  delete from DigitalTextCodes where id != ''
@@ -57,6 +57,16 @@
 		},
 		{
 			"FieldCode": "Shipment.MainCarriageToPortCountryCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
+		},
+		{
+			"FieldCode": "Shipment.ValueOfGoods",
 			"CreatedBy": "system",
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
@@ -2011,7 +2021,17 @@
 			"IsList": true,
 			"IsPm": true
 		},
-				{
+		{
+			"FieldCode": "Shipment.ValueOfGoods",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
+		},
+		{
 			"FieldCode": "Shipment.OnCarriageToPortName",
 			"CreatedBy": "system",
 			"ModifiedBy": "system",
