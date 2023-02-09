@@ -94,7 +94,9 @@ export class SignStationExtendedListService {
                     //}
                     //serviceResponse.Result = _mappedListsArray;
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                })
+                //,catchError(ServiceHelper.HandleServiceError)
+                );
         });
     }
 
