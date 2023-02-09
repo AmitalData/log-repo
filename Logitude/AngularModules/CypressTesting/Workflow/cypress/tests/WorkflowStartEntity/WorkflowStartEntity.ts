@@ -5,7 +5,7 @@ import { StartNodeDetails } from "../../models/StartNodeDetails";
 import { WorkflowDetails } from "../../models/WorkflowDetails";
 import { ConditionDetails } from "../../models/ConditionDetails";
 
-let secondGroupSelector = 0;
+let secondGroupSelector = 1;
 
 Given("the user logged in and navigates to automation workspace", () => {
     cy.Login();
