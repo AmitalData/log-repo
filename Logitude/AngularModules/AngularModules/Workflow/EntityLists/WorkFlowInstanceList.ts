@@ -23,6 +23,7 @@ export class WorkFlowInstanceList {
 	StatusName: string;
 	WorkFlowVersionId: string;
 	WorkFlowVersionNumber: number;
+	RetryAttemptsNumber: number;
 	
 }
  
