@@ -286,6 +286,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
                                                      WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
                                                      CargoTokenTimeout = a.CargoTokenTimeout,
+                                                     ShowMoneyOrder=a.ShowMoneyOrder
                                                  }).FirstOrDefault();
                     if (tenant != null)
                     {
@@ -491,6 +492,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
                                                   WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
                                                   CargoTokenTimeout = a.CargoTokenTimeout,
+                                                  ShowMoneyOrder = a.ShowMoneyOrder
 
                                               }).FirstOrDefault();
 
@@ -688,6 +690,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
                         WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
                         CargoTokenTimeout = a.CargoTokenTimeout,
+                        ShowMoneyOrder = a.ShowMoneyOrder
 
                     });
         }
@@ -832,6 +835,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     ScheduledTasksLimitPerReport = entity.ScheduledTasksLimitPerReport,
                     WhatsAppMessagingPhoneNumber = entity.WhatsAppMessagingPhoneNumber,
 
+                    ShowMoneyOrder = entity.ShowMoneyOrder
                 };
             }
 
@@ -976,6 +980,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
                        PrivateLabelId = a.GlobalTenant != null ? a.GlobalTenant.PrivateLabelId : "",
                        PrivateLabelName = a.GlobalTenant != null ? a.GlobalTenant.TenantManagmentPrivateLabel != null ? a.GlobalTenant.TenantManagmentPrivateLabel.PrivateLabelName : "" : "",
+                       ShowMoneyOrder = a.ShowMoneyOrder
                    };
         }
 
@@ -1258,7 +1263,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              CargoTokenTimeout = a.CargoTokenTimeout,
                                              SecondaryColor = a.SecondaryColor,
                                              TertiaryColor = a.TertiaryColor,
-                                             ComapnylogoId = a.ComapnylogoId
+                                             ComapnylogoId = a.ComapnylogoId,
+                                             ShowMoneyOrder=a.ShowMoneyOrder
                                          }).FirstOrDefault();
 
             return tenant;

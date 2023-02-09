@@ -748,7 +748,10 @@ export class TenantManagementPM {
     public get PrivateLabelId() { return this.privateLabelId; }
     public set PrivateLabelId(newValue: string) { if (this.privateLabelId != newValue) { this.privateLabelId = newValue; this.MarkAsDirty("PrivateLabelId"); } }
        
-	 
+    private showMoneyOrder: boolean;
+    public get ShowMoneyOrder() { return this.showMoneyOrder; }
+    public set ShowMoneyOrder(newValue: boolean) { if (this.showMoneyOrder != newValue) { this.showMoneyOrder = newValue; this.MarkAsDirty("ShowMoneyOrder"); } }
+
 
     public PackagesCodes_PK: Array<string>= [];
 		 
@@ -858,6 +861,11 @@ export class TenantManagementPM {
     private secondaryColorOpacity: string;
     public get SecondaryColorOpacity() { return this.secondaryColorOpacity; }
     public set SecondaryColorOpacity(newValue: string) { if (this.secondaryColorOpacity != newValue) { this.secondaryColorOpacity = newValue; this.MarkAsDirty("SecondaryColorOpacity"); } }
+       
+	 
+    private tertiaryColorOpacity: string;
+    public get TertiaryColorOpacity() { return this.tertiaryColorOpacity; }
+    public set TertiaryColorOpacity(newValue: string) { if (this.tertiaryColorOpacity != newValue) { this.tertiaryColorOpacity = newValue; this.MarkAsDirty("TertiaryColorOpacity"); } }
        
 	 
     private totalNumberOfUsers: number;
@@ -987,4 +995,4 @@ export class TenantManagementPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

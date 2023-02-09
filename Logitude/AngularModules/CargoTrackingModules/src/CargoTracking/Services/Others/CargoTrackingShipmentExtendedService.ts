@@ -4,7 +4,7 @@ import { catchError, map } from 'rxjs/operators';
 import { ServiceHelper } from 'src/CargoTracking/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 import { DeclarationApprovalArgs } from 'src/CargoTracking/DataContracts/DeclarationApprovalArgs';
-import { throwError } from 'rxjs';
+import { defer, throwError } from 'rxjs';
 
 @Injectable()
 
@@ -68,4 +68,16 @@ export class CargoTrackingShipmentExtendedService
             }),
             catchError(err=> throwError(err?.error?.ErrorMessage)));
     }
+    GetFilingAttachPdfReport(documentId: string,tenant:number)
+    {
+        return this._http.get(this._apiUrl + '/GetFilingAttachPdfReport?' + 'documentId=' + documentId+'&tenant='+tenant).pipe(
+            map((response: ServiceResponse) =>
+            {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse = response;
+                return serviceResponse;
+            }),
+            catchError(null));
+    }
+
 }

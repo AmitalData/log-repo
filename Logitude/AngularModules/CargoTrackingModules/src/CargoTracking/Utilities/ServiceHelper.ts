@@ -214,4 +214,8 @@ export  class ServiceHelper{
     public static GetLDocumentDownloadToken() {
         return SessionInfo.DocumentDownloadToken;
     }
+    public static GetLoggedUserToken() {
+        return SessionInfo.Token;
+    }
+    
 }

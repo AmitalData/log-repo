@@ -141,6 +141,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public DateTime? AgentSharedLogisticsStatisticsLastDate { get; set; }
         public int AgentSharedLogisticsStatisticsLastWeek { get; set; }
         public int AgentSharedLogisticsStatisticsLastMonth { get; set; }
+        public bool ShowMoneyOrder { get; set; }
 
 
         [ForeignKey("RecurringPeriodCode")]
