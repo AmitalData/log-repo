@@ -31,6 +31,10 @@ import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { CardPMService } from '"../../../Common/Services/StandardPMs/CardPMService';
 import { ServiceLocator } from '../../Locators/ServiceLocator';
 import { ObjectsLocator } from '../../Locators/ObjectsLocator';
+import { TenantPMService } from '../../../Common/Services/StandardPMs/TenantPMService';
+import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
+import { CustomerPMService } from '../../../Common/Services/StandardPMs/CustomerPMService';
+import { CustomerPM } from '../../../Common/EntityPMs/CustomerPM';
 
 @Component({
     
@@ -83,6 +87,12 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     IsLoadDocumentTypeListsComplete: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     IsApprovePendingDocumentsEnabled:boolean = false;
+    public TenantPM: TenantPM;
+    public Customer: CustomerPM;
+    public IsDigitalPortalInvitedCustomer: boolean = false;
+    public IsDocumentsNeedApprove: boolean = false;
+    public TenantPMService: TenantPMService;
+    public CustomerPMService: CustomerPMService;
     constructor(public _documentTypeListService: DocumentTypeListService , public _imageLibraryService: ImageLibraryService,public entityArgs: EntityArgs, public _documentTypeListExtendedService: DocumentTypeListExtendedService, public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService) {
         super();
         this.ItemsSource = new ObservableCollection([]);
@@ -92,6 +102,8 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
             this.documentsFilingPMService = new DocumentsFilingPMService();
 
         }
+        this.CustomerPMService = new CustomerPMService();
+        this.TenantPMService = new TenantPMService();
         this.Listen();
         this.CurrentSession.StartBusyIndicatorLoading();
     }
@@ -127,11 +139,9 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
         if (FeatureLocator.HasFeaturePermession("Shipment", "DOCSINDOWNLOADDOCUMENTS") && this.ObjectTableName == "Shipment") {
             this.DownloadAllVisibile = true;
         }
-        this.IsApprovePendingDocumentsEnabled = this.CheckApprovePendingDocumentsAvailability();
-        if (this.IsApprovePendingDocumentsEnabled) {
-            this.ApprovePendingDocuments = !this.EntityPM.IsDocumentsNeedApprove;
-        }
 
+        this.CheckApproveDocumentsAvailability();
+        this.CheckCustomerInvitationStatus();
         // Ayman:
         // we need this for Translation
         // Please don't remove it
@@ -279,19 +289,34 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     //    });
 
     //}
-    private approvePendingDocuments: boolean;
-    public get ApprovePendingDocuments() { return this.approvePendingDocuments; }
-    public set ApprovePendingDocuments(newValue: boolean) {
-        if (this.approvePendingDocuments != newValue) {
-            this.approvePendingDocuments = newValue;
-            this.EntityPM.IsDocumentsNeedApprove = !this.approvePendingDocuments;
-        }
+
+    ApprovePendingDocuments() {
+        this.EntityPM.IsDocumentsNeedApprove = false;
+        this.IsDocumentsNeedApprove = false;
     }
 
-    CheckApprovePendingDocumentsAvailability() {
-        if (this.ObjectTableName == "Shipment" || ObjectsLocator.GlobalSetting.WorkEnvironment == "Logitude")
-            return true;
-        return false;
+    CheckCustomerInvitationStatus() {
+        this.CustomerPMService.get(this.EntityPM.CustomerId).subscribe((response: any) => {
+            this.CurrentSession.StartBusyIndicatorLoading();
+            this.Customer = response.Result;
+            if (this.Customer.SharedLogisticsInvitationStatusName != "Not Invited")
+                this.IsDigitalPortalInvitedCustomer = true;
+            this.CurrentSession.StopBusyIndicator();
+        });
+    }
+
+    CheckApproveDocumentsAvailability() {
+        this.TenantPMService.get(SessionLocator.TenantPM.Id).subscribe((response: ServiceResponse) => {
+            this.CurrentSession.StartBusyIndicatorLoading();
+            this.TenantPM = response.Result;
+            if ((this.ObjectTableName == "Shipment" || ObjectsLocator.GlobalSetting.WorkEnvironment == "Logitude") && this.TenantPM.ApproveUploadedDocuments)
+                this.IsApprovePendingDocumentsEnabled = true;
+            if (this.IsApprovePendingDocumentsEnabled) {
+                this.IsDocumentsNeedApprove = this.EntityPM.IsDocumentsNeedApprove;
+            }
+            this.CurrentSession.StopBusyIndicator();
+        });
+
     }
     LoadAllDocumentTypeList() {
 

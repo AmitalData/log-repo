@@ -428,5 +428,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string ShipmentATADateIndicator { get; set; }
         public int? TotalDefaultNumberOfUsers { get; set; }
         public bool IsNewLogboxFromCloud { get; set; }
+        public bool ApproveUploadedDocuments { get; set; }
     }
 }

@@ -215,6 +215,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.SharedLogisMasterMessageLink).HasColumnName("SharedLogisMasterMessageLink");
             this.Property(t => t.ShowMultiUnitsOfMeasurements).HasColumnName("ShowMultiUnitsOfMeasurements");
             this.Property(t => t.UseNewTermsOfUse).HasColumnName("UseNewTermsOfUse");
+            this.Property(t => t.ApproveUploadedDocuments).HasColumnName("ApproveUploadedDocuments");
 
             this.HasRequired(t => t.LogBoxTenantSetting).WithRequiredPrincipal(d => d.Tenant);
             this.HasOptional(t => t.Address).WithMany().HasForeignKey(d => d.AddressId);

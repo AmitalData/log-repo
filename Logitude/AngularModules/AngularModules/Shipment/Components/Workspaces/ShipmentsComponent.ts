@@ -13,6 +13,8 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
+import { TenantPMService } from '../../../Common/Services/StandardPMs/TenantPMService';
+import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
 declare var window: any;
 
 @Component({
@@ -27,9 +29,12 @@ export class ShipmentsComponent {
     private myShipmentDomainService: ShipmentDomainService;
     public TestToggleIsVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsApproveUploadedDocumentsEnabled: boolean = false;
+    public TenantPMService: TenantPMService;
+    public TenantPM: TenantPM;
     constructor() {
         this.myShipmentDomainService = new ShipmentDomainService();
-
+        this.TenantPMService = new TenantPMService();
         if (ObjectsLocator.GlobalSetting) {
             if (ObjectsLocator.GlobalSetting.DeploymentStage) {
                 if (ObjectsLocator.GlobalSetting.DeploymentStage.toLowerCase() == "amitalstorage") {
@@ -45,8 +50,7 @@ export class ShipmentsComponent {
     }
 
     InitComponent() {
-        this.LoadAllScreenData();
-        this.SetQueriesVisibility();
+        this.CheckApproveUploadedDocuments();
     }
     RefreshButtonClicked() {
         this.LoadAllScreenData();
@@ -61,6 +65,16 @@ export class ShipmentsComponent {
         this.ReloadUserQueries.emit();
     }
 
+    CheckApproveUploadedDocuments() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.TenantPMService.get(SessionLocator.TenantPM.Id).subscribe((response: ServiceResponse) => {
+            this.TenantPM = response.Result;
+            this.IsApproveUploadedDocumentsEnabled = this.TenantPM.ApproveUploadedDocuments;
+            this.CurrentSession.StopBusyIndicator();
+            this.LoadAllScreenData();
+            this.SetQueriesVisibility();
+        });
+    }
 
     // Queries Features
     public IsNewButtonVisible: boolean = false;
@@ -117,7 +131,7 @@ export class ShipmentsComponent {
         this.IsQueryVisible_MyFollowUps = FeatureLocator.HasFeaturePermession("Shipment", "MYFOLLOWUPS") ? true : false;
         this.IsQueryVisible_AllShipments = FeatureLocator.HasFeaturePermession("Shipment", "ALLSHIPMENTS") ? true : false;
         this.IsQueryVisible_AllMasters = FeatureLocator.HasFeaturePermession("Shipment", "ALLMASTERS") ? true : false;
-        this.IsQueryVisible_PendingApprovalDocuments = FeatureLocator.HasFeaturePermession("Shipment", "Shipment.Q.PendingApprovalDocuments") ? true : false;
+        this.IsQueryVisible_PendingApprovalDocuments = FeatureLocator.HasFeaturePermession("Shipment", "Shipment.Q.PendingApprovalDocuments") ? this.IsApproveUploadedDocumentsEnabled : false;
 
         this.IsQueryVisible_CanceledShipments = FeatureLocator.HasFeaturePermession("Shipment", "CANCELLEDSHIPMENTS") ? true : false;
         if (this.IsQueryVisible_AllFollowUps || this.IsQueryVisible_MyFollowUps || this.IsQueryVisible_AllShipments || this.IsQueryVisible_AllMasters || this.IsQueryVisible_CanceledShipments || this.IsQueryVisible_PendingApprovalDocuments) {
