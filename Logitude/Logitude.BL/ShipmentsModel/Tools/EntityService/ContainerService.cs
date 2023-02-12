@@ -117,7 +117,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 IsSimulator = false,
                 Data = null,
                 ContainerStatusSourceCode = "VZN",
-                DirectionId = this.GetShipment()?.DirectionId
+                DirectionId = this.GetShipment()?.DirectionId,
+                IsUpdatedFromRequest = entityPM.IsUpdatedFromRequest,
             };
         }
 
@@ -185,6 +186,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             //AddShipmentUpdateKafkaQueueMessage("CToolContainerUpdate");
             MapShipmentConcurrencyFields();
+            
             new GeneralContainerTrackingService(GetGeneralContainerTrackingArgs(entityPM)).AutomaticTrackContainer();
         }
         private AuditLog AddContainerAuditLogChanges(Container entityPoco, List<FieldChange> FieldChanges)
@@ -316,7 +318,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private void HandleEmptyReturnLeg()
         {
             ShipmentPM shipmentPM = this.GetShipment();
-            if (shipmentPM == null || shipmentPM.DirectionId != "I") return;
+            if (shipmentPM == null || (shipmentPM.DirectionId != "I" && shipmentPM.DirectionId != "R")) return;
 
             ShipmentDeliveryPM emptyReturn = this.GetEmptyReturnLeg(shipmentPM);
             if (emptyReturn != null)

@@ -54,13 +54,14 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         queryableData = queryableData.Where(d => d.ShipmentDeliveryATD != null && d.ShipmentDeliveryATA == null);
 
                     else if (item.FieldName == "PendingPOLDepartureFilter")
-                    {
-                        DateTime twoDaysAgoDate = todayDate.AddDays(-2);
+                    {                       
+                        DateTime afterTwoDaysDate = todayDate.AddDays(2);
+
 
                         queryableData = from d in queryableData
                                         where d.ActualPOLVesselDeparture == null
                                         && d.EstimatedPOLVesselDeparture != null
-                                        && (d.EstimatedPOLVesselDeparture <= twoDaysAgoDate)
+                                        && (d.EstimatedPOLVesselDeparture <= afterTwoDaysDate)
                                         select d;
                     }
 

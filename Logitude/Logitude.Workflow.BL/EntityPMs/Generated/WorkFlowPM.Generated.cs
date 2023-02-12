@@ -464,7 +464,53 @@ namespace Logitude.Workflow.BL.EntityPMs
               }
              set {  deletedWorkFlowVersions = value; }
 	    }
-	  	    }
+	  	  private int retriesNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int RetriesNumber  
+	   {
+	    
+	     get
+		{
+		   return retriesNumber;
+		 }
+		 set
+		 {
+		   if(retriesNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RetriesNumber",OldValue=retriesNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   retriesNumber=value;
+		   }
+			
+		 }
+	   }
+	  private int retriesDelay ;
+	  	  
+       
+	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int RetriesDelay  
+	   {
+	    
+	     get
+		{
+		   return retriesDelay;
+		 }
+		 set
+		 {
+		   if(retriesDelay != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RetriesDelay",OldValue=retriesDelay,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   retriesDelay=value;
+		   }
+			
+		 }
+	   }
+	    }
    
 }
 	 

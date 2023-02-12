@@ -35,7 +35,9 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         StatusCode, 
 	         FlowJson, 
 	         Entity, 
-	         Trigger,
+	         Trigger, 
+	         RetriesNumber, 
+	         RetriesDelay,
 	      }
 
 
@@ -59,7 +61,9 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         UpdatedByUserName, 
 	         FlowJson, 
 	         Entity, 
-	         Trigger,
+	         Trigger, 
+	         RetriesNumber, 
+	         RetriesDelay,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -131,6 +135,16 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Trigger))
             {
 				entityPOCO.Trigger = entityPM.Trigger;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RetriesNumber))
+            {
+				entityPOCO.RetriesNumber = entityPM.RetriesNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RetriesDelay))
+            {
+				entityPOCO.RetriesDelay = entityPM.RetriesDelay;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -209,6 +223,16 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 					entityPM.Trigger = entityPOCO.Trigger;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RetriesNumber))
+            {
+					entityPM.RetriesNumber = entityPOCO.RetriesNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RetriesDelay))
+            {
+					entityPM.RetriesDelay = entityPOCO.RetriesDelay;
+            }
+
 		}
 
 		public void PMToOldPM(WorkFlowPM entityPM, WorkFlowPM oldEntityPM)
@@ -278,6 +302,16 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Trigger))
             {
                 oldEntityPM.Trigger = entityPM.Trigger;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RetriesNumber))
+            {
+                oldEntityPM.RetriesNumber = entityPM.RetriesNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RetriesDelay))
+            {
+                oldEntityPM.RetriesDelay = entityPM.RetriesDelay;
             }
 			
 		}

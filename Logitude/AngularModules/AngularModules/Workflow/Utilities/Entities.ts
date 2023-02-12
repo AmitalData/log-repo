@@ -46,37 +46,21 @@ export class Entities {
             });
     }
 
-    private static getEntityDisplayName(objectTable: ObjectTableList): string | null {
-        let objectTableName = objectTable ? objectTable.Name : null;
-        switch (objectTableName) {
-            case "ShipmentStoragePricing":
-                return "Storage Pricing";
-            case "ShipmentPackage":
-                return "Package";
-            case "ShipmentReceivable":
-                return "Receivable";
-            case "ShipmentPayable":
-                return "Payable";
-            default:
-                return this.getGeneralEntityDisplayName(objectTable);
-        }
-    }
-
-    private static getGeneralEntityDisplayName(objectTable: ObjectTableList): string | null {
-        let entityDisplayName: string | null = null;
+    private static getEntityOrder(objectTable: ObjectTableList, isChildren: boolean = false): number {
+        let lastOrder = (isChildren ? this.DefaultChildren.length : this.DefaultParents.length) + 1;
         let objectTableName = objectTable ? objectTable.Name : null;
         if (objectTableName) {
-            if (objectTableName.indexOf(".") !== -1) {
-                let objectTableNameSections = objectTableName.split(".");
-                entityDisplayName = objectTableNameSections[objectTableNameSections.length - 1];
-            } else {
-                entityDisplayName = objectTableName;
-            }
-
-            entityDisplayName = entityDisplayName.replace(/([a-z])([A-Z])/g, "$1 $2");
-            entityDisplayName = entityDisplayName.replace(/([A-Z])([A-Z][a-z])/g, "$1 $2");
+            let entityIndex = (isChildren ? this.DefaultChildren : this.DefaultParents).indexOf(objectTableName);
+            return entityIndex === -1 ? lastOrder : entityIndex;
         }
-        return entityDisplayName;
+        return lastOrder;
+    }
+
+    private static getEntityDisplayName(objectTable: ObjectTableList): string | null {
+        if (objectTable) {
+            return objectTable.FullNameTextCodeDefaultText || objectTable.Name;
+        }
+        return null;
     }
 
     private static getParentEntityCode(objectTable: ObjectTableList): string | null {
@@ -91,16 +75,6 @@ export class Entities {
             default:
                 return ObjectTables.getNameById(objectTable ? objectTable.ParentObjectTableId : null);
         }
-    }
-
-    private static getEntityOrder(objectTable: ObjectTableList, isChildren: boolean = false): number {
-        let lastOrder = (isChildren ? this.DefaultChildren.length : this.DefaultParents.length) + 1;
-        let objectTableName = objectTable ? objectTable.Name : null;
-        if (objectTableName) {
-            let entityIndex = (isChildren ? this.DefaultChildren : this.DefaultParents).indexOf(objectTableName);
-            return entityIndex === -1 ? lastOrder : entityIndex;
-        }
-        return lastOrder;
     }
 
 }

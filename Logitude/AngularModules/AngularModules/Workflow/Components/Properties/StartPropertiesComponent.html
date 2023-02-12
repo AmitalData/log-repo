@@ -73,6 +73,10 @@
     .min-start-conditions-container {
         height: 285px;
     }
+
+    .break-space{
+        white-space: break-spaces;
+    }
 </style>
 
 
@@ -95,7 +99,7 @@
         <td class="table-row-cell">
             <div class="table-row-cell-block">
                 <div class="select-entity-label">Select Object</div>
-                <div>Select the object whose records trigger the flow when they're created or updated</div>
+                <div class="Label">Select the object whose records trigger the flow when they're created or updated</div>
             </div>
         </td>
     </tr>
@@ -181,21 +185,9 @@
     <tr class="table-row">
         <td class="table-row-cell">
             <div class="table-row-cell-block">
-                <p class="Label" style="white-space: pre-wrap">
-                    Specify entry conditions to reduce the number of records that trigger the flow and the number of
-                    times the flow is executed.<br />
-                    Minimizing unnecessary flow executions helps to conserve your tenant's resources
-                </p>
-            </div>
-        </td>
-    </tr>
-
-    <tr class="table-row">
-        <td class="table-row-cell">
-            <div class="table-row-cell-block">
-                <p class="Label" style="white-space: pre-wrap">
-                    If you create a flow when the record is that's triggered when a record is updated, we recommend
-                    first defining entry condition by triggering the flow when a field value is changed
+                <p class="Label break-space" >Specify entry conditions to reduce the number of records that trigger the flow and the number of
+                    times the flow is executed. Minimizing unnecessary flow executions <br/>helps to conserve your tenant's resources
+                    <br /><br />If you create a flow that's triggered when the record is updated or when the record is created or updated, we recommend defining entry condition when a field value is changed.
                 </p>
             </div>
         </td>

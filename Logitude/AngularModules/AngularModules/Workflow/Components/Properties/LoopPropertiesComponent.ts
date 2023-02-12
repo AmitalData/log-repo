@@ -5,6 +5,7 @@ import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { FlowVariablesTreeList } from "Workflow/TreeLists/FlowVariablesTreeList";
 import { SingleEditableEntitiesTreeList } from "Workflow/TreeLists/SingleEditableEntitiesTreeList";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
+import { ObjectTables } from "Workflow/Utilities/ObjectTables";
 
 @Component({
     templateUrl: "./LoopPropertiesComponent.html"
@@ -97,10 +98,12 @@ export class LoopPropertiesComponent extends BaseComponent {
         let isEditableEntity = collectionVariableItem ? (collectionVariableItem.data["isEditableEntity"] || false) : null;
         let isCollectionFilterVariable = collectionVariableItem ? (collectionVariableItem.data["isCollectionFilterVariable"] || false) : null;
         let isDeclaredCollectionVariable = collectionVariableItem ? (collectionVariableItem.data["isDeclaredCollectionVariable"] || false) : null;
-        this.Data["isEditableEntity"] = isEditableEntity;
+
         this.Data["collectionVariable"] = collectionVariable;
+        this.Data["isEditableEntity"] = isEditableEntity;
         this.Data["isCollectionFilterVariable"] = isCollectionFilterVariable;
         this.Data["isDeclaredCollectionVariable"] = isDeclaredCollectionVariable;
+        this.Data["isCustomEntity"] = isEditableEntity ? ObjectTables.getIsCustomByName(collectionVariable ? collectionVariable.split("_")[1] : null) : null;
         this.CollectionVariable = collectionVariable;
 
         this.Data["collectionUsedFrom"] = collectionVariableItem && collectionVariableItem.data && collectionVariableItem.data["nodeId"] ? collectionVariableItem.data["nodeId"] : null;

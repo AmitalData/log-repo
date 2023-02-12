@@ -91,5 +91,8 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string DNSZone { get; set; }
         public string QboBaseUrl { get; set; }
         public string QboEnvironment { get; set; }
+        
+        public string WorkflowStorageAccountName { get; set; }
+        public string WorkflowStorageAccountKey { get; set; }
     }
 }

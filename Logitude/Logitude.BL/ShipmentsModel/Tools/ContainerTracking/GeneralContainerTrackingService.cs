@@ -24,6 +24,7 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -64,6 +65,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
 
         public void AutomaticTrackContainer()
         {
+            TenantManagement tenantManagement = GetTenantManagement();
+            if (tenantManagement?.IsContainerTrackingPrepaid != true) return;
+            if (generalContainerTrackingArgs.IsUpdatedFromRequest) return;
+
             try
             {
                 SetArgsFields();
@@ -72,6 +77,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
             }
             catch (Exception) { }
 
+        }
+
+        private TenantManagement GetTenantManagement()
+        {
+            TenantManagement tenantManagement;
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
+                tenantManagement = tenantManagementRepository.GetSingleTenantManagement(tenant);
+                scope.Complete();
+            }
+            return tenantManagement;
         }
 
         private void ValidateAndTrack()
@@ -93,9 +110,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
         private bool AllowAutomaticTrackContainer()
         {
             var containerSettings = containerSettingRepository.GetAll(tenant).FirstOrDefault();
-            if (containerSettings == null || !containerSettings.AddedManually) return CheckAutomaticTrackContainerFromTenantZero();
+            if (containerSettings == null || !containerSettings.AddedManually) return BeforeActivationDate(containerSettings.ActivationDate) && CheckAutomaticTrackContainerFromTenantZero();
             if (!AutomaticTrackContainerDirectionAllowd(containerSettings, generalContainerTrackingArgs.DirectionId)) return false;
-            return CommonContext.ShippingLines.Any(x => x.Tenant == tenant && x.SCACCode == generalContainerTrackingArgs.ScacCode && x.IsAutomaticRequestsSent);
+            return BeforeActivationDate(containerSettings.ActivationDate) && CommonContext.ShippingLines.Any(x => x.Tenant == tenant && x.SCACCode == generalContainerTrackingArgs.ScacCode && x.IsAutomaticRequestsSent);
+        }
+
+        private bool BeforeActivationDate(DateTime? activationDate)
+        {
+            if (activationDate == null || generalContainerTrackingArgs.ShipmentCreateDateTime == null) return false;
+            return generalContainerTrackingArgs.ShipmentCreateDateTime.Value.Date >= activationDate.Value.Date;
         }
 
         private bool CheckAutomaticTrackContainerFromTenantZero()
@@ -149,6 +172,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
             generalContainerTrackingArgs.CarrierId = shipmentMasterData?.MainCarriageCarrierId;
             generalContainerTrackingArgs.ScacCode = shipmentMasterData?.MainCarriageCarrierCard?.ShippingLine?.SCACCode;
             generalContainerTrackingArgs.Master = shipmentMasterData?.Master;
+            generalContainerTrackingArgs.ShipmentCreateDateTime = shipment?.CreateDateTime;
         }
 
         private bool CheckValidation()
@@ -280,6 +304,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
                 Id = IdCounter.GetNumber("AnalyzeQueue", 0),
                 MessageBody = analyzeQueueMessageBody,
                 Status = "W",
+
                 Retries = 0,
                 ConnectedToEntity = false,
                 ConnectedToTenant = false,
@@ -341,7 +366,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
             ContainerPM container = containerQuery.GetSinglePM(generalContainerTrackingArgs.ContainerId, generalContainerTrackingArgs.Tenant);
 
             if (container == null) return;
-            if (container.RequestDate == null) container.RequestDate = TenantServerConfigration.GetCurrentDateTime(generalContainerTrackingArgs.Tenant);
+            if (container.RequestDate == null)
+                container.RequestDate = TenantServerConfigration.GetCurrentDateTime(generalContainerTrackingArgs.Tenant);
+
+            container.IsUpdatedFromRequest = true;
             ContainerService containerService = new ContainerService(shipmentsContext, generalContainerTrackingArgs.Tenant);
             containerService.Update(container);
         }

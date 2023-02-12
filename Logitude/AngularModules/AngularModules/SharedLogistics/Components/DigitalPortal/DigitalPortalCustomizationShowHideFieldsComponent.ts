@@ -157,16 +157,34 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
             this.ModifiedLables.ProfileCode = this.ProfileCode;
             this.ModifiedLables.ParentObjectTableId = this.ParentObjectTableId;
             var hasHasPermissionList = this.FieldsItemsSource.Collection;
-
-            hasHasPermissionList.forEach(item => {
-                var newLabel = new DigitalFeildSecurityUpdateModel();
-                newLabel.FieldCode = item.FieldCode;
-                newLabel.CreatedBy = item.CreatedBy;
-                newLabel.CreatedOn = item.CreatedOn;
-                newLabel.HasPermission = item.HasPermission;
-                newLabel.ModifiedBy = item.ModifiedBy;
-                newLabel.ModifiedOn = item.ModifiedOn;
-                this.ModifiedLables.DefaultSettings.push(newLabel);
+            
+            this.loadedResults = this.loadedResults.map(el => {
+                var updateItem = hasHasPermissionList.find(f => f.FieldCode === el.FieldCode);
+                if (updateItem) {
+                    var newLabel = new DigitalFeildSecurityUpdateModel();
+                    newLabel.FieldCode = updateItem.FieldCode;
+                    newLabel.CreatedBy = updateItem.CreatedBy;
+                    newLabel.CreatedOn = updateItem.CreatedOn;
+                    newLabel.HasPermission = updateItem.HasPermission;
+                    newLabel.ModifiedBy = updateItem.ModifiedBy;
+                    newLabel.ModifiedOn = updateItem.ModifiedOn;
+                    newLabel.IsList = updateItem.IsList;
+                    newLabel.IsPm = updateItem.IsPm;
+                    this.ModifiedLables.DefaultSettings.push(newLabel);
+                    return newLabel;
+                } else {
+                    var newLabel2 = new DigitalFeildSecurityUpdateModel();
+                    newLabel2.FieldCode = el.FieldCode;
+                    newLabel2.CreatedBy = el.CreatedBy;
+                    newLabel2.CreatedOn = el.CreatedOn;
+                    newLabel2.HasPermission = el.HasPermission;
+                    newLabel2.ModifiedBy = el.ModifiedBy;
+                    newLabel2.ModifiedOn = el.ModifiedOn;
+                    newLabel2.IsList = el.IsList;
+                    newLabel2.IsPm = el.IsPm;
+                    this.ModifiedLables.DefaultSettings.push(newLabel2);
+                    return newLabel2;
+                }
             });
 
             this.digitalTextService.UpdateFeildPermission(this.ModifiedLables).subscribe((myResult) => {
@@ -252,6 +270,8 @@ export class ProfileFieldsItem extends BaseComponent {
     public DefaultTextBackground = "rgba(230, 231, 232, 0.5)";
     constructor(public father: DigitalPortalCustomizationShowHideFieldsComponent, item) {
         super();
+        this.isList = item.IsList;
+        this.isPm = item.IsPm;
         this.hasPermission = item.HasPermission;
         this.fieldCode = item.FieldCode;
         var selelectField = father.loadedFieldsResults.filter(a => a['FieldCode'] == this.fieldCode)[0];
@@ -269,6 +289,16 @@ export class ProfileFieldsItem extends BaseComponent {
             this.Background = "rgba(255, 171, 3, 0.6)";
             this.DefaultTextBackground = "rgba(255, 171, 3, 0.6)";
         }
+    }
+
+    private isList: boolean =false;
+    get IsList() {
+        return this.isList;
+    }
+    
+    private isPm: boolean = false;
+    get IsPm() {
+        return this.isPm;
     }
 
     private fieldCode: string = "";

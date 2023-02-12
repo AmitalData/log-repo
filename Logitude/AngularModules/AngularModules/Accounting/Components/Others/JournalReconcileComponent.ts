@@ -211,6 +211,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         for (let i = 0; i < this._SelectedLines.Length; i++) {
             const selectedTransaction = this._SelectedLines.Collection[i];
             if (this.checkClosedMonth(new Date(selectedTransaction.AccountingDate))) {
+
                 errorMessage += 'This line is closed ' +
                     new Date(selectedTransaction.AccountingDate).toDateString() + ', ' +
                     new Date(selectedTransaction.DocumentDate).toDateString() + ', ' +
@@ -235,8 +236,9 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
 
         if (errorMessage !== '') {
             const messageWindow = new MessageWindow();
-            messageWindow.Width = 400;
-            messageWindow.Height = 150;
+            messageWindow.Width = 600;
+            messageWindow.Height = 300;
+            messageWindow.IsMessageMultiLine = true;
             messageWindow.Show(errorMessage);
         }
     }
@@ -323,7 +325,6 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                     this.AccountingPeriods = myResponse.Result;
-                    this.checkSelectedLinesClosedMonth();
                 }
             }
         });
@@ -435,6 +436,8 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
 
             });
         }
+
+        this.checkSelectedLinesClosedMonth();
     }
     _NewJournalPM: JournalPM;
     _NewJournals: JournalPM[];

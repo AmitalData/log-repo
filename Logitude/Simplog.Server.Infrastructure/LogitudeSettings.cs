@@ -157,6 +157,9 @@ namespace Simplog.Server.Infrastructure
 
         public static string WorkerRoleName { get; set; }
         public static bool RunWorkerRoleAutomaticBreakPoint { get; set; }
+
+        public static string WorkflowStorageAccountName { get; set; }
+        public static string WorkflowStorageAccountKey { get; set; }
     }
 
     public class LogitudeCustomsSettingsM

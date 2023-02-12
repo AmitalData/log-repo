@@ -15,7 +15,7 @@ const valdationMessageOfDisplayLabelSingular = 'Please fill the Display Label (S
 const valdationMessageOfDisplayLabelPlural = 'Please fill the Display Label (Plural)';
 const validationMessageOfDuplicateCustomSubObjectTableName = 'Another sub object with same Display Label(Singular) is already exist';
 const validationMessageOfDuplicateCustomObjectTableName = 'Another custom object with same Display Label(Singular) is already exist';
-const validationMessageOfCustomObjectTableNameLength = 'Maximum Length of Display Label(Singular) is 40';
+const validationMessageOfCustomObjectTableNameLength = 'Maximum Length of Display Label(Singular) is 100';
 declare var window: any;
 
 @Component({
@@ -79,14 +79,8 @@ export class AddCustomObjectComponent extends BaseComponent {
     set DisplayLabelSingular(newValue: string) {
         if (this.displayLabelSingular != newValue) {
             this.displayLabelSingular = newValue;
-            this.objectTableName = this.GetObjectTableName(newValue);
+            this.objectTableName = newValue;
         }
-    }
-
-    private GetObjectTableName(newValue: string): string {
-        if (AppTool.IsNullOrEmpty(newValue)) return "";
-        if (this.IsSubObject) return this.parentObjectTableId + "." + SessionLocator.Tenant + "." + newValue.replace(/\s/g, "");
-        return "C." + SessionLocator.Tenant + "." + newValue.replace(/\s/g, "");
     }
 
     private displayLabelPlural: string;
@@ -135,9 +129,12 @@ export class AddCustomObjectComponent extends BaseComponent {
         if (!this.displayLabelPlural)
             errors.push(valdationMessageOfDisplayLabelPlural);
 
-        if (this.IsNotValidTableName()) {
-            let validationMessage = this.IsSubObject ? validationMessageOfDuplicateCustomSubObjectTableName : validationMessageOfDuplicateCustomObjectTableName;
-            errors.push(validationMessage);
+        if (this.IsNotValidCustomTableName()) {
+            errors.push(validationMessageOfDuplicateCustomObjectTableName);
+        }
+
+        if (this.IsNotValidCustomSubTableName()) {
+            errors.push(validationMessageOfDuplicateCustomSubObjectTableName);
         }
 
         if (!this.ValidTableNameLength()) {
@@ -154,10 +151,18 @@ export class AddCustomObjectComponent extends BaseComponent {
     }
 
     private ValidTableNameLength() {
-        return this.DisplayLabelSingular.replace(/\s/g, "").length < 40;
+        return this.DisplayLabelSingular.length < 100;
     }
-    private IsNotValidTableName() {
-        let objectTable = window.ObjectTables.filter(t => t.Name.toLowerCase() == this.objectTableName.toLowerCase())[0];
+
+    private IsNotValidCustomTableName() {
+        if (this.IsSubObject) return;
+        let objectTable = window.ObjectTables.filter(t => t.FullNameTextCodeDefaultText?.toLowerCase() == this.objectTableName.toLowerCase() && t.IsCustom && AppTool.IsNullOrEmpty(t.ParentObjectTableId))[0];
+        return !AppTool.IsNullOrEmpty(objectTable);
+    }
+
+    private IsNotValidCustomSubTableName() {
+        if (!this.IsSubObject) return;
+        let objectTable = window.ObjectTables.filter(t => t.FullNameTextCodeDefaultText?.toLowerCase() == this.objectTableName.toLowerCase() && t.IsCustom && t.ParentObjectTableId == this.parentObjectTableId)[0];
         return !AppTool.IsNullOrEmpty(objectTable);
     }
 
@@ -167,8 +172,9 @@ export class AddCustomObjectComponent extends BaseComponent {
         this.objectTablePM.IsCustom = true;
         this.objectTablePM.Tenant = SessionLocator.Tenant;
         this.objectTablePM.LastUpdateDate = DateTool.GetCurrentDateTimeAsUtc();
-        this.objectTablePM.Name = this.objectTableName;
+        this.objectTablePM.Name = "Custom Table";
         this.objectTablePM.DefaultText = this.DisplayLabelSingular;
+        this.objectTablePM.FullNameTextCodeDefaultText = this.DisplayLabelSingular;
         this.objectTablePM.DefaultTextPlural = this.DisplayLabelPlural;
         this.objectTablePM.Description = this.Description;
         this.objectTablePM.ObjectTableTypeCode = this.objectTableTypeCode;
@@ -188,6 +194,7 @@ export class AddCustomObjectComponent extends BaseComponent {
 
     LoadData(objectTable: ObjectTablePM) {
         window.ObjectTables.push(objectTable);
+        this.objectTablePM.Name = objectTable?.Name;
         this.GetObjectFields();
         this.GetScreens();
         this.GetTabs();

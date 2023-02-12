@@ -66,5 +66,8 @@ export class ObjectTableList {
 		ApplyGenericCustomFields: boolean;
 		LookUp1: string;
 		LookUp2: string;
+		FullNameTextCodeId: string;
+		FullNameTextCodeCode: string;
+		FullNameTextCodeDefaultText: string;
 	
 }

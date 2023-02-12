@@ -39,7 +39,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             {
                WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(tenant);
 
-               currentLastUpdates = (from a in repository.context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode")
+               currentLastUpdates = (from a in repository.context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
                                      where a.Tenant == tenant && a.LastUpdateDate > sinceDate
                                      select new ObjectTablePM()
                                      {
@@ -109,14 +109,17 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          ParentObjectTableId = a.ParentObjectTableId,
                                          IsCustom = a.IsCustom,
                                          SupportSubEntity = a.SupportSubEntity,
-                                         ApplyGenericCustomFields = a.ApplyGenericCustomFields
+                                         ApplyGenericCustomFields = a.ApplyGenericCustomFields,
+                                         FullNameTextCodeId = a.FullNameTextCodeId,
+                                         FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                         FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                      }).ToList();
             }
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
              WebFreightContext   webFreightContext = (WebFreightContext)WebFreightContext.GetContext(0);
 
-             zeroLastUpdates = (from a in repository.context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode")
+             zeroLastUpdates = (from a in repository.context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
                                 where a.Tenant == 0 && a.LastUpdateDate > sinceDate
                                 select new ObjectTablePM()
                                 {
@@ -186,7 +189,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                     ParentObjectTableId = a.ParentObjectTableId,
                                     IsCustom = a.IsCustom,
                                     SupportSubEntity = a.SupportSubEntity,
-                                    ApplyGenericCustomFields = a.ApplyGenericCustomFields
+                                    ApplyGenericCustomFields = a.ApplyGenericCustomFields,
+                                    FullNameTextCodeId = a.FullNameTextCodeId,
+                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                    FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                 }).ToList();
             }
 
@@ -201,7 +207,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             {
                WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(tenant);
 
-               currentObjectTables = (from a in repository.context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode")
+               currentObjectTables = (from a in repository.context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
                                        where a.Tenant == tenant
                                        select new ObjectTablePM()
                                        {
@@ -271,7 +277,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                            ParentObjectTableId = a.ParentObjectTableId,
                                            IsCustom = a.IsCustom,
                                            SupportSubEntity = a.SupportSubEntity,
-                                           ApplyGenericCustomFields = a.ApplyGenericCustomFields
+                                           ApplyGenericCustomFields = a.ApplyGenericCustomFields,
+                                           FullNameTextCodeId = a.FullNameTextCodeId,
+                                           FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                           FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
 
                                        }).ToList();
             }
@@ -281,7 +290,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 {
                     WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(0);
 
-                    zeroObjectTables = (from a in repository.context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode")
+                    zeroObjectTables = (from a in repository.context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
                                         where a.Tenant == 0
                                         select new ObjectTablePM()
                                         {
@@ -351,7 +360,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             ParentObjectTableId = a.ParentObjectTableId,
                                             IsCustom = a.IsCustom,
                                             SupportSubEntity = a.SupportSubEntity,
-                                            ApplyGenericCustomFields = a.ApplyGenericCustomFields
+                                            ApplyGenericCustomFields = a.ApplyGenericCustomFields,
+                                            FullNameTextCodeId = a.FullNameTextCodeId,
+                                            FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                            FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                         }).ToList();
                 }
             }
@@ -377,7 +389,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                         {
                             IWebFreightContext context = WebFreightContext.GetContext(tenant);
-                            currentTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode")
+                            currentTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
                                                    where (a.Tenant == tenant && a.InActive == false)
                                                    select new ObjectTablePM()
                                                    {
@@ -445,7 +457,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        ParentObjectTableName = a.ParentObjectTableName,
                                                        AvailableInCustomization = a.AvailableInCustomization,
                                                        SupportSubEntity = a.SupportSubEntity,
-                                                       ApplyGenericCustomFields = a.ApplyGenericCustomFields
+                                                       ApplyGenericCustomFields = a.ApplyGenericCustomFields,
+                                                       FullNameTextCodeId = a.FullNameTextCodeId,
+                                                       FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                                       FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                                    }).ToList();
                             scope.Complete();
                         }
@@ -462,7 +477,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
                         IWebFreightContext context = WebFreightContext.GetContext(tenant);
-                        currentTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode")
+                        currentTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
                                                where (a.Tenant == tenant && a.InActive == false)
                                                select new ObjectTablePM()
                                                {
@@ -530,7 +545,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    ParentObjectTableName = a.ParentObjectTableName,
                                                    AvailableInCustomization = a.AvailableInCustomization,
                                                    SupportSubEntity = a.SupportSubEntity,
-                                                   ApplyGenericCustomFields = a.ApplyGenericCustomFields
+                                                   ApplyGenericCustomFields = a.ApplyGenericCustomFields,
+                                                   FullNameTextCodeId = a.FullNameTextCodeId,
+                                                   FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                                   FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                                }).ToList();
                         scope.Complete();
                     }
@@ -544,8 +562,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
                         IWebFreightContext context = WebFreightContext.GetContext(0);
-                        zeroTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode")
-                                               where (a.Tenant == 0 && a.InActive == false)
+                        zeroTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
+                                            where (a.Tenant == 0 && a.InActive == false)
                                                select new ObjectTablePM()
                                                {
                                                    NewButtonTextCodeCode = a.NewButtonTextCodeCode,
@@ -614,7 +632,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    ParentObjectTableId = a.ParentObjectTableId,
                                                    IsCustom = a.IsCustom,
                                                    SupportSubEntity = a.SupportSubEntity,
-                                                   ApplyGenericCustomFields = a.ApplyGenericCustomFields
+                                                   ApplyGenericCustomFields = a.ApplyGenericCustomFields,
+                                                   FullNameTextCodeId = a.FullNameTextCodeId,
+                                                   FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                                   FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                                }).ToList();
 
                         scope.Complete();
@@ -633,7 +654,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
                     IWebFreightContext context = WebFreightContext.GetContext(0);
-                    zeroTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode")
+                    zeroTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
                                         where (a.Tenant == 0 && a.InActive == false)
                                         select new ObjectTablePM()
                                         {
@@ -703,7 +724,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             ParentObjectTableId = a.ParentObjectTableId,
                                             IsCustom = a.IsCustom,
                                             SupportSubEntity = a.SupportSubEntity,
-                                            ApplyGenericCustomFields = a.ApplyGenericCustomFields
+                                            ApplyGenericCustomFields = a.ApplyGenericCustomFields,
+                                            FullNameTextCodeId = a.FullNameTextCodeId,
+                                            FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                            FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                         }).ToList();
 
 
@@ -803,7 +827,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         }
         public IQueryable<ObjectTableList> GetIQueryableEntityList(IQueryable<ObjectTable> iQueryable)
         {
-            IQueryable<ObjectTableList> result = from a in iQueryable
+            IQueryable<ObjectTableList> result = from a in iQueryable.Include("FullNameTextCode")
                                                  select new ObjectTableList()
                                                  {
                                                      AutoCompleteSearchWindow = a.AutoCompleteSearchWindow,
@@ -861,13 +885,16 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      SupportSubEntity = a.SupportSubEntity,
                                                      ApplyGenericCustomFields = a.ApplyGenericCustomFields,
                                                      LookUp1 = a.LookUp1,
-                                                     LookUp2 = a.LookUp2
+                                                     LookUp2 = a.LookUp2,
+                                                     FullNameTextCodeId = a.FullNameTextCodeId,
+                                                     FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                                     FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                                  };
             return result;
         }  
         public ObjectTableList GetObjectTableList(string id, int tenant)
         {
-            ObjectTableList ObjectTableList = (from a in repository.context.ObjectTables
+            ObjectTableList ObjectTableList = (from a in repository.context.ObjectTables.Include("FullNameTextCode")
                                                where (a.Tenant == tenant || a.Tenant == 0)
                                                && a.Id == id
                                                && a.InActive == false
@@ -926,7 +953,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    ParentObjectTableId = a.ParentObjectTableId,
                                                    IsCustom = a.IsCustom,
                                                    SupportSubEntity = a.SupportSubEntity,
-                                                   ApplyGenericCustomFields = a.ApplyGenericCustomFields
+                                                   ApplyGenericCustomFields = a.ApplyGenericCustomFields,
+                                                   FullNameTextCodeId = a.FullNameTextCodeId,
+                                                   FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                                   FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                                }).FirstOrDefault();
 
 

@@ -23,7 +23,7 @@ using System.Transactions;
 
 namespace Logitude.Server.Tools.Helpers
 {
-   public class TotangoActivityLogger
+    public class TotangoActivityLogger
     {
         public static void SendUserActivity(string organizationId, string orgDisplayName, string userName, string module, string activity, string contactId, int tenant, bool isSharedLogisticsContact, string cardId, string partnerTypeId)
         {
@@ -35,7 +35,7 @@ namespace Logitude.Server.Tools.Helpers
                 try
                 {
                     UserRepository userRepository = new UserRepository(tenant);
-                  
+
                     User user = userRepository.GetSingleUser(contactId, tenant, false);
                     bool iscustomerCare = (user.Tenant == 0 && !user.IsDistributor);
                     if (user != null && !iscustomerCare)
@@ -110,11 +110,11 @@ namespace Logitude.Server.Tools.Helpers
             var ConfigConnectionString = ConfigurationManager.ConnectionStrings["SystemLogsStr"].ConnectionString;
             return DatabaseInitializer.GetConnection(ConfigConnectionString);
         }
-        public static void AddContactActivityLog(string cardId, string partnerTypeId, string contactId, string module, string activity, int tenant, bool isSharedLogisticsContact,string via = "")
+        public static void AddContactActivityLog(string cardId, string partnerTypeId, string contactId, string module, string activity, int tenant, bool isSharedLogisticsContact, string via = "")
         {
             ContactRepository contactRepository = new ContactRepository(tenant);
             Contact contact = contactRepository.GetSingleContact(contactId, tenant);
-
+            SqlTransaction transaction = null;
             try
             {
                 string strConnString = GetLogsDBConnection().ConnectionString;
@@ -167,7 +167,10 @@ namespace Logitude.Server.Tools.Helpers
                     cmd.CommandType = CommandType.Text;
                     cmd.CommandTimeout = 5;
                     cn.Open();
+                    transaction = cn.BeginTransaction(System.Data.IsolationLevel.Snapshot);
+                    cmd.Transaction = transaction;
                     var output = cmd.ExecuteNonQuery();
+                    transaction.Commit();
                     cn.Close();
                 }
                 //ContactActivityLogRepository contactActivityLogRepository = new ContactActivityLogRepository();
@@ -190,6 +193,10 @@ namespace Logitude.Server.Tools.Helpers
             }
             catch (Exception ex)
             {
+                if (transaction != null)
+                {
+                    transaction.Rollback();
+                }
                 string ip = "";
                 if (HttpContext.Current != null && HttpContext.Current.Request != null)
                 {

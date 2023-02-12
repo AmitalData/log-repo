@@ -49,6 +49,7 @@ using Logitude.BL.InvoiceModel.CloseTables;
 using Logitude.BL.InvoiceModel.Tools.Behaviours.ARInvoiceBehaviours;
 using Logitude.BL.InvoiceModel.Tools.Behaviours;
 using Logitude.BL.AnalyticTableServices;
+using System.Data.Entity.Core;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -199,6 +200,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void GetLoggedContact()
         {
+            if (!string.IsNullOrEmpty(loggedContactId)) return;
+
             ContactPM loggedContact = null;
 
             if (entityPM.IsFromConsolidationBatch)
@@ -2717,9 +2720,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                         foreach (ARInvoice myInvoice in allInvoices)
                         {
+                            ValidateConstituentInvoiceConcurrency(myInvoice, entityPM.ConstituentInvoices.FirstOrDefault(x=> x.Id == myInvoice.Id));
                             myInvoice.IsClosed = true;
                             myInvoice.StatusCode = "CN";
                             myInvoice.ConsolidationInvoiceId = entityPM.Id;
+                            myInvoice.ConcurrencyGUID = Guid.NewGuid().ToString();
                             invoiceRepository.Update(myInvoice);
 
                             EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -2769,9 +2774,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     {
                                         if (myInvoice.ConsolidationInvoiceId == null)
                                         {
+                                            ValidateConstituentInvoiceConcurrency(myInvoice, item);
                                             myInvoice.IsClosed = true;
                                             myInvoice.StatusCode = "CN";
                                             myInvoice.ConsolidationInvoiceId = entityPM.Id;
+                                            myInvoice.ConcurrencyGUID = Guid.NewGuid().ToString();
                                             invoiceRepository.Update(myInvoice);
 
                                             EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -2812,9 +2819,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                         ARInvoice myInvoice = (from d in allInvoices where d.Id == item.Id select d).FirstOrDefault();
                                         if (myInvoice != null)
                                         {
+                                            ValidateConstituentInvoiceConcurrency(myInvoice, item);
                                             myInvoice.IsClosed = false;
                                             myInvoice.StatusCode = "NT";
                                             myInvoice.ConsolidationInvoiceId = null;
+                                            myInvoice.ConcurrencyGUID = Guid.NewGuid().ToString();
 
                                             invoiceRepository.Update(myInvoice);
 
@@ -2864,6 +2873,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         }
                     }
                 }
+            }
+        }
+
+        private void ValidateConstituentInvoiceConcurrency(ARInvoice myInvoice, ConstituentPM item)
+        {
+            if (!myInvoice.ConcurrencyGUID.Equals(item.ConcurrencyGUID))
+            {
+                throw new OptimisticConcurrencyException("Sorry you can't use this invoice right now, it's being updated by another user");
             }
         }
 
@@ -4394,6 +4411,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                     Id = d.Id,
                                                     Tenant = d.Tenant,
                                                     ConsolidationInvoiceId = d.ConsolidationInvoiceId,
+                                                    ConcurrencyGUID = d.ConcurrencyGUID,
                                                 }).ToList();
             }
 

@@ -124,7 +124,7 @@ export class ARInvoicePMService {
 	}
 
 	update(entityPM: ARInvoicePM) {
-
+        
 		var callTime = new Date();     
 		
 		return defer(() => {
@@ -141,9 +141,7 @@ export class ARInvoicePMService {
 			}
 
 			if (errorsArray.length == 0) {
-
 				var mappedEntity: ARInvoicePM = this.MapJsonToEntityPM(entityPM, false);
-				
 				return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
 						map((response: HttpResponse<any>) => {

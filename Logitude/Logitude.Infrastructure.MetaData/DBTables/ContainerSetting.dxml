@@ -67,4 +67,10 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="ActivationDate"
+    Type="date">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

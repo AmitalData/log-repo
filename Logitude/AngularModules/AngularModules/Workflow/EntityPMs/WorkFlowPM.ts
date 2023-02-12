@@ -129,6 +129,16 @@ export class WorkFlowPM {
             this.workFlowVersions = newValue;
         }
     }
+    private retriesNumber: number;
+    public get RetriesNumber() { return this.retriesNumber; }
+    public set RetriesNumber(newValue: number) { if (this.retriesNumber != newValue) { this.retriesNumber = newValue; this.MarkAsDirty("RetriesNumber"); } }
+       
+	 
+    private retriesDelay: number;
+    public get RetriesDelay() { return this.retriesDelay; }
+    public set RetriesDelay(newValue: number) { if (this.retriesDelay != newValue) { this.retriesDelay = newValue; this.MarkAsDirty("RetriesDelay"); } }
+       
+	 
 
     public OldEntityPM: WorkFlowPM;
 		

@@ -28,7 +28,8 @@
                 <tr class="FormFieldRow">
                     <td style="width: 1px; padding-left: 5px;">
                         <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"
-                            [DataCy]="'SingleInstanceActivityListRefresh'"></IconButton>
+                            [DataCy]="'SingleInstanceActivityListRefresh'">
+                        </IconButton>
                     </td>
                 </tr>
             </table>
@@ -44,8 +45,8 @@
     <tr>
         <td style="vertical-align:top">
             <div class="MediaFill">
-                <logitude-edit-grid *ngIf="!IsActivityLoading" GridWidth="100%" GridHeight="100%" [UseVirtuallization]="true"
-                    [ItemSource]="ActivityItemsSource" (RowDataLoaded)="OnRowLoaded($event)"
+                <logitude-edit-grid GridWidth="100%" GridHeight="100%"
+                    [UseVirtuallization]="true" [ItemSource]="ActivityItemsSource" (RowDataLoaded)="OnRowLoaded($event)"
                     [EnableExpandCollapseAll]="'true'" [IsDarkHeader]="'true'">
 
                     <log-row-details>
@@ -139,7 +140,7 @@
     <tr *ngIf="IsVariablesHasPermission" class="Variables">
         <td style="vertical-align:top">
             <div class="MediaFill">
-                <logitude-edit-grid *ngIf="!IsVariableLoading" GridWidth="100%" GridHeight="100%"
+                <logitude-edit-grid GridWidth="100%" GridHeight="100%"
                     [ItemSource]="VariableItemsSource" [IsDarkHeader]="'true'">
 
                     <!-- Name -->
@@ -156,7 +157,7 @@
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate [IsEditMode]="false">
                                 <div *ngIf="(item.Type | IsObjectTypePipe)">
-                                    <Hyperlink (click)="DisplayValueObject(item)" [FontSize]="12" [Text]="'Object'">
+                                    <Hyperlink (click)="DisplayObjectValue(item)" [FontSize]="12" [Text]="'Object'">
                                     </Hyperlink>
                                 </div>
                                 <div *ngIf="!(item.Type | IsObjectTypePipe)">
@@ -179,3 +180,6 @@
         </td>
     </tr>
 </table>
+
+<BusyIndicator [Text]="'Loading ...'" [IsBusy]="IsActivitiesLoading || IsVariablesLoading" [Width]="200">
+</BusyIndicator>

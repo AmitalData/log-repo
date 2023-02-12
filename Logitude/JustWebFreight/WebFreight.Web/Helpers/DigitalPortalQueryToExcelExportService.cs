@@ -264,7 +264,7 @@ namespace WebFreight.Web.Helpers
                     row[0] = DoesPropertyExistInDynamic(item, "ShipmentNumber") ? item.ShipmentNumber : null;
                     row[1] = DoesPropertyExistInDynamic(item, "TransportModeName") ? item.TransportModeName : null;
                     row[2] = DoesPropertyExistInDynamic(item, "DirectionName") ? item.DirectionName : null;
-                    row[3] = item.MainCarriageFromPortName + ", " + item.MainCarriageToPortName;
+                    row[3] = DoesPropertyExistInDynamic(item, "MainCarriageFromPortName" ) ? $"{item.MainCarriageFromPortName}, " : "" + DoesPropertyExistInDynamic(item, "MainCarriageToPortName") ? item.MainCarriageToPortName : "";
                     row[4] = DoesPropertyExistInDynamic(item, "MainCarriageATD") ? item.MainCarriageATD?.ToString("dd MMM yyyy", CultureInfo.InvariantCulture) : null;
                     row[5] = DoesPropertyExistInDynamic(item, "MainCarriageATA") ? item.MainCarriageATA?.ToString("dd MMM yyyy", CultureInfo.InvariantCulture) : null; ;
                     row[6] = DoesPropertyExistInDynamic(item, "Master") ? item.Master : null;
@@ -361,7 +361,7 @@ namespace WebFreight.Web.Helpers
                     row[0] = DoesPropertyExistInDynamic(item, "ShipmentNumber") ? item.ShipmentNumber : null;
                     row[1] = DoesPropertyExistInDynamic(item, "TransportModeName") ? item.TransportModeName : null;
                     row[2] = DoesPropertyExistInDynamic(item, "DirectionName") ? item.DirectionName : null;
-                    row[3] = item.MainCarriageFromPortName + ", " + item.MainCarriageToPortName;
+                    row[3] = DoesPropertyExistInDynamic(item, "MainCarriageFromPortName") ? $"{item.MainCarriageFromPortName}, " : "" + DoesPropertyExistInDynamic(item, "MainCarriageToPortName") ? item.MainCarriageToPortName : "";
                     row[4] = DoesPropertyExistInDynamic(item, "MainCarriageATD") ? item.MainCarriageATD?.ToString("dd MMM yyyy", CultureInfo.InvariantCulture) : null;
                     row[5] = DoesPropertyExistInDynamic(item, "MainCarriageATA") ? item.MainCarriageATA?.ToString("dd MMM yyyy", CultureInfo.InvariantCulture) : null; ;
                     row[6] = DoesPropertyExistInDynamic(item, "Master") ? item.Master : null;
@@ -520,23 +520,6 @@ namespace WebFreight.Web.Helpers
                                                       .Select(a => a.FieldCode.Replace("Shipment.", ""))
                                                       .ToList();
 
-                    allowedShipmentsFieldSecurites.AddRange(new List<String>() 
-                    {   
-                        "GrossWeightInKG", 
-                        "VolumeInCBM",
-                        "ChargeableWeightInKG",
-                        "Master",
-                        "ValueOfGoods",
-                        "TruckContainerNumber",
-                        "ContainersNumbersandTypesArray", 
-                        "MainCarriageToPortName",
-                        "MainCarriageFromPortName",
-                        "DirectionName",
-                        "TransportModeName", 
-                        "MainCarriageATA", 
-                        "TruckNumber" 
-                    });
-
                     var shipmentsFields = string.Join(",", allowedShipmentsFieldSecurites);
                     var shipmentsDynamicData = shipmentData.Select("new { " + shipmentsFields + " }").ToDynamicList();
 
@@ -582,14 +565,20 @@ namespace WebFreight.Web.Helpers
         {
             listQuery.ForEach(shipment =>
             {
-                bool isInlandDomesticShipment = (shipment.DirectionId == "D" && shipment.TransportModeId == "I");
-                if (shipment.TransportModeId != "O" || !string.IsNullOrEmpty(shipment.ContainersNumbersandTypesArray))
+                bool isInlandDomesticShipment = DoesPropertyExistInDynamic(shipment, "DirectionId") 
+                                                && DoesPropertyExistInDynamic(shipment, "TransportModeId") 
+                                                ? (shipment.DirectionId == "D" && shipment.TransportModeId == "I")
+                                                : false;
+
+                if (DoesPropertyExistInDynamic(shipment, "ContainersNumbersandTypesArray") 
+                    && DoesPropertyExistInDynamic(shipment, "TransportModeId")
+                    && (shipment.TransportModeId != "O" || !string.IsNullOrEmpty(shipment.ContainersNumbersandTypesArray)))
                 {
                     shipment.TruckContainerNumber = shipment.TransportModeId == "O"
                                                     ? Regex.Replace(shipment.ContainersNumbersandTypesArray, "(\\[.*?\\])", "")
                                                     : isInlandDomesticShipment
-                                                        ? shipment.TruckNumber
-                                                        : shipment.CarrierNumber;
+                                                        ? DoesPropertyExistInDynamic(shipment, "TruckNumber") ? shipment.TruckNumber : ""
+                                                        : DoesPropertyExistInDynamic(shipment, "CarrierNumber") ? shipment.CarrierNumber : "";
                 }
             });
         }

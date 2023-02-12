@@ -1,6 +1,6 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-	<Sql Version="1">
-      <![CDATA[	  
+	<Sql Version="4">
+      <![CDATA[
 	  
 		delete from DigitalPreDefinedComponents where id != ''
 		declare @shipmentObjectId as varchar(15)
@@ -101,6 +101,16 @@
 			CURRENT_TIMESTAMP,
 			'Required documents message component',
 			'<RequiredDocumentsMessage></RequiredDocumentsMessage> ');
+			
+	EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPreDefinedComponent'
+	INSERT INTO DigitalPreDefinedComponents (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, Name, Content) 
+	values (@EntityId,
+			0,
+			@shipmentObjectId,
+			CURRENT_TIMESTAMP,
+			CURRENT_TIMESTAMP,
+			'Shipment horizontal timeline component - Mobile',
+			'<HorizontalTimelineForMobile></HorizontalTimelineForMobile> ');
 			
 			]]>
 </Sql>

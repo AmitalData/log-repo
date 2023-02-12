@@ -139,6 +139,7 @@
     <None Include="DBScripts\GlobalModel\202209271124_AddQboBaseUrl.sxml" />
     <None Include="DBScripts\GlobalModel\AddInProgressStatusToAnalyzeQueue.sxml" />
     <None Include="DBScripts\GlobalModel\AddWorkflowEngineWorkerBatchService.sxml" />
+    <None Include="DBScripts\InfrastructureModel\202302051135_UpdateObjectTableFullNameTextCode.sxml" />
     <None Include="DBScripts\InfrastructureModel\202301161230_InsertCustomObjectTableQueryGroup.sxml" />
     <None Include="DBScripts\InfrastructureModel\202212141022_FillRelatedScreenCodeInScreensTable.sxml" />
     <None Include="DBScripts\InfrastructureModel\202205100957_UpdateDoubleFieldDataTypeDisplayName.sxml" />
@@ -157,6 +158,7 @@
     <None Include="DBScripts\InvoiceModel\202212201040_FillTotalExamptFortaxReport.sxml" />
     <None Include="DBScripts\QuoteModel\202209100331_FillQuoteClosingReasonNotes.sxml" />
     <None Include="DBScripts\QuoteModel\202218091107_FillMarkupCurrenciesOnQuoteCharges.sxml" />
+    <None Include="DBScripts\ShipmentModel\202302070144_UpdateVisionEventNames.sxml" />
     <None Include="DBScripts\ShipmentModel\202211010300_AddNewSpecialHandlingCode.sxml" />
     <None Include="DBScripts\ShipmentModel\202207210955_FillTransshipmentsRouting.soxml" />
     <None Include="DBScripts\CommonModel\202203291200_AddShipmentOrderDocumentTypes.sxml" />

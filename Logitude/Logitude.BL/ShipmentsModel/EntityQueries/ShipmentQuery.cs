@@ -366,6 +366,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         PortPM mainCarriageFromPort = portQuery.GetSinglePM(shipmentPM.MainCarriageFromPortId, masterData.Tenant);
                         shipmentPM.MainCarriageFromPortCode = mainCarriageFromPort?.Code;
                         shipmentPM.MainCarriageFromPortName = mainCarriageFromPort?.EnglishName;
+                        shipmentPM.MainCarriageFromPortCountryCode = mainCarriageFromPort.CountryCode;
+                        shipmentPM.MainCarriageFromPortCountryName = mainCarriageFromPort.CountryName;
                     }
 
                     if (!string.IsNullOrEmpty(shipmentPM.MainCarriageToPortId))
@@ -373,6 +375,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         PortPM mainCarriageToPort = portQuery.GetSinglePM(shipmentPM.MainCarriageToPortId, masterData.Tenant);
                         shipmentPM.MainCarriageToPortCode = mainCarriageToPort?.Code;
                         shipmentPM.MainCarriageToPortName = mainCarriageToPort?.EnglishName;
+                        shipmentPM.MainCarriageToPortCountryCode = mainCarriageToPort.CountryCode;
+                        shipmentPM.MainCarriageToPortCountryName = mainCarriageToPort.CountryName;
                     }
 
                     shipmentPM.MainCarriageFromPartnerId = masterData.MainCarriageFromPartnerId;
@@ -2702,7 +2706,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             else if (shipmentPM.InlandDomesticFromTypeCode == "CASL")
             {
                 shipmentPM.FromLocation = shipmentPM.InlandDomesticFromCity;
-                Country country = GetCountryByCASLAddress(shipmentPM.InlandDomesticFromCountryId, tenant);
+                Country country = GetCountryCodeByCASLAddress(shipmentPM.InlandDomesticFromCountryId, tenant);
                 if (country != null)
                 {
                     shipmentPM.FromPartnerCountryCode = country.Code;
@@ -2724,7 +2728,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             else if (shipmentPM.InlandDomesticToTypeCode == "CASL")
             {
                 shipmentPM.ToLocation = shipmentPM.InlandDomesticToCity;
-                Country country = GetCountryByCASLAddress(shipmentPM.InlandDomesticToCountryId, tenant);
+                Country country = GetCountryCodeByCASLAddress(shipmentPM.InlandDomesticToCountryId, tenant);
                 if (country != null)
                 {
                     shipmentPM.ToPartnerCountryCode = country.Code;
@@ -4513,9 +4517,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                               .Include("MoveType")
                                               .FirstOrDefault(a => a.Id == id && a.Tenant == tenant);
                 if (shipment != null)
-                {
-                    CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
-                    customFieldResolver.SetCustomFieldsValues("Shipment", tenant, new List<Shipment> { shipment }.Cast<object>().ToList());
+                {                  
 
                     ShipmentMasterData masterData = repository.context
                                                               .ShipmentMasterDatas
@@ -13528,6 +13530,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                            select new DigitalShipmentList()
                            {
                                TruckContainerNumber = "",
+                               Transshipment3ToPortName = f.Transshipment3ToPortName,
+                               Transshipment3ToPortCountryCode = f.Transshipment3ToPortCountryCode,
+                               Transshipment2ToPortName = f.Transshipment2ToPortName,
+                               Transshipment2ToPortCountryCode = f.Transshipment2ToPortCountryCode,
+                               Transshipment1ToPortName = f.Transshipment1ToPortName,
+                               Transshipment1ToPortCountryCode = f.Transshipment1ToPortCountryCode,
+                               MainCarriageToPortName = f.MainCarriageToPortName,
+                               MainCarriageToPortCountryCode = f.MainCarriageToPortCountryCode,
                                StatusCode = f.StatusCode,
                                ChargeableWeightInKG = f.ChargeableWeightInKG,
                                GrossWeightInKG = f.GrossWeightInKG,
@@ -13799,12 +13809,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                MainCarriageExpectedOrActual = f.MainCarriageExpectedOrActual,
                                MainCarriageETAOrATA = f.MainCarriageETAOrATA,
                                MainCarriageFromPortCountryCode = f.MainCarriageFromPortCountryCode,
-                               MainCarriageToPortCountryCode = f.MainCarriageToPortCountryCode,
                                MainCarriageFromPortCode = f.MainCarriageFromPortCode,
                                MainCarriageFromPortCountryName = f.MainCarriageFromPortCountryName,
                                MainCarriageToPortCode = f.MainCarriageToPortCode,
                                MainCarriageToPortCountryName = f.MainCarriageToPortCountryName,
-                               MainCarriageToPortName = f.MainCarriageToPortName,
                                MainHarmonize = f.MainHarmonize,
                                StatusId = f.StatusId,
                                StatusDate = f.StatusDate,
@@ -13992,7 +14000,97 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                InlandDomesticFromStateId = f.InlandDomesticFromStateId,
                                NumberOfTransshipments = f.NumberOfTransshipments,
                                Transshipments = f.Transshipments,
-                               IsDocumentsNeedApprove = f.IsDocumentsNeedApprove
+                               IsDocumentsNeedApprove = f.IsDocumentsNeedApprove,
+                               Notify1Id = f.Notify1Id,
+                               Notify2Id = f.Notify2Id,
+                               Notify1Name = f.Notify1Name,
+                               Notify1Note = f.Notify1Note,
+                               Notify2Name = f.Notify2Name,
+                               Notify2Note = f.Notify2Note,
+                               Notify2AddressId = f.Notify2AddressId,
+                               Notify1AddressId = f.Notify1AddressId,
+                               Notify1ContactId = f.Notify1ContactId,
+                               ConsigneeNotImporterId = f.ConsigneeNotImporterId,
+                               ConsigneeNotImporterAddressId = f.ConsigneeNotImporterAddressId,
+                               ConsigneeReference1 = f.ConsigneeReference1,
+                               ConsigneeNotImporterNote = f.ConsigneeNotImporterNote,
+                               ConsigneeNotImporterName = f.ConsigneeNotImporterName,
+                               ConsigneeNotImporterContactId = f.ConsigneeNotImporterContactId,
+                               ConsigneeId = f.ConsigneeId,
+                               ShipperId = f.ShipperId,
+                               ShipperReference2 = f.ShipperReference2,
+                               ColoaderId = f.ColoaderId,
+                               TruckerId = f.TruckerId,
+                               ConsigneeReference2 = f.ConsigneeReference2,
+                               CustomConnectToShipment = f.CustomConnectToShipment,
+                               DepartureArrivalFromDate = f.DepartureArrivalFromDate,
+                               DepartureArrivalToDate = f.DepartureArrivalToDate,
+                               MainCarriageFinalDestinationCountryCode = f.MainCarriageFinalDestinationCountryCode,
+                               MainCarriageFinalDestinationCountryName = f.MainCarriageFinalDestinationCountryName,
+                               MainCarriageFinalDestinationPortId = f.MainCarriageFinalDestinationPortId,
+                               MainCarriageFinalDestinationPortCode = f.MainCarriageFinalDestinationPortCode,
+                               MainCarriageFinalDestinationPortName = f.MainCarriageFinalDestinationPortName,
+                               MainCarriageFromPortAddress = f.MainCarriageFromPortAddress,
+                               MainCarriageToPortAddress = f.MainCarriageToPortAddress,
+                               Notify2ContactId = f.Notify2ContactId,
+                               CustomAgentExportId = f.CustomAgentExportId,
+                               CustomAgentExportAddressId = f.CustomAgentExportAddressId,
+                               CustomAgentExportContactId = f.CustomAgentExportContactId,
+                               CustomAgentExportReference = f.CustomAgentExportReference,
+                               CustomAgentExportName = f.CustomAgentExportName,
+                               CustomAgentExportNote = f.CustomAgentExportNote,
+                               CustomAgentImportId = f.CustomAgentImportId,
+                               CustomAgentImportAddressId = f.CustomAgentImportAddressId,
+                               CustomAgentImportContactId = f.CustomAgentImportContactId,
+                               CustomAgentImportReference = f.CustomAgentImportReference,
+                               CustomAgentImportName = f.CustomAgentImportName,
+                               CustomAgentImportNote = f.CustomAgentImportNote,
+                               ReleasingAgentId = f.ReleasingAgentId,
+                               ReleasingAgentName = f.ReleasingAgentName,
+                               PreCarriageATD = f.PreCarriageATD,
+                               PreCarriageETA = f.PreCarriageETA,
+                               PreCarriageATA = f.PreCarriageATA,
+                               Transshipment1FromPortId = f.Transshipment1FromPortId,
+                               Transshipment1FromPortName = f.Transshipment1FromPortName,
+                               Transshipment2FromPortId = f.Transshipment2FromPortId,
+                               Transshipment2FromPortName = f.Transshipment2FromPortName,
+                               Transshipment3FromPortId = f.Transshipment3FromPortId,
+                               Transshipment3FromPortName = f.Transshipment3FromPortName,
+                               Transshipment1FromPortCountryCode = f.Transshipment1FromPortCountryCode,
+                               Transshipment1FromPortCountryName = f.Transshipment1FromPortCountryName,
+                               Transshipment2FromPortCountryCode = f.Transshipment2FromPortCountryCode,
+                               Transshipment2FromPortCountryName = f.Transshipment2FromPortCountryName,
+                               Transshipment3FromPortCountryCode = f.Transshipment3FromPortCountryCode,
+                               Transshipment3FromPortCountryName = f.Transshipment3FromPortCountryName,
+                               Transshipment1AdditionalMAWBOBLBL = f.Transshipment1AdditionalMAWBOBLBL,
+                               Transshipment2AdditionalMAWBOBLBL = f.Transshipment2AdditionalMAWBOBLBL,
+                               Transshipment3AdditionalMAWBOBLBL = f.Transshipment3AdditionalMAWBOBLBL,
+                               Transshipment1CarrierName = f.Transshipment1CarrierName,
+                               Transshipment1CarrierCode = f.Transshipment1CarrierCode,
+                               Transshipment2CarrierName = f.Transshipment2CarrierName,
+                               Transshipment2CarrierCode = f.Transshipment2CarrierCode,
+                               Transshipment3CarrierName = f.Transshipment3CarrierName,
+                               Transshipment3CarrierCode = f.Transshipment3CarrierCode,
+                               Transshipment1CarrierNumber = f.Transshipment1CarrierNumber,
+                               Transshipment1CarrierId = f.Transshipment1CarrierId,
+                               Transshipment2CarrierNumber = f.Transshipment2CarrierNumber,
+                               Transshipment2CarrierId = f.Transshipment2CarrierId,
+                               Transshipment3CarrierNumber = f.Transshipment3CarrierNumber,
+                               Transshipment3CarrierId = f.Transshipment3CarrierId,
+                               OnCarriageTransportModeId = f.OnCarriageTransportModeId,
+                               PreCarriageToPortId = f.PreCarriageToPortId,
+                               PreCarriageFromPortId = f.PreCarriageFromPortId,
+                               MainCarriageCarrierNumber = f.MainCarriageCarrierNumber,
+                               MainCarriageCarrierCode = f.MainCarriageCarrierCode,
+                               Transshipment1ToPortId = f.Transshipment1ToPortId,
+                               Transshipment2ToPortId = f.Transshipment2ToPortId,
+                               Transshipment3ToPortId = f.Transshipment3ToPortId,
+                               OnCarriageToPortId = f.OnCarriageToPortId,
+                               MainCarriageToPortId = f.MainCarriageToPortId,
+                               OnCarriageETD =  f.OnCarriageETD,
+                               OnCarriageATD =  f.OnCarriageATD,
+                               OnCarriageETA =  f.OnCarriageETA,
+                               OnCarriageATA =  f.OnCarriageATA
                            };
 
             return myResult;

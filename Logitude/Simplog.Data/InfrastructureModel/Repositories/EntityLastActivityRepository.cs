@@ -57,7 +57,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public List<EntityLastActivity> GetTopEntityLastActivities(int tenant, string userId, string objectTableId)
         {
-            using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 IQueryable<EntityLastActivity> lastActivitiesQuery = null;
                 if (tenant != 65)

@@ -53,9 +53,9 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
             newTenant.CustomerId = connectedCustomerId;
             newTenant.AgentId = signUpInfoClass.IsCreateLogboxTenantFromCloud ? GetNewAgentId(signUpInfoClass) : newTenant.AgentId;
             newTenant.CustomerTenantShareImportFile = true;
-            newTenant.AutoArchiveOnInvoice = !string.IsNullOrEmpty(newTenant.PrivateLabelId) ? true : newTenant.AutoArchiveOnInvoice;
-            newTenant.AutoArchiveOnPODExport = !string.IsNullOrEmpty(newTenant.PrivateLabelId) ? true : newTenant.AutoArchiveOnPODExport;
-            newTenant.DocumentShareAsDefault = !string.IsNullOrEmpty(newTenant.PrivateLabelId) ? true : newTenant.DocumentShareAsDefault;
+            newTenant.AutoArchiveOnInvoice = !string.IsNullOrEmpty(newTenant.PrivateLabelId) || signUpInfoClass.IsCreateLogboxTenantFromCloud ? true : newTenant.AutoArchiveOnInvoice;
+            newTenant.AutoArchiveOnPODExport = !string.IsNullOrEmpty(newTenant.PrivateLabelId) || signUpInfoClass.IsCreateLogboxTenantFromCloud ? true : newTenant.AutoArchiveOnPODExport;
+            newTenant.DocumentShareAsDefault = !string.IsNullOrEmpty(newTenant.PrivateLabelId) || signUpInfoClass.IsCreateLogboxTenantFromCloud ? true : newTenant.DocumentShareAsDefault;
             service.Update(newTenant);
         }
 

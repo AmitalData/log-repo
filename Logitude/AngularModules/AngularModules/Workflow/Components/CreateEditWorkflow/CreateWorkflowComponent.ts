@@ -18,6 +18,7 @@ export class CreateWorkflowComponent extends BaseComponent implements OnInit {
     public ObjectTableName: string = "WorkFlow";
     public DataContext: CreateWorkflowComponent = this;
     public ValidationErrorsList: string[];
+    public ShowAdvancedSettings: boolean = false;
 
     public CurrentSession = SessionLocator.SelectedSession;
 
@@ -56,6 +57,26 @@ export class CreateWorkflowComponent extends BaseComponent implements OnInit {
         }
     }
 
+    get RetriesNumber() { return this.EntityPM.RetriesNumber }
+    set RetriesNumber(value: number) {
+        if (this.EntityPM.RetriesNumber != value) {
+            this.EntityPM.RetriesNumber = value;
+            this.setUIProperties()
+        }
+    }
+
+    get RetriesDelay() { return this.EntityPM.RetriesDelay; }
+    set RetriesDelay(value: number) {
+        if (this.EntityPM.RetriesDelay != value) {
+            this.EntityPM.RetriesDelay = value;
+            this.setUIProperties()
+        }
+    }
+
+    showAdvancedSettings(){
+        this.ShowAdvancedSettings = true;
+    }
+
     ngOnInit() {
         if (this.IsNewEntity) {
             this.initializeWorkFlow();
@@ -73,6 +94,8 @@ export class CreateWorkflowComponent extends BaseComponent implements OnInit {
         this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
         this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
         this.EntityPM.StatusCode = "DRFT";
+        this.EntityPM.RetriesNumber = 5;
+        this.EntityPM.RetriesDelay = 300;
     }
 
     loadWorkflow() {
@@ -89,16 +112,36 @@ export class CreateWorkflowComponent extends BaseComponent implements OnInit {
         this.CurrentSession.CloseCurrentWindow();
     }
 
+    setUIProperties() {
+        if (this.EntityPM.RetriesNumber && this.EntityPM.RetriesNumber > 10) {
+            this.UIProperties.SetValidity("RetriesNumber", this.ObjectTableName, false, "The maximum number of retries is 10");
+        } else {
+            this.UIProperties.SetValidity("RetriesNumber", this.ObjectTableName, true, "");
+        }
+
+        if (this.EntityPM.RetriesDelay && this.EntityPM.RetriesDelay < 120) {
+            this.UIProperties.SetValidity("RetriesDelay", this.ObjectTableName, false, "The minimum number of retries delay is 120");
+        } else {
+            this.UIProperties.SetValidity("RetriesDelay", this.ObjectTableName, true, "");
+        }
+    }
+
     saveButtonClicked() {
         let errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.DataContext.ObjectTableName, errors);
-        this.ValidationErrorsList = errors;
-        if (this.ValidationErrorsList.length == 0) {
+        let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
+        let validationErrors = notValidUIProperties.map(t => { return t.ValidationError ? t.ValidationError.replace(/\_/gi, " ") : null });
+
+        this.ValidationErrorsList = [];
+
+        if (errors.length == 0 && validationErrors.length == 0) {
             if (this.IsNewEntity) {
                 this.createWorkflow();
             } else {
                 this.editWorkflow();
             }
+        } else {
+            this.ValidationErrorsList = this.ValidationErrorsList.concat(errors).concat(validationErrors)
         }
     }
 

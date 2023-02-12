@@ -19,6 +19,8 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
                 ValidateWorkflowName(entityPM, true);
+                ValidateRetriesNumber(entityPM);
+                ValidateRetriesDelay(entityPM);
                 CreateNewVersion(entityPM);
             }
         }
@@ -28,6 +30,8 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
             if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
                 ValidateWorkflowName(entityPM, false);
+                ValidateRetriesNumber(entityPM);
+                ValidateRetriesDelay(entityPM);
             }
         }
 
@@ -54,6 +58,22 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
             if (exists)
             {
                 throw new ApplicationException("Workflow name already exists");
+            }
+        }
+
+        private void ValidateRetriesNumber(WorkFlowPM entityPM)
+        {
+            if (entityPM.RetriesNumber > 10)
+            {
+                throw new ApplicationException("The maximum number of retries is 10");
+            }
+        }
+
+        private void ValidateRetriesDelay(WorkFlowPM entityPM)
+        {
+            if (entityPM.RetriesDelay > 0 && entityPM.RetriesDelay < 120)
+            {
+                throw new ApplicationException("The minimum number of retries delay is 120");
             }
         }
 

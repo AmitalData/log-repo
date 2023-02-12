@@ -41,11 +41,12 @@ namespace WebFreight.Web.Helpers.BatchPrint
         private ARInvoicePM GetARInvoicePM(PrintEntityKeys item)
         {
             ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(_batchPrinterArgs.Tenant);
-            return aRInvoiceQuery.GetSinglePM(item.EntityId, _batchPrinterArgs.Tenant);
+            return aRInvoiceQuery.GetSinglePM(item.ChildEntityId, _batchPrinterArgs.Tenant);
         }
         public override void AfterPrint(PrintEntityKeys item)
         {
-            ARInvoicePrintDetailsService aRInvoicePrintDetailsService = new ARInvoicePrintDetailsService(_batchPrinterArgs.Tenant, item.EntityId, _batchPrinterArgs.Email);
+            if (item.IsAlreadyPrinted) return;
+            ARInvoicePrintDetailsService aRInvoicePrintDetailsService = new ARInvoicePrintDetailsService(_batchPrinterArgs.Tenant, item.ChildEntityId, _batchPrinterArgs.Email);
             aRInvoicePrintDetailsService.Update();
         }
     }

@@ -13,10 +13,12 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         private TextCodeRepository textCodeRepository;
         private ObjectTableDefaultFieldsService objectTableDefaultFieldsService;
         private IWebFreightContext objectContext;
-        public ObjectTableServiceInitializer(ObjectTablePM entityPM, IWebFreightContext objectContext)
+        private ObjectTableRepository objectTableRepository;
+        public ObjectTableServiceInitializer(ObjectTablePM entityPM, IWebFreightContext objectContext, ObjectTableRepository objectTableRepository)
         {
             this.entityPM = entityPM;
             this.objectContext = objectContext;
+            this.objectTableRepository = objectTableRepository;
             this.textCodeRepository = new TextCodeRepository(objectContext);
             this.objectTableDefaultFieldsService = new ObjectTableDefaultFieldsService(entityPM, objectContext);
         }
@@ -24,7 +26,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         public void Initialize()
         {
             InitializeEntity();
-            InitializeTextCode();
             this.objectTableDefaultFieldsService.AddDefaultFields();
         }
 
@@ -39,40 +40,23 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             if ((entityPM.IsCustom && string.IsNullOrEmpty(entityPM.ParentObjectTableId))) return;
             this.entityPM.IsComposition = true;
         }
+
         private void MapEntityName()
         {
-            if (entityPM.IsCustom && !string.IsNullOrEmpty(entityPM.ParentObjectTableId))
-            {
-                MapCustomSubEntityName();
-                return;
-            }
-            if (entityPM.IsCustom && string.IsNullOrEmpty(entityPM.ParentObjectTableId))
-            {
-                MapCustomEntityName();
-                return;
-            }  
+            entityPM.Name = entityPM.IsCustom ? entityPM.Id : entityPM.Name;
         }
 
-        private void MapCustomSubEntityName()
+        public void InitializeTextCode(ObjectTable objectTable)
         {
-            ObjectTableRepository entityRepository = new ObjectTableRepository(objectContext);
-            ObjectTable  parentObjectTable = entityRepository.GetSingleObjectTable(entityPM.ParentObjectTableId, entityPM.Tenant, false);
-            if (entityPM.Name.StartsWith(parentObjectTable.Id + "." + entityPM.Tenant + ".")) return;
-            entityPM.Name = parentObjectTable.Id + "." + entityPM.Tenant + "." + entityPM.Name;
-        }
-        private void MapCustomEntityName()
-        {
-            if (entityPM.Name.StartsWith("C." + entityPM.Tenant + ".")) return;
-            entityPM.Name = "C." + entityPM.Tenant + "." + entityPM.Name;
-        }
-        private void InitializeTextCode()
-        {
-            CreateDefaultTextCode();
+            TextCode defaultTextCode = CreateDefaultTextCode();
+            MapDefaultTextCode(defaultTextCode, objectTable);
             TextCode descreptionTextCode = CreateDescriptionTextCode();
-            MapDescreptionTextCode(descreptionTextCode);
+            MapDescreptionTextCode(descreptionTextCode, objectTable);
+            objectTableRepository.Update(objectTable);
+            objectContext.SaveChanges();
         }
 
-        private void CreateDefaultTextCode()
+        private TextCode CreateDefaultTextCode()
         {
             TextCode textCode = new TextCode();
             textCode.Id = IdCounter.GetNumber("TextCode", this.entityPM.Tenant).ToString();
@@ -84,6 +68,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             textCode.Tenant = this.entityPM.Tenant;
             textCode.TextCodeTypeCode = "T";
             textCodeRepository.Add(textCode);
+            return textCode;
         }
 
         private TextCode CreateDescriptionTextCode()
@@ -99,11 +84,18 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             textCodeRepository.Add(descriptionTextCode);
             return descriptionTextCode;
         }
-        private void MapDescreptionTextCode (TextCode descreptionTextCode)
+        private void MapDescreptionTextCode (TextCode descreptionTextCode, ObjectTable objectTable)
         {
             if (descreptionTextCode == null) return;
-            //entityPM.DescriptionTextCodeId = descreptionTextCode.Id;
-            entityPM.DescriptionTextCodeCode = descreptionTextCode.Code;
+            entityPM.DescriptionTextCodeId = objectTable.DescriptionTextCodeId = descreptionTextCode.Id;
+            entityPM.DescriptionTextCodeCode = objectTable.DescriptionTextCodeCode = descreptionTextCode.Code;
+        }
+
+        private void MapDefaultTextCode(TextCode defaultTextCode, ObjectTable objectTable)
+        {
+            if (defaultTextCode == null) return;
+            entityPM.FullNameTextCodeId = objectTable.FullNameTextCodeId = defaultTextCode.Id;
+            entityPM.FullNameTextCodeCode = objectTable.FullNameTextCodeCode = defaultTextCode.Code;
         }
 
     }

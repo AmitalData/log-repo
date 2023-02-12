@@ -35,12 +35,14 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
     private UserTenantShippingLines: ShippingLinePM[] = [];
     public ShippingLines: ShippingLineItem[];
     private ShowDefaults: boolean;
+    public IsContainerTrackingPrepaid: boolean;
 
     constructor() {
         super();
         this.ContainerSettingPMService = new ContainerSettingPMService();
         this.ContainerSettingExtendedService = new ContainerSettingExtendedService();
         this.ShippingLineExtendedPMService = new ShippingLineExtendedPMService();
+        this.IsContainerTrackingPrepaid = SessionLocator.TenantManagementJS.IsContainerTrackingPrepaid
     }
 
     ngOnInit() {
@@ -78,12 +80,11 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
     private SetDefaultGeneralItem() {
         if (!AppTool.IsNullOrEmpty(this.DataContext.ShipmentATADateIndicator)) this.SelectedShipmentATADateItem = this.ShipmentATADateComboList.filter(d => d.Code == this.DataContext.ShipmentATADateIndicator)[0];
         else this.SelectedShipmentATADateItem = this.ShipmentATADateComboList.filter(d => d.Code == "Vessel")[0];
-        if(!this.ShowDefaults) return;
+        if (!this.ShowDefaults) return;
         this.EmptyReturnClosingDays = 5;
         this.ShipmentATAClosingDays = 90;
-
     }
-    
+
 
     private LoadTenantZeroShippingLines() {
         this.TenantZeroShippingLines = [];
@@ -157,9 +158,13 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
         this.ValidationErrorsList = errors;
-        if (this.ValidationErrorsList.length == 0) {
-            this.SubmitSave();
-        }
+        this.CustomValidation();
+        if (this.ValidationErrorsList.length == 0) this.SubmitSave();
+    }
+
+    CustomValidation() {
+        if (this.IsContainerTrackingPrepaid && AppTool.IsNullOrEmpty(this.ActivationDate))
+            this.ValidationErrorsList.push("Activation Date is Required");
     }
 
     SubmitSave() {
@@ -276,6 +281,13 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
     set IsDrop(value: boolean) {
         if (this.EntityPM.IsDrop != value) {
             this.EntityPM.IsDrop = value;
+        }
+    }
+
+    get ActivationDate() { return this.EntityPM.ActivationDate; }
+    set ActivationDate(value: Date) {
+        if (this.EntityPM.ActivationDate != value) {
+            this.EntityPM.ActivationDate = value;
         }
     }
 }

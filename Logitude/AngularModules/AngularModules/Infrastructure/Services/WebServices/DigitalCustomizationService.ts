@@ -190,4 +190,6 @@ export class AddCustomFieldRequest {
     public CreatedBy: string;
     public ModifiedBy: string;
     public DisplayText: string;
+    public IsList: boolean;
+    public IsPm: boolean;
 }

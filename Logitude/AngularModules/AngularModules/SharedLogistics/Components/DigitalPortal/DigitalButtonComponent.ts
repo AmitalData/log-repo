@@ -5,6 +5,7 @@ import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
 import { DigitalCustomizationService, AddCustomFieldRequest } from '../../../Infrastructure/Services/WebServices/DigitalCustomizationService';
+import { AppTool } from '../../../Infrastructure/Tools';
 
 @Component({
     selector: 'DigitalButtonComponent',
@@ -76,7 +77,8 @@ export class DigitalButtonComponent {
         newField.DisplayText = this.rowData.FullNameTextCodeDefaultText;
         newField.CreatedBy = SessionLocator.LoggedUserPM.EnglishName;
         newField.ModifiedBy = SessionLocator.LoggedUserPM.EnglishName;
-
+        newField.IsList = this.rowData.DisplayInList;
+        newField.IsPm = !AppTool.IsNullOrEmpty(this.rowData.PMPropertyPath);
         this.digitalCustomizationService.AddCustomField(newField).subscribe((myResult) => {
             this.RefreshDateUpdated();
             this.StopBusyIndicator();

@@ -270,7 +270,7 @@ export class SharedLogisticsDigitalPortalComponent implements OnInit {
     }
 
     LoadSharedLogisticsSummary() {
-        this._sharedLogisticsService.getSharedLogisticsSummaryData(SessionInfo.LoggedUserTenant).subscribe((res: any) => {
+        this._sharedLogisticsService.getDigitalSharedLogisticsSummaryData(SessionInfo.LoggedUserTenant).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.sharedLogisticsSummary = pmResponse.Result;

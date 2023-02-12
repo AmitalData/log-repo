@@ -639,6 +639,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         BluesnapInttraStockContractQTY = entityPM.BluesnapInttraStockContractQTY,
                         MainAdditionalPackageApplied = entityPM.MainAdditionalPackageApplied,
                         CustomerURL = entityPM.CustomerURL,
+                        IsContainerTrackingPrepaid = entityPM.IsContainerTrackingPrepaid,
                     };
 
                     if (entityPM.PaymentFailure)
@@ -885,6 +886,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string TemporalPackageCode { get; set; }
         public string CountryName { get; set; }
         public bool MainAdditionalPackageApplied { get; set; }
+        public bool IsContainerTrackingPrepaid { get; set; }
         public string CustomerURL { get; set; }
 
 

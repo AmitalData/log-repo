@@ -89,5 +89,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             }
             this.loggedContact = new ContactRepository(tenant).GetSingleContactByEmail(("system@tenant" + tenant.ToString() + ".com"), tenant,true);
         }
+
     }
 }

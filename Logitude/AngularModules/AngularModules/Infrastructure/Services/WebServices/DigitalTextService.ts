@@ -72,11 +72,12 @@ export class DigitalTextService {
         });
     }
 
-    public GetFeildPermissionByFilters(cardId: string, objectTableId: string, profileCode: string) {
+    public GetFeildPermissionByFilters(cardId: string, objectTableId: string, profileCode: string, screenCode: string = null) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetFeildPermissionByFilters?cardId=' + cardId + "&objectTableId=" + objectTableId + "&profileCode=" + profileCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetFeildPermissionByFilters?cardId=' + cardId + "&objectTableId=" + objectTableId + "&profileCode=" + profileCode
+                + "&screenCode=" + screenCode , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -157,4 +158,6 @@ export class DigitalFeildSecurityUpdateModel {
     public ModifiedOn: Date;
     public ModifiedBy: string;
     public HasPermission: boolean;
+    public IsList: boolean;
+    public IsPm: boolean;
 }

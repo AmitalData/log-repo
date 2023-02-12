@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { DashboardPM } from '../../../../DashboardModule/EntityPMs/DashboardPM';
 import { WidgetPM } from '../../../../DashboardModule/EntityPMs/WidgetPM';
 import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
@@ -20,11 +20,7 @@ import { DashboardCopyService } from 'DashboardModule/Tools/DashboardCopyService
 import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 import { GlobalFilterItem } from 'DashboardModule/Components/Windows/Filter/GlobalFilter/GlobalFilterItem';
 import { AnalyticsFactsFieldsMetaDataPM } from 'DashboardModule/EntityPMs/AnalyticsFactsFieldsMetaDataPM';
-import { GlobalFilterComponent } from 'DashboardModule/Components/Windows/Filter/GlobalFilter/GlobalFilterComponent';
-import * as moment from 'moment';
 import { formatDate } from '@angular/common';
-//import { formatDate, Inject, LOCALE_ID } from '@angular/common';
-
 
 @Component({
     templateUrl: 'DashboardTabComponent.html',
@@ -100,26 +96,23 @@ export class DashboardTabComponent implements OnInit {
     public IsEditDashboardButtonVisible: boolean = false;
     public IsEditLayoutButtonVisible: boolean = !this.IsEditLayoutModeActive && !AppTool.IsNullOrEmpty(this.DashboardId);
 
-    private LoadSelectedDashboard() {
+    private LoadSelectedDashboard(refreshWidgets: boolean = false) {
         this.dashboardPMService.get(this.DashboardId).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.SelectedDashboard = myResponse.Result;
-                this.IsEditLayoutButtonVisible = !this.IsEditLayoutModeActive
-                    && this.SelectedDashboard
-                    && this.SelectedDashboard.Tenant == SessionLocator.Tenant
-                    && (this.SelectedDashboard.CreatedByUserId == SessionLocator.LoggedUserId || SessionLocator.LoggedUserPM.IsCustomerCare);
-
-                if (this.SelectedDashboard) {
-                    this.applyWDashboard();
-                }
-
-                else {
-                    this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone({ lg: [] }));
-                }
-
-                this.CurrentSession.StopBusyIndicator();
-            }
+            this.CurrentSession.StopBusyIndicator();
+            if (myResponse.HasError) return;
+            this.SelectedDashboard = myResponse.Result;
+            this.SetIsEditLayoutButtonVisible();
+            if (this.SelectedDashboard) this.applyWDashboard();
+            else this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone({ lg: [] }));
+            if (refreshWidgets) this.RefreshWidgets();
         });
+    }
+
+    private SetIsEditLayoutButtonVisible() {
+        this.IsEditLayoutButtonVisible = !this.IsEditLayoutModeActive
+            && this.SelectedDashboard
+            && this.SelectedDashboard.Tenant == SessionLocator.Tenant
+            && (this.SelectedDashboard.CreatedByUserId == SessionLocator.LoggedUserId || SessionLocator.LoggedUserPM.IsCustomerCare);
     }
 
     get IsEmptyDashboardVisible() {
@@ -186,7 +179,13 @@ export class DashboardTabComponent implements OnInit {
     }
 
     RefreshLayoutClicked() {
+        if (!this.SelectedDashboard) return;
+        this.CurrentSession.StartBusyIndicatorLoading();
         MixPanelLocator.PostDashboardAction({ ActionName: "Refresh Click", DashboardId: this.SelectedDashboard?.Id });
+        this.LoadSelectedDashboard(true);
+    }
+
+    RefreshWidgets() {
         for (const item of this.reactWidgetsLayout.lg) {
             item.GlobalFilters = this.GetWidgetGlobalFilters(item);
             this.DashboardDataBinding.onEditWidget.next(item);
@@ -445,24 +444,24 @@ export class DashboardTabComponent implements OnInit {
     SetPreviousDates(compareItem: any) {
         var curDate = new Date(Date.now());
         let formattedDate = this.FormatDate(curDate);
-        
-        if (compareItem.dateGroupCode == "Quarter"){
+
+        if (compareItem.dateGroupCode == "Quarter") {
             this.GetDateRangeLabelForQuarter(compareItem);
             return;
         }
-        
+
         this.DateRangeLabel = this.GetFromDateForPrevious(compareItem) + " - " + formattedDate + "    vs    " + this.GetCompareFromDateForPrevious(compareItem, this.GetFromDateForPrevious(compareItem))
             + " - " + this.GetCompareToDateForPrevious(this.GetFromDateForPrevious(compareItem));
     }
 
-    GetDateRangeLabelForQuarter(compareItem: any){
-       
+    GetDateRangeLabelForQuarter(compareItem: any) {
+
         var numberPeriod = +compareItem.fieldValue3;
         var FromDate = this.GetFromDateForPrevious(compareItem);
-        var CompareFromDate = this.GetCompareFromDateForQuarter(new Date (FromDate), numberPeriod);
+        var CompareFromDate = this.GetCompareFromDateForQuarter(new Date(FromDate), numberPeriod);
 
         this.DateRangeLabel = FromDate + " - " + this.GetEndOfQuarter(new Date(FromDate), numberPeriod) + "    vs    " + CompareFromDate
-        + " - " + this.GetEndOfQuarter(new Date (CompareFromDate), numberPeriod);
+            + " - " + this.GetEndOfQuarter(new Date(CompareFromDate), numberPeriod);
     }
 
     ParseDateFormat(date: string): string {
@@ -512,7 +511,7 @@ export class DashboardTabComponent implements OnInit {
         let formattedDate = this.FormatDate(dateFromHere);
         return formattedDate;
     }
-    
+
     SetDateFromAccordingDateGroupCode(compareItem: any, dateFromHere: Date, numberPeriod: number): Date {
         if (compareItem.dateGroupCode == 'Day') {
             dateFromHere.setDate(dateFromHere.getDate() - numberPeriod);
@@ -524,7 +523,7 @@ export class DashboardTabComponent implements OnInit {
             dateFromHere.setMonth(dateFromHere.getMonth() - numberPeriod);
         }
         if (compareItem.dateGroupCode == 'Quarter') {
-            var month = this.GetStartCurrentQuarter(dateFromHere); 
+            var month = this.GetStartCurrentQuarter(dateFromHere);
             dateFromHere.setMonth(month);
             dateFromHere = new Date(dateFromHere.getFullYear(), dateFromHere.getMonth(), 1);
             dateFromHere.setMonth(dateFromHere.getMonth() - (3 * numberPeriod));
@@ -538,28 +537,27 @@ export class DashboardTabComponent implements OnInit {
     }
     GetEndOfQuarter(date: Date, numberPeriod: number): string {
 
-        var lastDayInQuarter = new Date (date); 
-        lastDayInQuarter.setMonth(lastDayInQuarter.getMonth() + (3 * numberPeriod)); 
-        lastDayInQuarter.setDate(lastDayInQuarter.getDate() - 1); 
+        var lastDayInQuarter = new Date(date);
+        lastDayInQuarter.setMonth(lastDayInQuarter.getMonth() + (3 * numberPeriod));
+        lastDayInQuarter.setDate(lastDayInQuarter.getDate() - 1);
         let formattedDate = this.FormatDate(lastDayInQuarter);
         return formattedDate;
     }
 
-    GetCompareFromDateForQuarter(date: Date, numberPeriod: number){
+    GetCompareFromDateForQuarter(date: Date, numberPeriod: number) {
         date = new Date(date.getFullYear(), date.getMonth(), 1);
         date.setMonth(date.getMonth() - (3 * numberPeriod));
         let formattedDate = this.FormatDate(date);
         return formattedDate;
     }
 
-    GetStartCurrentQuarter(date : Date): number
-    {
+    GetStartCurrentQuarter(date: Date): number {
         if (date.getMonth() >= 4 && date.getMonth() <= 6)
             return 3;
         else if (date.getMonth() >= 7 && date.getMonth() <= 9)
             return 6;
         else if (date.getMonth() >= 10 && date.getMonth() <= 12)
-            return 9;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+            return 9;
         else
             return 0;
     }

@@ -23,6 +23,7 @@ namespace Logitude.Server.Tools.CustomFields
         private string objectTableName = string.Empty;
         private string type = string.Empty;
         private List<object> entities = null;
+        private string keyName = "Id";
 
 
         public EntityCustomFieldService(EntityCustomFieldServiceArgs entityCustomFieldServiceArgs)
@@ -35,6 +36,10 @@ namespace Logitude.Server.Tools.CustomFields
             customFieldsMainObjectRepository = new CustomFieldsMainObjectRepository(tenant);
             customObjectFields = GetCustomObjectFields();
             customFieldsMainObjects = GetCustomFieldsMainObjects(entityCustomFieldServiceArgs.EntityId);
+            if(!string.IsNullOrEmpty(entityCustomFieldServiceArgs.KeyName))
+            {
+                keyName = entityCustomFieldServiceArgs.KeyName;
+            }
         }
 
 
@@ -42,7 +47,7 @@ namespace Logitude.Server.Tools.CustomFields
         {
             if (customObjectFields.Count() == 0 || entities == null || entities.Count() == 0) return;
             object entity = entities.FirstOrDefault();
-            string entityId = GetPropertyValue(entity, "Id").ToString();
+            string entityId = GetPropertyValue(entity, keyName).ToString();
             CustomFieldsMainObject customFieldsMainObject = GetCustomFieldsMainObject(entityId);
             if (customFieldsMainObject == null) return;
             foreach (ObjectField customObjectField in customObjectFields)
@@ -67,7 +72,7 @@ namespace Logitude.Server.Tools.CustomFields
 
         private void SetCustomFieldValue(object entity)
         {
-            CustomFieldsMainObject customFieldsMainObject = GetCustomFieldsMainObject((GetPropertyValue(entity, "Id").ToString()));
+            CustomFieldsMainObject customFieldsMainObject = GetCustomFieldsMainObject((GetPropertyValue(entity, keyName).ToString()));
             if (entity == null || customFieldsMainObject == null) return;
             foreach (ObjectField customObjectField in customObjectFields)
             {
@@ -150,8 +155,7 @@ namespace Logitude.Server.Tools.CustomFields
         public string ObjectTableName { get; set; }
         public string Type { get; set; }
         public List<object> Entities { get; set; }
-
-
+        public string KeyName { get; set; }
     }
 
 }

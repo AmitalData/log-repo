@@ -286,6 +286,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
                                                      WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
                                                      CargoTokenTimeout = a.CargoTokenTimeout,
+                                                     IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
                                                  }).FirstOrDefault();
                     if (tenant != null)
                     {
@@ -491,6 +492,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
                                                   WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
                                                   CargoTokenTimeout = a.CargoTokenTimeout,
+                                                  IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
 
                                               }).FirstOrDefault();
 
@@ -688,6 +690,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
                         WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
                         CargoTokenTimeout = a.CargoTokenTimeout,
+                        IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
 
                     });
         }
@@ -831,6 +834,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     LastMonthCreatedTariffs = entity.LastMonthCreatedTariffs,
                     ScheduledTasksLimitPerReport = entity.ScheduledTasksLimitPerReport,
                     WhatsAppMessagingPhoneNumber = entity.WhatsAppMessagingPhoneNumber,
+                    IsContainerTrackingPrepaid = entity.IsContainerTrackingPrepaid,
 
                 };
             }
@@ -974,6 +978,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
                        ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
                        WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
+                       IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
                        PrivateLabelId = a.GlobalTenant != null ? a.GlobalTenant.PrivateLabelId : "",
                        PrivateLabelName = a.GlobalTenant != null ? a.GlobalTenant.TenantManagmentPrivateLabel != null ? a.GlobalTenant.TenantManagmentPrivateLabel.PrivateLabelName : "" : "",
                    };
@@ -1258,7 +1263,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              CargoTokenTimeout = a.CargoTokenTimeout,
                                              SecondaryColor = a.SecondaryColor,
                                              TertiaryColor = a.TertiaryColor,
-                                             ComapnylogoId = a.ComapnylogoId
+                                             ComapnylogoId = a.ComapnylogoId,
+                                             IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid
                                          }).FirstOrDefault();
 
             return tenant;
