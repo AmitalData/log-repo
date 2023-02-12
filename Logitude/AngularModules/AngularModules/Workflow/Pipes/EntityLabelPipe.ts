@@ -9,7 +9,6 @@ export class EntityLabelPipe implements PipeTransform {
 
     transform(entity: string) {
         if (entity) {
-
             let parentEntity = Entities.getParents().find(e => e.Code === entity);
             if (parentEntity) {
                 return parentEntity.Name;
@@ -20,7 +19,7 @@ export class EntityLabelPipe implements PipeTransform {
                 return childEntity.Name;
             }
 
-            return entity ? entity : null;
+            return entity;
         }
         return null;
     }
