@@ -354,6 +354,9 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
                             case IsolationLevel.Snapshot:
                                 command.CommandText = "SET TRANSACTION ISOLATION LEVEL SNAPSHOT";
                                 break;
+                            case IsolationLevel.Serializable:
+                                command.CommandText = "SET TRANSACTION ISOLATION LEVEL SERIALIZABLE";
+                                break;
                             default:
                                 throw new ArgumentOutOfRangeException();
                         }
