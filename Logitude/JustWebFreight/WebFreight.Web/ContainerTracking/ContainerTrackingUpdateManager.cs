@@ -49,9 +49,6 @@ namespace WebFreight.Web.ContainerTracking
             this.portQuery = new PortQuery(portRepository);
             this.vesselRepository = new VesselRepository(tenant);
             this.tenantRepository = new TenantRepository(tenant);
-            this.containerDiscrepancyService = new ContainerDiscrepancyService(tenant);
-            //containerDiscrepancyRepository = new ContainerDiscrepancyRepository(tenant);
-
             containerTrackingHelper = new ContainerTrackingHelper(tenant);
         }
         public void Update(bool isUpatingContainer, bool isUpdatingShipment)
@@ -148,7 +145,9 @@ namespace WebFreight.Web.ContainerTracking
 
         private void AddContainerDiscrepancy(ContainerPM containerPM, ShipmentPM shipmentPM, string reasonOfDiscrepancy)
         {
+            this.containerDiscrepancyService = new ContainerDiscrepancyService(tenant);
             this.containerDiscrepancyService.Create(containerPM, shipmentPM, reasonOfDiscrepancy);
+           
             //ContainerDiscrepancy containerDiscrepancy = new ContainerDiscrepancy();
             //containerDiscrepancy.Id = IdCounter.GetNumber("ContainerDiscrepancy", tenant);
             //containerDiscrepancy.ContainerId = containerId;
