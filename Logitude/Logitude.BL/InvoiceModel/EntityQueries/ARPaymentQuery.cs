@@ -154,6 +154,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        TransferStatusCode_Original = a.TransferStatusCode,
                                        IsTransferStarted_Original = a.IsTransferStarted,
                                        TransferError_Original = a.TransferError,
+                                       SATAdditionalFieldsXML = a.SATAdditionalFieldsXML
                                    }).FirstOrDefault();
 
 

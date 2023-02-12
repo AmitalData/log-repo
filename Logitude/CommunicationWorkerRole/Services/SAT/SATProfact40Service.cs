@@ -241,7 +241,7 @@ namespace CommunicationWorkerRole.Services.SAT
 							CommunicationLogRep = communicationLogRep,
 							TransError = transError,
 							Invoice = invoice,
-							ResultadoTimbre = resultadoTimbre
+							ResultadoTimbre = resultadoTimbre 
 						});
 					}
 				}
@@ -544,6 +544,7 @@ namespace CommunicationWorkerRole.Services.SAT
 
 		private void HandleInvoiceError(SATErrorArgs sATErrorArgs)
 		{
+			sATErrorArgs.InvoicePM = invoiceQuery.GetSinglePM(sATErrorArgs.WaitingCommLog.EntityId, sATErrorArgs.WaitingCommLog.Tenant);
 			if (sATErrorArgs.TransError != sATErrorArgs.Invoice.TransmissionError || sATErrorArgs.Invoice.SATTransferStatusCode != "TE")
 			{
 				if (isConcurrencyToggleEnabled)
