@@ -2366,6 +2366,11 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 });
                             });
                     }
+                    else if (myObjectTableName == "WorkFlowVersion" || myObjectTableName == "WorkFlowInstance") {
+                        this.isEditControlOpened = false;
+                        this.BackCompleted.emit($event.rowData.Id);
+                        this.OnBackFromEdit(selectedEntityId, $event)
+                    }
                     else if (this.ObjectTableName == "Customs.DeclarationReferantData") {
                         var customFile = "";
                         if ($event != null) customFile = $event.rowData.CustomFileNo;
@@ -2857,6 +2862,16 @@ export class ListComponent implements OnInit, AfterViewInit {
                             isVisible = false;
                             break;
                         }
+                    case "WorkFlowVersion":
+                        {
+                            isVisible = false;
+                            break;
+                        }
+                    case "WorkFlowInstance":
+                    {
+                        isVisible = false;
+                        break;
+                    }
                 }
             }
         }

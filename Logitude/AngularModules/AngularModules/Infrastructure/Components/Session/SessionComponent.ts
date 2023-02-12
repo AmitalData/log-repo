@@ -81,6 +81,34 @@ export class SessionComponent {
         }
     }
 
+    private iSessionversionLocation: LocationDirective;
+    public get SessionversionLocation() { return this.iSessionversionLocation; }
+    public set SessionversionLocation(value: LocationDirective) {
+        if (this.iSessionversionLocation != value) {
+            if (value) {
+                this.iSessionversionLocation = value;
+            }
+
+            else if (this.isDestroingSession) {
+                this.iSessionversionLocation = value;
+            }
+        }
+    }
+
+    private iSessionInstanceLocation: LocationDirective;
+    public get SessionInstanceLocation() { return this.iSessionInstanceLocation; }
+    public set SessionInstanceLocation(value: LocationDirective) {
+        if (this.iSessionInstanceLocation != value) {
+            if (value) {
+                this.iSessionInstanceLocation = value;
+            }
+
+            else if (this.isDestroingSession) {
+                this.iSessionInstanceLocation = value;
+            }
+        }
+    }
+
     OnSessionMouseUp($event) {
         this.MouseUpEvent.emit(event);
     }
@@ -627,6 +655,8 @@ export class SessionComponent {
 
         this.SessionLocation = null;
         this.SessionMenuLocation = null;
+        this.SessionversionLocation = null;
+        this.SessionInstanceLocation = null;
 
         if (this.BusyIndicatorTimer) {
             clearTimeout(this.BusyIndicatorTimer);
