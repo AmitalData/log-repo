@@ -249,10 +249,10 @@ namespace WebFreight.Web.ContainerTracking
             var index2= 2;
             var index3 = 3;
             var index4 = 4;
-            Vessel polLegVesselId = this.GetVessel(containerUpdatedFields.POLLegVessel);
-            Vessel podLegVesselId = this.GetVessel(containerUpdatedFields.PODLegVessel);
-            var polLeg = new { Index = index1, Vessel = containerUpdatedFields.POLLegVessel, VesselId = polLegVesselId, Voyage = containerUpdatedFields.POLLegVoyage };
-            var podLeg = new { Index = index4, Vessel = containerUpdatedFields.PODLegVessel, VesselId = podLegVesselId, Voyage = containerUpdatedFields.PODLegVoyage };
+            Vessel polLegVessel = this.GetVessel(containerUpdatedFields.POLLegVessel);
+            Vessel podLegVessel = this.GetVessel(containerUpdatedFields.PODLegVessel);
+            var polLeg = new { Index = index1, Vessel = containerUpdatedFields.POLLegVessel, VesselId = polLegVessel?.Id, Voyage = containerUpdatedFields.POLLegVoyage };
+            var podLeg = new { Index = index4, Vessel = containerUpdatedFields.PODLegVessel, VesselId = podLegVessel?.Id, Voyage = containerUpdatedFields.PODLegVoyage };
 
             UpdateVesselVoyageVizionTransshipments(polLeg, index1, containerPM);
             if (leg3 != null)
@@ -288,10 +288,10 @@ namespace WebFreight.Web.ContainerTracking
             var index1 = 1;
             var index2 = 2;
             var index3 = 3;
-            Vessel polLegVesselId = this.GetVessel(containerUpdatedFields.POLLegVessel);
-            Vessel podLegVesselId = this.GetVessel(containerUpdatedFields.PODLegVessel);
-            var polLeg = new { Vessel = containerUpdatedFields.POLLegVessel, VesselId = polLegVesselId, Voyage = containerUpdatedFields.POLLegVoyage };
-            var podLeg = new { Vessel = containerUpdatedFields.PODLegVessel, VesselId = podLegVesselId, Voyage = containerUpdatedFields.PODLegVoyage };
+            Vessel polLegVessel = this.GetVessel(containerUpdatedFields.POLLegVessel);
+            Vessel podLegVessel = this.GetVessel(containerUpdatedFields.PODLegVessel);
+            var polLeg = new { Vessel = containerUpdatedFields.POLLegVessel, VesselId = polLegVessel, Voyage = containerUpdatedFields.POLLegVoyage };
+            var podLeg = new { Vessel = containerUpdatedFields.PODLegVessel, VesselId = podLegVessel, Voyage = containerUpdatedFields.PODLegVoyage };
 
             UpdateShipmentVesselVoyage(polLeg, null, shipmentPM);
             if (leg3 != null)
