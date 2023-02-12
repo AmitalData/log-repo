@@ -157,6 +157,8 @@ namespace Simplog.Server.Infrastructure
 
         public static string WorkerRoleName { get; set; }
         public static bool RunWorkerRoleAutomaticBreakPoint { get; set; }
+        public static int System2RedirectFraction { get; set; }
+
     }
 
     public class LogitudeCustomsSettingsM
