@@ -126,7 +126,7 @@
                                 </tr>
 
                                 
-                                <tr class="FormFieldRow">
+                                <tr class="FormFieldRow" *ngIf="IsContainerTrackingPrepaid">
                                     <td style="width: 170px;">
                                         <LogLabel [ObjectFieldName]="'ActivationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                                         </LogLabel>
