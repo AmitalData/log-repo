@@ -195,7 +195,7 @@
     Name="AmountDue"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="ExpectedPaymentDate"
@@ -845,6 +845,12 @@
     Name="DocumentTemplateId"
     Type="varchar"
     Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsSigned"
+    Type="bit">
     <Constraints
       Nullable="true" />
   </Column>
