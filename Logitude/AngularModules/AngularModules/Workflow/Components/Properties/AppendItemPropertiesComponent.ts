@@ -177,6 +177,7 @@ export class AppendItemPropertiesComponent extends BaseComponent {
 
         this.Data["collection"] = collectionName;
         this.Data["entity"] = collectionEntity;
+        this.Data["isCustomEntity"] = ObjectTables.getIsCustomByName(collectionEntity);
 
         this.Data["collectionUsedFrom"] = collectionItem && collectionItem.data && collectionItem.data["nodeId"] ? collectionItem.data["nodeId"] : null;
 

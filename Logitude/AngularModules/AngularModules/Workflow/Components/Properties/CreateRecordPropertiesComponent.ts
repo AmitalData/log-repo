@@ -25,7 +25,6 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
     public FlowObject: any;
     public CurrentNodeId: string;
 
-    public EntitiesTreeList: EntitiesTreeList;
     public EntitiesTreeItems: TreeSelectItem[];
 
     public ValidationErrorsList: string[];
@@ -59,8 +58,7 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
     }
 
     initializeEntitiesTreeItems() {
-        this.EntitiesTreeList = new EntitiesTreeList();
-        this.EntitiesTreeItems = this.EntitiesTreeList.Items;
+        this.EntitiesTreeItems = new EntitiesTreeList().Items;
     }
 
     initialize() {

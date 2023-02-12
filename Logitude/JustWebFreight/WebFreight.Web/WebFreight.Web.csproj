@@ -7704,6 +7704,7 @@
       <DependentUpon>XapFilesStorageService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="WorkflowModel\DomainServices\WorkFlowVersionDomainService.cs" />
     <Compile Include="WorkflowModel\DomainServices\WorkFlowInstanceDomainService.cs" />
     <Compile Include="WorkflowModel\DomainServices\WorkFlowDomainService.cs" />
     <Compile Include="XapFileDownloadHandler.ashx.cs">

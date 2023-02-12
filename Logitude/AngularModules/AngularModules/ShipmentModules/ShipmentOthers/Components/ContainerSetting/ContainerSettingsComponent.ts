@@ -161,9 +161,9 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
         this.CustomValidation();
         if (this.ValidationErrorsList.length == 0) this.SubmitSave();
     }
-    
+
     CustomValidation() {
-        if (AppTool.IsNullOrEmpty(this.ActivationDate))
+        if (this.IsContainerTrackingPrepaid && AppTool.IsNullOrEmpty(this.ActivationDate))
             this.ValidationErrorsList.push("Activation Date is Required");
     }
 

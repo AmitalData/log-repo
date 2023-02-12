@@ -46,7 +46,6 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     public CurrentSession = SessionLocator.SelectedSession;
     public SortDirectionListItems = new SortDirectionList().Items;
 
-    public EntitiesTreeList: EntitiesTreeList;
     public EntitiesTreeItems: TreeSelectItem[];
 
     public ExcludedEntities: string[];
@@ -85,8 +84,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     }
 
     initializeEntitiesTreeItems() {
-        this.EntitiesTreeList = new EntitiesTreeList("parent");
-        this.EntitiesTreeItems = this.EntitiesTreeList.Items;
+        this.EntitiesTreeItems = new EntitiesTreeList("parent").Items;
     }
 
     initialize() {

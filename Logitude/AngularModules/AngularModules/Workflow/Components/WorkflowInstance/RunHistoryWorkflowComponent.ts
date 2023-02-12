@@ -1,49 +1,34 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
+import { Component, EventEmitter, Output, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
 import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
-import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
-import { ObjectFieldPMExtendedService } from 'Infrastructure/Services/ExtendedPMs/ObjectFieldPMExtendedService';
 import { AppTool } from 'Infrastructure/Tools';
 import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { WorkFlowPM } from 'Workflow/EntityPMs/WorkFlowPM';
-import { ApiQueryFiltersBuilder } from 'Workflow/Utilities/ApiQueryFiltersBuilder';
-import { WorkFlowInstanceListService } from 'Workflow/Services/StandardLists/WorkFlowInstanceListService';
-
-const SearchBoxDelayTime = 700;
+import { LocationDirective } from 'Infrastructure/Utilities/LocationDirective';
+import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
+import { ListComponentArgs } from 'Infrastructure/Args';
 
 @Component({
     templateUrl: './RunHistoryWorkflowComponent.html',
 })
 
 export class RunHistoryWorkflowComponent extends BaseComponent {
-    @Output() onQueryChangeEvent = new EventEmitter();
-    @Output() MenuHeaderchangeevent = new EventEmitter();
-    public DataSource: any;
-    public DataContext: RunHistoryWorkflowComponent = this;
     public EntityPM: WorkFlowPM;
     public ObjectTableName: string = "WorkFlowInstance";
-    public AllInstancesCount: number = 0;
 
-    public QueryColumns: QueryColumnPM[] = [];
-    public columns: any[] = null;
+    private timerToken: any;
+    private Retries: number = 0;
 
     private CurrentSession = SessionLocator.SelectedSession;
-    private SearchText: string = null;
-    private VersionIds: string[];
+    @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
+    @ViewChild("WFInstanceContainer", { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    public filterAgrs: ApiQueryFilters;
+    private _entityResourceService: EntityResourceService = new EntityResourceService();
 
-    public StartTimeObjectfield: any;
-    public Filters: ApiQueryFilters;
-    public FilterValue1: any;
-    public FilterValue2: any;
-    public FilterOperator: string;
-    public IsDateFilter: boolean;
     private TabSelectedEvent: any = null;
-
-    public LogitudeGridExportToExcelComponent: LogitudeGridExportToExcelComponent = new LogitudeGridExportToExcelComponent();
 
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -52,17 +37,76 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
     }
 
     ngOnInit() {
-        this.BuildColumns();
-        this.SetDataSource();
-        this.BuildQueryColumns();
-        this.GetStartTimeObjectFields();
+        this.RunComponent();
     }
+
+    RunComponent() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+        if (this.AllLocations) {
+
+            if (this.AllLocations.toArray().length == 0) {
+                this.RunComponentTimer();
+            }
+
+            else {
+                let locs = this.AllLocations.toArray().filter(f => f.Code == 'WFInstanceContainer');
+                let myLocation: LocationDirective = locs[0];
+                this.CurrentSession.SessionWorkflowInstanceLocation = myLocation;
+
+                this.loadComponentList();
+            }
+        }
+
+        else {
+            this.RunComponentTimer();
+        }
+    }
+
+    private RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 20) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
+    }
+
+    private loadComponentList() {
+        this.filterAgrs = new ApiQueryFilters();
+
+        var versionsIdList = this.EntityPM.WorkFlowVersions.map(v => v.Id);
+        this.filterAgrs.addAdditionalFilter("WorkFlowVersionId", versionsIdList.join(','), null, null, "InListExact", false, false, false, "Text");
+
+        var listArgs = new ListComponentArgs();
+        listArgs.Filters = this.filterAgrs;
+        listArgs.QueryCode = "All WorkFlow Instance";
+        listArgs.ObjectTableName = "WorkFlowInstance";
+        listArgs.DisplayTitle = "Workflow Instance";
+        listArgs.HideBackButton = true;
+
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, this.EntityPM.Tenant).subscribe((response: any) => {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionWorkflowInstanceLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run(listArgs);
+
+                    cmpRef.instance.BackCompleted.subscribe(event => {
+                        this.onRowSelected(event)
+                    });
+                });
+        });
+        this.CurrentSession.StopBusyIndicator();
+    }
+
 
     private Listen() {
         if (this.entityArgs.EditComponent) {
             this.TabSelectedEvent = this.entityArgs.EditComponent.TabSelected.subscribe((tabCode: string) => {
                 if (tabCode == "WFRH") {
-                    this.LoadData()
+                    this.CurrentSession.FireEvent("ReloadAllList");
                 }
             });
         }
@@ -70,128 +114,6 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
 
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.TabSelectedEvent);
-    }
-
-    LoadData() {
-        this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
-    }
-
-    RefreshButtonClicked() {
-        this.LoadData();
-    }
-
-    GetStartTimeObjectFields() {
-        var objectFieldPMExtendedService = new ObjectFieldPMExtendedService()
-        objectFieldPMExtendedService.GetObjectFieldsByObjectTable(this.ObjectTableName).subscribe((response: any) => {
-            if (!response) return;
-            this.StartTimeObjectfield = response.find((e: { FieldName: string; }) => e.FieldName == 'StartTime')
-        });
-    }
-
-    SetDataSource() {
-        this.DataSource = {
-            pageSize: 30,
-            rowCount: null,
-            sortingCol: "StartTime",
-            sortingDir: "Descending",
-            getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
-                var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
-                this.CurrentSession.StopBusyIndicator();
-                return tempo;
-            },
-        };
-    }
-
-    private timerToken: any;
-    TextChanged(searchtext: string) {
-        if (searchtext != null || searchtext != undefined) {
-            this.timerToken = setTimeout(() => {
-                this.SearchText = searchtext;
-                this.LoadData();
-            }, SearchBoxDelayTime);
-
-        } else {
-            this.SearchText = null;
-            this.LoadData();
-        }
-    }
-
-    getRows(skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
-        this.CurrentSession.StartBusyIndicatorLoading();
-        var versionsIdList = this.EntityPM.WorkFlowVersions.map(v => v.Id);
-
-        let businessKeyFilterValue = !AppTool.IsNullOrEmpty(this.SearchText) ? (AppTool.IsNullOrEmpty(this.SearchText.trim()) ? null : this.SearchText) : null;
-        this.Filters = ApiQueryFiltersBuilder.getWorkflowInstanceFilters(versionsIdList.join(','), businessKeyFilterValue);
-
-        if (this.IsDateFilter) {
-            this.Filters.addAdditionalFilter(this.StartTimeObjectfield.FieldName, this.FilterValue1, this.FilterValue2, null, this.FilterOperator, false, false, false, this.StartTimeObjectfield.dataTypeCode)
-        }
-
-        this.Filters.PageSize = take;
-        this.Filters.PageIndex = skip;
-        this.Filters.GetAll = false;
-        this.Filters.GetCount = true;
-        this.Filters.SortBy = sortingCol;
-        this.Filters.SortDirection = sortingDir;
-        return new Promise((resolve) => {
-            var service: WorkFlowInstanceListService = new WorkFlowInstanceListService();
-            resolve(service.getByFilters(this.Filters));
-        });
-    }
-
-    BuildColumns() {
-        this.columns = [];
-        this.columns.push({
-            FieldName: 'BusinessKey',
-            DataTypeCode: 'String',
-            Display: "Business Key",
-            IsCustomTemplate: true,
-            Styles: { width: '400px' },
-        });
-        this.columns.push({
-            FieldName: 'WorkFlowVersionNumber',
-            DataTypeCode: 'String',
-            Display: "Version Number",
-            IsCustomTemplate: true,
-            Styles: { width: '400px' },
-            ServerSideSortable: true
-        });
-        this.columns.push({
-            FieldName: 'StartTime',
-            AdditionalDataCustom: this.ObjectTableName,
-            DataTypeCode: 'Date',
-            Display: "Start Time",
-            IsCustomTemplate: true,
-            Styles: { width: '400px' },
-            HtmlListComponentName: 'FieldTemplateComponent',
-            HtmlListComponentUrl: './Workflow/Components/Templates/FieldTemplateComponent',
-            ServerSideSortable: true
-        });
-        this.columns.push({
-            FieldName: 'Duration',
-            DataTypeCode: 'Date',
-            Display: "Duration",
-            IsCustomTemplate: true,
-            Styles: { width: '400px' },
-            ServerSideSortable: true
-        });
-        this.columns.push({
-            FieldName: 'StatusName',
-            AdditionalDataCustom: this.ObjectTableName,
-            DataTypeCode: 'String',
-            Display: "Status",
-            HtmlListComponentName: 'FieldTemplateComponent',
-            HtmlListComponentUrl: './Workflow/Components/Templates/FieldTemplateComponent',
-            IsCustomTemplate: true,
-            Styles: { width: '400px' },
-        });
-    }
-
-    BuildQueryColumns() {
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("BusinessKey", 'String', "Business Key"));
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("StartTime", 'Date', "Start Time"));
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Duration", 'Date', "Duration"));
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("StatusName", 'String', "Status"));
     }
 
     onRowSelected(event: any) {
@@ -207,32 +129,6 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
             windowArgs.ObjectTableName = "WorkFlowInstanceActivity";
             logWindow.WindowArgs = windowArgs;
             logWindow.Show('./Workflow/Components/CreateEditWorkflow/WorkflowInstanceDetailsComponent');
-        }
-    }
-
-    public ExportToExcel() {
-        this.LogitudeGridExportToExcelComponent.ExportToExcelExcute(this.ObjectTableName, this.Filters, this.QueryColumns);
-    }
-
-    setDateFilter(event: any) {
-        if (event) {
-            if (event.FromDate && event.ToDate) {
-                this.FilterValue1 = event.FromDate;
-                this.FilterValue2 = event.ToDate;
-                this.FilterOperator = "Between";
-                this.IsDateFilter = true
-            } else if (event.Date) {
-                this.FilterValue1 = event.Date;
-                this.FilterValue2 = null;
-                this.FilterOperator = event.Operation;
-                this.IsDateFilter = true
-            } else if (event == "NoDate") {
-                this.IsDateFilter = false
-            }
-            this.LoadData();
-        } else {
-            this.IsDateFilter = false
-            this.LoadData();
         }
     }
 }

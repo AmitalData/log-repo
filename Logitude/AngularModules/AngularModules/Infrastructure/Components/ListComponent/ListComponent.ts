@@ -2366,6 +2366,11 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 });
                             });
                     }
+                    else if (myObjectTableName == "WorkFlowVersion" || myObjectTableName == "WorkFlowInstance") {
+                        this.isEditControlOpened = false;
+                        this.BackCompleted.emit($event);
+                        this.OnBackFromEdit(selectedEntityId, $event)
+                    }
                     else if (this.ObjectTableName == "Customs.DeclarationReferantData") {
                         var customFile = "";
                         if ($event != null) customFile = $event.rowData.CustomFileNo;
@@ -2857,6 +2862,16 @@ export class ListComponent implements OnInit, AfterViewInit {
                             isVisible = false;
                             break;
                         }
+                    case "WorkFlowVersion":
+                        {
+                            isVisible = false;
+                            break;
+                        }
+                    case "WorkFlowInstance":
+                        {
+                            isVisible = false;
+                            break;
+                        }
                 }
             }
         }
@@ -2964,7 +2979,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         var messageWindow = new MessageWindow();
         messageWindow.Width = 450;
         messageWindow.Height = 190;
-        messageWindow.Show("You can define the \"New " + this.ObjectTableDisplayName + "\" screen by selecting a one from the Views tab of the " + this.ObjectTableDisplayName+" object in the Customization");
+        messageWindow.Show("You can define the \"New " + this.ObjectTableDisplayName + "\" screen by selecting a one from the Views tab of the " + this.ObjectTableDisplayName + " object in the Customization");
     }
     RunNewExportDeclaration() {
         var logWindow = new LogitudeWindow();

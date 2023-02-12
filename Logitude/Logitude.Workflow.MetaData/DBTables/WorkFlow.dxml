@@ -103,14 +103,14 @@
   <Column
     Name="RetriesNumber"
     Type="int"
-	DefaultValue="5">
+    DefaultValue="5">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
     Name="RetriesDelay"
     Type="int"
-	DefaultValue="300">
+    DefaultValue="300">
     <Constraints
       Nullable="false" />
   </Column>
