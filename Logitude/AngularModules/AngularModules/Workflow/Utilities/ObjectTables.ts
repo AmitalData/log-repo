@@ -68,4 +68,12 @@ export class ObjectTables {
         return null;
     }
 
+    static getIsCustomByName(name: string) {
+        if (name) {
+            let objectTable = this.getByName(name);
+            return objectTable ? objectTable.IsCustom : null;
+        }
+        return null;
+    }
+
 }
