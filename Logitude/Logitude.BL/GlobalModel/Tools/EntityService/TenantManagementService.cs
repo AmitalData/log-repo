@@ -267,6 +267,7 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
                 if (containerSetting != null)
                 {
                     UpdateContainerSettingActivationDate(containerSettingRepository, containerSetting);
+                    scope.Complete();
                     return;
                 }
                 containerSetting = GetDefaultContainerSetting();
