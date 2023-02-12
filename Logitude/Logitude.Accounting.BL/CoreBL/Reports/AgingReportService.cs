@@ -1524,7 +1524,7 @@ _Param.AgingForDate.Date, false, true, true,false, false);
             if (!String.IsNullOrWhiteSpace(_Param.CollectorId))
             {
 
-                var qGLAccIdByCollectorId = _myGLAccountQueryService.GetQGLAccIdByCollectorId(_Param.Tenant, _Param.CollectorId, GetAccountType(_Param.Aging4AccountTypeCode));
+                var qGLAccIdByCollectorId = _myGLAccountQueryService.GetQGLAccIdByCollectorId_ForAgingReport(_Param.Tenant, _Param.CollectorId, GetAccountType(_Param.Aging4AccountTypeCode));
                 Join_AccountIdList(qGLAccIdByCollectorId);
 
             }
