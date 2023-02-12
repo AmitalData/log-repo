@@ -496,10 +496,20 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         return datepipe.transform(params.value, "DT");
     }
 
-
+    ExportToPDFButtonClicked() {
+        let windowArgs: any = {
+            Type: "Pdf"
+        }
+        this.OpenAdvancedSettingsComponent(windowArgs);
+    }
     ExportToExcelAdvancedButtonClick() {
+        let windowArgs: any = {
+            Type:"Excel"
+        }
+        this.OpenAdvancedSettingsComponent(windowArgs);
+    }
 
-        var windowArgs: any = {};
+    private OpenAdvancedSettingsComponent(windowArgs: any) {
         var logWindow = new LogitudeWindow();
         windowArgs.BIReportPreviewComponent = this;
         logWindow.WindowArgs = windowArgs;
@@ -508,7 +518,6 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         logWindow.Title = "Export Advanced Settings";
 
         logWindow.Show("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIExportSettingAdvanceComponent");
-
     }
 
     public methodFromParent(cell) {
