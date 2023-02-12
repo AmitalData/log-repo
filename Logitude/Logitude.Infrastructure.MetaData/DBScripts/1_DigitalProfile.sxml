@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="17">
+  <Sql Version="18">
       <![CDATA[
 	  delete from DigitalFieldSecurities where id != ''	  
   	  delete from DigitalTextCodes where id != ''
@@ -57,6 +57,36 @@
 		},
 		{
 			"FieldCode": "Shipment.MainCarriageToPortCountryCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
+		},
+		{
+			"FieldCode": "Shipment.VolumeInCBM",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
+		},
+		{
+			"FieldCode": "Shipment.GrossWeightInKG",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
+		},
+		{
+			"FieldCode": "Shipment.ChargeableWeightInKG",
 			"CreatedBy": "system",
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
@@ -2013,6 +2043,36 @@
 		},
 		{
 			"FieldCode": "Shipment.MainCarriageToPortCountryCode",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
+		},
+		{
+			"FieldCode": "Shipment.VolumeInCBM",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
+		},
+		{
+			"FieldCode": "Shipment.GrossWeightInKG",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true,
+			"IsList": true,
+			"IsPm": true
+		},
+		{
+			"FieldCode": "Shipment.ChargeableWeightInKG",
 			"CreatedBy": "system",
 			"ModifiedBy": "system",
 			"CreatedOn": "", 
