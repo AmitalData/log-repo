@@ -311,8 +311,27 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
             Database.Connection.StateChange += Connection_StateChange;
             InitLog();
         }
-
+        
         private void Connection_StateChange(object sender, StateChangeEventArgs args)
+        {
+            if (LogitudeSettings.System2RedirectFraction == 0)
+            {
+                return;
+            }
+            if (ApplySnapshotIsolation())
+            {
+                SetTransactionIsolationLevel(args);
+            }
+        }
+
+        private bool ApplySnapshotIsolation()
+        {
+            Random random = new Random();
+            var LuckyNumber = random.Next(1, 101);
+            return ((LuckyNumber % LogitudeSettings.System2RedirectFraction) == 0);
+        }
+
+        private void SetTransactionIsolationLevel(StateChangeEventArgs args)
         {
             if (args.CurrentState == ConnectionState.Open && args.OriginalState != ConnectionState.Open)
             {
