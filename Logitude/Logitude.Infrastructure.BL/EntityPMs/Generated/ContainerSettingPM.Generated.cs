@@ -250,6 +250,29 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
+	  private DateTime? activationDate ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? ActivationDate  
+	   {
+	    
+	     get
+		{
+		   return activationDate;
+		 }
+		 set
+		 {
+		   if(activationDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ActivationDate",OldValue=activationDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   activationDate=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

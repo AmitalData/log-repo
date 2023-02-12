@@ -125,6 +125,31 @@
                                     </td>
                                 </tr>
 
+                                
+                                <tr class="FormFieldRow">
+                                    <td style="width: 170px;">
+                                        <LogLabel [ObjectFieldName]="'ActivationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                        </LogLabel>
+                                    </td>
+
+                                    <td style="width: 200px;">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'ActivationDate'" [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext" [HideColumns]="true" *ngIf="Loaded"></LogDatePicker>
+                                                </td>
+                                                <td style="width: 18px;">
+                                                    <div float-end></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
                                 <tr>
                                     <td colspan="2">
                                         <div></div>

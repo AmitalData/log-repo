@@ -168,7 +168,7 @@ namespace CommunicationWorkerRole.Services
             else
             {
                 this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Exporting report to pdf file"));
-                string documentId = GetDocumentIdAfterExport(stiReport, reportTask.Name, reportTask.Tenant, schedulerDetails, reportFilter);
+                string documentId = GetDocumentIdAfterExport(stiReport, reportTask.Name, reportTask.Tenant, schedulerDetails, reportFilter, reportTask);
                 SendPdfReportIfIsValid(reportTask, schedulerDetails, documentId, stiReport);
             }
         }
@@ -431,13 +431,14 @@ namespace CommunicationWorkerRole.Services
             return stiReport;
         }
 
-        private string GetDocumentIdAfterExport(StiReport stiReport, string reportName, int tenant, SchedulerDetails schedulerDetails, ReportFliter reportFilter)
+        private string GetDocumentIdAfterExport(StiReport stiReport, string reportName, int tenant, SchedulerDetails schedulerDetails, ReportFliter reportFilter, TasksSchedulerPM reportTask)
         {
             string documentId = String.Empty;
             MemoryStream memoryStream = new MemoryStream();
             if (reportFilter.ReportCode == "LTRP" && schedulerDetails?.ReportDetails?.ReportTemplateType == "E")
             {
-                stiReport.ExportDocument(StiExportFormat.Excel, memoryStream);
+                reportTask.Format = "Excel";
+                memoryStream = GetMemoryStreamAfterExportDocument(reportTask, reportFilter);
             }
             else
             {
