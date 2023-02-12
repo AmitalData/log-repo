@@ -30,7 +30,7 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Extended
                 int tenant = authenticationToken.Tenant;
 
                 WorkflowInstanceStorage workflowInstanceStorage = new WorkflowInstanceStorage();
-                List<WorkFlowInstanceActivityList> workflowInstanceActivities = workflowInstanceStorage.GetActivities(workflowInstanceId, tenant).OrderBy(a => a.Sequence).ToList();
+                List<WorkFlowInstanceActivityList> workflowInstanceActivities = workflowInstanceStorage.GetActivities(workflowInstanceId, tenant)?.OrderBy(a => a.Sequence)?.ToList();
 
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 

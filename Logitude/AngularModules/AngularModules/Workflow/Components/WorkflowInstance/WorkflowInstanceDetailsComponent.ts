@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
@@ -12,7 +12,7 @@ import { WorkflowInstanceExtendedService } from 'Workflow/Services/Extended/Work
     templateUrl: './WorkflowInstanceDetailsComponent.html',
 })
 
-export class WorkflowInstanceDetailsComponent extends BaseComponent {
+export class WorkflowInstanceDetailsComponent extends BaseComponent implements OnInit {
     public EntityId: string;
     public IsActivitiesLoading: boolean = false;
     public IsVariablesLoading: boolean = false;

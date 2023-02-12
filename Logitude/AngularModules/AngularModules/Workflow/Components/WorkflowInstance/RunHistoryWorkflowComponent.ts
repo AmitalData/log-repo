@@ -194,16 +194,16 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("StatusName", 'String', "Status"));
     }
 
-    onRowSelected($event: { rowData: { Id: any; }; }) {
-        let isVariableHasPermission = FeatureLocator.HasFeaturePermession("WorkFlowInstance", "WorkFlowInstance.ShowVariables")
-        if ($event != null) {
-            var logWindow = new LogitudeWindow();
+    onRowSelected(event: any) {
+        if (event !== null && event.rowData !== null && (event.rowData.StatusCode === "COED" || event.rowData.StatusCode === "FAED")) {
+            let isVariableHasPermission = FeatureLocator.HasFeaturePermession("WorkFlowInstance", "WorkFlowInstance.ShowVariables");
+            let logWindow = new LogitudeWindow();
             logWindow.Width = 960;
             logWindow.Height = isVariableHasPermission ? 690 : 570;
             logWindow.Title = "Instance Activities" + (isVariableHasPermission ? " And Variables" : '');
             logWindow.IsShowCloseButton = true
-            var windowArgs: any = {};
-            windowArgs.EntityId = $event.rowData.Id;
+            let windowArgs: any = {};
+            windowArgs.EntityId = event.rowData.Id;
             windowArgs.ObjectTableName = "WorkFlowInstanceActivity";
             logWindow.WindowArgs = windowArgs;
             logWindow.Show('./Workflow/Components/CreateEditWorkflow/WorkflowInstanceDetailsComponent');
