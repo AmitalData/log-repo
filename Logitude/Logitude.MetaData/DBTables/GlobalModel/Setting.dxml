@@ -559,5 +559,23 @@
     <Constraints
       Nullable="true" />
   </Column>
+
+  <Column
+      Name="WorkflowStorageAccountName"
+      Type="varchar"
+      Size="100"
+      DefaultValue="''">
+    <Constraints
+      Nullable="false" />
+  </Column>
+
+  <Column
+    Name="WorkflowStorageAccountKey"
+    Type="varchar"
+    Size="1000"
+    DefaultValue="''">
+    <Constraints
+      Nullable="false" />
+  </Column>
 	
 </Table>
