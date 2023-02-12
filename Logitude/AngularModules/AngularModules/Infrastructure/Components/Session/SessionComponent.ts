@@ -81,30 +81,30 @@ export class SessionComponent {
         }
     }
 
-    private iSessionversionLocation: LocationDirective;
-    public get SessionversionLocation() { return this.iSessionversionLocation; }
-    public set SessionversionLocation(value: LocationDirective) {
-        if (this.iSessionversionLocation != value) {
+    private iSessionWorkflowVersionLocation: LocationDirective;
+    public get SessionWorkflowVersionLocation() { return this.iSessionWorkflowVersionLocation; }
+    public set SessionWorkflowVersionLocation(value: LocationDirective) {
+        if (this.iSessionWorkflowVersionLocation != value) {
             if (value) {
-                this.iSessionversionLocation = value;
+                this.iSessionWorkflowVersionLocation = value;
             }
 
             else if (this.isDestroingSession) {
-                this.iSessionversionLocation = value;
+                this.iSessionWorkflowVersionLocation = value;
             }
         }
     }
 
-    private iSessionInstanceLocation: LocationDirective;
-    public get SessionInstanceLocation() { return this.iSessionInstanceLocation; }
-    public set SessionInstanceLocation(value: LocationDirective) {
-        if (this.iSessionInstanceLocation != value) {
+    private iSessionWorkflowInstanceLocation: LocationDirective;
+    public get SessionWorkflowInstanceLocation() { return this.iSessionWorkflowInstanceLocation; }
+    public set SessionWorkflowInstanceLocation(value: LocationDirective) {
+        if (this.iSessionWorkflowInstanceLocation != value) {
             if (value) {
-                this.iSessionInstanceLocation = value;
+                this.iSessionWorkflowInstanceLocation = value;
             }
 
             else if (this.isDestroingSession) {
-                this.iSessionInstanceLocation = value;
+                this.iSessionWorkflowInstanceLocation = value;
             }
         }
     }
@@ -655,8 +655,8 @@ export class SessionComponent {
 
         this.SessionLocation = null;
         this.SessionMenuLocation = null;
-        this.SessionversionLocation = null;
-        this.SessionInstanceLocation = null;
+        this.SessionWorkflowVersionLocation = null;
+        this.SessionWorkflowInstanceLocation = null;
 
         if (this.BusyIndicatorTimer) {
             clearTimeout(this.BusyIndicatorTimer);

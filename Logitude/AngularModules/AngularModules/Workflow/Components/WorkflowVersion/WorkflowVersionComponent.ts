@@ -49,7 +49,7 @@ export class WorkflowVersionComponent extends BaseComponent {
             else {
                 let locs = this.AllLocations.toArray().filter(f => f.Code == 'WFVersionContainer');
                 let myLocation: LocationDirective = locs[0];
-                this.CurrentSession.SessionversionLocation = myLocation;
+                this.CurrentSession.SessionWorkflowVersionLocation = myLocation;
 
                 this.loadComponentList();
             }
@@ -85,7 +85,7 @@ export class WorkflowVersionComponent extends BaseComponent {
         listArgs.HideBackButton = true;
 
         this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, this.EntityPM.Tenant).subscribe((response: any) => {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionversionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionWorkflowVersionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);

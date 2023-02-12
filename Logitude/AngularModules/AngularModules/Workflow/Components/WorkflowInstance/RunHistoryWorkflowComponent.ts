@@ -51,7 +51,7 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
             else {
                 let locs = this.AllLocations.toArray().filter(f => f.Code == 'WFInstanceContainer');
                 let myLocation: LocationDirective = locs[0];
-                this.CurrentSession.SessionInstanceLocation = myLocation;
+                this.CurrentSession.SessionWorkflowInstanceLocation = myLocation;
 
                 this.loadComponentList();
             }
@@ -88,7 +88,7 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
         listArgs.HideBackButton = true;
 
         this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, this.EntityPM.Tenant).subscribe((response: any) => {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionInstanceLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionWorkflowInstanceLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
