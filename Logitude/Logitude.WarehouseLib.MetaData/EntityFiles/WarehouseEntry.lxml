@@ -6680,6 +6680,18 @@
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
+    TabName="&quot;Audit&quot;"
+    ObjectTableName="&quot;WarehouseEntry&quot;"
+    Code="&quot;WEAU&quot;"
+    ControlPath="&quot;./Warehouse/Components/EditTabs/Audit/WarehouseEntryAuditTabComponent&quot;"
+    TextCode="&quot;WarehouseEntry.TH.Audit&quot;"
+    IsPackagable="true"
+    IndexOrder="6"
+    HtmlComponentURL="&quot;./Warehouse/Components/EditTabs/Audit/WarehouseEntryAuditTabComponent&quot;"
+    HtmlComponentName="&quot;WarehouseEntryAuditTabComponent&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
     TabName="&quot;Events&quot;"
     TabLocalName="&quot;Events&quot;"
     ObjectTableName="&quot;WarehouseEntry&quot;"
@@ -6687,24 +6699,12 @@
     ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
     TextCode="&quot;WarehouseEntry.TH.Events&quot;"
     IsPackagable="true"
-    IndexOrder="6"
+    IndexOrder="7"
     HtmlComponentURL="&quot;&quot;"
     HtmlComponentName="&quot;&quot;"
     FeatureCode="&quot;WarehouseEntry.Tab.Events&quot;"
     FeatureTextCodeCode="&quot;WarehouseEntry.Features.Events&quot;"
     FeatureDefaultText="&quot;Events&quot;"
-    IsSpellChecked="false"
-    HasGeneralFeature="false" />
-  <Tab
-    TabName="&quot;Audit&quot;"
-    ObjectTableName="&quot;WarehouseEntry&quot;"
-    Code="&quot;WEAU&quot;"
-    ControlPath="&quot;./Warehouse/Components/EditTabs/Audit/WarehouseEntryAuditTabComponent&quot;"
-    TextCode="&quot;WarehouseEntry.TH.Audit&quot;"
-    IsPackagable="true"
-    IndexOrder="7"
-    HtmlComponentURL="&quot;./Warehouse/Components/EditTabs/Audit/WarehouseEntryAuditTabComponent&quot;"
-    HtmlComponentName="&quot;WarehouseEntryAuditTabComponent&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <EventTypes>
