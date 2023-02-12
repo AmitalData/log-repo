@@ -337,7 +337,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      x.FastIndividualProcessCode,
                                                      x.TotalInvoiceAmountInUSD,
                                                      x.CourierPendingReasonList,
-                                                     x.IsCourierMissingClassification
+                                                     x.IsCourierMissingClassification,
+                                                     x.TerminalReleaseDate
                                                  })
                                                               on a.Id equals dcsJoin.DeclarationId
                                                               into dcsJoin_
