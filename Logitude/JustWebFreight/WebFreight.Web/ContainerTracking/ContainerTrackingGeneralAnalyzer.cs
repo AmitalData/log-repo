@@ -646,15 +646,13 @@ namespace WebFreight.Web.ContainerTracking
         public string OnCarriageLocation;
 
         public string POLLegVessel;
-        public string POLLegVesselId;
         public string POLLegVoyage;
 
         public string PODLegVessel;
-        public string PODLegVesselId;
         public string PODLegVoyage;
 
-        public Location VisionPreCarriage { get; set; }
-        public Location VisionOnCarriage { get; set; }
+        public string VisionPreCarriage { get; set; }
+        public string VisionOnCarriage { get; set; }
     }
 
     public class MilestoneData

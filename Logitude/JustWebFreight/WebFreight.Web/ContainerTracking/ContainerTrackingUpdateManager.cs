@@ -249,26 +249,27 @@ namespace WebFreight.Web.ContainerTracking
             var index2= 2;
             var index3 = 3;
             var index4 = 4;
-
-            var polLeg = new { Index = index1, Vessel = containerUpdatedFields.POLLegVessel, VesselId = containerUpdatedFields.POLLegVesselId, Voyage = containerUpdatedFields.POLLegVoyage };
-            var podLeg = new { Index = index4, Vessel = containerUpdatedFields.PODLegVessel, VesselId = containerUpdatedFields.PODLegVesselId, Voyage = containerUpdatedFields.PODLegVoyage };
+            Vessel polLegVesselId = this.GetVessel(containerUpdatedFields.POLLegVessel);
+            Vessel podLegVesselId = this.GetVessel(containerUpdatedFields.PODLegVessel);
+            var polLeg = new { Index = index1, Vessel = containerUpdatedFields.POLLegVessel, VesselId = polLegVesselId, Voyage = containerUpdatedFields.POLLegVoyage };
+            var podLeg = new { Index = index4, Vessel = containerUpdatedFields.PODLegVessel, VesselId = podLegVesselId, Voyage = containerUpdatedFields.PODLegVoyage };
 
             UpdateVesselVoyageVizionTransshipments(polLeg, index1, containerPM);
             if (leg3 != null)
             {
+                UpdateVesselVoyageVizionTransshipments(leg3, index2, containerPM);
                 UpdateVesselVoyageVizionTransshipments(podLeg, index3, containerPM);
-
-                if (leg2 != null)
-                {
-                    UpdateVesselVoyageVizionTransshipments(leg3, index2, containerPM);
-                }
+                UpdateVesselVoyageVizionTransshipments(podLeg, index4, containerPM);
             }
             else if (leg2 != null)
             {
                 UpdateVesselVoyageVizionTransshipments(podLeg, index2, containerPM);
+                UpdateVesselVoyageVizionTransshipments(podLeg, index3, containerPM);
             }
-
-            UpdateVesselVoyageVizionTransshipments(podLeg, index4, containerPM);
+            else
+            {
+                UpdateVesselVoyageVizionTransshipments(podLeg, index2, containerPM);
+            }
         }
 
         private void  UpdateVesselVoyageVizionTransshipments(dynamic leg, int index, object entity)
@@ -284,52 +285,48 @@ namespace WebFreight.Web.ContainerTracking
             var leg2 = allTrasshipmentLegs.Where(a => a.Index == 2).FirstOrDefault();
             var leg3 = allTrasshipmentLegs.Where(a => a.Index == 3).FirstOrDefault();
             var leg4 = allTrasshipmentLegs.Where(a => a.Index == 4).FirstOrDefault();
-            var index0 = 0;
             var index1 = 1;
             var index2 = 2;
             var index3 = 3;
+            Vessel polLegVesselId = this.GetVessel(containerUpdatedFields.POLLegVessel);
+            Vessel podLegVesselId = this.GetVessel(containerUpdatedFields.PODLegVessel);
+            var polLeg = new { Vessel = containerUpdatedFields.POLLegVessel, VesselId = polLegVesselId, Voyage = containerUpdatedFields.POLLegVoyage };
+            var podLeg = new { Vessel = containerUpdatedFields.PODLegVessel, VesselId = podLegVesselId, Voyage = containerUpdatedFields.PODLegVoyage };
 
-            var polLeg = new { Index = index0, Vessel = containerUpdatedFields.POLLegVessel, VesselId = containerUpdatedFields.POLLegVesselId, Voyage = containerUpdatedFields.POLLegVoyage };
-            var podLeg = new { Index = index3, Vessel = containerUpdatedFields.PODLegVessel, VesselId = containerUpdatedFields.PODLegVesselId, Voyage = containerUpdatedFields.PODLegVoyage };
-
-            UpdateShipmentVesselVoyage(polLeg, index1, containerPM);
+            UpdateShipmentVesselVoyage(polLeg, null, shipmentPM);
             if (leg3 != null)
             {
-                UpdateShipmentVesselVoyage(podLeg, index3, containerPM);
-
-                if (leg2 != null)
-                {
-                    UpdateShipmentVesselVoyage(leg3, index2, containerPM);
-                }
-
-                if (leg1 != null)
-                {
-                    UpdateShipmentVesselVoyage(leg2, index1, containerPM);
-                }
+                UpdateShipmentVesselVoyage(podLeg, index3, shipmentPM);
+                UpdateShipmentVesselVoyage(leg3, index2, shipmentPM);
+                UpdateShipmentVesselVoyage(leg2, index1, shipmentPM);
             }
             else if (leg2 != null)
             {
-                UpdateShipmentVesselVoyage(podLeg, index2, containerPM);
-                if (leg1 != null)
-                {
-                    UpdateShipmentVesselVoyage(leg1, index1, containerPM);
-                }
+                UpdateShipmentVesselVoyage(podLeg, index2, shipmentPM);
+                UpdateShipmentVesselVoyage(leg1, index1, shipmentPM);
             }
-
-            UpdateShipmentVesselVoyage(podLeg, index3, containerPM);
+            else
+            {
+                UpdateShipmentVesselVoyage(podLeg, index1, shipmentPM);
+            }
         }
 
-        private void UpdateShipmentVesselVoyage(dynamic leg, int index, object entity)
+        private void UpdateShipmentVesselVoyage(dynamic leg, int? index, object entity)
         {
             var fieldName = "Transshipment";
-            if (index == 0)
+            if (index == null)
             {
                 fieldName = "MainCarriage";
             }
 
-            this.FillFieldsNewValues(fieldName + index + "VesselName", leg.Vessel, entity);
-            this.FillFieldsNewValues(fieldName + index + "VesselId", leg.VesselId, entity);
-            this.FillFieldsNewValues(fieldName + index + "CarrierNumber", leg.Voyage, entity);
+            if (string.IsNullOrEmpty((string)GetPropValue(entity, fieldName + index + "VesselName"))) 
+                this.FillFieldsNewValues(fieldName + index + "VesselName", leg.Vessel, entity);
+
+            if (string.IsNullOrEmpty((string)GetPropValue(entity, fieldName + index + "VesselId")))
+                this.FillFieldsNewValues(fieldName + index + "VesselId", leg.VesselId, entity);
+
+            if (string.IsNullOrEmpty((string)GetPropValue(entity, fieldName + index + "CarrierNumber")))
+                this.FillFieldsNewValues(fieldName + index + "CarrierNumber", leg.Voyage, entity);
         }
 
 
