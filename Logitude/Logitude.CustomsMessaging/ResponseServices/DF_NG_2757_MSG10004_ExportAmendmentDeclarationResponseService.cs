@@ -1291,12 +1291,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         SupplierInvoiceItemsPricePM supplierInvoiceItemsPrice = new SupplierInvoiceItemsPricePM();
 
+
                         if (!isFromImporter && AdditionalPriceTypeCodes.Contains(AdditionalPriceTypeCode))
                         {
                             supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Update;
                         }
-                        else if (isFromImporter)
+                       else if (isFromImporter)
                         {
+
                             supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Insert;
                         }
                         else
