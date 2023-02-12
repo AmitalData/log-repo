@@ -50,12 +50,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                    CreateDeclarationFromResponse(customResponse.Response.Declaration, requestParams.Tenant, customResponse);
               
             }
-            else
-            {
+            if (!string.IsNullOrEmpty(requestParams.DeclarationId)){
                 if (customResponse?.Response?.Status[0]?.NameCode?.Value == "36")
                 {
                     var declaration = declarationqueryService.GetSingle(requestParams.DeclarationId, false, false);
-                    if(!declaration.IsConvertedDeclaration && (declaration.DeclarationStatusTypeCode!= customResponse.Response.Status[0].NameCode.Value))
+                    if (!declaration.IsConvertedDeclaration && (declaration.DeclarationStatusTypeCode != customResponse.Response.Status[0].NameCode.Value))
                     {
                         RaiseEvent(declaration, null, status_id: "CLS");
                     }
