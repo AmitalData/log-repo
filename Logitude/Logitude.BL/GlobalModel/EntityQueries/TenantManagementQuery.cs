@@ -1270,7 +1270,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              SecondaryColor = a.SecondaryColor,
                                              TertiaryColor = a.TertiaryColor,
 
-                                             IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid
+                                             IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
                                              ComapnylogoId = a.ComapnylogoId,
                                              ShowMoneyOrder=a.ShowMoneyOrder
                                          }).FirstOrDefault();
