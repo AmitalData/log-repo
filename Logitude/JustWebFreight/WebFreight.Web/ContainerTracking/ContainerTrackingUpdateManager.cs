@@ -268,7 +268,7 @@ namespace WebFreight.Web.ContainerTracking
             }
             else
             {
-                UpdateVesselVoyageVizionTransshipments(podLeg, index2, containerPM);
+                UpdateVesselVoyageVizionTransshipments(podLeg, index1, containerPM);
             }
         }
 
@@ -290,8 +290,8 @@ namespace WebFreight.Web.ContainerTracking
             var index3 = 3;
             Vessel polLegVessel = this.GetVessel(containerUpdatedFields.POLLegVessel);
             Vessel podLegVessel = this.GetVessel(containerUpdatedFields.PODLegVessel);
-            var polLeg = new { Vessel = containerUpdatedFields.POLLegVessel, VesselId = polLegVessel, Voyage = containerUpdatedFields.POLLegVoyage };
-            var podLeg = new { Vessel = containerUpdatedFields.PODLegVessel, VesselId = podLegVessel, Voyage = containerUpdatedFields.PODLegVoyage };
+            var polLeg = new { Vessel = containerUpdatedFields.POLLegVessel, VesselId = polLegVessel?.Id, Voyage = containerUpdatedFields.POLLegVoyage };
+            var podLeg = new { Vessel = containerUpdatedFields.PODLegVessel, VesselId = podLegVessel?.Id, Voyage = containerUpdatedFields.PODLegVoyage };
 
             UpdateShipmentVesselVoyage(polLeg, null, shipmentPM);
             if (leg3 != null)
@@ -307,7 +307,7 @@ namespace WebFreight.Web.ContainerTracking
             }
             else
             {
-                UpdateShipmentVesselVoyage(podLeg, index1, shipmentPM);
+                UpdateShipmentVesselVoyage(podLeg, null, shipmentPM);
             }
         }
 
