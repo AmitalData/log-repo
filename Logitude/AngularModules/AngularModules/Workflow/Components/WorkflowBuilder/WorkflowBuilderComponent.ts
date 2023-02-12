@@ -468,6 +468,11 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     }
 
     handlePropertiesWindowClosed(data: any, nodeType: string) {
+
+        if ((window as any)?.PrintData) {
+            console.log(data);
+        }
+
         if (data) {
             document.dispatchEvent(new CustomEvent(this.ReturnPropertiesDataEventKey, { detail: data }));
 
