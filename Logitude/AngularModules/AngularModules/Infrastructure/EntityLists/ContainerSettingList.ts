@@ -18,6 +18,7 @@ export class ContainerSettingList {
 	IsImport: boolean;
 	IsDrop: boolean;
 	AddedManually: boolean;
+	ActivationDate: Date;
 	
 }
  
