@@ -77,127 +77,6 @@ namespace WebFreight.Web.ContainerTracking
 
             SaveContainer();
         }
-
-        private void MapPreCarriage()
-        {
-            containerPM.PreCarriageLocation = containerUpdatedFields.OriginLocation;
-            containerPM.PreCarriageLocationPortId = this.GetPortId(containerUpdatedFields.OriginLocation);
-            containerPM.PreCarriageETD = containerUpdatedFields.EstimatedOriginPickup;
-            containerPM.PreCarriageATD = containerUpdatedFields.ActualOriginPickup;
-        }
-
-        private void MapOnCarriage()
-        {
-            containerPM.OnCarriageLocation = containerUpdatedFields.DeliveryLocation;
-            containerPM.OnCarriageLocationPortId = this.GetPortId(containerUpdatedFields.DeliveryLocation);
-            containerPM.EstimatedLIFArrival = containerUpdatedFields.EstimatedLIFArrival;
-            containerPM.ActualLIFArrival = containerUpdatedFields.ActualLIFArrival;
-        }
-
-        private void MapVizionPreCarriage()
-        {
-            this.MapVizionPreCarriageLocation();
-            this.MapVizionPreCarriageDates();
-        }
-        private void MapVizionPreCarriageLocation()
-        {
-            if (containerUpdatedFields.VisionPreCarriage == null)
-                return;
-            var port = GetPortForVizion(containerUpdatedFields.VisionPreCarriage);
-            if (port == null)
-                return;
-
-            containerPM.PreCarriageLocationPortId = port.Id;
-            containerPM.PreCarriageLocation = port.CombinedCode;
-        }
-        
-        private void MapVizionPreCarriageDates()
-        {
-            if (containerUpdatedFields.OriginLocation == null) return;
-            string portId = this.GetPortId(containerUpdatedFields.OriginLocation);
-            if (!containerTrackingHelper.IsSameLocationUsingId(portId, containerPM.PreCarriageLocationPortId)) return;
-
-            containerPM.PreCarriageETD = containerUpdatedFields.EstimatedOriginPickup;
-            containerPM.PreCarriageATD = containerUpdatedFields.ActualOriginPickup;
-
-            if (!containerTrackingHelper.IsSameLocationUsingId(containerPM.PreCarriageLocationPortId, shipmentPM.PreCarriageFromPortId)) return;
-            
-            shipmentPM.PreCarriageETD = containerPM.PreCarriageETD;
-            shipmentPM.PreCarriageATD = shipmentPM.PreCarriageATD ?? containerPM.PreCarriageATD;
-        }
-
-        private void MapVizionOnCarriage()
-        {
-            this.MapVizionOnCarriageLocation();
-            this.MapVizionOnCarriageDates();
-        }
-        private void MapVizionOnCarriageLocation()
-        {
-            if (containerUpdatedFields.VisionOnCarriage == null)
-                return;
-            var port = GetPortForVizion(containerUpdatedFields.VisionOnCarriage);
-            if (port == null)
-                return;
-            containerPM.OnCarriageLocationPortId = port.Id;
-            containerPM.OnCarriageLocation = port.CombinedCode;
-        }
-        private void MapVizionOnCarriageDates()
-        {
-            if (containerUpdatedFields.OnCarriageLocation == null) return;
-            string portId = this.GetPortId(containerUpdatedFields.OnCarriageLocation);
-            if (!containerTrackingHelper.IsSameLocationUsingId(portId, containerPM.OnCarriageLocationPortId)) return;
-
-            containerPM.OnCarriageETA = containerUpdatedFields.OnCarriageETA;
-            containerPM.OnCarriageATA = containerUpdatedFields.OnCarriageATA;
-
-            if (!containerTrackingHelper.IsSameLocationUsingId(containerPM.OnCarriageLocationPortId, shipmentPM.OnCarriageToPortId)) return;
-
-            shipmentPM.OnCarriageETA = containerPM.OnCarriageETA;
-            shipmentPM.OnCarriageATA = shipmentPM.OnCarriageATA ?? containerPM.OnCarriageATA;
-        }
-
-        private Port GetPortForVizion(Location portLocation)
-        {
-            Port port = null;
-            if (!string.IsNullOrEmpty(portLocation.unlocode))
-                port = GetPort(portLocation.unlocode);
-            if (port != null)
-                return port;
-            var name1 = portLocation.name;
-            if (!string.IsNullOrEmpty(name1) && portLocation.name.Contains(','))
-                name1 = portLocation.name.Split(',').First();
-            var name2 = portLocation.city;
-            port = GetPortByNames(name1, name2);
-            return port;
-        }
-        private Port GetPortByNames(string name1, string name2)
-        {
-            var port = portRepository.GetOceanPortByNames(name1, name2, containerPM.Tenant);
-            if (port != null)
-                return port;
-            port = portRepository.GetOceanPortByNames(name1, name2, 0);
-            if (port == null)
-                return null;
-            var newPort = portQuery.GetPortCopyToCurrentTenantPoco(port.Id, tenant);
-            return newPort;
-        }
-
-        public void SetContainer(ContainerPM containerPM)
-        {
-            this.containerPM = containerPM;
-            this.tenant = containerPM.Tenant;
-        }
-        public void SetShipment(ShipmentPM shipmentPM)
-        {
-            this.shipmentPM = shipmentPM;
-            this.tenant = shipmentPM.Tenant;
-            this.GetTenant();
-        }
-        private void GetTenant()
-        {
-            myTenant = tenantRepository.GetSingleTenant(tenant);
-        }
-
         private void MapContainerFields()
         {
             this.FillFieldsNewValues("MainCarriageETD", containerUpdatedFields.MainCarriageETD, containerPM);
@@ -261,6 +140,87 @@ namespace WebFreight.Web.ContainerTracking
             containerPM.IsAutomaticUpdates = true;
             this.MapTransshipments();
         }
+
+        private void MapPreCarriage()
+        {
+            containerPM.PreCarriageLocation = containerUpdatedFields.OriginLocation;
+            containerPM.PreCarriageLocationPortId = this.GetPortId(containerUpdatedFields.OriginLocation);
+            containerPM.PreCarriageETD = containerUpdatedFields.EstimatedOriginPickup;
+            containerPM.PreCarriageATD = containerUpdatedFields.ActualOriginPickup;
+        }
+        private void MapOnCarriage()
+        {
+            containerPM.OnCarriageLocation = containerUpdatedFields.DeliveryLocation;
+            containerPM.OnCarriageLocationPortId = this.GetPortId(containerUpdatedFields.DeliveryLocation);
+            containerPM.EstimatedLIFArrival = containerUpdatedFields.EstimatedLIFArrival;
+            containerPM.ActualLIFArrival = containerUpdatedFields.ActualLIFArrival;
+        }
+        private void MapVizionPreCarriage()
+        {
+            this.MapVizionPreCarriageLocation();
+            this.MapVizionPreCarriageDates();
+        }
+        private void MapVizionPreCarriageLocation()
+        {
+            containerPM.PreCarriageLocationPortId = this.GetPortId(containerUpdatedFields.VisionPreCarriage);
+            containerPM.PreCarriageLocation = containerUpdatedFields.VisionPreCarriage;
+        }
+        
+        private void MapVizionPreCarriageDates()
+        {
+            if (containerUpdatedFields.OriginLocation == null) return;
+            string portId = this.GetPortId(containerUpdatedFields.OriginLocation);
+            if (!containerTrackingHelper.IsSameLocationUsingId(portId, containerPM.PreCarriageLocationPortId)) return;
+
+            containerPM.PreCarriageETD = containerUpdatedFields.EstimatedOriginPickup;
+            containerPM.PreCarriageATD = containerUpdatedFields.ActualOriginPickup;
+
+            if (!containerTrackingHelper.IsSameLocationUsingId(containerPM.PreCarriageLocationPortId, shipmentPM.PreCarriageFromPortId)) return;
+            
+            shipmentPM.PreCarriageETD = containerPM.PreCarriageETD;
+            shipmentPM.PreCarriageATD = shipmentPM.PreCarriageATD ?? containerPM.PreCarriageATD;
+        }
+        private void MapVizionOnCarriage()
+        {
+            this.MapVizionOnCarriageLocation();
+            this.MapVizionOnCarriageDates();
+        }
+        private void MapVizionOnCarriageLocation()
+        {
+            containerPM.OnCarriageLocationPortId = this.GetPortId(containerUpdatedFields.VisionOnCarriage);
+            containerPM.OnCarriageLocation = containerUpdatedFields.VisionOnCarriage;
+        }
+        private void MapVizionOnCarriageDates()
+        {
+            if (containerUpdatedFields.OnCarriageLocation == null) return;
+            string portId = this.GetPortId(containerUpdatedFields.OnCarriageLocation);
+            if (!containerTrackingHelper.IsSameLocationUsingId(portId, containerPM.OnCarriageLocationPortId)) return;
+
+            containerPM.OnCarriageETA = containerUpdatedFields.OnCarriageETA;
+            containerPM.OnCarriageATA = containerUpdatedFields.OnCarriageATA;
+
+            if (!containerTrackingHelper.IsSameLocationUsingId(containerPM.OnCarriageLocationPortId, shipmentPM.OnCarriageToPortId)) return;
+
+            shipmentPM.OnCarriageETA = containerPM.OnCarriageETA;
+            shipmentPM.OnCarriageATA = shipmentPM.OnCarriageATA ?? containerPM.OnCarriageATA;
+        }
+
+        public void SetContainer(ContainerPM containerPM)
+        {
+            this.containerPM = containerPM;
+            this.tenant = containerPM.Tenant;
+        }
+        public void SetShipment(ShipmentPM shipmentPM)
+        {
+            this.shipmentPM = shipmentPM;
+            this.tenant = shipmentPM.Tenant;
+            this.GetTenant();
+        }
+        private void GetTenant()
+        {
+            myTenant = tenantRepository.GetSingleTenant(tenant);
+        }
+        
         private void MapTransshipments()
         {
             if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.Vizion)
@@ -506,15 +466,16 @@ namespace WebFreight.Web.ContainerTracking
 
         private void SetShipmentTransshipmentLegDates(int? transshipmentLegIndex, MilestoneDataUpdatedFields updatedFields, string key, string portId)
         {
-            if (!containerTrackingHelper.IsSameLocationUsingId((string)GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + "FromPortId"), portId)) return;
-
             if (key == "VesselArrived")
             {
+                if (!containerTrackingHelper.IsSameLocationUsingId((string)GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + "ToPortId"), portId)) return;
                 this.FillFieldsNewValues("Transshipment" + transshipmentLegIndex + "ETA", updatedFields.EstimatedDate, shipmentPM);
                 if (GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + "ATA") == null) this.FillFieldsNewValues("Transshipment" + transshipmentLegIndex + "ATA", updatedFields.ActualDate, shipmentPM);
             }
+
             else if (key == "VesselDeparted")
             {
+                if (!containerTrackingHelper.IsSameLocationUsingId((string)GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + "FromPortId"), portId)) return;
                 this.FillFieldsNewValues("Transshipment" + transshipmentLegIndex + "ETD", updatedFields.EstimatedDate, shipmentPM);
                 if (GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + "ATD") == null) this.FillFieldsNewValues("Transshipment" + transshipmentLegIndex + "ATD", updatedFields.ActualDate, shipmentPM);
             }
