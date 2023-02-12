@@ -2368,7 +2368,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     }
                     else if (myObjectTableName == "WorkFlowVersion" || myObjectTableName == "WorkFlowInstance") {
                         this.isEditControlOpened = false;
-                        this.BackCompleted.emit($event.rowData.Id);
+                        this.BackCompleted.emit($event);
                         this.OnBackFromEdit(selectedEntityId, $event)
                     }
                     else if (this.ObjectTableName == "Customs.DeclarationReferantData") {
@@ -2868,10 +2868,10 @@ export class ListComponent implements OnInit, AfterViewInit {
                             break;
                         }
                     case "WorkFlowInstance":
-                    {
-                        isVisible = false;
-                        break;
-                    }
+                        {
+                            isVisible = false;
+                            break;
+                        }
                 }
             }
         }
@@ -2979,7 +2979,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         var messageWindow = new MessageWindow();
         messageWindow.Width = 450;
         messageWindow.Height = 190;
-        messageWindow.Show("You can define the \"New " + this.ObjectTableDisplayName + "\" screen by selecting a one from the Views tab of the " + this.ObjectTableDisplayName+" object in the Customization");
+        messageWindow.Show("You can define the \"New " + this.ObjectTableDisplayName + "\" screen by selecting a one from the Views tab of the " + this.ObjectTableDisplayName + " object in the Customization");
     }
     RunNewExportDeclaration() {
         var logWindow = new LogitudeWindow();

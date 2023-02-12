@@ -93,7 +93,7 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
 
-                    cmpRef.instance.BackCompleted.subscribe((event: string) => {
+                    cmpRef.instance.BackCompleted.subscribe(event => {
                         this.onRowSelected(event)
                     });
                 });
@@ -116,19 +116,19 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
         AppTool.KillEventEmitter(this.TabSelectedEvent);
     }
 
-    onRowSelected(id: string | null) {
-        let isVariableHasPermission = FeatureLocator.HasFeaturePermession("WorkFlowInstance", "WorkFlowInstance.ShowVariables")
-        if (id != null) {
-            var logWindow = new LogitudeWindow();
+    onRowSelected(event: any) {
+        if (event !== null && event.rowData !== null && (event.rowData.StatusCode === "COED" || event.rowData.StatusCode === "FAED")) {
+            let isVariableHasPermission = FeatureLocator.HasFeaturePermession("WorkFlowInstance", "WorkFlowInstance.ShowVariables");
+            let logWindow = new LogitudeWindow();
             logWindow.Width = 960;
             logWindow.Height = isVariableHasPermission ? 690 : 570;
             logWindow.Title = "Instance Activities" + (isVariableHasPermission ? " And Variables" : '');
             logWindow.IsShowCloseButton = true
-            var windowArgs: any = {};
-            windowArgs.EntityId = id;
+            let windowArgs: any = {};
+            windowArgs.EntityId = event.rowData.Id;
             windowArgs.ObjectTableName = "WorkFlowInstanceActivity";
             logWindow.WindowArgs = windowArgs;
-            logWindow.Show('./Workflow/Components/CreateEditWorkflow/WorkflowInstanceActivityComponent');
+            logWindow.Show('./Workflow/Components/CreateEditWorkflow/WorkflowInstanceDetailsComponent');
         }
     }
 }

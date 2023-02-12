@@ -89,8 +89,8 @@ export class WorkflowVersionComponent extends BaseComponent {
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
-                    cmpRef.instance.BackCompleted.subscribe((event: string) => {
-                        this.onRowSelected(event)
+                    cmpRef.instance.BackCompleted.subscribe((event: any) => {
+                        this.onRowSelected(event.rowData.Id)
                     });
                 });
         });
