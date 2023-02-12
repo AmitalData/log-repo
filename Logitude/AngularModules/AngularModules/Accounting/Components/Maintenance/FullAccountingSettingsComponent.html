@@ -835,6 +835,73 @@
 
                             </div>
 
+                             <!-- #region Signed Tab -->
+                             <div *ngSwitchCase="'Signed'" style="height: 100%;">
+                                <table *ngIf="EntityPM">
+
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <table class="FixedTable">
+
+                                                <!-- HSM  -->
+                                                <tr class="FormFieldRow">
+                                                    <td style="width:150px">
+                                                        <LogLabel [ObjectFieldName]="'HSM'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    </td>
+
+                                                    <td colspan="2" style="width:200px">
+                                                        <LogTextBox [ObjectFieldName]="'HSM'" [ObjectTableName]="ObjectTableName"
+                                                        [InputType]="'integer'" [DataContext]="DataContext"></LogTextBox>
+
+                                                    </td>
+                                                   
+                                                    <td><div></div></td>
+                                                </tr>
+
+                                                <!-- HSMtoken  -->
+                                                <tr class="FormFieldRow">
+                                                    <td style="width:250px">
+                                                        <LogLabel [ObjectFieldName]="'HSMtoken'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    </td>
+
+                                                    <td colspan="3" style="width:200px">
+                                                        <LogTextBox [ObjectFieldName]="'HSMtoken'" [ObjectTableName]="ObjectTableName" 
+                                                        [InputType]="'text'" [DataContext]="DataContext"></LogTextBox>
+
+                                                    </td>
+                                                    <td><div></div></td>
+                                                    <td><div></div></td>
+                                                    <td><div></div></td>
+                                                </tr>
+                                                <!-- HSMaddress  -->
+                                                <tr class="FormFieldRow">
+                                                    <td style="width:250px">
+                                                        <LogLabel [ObjectFieldName]="'HSMaddress'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    </td>
+
+                                                    <td colspan="3" style="width:200px">
+                                                        <LogTextBox [ObjectFieldName]="'HSMaddress'" [ObjectTableName]="ObjectTableName" IsMultiline = 'true'
+                                                        [InputType]="'text'" [DataContext]="DataContext"></LogTextBox>
+
+                                                    </td>
+                                                    <td><div></div></td>
+                                                    <td><div></div></td>
+                                                    <td><div></div></td>
+                                                </tr>
+                                                <tr><td><div></div></td></tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                            <!-- #endregion -->
                         </div>
                     </div>
                 </div>

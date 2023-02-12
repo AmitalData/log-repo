@@ -55,7 +55,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     tenantPMService: TenantPMService;
     private CurrentSession = SessionLocator.SelectedSession;
     public TaxInstitutionGLAccountFilterItems: ApiQueryFilters = new ApiQueryFilters();
-
+    private indexHyphenSholudInHSMTokken = [8,13,18,23];
 
 
     constructor(public serviceArgs: ServiceArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
@@ -533,6 +533,114 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
 
 
+
+    // Signed 
+
+    get HSM(){return this.EntityPM.HSM;}
+    set HSM(hsm:number){
+
+        if (hsm.toString().length != 3) {
+            this.UIProperties.SetValidity("HSM", this.ObjectTableName, false, "HSM must be 3 digits");
+           
+        } else {
+            this.UIProperties.SetValidity("HSM", this.ObjectTableName, true, "");
+        }
+
+        if(this.EntityPM.HSM != hsm) {
+            
+            this.EntityPM.HSM = hsm;
+          
+        }
+    }
+
+
+    get HSMtoken(){return this.EntityPM.HSMtoken;}
+    set HSMtoken(hsmToken:string){
+
+      
+        this.ValidateInputHMSToken(hsmToken)
+        if(this.EntityPM.HSMtoken != hsmToken) {
+            this.EntityPM.HSMtoken = hsmToken;
+        }
+    }
+
+
+    ValidateInputHMSToken(hsmToken){
+        if(hsmToken.toString().length != 36 )
+        
+        {
+            this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, "HSMtoken must be 36 characters long and should be format like 8X-4X-4X-4X-12X");
+        } else if(!this.ValidateFormatHSMToken(hsmToken)) {
+            this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, "HSMtoken should be format like 8X-4X-4X-4X-12X");
+
+        } else {
+            this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, true, "");
+        }
+
+    }
+    
+    ValidateFormatHSMToken(hsmToken){
+
+        if(hsmToken.toString().length == 36 && (hsmToken.toString().indexOf('-') == this.indexHyphenSholudInHSMTokken[0]
+        && hsmToken.toString().indexOf('-',this.indexHyphenSholudInHSMTokken[0]+1) == this.indexHyphenSholudInHSMTokken[1]
+        && hsmToken.toString().indexOf('-',this.indexHyphenSholudInHSMTokken[1]+1) == this.indexHyphenSholudInHSMTokken[2]
+        && hsmToken.toString().indexOf('-',this.indexHyphenSholudInHSMTokken[2]+1) == this.indexHyphenSholudInHSMTokken[3])
+        ) {
+           return true
+        } else {
+            return false
+        }
+    }
+
+
+    get HSMaddress(){return this.EntityPM.HSMaddress;}
+    set HSMaddress(hsmAddress:string){
+        
+        if(hsmAddress.toString().length >= 50) {
+            this.UIProperties.SetValidity("HSMaddress", this.ObjectTableName, false, "HSMaddress must be 50 characters long");
+        } else {
+            this.UIProperties.SetValidity("HSMaddress", this.ObjectTableName, true, "");
+        }
+
+        if(this.EntityPM.HSMaddress != hsmAddress) {
+            this.EntityPM.HSMaddress = hsmAddress;
+        }
+    }
+
+
+    ValidateSigned() {
+       
+        this.ValidationErrorsList = [];
+
+        this.UIProperties.SetValidity("HSM", this.ObjectTableName, true, "");
+        this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, true, "");
+        this.UIProperties.SetValidity("HSMaddress", this.ObjectTableName, true, "");
+
+        if (this.HSM.toString().length != 3) {
+            this.ValidationErrorsList.push("HSM must be 3 digits");
+            this.UIProperties.SetValidity("HSM", this.ObjectTableName, false, "HSM must be 3 digits");
+        }
+        if(this.HSMtoken.toString().length != 36 ){
+            this.ValidationErrorsList.push("HSMtoken must be 36 characters long and should be format like 8X-4X-4X-4X-12X");
+            this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, "HSMtoken must be 36 characters long and should be format like 8X-4X-4X-4X-12X");
+
+        }
+
+        if(!this.ValidateFormatHSMToken(this.HSMtoken)) {
+            this.ValidationErrorsList.push("HSMtoken should be format like 8X-4X-4X-4X-12X");
+            this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, "HSMtoken should be format like 8X-4X-4X-4X-12X");
+
+        }
+
+        if(this.HSMaddress.toString().length >= 50) {
+            this.ValidationErrorsList.push("HSMaddress must be 50 characters long");
+            this.UIProperties.SetValidity("HSMaddress", this.ObjectTableName, false, "HSMaddress must be 50 characters long");
+        }
+        
+    }
+
+
+
     //#endregion
 
     //Commands
@@ -558,6 +666,10 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
         if (errors.length == 0)
             this.ValidateMulticurrencyAccounts();
+
+
+        if (errors.length == 0)
+            this.ValidateSigned();
 
 
         if (this.ValidationErrorsList.length == 0) {
@@ -692,6 +804,7 @@ SubmitChanges(ControlAccountId:string) {
         this.TabsSource.push({ Name: "FullAccoutingSetting", isSelected: true, Header: TextCodeTranslator.Translate("General.O.General") }); //Accounting.O.FullAccountingSettings
         this.TabsSource.push({ Name: "ControlAccounts", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.O.ControlGLAccounts") });
         this.TabsSource.push({ Name: "Logo", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.General.O.Cheques") });
+        this.TabsSource.push({ Name: "Signed", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.General.O.Signeds") });
         if(this.AccountingActivated)
             this.AddAgingDefinitionTab();
     }

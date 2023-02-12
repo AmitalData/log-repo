@@ -114,6 +114,12 @@ namespace Logitude.Accounting.Data.EntityLists
        public bool CreateRevaluationJournal  { get; set; }
        [DataMember]
        public string TaxInstitutionGLAccountId  { get; set; }
+       [DataMember]
+       public int? HSM  { get; set; }
+       [DataMember]
+       public string HSMtoken  { get; set; }
+       [DataMember]
+       public string HSMaddress  { get; set; }
    }
 
 }

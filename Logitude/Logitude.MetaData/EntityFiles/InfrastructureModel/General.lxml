@@ -38,7 +38,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;d85a&quot;"
+  Code="&quot;72a7&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5646,6 +5646,12 @@
       DefaultText="&quot;Containers&quot;"
       LocalDefaultText="&quot;Containers&quot;"
       TextCodeTypeCode="&quot;MH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.Signeds&quot;"
+      DefaultText="&quot;Signed fields&quot;"
+      LocalDefaultText="&quot;חתימה דיגיטלית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>

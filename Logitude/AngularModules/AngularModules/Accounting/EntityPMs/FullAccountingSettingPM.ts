@@ -15,11 +15,11 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class FullAccountingSettingPM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+                    this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -292,6 +292,21 @@ export class FullAccountingSettingPM {
     private taxInstitutionGLAccountId: string;
     public get TaxInstitutionGLAccountId() { return this.taxInstitutionGLAccountId; }
     public set TaxInstitutionGLAccountId(newValue: string) { if (this.taxInstitutionGLAccountId != newValue) { this.taxInstitutionGLAccountId = newValue; this.MarkAsDirty("TaxInstitutionGLAccountId"); } }
+       
+	 
+    private hSM: number;
+    public get HSM() { return this.hSM; }
+    public set HSM(newValue: number) { if (this.hSM != newValue) { this.hSM = newValue; this.MarkAsDirty("HSM"); } }
+       
+	 
+    private hSMtoken: string;
+    public get HSMtoken() { return this.hSMtoken; }
+    public set HSMtoken(newValue: string) { if (this.hSMtoken != newValue) { this.hSMtoken = newValue; this.MarkAsDirty("HSMtoken"); } }
+       
+	 
+    private hSMaddress: string;
+    public get HSMaddress() { return this.hSMaddress; }
+    public set HSMaddress(newValue: string) { if (this.hSMaddress != newValue) { this.hSMaddress = newValue; this.MarkAsDirty("HSMaddress"); } }
        
 	 
 
