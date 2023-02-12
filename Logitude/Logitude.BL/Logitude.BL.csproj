@@ -805,8 +805,10 @@
     <Compile Include="ShipmentsModel\CustomFilters\DigitalPortalCustomFilter.cs" />
     <Compile Include="ShipmentsModel\EntityLists\DigitalShipmentList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\ShipmentDigitalFieldList.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\ContainerDiscrepancyPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentDigitalFieldPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentRoutingLeg.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\ContainerDiscrepancyQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentQuery.Digital.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentDigitalFieldsBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\UpdateShipmentDocsFieldBehaviour.cs" />
@@ -3172,6 +3174,7 @@
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ShipmentCarrierStatus.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\SpecialServicesTypeMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\AWBAdditionalHandlingInfoService.cs" />
+    <Compile Include="ShipmentsModel\Tools\EntityService\ContainerDiscrepancyService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\ContainerTrackingProviderService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\ContainerTrackingResponseService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\ContainerTrackingRequestService.cs" />

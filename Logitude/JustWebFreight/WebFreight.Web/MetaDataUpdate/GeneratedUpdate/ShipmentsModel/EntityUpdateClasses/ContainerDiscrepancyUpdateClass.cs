@@ -83,16 +83,16 @@ using Logitude.DashboardModule.BL;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpdateClasses
 {
-   public class ContainerDiscrepanciesUpdateClass
+   public class ContainerDiscrepancyUpdateClass
    {  		
-		public const string HashString = "b60b59de1e1ad9796a90fcf1f0ecdf3e";
+		public const string HashString = "9b516f685daf580010b50de5f6e556b9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "ContainerDiscrepancies",
+	             				    ObjectTableName =  "ContainerDiscrepancy",
 			      				    IsNew =  true,
 			      				    DBTableName =  "ContainerDiscrepancies",
 			      				    ObjectTableSingular =  "ContainerDiscrepancy",
@@ -128,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "ContainerDiscrepancies",
-			      				    Code =  "bfa3",
+			      				    Code =  "c3d2",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",
@@ -140,7 +140,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
-			      				    HashString =  ContainerDiscrepanciesUpdateClass.HashString,
+			      				    HashString =  ContainerDiscrepancyUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -152,7 +152,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Id",
-					  						ObjectTableName =  "ContainerDiscrepancies",
+					  						ObjectTableName =  "ContainerDiscrepancy",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  15,
@@ -172,6 +172,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Id",
 					  						ListPropertyPath =  "Id",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -213,7 +214,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Tenant",
-					  						ObjectTableName =  "ContainerDiscrepancies",
+					  						ObjectTableName =  "ContainerDiscrepancy",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -233,6 +234,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Tenant",
 					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -274,7 +276,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						ObjectTableName =  "ContainerDiscrepancies",
+					  						ObjectTableName =  "ContainerDiscrepancy",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
@@ -294,6 +296,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SearchFields",
 					  						ListPropertyPath =  "SearchFields",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -335,7 +338,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ContainerID",
-					  						ObjectTableName =  "ContainerDiscrepancies",
+					  						ObjectTableName =  "ContainerDiscrepancy",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Container",
 					  						MinLength =  0,
@@ -356,6 +359,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ContainerID",
 					  						ListPropertyPath =  "ContainerID",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -396,7 +400,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ShipmentId",
-					  						ObjectTableName =  "ContainerDiscrepancies",
+					  						ObjectTableName =  "ContainerDiscrepancy",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Shipment",
 					  						MinLength =  0,
@@ -417,6 +421,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ShipmentId",
 					  						ListPropertyPath =  "ShipmentId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -457,7 +462,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "DiscrepancyDate",
-					  						ObjectTableName =  "ContainerDiscrepancies",
+					  						ObjectTableName =  "ContainerDiscrepancy",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -477,6 +482,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "DiscrepancyDate",
 					  						ListPropertyPath =  "DiscrepancyDate",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -515,7 +521,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Discrepancy",
-					  						ObjectTableName =  "ContainerDiscrepancies",
+					  						ObjectTableName =  "ContainerDiscrepancy",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  250,
@@ -535,6 +541,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Discrepancy",
 					  						ListPropertyPath =  "Discrepancy",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -575,7 +582,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable ContainerDiscrepancyObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ContainerDiscrepancy" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> ContainerDiscrepancyObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ContainerDiscrepancy").ToList();
+		       
+	      
+
+	         Screen ContainerDiscrepancyContainerDiscrepanciesHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ContainerDiscrepancy.HeaderScreen", Name = "ContainerDiscrepanciesHeaderScreen", ObjectTableId = ContainerDiscrepancyObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    ContainerDiscrepancyObjectTable.HeaderScreenId = ContainerDiscrepancyContainerDiscrepanciesHeaderScreenScreen0.Id;
+		    ContainerDiscrepancyObjectTable.HeaderScreenCode = ContainerDiscrepancyContainerDiscrepanciesHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 
@@ -585,18 +604,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
-		   ObjectTable ContainerDiscrepanciesObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ContainerDiscrepancies" && d.Tenant == 0).FirstOrDefault(); 
+		   ObjectTable ContainerDiscrepancyObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ContainerDiscrepancy" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature ContainerDiscrepanciesFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = ContainerDiscrepanciesObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerDiscrepancies.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContainerDiscrepanciesObjectTable);
-		   Feature ContainerDiscrepanciesFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = ContainerDiscrepanciesObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerDiscrepancies.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContainerDiscrepanciesObjectTable);
-		   Feature ContainerDiscrepanciesFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = ContainerDiscrepanciesObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerDiscrepancies.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContainerDiscrepanciesObjectTable);
-		   Feature ContainerDiscrepanciesFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = ContainerDiscrepanciesObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerDiscrepancies.Features.PackageFeature", NameTextCodeDefaultText = "ContainerDiscrepancies Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContainerDiscrepanciesObjectTable);    
+		   Feature ContainerDiscrepancyFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = ContainerDiscrepancyObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerDiscrepancy.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContainerDiscrepancyObjectTable);
+		   Feature ContainerDiscrepancyFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = ContainerDiscrepancyObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerDiscrepancy.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContainerDiscrepancyObjectTable);
+		   Feature ContainerDiscrepancyFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = ContainerDiscrepancyObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerDiscrepancy.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContainerDiscrepancyObjectTable);
+		   Feature ContainerDiscrepancyFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = ContainerDiscrepancyObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerDiscrepancy.Features.PackageFeature", NameTextCodeDefaultText = "ContainerDiscrepancy Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContainerDiscrepancyObjectTable);    
 	    
 		}
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable ContainerDiscrepanciesObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ContainerDiscrepancies" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable ContainerDiscrepancyObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ContainerDiscrepancy" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -610,7 +629,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = ContainerDiscrepanciesObjectTable.Id,
+                ObjectTableId = ContainerDiscrepancyObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -628,7 +647,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = ContainerDiscrepanciesObjectTable.Id,
+                ObjectTableId = ContainerDiscrepancyObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 

@@ -57,12 +57,12 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                ContainerDiscrepanciesQuery containerDiscrepanciesQuery = new ContainerDiscrepanciesQuery(authToken.Tenant);
-                ContainerDiscrepanciesPM containerDiscrepanciesPM = containerDiscrepanciesQuery.GetSinglePM(id, authToken.Tenant);
+                ContainerDiscrepancyQuery containerDiscrepancyQuery = new ContainerDiscrepancyQuery(authToken.Tenant);
+                ContainerDiscrepancyPM containerDiscrepancyPM = containerDiscrepancyQuery.GetSinglePM(id, authToken.Tenant);
                 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
-                return Request.CreateResponse(HttpStatusCode.OK, containerDiscrepanciesPM);
+                return Request.CreateResponse(HttpStatusCode.OK, containerDiscrepancyPM);
 			 
 			}
             catch (Exception ex)
@@ -75,7 +75,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
          
 		
 
-        public HttpResponseMessage Post(ContainerDiscrepanciesPM entityPM)
+        public HttpResponseMessage Post(ContainerDiscrepancyPM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -89,11 +89,11 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(entityPM.Tenant);
-                        ContainerDiscrepanciesService service = new ContainerDiscrepanciesService(MyContext, entityPM.Tenant);
+                        ContainerDiscrepancyService service = new ContainerDiscrepancyService(MyContext, entityPM.Tenant);
                         service.Create(entityPM);
 				
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        // ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("ContainerDiscrepancies", 0, true);
+                        // ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("ContainerDiscrepancy", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
                         // ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
@@ -121,7 +121,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
         }
 
 
-        public HttpResponseMessage Put(ContainerDiscrepanciesPM entityPM)
+        public HttpResponseMessage Put(ContainerDiscrepancyPM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -134,8 +134,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                        string entityName = "ContainerDiscrepancies" + entityPM.Id + entityPM.Tenant;
-                        string entityPmName = "ContainerDiscrepanciesPM" + entityPM.Id + entityPM.Tenant;
+                        string entityName = "ContainerDiscrepancy" + entityPM.Id + entityPM.Tenant;
+                        string entityPmName = "ContainerDiscrepancyPM" + entityPM.Id + entityPM.Tenant;
                         if (CacheManager.CacheWrapper.Get(entityName) != null)
                         {
                             CacheManager.CacheWrapper.Invalidate(entityName);
@@ -146,12 +146,12 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                         }
                 
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(entityPM.Tenant);
-                        ContainerDiscrepanciesService service = new ContainerDiscrepanciesService(MyContext, entityPM.Tenant);
+                        ContainerDiscrepancyService service = new ContainerDiscrepancyService(MyContext, entityPM.Tenant);
  
                         service.Update(entityPM);
 
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("ContainerDiscrepancies", 0, true);
+                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("ContainerDiscrepancy", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
                         //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);

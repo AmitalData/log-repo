@@ -47,7 +47,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 { 
 
     
-    public partial class ContainerDiscrepanciesViewsController : ApiController
+    public partial class ContainerDiscrepancyViewsController : ApiController
     {
 	  
        
@@ -61,18 +61,18 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 				
 		    	IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
-				ContainerDiscrepanciesRepository  containerDiscrepanciesRepository = new ContainerDiscrepanciesRepository(MyContext);
-				ContainerDiscrepanciesList entityList = null;
-				ContainerDiscrepancies entityPoco = containerDiscrepanciesRepository.GetSingleContainerDiscrepancies(id , authToken.Tenant);
+				ContainerDiscrepancyRepository  containerDiscrepancyRepository = new ContainerDiscrepancyRepository(MyContext);
+				ContainerDiscrepancyList entityList = null;
+				ContainerDiscrepancy entityPoco = containerDiscrepancyRepository.GetSingleContainerDiscrepancy(id , authToken.Tenant);
 
 				if (entityPoco != null)
 				{
-									List<ContainerDiscrepancies> singleEntityList = new List<ContainerDiscrepancies>();
+									List<ContainerDiscrepancy> singleEntityList = new List<ContainerDiscrepancy>();
 					singleEntityList.Add(entityPoco);
 
-					ContainerDiscrepanciesQuery containerDiscrepanciesQuery = new ContainerDiscrepanciesQuery(containerDiscrepanciesRepository);
-					IQueryable<ContainerDiscrepancies> iQueryable = singleEntityList.AsQueryable();
-					IQueryable<ContainerDiscrepanciesList> iQueryableEntityList = containerDiscrepanciesQuery.GetIQueryableEntityList(iQueryable);
+					ContainerDiscrepancyQuery containerDiscrepancyQuery = new ContainerDiscrepancyQuery(containerDiscrepancyRepository);
+					IQueryable<ContainerDiscrepancy> iQueryable = singleEntityList.AsQueryable();
+					IQueryable<ContainerDiscrepancyList> iQueryableEntityList = containerDiscrepancyQuery.GetIQueryableEntityList(iQueryable);
 				    entityList = iQueryableEntityList.FirstOrDefault();
 
 			    }
@@ -99,13 +99,13 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 
 
 				IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
-				ContainerDiscrepanciesRepository  containerDiscrepanciesRepository = new ContainerDiscrepanciesRepository(MyContext);
-				IQueryable<ContainerDiscrepancies> entityPocos = containerDiscrepanciesRepository.GetContainerDiscrepancies(authToken.Tenant);
+				ContainerDiscrepancyRepository  containerDiscrepancyRepository = new ContainerDiscrepancyRepository(MyContext);
+				IQueryable<ContainerDiscrepancy> entityPocos = containerDiscrepancyRepository.GetContainerDiscrepancies(authToken.Tenant);
 
-				ContainerDiscrepanciesQuery containerDiscrepanciesQuery = new ContainerDiscrepanciesQuery(containerDiscrepanciesRepository);
-			    IQueryable<ContainerDiscrepanciesList> entityLists = containerDiscrepanciesQuery.GetIQueryableEntityList(entityPocos);
+				ContainerDiscrepancyQuery containerDiscrepancyQuery = new ContainerDiscrepancyQuery(containerDiscrepancyRepository);
+			    IQueryable<ContainerDiscrepancyList> entityLists = containerDiscrepancyQuery.GetIQueryableEntityList(entityPocos);
 				entityLists = entityLists.OrderBy(d => d.Id);
-				List<ContainerDiscrepanciesList> listResult = entityLists.ToList();
+				List<ContainerDiscrepancyList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 										
 				return Request.CreateResponse(HttpStatusCode.OK, listResult);
@@ -129,7 +129,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 				
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "ContainerDiscrepancies",
+                    ObjectTableName = "ContainerDiscrepancy",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
                     QuerySection = "ContainerDiscrepancies",
@@ -138,7 +138,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 					GetAll = filters.GetAll, 
                 };
 
-				List<ObjectField> ContainerDiscrepanciesObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ContainerDiscrepancies",tenant);
+				List<ObjectField> ContainerDiscrepancyObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ContainerDiscrepancy",tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
@@ -161,7 +161,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                             //}
                         //}
                         //ToDo: Get object field by name and set the remained filter properties
-						ObjectField field = ContainerDiscrepanciesObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+						ObjectField field = ContainerDiscrepancyObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                         if (field != null)
                         {
                             string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -188,7 +188,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 
                     foreach (QueryFilterItem filter in filters_list)
                     {
-                        ObjectField field = ContainerDiscrepanciesObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        ObjectField field = ContainerDiscrepancyObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                         if (field != null)
                         {
 
@@ -216,7 +216,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                 TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
                  { 
                      AdditionalTreeFilter = filters.TreeFilters,
-                     ObjectTableName = "ContainerDiscrepancies",
+                     ObjectTableName = "ContainerDiscrepancy",
                      ParentEntityId = filters.ParentEntityId,
                      ParentObjectTableName = filters.ParentObjectTableName, 
                      Tenant = tenant ,
@@ -225,31 +225,31 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 
 								
                 IShipmentsContext MyContext = ShipmentsContext.GetContext(tenant);
-                ContainerDiscrepanciesRepository  containerDiscrepanciesRepository = new ContainerDiscrepanciesRepository(MyContext);
-                IQueryable<ContainerDiscrepancies> entityPocos = containerDiscrepanciesRepository.GetContainerDiscrepancies(tenant);
+                ContainerDiscrepancyRepository  containerDiscrepancyRepository = new ContainerDiscrepancyRepository(MyContext);
+                IQueryable<ContainerDiscrepancy> entityPocos = containerDiscrepancyRepository.GetContainerDiscrepancies(tenant);
 
-                ContainerDiscrepanciesQuery containerDiscrepanciesQuery = new ContainerDiscrepanciesQuery(containerDiscrepanciesRepository);
+                ContainerDiscrepancyQuery containerDiscrepancyQuery = new ContainerDiscrepancyQuery(containerDiscrepancyRepository);
                 
 				QueryOperations nonListQueryOperation = new QueryOperations();
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
 				
-                entityPocos = genericFilter.GetFilteredQuery<ContainerDiscrepancies>(nonListQueryOperation, entityPocos);
+                entityPocos = genericFilter.GetFilteredQuery<ContainerDiscrepancy>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
-                IQueryable<ContainerDiscrepanciesList> entityLists = containerDiscrepanciesQuery.GetIQueryableEntityList(entityPocos);
+                IQueryable<ContainerDiscrepancyList> entityLists = containerDiscrepancyQuery.GetIQueryableEntityList(entityPocos);
 
-                entityLists = genericFilter.GetFilteredQuery<ContainerDiscrepanciesList>(listQueryOperation, entityLists);
-                entityLists = new TreeFilterQueryService().Apply<ContainerDiscrepanciesList>(entityLists , treeFilterQueryArgs);
+                entityLists = genericFilter.GetFilteredQuery<ContainerDiscrepancyList>(listQueryOperation, entityLists);
+                entityLists = new TreeFilterQueryService().Apply<ContainerDiscrepancyList>(entityLists , treeFilterQueryArgs);
 
 		      
 			  								
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
-                   PropertyInfo propInfo = typeof(ContainerDiscrepanciesList).GetProperty(queryOperations.SortByColumnName);
+                   PropertyInfo propInfo = typeof(ContainerDiscrepancyList).GetProperty(queryOperations.SortByColumnName);
                    
 
-                   ObjectField objectField = (from a in ContainerDiscrepanciesObjectFields
+                   ObjectField objectField = (from a in ContainerDiscrepancyObjectFields
                                            where a.FieldName == queryOperations.SortByColumnName
                                            select a).FirstOrDefault();
 
@@ -257,7 +257,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                    {
                     if (objectField.IsCustom)
                     {
-                        entityLists = sortClass.GetSorterQuery<ContainerDiscrepanciesList, string>(queryOperations, entityLists);
+                        entityLists = sortClass.GetSorterQuery<ContainerDiscrepancyList, string>(queryOperations, entityLists);
                     }
                     else
                     {
@@ -267,36 +267,36 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                         case "text":
 						case "lookup":
                             {
-                                entityLists = sortClass.GetSorterQuery<ContainerDiscrepanciesList, string>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<ContainerDiscrepancyList, string>(queryOperations, entityLists);
                                 break;
                             }
 						case "sigdouble":
 						case "double":
                             {
-                                entityLists = sortClass.GetSorterQuery<ContainerDiscrepanciesList, double>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<ContainerDiscrepancyList, double>(queryOperations, entityLists);
                                 break;
                             }
 						case "date":
                         case "datetime":
                             {
-                                entityLists = sortClass.GetSorterQuery<ContainerDiscrepanciesList, DateTime>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<ContainerDiscrepancyList, DateTime>(queryOperations, entityLists);
                                 break;
                             }
 						case "unsinteger":
                         case "integer":
                             {
-                                entityLists = sortClass.GetSorterQuery<ContainerDiscrepanciesList, int>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<ContainerDiscrepancyList, int>(queryOperations, entityLists);
                                 break;
                             }
                         case "boolean":
                             {
-                                entityLists = sortClass.GetSorterQuery<ContainerDiscrepanciesList, bool>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<ContainerDiscrepancyList, bool>(queryOperations, entityLists);
                                 break;
                             }
 						case "unsdecimal":
 						case "decimal":
                             {
-                                entityLists = sortClass.GetSorterQuery<ContainerDiscrepanciesList, decimal>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<ContainerDiscrepancyList, decimal>(queryOperations, entityLists);
                                 break;
                             }
                         default:
@@ -326,7 +326,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 				  entityLists = entityLists.Take(queryOperations.PageSize);
 
 				}
-			   List<ContainerDiscrepanciesList> listResult = entityLists.ToList();
+			   List<ContainerDiscrepancyList> listResult = entityLists.ToList();
 
                response.Result = listResult;
 			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);

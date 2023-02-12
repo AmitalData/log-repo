@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <entity
   Id="&quot;9d759438-33ca-4551-8956-2e98b00d3ebe&quot;"
-  ObjectTableName="&quot;ContainerDiscrepancies&quot;"
+  ObjectTableName="&quot;ContainerDiscrepancy&quot;"
   IsNew="true"
   DBTableName="&quot;ContainerDiscrepancies&quot;"
   DBTableOldNames="ContainerDiscrepancies"
@@ -40,7 +40,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;ContainerDiscrepancies&quot;"
-  Code="&quot;bfa3&quot;"
+  Code="&quot;c3d2&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"
@@ -72,7 +72,7 @@
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
-    ObjectTableName="&quot;ContainerDiscrepancies&quot;"
+    ObjectTableName="&quot;ContainerDiscrepancy&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="15"
@@ -93,6 +93,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Id&quot;"
     ListPropertyPath="&quot;Id&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -144,7 +145,7 @@
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
-    ObjectTableName="&quot;ContainerDiscrepancies&quot;"
+    ObjectTableName="&quot;ContainerDiscrepancy&quot;"
     FieldsDataType="&quot;Integer&quot;"
     MinLength="0"
     MaxLength="0"
@@ -165,6 +166,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Tenant&quot;"
     ListPropertyPath="&quot;Tenant&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -216,7 +218,7 @@
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
-    ObjectTableName="&quot;ContainerDiscrepancies&quot;"
+    ObjectTableName="&quot;ContainerDiscrepancy&quot;"
     FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="1000"
@@ -237,6 +239,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;SearchFields&quot;"
     ListPropertyPath="&quot;SearchFields&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -288,7 +291,7 @@
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
-    ObjectTableName="&quot;ContainerDiscrepancies&quot;"
+    ObjectTableName="&quot;ContainerDiscrepancy&quot;"
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;Container&quot;"
     MinLength="0"
@@ -310,6 +313,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ContainerID&quot;"
     ListPropertyPath="&quot;ContainerID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -360,7 +364,7 @@
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
-    ObjectTableName="&quot;ContainerDiscrepancies&quot;"
+    ObjectTableName="&quot;ContainerDiscrepancy&quot;"
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;Shipment&quot;"
     MinLength="0"
@@ -382,6 +386,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ShipmentId&quot;"
     ListPropertyPath="&quot;ShipmentId&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -432,7 +437,7 @@
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
-    ObjectTableName="&quot;ContainerDiscrepancies&quot;"
+    ObjectTableName="&quot;ContainerDiscrepancy&quot;"
     FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
     MaxLength="0"
@@ -453,6 +458,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;DiscrepancyDate&quot;"
     ListPropertyPath="&quot;DiscrepancyDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -501,7 +507,7 @@
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
-    ObjectTableName="&quot;ContainerDiscrepancies&quot;"
+    ObjectTableName="&quot;ContainerDiscrepancy&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="250"
@@ -522,6 +528,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Discrepancy&quot;"
     ListPropertyPath="&quot;Discrepancy&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -563,10 +570,19 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;ContainerDiscrepanciesHeaderScreen&quot;"
+    ObjectTableName="&quot;ContainerDiscrepancy&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
-      ObjectTableName="&quot;ContainerDiscrepancies&quot;"
+      ObjectTableName="&quot;ContainerDiscrepancy&quot;"
       EnglishName="&quot;Created&quot;"
       LocalName="&quot;Created&quot;"
       IsManualEntry="false"
@@ -579,7 +595,7 @@
       IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
-      ObjectTableName="&quot;ContainerDiscrepancies&quot;"
+      ObjectTableName="&quot;ContainerDiscrepancy&quot;"
       EnglishName="&quot;Updated&quot;"
       LocalName="&quot;Updated&quot;"
       IsManualEntry="false"
@@ -591,6 +607,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />
