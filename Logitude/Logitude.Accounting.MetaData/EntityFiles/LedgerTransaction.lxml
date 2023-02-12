@@ -6102,6 +6102,12 @@
       LocalDefaultText="&quot;סכום במט&quot;ז&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;LedgerTransaction.O.Currency&quot;"
+      DefaultText="&quot;Currency&quot;"
+      LocalDefaultText="&quot;מטבע&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
