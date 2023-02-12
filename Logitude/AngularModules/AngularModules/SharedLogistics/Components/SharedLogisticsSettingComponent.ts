@@ -302,7 +302,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
         if (this.TenantPM.IsDirty) {
             this.CurrentSession.StartBusyIndicatorSaving();
             this.tenantPMService.update(this.TenantPM).subscribe((res:any)=> {
-
+                SessionLocator.TenantPM.ApproveUploadedDocuments = this.TenantPM.ApproveUploadedDocuments;
                 this.CloseButtonClicked();
             });
         }

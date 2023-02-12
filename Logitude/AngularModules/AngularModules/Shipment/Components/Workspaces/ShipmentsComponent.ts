@@ -30,11 +30,8 @@ export class ShipmentsComponent {
     public TestToggleIsVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsApproveUploadedDocumentsEnabled: boolean = false;
-    public TenantPMService: TenantPMService;
-    public TenantPM: TenantPM;
     constructor() {
         this.myShipmentDomainService = new ShipmentDomainService();
-        this.TenantPMService = new TenantPMService();
         if (ObjectsLocator.GlobalSetting) {
             if (ObjectsLocator.GlobalSetting.DeploymentStage) {
                 if (ObjectsLocator.GlobalSetting.DeploymentStage.toLowerCase() == "amitalstorage") {
@@ -51,6 +48,8 @@ export class ShipmentsComponent {
 
     InitComponent() {
         this.CheckApproveUploadedDocuments();
+        this.LoadAllScreenData();
+        this.SetQueriesVisibility();
     }
     RefreshButtonClicked() {
         this.LoadAllScreenData();
@@ -66,14 +65,7 @@ export class ShipmentsComponent {
     }
 
     CheckApproveUploadedDocuments() {
-        this.CurrentSession.StartBusyIndicatorLoading();
-        this.TenantPMService.get(SessionLocator.TenantPM.Id).subscribe((response: ServiceResponse) => {
-            this.TenantPM = response.Result;
-            this.IsApproveUploadedDocumentsEnabled = this.TenantPM.ApproveUploadedDocuments;
-            this.CurrentSession.StopBusyIndicator();
-            this.LoadAllScreenData();
-            this.SetQueriesVisibility();
-        });
+        this.IsApproveUploadedDocumentsEnabled = SessionLocator.TenantPM.ApproveUploadedDocuments;
     }
 
     // Queries Features

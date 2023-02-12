@@ -1065,7 +1065,10 @@ export class ListComponent implements OnInit, AfterViewInit {
         let querySection: string = !AppTool.IsNullOrEmpty(this.MenuTableQuerySection) ? this.MenuTableQuerySection : this.ObjectTableName;
         return allQueries.filter(d => d.QuerySection == querySection || d.QuerySection == (querySection + "FollowUp"));
     }
-
+    AppendUploadedDocument: boolean;
+    CheckAppendUploadedDocumentFeature() {
+        this.AppendUploadedDocument = SessionLocator.TenantPM.ApproveUploadedDocuments;
+    }
     public UserId: string = SessionInfo.LoggedUserId;
     public Tenant: number = SessionInfo.LoggedUserTenant;
     GetQueries() {
@@ -1079,6 +1082,13 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.Queries = allQueries.filter(x => (FeatureLocator.IsFeatureGrantedByUniqeCode(x.FeatureUniqeCode)));
 
         }
+        if (this.ObjectTableName == "Shipment") {
+            this.CheckAppendUploadedDocumentFeature();
+            if (this.AppendUploadedDocument == false) {
+                this.Queries = allQueries.filter(x => (x.Code != "Pending Approval Documents" && x.UserId == null && x.SystemLevel == true));
+            }
+        }
+
         this.UserQueries = allQueries.filter(x => x.UserId != null && x.Tenant == SessionInfo.LoggedUserTenant);
 
         if (this.listArgs.Perspective != null && this.listArgs.IgnoreSelectedPerspective == false) {
