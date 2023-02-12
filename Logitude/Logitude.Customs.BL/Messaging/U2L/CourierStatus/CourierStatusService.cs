@@ -105,7 +105,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CourierStatus
                 var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(_MyDeclarationPM.Tenant), _MyDeclarationPM.Tenant);
                 var feature = features.Features.FirstOrDefault(x => x.Code == "UpdateDistributionStatus");
          
-                if(feature == null || (feature != null && newDeclarationCourierStatusPM.LastMileStatusDate < AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCourierStatus.LastMileStatusDate, "_LogitudeCourierStatus.LastMileStatusDate")))
+                if(feature == null || (feature != null && (newDeclarationCourierStatusPM.LastMileStatusDate == null || newDeclarationCourierStatusPM.LastMileStatusDate < AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCourierStatus.LastMileStatusDate, "_LogitudeCourierStatus.LastMileStatusDate"))))
                 {
                     DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
 
