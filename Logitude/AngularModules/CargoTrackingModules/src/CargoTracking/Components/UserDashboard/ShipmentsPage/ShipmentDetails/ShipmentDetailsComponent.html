@@ -720,12 +720,12 @@
                         </div>
                         <div>
                             <div class="title">Declaration Status</div>
-                            <div class="description TextTrimming">
-                                {{cargoTrackingShipmentPM.CustomsData.DeclarationStatus}}
-                                <a *ngIf="this.cargoTrackingShipmentPM.CustomsData.DeclarationStatus && this.cargoTrackingShipmentPM.CustomsData.DeclarationStatus.length > 18"
+                            
+                                <!-- <a *ngIf="this.cargoTrackingShipmentPM.CustomsData.DeclarationStatus && this.cargoTrackingShipmentPM.CustomsData.DeclarationStatus.length > 18"
                                     (click)="ShowMoreWindow(this.cargoTrackingShipmentPM.CustomsData.DeclarationStatus)"
-                                    style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
-                            </div>
+                                    style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a> -->
+                                    <custom-label *ngIf="this.cargoTrackingShipmentPM.CustomsData.DeclarationStatus && this.cargoTrackingShipmentPM.CustomsData.DeclarationStatus.length > 18">{{this.cargoTrackingShipmentPM.CustomsData?.DeclarationStatus}}</custom-label>
+
                         </div>
                         <div>
                             <div class="title">IMPORTER VAT</div>
@@ -760,12 +760,13 @@
                         </div>
                         <div>
                             <div class="title">goods description</div>
-                            <div class="description TextTrimming">{{cargoTrackingShipmentPM.CustomsData.GoodsDescription
-                                }}
-                                <a *ngIf="this.cargoTrackingShipmentPM.CustomsData.GoodsDescription && this.cargoTrackingShipmentPM.CustomsData.GoodsDescription.length > 18"
+                            
+                                <!-- <a *ngIf="this.cargoTrackingShipmentPM.CustomsData.GoodsDescription && this.cargoTrackingShipmentPM.CustomsData.GoodsDescription.length > 18"
                                     (click)="ShowMoreWindow(this.cargoTrackingShipmentPM.CustomsData.GoodsDescription)"
-                                    style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
-                            </div>
+                                    style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a> -->
+                          
+                            <custom-label >{{this.cargoTrackingShipmentPM.CustomsData?.GoodsDescription}}</custom-label>
+
                         </div>
                         <div>
                             <div class="title">total taxes nis</div>
