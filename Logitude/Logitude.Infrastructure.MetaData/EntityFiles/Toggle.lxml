@@ -42,7 +42,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;38f3&quot;"
+  Code="&quot;afcf&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -930,6 +930,11 @@
       Name="&quot;Stimulsoft Printing&quot;"
       SearchFields="&quot;SSP,Stimulsoft Printing&quot;"
       Description="&quot;Stimulsoft Printing&quot;" />
+    <Record
+      Code="&quot;RDT&quot;"
+      Name="&quot;Digital Portal Required Documents&quot;"
+      Description="&quot;Toggle Feature for Digital Portal Required Documents&quot;"
+      SearchFields="&quot;RDT,Digital Portal Required Documents&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
