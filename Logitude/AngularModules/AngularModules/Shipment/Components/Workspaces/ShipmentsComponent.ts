@@ -27,9 +27,9 @@ export class ShipmentsComponent {
     private myShipmentDomainService: ShipmentDomainService;
     public TestToggleIsVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsApproveUploadedDocumentsEnabled: boolean = false;
     constructor() {
         this.myShipmentDomainService = new ShipmentDomainService();
-
         if (ObjectsLocator.GlobalSetting) {
             if (ObjectsLocator.GlobalSetting.DeploymentStage) {
                 if (ObjectsLocator.GlobalSetting.DeploymentStage.toLowerCase() == "amitalstorage") {
@@ -60,7 +60,6 @@ export class ShipmentsComponent {
     ReloadUsersQuery() {
         this.ReloadUserQueries.emit();
     }
-
 
     // Queries Features
     public IsNewButtonVisible: boolean = false;
@@ -117,7 +116,7 @@ export class ShipmentsComponent {
         this.IsQueryVisible_MyFollowUps = FeatureLocator.HasFeaturePermession("Shipment", "MYFOLLOWUPS") ? true : false;
         this.IsQueryVisible_AllShipments = FeatureLocator.HasFeaturePermession("Shipment", "ALLSHIPMENTS") ? true : false;
         this.IsQueryVisible_AllMasters = FeatureLocator.HasFeaturePermession("Shipment", "ALLMASTERS") ? true : false;
-        this.IsQueryVisible_PendingApprovalDocuments = FeatureLocator.HasFeaturePermession("Shipment", "Shipment.Q.PendingApprovalDocuments") ? true : false;
+        this.IsQueryVisible_PendingApprovalDocuments = FeatureLocator.HasFeaturePermession("Shipment", "Shipment.Q.PendingApprovalDocuments") ? SessionLocator.TenantPM.ApproveUploadedDocuments : false;
 
         this.IsQueryVisible_CanceledShipments = FeatureLocator.HasFeaturePermession("Shipment", "CANCELLEDSHIPMENTS") ? true : false;
         if (this.IsQueryVisible_AllFollowUps || this.IsQueryVisible_MyFollowUps || this.IsQueryVisible_AllShipments || this.IsQueryVisible_AllMasters || this.IsQueryVisible_CanceledShipments || this.IsQueryVisible_PendingApprovalDocuments) {
