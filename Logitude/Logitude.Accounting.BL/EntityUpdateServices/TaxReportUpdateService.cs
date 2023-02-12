@@ -189,17 +189,18 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             List<TaxReportLinePM> taxReportLines = GetTaxReportLines(taxReportPM.Id, taxReportPM.Tenant);
             if (taxReportLines != null && taxReportLines.Count > 0)
             {
-                var duplicates = taxReportLines.GroupBy(ln =>
+                var dup = taxReportLines.GroupBy(ln =>
                 new
                 {
                     VatNumber = ln.VatNumber,
                     Reference = ln.Reference
-                }).OrderByDescending(g => g.Key.VatNumber).ThenBy(g => g.Key.Reference)
-                .Select(g => new
+                }).OrderByDescending(g => g.Key.VatNumber).ThenBy(g => g.Key.Reference);
+
+                var duplicates = dup.Select(g => new
                 {
                     VatNumber = g.Key.VatNumber,
                     Reference = g.Key.Reference,
-                    LineNumbers = g.OrderBy(x => x.Line).Select(x => x.Line).ToList()
+                    LineNumbers = g.OrderBy(x => x.Line).Skip(1).Select(x => x.Line)
                 })
                 .Where(g => g.LineNumbers.Count() > 1).ToList();
                 
