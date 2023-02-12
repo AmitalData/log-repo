@@ -3,6 +3,7 @@ using Logitude.BL.DataContracts;
 using Logitude.BL.ShipmentsModel.CloseTables;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
+using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -83,12 +84,15 @@ namespace WebFreight.Web.ContainerTracking
         private void AddContainerDiscrepancy(string containerId, string shipmentId, string reasonOfDiscrepancy)
         {
             ContainerDiscrepancy containerDiscrepancy = new ContainerDiscrepancy();
+            containerDiscrepancy.Id = IdCounter.GetNumber("ContainerDiscrepancy", tenant);
             containerDiscrepancy.ContainerId = containerId;
             containerDiscrepancy.ShipmentId = shipmentId;
             containerDiscrepancy.Discrepancy = reasonOfDiscrepancy;
             containerDiscrepancy.DiscrepancyDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;   
             containerDiscrepancy.Tenant = tenant;
+            containerDiscrepancy.SearchFields = containerPM.ShipmentNumber + "," + containerPM.ContainerNumber + "," + containerDiscrepancy.DiscrepancyDate;
             containerDiscrepancyRepository.Add(containerDiscrepancy);
+            containerDiscrepancyRepository.SubmitChanges();
         }
 
         private void MapPreCarriage()
@@ -135,10 +139,11 @@ namespace WebFreight.Web.ContainerTracking
 
             if (!containerTrackingHelper.IsSameLocationUsingId(containerPM.PreCarriageLocationPortId, shipmentPM.PreCarriageFromPortId))
             {
-                //ContainedescRepos  . create();
-                //save execiton
+                var shipmentUnloCode = GetUnloCodeFromPortId(shipmentPM.PreCarriageFromPortId);
 
-                AddContainerDiscrepancy(containerPM.Id, shipmentPM.Id, $@"Shipment Pre Carriage From port {shipmentPM.PreCarriageFromPortId} not equal to container POL port {containerPM.PreCarriageLocationPortId} - shipment ETD not updated.");
+                if(shipmentUnloCode == null) AddContainerDiscrepancy(containerPM.Id, shipmentPM.Id, $@"Shipment pre carriage from port is empty - shipment ETD not updated.");
+
+                AddContainerDiscrepancy(containerPM.Id, shipmentPM.Id, $@"Shipment pre carriage from port {shipmentUnloCode} not equal to container POL port {containerPM.PreCarriageLocation} - shipment ETD not updated.");
                 return;
             }
     
@@ -156,6 +161,14 @@ namespace WebFreight.Web.ContainerTracking
                 AddContainerDiscrepancy(containerPM.Id, shipmentPM.Id, $@"Shipment Pre Carriage ATD already has a value of {shipmentPM.PreCarriageATD} - did not update new container value {containerPM.PreCarriageATD}.");
             }
             
+        }
+        private string GetUnloCodeFromPortId(string portId)
+        {
+            var newPort = portQuery.GetSinglePM(portId, tenant);
+            if (newPort == null) return null;
+            var combineCode = newPort.CombinedCode;
+            return combineCode;
+
         }
 
         private void MapVizionOnCarriage()
@@ -184,7 +197,9 @@ namespace WebFreight.Web.ContainerTracking
 
             if (!containerTrackingHelper.IsSameLocationUsingId(containerPM.OnCarriageLocationPortId, shipmentPM.OnCarriageToPortId))
             {
-                AddContainerDiscrepancy(containerPM.Id, shipmentPM.Id, $@"Shipment On Carriage From port {shipmentPM.OnCarriageToPortCode} not equal to container POL port {containerPM.OnCarriageLocationPortId} - shipment ETD not updated.");
+                var shipmentUnloCode = GetUnloCodeFromPortId(shipmentPM.OnCarriageToPortId);
+                if (shipmentUnloCode == null) AddContainerDiscrepancy(containerPM.Id, shipmentPM.Id, $@"Shipment on carriage to port is empty - shipment ETD not updated.");
+                AddContainerDiscrepancy(containerPM.Id, shipmentPM.Id, $@"Shipment On Carriage From port {shipmentUnloCode} not equal to container POL port {containerPM.OnCarriageLocation} - shipment ETD not updated.");
                 return;
             }
             //same
@@ -427,7 +442,11 @@ namespace WebFreight.Web.ContainerTracking
         {
             if (!containerTrackingHelper.IsSameLocationUsingId((string)GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + "FromPortId"), portId))
             {
-                AddContainerDiscrepancy(containerPM.Id, shipmentPM.Id, $@"Transshipment{transshipmentLegIndex} From port {shipmentPM.OnCarriageToPortId} not equal to container Transshipment{transshipmentLegIndex} From port {containerPM.OnCarriageLocationPortId} - shipment ETA not updated.");
+
+                var shipmentUnloCode = getTransshipmentUnloCode(transshipmentLegIndex);
+                if (shipmentUnloCode == null) AddContainerDiscrepancy(containerPM.Id, shipmentPM.Id, $@"Transshipment{transshipmentLegIndex} From port is Empty - shipment ETD not updated.");
+                var containerUnloCode = GetUnloCodeFromPortId(portId);
+                AddContainerDiscrepancy(containerPM.Id, shipmentPM.Id, $@"Transshipment{transshipmentLegIndex} From port {shipmentUnloCode} not equal to container Transshipment{transshipmentLegIndex} From port {containerUnloCode} - shipment ETA not updated.");
                 return;
             }
             //same
@@ -461,6 +480,13 @@ namespace WebFreight.Web.ContainerTracking
                     AddContainerDiscrepancy(containerPM.Id, shipmentPM.Id, $@"Transshipment{transshipmentLegIndex} ATD already has a value of {transshipmentATDInShipment} - did not update new container value {updatedFields.ActualDate}.");
                 //same
             }
+        }
+        private string getTransshipmentUnloCode(int? transshipmentLegIndex)
+        {
+            if(transshipmentLegIndex == 1) return GetUnloCodeFromPortId(shipmentPM.Transshipment1FromPortId);
+            if (transshipmentLegIndex == 2) return GetUnloCodeFromPortId(shipmentPM.Transshipment2FromPortId);
+
+            return GetUnloCodeFromPortId(shipmentPM.Transshipment3FromPortId);
         }
         private void SetTransshipmentLegDates(int? transshipmentLegIndex, MilestoneDataUpdatedFields updatedFields, string key)
         {
