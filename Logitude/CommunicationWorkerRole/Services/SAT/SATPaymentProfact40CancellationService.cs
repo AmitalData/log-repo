@@ -23,117 +23,103 @@ namespace CommunicationWorkerRole.Services.SAT
 		public static void SendRequest(SATPaymentProfact40CancellationServiceArgs args)
 		{
 			CommunicationLog waitingCommLog = args.WaitingCommLog;
-			CommunicationLogRepository communicationLogRep = args.CommunicationLogRep;
 			Simplog.Data.InvoiceModel.EntityPOCOs.SATInterfaceSetting satSetting = args.SatSetting;
 			Simplog.Data.InvoiceModel.Repositories.ARPaymentRepository arPaymentRep = args.ARPaymentRep;
 			Simplog.Data.InvoiceModel.EntityPOCOs.ARPayment payment = args.ARPayment;
 			ARInvoiceRepository arInvoiceRep = args.ARInvoiceRep;
-			bool isConcurrencyToggleEnabled = FeatureToggleHelper.HasFeatureToggle("INU", payment.Tenant);
 
-			SATInterfaceHelper sATInterfaceHelper = new SATInterfaceHelper();
-
-			bool isProduction = satSetting.Token != "mvpNUXmQfK8=";
-			Profact.TimbraCFDI40.Conector conector = new Profact.TimbraCFDI40.Conector(isProduction);
-			conector.EstableceCredenciales(satSetting.Token);
-
+			Profact.TimbraCFDI40.Conector conector = SATBaseService.ConnectToSAT(satSetting.Token);
 			ComprobanteDetails comprobanteDetails = SATInterfaceWorkerRole.GetcomprobanteDetails(payment.SATXML);
+			if (comprobanteDetails == null || comprobanteDetails.ComplementoAny == null) return;
 
-			if (comprobanteDetails.ComplementoAny != null)
+			System.Xml.XmlElement sATXmlElement = SATBaseService.GetSATXmlElement(comprobanteDetails.ComplementoAny);
+			if (sATXmlElement == null) return;
+
+			Profact.TimbraCFDI.TimbreFiscalDigital taxStampDigital = SATBaseService.GetTaxStampDigital(sATXmlElement.OuterXml);
+
+			string rfcEmisor = comprobanteDetails.RfcEmisor;
+			string folioFiscal = taxStampDigital.UUID?.Trim();
+			const string motivoCancelaOperation = "03";
+
+			ResultadoCancelacion resultadoCancelacion = conector.CancelaCFDI40(rfcEmisor, folioFiscal, motivoCancelaOperation, "");
+
+			if (resultadoCancelacion.Exitoso)
 			{
-				List<System.Xml.XmlElement> myLXmlComplementos = comprobanteDetails.ComplementoAny.ToList<System.Xml.XmlElement>();
-				var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
-				if (timbreFiscalDigitalElement != null)
-				{
-					Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
-
-					string rfcEmisor = comprobanteDetails.RfcEmisor;
-
-					string folioFiscal = digitalTi.UUID.Trim();
-
-					const string motivoCancelaOperation = "03";
-
-					ResultadoCancelacion resultadoCancelacion = conector.CancelaCFDI40(rfcEmisor, folioFiscal, motivoCancelaOperation, "");
-
-					string SATTransferStatusCode = null;
-					string transmissionError = null;
-
-					if (resultadoCancelacion.Exitoso)
-					{
-						waitingCommLog.CommunicationStatusTypeCode = "D";
-						waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-						waitingCommLog.DoneDateUTC = DateTime.UtcNow;
-						waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-						waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
-						communicationLogRep.Update(waitingCommLog);
-						communicationLogRep.SubmitChanges();
-
-						SATTransferStatusCode = "TD";
-						transmissionError = null;
-
-						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment.Id, waitingCommLog.Tenant, comprobanteDetails.ComplementoAny[0], arInvoiceRep, arPaymentRep);
-					}
-					else
-					{
-						string transError = resultadoCancelacion.Descripcion;
-						if (transError.Contains("Comprobante ya está en proceso de cancelación") || transError == "El comprobante será cancelado")
-						{
-							waitingCommLog.CommunicationStatusTypeCode = "D";
-							waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-							waitingCommLog.DoneDateUTC = DateTime.UtcNow;
-							waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-							waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
-							communicationLogRep.Update(waitingCommLog);
-							communicationLogRep.SubmitChanges();
-
-							SATTransferStatusCode = "CS";
-							transmissionError = null;
-						}
-
-						else
-						{
-							if (waitingCommLog.Retries == 4)
-							{
-								if (!string.IsNullOrEmpty(resultadoCancelacion.Descripcion) && payment != null)
-								{
-									transError = resultadoCancelacion.Descripcion.Replace("Error en la validación de estructura xsd:", "").ToString().Trim();
-									if (!string.IsNullOrEmpty(resultadoCancelacion.TipoExcepcion))
-									{
-										transError += Environment.NewLine + resultadoCancelacion.TipoExcepcion;
-									}
-									if (transError != payment.TransmissionError || payment.SATTransferStatusCode != "TE")
-									{
-										SATTransferStatusCode = "TE";
-										transmissionError = transError;
-									}
-								}
-							}
-
-							throw new Exception("Failed," + transError);
-						}
-					}
-
-					if (isConcurrencyToggleEnabled)
-					{
-						args.ARPaymentPM.IsUpdatedBySAT = true;
-						args.ARPaymentPM.SATTransferStatusCode = SATTransferStatusCode;
-						args.ARPaymentPM.TransmissionError = transmissionError;
-
-						IInvoiceContext invoiceContext = InvoiceContext.GetContext(payment.Tenant);
-						ARPaymentService aRPaymentService = new ARPaymentService(invoiceContext, payment.Tenant);
-						aRPaymentService.Update(args.ARPaymentPM);
-					}
-
-					else
-					{
-						payment.SATTransferStatusCode = SATTransferStatusCode;
-						payment.TransmissionError = transmissionError;
-						arPaymentRep.Update(payment);
-						arPaymentRep.SubmitChanges();
-					}
-				}
+				UpdateCommunicationLog(args, "D");
+				UpdatePayment(args, SATData.SATTransferedStatusCode, null);
+				new SATInterfaceHelper().UpdatePaymentInvoicesSATStatus(payment.Id, waitingCommLog.Tenant, comprobanteDetails.ComplementoAny[0], arInvoiceRep, arPaymentRep);
 			}
+
+
+			if (SATBaseService.IsWaitingToCancelledFromSAT(resultadoCancelacion))
+			{
+				UpdateCommunicationLog(args, "D");
+				UpdatePayment(args, SATData.SATCancelledWaitingStatusCode, null);
+				return;
+			}
+
+			if (args.WaitingCommLog.Retries != 4)
+			{
+				throw new Exception("Failed," + resultadoCancelacion.Descripcion);
+			}
+
+			if (string.IsNullOrEmpty(resultadoCancelacion.Descripcion))
+			{
+				throw new Exception("Failed," + resultadoCancelacion.Descripcion);
+			}
+
+			string transError = resultadoCancelacion.Descripcion.Replace("Error en la validación de estructura xsd:", "").ToString().Trim();
+			if (!string.IsNullOrEmpty(resultadoCancelacion.TipoExcepcion))
+			{
+				transError += Environment.NewLine + resultadoCancelacion.TipoExcepcion;
+			}
+			if (transError != payment.TransmissionError || payment.SATTransferStatusCode != SATData.SATTransferedWithErrorStatusCode)
+			{
+				UpdatePayment(args, SATData.SATTransferedWithErrorStatusCode, transError);
+			}
+
+			throw new Exception("Failed," + transError);
 		}
-	}
+
+		private static void UpdatePayment(SATPaymentProfact40CancellationServiceArgs args, string SATTransferStatusCode, string transmissionError)
+		{
+			bool isConcurrencyToggleEnabled = FeatureToggleHelper.HasFeatureToggle("INU", args.ARPayment.Tenant);
+
+			if (isConcurrencyToggleEnabled)
+			{
+
+				UpdateARPaymentUsingPMService(args, SATTransferStatusCode, transmissionError);
+				return;
+			}
+
+			args.ARPayment.SATTransferStatusCode = SATTransferStatusCode;
+			args.ARPayment.TransmissionError = transmissionError;
+			args.ARPaymentRep.Update(args.ARPayment);
+			args.ARPaymentRep.SubmitChanges();
+		}
+
+		private static void UpdateARPaymentUsingPMService(SATPaymentProfact40CancellationServiceArgs args, string SATTransferStatusCode, string transmissionError)
+		{
+			args.ARPaymentPM.IsUpdatedBySAT = true;
+			args.ARPaymentPM.SATTransferStatusCode = SATTransferStatusCode;
+			args.ARPaymentPM.TransmissionError = transmissionError;
+
+			IInvoiceContext invoiceContext = InvoiceContext.GetContext(args.ARPaymentPM.Tenant);
+			ARPaymentService aRPaymentService = new ARPaymentService(invoiceContext, args.ARPaymentPM.Tenant);
+			aRPaymentService.Update(args.ARPaymentPM);
+		}
+
+		private static void UpdateCommunicationLog(SATPaymentProfact40CancellationServiceArgs args, string communicationStatusType)
+        {
+			args.WaitingCommLog.CommunicationStatusTypeCode = communicationStatusType;
+			args.WaitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(args.WaitingCommLog.Tenant);
+			args.WaitingCommLog.DoneDateUTC = DateTime.UtcNow;
+			args.WaitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(args.WaitingCommLog.Tenant);
+			args.WaitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
+			args.CommunicationLogRep.Update(args.WaitingCommLog);
+			args.CommunicationLogRep.SubmitChanges();
+        }
+    }
 
 	public class SATPaymentProfact40CancellationServiceArgs
 	{

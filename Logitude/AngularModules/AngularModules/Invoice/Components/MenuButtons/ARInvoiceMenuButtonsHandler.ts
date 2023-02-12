@@ -887,67 +887,23 @@ export class ARInvoiceMenuButtonsHandler {
     }
 
     private OpenValidateApprovalSendToSATErrorWindow(result, ProceedToApproveMessage) {
-        const confirmWindow = new ConfirmWindow();
-        confirmWindow.Width = 420;
-        confirmWindow.Height = 185;
-        confirmWindow.ShowCancelButton = true;
-        confirmWindow.CancelButtonText = "Cancel";
-        confirmWindow.ShowNoButton = false;
-        confirmWindow.IsMultipleMessages = true;
-        confirmWindow.YesButtonText = "Continue";
-        confirmWindow.Title = "Error in VAT Amounts";
-
-        confirmWindow.Show(this.GetConfirmVatAmountAdjusments(result));
-
-        confirmWindow.WindowClosed.subscribe(event => {
-            if (confirmWindow.Yes) {
-                this.UpdateARInvoiceVatAmounts(result);
-                this.ProceedToApprove(ProceedToApproveMessage);
-            }
-            else if (confirmWindow.Cancel) {
+        let logWindow = new LogitudeWindow();
+        logWindow.Width = 450;
+        logWindow.Height = 190;
+        logWindow.Title = "Adjustments to VAT Amounts";
+        logWindow.WindowArgs = { ARInvoicePM : this.EntityPM, ARInvoiceLinesVATAmountsAdjustments: result };
+        logWindow.Show('./Invoice/Components/SAT/ARInvoiceLinesVATAmountsAdjustmentsComponent');
+        logWindow.WindowClosed.subscribe(s => {
+            if (s != "UpdateInvoice") {
                 this.StopFlags();
+                return;
             }
-        });
-    }
 
-    GetConfirmVatAmountAdjusments(result) {
-        let message = "Due to the SAT Invoice Transmission we calculate the VAT amount per line. There is a difference between the lines VAT sum and the total VAT at the invoice level.<br> ";
-
-        result.CorrectedARInvoiceTrasladoLines.forEach(line => {
-            let originalLine = this.GetOriginalInvoiceLineToBeCorrected(line);
-            if (originalLine) message += "<br>line with amount (" + originalLine.InvoiceCurrencyAmount + ") will be adjusted to (" + line.InvoiceCurrencyAmount + ")";
+            this.ProceedToApprove(ProceedToApproveMessage);
         });
 
-        result.CorrectedARInvoiceRetencionLines.forEach(line => {
-            let originalLine = this.GetOriginalInvoiceLineToBeCorrected(line);
-            if (originalLine) message += "<br>line with amount (" + originalLine.InvoiceCurrencyAmount + ") will be adjusted to (" + line.InvoiceCurrencyAmount + ")";
-        });
-
-        return message;
     }
 
-    UpdateARInvoiceVatAmounts(result: any) {
-        result.CorrectedARInvoiceTrasladoLines.forEach(line => {
-            this.UpdateARInvoiceLineVatAmount(line);
-        });
-
-        result.CorrectedARInvoiceRetencionLines.forEach(line => {
-            this.UpdateARInvoiceLineVatAmount(line);
-        });
-    }
-
-    private UpdateARInvoiceLineVatAmount(line: any) {
-        let originalLine = this.GetOriginalInvoiceLineToBeCorrected(line);
-        if (!originalLine) return;
-        if (originalLine.ForiegnCurrencyAmount == originalLine.InvoiceCurrencyAmount) {
-            originalLine.ForiegnCurrencyAmount = line.InvoiceCurrencyAmount;
-        }
-        originalLine.InvoiceCurrencyAmount = line.InvoiceCurrencyAmount;
-    }
-
-    GetOriginalInvoiceLineToBeCorrected(line: any) {
-        return this.EntityPM.InvoiceLines.filter(Invoiceline => Invoiceline.ProfitCurrencyAmount == line.ProfitCurrencyAmount && Invoiceline.VatTypeId == line.VatTypeId && Invoiceline.InvoiceCurrencyAmount != line.InvoiceCurrencyAmount)[0];
-    }
 
     ProceedToApprove(msg: string) {
         this.EntityPM.SetVoided = false;
