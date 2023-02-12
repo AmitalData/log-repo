@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="21">
+  <Sql Version="22">
     <![CDATA[
 	  delete from DigitalTextCodes where Id != ''
 	  
@@ -7,9 +7,7 @@
 	  declare @generalObjectTableId as varchar(15)
 	  set @generalObjectTableId = (select Id from ObjectTables where [Name] = 'General' and Tenant = 0 )
 	  declare @commonProfileId as varchar(15)
-	  set @commonProfileId = (select Id from DigitalProfiles where [Name] = 'Common' and Tenant = 0 )
-	  
-	  
+	  set @commonProfileId = (select Id from DigitalProfiles where [Name] = 'Common' and Tenant = 0 )	  
 	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
 	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate,  ProfileId, Labels) 
 	  values (@NewEntityId, 0, @generalObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @commonProfileId,
@@ -2767,6 +2765,24 @@
 			"TextCode": "Shipment.F.OnCarriageToPortName",
 			"DefaultText": "OnCarriage to port name",
 			"FieldCode": "Shipment.OnCarriageToPortName",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.VolumeInCBM",
+			"DefaultText": "Volume in CBM",
+			"FieldCode": "Shipment.VolumeInCBM",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.GrossWeightInKG",
+			"DefaultText": "Gross weight In KG",
+			"FieldCode": "Shipment.GrossWeightInKG",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.ChargeableWeightInKG",
+			"DefaultText": "Chargeable Weight",
+			"FieldCode": "Shipment.ChargeableWeightInKG",
 		    "DisplayText": ""
 		},
 		{
@@ -5576,6 +5592,24 @@
 			"TextCode": "Shipment.F.OnCarriageToPortName",
 			"DefaultText": "OnCarriage to port name",
 			"FieldCode": "Shipment.OnCarriageToPortName",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.VolumeInCBM",
+			"DefaultText": "Volume in CBM",
+			"FieldCode": "Shipment.VolumeInCBM",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.GrossWeightInKG",
+			"DefaultText": "Gross weight In KG",
+			"FieldCode": "Shipment.GrossWeightInKG",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.ChargeableWeightInKG",
+			"DefaultText": "Chargeable Weight",
+			"FieldCode": "Shipment.ChargeableWeightInKG",
 		    "DisplayText": ""
 		},
 		{
