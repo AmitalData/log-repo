@@ -31,8 +31,8 @@ import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { CardPMService } from '"../../../Common/Services/StandardPMs/CardPMService';
 import { ServiceLocator } from '../../Locators/ServiceLocator';
 import { ObjectsLocator } from '../../Locators/ObjectsLocator';
-import { CustomerPMService } from '../../../Common/Services/StandardPMs/CustomerPMService';
-import { CustomerPM } from '../../../Common/EntityPMs/CustomerPM';
+import { CustomerListService } from '../../../Common/Services/StandardLists/CustomerListService';
+import { CustomerList } from '../../../Common/EntityLists/CustomerList';
 
 @Component({
     
@@ -85,10 +85,10 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     IsLoadDocumentTypeListsComplete: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     IsApprovePendingDocumentsEnabled:boolean = false;
-    public Customer: CustomerPM;
+    public Customer: CustomerList;
     public IsDigitalPortalInvitedCustomer: boolean = false;
     public IsDocumentsNeedApprove: boolean = false;
-    public CustomerPMService: CustomerPMService;
+    public CustomerListService: CustomerListService;
     constructor(public _documentTypeListService: DocumentTypeListService , public _imageLibraryService: ImageLibraryService,public entityArgs: EntityArgs, public _documentTypeListExtendedService: DocumentTypeListExtendedService, public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService) {
         super();
         this.ItemsSource = new ObservableCollection([]);
@@ -98,7 +98,6 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
             this.documentsFilingPMService = new DocumentsFilingPMService();
 
         }
-        this.CustomerPMService = new CustomerPMService();
         this.Listen();
         this.CurrentSession.StartBusyIndicatorLoading();
     }
@@ -292,7 +291,8 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     }
 
     CheckCustomerInvitationStatus() {
-        this.CustomerPMService.get(this.EntityPM.CustomerId).subscribe((response: any) => {
+        this.CustomerListService = new CustomerListService();
+        this.CustomerListService.getSingle(this.EntityPM.CustomerId).subscribe((response: any) => {
             this.CurrentSession.StartBusyIndicatorLoading();
             this.Customer = response.Result;
             if (this.Customer.SharedLogisticsInvitationStatusName != "Not Invited")

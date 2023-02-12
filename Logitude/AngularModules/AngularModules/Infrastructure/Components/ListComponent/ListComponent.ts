@@ -1065,12 +1065,16 @@ export class ListComponent implements OnInit, AfterViewInit {
         let querySection: string = !AppTool.IsNullOrEmpty(this.MenuTableQuerySection) ? this.MenuTableQuerySection : this.ObjectTableName;
         return allQueries.filter(d => d.QuerySection == querySection || d.QuerySection == (querySection + "FollowUp"));
     }
-    AppendUploadedDocument: boolean;
-    CheckAppendUploadedDocumentFeature() {
-        this.AppendUploadedDocument = SessionLocator.TenantPM.ApproveUploadedDocuments;
-    }
     public UserId: string = SessionInfo.LoggedUserId;
     public Tenant: number = SessionInfo.LoggedUserTenant;
+    ApplyQueriesAdvancedFilter(allQueries:any) {
+        if (this.ObjectTableName != "Shipment")
+            return this.Queries;
+        if (SessionLocator.TenantPM.ApproveUploadedDocuments == false) {
+            return allQueries.filter(x => (x.Code != "Pending Approval Documents" && x.UserId == null && x.SystemLevel == true));
+        }
+        return this.Queries;
+    }
     GetQueries() {
 
         var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
@@ -1082,12 +1086,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.Queries = allQueries.filter(x => (FeatureLocator.IsFeatureGrantedByUniqeCode(x.FeatureUniqeCode)));
 
         }
-        if (this.ObjectTableName == "Shipment") {
-            this.CheckAppendUploadedDocumentFeature();
-            if (this.AppendUploadedDocument == false) {
-                this.Queries = allQueries.filter(x => (x.Code != "Pending Approval Documents" && x.UserId == null && x.SystemLevel == true));
-            }
-        }
+        this.Queries = this.ApplyQueriesAdvancedFilter(allQueries);
 
         this.UserQueries = allQueries.filter(x => x.UserId != null && x.Tenant == SessionInfo.LoggedUserTenant);
 

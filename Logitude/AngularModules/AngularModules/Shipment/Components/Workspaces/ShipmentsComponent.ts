@@ -13,8 +13,6 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
-import { TenantPMService } from '../../../Common/Services/StandardPMs/TenantPMService';
-import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
 declare var window: any;
 
 @Component({
@@ -47,7 +45,6 @@ export class ShipmentsComponent {
     }
 
     InitComponent() {
-        this.CheckApproveUploadedDocuments();
         this.LoadAllScreenData();
         this.SetQueriesVisibility();
     }
@@ -62,10 +59,6 @@ export class ShipmentsComponent {
     }
     ReloadUsersQuery() {
         this.ReloadUserQueries.emit();
-    }
-
-    CheckApproveUploadedDocuments() {
-        this.IsApproveUploadedDocumentsEnabled = SessionLocator.TenantPM.ApproveUploadedDocuments;
     }
 
     // Queries Features
@@ -123,7 +116,7 @@ export class ShipmentsComponent {
         this.IsQueryVisible_MyFollowUps = FeatureLocator.HasFeaturePermession("Shipment", "MYFOLLOWUPS") ? true : false;
         this.IsQueryVisible_AllShipments = FeatureLocator.HasFeaturePermession("Shipment", "ALLSHIPMENTS") ? true : false;
         this.IsQueryVisible_AllMasters = FeatureLocator.HasFeaturePermession("Shipment", "ALLMASTERS") ? true : false;
-        this.IsQueryVisible_PendingApprovalDocuments = FeatureLocator.HasFeaturePermession("Shipment", "Shipment.Q.PendingApprovalDocuments") ? this.IsApproveUploadedDocumentsEnabled : false;
+        this.IsQueryVisible_PendingApprovalDocuments = FeatureLocator.HasFeaturePermession("Shipment", "Shipment.Q.PendingApprovalDocuments") ? SessionLocator.TenantPM.ApproveUploadedDocuments : false;
 
         this.IsQueryVisible_CanceledShipments = FeatureLocator.HasFeaturePermession("Shipment", "CANCELLEDSHIPMENTS") ? true : false;
         if (this.IsQueryVisible_AllFollowUps || this.IsQueryVisible_MyFollowUps || this.IsQueryVisible_AllShipments || this.IsQueryVisible_AllMasters || this.IsQueryVisible_CanceledShipments || this.IsQueryVisible_PendingApprovalDocuments) {
