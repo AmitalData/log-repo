@@ -407,6 +407,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     // declarationPM.TaxationDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
                     declarationPM.IsConvertedDeclaration = true;
                      declarationPM.TaxationDateTime = Convert.ToDateTime(declaration.IssueDateTime);
+
                     decimal DealValueWithoutFactor = 0;
                     if (declaration.GoodsShipment != null)
                     {

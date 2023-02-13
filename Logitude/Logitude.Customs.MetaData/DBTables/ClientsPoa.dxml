@@ -126,4 +126,4 @@
     ReferencedTable="PoaAuthorizationTypeLookups"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
-</Table>
+</Table> 

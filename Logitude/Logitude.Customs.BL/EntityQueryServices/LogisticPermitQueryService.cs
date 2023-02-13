@@ -19,6 +19,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
         public LogisticPermitPM GetSinglePM(int CargoIdentifierType, string CargoIdentifierKey1, string CargoIdentifierKey2, string CargoIdentifierKey3, int tenant)
         {
             var LogisticPermit = repository.GetSingleByIdentifierKeys(CargoIdentifierType, CargoIdentifierKey1, CargoIdentifierKey2, CargoIdentifierKey3, tenant);
+            if(LogisticPermit == null)   return null;
             var LogisticPermitPM = new LogisticPermitPM();
             LogisticPermitDataMapping mapping = new LogisticPermitDataMapping();
             mapping.CustomPOCOToPM(LogisticPermitPM, LogisticPermit);
