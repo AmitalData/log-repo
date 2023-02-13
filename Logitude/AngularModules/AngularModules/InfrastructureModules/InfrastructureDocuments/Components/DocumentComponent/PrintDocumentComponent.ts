@@ -1,4 +1,3 @@
-import {browser} from 'protractor';
 declare var window: any;
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -35,6 +34,7 @@ import { interval } from 'rxjs';
 import { timeInterval } from 'rxjs/operators';
 declare var Base64ToString: any;
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
+import {ObjectsLocator} from "../../../../Infrastructure/Locators/ObjectsLocator";
 
 
 @Component({
@@ -104,7 +104,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (browser.params.Env === 'cloud' || browser.params.Env === 'test') {
+        if (ObjectsLocator.GlobalSetting.WorkEnvironment === 'cloud') {
             this.UpdateDocumentsAutomatically();
         }
     }
