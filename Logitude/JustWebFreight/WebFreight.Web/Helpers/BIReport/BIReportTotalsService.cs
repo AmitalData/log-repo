@@ -43,6 +43,7 @@ namespace WebFreight.Web.Helpers.BIReport
 
         public List<string> GetReportMeasurementColumns()
         {
+            factTableName = GetFactTableName();
             dWObjectMaxMeasurementFieldPMs = dWObjectFieldQuery.GetDWObjectFieldByDWObjectTableCode(0, factTableName).Where(dwField => dwField.IsMeasurement && dwField.AggregationTypeCode == "MAX").ToList();
             measurmentColumns = bITabularViewSettings.Columns.Where(c => ValidTotalColumn(c)).Select(c => c.Code).ToList();
             return measurmentColumns;
@@ -55,7 +56,6 @@ namespace WebFreight.Web.Helpers.BIReport
 
         private bool IncludeColumnInTotal(Column selectedColumn)
         {
-            factTableName = GetFactTableName();
             if (factTableName == "Fact_Charges" || factTableName == "Fact_MasterCharges")
             {
                 return !ChargesFactMeasurementFields.Any(f => f == selectedColumn.Name);
