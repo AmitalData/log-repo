@@ -785,7 +785,7 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
         this.Modified = true;
     }
     IsEnabledAddingSummarySection(): boolean {
-        let summarySectionScreen = this.SectionScreens.filter(s => s.Section.Type == 'Summary' && s.Section.Inactive == false)[0];
+        let summarySectionScreen = this.SectionScreens.filter(s => s.Section.Type == 'Summary' && (s.Section.Inactive == false || s.Section.Inactive == undefined))[0];
         if (summarySectionScreen) return false;
         return true;
     }
