@@ -111,7 +111,7 @@ export class ContainerComponent implements OnInit {
     }
     public ContainersCount: string;
     LoadQueriesCounts() {
-        this.myDomainService.GetQueriesCounts().subscribe((myResponse: ServiceResponse) => {
+        this.myDomainService.GetContainerQueriesCounts().subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                     var myResult: ContainersFUSummary = myResponse.Result;
