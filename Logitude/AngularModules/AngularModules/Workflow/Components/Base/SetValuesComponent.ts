@@ -29,6 +29,7 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
 
     public DataContext: any = this;
     public IsValidSetValues: boolean = true;
+    public SetValuesCounter: number = 1;
 
     public FlowVariablesTreeItems: TreeSelectItem[];
     public ObjectFieldsTreeItems: TreeSelectItem[];
@@ -38,6 +39,7 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
     }
 
     ngOnInit() {
+        this.initializeSetValuesIds();
         this.initializeFlowVariablesTree();
         this.IsValidSetValues = this.isValidSetValues();
         this.IsValidSetValuesChange.emit(this.IsValidSetValues);
@@ -63,14 +65,17 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props).Items;
     }
 
-    setValuesChanged() {
+    setValuesChanged(event: any = null) {
         this.IsValidSetValues = this.isValidSetValues();
         this.IsValidSetValuesChange.emit(this.IsValidSetValues);
+        if (event === "add") {
+            this.increaseSetValuesCounter();
+        }
     }
 
     isValidSetValues() {
         let result = true;
-        for (let setValues of (this.SetValues)) {
+        for (let setValues of this.SetValues) {
             if (setValues.operator === SetValueOperators.Expression) {
                 if (!setValues.field || !setValues.expressionValue || !setValues.expressionValue.expression || setValues.expressionValue.expression === "") {
                     result = false;
@@ -185,8 +190,9 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
     addSetValue() {
         if (this.IsValidSetValues) {
             let setvalue = new SetValue();
+            setvalue.id = this.SetValuesCounter;
             this.SetValues.push(setvalue);
-            this.setValuesChanged();
+            this.setValuesChanged("add");
         }
     }
 
@@ -217,5 +223,16 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
 
     getObjectField(field: string) {
         return new ObjectFieldPipe().transform(field);
+    }
+
+    initializeSetValuesIds() {
+        for (let setValue of this.SetValues) {
+            setValue.id = this.SetValuesCounter;
+            this.increaseSetValuesCounter();
+        }
+    }
+
+    increaseSetValuesCounter() {
+        this.SetValuesCounter++;
     }
 }

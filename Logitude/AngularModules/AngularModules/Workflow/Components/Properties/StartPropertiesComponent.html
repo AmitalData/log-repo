@@ -74,7 +74,7 @@
         height: 285px;
     }
 
-    .break-space{
+    .break-space {
         white-space: break-spaces;
     }
 </style>
@@ -99,7 +99,8 @@
         <td class="table-row-cell">
             <div class="table-row-cell-block">
                 <div class="select-entity-label">Select Object</div>
-                <div class="Label">Select the object whose records trigger the flow when they're created or updated</div>
+                <div class="Label">Select the object whose records trigger the flow when they're created or updated
+                </div>
             </div>
         </td>
     </tr>
@@ -112,7 +113,8 @@
             </div>
             <div class="table-row-cell-block entity-list-container">
                 <TreeSelect [Items]="EntitiesTreeItems" [Width]="'300px'" [Value]="Entity" [ShowExpand]="false"
-                    [ShowItem]="ExcludedEntities | ShowEntitiesTreeItemPipe" (ValueChanged)="updateEntity($event)">
+                    [ShowItem]="ExcludedEntities | ShowEntitiesTreeItemPipe" (ValueChanged)="updateEntity($event)"
+                    [DataCy]="'TriggerEntity'">
                 </TreeSelect>
             </div>
         </td>
@@ -185,9 +187,12 @@
     <tr class="table-row">
         <td class="table-row-cell">
             <div class="table-row-cell-block">
-                <p class="Label break-space" >Specify entry conditions to reduce the number of records that trigger the flow and the number of
-                    times the flow is executed. Minimizing unnecessary flow executions <br/>helps to conserve your tenant's resources
-                    <br /><br />If you create a flow that's triggered when the record is updated or when the record is created or updated, we recommend defining entry condition when a field value is changed.
+                <p class="Label break-space">Specify entry conditions to reduce the number of records that trigger the
+                    flow and the number of
+                    times the flow is executed. Minimizing unnecessary flow executions <br />helps to conserve your
+                    tenant's resources
+                    <br /><br />If you create a flow that's triggered when the record is updated or when the record is
+                    created or updated, we recommend defining entry condition when a field value is changed.
                 </p>
             </div>
         </td>
@@ -199,8 +204,8 @@
                 [ngClass]="{'min-start-conditions-container': (ValidationErrorsList != null && ValidationErrorsList.length > 0)}">
 
                 <div *ngIf="Conditions && Conditions.length === 0">
-                    <span class="link-button" [ngClass]="{'disabled': !EntityId}" (click)="initializeConditions(true, true)"
-                        [attr.data-cy]="'AddConditionButton'">
+                    <span class="link-button" [ngClass]="{'disabled': !EntityId}"
+                        (click)="initializeConditions(true, true)" [attr.data-cy]="'AddConditionButton'">
                         <span class="plus-sign">+</span><span>Add Condition</span>
                     </span>
                 </div>
