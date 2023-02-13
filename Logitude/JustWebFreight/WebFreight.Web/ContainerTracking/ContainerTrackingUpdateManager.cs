@@ -35,7 +35,6 @@ namespace WebFreight.Web.ContainerTracking
         private bool isUpdatingEmptyLeg = false;
         private Tenant myTenant;
         private readonly ContainerTrackingHelper containerTrackingHelper;
-       // private ContainerDiscrepancyRepository containerDiscrepancyRepository;
         private ContainerDiscrepancyService containerDiscrepancyService;
 
 
@@ -148,16 +147,7 @@ namespace WebFreight.Web.ContainerTracking
             this.containerDiscrepancyService = new ContainerDiscrepancyService(tenant);
             this.containerDiscrepancyService.Create(containerPM, shipmentPM, reasonOfDiscrepancy);
            
-            //ContainerDiscrepancy containerDiscrepancy = new ContainerDiscrepancy();
-            //containerDiscrepancy.Id = IdCounter.GetNumber("ContainerDiscrepancy", tenant);
-            //containerDiscrepancy.ContainerId = containerId;
-            //containerDiscrepancy.ShipmentId = shipmentId;
-            //containerDiscrepancy.Discrepancy = reasonOfDiscrepancy;
-            //containerDiscrepancy.DiscrepancyDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;   
-            //containerDiscrepancy.Tenant = tenant;
-            //containerDiscrepancy.SearchFields = containerPM.ShipmentNumber + "," + containerPM.ContainerNumber + "," + containerDiscrepancy.DiscrepancyDate;
-            //containerDiscrepancyRepository.Add(containerDiscrepancy);
-            //containerDiscrepancyRepository.SubmitChanges();
+         
         }
 
         private void MapPreCarriage()
@@ -196,7 +186,10 @@ namespace WebFreight.Web.ContainerTracking
 
             if (!containerTrackingHelper.IsSameLocationUsingId(containerPM.PreCarriageLocationPortId, shipmentPM.PreCarriageFromPortId))
             {
-                AddNotSamePreCarriageLocationDiscrepancy();
+                var shipmentLocation = shipmentPM.PreCarriageFromPortId;
+                var containerLocation = containerPM.PreCarriageLocation;
+                var location = "Pre Carriage"; 
+                AddNotSameLocationDiscrepancy(containerLocation, shipmentLocation, location);
                 return;
             }
     
@@ -215,13 +208,14 @@ namespace WebFreight.Web.ContainerTracking
             }
             
         }
-        private void AddNotSamePreCarriageLocationDiscrepancy()
+        private void AddNotSameLocationDiscrepancy(string containerLocation, string shipmentLocation, string location)
         {
-            var shipmentUnloCode = GetUnloCodeFromPortId(shipmentPM.PreCarriageFromPortId);
-            var discrepancyReason = "Shipment pre carriage from port is empty - shipment ETD not updated.";
+            
+            var shipmentUnloCode = GetUnloCodeFromPortId(shipmentLocation);
+            var discrepancyReason = "Shipment " + location + " from port is empty - shipment ETD not updated.";
             if (shipmentUnloCode != null)
             {
-                discrepancyReason = $@"Shipment pre carriage from port {shipmentUnloCode} not equal to container POL port {containerPM.PreCarriageLocation} - shipment ETD not updated.";
+                discrepancyReason = $@"Shipment {location} from port {shipmentUnloCode} not equal to container {location} port {containerLocation} - shipment ETD not updated.";
             }
 
             AddContainerDiscrepancy(containerPM, shipmentPM, discrepancyReason);          
@@ -256,7 +250,10 @@ namespace WebFreight.Web.ContainerTracking
 
             if (!containerTrackingHelper.IsSameLocationUsingId(containerPM.OnCarriageLocationPortId, shipmentPM.OnCarriageToPortId))
             {
-                AddNotSameOnCarriageLocationDiscrepancy();
+                var containerLocation = containerPM.OnCarriageLocation;
+                var shipmentLocation = shipmentPM.OnCarriageToPortId;
+                var location = "On Carriage";
+                AddNotSameLocationDiscrepancy(containerLocation, shipmentLocation, location);
             }
             
             shipmentPM.OnCarriageETA = containerPM.OnCarriageETA;
@@ -273,17 +270,7 @@ namespace WebFreight.Web.ContainerTracking
                 AddContainerDiscrepancy(containerPM, shipmentPM, discrepancyReason);
             }
         }
-        private void AddNotSameOnCarriageLocationDiscrepancy()
-        {
-            var shipmentUnloCode = GetUnloCodeFromPortId(shipmentPM.OnCarriageToPortId);
-
-            var discrepancyReason = "Shipment on carriage to port is empty - shipment ETD not updated.";
-
-            if (shipmentUnloCode != null) discrepancyReason = $@"Shipment On Carriage From port {shipmentUnloCode} not equal to container POL port {containerPM.OnCarriageLocation} - shipment ETD not updated.";
-           
-            AddContainerDiscrepancy(containerPM, shipmentPM,discrepancyReason);
-        }
-
+   
         public void SetContainer(ContainerPM containerPM)
         {
             this.containerPM = containerPM;
