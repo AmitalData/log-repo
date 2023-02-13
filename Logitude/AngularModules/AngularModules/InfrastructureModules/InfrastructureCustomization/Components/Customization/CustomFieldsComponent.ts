@@ -54,8 +54,10 @@ export class CustomFieldsComponent {
         //this.BuildItemsSource();
     }
     public LoadCustomFields() {
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.myService.GetCustomFieldsByTableId(this.ObjectTableId).subscribe((myResult: ServiceResponse) => {
             var myResponse: ServiceResponse = myResult;
+            this.CurrentSession.StopBusyIndicator();
             if (!myResponse.HasError) {
 
                 this.loadedFields = myResponse.Result;
@@ -113,16 +115,7 @@ export class CustomFieldsComponent {
                 logWindow.WindowArgs = windowArgs;
                 logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddEditCustomFieldComponent');
                 logWindow.WindowClosed.subscribe((event: any) => {
-                    this.myService.GetCustomFieldsByTableId(this.ObjectTableId).subscribe((myResult: ServiceResponse) => {
-                        var myResponse: ServiceResponse = myResult;
-                        if (!myResponse.HasError) {
-
-                            this.loadedFields = myResponse.Result;
-                            if (this.loadedFields != null) {
-                                this.BuildItemsSource();
-                            }
-                        }
-                    });
+                    if (event == "Refresh") this.LoadCustomFields();
                 });
 
             }
@@ -155,17 +148,7 @@ export class CustomFieldsComponent {
                     logWindow.WindowArgs = windowArgs;
                     logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddEditCustomFieldComponent');
                     logWindow.WindowClosed.subscribe((event: any) => {
-                        this.myService.GetCustomFieldsByTableId(this.ObjectTableId).subscribe((myResult: ServiceResponse) => {
-                            var myResponse: ServiceResponse = myResult;
-                            if (!myResponse.HasError) {
-
-                                this.loadedFields = myResponse.Result;
-                                this.filterPickListCustomFields();
-                                if (this.loadedFields != null) {
-                                    this.BuildItemsSource();
-                                }
-                            }
-                        });
+                        if (event == "Refresh") this.LoadCustomFields();
                     });
 
                 });
