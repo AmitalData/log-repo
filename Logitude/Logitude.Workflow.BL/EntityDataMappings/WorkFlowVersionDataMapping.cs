@@ -10,6 +10,7 @@ using Logitude.Server.Tools;
 using Logitude.Workflow.Data.EntityPOCOs;
 using Logitude.Workflow.BL.EntityPMs; 
 using Logitude.Workflow.Data;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.Workflow.BL.EntityDataMappings
 {
@@ -22,15 +23,23 @@ namespace Logitude.Workflow.BL.EntityDataMappings
             entityPOCO.Id = entityPM.Id;
             CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
 
-            entityPM.SearchFields = entityPM.Description;
-            entityPOCO.SearchFields = entityPM.Description;
+            BuildSearchFields(entityPM, entityPOCO);
         }
 
         public void CustomPOCOToPM(WorkFlowVersionPM entityPM, WorkFlowVersion entityPOCO)
         {
             //throw new NotImplementedException();
         }
-   }
+
+        private void BuildSearchFields(WorkFlowVersionPM entityPM, WorkFlowVersion entityPOCO)
+        {
+            string mySearchFields = "";
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Description);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.VersionNumber.ToString());
+            entityPM.SearchFields = mySearchFields;
+            entityPOCO.SearchFields = mySearchFields;
+        }
+    }
 
 
 }

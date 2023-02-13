@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Output, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
+import { Component, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
 import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
+import { FilterItem } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
 import { AppTool } from 'Infrastructure/Tools';
 import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
@@ -25,7 +25,6 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     @ViewChild("WFInstanceContainer", { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
-    public filterAgrs: ApiQueryFilters;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
 
     private TabSelectedEvent: any = null;
@@ -75,13 +74,12 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
     }
 
     private loadComponentList() {
-        this.filterAgrs = new ApiQueryFilters();
-
         var versionsIdList = this.EntityPM.WorkFlowVersions.map(v => v.Id);
-        this.filterAgrs.addAdditionalFilter("WorkFlowVersionId", versionsIdList.join(','), null, null, "InListExact", false, false, false, "Text");
+
+        let filterItem = new FilterItem("WorkFlowVersionId", versionsIdList.join(","), null, null, "InListExact", false, false, false, "Text");
 
         var listArgs = new ListComponentArgs();
-        listArgs.Filters = this.filterAgrs;
+        listArgs.DefaultFilterItems = [filterItem];
         listArgs.QueryCode = "All WorkFlow Instance";
         listArgs.ObjectTableName = "WorkFlowInstance";
         listArgs.DisplayTitle = "Workflow Instance";
@@ -93,8 +91,8 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
 
-                    cmpRef.instance.BackCompleted.subscribe(event => {
-                        this.onRowSelected(event)
+                    cmpRef.instance.RowClicked.subscribe(event => {
+                        this.onRowSelected(event);
                     });
                 });
         });
@@ -106,7 +104,7 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
         if (this.entityArgs.EditComponent) {
             this.TabSelectedEvent = this.entityArgs.EditComponent.TabSelected.subscribe((tabCode: string) => {
                 if (tabCode == "WFRH") {
-                    this.CurrentSession.FireEvent("ReloadAllList");
+                    this.CurrentSession.FireEvent("ReloadAllList" + this.ObjectTableName);
                 }
             });
         }
