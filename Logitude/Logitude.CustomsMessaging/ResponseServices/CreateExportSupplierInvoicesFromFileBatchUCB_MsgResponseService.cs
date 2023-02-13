@@ -218,6 +218,31 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
+        private int? CalculateLuhnAlgorithm(string value)
+        {
+            var sum = 0;
+            int d;
+            for (var i = 0; i < value.Length; i++)
+            {
+                d = 0;
+                if (!int.TryParse(value.Substring(i, 1), out d)) return null;
+                if (i % 2 != 0)
+                    d = d * 2;
+                if (d > 9)
+                    d -= 9;
+                sum += d;
+            }
+
+            if (sum % 10 == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                var x = sum % 10;
+                return 10 - x;
+            }
+        }
         private void CreateSupplierInvoiceItems(SupplierInvoicePM invoice, int tenant, string declarationid, InvoiceFromFile invoiceFromFile, SupplierInvoicePM invoiceFromDB, out string errorItems)
         {
               errorItems = "";
@@ -235,6 +260,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     InvoiceNumber = invoiceFromFile.InvoiceNumber,
                     // ItemCode = invoiceItemFromFile.ItemDescription,
                 };
+                if(invoiceItem.ClassificationCode.Length == 10)
+                {
+                    var checkDigit = CalculateLuhnAlgorithm(invoiceItemFromFile.ClassificationCode);
+                    if (checkDigit.HasValue)
+                        invoiceItem.ClassificationCode += checkDigit.Value.ToString();
+
+                }
                 if (!string.IsNullOrWhiteSpace(invoiceItemFromFile.DutyRegimeProtocolCode))
                 {
                     TradeAgreementProtocolQueryService queryService = new TradeAgreementProtocolQueryService(invoice.Tenant);
