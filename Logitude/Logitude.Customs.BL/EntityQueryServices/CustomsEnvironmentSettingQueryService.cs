@@ -28,7 +28,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                  ;
             });
 
-            return settingPM;
+            return settingPM ?? new CustomsEnvironmentSettingPM();
 
 
 
