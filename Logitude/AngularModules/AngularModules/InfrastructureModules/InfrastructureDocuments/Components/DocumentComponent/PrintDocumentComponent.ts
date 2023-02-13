@@ -1,3 +1,4 @@
+import {browser} from 'protractor';
 declare var window: any;
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -103,7 +104,9 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.UpdateDocumentsAutomatically();
+        if (browser.params.Env === 'cloud' || browser.params.Env === 'test') {
+            this.UpdateDocumentsAutomatically();
+        }
     }
 
     UpdateDocumentsAutomatically()
