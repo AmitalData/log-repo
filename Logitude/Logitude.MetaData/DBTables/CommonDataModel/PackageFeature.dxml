@@ -50,7 +50,4 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo"
     Ignore="true" />
-	<Index
-	 Columns="PackageCode" />
-
 </Table>
