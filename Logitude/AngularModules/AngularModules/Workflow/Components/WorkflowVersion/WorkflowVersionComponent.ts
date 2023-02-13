@@ -1,6 +1,6 @@
 import { Component, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
+import { ApiQueryFilters, FilterItem } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
 import { AppTool } from 'Infrastructure/Tools';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
@@ -73,12 +73,10 @@ export class WorkflowVersionComponent extends BaseComponent {
     }
 
     private loadComponentList() {
-        this.filterAgrs = new ApiQueryFilters();
-
-        this.filterAgrs.addAdditionalFilter("WorkflowId", this.EntityPM.Id, null, null, "Equals", false, false, false, "String");
+        let filterItem = new FilterItem("WorkflowId", this.EntityPM.Id, null, null, "Equals", false, false, false, "String");
 
         var listArgs = new ListComponentArgs();
-        listArgs.Filters = this.filterAgrs;
+        listArgs.DefaultFilterItems = [filterItem];
         listArgs.QueryCode = "All Workflow Versions";
         listArgs.ObjectTableName = "WorkFlowVersion";
         listArgs.DisplayTitle = "Workflow Versions";
@@ -89,7 +87,7 @@ export class WorkflowVersionComponent extends BaseComponent {
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
-                    cmpRef.instance.BackCompleted.subscribe((event: any) => {
+                    cmpRef.instance.RowClicked.subscribe((event: any) => {
                         this.onRowSelected(event.rowData.Id)
                     });
                 });
@@ -101,7 +99,7 @@ export class WorkflowVersionComponent extends BaseComponent {
         if (this.entityArgs.EditComponent) {
             this.TabSelectedEvent = this.entityArgs.EditComponent.TabSelected.subscribe((tabCode: string) => {
                 if (tabCode == "WFVR") {
-                    this.CurrentSession.FireEvent("ReloadAllList");
+                    this.CurrentSession.FireEvent("ReloadAllList" + this.ObjectTableName);
                 }
             });
         }
@@ -110,7 +108,7 @@ export class WorkflowVersionComponent extends BaseComponent {
             this.entityArgs.EntityArgEventEmitter.subscribe(
                 theMessage => {
                     if (theMessage == "WorkflowVersionsUpdated") {
-                        this.CurrentSession.FireEvent("ReloadAllList");
+                        this.CurrentSession.FireEvent("ReloadAllList" + this.ObjectTableName);
                     }
                 }
             );

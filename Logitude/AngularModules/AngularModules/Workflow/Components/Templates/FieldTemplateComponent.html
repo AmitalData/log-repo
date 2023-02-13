@@ -20,9 +20,14 @@
         color: #db2121 !important;
     }
 
-    .active-version{
+    .active-version {
         font-weight: bold;
         color: #54aa41;
+    }
+
+    .number-style {
+        text-align: left !important;
+        padding: 0 !important;
     }
 </style>
 
@@ -43,7 +48,8 @@
                                     </div>
                                 </div>
 
-                                <div class="TextTrimming" *ngIf="FieldName == 'UpdateDate'">{{ Entity[FieldName] | DateTimePipe:'DT' }}</div>
+                                <div class="TextTrimming" *ngIf="FieldName == 'UpdateDate'">{{ Entity[FieldName] |
+                                    DateTimePipe:'DT' }}</div>
 
                             </div>
                         </td>
@@ -62,9 +68,13 @@
                                     </div>
                                 </div>
 
-                                <div class="TextTrimming" *ngIf="FieldName == 'StartTime'">{{ Entity[FieldName] | DateTimePipe:'DT' }}
+                                <div class="TextTrimming" *ngIf="FieldName == 'StartTime'">{{ Entity[FieldName] |
+                                    DateTimePipe:'DT' }}
                                 </div>
 
+                                <div class="number-style" *ngIf="FieldName == 'Duration'">{{ Entity[FieldName] }}</div>
+                                <div class="number-style" *ngIf="FieldName == 'WorkFlowVersionNumber'">{{ Entity[FieldName] }}</div>
+                                <div class="number-style" *ngIf="FieldName == 'RetryAttemptsNumber'">{{ Entity[FieldName] }}</div>
 
                             </div>
                         </td>
@@ -83,10 +93,13 @@
                                     </div>
                                 </div>
 
-                                <div class="TextTrimming" *ngIf="FieldName == 'CreateDate'">{{ Entity[FieldName] | DateTimePipe:'DT' }}
+                                <div class="TextTrimming" *ngIf="FieldName == 'CreateDate'">{{ Entity[FieldName] |
+                                    DateTimePipe:'DT' }}
                                 </div>
-                                <div class="TextTrimming" *ngIf="FieldName == 'ActivatedDate'">{{ Entity[FieldName] | DateTimePipe:'DT' }}
+                                <div class="TextTrimming" *ngIf="FieldName == 'ActivatedDate'">{{ Entity[FieldName] |
+                                    DateTimePipe:'DT' }}
                                 </div>
+                                <div class="number-style" *ngIf="FieldName == 'VersionNumber'">{{ Entity[FieldName] }}</div>
                             </div>
                         </td>
                     </tr>
