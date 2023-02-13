@@ -3129,6 +3129,10 @@
     <Compile Include="Helpers\WorkerRole\PODImage\IPODImageConverter.cs" />
     <Compile Include="Helpers\WorkerRole\PODImage\PODImagePdfConverter.cs" />
     <Compile Include="Helpers\WorkerRole\ReportExecutionService.cs" />
+    <Compile Include="Helpers\Workflow\ErrorTypes.cs" />
+    <Compile Include="Helpers\Workflow\ShortErrorMessages.cs" />
+    <Compile Include="Helpers\Workflow\SqlExceptionNumbers.cs" />
+    <Compile Include="Helpers\Workflow\WorkflowApiExceptionBuilder.cs" />
     <Compile Include="InfrastructureModel\DomainServices\InfrastructureDomainService.cs" />
     <Compile Include="InfrastructureModel\DomainServices\WebFreightDomainService.EntityStatusType.cs" />
     <Compile Include="InfrastructureModel\DomainServices\WebFreightDomainService.QuoteChargesGruop.cs" />
