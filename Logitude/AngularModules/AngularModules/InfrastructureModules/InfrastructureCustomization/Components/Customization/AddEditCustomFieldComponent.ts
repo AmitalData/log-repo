@@ -594,7 +594,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
                             item.ObjectTableName = this.ObjectTableName;
                             window.ObjectFields.push(item);
                             this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                            this.CurrentSession.CloseCurrentWindow();
+                            this.CurrentSession.CloseCurrentWindowEmit("Refresh");
                             this.CurrentSession.SessionEvent.emit({ Name: "ReloadGridComponent" });
 
                         });
@@ -616,9 +616,10 @@ export class AddEditCustomFieldComponent extends BaseComponent {
                                 window.ObjectFields.splice(index, 1);
                             }
                             item.ObjectTable_LookUpTableName = this.LookUpTableName;
+                            item.ObjectTableName = this.ObjectTableName;
                             window.ObjectFields.push(item);
                             this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                            this.CurrentSession.CloseCurrentWindow();
+                            this.CurrentSession.CloseCurrentWindowEmit("Refresh");
                             //this.loginService.GetObjectFields().subscribe((myResult:any) => {
                             //    if (myResult != null) {
                             //        window.ObjectFields = myResult;

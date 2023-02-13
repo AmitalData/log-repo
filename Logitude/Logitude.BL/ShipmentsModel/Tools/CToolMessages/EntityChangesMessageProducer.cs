@@ -113,7 +113,7 @@ namespace Logitude.Server.Tools.CToolWorkflows
                         using (var shipmentUpdateMessageProducer = new Producer())
                         {
                             var result = shipmentUpdateMessageProducer.Produce(KafkaTopics.ShipmentsUpdateTopic,
-                           KakaMessageTypes.ShipmentCreate, serializedCToolWorkflowMessage, true);
+                           KakaMessageTypes.ShipmentUpdate, serializedCToolWorkflowMessage, true);
                         }
                     }
                     else

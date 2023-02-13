@@ -99,6 +99,11 @@ export class WorkFlowInstancePM {
     public set WorkFlowVersionNumber(newValue: number) { if (this.workFlowVersionNumber != newValue) { this.workFlowVersionNumber = newValue; this.MarkAsDirty("WorkFlowVersionNumber"); } }
        
 	 
+    private retryAttemptsNumber: number;
+    public get RetryAttemptsNumber() { return this.retryAttemptsNumber; }
+    public set RetryAttemptsNumber(newValue: number) { if (this.retryAttemptsNumber != newValue) { this.retryAttemptsNumber = newValue; this.MarkAsDirty("RetryAttemptsNumber"); } }
+       
+	 
 
     public OldEntityPM: WorkFlowInstancePM;
 		

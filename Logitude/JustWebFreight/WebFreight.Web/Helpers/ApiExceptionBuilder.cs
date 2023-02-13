@@ -98,7 +98,7 @@ namespace WebFreight.Web.Helpers
                                   "Entity Id: " + entityId + Environment.NewLine +
                                   "Json Patch: " + JsonConvert.SerializeObject(jsonPatch);
 
-            string shortErrorMessage = "Some of the " + GetChildEntityName(exception) + " were deleted.";
+            string shortErrorMessage = GetShortErrorMessage(exception);
 
             return new APIException()
             {
@@ -106,6 +106,18 @@ namespace WebFreight.Web.Helpers
                 ErrorMessage = errorMessage,
                 ShortErrorMessage = shortErrorMessage
             };
+        }
+
+        private static string GetShortErrorMessage(JsonPatchException exception)
+        {
+            if (Regex.IsMatch(exception.Message, @"The current value '.*' at path '.*' is not equal to the test value '.*'\."))
+            {
+                return "Some of the " + GetChildEntityName(exception) + " were deleted.";
+            }
+            else
+            {
+                return "Invalid update";
+            }
         }
 
         private static string GetChildEntityName(JsonPatchException exception)

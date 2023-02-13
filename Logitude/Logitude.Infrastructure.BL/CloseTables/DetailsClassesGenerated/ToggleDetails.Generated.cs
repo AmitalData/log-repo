@@ -868,6 +868,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "SSP,Stimulsoft Printing", 
                 Description = "Stimulsoft Printing", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "RDT", 
+                Name = "Digital Portal Required Documents", 
+                Description = "Toggle Feature for Digital Portal Required Documents", 
+                SearchFields = "RDT,Digital Portal Required Documents", 
+			});
 			
             return all;
        }

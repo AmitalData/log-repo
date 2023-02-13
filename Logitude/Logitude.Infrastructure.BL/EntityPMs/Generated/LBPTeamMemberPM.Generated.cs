@@ -216,7 +216,7 @@ namespace Logitude.Infrastructure.BL.EntityPMs
               }
              set {  deletedBusinessRolesList = value; }
 	    }
-	     }
+	  	    }
    
 }
 	 

@@ -162,5 +162,6 @@ export class ARInvoiceList {
 		TotalExamptFortaxReport: number;
 		DocumentTemplateId: string;
 		TotalAmountNotForTaxReport: number;
+		ConcurrencyGUID: string;
 	
-}
+}

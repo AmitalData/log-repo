@@ -365,6 +365,29 @@ namespace Logitude.Workflow.BL.EntityPMs
 			
 		 }
 	   }
+	  private int retryAttemptsNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int RetryAttemptsNumber  
+	   {
+	    
+	     get
+		{
+		   return retryAttemptsNumber;
+		 }
+		 set
+		 {
+		   if(retryAttemptsNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RetryAttemptsNumber",OldValue=retryAttemptsNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   retryAttemptsNumber=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }
