@@ -17,6 +17,7 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System.Data.Entity;
 using Simplog.Data.ShipmentsModel;
+using Logitude.Server.Tools.Helpers;
 
 namespace CommunicationWorkerRole
 {
@@ -259,7 +260,10 @@ namespace CommunicationWorkerRole
 
         private ShipmentPM GetShipment(string shipmentId, int tenant)
         {
-            if (shipmentPM != null) return shipmentPM;
+            //if (shipmentPM != null) return shipmentPM; 
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            Contact receivedBy = contactRepository.GetSingleContact(documentsFilingPM.ReceivedByUserId, tenant);
+            AuthenticationUtil.AuthenticatedUserEmail = receivedBy.Email;
             shipmentPM = new ShipmentQuery(shipmentRepository).GetSinglePM(shipmentId, tenant);
             return shipmentPM;
         }
