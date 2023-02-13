@@ -25,6 +25,8 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract
         public string SourceCode { get; set; }
         public string DirectionId { get; set; }
         public bool IsUpdatedFromRequest { get; set; }
+        public DateTime? ShipmentCreateDateTime { get; set; }
+
         public GeneralContainerTrackingArgs()
         {
             Success = true;

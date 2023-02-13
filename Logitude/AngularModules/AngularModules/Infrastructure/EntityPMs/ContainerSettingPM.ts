@@ -74,6 +74,11 @@ export class ContainerSettingPM {
     public set AddedManually(newValue: boolean) { if (this.addedManually != newValue) { this.addedManually = newValue; this.MarkAsDirty("AddedManually"); } }
        
 	 
+    private activationDate: Date;
+    public get ActivationDate() { return this.activationDate; }
+    public set ActivationDate(newValue: Date) { if (this.activationDate != newValue) { this.activationDate = newValue; this.MarkAsDirty("ActivationDate"); } }
+       
+	 
 
     public OldEntityPM: ContainerSettingPM;
 		
