@@ -101,7 +101,7 @@
                                                     <div></div>
                                                 </td>
 
-                                                <td class="LegLocation TextTrimming" style="max-width:120px;">
+                                                <td class="LegLocation TextTrimming" style="max-width:120px;" [title]="item.Location">
                                                     {{item.Location}}
                                                 </td>
                                             </tr>
@@ -164,6 +164,34 @@
                                                     </LogLov>
                                                 </td>
                                             </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentPickupFrom'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [ObjectFieldName]="'ShipmentPickupFrom'"
+                                                                [Text]="DataContext.ShipmentPickupFrom"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext">
+                                                    </LogTextBox>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentPickupTo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [ObjectFieldName]="'ShipmentPickupTo'"
+                                                                [Text]="DataContext.ShipmentPickupTo"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext">
+                                                    </LogTextBox>
+                                                </td>
+                                            </tr>
                                         </table>
                                     </td>
 
@@ -186,6 +214,34 @@
                                                     </LogDatePicker>
                                                 </td>
                                             </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentPickupETD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'ShipmentPickupETD'"
+                                                                   [SelectedDateValue]="DataContext.ShipmentPickupETD"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentPickupATD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'ShipmentPickupATD'"
+                                                                   [SelectedDateValue]="DataContext.ShipmentPickupATD"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
+                                            </tr>
                                         </table>
                                     </td>
 
@@ -203,6 +259,34 @@
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'ActualEmptyPickupDate'"
                                                                    [SelectedDateValue]="DataContext.ActualEmptyPickupDate"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentPickupETA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'ShipmentPickupETA'"
+                                                                   [SelectedDateValue]="DataContext.ShipmentPickupETA"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentPickupATA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'ShipmentPickupATA'"
+                                                                   [SelectedDateValue]="DataContext.ShipmentPickupATA"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -352,6 +436,21 @@
                                                     </LogDatePicker>
                                                 </td>
                                             </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentMainCarriageFromId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'ShipmentMainCarriageFromId'"
+                                                            [SelectedValue]="DataContext.ShipmentMainCarriageFromId"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'Port'">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
                                         </table>
                                     </td>
 
@@ -388,6 +487,20 @@
                                                     </LogDatePicker>
                                                 </td>
                                             </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentMainCarriageETD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'ShipmentMainCarriageETD'"
+                                                                   [SelectedDateValue]="DataContext.ShipmentMainCarriageETD"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
+                                            </tr>
                                         </table>
                                     </td>
 
@@ -419,6 +532,20 @@
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'ActualPOLVesselDeparture'"
                                                                    [SelectedDateValue]="DataContext.ActualPOLVesselDeparture"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentMainCarriageATD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'ShipmentMainCarriageATD'"
+                                                                   [SelectedDateValue]="DataContext.ShipmentMainCarriageATD"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -476,6 +603,88 @@
                                                     </LogDatePicker>
                                                 </td>
                                             </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentTransshipment1FromId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'ShipmentTransshipment1FromId'"
+                                                            [SelectedValue]="DataContext.ShipmentTransshipment1FromId"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'Port'">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <td style="width:10px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width:400px;">
+                                        <table>
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'EstimatedTrans1VesselDeparture'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'EstimatedTrans1VesselDeparture'"
+                                                                   [SelectedDateValue]="DataContext.EstimatedTrans1VesselDeparture"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'ActualTrans1VesselDeparture'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'ActualTrans1VesselDeparture'"
+                                                                   [SelectedDateValue]="DataContext.ActualTrans1VesselDeparture"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentTransshipment1ETD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'ShipmentTransshipment1ETD'"
+                                                                   [SelectedDateValue]="DataContext.ShipmentTransshipment1ETD"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentTransshipment1ATD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'ShipmentTransshipment1ATD'"
+                                                                   [SelectedDateValue]="DataContext.ShipmentTransshipment1ATD"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
+                                            </tr>
                                         </table>
                                     </td>
 
@@ -512,23 +721,15 @@
                                                     </LogDatePicker>
                                                 </td>
                                             </tr>
-                                        </table>
-                                    </td>
 
-                                    <td style="width:10px;">
-                                        <div></div>
-                                    </td>
-
-                                    <td style="width:400px;">
-                                        <table>
                                             <tr class="FormFieldRow">
                                                 <td style="width:180px;">
-                                                    <LogLabel [ObjectFieldName]="'EstimatedTrans1VesselDeparture'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'ShipmentTransshipment1ETA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
                                                 <td>
-                                                    <LogDatePicker [ObjectFieldName]="'EstimatedTrans1VesselDeparture'"
-                                                                   [SelectedDateValue]="DataContext.EstimatedTrans1VesselDeparture"
+                                                    <LogDatePicker [ObjectFieldName]="'ShipmentTransshipment1ETA'"
+                                                                   [SelectedDateValue]="DataContext.ShipmentTransshipment1ETA"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -537,12 +738,12 @@
 
                                             <tr class="FormFieldRow">
                                                 <td style="width:180px;">
-                                                    <LogLabel [ObjectFieldName]="'ActualTrans1VesselDeparture'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'ShipmentTransshipment1ATA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
                                                 <td>
-                                                    <LogDatePicker [ObjectFieldName]="'ActualTrans1VesselDeparture'"
-                                                                   [SelectedDateValue]="DataContext.ActualTrans1VesselDeparture"
+                                                    <LogDatePicker [ObjectFieldName]="'ShipmentTransshipment1ATA'"
+                                                                   [SelectedDateValue]="DataContext.ShipmentTransshipment1ATA"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -600,6 +801,88 @@
                                                     </LogDatePicker>
                                                 </td>
                                             </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentTransshipment2FromId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'ShipmentTransshipment2FromId'"
+                                                            [SelectedValue]="DataContext.ShipmentTransshipment2FromId"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'Port'">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <td style="width:10px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width:400px;">
+                                        <table>
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'EstimatedTrans2VesselDeparture'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'EstimatedTrans2VesselDeparture'"
+                                                                   [SelectedDateValue]="DataContext.EstimatedTrans2VesselDeparture"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'ActualTrans2VesselDeparture'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'ActualTrans2VesselDeparture'"
+                                                                   [SelectedDateValue]="DataContext.ActualTrans2VesselDeparture"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentTransshipment2ETD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'ShipmentTransshipment2ETD'"
+                                                                   [SelectedDateValue]="DataContext.ShipmentTransshipment2ETD"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentTransshipment2ATD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'ShipmentTransshipment2ATD'"
+                                                                   [SelectedDateValue]="DataContext.ShipmentTransshipment2ATD"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
+                                            </tr>
                                         </table>
                                     </td>
 
@@ -636,23 +919,15 @@
                                                     </LogDatePicker>
                                                 </td>
                                             </tr>
-                                        </table>
-                                    </td>
 
-                                    <td style="width:10px;">
-                                        <div></div>
-                                    </td>
-
-                                    <td style="width:400px;">
-                                        <table>
                                             <tr class="FormFieldRow">
                                                 <td style="width:180px;">
-                                                    <LogLabel [ObjectFieldName]="'EstimatedTrans2VesselDeparture'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'ShipmentTransshipment3ETA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
                                                 <td>
-                                                    <LogDatePicker [ObjectFieldName]="'EstimatedTrans2VesselDeparture'"
-                                                                   [SelectedDateValue]="DataContext.EstimatedTrans2VesselDeparture"
+                                                    <LogDatePicker [ObjectFieldName]="'ShipmentTransshipment3ETA'"
+                                                                   [SelectedDateValue]="DataContext.ShipmentTransshipment3ETA"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -661,12 +936,12 @@
 
                                             <tr class="FormFieldRow">
                                                 <td style="width:180px;">
-                                                    <LogLabel [ObjectFieldName]="'ActualTrans2VesselDeparture'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'ShipmentTransshipment2ATA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
                                                 <td>
-                                                    <LogDatePicker [ObjectFieldName]="'ActualTrans2VesselDeparture'"
-                                                                   [SelectedDateValue]="DataContext.ActualTrans2VesselDeparture"
+                                                    <LogDatePicker [ObjectFieldName]="'ShipmentTransshipment2ATA'"
+                                                                   [SelectedDateValue]="DataContext.ShipmentTransshipment2ATA"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -724,6 +999,88 @@
                                                     </LogDatePicker>
                                                 </td>
                                             </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentTransshipment3FromId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'ShipmentTransshipment3FromId'"
+                                                            [SelectedValue]="DataContext.ShipmentTransshipment3FromId"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'Port'">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <td style="width:10px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width:400px;">
+                                        <table>
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'EstimatedTrans3VesselDeparture'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'EstimatedTrans3VesselDeparture'"
+                                                                   [SelectedDateValue]="DataContext.EstimatedTrans3VesselDeparture"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'ActualTrans3VesselDeparture'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'ActualTrans3VesselDeparture'"
+                                                                   [SelectedDateValue]="DataContext.ActualTrans3VesselDeparture"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentTransshipment3ETD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'ShipmentTransshipment3ETD'"
+                                                                   [SelectedDateValue]="DataContext.ShipmentTransshipment3ETD"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentTransshipment3ATD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'ShipmentTransshipment3ATD'"
+                                                                   [SelectedDateValue]="DataContext.ShipmentTransshipment3ATD"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
+                                            </tr>
                                         </table>
                                     </td>
 
@@ -760,23 +1117,15 @@
                                                     </LogDatePicker>
                                                 </td>
                                             </tr>
-                                        </table>
-                                    </td>
 
-                                    <td style="width:10px;">
-                                        <div></div>
-                                    </td>
-
-                                    <td style="width:400px;">
-                                        <table>
                                             <tr class="FormFieldRow">
                                                 <td style="width:180px;">
-                                                    <LogLabel [ObjectFieldName]="'EstimatedTrans3VesselDeparture'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'ShipmentTransshipment3ETA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
                                                 <td>
-                                                    <LogDatePicker [ObjectFieldName]="'EstimatedTrans3VesselDeparture'"
-                                                                   [SelectedDateValue]="DataContext.EstimatedTrans3VesselDeparture"
+                                                    <LogDatePicker [ObjectFieldName]="'ShipmentTransshipment3ETA'"
+                                                                   [SelectedDateValue]="DataContext.ShipmentTransshipment3ETA"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -785,12 +1134,12 @@
 
                                             <tr class="FormFieldRow">
                                                 <td style="width:180px;">
-                                                    <LogLabel [ObjectFieldName]="'ActualTrans3VesselDeparture'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'ShipmentTransshipment3ATA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
                                                 <td>
-                                                    <LogDatePicker [ObjectFieldName]="'ActualTrans3VesselDeparture'"
-                                                                   [SelectedDateValue]="DataContext.ActualTrans3VesselDeparture"
+                                                    <LogDatePicker [ObjectFieldName]="'ShipmentTransshipment3ATA'"
+                                                                   [SelectedDateValue]="DataContext.ShipmentTransshipment3ATA"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -860,9 +1209,32 @@
                                             </tr>
 
                                             <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentMainCarriageToId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'ShipmentMainCarriageToId'"
+                                                            [SelectedValue]="DataContext.ShipmentMainCarriageToId"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'Port'">
+                                                    </LogLov>
+                                                </td>
                                             </tr>
 
                                             <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentMainCarriageETA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'ShipmentMainCarriageETA'"
+                                                                   [SelectedDateValue]="DataContext.ShipmentMainCarriageETA"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
                                             </tr>
                                         </table>
                                     </td>
@@ -930,6 +1302,17 @@
                                             </tr>
 
                                             <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentMainCarriageATA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'ShipmentMainCarriageATA'"
+                                                                   [SelectedDateValue]="DataContext.ShipmentMainCarriageATA"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
                                             </tr>
                                         </table>
                                     </td>
@@ -1056,6 +1439,24 @@
                                                     </LogDatePicker>
                                                 </td>
                                             </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentOnCarriageToId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'ShipmentOnCarriageToId'"
+                                                            [SelectedValue]="DataContext.ShipmentOnCarriageToId"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'Port'">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                            </tr>
                                         </table>
                                     </td>
 
@@ -1092,6 +1493,34 @@
                                                     </LogDatePicker>
                                                 </td>
                                             </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentOnCarriageETD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'ShipmentOnCarriageETD'"
+                                                                   [SelectedDateValue]="DataContext.ShipmentOnCarriageETD"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentOnCarriageATD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'ShipmentOnCarriageATD'"
+                                                                   [SelectedDateValue]="DataContext.ShipmentOnCarriageATD"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
+                                            </tr>
                                         </table>
                                     </td>
 
@@ -1123,6 +1552,34 @@
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'OnCarriageATA'"
                                                                    [SelectedDateValue]="DataContext.OnCarriageATA"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentOnCarriageETA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'ShipmentOnCarriageETA'"
+                                                                   [SelectedDateValue]="DataContext.ShipmentOnCarriageETA"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentOnCarriageATA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'ShipmentOnCarriageATA'"
+                                                                   [SelectedDateValue]="DataContext.ShipmentOnCarriageATA"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>
@@ -1298,6 +1755,34 @@
                                                     </LogLov>
                                                 </td>
                                             </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'EmptyContainerReturnFrom'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [ObjectFieldName]="'EmptyContainerReturnFrom'"
+                                                                [Text]="DataContext.EmptyContainerReturnFrom"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext">
+                                                    </LogTextBox>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'EmptyContainerReturnTo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [ObjectFieldName]="'EmptyContainerReturnTo'"
+                                                                [Text]="DataContext.EmptyContainerReturnTo"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext">
+                                                    </LogTextBox>
+                                                </td>
+                                            </tr>
                                         </table>
                                     </td>
 
@@ -1320,6 +1805,34 @@
                                                     </LogDatePicker>
                                                 </td>
                                             </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'EmptyContainerReturnETD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'EmptyContainerReturnETD'"
+                                                                   [SelectedDateValue]="DataContext.EmptyContainerReturnETD"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'EmptyContainerReturnATD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'EmptyContainerReturnATD'"
+                                                                   [SelectedDateValue]="DataContext.EmptyContainerReturnATD"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
+                                            </tr>
                                         </table>
                                     </td>
 
@@ -1337,6 +1850,34 @@
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'ActualEmptyReturn'"
                                                                    [SelectedDateValue]="DataContext.ActualEmptyReturn"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'EmptyContainerReturnETA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'EmptyContainerReturnETA'"
+                                                                   [SelectedDateValue]="DataContext.EmptyContainerReturnETA"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width:180px;">
+                                                    <LogLabel [ObjectFieldName]="'EmptyContainerReturnATA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'EmptyContainerReturnATA'"
+                                                                   [SelectedDateValue]="DataContext.EmptyContainerReturnATA"
                                                                    [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="DataContext">
                                                     </LogDatePicker>

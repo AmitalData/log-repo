@@ -133,6 +133,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
 
     }
 
+    private lastLegCode: string = null;
     private BuildItemsSource() {
         this.ItemsSource = [];
 
@@ -146,6 +147,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         this.AddRoutingItem("EMRT", null, 8);
 
         this.Set_Previous();
+        this.RoutingItemClicked(this.lastLegCode);
     }
     private Set_Previous() {
         this.ItemsSource.forEach(item => {
@@ -171,6 +173,10 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         item.IsDashedLine = !item.IsContinuousLine;
         item.Calculate();
         this.ItemsSource.push(item);
+
+        if (item.IsGreenCircle || item.IsOrangeCircle) {
+            this.lastLegCode = item.Code;
+        }
     }
 
     private CheckNextLegDates(nextLegCode: string): boolean {
@@ -548,16 +554,16 @@ export class RoutingItem {
     }
     private GetDate_POL(): string {
         if (this.Container.ActualPOLVesselDeparture != null)
-            return this.GetDateString("Act. vsl Departure", this.Container.ActualPOLVesselDeparture);
+            return this.GetDateString("Vessel ATD", this.Container.ActualPOLVesselDeparture);
 
         else if (this.Container.EstimatedPOLVesselDeparture != null)
-            return this.GetDateString("Est. vsl Departure", this.Container.EstimatedPOLVesselDeparture);
+            return this.GetDateString("Vessel ETD", this.Container.EstimatedPOLVesselDeparture);
 
         else if (this.Container.ActualPOLLoaded != null)
-            return this.GetDateString("Act. Loaded", this.Container.ActualPOLLoaded);
+            return this.GetDateString("Loaded Actual", this.Container.ActualPOLLoaded);
 
         else if (this.Container.EstimatedPOLLoaded != null)
-            return this.GetDateString("Est. Loaded", this.Container.EstimatedPOLLoaded);
+            return this.GetDateString("Loaded Est.", this.Container.EstimatedPOLLoaded);
 
         else if (this.Container.GateIn != null)
             return this.GetDateString("Gate In", this.Container.GateIn);
@@ -567,66 +573,66 @@ export class RoutingItem {
     }
     private GetDate_TS1(): string {
         if (this.Container.ActualTrans1VesselDeparture != null)
-            return this.GetDateString("Act. vsl Departure", this.Container.ActualTrans1VesselDeparture);
+            return this.GetDateString("Vessel ATD", this.Container.ActualTrans1VesselDeparture);
 
         else if (this.Container.EstimatedTrans1VesselDeparture != null)
-            return this.GetDateString("Est. vsl Departure", this.Container.EstimatedTrans1VesselDeparture);
+            return this.GetDateString("Vessel ETD", this.Container.EstimatedTrans1VesselDeparture);
 
         else if (this.Container.ActualTransshipment1VesselArrival != null)
-            return this.GetDateString("Act. vsl Arrival", this.Container.ActualTransshipment1VesselArrival);
+            return this.GetDateString("Vessel ATA", this.Container.ActualTransshipment1VesselArrival);
 
         else if (this.Container.EstimatedTrans1VesselArrival != null)
-            return this.GetDateString("Est. vsl Arrival", this.Container.EstimatedTrans1VesselArrival);
+            return this.GetDateString("Vessel ETA", this.Container.EstimatedTrans1VesselArrival);
 
         else if (this.Container.ActualTransshipment1Loaded != null)
-            return this.GetDateString("Act. Loaded", this.Container.ActualTransshipment1Loaded);
+            return this.GetDateString("Loaded Actual", this.Container.ActualTransshipment1Loaded);
 
         else if (this.Container.EstimatedTransshipment1Loaded != null)
-            return this.GetDateString("Est. Loaded", this.Container.EstimatedTransshipment1Loaded);
+            return this.GetDateString("Loaded Est.", this.Container.EstimatedTransshipment1Loaded);
 
         else
             return null;
     }
     private GetDate_TS2(): string {
         if (this.Container.ActualTrans2VesselDeparture != null)
-            return this.GetDateString("Act. vsl Departure", this.Container.ActualTrans2VesselDeparture);
+            return this.GetDateString("Vessel ATD", this.Container.ActualTrans2VesselDeparture);
 
         else if (this.Container.EstimatedTrans2VesselDeparture != null)
-            return this.GetDateString("Est. vsl Departure", this.Container.EstimatedTrans2VesselDeparture);
+            return this.GetDateString("Vessel ETD", this.Container.EstimatedTrans2VesselDeparture);
 
         else if (this.Container.ActualTransshipment2VesselArrival != null)
-            return this.GetDateString("Act. vsl Arrival", this.Container.ActualTransshipment2VesselArrival);
+            return this.GetDateString("Vessel ATA", this.Container.ActualTransshipment2VesselArrival);
 
         else if (this.Container.EstimatedTrans2VesselArrival != null)
-            return this.GetDateString("Est. vsl Arrival", this.Container.EstimatedTrans2VesselArrival);
+            return this.GetDateString("Vessel ETA", this.Container.EstimatedTrans2VesselArrival);
 
         else if (this.Container.ActualTransshipment2Loaded != null)
-            return this.GetDateString("Act. Loaded", this.Container.ActualTransshipment2Loaded);
+            return this.GetDateString("Loaded Actual", this.Container.ActualTransshipment2Loaded);
 
         else if (this.Container.EstimatedTransshipment2Loaded != null)
-            return this.GetDateString("Est. Loaded", this.Container.EstimatedTransshipment2Loaded);
+            return this.GetDateString("Loaded Est.", this.Container.EstimatedTransshipment2Loaded);
 
         else
             return null;
     }
     private GetDate_TS3(): string {
         if (this.Container.ActualTrans3VesselDeparture != null)
-            return this.GetDateString("Act. vsl Departure", this.Container.ActualTrans3VesselDeparture);
+            return this.GetDateString("Vessel ATD", this.Container.ActualTrans3VesselDeparture);
 
         else if (this.Container.EstimatedTrans3VesselDeparture != null)
-            return this.GetDateString("Est. vsl Departure", this.Container.EstimatedTrans3VesselDeparture);
+            return this.GetDateString("Vessel ETD", this.Container.EstimatedTrans3VesselDeparture);
 
         else if (this.Container.ActualTransshipment3VesselArrival != null)
-            return this.GetDateString("Act. vsl Arrival", this.Container.ActualTransshipment3VesselArrival);
+            return this.GetDateString("Vessel ATA", this.Container.ActualTransshipment3VesselArrival);
 
         else if (this.Container.EstimatedTrans3VesselArrival != null)
-            return this.GetDateString("Est. vsl Arrival", this.Container.EstimatedTrans3VesselArrival);
+            return this.GetDateString("Vessel ETA", this.Container.EstimatedTrans3VesselArrival);
 
         else if (this.Container.ActualTransshipment3Loaded != null)
-            return this.GetDateString("Act.  Loaded", this.Container.ActualTransshipment3Loaded);
+            return this.GetDateString("Loaded Actual", this.Container.ActualTransshipment3Loaded);
 
         else if (this.Container.EstimatedTransshipment3Loaded != null)
-            return this.GetDateString("Est. Loaded", this.Container.EstimatedTransshipment3Loaded);
+            return this.GetDateString("Loaded Est.", this.Container.EstimatedTransshipment3Loaded);
 
         else
             return null;
@@ -636,16 +642,16 @@ export class RoutingItem {
             return this.GetDateString("Gate Out", this.Container.GateOut);
 
         else if (this.Container.ActualPODDischarge != null)
-            return this.GetDateString("Act. Discharge", this.Container.ActualPODDischarge);
+            return this.GetDateString("Vessel ATD", this.Container.ActualPODDischarge);
 
         else if (this.Container.EstimatedPODDischarge != null)
-            return this.GetDateString("Est. Discharge", this.Container.EstimatedPODDischarge);
+            return this.GetDateString("Vessel ETD", this.Container.EstimatedPODDischarge);
 
         else if (this.Container.ActualPODVesselArrival != null)
-            return this.GetDateString("Act. vsl Arrival", this.Container.ActualPODVesselArrival);
+            return this.GetDateString("Vessel ATA", this.Container.ActualPODVesselArrival);
 
         else if (this.Container.EstimatedPODVesselArrival != null)
-            return this.GetDateString("Est. vsl Arrival", this.Container.EstimatedPODVesselArrival);
+            return this.GetDateString("Vessel ETA", this.Container.EstimatedPODVesselArrival);
 
         else
             return null;
