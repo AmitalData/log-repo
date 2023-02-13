@@ -16,7 +16,7 @@ import {ObjectsLocator} from '../../Locators/ObjectsLocator';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-    
+
 
     selector: 'QueryColumnEdit',
     templateUrl: './QueryColumnsEditComponent.html',
@@ -58,7 +58,7 @@ export class QueryColumnsEditComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     public IsViewOnly: boolean = false;
     public IsShowWarringMessage: boolean = false;
-     
+
     public LayoutDirection: string = 'ltr';
 
     constructor(private CD: ChangeDetectorRef) {
@@ -84,7 +84,7 @@ export class QueryColumnsEditComponent {
         this.isNewQueryMode = args.isNewQueryMode;
         this.CurrentObjectTable = args.currentObjectTable;
 
-        
+
         this.IsEnabled = false;
         this.ObjectTable = window.ObjectTables.filter(d => d.Name == args.currentObjectTable)[0];
         this.Run();
@@ -166,8 +166,6 @@ export class QueryColumnsEditComponent {
                 this.staticColumnsList = this.queryColumnsList.filter(q => q.QueryCode == this.QueryCode && ((q.UserId == SessionInfo.LoggedUserId && q.Tenant == SessionInfo.LoggedUserTenant))).sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
 
                 var listColumns = this.queryColumnsList.filter(q => q.QueryCode == this.QueryCode && ((q.UserId == SessionInfo.LoggedUserId && q.Tenant == SessionInfo.LoggedUserTenant))).sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
-
-
                 this.unselectedObjectFields = window.ObjectFields.filter(a => a.ObjectTableName == this.CurrentObjectTable).filter(d => d.DisplayInList == true && (d.Tenant == SessionInfo.LoggedUserTenant || d.Tenant == 0) && ((d.ValidForQuerySection1 == currentQuery?.QuerySection || d.ValidForQuerySection2 == currentQuery?.QuerySection || (d.AdditionalQuerySections && d.AdditionalQuerySections.split(',').indexOf(currentQuery?.QuerySection) > -1)) || d.IsCustom == true));
 
 
@@ -194,8 +192,18 @@ export class QueryColumnsEditComponent {
                 });
 
                 this.OrderedQueryColumnsList = this.OrderedQueryColumnsList.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
+
+                if (this.QueryCode === 'ARInvoice.All Invoices' && !SessionLocator.TenantPM.AccountingActivated) {
+                    this.unSelectedList = this.unSelectedList.filter(a =>
+                        a.FieldName !== 'TotalVAT' &&
+                        a.FieldName !== 'TotalExamptFortaxReport' &&
+                        a.FieldName !== 'TotalAmountNotForTaxReport' &&
+                        a.FieldName !== 'TotalAmountForTaxReport' &&
+                        a.FieldName !== 'TotaVatableAmountForTaxReport'
+                    );
+                }
                 this.CD.detectChanges();
-                //SelectedQueryColumnsList.ItemsSource = OrderedQueryColumnsList;
+
                 this.Fixedunselected = this.unSelectedList;
 
                 this.IsEnabled = true;
@@ -205,7 +213,7 @@ export class QueryColumnsEditComponent {
     }
 
     //txtSearch_TextChanged
-    private searchText: string; 
+    private searchText: string;
 
     private SetIsViewOnlyOption(currentQuery: any) {
         if (!currentQuery) return;
@@ -409,7 +417,7 @@ export class QueryColumnsEditComponent {
 
             this.unSelectedList = this.unSelectedList.filter(a => a.FieldName != field.FieldName);
             this.Fixedunselected = this.Fixedunselected.filter(a => a.FieldName != field.FieldName);
-            this.IsbtnAddEnabled = false; 
+            this.IsbtnAddEnabled = false;
             this.CD.detectChanges();
 
 
@@ -419,7 +427,7 @@ export class QueryColumnsEditComponent {
             this.onUnSelectedDataLoadedEvent.emit(this.SelectedItem);
 
 
-        } 
+        }
         //this.ReorderColumnsList();
         this.onSelectedDataLoadedEvent.emit(this.FieldSelectedItem);
         this.FieldSelectedItem = null;
@@ -536,7 +544,7 @@ export class QueryColumnsEditComponent {
                         }
                     });
                 }
-            
+
         });
         var removedQueryLength = 0;
         this.removedQueryColumnList.forEach((queryColumn, key) => {
