@@ -37,15 +37,14 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
                 return GetMexicoRfcReceptor(comprobanteReceptor, billToCard, currentTenant);
             }
 
-            comprobanteReceptor.Rfc = !string.IsNullOrEmpty(billToCard.SATForeignRFC) ? billToCard.SATForeignRFC : SATData.OutSideMexicoRfc;
+            comprobanteReceptor.Rfc = SATData.OutSideMexicoRfc;
             comprobanteReceptor.ResidenciaFiscal = billToCountryCode;
             comprobanteReceptor.ResidenciaFiscalSpecified = true;
-            comprobanteReceptor.NumRegIdTrib = !string.IsNullOrEmpty(comprobanteReceptor.Rfc) ? comprobanteReceptor.Rfc : SATData.OutSideMexicoRfc;
+            comprobanteReceptor.NumRegIdTrib = !string.IsNullOrEmpty(billToCard.SATForeignRFC) ? billToCard.SATForeignRFC : SATData.OutSideMexicoRfc;
+            comprobanteReceptor.DomicilioFiscalReceptor = LugarExpedicion.Get(new LugarExpedicionArgs { CommonContext = commonContext, BranchId = arPaymentPM.BranchId, CurrentTenantZipCode = currentTenant.Address.ZipCode, Tenant = arPaymentPM.Tenant });
+            const string regimenFiscalReceptor616Code = "616";
+            comprobanteReceptor.RegimenFiscalReceptor = regimenFiscalReceptor616Code;
 
-            if(comprobanteReceptor.Rfc == SATData.OutSideMexicoRfc) {
-                comprobanteReceptor.DomicilioFiscalReceptor = LugarExpedicion.Get(new LugarExpedicionArgs { CommonContext = commonContext, BranchId = arPaymentPM.BranchId, CurrentTenantZipCode = currentTenant.Address.ZipCode, Tenant = arPaymentPM.Tenant });
-            }
-            
             return comprobanteReceptor;
         }
 
