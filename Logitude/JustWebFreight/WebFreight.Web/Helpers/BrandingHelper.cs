@@ -44,6 +44,7 @@ namespace WebFreight.Web.Helpers
 
             brandingData.Tenant = tenantManagementPM.Id;
             brandingData.BackgroundId = tenantManagementPM.BackgroundId;
+            brandingData.MobileBackgroundId = tenantManagementPM.MobileBackgroundId;
             brandingData.BrowserIconId = tenantManagementPM.BrowserIconId;
             brandingData.ComapnylogoId = tenantManagementPM.ComapnylogoId;
             brandingData.InvertedLogoId = tenantManagementPM.InvertedLogoId;
@@ -58,6 +59,7 @@ namespace WebFreight.Web.Helpers
         private void SetBrandingImagesBytes(BrandingData brandingData)
         {
             brandingData.BackgroundBytes = SetImageBase64(brandingData.BackgroundId);
+            brandingData.MobileBackgroundBytes = SetImageBase64(brandingData.MobileBackgroundId);
             var comapnylogoBytes = SetImageBase64(brandingData.ComapnylogoId);
             brandingData.ComapnylogoBytes = comapnylogoBytes == null ? this.GetTenantLogo(brandingData.Tenant) : comapnylogoBytes;
             brandingData.InvertedLogoBytes = SetImageBase64(brandingData.InvertedLogoId);

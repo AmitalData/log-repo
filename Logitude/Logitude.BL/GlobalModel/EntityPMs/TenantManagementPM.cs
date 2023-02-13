@@ -254,6 +254,7 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public string SecondaryColor { get; set; }
         public string TertiaryColor { get; set; }
         public string BackgroundId { get; set; }
+        public string MobileBackgroundId { get; set; }
         public string ComapnylogoId { get; set; }
         public string InvertedLogoId { get; set; }
         public string BrowserIconId { get; set; }
