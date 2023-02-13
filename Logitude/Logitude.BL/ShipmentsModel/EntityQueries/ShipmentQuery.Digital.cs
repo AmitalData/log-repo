@@ -1780,7 +1780,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             if (shipment.TransportModeId == "I")
             {
-                return "Trucker.F.TruckerNo";
+                return "Shipment.F.TruckNumber";
             }
 
             return null;
