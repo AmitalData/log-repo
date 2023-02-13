@@ -30,7 +30,7 @@ export class SignStationsComponent
     _SignStationExtendedListService: SignStationExtendedListService = new SignStationExtendedListService();
     ValidationErrorsList: string[] = [];
     _SelectedStatusValue: string='';
-    _StatusList = ["Start", "תקין", "כשלון", "ממתין להזנת סיסמא", "כרטיס שגוי", "ללא הגדרה"];
+    _StatusList = ["Start", "תקין", "כשלון", "ממתין להזנת סיסמם", "כרטיס שגוי", "ללם הגדרה"];
 
 
     _AllNum: number = 0;
@@ -39,7 +39,7 @@ export class SignStationsComponent
     _OKNum: number = 0;
     private CurrentSession = SessionLocator.SelectedSession;
     
-    constructor() {
+     constructor() {
         super();
         this._entityListService = new EntityListService();
         this.BuildColumns()
@@ -112,7 +112,7 @@ export class SignStationsComponent
     _Incorrectcard: string;
     _OK: string;
     GetTotalOf(mystatus) {
-        //_StatusList = ["Start", "תקין", "כישלון", "ממתין להזנת סיסמא", "כרטיס שגוי", "ללא הגדרה"];
+        //_StatusList = ["Start", "תקין", "כישלון", "ממתין להזנת סיסמם", "כרטיס שגוי", "ללם הגדרה"];
         //_StatusList = ["Start", "OK", "Failure", "Waitingtoenterapassword", "Incorrectcard", "NoDefinition"];
         let tot = 0;
         this.SignStationGroupList.forEach(r => {
@@ -196,7 +196,7 @@ export class SignStationsComponent
         this.columns.push({
             FieldName: 'IsPersonalSignOn',
             DataTypeCode: 'string',
-            Display: 'ח. אישית',
+            Display: 'ח. םישית',
             Styles: { width: '60px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
