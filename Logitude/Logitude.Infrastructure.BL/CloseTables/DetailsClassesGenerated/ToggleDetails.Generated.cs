@@ -868,6 +868,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "SSP,Stimulsoft Printing", 
                 Description = "Stimulsoft Printing", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Remove Exception Logic", 
+                Code = "REL", 
+                SearchFields = "REL,Remove Exception Logic", 
+                Description = "Remove Exception Logic", 
+			});
 			
             return all;
        }
