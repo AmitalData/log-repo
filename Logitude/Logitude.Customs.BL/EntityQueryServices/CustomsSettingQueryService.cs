@@ -144,7 +144,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
         {
             var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(tenant);
             var environmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM();
-            
+            if (environmentSettingPM==null)
+            {
+                return false;
+            }
             var setting = this.GetSettingByTenantN(tenant);
 
 
