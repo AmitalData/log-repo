@@ -60,7 +60,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                     .Where(r => listStorageDefault.Contains(r.StorageSiteCode))
                     .Select(r => r.StorageSiteCode)
                     .FirstOrDefault();
-                sb.Append("myStorageSiteCode={myStorageSiteCode} IS NUL ???");
+                sb.Append($"myStorageSiteCode={myStorageSiteCode} IS NULL ???");
                 if (dbPM==null)
                 {
                     var qs = new DeclarationQueryService(drityEntityPM.Tenant);
@@ -114,6 +114,11 @@ namespace Logitude.Customs.BL.Messaging.Maman
                             dataHaveChangeSendIt = true;
                             sb.AppendLine("forceSend || forceDueEcomUpsert-SEND!!!");
 
+                        }
+                        else
+                        {
+                            
+                            sb.AppendLine(Environment.StackTrace);
                         }
                     }
                     if (dataHaveChangeSendIt)
