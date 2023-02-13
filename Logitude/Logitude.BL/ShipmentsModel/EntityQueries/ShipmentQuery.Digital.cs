@@ -1062,7 +1062,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             var master = shipment.TransportModeId == "A" ?
                         (shipment.AirlinePrefix != null && shipment.Master != null
-                                 ? SetPermissonFieldValue("Shipment", "Shipment.AirlinePrefix", shipment.AirlinePrefix) + "-" + SetPermissonFieldValue("Shipment", "Shipment.Master", shipment.Master)
+                                 ? (CheckIsPermissonField("Shipment", "Shipment.AirlinePrefix") ? $"{shipment.AirlinePrefix}-" : "") + SetPermissonFieldValue("Shipment", "Shipment.Master", shipment.Master)
                                  : SetPermissonFieldValue("Shipment", "Shipment.Master", shipment.Master))
                         : SetPermissonFieldValue("Shipment", "Shipment.Master", shipment.Master);
 
@@ -1088,15 +1088,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             string loadingPort;
             if (!string.IsNullOrEmpty(shipment.PreCarriageCarrierId))
             {
-                loadingPort = SetPermissonFieldValue("Shipment", "Shipment.PreCarriageFromPortName", shipment.PreCarriageFromPortName)
-                             + ", "
+                loadingPort = (CheckIsPermissonField("Shipment", "Shipment.PreCarriageFromPortName") ? $"{ shipment.PreCarriageFromPortName }, ": "")
                              + SetPermissonFieldValue("Shipment", "Shipment.PreCarriageFromPortCountryCode", shipment.PreCarriageFromPortCountryCode);
             }
             else
             {
-                loadingPort = SetPermissonFieldValue("Shipment", "Shipment.MainCarriageFromPortName", shipment.MainCarriageFromPortName)
-                                + ", "
-                                + SetPermissonFieldValue("Shipment", "Shipment.MainCarriageFromPortCountryCode", shipment.MainCarriageFromPortCountryCode);
+                loadingPort = (CheckIsPermissonField("Shipment", "Shipment.MainCarriageFromPortName") ? $"{ shipment.MainCarriageFromPortName }, " : "")
+                              + SetPermissonFieldValue("Shipment", "Shipment.MainCarriageFromPortCountryCode", shipment.MainCarriageFromPortCountryCode);
             }
 
             return loadingPort;
@@ -1106,33 +1104,28 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             if (!string.IsNullOrEmpty(shipment.OnCarriageFromPortId))
             {
-                return SetPermissonFieldValue("Shipment", "Shipment.OnCarriageToPortName", shipment.OnCarriageToPortName)
-                        + ", "
+                return (CheckIsPermissonField("Shipment", "Shipment.OnCarriageToPortName") ? $"{ shipment.OnCarriageToPortName }, " : "")
                         + SetPermissonFieldValue("Shipment", "Shipment.OnCarriageToPortCountryCode", shipment.OnCarriageToPortCountryCode);
             }
             else if (!string.IsNullOrEmpty(shipment.Transshipment3ToPortId))
             {
-                return SetPermissonFieldValue("Shipment", "Shipment.Transshipment3ToPortName", shipment.Transshipment3ToPortName)
-                        + ", "
+                return (CheckIsPermissonField("Shipment", "Shipment.Transshipment3ToPortName") ? $"{ shipment.Transshipment3ToPortName }, " : "")
                         + SetPermissonFieldValue("Shipment", "Shipment.Transshipment3ToPortCountryCode", shipment.Transshipment3ToPortCountryCode);
             }
             else if (!string.IsNullOrEmpty(shipment.Transshipment2ToPortId))
             {
-                return SetPermissonFieldValue("Shipment", "Shipment.Transshipment2ToPortName", shipment.Transshipment2ToPortName)
-                       + ", "
+                return (CheckIsPermissonField("Shipment", "Shipment.Transshipment2ToPortName") ? $"{ shipment.Transshipment2ToPortName }, " : "")
                        + SetPermissonFieldValue("Shipment", "Shipment.Transshipment2ToPortCountryCode", shipment.Transshipment2ToPortCountryCode);
             }
             else if (!string.IsNullOrEmpty(shipment.Transshipment1ToPortId))
             {
-                return SetPermissonFieldValue("Shipment", "Shipment.Transshipment1ToPortName", shipment.Transshipment1ToPortName)
-                       + ", "
+                return (CheckIsPermissonField("Shipment", "Shipment.Transshipment1ToPortName") ? $"{ shipment.Transshipment1ToPortName }, " : "")
                        + SetPermissonFieldValue("Shipment", "Shipment.Transshipment1ToPortCountryCode", shipment.Transshipment1ToPortCountryCode);
 
             }
             else if (!string.IsNullOrEmpty(shipment.MainCarriageToPortId))
             {
-                return SetPermissonFieldValue("Shipment", "Shipment.MainCarriageToPortName", shipment.MainCarriageToPortName)
-                       + ", "
+                return (CheckIsPermissonField("Shipment", "Shipment.MainCarriageToPortName") ? $"{ shipment.MainCarriageToPortName }, " : "")
                        + SetPermissonFieldValue("Shipment", "Shipment.MainCarriageToPortCountryCode", shipment.MainCarriageToPortCountryCode);
             }
 
@@ -1250,25 +1243,29 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 Title = "Shipment.G.PreCarrigeInformation",
                 LegHeader = "PreCarriage",
-                FromPort = SetPermissonFieldValue("Shipment", "Shipment.PreCarriageFromPortName", shipment.PreCarriageFromPortName) 
-                           + ", " 
+                FromPort = (CheckIsPermissonField("Shipment", "Shipment.PreCarriageFromPortName") ? $"{ shipment.PreCarriageFromPortName }, " : "")
                            + SetPermissonFieldValue("Shipment", "Shipment.PreCarriageFromPortCountryCode", shipment.PreCarriageFromPortCountryCode),
-
-                ToPort = SetPermissonFieldValue("Shipment", "Shipment.PreCarriageToPortName", shipment.PreCarriageToPortName)
-                           + ", "
+                ToPort = (CheckIsPermissonField("Shipment", "Shipment.PreCarriageToPortName") ? $"{ shipment.PreCarriageToPortName }, " : "")
                            + SetPermissonFieldValue("Shipment", "Shipment.PreCarriageToPortCountryCode", shipment.PreCarriageToPortCountryCode),
                 TransportMode = GetTransportModeName(shipment.PreCarriageTransportModeId),
                 DepartureDate = shipment.PreCarriageATD != null ?
                                 SetPermissonFieldValue("Shipment", "Shipment.PreCarriageATD", shipment.PreCarriageATD)
                                 :
                                 SetPermissonFieldValue("Shipment", "Shipment.PreCarriageETD", shipment.PreCarriageETD),
-                DepartureDateType = shipment.PreCarriageATD != null ? "ATD" : (shipment.PreCarriageETD != null ? "ETD" : null),
-
+                DepartureDateType = CheckIsPermissonField("Shipment", "Shipment.PreCarriageATD") && shipment.PreCarriageATD != null 
+                                    ? "ATD" 
+                                    : (CheckIsPermissonField("Shipment", "Shipment.PreCarriageETD") && shipment.PreCarriageETD != null 
+                                        ? "ETD" 
+                                        : null),
                 ArrivalDate = shipment.PreCarriageATA != null ?
                                 SetPermissonFieldValue("Shipment", "Shipment.PreCarriageATA", shipment.PreCarriageATA)
                                 :
                                 SetPermissonFieldValue("Shipment", "Shipment.PreCarriageETA", shipment.PreCarriageETA),
-                ArrivalDateType = shipment.PreCarriageATA != null ? "ATA" : (shipment.PreCarriageETA != null ? "ETA" : null),
+                ArrivalDateType = CheckIsPermissonField("Shipment", "Shipment.PreCarriageATA") && shipment.PreCarriageATA != null 
+                                  ? "ATA" 
+                                  : (CheckIsPermissonField("Shipment", "Shipment.PreCarriageETA") && shipment.PreCarriageETA != null 
+                                      ? "ETA" 
+                                      : null),
                 Carrier = SetPermissonFieldValue("Shipment", "Shipment.PreCarriageCarrierName", shipment.PreCarriageCarrierName),
                 CarrierLabel = "Shipment.PreCarriageCarrierName",
                 CarrierNumberLabel = "Shipment.PreCarriageCarrierNumber",
@@ -1287,15 +1284,33 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 Title = "Shipment.G.MainCarrigeInformation",
                 LegHeader = "MainCarriage",
-                FromPort = shipment.MainCarriageFromPortName + ", " + shipment.MainCarriageFromPortCountryCode,
-                ToPort = shipment.MainCarriageToPortName + ", " + shipment.MainCarriageToPortCountryCode,
+                FromPort = (CheckIsPermissonField("Shipment", "Shipment.MainCarriageFromPortName") ? $"{ shipment.MainCarriageFromPortName }, " : "")
+                           + SetPermissonFieldValue("Shipment", "Shipment.MainCarriageFromPortCountryCode", shipment.MainCarriageFromPortCountryCode),
+                ToPort = (CheckIsPermissonField("Shipment", "Shipment.MainCarriageToPortName") ? $"{ shipment.MainCarriageToPortName }, " : "")
+                           + SetPermissonFieldValue("Shipment", "Shipment.MainCarriageToPortCountryCode", shipment.MainCarriageToPortCountryCode),
                 CarrierLabel = GetCarrierTextCode(shipment),
                 CarrierNumberLabel = GetCarrierNumberTextCode(shipment),
-                VesselName = shipment.TransportModeId == "O" ? shipment.MainCarriageVesselName : null,
-                DepartureDate = shipment.MainCarriageATD != null ? shipment.MainCarriageATD : shipment.MainCarriageETD,
-                DepartureDateType = shipment.MainCarriageATD != null ? "ATD" : (shipment.MainCarriageETD != null ? "ETD" : null),
-                ArrivalDate = shipment.MainCarriageATA != null ? shipment.MainCarriageATA : shipment.MainCarriageETA,
-                ArrivalDateType = shipment.MainCarriageATA != null ? "ATA" : (shipment.MainCarriageETA != null ? "ETA" : null),
+                VesselName = shipment.TransportModeId == "O" 
+                             ? SetPermissonFieldValue("Shipment", "Shipment.MainCarriageVesselName", shipment.MainCarriageVesselName)
+                             : null,
+                DepartureDate = shipment.MainCarriageATD != null 
+                                ? SetPermissonFieldValue("Shipment", "Shipment.MainCarriageATD", shipment.MainCarriageATD) 
+                                : SetPermissonFieldValue("Shipment", "Shipment.MainCarriageETD", shipment.MainCarriageETD),
+                DepartureDateType = CheckIsPermissonField("Shipment", "Shipment.MainCarriageATD") && shipment.MainCarriageATD != null 
+                                    ? "ATD" 
+                                    : (CheckIsPermissonField("Shipment", "Shipment.MainCarriageETD") && shipment.MainCarriageETD != null 
+                                       ? "ETD" 
+                                       : null),
+                ArrivalDate = CheckIsPermissonField("Shipment", "Shipment.MainCarriageATA") && shipment.MainCarriageATA != null 
+                             ? shipment.MainCarriageATA 
+                             : (CheckIsPermissonField("Shipment", "Shipment.MainCarriageETA")
+                                && shipment.MainCarriageETA != null 
+                                ? shipment.MainCarriageETA : null),
+                ArrivalDateType = CheckIsPermissonField("Shipment", "Shipment.MainCarriageATA") &&  shipment.MainCarriageATA != null 
+                                  ? "ATA" 
+                                  : (CheckIsPermissonField("Shipment", "Shipment.MainCarriageETA") && shipment.MainCarriageETA != null 
+                                    ? "ETA" 
+                                    : null),
                 TransportMode = GetTransportModeName(shipment.TransportModeId),
             };
 
@@ -1318,21 +1333,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 Title = "Shipment.G.Transshipment1Information",
                 LegHeader = "Transshipment1",
-
-                FromPort = SetPermissonFieldValue("Shipment", "Shipment.Transshipment1FromPortName", shipment.Transshipment1FromPortName)
-                           + ", "
+                FromPort = (CheckIsPermissonField("Shipment", "Shipment.Transshipment1FromPortName") ? $"{ shipment.Transshipment1FromPortName }, " : "")
                            + SetPermissonFieldValue("Shipment", "Shipment.Transshipment1FromPortCountryCode", shipment.Transshipment1FromPortCountryCode),
-
-                ToPort = SetPermissonFieldValue("Shipment", "Shipment.Transshipment1ToPortName", shipment.Transshipment1ToPortName)
-                           + ", "
+                ToPort = (CheckIsPermissonField("Shipment", "Shipment.Transshipment1ToPortName") ? $"{ shipment.Transshipment1ToPortName }, " : "")
                            + SetPermissonFieldValue("Shipment", "Shipment.Transshipment1ToPortCountryCode", shipment.Transshipment1ToPortCountryCode),
-
                 CarrierLabel = GetCarrierTextCode(shipment),
                 CarrierNumberLabel = GetCarrierNumberTextCode(shipment),
                 VesselName = shipment.TransportModeId == "O" ?
                                 SetPermissonFieldValue("Shipment", "Shipment.Transshipment1VesselName", shipment.Transshipment1VesselName)
                                 : null,
-
                 DepartureDate = shipment.Transshipment1ATD != null ?
                                 SetPermissonFieldValue("Shipment", "Shipment.Transshipment1ATD", shipment.Transshipment1ATD)
                                 :
@@ -1342,8 +1351,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                 :
                                 SetPermissonFieldValue("Shipment", "Shipment.Transshipment1ETA", shipment.Transshipment1ETA),
 
-                DepartureDateType = shipment.Transshipment1ATD != null ? "ATD" : (shipment.Transshipment1ETD != null ? "ETD" : null),
-                ArrivalDateType = shipment.Transshipment1ATA != null ? "ATA" : (shipment.Transshipment1ETA != null ? "ETA" : null),
+                DepartureDateType = CheckIsPermissonField("Shipment", "Shipment.Transshipment1ATD") && shipment.Transshipment1ATD != null 
+                                    ? "ATD" 
+                                    : (CheckIsPermissonField("Shipment", "Shipment.Transshipment1ETD") && shipment.Transshipment1ETD != null 
+                                       ? "ETD" 
+                                       : null),
+                ArrivalDateType = CheckIsPermissonField("Shipment", "Shipment.Transshipment1ATA") && shipment.Transshipment1ATA != null 
+                                  ? "ATA" 
+                                  : (CheckIsPermissonField("Shipment", "Shipment.Transshipment1ETA") && shipment.Transshipment1ETA != null 
+                                     ? "ETA" 
+                                     : null),
                 TransportMode = GetTransportModeName(shipment.TransportModeId),
             };
 
@@ -1366,20 +1383,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 Title = "Shipment.G.Transshipment2Information",
                 LegHeader = "Transshipment2",
-                FromPort = SetPermissonFieldValue("Shipment", "Shipment.Transshipment2FromPortName", shipment.Transshipment2FromPortName)
-                           + ", "
+                FromPort = (CheckIsPermissonField("Shipment", "Shipment.Transshipment2FromPortName") ? $"{ shipment.Transshipment2FromPortName }, " : "")
                            + SetPermissonFieldValue("Shipment", "Shipment.Transshipment2FromPortCountryCode", shipment.Transshipment2FromPortCountryCode),
-
-                ToPort = SetPermissonFieldValue("Shipment", "Shipment.Transshipment2ToPortName", shipment.Transshipment2ToPortName)
-                           + ", "
+                ToPort = (CheckIsPermissonField("Shipment", "Shipment.Transshipment2ToPortName") ? $"{ shipment.Transshipment2ToPortName }, " : "")
                            + SetPermissonFieldValue("Shipment", "Shipment.Transshipment2ToPortCountryCode", shipment.Transshipment2ToPortCountryCode),
-
                 CarrierLabel = GetCarrierTextCode(shipment),
                 CarrierNumberLabel = GetCarrierNumberTextCode(shipment),
                 VesselName = shipment.TransportModeId == "O" ?
                                 SetPermissonFieldValue("Shipment", "Shipment.Transshipment2VesselName", shipment.Transshipment2VesselName)
                                 : null,
-
                 DepartureDate = shipment.Transshipment2ATD != null ?
                                 SetPermissonFieldValue("Shipment", "Shipment.Transshipment2ATD", shipment.Transshipment2ATD)
                                 :
@@ -1388,9 +1400,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                 SetPermissonFieldValue("Shipment", "Shipment.Transshipment2ATA", shipment.Transshipment2ATA)
                                 :
                                 SetPermissonFieldValue("Shipment", "Shipment.Transshipment2ETA", shipment.Transshipment2ETA),
-
-                DepartureDateType = shipment.Transshipment2ATD != null ? "ATD" : (shipment.Transshipment2ETD != null ? "ETD" : null),
-                ArrivalDateType = shipment.Transshipment2ATA != null ? "ATA" : (shipment.Transshipment2ETA != null ? "ETA" : null),
+                DepartureDateType = CheckIsPermissonField("Shipment", "Shipment.Transshipment2ATD") && shipment.Transshipment2ATD != null 
+                                    ? "ATD" 
+                                    : (CheckIsPermissonField("Shipment", "Shipment.Transshipment2ETD") && shipment.Transshipment2ETD != null 
+                                       ? "ETD" 
+                                       : null),
+                ArrivalDateType = CheckIsPermissonField("Shipment", "Shipment.Transshipment2ATA") && shipment.Transshipment2ATA != null 
+                                  ? "ATA" 
+                                  : (CheckIsPermissonField("Shipment", "Shipment.Transshipment2ETA") && shipment.Transshipment2ETA != null 
+                                     ? "ETA" 
+                                     : null),
                 TransportMode = GetTransportModeName(shipment.TransportModeId),
             };
 
@@ -1413,20 +1432,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 Title = "Shipment.G.Transshipment3Information",
                 LegHeader = "Transshipment3",
-                FromPort = SetPermissonFieldValue("Shipment", "Shipment.Transshipment3FromPortName", shipment.Transshipment3FromPortName)
-                           + ", "
+                FromPort = (CheckIsPermissonField("Shipment", "Shipment.Transshipment3FromPortName") ? $"{ shipment.Transshipment3FromPortName }, " : "")
                            + SetPermissonFieldValue("Shipment", "Shipment.Transshipment3FromPortCountryCode", shipment.Transshipment3FromPortCountryCode),
-
-                ToPort = SetPermissonFieldValue("Shipment", "Shipment.Transshipment3ToPortName", shipment.Transshipment3ToPortName)
-                           + ", "
+                ToPort = (CheckIsPermissonField("Shipment", "Shipment.Transshipment3ToPortName") ? $"{ shipment.Transshipment3ToPortName }, " : "")
                            + SetPermissonFieldValue("Shipment", "Shipment.Transshipment3ToPortCountryCode", shipment.Transshipment3ToPortCountryCode),
-
                 CarrierLabel = GetCarrierTextCode(shipment),
                 CarrierNumberLabel = GetCarrierNumberTextCode(shipment),
                 VesselName = shipment.TransportModeId == "O" ?
                                 SetPermissonFieldValue("Shipment", "Shipment.Transshipment3VesselName", shipment.Transshipment3VesselName)
                                 : null,
-
                 DepartureDate = shipment.Transshipment3ATD != null ?
                                 SetPermissonFieldValue("Shipment", "Shipment.Transshipment3ATD", shipment.Transshipment3ATD)
                                 :
@@ -1435,9 +1449,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                 SetPermissonFieldValue("Shipment", "Shipment.Transshipment3ATA", shipment.Transshipment3ATA)
                                 :
                                 SetPermissonFieldValue("Shipment", "Shipment.Transshipment3ETA", shipment.Transshipment3ETA),
-
-                DepartureDateType = shipment.Transshipment3ATD != null ? "ATD" : (shipment.Transshipment3ETD != null ? "ETD" : null),
-                ArrivalDateType = shipment.Transshipment3ATA != null ? "ATA" : (shipment.Transshipment3ETA != null ? "ETA" : null),
+                DepartureDateType = CheckIsPermissonField("Shipment", "Shipment.Transshipment3ATD") && shipment.Transshipment3ATD != null 
+                                    ? "ATD" 
+                                    : (CheckIsPermissonField("Shipment", "Shipment.Transshipment3ETD") && shipment.Transshipment3ETD != null 
+                                      ? "ETD" 
+                                      : null),
+                ArrivalDateType = CheckIsPermissonField("Shipment", "Shipment.Transshipment3ATA") && shipment.Transshipment3ATA != null 
+                                  ? "ATA" 
+                                  : (CheckIsPermissonField("Shipment", "Shipment.Transshipment3ETA") && shipment.Transshipment3ETA != null 
+                                  ? "ETA" 
+                                  : null),
                 TransportMode = GetTransportModeName(shipment.TransportModeId),
             };
 
@@ -1460,32 +1481,34 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 Title = "Shipment.G.OnCarrigeInformation",
                 LegHeader = "OnCarriage",
-                FromPort = SetPermissonFieldValue("Shipment", "Shipment.OnCarriageFromPortName", shipment.OnCarriageFromPortName)
-                           + ", "
+                FromPort = (CheckIsPermissonField("Shipment", "Shipment.OnCarriageFromPortName") ? $"{ shipment.OnCarriageFromPortName }, " : "")
                            + SetPermissonFieldValue("Shipment", "Shipment.OnCarriageFromPortCountryCode", shipment.OnCarriageFromPortCountryCode),
-
-                ToPort = SetPermissonFieldValue("Shipment", "Shipment.OnCarriageToPortName", shipment.OnCarriageToPortName)
-                           + ", "
+                ToPort = (CheckIsPermissonField("Shipment", "Shipment.OnCarriageToPortName") ? $"{ shipment.OnCarriageToPortName }, " : "")
                            + SetPermissonFieldValue("Shipment", "Shipment.OnCarriageToPortCountryCode", shipment.OnCarriageToPortCountryCode),
-
                 TransportMode = GetTransportModeName(shipment.OnCarriageTransportModeId),
-              
-                DepartureDate = shipment.OnCarriageATD != null ?
-                                SetPermissonFieldValue("Shipment", "Shipment.OnCarriageATD", shipment.OnCarriageATD)
-                                :
-                                SetPermissonFieldValue("Shipment", "Shipment.OnCarriageETD", shipment.OnCarriageETD),
-                ArrivalDate = shipment.OnCarriageATA != null ?
-                                SetPermissonFieldValue("Shipment", "Shipment.OnCarriageATA", shipment.OnCarriageATA)
-                                :
-                                SetPermissonFieldValue("Shipment", "Shipment.OnCarriageETA", shipment.OnCarriageETA),
-
-                DepartureDateType = shipment.OnCarriageATD != null ? "ATD" : (shipment.OnCarriageETD != null ? "ETD" : null),
-                ArrivalDateType = shipment.OnCarriageATA != null ? "ATA" : (shipment.OnCarriageETA != null ? "ETA" : null),
+                DepartureDate = CheckIsPermissonField("ShipmentPackage", "ShipmentPackage.OnCarriageATD") && shipment.OnCarriageATD != null 
+                                ? shipment.OnCarriageATD
+                                : CheckIsPermissonField("ShipmentPackage", "ShipmentPackage.OnCarriageETD") ? shipment.OnCarriageETD : null,
+                ArrivalDate = CheckIsPermissonField("ShipmentPackage", "ShipmentPackage.OnCarriageATA") && shipment.OnCarriageATA != null 
+                                ? shipment.OnCarriageATA
+                                : CheckIsPermissonField("ShipmentPackage", "ShipmentPackage.OnCarriageETA") ? shipment.OnCarriageETA : null,
+                DepartureDateType = CheckIsPermissonField("ShipmentPackage", "ShipmentPackage.OnCarriageATD") && shipment.OnCarriageATD != null 
+                                    ? "ATD" 
+                                    : (CheckIsPermissonField("ShipmentPackage", "ShipmentPackage.OnCarriageETD") && shipment.OnCarriageETD != null 
+                                       ? "ETD" 
+                                       : null),
+                ArrivalDateType = CheckIsPermissonField("ShipmentPackage", "ShipmentPackage.OnCarriageATA") && shipment.OnCarriageATA != null 
+                                  ? "ATA" 
+                                  : (CheckIsPermissonField("ShipmentPackage", "ShipmentPackage.OnCarriageETA") && shipment.OnCarriageETA != null 
+                                     ? "ETA" 
+                                     : null),
                 Carrier = SetPermissonFieldValue("Shipment", "Shipment.OnCarriageCarrierName", shipment.OnCarriageCarrierName),
                 CarrierNumber = SetPermissonFieldValue("Shipment", "Shipment.OnCarriageCarrierNumber", shipment.OnCarriageCarrierNumber),
                 CarrierLabel = "Shipment.OnCarriageCarrierName",
                 CarrierNumberLabel = "Shipment.OnCarriageCarrierNumber",
-                VesselName = shipment.OnCarriageTransportModeId == "O" ? SetPermissonFieldValue("Shipment", "Shipment.OnCarriageVesselName", shipment.OnCarriageVesselName) : null,
+                VesselName = shipment.OnCarriageTransportModeId == "O" 
+                             ? SetPermissonFieldValue("Shipment", "Shipment.OnCarriageVesselName", shipment.OnCarriageVesselName) 
+                             : null,
             };
 
             return onCarriageLeg;
@@ -1526,8 +1549,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                               SetPermissonFieldValue("ShipmentPickUpDelivery", "ShipmentPickUpDelivery.ATA", finalDelivery.ATA)
                               :
                               SetPermissonFieldValue("ShipmentPickUpDelivery", "ShipmentPickUpDelivery.ETA", finalDelivery.ETA),
-                DepartureDateType = finalDelivery.ATD != null ? "ATD" : (finalDelivery.ETD != null ? "ETD" : null),
-                ArrivalDateType = finalDelivery.ATA != null ? "ATA" : (finalDelivery.ETA != null ? "ETA" : null),
+                DepartureDateType = CheckIsPermissonField("ShipmentPickUpDelivery", "ShipmentPickUpDelivery.ATD") && finalDelivery.ATD != null 
+                                    ? "ATD" 
+                                    : (CheckIsPermissonField("ShipmentPickUpDelivery", "ShipmentPickUpDelivery.ETD") &&  finalDelivery.ETD != null 
+                                        ? "ETD" 
+                                        : null),
+                ArrivalDateType = CheckIsPermissonField("ShipmentPickUpDelivery", "ShipmentPickUpDelivery.ATA") && finalDelivery.ATA != null 
+                                  ? "ATA" 
+                                  : (CheckIsPermissonField("ShipmentPickUpDelivery", "ShipmentPickUpDelivery.ETA") && finalDelivery.ETA != null 
+                                     ? "ETA" 
+                                     : null),
                 Carrier = SetPermissonFieldValue("Trucker", "Trucker.EnglishName", trucker?.EnglishName),
                 CarrierNumber = SetPermissonFieldValue("ShipmentPickUpDelivery", "ShipmentPickUpDelivery.PickUpDeliveryNumber", finalDelivery.CarrierNumber),
                 CarrierNumberLabel = "ShipmentPickUpDelivery.PickUpDeliveryNumber",
@@ -1749,7 +1780,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             if (shipment.TransportModeId == "I")
             {
-                return "Trucker.F.TruckerNo";
+                return "Shipment.F.TruckNumber";
             }
 
             return null;
@@ -1759,17 +1790,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             if (transportModeId == "A")
             {
-                return "Air";
+                return "Dashboard.G.AirLabel";
             }
 
             if (transportModeId == "O")
             {
-                return "Ocean";
+                return "Dashboard.G.OceanLabel";
             }
 
             if (transportModeId == "I")
             {
-                return "Inland";
+                return "Dashboard.G.InlandLabel";
             }
 
             return null;
@@ -2007,15 +2038,20 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private TimeLineData FillShipmnetTimeLineForShipment(dynamic shipment)
         {
-            string id = shipment.Id;
+            var timeLineData = new TimeLineData();
 
+            if (!DoesPropertyExistInDynamic(shipment, "Id"))
+            {
+                return timeLineData;
+            }
+
+            string id = shipment.Id;
             var shipmentPickUpDeliveries = repository.context
                                                      .ShipmentPickUpDeliveries
                                                      .Include("FromAddressCountry")
                                                      .Include("ToAddressCountry")
                                                      .Where(a => a.ShipmentId == id);
 
-            var timeLineData = new TimeLineData();
             this.FillMainCarraigeFromTimeLine(timeLineData, shipment);
             this.FillMainCarraigeToTimeLine(timeLineData, shipment);
             this.FillPickUpTimeLine(timeLineData, shipmentPickUpDeliveries);
@@ -2559,7 +2595,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 legDetails.Add(GetVerticalTimelineCarrierNumberTextCode(shipment), "");
             }
 
-            if (CheckIsPermissonField("Shipment", "Shipment.Shipment.Master"))
+            if (CheckIsPermissonField("Shipment", "Shipment.Master"))
             {
                 legDetails.Add(GetVerticalTimeLineMasterTextCode(shipment), CheckEmptyValue(master));
             }
@@ -2656,7 +2692,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 legDetails.Add(GetVerticalTimelineCarrierNumberTextCode(shipment), "");
             }
 
-            if (CheckIsPermissonField("Shipment", "shipment.Transshipment1AdditionalMAWBOBLBL"))
+            if (CheckIsPermissonField("Shipment", "Shipment.Transshipment1AdditionalMAWBOBLBL"))
             {
                 legDetails.Add(GetVerticalTimeLineMasterTextCode(shipment), CheckEmptyValue(master));
             }
@@ -2696,7 +2732,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 legDetails.Add(GetVerticalTimelineCarrierNumberTextCode(shipment), "");
             }
 
-            if (CheckIsPermissonField("Shipment", "shipment.Transshipment2AdditionalMAWBOBLBL"))
+            if (CheckIsPermissonField("Shipment", "Shipment.Transshipment2AdditionalMAWBOBLBL"))
             {
                 legDetails.Add(GetVerticalTimeLineMasterTextCode(shipment), CheckEmptyValue(master));
             }
@@ -2736,7 +2772,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 legDetails.Add(GetVerticalTimelineCarrierNumberTextCode(shipment), "");
             }
 
-            if (CheckIsPermissonField("Shipment", "shipment.Transshipment3AdditionalMAWBOBLBL"))
+            if (CheckIsPermissonField("Shipment", "Shipment.Transshipment3AdditionalMAWBOBLBL"))
             {
                 legDetails.Add(GetVerticalTimeLineMasterTextCode(shipment), CheckEmptyValue(master));
             }
@@ -2845,7 +2881,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 legDetails.Add(GetVerticalTimelineCarrierNumberTextCode(shipment), "");
             }
 
-            if (CheckIsPermissonField("Shipment", "Shipment.Shipment.Master"))
+            if (CheckIsPermissonField("Shipment", "Shipment.Master"))
             {
                 legDetails.Add(GetVerticalTimeLineMasterTextCode(shipment), CheckEmptyValue(master));
             }
