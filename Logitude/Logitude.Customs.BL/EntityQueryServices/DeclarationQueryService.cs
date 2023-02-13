@@ -1041,7 +1041,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         {
                             errorview.ConstraintIndication = constraints.Where(d => d.ConstraintNumber == errorview.ConstraintId).Any();
                         }
-                        errorview.Description = error.MessageError.Replace(',', ';');
+                        errorview.Description = error.MessageError; //.Replace(',', ';');
                         errorview.ErrorType = error.Code;
                         if (!string.IsNullOrEmpty(error.Code))
                         {
