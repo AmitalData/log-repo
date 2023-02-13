@@ -344,7 +344,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 physicalCheck.CargoTypeCode = NoticeToClient.entityType.ToString();
                 physicalCheck.CheckId = NoticeToClient.checkId.ToString();
-                physicalCheck.CheckSiteCode = NoticeToClient.checkSiteNumber.ToString();
+                physicalCheck.CheckSiteCode = NoticeToClient.checkSiteNumber?.ToString();
 
                 physicalCheck.ImporterNumber = NoticeToClient.importerNumberSpecified ? NoticeToClient.importerNumber.ToString() : null;
                 physicalCheck.InitiatorTypeCode = NoticeToClient.initiatorTypeSpecified ? NoticeToClient.initiatorType.ToString() : null;
@@ -359,7 +359,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 physicalCheck.QueueTypeCode = NoticeToClient.QueueTypeSpecified ? NoticeToClient.QueueType.ToString() : null;
 
                 physicalCheck.StatusMessageCode = NoticeToClient.statusMessage.ToString();
-                physicalCheck.StorageSiteCode = NoticeToClient.storageSiteNumber.ToString();
+                physicalCheck.StorageSiteCode = NoticeToClient.storageSiteNumber?.ToString();
                 physicalCheck.Tenant = requestParams.Tenant;
                 if (NoticeToClient.IsComprehensiveCheckSpecified == true)
                 {
