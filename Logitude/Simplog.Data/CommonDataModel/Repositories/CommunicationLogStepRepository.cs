@@ -49,7 +49,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
            return (from a in context.CommunicationLogSteps 
                        .Include("CommunicationStatusType")
                        .Include("Document")
-                   where a.CommunicationLogId == id && a.StepNumber == StepNumber
+                   where a.CommunicationLogId == id && a.StepNumber == StepNumber && a.Tenant == tenant
                     select a).FirstOrDefault();
 
         }
@@ -123,6 +123,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                        .Include("CommunicationStatusType")
                        .Include("Document")
                     where a.CommunicationLogId == id
+                    && a.Tenant == tenant
                     orderby a.StepNumber //MUST !!!
                     select a).ToList();
 
@@ -148,10 +149,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return (from a in context.CommunicationLogSteps
                        .Include("CommunicationStatusType")
                        .Include("Document")
-                    where a.CommunicationLogId == id
+                    where a.CommunicationLogId == id &&
+                    a.Tenant == tenant
                     orderby a.StepNumber //MUST !!!
                     select a);
-
+            
         }
         public IQueryable<string> Get104921()
         {

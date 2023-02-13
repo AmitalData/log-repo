@@ -93,4 +93,8 @@
     ReferencedTable="Documents"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+	<Index
+		Columns="CommunicationLogId,Tenant" />
+	<Index
+		Columns="CommunicationLogId,StepNumber,Tenant" />
 </Table>
