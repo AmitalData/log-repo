@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PendingByKeywordUpdateClass
    {  		
-		public const string HashString = "32af41b6626b176d9502ff0c3b0f7fd0";
+		public const string HashString = "9497f5c03be389411b7c06a7be0a905a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -731,7 +731,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  2000,
 					  						DisplayInList =  true,
-					  						DataTemplateName =  "צירוף מילים להחרגה",
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -757,6 +756,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExceptKeywords",
 					  						DefaultText =  "Except Key words",
+					  						FullLocalDefaultText =  "צירוף מילים להחרגה",
 					  						ListFieldLable =  "ExceptKeywordsListLable",
 					  						ListLableDefaultText =  "ExceptKeywords",
 					  						ListLocalDefaultText =  "צירוף מילים להחרגה",
