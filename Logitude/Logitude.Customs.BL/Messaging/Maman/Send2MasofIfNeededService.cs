@@ -115,6 +115,11 @@ namespace Logitude.Customs.BL.Messaging.Maman
                             sb.AppendLine("forceSend || forceDueEcomUpsert-SEND!!!");
 
                         }
+                        else
+                        {
+                            
+                            sb.AppendLine(Environment.StackTrace);
+                        }
                     }
                     if (dataHaveChangeSendIt)
                     {
