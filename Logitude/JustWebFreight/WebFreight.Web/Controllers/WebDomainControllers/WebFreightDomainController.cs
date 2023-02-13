@@ -340,13 +340,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
        
         private static async Task RunAddingDNSRecordAsync(string customerURL, int tenant)
         {
+            customerURL = customerURL.ToLower();
+
             if (!IsValidDomain(customerURL))
             {
                 throw new Exception("Invalid domain name");
             }
 
             var isSubDomainIOfTenantManagementUsed = IsSubDomainIOfTenantManagementUsed(customerURL, tenant);
-           
+
             if (isSubDomainIOfTenantManagementUsed.Item1)
             {
                 throw new Exception("The domain already defined for tenant No. " + isSubDomainIOfTenantManagementUsed.Item2);
@@ -365,6 +367,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 SubscriptionId = subscriptionId
             };
+
+            if (CheckOnDNS(dnsClient, resourceGroupName, zoneName, customerURL, RecordType.CNAME) 
+                 || CheckOnDNS(dnsClient, resourceGroupName, zoneName, customerURL, RecordType.A))
+            {
+                throw new Exception("The domain already exist on the dns");
+            }
 
             try
             {
@@ -386,6 +394,23 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
+        private static bool CheckOnDNS(DnsManagementClient dnsClient, string resourceGroupName, string zoneName, string customerURL, RecordType recordType)
+        {
+            try
+            {
+                if (dnsClient.RecordSets.Get(resourceGroupName, zoneName, customerURL, recordType) != null)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         private static string GetDomainData()
         {
             return LogitudeSettings.DeploymentStage.ToLower() == "simplog"
@@ -400,6 +425,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         private static bool IsValidDomain(string subDomain)
         {
             if (string.IsNullOrWhiteSpace(subDomain))
+            {
+                return false;
+            }
+
+            if (char.IsDigit(subDomain[0]))
             {
                 return false;
             }

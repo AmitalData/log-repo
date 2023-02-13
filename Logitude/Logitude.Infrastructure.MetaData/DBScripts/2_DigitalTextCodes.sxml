@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="22">
+  <Sql Version="23">
     <![CDATA[
 	  delete from DigitalTextCodes where Id != ''
 	  
@@ -338,6 +338,18 @@
 		{
 			"TextCode": "General.G.NoDataDefaultMSG",
 			"DefaultText": "You do not have any information here All information will be displayed here, when it will be added by the forwarder",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.Browsefiles",
+			"DefaultText": "Browse files",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.OR",
+			"DefaultText": "OR",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
@@ -3181,6 +3193,18 @@
 		{
 			"TextCode": "General.G.NoDataDefaultMSG",
 			"DefaultText": "You do not have any information here All information will be displayed here, when it will be added by the forwarder",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.Browsefiles",
+			"DefaultText": "Browse files",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.OR",
+			"DefaultText": "OR",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
