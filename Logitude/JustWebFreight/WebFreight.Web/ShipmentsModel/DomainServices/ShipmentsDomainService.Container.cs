@@ -31,6 +31,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
             QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+            queryOperations.QueryFilterItems = GetQueryFilterItems("Container", tenant, queryOperations.QueryFilterItems);
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
@@ -40,10 +41,10 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             IQueryable<Container> iQueryable = containerRepository.GetContainers(tenant);
             iQueryable = customfilters.GetFilteredQuery(queryOperations, iQueryable);
             QueryOperations nonListQueryOperation = new QueryOperations();
-            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
 
             QueryOperations listQueryOperation = new QueryOperations();
-            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
 
             iQueryable = filter.GetFilteredQuery<Container>(nonListQueryOperation, iQueryable);
 
@@ -122,6 +123,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
             QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+            queryOperations.QueryFilterItems = GetQueryFilterItems("Container", tenant, queryOperations.QueryFilterItems);
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
@@ -129,10 +131,10 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             IQueryable<Container> iQueryable = containerRepository.GetContainers(tenant);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
-            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
 
             QueryOperations listQueryOperation = new QueryOperations();
-            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
 
             iQueryable = filter.GetFilteredQuery<Container>(nonListQueryOperation, iQueryable);
             ContainerQuery containerQuery = new ContainerQuery(tenant);
@@ -143,5 +145,29 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             return count;
         }
 
+        private List<QueryFilterItem> GetQueryFilterItems(string objectTableName, int tenant, List<QueryFilterItem> queryFilterItems)
+        {
+            QueryOperations queryOperations = new QueryOperations();
+            List<ObjectField> ContainerObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName(objectTableName, tenant);
+            foreach (QueryFilterItem queryFilterItem in queryFilterItems)
+            {
+                SetQueryFilterItem(queryOperations, ContainerObjectFields, queryFilterItem);
+            }
+            return queryOperations.QueryFilterItems;
+        }
+        private void SetQueryFilterItem(QueryOperations queryOperations, List<ObjectField> ContainerObjectFields, QueryFilterItem queryFilterItem)
+        {
+            ObjectField field = ContainerObjectFields.FirstOrDefault(f => f.FieldName == queryFilterItem.FieldName);
+            if (field == null)
+            {
+                queryOperations.SetFilter(queryFilterItem.FieldName, queryFilterItem.FieldValue, queryFilterItem.IsCustom, queryFilterItem.Operator, queryFilterItem.FieldValue2, queryFilterItem.DisplayInList);
+                return;
+            }
+            string valuestring1 = queryFilterItem.FieldValue != null ? queryFilterItem.FieldValue.ToString() : null;
+            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+            string valuestring2 = queryFilterItem.FieldValue2 != null ? queryFilterItem.FieldValue2.ToString() : null;
+            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+            queryOperations.SetFilter(queryFilterItem.FieldName, value1, field.IsCustomFilter, queryFilterItem.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode, field.IsListFilter);
+        }
     }
 }

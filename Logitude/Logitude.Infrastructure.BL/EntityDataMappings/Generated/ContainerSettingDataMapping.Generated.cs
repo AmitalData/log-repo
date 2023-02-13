@@ -31,7 +31,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         IsDomestic, 
 	         IsImport, 
 	         IsDrop, 
-	         AddedManually,
+	         AddedManually, 
+	         ActivationDate,
 	      }
 
 
@@ -47,7 +48,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         IsDomestic, 
 	         IsImport, 
 	         IsDrop, 
-	         AddedManually,
+	         AddedManually, 
+	         ActivationDate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -99,6 +101,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AddedManually))
             {
 				entityPOCO.AddedManually = entityPM.AddedManually;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ActivationDate))
+            {
+				entityPOCO.ActivationDate = entityPM.ActivationDate;
 			}
 			}
 
@@ -155,6 +162,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 					entityPM.AddedManually = entityPOCO.AddedManually;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ActivationDate))
+            {
+					entityPM.ActivationDate = entityPOCO.ActivationDate;
+            }
+
 		}
 
 		public void PMToOldPM(ContainerSettingPM entityPM, ContainerSettingPM oldEntityPM)
@@ -204,6 +216,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AddedManually))
             {
                 oldEntityPM.AddedManually = entityPM.AddedManually;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ActivationDate))
+            {
+                oldEntityPM.ActivationDate = entityPM.ActivationDate;
             }
 			
 		}

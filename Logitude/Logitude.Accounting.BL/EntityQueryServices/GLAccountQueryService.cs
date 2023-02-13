@@ -69,6 +69,18 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                  select a.Id);
             return q;
         }
+
+        public IQueryable<string> GetQGLAccIdByCollectorId_ForAgingReport(int tenant, string CollectorId, string AccountTypeCode)
+        {
+            var q = (
+                from a in this.repository.GetQAllByAccountTypeCode(tenant, AccountTypeCode)
+                join cardsdata in (this.context as AccountingContext).GLAccountCardsDatas
+                    .Where(r => r.CollectorUserId == CollectorId && r.Tenant == tenant)
+                 on a.CardsDataId equals cardsdata.Id              
+                select a.Id);
+            return q;
+        }
+
         internal IQueryable<string> GetQByChartOfAccountsTypeCode(int tenant, string chartOfAccountsTypeCode)
         {
             var q = (

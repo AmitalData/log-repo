@@ -157,18 +157,34 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
             this.ModifiedLables.ProfileCode = this.ProfileCode;
             this.ModifiedLables.ParentObjectTableId = this.ParentObjectTableId;
             var hasHasPermissionList = this.FieldsItemsSource.Collection;
-
-            hasHasPermissionList.forEach(item => {
-                var newLabel = new DigitalFeildSecurityUpdateModel();
-                newLabel.FieldCode = item.FieldCode;
-                newLabel.CreatedBy = item.CreatedBy;
-                newLabel.CreatedOn = item.CreatedOn;
-                newLabel.HasPermission = item.HasPermission;
-                newLabel.ModifiedBy = item.ModifiedBy;
-                newLabel.ModifiedOn = item.ModifiedOn;
-                newLabel.IsList = item.IsList;
-                newLabel.IsPm = item.IsPm;
-                this.ModifiedLables.DefaultSettings.push(newLabel);
+            
+            this.loadedResults = this.loadedResults.map(el => {
+                var updateItem = hasHasPermissionList.find(f => f.FieldCode === el.FieldCode);
+                if (updateItem) {
+                    var newLabel = new DigitalFeildSecurityUpdateModel();
+                    newLabel.FieldCode = updateItem.FieldCode;
+                    newLabel.CreatedBy = updateItem.CreatedBy;
+                    newLabel.CreatedOn = updateItem.CreatedOn;
+                    newLabel.HasPermission = updateItem.HasPermission;
+                    newLabel.ModifiedBy = updateItem.ModifiedBy;
+                    newLabel.ModifiedOn = updateItem.ModifiedOn;
+                    newLabel.IsList = updateItem.IsList;
+                    newLabel.IsPm = updateItem.IsPm;
+                    this.ModifiedLables.DefaultSettings.push(newLabel);
+                    return newLabel;
+                } else {
+                    var newLabel2 = new DigitalFeildSecurityUpdateModel();
+                    newLabel2.FieldCode = el.FieldCode;
+                    newLabel2.CreatedBy = el.CreatedBy;
+                    newLabel2.CreatedOn = el.CreatedOn;
+                    newLabel2.HasPermission = el.HasPermission;
+                    newLabel2.ModifiedBy = el.ModifiedBy;
+                    newLabel2.ModifiedOn = el.ModifiedOn;
+                    newLabel2.IsList = el.IsList;
+                    newLabel2.IsPm = el.IsPm;
+                    this.ModifiedLables.DefaultSettings.push(newLabel2);
+                    return newLabel2;
+                }
             });
 
             this.digitalTextService.UpdateFeildPermission(this.ModifiedLables).subscribe((myResult) => {
