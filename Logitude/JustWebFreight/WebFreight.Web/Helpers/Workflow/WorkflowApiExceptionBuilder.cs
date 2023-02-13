@@ -20,7 +20,7 @@ namespace WebFreight.Web.Helpers.Workflow
                 HandleSqlException(sqlInnerException, exception, apiException);
             }
             else if (exception is DbUpdateException dbUpdateException &&
-                     dbUpdateException.InnerException is SqlException dbUpdateSqlException)
+                     dbUpdateException?.InnerException?.InnerException is SqlException dbUpdateSqlException)
             {
                 HandleSqlException(dbUpdateSqlException, exception, apiException);
             }
