@@ -2045,6 +2045,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\SubEntitiesComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\ExternalService\ClassicScreenLayoutService.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\SetWorkerRoleName\SetWorkerRoleNameComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\ExternalService\CustomaizationPermissionService.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\EditTabs\AddCustomFieldsComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\EditTabs\CustomFieldsTabComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\EditTabs\DeploymentPackageGeneralTabComponent.ts" />

@@ -1,4 +1,4 @@
-import { FeatureLocator } from "../../../../../Infrastructure/Utilities/FeatureLocator";
+import { CustomaizationPermissionService } from "../../../ExternalService/CustomaizationPermissionService";
 import { CustomizationMainMenuItem } from "./CustomizationMainMenuItem";
 
 export class RulesMainMenuItem extends CustomizationMainMenuItem {
@@ -19,7 +19,7 @@ export class RulesMainMenuItem extends CustomizationMainMenuItem {
         }
     }
     CheckFeaturePermission(args: any): boolean {
-        let IsShowRules = FeatureLocator.HasFeaturePermession("General", "RulesCustomization");
+        let IsShowRules = CustomaizationPermissionService.HasFeaturePermession("General", "RulesCustomization");
         return (!args.IsObjectTableFilterEnabled || IsShowRules) && !args.IsCustomFieldsMenue;
     }
 

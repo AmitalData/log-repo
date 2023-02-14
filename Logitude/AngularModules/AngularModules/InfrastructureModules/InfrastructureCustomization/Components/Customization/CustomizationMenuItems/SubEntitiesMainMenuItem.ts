@@ -1,5 +1,5 @@
 import { AppTool } from "../../../../../Infrastructure/Tools";
-import { FeatureLocator } from "../../../../../Infrastructure/Utilities/FeatureLocator";
+import { CustomaizationPermissionService } from "../../../ExternalService/CustomaizationPermissionService";
 import { CustomizationMainMenuItem } from "./CustomizationMainMenuItem";
 
 declare var window: any;
@@ -23,7 +23,7 @@ export class SubEntitiesMainMenuItem extends CustomizationMainMenuItem {
         }
     }
     CheckFeaturePermission(args: any): boolean {
-        let IsShowSubEntities = FeatureLocator.HasFeaturePermession("General", "SubEntitiesCustomization");
+        let IsShowSubEntities = CustomaizationPermissionService.HasFeaturePermession("General", "SubEntitiesCustomization");
         let IsReferenceCustomObject = this.CheckReferenceCustomObjectType(args.ObjectTableId);
         return (!args.IsObjectTableFilterEnabled || IsShowSubEntities) && !args.IsCustomFieldsMenue && !args.IsSubEntity && !IsReferenceCustomObject;
     }

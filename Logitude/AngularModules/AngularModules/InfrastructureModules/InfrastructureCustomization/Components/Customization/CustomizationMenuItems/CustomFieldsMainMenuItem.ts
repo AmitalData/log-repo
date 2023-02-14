@@ -1,4 +1,4 @@
-import { FeatureLocator } from "../../../../../Infrastructure/Utilities/FeatureLocator";
+import { CustomaizationPermissionService } from "../../../ExternalService/CustomaizationPermissionService";
 import { CustomizationMainMenuItem } from "./CustomizationMainMenuItem";
 
 declare var window: any;
@@ -27,7 +27,7 @@ export class CustomFieldsMainMenuItem extends CustomizationMainMenuItem {
         }
     }
     CheckFeaturePermission(args: any): boolean {
-        let IsShowCustomFields = FeatureLocator.HasFeaturePermession("General", "CustomFieldsCustomization");
+        let IsShowCustomFields = CustomaizationPermissionService.HasFeaturePermession("General", "CustomFieldsCustomization");
         return (!args.IsObjectTableFilterEnabled || IsShowCustomFields || args.IsCustomFieldsMenue);
     }
 

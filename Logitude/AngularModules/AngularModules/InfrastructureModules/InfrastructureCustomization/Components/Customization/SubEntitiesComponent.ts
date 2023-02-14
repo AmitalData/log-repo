@@ -6,8 +6,8 @@ import { ObjectTablePM } from '../../../../Infrastructure/EntityPMs/ObjectTableP
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { FieldsTranslations, GeneralDomainService } from '../../../../Infrastructure/Services/GeneralDomainService';
 import { AppTool } from '../../../../Infrastructure/Tools';
-import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { CustomaizationPermissionService } from '../../ExternalService/CustomaizationPermissionService';
 import { CustomizationObjectTableService } from '../../ExternalService/CustomizationObjectTableService';
 import { CustomizationEditComponent } from './CustomizationEditComponent';
 
@@ -51,7 +51,7 @@ export class SubEntitiesComponent {
     }
     GetCreatingCustomSubObjectPermission() {
         let isCustomObjectTable = this.ObjectTable.IsCustom && AppTool.IsNullOrEmpty(this.ObjectTable.ParentObjectTableId);
-        let creatCustomSubObjectPermission = FeatureLocator.HasFeaturePermession("General", "Customization.CreateSubObjects");
+        let creatCustomSubObjectPermission = CustomaizationPermissionService.HasFeaturePermession("General", "Customization.CreateSubObjects");
         if (isCustomObjectTable) return creatCustomSubObjectPermission && this.ObjectTable.ObjectTableTypeCode == "BR";
         return creatCustomSubObjectPermission;
     }

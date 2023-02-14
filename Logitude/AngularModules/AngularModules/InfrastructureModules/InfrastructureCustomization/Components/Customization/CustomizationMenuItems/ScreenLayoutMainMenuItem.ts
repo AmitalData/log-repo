@@ -1,4 +1,4 @@
-import { FeatureLocator } from "../../../../../Infrastructure/Utilities/FeatureLocator";
+import { CustomaizationPermissionService } from "../../../ExternalService/CustomaizationPermissionService";
 import { CustomizationMainMenuItem } from "./CustomizationMainMenuItem";
 
 export class ScreenLayoutMainMenuItem extends CustomizationMainMenuItem {
@@ -21,11 +21,11 @@ export class ScreenLayoutMainMenuItem extends CustomizationMainMenuItem {
         }
     }
     CheckTabsFeaturePermission(args: any) {
-        let IsShowTabs = FeatureLocator.HasFeaturePermession("General", "TabsCustomization");
+        let IsShowTabs = CustomaizationPermissionService.HasFeaturePermession("General", "TabsCustomization");
         return (!args.IsObjectTableFilterEnabled || IsShowTabs) && !args.IsCustomFieldsMenue;
     }
     CheckFeaturePermission(args: any): boolean {
-        let IsShowScreensLayout = FeatureLocator.HasFeaturePermession("General", "ScreenLayoutCustomization");
+        let IsShowScreensLayout = CustomaizationPermissionService.HasFeaturePermession("General", "ScreenLayoutCustomization");
         return (!args.IsObjectTableFilterEnabled || IsShowScreensLayout) && !args.IsCustomFieldsMenue;
     }
 

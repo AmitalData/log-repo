@@ -1,5 +1,5 @@
 import { AppTool } from "../../../../../Infrastructure/Tools";
-import { FeatureLocator } from "../../../../../Infrastructure/Utilities/FeatureLocator";
+import { CustomaizationPermissionService } from "../../../ExternalService/CustomaizationPermissionService";
 import { CustomizationMainMenuItem } from "./CustomizationMainMenuItem";
 
 declare var window: any;
@@ -22,7 +22,7 @@ export class QueriesMainMenuItem extends CustomizationMainMenuItem {
         }
     }
     CheckFeaturePermission(args: any): boolean {
-        let isShowQueries = FeatureLocator.HasFeaturePermession("General", "QueriesCustomization");
+        let isShowQueries = CustomaizationPermissionService.HasFeaturePermession("General", "QueriesCustomization");
         let isMainCustomObjectTable = this.IsMainCustomObjectTable(args.ObjectTableId);
         return (!args.IsObjectTableFilterEnabled || isShowQueries) && !args.IsCustomFieldsMenue && !args.IsSubEntity && isMainCustomObjectTable;
     }
