@@ -17,6 +17,7 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System.Data.Entity;
 using Simplog.Data.ShipmentsModel;
+using Logitude.Server.Tools.Helpers;
 
 namespace CommunicationWorkerRole
 {
