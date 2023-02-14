@@ -87,9 +87,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 
         private static void MapConcurrencyFields_SAT(ARPaymentPM entityPM, ARPayment entity)
         {
-            if (entityPM.SATTransferStatusCode == sATSolvedManualStatusCode)            
-                entity.SATTransferStatusCode = entityPM.SATTransferStatusCode;
-           
+            entity.SATTransferStatusCode = entityPM.SATTransferStatusCode;
             entity.SATApprovalDate = entityPM.SATApprovalDate;
             entity.SATXML = entityPM.SATXML;
             entity.TransmissionError = entityPM.TransmissionError;

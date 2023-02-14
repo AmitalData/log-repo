@@ -771,8 +771,12 @@ export class TenantPM {
     private shipmentATADateIndicator: string;
     public get ShipmentATADateIndicator() { return this.shipmentATADateIndicator; }
     public set ShipmentATADateIndicator(newValue: string) { if (this.shipmentATADateIndicator != newValue) { this.shipmentATADateIndicator = newValue; this.MarkAsDirty("ShipmentATADateIndicator"); } }
-       
-	 
+
+    
+    private approveUploadedDocuments: boolean;
+    public get ApproveUploadedDocuments() { return this.approveUploadedDocuments; }
+    public set ApproveUploadedDocuments(newValue: boolean) { if (this.approveUploadedDocuments != newValue) { this.approveUploadedDocuments = newValue; this.MarkAsDirty("ApproveUploadedDocuments"); } }
+
 
     public OldEntityPM: TenantPM;
 		

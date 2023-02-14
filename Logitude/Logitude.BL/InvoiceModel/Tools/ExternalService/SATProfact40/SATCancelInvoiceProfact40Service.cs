@@ -83,7 +83,14 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
         private void SetSATTransferStatus(string sATStatusCode)
         {
-            arInvoice.SATTransferStatusCode = arInvoicePM.SATTransferStatusCode = sATStatusCode;
+            if (FeatureToggleHelper.HasFeatureToggle("INU", arInvoice.Tenant))
+            {
+                arInvoicePM.SATTransferStatusCode = sATStatusCode;
+            }
+            else
+            {
+                arInvoice.SATTransferStatusCode = arInvoicePM.SATTransferStatusCode = sATStatusCode;
+            }
         }
 
         private void BuildProfactCommunicationLog()
