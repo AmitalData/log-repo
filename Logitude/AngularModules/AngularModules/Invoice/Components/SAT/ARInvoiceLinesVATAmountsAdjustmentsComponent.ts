@@ -72,6 +72,7 @@ export class ARInvoiceLinesVATAmountsAdjustmentsComponent {
             originalLine.ForiegnCurrencyAmount = line.InvoiceCurrencyAmount;
         }
         originalLine.InvoiceCurrencyAmount = line.InvoiceCurrencyAmount;
+        this.ARInvoicePM.VatsAmountsManulAdjuested = true;
     }
 
     GetOriginalInvoiceLineToBeCorrected(line: any) {

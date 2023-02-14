@@ -888,8 +888,8 @@ export class ARInvoiceMenuButtonsHandler {
 
     private OpenValidateApprovalSendToSATErrorWindow(result, ProceedToApproveMessage) {
         let logWindow = new LogitudeWindow();
-        logWindow.Width = 450;
-        logWindow.Height = 190;
+        logWindow.Width = 490;
+        logWindow.Height = 180;
         logWindow.Title = "Adjustments to VAT Amounts";
         logWindow.WindowArgs = { ARInvoicePM : this.EntityPM, ARInvoiceLinesVATAmountsAdjustments: result };
         logWindow.Show('./Invoice/Components/SAT/ARInvoiceLinesVATAmountsAdjustmentsComponent');
