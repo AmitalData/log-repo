@@ -77,7 +77,7 @@ export class DigitalTextService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return defer(() => {
             return this._http.get(this._apiUrl + '/GetFeildPermissionByFilters?cardId=' + cardId + "&objectTableId=" + objectTableId + "&profileCode=" + profileCode
-                + "&isList=" + (isList != null ? isList : true) , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                + "&isList=" + (isList != null ? isList : true) , ServiceHelper.GetHttpHeaders()).pipe(map(response => { 
                 var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
