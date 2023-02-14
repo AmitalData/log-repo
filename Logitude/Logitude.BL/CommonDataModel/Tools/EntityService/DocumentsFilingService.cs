@@ -1048,7 +1048,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             if (!theEntityPm.IsUoloadedField)
                 return;
-
+            if (!theEntityPm.IsFromDigital)
+                return;
             GeneralEntityChangeService generalEntityChangeService = new GeneralEntityChangeService();
             EntityDetails entityDetails = generalEntityChangeService.GetEntityDetails(theEntityPm.EntityId, theEntityPm.ObjectTableName, theEntityPm.Tenant);
             
@@ -1717,7 +1718,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 IsApprovalRequired = info.IsApprovalRequired,
                 HasFile = true,
                 Received = true,
-                IsUoloadedField = true,
+                IsFromDigital = true,
             };
 
             UserRepository userRepository = new UserRepository(tenant);
