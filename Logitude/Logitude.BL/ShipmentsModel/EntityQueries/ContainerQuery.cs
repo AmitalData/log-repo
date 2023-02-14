@@ -312,13 +312,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     OnCarriageATA = container.OnCarriageATA,
                     RequestDate = container.RequestDate,
                     RecentResponseDate = container.RecentResponseDate,
-                    //ShipmentPreCarriageFromName = container.PODLocationPort == null ? null : container.PODLocationPort.EnglishName,
-                    //ShipmentMainCarriageFromName = container.PODLocationPort == null ? null : container.PODLocationPort.EnglishName,
-                    //ShipmentMainCarriageToName = container.PODLocationPort == null ? null : container.PODLocationPort.EnglishName,
-                    //ShipmentOnCarriageToName = container.PODLocationPort == null ? null : container.PODLocationPort.EnglishName,
-                    //ShipmentTransshipment1FromName = container.PODLocationPort == null ? null : container.PODLocationPort.EnglishName,
-                    //ShipmentTransshipment2FromName = container.PODLocationPort == null ? null : container.PODLocationPort.EnglishName,
-                    //ShipmentTransshipment3FromName = container.PODLocationPort == null ? null : container.PODLocationPort.EnglishName,
+                    ShipmentPreCarriageFromName = container.ShipmentPreCarriageFromPort == null ? null : container.ShipmentPreCarriageFromPort.EnglishName,
+                    ShipmentMainCarriageFromName = container.ShipmentMainCarriageFromPort == null ? null : container.ShipmentMainCarriageFromPort.EnglishName,
+                    ShipmentMainCarriageToName = container.ShipmentMainCarriageToPort == null ? null : container.ShipmentMainCarriageToPort.EnglishName,
+                    ShipmentOnCarriageToName = container.ShipmentOnCarriageToPort == null ? null : container.ShipmentOnCarriageToPort.EnglishName,
+                    ShipmentTransshipment1FromName = container.ShipmentTransshipment1FromPort == null ? null : container.ShipmentTransshipment1FromPort.EnglishName,
+                    ShipmentTransshipment2FromName = container.ShipmentTransshipment2FromPort == null ? null : container.ShipmentTransshipment2FromPort.EnglishName,
+                    ShipmentTransshipment3FromName = container.ShipmentTransshipment3FromPort == null ? null : container.ShipmentTransshipment3FromPort.EnglishName,
                 };
 
                 if (container.EntityStatus != null)

@@ -15,7 +15,7 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
-import { CustomChildEntity } from '../../Infrastructure/EntityPMs/CustomChildEntity';
+import { CustomChildEntity } from '../../Infrastructure/EntityPMs/CustomChildEntity'
 
 export class ContainerPM {
 
@@ -1642,6 +1642,41 @@ export class ContainerPM {
     public set EmptyReturnLocationName(newValue: string) { if (this.emptyReturnLocationName != newValue) { this.emptyReturnLocationName = newValue; this.MarkAsDirty("EmptyReturnLocationName"); } }
        
 	 
+    private shipmentPreCarriageFromName: string;
+    public get ShipmentPreCarriageFromName() { return this.shipmentPreCarriageFromName; }
+    public set ShipmentPreCarriageFromName(newValue: string) { if (this.shipmentPreCarriageFromName != newValue) { this.shipmentPreCarriageFromName = newValue; this.MarkAsDirty("ShipmentPreCarriageFromName"); } }
+       
+	 
+    private shipmentMainCarriageFromName: string;
+    public get ShipmentMainCarriageFromName() { return this.shipmentMainCarriageFromName; }
+    public set ShipmentMainCarriageFromName(newValue: string) { if (this.shipmentMainCarriageFromName != newValue) { this.shipmentMainCarriageFromName = newValue; this.MarkAsDirty("ShipmentMainCarriageFromName"); } }
+       
+	 
+    private shipmentMainCarriageToName: string;
+    public get ShipmentMainCarriageToName() { return this.shipmentMainCarriageToName; }
+    public set ShipmentMainCarriageToName(newValue: string) { if (this.shipmentMainCarriageToName != newValue) { this.shipmentMainCarriageToName = newValue; this.MarkAsDirty("ShipmentMainCarriageToName"); } }
+       
+	 
+    private shipmentOnCarriageToName: string;
+    public get ShipmentOnCarriageToName() { return this.shipmentOnCarriageToName; }
+    public set ShipmentOnCarriageToName(newValue: string) { if (this.shipmentOnCarriageToName != newValue) { this.shipmentOnCarriageToName = newValue; this.MarkAsDirty("ShipmentOnCarriageToName"); } }
+       
+	 
+    private shipmentTransshipment1FromName: string;
+    public get ShipmentTransshipment1FromName() { return this.shipmentTransshipment1FromName; }
+    public set ShipmentTransshipment1FromName(newValue: string) { if (this.shipmentTransshipment1FromName != newValue) { this.shipmentTransshipment1FromName = newValue; this.MarkAsDirty("ShipmentTransshipment1FromName"); } }
+       
+	 
+    private shipmentTransshipment2FromName: string;
+    public get ShipmentTransshipment2FromName() { return this.shipmentTransshipment2FromName; }
+    public set ShipmentTransshipment2FromName(newValue: string) { if (this.shipmentTransshipment2FromName != newValue) { this.shipmentTransshipment2FromName = newValue; this.MarkAsDirty("ShipmentTransshipment2FromName"); } }
+       
+	 
+    private shipmentTransshipment3FromName: string;
+    public get ShipmentTransshipment3FromName() { return this.shipmentTransshipment3FromName; }
+    public set ShipmentTransshipment3FromName(newValue: string) { if (this.shipmentTransshipment3FromName != newValue) { this.shipmentTransshipment3FromName = newValue; this.MarkAsDirty("ShipmentTransshipment3FromName"); } }
+       
+	 
     private onCarriageETA: Date;
     public get OnCarriageETA() { return this.onCarriageETA; }
     public set OnCarriageETA(newValue: Date) { if (this.onCarriageETA != newValue) { this.onCarriageETA = newValue; this.MarkAsDirty("OnCarriageETA"); } }
@@ -1675,6 +1710,11 @@ export class ContainerPM {
     private recentResponseDate: Date;
     public get RecentResponseDate() { return this.recentResponseDate; }
     public set RecentResponseDate(newValue: Date) { if (this.recentResponseDate != newValue) { this.recentResponseDate = newValue; this.MarkAsDirty("RecentResponseDate"); } }
+       
+	 
+    private isUpdatedFromRequest: boolean;
+    public get IsUpdatedFromRequest() { return this.isUpdatedFromRequest; }
+    public set IsUpdatedFromRequest(newValue: boolean) { if (this.isUpdatedFromRequest != newValue) { this.isUpdatedFromRequest = newValue; this.MarkAsDirty("IsUpdatedFromRequest"); } }
        
 	 
 
