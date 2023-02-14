@@ -38,7 +38,7 @@ export class SignStationsComponent
     _BadCardSelectedNum: number = 0;
     _OKNum: number = 0;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor() {
+     constructor() {
         super();
         this._entityListService = new EntityListService();
         this.BuildColumns()
@@ -81,7 +81,7 @@ export class SignStationsComponent
     RefreshBtnClick() {
         this.IsSearchButtonEnabled = false;
         //this.CurrentSession.StartBusyIndicator("");
-
+        this.ValidationErrorsList =[];
         setTimeout(() => {
             this._SignStationExtendedListService
                 .GetSignStationGroupByStatus(this._SearchText)
@@ -93,6 +93,9 @@ export class SignStationsComponent
                     this._Waitingtoenterapassword = this.GetTotalOf("Waitingtoenterapassword");
                     this._Incorrectcard = this.GetTotalOf("IncorrectCard");
                     this._OK = this.GetTotalOf("OK");
+                },
+                    err => {
+                        this.ValidationErrorsList.push(err?.error?.ErrorMessage);
                 }
                 );
         }, 1);

@@ -176,7 +176,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ExportStorage
                 }
 
 
-                _DBExportStoragePM.DeclarationId = _UnifreigntExportStorage.DeclarationId;
+               // _DBExportStoragePM.DeclarationId = _UnifreigntExportStorage.DeclarationId;
 
                 _DBExportStoragePM.ExportDealIdentification = _UnifreigntExportStorage.General.ExportDealIdentification;
                 

@@ -50,6 +50,4 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo"
     Ignore="true" />
-  
-
 </Table>

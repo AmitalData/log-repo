@@ -44,4 +44,6 @@
     ReferencedTable="UIMessages"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
+	<Index
+   Columns="Code,Tenant" />
 </Table>

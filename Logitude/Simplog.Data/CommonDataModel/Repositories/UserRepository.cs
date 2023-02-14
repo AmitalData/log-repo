@@ -184,13 +184,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
                         entity = (from record in context.Users.Include("Contact")
-                                  where (record.Contact.Email == email) && record.Tenant == tenant
+                                  where (record.Contact.Email == email && record.Contact.Tenant== tenant) && record.Tenant == tenant
                                   select record).FirstOrDefault();
 
                         if (entity == null && tenant != 0)
                         {
                             entity = (from record in context.Users.Include("Contact")
-                                      where (record.Contact.Email == email) && record.Tenant == 0
+                                      where (record.Contact.Email == email && record.Contact.Tenant == 0) && record.Tenant == 0
                                       select record).FirstOrDefault();
                         }
 
@@ -214,13 +214,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
             else
             {
                 entity = (from record in context.Users.Include("Contact")
-                          where (record.Contact.Email == email) && record.Tenant == tenant
+                          where (record.Contact.Email == email && record.Contact.Tenant == tenant) && record.Tenant == tenant
                           select record).FirstOrDefault();
 
                 if (entity == null && tenant != 0)
                 {
                     entity = (from record in context.Users.Include("Contact")
-                              where (record.Contact.Email == email) && record.Tenant == 0
+                              where (record.Contact.Email == email && record.Contact.Tenant == 0) && record.Tenant == 0
                               select record).FirstOrDefault();
                 }
 
@@ -242,7 +242,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
                         entity = (from record in context.Users.Include("UserLastLogin").Include("Contact").Include("Department").Include("Branch").Include("BusinessUnit")
-                                  where ((record.Code == code && !string.IsNullOrEmpty(record.Code)) || (record.Contact.Email == email && !string.IsNullOrEmpty(record.Contact.Email))) && record.Tenant == tenant
+                                  where ((record.Code == code && !string.IsNullOrEmpty(record.Code)) || (record.Contact.Tenant == tenant && record.Contact.Email == email && !string.IsNullOrEmpty(record.Contact.Email))) && record.Tenant == tenant
                                   select record).FirstOrDefault();
 
 
@@ -267,7 +267,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             else
             {
                 entity = (from record in context.Users.Include("UserLastLogin").Include("Contact").Include("Department").Include("Branch").Include("BusinessUnit")
-                          where ((record.Code == code && !string.IsNullOrEmpty(record.Code)) || (record.Contact.Email == email && !string.IsNullOrEmpty(record.Contact.Email))) && record.Tenant == tenant
+                          where ((record.Code == code && !string.IsNullOrEmpty(record.Code)) || (record.Contact.Tenant == tenant && record.Contact.Email == email && !string.IsNullOrEmpty(record.Contact.Email))) && record.Tenant == tenant
                           select record).FirstOrDefault();
 
 
@@ -286,7 +286,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
                         entity = (from record in context.Users.Include("UserLastLogin").Include("Contact").Include("Department").Include("Branch").Include("BusinessUnit")
-                                  where ((record.Code == code && !string.IsNullOrEmpty(record.Code)) || (record.Contact.Email == email && !string.IsNullOrEmpty(record.Contact.Email))) && record.Tenant == tenant
+                                  where ((record.Code == code &&!string.IsNullOrEmpty(record.Code)) || (record.Contact.Tenant == tenant && record.Contact.Email == email && !string.IsNullOrEmpty(record.Contact.Email))) && record.Tenant == tenant
                                   select record).FirstOrDefault();
 
                         if (entity == null && tenant != 0)
@@ -332,9 +332,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public bool DoesUserExist(string email, int tenant)
         {
+            email = email.ToLower();
             return (from a in context.Users
-                    where a.Contact.Email == email.ToLower() && a.Tenant == tenant
-                    select a).Any();
+                       where a.Contact.Email == email && a.Tenant == tenant
+                       select a).Any();
         }
 
         public void Add(User entity)
