@@ -20,7 +20,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 {
     public  class DCAInCB_MSG_8314_8888_CustomItemDetailsHeaderMessagingService: MessagingServiceBase<
         CD_NG_8314_Web01_CustomsItemDetailsRequestParams,
-        INF_MSG_GenericResponseData,
+        CB_NG_8314_8888_CustomsItemDetailsResponseData,
          CB_NG_8314_CustomItemDetailsHeaderIn,
          CB_NG_8888_CustomsItemOut,
          Get_CB_MSG_8314_8888_CustomItemDetailsHeaderRequestService,

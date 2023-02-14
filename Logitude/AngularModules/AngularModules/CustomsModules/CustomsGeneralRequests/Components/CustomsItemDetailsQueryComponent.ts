@@ -33,11 +33,9 @@ export class CustomsItemDetailsQueryComponent
     public ObjectTableName: string = "Customs.Declaration";//TODO
 
     _IIGGeneralMessagesService: IIGGeneralMessagesService = new IIGGeneralMessagesService();
-    public ExchangeRatesQueryObservableList: ObservableCollection;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
-        this.ExchangeRatesQueryObservableList = new ObservableCollection([]);
         this.UIProperties.SetRequired("Classification", "Customs.Classification", true);
         this.RequestParams.CustomsBookType = "1";
         this.RequestParams.ValidToDate = new Date()
@@ -63,13 +61,11 @@ export class CustomsItemDetailsQueryComponent
         if (this.RequestParams == null) {
             this.RequestParams = new ExchangeRatesQueryRequestParams();
             this.UIProperties.SetRequired("ValidToDate", this.ObjectTableName, true);
-           
+
 
         }
 
-        if (this.ResponseData && this.ResponseData.CurrencyRateList) {
-            this.ExchangeRatesQueryObservableList.InsertCollection(this.ResponseData.CurrencyRateList);
-        }
+        
     }
 
 
@@ -120,7 +116,7 @@ export class CustomsItemDetailsQueryComponent
         return this.RequestParams.Classification;
     }
     set Classification(value: string) {
-  
+
         if (this.RequestParams.Classification != value) {
             this.RequestParams.Classification = value;
         }
@@ -160,7 +156,7 @@ export class CustomsItemDetailsQueryComponent
         }
     }
     get IsDiscountCode() { return this.RequestParams.IsDiscountCode; }
-    set IsDiscountCode(value: string) {
+    set IsDiscountCode(value: boolean) {
         if (this.RequestParams.IsDiscountCode != value) {
             this.RequestParams.IsDiscountCode = value;
         }
@@ -189,22 +185,18 @@ export class CustomsItemDetailsQueryComponent
     }
 
     OnCustomSendOptionsButtonClick(customSendOptionsArgs: CustomSendOptionsArgs) {
-        
+
         //alert(customSendOptionsArgs.Option);
         this.FillErrors();
         if (this.ValidationErrorsList.length > 0) {
             return;
         }
 
-        this.ExchangeRatesQueryObservableList.Clear();
-
-
-
 
         var currRequestParams = new CustomsItemDetailsQueryRequestParams();///Force new GUID On Each Send !!
-        currRequestParams.ValidToDate=this.ValidToDate;
-        currRequestParams.Classification=this.Classification;
-        currRequestParams.CustomsBookType=this.CustomsBookType;
+        currRequestParams.ValidToDate = this.ValidToDate;
+        currRequestParams.Classification = this.Classification;
+        currRequestParams.CustomsBookType = this.CustomsBookType;
 
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
@@ -213,10 +205,17 @@ export class CustomsItemDetailsQueryComponent
         currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
 
         CustomMessageProgressComponent
-            //.ShowProgressBar(currRequestParams.PBId, "שליחת שאילתא לשערי מטבע", true)
-            .ShowProgressBar(this.CurrentSession, currRequestParams.PBId, "שאילתא לנתוני פרט מכס", false)
+            .ShowProgressBar(this.CurrentSession, currRequestParams.PBId, "שאילתא לנתוני פרט מכס", true)
             .then((res) => {
+                
+
                 this.ResponseData = res;
+                this.FullClassification = this.ResponseData?.CustomsItemList[0]?.fullClassification
+                this.CustomsBookTypeName = this.ResponseData?.CustomsItemList[0]?.customsBookTypeName;
+                this.GoodsDescription = this.ResponseData?.CustomsItemList[0]?.goodsDescription
+                this.StatisticMeasurementUnitCode = this.ResponseData?.CustomsItemList[0]?.statisticMeasurementUnitCode.toString();
+                this.IsDiscountCode = this.ResponseData?.CustomsItemList[0]?.isDiscountCode;
+
                 this.MyLastCustomsRequestSheetId = currRequestParams.PBId;
                 this.OnMassageDisplayMethod();
             }
@@ -247,8 +246,8 @@ export class CustomsItemDetailsQueryComponent
     async OnClassificationLostFocus(logCellTemplate: any, classificationTextBox: any) {
 
         debugger;
-       
-       
+
+
         var newValue = this.Classification;
         this.Classification = newValue;
         this.valid = true;
@@ -316,7 +315,7 @@ export class CustomsItemDetailsQueryComponent
             this.UIProperties.SetValidity("Classification", "Customs.Classification", true, "");
         }
 
-        
+
 
         if (this.valid) {
 
