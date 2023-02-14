@@ -2070,7 +2070,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                           ? shipment.FromPortName 
                           : ""),
                 CountryCode = DoesPropertyExistInDynamic(shipment, "FromCountryCode") ? shipment.FromCountryCode : "",
-                Date = DoesPropertyExistInDynamic(shipment, "MainCarriageFromCity") 
+                Date = DoesPropertyExistInDynamic(shipment, "MainCarriageATD") 
                         && shipment.MainCarriageATD != null 
                        ? shipment.MainCarriageATD 
                        : DoesPropertyExistInDynamic(shipment, "MainCarriageETD") ? shipment.MainCarriageETD : null,

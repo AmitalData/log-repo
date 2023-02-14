@@ -1,7 +1,7 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="23">
+  <Sql Version="24">
     <![CDATA[
-	  delete from DigitalTextCodes where Id != ''
+	  delete from DigitalTextCodes where Tenant = 0
 	  
       declare @NewEntityId as varchar(15)
 	  declare @generalObjectTableId as varchar(15)
@@ -2103,6 +2103,12 @@
 		{
 			"TextCode": "Shipment.G.UploadingDocumentHeaderMsg",
 			"DefaultText": "Uploading document",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.G.UploadDataMSG",
+			"DefaultText": "Document being uploaded, this might take several seconds, please do not refresh the page or close this window",
 			"FieldCode" : "",
 			"DisplayText": ""
 		},
@@ -4949,6 +4955,12 @@
 		{
 			"TextCode": "Shipment.G.UploadingDocumentHeaderMsg",
 			"DefaultText": "Uploading document",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.G.UploadDataMSG",
+			"DefaultText": "Document being uploaded, this might take several seconds, please do not refresh the page or close this window",
 			"FieldCode" : "",
 			"DisplayText": ""
 		},
