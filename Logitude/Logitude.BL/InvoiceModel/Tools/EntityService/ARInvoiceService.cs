@@ -4863,6 +4863,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
             else if (entityPM.InvoiceCurrencyId == entityPM.LocalCurrencyId)
             {
+                if (entityPM.VatsAmountsManulAdjuested) invoiceLine.LocalCurrencyAmount = invoiceLine.InvoiceCurrencyAmount;
                 invoiceLine.InvoiceCurrencyAmount = invoiceLine.LocalCurrencyAmount;
             }
             else if (entityPM.InvoiceCurrencyId == entityPM.ProfitCurrencyId)

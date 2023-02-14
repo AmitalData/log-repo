@@ -94,9 +94,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
         }
         private static void MapConcurrencyFields_SAT(ARInvoicePM entityPM, ARInvoice entity, bool isNewState)
         {
-            if (isNewState)
-                entity.SATInvoiceStatusCode = entityPM.SATInvoiceStatusCode;
-
+            entity.SATInvoiceStatusCode = entityPM.SATInvoiceStatusCode;
             entity.SATTransferStatusCode = entityPM.SATTransferStatusCode;
             entity.SATApprovalDate = entityPM.SATApprovalDate;
             entity.SATXML = entityPM.SATXML;
@@ -111,6 +109,12 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
         }
         private static void MapConcurrencyFields_OnEdited(ARInvoicePM entityPM, ARInvoice entity)
         {
+            if (entityPM.SetApproved || entityPM.SetVoided)
+            {
+                entity.SATInvoiceStatusCode = entityPM.SATInvoiceStatusCode;
+                entity.SATTransferStatusCode = entityPM.SATTransferStatusCode;
+            }
+
             var transferStatusCode = ConcurrencyFieldHelper.GetConcurrencyFieldValue_String(entityPM.TransferStatusCode_Original, entityPM.TransferStatusCode, entity.TransferStatusCode);
             entity.TransferStatusCode = transferStatusCode;
 
