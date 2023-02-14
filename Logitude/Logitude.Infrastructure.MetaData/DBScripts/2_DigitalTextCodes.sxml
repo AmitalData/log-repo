@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="24">
+  <Sql Version="25">
     <![CDATA[
 	  delete from DigitalTextCodes where Tenant = 0
 	  
@@ -15,6 +15,12 @@
 			"TextCode": "General.G.NoDataDefaultMSG",
 			"DefaultText": "You do not have any information here All information will be displayed here, when it will be added by the forwarder",
 			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.NoInfoAvailableMsg",
+			"DefaultText": "All information will be displayed here, when it will be added by the forwarder.",
+			"FieldCode" : "",
 			"DisplayText": ""
 		},
 		{
