@@ -547,7 +547,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         ScreenCode = digitalPortalScreenUpdateModel.ScreenCode,
                         ObjectTableId = digitalPortalScreenUpdateModel.ObjectTableId,
                         CreateDate = DateTime.UtcNow,
-                        UpdateDate = DateTime.UtcNow
+                        UpdateDate = DateTime.UtcNow,
+                        IsList = digitalPortalScreenUpdateModel.IsList
                     };
                 }
                 else
@@ -602,6 +603,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     tenantDigitalPortalScreen.Content = tenantDigitalPortalScreen.Content;
                     tenantDigitalPortalScreen.DraftContent = defaultDisgitalPortalScreen.DraftContent;
                     tenantDigitalPortalScreen.UpdateDate = DateTime.UtcNow;
+                    tenantDigitalPortalScreen.IsList = defaultDisgitalPortalScreen.IsList;
                     digitalPreDefinedComponentQueryService.UpdateDigitalPortalScreen(tenantDigitalPortalScreen);
                 }
                 else

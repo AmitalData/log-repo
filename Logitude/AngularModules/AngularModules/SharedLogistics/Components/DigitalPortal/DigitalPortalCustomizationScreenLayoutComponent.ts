@@ -108,6 +108,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
     get HTMLEditor() {
         return this.hTMLEditor;
     }
+
     set HTMLEditor(newValue: string) {
         if (newValue != this.hTMLEditor) {
             this.hTMLEditor = newValue;
@@ -139,6 +140,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         windowArgs.ObjectTableId = this.SelectedItem.ObjectTableId;
         windowArgs.ProfileCode = this.ProfileCode;
         windowArgs.ScreenCode = this.SelectedItem.ScreenCode;
+        windowArgs.IsList = this.SelectedItem.IsList;
         logWindow.Title = "Insert Field";
         logWindow.WindowArgs = windowArgs;
         logWindow.Show('./SharedLogistics/Components/DigitalPortal/AddDigitalFieldCodeComponent');
@@ -209,6 +211,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         this.CurrentSession.StartBusyIndicatorLoading();
         var objectTableId = this.SelectedItem.ObjectTableId;
         var screenCode = this.SelectedItem.ScreenCode;
+        var isList = this.SelectedItem.IsList;
         var name = this.SelectedItem.Name;
         this.ModifiedScreenData.ObjectTableId = objectTableId;
         var profileId = this.ProfileId;
@@ -216,6 +219,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         this.ModifiedScreenData.ProfileId = profileId;
         this.ModifiedScreenData.ProfileCode = profileCode;
         this.ModifiedScreenData.ScreenCode = screenCode;
+        this.ModifiedScreenData.IsList = isList;
         this.ModifiedScreenData.Name = name;
         this.ModifiedScreenData.IsDraft = isDraft;
         if (isDraft == true) {
@@ -250,6 +254,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         const start = event.target.selectionStart;
         this.TextAreaInputCurrentPosition = start;
     }
+
     myRange : any;
     myEditor : any;
     onInit(editor) {

@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-	<Sql Version="19">
+	<Sql Version="21">
       <![CDATA[
 	    delete from DigitalPortalScreens where Id != ''
 		declare @customerProfileId as varchar(15)
@@ -10,8 +10,8 @@
 		set @shipmentObjectId = (select Id from ObjectTables where [Name] = 'Shipment' and Tenant = 0 )
 		declare @EntityId as varchar(15)
 		EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
-		INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, ProfileId, Content, DraftContent) 
-		values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Shipment list card item - Desktop & Tablets', 'SLCI', @customerProfileId,
+		INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
+		values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Shipment list card item - Desktop & Tablets', 'SLCI', 1, @customerProfileId,
  		'<LogTable>
 			<LogRow>
 				<LogColumn width=''30%''>
@@ -254,8 +254,8 @@
 		</LogTable>');
 			
 		EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
-		INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, ProfileId, Content, DraftContent) 
-	    values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Shipment list card item - Desktop & Tablets', 'SLCI', @agentProfileId,
+		INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
+	    values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Shipment list card item - Desktop & Tablets', 'SLCI', 1, @agentProfileId,
  		'<LogTable>
 			<LogRow>
 				<LogColumn width=''30%''>
@@ -498,8 +498,8 @@
 		</LogTable>');
 
  		EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
-		INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode,ProfileId, Content, DraftContent) 
-	    values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single Shipment card item - Desktop', 'SSHGI', @customerProfileId, 
+		INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
+	    values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single Shipment card item - Desktop', 'SSHGI', 0, @customerProfileId, 
  		'<LogTable>
 	<LogRow class=''border-0''>
 		<LogColumn>
@@ -720,8 +720,8 @@
 </LogTable>');
 				
 			EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
-			INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode,ProfileId, Content, DraftContent) 
-			values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single Shipment card item - Desktop', 'SSHGI', @agentProfileId, 
+			INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
+			values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single Shipment card item - Desktop', 'SSHGI', 0, @agentProfileId, 
 			'<LogTable>
 	<LogRow class=''border-0''>
 		<LogColumn>
@@ -942,8 +942,8 @@
 </LogTable>');
 
 			EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
-			INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode,ProfileId, Content, DraftContent) 
-			values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single Shipment card item - Tablet', 'SSHGIT', @customerProfileId, 
+			INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
+			values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single Shipment card item - Tablet', 'SSHGIT', 0, @customerProfileId, 
 			'<LogTable>
 	<LogRow class=''border-0''>
 		<LogColumn>
@@ -1167,8 +1167,8 @@
 			
 			
 			EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
-			INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode,ProfileId, Content, DraftContent) 
-			values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single Shipment card item - Tablet', 'SSHGIT', @agentProfileId, 
+			INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
+			values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single Shipment card item - Tablet', 'SSHGIT', 0, @agentProfileId, 
 			'<LogTable>
 	<LogRow class=''border-0''>
 		<LogColumn>
@@ -1392,8 +1392,8 @@
 			
 			
 			EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
-			INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode,ProfileId, Content, DraftContent) 
-			values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single Shipment card item - Mobile', 'SSHGIM', @customerProfileId, 
+			INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
+			values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single Shipment card item - Mobile', 'SSHGIM', 0, @customerProfileId, 
 			'<LogTable>
 	<LogRow class=''border-0 align-items-start''>
 		<LogColumn width=''50%''>
@@ -1631,8 +1631,8 @@
 			
 			
 			EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
-			INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode,ProfileId, Content, DraftContent) 
-			values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single Shipment card item - Mobile', 'SSHGIM', @agentProfileId, 
+			INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
+			values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single Shipment card item - Mobile', 'SSHGIM', 0, @agentProfileId, 
 			'<LogTable>
 	<LogRow class=''border-0 align-items-start''>
 		<LogColumn width=''50%''>
@@ -1870,8 +1870,8 @@
 			
 			
 			EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
-			INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode,ProfileId, Content, DraftContent) 
-			values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Shipment list card item - Mobile', 'SLCIM', @customerProfileId, 
+			INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
+			values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Shipment list card item - Mobile', 'SLCIM', 1, @customerProfileId, 
 			'<LogTable>
 	<LogRow class=''border-0 margin-0 padding-0''>
 		<LogColumn>
@@ -2081,8 +2081,8 @@
 			
 			
 			EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
-			INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode,ProfileId, Content, DraftContent) 
-			values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Shipment list card item - Mobile', 'SLCIM', @agentProfileId, 
+			INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
+			values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Shipment list card item - Mobile', 'SLCIM', 1, @agentProfileId, 
 			'<LogTable>
 	<LogRow class=''border-0 margin-0 padding-0''>
 		<LogColumn>
