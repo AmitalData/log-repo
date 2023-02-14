@@ -1084,9 +1084,6 @@ namespace WebFreight.Web.ReportsWebServices
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 
-            QueryFilterItem fromDateItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDate" && d.Operator == "GreaterThanOrEqual").FirstOrDefault();
-            QueryFilterItem toDateItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDate" && d.Operator == "LessThanOrEqual").FirstOrDefault();
-
             TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
             AddressQuery addressQuery = new AddressQuery(tenant);
             AddressPM address = addressQuery.GetSingleAddressPM(currentTenant.AddressId, currentTenant.Id, false);
@@ -1108,66 +1105,72 @@ namespace WebFreight.Web.ReportsWebServices
             dataProvider.TenantName = currentTenant.Company;
             dataProvider.Signature = currentTenant.Signature;
             dataProvider.Logo = DataProviders.General.GetLogo(currentTenant.Id);
+            
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime? fromDate = null;
+            DateTime? toDate = null;
+
+            QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+            QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
+
+            if (filterItem_FromDate != null)
+            {
+                if (filterItem_FromDate.FieldValue != null)
+                {
+                    fromDate = (DateTime)filterItem_FromDate.FieldValue;
+                }
+            }
+            if (filterItem_ToDate != null)
+            {
+                if (filterItem_ToDate.FieldValue != null)
+                {
+                    toDate = (DateTime)filterItem_ToDate.FieldValue;
+                }
+            }
+
+            if (fromDate == null)
+            {
+                fromDate = todayDate.AddDays(-90);
+            }
+
+            dataProvider.FromPeriod = fromDate.Value;
+            dataProvider.ToPeriod = toDate.Value;
 
             if (dateType == "CreateDate")
             {
-                DateTime fromDate = (DateTime)fromDateItem.FieldValue;
-                dataProvider.FromPeriod = fromDate;
-
-                DateTime toDate = (DateTime)toDateItem.FieldValue;
-                toDate = toDate.Date;
-                toDate = toDate.AddHours(23).AddMinutes(59);
-                queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDate" && d.Operator == "LessThanOrEqual").FirstOrDefault().FieldValue = toDate;
-
-                dataProvider.ToPeriod = toDate;
+                iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate)
+                && System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
             }
             else
             {
-                queryOperations.QueryFilterItems.Add(new QueryFilterItem() { FieldName = "InvoiceDate", FieldValue = fromDateItem.FieldValue, Operator = "GreaterThanOrEqual" });
-
-                DateTime fromDate = (DateTime)fromDateItem.FieldValue;
-                dataProvider.FromPeriod = fromDate;
-                queryOperations.QueryFilterItems.Remove(fromDateItem);
-                queryOperations.QueryFilterItems.Add(new QueryFilterItem() { FieldName = "InvoiceDate", FieldValue = toDateItem.FieldValue, Operator = "LessThanOrEqual" });
-
-                DateTime toDate = (DateTime)toDateItem.FieldValue;
-                queryOperations.QueryFilterItems.Remove(toDateItem);
-                toDate = toDate.Date;
-                toDate = toDate.AddHours(23).AddMinutes(59);
-                queryOperations.QueryFilterItems.Where(d => d.FieldName == "InvoiceDate" && d.Operator == "LessThanOrEqual").FirstOrDefault().FieldValue = toDate;
-
-                dataProvider.ToPeriod = toDate;
+                iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate)
+                && System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
             }
+
             string partnerId = null;
-            QueryFilterItem partnerFilterItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "PartnerId" && d.Operator == "Equals").FirstOrDefault();
-        
+            QueryFilterItem partnerFilterItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "PartnerId" && d.Operator == "Equals").FirstOrDefault();        
             if (partnerFilterItem != null && partnerFilterItem.FieldValue != null)
             {
                 partnerId = partnerFilterItem.FieldValue.ToString();
             }
 
-            iQueryable = filter.GetFilteredQuery<ARInvoice>(queryOperations, iQueryable);
-            IQueryable<ARInvoiceList> invoicequery = arInvoiceQuery.GetIQueryableEntityList(iQueryable);
-
             if (!string.IsNullOrEmpty(partnerId))
             {
-                invoicequery = invoicequery.Where(d => d.PartnerId == partnerId);
+                iQueryable = iQueryable.Where(d => d.PartnerId == partnerId);
             }
-            var t = invoicequery.ToList();
-            QueryFilterItem customerItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BillToId" && d.Operator == "Equals").FirstOrDefault();
-           
-            string id = "";
-            Card customer = null;
-            Address myFilterdCustomerAddress = null;
 
+            QueryFilterItem customerItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BillToId" && d.Operator == "Equals").FirstOrDefault();
             if (customerItem != null)
             {
-                id = customerItem.FieldValue.ToString();
-                customer = CardRepository.GetSingleCard(id, tenant, true);
-                dataProvider.CustomerName = customer.EnglishName;
-                dataProvider.CustomerCode = customer.Code;
+                string customerId = customerItem.FieldValue.ToString();
 
-                myFilterdCustomerAddress = addressRep.GetMainAddressByCardId(id, tenant);
+                iQueryable = iQueryable.Where(d => d.BillToId == customerId);
+
+                Card customer = CardRepository.GetSingleCard(customerId, tenant, true);
+                dataProvider.CustomerName = customer?.EnglishName;
+                dataProvider.CustomerCode = customer?.Code;
+
+                Address myFilterdCustomerAddress = addressRep.GetMainAddressByCardId(customerId, tenant);
                 if (myFilterdCustomerAddress != null)
                 {
                     dataProvider.CustomerPhone = myFilterdCustomerAddress.PhoneNumber;
@@ -1176,8 +1179,11 @@ namespace WebFreight.Web.ReportsWebServices
             else
             {
                 dataProvider.CustomerName = "All";
-            }        
+            }
 
+
+            IQueryable<ARInvoiceList> invoicequery = arInvoiceQuery.GetIQueryableEntityList(iQueryable);
+            
             dataProvider.InvoicesByPartnerList = new List<InvoicesByPartnerDataProvider.InvoicesByPartner>();
 
             string[] currencyarray = currency.Split(',');
