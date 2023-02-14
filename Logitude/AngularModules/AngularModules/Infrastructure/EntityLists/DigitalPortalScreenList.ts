@@ -19,6 +19,7 @@ export class DigitalPortalScreenList {
 	DraftContent: string;
 	ProfileId: string;
 	ProfileCode: string;
+	IsList: boolean;
 	
 }
  

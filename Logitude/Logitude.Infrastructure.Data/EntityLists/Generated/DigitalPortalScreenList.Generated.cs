@@ -36,6 +36,8 @@ namespace Logitude.Infrastructure.Data.EntityLists
        public string ProfileId  { get; set; }
        [DataMember]
        public string ProfileCode  { get; set; }
+       [DataMember]
+       public bool IsList  { get; set; }
    }
 
 }
