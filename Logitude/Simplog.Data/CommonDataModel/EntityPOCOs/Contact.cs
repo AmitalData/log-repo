@@ -86,5 +86,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public ColorIndex ColorIndex { get; set; }
 
         public DateTime? CreateDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
     }
 }
