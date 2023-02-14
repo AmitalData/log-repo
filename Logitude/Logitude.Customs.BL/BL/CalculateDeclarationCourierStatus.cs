@@ -141,8 +141,9 @@ namespace Logitude.Customs.BL.BL
                 CalcSpecialActionStatus(myDeclarationCourierStatusPM);
                 CalcFastIndividualProcess(myDeclarationCourierStatusPM);
                 CalcDeclarationPendings902(myDeclarationCourierStatusPM);
-
-                CalcDeclarationPendings905(myDeclarationCourierStatusPM);
+                if(declarationPM.ChangeSetOp== ChangeSetOperation.Insert) {
+                   CalcDeclarationPendings905(myDeclarationCourierStatusPM);
+                }
 
 
                 var updateDeclarationPending903InvalidPhoneNumberService = new UpdateDeclarationPending903InvalidPhoneNumberService(declarationPM);
@@ -592,7 +593,7 @@ namespace Logitude.Customs.BL.BL
 
 
 
-            if (declarationPM.CasualImporterCountry != "IL")
+            if (declarationPM.CasualImporterCountry != "IL" && declarationPM.IsAramex)
             {
               
                

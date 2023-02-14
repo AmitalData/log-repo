@@ -455,6 +455,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual LoadingSiteType ExportLoadingPort { get; set; }
         [Column("CasualImporterCountry")]
 	    public string CasualImporterCountry { get; set; }
+        [Column("IsAramex")]
+	    public bool IsAramex { get; set; }
     }
 }
 	 

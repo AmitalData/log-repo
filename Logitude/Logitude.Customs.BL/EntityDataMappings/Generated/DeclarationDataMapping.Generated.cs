@@ -173,7 +173,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsExportClosed, 
 	         ExportClosedErrorXML, 
 	         ExportLoadingPortCode, 
-	         CasualImporterCountry,
+	         CasualImporterCountry, 
+	         IsAramex,
 	      }
 
 
