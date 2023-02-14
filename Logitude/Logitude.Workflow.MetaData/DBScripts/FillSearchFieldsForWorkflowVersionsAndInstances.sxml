@@ -2,10 +2,9 @@
   <Sql Version="1">
     <![CDATA[
     
- update WorkFlowInstances set SearchFields = (BusinessKey +','+ CONVERT(VARCHAR(10),(select VersionNumber from WorkFlowVersions where id = WorkFlowVersionId)))
- 
- 
- update WorkFlowVersions set SearchFields = (SearchFields +',' +CONVERT(VARCHAR(10),VersionNumber))
+    update [WorkFlowInstances] set [SearchFields] = ([BusinessKey] + ',' + CONVERT(VARCHAR(10), (select [VersionNumber] from [WorkFlowVersions] where [Id] = [WorkFlowVersionId])));
+    
+    update [WorkFlowVersions] set [SearchFields] = ([Description] + ',' + CONVERT(VARCHAR(10), [VersionNumber]));
     
     ]]>
   </Sql>

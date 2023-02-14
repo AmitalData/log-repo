@@ -10,7 +10,7 @@ export class ObjectVariableComponent implements OnInit {
     public ObjectHtml: string | null = null;
 
     SetWindowArgs(args: any) {
-        this.Object = args.Value ? JSON.parse(args.Value) : null;
+        this.Object = args && args.Value ? JSON.parse(args.Value) : null;
     }
 
     ngOnInit() {

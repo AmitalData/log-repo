@@ -27,10 +27,13 @@
 
 <tr>
     <td>
-        <div class="open-expression-builder-btn" [ngStyle]="{ 'width': Width }" (click)="openExpressionBuilder()"></div>
-        <div class="expression-element" [ngStyle]="{ 'width': Width }">
+        <div class="open-expression-builder-btn" [ngStyle]="{ 'width': Width }" (click)="openExpressionBuilder()"
+            [attr.data-cy]="DataCy">
+        </div>
+
+        <div class="expression-element" [ngStyle]="{ 'width': Width }" [attr.data-cy]="DataCy">
             <input [disabled]="IsDisabled" class="expression-input" type="text" placeholder="Expression ..."
-                [(ngModel)]="ExpressionValue.expression" readonly />
+                [(ngModel)]="ExpressionValue.expression" readonly [attr.data-cy]="DataCy" />
             <img class="function-icon" src="./Images/function.png" />
         </div>
     </td>

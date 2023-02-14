@@ -22,7 +22,6 @@ export class AppendItemPropertiesComponent extends BaseComponent {
     public CurrentNodeId: string;
     public SingleEditableEntitiesTreeItems: TreeSelectItem[];
     public VariablesTreeItems: TreeSelectItem[];
-    public FlowVariablesTreeList: FlowVariablesTreeList;
     public FlowVariablesTreeItems: TreeSelectItem[];
     public Data: any;
     public IsNew: boolean;
@@ -145,8 +144,7 @@ export class AppendItemPropertiesComponent extends BaseComponent {
             IsObjectVariableSelectable: true,
             IsNoChildrenObjectVariables: false
         };
-        this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props);
-        this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;
+        this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props).Items;
     }
 
     updateName(name: string) {

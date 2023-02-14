@@ -1,6 +1,5 @@
 import { Component } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
-import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
@@ -15,6 +14,7 @@ import { EntitiesTreeList } from "Workflow/TreeLists/EntitiesTreeList";
 import { ObjectTables } from "Workflow/Utilities/ObjectTables";
 import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
 import { ObjectFields } from "Workflow/Utilities/ObjectFields";
+import { ObjectFieldsTreeList } from "Workflow/TreeLists/ObjectFieldsTreeList";
 
 @Component({
     templateUrl: "./GetRecordPropertiesComponent.html"
@@ -47,6 +47,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     public SortDirectionListItems = new SortDirectionList().Items;
 
     public EntitiesTreeItems: TreeSelectItem[];
+    public ObjectFieldsTreeItems: TreeSelectItem[];
 
     public ExcludedEntities: string[];
     public EnableAddConditions: boolean;
@@ -65,12 +66,9 @@ export class GetRecordPropertiesComponent extends BaseComponent {
 
     ngOnInit() {
         this.initializeWindowEvents();
-        this.initializeEntitiesTreeItems();
         this.initialize();
-    }
-
-    ngOnChanges() {
-        this.SortDirectionListItems = new SortDirectionList().Items;
+        this.initializeEntitiesTreeItems();
+        this.initializeObjectFieldsTreeItems();
     }
 
     initializeWindowEvents() {
@@ -81,10 +79,6 @@ export class GetRecordPropertiesComponent extends BaseComponent {
                 this.cancelButtonClicked();
             }
         });
-    }
-
-    initializeEntitiesTreeItems() {
-        this.EntitiesTreeItems = new EntitiesTreeList("parent").Items;
     }
 
     initialize() {
@@ -165,6 +159,14 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         }
     }
 
+    initializeEntitiesTreeItems() {
+        this.EntitiesTreeItems = new EntitiesTreeList("parent").Items;
+    }
+
+    initializeObjectFieldsTreeItems() {
+        this.ObjectFieldsTreeItems = new ObjectFieldsTreeList(this.EntityId).Items;
+    }
+
     updateName(name: string) {
         if (this.IsNew) {
             this.Data["name"] = name;
@@ -186,6 +188,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
             this.updateRecordsLimit(GetRecordLimits.FirstRecord);
             this.initializeConditions(this.RecordsType, true);
             this.initializeReturnedFields(this.RecordsType, true);
+            this.initializeObjectFieldsTreeItems();
         }
 
         this.setUIProperties();
@@ -232,9 +235,9 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         this.setUIProperties();
     }
 
-    updateSortBy(sortValue: ObjectFieldPM) {
-        this.Data["sortBy"] = sortValue ? sortValue.FieldCode : null;
-        this.SortBy = sortValue ? sortValue.FieldCode : null;
+    updateSortBy(fieldCode: string) {
+        this.Data["sortBy"] = fieldCode || null;
+        this.SortBy = fieldCode || null;
         this.setUIProperties();
     }
 
@@ -287,9 +290,10 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         this.Data["returnedFields"] = this.ReturnedFields;
     }
 
-    updateSelectedField(selectedField: ObjectFieldPM, index: number) {
-        this.ReturnedFields[index].fieldCode = selectedField ? selectedField.FieldCode : null;
-        this.ReturnedFields[index].type = selectedField ? selectedField.DataTypeCode : null;
+    updateSelectedField(objectFieldItem: TreeSelectItem, index: number) {
+        let objectField = objectFieldItem ? (objectFieldItem.data["objectField"] || null) : null;
+        this.ReturnedFields[index].fieldCode = objectField ? objectField.FieldCode : null;
+        this.ReturnedFields[index].type = objectField ? objectField.DataTypeCode : null;
         this.IsValidReturnedFields = this.ReturnedFields.filter(r => r.fieldCode === null).length === 0;
     }
 
