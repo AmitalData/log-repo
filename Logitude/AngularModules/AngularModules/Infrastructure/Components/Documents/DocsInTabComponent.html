@@ -21,15 +21,18 @@
                             <div></div>
                         </td>
 
-                        <td style="width:1px" *ngIf ="IsApprovePendingDocumentsEnabled">
-                            <table style="margin-right: 10px;">
-                                <tr class="FormFieldRow">
-                                    <td style="vertical-align:middle; text-align:center">
-                                        <CheckBox style="display: inline-block; vertical-align: middle;" [IsChecked]="ApprovePendingDocuments" (Checked)="ApprovePendingDocuments = $event"></CheckBox>
-                                        <label style="color: rgb(110, 113, 114);"> Approve Pending Documents </label>
-                                    </td>
-                                </tr>
-                            </table>
+                        <td style="width: 5px;" *ngIf="IsApprovePendingDocumentsEnabled">
+                            <button [disabled]="!IsDigitalPortalInvitedCustomer" *ngIf="!IsDocumentsNeedApprove" class="Button">
+                                <span>Approve Pending Documents</span>
+                            </button>
+
+                            <button [disabled]="!IsDigitalPortalInvitedCustomer" class="EntityChangesButton" *ngIf="IsDocumentsNeedApprove" (click)="ApprovePendingDocuments()">
+                                <span>Approve Pending Documents</span>
+                            </button>
+                        </td>
+
+                        <td style="width: 5px;">
+                            <div></div>
                         </td>
 
                         <td style="width:5px">
