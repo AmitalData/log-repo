@@ -1968,6 +1968,15 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         }
     
     } 
+    
+    async FetchCustomsSetting(){
+        if (AppTool.IsNullOrEmpty(EditComponent._CustomsSettingList)){
+            const dCustomsSettingListService: CustomsSettingListService = new CustomsSettingListService;
+            const response = await dCustomsSettingListService.getSingleFromCache(SessionLocator.Tenant.toString()).toPromise();
+            EditComponent._CustomsSettingList = response.Result;
+        }
+    
+    } 
     SetSplitComponentState() {
         if (this.IsSplitBtnVisible == false) {
             return;

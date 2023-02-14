@@ -451,9 +451,11 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string CasualImporterCountry  { get; set; }
        [DataMember]
+
        public string IntegratorName  { get; set; }
        [DataMember]
        public string ExportCloseAmendStatusName  { get; set; }
+
    }
 
 }

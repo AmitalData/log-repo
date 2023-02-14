@@ -60,7 +60,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                     .Where(r => listStorageDefault.Contains(r.StorageSiteCode))
                     .Select(r => r.StorageSiteCode)
                     .FirstOrDefault();
-                sb.Append("myStorageSiteCode={myStorageSiteCode} IS NUL ???");
+                sb.Append($"myStorageSiteCode={myStorageSiteCode} IS NULL ???");
                 if (dbPM==null)
                 {
                     var qs = new DeclarationQueryService(drityEntityPM.Tenant);
@@ -114,6 +114,13 @@ namespace Logitude.Customs.BL.Messaging.Maman
                             dataHaveChangeSendIt = true;
                             sb.AppendLine("forceSend || forceDueEcomUpsert-SEND!!!");
 
+                        }
+                        else
+                        {
+                            
+                            sb.AppendLine($"{Environment.MachineName}+;{drityEntityPM?.MyEcomInsert};-;{drityEntityPM?.MyEcomInsert?.MyDeclarationCourierStatusPM}+;{drityEntityPM?.MyEcomInsert?.MyCourierMasterPM}+;{drityEntityPM?.MyEcomInsert?.MyDeclarationCourierStatusPM?.DeclarationId}");
+
+                            sb.AppendLine(Environment.StackTrace);
                         }
                     }
                     if (dataHaveChangeSendIt)
@@ -172,10 +179,14 @@ namespace Logitude.Customs.BL.Messaging.Maman
                         sb.AppendLine(res);
                         
                     }
+                    else
+                    {
+
+                        sb.AppendLine(Environment.StackTrace);
+                    }
 
                 }
 
-            
               else if (listStorageDefault.Contains("ILSWS") && myStorageSiteCode == "ILSWS")
                 {
                     
@@ -211,15 +222,22 @@ namespace Logitude.Customs.BL.Messaging.Maman
                             Debug.WriteLine(res);
                             sb.AppendLine(res);
                         }
+                        else
+                        {
+
+                            sb.AppendLine(Environment.StackTrace);
+                        }
                     }
             }
 
         }
             catch (Exception e)
             {
+                sb.AppendLine(e.ToString());
                 //e.SetMess
                 //throw;
-            }finally
+            }
+            finally
             {
                 if (Logger.ToLogUntilDateyyyyMMdd("20230112HDCall409236.LogUntilDateyyyyMMdd"))
                 {
