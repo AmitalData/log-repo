@@ -1716,7 +1716,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 IsFromUnifreightPodMobile = true,
                 IsApprovalRequired = info.IsApprovalRequired,
                 HasFile = true,
-                Received = true
+                Received = true,
+                IsUoloadedField = true,
             };
 
             UserRepository userRepository = new UserRepository(tenant);

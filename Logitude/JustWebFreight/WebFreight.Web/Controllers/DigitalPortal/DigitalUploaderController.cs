@@ -30,30 +30,24 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             try
             {
-                using (TransactionScope scope = TransactionFactory.GetTransaction())
-                {
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                // Create Docs In
+                tenant = authToken.Tenant;
+                email = authToken.Email;
 
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
-                    // Create Docs In
-                    tenant = authToken.Tenant;
-                    email = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, info.CardId);
 
-                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, info.CardId);
+                ICommonDataContext context = CommonDataContext.GetContext(tenant);
+                ContactRepository contactRepository = new ContactRepository(tenant);
+                Contact loggedContact = contactRepository.GetSingleContactByEmailAndTenant(email, tenant);
+                DocumentsFilingService service = new DocumentsFilingService(context, tenant);
 
-                    ICommonDataContext context = CommonDataContext.GetContext(tenant);
-                    ContactRepository contactRepository = new ContactRepository(tenant);
-                    Contact loggedContact = contactRepository.GetSingleContactByEmailAndTenant(email, tenant);
-                    DocumentsFilingService service = new DocumentsFilingService(context, tenant);
-
-                    var documentId = service.UploadDigitalDocument(info, tenant, loggedContact);
-                    ImageParameter imageParameterfilter = UploadImage(documentId, info, tenant);
-                    AddUploadEvent(info, loggedContact.Id, tenant);
-
-                    scope.Complete();
-
-                    return Request.CreateResponse(HttpStatusCode.OK, imageParameterfilter);
-                }
+                var documentId = service.UploadDigitalDocument(info, tenant, loggedContact);
+                ImageParameter imageParameterfilter = UploadImage(documentId, info, tenant);
+                AddUploadEvent(info, loggedContact.Id, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, imageParameterfilter);
+                
             }
             catch (AutenticationException ex)
             {

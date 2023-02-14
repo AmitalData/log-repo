@@ -39,6 +39,8 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public bool IsDrop { get; set; }
         [Column("AddedManually")]
 	    public bool AddedManually { get; set; }
+        [Column("ActivationDate")]
+	    public DateTime? ActivationDate { get; set; }
     }
 }
 	 
