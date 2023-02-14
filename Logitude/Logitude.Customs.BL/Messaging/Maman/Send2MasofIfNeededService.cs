@@ -118,6 +118,8 @@ namespace Logitude.Customs.BL.Messaging.Maman
                         else
                         {
                             
+                            sb.AppendLine($"{Environment.MachineName}+;{drityEntityPM?.MyEcomInsert};-;{drityEntityPM?.MyEcomInsert?.MyDeclarationCourierStatusPM}+;{drityEntityPM?.MyEcomInsert?.MyCourierMasterPM}+;{drityEntityPM?.MyEcomInsert?.MyDeclarationCourierStatusPM?.DeclarationId}");
+
                             sb.AppendLine(Environment.StackTrace);
                         }
                     }
@@ -177,10 +179,14 @@ namespace Logitude.Customs.BL.Messaging.Maman
                         sb.AppendLine(res);
                         
                     }
+                    else
+                    {
+
+                        sb.AppendLine(Environment.StackTrace);
+                    }
 
                 }
 
-            
               else if (listStorageDefault.Contains("ILSWS") && myStorageSiteCode == "ILSWS")
                 {
                     
@@ -216,15 +222,22 @@ namespace Logitude.Customs.BL.Messaging.Maman
                             Debug.WriteLine(res);
                             sb.AppendLine(res);
                         }
+                        else
+                        {
+
+                            sb.AppendLine(Environment.StackTrace);
+                        }
                     }
             }
 
         }
             catch (Exception e)
             {
+                sb.AppendLine(e.ToString());
                 //e.SetMess
                 //throw;
-            }finally
+            }
+            finally
             {
                 if (GetStopLogAt()> DateTime.Now)
                 {
