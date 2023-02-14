@@ -675,18 +675,24 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             QueryColumnQuery queryColumnQuery = new QueryColumnQuery(queryColumnRepository);
             var queryColumns = getfromsystemlevel ? null : queryColumnQuery.GetQueryColumnsByQueryCodeAndUser(tenant, userid, queryCode).ToList();
 
-            Tenant tenantDetails = TenantRepository.GetSingleTenant(tenant, true);
-            if (queryColumns != null && queryColumns.Any())
+            
+            if (queryColumns != null && queryColumns.Count() > 0)
             {
-                if (queryCode == "ARInvoice.All Invoices" && !tenantDetails.AccountingActivated)
+                if(LogitudeSettings.WorkEnvironment != "cloud")
                 {
-                    queryColumns.RemoveAll(q =>
-                        q.ObjectFieldName == "TotalVAT" ||
-                        q.ObjectFieldName == "TotalExamptFortaxReport" ||
-                        q.ObjectFieldName == "TotalAmountNotForTaxReport" ||
-                        q.ObjectFieldName == "TotalAmountForTaxReport" ||
-                        q.ObjectFieldName == "TotaVatableAmountForTaxReport"
-                    );
+                    ObjectTableRepository tableRepository = new ObjectTableRepository(tenant);
+                    ObjectTable objectTable = tableRepository.GetSingleObjectTable(objecttableid, tenant, true);
+
+                    if (queryCode == "ARInvoice.All Invoices" && objectTable.Name == "ARInvoice")
+                    {
+                        queryColumns.RemoveAll(q =>
+                            q.ObjectFieldName == "TotalVAT" ||
+                            q.ObjectFieldName == "TotalExamptFortaxReport" ||
+                            q.ObjectFieldName == "TotalAmountNotForTaxReport" ||
+                            q.ObjectFieldName == "TotalAmountForTaxReport" ||
+                            q.ObjectFieldName == "TotaVatableAmountForTaxReport"
+                        );
+                    }
                 }
                 return queryColumns.OrderBy(a => a.IndexOrder).ToList();
             }
