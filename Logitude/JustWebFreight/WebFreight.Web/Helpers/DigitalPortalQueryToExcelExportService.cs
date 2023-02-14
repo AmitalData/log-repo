@@ -572,6 +572,7 @@ namespace WebFreight.Web.Helpers
 
                 if (DoesPropertyExistInDynamic(shipment, "ContainersNumbersandTypesArray") 
                     && DoesPropertyExistInDynamic(shipment, "TransportModeId")
+                    && DoesPropertyExistInDynamic(shipment, "TruckContainerNumber")
                     && (shipment.TransportModeId != "O" || !string.IsNullOrEmpty(shipment.ContainersNumbersandTypesArray)))
                 {
                     shipment.TruckContainerNumber = shipment.TransportModeId == "O"
