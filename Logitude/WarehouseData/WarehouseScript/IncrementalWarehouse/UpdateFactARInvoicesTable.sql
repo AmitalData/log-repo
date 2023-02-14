@@ -102,7 +102,7 @@
 	DIM_Branches.Id_Number,dw_ARInvoices.StatusCode, dw_ARInvoices.DraftNumber,
 	dw_ARInvoices.IsConsolidationInvoice,dw_ARInvoices.MainEntityId,dw_ARInvoiceLines.EntityId , dw_ARInvoices.MasterNumber, dw_ARInvoices.HouseNumber,@dw_ARInvoices.CustomFieldsVariable,
 	ConsolidationInvoice.InvoiceNumber,ConsolidationInvoice.InvoiceDate, ConsolidationInvoice.StatusCode, ConsolidationInvoice.DraftNumber,  Partner.Id_Number, ConsolidationInvoice.Id, dw_ARInvoices.RegionalTaxPercentage,dw_ARInvoices.PaymentReferences,
-	ProfitCurrency.Id_Number,DIM_ChargesTypes.Id_Number,NewDIM_ARInvoiceTransferStatus.Name
+	ProfitCurrency.Id_Number,DIM_ChargesTypes.Id_Number,DIM_ARInvoiceTransferStatus.Name
 
 	 
     From dw_ARInvoices
