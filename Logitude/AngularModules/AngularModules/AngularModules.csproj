@@ -343,6 +343,7 @@
     <Content Include="Images\PrivateLabel\MainImage.png" />
     <Content Include="Images\PrivateLabel\LogBoxLogo.png" />
     <Content Include="Images\PrivateLabel\Background.png" />
+    <Content Include="Images\problem.png" />
     <Content Include="Images\Update-Button.png" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\DWQueryBuilderBaseComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCommunications\Components\ReportExecutionLog\ReportExecutionLogErrorComponent.html" />
@@ -471,6 +472,7 @@
     <Content Include="Workflow\Components\Base\TreeSelectComponent.html" />
     <Content Include="Workflow\Components\CreateEditWorkflow\CreateWorkflowComponent.html" />
     <Content Include="Workflow\Components\CreateEditWorkflow\EditWorkflowComponent.html" />
+    <Content Include="Workflow\Components\Helpers\WorkFlowHelperComponent.html" />
     <Content Include="Workflow\Components\Messages\DeleteNodeWarningComponent.html" />
     <Content Include="Workflow\Components\Properties\AppendItemPropertiesComponent.html" />
     <Content Include="Workflow\Components\Properties\CollectionFilterPropertiesComponent.html" />
@@ -8237,6 +8239,7 @@
     <TypeScriptCompile Include="Workflow\Components\Base\TreeSelectComponent.ts" />
     <TypeScriptCompile Include="Workflow\Components\CreateEditWorkflow\CreateWorkflowComponent.ts" />
     <TypeScriptCompile Include="Workflow\Components\CreateEditWorkflow\EditWorkflowComponent.ts" />
+    <TypeScriptCompile Include="Workflow\Components\Helpers\WorkFlowHelperComponent.ts" />
     <TypeScriptCompile Include="Workflow\Components\MenuButtons\WorkFlowMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Workflow\Components\Messages\DeleteNodeWarningComponent.ts" />
     <TypeScriptCompile Include="Workflow\Components\Properties\AppendItemPropertiesComponent.ts" />

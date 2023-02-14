@@ -49,6 +49,7 @@ import { IsObjectTypePipe } from "./Pipes/IsObjectTypePipe";
 import { ObjectVariableComponent } from "./Components/Base/ObjectVariableComponent";
 import { AppendItemPropertiesComponent } from './Components/Properties/AppendItemPropertiesComponent';
 import { DeleteItemPropertiesComponent } from './Components/Properties/DeleteItemPropertiesComponent';
+import { WorkFlowHelperComponent } from "./Components/Helpers/WorkFlowHelperComponent";
 
 export const Components = [
     WorkflowBuilderComponent,
@@ -82,6 +83,7 @@ export const Components = [
     CreateWorkflowVersionComponent,
     WorkFlowShortTitleComponent,
     ObjectVariableComponent,
+    WorkFlowHelperComponent,
 ];
 
 export const Pipes = [
@@ -142,6 +144,7 @@ export class ModuleDeclarations {
             case "CreateWorkflowVersionComponent": { result = CreateWorkflowVersionComponent; break; }
             case "WorkFlowShortTitleComponent": { result = WorkFlowShortTitleComponent; break; }
             case "ObjectVariableComponent": { result = ObjectVariableComponent; break; }
+            case "WorkFlowHelperComponent": { result = WorkFlowHelperComponent; break; }
         }
         return result;
     }

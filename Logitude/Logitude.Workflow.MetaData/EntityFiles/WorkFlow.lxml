@@ -12,7 +12,7 @@
   AvailableInCustomization="false"
   SupportSubEntity="false"
   ApplyGenericCustomFields="false"
-  HasHelper="false"
+  HasHelper="true"
   HasShortTitle="true"
   HasFiltersMenu="false"
   HasCustomValidator="false"
