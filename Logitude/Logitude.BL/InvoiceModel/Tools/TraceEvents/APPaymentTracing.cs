@@ -36,6 +36,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                     EntityId = entityPM.Id,
                     ObjectTableName = myEntityName,
                 });
+                return;
             }
 
 
@@ -131,25 +132,6 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                     Notes = notes
                 });
             }
-            if (entityPM.AmountInPaymentCurrency != payment.AmountInPaymentCurrency)
-            {
-                var isAmountInPaymentCurrencyChanged = entityPM.AmountInPaymentCurrency != payment.AmountInPaymentCurrency;
-                var AmountInPaymentCurrency = "Amount In Payment Currency Updated: " + oldValue + payment.AmountInPaymentCurrency + newValue + entityPM.AmountInPaymentCurrency;
-                if (isAmountInPaymentCurrencyChanged)
-                {
-                    notes = AmountInPaymentCurrency;
-                }
-
-                EventTracer.CreateTraceEvent(new EventTracerArgs()
-                {
-                    Tenant = entityPM.Tenant,
-                    EventTypeCode = "UPAP",
-                    UserId = loggedContact.Id,
-                    EntityId = entityPM.Id,
-                    ObjectTableName = myEntityName,
-                    Notes = notes
-                });
-            }
             if (entityPM.RegisterDate != payment.RegisterDate)
             {
                 var isRegisterDateChanged = entityPM.RegisterDate != payment.RegisterDate;
@@ -212,6 +194,26 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                 });
             }
 
+            if (entityPM.AmountInPaymentCurrency != payment.AmountInPaymentCurrency)
+            {
+                var isAmountInPaymentCurrencyChanged = entityPM.AmountInPaymentCurrency != payment.AmountInPaymentCurrency;
+                var AmountInPaymentCurrency = "Amount In Payment Currency Updated: " + oldValue + payment.AmountInPaymentCurrency + newValue + entityPM.AmountInPaymentCurrency;
+                if (isAmountInPaymentCurrencyChanged)
+                {
+                    notes = AmountInPaymentCurrency;
+                }
+
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "UPAP",
+                    UserId = loggedContact.Id,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = myEntityName,
+                    Notes = notes
+                });
+            }
+
             if (entityPM.AccountingPaymentMethodId != payment.AccountingPaymentMethodId)
             {
 
@@ -241,7 +243,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                 Card oldCard = cardRep.GetSingleCard(payment.VendorId, entityPM.Tenant);
                 Card newCard = cardRep.GetSingleCard(entityPM.VendorId, entityPM.Tenant);
                 var isVendorIdChanged = entityPM.VendorId != payment.VendorId;
-                var VendorId = "Vendor Updated: " + oldValue + oldCard.EnglishName + newValue + newCard.EnglishName;
+                var VendorId = "Vendor Updated: " + oldValue + (oldCard.EnglishName ?? oldCard.LocalName) + newValue + (newCard.EnglishName ?? newCard.LocalName);
                 if (isVendorIdChanged)
                 {
                     notes = VendorId;
