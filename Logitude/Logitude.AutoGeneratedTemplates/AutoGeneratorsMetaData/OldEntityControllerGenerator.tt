@@ -709,6 +709,7 @@ if(hasTenant)
 	string apiHelpernamespacestring =  "WebFreight.Web.Controllers."+ modelname+".ApiHelpers;";
 	
 	string context = FirstServiceCharacterToLower(contextName);
+    string tableNameFirstToLower = FirstServiceCharacterToLower(tableName);
 	string queryName = FirstServiceCharacterToLower(tableName)+"Query";
 	string repositoryName = FirstServiceCharacterToLower(tableName)+"Repository";
 
@@ -756,6 +757,13 @@ if(hasTenant)
 	if( entity.EnableSecurity.GetType() == typeof(string))
 	{
 	    enableSecurity = (entity.EnableSecurity == "true");
+				 
+    }
+
+    bool applyGenericCustomFields = false;
+	if( entity.ApplyGenericCustomFields.GetType() == typeof(string))
+	{
+	    applyGenericCustomFields = (entity.ApplyGenericCustomFields == "true");
 				 
     }
 	
@@ -956,10 +964,20 @@ else
 				
 		    	I<#= contextName #> MyContext = <#= contextName #>.GetContext(<#= databaseConnTenant #>);
 				<#= tableName #>Repository  <#= repositoryName #> = new <#= tableName #>Repository(MyContext);
+<#+
+if(applyGenericCustomFields)
+{
+#>
+				<#= tableName #>Query  <#= queryName #> = new <#= tableName #>Query(<#= repositoryName #>);
+                IQueryable<<#= tableName #>> <#= tableNameFirstToLower #>s = <#= repositoryName #>.Get<#= dBTableName #>(authToken.Tenant).Where(a=><#= primarykeyCondition #>);
+                <#= tableName #>List entityList = <#= queryName #>.GetIQueryableEntityList(<#= tableNameFirstToLower #>s).FirstOrDefault();
+<#+
+}else{
+#>
 				<#= tableName #>List entityList = null;
 				<#= tableName #> entityPoco = <#= repositoryName #>.GetSingle<#= tableName #>(<#= primaryonlyparam #> <#= tenantonlyParam #>);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 				<#+
 if(tableName == "Card")
@@ -982,6 +1000,9 @@ if(tableName == "Card")
 #>
 
 			    }
+<#+
+}
+#>
 <#+
 if(hasApiHelper)
 {

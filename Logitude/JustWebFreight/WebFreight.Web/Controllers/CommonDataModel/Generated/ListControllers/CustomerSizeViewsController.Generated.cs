@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				CustomerSizeRepository  customerSizeRepository = new CustomerSizeRepository(MyContext);
 				CustomerSizeList entityList = null;
 				CustomerSize entityPoco = customerSizeRepository.GetSingleCustomerSize(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<CustomerSize> singleEntityList = new List<CustomerSize>();
 					singleEntityList.Add(entityPoco);

@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				AutomationResultEmailRecipientRepository  automationResultEmailRecipientRepository = new AutomationResultEmailRecipientRepository(MyContext);
 				AutomationResultEmailRecipientList entityList = null;
 				AutomationResultEmailRecipient entityPoco = automationResultEmailRecipientRepository.GetSingleAutomationResultEmailRecipient(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<AutomationResultEmailRecipient> singleEntityList = new List<AutomationResultEmailRecipient>();
 					singleEntityList.Add(entityPoco);

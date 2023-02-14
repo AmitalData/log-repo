@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				VatMandatoryTypeRepository  vatMandatoryTypeRepository = new VatMandatoryTypeRepository(MyContext);
 				VatMandatoryTypeList entityList = null;
 				VatMandatoryType entityPoco = vatMandatoryTypeRepository.GetSingleVatMandatoryType(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<VatMandatoryType> singleEntityList = new List<VatMandatoryType>();
 					singleEntityList.Add(entityPoco);

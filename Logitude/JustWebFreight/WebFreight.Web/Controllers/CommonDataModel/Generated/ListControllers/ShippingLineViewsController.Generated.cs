@@ -67,8 +67,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				ShippingLineRepository  shippingLineRepository = new ShippingLineRepository(MyContext);
 				ShippingLineList entityList = null;
 				ShippingLine entityPoco = shippingLineRepository.GetSingleShippingLine(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<ShippingLine> singleEntityList = new List<ShippingLine>();
 					singleEntityList.Add(entityPoco);

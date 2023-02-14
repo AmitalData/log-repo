@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				AutomationRepository  automationRepository = new AutomationRepository(MyContext);
 				AutomationList entityList = null;
 				Automation entityPoco = automationRepository.GetSingleAutomation(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Automation> singleEntityList = new List<Automation>();
 					singleEntityList.Add(entityPoco);

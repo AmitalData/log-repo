@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				MeasurementRepository  measurementRepository = new MeasurementRepository(MyContext);
 				MeasurementList entityList = null;
 				Measurement entityPoco = measurementRepository.GetSingleMeasurement(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Measurement> singleEntityList = new List<Measurement>();
 					singleEntityList.Add(entityPoco);

@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				DocumentFilingBackupSettingRepository  documentFilingBackupSettingRepository = new DocumentFilingBackupSettingRepository(MyContext);
 				DocumentFilingBackupSettingList entityList = null;
 				DocumentFilingBackupSetting entityPoco = documentFilingBackupSettingRepository.GetSingleDocumentFilingBackupSetting(tenant , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<DocumentFilingBackupSetting> singleEntityList = new List<DocumentFilingBackupSetting>();
 					singleEntityList.Add(entityPoco);

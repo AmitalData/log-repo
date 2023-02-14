@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				AddressRepository  addressRepository = new AddressRepository(MyContext);
 				AddressList entityList = null;
 				Address entityPoco = addressRepository.GetSingleAddress(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Address> singleEntityList = new List<Address>();
 					singleEntityList.Add(entityPoco);

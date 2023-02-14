@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				LoginPolicyRepository  loginPolicyRepository = new LoginPolicyRepository(MyContext);
 				LoginPolicyList entityList = null;
 				LoginPolicy entityPoco = loginPolicyRepository.GetSingleLoginPolicy(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<LoginPolicy> singleEntityList = new List<LoginPolicy>();
 					singleEntityList.Add(entityPoco);
