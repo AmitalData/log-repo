@@ -412,6 +412,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             itemContactPM.CardId = this.entityPM.Id;
             itemContactPM.CompanyName = this.entityPM.EnglishName;
+            itemContactPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
             if (itemContactPM.IsCreatedWithPartner)
             {
@@ -501,6 +502,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     #endregion
 
                     #endregion
+                }
+                else
+                {
+                    Contact newContact = contactRepository.GetSingleContact(itemContactPM.Id, itemContactPM.Tenant);
+
+                    ContactMapping.MapEntity(itemContactPM, newContact, isNewEntity);
+                    contactRepository.Update(newContact);
                 }
 
                 if (isNewEntity)

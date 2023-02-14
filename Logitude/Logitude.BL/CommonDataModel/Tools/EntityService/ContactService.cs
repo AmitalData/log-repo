@@ -81,6 +81,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         Id = IdCounter.GetNumber("Contact", entityPM.Tenant).ToString(),
                         UserType = "R",
                         CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                        UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                     };
 
                     this.entityPM.Id = this.Poco.Id;
@@ -226,6 +227,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 this.isConnectedToCard = true;
                 this.allCardContact = CardContactRepository.GetCardContactsByCardId(entityPM.CardId).ToList();
             }
+
+            entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
         }
         private void ValidateContactExists()
         {
