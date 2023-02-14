@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				UsoCFDIRepository  usoCFDIRepository = new UsoCFDIRepository(MyContext);
 				UsoCFDIList entityList = null;
 				UsoCFDI entityPoco = usoCFDIRepository.GetSingleUsoCFDI(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<UsoCFDI> singleEntityList = new List<UsoCFDI>();
 					singleEntityList.Add(entityPoco);

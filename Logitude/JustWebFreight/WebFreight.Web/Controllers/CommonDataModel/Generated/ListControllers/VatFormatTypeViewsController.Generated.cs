@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				VatFormatTypeRepository  vatFormatTypeRepository = new VatFormatTypeRepository(MyContext);
 				VatFormatTypeList entityList = null;
 				VatFormatType entityPoco = vatFormatTypeRepository.GetSingleVatFormatType(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<VatFormatType> singleEntityList = new List<VatFormatType>();
 					singleEntityList.Add(entityPoco);

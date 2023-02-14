@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				FTPDetailRepository  fTPDetailRepository = new FTPDetailRepository(MyContext);
 				FTPDetailList entityList = null;
 				FTPDetail entityPoco = fTPDetailRepository.GetSingleFTPDetail(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<FTPDetail> singleEntityList = new List<FTPDetail>();
 					singleEntityList.Add(entityPoco);

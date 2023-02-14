@@ -70,8 +70,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				CustomAgentRepository  customAgentRepository = new CustomAgentRepository(MyContext);
 				CustomAgentList entityList = null;
 				CustomAgent entityPoco = customAgentRepository.GetSingleCustomAgent(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<CustomAgent> singleEntityList = new List<CustomAgent>();
 					singleEntityList.Add(entityPoco);

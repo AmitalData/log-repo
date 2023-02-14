@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				CustomerFieldsUpdateSettingRepository  customerFieldsUpdateSettingRepository = new CustomerFieldsUpdateSettingRepository(MyContext);
 				CustomerFieldsUpdateSettingList entityList = null;
 				CustomerFieldsUpdateSetting entityPoco = customerFieldsUpdateSettingRepository.GetSingleCustomerFieldsUpdateSetting(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<CustomerFieldsUpdateSetting> singleEntityList = new List<CustomerFieldsUpdateSetting>();
 					singleEntityList.Add(entityPoco);

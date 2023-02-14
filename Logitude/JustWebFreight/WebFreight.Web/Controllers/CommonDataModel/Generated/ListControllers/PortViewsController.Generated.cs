@@ -67,8 +67,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				PortRepository  portRepository = new PortRepository(MyContext);
 				PortList entityList = null;
 				Port entityPoco = portRepository.GetSinglePort(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Port> singleEntityList = new List<Port>();
 					singleEntityList.Add(entityPoco);

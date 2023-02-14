@@ -66,8 +66,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				AWBDescriptionOfGoodsRepository  aWBDescriptionOfGoodsRepository = new AWBDescriptionOfGoodsRepository(MyContext);
 				AWBDescriptionOfGoodsList entityList = null;
 				AWBDescriptionOfGoods entityPoco = aWBDescriptionOfGoodsRepository.GetSingleAWBDescriptionOfGoods(id );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<AWBDescriptionOfGoods> singleEntityList = new List<AWBDescriptionOfGoods>();
 					singleEntityList.Add(entityPoco);

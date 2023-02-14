@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				CompetitorRepository  competitorRepository = new CompetitorRepository(MyContext);
 				CompetitorList entityList = null;
 				Competitor entityPoco = competitorRepository.GetSingleCompetitor(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Competitor> singleEntityList = new List<Competitor>();
 					singleEntityList.Add(entityPoco);

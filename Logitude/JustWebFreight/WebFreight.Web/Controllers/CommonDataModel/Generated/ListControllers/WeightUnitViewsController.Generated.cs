@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				WeightUnitRepository  weightUnitRepository = new WeightUnitRepository(MyContext);
 				WeightUnitList entityList = null;
 				WeightUnit entityPoco = weightUnitRepository.GetSingleWeightUnit(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<WeightUnit> singleEntityList = new List<WeightUnit>();
 					singleEntityList.Add(entityPoco);

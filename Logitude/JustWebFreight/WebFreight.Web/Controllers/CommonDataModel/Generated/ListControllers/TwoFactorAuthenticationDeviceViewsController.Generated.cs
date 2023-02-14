@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				TwoFactorAuthenticationDeviceRepository  twoFactorAuthenticationDeviceRepository = new TwoFactorAuthenticationDeviceRepository(MyContext);
 				TwoFactorAuthenticationDeviceList entityList = null;
 				TwoFactorAuthenticationDevice entityPoco = twoFactorAuthenticationDeviceRepository.GetSingleTwoFactorAuthenticationDevice(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<TwoFactorAuthenticationDevice> singleEntityList = new List<TwoFactorAuthenticationDevice>();
 					singleEntityList.Add(entityPoco);

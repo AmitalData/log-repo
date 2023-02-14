@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				FilingInboxAttachmentLogRepository  filingInboxAttachmentLogRepository = new FilingInboxAttachmentLogRepository(MyContext);
 				FilingInboxAttachmentLogList entityList = null;
 				FilingInboxAttachmentLog entityPoco = filingInboxAttachmentLogRepository.GetSingleFilingInboxAttachmentLog(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<FilingInboxAttachmentLog> singleEntityList = new List<FilingInboxAttachmentLog>();
 					singleEntityList.Add(entityPoco);

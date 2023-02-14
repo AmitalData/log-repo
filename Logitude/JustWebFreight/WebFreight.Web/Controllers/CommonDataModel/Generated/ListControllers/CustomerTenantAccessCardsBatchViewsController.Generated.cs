@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				CustomerTenantAccessCardsBatchRepository  customerTenantAccessCardsBatchRepository = new CustomerTenantAccessCardsBatchRepository(MyContext);
 				CustomerTenantAccessCardsBatchList entityList = null;
 				CustomerTenantAccessCardsBatch entityPoco = customerTenantAccessCardsBatchRepository.GetSingleCustomerTenantAccessCardsBatch(customerid, customertenantaccessid, batchnumber , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<CustomerTenantAccessCardsBatch> singleEntityList = new List<CustomerTenantAccessCardsBatch>();
 					singleEntityList.Add(entityPoco);

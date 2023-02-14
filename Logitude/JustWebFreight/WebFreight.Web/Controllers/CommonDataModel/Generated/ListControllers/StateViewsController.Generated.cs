@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				StateRepository  stateRepository = new StateRepository(MyContext);
 				StateList entityList = null;
 				State entityPoco = stateRepository.GetSingleState(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<State> singleEntityList = new List<State>();
 					singleEntityList.Add(entityPoco);

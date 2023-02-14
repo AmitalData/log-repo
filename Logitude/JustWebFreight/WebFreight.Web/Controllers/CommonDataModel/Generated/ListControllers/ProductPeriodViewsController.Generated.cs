@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				ProductPeriodRepository  productPeriodRepository = new ProductPeriodRepository(MyContext);
 				ProductPeriodList entityList = null;
 				ProductPeriod entityPoco = productPeriodRepository.GetSingleProductPeriod(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<ProductPeriod> singleEntityList = new List<ProductPeriod>();
 					singleEntityList.Add(entityPoco);

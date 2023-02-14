@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				CustomerDepositionRepository  customerDepositionRepository = new CustomerDepositionRepository(MyContext);
 				CustomerDepositionList entityList = null;
 				CustomerDeposition entityPoco = customerDepositionRepository.GetSingleCustomerDeposition(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<CustomerDeposition> singleEntityList = new List<CustomerDeposition>();
 					singleEntityList.Add(entityPoco);

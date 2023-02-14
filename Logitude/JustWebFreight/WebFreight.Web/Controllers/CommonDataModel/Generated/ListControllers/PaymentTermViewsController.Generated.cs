@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				PaymentTermRepository  paymentTermRepository = new PaymentTermRepository(MyContext);
 				PaymentTermList entityList = null;
 				PaymentTerm entityPoco = paymentTermRepository.GetSinglePaymentTerm(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<PaymentTerm> singleEntityList = new List<PaymentTerm>();
 					singleEntityList.Add(entityPoco);

@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				CommunicationStatusTypeRepository  communicationStatusTypeRepository = new CommunicationStatusTypeRepository(MyContext);
 				CommunicationStatusTypeList entityList = null;
 				CommunicationStatusType entityPoco = communicationStatusTypeRepository.GetSingleCommunicationStatusType(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<CommunicationStatusType> singleEntityList = new List<CommunicationStatusType>();
 					singleEntityList.Add(entityPoco);

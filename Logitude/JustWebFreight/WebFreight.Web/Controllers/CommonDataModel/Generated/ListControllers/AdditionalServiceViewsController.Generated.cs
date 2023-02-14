@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				AdditionalServiceRepository  additionalServiceRepository = new AdditionalServiceRepository(MyContext);
 				AdditionalServiceList entityList = null;
 				AdditionalService entityPoco = additionalServiceRepository.GetSingleAdditionalService(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<AdditionalService> singleEntityList = new List<AdditionalService>();
 					singleEntityList.Add(entityPoco);
