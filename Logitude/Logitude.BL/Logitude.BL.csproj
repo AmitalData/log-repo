@@ -746,6 +746,7 @@
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentBankTranfer.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentCheque.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentChequeStatusReplica.Generated.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\ARPaymentChqSts.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentInvoice.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentStatus.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\QueryService\APInvoiceLineQueryService.Generated.cs" />
