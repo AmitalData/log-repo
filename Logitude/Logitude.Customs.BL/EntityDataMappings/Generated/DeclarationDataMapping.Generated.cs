@@ -173,8 +173,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsExportClosed, 
 	         ExportClosedErrorXML, 
 	         ExportLoadingPortCode, 
-	         CasualImporterCountry, 
-	         IsAramex,
+	         CasualImporterCountry,
 	      }
 
 
@@ -417,7 +416,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsExportDeclarationAmendments, 
 	         ExportLoadingPortCode, 
 	         PhysicalCheckName, 
-	         CasualImporterCountry,
+	         CasualImporterCountry, 
+	         IsAramex,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

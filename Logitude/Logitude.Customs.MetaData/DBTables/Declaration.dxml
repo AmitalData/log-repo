@@ -1043,12 +1043,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="IsAramex"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"

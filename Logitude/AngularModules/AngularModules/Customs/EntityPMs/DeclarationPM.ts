@@ -1429,6 +1429,11 @@ export class DeclarationPM {
     public set CasualImporterCountry(newValue: string) { if (this.casualImporterCountry != newValue) { this.casualImporterCountry = newValue; this.MarkAsDirty("CasualImporterCountry"); } }
        
 	 
+    private isAramex: boolean;
+    public get IsAramex() { return this.isAramex; }
+    public set IsAramex(newValue: boolean) { if (this.isAramex != newValue) { this.isAramex = newValue; this.MarkAsDirty("IsAramex"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		
