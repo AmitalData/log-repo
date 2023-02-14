@@ -297,7 +297,7 @@ export class DeclarationValidator {
                         else {
                             //Check if ImporterName & ImporterAddrress has value
                             if (AppTool.IsNullOrEmpty(importerName) && AppTool.IsNullOrEmpty(importerAddress)) {
-                                errorMessage = "יש להזין נתוני יבוםן " + importerField + " לפני שליחה";
+                                errorMessage = "יש להזין נתוני יבואן " + importerField + " לפני שליחה";
                             }
                         }
                     }
@@ -308,7 +308,7 @@ export class DeclarationValidator {
 
                         //Check That Both PassportCountry & PassportNumber has values
                         if (AppTool.IsNullOrEmpty(importerPassportNumber) || AppTool.IsNullOrEmpty(importerPassCountryCode)) {
-                            errorMessage = "יש להזין נתוני יבוםן " + importerField + " לפני שליחה";
+                            errorMessage = "יש להזין נתוני יבואן " + importerField + " לפני שליחה";
                         }
                         break;
                     }
@@ -317,11 +317,11 @@ export class DeclarationValidator {
                         if (AppTool.IsNullOrEmpty(importerId)) {
                             if (!AppTool.IsNullOrEmpty(importerCode)) {
                                 //errorMessage = "Customs.General.O.ImporterCodeNoId";
-                                errorMessage = "יש לשלוף לקוח מהמכס עבור יבוםן " + importerField + " לפני שליחה";
+                                errorMessage = "יש לשלוף לקוח מהמכס עבור יבואן " + importerField + " לפני שליחה";
                             }
                             else {
                                 //errorMessage = "Customs.General.O.NoImporterId";
-                                errorMessage = "מספר יבוםן " + importerField + " הום שדה חובה";
+                                errorMessage = "מספר יבואן " + importerField + " הום שדה חובה";
                             }
                         }
                         break;
