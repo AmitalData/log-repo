@@ -105,10 +105,14 @@ export  class ServiceHelper{
         }
         else if(BrandingData.MobileBackgroundBytes){
             CargoTrackingBrandingData.BackgroundURL = "url("+ServiceHelper.GetImageFromBytes(BrandingData.MobileBackgroundBytes)+")";
-            this.StoreImageInStorage("BackgroundImg",BrandingData.MobileBackgroundId,BrandingData.MobileBackgroundBytes);
+            this.StoreImageInStorage("ImageBackgroundImg",BrandingData.MobileBackgroundId,BrandingData.MobileBackgroundBytes);
         }
         else{
+            if(backGndId)
             var StorageBackground:CargoTrackingImage = ServiceHelper.GetImageFromStorage("BackgroundImg");
+            else 
+            var StorageBackground:CargoTrackingImage = ServiceHelper.GetImageFromStorage("ImageBackgroundImg");
+
                 if(StorageBackground && StorageBackground.Id!=null && StorageBackground.Id == BrandingData.BackgroundId){
                     CargoTrackingBrandingData.BackgroundURL ="url("+ServiceHelper.GetImageFromBytes(StorageBackground.Data)+")";
                 }
