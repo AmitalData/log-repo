@@ -467,21 +467,21 @@ export class RoutingItem {
         switch (this.Code) {
             case "PICK": {
                 name = "Empty Pickup";
-                location = this.Container.EmptyPickupLocationName;
+                location = this.Container.EmptyPickupLocationName ?? !AppTool.IsNullOrEmpty(this.Container.ShipmentPickupFrom) ? this.Container.ShipmentPickupFrom + " , " + this.Container.ShipmentPickupTo : null;
                 date = this.GetDate_EmptyPickup();
                 break;
             }
 
             case "PREC": {
                 name = "Pre Carriage";
-                location = this.Container.PreCarriageLocationName;
+                location = this.Container.PreCarriageLocationName ?? this.Container.ShipmentPreCarriageFromName;
                 date = this.GetDate_PreCarriage();
                 break;
             }
 
             case "POL": {
                 name = "POL";
-                location = this.Container.POLLocationName;
+                location = this.Container.POLLocationName ?? this.Container.ShipmentMainCarriageFromName;
                 date = this.GetDate_POL();
                 break;
             }
@@ -495,14 +495,14 @@ export class RoutingItem {
 
             case "POD": {
                 name = "POD";
-                location = this.Container.PODLocationName;
+                location = this.Container.PODLocationName ?? this.Container.ShipmentPreCarriageToName;
                 date = this.GetDate_POD();
                 break;
             }
 
             case "ONC": {
                 name = "On Carriage";
-                location = this.Container.OnCarriageLocationName;
+                location = this.Container.OnCarriageLocationName ?? this.Container.ShipmentOnCarriageToName;
                 date = this.GetDate_OnCarriage();
                 break;
             }
@@ -516,7 +516,7 @@ export class RoutingItem {
 
             case "EMRT": {
                 name = "Empty Return";
-                location = this.Container.EmptyReturnLocationName;
+                location = this.Container.EmptyReturnLocationName ?? !AppTool.IsNullOrEmpty(this.Container.EmptyContainerReturnFrom) ? this.Container.EmptyContainerReturnFrom + " , " + this.Container.EmptyContainerReturnTo : null;
                 date = this.GetDate_EmptyReturn();
                 break;
             }
@@ -707,14 +707,14 @@ export class RoutingItem {
     }
 
     private GetTrnasshipmentLocation(): string {
-        if (!AppTool.IsNullOrEmpty(this.Container.Transshipment3LocationName))
-            return this.Container.Transshipment3LocationName;        
+        if (!AppTool.IsNullOrEmpty(this.Container.Transshipment3LocationName) || !AppTool.IsNullOrEmpty(this.Container.ShipmentTransshipment3FromName))
+            return this.Container.Transshipment3LocationName ?? this.Container.ShipmentTransshipment3FromName;
 
-        else if (!AppTool.IsNullOrEmpty(this.Container.Transshipment2LocationName))
-            return this.Container.Transshipment2LocationName;        
+        else if (!AppTool.IsNullOrEmpty(this.Container.Transshipment2LocationName) || !AppTool.IsNullOrEmpty(this.Container.ShipmentTransshipment2FromName))
+            return this.Container.Transshipment2LocationName ?? this.Container.ShipmentTransshipment2FromName;
 
-        else if (!AppTool.IsNullOrEmpty(this.Container.Transshipment1LocationName)) 
-            return this.Container.Transshipment1LocationName;        
+        else if (!AppTool.IsNullOrEmpty(this.Container.Transshipment1LocationName) || !AppTool.IsNullOrEmpty(this.Container.ShipmentTransshipment1FromName))
+            return this.Container.Transshipment1LocationName ?? this.Container.ShipmentTransshipment1FromName;
 
         else
             return null;
