@@ -652,7 +652,21 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     {
                          UpdateDeclarationPending("905");
                     }
-                    if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.CrateNumber != _LogitudeCommDecFile.CrateNumber)
+
+                    if(_LogitudeCommDecFile.Pendings != null)
+                    {
+
+
+                            foreach (var pending in _LogitudeCommDecFile.Pendings.Pending)
+                            {
+
+                                UpdateDeclarationPending(pending.PendingCode);
+                                    
+                                
+                            }
+                        }
+
+                        if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.CrateNumber != _LogitudeCommDecFile.CrateNumber)
                     {
                         currentDeclarationCourierStatusPM.CrateNumber = _LogitudeCommDecFile.CrateNumber;
                         if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
