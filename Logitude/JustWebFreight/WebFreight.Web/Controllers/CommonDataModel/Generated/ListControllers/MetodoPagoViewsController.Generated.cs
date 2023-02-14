@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				MetodoPagoRepository  metodoPagoRepository = new MetodoPagoRepository(MyContext);
 				MetodoPagoList entityList = null;
 				MetodoPago entityPoco = metodoPagoRepository.GetSingleMetodoPago(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<MetodoPago> singleEntityList = new List<MetodoPago>();
 					singleEntityList.Add(entityPoco);

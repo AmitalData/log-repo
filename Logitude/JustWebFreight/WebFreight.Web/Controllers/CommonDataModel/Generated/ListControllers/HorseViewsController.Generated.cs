@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				HorseRepository  horseRepository = new HorseRepository(MyContext);
 				HorseList entityList = null;
 				Horse entityPoco = horseRepository.GetSingleHorse(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Horse> singleEntityList = new List<Horse>();
 					singleEntityList.Add(entityPoco);

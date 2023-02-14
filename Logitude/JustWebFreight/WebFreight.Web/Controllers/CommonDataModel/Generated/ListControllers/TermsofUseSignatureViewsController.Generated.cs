@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				TermsofUseSignatureRepository  termsofUseSignatureRepository = new TermsofUseSignatureRepository(MyContext);
 				TermsofUseSignatureList entityList = null;
 				TermsofUseSignature entityPoco = termsofUseSignatureRepository.GetSingleTermsofUseSignature(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<TermsofUseSignature> singleEntityList = new List<TermsofUseSignature>();
 					singleEntityList.Add(entityPoco);

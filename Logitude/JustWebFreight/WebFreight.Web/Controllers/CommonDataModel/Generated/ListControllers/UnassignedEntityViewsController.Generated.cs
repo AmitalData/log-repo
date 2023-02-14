@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				UnassignedEntityRepository  unassignedEntityRepository = new UnassignedEntityRepository(MyContext);
 				UnassignedEntityList entityList = null;
 				UnassignedEntity entityPoco = unassignedEntityRepository.GetSingleUnassignedEntity(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<UnassignedEntity> singleEntityList = new List<UnassignedEntity>();
 					singleEntityList.Add(entityPoco);

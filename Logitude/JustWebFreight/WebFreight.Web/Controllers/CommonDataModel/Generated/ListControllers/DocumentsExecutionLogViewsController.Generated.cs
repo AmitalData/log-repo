@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				DocumentsExecutionLogRepository  documentsExecutionLogRepository = new DocumentsExecutionLogRepository(MyContext);
 				DocumentsExecutionLogList entityList = null;
 				DocumentsExecutionLog entityPoco = documentsExecutionLogRepository.GetSingleDocumentsExecutionLog(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<DocumentsExecutionLog> singleEntityList = new List<DocumentsExecutionLog>();
 					singleEntityList.Add(entityPoco);

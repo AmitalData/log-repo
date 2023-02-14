@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				ComputingPartnerRepository  computingPartnerRepository = new ComputingPartnerRepository(MyContext);
 				ComputingPartnerList entityList = null;
 				ComputingPartner entityPoco = computingPartnerRepository.GetSingleComputingPartner(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<ComputingPartner> singleEntityList = new List<ComputingPartner>();
 					singleEntityList.Add(entityPoco);

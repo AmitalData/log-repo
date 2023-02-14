@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				HorseGenderRepository  horseGenderRepository = new HorseGenderRepository(MyContext);
 				HorseGenderList entityList = null;
 				HorseGender entityPoco = horseGenderRepository.GetSingleHorseGender(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<HorseGender> singleEntityList = new List<HorseGender>();
 					singleEntityList.Add(entityPoco);

@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				CommodityRepository  commodityRepository = new CommodityRepository(MyContext);
 				CommodityList entityList = null;
 				Commodity entityPoco = commodityRepository.GetSingleCommodity(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Commodity> singleEntityList = new List<Commodity>();
 					singleEntityList.Add(entityPoco);

@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				TemperatureUnitRepository  temperatureUnitRepository = new TemperatureUnitRepository(MyContext);
 				TemperatureUnitList entityList = null;
 				TemperatureUnit entityPoco = temperatureUnitRepository.GetSingleTemperatureUnit(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<TemperatureUnit> singleEntityList = new List<TemperatureUnit>();
 					singleEntityList.Add(entityPoco);

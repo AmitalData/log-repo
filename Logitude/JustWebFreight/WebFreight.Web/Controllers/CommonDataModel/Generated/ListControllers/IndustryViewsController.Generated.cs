@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				IndustryRepository  industryRepository = new IndustryRepository(MyContext);
 				IndustryList entityList = null;
 				Industry entityPoco = industryRepository.GetSingleIndustry(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Industry> singleEntityList = new List<Industry>();
 					singleEntityList.Add(entityPoco);

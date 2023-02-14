@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				ComputingPartnerTranslationRepository  computingPartnerTranslationRepository = new ComputingPartnerTranslationRepository(MyContext);
 				ComputingPartnerTranslationList entityList = null;
 				ComputingPartnerTranslation entityPoco = computingPartnerTranslationRepository.GetSingleComputingPartnerTranslation(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<ComputingPartnerTranslation> singleEntityList = new List<ComputingPartnerTranslation>();
 					singleEntityList.Add(entityPoco);

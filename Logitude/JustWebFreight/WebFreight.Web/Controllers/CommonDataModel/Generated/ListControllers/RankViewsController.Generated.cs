@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				RankRepository  rankRepository = new RankRepository(MyContext);
 				RankList entityList = null;
 				Rank entityPoco = rankRepository.GetSingleRank(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Rank> singleEntityList = new List<Rank>();
 					singleEntityList.Add(entityPoco);

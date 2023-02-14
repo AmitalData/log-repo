@@ -67,8 +67,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				AirlineRepository  airlineRepository = new AirlineRepository(MyContext);
 				AirlineList entityList = null;
 				Airline entityPoco = airlineRepository.GetSingleAirline(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Airline> singleEntityList = new List<Airline>();
 					singleEntityList.Add(entityPoco);

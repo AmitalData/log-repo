@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				HybridPartnerRepository  hybridPartnerRepository = new HybridPartnerRepository(MyContext);
 				HybridPartnerList entityList = null;
 				HybridPartner entityPoco = hybridPartnerRepository.GetSingleHybridPartner(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<HybridPartner> singleEntityList = new List<HybridPartner>();
 					singleEntityList.Add(entityPoco);

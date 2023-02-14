@@ -67,8 +67,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				CustomsShipperRepository  customsShipperRepository = new CustomsShipperRepository(MyContext);
 				CustomsShipperList entityList = null;
 				CustomsShipper entityPoco = customsShipperRepository.GetSingleCustomsShipper(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<CustomsShipper> singleEntityList = new List<CustomsShipper>();
 					singleEntityList.Add(entityPoco);

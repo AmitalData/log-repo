@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				DimensionsUnitRepository  dimensionsUnitRepository = new DimensionsUnitRepository(MyContext);
 				DimensionsUnitList entityList = null;
 				DimensionsUnit entityPoco = dimensionsUnitRepository.GetSingleDimensionsUnit(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<DimensionsUnit> singleEntityList = new List<DimensionsUnit>();
 					singleEntityList.Add(entityPoco);

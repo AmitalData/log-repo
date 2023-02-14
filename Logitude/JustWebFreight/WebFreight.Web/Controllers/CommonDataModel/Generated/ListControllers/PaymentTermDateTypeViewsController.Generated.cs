@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				PaymentTermDateTypeRepository  paymentTermDateTypeRepository = new PaymentTermDateTypeRepository(MyContext);
 				PaymentTermDateTypeList entityList = null;
 				PaymentTermDateType entityPoco = paymentTermDateTypeRepository.GetSinglePaymentTermDateType(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<PaymentTermDateType> singleEntityList = new List<PaymentTermDateType>();
 					singleEntityList.Add(entityPoco);

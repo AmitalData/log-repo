@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				PortTimeZoneRepository  portTimeZoneRepository = new PortTimeZoneRepository(MyContext);
 				PortTimeZoneList entityList = null;
 				PortTimeZone entityPoco = portTimeZoneRepository.GetSinglePortTimeZone(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<PortTimeZone> singleEntityList = new List<PortTimeZone>();
 					singleEntityList.Add(entityPoco);

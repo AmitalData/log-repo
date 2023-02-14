@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				DueTypeRepository  dueTypeRepository = new DueTypeRepository(MyContext);
 				DueTypeList entityList = null;
 				DueType entityPoco = dueTypeRepository.GetSingleDueType(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<DueType> singleEntityList = new List<DueType>();
 					singleEntityList.Add(entityPoco);
