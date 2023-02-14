@@ -31,7 +31,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         Name, 
 	         Content, 
 	         DraftContent, 
-	         ProfileId,
+	         ProfileId, 
+	         IsList,
 	      }
 
 
@@ -48,7 +49,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         Content, 
 	         DraftContent, 
 	         ProfileId, 
-	         ProfileCode,
+	         ProfileCode, 
+	         IsList,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -100,6 +102,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ProfileId))
             {
 				entityPOCO.ProfileId = entityPM.ProfileId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsList))
+            {
+				entityPOCO.IsList = entityPM.IsList;
 			}
 			}
 
@@ -156,6 +163,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 					entityPM.ProfileId = entityPOCO.ProfileId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsList))
+            {
+					entityPM.IsList = entityPOCO.IsList;
+            }
+
 		}
 
 		public void PMToOldPM(DigitalPortalScreenPM entityPM, DigitalPortalScreenPM oldEntityPM)
@@ -205,6 +217,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ProfileId))
             {
                 oldEntityPM.ProfileId = entityPM.ProfileId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsList))
+            {
+                oldEntityPM.IsList = entityPM.IsList;
             }
 			
 		}

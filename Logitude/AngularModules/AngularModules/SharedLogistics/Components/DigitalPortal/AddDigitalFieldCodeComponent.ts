@@ -18,6 +18,7 @@ export class AddDigitalFieldCodeComponent {
     IsAddingComponent = false;
     ProfileCode: string;
     ScreenCode: string;
+    IsList: boolean;
 
     constructor() {
        
@@ -28,13 +29,13 @@ export class AddDigitalFieldCodeComponent {
         this.digitalTextService = new DigitalTextService();
         this.ObjectTableId = args.ObjectTableId;
         this.ProfileCode = args.ProfileCode;
-        this.ScreenCode = args.ScreenCode;
+        this.IsList = args.IsList;
         this.BuildItemsSource();
     }
 
     BuildItemsSource() {
         this.LabelsItemsSource = new ObservableCollection([]);
-        this.digitalTextService.GetFeildPermissionByFilters(null, this.ObjectTableId, this.ProfileCode, this.ScreenCode).subscribe((myResult) => {
+        this.digitalTextService.GetFeildPermissionByFilters(null, this.ObjectTableId, this.ProfileCode, this.IsList).subscribe((myResult) => {
             if (!myResult.HasError) {
                 var data = myResult.Result;
 

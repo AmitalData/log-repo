@@ -14,5 +14,6 @@ namespace Simplog.Server.Infrastructure.DataContracts.Models
         public bool IsDraft { get; set; }
         public string ProfileId { get; set; }
         public string ProfileCode { get; set; }
+        public bool IsList { get; set; }
     }
 }
