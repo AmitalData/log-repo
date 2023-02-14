@@ -225,7 +225,7 @@ namespace CommunicationWorkerRole
                 LogitudeSettings.SMSServicePhoneNumber = setting.SMSServicePhoneNumber;
                 LogitudeSettings.EmailSendingQuota = setting.EmailSendingQuota;
                 LogitudeSettings.CPUIntensiveWebServicesURL = setting.CPUIntensiveWebServicesURL;
-
+                LogitudeSettings.System2RedirectFraction = setting.System2RedirectFraction;
                 //LogitudeSettings.ABMProductId = setting.ABMProductId;
 
             }
@@ -807,7 +807,7 @@ namespace CommunicationWorkerRole
                 LogitudeSettings.ABMProductId = setting.ABMProductId;
                 LogitudeSettings.AzureFolderName = setting.AzureFolderName;
                 LogitudeSettings.CPUIntensiveWebServicesURL = setting.CPUIntensiveWebServicesURL;
-
+                LogitudeSettings.System2RedirectFraction = setting.System2RedirectFraction;
 
 
 

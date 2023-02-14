@@ -2518,7 +2518,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     
                     FieldChange.Add(entityMasterData.MainCarriageVesselName, entityPM.MainCarriageVesselName, nameof(entityPM.MainCarriageVesselName), fieldChanges);
                     entityMasterData.MainCarriageVesselName = entityPM.MainCarriageVesselName;
-                    
+
                     FieldChange.Add(entityMasterData.MainCarriageIsFromStack, entityPM.MainCarriageIsFromStack, nameof(entityPM.MainCarriageIsFromStack), fieldChanges);
                     entityMasterData.MainCarriageIsFromStack = entityPM.MainCarriageIsFromStack;
                     

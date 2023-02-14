@@ -342,6 +342,18 @@ namespace WebFreight.Web.Helpers
 
                 if (stop == false)
                 {
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.WorkFlow.DomainServices.WorkFlowVersionDomainService", query);
+                    if (MethodsInfo != null)
+                    {
+                        getListMethodInfo = MethodsInfo.ListMethodInfo;
+                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                        context = MethodsInfo.context;
+                        stop = true;
+                    }
+                }
+
+                if (stop == false)
+                {
                     MethodsInfo = getMethodsInfo("WebFreight.Web.InfrastructureModel.DomainServices.InfrastructureDomainService", query);
                     if (MethodsInfo != null)
                     {
@@ -1155,7 +1167,7 @@ class ReflectionProperties
 
 }
 
-class ExcelTotals
+public class ExcelTotals
 {
     public ExcelTotals(string fieldCode, double total, int indexOrder)
     {

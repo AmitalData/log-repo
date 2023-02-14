@@ -58,6 +58,7 @@ export class CreateWorkflowVersionComponent extends BaseComponent {
         this.EntityPM.FlowJson = this.FlowJson;
         this.EntityPM.Entity = this.Entity;
         this.EntityPM.Trigger = this.Trigger;
+        this.EntityPM.VersionNumber = 0;
     }
 
 

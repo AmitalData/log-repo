@@ -14,6 +14,7 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Infrastructure.Data.Repsitories;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -152,6 +153,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     myResult.IsAgentShared = sharedLogisticsSetting.IsAgentShared;
                     myResult.IsShipperShared = sharedLogisticsSetting.IsShipperShared;
                     myResult.IsConsigneeShared = sharedLogisticsSetting.IsConsigneeShared;
+                }
+
+                if (FeatureToggleHelper.HasFeatureToggle("RDT", tenant))
+                {
+                    myResult.IsDigitalPortalRequiredDocumentsEnabled = true;
                 }
 
                 myResult.IsReportsMenuEnabled = true;

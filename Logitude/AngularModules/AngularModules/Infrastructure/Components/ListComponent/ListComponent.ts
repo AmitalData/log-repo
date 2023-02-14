@@ -66,6 +66,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     @Output() ColumnsReady = new EventEmitter();
     @Output() QueryListSourceChanged = new EventEmitter();
     @Output() FiltersBarLoaded: EventEmitter<any> = new EventEmitter<any>();
+    @Output() RowClicked = new EventEmitter();
     RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);
     public SeachBoxIsDisabled: boolean = false;
     //@Output() ShowTipEvent = new EventEmitter();
@@ -694,6 +695,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.ReloadAllListEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "ReloadAllList") {
                     this.RefreshBtnClick();
+                }else if(s == "ReloadAllList" + this.ObjectTableName){
+                    this.RefreshBtnClick();
                 }
             });
         }
@@ -1065,9 +1068,16 @@ export class ListComponent implements OnInit, AfterViewInit {
         let querySection: string = !AppTool.IsNullOrEmpty(this.MenuTableQuerySection) ? this.MenuTableQuerySection : this.ObjectTableName;
         return allQueries.filter(d => d.QuerySection == querySection || d.QuerySection == (querySection + "FollowUp"));
     }
-
     public UserId: string = SessionInfo.LoggedUserId;
     public Tenant: number = SessionInfo.LoggedUserTenant;
+    ApplyQueriesAdvancedFilter(allQueries:any) {
+        if (this.ObjectTableName != "Shipment")
+            return this.Queries;
+        if (SessionLocator.TenantPM.ApproveUploadedDocuments == false) {
+            return allQueries.filter(x => (x.Code != "Pending Approval Documents" && x.UserId == null && x.SystemLevel == true));
+        }
+        return this.Queries;
+    }
     GetQueries() {
 
         var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
@@ -1079,6 +1089,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.Queries = allQueries.filter(x => (FeatureLocator.IsFeatureGrantedByUniqeCode(x.FeatureUniqeCode)));
 
         }
+        this.Queries = this.ApplyQueriesAdvancedFilter(allQueries);
+
         this.UserQueries = allQueries.filter(x => x.UserId != null && x.Tenant == SessionInfo.LoggedUserTenant);
 
         if (this.listArgs.Perspective != null && this.listArgs.IgnoreSelectedPerspective == false) {
@@ -1730,6 +1742,13 @@ export class ListComponent implements OnInit, AfterViewInit {
         //if (filters == null) {
         //    filters = new ApiQueryFilters();
         //}
+        
+        if (this.listArgs.DefaultFilterItems && this.listArgs.DefaultFilterItems.length > 0) {
+            this.listArgs.DefaultFilterItems.forEach((filter) => {
+                MyFilters.AdditionalFilters.push(filter)
+            });
+        }
+
         filters.AdditionalFilters.forEach((filter, key) => {
             if (filter.FieldName == "CompetitorFields")
                 filter.Operator = "Contains";
@@ -2357,7 +2376,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                             .then(cmpRef => {
                                 cmpRef.instance.ComponentRef = cmpRef;
-                                cmpRef.instance.Run({ EntityId: $event.rowData.Id, EntityPM: entitypm, ObjectTableName: 'WorkFlow', BackButtonLabel: "WorkFlows" });
+                                cmpRef.instance.Run({ EntityId: $event.rowData.Id, EntityPM: entitypm, ObjectTableName: 'WorkFlow', BackButtonLabel: "Workflows" });
 
                                 cmpRef.instance.BackCompleted.subscribe(() => {
                                     this.isEditControlOpened = false;
@@ -2365,6 +2384,10 @@ export class ListComponent implements OnInit, AfterViewInit {
                                     //this.RefreshBtnClick();
                                 });
                             });
+                    }
+                    else if (myObjectTableName == "WorkFlowVersion" || myObjectTableName == "WorkFlowInstance") {
+                        this.isEditControlOpened = false;
+                        this.RowClicked.emit($event);
                     }
                     else if (this.ObjectTableName == "Customs.DeclarationReferantData") {
                         var customFile = "";
@@ -2857,6 +2880,16 @@ export class ListComponent implements OnInit, AfterViewInit {
                             isVisible = false;
                             break;
                         }
+                    case "WorkFlowVersion":
+                        {
+                            isVisible = false;
+                            break;
+                        }
+                    case "WorkFlowInstance":
+                        {
+                            isVisible = false;
+                            break;
+                        }
                 }
             }
         }
@@ -2964,7 +2997,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         var messageWindow = new MessageWindow();
         messageWindow.Width = 450;
         messageWindow.Height = 190;
-        messageWindow.Show("You can define the \"New " + this.ObjectTableDisplayName + "\" screen by selecting a one from the Views tab of the " + this.ObjectTableDisplayName+" object in the Customization");
+        messageWindow.Show("You can define the \"New " + this.ObjectTableDisplayName + "\" screen by selecting a one from the Views tab of the " + this.ObjectTableDisplayName + " object in the Customization");
     }
     RunNewExportDeclaration() {
         var logWindow = new LogitudeWindow();
@@ -3791,6 +3824,12 @@ export class ListComponent implements OnInit, AfterViewInit {
 
         var MyFilters = new ApiQueryFilters();
 
+        if (this.listArgs.DefaultFilterItems && this.listArgs.DefaultFilterItems.length > 0) {
+            this.listArgs.DefaultFilterItems.forEach((filter) => {
+                MyFilters.AdditionalFilters.push(filter)
+            });
+        }
+
         this.currentFilters.AdditionalFilters.forEach((filter, key) => {
             if (filter.FieldName == "CompetitorFields")
                 filter.Operator = "Contains";
@@ -3846,8 +3885,6 @@ export class ListComponent implements OnInit, AfterViewInit {
             });
 
         });
-
-
     }
 
     public SortServerProp: any;

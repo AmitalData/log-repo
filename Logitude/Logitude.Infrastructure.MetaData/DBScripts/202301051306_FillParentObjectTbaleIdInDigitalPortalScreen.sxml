@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="6">
+  <Sql Version="7">
     <![CDATA[
     declare @shipmentObjectId as varchar(15)
     set @shipmentObjectId = (select Id from ObjectTables where [Name] = 'Shipment' and Tenant = 0 )
@@ -12,6 +12,7 @@
     update  DigitalFieldSecurities
     set ParentObjectTableId = @shipmentObjectId
     where ObjectTableId in (@truckerObjectTableId,@shipmentPackageObjectTableId, @shipmentPickUpDeliveryObjectTableId)
+	
     ]]>
   </Sql>
 </Script>

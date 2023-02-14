@@ -2947,6 +2947,7 @@
     <Compile Include="Helpers\BatchPrint\BatchPrintService.cs" />
     <Compile Include="Helpers\BatchPrint\PrintingResult.cs" />
     <Compile Include="Helpers\BatchPrint\ShipmentBatchPrinter.cs" />
+    <Compile Include="Helpers\BIReport\BIReportTotalsService.cs" />
     <Compile Include="Helpers\BrandingHelper.cs" />
     <Compile Include="Helpers\BIReport\BIReportXMLDataService.cs" />
     <Compile Include="Helpers\CallBack\CallBackService.cs" />
@@ -3128,6 +3129,10 @@
     <Compile Include="Helpers\WorkerRole\PODImage\IPODImageConverter.cs" />
     <Compile Include="Helpers\WorkerRole\PODImage\PODImagePdfConverter.cs" />
     <Compile Include="Helpers\WorkerRole\ReportExecutionService.cs" />
+    <Compile Include="Helpers\Workflow\ErrorTypes.cs" />
+    <Compile Include="Helpers\Workflow\ShortErrorMessages.cs" />
+    <Compile Include="Helpers\Workflow\SqlExceptionNumbers.cs" />
+    <Compile Include="Helpers\Workflow\WorkflowApiExceptionBuilder.cs" />
     <Compile Include="InfrastructureModel\DomainServices\InfrastructureDomainService.cs" />
     <Compile Include="InfrastructureModel\DomainServices\WebFreightDomainService.EntityStatusType.cs" />
     <Compile Include="InfrastructureModel\DomainServices\WebFreightDomainService.QuoteChargesGruop.cs" />
@@ -7704,6 +7709,7 @@
       <DependentUpon>XapFilesStorageService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="WorkflowModel\DomainServices\WorkFlowVersionDomainService.cs" />
     <Compile Include="WorkflowModel\DomainServices\WorkFlowInstanceDomainService.cs" />
     <Compile Include="WorkflowModel\DomainServices\WorkFlowDomainService.cs" />
     <Compile Include="XapFileDownloadHandler.ashx.cs">

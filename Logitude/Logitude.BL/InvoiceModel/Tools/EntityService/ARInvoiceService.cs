@@ -4912,7 +4912,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             foreach (ARInvoicePaymentPM item in invoicePaymentsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert || d.ChangeSetOp == ChangeSetOperation.Delete))
             {
-                ARPayment aRPayment = paymentRepository.GetSingleARPayment(item.ARPaymentId, tenant);
+                ARPayment aRPayment = paymentRepository.GetSingleARPayment(item.ARPaymentId);
                 if (aRPayment == null)
                 {
                     return;

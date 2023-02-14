@@ -1,7 +1,11 @@
 
 import { WorkFlowMenuButtonsHandler } from './Components/MenuButtons/WorkFlowMenuButtonsHandler';
+import { WorkFlowInstanceListService } from './Services/StandardLists/WorkFlowInstanceListService';
+import { WorkFlowInstanceStatusListService } from './Services/StandardLists/WorkFlowInstanceStatusListService';
 import { WorkFlowListService } from './Services/StandardLists/WorkFlowListService';
 import { WorkFlowStatusListService } from './Services/StandardLists/WorkFlowStatusListService';
+import { WorkFlowVersionListService } from './Services/StandardLists/WorkFlowVersionListService';
+import { WorkFlowVersionStatusListService } from './Services/StandardLists/WorkFlowVersionStatusListService';
 import { WorkFlowPMService } from './Services/StandardPMs/WorkFlowPMService';
 
 export class ModuleProviders {
@@ -12,9 +16,13 @@ export class ModuleProviders {
         switch (name) {
             case "WorkFlowListService": { service = new WorkFlowListService(); break; }
             case "WorkFlowStatusListService": { service = new WorkFlowStatusListService(); break; }
+            case "WorkFlowVersionStatusListService": { service = new WorkFlowVersionStatusListService(); break; }
+            case "WorkFlowInstanceStatusListService": { service = new WorkFlowInstanceStatusListService(); break; }
 
             case "WorkFlowPMService": { service = new WorkFlowPMService(); break; }
             case "WorkFlowMenuButtonsHandler": { service = new WorkFlowMenuButtonsHandler(); break; }
+            case "WorkFlowVersionListService": { service = new WorkFlowVersionListService(); break; }
+            case "WorkFlowInstanceListService": { service = new WorkFlowInstanceListService(); break; }
             
         }
 

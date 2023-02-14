@@ -17,6 +17,7 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System.Data.Entity;
 using Simplog.Data.ShipmentsModel;
+using Logitude.Server.Tools.Helpers;
 
 namespace CommunicationWorkerRole
 {
@@ -56,6 +57,9 @@ namespace CommunicationWorkerRole
                 {
                     try
                     {
+                        shipmentPM = null;
+                        documentsFilingPM = null;
+                        shipmentDocsField = null;
                         ReadQueueMessage();
                     }
                     catch (Exception exception)
@@ -145,8 +149,8 @@ namespace CommunicationWorkerRole
 
         private void MarkShipmentAsApprovalRequired()
         {
-            shipmentPM = GetShipment(documentsFilingPM.EntityId , documentsFilingPM.Tenant);
-            if (shipmentPM == null || shipmentPM.IsDocumentsNeedApprove) return;   
+            shipmentPM = GetShipment(documentsFilingPM.EntityId, documentsFilingPM.Tenant);
+            if (shipmentPM == null || shipmentPM.IsDocumentsNeedApprove) return;
             shipmentPM.IsDocumentsNeedApprove = true;
             shipmentPM.IsDocsKPIsUpdatedFromWR = true;
 
@@ -230,7 +234,7 @@ namespace CommunicationWorkerRole
             if (shipmentPM == null) return;
 
             shipmentDocsField = this.GetEntity(shipmentId);
-            if(shipmentDocsField != null)
+            if (shipmentDocsField != null)
             {
                 this.HandleShipmentFields(shipmentDocsField, isReceived, receivedDate);
             }
@@ -247,8 +251,8 @@ namespace CommunicationWorkerRole
             ContactRepository contactRepository = new ContactRepository(tenant);
             Contact receivedBy = contactRepository.GetSingleContact(documentsFilingPM.ReceivedByUserId, tenant);
             ShipmentService shipmentService = new ShipmentService(shipmentContext, shipmentPM, receivedBy.Email);
-           
-            if (shipmentDocsField!=null)
+
+            if (shipmentDocsField != null)
             {
                 shipmentService.ShipmentDocsFieldFromWorkerRole = shipmentDocsField;
             }
@@ -260,14 +264,23 @@ namespace CommunicationWorkerRole
         private ShipmentPM GetShipment(string shipmentId, int tenant)
         {
             if (shipmentPM != null) return shipmentPM;
-            shipmentPM = new ShipmentQuery(shipmentRepository).GetSinglePM(shipmentId, tenant);
+            var thread = new Thread(() =>
+            {
+                ContactRepository contactRepository = new ContactRepository(tenant);
+                Contact receivedBy = contactRepository.GetSingleContact(documentsFilingPM.ReceivedByUserId, tenant);
+                AuthenticationUtil.AuthenticatedUserEmail = receivedBy.Email;
+                shipmentPM = new ShipmentQuery(shipmentRepository).GetSinglePM(shipmentId, tenant);
+            });
+
+            thread.Start();
+            thread.Join();
             return shipmentPM;
         }
 
 
 
         private ShipmentDocsField GetEntity(string id)
-        {            
+        {
             ShipmentDocsField shipmentDocsField = shipmentDocsFieldRepository.GetSingleShipmentDocsField(id, tenant);
 
             if (shipmentDocsField == null)
@@ -279,7 +292,7 @@ namespace CommunicationWorkerRole
         }
         private void HandleShipmentFields(ShipmentDocsField shipmentDocsField, bool isReceived, DateTime? receivedDate)
         {
-            if(documentCode == DocumentsCodes.POD)
+            if (documentCode == DocumentsCodes.POD)
             {
                 shipmentDocsField.IsPODReceived = isReceived;
                 shipmentDocsField.PODReceivedDate = receivedDate;

@@ -51,6 +51,7 @@ using Simplog.Server.Infrastructure.Interfaces;
 using Microsoft.Practices.Unity;
 using Logitude.Server.Tools.Interfaces;
 using Logitude.Server.Tools.TreeFilterQuery;
+using Microsoft.Azure.Management.ResourceManager;
 
 namespace WebFreight.Web
 {
@@ -72,7 +73,8 @@ namespace WebFreight.Web
                 LogitudeSettings.DatabaseManagementSystem = dbms;
                 LogitudeSettings.DebugKey = System.Configuration.ConfigurationManager.AppSettings.Get("DebugKey");
                 FillAppSettings();
-
+                Thread settingsThread = new Thread(HandleSettingsChanges);
+                settingsThread.Start();
 
 
                 //SessionContextConfiguration conf = new SessionContextConfiguration();
@@ -305,6 +307,20 @@ namespace WebFreight.Web
 
 		}
 
+        private void HandleSettingsChanges()
+        {
+            while (true)
+            {
+                try
+                {
+                    FillAppSettings();
+                    Thread.Sleep(2000);
+                }
+
+                catch { }
+            }
+        }
+
         private static void LogitudeSettings_AmitalInit()//itzik:CleanCode when is possible -should convert 2 ContainerAccessor
         {
             //LogitudeSettings.IsCostomsDeploy = Logitude.Customs.BL.Utils.CustomsSettingUtil.ForceDownloadXapFromIIS();
@@ -526,6 +542,7 @@ namespace WebFreight.Web
             LogitudeSettings.DNSIPAddress = setting.DNSIPAddress;
             LogitudeSettings.WorkflowStorageAccountName = setting.WorkflowStorageAccountName;
             LogitudeSettings.WorkflowStorageAccountKey = setting.WorkflowStorageAccountKey;
+            LogitudeSettings.System2RedirectFraction = setting.System2RedirectFraction;
         }
 
         private void StartSignalRTopicThread()

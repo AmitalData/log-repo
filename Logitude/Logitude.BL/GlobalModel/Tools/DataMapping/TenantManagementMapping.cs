@@ -150,6 +150,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.ComapnylogoId = entityPM.ComapnylogoId;
             entityPOCO.InvertedLogoId = entityPM.InvertedLogoId;
             entityPOCO.BackgroundId = entityPM.BackgroundId;
+            entityPOCO.MobileBackgroundId = entityPM.MobileBackgroundId;
             entityPOCO.BrowserIconId = entityPM.BrowserIconId;
             entityPOCO.ShipmentHeaderImageId = entityPM.ShipmentHeaderImageId;
             entityPOCO.NoPaymentForChildTenants = entityPM.NoPaymentForChildTenants;

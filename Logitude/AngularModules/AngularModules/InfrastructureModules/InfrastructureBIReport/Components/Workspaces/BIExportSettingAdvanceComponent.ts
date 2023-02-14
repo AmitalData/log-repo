@@ -10,6 +10,7 @@ import { BIReportPreviewComponent } from './BIReportPreviewComponent';
 
 export class BIExportSettingAdvanceComponent implements OnInit {
     BIReportPreviewComponent: BIReportPreviewComponent;
+    private type: string;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
@@ -21,6 +22,7 @@ export class BIExportSettingAdvanceComponent implements OnInit {
 
     SetWindowArgs(args: any) {
         this.BIReportPreviewComponent = args.BIReportPreviewComponent;
+        this.type = args.Type;
     }
 
     private includeTotals: boolean = false;
@@ -41,7 +43,7 @@ export class BIExportSettingAdvanceComponent implements OnInit {
     SaveButtonClicked() {
         if (this.BIReportPreviewComponent != null && this.BIReportPreviewComponent.BIReportXMLData != null) {
             this.BIReportPreviewComponent.BIReportXMLData.IncludeTotals = this.IncludeTotals;
-            this.BIReportPreviewComponent.ExportButtonClicked("Excel");
+            this.BIReportPreviewComponent.ExportButtonClicked(this.type);
         }
         this.CurrentSession.CloseCurrentWindow();
     }

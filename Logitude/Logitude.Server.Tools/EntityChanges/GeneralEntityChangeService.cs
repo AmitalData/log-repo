@@ -1,4 +1,5 @@
-﻿using Simplog.Data.CommonDataModel.Repositories;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -23,17 +24,17 @@ namespace Logitude.Server.Tools.EntityChanges
 
         public string GetLoggedContactId(int tenant, string loggedUserEmail)
         {
-            string loggedContactId = string.Empty;
             string email = !string.IsNullOrEmpty(loggedUserEmail) ? loggedUserEmail : ("system@tenant" + tenant.ToString() + ".com");
-            ContactRepository contactRepository = new ContactRepository(tenant);
             if (HttpContext.Current != null && HttpContext.Current.User != null && HttpContext.Current.User.Identity != null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
             {
                 email = HttpContext.Current.User.Identity.Name;
             }
-            var contact = contactRepository.GetSingleContactByEmail(email, tenant, true);
-            if (contact != null) loggedContactId = contact.Id;
 
-            return loggedContactId;
+            UserRepository userRepository = new UserRepository(tenant);
+            User user = userRepository.GetSingleUserByEmail(email, tenant, true);
+            if(user == null) user = userRepository.GetSingleUserByEmail(("system@tenant" + tenant.ToString() + ".com"), tenant, true);
+
+            return user?.Id;
         }
 
         public DateTime? GetAutomationLastUpdateDate(string automationObjectTableId , int tenant)

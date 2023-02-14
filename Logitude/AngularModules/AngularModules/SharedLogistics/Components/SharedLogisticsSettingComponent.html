@@ -248,7 +248,7 @@
                                                 <tr>
                                                     <td colspan="3" style="vertical-align:top">
                                                         <div class="MessageText" style="display:block;margin-left:5px;font-size:12px;margin-top:5px;vertical-align:top">
-                                                             Use this setting to show/hide values in Imperial units of measurements in addition to Metric units of measurements, disabling it will only show Metric units.
+                                                            Use this setting to show/hide values in Imperial units of measurements in addition to Metric units of measurements, disabling it will only show Metric units.
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -286,6 +286,33 @@
                                     </tr>
 
 
+                                    <!--Approve Uploaded Documents-->
+                                    <tr *ngIf="SharedTitleType == 'DigitalPortal' && ShowApproveUploadedDocumentsEnabled" style="height:100px;vertical-align:top">
+                                        <td>
+                                            <table style="text-align:left">
+                                                <tr style="height:30px;">
+                                                    <td style="width:5px;">
+                                                        <div style="width:5px"></div>
+                                                    </td>
+                                                    <td style="width:20px;text-align:left;">
+                                                        <div class="CheckBox">
+                                                            <CheckBox [DataCy]="'Approve Uploaded Documents'" [IsChecked]="ApproveUploadedDocuments" (Checked)="ApproveUploadedDocuments = $event"></CheckBox>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Approve Uploaded Documents</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3" style="vertical-align:top">
+                                                        <div class="MessageText" style="display:block;margin-left:5px;font-size:12px;margin-top:5px;vertical-align:top">
+                                                            Use this setting to see all the shipments that contain documents need to be approve and approve them when your customers sent you by the digital portal.
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
 
 
 
