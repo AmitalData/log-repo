@@ -867,9 +867,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             List<string> allShipmentIds = totalList.Select(s => s.ShipmentId).ToList();
             List<ShipmentEntityClass> allShipmentData = (from d in shipmentsContext.Shipments.Include("ShipperCard").Include("ConsigneeCard").Include("Direction")
-                                                         join sc in shipmentsContext.ShipmentComputedFields 
-                                                         on d.Id equals sc.Id into shipmentJoin
+                                                         join sc in shipmentsContext.ShipmentComputedFields on d.Id equals sc.Id into shipmentJoin
+                                                         join ms in shipmentsContext.ShipmentMasterDatas on d.Id equals ms.Id into masterJoin
                                                          from m in shipmentJoin.DefaultIfEmpty()
+                                                         from master in masterJoin.DefaultIfEmpty()
                                                          where d.Tenant == tenant && allShipmentIds.Contains(d.Id)
                                                          select new ShipmentEntityClass
                                                          {
@@ -882,6 +883,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                                              Direction = d.Direction == null ? null : d.Direction.Name,
                                                              ContainersNumbersArray = m.ContainersNumbers,
                                                              ProjectNumber = d.ProjectNumber,
+                                                             NumberOfContainers = d.NumberOfContainers,
+                                                             FinalDestinationATA = master.MainCarriageFinalDestinationATA,
+                                                             FinalDestinationETA = m.FinalDeliveryETA == null ? master.MainCarriageFinalDestinationETA : m.FinalDeliveryETA
                                                          }).ToList();
 
             List<Branch> branches = (from d in commonContext.Branches where d.Tenant == tenant select d).ToList();
@@ -943,6 +947,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.ShipmentDirection = shipmentEntity.Direction;
                     record.ContainersNumbersArray = shipmentEntity.ContainersNumbersArray;
                     record.ProjectNumber = shipmentEntity.ProjectNumber;
+                    record.ContainersQuantity = shipmentEntity.NumberOfContainers;
+                    record.FinalDestinationATA = shipmentEntity.FinalDestinationATA;
+                    record.FinalDestinationETA = shipmentEntity.FinalDestinationETA;
                 }
 
                 if (record.BranchId != null)
@@ -1157,5 +1164,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         public string Direction { get; set; }
         public string ContainersNumbersArray { get; set; }
         public string ProjectNumber { get; set; }
+        public int? NumberOfContainers { get; set; }
+        public DateTime? FinalDestinationATA { get; set; }
+        public DateTime? FinalDestinationETA { get; set; }
     }
 }
