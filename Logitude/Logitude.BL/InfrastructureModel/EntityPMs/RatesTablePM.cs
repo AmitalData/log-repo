@@ -22,5 +22,8 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
                 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? ValueDate { get; set; }
+        public string UpdatedByUserId { get; set; }
+        public string UpdatedByUserName { get; set; }
+        public DateTime? UpdatedDate { get; set; }
     }
 }

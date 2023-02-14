@@ -17,5 +17,8 @@ namespace Logitude.BL.DataContracts
         public double? Rate { get; set; }
         public DateTime? LogDateTime { get; set; }
         public int? HistoryCount { get; set; }
+        public string UpdatedByUderId { get; set; }
+        public string UpdatedByUserName { get; set; }
+        public DateTime? UpdatedDate { get; set; }
     }
 }
