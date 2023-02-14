@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				CustomerTenantAccessRepository  customerTenantAccessRepository = new CustomerTenantAccessRepository(MyContext);
 				CustomerTenantAccessList entityList = null;
 				CustomerTenantAccess entityPoco = customerTenantAccessRepository.GetSingleCustomerTenantAccess(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<CustomerTenantAccess> singleEntityList = new List<CustomerTenantAccess>();
 					singleEntityList.Add(entityPoco);

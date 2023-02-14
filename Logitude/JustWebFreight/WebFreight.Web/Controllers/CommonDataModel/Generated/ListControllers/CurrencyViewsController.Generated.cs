@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				CurrencyRepository  currencyRepository = new CurrencyRepository(MyContext);
 				CurrencyList entityList = null;
 				Currency entityPoco = currencyRepository.GetSingleCurrency(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Currency> singleEntityList = new List<Currency>();
 					singleEntityList.Add(entityPoco);

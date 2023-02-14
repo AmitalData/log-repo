@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				DocumentFilingBackupBatchRepository  documentFilingBackupBatchRepository = new DocumentFilingBackupBatchRepository(MyContext);
 				DocumentFilingBackupBatchList entityList = null;
 				DocumentFilingBackupBatch entityPoco = documentFilingBackupBatchRepository.GetSingleDocumentFilingBackupBatch(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<DocumentFilingBackupBatch> singleEntityList = new List<DocumentFilingBackupBatch>();
 					singleEntityList.Add(entityPoco);

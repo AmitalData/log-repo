@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				MentionRepository  mentionRepository = new MentionRepository(MyContext);
 				MentionList entityList = null;
 				Mention entityPoco = mentionRepository.GetSingleMention(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Mention> singleEntityList = new List<Mention>();
 					singleEntityList.Add(entityPoco);

@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				DocumentsFilingRepository  documentsFilingRepository = new DocumentsFilingRepository(MyContext);
 				DocumentsFilingList entityList = null;
 				DocumentsFiling entityPoco = documentsFilingRepository.GetSingleDocumentsFiling(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<DocumentsFiling> singleEntityList = new List<DocumentsFiling>();
 					singleEntityList.Add(entityPoco);

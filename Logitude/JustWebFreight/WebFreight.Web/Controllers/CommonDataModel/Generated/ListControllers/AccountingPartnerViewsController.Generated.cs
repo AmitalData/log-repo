@@ -67,8 +67,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				AccountingPartnerRepository  accountingPartnerRepository = new AccountingPartnerRepository(MyContext);
 				AccountingPartnerList entityList = null;
 				AccountingPartner entityPoco = accountingPartnerRepository.GetSingleAccountingPartner(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<AccountingPartner> singleEntityList = new List<AccountingPartner>();
 					singleEntityList.Add(entityPoco);

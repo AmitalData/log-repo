@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				LeadSourceRepository  leadSourceRepository = new LeadSourceRepository(MyContext);
 				LeadSourceList entityList = null;
 				LeadSource entityPoco = leadSourceRepository.GetSingleLeadSource(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<LeadSource> singleEntityList = new List<LeadSource>();
 					singleEntityList.Add(entityPoco);

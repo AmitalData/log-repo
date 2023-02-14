@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				TariffCarrierTranslationRepository  tariffCarrierTranslationRepository = new TariffCarrierTranslationRepository(MyContext);
 				TariffCarrierTranslationList entityList = null;
 				TariffCarrierTranslation entityPoco = tariffCarrierTranslationRepository.GetSingleTariffCarrierTranslation(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<TariffCarrierTranslation> singleEntityList = new List<TariffCarrierTranslation>();
 					singleEntityList.Add(entityPoco);

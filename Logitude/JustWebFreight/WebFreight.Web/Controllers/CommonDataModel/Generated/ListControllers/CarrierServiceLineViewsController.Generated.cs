@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				CarrierServiceLineRepository  carrierServiceLineRepository = new CarrierServiceLineRepository(MyContext);
 				CarrierServiceLineList entityList = null;
 				CarrierServiceLine entityPoco = carrierServiceLineRepository.GetSingleCarrierServiceLine(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<CarrierServiceLine> singleEntityList = new List<CarrierServiceLine>();
 					singleEntityList.Add(entityPoco);

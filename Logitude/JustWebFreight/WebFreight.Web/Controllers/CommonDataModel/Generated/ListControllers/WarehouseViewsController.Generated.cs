@@ -70,8 +70,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				WarehouseRepository  warehouseRepository = new WarehouseRepository(MyContext);
 				WarehouseList entityList = null;
 				Warehouse entityPoco = warehouseRepository.GetSingleWarehouse(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Warehouse> singleEntityList = new List<Warehouse>();
 					singleEntityList.Add(entityPoco);

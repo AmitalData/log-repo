@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				RegimenFiscalRepository  regimenFiscalRepository = new RegimenFiscalRepository(MyContext);
 				RegimenFiscalList entityList = null;
 				RegimenFiscal entityPoco = regimenFiscalRepository.GetSingleRegimenFiscal(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<RegimenFiscal> singleEntityList = new List<RegimenFiscal>();
 					singleEntityList.Add(entityPoco);

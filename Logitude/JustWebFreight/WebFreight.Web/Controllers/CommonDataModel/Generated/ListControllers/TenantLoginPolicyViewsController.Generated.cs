@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				TenantLoginPolicyRepository  tenantLoginPolicyRepository = new TenantLoginPolicyRepository(MyContext);
 				TenantLoginPolicyList entityList = null;
 				TenantLoginPolicy entityPoco = tenantLoginPolicyRepository.GetSingleTenantLoginPolicy(tenant , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<TenantLoginPolicy> singleEntityList = new List<TenantLoginPolicy>();
 					singleEntityList.Add(entityPoco);

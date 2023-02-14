@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				WarehouseTypeRepository  warehouseTypeRepository = new WarehouseTypeRepository(MyContext);
 				WarehouseTypeList entityList = null;
 				WarehouseType entityPoco = warehouseTypeRepository.GetSingleWarehouseType(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<WarehouseType> singleEntityList = new List<WarehouseType>();
 					singleEntityList.Add(entityPoco);

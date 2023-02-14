@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				TenantAdditionalDataRepository  tenantAdditionalDataRepository = new TenantAdditionalDataRepository(MyContext);
 				TenantAdditionalDataList entityList = null;
 				TenantAdditionalData entityPoco = tenantAdditionalDataRepository.GetSingleTenantAdditionalData(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<TenantAdditionalData> singleEntityList = new List<TenantAdditionalData>();
 					singleEntityList.Add(entityPoco);

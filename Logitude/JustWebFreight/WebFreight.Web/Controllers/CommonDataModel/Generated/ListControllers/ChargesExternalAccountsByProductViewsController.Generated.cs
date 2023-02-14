@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				ChargesExternalAccountsByProductRepository  chargesExternalAccountsByProductRepository = new ChargesExternalAccountsByProductRepository(MyContext);
 				ChargesExternalAccountsByProductList entityList = null;
 				ChargesExternalAccountsByProduct entityPoco = chargesExternalAccountsByProductRepository.GetSingleChargesExternalAccountsByProduct(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<ChargesExternalAccountsByProduct> singleEntityList = new List<ChargesExternalAccountsByProduct>();
 					singleEntityList.Add(entityPoco);

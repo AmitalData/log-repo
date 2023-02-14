@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				TenantRepository  tenantRepository = new TenantRepository(MyContext);
 				TenantList entityList = null;
 				Tenant entityPoco = tenantRepository.GetSingleTenant(id );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Tenant> singleEntityList = new List<Tenant>();
 					singleEntityList.Add(entityPoco);

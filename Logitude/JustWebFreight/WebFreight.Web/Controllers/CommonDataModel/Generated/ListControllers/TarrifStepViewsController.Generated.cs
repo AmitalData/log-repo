@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				TarrifStepRepository  tarrifStepRepository = new TarrifStepRepository(MyContext);
 				TarrifStepList entityList = null;
 				TarrifStep entityPoco = tarrifStepRepository.GetSingleTarrifStep(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<TarrifStep> singleEntityList = new List<TarrifStep>();
 					singleEntityList.Add(entityPoco);

@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				PostalCodeRepository  postalCodeRepository = new PostalCodeRepository(MyContext);
 				PostalCodeList entityList = null;
 				PostalCode entityPoco = postalCodeRepository.GetSinglePostalCode(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<PostalCode> singleEntityList = new List<PostalCode>();
 					singleEntityList.Add(entityPoco);

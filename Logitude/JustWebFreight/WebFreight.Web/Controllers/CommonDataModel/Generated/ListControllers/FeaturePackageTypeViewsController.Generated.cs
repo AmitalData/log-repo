@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				FeaturePackageTypeRepository  featurePackageTypeRepository = new FeaturePackageTypeRepository(MyContext);
 				FeaturePackageTypeList entityList = null;
 				FeaturePackageType entityPoco = featurePackageTypeRepository.GetSingleFeaturePackageType(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<FeaturePackageType> singleEntityList = new List<FeaturePackageType>();
 					singleEntityList.Add(entityPoco);
