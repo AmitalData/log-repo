@@ -1,15 +1,13 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="21">
+  <Sql Version="24">
     <![CDATA[
-	  delete from DigitalTextCodes where Id != ''
+	  delete from DigitalTextCodes where Tenant = 0
 	  
       declare @NewEntityId as varchar(15)
 	  declare @generalObjectTableId as varchar(15)
 	  set @generalObjectTableId = (select Id from ObjectTables where [Name] = 'General' and Tenant = 0 )
 	  declare @commonProfileId as varchar(15)
-	  set @commonProfileId = (select Id from DigitalProfiles where [Name] = 'Common' and Tenant = 0 )
-	  
-	  
+	  set @commonProfileId = (select Id from DigitalProfiles where [Name] = 'Common' and Tenant = 0 )	  
 	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
 	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate,  ProfileId, Labels) 
 	  values (@NewEntityId, 0, @generalObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @commonProfileId,
@@ -344,8 +342,26 @@
 			"DisplayText": ""
 		},
 		{
+			"TextCode": "General.G.Browsefiles",
+			"DefaultText": "Browse files",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.OR",
+			"DefaultText": "OR",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
 			"TextCode": "General.G.NoDate",
 			"DefaultText": "No date",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.NoFileChosen",
+			"DefaultText": "No file chosen",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
@@ -2091,6 +2107,12 @@
 			"DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.G.UploadDataMSG",
+			"DefaultText": "Document being uploaded, this might take several seconds, please do not refresh the page or close this window",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.G.ATD",
 			"DefaultText": "ATD",
 			"FieldCode" : "Shipment.MainCarriageATD",
@@ -2770,6 +2792,24 @@
 		    "DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.F.VolumeInCBM",
+			"DefaultText": "Volume in CBM",
+			"FieldCode": "Shipment.VolumeInCBM",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.GrossWeightInKG",
+			"DefaultText": "Gross weight In KG",
+			"FieldCode": "Shipment.GrossWeightInKG",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.ChargeableWeightInKG",
+			"DefaultText": "Chargeable Weight",
+			"FieldCode": "Shipment.ChargeableWeightInKG",
+		    "DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.F.OnCarriageFromPortCountryCode",
 			"DefaultText": "OnCarriage from port country code",
 			"FieldCode": "Shipment.OnCarriageFromPortCountryCode",
@@ -3163,8 +3203,26 @@
 			"DisplayText": ""
 		},
 		{
+			"TextCode": "General.G.Browsefiles",
+			"DefaultText": "Browse files",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.OR",
+			"DefaultText": "OR",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
 			"TextCode": "General.G.NoDate",
 			"DefaultText": "No date",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.NoFileChosen",
+			"DefaultText": "No file chosen",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
@@ -4901,6 +4959,12 @@
 			"DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.G.UploadDataMSG",
+			"DefaultText": "Document being uploaded, this might take several seconds, please do not refresh the page or close this window",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.G.ATD",
 			"DefaultText": "ATD",
 			"FieldCode" : "Shipment.MainCarriageATD",
@@ -5576,6 +5640,24 @@
 			"TextCode": "Shipment.F.OnCarriageToPortName",
 			"DefaultText": "OnCarriage to port name",
 			"FieldCode": "Shipment.OnCarriageToPortName",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.VolumeInCBM",
+			"DefaultText": "Volume in CBM",
+			"FieldCode": "Shipment.VolumeInCBM",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.GrossWeightInKG",
+			"DefaultText": "Gross weight In KG",
+			"FieldCode": "Shipment.GrossWeightInKG",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.ChargeableWeightInKG",
+			"DefaultText": "Chargeable Weight",
+			"FieldCode": "Shipment.ChargeableWeightInKG",
 		    "DisplayText": ""
 		},
 		{

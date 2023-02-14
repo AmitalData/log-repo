@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				PackageRepository  packageRepository = new PackageRepository(MyContext);
 				PackageList entityList = null;
 				Package entityPoco = packageRepository.GetSinglePackage(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Package> singleEntityList = new List<Package>();
 					singleEntityList.Add(entityPoco);

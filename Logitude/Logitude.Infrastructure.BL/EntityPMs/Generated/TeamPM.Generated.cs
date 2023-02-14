@@ -377,7 +377,7 @@ namespace Logitude.Infrastructure.BL.EntityPMs
               }
              set {  deletedMemberLines = value; }
 	    }
-	     }
+	  	    }
    
 }
 	 

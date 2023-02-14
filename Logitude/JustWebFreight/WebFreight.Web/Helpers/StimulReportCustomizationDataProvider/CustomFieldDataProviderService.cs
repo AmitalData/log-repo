@@ -18,7 +18,7 @@ namespace WebFreight.Web.Helpers.StimulReportCustomizationDataProvider
         private List<Field> fields;
         private DocumentDataProviderArgs documentDataProviderArgs;
         private CustomFieldResolver customFieldResolver;
-
+        CustomFieldClass customFieldClass;
         private string objectTableName = string.Empty;
         public CustomFieldDataProviderService(List<Field> fields, DocumentDataProviderArgs documentDataProviderArgs, string objectTableName)
         {
@@ -26,6 +26,7 @@ namespace WebFreight.Web.Helpers.StimulReportCustomizationDataProvider
             this.objectTableName = objectTableName;
             this.fields = fields;
             customFieldResolver = new CustomFieldResolver(documentDataProviderArgs.DocumentTypeTemplatePM.Tenant);
+            customFieldClass = new CustomFieldClass();
 
         }
 
@@ -68,8 +69,7 @@ namespace WebFreight.Web.Helpers.StimulReportCustomizationDataProvider
 
             if (field.IsCustom && fieldValue != null)
             {
-                CustomFieldClass customFilterClass = new CustomFieldClass();
-                fieldValue = customFilterClass.SetFieldDataType(field.DataTypeCode, fieldValue.ToString());
+                fieldValue = customFieldClass.GetFieldValue(field.DataTypeCode, fieldValue.ToString());
             }
 
             return fieldValue;

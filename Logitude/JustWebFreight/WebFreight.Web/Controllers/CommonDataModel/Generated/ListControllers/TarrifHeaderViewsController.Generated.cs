@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				TarrifHeaderRepository  tarrifHeaderRepository = new TarrifHeaderRepository(MyContext);
 				TarrifHeaderList entityList = null;
 				TarrifHeader entityPoco = tarrifHeaderRepository.GetSingleTarrifHeader(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<TarrifHeader> singleEntityList = new List<TarrifHeader>();
 					singleEntityList.Add(entityPoco);

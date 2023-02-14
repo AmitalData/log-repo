@@ -70,8 +70,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				TruckerRepository  truckerRepository = new TruckerRepository(MyContext);
 				TruckerList entityList = null;
 				Trucker entityPoco = truckerRepository.GetSingleTrucker(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Trucker> singleEntityList = new List<Trucker>();
 					singleEntityList.Add(entityPoco);

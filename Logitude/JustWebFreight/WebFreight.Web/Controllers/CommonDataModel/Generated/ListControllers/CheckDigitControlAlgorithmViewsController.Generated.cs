@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				CheckDigitControlAlgorithmRepository  checkDigitControlAlgorithmRepository = new CheckDigitControlAlgorithmRepository(MyContext);
 				CheckDigitControlAlgorithmList entityList = null;
 				CheckDigitControlAlgorithm entityPoco = checkDigitControlAlgorithmRepository.GetSingleCheckDigitControlAlgorithm(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<CheckDigitControlAlgorithm> singleEntityList = new List<CheckDigitControlAlgorithm>();
 					singleEntityList.Add(entityPoco);

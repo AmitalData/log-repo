@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				ContactDoneMethodRepository  contactDoneMethodRepository = new ContactDoneMethodRepository(MyContext);
 				ContactDoneMethodList entityList = null;
 				ContactDoneMethod entityPoco = contactDoneMethodRepository.GetSingleContactDoneMethod(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<ContactDoneMethod> singleEntityList = new List<ContactDoneMethod>();
 					singleEntityList.Add(entityPoco);

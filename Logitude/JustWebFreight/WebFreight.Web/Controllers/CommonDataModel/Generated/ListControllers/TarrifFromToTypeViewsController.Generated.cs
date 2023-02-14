@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				TarrifFromToTypeRepository  tarrifFromToTypeRepository = new TarrifFromToTypeRepository(MyContext);
 				TarrifFromToTypeList entityList = null;
 				TarrifFromToType entityPoco = tarrifFromToTypeRepository.GetSingleTarrifFromToType(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<TarrifFromToType> singleEntityList = new List<TarrifFromToType>();
 					singleEntityList.Add(entityPoco);

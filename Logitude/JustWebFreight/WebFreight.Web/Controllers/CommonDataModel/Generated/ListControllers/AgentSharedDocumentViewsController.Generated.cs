@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				AgentSharedDocumentRepository  agentSharedDocumentRepository = new AgentSharedDocumentRepository(MyContext);
 				AgentSharedDocumentList entityList = null;
 				AgentSharedDocument entityPoco = agentSharedDocumentRepository.GetSingleAgentSharedDocument(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<AgentSharedDocument> singleEntityList = new List<AgentSharedDocument>();
 					singleEntityList.Add(entityPoco);

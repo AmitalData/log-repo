@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				BusinessUnitRepository  businessUnitRepository = new BusinessUnitRepository(MyContext);
 				BusinessUnitList entityList = null;
 				BusinessUnit entityPoco = businessUnitRepository.GetSingleBusinessUnit(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<BusinessUnit> singleEntityList = new List<BusinessUnit>();
 					singleEntityList.Add(entityPoco);

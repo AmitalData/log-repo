@@ -442,5 +442,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string TransferStatusCode_Original { get; set; }
         public bool IsTransferStarted_Original { get; set; }
         public string TransferError_Original { get; set; }
+        public bool VatsAmountsManulAdjuested { get; set; }
     }
 }

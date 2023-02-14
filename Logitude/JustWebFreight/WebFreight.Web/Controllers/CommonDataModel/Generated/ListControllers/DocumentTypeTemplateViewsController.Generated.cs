@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				DocumentTypeTemplateRepository  documentTypeTemplateRepository = new DocumentTypeTemplateRepository(MyContext);
 				DocumentTypeTemplateList entityList = null;
 				DocumentTypeTemplate entityPoco = documentTypeTemplateRepository.GetSingleDocumentTypeTemplate(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<DocumentTypeTemplate> singleEntityList = new List<DocumentTypeTemplate>();
 					singleEntityList.Add(entityPoco);

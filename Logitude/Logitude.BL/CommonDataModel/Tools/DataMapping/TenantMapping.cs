@@ -150,7 +150,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.ShipmentATAClosingDays = entityPM.ShipmentATAClosingDays;
             poco.UseNewTermsOfUse = entityPM.UseNewTermsOfUse;
             poco.ShipmentATADateIndicator = entityPM.ShipmentATADateIndicator;
-
+            poco.ApproveUploadedDocuments = entityPM.ApproveUploadedDocuments;
             // poco.StorageEncryptionKey = entityPM.StorageEncryptionKey;
             BuildSearchFields(entityPM, poco);
         }

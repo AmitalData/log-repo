@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				CountryRepository  countryRepository = new CountryRepository(MyContext);
 				CountryList entityList = null;
 				Country entityPoco = countryRepository.GetSingleCountry(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Country> singleEntityList = new List<Country>();
 					singleEntityList.Add(entityPoco);

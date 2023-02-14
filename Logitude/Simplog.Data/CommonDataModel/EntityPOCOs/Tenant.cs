@@ -204,5 +204,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool IsDigitalPortalAccessActivated { get; set; }
         public bool UseNewTermsOfUse { get; set; }
         public string ShipmentATADateIndicator { get; set; }
+        public bool ApproveUploadedDocuments { get; set; }
     }
 }

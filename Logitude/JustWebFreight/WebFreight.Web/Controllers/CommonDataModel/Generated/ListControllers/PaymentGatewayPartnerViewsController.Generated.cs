@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				PaymentGatewayPartnerRepository  paymentGatewayPartnerRepository = new PaymentGatewayPartnerRepository(MyContext);
 				PaymentGatewayPartnerList entityList = null;
 				PaymentGatewayPartner entityPoco = paymentGatewayPartnerRepository.GetSinglePaymentGatewayPartner(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<PaymentGatewayPartner> singleEntityList = new List<PaymentGatewayPartner>();
 					singleEntityList.Add(entityPoco);

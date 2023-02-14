@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				ReportsTemplateRepository  reportsTemplateRepository = new ReportsTemplateRepository(MyContext);
 				ReportsTemplateList entityList = null;
 				ReportsTemplate entityPoco = reportsTemplateRepository.GetSingleReportsTemplate(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<ReportsTemplate> singleEntityList = new List<ReportsTemplate>();
 					singleEntityList.Add(entityPoco);

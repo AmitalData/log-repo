@@ -51,7 +51,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     AddUploadEvent(info, loggedContact.Id, tenant);
 
                     scope.Complete();
-
                     return Request.CreateResponse(HttpStatusCode.OK, imageParameterfilter);
                 }
             }

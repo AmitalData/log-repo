@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				RestrictionRepository  restrictionRepository = new RestrictionRepository(MyContext);
 				RestrictionList entityList = null;
 				Restriction entityPoco = restrictionRepository.GetSingleRestriction(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Restriction> singleEntityList = new List<Restriction>();
 					singleEntityList.Add(entityPoco);

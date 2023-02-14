@@ -66,8 +66,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				CardRepository  cardRepository = new CardRepository(MyContext);
 				CardList entityList = null;
 				Card entityPoco = cardRepository.GetSingleCard(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									CardQuery cardQuery = new CardQuery(cardRepository);
                     entityList = cardQuery.GetSingleCardList(entityPoco);

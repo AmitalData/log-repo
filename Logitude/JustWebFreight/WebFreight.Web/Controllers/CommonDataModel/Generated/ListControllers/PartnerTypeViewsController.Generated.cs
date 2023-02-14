@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				PartnerTypeRepository  partnerTypeRepository = new PartnerTypeRepository(MyContext);
 				PartnerTypeList entityList = null;
 				PartnerType entityPoco = partnerTypeRepository.GetSinglePartnerType(id );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<PartnerType> singleEntityList = new List<PartnerType>();
 					singleEntityList.Add(entityPoco);

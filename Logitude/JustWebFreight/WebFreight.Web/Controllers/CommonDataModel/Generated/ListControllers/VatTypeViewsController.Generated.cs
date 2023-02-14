@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				VatTypeRepository  vatTypeRepository = new VatTypeRepository(MyContext);
 				VatTypeList entityList = null;
 				VatType entityPoco = vatTypeRepository.GetSingleVatType(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<VatType> singleEntityList = new List<VatType>();
 					singleEntityList.Add(entityPoco);

@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				VesselRepository  vesselRepository = new VesselRepository(MyContext);
 				VesselList entityList = null;
 				Vessel entityPoco = vesselRepository.GetSingleVessel(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Vessel> singleEntityList = new List<Vessel>();
 					singleEntityList.Add(entityPoco);
