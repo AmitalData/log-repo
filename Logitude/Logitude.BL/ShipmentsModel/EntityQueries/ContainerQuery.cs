@@ -312,6 +312,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     OnCarriageATA = container.OnCarriageATA,
                     RequestDate = container.RequestDate,
                     RecentResponseDate = container.RecentResponseDate,
+                    ShipmentPreCarriageFromName = container.ShipmentPreCarriageFromPort == null ? null : container.ShipmentPreCarriageFromPort.EnglishName,
+                    ShipmentMainCarriageFromName = container.ShipmentMainCarriageFromPort == null ? null : container.ShipmentMainCarriageFromPort.EnglishName,
+                    ShipmentMainCarriageToName = container.ShipmentMainCarriageToPort == null ? null : container.ShipmentMainCarriageToPort.EnglishName,
+                    ShipmentOnCarriageToName = container.ShipmentOnCarriageToPort == null ? null : container.ShipmentOnCarriageToPort.EnglishName,
+                    ShipmentTransshipment1FromName = container.ShipmentTransshipment1FromPort == null ? null : container.ShipmentTransshipment1FromPort.EnglishName,
+                    ShipmentTransshipment2FromName = container.ShipmentTransshipment2FromPort == null ? null : container.ShipmentTransshipment2FromPort.EnglishName,
+                    ShipmentTransshipment3FromName = container.ShipmentTransshipment3FromPort == null ? null : container.ShipmentTransshipment3FromPort.EnglishName,
                 };
 
                 if (container.EntityStatus != null)
