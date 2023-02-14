@@ -208,7 +208,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public virtual Port EmptyPickupLocationPort { get; set; }
         [ForeignKey("OnCarriageLocationPortId")]
         public virtual Port OnCarriageLocationPort { get; set; }
-        [ForeignKey("EmptyReturnLocation")]
+        [ForeignKey("EmptyReturnLocationPortId")]
         public virtual Port EmptyReturnLocationPort { get; set; }
         [ForeignKey("AvailabilityLocationPortId")]
         public virtual Port AvailabilityLocationPort { get; set; }

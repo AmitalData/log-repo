@@ -27,7 +27,8 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                                                                         DraftContent = x.DraftContent,
                                                                         ScreenCode = x.ScreenCode,
                                                                         ObjectTableId = x.ObjectTableId,
-                                                                        ProfileId = x.ProfileId
+                                                                        ProfileId = x.ProfileId,
+                                                                        IsList = x.IsList
                                                                     })
                                                                     .ToList();
             return digitalPortalScreens;
@@ -49,7 +50,8 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                                                                         ObjectTableId = x.ObjectTableId,
                                                                         ProfileId = x.ProfileId,
                                                                         Content = x.Content,
-                                                                        DraftContent = x.DraftContent
+                                                                        DraftContent = x.DraftContent,
+                                                                        IsList = x.IsList                                                                        
                                                                     })
                                                                     .ToList();
             return digitalPortalScreens;
@@ -72,6 +74,7 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                                                                         Content = x.Content,
                                                                         DraftContent = x.DraftContent,
                                                                         ProfileCode = x.DigitalProfile.Code,
+                                                                        IsList = x.IsList
                                                                     })
                                                                     .ToList();
             return digitalPortalScreens;
@@ -91,7 +94,8 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                     DraftContent = digitalPortalScreenUpdateObject.DraftContent,
                     CreateDate = digitalPortalScreenUpdateObject.CreateDate,
                     UpdateDate = digitalPortalScreenUpdateObject.UpdateDate,
-                    ProfileId = digitalPortalScreenUpdateObject.ProfileId
+                    ProfileId = digitalPortalScreenUpdateObject.ProfileId,
+                    IsList = digitalPortalScreenUpdateObject.IsList
                 };
 
                 entityPm.ChangeSetOp = ChangeSetOperation.Insert;
@@ -112,7 +116,8 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                     ScreenCode = digitalPortalScreenUpdateObject.ScreenCode,
                     CreateDate = digitalPortalScreenUpdateObject.CreateDate,
                     UpdateDate = digitalPortalScreenUpdateObject.UpdateDate,
-                    ProfileId = digitalPortalScreenUpdateObject.ProfileId
+                    ProfileId = digitalPortalScreenUpdateObject.ProfileId,
+                    IsList = digitalPortalScreenUpdateObject.IsList
                 };
 
                 var contextData = InfrastructureContext.GetContext(entityPm.Tenant);

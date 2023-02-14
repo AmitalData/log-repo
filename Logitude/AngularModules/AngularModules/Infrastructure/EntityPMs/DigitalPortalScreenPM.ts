@@ -79,6 +79,11 @@ export class DigitalPortalScreenPM {
     public set ProfileCode(newValue: string) { if (this.profileCode != newValue) { this.profileCode = newValue; this.MarkAsDirty("ProfileCode"); } }
        
 	 
+    private isList: boolean;
+    public get IsList() { return this.isList; }
+    public set IsList(newValue: boolean) { if (this.isList != newValue) { this.isList = newValue; this.MarkAsDirty("IsList"); } }
+       
+	 
 
     public OldEntityPM: DigitalPortalScreenPM;
 		
