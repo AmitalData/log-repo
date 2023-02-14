@@ -1046,9 +1046,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void RunAutomation(DocumentsFilingPM theEntityPm, string automationType)
         {
-            if (!theEntityPm.IsUoloadedField)
-                return;
-            if (!theEntityPm.IsFromDigital)
+            if (!theEntityPm.IsUoloadedField && !theEntityPm.IsFromDigital)
                 return;
             GeneralEntityChangeService generalEntityChangeService = new GeneralEntityChangeService();
             EntityDetails entityDetails = generalEntityChangeService.GetEntityDetails(theEntityPm.EntityId, theEntityPm.ObjectTableName, theEntityPm.Tenant);
