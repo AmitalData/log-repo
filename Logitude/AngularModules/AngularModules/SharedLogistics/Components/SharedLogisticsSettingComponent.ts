@@ -395,7 +395,11 @@ export class SharedLogisticsSettingComponent implements OnInit {
 
     }
 
-
+    OnSharedLogisticsMessageLink() {
+        if(this.SharedTitleType == 'DigitalPortal'){
+            this.DisplayDocumentsAndEvents = false;
+        }
+    }
 
 
 
