@@ -1,4 +1,5 @@
 ﻿using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
@@ -295,6 +296,29 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 			myCustomer.ZipCode_Potential = mainAddress.ZipCode;
 			myCustomer.FaxNumber_Potential = mainAddress.FaxNumber;
 			myCustomer.PhoneNumber_Potential = mainAddress.PhoneNumber;
+		}
+
+		public List<Contact> GetCustomerContacts(string customerId)
+        {
+			List<Contact> contacts = new List<Contact>();
+			ContactQuery entityQuery = new ContactQuery(tenant);
+			List<ContactList> result = entityQuery.GetContactListsbyCardId(customerId, tenant).ToList();
+
+			result.ForEach(item =>
+			{
+				contacts.Add(new Contact()
+				{
+					Email = item.Email,
+					EnglishName = item.EnglishName,
+					BusinessPhone = item.BusinessPhone,
+					Mobile = item.Mobile,
+					//IsPrimaryContact = item.SetAsPrimaryForCard,
+					Notes = item.Notes,
+					InActive = item.InActive,
+				});
+			});
+
+			return contacts;
 		}
 	}
 }
