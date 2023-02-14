@@ -1399,6 +1399,7 @@
     <Compile Include="ExternalAPIs\RatesUpdateController.cs" />
     <Compile Include="ExternalAPIs\ShipmentNumbersController.cs" />
     <Compile Include="ExternalAPIs\V1\ARInvoiceJournalLTController.cs" />
+    <Compile Include="ExternalAPIs\V1\ARPaymentChqStsController.cs" />
     <Compile Include="ExternalAPIs\V1\ClosedMonthCheckController.cs" />
     <Compile Include="ExternalAPIs\V1\ContainerController.cs" />
     <Compile Include="ExternalAPIs\V1\EventTypeModule\EventTypeController.cs" />
