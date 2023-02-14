@@ -42,6 +42,25 @@ export class ContainersFUDomainService {
         });
     }
 
+    GetContainerQueriesCounts() {
+        var url = this._apiUrl + '/GetContainersQueriesCounts';
+        return defer(() => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myJsonResult = response;
+                var myResult = new ContainersFUSummary();
+                if (myJsonResult) {
+                    var jsonListKeys = Object.keys(myJsonResult);
+                    for (var key in jsonListKeys) {
+                        var property = jsonListKeys[key];
+                        myResult[property] = myJsonResult[property];
+                    }
+                }
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 }
 
 export class ContainersFUSummary {
