@@ -72,6 +72,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsList"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="ObjectTableId"
     ReferencedTable="ObjectTables"
