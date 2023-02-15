@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class VendorCurrencyUpdateClass
    {  		
-		public const string HashString = "b3f2a24277d2a09421f0b62d1ab6e4bc";
+		public const string HashString = "d64ffb4ae02bfa3396cfede1090ba0ff";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -122,11 +122,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    EnableSecurity =  false,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
-			      				    ObjectTableTypeCode =  "BR",
+			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "מטבעות ספק",
 			      				    DefaultText =  "Vendor Currency",
-			      				    Code =  "ae57",
+			      				    Code =  "e6cd",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
