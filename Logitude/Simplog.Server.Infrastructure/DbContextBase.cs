@@ -335,15 +335,14 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
         {
             if (args.CurrentState == ConnectionState.Open && args.OriginalState != ConnectionState.Open)
             {
-                if (Transaction.Current != null)
+                using (var command = Database.Connection.CreateCommand())
                 {
-                    using (var command = Database.Connection.CreateCommand())
+                    if (Transaction.Current == null)
                     {
-
-                        //    command.CommandText = "SET TRANSACTION ISOLATION LEVEL SNAPSHOT";
-                        //}
-                        //else
-                        //{
+                        command.CommandText = "SET TRANSACTION ISOLATION LEVEL SNAPSHOT";
+                    }
+                    else
+                    {
                         switch (Transaction.Current.IsolationLevel)
                         {
                             case IsolationLevel.ReadCommitted:
@@ -360,9 +359,10 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
                                 break;
                             default:
                                 throw new ArgumentOutOfRangeException();
-                        } 
-                        command.ExecuteNonQuery();
+                        }
                     }
+
+                    command.ExecuteNonQuery();
                 }
             }
         }
