@@ -146,8 +146,7 @@ export class MenuButtonsComponent implements OnDestroy {
     public CheckFeature(featureUniqeCode : string) {
         if (this.ObjectTableName == "DeploymentPackage")
             return CustomizationPermissionService.IsFeatureGrantedByUniqeCode(featureUniqeCode);
-        else
-            return FeatureLocator.IsFeatureGrantedByUniqeCode(featureUniqeCode);
+        return FeatureLocator.IsFeatureGrantedByUniqeCode(featureUniqeCode);
     }
 
     public BuildMenuButtons() {

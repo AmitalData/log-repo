@@ -724,9 +724,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     public CheckPermissions(objectTableName: string, featureCode: string, showWindow: boolean) {
         if (objectTableName == "DeploymentPackage")
             return CustomizationPermissionService.HasEntityPermessions(objectTableName, featureCode, showWindow);
-        else {
-            return FeatureLocator.HasEntityPermessions(objectTableName, featureCode, showWindow);
-        }
+        return FeatureLocator.HasEntityPermessions(objectTableName, featureCode, showWindow);
     }
 
 
