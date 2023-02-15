@@ -79,7 +79,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 FileSize = info.FileSize,
                 FileName = info.FileName,
                 Tenant = tenant,
-                Buffersize = info.Buffersize
+                Buffersize = info.Buffersize,
+                BufferNumber = -1
             };
 
             ImageParameter imageParameterfilter = imageLibraryControllerHelper.UploadAttachementOrChunk(filter);
