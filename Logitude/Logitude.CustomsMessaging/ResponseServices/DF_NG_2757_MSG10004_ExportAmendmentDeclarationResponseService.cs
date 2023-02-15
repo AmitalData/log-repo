@@ -1214,13 +1214,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 supplierInvoiceItemPM.ItemDescription = invoiceItem.ItemDescription;
                                 supplierInvoiceItemPM.ItemAdditionalStatus = invoiceItem.ItemAdditionalStatus;
                                 supplierInvoiceItemPM.CertificatesStatusCode = invoiceItem.CertificatesStatusCode;
+                                supplierInvoiceItemPM.TaxExemptCode = invoiceItem.TaxExemptCode;
                             }
                         }
                         else
                         {
                             supplierInvoiceItemPM.SupplierInvoiceItemVehicles = GetSupplierInvoiceItemVehicles(governmentAgencyGoodsItem, declaration, declarationId, tenant);
                         }
-                    }
+                    }                   
                     supplierInvoiceItemPM.PreferenceDocumentNumber = GetValueIDType(governmentAgencyGoodsItem.DMExtensions.PreferenceDocumentNumber);
                     supplierInvoiceItemPM.ActualInvoiceLines = governmentAgencyGoodsItem.DMExtensions.InvoiceLineNumbers;
                     supplierInvoiceItemPM.SupplierInvoiceItemsMods = GetSupplierInvoiceItemsMods(governmentAgencyGoodsItem, declaration, declarationId, tenant);
