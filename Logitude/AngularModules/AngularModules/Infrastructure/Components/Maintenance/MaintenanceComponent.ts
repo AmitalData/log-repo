@@ -188,6 +188,10 @@ export class MaintenanceComponent {
                     this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
                 }
             }
+
+            else if (item.Code == "DEPA" && this.CheckDeploymentPackageFeatures()) {
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            }
         });
 
         this.BuildPersonalSettings();
@@ -200,7 +204,11 @@ export class MaintenanceComponent {
         this.BuildCustomObjectsMenus();
         this.PageChanged(this.PagesMenu[0]);
     }
-
+    CheckDeploymentPackageFeatures() {
+        if (FeatureLocator.IsFeatureGrantedByUniqeCode("General.Customization.DeploymentPackage"))
+            return false;
+        return CustomizationPermissionService.HasFeaturePermession("General", "Customization.DeploymentPackage");
+    }
     private PushEntityStatusMenu(item: MenusTablePM) {
         if (SessionLocator.LoggedUserPM.IsCustomerCare || SessionLocator.LoggedUserPM.IsDistributor || this.EntityStatusToggle) {
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
