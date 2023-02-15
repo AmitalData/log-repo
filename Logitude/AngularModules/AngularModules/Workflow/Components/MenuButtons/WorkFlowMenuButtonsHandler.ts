@@ -56,7 +56,11 @@ export class WorkFlowMenuButtonsHandler {
             switch (button.EventCode) {
                 case "NewVersion":
                     {
-                        button.IsDisabled = IsNewVersionDisabled;
+                        if (!HasChanges) {
+                            button.IsDisabled = IsNewVersionDisabled;
+                        } else {
+                            button.IsDisabled = true;
+                        }
                         break;
                     }
                 case "Activate":
