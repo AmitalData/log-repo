@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ContainerUpdateClass
    {  		
-		public const string HashString = "d213b1049a1fc6f4ddc849d42a4b8ce1";
+		public const string HashString = "d53a1172fd92d8123925c8bc858e7eaf";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -19036,17 +19036,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	
 			 QueryColumn PendingDischargeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDischargeQuery.Id,QueryCode = PendingDischargeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 109 }, addedQueryColumns);
 
-			 QueryColumn PendingDischargeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDischargeQuery.Id,QueryCode = PendingDischargeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Container.Master" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn PendingDischargeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDischargeQuery.Id,QueryCode = PendingDischargeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Container.CreateDate" , ColumnWidth = 94 }, addedQueryColumns);
 
-			 QueryColumn PendingDischargeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDischargeQuery.Id,QueryCode = PendingDischargeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Container.CreateDate" , ColumnWidth = 94 }, addedQueryColumns);
+			 QueryColumn PendingDischargeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDischargeQuery.Id,QueryCode = PendingDischargeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Container.ContainerTypeName" , ColumnWidth = 128 }, addedQueryColumns);
 
-			 QueryColumn PendingDischargeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDischargeQuery.Id,QueryCode = PendingDischargeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Container.ContainerTypeName" , ColumnWidth = 128 }, addedQueryColumns);
+			 QueryColumn PendingDischargeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDischargeQuery.Id,QueryCode = PendingDischargeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Container.StatusName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn PendingDischargeQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDischargeQuery.Id,QueryCode = PendingDischargeQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.StatusName" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn PendingDischargeQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDischargeQuery.Id,QueryCode = PendingDischargeQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.ShipmentStatusName" , ColumnWidth = 140 }, addedQueryColumns);
 
 			 QueryColumn PendingDischargeQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDischargeQuery.Id,QueryCode = PendingDischargeQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Container.ShipmentNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn PendingDischargeQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDischargeQuery.Id,QueryCode = PendingDischargeQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Container.ShipmentStatusName" , ColumnWidth = 140 }, addedQueryColumns);
+			 QueryColumn PendingDischargeQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDischargeQuery.Id,QueryCode = PendingDischargeQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Container.Master" , ColumnWidth = 120 }, addedQueryColumns);
 
 			 QueryColumn PendingDischargeQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDischargeQuery.Id,QueryCode = PendingDischargeQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Container.CarrierName" , ColumnWidth = 120 }, addedQueryColumns);
 
@@ -19090,8 +19090,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			 QueryColumn PendingGateOutQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingGateOutQuery.Id,QueryCode = PendingGateOutQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Container.PODLocation" , ColumnWidth = 89 }, addedQueryColumns);
 
 			 QueryColumn PendingGateOutQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingGateOutQuery.Id,QueryCode = PendingGateOutQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Container.ActualPODVesselArrival" , ColumnWidth = 154 }, addedQueryColumns);
-
-			 QueryColumn PendingGateOutQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingGateOutQuery.Id,QueryCode = PendingGateOutQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Container.EstimatedPODDischarge" , ColumnWidth = 154 }, addedQueryColumns);
 
              AdvancedQueryFilter PendingGateOutQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.PendingGateOutFilter", PredefinedValue = "True",PredefinedValue2 = null, CustomPredefined = false, QueryId = PendingGateOutQuery.Id,QueryCode = PendingGateOutQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
