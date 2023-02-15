@@ -48,7 +48,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         }
         public IQueryable<RatesTableList> GetIQueryableEntityList(IQueryable<RatesTable> iQueryable)
         {
-            IQueryable<RatesTableList> result = from entity in iQueryable.Include("ForeignCurrency")
+            IQueryable<RatesTableList> result = from entity in iQueryable.Include("ForeignCurrency").Include("UpdatedByUser").Include("UpdatedByUser.Contact")
                                                 select new RatesTableList()
                                                 {
                                                     Id = entity.Id,
@@ -60,6 +60,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     BaseCurrencyId = entity.BaseCurrencyId,
                                                     ValueDate = entity.ValueDate,
                                                     LogDateTime = entity.LogDateTime,
+                                                    UpdatedByUserId = entity.UpdatedByUserId,
+                                                    UpdatedByUserName = entity.UpdatedByUser != null ? entity.UpdatedByUser.Contact.EnglishName : null,
+                                                    UpdatedDate = entity.UpdatedDate,
                                                 };
             return result;
         }

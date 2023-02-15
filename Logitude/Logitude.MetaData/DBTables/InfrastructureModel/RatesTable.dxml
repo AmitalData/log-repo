@@ -50,6 +50,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="UpdatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="UpdatedDate"
+    OldNames="UpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ForeignCurrencyId"
     ReferencedTable="Currencies"
@@ -58,6 +72,11 @@
   <Relation
     ForeignKeyColumn="BaseCurrencyId"
     ReferencedTable="Currencies"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="UpdatedByUserId"
+    ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>
