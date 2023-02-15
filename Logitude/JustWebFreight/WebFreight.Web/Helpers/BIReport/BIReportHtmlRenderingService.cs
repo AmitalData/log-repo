@@ -94,20 +94,17 @@ namespace WebFreight.Web.Helpers.BIReport
 
         private void BuildReportMeasurementColumns()
         {
-            if (!bIReportXMLData.IncludeTotals) return;
             measurmentColumns = bIReportTotalsService.GetReportMeasurementColumns();
         }
 
         private void BuildTotalsMeasurementColumnsList()
         {
-            if (!bIReportXMLData.IncludeTotals || measurmentColumns == null || measurmentColumns.Count == 0) return;
+            if (measurmentColumns == null || measurmentColumns.Count == 0) return;
             totalMeasurementColumnList = bIReportTotalsService.BuildTotalMeasurementColumnList();
         }
 
         private void AddToTotalsMeasurementValues(DataRow row, DataColumn column)
         {
-            if (!bIReportXMLData.IncludeTotals) return;
-
             var agColumn = bITabularViewSettings.Columns.Where(a => a.Name == column.ColumnName).FirstOrDefault();
 
             if (bIReportTotalsService.ValidTotalColumn(agColumn))
@@ -128,7 +125,7 @@ namespace WebFreight.Web.Helpers.BIReport
 
         private void BuildTotalRow()
         {
-            if (!bIReportXMLData.IncludeTotals || totalMeasurementColumnList == null || totalMeasurementColumnList.Count == 0) return;
+            if (totalMeasurementColumnList == null || totalMeasurementColumnList.Count == 0) return;
             stringBuilder.Append(" <tr>");
             foreach (DataColumn column in bIReportdataTable.Columns)
             {

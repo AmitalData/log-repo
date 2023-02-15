@@ -496,12 +496,6 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         return datepipe.transform(params.value, "DT");
     }
 
-    ExportToPDFButtonClicked() {
-        let windowArgs: any = {
-            Type: "Pdf"
-        }
-        this.OpenAdvancedSettingsComponent(windowArgs);
-    }
     ExportToExcelAdvancedButtonClick() {
         let windowArgs: any = {
             Type:"Excel"

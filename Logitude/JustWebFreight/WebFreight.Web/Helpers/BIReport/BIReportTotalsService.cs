@@ -51,6 +51,7 @@ namespace WebFreight.Web.Helpers.BIReport
 
         public bool ValidTotalColumn(Column column)
         {
+            if (column == null) return false;
             return (column.DataTypeCode == "Double" || column.DataTypeCode == "Decimal" || column.DataTypeCode == "Integer") && IncludeColumnInTotal(column);
         }
 
