@@ -15,6 +15,7 @@ import { ObjectTables } from "Workflow/Utilities/ObjectTables";
 import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
 import { ObjectFields } from "Workflow/Utilities/ObjectFields";
 import { ObjectFieldsTreeList } from "Workflow/TreeLists/ObjectFieldsTreeList";
+import { FlowReader } from "Workflow/Utilities/FlowReader";
 
 @Component({
     templateUrl: "./GetRecordPropertiesComponent.html"
@@ -266,7 +267,8 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     saveButtonClicked() {
         this.ValidationErrorsList = [];
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
-        if (notValidUIProperties.length === 0 && this.IsValidConditions && this.IsValidReturnedFields) {
+        let isValidName = !this.IsNew || !FlowReader.isNodeNameExists(this.FlowObject, this.Name);
+        if (notValidUIProperties.length === 0 && this.IsValidConditions && this.IsValidReturnedFields && isValidName) {
             this.setData();
             //console.log(this.Data);
             this.CurrentSession.CurrentWindow.Close(this.Data);
@@ -280,6 +282,10 @@ export class GetRecordPropertiesComponent extends BaseComponent {
 
             if (!this.IsValidReturnedFields) {
                 this.ValidationErrorsList.push("Invalid Selected Fields");
+            }
+
+            if (!isValidName) {
+                this.ValidationErrorsList.push("The Name Should be Unique.");
             }
         }
     }

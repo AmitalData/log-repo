@@ -3,6 +3,7 @@ import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/Base
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { SetValue } from "Workflow/Models/SetValue";
+import { FlowReader } from "Workflow/Utilities/FlowReader";
 
 @Component({
     templateUrl: "./SetValuePropertiesComponent.html"
@@ -91,7 +92,8 @@ export class SetValuePropertiesComponent extends BaseComponent {
     saveButtonClicked() {
         this.ValidationErrorsList = [];
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
-        if (notValidUIProperties.length === 0 && this.IsValidSetValues) {
+        let isValidName = !this.IsNew || !FlowReader.isNodeNameExists(this.FlowObject, this.Name);
+        if (notValidUIProperties.length === 0 && this.IsValidSetValues && isValidName) {
             this.setValuesData();
             //console.log(this.Data);
             this.CurrentSession.CurrentWindow.Close(this.Data);
@@ -101,6 +103,10 @@ export class SetValuePropertiesComponent extends BaseComponent {
 
             if (!this.IsValidSetValues)
                 this.ValidationErrorsList.push("Invalid Set Values");
+
+                if (!isValidName) {
+                    this.ValidationErrorsList.push("The Name Should be Unique.");
+                    }
         }
     }
 

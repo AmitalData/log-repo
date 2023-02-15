@@ -10,6 +10,7 @@ import { SetRecordFieldsTypes } from "Workflow/Constants/SetRecordFieldsTypes";
 import { FlowVariablesTreeList } from "Workflow/TreeLists/FlowVariablesTreeList";
 import { IsObjectTypePipe } from "Workflow/Pipes/IsObjectTypePipe";
 import { EntityLabelPipe } from "Workflow/Pipes/EntityLabelPipe";
+import { FlowReader } from "Workflow/Utilities/FlowReader";
 
 @Component({
     templateUrl: "./AppendItemPropertiesComponent.html"
@@ -261,7 +262,8 @@ export class AppendItemPropertiesComponent extends BaseComponent {
     saveButtonClicked() {
         this.ValidationErrorsList = [];
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
-        if (notValidUIProperties.length === 0 && this.IsValidSetValues) {
+        let isValidName = !this.IsNew || !FlowReader.isNodeNameExists(this.FlowObject, this.Name);
+        if (notValidUIProperties.length === 0 && this.IsValidSetValues && isValidName) {
             this.setSetValuesData();
             //console.log(this.Data);
             this.CurrentSession.CurrentWindow.Close(this.Data);
@@ -271,6 +273,10 @@ export class AppendItemPropertiesComponent extends BaseComponent {
 
             if (!this.IsValidSetValues) {
                 this.ValidationErrorsList.push("Invalid Set Values");
+            }
+
+            if (!isValidName) {
+                this.ValidationErrorsList.push("The Name Should be Unique.");
             }
         }
     }
