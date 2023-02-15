@@ -12,6 +12,7 @@ using System.Reflection;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Helpers;
 using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.Server.Tools.Helpers
 {
@@ -153,14 +154,24 @@ namespace Logitude.Server.Tools.Helpers
                         ChildEntityId = args.ChildEntityId,
                         ChildObjectTableId = childObjectTable?.Id,
                     };
-                    
-                    using (var scopeCustom = objectContext.GetSnapshotTransaction())
+
+                    if (LogitudeSettings.WorkEnvironment != "cloud")
+                    {
+                        using (var scope = objectContext.GetSnapshotTransaction())
+                        {
+                            TraceEventRepository traceEventRepository = new TraceEventRepository(objectContext);
+                            traceEventRepository.Add(myTraceEvent);
+                            traceEventRepository.SubmitChanges();
+                            objectContext.SaveChanges();
+                            scope.Commit();
+                        }
+                    }
+                    else
                     {
                         TraceEventRepository traceEventRepository = new TraceEventRepository(objectContext);
                         traceEventRepository.Add(myTraceEvent);
                         traceEventRepository.SubmitChanges();
                         objectContext.SaveChanges();
-                        scopeCustom.Commit();
                     }
 
                     if (eventType.IsCustomerView)
@@ -170,12 +181,10 @@ namespace Logitude.Server.Tools.Helpers
 
                     if (!string.IsNullOrEmpty(eventType.CustomField) && objectTable.AllowCustomFields)
                     {
-                    EventCustomFieldUpdateService.UpdateEventCustomFieldValue(new UpdateEventCustomFieldArgs() { CustomField = eventType.CustomField, EventDateTime = myTraceEvent.EventDateTime, Entity = args.Entity, EntityId = args.EntityId, ObjectTableName = args.ObjectTableName, Tenant = args.Tenant });
+                        EventCustomFieldUpdateService.UpdateEventCustomFieldValue(new UpdateEventCustomFieldArgs() { CustomField = eventType.CustomField, EventDateTime = myTraceEvent.EventDateTime, Entity = args.Entity, EntityId = args.EntityId, ObjectTableName = args.ObjectTableName, Tenant = args.Tenant });
                     }
 
                 }
-               
-               
 
             }
         }
