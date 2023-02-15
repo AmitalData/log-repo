@@ -505,8 +505,10 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 {
                     courierMasterID = _CourierMasterPM.Id;
                 }
+                AppendLogLine("this._LogitudeCommDecFile.INVOICE != null 905  ??" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                 if (this._LogitudeCommDecFile.INVOICE != null)
-                {
+                {              AppendLogLine("this._LogitudeCommDecFile.INVOICE != null 905 !!" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+
                     if (this._LogitudeCommDecFile.INVOICE.Count() > 0)
                     {
 
@@ -567,9 +569,10 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 }
 
                 AppendLogLine("Importer Code: " + this._MyDeclarationPM.ImporterCode);
-
+                
                 if (this._LogitudeCommDecFile.CustomsDocuments != null && this._LogitudeCommDecFile.CustomsDocuments.Where(d => d.Blocked != "1").Count() > 0) // moran 2.6.16 - AMI-56624
                 {
+                    AppendLogLine("In the if  this._LogitudeCommDecFile.CustomsDocuments  905" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                     var myCustomsDocumentQueryService = new CustomsDocumentQueryService(dbContext);
                     var myCustomsDocumentPointerUpdateService = new CustomsDocumentPointerUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
                     var myCustomsDocumentsTicketUpdateService = new CustomsDocumentsTicketUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
@@ -633,15 +636,19 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 }
 
             this._LOGICUSTFILE = XmlGenericUtil<LOGICUSTFILE>.DeSerializeObject(xmlLOGICUSTFILE);
-            if (_LOGICUSTFILE.LogitudeCustomsFile == null || _LOGICUSTFILE.LogitudeCustomsFile.Length != 1)
+                AppendLogLine("before the else 905" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                if (_LOGICUSTFILE.LogitudeCustomsFile == null || _LOGICUSTFILE.LogitudeCustomsFile.Length != 1)
             {
                 MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                 MyGenericResponseObj.Message = "customFile.LogitudeCustomsFile.Length !=1 !!!";
             }
+               
             else
             {
-                this._AmitalCustomsFile = _LOGICUSTFILE.LogitudeCustomsFile[0];
-                if (_MyDeclarationPM.IsCourierDeclaration == true)
+                    AppendLogLine("in  the else 905" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                    this._AmitalCustomsFile = _LOGICUSTFILE.LogitudeCustomsFile[0];
+                    AppendLogLine("IF " + _MyDeclarationPM.IsCourierDeclaration + "==true    commdec service" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                    if (_MyDeclarationPM.IsCourierDeclaration == true)
                 {
                     UpdateNoIdUnder150();
                     CalcIsAutonomy();
@@ -664,10 +671,6 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                         if (this.IsAutonomy)
                     {
                         UpdateDeclarationPending("901");
-                    }
-                    if (_MyDeclarationPM.CasualImporterCountry!="IL" && this._AmitalCustomsFile.CreatedByUserId=="RMXORN")
-                    {
-                         UpdateDeclarationPending("905");
                     }
 
                     if(_LogitudeCommDecFile.Pendings != null)
