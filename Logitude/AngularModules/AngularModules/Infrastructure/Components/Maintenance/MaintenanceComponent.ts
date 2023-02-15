@@ -19,6 +19,7 @@ import { AmitalGatewayUtil } from '../../Utilities/AmitalGatewayUtil';
 import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
 //import {RecallClientsForCutoms} from '../../../Customs/Components/CustomsRequests/GeneralRequests/RecallClientsForCutoms';
 import { TextCodeTranslationPipe } from '../../../Controls/Pipes/TextCodeTranslationPipe';
+import { CustomizationPermissionService } from '../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
 
 @Component({
     
@@ -184,6 +185,12 @@ export class MaintenanceComponent {
 
             if (item.Code == "MTHT" || item.Code == "POGP") {
                 if (SessionLocator.Tenant == 0) {
+                    this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+                }
+            }
+
+            else if (item.Code == "DEPA" && !FeatureLocator.IsFeatureGrantedByUniqeCode("General.Customization.DeploymentPackage")) {
+                if (CustomizationPermissionService.HasFeaturePermession("General", "Customization.DeploymentPackage")) {
                     this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
                 }
             }

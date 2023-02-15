@@ -51,6 +51,7 @@ import { WorkFlowPMService } from 'Workflow/Services/StandardPMs/WorkFlowPMServi
 import { WorkFlowPM } from 'Workflow/EntityPMs/WorkFlowPM';
 import { TextCodeTranslationPipe } from '../../../Controls/Pipes/TextCodeTranslationPipe';
 import { QueryPM } from '../../EntityPMs/QueryPM';
+import { CustomizationPermissionService } from '../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
 
 @Component({
     templateUrl: './ListComponent.html',
@@ -674,12 +675,12 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
         this.NewButtonId = "NewButton_" + this.ObjectTableName;
 
-        if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "NEW", false) && !this.ObjectTable?.IsCustom) {
+        if (!this.CheckPermissions(this.ObjectTableName, "NEW", false) && !this.ObjectTable?.IsCustom) {
             this.IsNewEntityButtonDisabled = true;
         }
 
         if (this.ObjectTableName != "PortTimeZone") {
-            if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "READ", false)) {
+            if (!this.CheckPermissions(this.ObjectTableName, "READ", false)) {
                 this.HasPermition = false;
             }
         }
@@ -720,6 +721,13 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     }
 
+    public CheckPermissions(objectTableName: string, featureCode: string, showWindow: boolean) {
+        if (objectTableName == "DeploymentPackage")
+            return CustomizationPermissionService.HasEntityPermessions(objectTableName, featureCode, showWindow);
+        else {
+            return FeatureLocator.HasEntityPermessions(objectTableName, featureCode, showWindow);
+        }
+    }
 
 
     IsShowAddFromLibraryLink: boolean;
@@ -1068,15 +1076,25 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     public UserId: string = SessionInfo.LoggedUserId;
     public Tenant: number = SessionInfo.LoggedUserTenant;
+    CustomerCareDeploymentPackage(objectTableName : string){
+        if(objectTableName!="DeploymentPackage")
+            return false;
+        if(FeatureLocator.IsFeatureGrantedByUniqeCode("General.Customization.DeploymentPackage"))
+            return false;
+        if((SessionLocator.LoggedUserPM.IsCustomerCare || SessionLocator.LoggedUserPM.IsDistributor || ObjectsLocator.GlobalSetting.DeploymentStage == "Dev"))
+            return true;
+        return false;
+    }
     GetQueries() {
 
         var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
         allQueries = this.FilterQuerysByQuerySection(allQueries);
 
         this.Queries = allQueries.filter(x => x.UserId == null && x.SystemLevel == true);
-
+        if(this.ObjectTableName=="DeploymentPackage")
+            this.listArgs.DontCheckQueryFeature = true;
         if (!this.ObjectTable.IsClosed && !this.listArgs.DontCheckQueryFeature) {
-            this.Queries = allQueries.filter(x => (FeatureLocator.IsFeatureGrantedByUniqeCode(x.FeatureUniqeCode)));
+            this.Queries = allQueries.filter(x => (FeatureLocator.IsFeatureGrantedByUniqeCode(x.FeatureUniqeCode))|| this.CustomerCareDeploymentPackage(x.ObjectTableName) );
 
         }
         this.UserQueries = allQueries.filter(x => x.UserId != null && x.Tenant == SessionInfo.LoggedUserTenant);
@@ -1085,7 +1103,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Perspective == this.listArgs.Perspective)[0];
             this.SelectedQuery = allQueries.filter(f => f.Perspective == this.listArgs.Perspective)[0];
 
-            this.Queries = allQueries.filter(f => (f.UserId == null && (FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode) || this.ObjectTable?.IsCustom) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
+            this.Queries = allQueries.filter(f => (f.UserId == null && (FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode) || this.ObjectTable?.IsCustom ||this.CustomerCareDeploymentPackage(f.ObjectTableName)) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
         }
         else if (this.listArgs.Perspective != null && this.listArgs.IgnoreSelectedPerspective == true) {
             //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Code == this.QueryCode)[0];
@@ -1098,7 +1116,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             else {
                 this.SelectedQuery = allQueries.filter(f => f.UniqueCode == (this.ObjectTableName + (f.UserId != undefined ? "." + f.UserId : "") + '.' + this.QueryCode))[0];
             }
-            this.Queries = allQueries.filter(f => (f.UserId == null && FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
+            this.Queries = allQueries.filter(f => (f.UserId == null && (FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode)||this.CustomerCareDeploymentPackage(f.ObjectTableName)) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
         }
 
         else if (this.QueryCode) {
@@ -2876,7 +2894,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
         if (this.SelectedQuery != null) {
 
-            if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "NEW", true) && !this.ObjectTable?.IsCustom) {
+            if (!this.CheckPermissions(this.ObjectTableName, "NEW", true) && !this.ObjectTable?.IsCustom) {
                 return;
             }
 
@@ -3395,7 +3413,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     btnExcelCLicked() {
-        if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "READ", true)) {
+        if (!this.CheckPermissions(this.ObjectTableName, "READ", true)) {
             return;
         }
         else {
@@ -3434,7 +3452,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         if (this.CurrentQueryFilters == null) {
             this.CurrentQueryFilters = new ApiQueryFilters();
         }
-        if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "READ", true) && !this.ObjectTable?.IsCustom) {
+        if (!this.CheckPermissions(this.ObjectTableName, "READ", true) && !this.ObjectTable?.IsCustom) {
             return;
         }
         else {

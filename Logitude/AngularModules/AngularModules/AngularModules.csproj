@@ -2045,6 +2045,8 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\SubEntitiesComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\ExternalService\ClassicScreenLayoutService.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\SetWorkerRoleName\SetWorkerRoleNameComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\ExternalService\CustomizationObjectTableService.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\ExternalService\CustomizationPermissionService.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\EditTabs\AddCustomFieldsComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\EditTabs\CustomFieldsTabComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\EditTabs\DeploymentPackageGeneralTabComponent.ts" />
@@ -2052,6 +2054,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\NewEntity\AddNewDeploymentPackageComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\NewEntity\NewExportDeploymentPackageComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\NewEntity\NewImportDeploymentPackageComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\ExternalService\DeploymentPackagePermissionService.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\ModuleIInfrastructureDeploymentPackage.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocumentDefultAttachmentsComponent.ts" />
