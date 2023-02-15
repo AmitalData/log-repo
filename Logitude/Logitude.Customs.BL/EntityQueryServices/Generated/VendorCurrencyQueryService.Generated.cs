@@ -48,9 +48,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new VendorCurrencyDataMapping();
         }
 		 
-		public  VendorCurrencyPM GetSingle(string vendorid, int tenant, int linenumber, string currency,bool getComposition, bool getFromCache)
+		public  VendorCurrencyPM GetSingle(string vendorid, string currency,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new VendorCurrencyKeys(){ VendorId = vendorid, Tenant = tenant, LineNumber = linenumber, Currency = currency };
+             EntityKeys = new VendorCurrencyKeys(){ VendorId = vendorid, Currency = currency };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(VendorCurrency entityPOCO)
         {
-            VendorCurrencyKeys entityKeys = new VendorCurrencyKeys() { VendorId = entityPOCO.VendorId, Tenant = entityPOCO.Tenant, LineNumber = entityPOCO.LineNumber, Currency = entityPOCO.Currency,  };
+            VendorCurrencyKeys entityKeys = new VendorCurrencyKeys() { VendorId = entityPOCO.VendorId, Currency = entityPOCO.Currency,  };
             return entityKeys;
         }
      

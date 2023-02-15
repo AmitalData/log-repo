@@ -21,13 +21,13 @@ namespace Logitude.Customs.Data.EntityMapping
         { 
 			  this.ToTable("VendorCurrencies", "Customs");
 		
-		    this.HasKey(t => new { t.VendorId, t.Tenant, t.LineNumber, t.Currency });
+		    this.HasKey(t => new { t.VendorId, t.Currency });
 	 
             this.Property(t => t.VendorId).HasColumnName("VendorId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.Tenant).HasColumnName("Tenant").HasDatabaseGeneratedOption(null);
+            this.Property(t => t.Tenant).HasColumnName("Tenant");
 
-            this.Property(t => t.LineNumber).HasColumnName("LineNumber").HasDatabaseGeneratedOption(null);
+            this.Property(t => t.LineNumber).HasColumnName("LineNumber");
 
             this.Property(t => t.Currency).HasColumnName("Currency").HasMaxLength(3).IsUnicode(false);
         }

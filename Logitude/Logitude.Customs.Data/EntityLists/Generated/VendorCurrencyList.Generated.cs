@@ -16,12 +16,8 @@ namespace Logitude.Customs.Data.EntityLists
        [Key]
        [DataMember]
        public string VendorId  { get; set; }
-
-       [Key]
        [DataMember]
        public int Tenant  { get; set; }
-
-       [Key]
        [DataMember]
        public int LineNumber  { get; set; }
 

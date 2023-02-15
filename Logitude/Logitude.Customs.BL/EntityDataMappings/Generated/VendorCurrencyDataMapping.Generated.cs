@@ -43,7 +43,17 @@ namespace Logitude.Customs.BL.EntityDataMappings
     
 	    public void PMToPOCO(VendorCurrencyPM entityPM, VendorCurrency entityPOCO)
         {
-			 }
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LineNumber))
+            {
+				entityPOCO.LineNumber = entityPM.LineNumber;
+			}
+			}
 
 		public void POCOToPM(VendorCurrencyPM entityPM, VendorCurrency entityPOCO)
         {
@@ -74,6 +84,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LineNumber))
+            {
+                oldEntityPM.LineNumber = entityPM.LineNumber;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(VendorCurrencyPM entityPM)
