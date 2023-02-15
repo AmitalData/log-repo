@@ -153,7 +153,7 @@ export class CachedDataManager {
             if (key.indexOf("_CachedData_") != -1) {
                 var m: Array<string> = key.split('_'); 
                 var storedTenant: number = +(m[m.length - 1]);
-                if (storedTenant != SessionInfo.LoggedUserTenant) {
+                if (storedTenant != SessionInfo.LoggedUserTenant || SessionLocator.UseMemoryCachedData) {
                     LocalStorageManager.RemoveItem(key);
                     console.log(key + " deleted from local storage");
                 }
