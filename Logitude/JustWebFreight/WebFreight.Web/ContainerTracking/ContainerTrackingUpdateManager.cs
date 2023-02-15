@@ -254,6 +254,7 @@ namespace WebFreight.Web.ContainerTracking
                 var shipmentLocation = shipmentPM.OnCarriageToPortId;
                 var location = "On Carriage";
                 AddNotSameLocationDiscrepancy(containerLocation, shipmentLocation, location);
+                return;
             }
             
             shipmentPM.OnCarriageETA = containerPM.OnCarriageETA;
