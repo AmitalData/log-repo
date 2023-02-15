@@ -213,13 +213,14 @@ export class CustomsItemDetailsQueryComponent
                 this.FullClassification = this.ResponseData?.CustomsItemList[0]?.fullClassification
                 this.CustomsBookTypeName = this.ResponseData?.CustomsItemList[0]?.customsBookTypeName;
                 this.GoodsDescription = this.ResponseData?.CustomsItemList[0]?.goodsDescription
-                this.StatisticMeasurementUnitCode = this.ResponseData?.CustomsItemList[0]?.statisticMeasurementUnitCode.toString();
+                this.StatisticMeasurementUnitCode = this.ResponseData?.CustomsItemList[0]?.statisticMeasurementUnitCode?.toString();
                 this.IsDiscountCode = this.ResponseData?.CustomsItemList[0]?.isDiscountCode;
 
                 this.MyLastCustomsRequestSheetId = currRequestParams.PBId;
                 this.OnMassageDisplayMethod();
             }
             ).catch((err) => {
+                
                 this.ValidationErrorsList.push(err);
             });
 
