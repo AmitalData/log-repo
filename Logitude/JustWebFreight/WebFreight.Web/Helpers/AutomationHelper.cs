@@ -173,7 +173,7 @@ namespace WebFreight.Web.Helpers
 
                 if (!string.IsNullOrEmpty(NotifyBackEmails) && emptyDefaultDocuments != null && emptyDefaultDocuments.Count() > 0)
                 {
-                    new AttachmentDocumentNotifyService(emptyDefaultDocuments, automation.Tenant, automation.Name).Execute(NotifyBackEmails, automationSendEmailArgs.EntityReference);
+                    new AttachmentDocumentNotifyService(emptyDefaultDocuments, automation.Tenant, automation.Name).Execute(NotifyBackEmails, automationSendEmailArgs);
                 }
 
             }
@@ -226,34 +226,34 @@ namespace WebFreight.Web.Helpers
             return objectTableeName;
         }
 
-        private string GetAutomationNotifyBackEmailBody(string automationName, string objectTableeName, List<string> notifyBackPartners)
+        private string GetAutomationNotifyBackEmailBody(string automationName, string objectTableName, List<string> notifyBackPartners)
         {
-            string emailString = "";
             bool isMoreThanOnePartner = notifyBackPartners.Count > 1;
-            emailString += "Automation " + automationName + " failed to be sent to the following ";
-            emailString += "partner" + (isMoreThanOnePartner ? "s " : " ") + string.Join(",", notifyBackPartners.ToArray());
-            if (isMoreThanOnePartner)
-            {
-                emailString = ReplaceLastOccurrence(emailString, ",", " and ");
-            }
-            emailString += " since "+ (isMoreThanOnePartner ? "they are" : "it is") +" not defined in " + objectTableeName + " level ";
-            emailString += "<br />";
             var currentTenant = new TenantManagementRepository().GetSingleTenantManagement(tenant);
-            emailString += "<div>Tenant Name: " + currentTenant?.Name + "(" + tenant + ")" + "</div><br>";
+            const string boldFontWeight = "bold";
+            const string redColor = "red";
+            const string blueColor = "#6082B6";
+            const string blackColor = "black";
 
-            emailString += "<div>Entity Number: " + entityReference + "</div><br>";
+            string emailString = "<span " + GetTextColorAndWeightStyle(blueColor, boldFontWeight) + ">" + automationName + "</span> Automation in ";
+            emailString += "<span " + GetTextColorAndWeightStyle(blueColor, boldFontWeight) + ">" + currentTenant?.Name + "</span>";
+            emailString += " failed to be sent to the following ";
+            emailString += "recipient" + (isMoreThanOnePartner ? "s for" : " for "); 
+            emailString += "<span " + GetTextColorAndWeightStyle(blackColor, boldFontWeight) + ">" + objectTableName + " number </span>";
+            emailString += "<span " + GetTextColorAndWeightStyle(blueColor, boldFontWeight) + ">" + entityReference + ":</span>";
+
+            emailString += "<div>";
+            foreach (string partner in notifyBackPartners)
+            {
+                emailString += "- " + partner + ": <span " + GetTextColorAndWeightStyle(redColor, boldFontWeight) + ">Since it is not defined in " + objectTableName + " level </span> <br />";
+            }
+            emailString += "</div>";
+
             return emailString;
         }
-
-        private string ReplaceLastOccurrence(string Source, string Find, string Replace)
+        private string GetTextColorAndWeightStyle(string color, string fontWeight)
         {
-            int place = Source.LastIndexOf(Find);
-
-            if (place == -1)
-                return Source;
-
-            string result = Source.Remove(place, Find.Length).Insert(place, Replace);
-            return result;
+            return "style=\"color:" + color + "; font-weight: " + fontWeight + ";\"";
         }
 
         public string AddAutomationToQueue(Automation automation, AutomationSendEmailArgs automationSendEmailArgs, AutomationDocumentResult automationDocumentResult)

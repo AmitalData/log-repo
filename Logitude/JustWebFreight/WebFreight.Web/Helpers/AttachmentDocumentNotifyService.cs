@@ -17,7 +17,9 @@ namespace WebFreight.Web.Helpers
         private List<DocumentDefultAttachment> documentDefultAttachment;
         private int tenant;
         private string automationName;
-        string entityReference;
+        private string entityReference;
+        private string objectTableName;
+
         public AttachmentDocumentNotifyService(List<DocumentDefultAttachment> documentDefultAttachment, int tenant, string automationName)
         {
             this.documentDefultAttachment = documentDefultAttachment.Where(d => !string.IsNullOrEmpty(d.DocumentTypeName)).ToList();
@@ -26,10 +28,11 @@ namespace WebFreight.Web.Helpers
             this.automationName = automationName;
         }
 
-        public void Execute(string notifyBackEmails, string entityReference)
+        public void Execute(string notifyBackEmails, AutomationSendEmailArgs automationSendEmailArgs)
         {
             if (documentDefultAttachment.Count() == 0) return;
-            this.entityReference = entityReference;
+            entityReference = automationSendEmailArgs.EntityReference;
+            objectTableName = automationSendEmailArgs.ObjectTableName;
             var emailParams = BuildEmailCommunicationParams(notifyBackEmails);
             Communications.AddEmailCommunicationLogQueue(emailParams, tenant);
 
@@ -73,30 +76,42 @@ namespace WebFreight.Web.Helpers
         }
         private string GetEmailBody()
         {
+            var currentTenant = new TenantManagementRepository().GetSingleTenantManagement(tenant);
+            const string boldFontWeight = "bold";
+            const string redColor = "red";
+            const string blueColor = "#6082B6";
+            const string blackColor = "black";
+
             bool isMoreThanOneDocument = documentDefultAttachment.Count > 1;
-            string emailString = "Automation " + this.automationName + " failed to send the following ";
-            emailString += "document" + (isMoreThanOneDocument ? "s :" : " :");
+
+            string emailString = "<span " + GetTextColorAndWeightStyle(blueColor, boldFontWeight) + ">" + this.automationName + "</span> Automation in ";
+            emailString += "<span " + GetTextColorAndWeightStyle(blueColor, boldFontWeight) + ">" + currentTenant?.Name + "</span>";
+            emailString += " failed to send the following ";
+            emailString += "document" + (isMoreThanOneDocument ? "s for " : " for ");
+            emailString += "<span " + GetTextColorAndWeightStyle(blackColor, boldFontWeight) + ">" + objectTableName + " number </span>";
+            emailString += "<span " + GetTextColorAndWeightStyle(blueColor, boldFontWeight) + ">" + entityReference + ":</span>";
+
+
             emailString += "<div>";
             foreach (DocumentDefultAttachment document in this.documentDefultAttachment)
             {
-                emailString += "- " + document.DocumentTypeName + ": "+ GetFailureReason(document.Type) +"<br>";
+                emailString += "- " + document.DocumentTypeName + ": <span "+ GetTextColorAndWeightStyle(redColor, boldFontWeight) + ">" + GetFailureReason(document.Type) + "</span> <br />";
             }
-            emailString += "</div> <br>";
-
-            var currentTenant = new TenantManagementRepository().GetSingleTenantManagement(tenant);
-            emailString += "<div>Tenant Name: " + currentTenant?.Name + "(" + tenant + ")" + "</div><br>";
-
-            emailString += "<div>Entity Number: " + entityReference + "</div><br>";
-
+            emailString += "</div>";
+           
             return emailString;
         }
         private string GetFailureReason(string documentType)
         {
-            if (string.IsNullOrEmpty(documentType)) return "";
             if (documentType == "DocOut") return "The Document is not printed";
             if (documentType == "DocIn") return "The Document is not uploaded";
-            return "";
+            return "The Document is not uploaded or The Document is not printed";
         }
+        private string GetTextColorAndWeightStyle(string color, string fontWeight)
+        {
+            return "style=\"color:" + color + "; font-weight: " + fontWeight + ";\"";
+        }
+
         private StringBuilder GetEmailTemplate()
         {
             StringBuilder HtmlTemplate = new StringBuilder();
