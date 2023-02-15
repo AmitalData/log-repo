@@ -59,7 +59,7 @@ namespace Simplog.Server.Infrastructure
             Database.Connection.StateChange += Connection_StateChange;
             ///this.Database.CommandTimeout = 240;
             InitLog();
-        } 
+        }
         public override int SaveChanges()
         {
             bool suppressThrow = false;
@@ -311,7 +311,7 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
             Database.Connection.StateChange += Connection_StateChange;
             InitLog();
         }
-        
+
         private void Connection_StateChange(object sender, StateChangeEventArgs args)
         {
             if (LogitudeSettings.System2RedirectFraction == 0)
@@ -335,14 +335,15 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
         {
             if (args.CurrentState == ConnectionState.Open && args.OriginalState != ConnectionState.Open)
             {
-                using (var command = Database.Connection.CreateCommand())
+                if (Transaction.Current != null)
                 {
-                    if (Transaction.Current == null)
+                    using (var command = Database.Connection.CreateCommand())
                     {
-                        command.CommandText = "SET TRANSACTION ISOLATION LEVEL SNAPSHOT";
-                    }
-                    else
-                    {
+
+                        //    command.CommandText = "SET TRANSACTION ISOLATION LEVEL SNAPSHOT";
+                        //}
+                        //else
+                        //{
                         switch (Transaction.Current.IsolationLevel)
                         {
                             case IsolationLevel.ReadCommitted:
@@ -359,10 +360,9 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
                                 break;
                             default:
                                 throw new ArgumentOutOfRangeException();
-                        }
+                        } 
+                        command.ExecuteNonQuery();
                     }
-
-                    command.ExecuteNonQuery();
                 }
             }
         }
