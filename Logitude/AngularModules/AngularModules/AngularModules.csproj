@@ -330,10 +330,12 @@
     <Content Include="Images\Charts\PieChart.png" />
     <Content Include="Images\Customization\queries.Selected.png" />
     <Content Include="Images\Customization\queries.png" />
+    <Content Include="Images\function.png" />
     <Content Include="Images\Icons\multi-print.png" />
     <Content Include="Images\Icons\MultiUpdate.png" />
     <Content Include="Images\Icons\WhatsApp.png" />
     <Content Include="Images\LoginScreen\LogBoxLogo.png" />
+    <Content Include="Images\math.png" />
     <Content Include="Images\Menu\AutomationBlueIcon.Gray.png" />
     <Content Include="Images\Menu\AutomationBlueIcon.png" />
     <Content Include="Images\Menu\AutomationBlueIcon.Selected.png" />
@@ -345,6 +347,7 @@
     <Content Include="Images\PrivateLabel\Background.png" />
     <Content Include="Images\problem.png" />
     <Content Include="Images\Update-Button.png" />
+    <Content Include="Images\variable.png" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\DWQueryBuilderBaseComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCommunications\Components\ReportExecutionLog\ReportExecutionLogErrorComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCommunications\Components\ReportExecutionLog\ReportExecutionLogMessageBodyComponent.html" />
@@ -8355,10 +8358,13 @@
     <TypeScriptCompile Include="Workflow\TreeLists\EntitiesTreeList.ts" />
     <TypeScriptCompile Include="Workflow\TreeLists\ExpressionsTreeList.ts" />
     <TypeScriptCompile Include="Workflow\TreeLists\FlowVariablesTreeList.ts" />
+    <TypeScriptCompile Include="Workflow\TreeLists\ObjectFieldsTreeList.ts" />
     <TypeScriptCompile Include="Workflow\TreeLists\OperatorsTreeList.ts" />
     <TypeScriptCompile Include="Workflow\TreeLists\SingleEditableEntitiesTreeList.ts" />
     <TypeScriptCompile Include="Workflow\Types\index.ts" />
     <TypeScriptCompile Include="Workflow\Utilities\ApiQueryFiltersBuilder.ts" />
+    <TypeScriptCompile Include="Workflow\Utilities\BlobDownloader.ts" />
+    <TypeScriptCompile Include="Workflow\Utilities\CompareVariableItemType.ts" />
     <TypeScriptCompile Include="Workflow\Utilities\Entities.ts" />
     <TypeScriptCompile Include="Workflow\Utilities\FieldType.ts" />
     <TypeScriptCompile Include="Workflow\Utilities\FlowReader.ts" />

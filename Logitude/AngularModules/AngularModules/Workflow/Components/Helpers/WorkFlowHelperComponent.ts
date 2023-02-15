@@ -8,17 +8,15 @@ import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
 export class WorkFlowHelperComponent implements OnInit {
 
     public SetWarningMessagesEventCode: string = "SetWorkflowWarningMessages";
-    public WarningMessagesTitle: string = "Review these warnings";
-    public WarningMessages: string[] = [];
-    public IsWarningMessagesOpened: boolean = false;
-    public ShowWarningMessages: boolean = false;
-
     public SetErrorMessagesEventCode: string = "SetWorkflowErrorMessages";
+    public WarningMessagesTitle: string = "Review these warnings";
     public ErrorMessagesTitle: string = "Fix these errors";
+    public WarningMessages: string[] = [];
     public ErrorMessages: string[] = [];
+    public IsWarningMessagesOpened: boolean = false;
     public IsErrorMessagesOpened: boolean = false;
-    public ShowErrorMessages: boolean = false;
-
+    public IsWarningMessagesDisplayed: boolean = false;
+    public IsErrorMessagesDisplayed: boolean = false;
     public IsClickInside: boolean = false;
 
     constructor(public entityArguments: EntityArgs) { }
@@ -49,26 +47,47 @@ export class WorkFlowHelperComponent implements OnInit {
     }
 
     handleSetWarningMessagesEvent(event: any) {
-        if (event && event.Code && event.Code === this.SetWarningMessagesEventCode) {
-            this.WarningMessages = event.Messages ? event.Messages.filter((message: any) => message && message !== "") : [];
-            this.ShowWarningMessages = this.WarningMessages && this.WarningMessages.length > 0;
+        if (this.isSetWarningMessagesEvent(event)) {
+            let warningMessages = this.getMessages(event);
+            this.IsWarningMessagesDisplayed = warningMessages && warningMessages.length > 0;
+            this.WarningMessages = warningMessages;
         }
     }
 
     handleSetErrorMessagesEvent(event: any) {
-        if (event && event.Code && event.Code === this.SetErrorMessagesEventCode) {
-            this.ErrorMessages = event.Messages ? event.Messages.filter((message: any) => message && message !== "") : [];
-            this.ShowErrorMessages = this.ErrorMessages && this.ErrorMessages.length > 0;
+        if (this.isSetErrorMessagesEvent(event)) {
+            let errorMessages = this.getMessages(event);
+            this.IsErrorMessagesDisplayed = errorMessages && errorMessages.length > 0;
+            this.ErrorMessages = errorMessages;
         }
+    }
+
+    isSetWarningMessagesEvent(event: any) {
+        return event && event.Code && event.Code === this.SetWarningMessagesEventCode;
+    }
+
+    isSetErrorMessagesEvent(event: any) {
+        return event && event.Code && event.Code === this.SetErrorMessagesEventCode;
+    }
+
+    getMessages(event: any) {
+        if (event && event.Messages) {
+            return event.Messages.filter((message: any) => message && message !== "") as string[];
+        }
+        return [];
     }
 
     toggleWarningMessages() {
         this.IsWarningMessagesOpened = !this.IsWarningMessagesOpened;
-        this.IsErrorMessagesOpened = this.IsWarningMessagesOpened ? false : this.IsErrorMessagesOpened;
+        if (this.IsWarningMessagesOpened) {
+            this.IsErrorMessagesOpened = false;
+        }
     }
 
     toggleErrorMessages() {
         this.IsErrorMessagesOpened = !this.IsErrorMessagesOpened;
-        this.IsWarningMessagesOpened = this.IsErrorMessagesOpened ? false : this.IsWarningMessagesOpened;
+        if (this.IsErrorMessagesOpened) {
+            this.IsWarningMessagesOpened = false;
+        }
     }
 }

@@ -19,14 +19,14 @@
         border-radius: 4px;
         position: fixed;
         top: 86px;
-        right: 128px;
+        right: 355px;
         z-index: 1;
         background-color: white;
         box-shadow: 0px 2px 5px rgb(0 0 0 / 15%);
     }
 
     .moved-warning-messages-container {
-        right: 156px;
+        right: 383px;
     }
 
     .messages-container:after {
@@ -100,15 +100,15 @@
     }
 </style>
 
-<table *ngIf="ShowWarningMessages || ShowErrorMessages" class="messages-table">
+<table *ngIf="IsWarningMessagesDisplayed || IsErrorMessagesDisplayed" class="messages-table">
     <tr>
         <td class="messages-table-cell">
 
-            <div class="messages-section" *ngIf="ShowWarningMessages">
+            <div class="messages-section" *ngIf="IsWarningMessagesDisplayed">
                 <img class="toggle-messages-icon" src="./Images/warning_notice.png" (click)="toggleWarningMessages()" />
 
                 <div *ngIf="IsWarningMessagesOpened" class="messages-container warning-messages-container"
-                    [ngClass]="{'moved-warning-messages-container' : ShowErrorMessages}">
+                    [ngClass]="{'moved-warning-messages-container' : IsErrorMessagesDisplayed}">
                     <div class="messages-title warning-messages-title">
                         {{WarningMessagesTitle}}
                     </div>
@@ -120,10 +120,10 @@
                 </div>
             </div>
 
-            <div *ngIf="ShowWarningMessages && ShowErrorMessages" class="split-block">
+            <div *ngIf="IsWarningMessagesDisplayed && IsErrorMessagesDisplayed" class="split-block">
             </div>
 
-            <div class="messages-section" *ngIf="ShowErrorMessages">
+            <div class="messages-section" *ngIf="IsErrorMessagesDisplayed">
                 <img class="toggle-messages-icon" src="./Images/problem.png" (click)="toggleErrorMessages()" />
 
                 <div *ngIf="IsErrorMessagesOpened" class="messages-container error-messages-container">

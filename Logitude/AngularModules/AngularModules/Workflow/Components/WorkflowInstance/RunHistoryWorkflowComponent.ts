@@ -118,8 +118,8 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
         if (event !== null && event.rowData !== null && (event.rowData.StatusCode === "COED" || event.rowData.StatusCode === "FAED")) {
             let isVariableHasPermission = FeatureLocator.HasFeaturePermession("WorkFlowInstance", "WorkFlowInstance.ShowVariables");
             let logWindow = new LogitudeWindow();
-            logWindow.Width = 960;
-            logWindow.Height = isVariableHasPermission ? 690 : 570;
+            logWindow.Width = 1100;
+            logWindow.Height = 800;
             logWindow.Title = "Instance Activities" + (isVariableHasPermission ? " And Variables" : '');
             logWindow.IsShowCloseButton = true
             let windowArgs: any = {};
