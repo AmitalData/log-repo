@@ -25,7 +25,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         VendorId, 
 	         Tenant, 
 	         LineNumber, 
-	         CurrencyType,
+	         Currency,
 	      }
 
 
@@ -35,7 +35,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         VendorId, 
 	         Tenant, 
 	         LineNumber, 
-	         CurrencyType,
+	         Currency,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -63,9 +63,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.LineNumber = entityPOCO.LineNumber;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CurrencyType))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Currency))
             {
-					entityPM.CurrencyType = entityPOCO.CurrencyType;
+					entityPM.Currency = entityPOCO.Currency;
             }
 
 		}

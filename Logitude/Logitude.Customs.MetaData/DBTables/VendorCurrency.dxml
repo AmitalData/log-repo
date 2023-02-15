@@ -27,9 +27,10 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="CurrencyType"
+    Name="Currency"
+    OldNames="CurrencyType"
     Type="varchar"
-    Size="2">
+    Size="3">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
@@ -40,7 +41,7 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="Customs" />
   <Relation
-    ForeignKeyColumn="CurrencyType"
+    ForeignKeyColumn="Currency"
     ReferencedTable="CurrencyTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />

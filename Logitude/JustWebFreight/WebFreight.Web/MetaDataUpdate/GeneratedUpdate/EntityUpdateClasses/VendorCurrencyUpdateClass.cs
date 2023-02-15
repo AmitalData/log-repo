@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class VendorCurrencyUpdateClass
    {  		
-		public const string HashString = "5d533fd528c43d06a26e1fc7cf76e9b9";
+		public const string HashString = "8e005ea4a7d75b6315719799fa5e2771";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "מטבעות ספק",
 			      				    DefaultText =  "Vendor Currency",
-			      				    Code =  "5b34",
+			      				    Code =  "f60f",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -170,6 +170,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "VendorId",
 					  						ListPropertyPath =  "VendorId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -229,6 +230,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "LineNumber",
 					  						ListPropertyPath =  "LineNumber",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -270,11 +272,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "CurrencyType",
+					 						FieldName =  "Currency",
 					  						ObjectTableName =  "Customs.VendorCurrency",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  2,
+					  						MaxLength =  3,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -282,14 +284,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  2,
+					  						SystemMaxLength =  3,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "CurrencyType",
-					  						ListPropertyPath =  "CurrencyType",
+					  						PMPropertyPath =  "Currency",
+					  						ListPropertyPath =  "Currency",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -306,11 +309,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "CurrencyType",
-					  						DefaultText =  "Currency Type",
+					  						FullFieldLable =  "Currency",
+					  						DefaultText =  "Currency",
 					  						FullLocalDefaultText =  "סוג מטבע",
-					  						ListFieldLable =  "CurrencyTypeListLable",
-					  						ListLableDefaultText =  "Currency Type",
+					  						ListFieldLable =  "CurrencyListLable",
+					  						ListLableDefaultText =  "Currency",
 					  						ListLocalDefaultText =  "סוג מטבע",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -334,7 +337,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable VendorCurrencyObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.VendorCurrency" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> VendorCurrencyObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.VendorCurrency").ToList();
+		       
+	      
+
+	         Screen VendorCurrencyCustomsVendorCurrencyHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "VendorCurrency.HeaderScreen", Name = "Customs.VendorCurrencyHeaderScreen", ObjectTableId = VendorCurrencyObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    VendorCurrencyObjectTable.HeaderScreenId = VendorCurrencyCustomsVendorCurrencyHeaderScreenScreen0.Id;
+		    VendorCurrencyObjectTable.HeaderScreenCode = VendorCurrencyCustomsVendorCurrencyHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

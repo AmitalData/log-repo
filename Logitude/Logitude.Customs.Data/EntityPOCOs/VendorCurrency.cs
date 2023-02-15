@@ -32,8 +32,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public int LineNumber { get; set; }
      [Key]
         [ForeignKey("CurrencyType")]
-        [Column("CurrencyType")]
-	    public string CurrencyType { get; set; }
+        [Column("Currency")]
+	    public string Currency { get; set; }
 	      
         public virtual CurrencyType CurrencyType { get; set; }
     }

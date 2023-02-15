@@ -24,7 +24,7 @@ namespace Logitude.Customs.Data.EntityKeys
 	  
 				 
 	    			   
-	  public string CurrencyType  { get; set; }
+	  public string Currency  { get; set; }
 	  
 				 
 	    			   
@@ -32,7 +32,7 @@ namespace Logitude.Customs.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-                 return VendorId+'_'+Tenant+'_'+LineNumber+'_'+CurrencyType ;
+                 return VendorId+'_'+Tenant+'_'+LineNumber+'_'+Currency ;
                  
       }
 

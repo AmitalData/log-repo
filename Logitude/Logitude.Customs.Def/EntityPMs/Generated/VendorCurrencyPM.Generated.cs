@@ -93,27 +93,27 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string currencyType ;
+	  private string currency ;
 	  
        [Key]
 	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string CurrencyType  
+       public string Currency  
 	   {
 	    
 	     get
 		{
-		   return currencyType;
+		   return currency;
 		 }
 		 set
 		 {
-		   if(currencyType != value)
+		   if(currency != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyType",OldValue=currencyType,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Currency",OldValue=currency,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   currencyType=value;
+		   currency=value;
 		   }
 			
 		 }

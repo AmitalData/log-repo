@@ -38,7 +38,7 @@
   ParentTableName="CustomsVendor"
   LocalDefaultText="&quot;מטבעות ספק&quot;"
   DefaultText="&quot;Vendor Currency&quot;"
-  Code="&quot;5b34&quot;"
+  Code="&quot;f60f&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -90,6 +90,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;VendorId&quot;"
     ListPropertyPath="&quot;VendorId&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -165,6 +166,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Tenant&quot;"
     ListPropertyPath="&quot;Tenant&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -237,6 +239,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;LineNumber&quot;"
     ListPropertyPath="&quot;LineNumber&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -286,15 +289,15 @@
     EnableFullscreenTextBox="false" />
   <field
     Id="&quot;ea490c20-4273-4300-8f5c-86b3fdb29046&quot;"
-    FieldName="&quot;CurrencyType&quot;"
-    OldNames="CurrencyType"
+    FieldName="&quot;Currency&quot;"
+    OldNames="CurrencyType,Currency"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;Customs.VendorCurrency&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="2"
+    MaxLength="3"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -303,14 +306,15 @@
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
-    SystemMaxLength="2"
+    SystemMaxLength="3"
     DisplayInList="true"
     IsCustomFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
-    PMPropertyPath="&quot;CurrencyType&quot;"
-    ListPropertyPath="&quot;CurrencyType&quot;"
+    PMPropertyPath="&quot;Currency&quot;"
+    ListPropertyPath="&quot;Currency&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -327,11 +331,11 @@
     DisplayInDocumentReferences="false"
     InActive="false"
     DisplayLongName="false"
-    FullFieldLable="&quot;CurrencyType&quot;"
-    DefaultText="&quot;Currency Type&quot;"
+    FullFieldLable="&quot;Currency&quot;"
+    DefaultText="&quot;Currency&quot;"
     FullLocalDefaultText="&quot;סוג מטבע&quot;"
-    ListFieldLable="&quot;CurrencyTypeListLable&quot;"
-    ListLableDefaultText="&quot;Currency Type&quot;"
+    ListFieldLable="&quot;CurrencyListLable&quot;"
+    ListLableDefaultText="&quot;Currency&quot;"
     ListLocalDefaultText="&quot;סוג מטבע&quot;"
     IsNullable="false"
     IsForeignKey="true"
@@ -360,6 +364,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;Customs.VendorCurrencyHeaderScreen&quot;"
+    ObjectTableName="&quot;Customs.VendorCurrency&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -388,6 +401,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />

@@ -27,7 +27,7 @@ namespace Logitude.Customs.Data.EntityLists
 
        [Key]
        [DataMember]
-       public string CurrencyType  { get; set; }
+       public string Currency  { get; set; }
    }
 
 }

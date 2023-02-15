@@ -50,7 +50,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 		
 		protected override EntityKeyFields GetKeys(VendorCurrencyPM entityPM)
         {
-            VendorCurrencyKeys entityKeys = new VendorCurrencyKeys() { VendorId = entityPM.VendorId, Tenant = entityPM.Tenant, LineNumber = entityPM.LineNumber, CurrencyType = entityPM.CurrencyType };
+            VendorCurrencyKeys entityKeys = new VendorCurrencyKeys() { VendorId = entityPM.VendorId, Tenant = entityPM.Tenant, LineNumber = entityPM.LineNumber, Currency = entityPM.Currency };
             return entityKeys;
         }
 
