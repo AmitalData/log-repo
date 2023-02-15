@@ -19,6 +19,7 @@ import { AmitalGatewayUtil } from '../../Utilities/AmitalGatewayUtil';
 import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
 //import {RecallClientsForCutoms} from '../../../Customs/Components/CustomsRequests/GeneralRequests/RecallClientsForCutoms';
 import { TextCodeTranslationPipe } from '../../../Controls/Pipes/TextCodeTranslationPipe';
+import { CustomizationPermissionService } from '../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
 
 @Component({
     
@@ -817,17 +818,10 @@ export class MaintenanceComponent {
         if (SessionLocator.Tenant == 261) {
             return true;
         }
-        if (FeatureLocator.HasFeaturePermession("General", "General.Features.CustomizationSettings") && this.UserHasCustomizationAccess()) {
+        if (CustomizationPermissionService.HasFeaturePermession("General", "General.Features.CustomizationSettings")) {
             return true;
         }
-        if (FeatureLocator.HasFeaturePermession("General", "General.Features.CustomizationSettings") && SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CUS")[0]) {
-            return true;
-        }
-        return false;
-    }
-
-    UserHasCustomizationAccess(): boolean {
-        if (SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting.DeploymentStage == "Dev" || SessionLocator.LoggedUserPM.IsDistributor) {
+        if (CustomizationPermissionService.HasFeaturePermession("General", "General.Features.CustomizationSettings") && CustomizationPermissionService.HasToggleFeaturePermession("CUS")) {
             return true;
         }
         return false;
@@ -838,7 +832,7 @@ export class MaintenanceComponent {
             return true;
         }
 
-        else if (FeatureLocator.HasFeaturePermession("General", "General.Features.Customization")) {
+        else if (CustomizationPermissionService.HasFeaturePermession("General", "General.Features.Customization")) {
             return true;
         }
         return false;
