@@ -18,6 +18,7 @@ using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.QuoteModel.Repositories;
+using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Azure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -35,11 +36,15 @@ namespace WebFreight.Web.Helpers
 {
     public class AutomationHelper
     {
+        private int tenant;
+        private string entityReference;
         public string ExecuteEmailAutomation(AutomationSendEmailArgs automationSendEmailArgs)
         {
             string comunicationLogId = string.Empty;
             List<Field> AutomationConditionFieldLists = automationSendEmailArgs.AutomationConditionFieldLists;
             Automation automation = automationSendEmailArgs.Automation;
+            tenant = automationSendEmailArgs.Tenant;
+            entityReference = automationSendEmailArgs.EntityReference;
 
             string objectTableName = automationSendEmailArgs.ObjectTableName;
 
@@ -168,7 +173,7 @@ namespace WebFreight.Web.Helpers
 
                 if (!string.IsNullOrEmpty(NotifyBackEmails) && emptyDefaultDocuments != null && emptyDefaultDocuments.Count() > 0)
                 {
-                    new AttachmentDocumentNotifyService(emptyDefaultDocuments, automation.Tenant, automation.Name).Execute(NotifyBackEmails);
+                    new AttachmentDocumentNotifyService(emptyDefaultDocuments, automation.Tenant, automation.Name).Execute(NotifyBackEmails, automationSendEmailArgs.EntityReference);
                 }
 
             }
@@ -232,6 +237,11 @@ namespace WebFreight.Web.Helpers
                 emailString = ReplaceLastOccurrence(emailString, ",", " and ");
             }
             emailString += " since "+ (isMoreThanOnePartner ? "they are" : "it is") +" not defined in " + objectTableeName + " level ";
+            emailString += "<br />";
+            var currentTenant = new TenantManagementRepository().GetSingleTenantManagement(tenant);
+            emailString += "<div>Tenant Name: " + currentTenant?.Name + "(" + tenant + ")" + "</div><br>";
+
+            emailString += "<div>Entity Number: " + entityReference + "</div><br>";
             return emailString;
         }
 

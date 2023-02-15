@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.Server.Tools;
 using Simplog.Data.Helpers;
+using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -16,19 +17,21 @@ namespace WebFreight.Web.Helpers
         private List<DocumentDefultAttachment> documentDefultAttachment;
         private int tenant;
         private string automationName;
-        public AttachmentDocumentNotifyService(List<DocumentDefultAttachment> documentDefultAttachment , int tenant, string automationName)
+        string entityReference;
+        public AttachmentDocumentNotifyService(List<DocumentDefultAttachment> documentDefultAttachment, int tenant, string automationName)
         {
             this.documentDefultAttachment = documentDefultAttachment.Where(d => !string.IsNullOrEmpty(d.DocumentTypeName)).ToList();
-        
+
             this.tenant = tenant;
             this.automationName = automationName;
         }
 
-        public void Execute(string notifyBackEmails)
+        public void Execute(string notifyBackEmails, string entityReference)
         {
             if (documentDefultAttachment.Count() == 0) return;
+            this.entityReference = entityReference;
             var emailParams = BuildEmailCommunicationParams(notifyBackEmails);
-            Communications.AddEmailCommunicationLogQueue(emailParams,tenant);
+            Communications.AddEmailCommunicationLogQueue(emailParams, tenant);
 
         }
 
@@ -69,18 +72,30 @@ namespace WebFreight.Web.Helpers
             return "Automation " + this.automationName + " :" + " Not Sent Documents";
         }
         private string GetEmailBody()
-     {
+        {
             bool isMoreThanOneDocument = documentDefultAttachment.Count > 1;
             string emailString = "Automation " + this.automationName + " failed to send the following ";
             emailString += "document" + (isMoreThanOneDocument ? "s :" : " :");
             emailString += "<div>";
             foreach (DocumentDefultAttachment document in this.documentDefultAttachment)
             {
-                emailString += "- " + document.DocumentTypeName + "<br>";
+                emailString += "- " + document.DocumentTypeName + ": "+ GetFailureReason(document.Type) +"<br>";
             }
+            emailString += "</div> <br>";
 
-            emailString += "</div>";
+            var currentTenant = new TenantManagementRepository().GetSingleTenantManagement(tenant);
+            emailString += "<div>Tenant Name: " + currentTenant?.Name + "(" + tenant + ")" + "</div><br>";
+
+            emailString += "<div>Entity Number: " + entityReference + "</div><br>";
+
             return emailString;
+        }
+        private string GetFailureReason(string documentType)
+        {
+            if (string.IsNullOrEmpty(documentType)) return "";
+            if (documentType == "DocOut") return "The Document is not printed";
+            if (documentType == "DocIn") return "The Document is not uploaded";
+            return "";
         }
         private StringBuilder GetEmailTemplate()
         {
@@ -93,6 +108,6 @@ namespace WebFreight.Web.Helpers
             HtmlTemplate.Append("<br /><br />");
             return HtmlTemplate;
         }
-  
+
     }
 }
