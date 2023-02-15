@@ -237,7 +237,7 @@ namespace WebFreight.Web.Helpers
 
             string emailString = "<span " + GetTextColorAndWeightStyle(blueColor, boldFontWeight) + ">" + automationName + "</span> Automation in ";
             emailString += "<span " + GetTextColorAndWeightStyle(blueColor, boldFontWeight) + ">" + currentTenant?.Name + "</span>";
-            emailString += " failed to be sent to the following ";
+            emailString += " company failed to be sent to the following ";
             emailString += "recipient" + (isMoreThanOnePartner ? "s for" : " for "); 
             emailString += "<span " + GetTextColorAndWeightStyle(blackColor, boldFontWeight) + ">" + objectTableName + " number </span>";
             emailString += "<span " + GetTextColorAndWeightStyle(blueColor, boldFontWeight) + ">" + entityReference + ":</span>";
