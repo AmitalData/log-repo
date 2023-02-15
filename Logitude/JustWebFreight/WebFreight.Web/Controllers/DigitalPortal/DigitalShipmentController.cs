@@ -75,9 +75,27 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     foreach (var item in objectFieldIds)
                     {
                         var blockedFields = helper.GitDigitalSecuritesFeilds(item.ObjectTableId, profileCode, tenant, true)
-                                                          .Where(a => !a.HasPermission)
-                                                          .Select(a => a.FieldCode)
-                                                          .ToList();
+                                                  .Where(a => !a.HasPermission)
+                                                  .Select(a => a.FieldCode)
+                                                  .ToList();
+
+                        if (item.ObjectTableName.Equals("Shipment", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            if (blockedFields.Contains("Shipment.VolumeInCBM"))
+                            {
+                                blockedFields.Add("Shipment.VolumeInCBF");
+                            }
+                            
+                            if (blockedFields.Contains("Shipment.ChargeableWeightInKG"))
+                            {
+                                blockedFields.Add("Shipment.ChargeableWeightInLB");
+                            }
+                            
+                            if (blockedFields.Contains("Shipment.GrossWeightInKG"))
+                            {
+                                blockedFields.Add("Shipment.GrossWeightInLB");
+                            }
+                        }
 
                         if (blockedFields.Any())
                         {
