@@ -122,38 +122,43 @@ namespace Simplog.Server.Infrastructure.DataContracts
 
         public object GetFieldValue(string dataType, object value)
         {
-            if (value == null || String.IsNullOrEmpty(value.ToString())) return null;
-            switch (dataType)
+            if (string.IsNullOrEmpty(dataType) || value == null || String.IsNullOrEmpty(value.ToString())) return null;
+            switch (dataType.ToLower())
             {
-                case "Text":
-                case "nText":
-                case "LookUp":
-                case "PickList":{  return value.ToString(); }
-                case "DateTime":
-                case "Date": { return Convert.ToDateTime(value); }
-                case "Decimal":
-                case "UnsDecimal":
+                case "text":
+                case "ntext":
+                case "lookup":
+                case "picklist":{  return value.ToString(); }
+                case "datetime":
+                case "date": { return Convert.ToDateTime(value); }
+                case "decimal":
+                case "unsdecimal":
                     {
                         decimal decimalValue = 0;
                         decimal.TryParse(value.ToString(), out decimalValue);
                         return decimalValue;
                     }
-                case "Integer":
-                case "UnsInteger":
+                case "integer":
+                case "unsinteger":
                     {
                         int intValue = 0;
                         int.TryParse(value.ToString(), out intValue);
                         return intValue;
                     }
                
-                case "Double":
-                case "SigDouble":
+                case "double":
+                case "sigdouble":
                     {
                         double doubleValue = 0;
                         double.TryParse(value.ToString(), out doubleValue);
                         return doubleValue;
                     }
-                case "boolean":{return value.ToString();}
+                case "boolean":
+                    {
+                        bool booleanValue = false;
+                        bool.TryParse(value.ToString(), out booleanValue);
+                        return booleanValue;
+                    }
                 default: { return (value != null ? value.ToString() : null); }
             }
         }

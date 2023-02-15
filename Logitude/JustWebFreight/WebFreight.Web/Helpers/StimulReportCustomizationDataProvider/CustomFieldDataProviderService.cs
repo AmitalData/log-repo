@@ -30,8 +30,6 @@ namespace WebFreight.Web.Helpers.StimulReportCustomizationDataProvider
 
         }
 
-        public CustomFieldDataProviderService(){}
-
         public void Set(object dataProvider)
         {
             if (fields.Where(d => d.IsCustom && !d.IsChild && !d.IsList).ToList().Count() == 0) return ;
