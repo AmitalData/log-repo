@@ -683,7 +683,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     ObjectTableRepository tableRepository = new ObjectTableRepository(tenant);
                     ObjectTable objectTable = tableRepository.GetSingleObjectTable(objecttableid, tenant, true);
 
-                    if (queryCode == "ARInvoice.All Invoices" && objectTable.Name == "ARInvoice")
+                    if (queryCode == "ARInvoice.All General Invoices" && objectTable != null && objectTable.Name == "ARInvoice")
                     {
                         queryColumns.RemoveAll(q =>
                             q.ObjectFieldName == "TotalVAT" ||
