@@ -1,4 +1,4 @@
-import { CustomaizationPermissionService } from "../../../ExternalService/CustomaizationPermissionService";
+import { CustomizationPermissionService } from "../../../ExternalService/CustomizationPermissionService";
 import { CustomizationMainMenuItem } from "./CustomizationMainMenuItem";
 
 declare var window: any;
@@ -27,7 +27,7 @@ export class CustomFieldsMainMenuItem extends CustomizationMainMenuItem {
         }
     }
     CheckFeaturePermission(args: any): boolean {
-        let IsShowCustomFields = CustomaizationPermissionService.HasFeaturePermession("General", "CustomFieldsCustomization");
+        let IsShowCustomFields = CustomizationPermissionService.HasFeaturePermession("General", "CustomFieldsCustomization");
         return (!args.IsObjectTableFilterEnabled || IsShowCustomFields || args.IsCustomFieldsMenue);
     }
 

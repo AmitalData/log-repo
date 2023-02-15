@@ -8,7 +8,7 @@ import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
-import { CustomaizationPermissionService } from '../../ExternalService/CustomaizationPermissionService';
+import { CustomizationPermissionService } from '../../ExternalService/CustomizationPermissionService';
 declare var window: any;
 
 @Component({
@@ -58,8 +58,8 @@ export class CustomizationMainComponent {
     IsCustomizationToggleActive: boolean;
     LoadPermessions() {
         this.IsObjectTableFilterEnabled = this.SetIsObjectTableFilterEnabled();
-        this.IsCustomizationToggleActive = CustomaizationPermissionService.HasToggleFeaturePermession("CUS");
-        this.IsEnabledCreatingCustomObjects = CustomaizationPermissionService.HasFeaturePermession("General", "Customization.CreateObjects");
+        this.IsCustomizationToggleActive = CustomizationPermissionService.HasToggleFeaturePermession("CUS");
+        this.IsEnabledCreatingCustomObjects = CustomizationPermissionService.HasFeaturePermession("General", "Customization.CreateObjects");
     }
 
     SetIsObjectTableFilterEnabled(): boolean {
@@ -119,7 +119,7 @@ export class CustomizationMainComponent {
     }
 
     HasEntityPermessions(objectTable) {
-        return CustomaizationPermissionService.HasEntityPermessions(objectTable.Name, "READ", false) && objectTable.ParentObjectTableId == null;
+        return CustomizationPermissionService.HasEntityPermessions(objectTable.Name, "READ", false) && objectTable.ParentObjectTableId == null;
     }
 
     ShowPackageMessage() {

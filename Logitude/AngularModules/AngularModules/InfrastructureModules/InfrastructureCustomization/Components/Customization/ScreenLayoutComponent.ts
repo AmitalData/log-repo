@@ -27,7 +27,7 @@ import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { Guid } from '../../../../Infrastructure/Utilities/Guid';
 import { CustomizationEditComponent } from './CustomizationEditComponent';
 import { GridScreenLayoutService } from '../../ExternalService/GridScreenLayoutService';
-import { CustomaizationPermissionService } from '../../ExternalService/CustomaizationPermissionService';
+import { CustomizationPermissionService } from '../../ExternalService/CustomizationPermissionService';
 
 
 
@@ -83,7 +83,7 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
         this.myService = new EntityResourceService();
         this.myGeneralService = new GeneralDomainService();
         this.loginService = new LoginService();
-        this.IsEnabledCreatingSubCustomObjects = CustomaizationPermissionService.HasFeaturePermession("General", "Customization.CreateSubObjects");
+        this.IsEnabledCreatingSubCustomObjects = CustomizationPermissionService.HasFeaturePermession("General", "Customization.CreateSubObjects");
     }
 
     ngOnInit() {

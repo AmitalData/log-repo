@@ -7,8 +7,8 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { FieldsTranslations, GeneralDomainService } from '../../../../Infrastructure/Services/GeneralDomainService';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { CustomaizationPermissionService } from '../../ExternalService/CustomaizationPermissionService';
 import { CustomizationObjectTableService } from '../../ExternalService/CustomizationObjectTableService';
+import { CustomizationPermissionService } from '../../ExternalService/CustomizationPermissionService';
 import { CustomizationEditComponent } from './CustomizationEditComponent';
 
 declare var window: any;
@@ -51,7 +51,7 @@ export class SubEntitiesComponent {
     }
     GetCreatingCustomSubObjectPermission() {
         let isCustomObjectTable = this.ObjectTable.IsCustom && AppTool.IsNullOrEmpty(this.ObjectTable.ParentObjectTableId);
-        let creatCustomSubObjectPermission = CustomaizationPermissionService.HasFeaturePermession("General", "Customization.CreateSubObjects");
+        let creatCustomSubObjectPermission = CustomizationPermissionService.HasFeaturePermession("General", "Customization.CreateSubObjects");
         if (isCustomObjectTable) return creatCustomSubObjectPermission && this.ObjectTable.ObjectTableTypeCode == "BR";
         return creatCustomSubObjectPermission;
     }
