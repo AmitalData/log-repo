@@ -2720,9 +2720,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                         foreach (ARInvoice myInvoice in allInvoices)
                         {
+                            ValidateConstituentInvoiceConcurrency(myInvoice, entityPM.ConstituentInvoices.FirstOrDefault(x=> x.Id == myInvoice.Id));
                             myInvoice.IsClosed = true;
                             myInvoice.StatusCode = "CN";
                             myInvoice.ConsolidationInvoiceId = entityPM.Id;
+                            myInvoice.ConcurrencyGUID = Guid.NewGuid().ToString();
                             invoiceRepository.Update(myInvoice);
 
                             EventTracer.CreateTraceEvent(new EventTracerArgs()
