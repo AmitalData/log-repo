@@ -712,7 +712,7 @@ export class CustomerMenuButtonsHandler {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 1100;
         logWindow.Height = 570;
-        logWindow.Title = this.ObjectTableName == "Card" ? "Invite Partners" : "Invite Customers";
+        logWindow.Title = this.ObjectTableName == "Card" ? "Invite Partners" : "Invite Contacts";
         logWindow.WindowArgs = windowArgs;
         logWindow.IsShowCloseButton = true;
         logWindow.Show('./SharedLogistics/Components/InviteCustomersComponent');
