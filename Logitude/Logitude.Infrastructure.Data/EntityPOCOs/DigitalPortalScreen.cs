@@ -45,6 +45,8 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public string ProfileId { get; set; }
 	      
         public virtual DigitalProfile DigitalProfile { get; set; }
+        [Column("IsList")]
+	    public bool IsList { get; set; }
     }
 }
 	 

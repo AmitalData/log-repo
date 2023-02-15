@@ -888,7 +888,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                SetPermissonFieldValue("Shipment", "Shipment.MainCarriageATA", shipment.MainCarriageATA)
                                :
                                SetPermissonFieldValue("Shipment", "Shipment.MainCarriageETA", shipment.MainCarriageETA),
-
                 LoadingDate = shipment.MainCarriageATD != null ?
                                SetPermissonFieldValue("Shipment", "Shipment.MainCarriageATD", shipment.MainCarriageATD)
                                :
@@ -898,15 +897,22 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private string GetFromAddressForInlandDomestic(ShipmentPM shipment)
         {
-            if (shipment.InlandDomesticFromTypeCode == "PART")
+            if (CheckIsPermissonField("Shipment", "Shipment.InlandDomesticFromTypeCode")
+                 && CheckIsPermissonField("Shipment", "Shipment.MainCarriageFromAddressId")
+                 && shipment.InlandDomesticFromTypeCode == "PART")
             {
                 return GetFullAddressByPartnerId(shipment.MainCarriageFromAddressId);
             }
-            else if (shipment.InlandDomesticFromTypeCode == "PORT")
+            else if (CheckIsPermissonField("Shipment", "Shipment.InlandDomesticFromTypeCode")
+                     && shipment.InlandDomesticFromTypeCode == "PORT")
             {
-                return shipment.MainCarriageFromPortCode + ", " + shipment.MainCarriageFromPortCountryCode;
+                return (CheckIsPermissonField("Shipment", "Shipment.MainCarriageFromPortCode") ? $"{shipment.MainCarriageFromPortCode}, " : "") 
+                        + (CheckIsPermissonField("Shipment", "Shipment.MainCarriageFromPortCountryCode") ? shipment.MainCarriageFromPortCountryCode : "");
             }
-            else if (shipment.InlandDomesticFromTypeCode == "CASL")
+            else if (CheckIsPermissonField("Shipment", "Shipment.InlandDomesticFromTypeCode")
+                     && CheckIsPermissonField("Shipment", "Shipment.InlandDomesticFromCountryId")
+                     && CheckIsPermissonField("Shipment", "Shipment.InlandDomesticFromCity")
+                     && shipment.InlandDomesticFromTypeCode == "CASL")
             {
                 return this.GetFullAddressByCASLAddress(shipment.InlandDomesticFromCountryId, shipment.InlandDomesticFromCity);
             }
@@ -916,15 +922,22 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private string GetToAddressForInlandDomestic(ShipmentPM shipment)
         {
-            if (shipment.InlandDomesticToTypeCode == "PART")
+            if (CheckIsPermissonField("Shipment", "Shipment.InlandDomesticToTypeCode")
+                && CheckIsPermissonField("Shipment", "Shipment.MainCarriageToAddressId")
+                && shipment.InlandDomesticToTypeCode == "PART")
             {
                 return GetFullAddressByPartnerId(shipment.MainCarriageToAddressId);
             }
-            else if (shipment.InlandDomesticToTypeCode == "PORT")
+            else if (CheckIsPermissonField("Shipment", "Shipment.InlandDomesticToTypeCode")
+                     && shipment.InlandDomesticToTypeCode == "PORT")
             {
-                return shipment.MainCarriageToPortCode + ", " + shipment.MainCarriageToPortCountryCode;
+                return (CheckIsPermissonField("Shipment", "Shipment.MainCarriageToPortCode") ? $"{shipment.MainCarriageToPortCode}, " : "")
+                        + (CheckIsPermissonField("Shipment", "Shipment.MainCarriageToPortCountryCode") ? shipment.MainCarriageToPortCountryCode : "");
             }
-            else if (shipment.InlandDomesticToTypeCode == "CASL")
+            else if (CheckIsPermissonField("Shipment", "Shipment.InlandDomesticToTypeCode")
+                     && CheckIsPermissonField("Shipment", "Shipment.InlandDomesticToCountryId")
+                     && CheckIsPermissonField("Shipment", "Shipment.InlandDomesticToCity")
+                     && shipment.InlandDomesticToTypeCode == "CASL")
             {
                 return this.GetFullAddressByCASLAddress(shipment.InlandDomesticToCountryId, shipment.InlandDomesticToCity);
             }
@@ -1225,8 +1238,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                               SetPermissonFieldValue("ShipmentPickUpDelivery", "ShipmentPickUpDelivery.ATA", firstPickup.ATA)
                               :
                               SetPermissonFieldValue("ShipmentPickUpDelivery", "ShipmentPickUpDelivery.ETA", firstPickup.ETA),
-                ArrivalDateType = firstPickup.ATA != null ? "ATA" : (firstPickup.ETA != null ? "ETA" : null),
-                DepartureDateType = firstPickup.ATD != null ? "ATD" : (firstPickup.ETD != null ? "ETD" : null),
+                ArrivalDateType = CheckIsPermissonField("ShipmentPickUpDelivery", "ShipmentPickUpDelivery.ATA") && firstPickup.ATA != null 
+                                  ? "ATA" 
+                                  : (CheckIsPermissonField("ShipmentPickUpDelivery", "ShipmentPickUpDelivery.ETA") && firstPickup.ETA != null 
+                                     ? "ETA" 
+                                     : null),
+                DepartureDateType = CheckIsPermissonField("ShipmentPickUpDelivery", "ShipmentPickUpDelivery.ATD") && firstPickup.ATD != null 
+                                    ? "ATD" 
+                                    : (CheckIsPermissonField("ShipmentPickUpDelivery", "ShipmentPickUpDelivery.ETD") && firstPickup.ETD != null 
+                                        ? "ETD" 
+                                        : null),
                 Carrier = SetPermissonFieldValue("Trucker", "Trucker.EnglishName", trucker?.EnglishName),
                 CarrierNumber = SetPermissonFieldValue("ShipmentPickUpDelivery", "ShipmentPickUpDelivery.PickUpDeliveryNumber", firstPickup.CarrierNumber),
                 CarrierNumberLabel = "ShipmentPickUpDelivery.PickUpDeliveryNumber",
