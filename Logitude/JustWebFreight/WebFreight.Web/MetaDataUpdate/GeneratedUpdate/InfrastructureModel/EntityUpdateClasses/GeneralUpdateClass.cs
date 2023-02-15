@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "56e861a65db781aaa4ee744a69140d8e";
+		public const string HashString = "3aa6c8b7cf717adcf4b870952a31f39f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -127,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "72a7",
+			      				    Code =  "a937",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -2726,7 +2726,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralMHContainers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Containers", DefaultText = "Containers",LocalDefaultText = @"Containers", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_AccountingGeneralOSigneds = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Signeds", DefaultText = "Signed fields",LocalDefaultText = @"חתימה דיגיטלית", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_AccountingGeneralOSigneds = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Signeds", DefaultText = "Signed Fields",LocalDefaultText = @"חתימה דיגיטלית", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

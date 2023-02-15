@@ -569,9 +569,9 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         if(hsmToken.toString().length != 36 )
         
         {
-            this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, "HSMtoken must be 36 characters long and should be format like 8X-4X-4X-4X-12X");
+            this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, "HSM Token must be 36 characters long and should be format like 8X-4X-4X-4X-12X");
         } else if(!this.ValidateFormatHSMToken(hsmToken)) {
-            this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, "HSMtoken should be format like 8X-4X-4X-4X-12X");
+            this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, "HSM Token should be format like 8X-4X-4X-4X-12X");
 
         } else {
             this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, true, "");
@@ -581,10 +581,11 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     
     ValidateFormatHSMToken(hsmToken){
 
+        
         if(hsmToken.toString().length == 36 && (hsmToken.toString().indexOf('-') == this.indexHyphenSholudInHSMTokken[0]
         && hsmToken.toString().indexOf('-',this.indexHyphenSholudInHSMTokken[0]+1) == this.indexHyphenSholudInHSMTokken[1]
         && hsmToken.toString().indexOf('-',this.indexHyphenSholudInHSMTokken[1]+1) == this.indexHyphenSholudInHSMTokken[2]
-        && hsmToken.toString().indexOf('-',this.indexHyphenSholudInHSMTokken[2]+1) == this.indexHyphenSholudInHSMTokken[3])
+        && (hsmToken.toString().indexOf('-',this.indexHyphenSholudInHSMTokken[2]+1) == this.indexHyphenSholudInHSMTokken[3]) && hsmToken.toString().indexOf('-',this.indexHyphenSholudInHSMTokken[3]+1) == -1)
         ) {
            return true
         } else {
@@ -597,7 +598,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     set HSMaddress(hsmAddress:string){
         
         if(hsmAddress.toString().length >= 50) {
-            this.UIProperties.SetValidity("HSMaddress", this.ObjectTableName, false, "HSMaddress must be 50 characters long");
+            this.UIProperties.SetValidity("HSMaddress", this.ObjectTableName, false, "HSM Address must be 50 characters long");
         } else {
             this.UIProperties.SetValidity("HSMaddress", this.ObjectTableName, true, "");
         }
@@ -621,20 +622,20 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             this.UIProperties.SetValidity("HSM", this.ObjectTableName, false, "HSM must be 3 digits");
         }
         if(this.HSMtoken.toString().length != 36 ){
-            this.ValidationErrorsList.push("HSMtoken must be 36 characters long and should be format like 8X-4X-4X-4X-12X");
-            this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, "HSMtoken must be 36 characters long and should be format like 8X-4X-4X-4X-12X");
+            this.ValidationErrorsList.push("HSM Token must be 36 characters long and should be format like 8X-4X-4X-4X-12X");
+            this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, "HSM Token must be 36 characters long and should be format like 8X-4X-4X-4X-12X");
 
         }
 
         if(!this.ValidateFormatHSMToken(this.HSMtoken)) {
-            this.ValidationErrorsList.push("HSMtoken should be format like 8X-4X-4X-4X-12X");
-            this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, "HSMtoken should be format like 8X-4X-4X-4X-12X");
+            this.ValidationErrorsList.push("HSM Token should be format like 8X-4X-4X-4X-12X");
+            this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, "HSM Token should be format like 8X-4X-4X-4X-12X");
 
         }
 
         if(this.HSMaddress.toString().length >= 50) {
-            this.ValidationErrorsList.push("HSMaddress must be 50 characters long");
-            this.UIProperties.SetValidity("HSMaddress", this.ObjectTableName, false, "HSMaddress must be 50 characters long");
+            this.ValidationErrorsList.push("HSM Address must be 50 characters long");
+            this.UIProperties.SetValidity("HSMaddress", this.ObjectTableName, false, "HSM Address must be 50 characters long");
         }
         
     }

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class FullAccountingSettingUpdateClass
    {  		
-		public const string HashString = "9db80d11edb4e2507c7465d115815c5e";
+		public const string HashString = "d631f12edbbe5dd49547cbf6ff36c30d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -130,7 +130,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "הגדרות הנהלת חשבונות",
 			      				    DefaultText =  "Full Accounting Settings",
-			      				    Code =  "29bb",
+			      				    Code =  "d54d",
 			      				    Name =  "FullAccountingSetting Query Group",
 			      				    GenerateDomainService =  true,
 			      				    ClientModuleName =  "Accounting",
@@ -3683,7 +3683,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "HSM",
-					  						DefaultText =  "HSM tenant number ",
+					  						DefaultText =  "HSM Tenant Number ",
 					  						FullLocalDefaultText =  "קוד חברה שרת חתימות ",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -3803,7 +3803,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "HSMaddress",
-					  						DefaultText =  "HSMaddress",
+					  						DefaultText =  "HSM Address",
 					  						FullLocalDefaultText =  "כתובת שרת HSM",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
