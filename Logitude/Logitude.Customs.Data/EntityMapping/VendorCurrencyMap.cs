@@ -21,7 +21,7 @@ namespace Logitude.Customs.Data.EntityMapping
         { 
 			  this.ToTable("VendorCurrencies", "Customs");
 		
-		    this.HasKey(t => new { t.VendorId, t.Tenant, t.LineNumber, t.CurrencyType });
+		    this.HasKey(t => new { t.VendorId, t.Tenant, t.LineNumber, t.Currency });
 	 
             this.Property(t => t.VendorId).HasColumnName("VendorId").HasMaxLength(15).IsUnicode(false);
 
@@ -29,7 +29,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.LineNumber).HasColumnName("LineNumber").HasDatabaseGeneratedOption(null);
 
-            this.Property(t => t.CurrencyType).HasColumnName("CurrencyType").HasMaxLength(2).IsUnicode(false);
+            this.Property(t => t.Currency).HasColumnName("Currency").HasMaxLength(3).IsUnicode(false);
         }
     }
 }

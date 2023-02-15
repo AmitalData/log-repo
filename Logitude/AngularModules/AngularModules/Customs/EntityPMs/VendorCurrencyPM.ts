@@ -42,9 +42,9 @@ export class VendorCurrencyPM {
     public set LineNumber(newValue: number) { if (this.lineNumber != newValue) { this.lineNumber = newValue; this.MarkAsDirty("LineNumber"); } }
        
 	 
-    private currencyType: string;
-    public get CurrencyType() { return this.currencyType; }
-    public set CurrencyType(newValue: string) { if (this.currencyType != newValue) { this.currencyType = newValue; this.MarkAsDirty("CurrencyType"); } }
+    private currency: string;
+    public get Currency() { return this.currency; }
+    public set Currency(newValue: string) { if (this.currency != newValue) { this.currency = newValue; this.MarkAsDirty("Currency"); } }
        
 	 
 

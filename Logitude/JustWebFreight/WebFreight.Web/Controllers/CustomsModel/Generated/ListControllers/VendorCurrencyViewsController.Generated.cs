@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string vendorid, int tenant, int linenumber, string currencytype)
+        public HttpResponseMessage GetSingle(string vendorid, int tenant, int linenumber, string currency)
         {
 		  try
             {
@@ -61,7 +61,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 VendorCurrencyListQueryService vendorCurrencyQuery = new VendorCurrencyListQueryService(MyContext);
-                VendorCurrencyList vendorCurrencyList = vendorCurrencyQuery.GetSingle(vendorid, tenant, linenumber, currencytype);
+                VendorCurrencyList vendorCurrencyList = vendorCurrencyQuery.GetSingle(vendorid, tenant, linenumber, currency);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
                 return Request.CreateResponse(HttpStatusCode.OK,  vendorCurrencyList);
