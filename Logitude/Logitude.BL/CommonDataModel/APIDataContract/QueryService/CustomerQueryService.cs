@@ -1,16 +1,10 @@
-﻿using Logitude.Accounting.Def.EntityQueryServicesExt;
-using Logitude.BL.CommonDataModel.EntityLists;
-using Logitude.BL.CommonDataModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
-using Logitude.Server.Tools;
-using Microsoft.Practices.Unity;
 using Simplog.Data.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 {
@@ -298,12 +292,15 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 			myCustomer.PhoneNumber_Potential = mainAddress.PhoneNumber;
 		}
 
-		public List<Contact> GetCustomerContacts(string customerId)
+		public List<Contact> GetCustomerContacts(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Customer customer, int tenant)
         {
+			string customerId = customer?.Id;
+			string primaryContactId = customer?.PrimaryContact?.Id;
+			if (string.IsNullOrEmpty(customerId)) return null;
+
 			List<Contact> contacts = new List<Contact>();
 			ContactQuery entityQuery = new ContactQuery(tenant);
-			List<ContactList> result = entityQuery.GetContactListsbyCardId(customerId, tenant).ToList();
-
+			List<ContactPM> result = entityQuery.GetContactsbyCustomerId(customerId, tenant).ToList();
 			result.ForEach(item =>
 			{
 				contacts.Add(new Contact()
@@ -312,7 +309,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 					EnglishName = item.EnglishName,
 					BusinessPhone = item.BusinessPhone,
 					Mobile = item.Mobile,
-					//IsPrimaryContact = item.SetAsPrimaryForCard,
+					IsPrimaryContact = (primaryContactId == item.Id ? true: false),
 					Notes = item.Notes,
 					InActive = item.InActive,
 				});

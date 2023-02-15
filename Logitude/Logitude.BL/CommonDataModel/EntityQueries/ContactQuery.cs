@@ -2052,7 +2052,30 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  }).FirstOrDefault();
             return contact;
         }
-        
 
+        public IQueryable<ContactPM> GetContactsbyCustomerId(string id, int tenant)
+        {
+            CardContactRepository cardContactRepository = new CardContactRepository(tenant);
+            IQueryable<ContactPM> contacts = from a in cardContactRepository.context.CardContacts.Include("Contact")
+                                             where a.CardId == id && a.Tenant == tenant
+                                             select new ContactPM()
+                                             {
+                                                 BusinessPhone = a.Contact.BusinessPhone,
+                                                 Email = a.Contact.Email,
+                                                 EnglishName = a.Contact.EnglishName,
+                                                 Fax = a.Contact.Fax,
+                                                 Id = a.Contact.Id,
+                                                 InActive = a.Contact.InActive,
+                                                 LocalName = a.Contact.LocalName,
+                                                 Mobile = a.Contact.Mobile,
+                                                 Notes = a.Contact.Notes,
+                                                 Tenant = a.Contact.Tenant,
+                                                 CardId = id,
+                                                 Position = a.Contact.Position,
+                                                 CreateDate = a.Contact.CreateDate
+                                             };
+
+            return contacts;
+        }
     }
 }
