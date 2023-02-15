@@ -1,4 +1,6 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
+﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -11,11 +13,12 @@ namespace WebFreight.Web.ContainerTracking
     {
         private readonly PortRepository portRepository;
         private readonly int tenant;
-
+        private ContainerDiscrepancyService containerDiscrepancyService;
         public ContainerTrackingHelper(int tenant)
         {
             this.tenant = tenant;
             this.portRepository = new PortRepository(tenant);
+            this.containerDiscrepancyService = new ContainerDiscrepancyService(tenant);
         }
 
         public bool IsSameLocationUsingId(string entityPortId, string responsePortId)
@@ -67,6 +70,145 @@ namespace WebFreight.Web.ContainerTracking
         private Port GetPortById(string portId, int tenant)
         {
             return portRepository.GetSinglePort(portId, tenant);
+        }
+        public void AddContainerDiscrepancy(string code, ContainerPM containerPM, ShipmentPM shipmentPM)
+        {
+            if(code == "PreCarriage")
+            {
+                if (!IsSameLocationUsingId(containerPM.PreCarriageLocationPortId, shipmentPM.PreCarriageFromPortId))
+                {
+                    var shipmentLocation = shipmentPM.PreCarriageFromPortId;
+                    var containerLocation = containerPM.PreCarriageLocation;
+                    var location = "Pre Carriage";
+                    AddNotSameLocationDiscrepancy(containerPM, shipmentPM, containerLocation, shipmentLocation, location);
+                }
+
+                if (shipmentPM.PreCarriageATD != containerPM.PreCarriageATD)
+                {
+                    var discrepancyReason = $@"Shipment Pre Carriage ATD already has a value of {shipmentPM.PreCarriageATD} - did not update new container value {containerPM.PreCarriageATD}.";
+                    AddContainerDiscrepancyToService(containerPM, shipmentPM, discrepancyReason);
+                }
+            }
+
+            if (code == "OnCarriage")
+            {
+                if (!IsSameLocationUsingId(containerPM.OnCarriageLocationPortId, shipmentPM.OnCarriageToPortId))
+                {
+                    var containerLocation = containerPM.OnCarriageLocation;
+                    var shipmentLocation = shipmentPM.OnCarriageToPortId;
+                    var location = "On Carriage";
+                    AddNotSameLocationDiscrepancy(containerPM, shipmentPM, containerLocation, shipmentLocation, location);
+                }
+                if (shipmentPM.OnCarriageATA != containerPM.OnCarriageATA)
+                {
+                    var discrepancyReason = $@"Shipment On Carriage ATA already has a value of {shipmentPM.OnCarriageATA} - did not update new container value {containerPM.OnCarriageATA}.";
+                    AddContainerDiscrepancyToService(containerPM, shipmentPM, discrepancyReason);
+                }
+            }
+
+            if(code == "POLPreCarriage")
+            {
+                if (shipmentPM.PreCarriageATD != containerPM.ActualPOLVesselDeparture)
+                {
+                    var discrepancyReason = $@"Shipment Pre Carriage ATD already has a value of {shipmentPM.PreCarriageATD} - did not update new container value {containerPM.ActualPOLVesselDeparture}.";
+                    AddContainerDiscrepancyToService(containerPM, shipmentPM, discrepancyReason);
+                }
+            }
+
+            if (code == "POLMainCarriage")
+            {
+                if (shipmentPM.MainCarriageATD != containerPM.ActualPOLVesselDeparture)
+                {
+                    var discrepancyReason = $@"Shipment Main Carriage ATD already has a value of {shipmentPM.MainCarriageATD} - did not update new container value {containerPM.ActualPOLVesselDeparture}.";
+                    AddContainerDiscrepancyToService(containerPM, shipmentPM, discrepancyReason);
+                }
+            }
+            if(code == "PODOnCarriage")
+            {
+                if (shipmentPM.OnCarriageATA != containerPM.ActualPODVesselArrival)
+                {
+                    var discrepancyReason = $@"Shipment On Carriage ATA already has a value of {shipmentPM.OnCarriageATA} - did not update new container value {containerPM.ActualPODVesselArrival}.";
+                    AddContainerDiscrepancyToService(containerPM, shipmentPM, discrepancyReason);
+                }
+            }
+            if(code == "PODMainCarriage")
+            {
+                if (shipmentPM.MainCarriageATA != containerPM.ActualPODVesselArrival)
+                {
+                    var discrepancyReason = $@"Shipment Main Carriage ATA already has a value of {shipmentPM.MainCarriageATA} - did not update new container value {containerPM.ActualPODVesselArrival}.";
+                    AddContainerDiscrepancyToService(containerPM, shipmentPM, discrepancyReason);
+                }
+            }
+        }
+        public void AddDeliveryContainerDiscrepancy(ShipmentDeliveryPM delivery, ShipmentPM shipmentPM, ContainerPM containerPM)
+        {
+            if (delivery.ATA != containerPM.ActualEmptyReturn)
+            {
+                var discrepancyReason = $@"Actual Empty Return already has a value of {delivery.ATA} - did not update new container value {containerPM.ActualEmptyReturn}.";
+                AddContainerDiscrepancyToService(containerPM, shipmentPM, discrepancyReason);
+            }
+        }
+        public void AddTranshipmentDiscrepancyContainer(int? transshipmentLegIndex, string direction, ContainerPM containerPM, ShipmentPM shipmentPM, string portId, MilestoneDataUpdatedFields updatedFields)
+        {
+            if (!IsSameLocationUsingId((string)GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + "ToPortId"), portId))
+            {
+                AddNotSametransshipmentLegDiscrepancy(containerPM, shipmentPM, direction, transshipmentLegIndex, portId);
+            }
+            var transshipmentATAInShipment = GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + "ATA");
+            
+            if ((DateTime)transshipmentATAInShipment != updatedFields.ActualDate)
+            {
+                var discrepancyReason = $@"Transshipment{transshipmentLegIndex} ATA already has a value of {transshipmentATAInShipment} - did not update new container value {updatedFields.ActualDate}.";
+                AddContainerDiscrepancyToService(containerPM, shipmentPM, discrepancyReason);
+            }
+        }
+        private void AddNotSameLocationDiscrepancy(ContainerPM containerPM, ShipmentPM shipmentPM,string containerLocation, string shipmentLocation, string location)
+        {
+
+            var shipmentUnloCode = GetUnloCodeFromPortId(shipmentLocation);
+            var discrepancyReason = "Shipment " + location + " from port is empty - shipment ETD not updated.";
+            if (shipmentUnloCode != null)
+            {
+                discrepancyReason = $@"Shipment {location} from port {shipmentUnloCode} not equal to container {location} port {containerLocation} - shipment ETD not updated.";
+            }
+
+            AddContainerDiscrepancyToService(containerPM, shipmentPM, discrepancyReason);
+        }
+        private string GetUnloCodeFromPortId(string portId)
+        {
+            var newPort = GetPortById(portId, tenant);
+            if (newPort == null) return null;
+            var combineCode = newPort.CombinedCode;
+            return combineCode;
+
+        }
+        private void AddContainerDiscrepancyToService(ContainerPM containerPM, ShipmentPM shipmentPM, string reasonOfDiscrepancy)
+        {
+            this.containerDiscrepancyService = new ContainerDiscrepancyService(tenant);
+            this.containerDiscrepancyService.Create(containerPM, shipmentPM, reasonOfDiscrepancy);
+
+
+        }
+        private void AddNotSametransshipmentLegDiscrepancy(ContainerPM containerPM, ShipmentPM shipmentPM, string direction, int? transshipmentLegIndex, string portId)
+        {
+            var shipmentUnloCode = getTransshipmentUnloCode(shipmentPM, transshipmentLegIndex);
+            var discrepancyReason = $@"Transshipment{transshipmentLegIndex} {direction} port is Empty - shipment ETD not updated.";
+            var containerUnloCode = GetUnloCodeFromPortId(portId);
+
+            if (shipmentUnloCode != null) discrepancyReason = $@"Transshipment{transshipmentLegIndex} {direction} port {shipmentUnloCode} not equal to container Transshipment{transshipmentLegIndex} From port {containerUnloCode} - shipment ETA not updated.";
+
+            AddContainerDiscrepancyToService(containerPM, shipmentPM, discrepancyReason);
+        }
+        private string getTransshipmentUnloCode(ShipmentPM shipmentPM, int? transshipmentLegIndex)
+        {
+            if (transshipmentLegIndex == 1) return GetUnloCodeFromPortId(shipmentPM.Transshipment1FromPortId);
+            if (transshipmentLegIndex == 2) return GetUnloCodeFromPortId(shipmentPM.Transshipment2FromPortId);
+
+            return GetUnloCodeFromPortId(shipmentPM.Transshipment3FromPortId);
+        }
+        public static object GetPropValue(object src, string propName)
+        {
+            return src.GetType().GetProperty(propName).GetValue(src, null);
         }
     }
 }

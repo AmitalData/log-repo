@@ -43,7 +43,7 @@ namespace WebFreight.Web.ContainerTracking
         private string trackingSource;
         private ContainerUpdatedFields containerUpdatedFields;
         private ContainerTrackingHelper containerTrackingHelper;
-        private ContainerDiscrepancyService containerDiscrepancyService;
+        //private ContainerDiscrepancyService containerDiscrepancyService;
         private PortQuery portQuery;
         private PortRepository portRepository;
         public ContainerTrackingGeneralAnalyzer(string trackingSource, AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
@@ -223,54 +223,12 @@ namespace WebFreight.Web.ContainerTracking
         {
             if (shipment.IsOperationalClosed)            
                 return false;
-            
-            if (!containerTrackingHelper.IsSameLocation(shipment.MainCarriageFromPortId, containerUpdatedFields.POLLocation))
-            {
-                string location = "POL";
-                AddNotSameLocationDiscrepancy(container, shipment, location);
-                return false;
-            }            
-                
-            
-            if (!containerTrackingHelper.IsSameLocation(shipment.MainCarriageFinalDestinationPortId, containerUpdatedFields.PODLocation))
-            {
-                string location = "POD";
-                AddNotSameLocationDiscrepancy(container, shipment, location);
-                return false;
-            }           
-                            
-            
+
             return true;
         }
-        private void AddNotSameLocationDiscrepancy(ContainerPM container, ShipmentPM shipment, string location)
-        {
-            string shipmentLocation = shipment.MainCarriageFromPortId;
-            string containerLocation = container.PODLocation;
-            var shipmentUnloCode = GetUnloCodeFromPortId(shipmentLocation, container.Tenant);
-            var discrepancyReason = "Shipment Main Carriage from port is empty - shipment ETD not updated.";
-            if (shipmentUnloCode != null)
-            {
-                discrepancyReason = $@"Shipment Main Carriage from port {shipmentUnloCode} not equal to container {location} port {containerLocation} - shipment ETD not updated.";
-            }
+        
 
-            AddContainerDiscrepancy(container, shipment, discrepancyReason, container.Tenant);
-        }
-
-        private string GetUnloCodeFromPortId(string portId, int tenant)
-        {
-            var newPort = portQuery.GetSinglePM(portId, tenant);
-            if (newPort == null) return null;
-            var combineCode = newPort.CombinedCode;
-            return combineCode;
-
-        }
-        private void AddContainerDiscrepancy(ContainerPM containerPM, ShipmentPM shipmentPM, string reasonOfDiscrepancy, int tenant)
-        {
-            
-            this.containerDiscrepancyService = new ContainerDiscrepancyService(tenant);
-            this.containerDiscrepancyService.Create(containerPM, shipmentPM, reasonOfDiscrepancy);
-
-        }
+ 
         private bool IsValidToAnalyze(ShipmentPM shipment, ContainerPM container, ContainerTrackingRequest containerTrackingRequest)
         {
             return (
