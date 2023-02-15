@@ -18,7 +18,7 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 import { DashboardPMExtendedService, PinnedDashboard } from '../../../../DashboardModule/Services/ExtendedPMs/DashboardPMExtendedService';
 import { DashboardListExtendedService } from '../../../../DashboardModule/Services/ExtendedLists/DashboardListExtendedService';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
-import { UserPinnedDashboardPM } from 'DashboardModule/EntityPMs/UserPinnedDashboardPM';
+import { DashboardsUserSettingPM } from 'DashboardModule/EntityPMs/DashboardsUserSettingPM';
 import { AnalyticsFactsFieldsMetaDataPMExtendedService } from 'DashboardModule/Services/ExtendedPMs/AnalyticsFactsFieldsMetaDataExtendedService';
 import { AnalyticsFactsFieldsMetaDataPM } from 'DashboardModule/EntityPMs/AnalyticsFactsFieldsMetaDataPM';
 
@@ -47,7 +47,7 @@ export class CustomDashboardComponent extends BaseComponent {
     public SectionsItemsSource: CodeNameClass[];
     public SelectedFromDashboardDropDown: boolean = false;
     public PinnedDashboards: DashboardList[];
-    public UserPinnedDashboard: UserPinnedDashboardPM;
+    public DashboardsUserSetting: DashboardsUserSettingPM;
     private DashboardListExtendedService: DashboardListExtendedService;
     private AnalyticsFactsFieldsMetaDataPMExtendedService: AnalyticsFactsFieldsMetaDataPMExtendedService;
     public PresetFilters: AnalyticsFactsFieldsMetaDataPM[];
@@ -127,11 +127,11 @@ export class CustomDashboardComponent extends BaseComponent {
 
 
     GetPinnedDashboards() {
-        this.dashboardPMEstendedService.GetoggedUserPinnedDashboards(SessionLocator.LoggedUserId).subscribe((myResponse: ServiceResponse) => {
+        this.dashboardPMEstendedService.GetDashboardsUserSettings(SessionLocator.LoggedUserId).subscribe((myResponse: ServiceResponse) => {
             if (myResponse.HasError) return;
             SessionLocator.SelectedSession.StopBusyIndicator();
 
-            this.UserPinnedDashboard = myResponse.Result;
+            this.DashboardsUserSetting = myResponse.Result;
             if (myResponse.Result) {
                 this.PinnedDashboards = [];
                 var pinnedDashboards = (JSON.parse(myResponse.Result.Dashboards) as any[]) ?? [];
@@ -362,7 +362,7 @@ export class CustomDashboardComponent extends BaseComponent {
     }
 
     UnpinDashboardTabClicked(item: DashboardTab, close: boolean = false) {
-        this.dashboardPMEstendedService.UnpinDashboard(this.UserPinnedDashboard.Id, item.Dashboard.Id).subscribe((myResponse: ServiceResponse) => {
+        this.dashboardPMEstendedService.UnpinDashboard(this.DashboardsUserSetting.Id, item.Dashboard.Id).subscribe((myResponse: ServiceResponse) => {
             if (myResponse.HasError) return;
             const oldIndex = this.DashboardsTabs.indexOf(item, 0);
             let newIndex = this.DashboardsTabs.indexOf(this.DashboardsTabs.find(x => !x.IsPinned));
@@ -382,7 +382,7 @@ export class CustomDashboardComponent extends BaseComponent {
 
         this.dashboardPMEstendedService.PinDashboard(pinnedDashboard).subscribe((myResponse: ServiceResponse) => {
             if (myResponse.HasError) return;
-            this.UserPinnedDashboard = myResponse.Result;
+            this.DashboardsUserSetting = myResponse.Result;
 
             const oldIndex = this.DashboardsTabs.indexOf(item, 0);
             let newIndex = this.DashboardsTabs.indexOf(this.DashboardsTabs.find(x => !x.IsPinned));

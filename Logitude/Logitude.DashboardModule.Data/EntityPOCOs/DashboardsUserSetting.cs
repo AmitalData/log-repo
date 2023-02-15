@@ -14,7 +14,7 @@ using Simplog.Data.InvoiceModel.EntityPOCOs;
 namespace Logitude.DashboardModule.Data.EntityPOCOs
 {
    
-    public class UserPinnedDashboard
+    public class DashboardsUserSetting
     {
 	 string dbms;
 
@@ -28,8 +28,8 @@ namespace Logitude.DashboardModule.Data.EntityPOCOs
 	    public string UserId { get; set; }
 	      
         public virtual User User { get; set; }
-        [Column("Dashboards")]
-	    public string Dashboards { get; set; }
+        [Column("PinnedDashboards")]
+	    public string PinnedDashboards { get; set; }
     }
 }
 	 

@@ -12,68 +12,68 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.DashboardModule.Data.Repositories
 {
-   public partial class UserPinnedDashboardRepository:IRepository<UserPinnedDashboard>
+   public partial class DashboardsUserSettingRepository:IRepository<DashboardsUserSetting>
    {
    
         private IDashboardContext currentContext;
-        public UserPinnedDashboardRepository(int tenant)
+        public DashboardsUserSettingRepository(int tenant)
         {
             currentContext = DashboardContext.GetContext(tenant);
         }
 
-        public UserPinnedDashboardRepository(IDashboardContext context)
+        public DashboardsUserSettingRepository(IDashboardContext context)
         {
             currentContext = context;
         }
 
 		 
 		
-		public  UserPinnedDashboard GetSingle(string id, int tenant)
+		public  DashboardsUserSetting GetSingle(string id, int tenant)
         {
-            return (from a in context.UserPinnedDashboards
+            return (from a in context.DashboardsUserSettings
                     where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
-        public IQueryable<UserPinnedDashboard> GetAll(int tenant)
+        public IQueryable<DashboardsUserSetting> GetAll(int tenant)
         {
-            return from a in context.UserPinnedDashboards  
+            return from a in context.DashboardsUserSettings  
                    where a.Tenant == tenant
                    select a;
         }
 				 
-        public UserPinnedDashboard GetSingle(EntityKeyFields entityKeys)
+        public DashboardsUserSetting GetSingle(EntityKeyFields entityKeys)
         {
-            UserPinnedDashboardKeys keys = entityKeys as UserPinnedDashboardKeys;
-            return (from a in context.UserPinnedDashboards
+            DashboardsUserSettingKeys keys = entityKeys as DashboardsUserSettingKeys;
+            return (from a in context.DashboardsUserSettings
                     where a.Id == keys.Id
                     select a).FirstOrDefault();
         }
 		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
-        public void Add(UserPinnedDashboard entity)
+        public void Add(DashboardsUserSetting entity)
         {
             onAdd();
-            context.UserPinnedDashboards.Add(entity);
+            context.DashboardsUserSettings.Add(entity);
         }
 
-        public void Remove(UserPinnedDashboard entity)
+        public void Remove(DashboardsUserSetting entity)
         {
-            context.UserPinnedDashboards.Attach(entity);
-            context.UserPinnedDashboards.Remove(entity);
+            context.DashboardsUserSettings.Attach(entity);
+            context.DashboardsUserSettings.Remove(entity);
         }
 
         partial void onUpdate();//Partial Methods Definition in Generated
-        public void Update(UserPinnedDashboard entity)
+        public void Update(DashboardsUserSetting entity)
         {
             onUpdate();
-            context.UserPinnedDashboards.Attach(entity);
+            context.DashboardsUserSettings.Attach(entity);
             context.SetAsModified(entity);
         }
 
-        public List<UserPinnedDashboard> All()
+        public List<DashboardsUserSetting> All()
         {
-            return context.UserPinnedDashboards.ToList();
+            return context.DashboardsUserSettings.ToList();
         }
 
         private IDashboardContext context

@@ -10,7 +10,7 @@ using Simplog.Server.Infrastructure;
   
 namespace Logitude.DashboardModule.Data.EntityKeys
 {
-   public partial class UserPinnedDashboardKeys : EntityKeyFields
+   public partial class DashboardsUserSettingKeys : EntityKeyFields
    {
    	  public string Id  { get; set; }
 	  
@@ -26,7 +26,7 @@ namespace Logitude.DashboardModule.Data.EntityKeys
 
       public override string GetEntityPMName()
       {
-          return "UserPinnedDashboardPM";
+          return "DashboardsUserSettingPM";
       }
 	 
    }

@@ -19,17 +19,17 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
-import {UserPinnedDashboardList} from '../../EntityLists/UserPinnedDashboardList';
+import {DashboardsUserSettingList} from '../../EntityLists/DashboardsUserSettingList';
 
 @Injectable()
 
-export class UserPinnedDashboardListService {
+export class DashboardsUserSettingListService {
 	private _http: HttpClient;
     private _apiUrl: string;   
-	public static CachedData: Array<UserPinnedDashboardList> = [];
+	public static CachedData: Array<DashboardsUserSettingList> = [];
     constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/userpinneddashboardviews';  
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/dashboardsusersettingviews';  
     }
 
 	getSingle(id: string) {
@@ -42,7 +42,7 @@ export class UserPinnedDashboardListService {
 					map((response: HttpResponse<any>) => {
 
 						var list = response.body;                   
-						var entity: UserPinnedDashboardList;
+						var entity: DashboardsUserSettingList;
 						if (list) {
 							entity = this.MapJsonToEntityList(list);
 						}   
@@ -52,7 +52,7 @@ export class UserPinnedDashboardListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "UserPinnedDashboard", "GetSingleList", 'id=' + id); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DashboardsUserSetting", "GetSingleList", 'id=' + id); 
 
 						return serviceResponse;
 					}),
@@ -71,10 +71,10 @@ export class UserPinnedDashboardListService {
 					map((response: HttpResponse<any>) => {
 
 						var allLists = response.body;
-						var _mappedListsArray: Array<UserPinnedDashboardList> = [];
+						var _mappedListsArray: Array<DashboardsUserSettingList> = [];
 						if (allLists) {
 							for (var key in allLists) {				
-								var entity: UserPinnedDashboardList = this.MapJsonToEntityList(allLists[key]);
+								var entity: DashboardsUserSettingList = this.MapJsonToEntityList(allLists[key]);
 								_mappedListsArray.push(entity);
 							}
 						}
@@ -84,7 +84,7 @@ export class UserPinnedDashboardListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "UserPinnedDashboard", "GetAllLists", ""); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DashboardsUserSetting", "GetAllLists", ""); 
 
 						return serviceResponse;
 					}),
@@ -139,11 +139,11 @@ export class UserPinnedDashboardListService {
 					map((response: HttpResponse<any>) => {
 
 						var serviceResponse: ServiceResponse = response.body;
-						var _mappedListsArray: Array<UserPinnedDashboardList> = [];
+						var _mappedListsArray: Array<DashboardsUserSettingList> = [];
 
 						if (serviceResponse.Result) {
 							for (var key in serviceResponse.Result) {				
-								var entity: UserPinnedDashboardList = this.MapJsonToEntityList(serviceResponse.Result[key]);
+								var entity: DashboardsUserSettingList = this.MapJsonToEntityList(serviceResponse.Result[key]);
 								_mappedListsArray.push(entity);
 							}
 						}   
@@ -152,7 +152,7 @@ export class UserPinnedDashboardListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "UserPinnedDashboard", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DashboardsUserSetting", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
 				           
 						return serviceResponse;
 					}),
@@ -164,8 +164,8 @@ export class UserPinnedDashboardListService {
 	
 	    MapJsonToEntityList(jsonList: any) {
        
-            var entityList: UserPinnedDashboardList;
-            entityList = new UserPinnedDashboardList();
+            var entityList: DashboardsUserSettingList;
+            entityList = new DashboardsUserSettingList();
             var jsonListKeys = Object.keys(jsonList);
 
             for (var key in jsonListKeys) {

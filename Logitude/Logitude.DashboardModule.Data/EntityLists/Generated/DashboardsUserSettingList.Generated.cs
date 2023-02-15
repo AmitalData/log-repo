@@ -10,7 +10,7 @@ using System.Runtime.Serialization;
 namespace Logitude.DashboardModule.Data.EntityLists
 {
    [DataContract]
-   public partial class UserPinnedDashboardList
+   public partial class DashboardsUserSettingList
    {
    
        [Key]
@@ -21,7 +21,7 @@ namespace Logitude.DashboardModule.Data.EntityLists
        [DataMember]
        public string UserId  { get; set; }
        [DataMember]
-       public string Dashboards  { get; set; }
+       public string PinnedDashboards  { get; set; }
    }
 
 }

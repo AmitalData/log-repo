@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
-  Name="UserPinnedDashboards"
-  OldNames="UserPredefinedDashboards"
+  Name="DashboardsUserSettings"
   Schema="dbo"
   DBType="Main"
   Module="DashboardModule">
@@ -27,7 +26,7 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Dashboards"
+    Name="PinnedDashboards"
     Type="varchar"
     Size="1000">
     <Constraints

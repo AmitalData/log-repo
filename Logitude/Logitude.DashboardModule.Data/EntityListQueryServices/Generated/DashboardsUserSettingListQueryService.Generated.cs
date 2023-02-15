@@ -17,24 +17,24 @@ using Logitude.DashboardModule.Data.EntityLists;
 namespace Logitude.DashboardModule.Data.EntityListQueryServices
 { 
 
-    public partial class UserPinnedDashboardListQueryService
+    public partial class DashboardsUserSettingListQueryService
     {
          private IDashboardContext context;
-        public UserPinnedDashboardListQueryService(IDashboardContext context)
+        public DashboardsUserSettingListQueryService(IDashboardContext context)
         {
             this.context = context;
         }
 
-        public List<UserPinnedDashboardList> GetList(QueryOperations queryOperations, int tenant ){
+        public List<DashboardsUserSettingList> GetList(QueryOperations queryOperations, int tenant ){
 		     return GetList(queryOperations,tenant, new TreeFilterQueryArgs());
 		 }
 
-        public List<UserPinnedDashboardList> GetList(QueryOperations queryOperations, int tenant , TreeFilterQueryArgs treeFilterQueryArgs)
+        public List<DashboardsUserSettingList> GetList(QueryOperations queryOperations, int tenant , TreeFilterQueryArgs treeFilterQueryArgs)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<UserPinnedDashboard> iQueryable = (from a in context.UserPinnedDashboards
+            IQueryable<DashboardsUserSetting> iQueryable = (from a in context.DashboardsUserSettings
                                               
                    where a.Tenant == tenant select a);
             			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable,tenant);
@@ -45,21 +45,21 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
 
-            iQueryable = filter.GetFilteredQuery<UserPinnedDashboard>(nonListQueryOperation, iQueryable);
+            iQueryable = filter.GetFilteredQuery<DashboardsUserSetting>(nonListQueryOperation, iQueryable);
 
             int skippedPorts = queryOperations.PageIndex;
 
-            IQueryable<UserPinnedDashboardList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<DashboardsUserSettingList> query2 = GetIqueryableList(iQueryable);
            
-            query2 = filter.GetFilteredQuery<UserPinnedDashboardList>(listQueryOperation, query2);
-		    query2 = InjectionUtil.Instance.ApplyTreeFilter<UserPinnedDashboardList>(query2, treeFilterQueryArgs);
+            query2 = filter.GetFilteredQuery<DashboardsUserSettingList>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<DashboardsUserSettingList>(query2, treeFilterQueryArgs);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
-                PropertyInfo propInfo = typeof(UserPinnedDashboardList).GetProperty(queryOperations.SortByColumnName);
-                List<ObjectField> UserPinnedDashboardObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("UserPinnedDashboard",tenant).ToList();
+                PropertyInfo propInfo = typeof(DashboardsUserSettingList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> DashboardsUserSettingObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("DashboardsUserSetting",tenant).ToList();
 
-                ObjectField objectField = (from a in UserPinnedDashboardObjectFields
+                ObjectField objectField = (from a in DashboardsUserSettingObjectFields
                                            where a.FieldName == queryOperations.SortByColumnName
                                            select a).FirstOrDefault();
 
@@ -67,7 +67,7 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
                 {
 				 if (objectField.IsCustom)
                     {
-                        query2 = sortClass.GetSorterQuery<UserPinnedDashboardList, string>(queryOperations, query2);
+                        query2 = sortClass.GetSorterQuery<DashboardsUserSettingList, string>(queryOperations, query2);
                     }
                     else
                     {
@@ -76,36 +76,36 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
                          case "ntext":
                         case "text":
                             {
-                                query2 = sortClass.GetSorterQuery<UserPinnedDashboardList, string>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<DashboardsUserSettingList, string>(queryOperations, query2);
                                 break;
                             }
 						case "sigdouble":
 						case "double":
                             {
-                                query2 = sortClass.GetSorterQuery<UserPinnedDashboardList, double>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<DashboardsUserSettingList, double>(queryOperations, query2);
                                 break;
                             }
 						case "date":
                         case "datetime":
                             {
-                                query2 = sortClass.GetSorterQuery<UserPinnedDashboardList, DateTime>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<DashboardsUserSettingList, DateTime>(queryOperations, query2);
                                 break;
                             }
 						case "unsinteger":
                         case "integer":
                             {
-                                query2 = sortClass.GetSorterQuery<UserPinnedDashboardList, int>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<DashboardsUserSettingList, int>(queryOperations, query2);
                                 break;
                             }
                         case "boolean":
                             {
-                                query2 = sortClass.GetSorterQuery<UserPinnedDashboardList, bool>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<DashboardsUserSettingList, bool>(queryOperations, query2);
                                 break;
                             }
 						case "unsdecimal":
 						case "decimal":
                             {
-                                query2 = sortClass.GetSorterQuery<UserPinnedDashboardList, decimal>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<DashboardsUserSettingList, decimal>(queryOperations, query2);
                                 break;
                             }
                         default:
@@ -131,21 +131,21 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
     
         }
 
-         public List<UserPinnedDashboardList> GetList(int tenant)
+         public List<DashboardsUserSettingList> GetList(int tenant)
          {
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public UserPinnedDashboardList GetSingle(string id)
+        public DashboardsUserSettingList GetSingle(string id)
         {
-            IQueryable<UserPinnedDashboard> UserPinnedDashboardQuery = (from a in context.UserPinnedDashboards
+            IQueryable<DashboardsUserSetting> DashboardsUserSettingQuery = (from a in context.DashboardsUserSettings
                                                        where a.Id == id
                                                        select a);
 
              
-            IQueryable<UserPinnedDashboardList> UserPinnedDashboardListQuery = GetIqueryableList( UserPinnedDashboardQuery);
-            UserPinnedDashboardList UserPinnedDashboardList = UserPinnedDashboardListQuery.FirstOrDefault();
-            return UserPinnedDashboardList;
+            IQueryable<DashboardsUserSettingList> DashboardsUserSettingListQuery = GetIqueryableList( DashboardsUserSettingQuery);
+            DashboardsUserSettingList DashboardsUserSettingList = DashboardsUserSettingListQuery.FirstOrDefault();
+            return DashboardsUserSettingList;
            
         }
 
@@ -161,7 +161,7 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<UserPinnedDashboard> iQueryable = (from a in context.UserPinnedDashboards 
+            IQueryable<DashboardsUserSetting> iQueryable = (from a in context.DashboardsUserSettings 
                    where a.Tenant == tenant select a);
 
 			  			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable,tenant);
@@ -172,14 +172,14 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
             
-			iQueryable = filter.GetFilteredQuery<UserPinnedDashboard>(nonListQueryOperation, iQueryable);
+			iQueryable = filter.GetFilteredQuery<DashboardsUserSetting>(nonListQueryOperation, iQueryable);
 
 
 
-            IQueryable<UserPinnedDashboardList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<DashboardsUserSettingList> query2 = GetIqueryableList(iQueryable);
 
-            query2 = filter.GetFilteredQuery<UserPinnedDashboardList>(listQueryOperation, query2);
-		    query2 = InjectionUtil.Instance.ApplyTreeFilter<UserPinnedDashboardList>(query2, treeFilterQueryArgs);
+            query2 = filter.GetFilteredQuery<DashboardsUserSettingList>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<DashboardsUserSettingList>(query2, treeFilterQueryArgs);
 
             int count = query2.Count();
             return count;

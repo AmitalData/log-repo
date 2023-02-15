@@ -47,7 +47,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
 
     
-    public partial class UserPinnedDashboardViewsController : ApiController
+    public partial class DashboardsUserSettingViewsController : ApiController
     {
 	  
        
@@ -60,11 +60,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 IDashboardContext MyContext = DashboardContext.GetContext(authToken.Tenant);
-                UserPinnedDashboardListQueryService userPinnedDashboardQuery = new UserPinnedDashboardListQueryService(MyContext);
-                UserPinnedDashboardList userPinnedDashboardList = userPinnedDashboardQuery.GetSingle(id);
+                DashboardsUserSettingListQueryService dashboardsUserSettingQuery = new DashboardsUserSettingListQueryService(MyContext);
+                DashboardsUserSettingList dashboardsUserSettingList = dashboardsUserSettingQuery.GetSingle(id);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
-                return Request.CreateResponse(HttpStatusCode.OK,  userPinnedDashboardList);
+                return Request.CreateResponse(HttpStatusCode.OK,  dashboardsUserSettingList);
             }
             catch (Exception ex)
             {
@@ -82,8 +82,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 IDashboardContext MyContext = DashboardContext.GetContext(authToken.Tenant);
-                UserPinnedDashboardListQueryService userPinnedDashboardQuery = new UserPinnedDashboardListQueryService(MyContext);
-                List<UserPinnedDashboardList> result = userPinnedDashboardQuery.GetList(authToken.Tenant);
+                DashboardsUserSettingListQueryService dashboardsUserSettingQuery = new DashboardsUserSettingListQueryService(MyContext);
+                List<DashboardsUserSettingList> result = dashboardsUserSettingQuery.GetList(authToken.Tenant);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -108,17 +108,17 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "UserPinnedDashboard",
+                    ObjectTableName = "DashboardsUserSetting",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "UserPinnedDashboards",
+                    QuerySection = "DashboardsUserSettings",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
                 };
 
 				
-				List<ObjectField> UserPinnedDashboardObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("UserPinnedDashboard",tenant);
+				List<ObjectField> DashboardsUserSettingObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("DashboardsUserSetting",tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
@@ -141,7 +141,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             //}
 						//}
                         //ToDo: Get object field by name and set the remained filter properties
-						ObjectField field = UserPinnedDashboardObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+						ObjectField field = DashboardsUserSettingObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                        if (field != null)
                         {
                             string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -169,7 +169,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                     foreach (QueryFilterItem filter in filters_list)
                     {
-                        ObjectField field = UserPinnedDashboardObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        ObjectField field = DashboardsUserSettingObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                         if (field != null)
                         {
 
@@ -192,12 +192,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 }
 
                 IDashboardContext MyContext = DashboardContext.GetContext(tenant);
-				UserPinnedDashboardListQueryService userPinnedDashboardQuery = new UserPinnedDashboardListQueryService(MyContext);
+				DashboardsUserSettingListQueryService dashboardsUserSettingQuery = new DashboardsUserSettingListQueryService(MyContext);
 
                 TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
                  { 
                      AdditionalTreeFilter = filters.TreeFilters,
-                     ObjectTableName = "UserPinnedDashboard",
+                     ObjectTableName = "DashboardsUserSetting",
                      ParentEntityId = filters.ParentEntityId,
                      ParentObjectTableName = filters.ParentObjectTableName, 
                      Tenant = tenant ,
@@ -205,12 +205,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                  };
 
 
-                List<UserPinnedDashboardList> entityLists = userPinnedDashboardQuery.GetList(queryOperations, tenant , treeFilterQueryArgs);
+                List<DashboardsUserSettingList> entityLists = dashboardsUserSettingQuery.GetList(queryOperations, tenant , treeFilterQueryArgs);
 
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = userPinnedDashboardQuery.GetListCount(queryOperations, tenant , treeFilterQueryArgs);
+                    int count = dashboardsUserSettingQuery.GetListCount(queryOperations, tenant , treeFilterQueryArgs);
                     response.Count = count;
                 }
 

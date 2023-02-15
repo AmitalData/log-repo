@@ -79,8 +79,8 @@ export class DashboardPMExtendedService {
         });
     }
 
-    GetoggedUserPinnedDashboards(userId: string) {
-        var url = this._apiUrl + '/GetUserHasPinnedDashboards?userId=' + userId;
+    GetDashboardsUserSettings(userId: string) {
+        var url = this._apiUrl + '/GetDashboardsUserSettings?userId=' + userId;
 
         return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
@@ -118,8 +118,8 @@ export class DashboardPMExtendedService {
         });
     }
 
-    UnpinDashboard(userPinnedDashboardsId: string, dashboardId: string) {
-        var url = this._apiUrl + '/GetUnPinDashboard?userPinnedDashboardsId=' + userPinnedDashboardsId + '&dashboardId=' + dashboardId;
+    UnpinDashboard(dashboardsUserSettingId: string, dashboardId: string) {
+        var url = this._apiUrl + '/GetUnPinDashboard?dashboardsUserSettingsId=' + dashboardsUserSettingId + '&dashboardId=' + dashboardId;
 
         return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
