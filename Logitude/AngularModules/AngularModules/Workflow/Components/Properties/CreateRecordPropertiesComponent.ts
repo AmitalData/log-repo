@@ -6,6 +6,7 @@ import { EntitiesTreeList } from "Workflow/TreeLists/EntitiesTreeList";
 import { ObjectTables } from "Workflow/Utilities/ObjectTables";
 import { SetValue } from "Workflow/Models/SetValue";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
+import { FlowReader } from "Workflow/Utilities/FlowReader";
 
 @Component({
     templateUrl: "./CreateRecordPropertiesComponent.html"
@@ -121,7 +122,7 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
     }
 
     updateName(name: string) {
-        if(this.IsNew){
+        if (this.IsNew) {
             this.Data["name"] = name;
         }
 
@@ -156,7 +157,8 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
     saveButtonClicked() {
         this.ValidationErrorsList = [];
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
-        if (notValidUIProperties.length === 0 && this.IsValidSetValues) {
+        let isValidName = !this.IsNew || !FlowReader.isNodeNameExists(this.FlowObject, this.Name);
+        if (notValidUIProperties.length === 0 && this.IsValidSetValues && isValidName) {
             this.setValuesData();
             //console.log(this.Data);
             this.CurrentSession.CurrentWindow.Close(this.Data);
@@ -164,8 +166,12 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
             let validationErrors = notValidUIProperties.map(t => { return t.ValidationError; });
             this.ValidationErrorsList = validationErrors;
 
-            if (!this.IsValidSetValues){
+            if (!this.IsValidSetValues) {
                 this.ValidationErrorsList.push("Invalid Set Values");
+            }
+
+            if (!isValidName) {
+                this.ValidationErrorsList.push("The Name Should be Unique.");
             }
         }
     }

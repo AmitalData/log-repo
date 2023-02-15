@@ -11,6 +11,7 @@ import { FlowVariablesTreeList } from "Workflow/TreeLists/FlowVariablesTreeList"
 import { FieldType } from "Workflow/Utilities/FieldType";
 import { IsDateTimeTypePipe } from "Workflow/Pipes/IsDateTimeTypePipe";
 import { DateTimeValueExpressions } from "Workflow/Constants/DateTimeValueExpressions";
+import { FlowReader } from "Workflow/Utilities/FlowReader";
 
 @Component({
     templateUrl: "./CollectionFilterPropertiesComponent.html"
@@ -224,7 +225,8 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
     saveButtonClicked() {
         this.ValidationErrorsList = [];
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
-        if (notValidUIProperties.length === 0 && this.IsValidConditions) {
+        let isValidName = !this.IsNew || !FlowReader.isNodeNameExists(this.FlowObject, this.Name);
+        if (notValidUIProperties.length === 0 && this.IsValidConditions && isValidName) {
             this.setConditionsData();
             //console.log(this.Data);
             this.CurrentSession.CurrentWindow.Close(this.Data);
@@ -232,8 +234,13 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
             let validationErrors = notValidUIProperties.map(t => { return t.ValidationError; });
             this.ValidationErrorsList = validationErrors;
 
-            if (!this.IsValidConditions)
+            if (!this.IsValidConditions) {
                 this.ValidationErrorsList.push("Invalid Conditions");
+            }
+
+            if (!isValidName) {
+                this.ValidationErrorsList.push("The Name Should be Unique.");
+            }
         }
     }
 

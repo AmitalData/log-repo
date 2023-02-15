@@ -6,6 +6,7 @@ import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
 import { Condition } from "Workflow/Models/Condition";
 import { ObjectTables } from "Workflow/Utilities/ObjectTables";
 import { ObjectTableList } from "Infrastructure/EntityLists/ObjectTableList";
+import { FlowReader } from "Workflow/Utilities/FlowReader";
 
 @Component({
     templateUrl: "./ConditionPropertiesComponent.html"
@@ -135,7 +136,8 @@ export class ConditionPropertiesComponent extends BaseComponent {
         if (this.WorkflowEntity) {
             this.ValidationErrorsList = [];
             let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
-            if (notValidUIProperties.length === 0 && this.IsValidConditions) {
+            let isValidName = !this.IsNew || !FlowReader.isNodeNameExists(this.FlowObject, this.Name);
+            if (notValidUIProperties.length === 0 && this.IsValidConditions && isValidName) {
                 this.setConditionsData();
                 //console.log(this.Data);
                 this.CurrentSession.CurrentWindow.Close(this.Data);
@@ -145,6 +147,10 @@ export class ConditionPropertiesComponent extends BaseComponent {
 
                 if (!this.IsValidConditions)
                     this.ValidationErrorsList.push("Invalid Conditions");
+
+                if (!isValidName) {
+                    this.ValidationErrorsList.push("The Name Should be Unique.");
+                }
             }
         }
     }

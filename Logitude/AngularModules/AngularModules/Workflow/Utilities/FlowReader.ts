@@ -72,4 +72,12 @@ export class FlowReader {
         return [];
     }
 
+    static isNodeNameExists(flowObject: any, name: String) {
+        if (flowObject && name) {
+            let nodesWithSameName = flowObject.nodes
+                .filter((node: any) => node.data && node.data["name"] && node.data["name"].toLowerCase() === name.toLowerCase());
+            return nodesWithSameName.length > 0;
+        }
+        return false;
+    }
 }
