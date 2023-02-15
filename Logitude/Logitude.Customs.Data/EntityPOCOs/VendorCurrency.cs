@@ -24,10 +24,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string VendorId { get; set; }
 	      
         public virtual CustomsVendor CustomsVendor { get; set; }
-     [Key]
         [Column("Tenant")]
 	    public int Tenant { get; set; }
-     [Key]
         [Column("LineNumber")]
 	    public int LineNumber { get; set; }
      [Key]

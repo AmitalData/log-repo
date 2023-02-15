@@ -28,10 +28,10 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  VendorCurrency GetSingle(string vendorid, int tenant, int linenumber, string currency, int tenant)
+		public  VendorCurrency GetSingle(string vendorid, string currency, int tenant)
         {
             return (from a in context.VendorCurrencies
-                    where a.VendorId == vendorid && a.Tenant == tenant && a.LineNumber == linenumber && a.Currency == currency && a.Tenant == tenant
+                    where a.VendorId == vendorid && a.Currency == currency && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
@@ -46,7 +46,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             VendorCurrencyKeys keys = entityKeys as VendorCurrencyKeys;
             return (from a in context.VendorCurrencies
-                    where a.VendorId == keys.VendorId && a.Tenant == keys.Tenant && a.LineNumber == keys.LineNumber && a.Currency == keys.Currency
+                    where a.VendorId == keys.VendorId && a.Currency == keys.Currency
                     select a).FirstOrDefault();
         }
 		         
