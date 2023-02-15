@@ -887,7 +887,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     }
                 }
 
-                if (APPaymentMethods.Where(d => d.Id == apPayment.AccountingPaymentMethodId).FirstOrDefault().Code == "FS")
+                AccountingPaymentMethod paymentMethod = APPaymentMethods.Where(d => d.Id == apPayment.AccountingPaymentMethodId).FirstOrDefault();
+                if (paymentMethod != null && paymentMethod.Code == "FS")
                 {
                     if (apPayment.AmountInPaymentCurrency < 0)
                     {
@@ -912,7 +913,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.Notes = apPayment.InternalNotes;
                 accountingLedgerRecord.RegisterDate = apPayment.RegisterDate;
                 accountingLedgerRecord.ValueDate = apPayment.ValueDate;
-                accountingLedgerRecord.PaymentMethod = APPaymentMethods.Where(d => d.Id == apPayment.AccountingPaymentMethodId).FirstOrDefault().Name;
+                accountingLedgerRecord.PaymentMethod = paymentMethod == null ? null : paymentMethod.Name;
 
                 tempList.Add(accountingLedgerRecord);
             }
