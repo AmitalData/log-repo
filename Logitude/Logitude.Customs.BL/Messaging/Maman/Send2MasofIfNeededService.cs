@@ -21,7 +21,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
         [ThreadStatic]
         public static bool SuppressSend=false;
-         public void Send2Masof(DeclarationPM drityEntityPM,bool pHaveChange, DeclarationPM dbPM,bool forceSend=false)
+         public void Send2Masof(DeclarationPM drityEntityPM,bool pHaveChange, DeclarationPM dbPM,bool forceSend=false, CourierMasterPM courierMasterPM=null)
         {
             var sb=new StringBuilder();
             try
@@ -93,7 +93,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 {
                     sb.AppendLine("ILMMN!!!");
                     var courierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanRequestService();
-                    drityMessage = courierGWMessageECTHRDataMamanService.GetMessage2Maman(drityEntityPM.Id, drityEntityPM.Tenant, drityEntityPM, null);
+                    drityMessage = courierGWMessageECTHRDataMamanService.GetMessage2Maman(drityEntityPM.Id, drityEntityPM.Tenant, drityEntityPM, courierMasterPM);
                     if (!dataHaveChangeSendIt && dbPM != null)
                     {
                         
@@ -131,6 +131,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                         if (requiredField.Count > 0)
                         {
                             Debug.WriteLine($"חסרים שדות חובה :{String.Join(",", requiredField)}");
+                            sb.AppendLine($"חסרים שדות חובה :{String.Join(",", requiredField)}");
                             return;// $"חסרים שדות חובה :{String.Join(",", requiredField)}";
                         }
                         var res = courierGWMessageECTHRDataMamanService.BuildComm2Maman(drityEntityPM.Id, drityEntityPM.Tenant, drityMessage);
@@ -149,7 +150,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                     if (!dataHaveChangeSendIt && dbPM != null)
                     {
 
-                        dbMessage = courierGWMessageECTHRDataMamanService.GetMessageUpdateHawbStatus(dbPM.Id, dbPM.Tenant, dbPM, null);
+                        dbMessage = courierGWMessageECTHRDataMamanService.GetMessageUpdateHawbStatus(dbPM.Id, dbPM.Tenant, dbPM, courierMasterPM);
                         
                         if (dbMessage != drityMessage)
                         {
@@ -197,7 +198,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                     if (drityEntityPM.CourierCustomStatusCode != dbPM.CourierCustomStatusCode)
                     {
                         var courierECSWSTHRMessageRequestService = new CourierECSWSTHRMessageRequestService();
-                        drityMessage = courierECSWSTHRMessageRequestService.GetMessageUpdateHawbStatus(drityEntityPM.Id, drityEntityPM.Tenant, drityEntityPM, null);
+                        drityMessage = courierECSWSTHRMessageRequestService.GetMessageUpdateHawbStatus(drityEntityPM.Id, drityEntityPM.Tenant, drityEntityPM, courierMasterPM);
                         if (!dataHaveChangeSendIt && dbPM != null)
                         {
 
