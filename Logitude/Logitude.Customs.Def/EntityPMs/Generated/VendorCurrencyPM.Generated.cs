@@ -1,0 +1,124 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class VendorCurrencyPM : EntityPM
+   {
+   	  private string vendorId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VendorId  
+	   {
+	    
+	     get
+		{
+		   return vendorId;
+		 }
+		 set
+		 {
+		   if(vendorId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VendorId",OldValue=vendorId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vendorId=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private int lineNumber ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int LineNumber  
+	   {
+	    
+	     get
+		{
+		   return lineNumber;
+		 }
+		 set
+		 {
+		   if(lineNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LineNumber",OldValue=lineNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   lineNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string currencyType ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CurrencyType  
+	   {
+	    
+	     get
+		{
+		   return currencyType;
+		 }
+		 set
+		 {
+		   if(currencyType != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyType",OldValue=currencyType,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   currencyType=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

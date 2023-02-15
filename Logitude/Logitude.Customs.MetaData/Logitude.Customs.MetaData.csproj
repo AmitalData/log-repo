@@ -108,7 +108,6 @@
     <None Include="DBOthers\Views\DocumentsFilingsView.dxml" />
     <None Include="DBScripts\Post\20230125_AddCourierPendingReasons905.sxml" />
     <None Include="DBScripts\Post\202208151232_AddCOURIERPENDINGREASONS906.sxml" />
-
     <None Include="DBScripts\Post\202208281500_UpdateLoadingOfDeclaration.sxml" />
     <None Include="DBOthers\Procedures\usp_UpdateQueueMessagePriority.dxml" />
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
@@ -1017,6 +1016,7 @@
     <None Include="EntityFiles\VehicleType.lxml" />
     <None Include="EntityFiles\VendorCommission.lxml" />
     <None Include="EntityFiles\VendorCommunication.lxml" />
+    <None Include="EntityFiles\VendorCurrency.lxml" />
     <None Include="EntityFiles\VendorStatus.lxml" />
     <None Include="EntityFiles\VendorTransactionType.lxml" />
     <None Include="EntityFiles\ContainerType.lxml" />

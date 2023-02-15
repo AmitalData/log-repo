@@ -401,6 +401,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<VehicleType> VehicleTypes { get; }
 		 IDbSet<VendorCommission> VendorCommissions { get; }
 		 IDbSet<VendorCommunication> VendorCommunications { get; }
+		 IDbSet<VendorCurrency> VendorCurrencies { get; }
 		 IDbSet<VendorStatus> VendorStatuses { get; }
 		 IDbSet<VendorTransactionType> VendorTransactionTypes { get; }
 		 IDbSet<VendorType> VendorTypes { get; }
