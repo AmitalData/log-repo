@@ -293,15 +293,17 @@ namespace WebFreight.Web.ContainerTracking
             var polLeg = new { Vessel = containerUpdatedFields.POLLegVessel, VesselId = polLegVessel?.Id, Voyage = containerUpdatedFields.POLLegVoyage };
             var podLeg = new { Vessel = containerUpdatedFields.PODLegVessel, VesselId = podLegVessel?.Id, Voyage = containerUpdatedFields.PODLegVoyage };
 
-            UpdateShipmentVesselVoyage(polLeg, null, shipmentPM);
+            
             if (leg3 != null)
             {
+                UpdateShipmentVesselVoyage(polLeg, null, shipmentPM);
                 UpdateShipmentVesselVoyage(podLeg, index3, shipmentPM);
                 UpdateShipmentVesselVoyage(leg3, index2, shipmentPM);
                 UpdateShipmentVesselVoyage(leg2, index1, shipmentPM);
             }
             else if (leg2 != null)
             {
+                UpdateShipmentVesselVoyage(polLeg, null, shipmentPM);
                 UpdateShipmentVesselVoyage(podLeg, index2, shipmentPM);
                 UpdateShipmentVesselVoyage(leg1, index1, shipmentPM);
             }
