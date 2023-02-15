@@ -653,13 +653,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     {
                         UpdateDeclarationPending("901");
                     }
-                        AppendLogLine("IF " + _MyDeclarationPM.CasualImporterCountry+ "!=IL   905" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-                        AppendLogLine("IF " + this._AmitalCustomsFile.CreatedByUserId + "==RMXORN  905" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-                        if (this._AmitalCustomsFile.CasualImporterCountry!="IL" && this._AmitalCustomsFile.CreatedByUserId=="RMXORN")
-                    {
-                            AppendLogLine("זה כן עובד 905" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-                          //  UpdateDeclarationPending("905");
-                    }
+                 
                     if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.CrateNumber != _LogitudeCommDecFile.CrateNumber)
                     {
                         currentDeclarationCourierStatusPM.CrateNumber = _LogitudeCommDecFile.CrateNumber;
