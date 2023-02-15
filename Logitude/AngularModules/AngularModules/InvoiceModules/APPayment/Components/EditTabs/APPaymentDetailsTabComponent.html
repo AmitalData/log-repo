@@ -837,6 +837,19 @@
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
+                                    <!-- Reconciliation Number -->
+                                    <log-column *ngIf="IsFullAccounting"  [Alignment]="isRTL ? 'right' : 'left'" [width]="'120'"
+                                                [header]="'Accounting.O.ARP.ReconciliationNumber' | TextCodeTranslationPipe">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                                <div class="TextTrimming" text-start>
+                                                    <!-- <a *ngFor="let recoNum of item.RecociliationNumbers; let i = index"
+                                                       (click)="OpenReco(recoNum)">{{recoNum}}{{ i>=item.RecociliationNumbers.length-1?'':', ' }}</a> -->
+                                                    <a  (click)="OpenReco(item.RecoNumber)">{{item.RecoNumber}}</a>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
 
                                 </logitude-edit-grid>
 
@@ -900,6 +913,34 @@
                                                 <div class="Label" style="vertical-align:top;margin-top:-5px;display:inline-block;font-size: 11px;width:auto;">{{'APPayment.F.OpenAmount' | TextCodeTranslationPipe}}</div>
                                                 <div class="Label" style="vertical-align:top;margin-top:-5px;margin-left:5px;margin-right:5px; display:inline-block;font-size: 14px;width:auto;color:#282E30;" [style.text-align]="isRTL ? 'right' : 'left'">{{PaymentCurrencyCode}}</div>
                                             </div>
+                                        </div>
+
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </td>
+
+
+                        <td *ngIf="IsFullAccounting && paymentLedgerTransactions && paymentLedgerTransactions.length > 0">
+                            <table>
+                                <tr style="height: 21px;">
+                                    <td colspan="3" class="BlueTitle">{{'Accounting.O.ARP.ReconciliationNumber' | TextCodeTranslationPipe}}</td>
+                                </tr>
+
+                                <tr style="width:100%;">
+                                    <td style="vertical-align: middle">
+
+                                        <!-- Payment Amount -->
+                                        <div style="display:block;width:230px" [style.float]="isRTL ? 'right' : 'left'">
+                                            <div style="font-size: 14px; text-align: left;color:#282E30">
+                                            <a *ngFor="let recoNum of paymentLedgerTransactions; let i = index"
+                                                       (click)="OpenReco(recoNum)">{{recoNum}}{{ i>=paymentLedgerTransactions.length-1?'':', ' }}</a> 
+                                                    </div>
                                         </div>
 
                                     </td>
