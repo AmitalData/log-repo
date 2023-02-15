@@ -28,6 +28,11 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public virtual Currency ForeignCurrency { get; set; }
 
         //public List<ShipmentReceivable> ShipmentReceivables { get; set; }
+        public string UpdatedByUserId { get; set; }
+
+        [ForeignKey("UpdatedByUserId")]
+        public virtual User UpdatedByUser { get; set; }
+        public DateTime? UpdatedDate { get; set; }
 
     }
 

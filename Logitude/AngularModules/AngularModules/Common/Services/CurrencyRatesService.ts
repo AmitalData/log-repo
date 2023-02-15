@@ -243,6 +243,8 @@ export class LastRate {
     LogDateTime: Date;
     Rate: number;
     HistoryCount: number;
+    UpdatedByUserId: string;
+    UpdatedByUserNameName: string; 
 }
 export class AccountingCurrencyHelper {
     TenantPM: TenantPM;
