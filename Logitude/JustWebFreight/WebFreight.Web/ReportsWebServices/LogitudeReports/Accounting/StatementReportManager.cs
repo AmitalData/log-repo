@@ -42,7 +42,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private StatementDataProvider dataProvider;
         private ARInvoiceTotalVATRepository arInvoiceTotalVATRepository;
         private APInvoiceTotalVATRepository apInvoiceTotalVATRepository;
-
         public StatementReportManager(byte[] xmlFilters, int tenant)
         {
             this.tenant = tenant;
@@ -247,8 +246,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             {
                 this.HandelStatementRecordListOfGroup(group);
                 List<StatmentAging> agingList = dataProvider.StatementAgingSummaryRecordList.Where(d => d.Currency == group.Currency).ToList();
-                group.StatementAgingSummaryRecordList = agingList;
-                //group.PaymentTerm = in
+                group.StatementAgingSummaryRecordList = agingList;        
             }
 
             dataProvider.StatementGroupList = finalResults.OrderBy(d => d.Currency).ToList();            
