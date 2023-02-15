@@ -354,26 +354,31 @@ namespace Logitude.Customs.BL.BL
             CustomsRequiredFieldErrors errorsForDeclaration = CustomsRequiredFieldsValidator.GetRequiredFieldErrorsForDeclaration(declarationPM.Id, declarationPM.Tenant, declarationPM);
             if (errorsForDeclaration != null && errorsForDeclaration.RequiredFields != null && errorsForDeclaration.RequiredFields.Count() > 0)
             {
+                LogMessagingUtil.Instance.AppendLine("RequiredFields missed, CourierDeclarationStatusCode = M");
                 myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "M";
             }
             else if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > 150 && string.IsNullOrEmpty(declarationPM.ImporterId) && string.IsNullOrEmpty(declarationPM.ImporterCode))
             {
+                LogMessagingUtil.Instance.AppendLine("TotalInvoiceAmountInUSD > 150, CourierDeclarationStatusCode = M");
                 myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "M";
             }
             else if (myDeclarationCourierStatusPM.DocumentStatusCode == "M")
             {
+                LogMessagingUtil.Instance.AppendLine("DocumentStatusCode is M so CourierDeclarationStatusCode = M");
                 myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "M";
             }
             else
             {
                 if (string.IsNullOrWhiteSpace(declarationPM.DeclarationStatusTypeCode) || declarationPM.IsChanged == true && myDeclarationCourierStatusPM.CourierDeclarationStatusCode == "V")
                 {
+                    LogMessagingUtil.Instance.AppendLine("CourierDeclarationStatusCode set to R");
                     myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "R";
                 }
                 else
                 {
                     if (!string.IsNullOrWhiteSpace(declarationPM.PaymentDate.ToString()))
                     {
+                        LogMessagingUtil.Instance.AppendLine("CourierDeclarationStatusCode set to V");
                         myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "V";
                     }
                     else
@@ -398,6 +403,8 @@ namespace Logitude.Customs.BL.BL
                                 myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "";
                                 break;
                         }
+                        LogMessagingUtil.Instance.AppendLine("DeclarationStatusTypeCode is "+ declarationPM.DeclarationStatusTypeCode+
+                            ",CourierDeclarationStatusCode set to "+ myDeclarationCourierStatusPM.CourierDeclarationStatusCode);
                     }
                 }
             }

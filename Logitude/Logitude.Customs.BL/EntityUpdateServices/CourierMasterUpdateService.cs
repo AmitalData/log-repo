@@ -33,6 +33,7 @@ using System.Data.Common;
 using Simplog.Data.InfrastructureModel;
 using Logitude.Customs.BL.EntityDataMappings;
 using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.BL.Messaging.Maman;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -100,6 +101,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             ++maxSequenceNunmeric;
                             CourierDeclarationPM courierDeclaration = new CourierDeclarationPM() { DeclarationId = item, CourierMasterId = entityPOCO.Id, Tenant = entityPOCO.Tenant, ChangeSetOp = ChangeSetOperation.Insert, SequenceNumeric = maxSequenceNunmeric };
                             courierDeclarationUpdateService.Update(courierDeclaration, false);
+
+                            Send2MasofDueMasterChanged(courierDeclaration, entityPM);
+
                             DeclarationCourierStatus decCourier = rep.GetDeclarationsById(item, entityPOCO.Tenant);
                             if (decCourier != null)
                             {
@@ -281,6 +285,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
 
             base.OnUpdating(entityPM, entityPOCO);
+        }
+
+
+        private static void Send2MasofDueMasterChanged(CourierDeclarationPM courierDeclaration, CourierMasterPM  courierMasterPM)
+        {
+            var send2MasofIfNeededService = new Send2MasofIfNeededService();
+            var declarationQueryService = new DeclarationQueryService(courierDeclaration.Tenant);
+            var declarationPm = declarationQueryService.GetSingle(courierDeclaration.DeclarationId, true, false);
+            send2MasofIfNeededService.Send2Masof(declarationPm, true, declarationPm, true, courierMasterPM);
         }
 
         private void BuildGGGQ_FLIGHT_CREDIT_LETTER(CourierMasterPM entityPM)

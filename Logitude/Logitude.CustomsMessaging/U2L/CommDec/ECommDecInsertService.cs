@@ -1,4 +1,7 @@
-﻿using Logitude.AmitalMessaging.Customs.CustomFile.CommDecFile;
+﻿#if false
+
+
+using Logitude.AmitalMessaging.Customs.CustomFile.CommDecFile;
 using Logitude.AmitalMessaging.Infrastructure;
 using Logitude.AmitalMessaging.Utils;
 using Logitude.BL.CommonDataModel.EntityPMs;
@@ -2851,3 +2854,4 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
     }
 }
 
+#endif
