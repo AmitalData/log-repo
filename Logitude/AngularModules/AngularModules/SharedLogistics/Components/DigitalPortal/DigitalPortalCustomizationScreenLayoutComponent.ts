@@ -190,6 +190,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
     LoadDraftLayoutClicked() {
         this.GetHTMLText(true);
     }
+    
 
     PublishChangesClicked(isDraft) {
         if (this.IsModified) {
