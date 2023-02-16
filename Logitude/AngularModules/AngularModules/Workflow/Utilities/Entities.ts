@@ -23,12 +23,13 @@ export class Entities {
 
     public static getParents(): Entity[] {
         return ObjectTables.getAll()
-            .filter(o => this.DefaultParents.includes(o.Name))
+            .filter(o => this.DefaultParents.includes(o.Name) || (o.IsCustom && !o.ParentObjectTableId))
             .sort((a, b) => this.getEntityOrder(a) - this.getEntityOrder(b))
             .map(objectTable => {
                 return {
                     Code: objectTable.Name,
-                    Name: this.getEntityDisplayName(objectTable)
+                    Name: this.getEntityDisplayName(objectTable),
+                    IsCustom: objectTable.IsCustom
                 };
             });
     }
@@ -41,19 +42,20 @@ export class Entities {
                 return {
                     Code: objectTable.Name,
                     Name: this.getEntityDisplayName(objectTable),
-                    ParentEntityCode: this.getParentEntityCode(objectTable)
+                    ParentEntityCode: this.getParentEntityCode(objectTable),
+                    IsCustom: objectTable.IsCustom
                 };
             });
     }
 
     private static getEntityOrder(objectTable: ObjectTableList, isChildren: boolean = false): number {
-        let lastOrder = (isChildren ? this.DefaultChildren.length : this.DefaultParents.length) + 1;
+        let entityOrder = (isChildren ? this.DefaultChildren.length : this.DefaultParents.length) + 1;
         let objectTableName = objectTable ? objectTable.Name : null;
         if (objectTableName) {
             let entityIndex = (isChildren ? this.DefaultChildren : this.DefaultParents).indexOf(objectTableName);
-            return entityIndex === -1 ? lastOrder : entityIndex;
+            return entityIndex === -1 ? entityOrder : entityIndex;
         }
-        return lastOrder;
+        return entityOrder;
     }
 
     private static getEntityDisplayName(objectTable: ObjectTableList): string | null {

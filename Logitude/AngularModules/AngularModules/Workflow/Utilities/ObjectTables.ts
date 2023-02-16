@@ -55,6 +55,9 @@ export class ObjectTables {
     static getKeyPropertyPathByName(name: string) {
         if (name) {
             let objectTable = this.getByName(name);
+            if (objectTable && objectTable.IsCustom) {
+                return "Id";
+            }
             return objectTable ? objectTable.KeyPropertyPath : null;
         }
         return null;
