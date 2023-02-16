@@ -517,7 +517,7 @@ namespace WebFreight.Web.WebPages
                             {
                                 var digitalFileName = !string.IsNullOrEmpty(document.CalculatedFileName) ? document.CalculatedFileName : document.FileName;
 
-                                documentType =  string.IsNullOrWhiteSpace("documentType") ? (documentType + "-") : "";
+                                documentType =  !string.IsNullOrWhiteSpace("documentType") ? (documentType + "-") : "";
                                 documentName = $"{documentType}{digitalFileName}.{documentExtension}";
                             }
 
