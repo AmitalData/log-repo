@@ -161,27 +161,19 @@ export class CustomizationQueriesComponent extends BaseComponent{
         this.LoadCustomQueries();
     }
     RemoveIsDefaultQuery(Query: any) {
-        window.Queries = window.Queries.filter(q => (q.UniqueCode != Query.UniqueCode));
         Query.IsDefault = false;
-        this.QueriesPMService.update(Query).subscribe((serviceResponse: ServiceResponse) => {
-            if (!serviceResponse.HasError && serviceResponse.Result) {
-                window.Queries.push(Query);
-                this.LoadCustomQueries();
-            }
-            else {
-                this.CurrentSession.StopBusyIndicator();
-            }
-        });
+        this.updateQuery(Query);
     }
     updateQuery(Query: any) {
+        this.CurrentSession.StartBusyIndicatorSaving();
         this.QueriesPMService.update(Query).subscribe((serviceResponse: ServiceResponse) => {
-            if (!serviceResponse.HasError && serviceResponse.Result) {
-                window.Queries.push(Query);
-                this.LoadCustomQueries();
-            }
-            else {
+            if (serviceResponse.HasError || !serviceResponse.Result) {
                 this.CurrentSession.StopBusyIndicator();
+                return;
             }
+            window.Queries = window.Queries.filter(q => (q.UniqueCode != Query.UniqueCode));
+            window.Queries.push(Query);
+            this.LoadCustomQueries();
         });
     }
     IsDefaultClicked(ClickedQuery: any, event: boolean) {
@@ -191,13 +183,11 @@ export class CustomizationQueriesComponent extends BaseComponent{
         }
         let oldDefaultQuery = window.Queries.filter(q => (q.ObjectTableId == this.ObjectTableId) && q.SystemLevel && q.IsDefault);
         if (oldDefaultQuery.length == 0) {
-            window.Queries = window.Queries.filter(q => (q.UniqueCode != ClickedQuery.UniqueCode));
             ClickedQuery.IsDefault = true;
             this.updateQuery(ClickedQuery);
         }
         else {
             oldDefaultQuery = window.Queries.filter(q => q.ObjectTableId == this.ObjectTableId && q.SystemLevel && q.IsDefault)[0];
-            window.Queries = window.Queries.filter(q => (q.UniqueCode != oldDefaultQuery.UniqueCode) && (q.UniqueCode != ClickedQuery.UniqueCode));
             ClickedQuery.IsDefault = true;
             oldDefaultQuery.IsDefault = false;
             this.updateQuery(ClickedQuery);
