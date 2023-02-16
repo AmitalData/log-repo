@@ -331,7 +331,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
                 ArrayExportStorageId = (x.Result as ExportStorageList[]).map(x => x.Id);
                 var count=ArrayExportStorageId.length;
                 if(count>0){
-                    var msg = TextCodeTranslator.Translate("Customs.Declaration.O.DeleteSite")+count;
+                    var msg = TextCodeTranslator.Translate("Customs.ExportStorage.O.ConnectedAllToDeclartion")+" "+count +" "+TextCodeTranslator.Translate("Customs.ExportStorage.O.ExportStoragesToDeclartion");
                     var confirmWindow = new ConfirmWindow();
                     confirmWindow.Width = 400;
                     confirmWindow.Height = 150;
