@@ -539,6 +539,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     get HSM(){return this.EntityPM.HSM;}
     set HSM(hsm:number){
 
+        if(hsm != null) {
         if (hsm.toString().length != 3) {
             this.UIProperties.SetValidity("HSM", this.ObjectTableName, false, "HSM must be 3 digits");
            
@@ -551,6 +552,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             this.EntityPM.HSM = hsm;
           
         }
+      }
     }
 
 
@@ -566,6 +568,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
 
     ValidateInputHMSToken(hsmToken){
+        if(hsmToken != null) {
         if(hsmToken.toString().length != 36 )
         
         {
@@ -576,12 +579,13 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         } else {
             this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, true, "");
         }
+    }
 
     }
     
     ValidateFormatHSMToken(hsmToken){
 
-        
+        if(hsmToken != null) {
         if(hsmToken.toString().length == 36 && (hsmToken.toString().indexOf('-') == this.indexHyphenSholudInHSMTokken[0]
         && hsmToken.toString().indexOf('-',this.indexHyphenSholudInHSMTokken[0]+1) == this.indexHyphenSholudInHSMTokken[1]
         && hsmToken.toString().indexOf('-',this.indexHyphenSholudInHSMTokken[1]+1) == this.indexHyphenSholudInHSMTokken[2]
@@ -591,17 +595,21 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         } else {
             return false
         }
+      }
     }
 
 
     get HSMaddress(){return this.EntityPM.HSMaddress;}
     set HSMaddress(hsmAddress:string){
         
+        if(hsmAddress != null) {
         if(hsmAddress.toString().length >= 50) {
             this.UIProperties.SetValidity("HSMaddress", this.ObjectTableName, false, "HSM Address must be 50 characters long");
         } else {
             this.UIProperties.SetValidity("HSMaddress", this.ObjectTableName, true, "");
         }
+
+      }
 
         if(this.EntityPM.HSMaddress != hsmAddress) {
             this.EntityPM.HSMaddress = hsmAddress;
@@ -617,26 +625,40 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, true, "");
         this.UIProperties.SetValidity("HSMaddress", this.ObjectTableName, true, "");
 
-        if (this.HSM.toString().length != 3) {
-            this.ValidationErrorsList.push("HSM must be 3 digits");
-            this.UIProperties.SetValidity("HSM", this.ObjectTableName, false, "HSM must be 3 digits");
+        if(this.HSM != null) {
+            if (this.HSM.toString().length != 3) {
+                this.ValidationErrorsList.push("HSM must be 3 digits");
+                this.UIProperties.SetValidity("HSM", this.ObjectTableName, false, "HSM must be 3 digits");
+            }
         }
-        if(this.HSMtoken.toString().length != 36 ){
-            this.ValidationErrorsList.push("HSM Token must be 36 characters long and should be format like 8X-4X-4X-4X-12X");
-            this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, "HSM Token must be 36 characters long and should be format like 8X-4X-4X-4X-12X");
+        
+
+        if(this.HSMtoken != null ){
+
+            if(this.HSMtoken.toString().length != 36 ){
+                this.ValidationErrorsList.push("HSM Token must be 36 characters long and should be format like 8X-4X-4X-4X-12X");
+                this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, "HSM Token must be 36 characters long and should be format like 8X-4X-4X-4X-12X");
+    
+            }
+    
+            if(!this.ValidateFormatHSMToken(this.HSMtoken)) {
+                this.ValidationErrorsList.push("HSM Token should be format like 8X-4X-4X-4X-12X");
+                this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, "HSM Token should be format like 8X-4X-4X-4X-12X");
+    
+            }
 
         }
 
-        if(!this.ValidateFormatHSMToken(this.HSMtoken)) {
-            this.ValidationErrorsList.push("HSM Token should be format like 8X-4X-4X-4X-12X");
-            this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, "HSM Token should be format like 8X-4X-4X-4X-12X");
+        
 
+        if(this.HSMaddress != null) {
+            if(this.HSMaddress.toString().length >= 50) {
+                this.ValidationErrorsList.push("HSM Address must be 50 characters long");
+                this.UIProperties.SetValidity("HSMaddress", this.ObjectTableName, false, "HSM Address must be 50 characters long");
+            }
         }
 
-        if(this.HSMaddress.toString().length >= 50) {
-            this.ValidationErrorsList.push("HSM Address must be 50 characters long");
-            this.UIProperties.SetValidity("HSMaddress", this.ObjectTableName, false, "HSM Address must be 50 characters long");
-        }
+        
         
     }
 
