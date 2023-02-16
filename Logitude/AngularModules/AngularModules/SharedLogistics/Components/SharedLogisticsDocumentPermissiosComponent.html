@@ -233,6 +233,7 @@
                                                                                             <table>
                                                                                                 <tr>
                                                                                                     <td style="width: 100%; min-width: 100%;text-align:left">Document Name</td>
+                                                                                                    <td style="width: 100px; min-width: 100px;text-align:center">Suggested</td>
                                                                                                     <td style="width: 70px; min-width: 100px; text-align: left ">Customer Upload</td>
                                                                                                 </tr>
                                                                                             </table>
@@ -249,7 +250,12 @@
                                                                                                                             <td class="GridViewCell" style="width: 100%; min-width: 100%; max-width: 100%; position: relative;">
                                                                                                                                 {{item.DocumentTypeName}}
                                                                                                                             </td>
-
+                                                                                                                            <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px; position: relative;">
+                                                                                                                                <div class="CheckBox">
+                                                                                                                                    <input [disabled]="true" class="CenterCenter" style="text-align:center" [attr.id]="item.CustomerUploadPermissionSuggestedCheckedBoxId" type="checkbox" [(ngModel)]="item.CustomerUploadPermissionSuggestedIsChecked" />
+                                                                                                                                    <label class="CenterCenter" [attr.for]="item.CustomerUploadPermissionSuggestedCheckedBoxId"></label>
+                                                                                                                                </div>
+                                                                                                                            </td>
                                                                                                                             <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px; position: relative;">
                                                                                                                                 <div class="CheckBox">
                                                                                                                                     <input [attr.data-cy]="item.DocumentTypeName" class="CenterCenter" style="text-align:center" [attr.id]="item.CustomerPermissionCheckedBoxId" type="checkbox" [(ngModel)]="item.CustomerPermissionIsChecked" />
