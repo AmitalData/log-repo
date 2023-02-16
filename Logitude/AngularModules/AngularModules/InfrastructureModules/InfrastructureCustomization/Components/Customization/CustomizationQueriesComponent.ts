@@ -160,30 +160,49 @@ export class CustomizationQueriesComponent extends BaseComponent{
         window.Queries.push(oldDefaultQuery);
         this.LoadCustomQueries();
     }
-
-    IsDefaultClicked(newDefaultQuery: any) {
-        let oldDefaultQuery = window.Queries.filter(q => q.ObjectTableId == this.ObjectTableId && q.SystemLevel && q.IsDefault)[0];
-        window.Queries = window.Queries.filter(q => (q.UniqueCode != oldDefaultQuery.UniqueCode) && (q.UniqueCode != newDefaultQuery.UniqueCode));
-        newDefaultQuery.IsDefault = true;
-        oldDefaultQuery.IsDefault = false;
-        this.QueriesPMService.update(newDefaultQuery).subscribe((serviceResponse: ServiceResponse) => {
+    RemoveIsDefaultQuery(Query: any) {
+        window.Queries = window.Queries.filter(q => (q.UniqueCode != Query.UniqueCode));
+        Query.IsDefault = false;
+        this.QueriesPMService.update(Query).subscribe((serviceResponse: ServiceResponse) => {
             if (!serviceResponse.HasError && serviceResponse.Result) {
-                window.Queries.push(oldDefaultQuery);
+                window.Queries.push(Query);
                 this.LoadCustomQueries();
             }
             else {
                 this.CurrentSession.StopBusyIndicator();
             }
         });
-        this.QueriesPMService.update(oldDefaultQuery).subscribe((serviceResponse: ServiceResponse) => {
+    }
+    updateQuery(Query: any) {
+        this.QueriesPMService.update(Query).subscribe((serviceResponse: ServiceResponse) => {
             if (!serviceResponse.HasError && serviceResponse.Result) {
-                 window.Queries.push(newDefaultQuery);
-                 this.LoadCustomQueries();
+                window.Queries.push(Query);
+                this.LoadCustomQueries();
             }
             else {
                 this.CurrentSession.StopBusyIndicator();
             }
-        });       
+        });
+    }
+    IsDefaultClicked(ClickedQuery: any, event: boolean) {
+        if (!event) {
+            this.RemoveIsDefaultQuery(ClickedQuery);
+            return;
+        }
+        let oldDefaultQuery = window.Queries.filter(q => (q.ObjectTableId == this.ObjectTableId) && q.SystemLevel && q.IsDefault);
+        if (oldDefaultQuery.length == 0) {
+            window.Queries = window.Queries.filter(q => (q.UniqueCode != ClickedQuery.UniqueCode));
+            ClickedQuery.IsDefault = true;
+            this.updateQuery(ClickedQuery);
+        }
+        else {
+            oldDefaultQuery = window.Queries.filter(q => q.ObjectTableId == this.ObjectTableId && q.SystemLevel && q.IsDefault)[0];
+            window.Queries = window.Queries.filter(q => (q.UniqueCode != oldDefaultQuery.UniqueCode) && (q.UniqueCode != ClickedQuery.UniqueCode));
+            ClickedQuery.IsDefault = true;
+            oldDefaultQuery.IsDefault = false;
+            this.updateQuery(ClickedQuery);
+            this.updateQuery(oldDefaultQuery);
+        }
     }
 
     EditCustomView(item) {

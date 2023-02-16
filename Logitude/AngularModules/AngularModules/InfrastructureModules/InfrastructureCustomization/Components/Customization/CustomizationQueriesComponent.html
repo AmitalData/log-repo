@@ -46,7 +46,7 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate [IgnoreMods]="true">
                                             <div class="CheckBox" style="margin-left:3px; margin-top:5px;">
-                                                <CheckBox [DataCy]="'Is Default'" [IsChecked]="item.IsDefault" (Checked)="IsDefaultClicked(item)"></CheckBox>
+                                                <CheckBox [DataCy]="'Is Default'" [IsChecked]="item.IsDefault" (Checked)="IsDefaultClicked(item,$event)"></CheckBox>
                                             </div>
                                         </log-cell-template>
                                     </ng-template>
