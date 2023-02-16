@@ -39,7 +39,6 @@ export class WorkflowVersionComponent extends BaseComponent {
     }
 
     RunComponent() {
-        this.CurrentSession.StartBusyIndicatorLoading();
         if (this.AllLocations) {
 
             if (this.AllLocations.toArray().length == 0) {
@@ -92,7 +91,6 @@ export class WorkflowVersionComponent extends BaseComponent {
                     });
                 });
         });
-        this.CurrentSession.StopBusyIndicator();
     }
 
     private Listen() {

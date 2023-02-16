@@ -18,6 +18,8 @@ export class WorkFlowHelperComponent implements OnInit {
     public IsWarningMessagesDisplayed: boolean = false;
     public IsErrorMessagesDisplayed: boolean = false;
     public IsClickInside: boolean = false;
+    public WarningMessagesContainerPosition: { top: string, right: string } = { top: "0px", right: "0px" };
+    public ErrorMessagesContainerPosition: { top: string, right: string } = { top: "0px", right: "0px" };
 
     constructor(public entityArguments: EntityArgs) { }
 
@@ -77,17 +79,40 @@ export class WorkFlowHelperComponent implements OnInit {
         return [];
     }
 
-    toggleWarningMessages() {
-        this.IsWarningMessagesOpened = !this.IsWarningMessagesOpened;
-        if (this.IsWarningMessagesOpened) {
-            this.IsErrorMessagesOpened = false;
+    toggleWarningMessages(event: any) {
+        let warningMessagesToggle = !this.IsWarningMessagesOpened;
+
+        if (warningMessagesToggle) {
+            this.WarningMessagesContainerPosition = this.getMessagesContainerPosition(event?.target);
         }
+
+        this.IsWarningMessagesOpened = warningMessagesToggle;
+        this.IsErrorMessagesOpened = warningMessagesToggle ? false : this.IsErrorMessagesOpened;
     }
 
-    toggleErrorMessages() {
-        this.IsErrorMessagesOpened = !this.IsErrorMessagesOpened;
-        if (this.IsErrorMessagesOpened) {
-            this.IsWarningMessagesOpened = false;
+    toggleErrorMessages(event: any) {
+        let errorMessagesToggle = !this.IsErrorMessagesOpened;
+
+        if (errorMessagesToggle) {
+            this.ErrorMessagesContainerPosition = this.getMessagesContainerPosition(event?.target);
         }
+
+        this.IsErrorMessagesOpened = errorMessagesToggle;
+        this.IsWarningMessagesOpened = errorMessagesToggle ? false : this.IsWarningMessagesOpened;
+    }
+
+    getMessagesContainerPosition(messagesIconElement: HTMLElement) {
+        if (messagesIconElement) {
+            let bodyRect = document.body.getBoundingClientRect();
+            let messagesIconElementRect = messagesIconElement.getBoundingClientRect();
+            let topPosition = messagesIconElementRect.top - document.body.getBoundingClientRect().top + messagesIconElementRect.height + 10;
+            let rightPosition = bodyRect.right - messagesIconElementRect.right - (messagesIconElementRect.width / 2) + 3;
+
+            topPosition = topPosition - (topPosition % 1);
+            rightPosition = rightPosition - (rightPosition % 1);
+
+            return { top: (topPosition + "px"), right: (rightPosition + "px") };
+        }
+        return { top: "0px", right: "0px" };
     }
 }

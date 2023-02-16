@@ -43,6 +43,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     public ShowBusyIndicator: boolean = false;
     public BusyIndicatorWidth: number = 200;
     public ValidationErrorsList: string[] = [];
+    public ReactFlowId: string = (Date.now())?.toString();
     public ReturnPropertiesDataEventKey: string = "returnPropertiesDataEventKey_" + (Date.now())?.toString();
     public returnDeleteNodeConfirmationEventKey: string = "returnDeleteNodeConfirmationEventKey_" + (Date.now())?.toString();
     public HasChanges = false;
@@ -157,6 +158,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         if (this.EntityPM) {
             let flowObject = this.getEntityFlowObject();
             let props = {
+                id: this.ReactFlowId,
                 flow: flowObject,
                 flowChangedEvent: (event: any) => this.flowChangedEvent(event),
                 flowObjectChangedEvent: (event: any) => this.flowObjectChangedEvent(event),
@@ -536,9 +538,9 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         var activeVersion = versions.find(e => e.StatusCode == "ACVE");
         var newestVersion = versions[0];
         if (activeVersion) {
-            return activeVersion
+            return activeVersion;
         } else {
-            return newestVersion
+            return newestVersion;
         }
     }
 

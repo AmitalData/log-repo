@@ -18,15 +18,9 @@
         height: 125px;
         border-radius: 4px;
         position: fixed;
-        top: 86px;
-        right: 355px;
         z-index: 1;
         background-color: white;
         box-shadow: 0px 2px 5px rgb(0 0 0 / 15%);
-    }
-
-    .moved-warning-messages-container {
-        right: 383px;
     }
 
     .messages-container:after {
@@ -105,10 +99,11 @@
         <td class="messages-table-cell">
 
             <div class="messages-section" *ngIf="IsWarningMessagesDisplayed">
-                <img class="toggle-messages-icon" src="./Images/warning_notice.png" (click)="toggleWarningMessages()" />
+                <img class="toggle-messages-icon" src="./Images/warning_notice.png"
+                    (click)="toggleWarningMessages($event)" />
 
                 <div *ngIf="IsWarningMessagesOpened" class="messages-container warning-messages-container"
-                    [ngClass]="{'moved-warning-messages-container' : IsErrorMessagesDisplayed}">
+                    [ngStyle]="{ top : WarningMessagesContainerPosition.top, right : WarningMessagesContainerPosition.right }">
                     <div class="messages-title warning-messages-title">
                         {{WarningMessagesTitle}}
                     </div>
@@ -124,9 +119,10 @@
             </div>
 
             <div class="messages-section" *ngIf="IsErrorMessagesDisplayed">
-                <img class="toggle-messages-icon" src="./Images/problem.png" (click)="toggleErrorMessages()" />
+                <img class="toggle-messages-icon" src="./Images/problem.png" (click)="toggleErrorMessages($event)" />
 
-                <div *ngIf="IsErrorMessagesOpened" class="messages-container error-messages-container">
+                <div *ngIf="IsErrorMessagesOpened" class="messages-container error-messages-container"
+                    [ngStyle]="{ top : ErrorMessagesContainerPosition.top, right : ErrorMessagesContainerPosition.right }">
                     <div class="messages-title error-messages-title">{{ErrorMessagesTitle}}</div>
                     <ul class="messages-list">
                         <li class="message-item" *ngFor="let ErrorMessage of ErrorMessages">
