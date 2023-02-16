@@ -28,6 +28,7 @@ import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPM
 import { InternationalSiteListService } from 'Customs/Services/StandardLists/InternationalSiteListService';
 import { DeliverySiteTypeListService } from 'Customs/Services/StandardLists/DeliverySiteTypeListService';
 import { ExportStorageList } from '../../../../../Customs/EntityLists/ExportStorageList';
+import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 @Component({
 
     templateUrl: './ExportStorageDeclerationComponent.html',
@@ -317,18 +318,33 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
 
 
     async SendButtonClicked() {
-        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.Saving"));
- 
- 
         let  ArrayExportStorageId = [];
+       
+        
+ 
+        
         if (this.exportStorageExtendedListService.connectedSelectAll) {
             var filters = this.getFilters(true, "OpenDate", "Decending");
 
             this.exportStorageExtendedListService.getByFilters(filters).subscribe(x => {
 
                 ArrayExportStorageId = (x.Result as ExportStorageList[]).map(x => x.Id);
-                this.saveConnections(ArrayExportStorageId);
-
+                var count=ArrayExportStorageId.length;
+                if(count>0){
+                    var msg = TextCodeTranslator.Translate("Customs.Declaration.O.DeleteSite")+count;
+                    var confirmWindow = new ConfirmWindow();
+                    confirmWindow.Width = 400;
+                    confirmWindow.Height = 150;
+                    confirmWindow.Show(msg);
+                    confirmWindow.WindowClosed.subscribe((event: any) => {
+            
+                        if (confirmWindow.Yes) { // YES
+                            this.saveConnections(ArrayExportStorageId);
+                        }
+                    });
+                }
+               
+  
             })
 
 
@@ -344,6 +360,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
 
     
     async saveConnections(ArrayExportStorageId) {
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.Saving"));
  
         if (!AppTool.IsNullOrEmpty(this.exportStorageExtendedListService.disconnectedExportStorage))
             ArrayExportStorageId = ArrayExportStorageId.filter(item => !this.exportStorageExtendedListService.disconnectedExportStorage.split(',').find(x => x == item));
