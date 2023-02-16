@@ -110,7 +110,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     {
                         var shipmentObjectTableName = "Shipment";
                         var allStatuses = GetAllStatusesByObjecTableName(shipmentObjectTableName, Tenant);
-                        var allowedStatusWeight = allStatuses.FirstOrDefault(a => a.Code == "SDLD ")?.StatusWeight;
+                        var allowedStatusWeight = allStatuses.FirstOrDefault(a => a.Code == "SDLD")?.StatusWeight;
                         queryableData = queryableData.Include("ShipmentEntityStatus").Where(d => d.ShipmentDeliveryATD != null
                                                                                       && d.ShipmentDeliveryATA == null
                                                                                       && d.ShipmentEntityStatus.StatusWeight < allowedStatusWeight);
