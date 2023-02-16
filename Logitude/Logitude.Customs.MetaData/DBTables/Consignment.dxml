@@ -242,7 +242,7 @@
     ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="ExportUnloadingPortCode"
-    ReferencedTable="InternationalSites"
+    ReferencedTable="LoadingSiteTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Relation

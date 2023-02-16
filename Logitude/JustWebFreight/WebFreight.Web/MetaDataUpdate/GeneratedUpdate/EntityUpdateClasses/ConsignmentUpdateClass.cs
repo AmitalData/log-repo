@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ConsignmentUpdateClass
    {  		
-		public const string HashString = "ff9b56a580a4b914eedbf7afda2154e1";
+		public const string HashString = "98d8e3afa5698d76ad199b8067f0ffb6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "משגור",
 			      				    DefaultText =  "Consignment",
-			      				    Code =  "16e9",
+			      				    Code =  "a2e0",
 			      				    Name =  "Customs.Consignment Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2056,7 +2056,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 						FieldName =  "ExportUnloadingPortCode",
 					  						ObjectTableName =  "Customs.Consignment",
 					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Customs.InternationalSite",
+					  						LookUpTableName =  "Customs.LoadingSiteType",
 					  						MinLength =  0,
 					  						MaxLength =  17,
 					  						IsRequired =  false,
