@@ -135,5 +135,4 @@ export class DashboardPMExtendedService {
 export class PinnedDashboard {
     public Id: string;
     public Order: number;
-    public IsPredefined: boolean;
 }
