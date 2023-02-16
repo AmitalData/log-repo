@@ -57,6 +57,8 @@ namespace Logitude.Workflow.Data.EntityPOCOs
 	    public string WorkFlowVersionId { get; set; }
 	      
         public virtual WorkFlowVersion WorkFlowVersion { get; set; }
+        [Column("RetryAttemptsNumber")]
+	    public int RetryAttemptsNumber { get; set; }
     }
 }
 	 

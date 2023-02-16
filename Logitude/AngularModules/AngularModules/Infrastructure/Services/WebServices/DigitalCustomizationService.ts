@@ -175,6 +175,7 @@ export class DigitalPortalScreenUpdateModel {
     public Content: string;
     public DraftContent: string;
     public IsDraft: boolean;
+    public IsList : boolean;
     public ProfileId: string;
     public ProfileCode: string;
 }

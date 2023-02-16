@@ -100,6 +100,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="RetriesNumber"
+    Type="int"
+	DefaultValue="5">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="RetriesDelay"
+    Type="int"
+	DefaultValue="300">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				CustomerStatusRepository  customerStatusRepository = new CustomerStatusRepository(MyContext);
 				CustomerStatusList entityList = null;
 				CustomerStatus entityPoco = customerStatusRepository.GetSingleCustomerStatus(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<CustomerStatus> singleEntityList = new List<CustomerStatus>();
 					singleEntityList.Add(entityPoco);

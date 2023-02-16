@@ -56,8 +56,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             this.PropertyChangedEvent = this.EntityPM.PropertyChanged.subscribe((fieldChanged: PropertyChangedArgs) => {
                 if (fieldChanged) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    var index: number = this.GetChangedLegIndex(fieldChanged.PropertyName);
-                    this.Refresh(index);
+                    this.Refresh();
                 }
             });
         }
@@ -103,36 +102,20 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
 
     }
 
-    private Refresh(changedLegIndex: number) {
+    private Refresh() {
         this.ItemsSource.forEach(item => {
             item.IsContinuousLine = this.CheckNextLegDates(item.NextLegCode);
             item.IsDashedLine = !item.IsContinuousLine;
             item.Calculate();
         });
 
-        //this.Refresh_Previous(changedLegIndex);
-        this.Set_Previous();
+        this.SetPreviousLegProperites();
     }
-    Refresh_Previous(changedLegIndex: number) {
-        this.ItemsSource.filter(d => d.Index == changedLegIndex).forEach(item => {
-            this.ItemsSource.filter(d => d.Index < item.Index).forEach(previousItem => {
-                if (item.IsGreenCircle) {
-                    previousItem.IsGreenCircle = item.IsGreenCircle;
-                    previousItem.IsOrangeCircle = item.IsOrangeCircle;
-                }
-
-                else if (item.IsOrangeCircle) {
-                    previousItem.IsGreenCircle = true;
-                    previousItem.IsOrangeCircle = false;
-                }
-            });
-        });
-    }
-
     private SetUIProperties() {
 
     }
 
+    private lastLegCode: string = null;
     private BuildItemsSource() {
         this.ItemsSource = [];
 
@@ -145,9 +128,10 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         this.AddRoutingItem("DELV", "EMRT", 7);
         this.AddRoutingItem("EMRT", null, 8);
 
-        this.Set_Previous();
+        this.SetPreviousLegProperites();
+        this.RoutingItemClicked(this.lastLegCode);
     }
-    private Set_Previous() {
+    private SetPreviousLegProperites() {
         this.ItemsSource.forEach(item => {
             this.ItemsSource.filter(d => d.Index < item.Index).forEach(previousItem => {
                 if (item.IsGreenCircle) {
@@ -171,6 +155,10 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         item.IsDashedLine = !item.IsContinuousLine;
         item.Calculate();
         this.ItemsSource.push(item);
+
+        if (item.IsGreenCircle || item.IsOrangeCircle) {
+            this.lastLegCode = item.Code;
+        }
     }
 
     private CheckNextLegDates(nextLegCode: string): boolean {
@@ -461,21 +449,21 @@ export class RoutingItem {
         switch (this.Code) {
             case "PICK": {
                 name = "Empty Pickup";
-                location = this.Container.EmptyPickupLocationName;
+                location = this.Container.EmptyPickupLocationName ?? !AppTool.IsNullOrEmpty(this.Container.ShipmentPickupFrom) ? this.Container.ShipmentPickupFrom + " , " + this.Container.ShipmentPickupTo : null;
                 date = this.GetDate_EmptyPickup();
                 break;
             }
 
             case "PREC": {
                 name = "Pre Carriage";
-                location = this.Container.PreCarriageLocationName;
+                location = this.Container.PreCarriageLocationName ?? this.Container.ShipmentPreCarriageFromName;
                 date = this.GetDate_PreCarriage();
                 break;
             }
 
             case "POL": {
                 name = "POL";
-                location = this.Container.POLLocationName;
+                location = this.Container.POLLocationName ?? this.Container.ShipmentMainCarriageFromName;
                 date = this.GetDate_POL();
                 break;
             }
@@ -489,14 +477,14 @@ export class RoutingItem {
 
             case "POD": {
                 name = "POD";
-                location = this.Container.PODLocationName;
+                location = this.Container.PODLocationName ?? this.Container.ShipmentMainCarriageToName;
                 date = this.GetDate_POD();
                 break;
             }
 
             case "ONC": {
                 name = "On Carriage";
-                location = this.Container.OnCarriageLocationName;
+                location = this.Container.OnCarriageLocationName ?? this.Container.ShipmentOnCarriageToName;
                 date = this.GetDate_OnCarriage();
                 break;
             }
@@ -510,7 +498,7 @@ export class RoutingItem {
 
             case "EMRT": {
                 name = "Empty Return";
-                location = this.Container.EmptyReturnLocationName;
+                location = this.Container.EmptyReturnLocationName ?? !AppTool.IsNullOrEmpty(this.Container.EmptyContainerReturnFrom) ? this.Container.EmptyContainerReturnFrom + " , " + this.Container.EmptyContainerReturnTo : null;
                 date = this.GetDate_EmptyReturn();
                 break;
             }
@@ -527,8 +515,14 @@ export class RoutingItem {
         if (this.Container.ActualEmptyPickupDate != null)
             return this.GetDateString("Act.", this.Container.ActualEmptyPickupDate);
 
+        else if (this.Container.ShipmentPickupATD != null)
+            return this.GetDateString("Act.", this.Container.ShipmentPickupATD);
+
         else if (this.Container.EstimatedEmptyPickupDate != null)
             return this.GetDateString("Est.", this.Container.EstimatedEmptyPickupDate);
+
+        else if (this.Container.ShipmentPickupETD != null)
+            return this.GetDateString("Est.", this.Container.ShipmentPickupETD);
 
         else
             return null;
@@ -537,8 +531,14 @@ export class RoutingItem {
         if (this.Container.PreCarriageATD != null)
             return this.GetDateString("ATD", this.Container.PreCarriageATD);
 
+        else if (this.Container.ShipmentPreCarriageATD != null)
+            return this.GetDateString("ATD", this.Container.ShipmentPreCarriageATD);
+
         else if (this.Container.PreCarriageETD != null)
             return this.GetDateString("ETD", this.Container.PreCarriageETD);
+
+        else if (this.Container.ShipmentPreCarriageETD != null)
+            return this.GetDateString("ETD", this.Container.ShipmentPreCarriageETD);
 
         else if (this.Container.PreCarriageGateIn != null)
             return this.GetDateString("Gate In", this.Container.PreCarriageGateIn);
@@ -548,16 +548,22 @@ export class RoutingItem {
     }
     private GetDate_POL(): string {
         if (this.Container.ActualPOLVesselDeparture != null)
-            return this.GetDateString("Act. vsl Departure", this.Container.ActualPOLVesselDeparture);
+            return this.GetDateString("Vessel ATD", this.Container.ActualPOLVesselDeparture);
+
+        else if (this.Container.ShipmentMainCarriageATD != null)
+            return this.GetDateString("Vessel ATD", this.Container.ShipmentMainCarriageATD);
 
         else if (this.Container.EstimatedPOLVesselDeparture != null)
-            return this.GetDateString("Est. vsl Departure", this.Container.EstimatedPOLVesselDeparture);
+            return this.GetDateString("Vessel ETD", this.Container.EstimatedPOLVesselDeparture);
+
+        else if (this.Container.ShipmentMainCarriageETD != null)
+            return this.GetDateString("Vessel ETD", this.Container.ShipmentMainCarriageETD);
 
         else if (this.Container.ActualPOLLoaded != null)
-            return this.GetDateString("Act. Loaded", this.Container.ActualPOLLoaded);
+            return this.GetDateString("Loaded Actual", this.Container.ActualPOLLoaded);
 
         else if (this.Container.EstimatedPOLLoaded != null)
-            return this.GetDateString("Est. Loaded", this.Container.EstimatedPOLLoaded);
+            return this.GetDateString("Loaded Est.", this.Container.EstimatedPOLLoaded);
 
         else if (this.Container.GateIn != null)
             return this.GetDateString("Gate In", this.Container.GateIn);
@@ -567,66 +573,84 @@ export class RoutingItem {
     }
     private GetDate_TS1(): string {
         if (this.Container.ActualTrans1VesselDeparture != null)
-            return this.GetDateString("Act. vsl Departure", this.Container.ActualTrans1VesselDeparture);
+            return this.GetDateString("Vessel ATD", this.Container.ActualTrans1VesselDeparture);
+
+        else if (this.Container.ShipmentTransshipment1ATD != null)
+            return this.GetDateString("Vessel ATD", this.Container.ShipmentTransshipment1ATD);
 
         else if (this.Container.EstimatedTrans1VesselDeparture != null)
-            return this.GetDateString("Est. vsl Departure", this.Container.EstimatedTrans1VesselDeparture);
+            return this.GetDateString("Vessel ETD", this.Container.EstimatedTrans1VesselDeparture);
+
+        else if (this.Container.ShipmentTransshipment1ETD != null)
+            return this.GetDateString("Vessel ETD", this.Container.ShipmentTransshipment1ETD);
 
         else if (this.Container.ActualTransshipment1VesselArrival != null)
-            return this.GetDateString("Act. vsl Arrival", this.Container.ActualTransshipment1VesselArrival);
+            return this.GetDateString("Vessel ATA", this.Container.ActualTransshipment1VesselArrival);
 
         else if (this.Container.EstimatedTrans1VesselArrival != null)
-            return this.GetDateString("Est. vsl Arrival", this.Container.EstimatedTrans1VesselArrival);
+            return this.GetDateString("Vessel ETA", this.Container.EstimatedTrans1VesselArrival);
 
         else if (this.Container.ActualTransshipment1Loaded != null)
-            return this.GetDateString("Act. Loaded", this.Container.ActualTransshipment1Loaded);
+            return this.GetDateString("Loaded Actual", this.Container.ActualTransshipment1Loaded);
 
         else if (this.Container.EstimatedTransshipment1Loaded != null)
-            return this.GetDateString("Est. Loaded", this.Container.EstimatedTransshipment1Loaded);
+            return this.GetDateString("Loaded Est.", this.Container.EstimatedTransshipment1Loaded);
 
         else
             return null;
     }
     private GetDate_TS2(): string {
         if (this.Container.ActualTrans2VesselDeparture != null)
-            return this.GetDateString("Act. vsl Departure", this.Container.ActualTrans2VesselDeparture);
+            return this.GetDateString("Vessel ATD", this.Container.ActualTrans2VesselDeparture);
+
+        else if (this.Container.ShipmentTransshipment2ATD != null)
+            return this.GetDateString("Vessel ATD", this.Container.ShipmentTransshipment2ATD);
 
         else if (this.Container.EstimatedTrans2VesselDeparture != null)
-            return this.GetDateString("Est. vsl Departure", this.Container.EstimatedTrans2VesselDeparture);
+            return this.GetDateString("Vessel ETD", this.Container.EstimatedTrans2VesselDeparture);
+
+        else if (this.Container.ShipmentTransshipment2ETD != null)
+            return this.GetDateString("Vessel ETD", this.Container.ShipmentTransshipment2ETD);
 
         else if (this.Container.ActualTransshipment2VesselArrival != null)
-            return this.GetDateString("Act. vsl Arrival", this.Container.ActualTransshipment2VesselArrival);
+            return this.GetDateString("Vessel ATA", this.Container.ActualTransshipment2VesselArrival);
 
         else if (this.Container.EstimatedTrans2VesselArrival != null)
-            return this.GetDateString("Est. vsl Arrival", this.Container.EstimatedTrans2VesselArrival);
+            return this.GetDateString("Vessel ETA", this.Container.EstimatedTrans2VesselArrival);
 
         else if (this.Container.ActualTransshipment2Loaded != null)
-            return this.GetDateString("Act. Loaded", this.Container.ActualTransshipment2Loaded);
+            return this.GetDateString("Loaded Actual", this.Container.ActualTransshipment2Loaded);
 
         else if (this.Container.EstimatedTransshipment2Loaded != null)
-            return this.GetDateString("Est. Loaded", this.Container.EstimatedTransshipment2Loaded);
+            return this.GetDateString("Loaded Est.", this.Container.EstimatedTransshipment2Loaded);
 
         else
             return null;
     }
     private GetDate_TS3(): string {
         if (this.Container.ActualTrans3VesselDeparture != null)
-            return this.GetDateString("Act. vsl Departure", this.Container.ActualTrans3VesselDeparture);
+            return this.GetDateString("Vessel ATD", this.Container.ActualTrans3VesselDeparture);
+
+        else if (this.Container.ShipmentTransshipment3ATD != null)
+            return this.GetDateString("Vessel ATD", this.Container.ShipmentTransshipment3ATD);
 
         else if (this.Container.EstimatedTrans3VesselDeparture != null)
-            return this.GetDateString("Est. vsl Departure", this.Container.EstimatedTrans3VesselDeparture);
+            return this.GetDateString("Vessel ETD", this.Container.EstimatedTrans3VesselDeparture);
+
+        else if (this.Container.ShipmentTransshipment3ETD != null)
+            return this.GetDateString("Vessel ETD", this.Container.ShipmentTransshipment3ETD);
 
         else if (this.Container.ActualTransshipment3VesselArrival != null)
-            return this.GetDateString("Act. vsl Arrival", this.Container.ActualTransshipment3VesselArrival);
+            return this.GetDateString("Vessel ATA", this.Container.ActualTransshipment3VesselArrival);
 
         else if (this.Container.EstimatedTrans3VesselArrival != null)
-            return this.GetDateString("Est. vsl Arrival", this.Container.EstimatedTrans3VesselArrival);
+            return this.GetDateString("Vessel ETA", this.Container.EstimatedTrans3VesselArrival);
 
         else if (this.Container.ActualTransshipment3Loaded != null)
-            return this.GetDateString("Act.  Loaded", this.Container.ActualTransshipment3Loaded);
+            return this.GetDateString("Loaded Actual", this.Container.ActualTransshipment3Loaded);
 
         else if (this.Container.EstimatedTransshipment3Loaded != null)
-            return this.GetDateString("Est. Loaded", this.Container.EstimatedTransshipment3Loaded);
+            return this.GetDateString("Loaded Est.", this.Container.EstimatedTransshipment3Loaded);
 
         else
             return null;
@@ -636,16 +660,22 @@ export class RoutingItem {
             return this.GetDateString("Gate Out", this.Container.GateOut);
 
         else if (this.Container.ActualPODDischarge != null)
-            return this.GetDateString("Act. Discharge", this.Container.ActualPODDischarge);
+            return this.GetDateString("Vessel ATD", this.Container.ActualPODDischarge);
 
         else if (this.Container.EstimatedPODDischarge != null)
-            return this.GetDateString("Est. Discharge", this.Container.EstimatedPODDischarge);
+            return this.GetDateString("Vessel ETD", this.Container.EstimatedPODDischarge);
 
         else if (this.Container.ActualPODVesselArrival != null)
-            return this.GetDateString("Act. vsl Arrival", this.Container.ActualPODVesselArrival);
+            return this.GetDateString("Vessel ATA", this.Container.ActualPODVesselArrival);
+
+        else if (this.Container.ShipmentMainCarriageATA != null)
+            return this.GetDateString("Vessel ATA", this.Container.ShipmentMainCarriageATA);
 
         else if (this.Container.EstimatedPODVesselArrival != null)
-            return this.GetDateString("Est. vsl Arrival", this.Container.EstimatedPODVesselArrival);
+            return this.GetDateString("Vessel ETA", this.Container.EstimatedPODVesselArrival);
+
+        else if (this.Container.ShipmentMainCarriageETA != null)
+            return this.GetDateString("Vessel ETA", this.Container.ShipmentMainCarriageETA);
 
         else
             return null;
@@ -663,8 +693,14 @@ export class RoutingItem {
         else if (this.Container.OnCarriageATA != null)
             return this.GetDateString("ATA", this.Container.OnCarriageATA);
 
+        else if (this.Container.ShipmentOnCarriageATA != null)
+            return this.GetDateString("ATA", this.Container.ShipmentOnCarriageATA);
+
         else if (this.Container.OnCarriageETA != null)
             return this.GetDateString("ETA", this.Container.OnCarriageETA);
+
+        else if (this.Container.ShipmentOnCarriageETA != null)
+            return this.GetDateString("ETA", this.Container.ShipmentOnCarriageETA);
 
         else
             return null;
@@ -689,8 +725,14 @@ export class RoutingItem {
         if (this.Container.ActualEmptyReturn != null)
             return this.GetDateString("Act.", this.Container.ActualEmptyReturn);
 
+        else if (this.Container.EmptyContainerReturnATA != null)
+            return this.GetDateString("Act.", this.Container.EmptyContainerReturnATA);
+
         else if (this.Container.EstimatedEmptyReturn != null)
             return this.GetDateString("Est.", this.Container.EstimatedEmptyReturn);
+
+        else if (this.Container.EmptyContainerReturnETA != null)
+            return this.GetDateString("Est.", this.Container.EmptyContainerReturnETA);
 
         else
             return null;
@@ -701,14 +743,14 @@ export class RoutingItem {
     }
 
     private GetTrnasshipmentLocation(): string {
-        if (!AppTool.IsNullOrEmpty(this.Container.Transshipment3LocationName))
-            return this.Container.Transshipment3LocationName;        
+        if (!AppTool.IsNullOrEmpty(this.Container.Transshipment3LocationName) || !AppTool.IsNullOrEmpty(this.Container.ShipmentTransshipment3FromName))
+            return this.Container.Transshipment3LocationName ?? this.Container.ShipmentTransshipment3FromName;
 
-        else if (!AppTool.IsNullOrEmpty(this.Container.Transshipment2LocationName))
-            return this.Container.Transshipment2LocationName;        
+        else if (!AppTool.IsNullOrEmpty(this.Container.Transshipment2LocationName) || !AppTool.IsNullOrEmpty(this.Container.ShipmentTransshipment2FromName))
+            return this.Container.Transshipment2LocationName ?? this.Container.ShipmentTransshipment2FromName;
 
-        else if (!AppTool.IsNullOrEmpty(this.Container.Transshipment1LocationName)) 
-            return this.Container.Transshipment1LocationName;        
+        else if (!AppTool.IsNullOrEmpty(this.Container.Transshipment1LocationName) || !AppTool.IsNullOrEmpty(this.Container.ShipmentTransshipment1FromName))
+            return this.Container.Transshipment1LocationName ?? this.Container.ShipmentTransshipment1FromName;
 
         else
             return null;
@@ -775,101 +817,101 @@ export class RoutingItem {
         this.IsGreenCircle = false;
         this.IsOrangeCircle = false;
 
-        if (this.Container.ActualEmptyPickupDate != null)
+        if (this.Container.ActualEmptyPickupDate != null || this.Container.ShipmentPickupATD != null)
             this.IsGreenCircle = true;
     }
     CheckActualDates_PreCarriage() {
         this.IsGreenCircle = false;
         this.IsOrangeCircle = true;
 
-        if (this.Container.PreCarriageATD != null && this.Container.PreCarriageGateIn != null) {
+        if ((this.Container.PreCarriageATD != null || this.Container.ShipmentPreCarriageATD != null) && this.Container.PreCarriageGateIn != null) {
             this.IsGreenCircle = true;
             this.IsOrangeCircle = false;
         }
 
-        else if (this.Container.PreCarriageATD == null && this.Container.PreCarriageGateIn == null)
+        else if (this.Container.PreCarriageATD == null && this.Container.ShipmentPreCarriageATD == null && this.Container.PreCarriageGateIn == null)
             this.IsOrangeCircle = false;
     }
     CheckActualDates_POL() {
         this.IsGreenCircle = false;
         this.IsOrangeCircle = true;
 
-        if (this.Container.ActualPOLVesselDeparture != null && this.Container.ActualPOLLoaded != null && this.Container.GateIn != null) {
+        if ((this.Container.ActualPOLVesselDeparture != null || this.Container.ShipmentMainCarriageATD != null) && this.Container.ActualPOLLoaded != null && this.Container.GateIn != null) {
             this.IsGreenCircle = true;
             this.IsOrangeCircle = false;
         }
 
-        else if (this.Container.ActualPOLVesselDeparture == null && this.Container.ActualPOLLoaded == null && this.Container.GateIn == null)
+        else if (this.Container.ActualPOLVesselDeparture == null && this.Container.ShipmentMainCarriageATD == null && this.Container.ActualPOLLoaded == null && this.Container.GateIn == null)
             this.IsOrangeCircle = false;
     }
     CheckActualDates_Transshipments() {
         this.IsGreenCircle = false;
         this.IsOrangeCircle = false;
 
-        if (this.Container.ActualTrans3VesselDeparture != null || this.Container.ActualTransshipment3VesselArrival != null || this.Container.ActualTransshipment3Loaded != null)
+        if (this.Container.ActualTrans3VesselDeparture != null || this.Container.ShipmentTransshipment3ATD != null || this.Container.ActualTransshipment3VesselArrival != null || this.Container.ActualTransshipment3Loaded != null)
             this.CheckActualDates_TS3();
 
-        else if (this.Container.ActualTrans2VesselDeparture != null || this.Container.ActualTransshipment2VesselArrival != null || this.Container.ActualTransshipment2Loaded != null)
+        else if (this.Container.ActualTrans2VesselDeparture != null || this.Container.ShipmentTransshipment2ATD != null || this.Container.ActualTransshipment2VesselArrival != null || this.Container.ActualTransshipment2Loaded != null)
             this.CheckActualDates_TS2();
 
-        else if (this.Container.ActualTrans1VesselDeparture != null || this.Container.ActualTransshipment1VesselArrival != null || this.Container.ActualTransshipment1Loaded != null)
+        else if (this.Container.ActualTrans1VesselDeparture != null || this.Container.ShipmentTransshipment1ATD != null || this.Container.ActualTransshipment1VesselArrival != null || this.Container.ActualTransshipment1Loaded != null)
             this.CheckActualDates_TS1();
     }
     CheckActualDates_TS3() {
         this.IsOrangeCircle = true;
 
-        if (this.Container.ActualTrans3VesselDeparture != null && this.Container.ActualTransshipment3VesselArrival != null && this.Container.ActualTransshipment3Loaded != null) {
+        if ((this.Container.ActualTrans3VesselDeparture != null || this.Container.ShipmentTransshipment3ATD != null) && this.Container.ActualTransshipment3VesselArrival != null && this.Container.ActualTransshipment3Loaded != null) {
             this.IsGreenCircle = true;
             this.IsOrangeCircle = false;
         }
 
-        else if (this.Container.ActualTrans3VesselDeparture == null && this.Container.ActualTransshipment3VesselArrival == null && this.Container.ActualTransshipment3Loaded == null)
+        else if (this.Container.ActualTrans3VesselDeparture == null && this.Container.ShipmentTransshipment3ATD == null && this.Container.ActualTransshipment3VesselArrival == null && this.Container.ActualTransshipment3Loaded == null)
             this.IsOrangeCircle = false;
     }
     CheckActualDates_TS2() {
         this.IsOrangeCircle = true;
 
-        if (this.Container.ActualTrans2VesselDeparture != null && this.Container.ActualTransshipment2VesselArrival != null && this.Container.ActualTransshipment2Loaded != null) {
+        if ((this.Container.ActualTrans2VesselDeparture != null || this.Container.ShipmentTransshipment2ATD != null) && this.Container.ActualTransshipment2VesselArrival != null && this.Container.ActualTransshipment2Loaded != null) {
             this.IsGreenCircle = true;
             this.IsOrangeCircle = false;
         }
 
-        else if (this.Container.ActualTrans2VesselDeparture == null && this.Container.ActualTransshipment2VesselArrival == null && this.Container.ActualTransshipment2Loaded == null)
+        else if (this.Container.ActualTrans2VesselDeparture == null && this.Container.ShipmentTransshipment2ATD == null && this.Container.ActualTransshipment2VesselArrival == null && this.Container.ActualTransshipment2Loaded == null)
             this.IsOrangeCircle = false;
     }
     CheckActualDates_TS1() {
         this.IsOrangeCircle = true;
 
-        if (this.Container.ActualTrans1VesselDeparture != null && this.Container.ActualTransshipment1VesselArrival != null && this.Container.ActualTransshipment1Loaded != null) {
+        if ((this.Container.ActualTrans1VesselDeparture != null || this.Container.ShipmentTransshipment1ATD != null) && this.Container.ActualTransshipment1VesselArrival != null && this.Container.ActualTransshipment1Loaded != null) {
             this.IsGreenCircle = true;
             this.IsOrangeCircle = false;
         }
 
-        else if (this.Container.ActualTrans1VesselDeparture == null && this.Container.ActualTransshipment1VesselArrival == null && this.Container.ActualTransshipment1Loaded == null)
+        else if (this.Container.ActualTrans1VesselDeparture == null && this.Container.ShipmentTransshipment1ATD == null && this.Container.ActualTransshipment1VesselArrival == null && this.Container.ActualTransshipment1Loaded == null)
             this.IsOrangeCircle = false;
     }
     CheckActualDates_POD() {
         this.IsGreenCircle = false;
         this.IsOrangeCircle = true;
 
-        if (this.Container.GateOut != null && this.Container.ActualPODDischarge != null && this.Container.ActualPODVesselArrival != null) {
+        if (this.Container.GateOut != null && this.Container.ActualPODDischarge != null && (this.Container.ActualPODVesselArrival != null || this.Container.ShipmentMainCarriageATA != null)) {
             this.IsGreenCircle = true;
             this.IsOrangeCircle = false;
         }
 
-        else if (this.Container.GateOut == null && this.Container.ActualPODDischarge == null && this.Container.ActualPODVesselArrival == null)
+        else if (this.Container.GateOut == null && this.Container.ActualPODDischarge == null && this.Container.ActualPODVesselArrival == null && this.Container.ShipmentMainCarriageATA == null)
             this.IsOrangeCircle = false;
     }
     CheckActualDates_OnCarriage() {
         this.IsGreenCircle = false;
         this.IsOrangeCircle = true;
 
-        if (this.Container.OnCarriageGateOut != null && this.Container.OnCarriageATD != null && this.Container.OnCarriageATA != null) {
+        if (this.Container.OnCarriageGateOut != null && this.Container.OnCarriageATD != null && (this.Container.OnCarriageATA != null || this.Container.ShipmentOnCarriageATA != null)) {
             this.IsGreenCircle = true;
             this.IsOrangeCircle = false;
         }
 
-        else if (this.Container.OnCarriageGateOut == null && this.Container.OnCarriageATD == null && this.Container.OnCarriageATA == null)
+        else if (this.Container.OnCarriageGateOut == null && this.Container.OnCarriageATD == null && this.Container.OnCarriageATA == null && this.Container.ShipmentOnCarriageATA == null)
             this.IsOrangeCircle = false;
     }
     CheckActualDates_Delivery() {
@@ -888,7 +930,7 @@ export class RoutingItem {
         this.IsGreenCircle = false;
         this.IsOrangeCircle = false;
 
-        if (this.Container.ActualEmptyReturn != null)
+        if (this.Container.ActualEmptyReturn != null || this.Container.EmptyContainerReturnATA != null)
             this.IsGreenCircle = true;
     }
 }

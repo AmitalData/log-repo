@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				CustomerGroupRepository  customerGroupRepository = new CustomerGroupRepository(MyContext);
 				CustomerGroupList entityList = null;
 				CustomerGroup entityPoco = customerGroupRepository.GetSingleCustomerGroup(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<CustomerGroup> singleEntityList = new List<CustomerGroup>();
 					singleEntityList.Add(entityPoco);

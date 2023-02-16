@@ -26,6 +26,8 @@ export class WorkFlowList {
 	FlowJson: string;
 	Entity: string;
 	Trigger: string;
+	RetriesNumber: number;
+	RetriesDelay: number;
 	
 }
  

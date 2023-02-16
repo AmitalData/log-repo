@@ -248,6 +248,26 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     });
         }
 
+        public IQueryable<EntityStatusList> GetEntityStatusByObjectTableNameAndTenant(string objectTableName, int tenant)
+        {
+            var query = repository.context.EntityStatus.Include("ObjectTable")
+                                                       .Where(a => a.Tenant == tenant
+                                                               && a.InActive == false
+                                                               && a.ObjectTable.Name == objectTableName)
+                                                       .Select(a => new EntityStatusList()
+                                                       {
+                                                           Id = a.Id,
+                                                           Name = a.Name,
+                                                           ObjectTableId = a.ObjectTableId,
+                                                           StatusWeight = a.StatusWeight,
+                                                           Tenant = a.Tenant,
+                                                           ObjectTableName = a.ObjectTable.Name,
+                                                           Code = a.Code,
+                                                       });
+            return query;
+        }
+
+
         public IQueryable<EntityStatusList> GetIQueryableEntityList(IQueryable<EntityStatus> iQueryable)
         {
             IQueryable<EntityStatusList> result = from entity in iQueryable.Include("ObjectTable")

@@ -12,6 +12,7 @@ using System.Reflection;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Helpers;
 using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.Server.Tools.Helpers
 {
@@ -26,12 +27,10 @@ namespace Logitude.Server.Tools.Helpers
 
                 EventTypeRepository eventTypeRepository = new EventTypeRepository(objectContext);
                 EventType eventType = eventTypeRepository.GetSingleEventTypeByCode(args.EventTypeCode, tenant);
-
                 if (eventType == null)
                 {
                     throw new Exception("Event Type is not recognized:" + args.EventTypeCode);
                 }
-
                 else
                 {
                     ObjectTableRepository objectTabelRepository = new ObjectTableRepository(objectContext);
@@ -155,14 +154,26 @@ namespace Logitude.Server.Tools.Helpers
                         ChildEntityId = args.ChildEntityId,
                         ChildObjectTableId = childObjectTable?.Id,
                     };
-                    using (var scope = objectContext.GetSnapshotTransaction())
+
+                    if (LogitudeSettings.WorkEnvironment != "cloud")
+                    {
+                        using (var scope = objectContext.GetSnapshotTransaction())
+                        {
+                            TraceEventRepository traceEventRepository = new TraceEventRepository(objectContext);
+                            traceEventRepository.Add(myTraceEvent);
+                            traceEventRepository.SubmitChanges();
+                            objectContext.SaveChanges();
+                            scope.Commit();
+                        }
+                    }
+                    else
                     {
                         TraceEventRepository traceEventRepository = new TraceEventRepository(objectContext);
                         traceEventRepository.Add(myTraceEvent);
                         traceEventRepository.SubmitChanges();
                         objectContext.SaveChanges();
-                        scope.Commit();
                     }
+
                     if (eventType.IsCustomerView)
                     {
                         ContactsUnseenEntitiesHelper.AddUnseenEntityRecord(myTraceEvent.Id, tenant);

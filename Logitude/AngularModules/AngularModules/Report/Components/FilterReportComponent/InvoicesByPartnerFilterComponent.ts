@@ -95,15 +95,10 @@ export class InvoicesByPartnerFilterComponent extends BaseComponent   {
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.ReportsPreview = myReportsPreview;
 
-        var month = new Date().getMonth();
-        var Year = new Date().getFullYear();
-        var daysofmonth = this.daysInMonth(new Date());
-
-
-        this.FromDate = this.SetDate(Year, month - 1, 1);
-
-
-        this.ToDate = this.SetDate(Year, month - 1, daysofmonth);
+        var curDate = new Date();
+        this.FromDate= new Date();
+        this.FromDate.setUTCDate(this.FromDate.getUTCDate() - 90);
+        this.ToDate = curDate;
     }
  
     daysInMonth(aDate: Date) {
@@ -113,11 +108,6 @@ export class InvoicesByPartnerFilterComponent extends BaseComponent   {
     RunReport(isloading: boolean) {
 
         this.ValidationErrorsList = [];
-        if (this.FromDate == null) {
-            this.ValidationErrorsList.push("From Date is required");
-
-        }
-
         if (this.ToDate == null) {
             this.ValidationErrorsList.push("To Date is required");
 
@@ -131,11 +121,9 @@ export class InvoicesByPartnerFilterComponent extends BaseComponent   {
         if (this.ValidationErrorsList.length == 0) {
             this.queryFilterItems = new Array<QueryFilterItem>();
 
-
-
             this.queryFilterItem = new QueryFilterItem();
             this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "CreateDate";
+            this.queryFilterItem.FieldName = "FromDate";
             this.queryFilterItem.FieldValue = this.FromDate;
             this.queryFilterItem.FieldDataType = "Date";
             this.queryFilterItem.Operator = "GreaterThanOrEqual";
@@ -143,13 +131,11 @@ export class InvoicesByPartnerFilterComponent extends BaseComponent   {
 
             this.queryFilterItem = new QueryFilterItem();
             this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "CreateDate";
+            this.queryFilterItem.FieldName = "ToDate";
             this.queryFilterItem.FieldValue = this.ToDate;
             this.queryFilterItem.FieldDataType = "Date";
             this.queryFilterItem.Operator = "LessThanOrEqual";
             this.queryFilterItems.push(this.queryFilterItem);
-
-
 
             if (this.CustomerId) {
                 this.queryFilterItem = new QueryFilterItem();

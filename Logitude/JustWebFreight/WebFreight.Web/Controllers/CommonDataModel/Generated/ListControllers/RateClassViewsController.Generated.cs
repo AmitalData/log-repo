@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				RateClassRepository  rateClassRepository = new RateClassRepository(MyContext);
 				RateClassList entityList = null;
 				RateClass entityPoco = rateClassRepository.GetSingleRateClass(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<RateClass> singleEntityList = new List<RateClass>();
 					singleEntityList.Add(entityPoco);

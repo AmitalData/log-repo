@@ -4517,9 +4517,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                               .Include("MoveType")
                                               .FirstOrDefault(a => a.Id == id && a.Tenant == tenant);
                 if (shipment != null)
-                {
-                    CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
-                    customFieldResolver.SetCustomFieldsValues("Shipment", tenant, new List<Shipment> { shipment }.Cast<object>().ToList());
+                {                  
 
                     ShipmentMasterData masterData = repository.context
                                                               .ShipmentMasterDatas
@@ -14089,6 +14087,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                Transshipment3ToPortId = f.Transshipment3ToPortId,
                                OnCarriageToPortId = f.OnCarriageToPortId,
                                MainCarriageToPortId = f.MainCarriageToPortId,
+                               OnCarriageETD =  f.OnCarriageETD,
+                               OnCarriageATD =  f.OnCarriageATD,
+                               OnCarriageETA =  f.OnCarriageETA,
+                               OnCarriageATA =  f.OnCarriageATA
                            };
 
             return myResult;

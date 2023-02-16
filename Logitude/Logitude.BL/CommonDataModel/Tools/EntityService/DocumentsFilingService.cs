@@ -1046,9 +1046,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void RunAutomation(DocumentsFilingPM theEntityPm, string automationType)
         {
-            if (!theEntityPm.IsUoloadedField)
+            if (!theEntityPm.IsUoloadedField && !theEntityPm.IsFromDigital)
                 return;
-
             GeneralEntityChangeService generalEntityChangeService = new GeneralEntityChangeService();
             EntityDetails entityDetails = generalEntityChangeService.GetEntityDetails(theEntityPm.EntityId, theEntityPm.ObjectTableName, theEntityPm.Tenant);
             
@@ -1716,7 +1715,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 IsFromUnifreightPodMobile = true,
                 IsApprovalRequired = info.IsApprovalRequired,
                 HasFile = true,
-                Received = true
+                Received = true,
+                IsFromDigital = true,
             };
 
             UserRepository userRepository = new UserRepository(tenant);

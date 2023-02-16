@@ -67,8 +67,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				PackageTypeRepository  packageTypeRepository = new PackageTypeRepository(MyContext);
 				PackageTypeList entityList = null;
 				PackageType entityPoco = packageTypeRepository.GetSinglePackageType(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<PackageType> singleEntityList = new List<PackageType>();
 					singleEntityList.Add(entityPoco);

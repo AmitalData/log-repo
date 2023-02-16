@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				AirlineMessagingRuleRepository  airlineMessagingRuleRepository = new AirlineMessagingRuleRepository(MyContext);
 				AirlineMessagingRuleList entityList = null;
 				AirlineMessagingRule entityPoco = airlineMessagingRuleRepository.GetSingleAirlineMessagingRule(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<AirlineMessagingRule> singleEntityList = new List<AirlineMessagingRule>();
 					singleEntityList.Add(entityPoco);

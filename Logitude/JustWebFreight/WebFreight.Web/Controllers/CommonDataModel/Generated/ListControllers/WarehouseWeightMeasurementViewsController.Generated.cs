@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				WarehouseWeightMeasurementRepository  warehouseWeightMeasurementRepository = new WarehouseWeightMeasurementRepository(MyContext);
 				WarehouseWeightMeasurementList entityList = null;
 				WarehouseWeightMeasurement entityPoco = warehouseWeightMeasurementRepository.GetSingleWarehouseWeightMeasurement(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<WarehouseWeightMeasurement> singleEntityList = new List<WarehouseWeightMeasurement>();
 					singleEntityList.Add(entityPoco);

@@ -62,6 +62,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.ObjectContext.SaveChanges();
 
             objectTableServiceInitializer.InitializeTextCode(this.Poco);
+            InvalidateCache();
         }
 
         public void Update(ObjectTablePM theEntityPm)
@@ -75,6 +76,16 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             ObjectTableMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
+        }
+
+
+        private void InvalidateCache()
+        {
+            string tenantListName = "tenantobjecttables" + tenant;
+            if (CacheManager.CacheWrapper.Get(tenantListName) != null)
+            {
+                CacheManager.CacheWrapper.Invalidate(tenantListName);
+            }
         }
 
     }

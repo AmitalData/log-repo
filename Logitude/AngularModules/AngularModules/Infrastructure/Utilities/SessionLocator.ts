@@ -20,6 +20,7 @@ export class SessionLocator {
     public static SignalRChannelService: SignalRChannelService;
     public static DisableEntityValidation: boolean = false;
     public static UseCachedData: boolean = true;
+    public static UseMemoryCachedData: boolean = false;
     public static IsExternalParams: boolean = false;
     public static IsSiguOut: boolean = false;
     public static HomeComponent: HomeComponent;

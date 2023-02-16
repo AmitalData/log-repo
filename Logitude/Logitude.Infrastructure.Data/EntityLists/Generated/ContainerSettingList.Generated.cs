@@ -34,6 +34,8 @@ namespace Logitude.Infrastructure.Data.EntityLists
        public bool IsDrop  { get; set; }
        [DataMember]
        public bool AddedManually  { get; set; }
+       [DataMember]
+       public DateTime? ActivationDate  { get; set; }
    }
 
 }

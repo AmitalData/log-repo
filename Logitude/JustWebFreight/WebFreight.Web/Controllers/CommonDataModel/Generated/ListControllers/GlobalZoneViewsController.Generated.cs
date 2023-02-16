@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				GlobalZoneRepository  globalZoneRepository = new GlobalZoneRepository(MyContext);
 				GlobalZoneList entityList = null;
 				GlobalZone entityPoco = globalZoneRepository.GetSingleGlobalZone(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<GlobalZone> singleEntityList = new List<GlobalZone>();
 					singleEntityList.Add(entityPoco);

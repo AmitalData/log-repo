@@ -62,6 +62,7 @@
                                 <td style="width: 55px;min-width: 55px">{{'RatesTable.F.ForeignCurrencyId.Short' | TextCodeTranslationPipe}}</td>
                                 <td style="width: 90px;min-width: 90px">{{'RatesTable.O.ExchangeDate' | TextCodeTranslationPipe}}</td>
                                 <td style="width: 80px;min-width: 80px">{{'RatesTable.F.Rate' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 110px;min-width: 110px">{{'RatesTable.F.UpdatedByUserName' | TextCodeTranslationPipe}}</td>
                                 <td>
                                     <div></div>
                                 </td>
@@ -82,6 +83,10 @@
 
                                 <td class="GridViewCell" style="width: 80px;min-width: 80px">
                                     {{item.Rate | RatesNumbersPipe:'N5'}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 110px;min-width: 110px">
+                                    {{item.UpdatedByUserName}}
                                 </td>
 
                                 <td>

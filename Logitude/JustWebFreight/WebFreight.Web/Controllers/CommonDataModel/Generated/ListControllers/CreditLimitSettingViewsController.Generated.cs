@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				CreditLimitSettingRepository  creditLimitSettingRepository = new CreditLimitSettingRepository(MyContext);
 				CreditLimitSettingList entityList = null;
 				CreditLimitSetting entityPoco = creditLimitSettingRepository.GetSingleCreditLimitSetting(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<CreditLimitSetting> singleEntityList = new List<CreditLimitSetting>();
 					singleEntityList.Add(entityPoco);

@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				NumberFormatRepository  numberFormatRepository = new NumberFormatRepository(MyContext);
 				NumberFormatList entityList = null;
 				NumberFormat entityPoco = numberFormatRepository.GetSingleNumberFormat(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<NumberFormat> singleEntityList = new List<NumberFormat>();
 					singleEntityList.Add(entityPoco);

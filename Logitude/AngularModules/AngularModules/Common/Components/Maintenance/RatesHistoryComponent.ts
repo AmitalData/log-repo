@@ -275,6 +275,9 @@ export class RatesHistoryComponent extends BaseComponent {
     get Rate() {
         return this.LastRate.Rate;
     }
+    get UpdatedByUserName(){
+        return this.LastRate.UpdatedByUserNameName;
+    }
 
     // Commands
     public CloseButtonClicked() {

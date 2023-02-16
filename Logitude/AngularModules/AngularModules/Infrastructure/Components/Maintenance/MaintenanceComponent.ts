@@ -1616,12 +1616,14 @@ export class MaintenanceComponent {
                 }
 
                 case "ContainerSettings": {
-                    var logitudeWindow = new LogitudeWindow();
-                    logitudeWindow.ShowCloseButton = true;
-                    logitudeWindow.Width = 1200;
-                    logitudeWindow.Height = 600;
-                    logitudeWindow.Title = "Container Settings";
-                    logitudeWindow.Show('./ShipmentModules/ShipmentOthers/Components/ContainerSetting/ContainerSettingsComponent');
+                    this._entityResourceService.getEntityResourceByTableName("ContainerSetting").subscribe(() => {
+                        var logitudeWindow = new LogitudeWindow();
+                        logitudeWindow.ShowCloseButton = true;
+                        logitudeWindow.Width = 1200;
+                        logitudeWindow.Height = 600;
+                        logitudeWindow.Title = "Container Settings";
+                        logitudeWindow.Show('./ShipmentModules/ShipmentOthers/Components/ContainerSetting/ContainerSettingsComponent');
+                    });
                     break;
                 }
 

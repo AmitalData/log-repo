@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				BranchRepository  branchRepository = new BranchRepository(MyContext);
 				BranchList entityList = null;
 				Branch entityPoco = branchRepository.GetSingleBranch(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Branch> singleEntityList = new List<Branch>();
 					singleEntityList.Add(entityPoco);

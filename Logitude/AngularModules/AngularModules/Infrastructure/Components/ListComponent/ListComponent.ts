@@ -1065,9 +1065,16 @@ export class ListComponent implements OnInit, AfterViewInit {
         let querySection: string = !AppTool.IsNullOrEmpty(this.MenuTableQuerySection) ? this.MenuTableQuerySection : this.ObjectTableName;
         return allQueries.filter(d => d.QuerySection == querySection || d.QuerySection == (querySection + "FollowUp"));
     }
-
     public UserId: string = SessionInfo.LoggedUserId;
     public Tenant: number = SessionInfo.LoggedUserTenant;
+    ApplyQueriesAdvancedFilter(allQueries:any) {
+        if (this.ObjectTableName != "Shipment")
+            return this.Queries;
+        if (SessionLocator.TenantPM.ApproveUploadedDocuments == false) {
+            return allQueries.filter(x => (x.Code != "Pending Approval Documents" && x.UserId == null && x.SystemLevel == true));
+        }
+        return this.Queries;
+    }
     GetQueries() {
 
         var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
@@ -1079,6 +1086,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.Queries = allQueries.filter(x => (FeatureLocator.IsFeatureGrantedByUniqeCode(x.FeatureUniqeCode)));
 
         }
+        this.Queries = this.ApplyQueriesAdvancedFilter(allQueries);
+
         this.UserQueries = allQueries.filter(x => x.UserId != null && x.Tenant == SessionInfo.LoggedUserTenant);
 
         if (this.listArgs.Perspective != null && this.listArgs.IgnoreSelectedPerspective == false) {
@@ -2051,7 +2060,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                     var logWindow = new LogitudeWindow();
                                     logWindow.Width = 1100;
                                     logWindow.Height = 570;
-                                    logWindow.Title = this.ObjectTableName == "Card" ? "Invite Partners" : "Invite Customers";
+                                    logWindow.Title = this.ObjectTableName == "Card" ? "Invite Partners" : "Invite Contacts";
                                     logWindow.WindowArgs = windowArgs;
                                     logWindow.IsShowCloseButton = true;
                                     logWindow.Show('./SharedLogistics/Components/InviteCustomersComponent');

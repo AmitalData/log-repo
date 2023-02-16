@@ -67,8 +67,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				ParticipantRepository  participantRepository = new ParticipantRepository(MyContext);
 				ParticipantList entityList = null;
 				Participant entityPoco = participantRepository.GetSingleParticipant(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Participant> singleEntityList = new List<Participant>();
 					singleEntityList.Add(entityPoco);

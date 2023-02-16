@@ -230,7 +230,7 @@ export class ARInvoiceValidator {
             }
         }
 
-        else if (this.EntityPM.ConstituentInvoices.length == 0) {
+        else if (this.EntityPM.StatusCode != 'VD' && this.EntityPM.ConstituentInvoices.length == 0) {
             this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.YouShouldHaveOneLineAtLeast"));
         }
 

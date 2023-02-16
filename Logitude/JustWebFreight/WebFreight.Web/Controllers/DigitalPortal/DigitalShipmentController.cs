@@ -75,9 +75,27 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     foreach (var item in objectFieldIds)
                     {
                         var blockedFields = helper.GitDigitalSecuritesFeilds(item.ObjectTableId, profileCode, tenant, true)
-                                                          .Where(a => !a.HasPermission)
-                                                          .Select(a => a.FieldCode)
-                                                          .ToList();
+                                                  .Where(a => !a.HasPermission)
+                                                  .Select(a => a.FieldCode)
+                                                  .ToList();
+
+                        if (item.ObjectTableName.Equals("Shipment", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            if (blockedFields.Contains("Shipment.VolumeInCBM"))
+                            {
+                                blockedFields.Add("Shipment.VolumeInCBF");
+                            }
+                            
+                            if (blockedFields.Contains("Shipment.ChargeableWeightInKG"))
+                            {
+                                blockedFields.Add("Shipment.ChargeableWeightInLB");
+                            }
+                            
+                            if (blockedFields.Contains("Shipment.GrossWeightInKG"))
+                            {
+                                blockedFields.Add("Shipment.GrossWeightInLB");
+                            }
+                        }
 
                         if (blockedFields.Any())
                         {
@@ -145,16 +163,42 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 entityLists = QueryableExtensions.Skip(entityLists, () => newFilters.PageIndex);
                 entityLists = QueryableExtensions.Take(entityLists, () => newFilters.PageSize);
 
+                var allowedTableNames = new List<string> { "Trucker", "Shipment", "ShipmentPackage", "ShipmentPickUpDelivery" };
+
+                var textCodeQuery = new DigitalTextCodeQueryService(0);
+                var objectFieldIds = textCodeQuery.GetDigitalTextCodesObjetTables(0)
+                                                  .Where(a => allowedTableNames.Contains(a.ObjectTableName))
+                                                  .Select(a => new
+                                                  {
+                                                      a.ObjectTableId,
+                                                      a.ObjectTableName
+                                                  })
+                                                  .ToList();
+
+                var fields = new Dictionary<string, List<string>>();
                 var helper = new DigitalFieldSecuritesHelper();
+                foreach (var item in objectFieldIds)
+                {
+                    var blockedFields = helper.GitDigitalSecuritesFeilds(item.ObjectTableId, newFilters.ProfileCode, tenant, false)
+                                                      .Where(a => !a.HasPermission)
+                                                      .Select(a => a.FieldCode)
+                                                      .ToList();
+
+                    if (blockedFields.Any())
+                    {
+                        fields.Add(item.ObjectTableName, blockedFields);
+                    }
+                }
+
                 var allowedFieldSecurites = helper.GitDigitalSecuritesFeilds(newFilters.ObjectTableId, newFilters.ProfileCode, tenant, false)
                                                   .Where(a => a.HasPermission)
                                                   .Select(a => a.FieldCode.Replace($"Shipment.{tenant}.", ""))
                                                   .Select(a => a.Replace("Shipment.", ""))
                                                   .ToList();
 
-                var fields = string.Join(",", allowedFieldSecurites);
+                var fieldsToBeSelected = string.Join(",", allowedFieldSecurites);
 
-                var shipments = entityLists.Select("new { " + fields + " }").ToDynamicList();
+                var shipments = entityLists.Select("new { " + fieldsToBeSelected + " }").ToDynamicList();
 
                 var isAllShipmentsQuery = newFilters.AdditionalFilters.Where(a => a.FieldName == "AllShipments").Any();
                 if (isAllShipmentsQuery)
@@ -171,7 +215,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                 customFieldResolver.SetCustomFieldsValues("Shipment", tenant, shipments.Cast<object>().ToList());
 
-                var res = shipmentQuery.BuildShipmentListWithTimeLine(shipments, authToken.Tenant);
+                var res = shipmentQuery.BuildShipmentListWithTimeLine(shipments, authToken.Tenant, fields);
 
                 response.Result = res;
 
