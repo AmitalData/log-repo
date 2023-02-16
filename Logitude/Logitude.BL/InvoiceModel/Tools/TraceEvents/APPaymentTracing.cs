@@ -174,10 +174,11 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
             if (entityPM.BranchId != payment.BranchId)
             {
                 BranchRepository rep = new BranchRepository(entityPM.Tenant);
+
                 Branch oldBranch = rep.GetSingleBranch(payment.BranchId, payment.Tenant);
                 Branch newBranch = rep.GetSingleBranch(entityPM.BranchId, entityPM.Tenant);
                 var isBranchIdChanged = entityPM.BranchId != payment.BranchId;
-                var BranchId = "Branch Updated: " + oldValue + oldBranch.EnglishName + newValue + newBranch.EnglishName;
+                var BranchId = "Branch Updated: " + oldValue + oldBranch?.EnglishName + newValue + newBranch.EnglishName;
                 if (isBranchIdChanged)
                 {
                     notes = BranchId;
