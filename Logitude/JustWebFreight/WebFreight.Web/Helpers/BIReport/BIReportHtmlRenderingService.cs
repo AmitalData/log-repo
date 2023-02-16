@@ -19,6 +19,7 @@ namespace WebFreight.Web.Helpers.BIReport
         private List<ExcelTotals> totalMeasurementColumnList = new List<ExcelTotals>();
         public BIReportTotalsService bIReportTotalsService;
         int pdfTotalCount = 0;
+        private bool isValidTotalColumn = false;
 
         public BIReportHtmlRenderingService(DataTable bIReportdataTable, BIReportXMLData bIReportXMLData, int tenant)
         {
@@ -82,8 +83,8 @@ namespace WebFreight.Web.Helpers.BIReport
             pdfTotalCount = 0;
             foreach (DataColumn column in bIReportdataTable.Columns)
             {
-                stringBuilder.Append("<td>" + row[column.ColumnName].ToString() + "</td>");
                 AddToTotalsMeasurementValues(row, column);
+                stringBuilder.Append("<td style=\"text-align:"+(isValidTotalColumn ? "right":"left")+"\">" + row[column.ColumnName].ToString() + "</td>");
             }
         }
 
@@ -106,8 +107,9 @@ namespace WebFreight.Web.Helpers.BIReport
         private void AddToTotalsMeasurementValues(DataRow row, DataColumn column)
         {
             var agColumn = bITabularViewSettings.Columns.Where(a => a.Name == column.ColumnName).FirstOrDefault();
+            isValidTotalColumn = bIReportTotalsService.ValidTotalColumn(agColumn);
 
-            if (bIReportTotalsService.ValidTotalColumn(agColumn))
+            if (isValidTotalColumn)
             {
                 AddValueToTotalMeasurementColumn(row, agColumn);
                 pdfTotalCount += 1;
@@ -137,9 +139,24 @@ namespace WebFreight.Web.Helpers.BIReport
         private void BuildTotalCell(DataColumn column)
         {
             var pdfTotal = totalMeasurementColumnList.Where(d => d.FieldCode == column.ColumnName).FirstOrDefault();
-            var total = pdfTotal != null ? Math.Round(pdfTotal.Total, 3).ToString() : "";
-            string cellStyle = total != "" ? "style=\"background-color:#FFAC1C\"" : "";
-            stringBuilder.Append("<td "+ cellStyle + ">" + total + "</td>");
+            if (pdfTotal == null)
+            {
+                AppendTotalCellValue("");
+                return;
+            }
+            var total = Math.Round(pdfTotal.Total, 2);
+            var formattedTotal = String.Format("{0:#,##0.##}", total);
+            AppendTotalCellValue(formattedTotal);
+        }
+
+        private void AppendTotalCellValue(string total)
+        {
+            stringBuilder.Append("<td " + GetTotalStyle() + ">" + total + "</td>");
+        }
+
+        private string GetTotalStyle()
+        {
+            return "style=\"text-align:right;font-weight:bold;color:#1a83b9;background-color:#f7f7f7\"";
         }
     }
 }
