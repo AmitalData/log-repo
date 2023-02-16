@@ -335,34 +335,34 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
         {
             if (args.CurrentState == ConnectionState.Open && args.OriginalState != ConnectionState.Open)
             {
-                if (Transaction.Current != null)
-                {
+               
                     using (var command = Database.Connection.CreateCommand())
                     {
-
-                        //    command.CommandText = "SET TRANSACTION ISOLATION LEVEL SNAPSHOT";
-                        //}
-                        //else
-                        //{
-                        switch (Transaction.Current.IsolationLevel)
+                        if (Transaction.Current != null)
                         {
-                            case IsolationLevel.ReadCommitted:
-                                command.CommandText = "SET TRANSACTION ISOLATION LEVEL READ COMMITTED";
-                                break;
-                            case IsolationLevel.ReadUncommitted:
-                                command.CommandText = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED";
-                                break;
-                            case IsolationLevel.Snapshot:
-                                command.CommandText = "SET TRANSACTION ISOLATION LEVEL SNAPSHOT";
-                                break;
-                            case IsolationLevel.Serializable:
-                                command.CommandText = "SET TRANSACTION ISOLATION LEVEL SERIALIZABLE";
-                                break;
-                            default:
-                                throw new ArgumentOutOfRangeException();
+                            command.CommandText = "SET TRANSACTION ISOLATION LEVEL SNAPSHOT";
                         }
-                        command.ExecuteNonQuery();
-                    }
+                        else
+                        {
+                            switch (Transaction.Current.IsolationLevel)
+                            {
+                                case IsolationLevel.ReadCommitted:
+                                    command.CommandText = "SET TRANSACTION ISOLATION LEVEL READ COMMITTED";
+                                    break;
+                                case IsolationLevel.ReadUncommitted:
+                                    command.CommandText = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED";
+                                    break;
+                                case IsolationLevel.Snapshot:
+                                    command.CommandText = "SET TRANSACTION ISOLATION LEVEL SNAPSHOT";
+                                    break;
+                                case IsolationLevel.Serializable:
+                                    command.CommandText = "SET TRANSACTION ISOLATION LEVEL SERIALIZABLE";
+                                    break;
+                                default:
+                                    throw new ArgumentOutOfRangeException();
+                            }
+                            command.ExecuteNonQuery();
+                        }
                 }
             }
         }
