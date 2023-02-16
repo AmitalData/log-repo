@@ -608,5 +608,6 @@ namespace WebFreight.Web.DataProviders
         public string DestinationWarehouseLegTerminalAddress { get; set; }
         public DateTime? DeliveryETD_DateTime { get; set; }
         public string AccountManager { get; set; }
+        public string AccountManagerMobileNumber { get; set; }
     }
 }

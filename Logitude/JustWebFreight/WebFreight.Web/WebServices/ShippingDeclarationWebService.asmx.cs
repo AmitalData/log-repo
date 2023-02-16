@@ -92,7 +92,8 @@ namespace WebFreight.Web.WebServices
             TenantRepository tenantRepository = new TenantRepository(commonContext);
             countryRepository = new CountryRepository(commonContext);
             CardQuery cardQuery = new CardQuery(tenant);
-
+            UserRepository userRepository = new UserRepository(commonContext);
+           
             this.shipment = shipmentQuery.GetSinglePM(shipmentId, tenant);
 
             Tenant currentTenant = tenantRepository.GetSingleTenant(tenant);
@@ -120,6 +121,8 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.IssuedByUser = loggedContact.EnglishName;
                 myDataProvider.IssuedByUserPosition = loggedContact.Position;
             }
+            
+
 
             if (shipment != null)
             {
@@ -172,6 +175,8 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.DangerousMaterialDescription = shipment.DangerousMaterialDescription;
                 myDataProvider.MainCarriageTruckNumber = shipment.MainCarriageCarrierNumber;
                 myDataProvider.AccountManager = shipment.AccountManagerUserName;
+                //myDataProvider.AccountManagerPhoneNumber = shipment.AccountMan
+              
                 myDataProvider.TotalCollectReceivablesLocal = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "C").Sum(s => s.TotalAmountLocal);
                 myDataProvider.TotalPrepaidReceivablesLocal = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "P").Sum(s => s.TotalAmountLocal);
                 myDataProvider.TotalCollectReceivablesProfit = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "C").Sum(s => s.TotalAmount);
@@ -359,6 +364,14 @@ namespace WebFreight.Web.WebServices
                 if (salesmanData != null)
                 {
                     myDataProvider.SalesmanEmail = salesmanData.Email;
+
+                }
+                if (!string.IsNullOrEmpty(shipment.AccountManagerUserId)) 
+                {
+                    UserQuery userQuery = new UserQuery(tenant);
+                    UserPM userPM = userQuery.GetSinglePM(shipment.AccountManagerUserId, tenant);
+
+                    if (userPM != null) myDataProvider.AccountManagerMobileNumber = userPM.Mobile;
 
                 }
 
