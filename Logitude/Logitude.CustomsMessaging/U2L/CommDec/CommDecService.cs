@@ -333,11 +333,17 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     AppendLogLine("MarkToDeleteSupplierInvoice:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                     _MyDeclarationPM.CurrentContextTag = UpsertActionConst;
                     Customs.BL.Messaging.Maman.Send2MasofIfNeededService.SuppressSend = false;
-                    this._MyDeclarationPM.MyEcomInsert = new EcomInsert()
-                    {
-                        MyCourierMasterPM = _CourierMasterPM,
-                        MyDeclarationCourierStatusPM = _currentDeclarationCourierStatusPM
-                    };
+                        this._MyDeclarationPM.MyEcomInsert = new EcomInsert()
+                        {
+                            MyCourierMasterPM = _CourierMasterPM,
+                            MyDeclarationCourierStatusPM =
+                            _currentDeclarationCourierStatusPM
+                            ?? new DeclarationCourierStatusPM()
+                            {
+                                DeclarationId = this._MyDeclarationPM.Id,
+                                CrateNumber = _LogitudeCommDecFile?.CrateNumber
+                            }
+                        };
                     DeclarationUpdateService.Update(this._MyDeclarationPM, true);
                     AppendLogLine("Update:MarkToDeleteSupplierInvoice:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                     }
@@ -723,7 +729,13 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 this._MyDeclarationPM.MyEcomInsert = new EcomInsert()
                 {
                     MyCourierMasterPM = _CourierMasterPM,
-                    MyDeclarationCourierStatusPM = _currentDeclarationCourierStatusPM
+                    MyDeclarationCourierStatusPM = 
+                    _currentDeclarationCourierStatusPM
+                        ?? new DeclarationCourierStatusPM()
+                        {
+                            DeclarationId = this._MyDeclarationPM.Id,
+                            CrateNumber = _LogitudeCommDecFile?.CrateNumber
+                        }
                 };
                 declarationUpdateService.Update(this._MyDeclarationPM, true);
 
