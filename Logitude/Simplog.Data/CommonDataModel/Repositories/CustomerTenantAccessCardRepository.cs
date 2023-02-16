@@ -33,6 +33,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return (from record in context.CustomerTenantAccessCards where record.CustomerTenantAccessId == CustomerTenantAccessId && record.Tenant == Tenant select record);
         }
 
+        public IQueryable<CustomerTenantAccessCard> GetAllCustomerTenantAccessCardByTenant(int Tenant)
+        {
+            return (from record in context.CustomerTenantAccessCards.Include("Customer").Include("Customer.Card")
+                    where record.Tenant == Tenant
+                    select record);
+        }
+
         public CustomerTenantAccessCardRepository(int tenant)
         {
             commonDataContext = CommonDataContext.GetContext(tenant);
