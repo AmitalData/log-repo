@@ -360,7 +360,7 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
                                 break;
                             default:
                                 throw new ArgumentOutOfRangeException();
-                        } 
+                        }
                         command.ExecuteNonQuery();
                     }
                 }
