@@ -160,6 +160,40 @@ export class CustomizationQueriesComponent extends BaseComponent{
         window.Queries.push(oldDefaultQuery);
         this.LoadCustomQueries();
     }
+    RemoveIsDefaultQuery(Query: any) {
+        Query.IsDefault = false;
+        this.updateQuery(Query);
+    }
+    updateQuery(Query: any) {
+        this.CurrentSession.StartBusyIndicatorSaving();
+        this.QueriesPMService.update(Query).subscribe((serviceResponse: ServiceResponse) => {
+            if (serviceResponse.HasError || !serviceResponse.Result) {
+                this.CurrentSession.StopBusyIndicator();
+                return;
+            }
+            window.Queries = window.Queries.filter(q => (q.UniqueCode != Query.UniqueCode));
+            window.Queries.push(Query);
+            this.LoadCustomQueries();
+        });
+    }
+    IsDefaultClicked(ClickedQuery: any, event: boolean) {
+        if (!event) {
+            this.RemoveIsDefaultQuery(ClickedQuery);
+            return;
+        }
+        let oldDefaultQuery = window.Queries.filter(q => (q.ObjectTableId == this.ObjectTableId) && q.SystemLevel && q.IsDefault);
+        if (oldDefaultQuery.length == 0) {
+            ClickedQuery.IsDefault = true;
+            this.updateQuery(ClickedQuery);
+        }
+        else {
+            oldDefaultQuery = window.Queries.filter(q => q.ObjectTableId == this.ObjectTableId && q.SystemLevel && q.IsDefault)[0];
+            ClickedQuery.IsDefault = true;
+            oldDefaultQuery.IsDefault = false;
+            this.updateQuery(ClickedQuery);
+            this.updateQuery(oldDefaultQuery);
+        }
+    }
 
     EditCustomView(item) {
         let windowArgs: any = {};
