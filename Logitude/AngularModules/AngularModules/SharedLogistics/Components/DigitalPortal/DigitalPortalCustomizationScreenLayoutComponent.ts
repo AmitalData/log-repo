@@ -191,7 +191,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         this.GetHTMLText(true);
     }
 
-    PublichChangesClicked(isDraft) {
+    PublishChangesClicked(isDraft) {
         if (this.IsModified) {
             var confirm = new ConfirmWindow();
             confirm.Width = 400;
