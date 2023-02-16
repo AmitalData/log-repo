@@ -73,7 +73,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="LoadedAutomatically"
+    Name="PinnedByDefault"
+    OldNames="LoadedAutomatically"
     Type="bit">
     <Constraints
       Nullable="false" />

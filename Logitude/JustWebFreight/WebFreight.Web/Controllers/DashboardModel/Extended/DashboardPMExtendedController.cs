@@ -162,7 +162,7 @@ namespace WebFreight.Web.Controllers.DashboardModel.Extended
                 IDashboardContext myContext = DashboardContext.GetContext(authToken.Tenant);
                 DashboardRepository dashboardRepository = new DashboardRepository(myContext);
                 DashboardListQueryService dashboardListQueryService = new DashboardListQueryService(myContext);
-                IQueryable<Dashboard> predefinedDashboards = dashboardRepository.GetAll(0).Where(d => d.LoadedAutomatically);
+                IQueryable<Dashboard> predefinedDashboards = dashboardRepository.GetAll(0).Where(d => d.PinnedByDefault);
                 IQueryable<DashboardList> dashboards = dashboardListQueryService.GetIqueryableList(predefinedDashboards);
                 return Request.CreateResponse(HttpStatusCode.OK, dashboards);
             }

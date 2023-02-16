@@ -22,7 +22,7 @@ export class DashboardCopyService {
         dashboard.PermissionLevelCode = sourceDashboard.PermissionLevelCode;
         this.CopyUsers(sourceDashboard, dashboard);
         this.CopyGlobalFiltyers(sourceDashboard, dashboard);
-        dashboard.LoadedAutomatically = sourceDashboard.LoadedAutomatically;
+        dashboard.PinnedByDefault = sourceDashboard.PinnedByDefault;
         dashboard.PredefinedOrder = sourceDashboard.PredefinedOrder;
  
         return dashboard;

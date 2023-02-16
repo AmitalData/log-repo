@@ -168,7 +168,7 @@ export class CustomDashboardComponent extends BaseComponent {
     }
 
     ShowPredinedDashboards() {
-        var predineds = this.ItemsSource.filter(x => x.LoadedAutomatically && x.Tenant == 0).sort(function (a, b) {
+        var predineds = this.ItemsSource.filter(x => x.PinnedByDefault && x.Tenant == 0).sort(function (a, b) {
             return (a.PredefinedOrder ?? 1000) - (b.PredefinedOrder ?? 1000) || a.CreateDate.valueOf() - b.CreateDate.valueOf();
         });
         if (predineds.length == 0) return;
