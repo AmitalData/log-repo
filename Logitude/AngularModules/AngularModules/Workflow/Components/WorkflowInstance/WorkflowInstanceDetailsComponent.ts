@@ -7,6 +7,7 @@ import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { WorkFlowInstanceActivityList } from 'Workflow/EntityLists/WorkFlowInstanceActivityList';
 import { WorkflowInstanceExtendedService } from 'Workflow/Services/Extended/WorkflowInstanceExtendedService';
+import { BlobDownloader } from 'Workflow/Utilities/BlobDownloader';
 
 @Component({
     templateUrl: './WorkflowInstanceDetailsComponent.html',
@@ -93,5 +94,14 @@ export class WorkflowInstanceDetailsComponent extends BaseComponent implements O
             logWindow.WindowArgs = windowArgs;
             logWindow.Show('./Workflow/Components/CreateEditWorkflow/ObjectVariableComponent');
         }
+    }
+
+    DownloadDetails() {
+        let details = {
+            Id: this.EntityId,
+            Activities: this.ActivityItemsSource.Collection,
+            Variables: this.VariableItemsSource.Collection
+        };
+        BlobDownloader.downloadJson(details, this.EntityId);
     }
 }

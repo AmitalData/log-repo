@@ -330,10 +330,12 @@
     <Content Include="Images\Charts\PieChart.png" />
     <Content Include="Images\Customization\queries.Selected.png" />
     <Content Include="Images\Customization\queries.png" />
+    <Content Include="Images\function.png" />
     <Content Include="Images\Icons\multi-print.png" />
     <Content Include="Images\Icons\MultiUpdate.png" />
     <Content Include="Images\Icons\WhatsApp.png" />
     <Content Include="Images\LoginScreen\LogBoxLogo.png" />
+    <Content Include="Images\math.png" />
     <Content Include="Images\Menu\AutomationBlueIcon.Gray.png" />
     <Content Include="Images\Menu\AutomationBlueIcon.png" />
     <Content Include="Images\Menu\AutomationBlueIcon.Selected.png" />
@@ -343,7 +345,9 @@
     <Content Include="Images\PrivateLabel\MainImage.png" />
     <Content Include="Images\PrivateLabel\LogBoxLogo.png" />
     <Content Include="Images\PrivateLabel\Background.png" />
+    <Content Include="Images\problem.png" />
     <Content Include="Images\Update-Button.png" />
+    <Content Include="Images\variable.png" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\DWQueryBuilderBaseComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCommunications\Components\ReportExecutionLog\ReportExecutionLogErrorComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCommunications\Components\ReportExecutionLog\ReportExecutionLogMessageBodyComponent.html" />
@@ -471,6 +475,7 @@
     <Content Include="Workflow\Components\Base\TreeSelectComponent.html" />
     <Content Include="Workflow\Components\CreateEditWorkflow\CreateWorkflowComponent.html" />
     <Content Include="Workflow\Components\CreateEditWorkflow\EditWorkflowComponent.html" />
+    <Content Include="Workflow\Components\Helpers\WorkFlowHelperComponent.html" />
     <Content Include="Workflow\Components\Messages\DeleteNodeWarningComponent.html" />
     <Content Include="Workflow\Components\Properties\AppendItemPropertiesComponent.html" />
     <Content Include="Workflow\Components\Properties\CollectionFilterPropertiesComponent.html" />
@@ -8240,6 +8245,7 @@
     <TypeScriptCompile Include="Workflow\Components\Base\TreeSelectComponent.ts" />
     <TypeScriptCompile Include="Workflow\Components\CreateEditWorkflow\CreateWorkflowComponent.ts" />
     <TypeScriptCompile Include="Workflow\Components\CreateEditWorkflow\EditWorkflowComponent.ts" />
+    <TypeScriptCompile Include="Workflow\Components\Helpers\WorkFlowHelperComponent.ts" />
     <TypeScriptCompile Include="Workflow\Components\MenuButtons\WorkFlowMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Workflow\Components\Messages\DeleteNodeWarningComponent.ts" />
     <TypeScriptCompile Include="Workflow\Components\Properties\AppendItemPropertiesComponent.ts" />
@@ -8355,10 +8361,13 @@
     <TypeScriptCompile Include="Workflow\TreeLists\EntitiesTreeList.ts" />
     <TypeScriptCompile Include="Workflow\TreeLists\ExpressionsTreeList.ts" />
     <TypeScriptCompile Include="Workflow\TreeLists\FlowVariablesTreeList.ts" />
+    <TypeScriptCompile Include="Workflow\TreeLists\ObjectFieldsTreeList.ts" />
     <TypeScriptCompile Include="Workflow\TreeLists\OperatorsTreeList.ts" />
     <TypeScriptCompile Include="Workflow\TreeLists\SingleEditableEntitiesTreeList.ts" />
     <TypeScriptCompile Include="Workflow\Types\index.ts" />
     <TypeScriptCompile Include="Workflow\Utilities\ApiQueryFiltersBuilder.ts" />
+    <TypeScriptCompile Include="Workflow\Utilities\BlobDownloader.ts" />
+    <TypeScriptCompile Include="Workflow\Utilities\CompareVariableItemType.ts" />
     <TypeScriptCompile Include="Workflow\Utilities\Entities.ts" />
     <TypeScriptCompile Include="Workflow\Utilities\FieldType.ts" />
     <TypeScriptCompile Include="Workflow\Utilities\FlowReader.ts" />

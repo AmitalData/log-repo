@@ -28,7 +28,12 @@
                 <tr class="FormFieldRow">
                     <td style="width: 1px; padding-left: 5px;">
                         <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"
-                            [DataCy]="'SingleInstanceActivityListRefresh'">
+                            [DataCy]="'RefreshDetailsButton'">
+                        </IconButton>
+                    </td>
+                    <td style="padding-left: 5px;">
+                        <IconButton [Name]="'arrow-down'" (click)="DownloadDetails()"
+                            [DataCy]="'DownloadDetailsButton'">
                         </IconButton>
                     </td>
                 </tr>
@@ -45,8 +50,8 @@
     <tr>
         <td style="vertical-align:top">
             <div class="MediaFill">
-                <logitude-edit-grid GridWidth="100%" GridHeight="100%"
-                    [UseVirtuallization]="false" [ItemSource]="ActivityItemsSource" (RowDataLoaded)="OnRowLoaded($event)"
+                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [UseVirtuallization]="true"
+                    [ItemSource]="ActivityItemsSource" (RowDataLoaded)="OnRowLoaded($event)"
                     [EnableExpandCollapseAll]="'true'" [IsDarkHeader]="'true'">
 
                     <log-row-details>
@@ -140,7 +145,7 @@
     <tr *ngIf="IsVariablesHasPermission" class="Variables">
         <td style="vertical-align:top">
             <div class="MediaFill">
-                <logitude-edit-grid GridWidth="100%" GridHeight="100%"
+                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [UseVirtuallization]="true"
                     [ItemSource]="VariableItemsSource" [IsDarkHeader]="'true'">
 
                     <!-- Name -->
@@ -156,13 +161,14 @@
                     <log-column [width]="'155'" [header]="'Value'">
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate [IsEditMode]="false">
-                                <div *ngIf="(item.Type | IsObjectTypePipe)">
+                                <div *ngIf="item.Value !== null && (item.Type | IsObjectTypePipe)">
                                     <Hyperlink (click)="DisplayObjectValue(item)" [FontSize]="12" [Text]="'Object'">
                                     </Hyperlink>
                                 </div>
-                                <div *ngIf="!(item.Type | IsObjectTypePipe)">
+                                <div *ngIf="item.Value !== null && !(item.Type | IsObjectTypePipe)">
                                     {{item.Value}}
                                 </div>
+                                <div *ngIf="item.Value === null">Null</div>
                             </log-cell-template>
                         </ng-template>
                     </log-column>

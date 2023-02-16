@@ -15,10 +15,6 @@
         font-size: 18px;
         color: #1B90CB;
     }
-
-    .warning-summary {
-        width: 55%;
-    }
 </style>
 
 <div class="short-title-row">
@@ -26,9 +22,5 @@
         <span class="title-span">
             {{WorkflowName}} - V{{WorkflowVersionNumber}}
         </span>
-    </div>
-    <div *ngIf="WarningErrorsList != null && WarningErrorsList.length > 0" class="warning-summary" title="{{WarningErrorTitle}}">
-        <WarningSummary [ItemsSource]="WarningErrorsList" [SingleLine]="true">
-        </WarningSummary>
     </div>
 </div>
