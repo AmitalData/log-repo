@@ -72,6 +72,27 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     }
                 }
             }
+
+            if (entityPM.OpenAmount != 0 && entityPM.OpenAmount != entityPOCO.OpenAmount)
+            {
+                // checking a local-currency reconciliation
+                decimal localTransAmount = entityPM.LocalAmountDebit - entityPM.LocalAmountCredit;
+                if (entityPM.OpenAmountCurrencyId != entityPM.CurrencyId && Math.Abs(entityPM.OpenAmount) > Math.Abs(localTransAmount))
+                {
+                    throw new ApplicationException("Open amount (" + entityPM.OpenAmount + ") cannot be greather than transaction local amount (" + localTransAmount + ")");
+                }
+
+                // checking a foreign-currency reconciliation
+                decimal foreignTransAmount = entityPM.ForeignAmountDebit - entityPM.ForeignAmountCredit;
+                if (entityPM.OpenAmountCurrencyId == entityPM.CurrencyId && Math.Abs(entityPM.OpenAmount) > Math.Abs(foreignTransAmount))
+                {
+                    throw new ApplicationException("Open amount (" + entityPM.OpenAmount + ") cannot be greather than transaction amount (" + foreignTransAmount + ")");
+                }
+            }
+
+
+
+
             base.OnUpdating(entityPM, entityPOCO);
         }
 
