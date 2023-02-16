@@ -504,7 +504,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         this._isAllSelected = v;
 
         if (v) {
-            this.GetFirst5000LedgerForReconciliation();
+            //this.GetFirst5000LedgerForReconciliation();
+            this.GetFirstXLedgerForReconciliationByParam();
         } else {
             this.ReloadScreen();
             this.SelectedLines.Clear();
@@ -1338,12 +1339,33 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     }
     //#endregion
 
-    GetFirst5000LedgerForReconciliation()
-    {
+    GetFirst5000LedgerForReconciliation() {
         this.ValidationErrorsList = [];
         var filters = this.GetAPIFilters();
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.PrepareTransactions")); //"Preparing Transactions..."
         this._LedgerTransactionExtendedListService.GetFirst5000LedgerForReconciliation(this.GLAccountPM.Id, filters).subscribe((myResult: ServiceResponse) => {
+            var mm: ServiceResponse = myResult;
+            var first100Transactions = mm.Result;
+            if (!mm.HasError) {
+                if (!AppTool.IsNullOrEmpty(first100Transactions)) {
+                    this.SelectLines(first100Transactions);
+                    this.CalculateTotals();
+                }
+            }
+            else {
+                this.ValidationErrorsList = mm.ErrorsArray;
+                this.CurrentSession.StopBusyIndicator();
+            }
+            this.CurrentSession.StopBusyIndicator();
+        });
+    }
+
+
+    GetFirstXLedgerForReconciliationByParam() {
+        this.ValidationErrorsList = [];
+        var filters = this.GetAPIFilters();
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.PrepareTransactions")); //"Preparing Transactions..."
+        this._LedgerTransactionExtendedListService.GetFirstXLedgerForReconciliationByParam(this.GLAccountPM.Id, filters).subscribe((myResult: ServiceResponse) => {
             var mm: ServiceResponse = myResult;
             var first100Transactions = mm.Result;
             if (!mm.HasError) {

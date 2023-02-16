@@ -540,6 +540,41 @@ tenant);
 
         }
 
+        [HttpGet]
+        public HttpResponseMessage GetFirstXLedgerForReconciliationByParam(string gLAccountId, [FromUri] ApiQueryFilters filters)
+        {
+            try
+            {
+                int tenant = GetAuthinticatedTenant();
+                QueryOperations queryOperations = GetQueryOperationsFromFilter(filters, tenant);
+
+                LedgerTransactionListQueryService transactionQuery = new LedgerTransactionListQueryService(AccountingContext.GetContext(tenant));
+
+                GenericCallBack callback = transactionQuery.GetReconciliationFilterCallBack(queryOperations, gLAccountId, tenant, true);
+
+
+                List<LedgerTransactionList> openTransactions = transactionQuery.GetOpenReconciliationFilterList(queryOperations, callback, gLAccountId, tenant);
+
+                ServiceResponse response = new ServiceResponse();
+                if (filters.GetCount)
+                {
+                    int count = callback.TotalRecord;
+                    response.Count = count;
+                }
+                int firstX = 10000;  // preparation fo a possible future parameter 
+                //response.Result = openTransactions.Take(5000);
+                response.Result = openTransactions.Take(firstX);
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
         private static int GetAuthinticatedTenant()
         {
             string token = HttpContext.Current.Request.Headers["Token"];
