@@ -51,6 +51,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     public ObjectFieldsTreeItems: TreeSelectItem[];
 
     public ExcludedEntities: string[];
+    public ExcludeCustomEntities: boolean = false;
     public EnableAddConditions: boolean;
     public ShowConditionsOperation: boolean;
     public RecordsTypeChanged: boolean = false;
@@ -182,6 +183,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     updateEntity(entity: string) {
         let isEntityChanged = this.Data["entity"] !== entity;
         this.Data["entity"] = entity;
+        this.Data["isCustomEntity"] = ObjectTables.getIsCustomByName(entity);
         this.Entity = entity;
         this.EntityId = ObjectTables.getIdByName(entity);
 
@@ -219,11 +221,13 @@ export class GetRecordPropertiesComponent extends BaseComponent {
             this.EnableAddConditions = true;
             this.ShowConditionsOperation = true;
             this.ExcludedEntities = ["Opportunity"];
+            this.ExcludeCustomEntities = false;
         }
         else if (recordsType === GetRecordTypes.Editable) {
             this.EnableAddConditions = false;
             this.ShowConditionsOperation = false;
             this.ExcludedEntities = ["Customer", "User", "Opportunity", "ShipmentStoragePricing"];
+            this.ExcludeCustomEntities = true;
         }
     }
 

@@ -41,13 +41,15 @@ export type ExpressionValue = {
 
 export type Entity = {
     Code: string,
-    Name: string
+    Name: string,
+    IsCustom: boolean
 };
 
 export type ChildEntity = {
     Code: string,
     Name: string,
-    ParentEntityCode: string
+    ParentEntityCode: string,
+    IsCustom: boolean
 };
 
 export type EntitiesType = "all" | "parent" | "child";
