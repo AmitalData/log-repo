@@ -372,6 +372,13 @@ export class SupplierInvoiceExtendedPMService {
                     newSupplierInvoiceItemPM.SupplierInvoiceItemProcesTypes.push(newSupplierInvoiceItemProcesTypePM);
 
                 }
+                newSupplierInvoiceItemPM.SupplierInvoiceItemsPrices = [];
+                for (var k in mySupplierInvoiceItemPM.SupplierInvoiceItemsPrices) {
+                    var mySupplierInvoiceItemsPricePM = mySupplierInvoiceItemPM.SupplierInvoiceItemsPrices[k];
+                    var newSupplierInvoiceItemsPricePM = this.clone(mySupplierInvoiceItemPM.SupplierInvoiceItemsPrices[k]);
+                    newSupplierInvoiceItemPM.SupplierInvoiceItemsPrices.push(newSupplierInvoiceItemsPricePM);
+
+                }
                 newSupplierInvoiceItemPM.SupplierInvoiceItemLevies = [];
                 for (var k in mySupplierInvoiceItemPM.SupplierInvoiceItemLevies) {
                     var mySupplierInvoiceItemsLevyPM = mySupplierInvoiceItemPM.SupplierInvoiceItemLevies[k];
@@ -592,7 +599,7 @@ export class SupplierInvoiceExtendedPMService {
                 newSupplierInvoiceItemPM.OldEntityPM.SupplierInvoiceItemsPrices = [];
                 for (var k in newSupplierInvoiceItemPM.SupplierInvoiceItemsPrices) {
                     var clonedInside = this.clone(newSupplierInvoiceItemPM.SupplierInvoiceItemsPrices[k]);
-                    newSupplierInvoiceItemPM.OldEntityPM.SupplierInvoiceItemsPrices.push(clonedInside); // clone old SupplierInvoiceItemModVehicles//
+                    newSupplierInvoiceItemPM.OldEntityPM.SupplierInvoiceItemsPrices.push(clonedInside); // clone old SupplierInvoiceItemsPrices//
                 }
 
             }
@@ -629,6 +636,8 @@ export class SupplierInvoiceExtendedPMService {
 
 
                 this.MapSupplierInvoiceItemProcesTypes(newSupplierInvoiceItemPM, jItem, mapParent);
+
+                this.MapSupplierInvoiceItemsPrices(newSupplierInvoiceItemPM, jItem, mapParent);
 
 
                 this.MapSupplierInvoiceItemLevies(newSupplierInvoiceItemPM, jItem, mapParent);
@@ -695,6 +704,8 @@ export class SupplierInvoiceExtendedPMService {
 
 
                         this.MapSupplierInvoiceItemProcesTypes(deletedPM, oldItemJson, mapParent);
+
+                        this.MapSupplierInvoiceItemsPrices(deletedPM, oldItemJson, mapParent);
 
 
                         this.MapSupplierInvoiceItemLevies(deletedPM, oldItemJson, mapParent);
