@@ -56,7 +56,9 @@ namespace Logitude.Workflow.Data.EntityListQueryServices
 											  UpdatedByUserName = a.UpdatedByUser != null ? a.UpdatedByUser.Contact != null ? a.UpdatedByUser.Contact.EnglishName : null : null,
 
 											  RetriesDelay = a.RetriesDelay,
-											  RetriesNumber = a.RetriesNumber
+											  RetriesNumber = a.RetriesNumber,
+											  Entity = a.Entity,
+											  Trigger = a.Trigger
 
 											});
             return query;
