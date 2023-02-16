@@ -10,6 +10,7 @@ export class DocumentPermissiosViewModel {
     public AgentSuggestedIsCheckedBoxId: string;
     public AgentChooseIsCheckedBoxId: string;
     public CustomerPermissionCheckedBoxId: string;
+    public CustomerUploadPermissionSuggestedCheckedBoxId: string;
     public entityPM: DocumentTypePM;
 
     private entityPM_TenantZero: DocumentTypePM;
@@ -22,6 +23,7 @@ export class DocumentPermissiosViewModel {
         this.AgentChooseIsCheckedBoxId = Guid.newGuid();
         this.AgentSuggestedIsCheckedBoxId = Guid.newGuid();
         this.CustomerPermissionCheckedBoxId = Guid.newGuid();
+        this.CustomerUploadPermissionSuggestedCheckedBoxId = Guid.newGuid();
     }
 
     public get DocumentTypeName() {
@@ -30,6 +32,10 @@ export class DocumentPermissiosViewModel {
 
     public get CustomerSuggestedIsChecked() {
         return this.entityPM_TenantZero ? this.entityPM_TenantZero.IsCustomerView : false
+    }
+
+    public get CustomerUploadPermissionSuggestedIsChecked() {
+        return this.entityPM_TenantZero ? this.entityPM_TenantZero.IsCustomerUploadPermission : false
     }
 
     public get AgentSuggestedIsChecked() {
