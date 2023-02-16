@@ -1,0 +1,33 @@
+﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="Shipments">
+  <Sql Version="1">
+    <![CDATA[
+	  declare @Tenant as int
+		declare @MasterId as varchar(15)
+		declare @MasterShipmnetNumber as varchar(15)
+		declare @SearchFields as nvarchar(max)
+		declare @Id as varchar(15)
+
+		BEGIN
+				DECLARE DataCursor CURSOR READ_ONLY
+				FOR
+				SELECT Id,Tenant,MasterShipmentDataId,SearchFields
+				FROM Shipments	
+				where  ShipmentLevelCode = 'H' and $LastCounterWhere$
+				OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Id, @Tenant,@MasterId, @SearchFields
+				WHILE @@FETCH_STATUS = 0
+				BEGIN
+					set @MasterShipmnetNumber =  (select MasterShipmentNumber from ShipmentMasterDatas where id = @MasterId)
+					if(@MasterShipmnetNumber is not null)
+					begin
+						declare @NewSearchFieldValue nvarchar(max) = @SearchFields
+						set @NewSearchFieldValue = @NewSearchFieldValue + ',' + @MasterShipmnetNumber			
+						update Shipments set SearchFields = @NewSearchFieldValue where Id = @Id and Tenant = @Tenant
+					end
+				FETCH NEXT FROM DataCursor INTO  @Id, @Tenant,@MasterId, @SearchFields
+				END				
+				CLOSE DataCursor
+				DEALLOCATE DataCursor
+		END
+    ]]>
+  </Sql>
+</Script>
