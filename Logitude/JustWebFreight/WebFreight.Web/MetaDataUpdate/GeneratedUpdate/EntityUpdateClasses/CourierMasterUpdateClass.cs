@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CourierMasterUpdateClass
    {  		
-		public const string HashString = "8bb76903325591da9baa8189197c39a2";
+		public const string HashString = "d346d491d501cc183e846dad1504ea5d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4183,6 +4183,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature CourierMasterFeature_PendingByAddress = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PendingByAddress", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.Pending By Address", NameTextCodeDefaultText = @"Pending By Address" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
 
 		   Feature CourierMasterFeature_AllowDelayForm = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AllowDelayForm", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.AllowDelayForm", NameTextCodeDefaultText = @"AllowDelayForm" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
+
+		   Feature CourierMasterFeature_UpdateDistributionStatus = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UpdateDistributionStatus", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.UpdateDistributionStatus", NameTextCodeDefaultText = @"Update Distribution Status" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
 
    
 	    

@@ -817,7 +817,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                         ClearWrongValues(_MyDeclarationPM);
 
                     myDeclarationUpdateService.Update(_MyDeclarationPM, true);
-
+                    AppendLogLine(LogMessagingUtil.Instance.ToString());
 
 #if NOT_OpenCourierMasterourierDeclarationFromUNF
                     //Upsert CourierMaster

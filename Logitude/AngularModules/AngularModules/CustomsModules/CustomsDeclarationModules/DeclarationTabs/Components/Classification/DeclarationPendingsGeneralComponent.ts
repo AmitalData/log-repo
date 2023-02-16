@@ -271,14 +271,11 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
                     this._DeclarationCourierStatusPMService.update(this.DeclarationCourierStatus).subscribe((response: ServiceResponse) => {
                         this.InitTab();
                         SessionLocator.SelectedSession.StopBusyIndicator();
-                        SessionLocator.SelectedSession.CloseCurrentWindow();
                     });
                 }
                 else {
-                    SessionLocator.SelectedSession.CloseCurrentWindow();
                 }
             }
-
             else {
                 this.ValidationErrorsList = errors;
             }

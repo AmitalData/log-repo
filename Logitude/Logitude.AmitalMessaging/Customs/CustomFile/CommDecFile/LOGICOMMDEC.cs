@@ -150,6 +150,8 @@
 
         private string lastMileServiceTypeField;
 
+        private Pendings pendingsField;
+
         /// <remarks/>
         public string CustomFileNo
         {
@@ -683,6 +685,19 @@
             set
             {
                 this.customsDocumentsField = value;
+            }
+        }
+        [System.Xml.Serialization.XmlElementAttribute("Pendings")]
+
+        public Pendings Pendings
+        {
+            get
+            {
+                return this.pendingsField;
+            }
+            set
+            {
+                this.pendingsField = value;
             }
         }
 
@@ -2055,5 +2070,67 @@
             }
         }
     }
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGICOMMDEC")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGICOMMDEC", IsNullable = false)]
+    public partial class Pendings
+    {
+        private Pending[] pendingField;
 
-}
+        /// <remarks/>
+        /// 
+        [System.Xml.Serialization.XmlElementAttribute("Pending")]
+
+        public Pending[] Pending
+        {
+            get
+            {
+                return this.pendingField;
+            }
+            set
+            {
+                this.pendingField = value;
+            }
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGICOMMDEC")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGICOMMDEC", IsNullable = false)]
+    public partial class Pending
+    {
+        private string pendingCodeField;
+        private string pendingTypeField;
+
+        public string PendingCode
+        {
+            get
+            {
+                return this.pendingCodeField;
+            }
+            set
+            {
+                this.pendingCodeField = value;
+            }
+        }
+
+        public string PendingType
+        {
+            get
+            {
+                return this.pendingTypeField;
+            }
+            set
+            {
+                this.pendingTypeField = value;
+            }
+        }
+    }
+    }
