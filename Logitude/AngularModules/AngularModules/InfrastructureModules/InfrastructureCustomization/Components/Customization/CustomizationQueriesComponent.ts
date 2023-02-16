@@ -161,6 +161,32 @@ export class CustomizationQueriesComponent extends BaseComponent{
         this.LoadCustomQueries();
     }
 
+    IsDefaultClicked(item: any) {
+        let currentQuery = window.Queries.filter(q => q.UniqueCode == item.UniqueCode)[0];
+        let oldDefaultQuery = window.Queries.filter(q => q.ObjectTableId == this.ObjectTableId && q.SystemLevel && q.IsDefault)[0];
+        window.Queries = window.Queries.filter(q => (q.UniqueCode != oldDefaultQuery.UniqueCode) && (q.UniqueCode != currentQuery.UniqueCode));
+        currentQuery.IsDefault = true;
+        oldDefaultQuery.IsDefault = false;
+        this.QueriesPMService.update(currentQuery).subscribe((serviceResponse: ServiceResponse) => {
+            if (!serviceResponse.HasError && serviceResponse.Result) {
+                window.Queries.push(oldDefaultQuery);
+                this.LoadCustomQueries();
+            }
+            else {
+                this.CurrentSession.StopBusyIndicator();
+            }
+        });
+        this.QueriesPMService.update(oldDefaultQuery).subscribe((serviceResponse: ServiceResponse) => {
+            if (!serviceResponse.HasError && serviceResponse.Result) {
+                 window.Queries.push(currentQuery);
+                 this.LoadCustomQueries();
+            }
+            else {
+                this.CurrentSession.StopBusyIndicator();
+            }
+        });       
+    }
+
     EditCustomView(item) {
         let windowArgs: any = {};
         windowArgs.queryId = item.Id;

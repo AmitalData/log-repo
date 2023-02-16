@@ -17,8 +17,8 @@
                 <tr *ngIf="screenSection.Type != 'Grid'" style="height:100%">
                     <td *ngFor="let ScreenColumn of screenSection.ScreenColumns" style="width: 430px;">
                         <table>
-                            <tr class="FormFieldRow" *ngFor="let objectField of ScreenColumn.ObjectFields" [ngStyle]="{background: (IsCustomerCareOrDistributor && objectField.IsCustom == true) ? 'rgba(255, 171, 3, 0.6)' : 'transparent'}">
-
+                            <!--<tr class="FormFieldRow" *ngFor="let objectField of ScreenColumn.ObjectFields" [ngStyle]="{background: (IsCustomerCareOrDistributor && objectField.IsCustom == true) ? 'rgba(223,223,223)' : 'transparent'}">-->
+                            <tr class="FormFieldRow" *ngFor="let objectField of ScreenColumn.ObjectFields" [ngStyle]="{border: (IsCustomerCareOrDistributor && objectField.IsCustom == true) ? '2px dashed #CCC' : 'none'}">
                                 <td *ngIf="!objectField.MultiLine" [style.width.px]="screenSection.actualColumnsCount == 3 ? 160 : LabelWidth" [style.min-width.px]="screenSection.actualColumnsCount == 3 ? 160 : LabelWidth">
                                     <LogLabel *ngIf="objectField.FieldName != 'CustomField'" [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
                                     <LogLabel *ngIf="objectField.FieldName == 'CustomField' && IsCustomerCare" [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>

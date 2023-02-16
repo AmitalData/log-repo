@@ -104,13 +104,15 @@
 						<div></div>
 					</td>
 					<!-- Save & Open -->
-					<td style="width: 25px;">
+					<td style="width: 95px;">
 						<button id="{{ 'SaveOpen' | IdGeneratorAsyncPipe | async}}" *ngIf="!EntityPM.IsDirty" class="Button" (click)="SaveChangesAndOpen()">
-							<img class="CenterCenter" src="./Images/Buttons/SaveAndNew.png" style="width: 22px; height: 22px;" />
+							<img class="LeftCenter" src="./Images/Buttons/SaveAndNew.png" style="margin-left: 2px; width: 16px; height: 16px;" />
+							<span style="line-height: 19px; margin-left: 17px;">Save and New</span>
 						</button>
 
 						<button id="{{ 'SaveOpen' | IdGeneratorAsyncPipe | async}}" *ngIf="EntityPM.IsDirty" class="EntityChangesButton" (click)="SaveChangesAndOpen()">
-							<img class="CenterCenter" src="./Images/Buttons/SaveAndNew.Orange.png" style="width: 22px; height: 22px;" />
+							<img class="LeftCenter" src="./Images/Buttons/SaveAndNew.Orange.png" style="margin-left: 2px; width: 16px; height: 16px;" />
+							<span style="line-height: 19px; margin-left: 17px;">Save and New</span>
 						</button>
 					</td>
 					<td style="width: 12px;">
