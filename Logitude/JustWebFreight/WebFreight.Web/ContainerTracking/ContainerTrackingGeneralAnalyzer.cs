@@ -43,7 +43,6 @@ namespace WebFreight.Web.ContainerTracking
         private string trackingSource;
         private ContainerUpdatedFields containerUpdatedFields;
         private ContainerTrackingHelper containerTrackingHelper;
-        //private ContainerDiscrepancyService containerDiscrepancyService;
         private PortQuery portQuery;
         private PortRepository portRepository;
         public ContainerTrackingGeneralAnalyzer(string trackingSource, AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
@@ -223,8 +222,11 @@ namespace WebFreight.Web.ContainerTracking
         {
             if (shipment.IsOperationalClosed)            
                 return false;
-
-            return true;
+            if (!containerTrackingHelper.IsSameLocation(shipment.MainCarriageFromPortId, containerUpdatedFields.POLLocation))
+                return false;
+            if (!containerTrackingHelper.IsSameLocation(shipment.MainCarriageFinalDestinationPortId, containerUpdatedFields.PODLocation))
+                return false;
+                return true;
         }
         
 
