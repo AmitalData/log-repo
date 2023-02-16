@@ -134,14 +134,14 @@
                                 </td>
 
                                 <td style="width: 100px;">
-                                    <button id="{{ 'SaveBtn' | IdGeneratorAsyncPipe | async}}" *ngIf="!IsModified" class="Button" (click)="PublichChangesClicked(false)">
+                                    <button id="{{ 'SaveBtn' | IdGeneratorAsyncPipe | async}}" *ngIf="!IsModified" class="Button" (click)="publishChangesClicked(false)">
                                         <img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.png" />
-                                        <span style="line-height: 19px; margin-left: 17px;">Publich Changes</span>
+                                        <span style="line-height: 19px; margin-left: 17px;">publish Changes</span>
                                     </button>
 
-                                    <button id="{{ 'SaveBtn' | IdGeneratorAsyncPipe | async}}" class="EntityChangesButton" *ngIf="IsModified" (click)="PublichChangesClicked(false)">
+                                    <button id="{{ 'SaveBtn' | IdGeneratorAsyncPipe | async}}" class="EntityChangesButton" *ngIf="IsModified" (click)="publishChangesClicked(false)">
                                         <img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.Red.png" />
-                                        <span style="line-height: 19px; margin-left: 17px;">Publich Changes</span>
+                                        <span style="line-height: 19px; margin-left: 17px;">publish Changes</span>
                                     </button>
                                 </td>
 
@@ -149,7 +149,7 @@
                                     <div></div>
                                 </td>
                                 <td style="width: 100px;">
-                                    <button class="Button" (click)="PublichChangesClicked(true)">Save Draft </button>
+                                    <button class="Button" (click)="publishChangesClicked(true)">Save Draft </button>
                                 </td>
                                 <td style="width: 3px;">
                                     <div></div>
