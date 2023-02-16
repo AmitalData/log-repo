@@ -427,7 +427,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExportCloseAmendmentStatus, 
 	         ExportDecWithoutRelease, 
 	         CasualImporterCountry, 
-	         ExportCloseAmendStatusName,
+	         ExportCloseAmendStatusName, 
 	         IsAramex,
 	      }
 

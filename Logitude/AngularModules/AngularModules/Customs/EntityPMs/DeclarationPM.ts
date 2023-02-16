@@ -1497,6 +1497,8 @@ export class DeclarationPM {
     private exportCloseAmendStatusName: string;
     public get ExportCloseAmendStatusName() { return this.exportCloseAmendStatusName; }
     public set ExportCloseAmendStatusName(newValue: string) { if (this.exportCloseAmendStatusName != newValue) { this.exportCloseAmendStatusName = newValue; this.MarkAsDirty("ExportCloseAmendStatusName"); } }
+       
+	 
     private isAramex: boolean;
     public get IsAramex() { return this.isAramex; }
     public set IsAramex(newValue: boolean) { if (this.isAramex != newValue) { this.isAramex = newValue; this.MarkAsDirty("IsAramex"); } }
@@ -1530,4 +1532,4 @@ export class DeclarationPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
