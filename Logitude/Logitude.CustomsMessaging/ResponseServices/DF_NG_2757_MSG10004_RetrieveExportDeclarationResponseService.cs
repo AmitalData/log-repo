@@ -44,29 +44,28 @@ namespace Logitude.CustomsMessaging.ResponseServices
           
 
             }
-
-            if (string.IsNullOrEmpty(requestParams.DeclarationId)|| !string.IsNullOrEmpty(requestParams.DeclarationId) && requestParams.IsUpdateDB) { //declaration not exits in db
-
-
             var declarationqueryService = new DeclarationQueryService(requestParams.Tenant);
-            if (string.IsNullOrEmpty(requestParams.DeclarationId)) { //declaration not exits in db
-               
+
+            if (string.IsNullOrEmpty(requestParams.DeclarationId) || !string.IsNullOrEmpty(requestParams.DeclarationId) && requestParams.IsUpdateDB)
+            { //declaration not exits in db
+
                 var decId = declarationqueryService.GetIdByDeclarationNumber(requestParams.DeclarationNumber, requestParams.Tenant);
-                if (customResponse.Response != null && customResponse.Response.Declaration != null && (string.IsNullOrEmpty(decId)|| requestParams.IsUpdateDB)) 
-                   CreateDeclarationFromResponse(customResponse.Response.Declaration, requestParams.Tenant,  customResponse, requestParams.IsUpdateDB, requestParams.DeclarationId);                                  
-              
+                if (customResponse.Response != null && customResponse.Response.Declaration != null && (string.IsNullOrEmpty(decId) || requestParams.IsUpdateDB))
+                    CreateDeclarationFromResponse(customResponse.Response.Declaration, requestParams.Tenant, customResponse, requestParams.IsUpdateDB, requestParams.DeclarationId);
+
             }
-            else
+            if (!string.IsNullOrEmpty(requestParams.DeclarationId))
             {
                 if (customResponse?.Response?.Status[0]?.NameCode?.Value == "36")
                 {
                     var declaration = declarationqueryService.GetSingle(requestParams.DeclarationId, false, false);
-                    if(!declaration.IsConvertedDeclaration && (declaration.DeclarationStatusTypeCode!= customResponse.Response.Status[0].NameCode.Value))
+                    if (!declaration.IsConvertedDeclaration && (declaration.DeclarationStatusTypeCode != customResponse.Response.Status[0].NameCode.Value))
                     {
                         RaiseEvent(declaration, null, status_id: "CLS");
                     }
                 }
             }
+
             if (customResponse.ResponseContentHeader != null &&
                 customResponse.Response == null &&
                 customResponse.AddAGlobalScannedAttachmentToEntityResponse == null &&
@@ -134,7 +133,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //Yuval Chalup 13.05.2015 TASK-11915 --->
         }
 
-            }
         public override DeclarationRestoreResponseData GetResponse(DF_NG_2757_MSG10004_ExportDeclarationResponse customResponse, DeclarationRestoreRequestParams requestParams)
         {
             if (_DF_NG_2754_MSG10004_ExportDeclarationResponseService == null || _DF_NG_2754_MSG10004_ExportDeclarationResponseService.MyResponseData == null)
