@@ -165,12 +165,12 @@ export class CustomsCollateralComponent extends BaseComponent {
 
                     for (var i = 0; i < this.CurrentEntity.CustomsCollateralsAnswers.length; i++) {
                         var answer = this.CurrentEntity.CustomsCollateralsAnswers[i];
-                        answer.LineNumber = i + 1;
+                        answer.LineNumber = AppTool.IsNullOrEmpty(answer.LineNumber) ? i + 1 : answer.LineNumber;
                       
                     }
                     for (var i = 0; i < this.AnswersTabs.length; i++) {
                         var collateralAnswer: CustomsCollateralsAnswerPM = this.AnswersTabs[i].EntityPM;
-                        collateralAnswer.LineNumber = i + 1;
+                        collateralAnswer.LineNumber = AppTool.IsNullOrEmpty(collateralAnswer.LineNumber) ?  i + 1 : collateralAnswer.LineNumber;
                         this.AnswersTabs[i].Code = collateralAnswer.LineNumber.toString();
                         this.AnswersTabs[i].Header = collateralAnswer.LineNumber.toString();
                     }
