@@ -5647,6 +5647,12 @@
       LocalDefaultText="&quot;Containers&quot;"
       TextCodeTypeCode="&quot;MH&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.Signeds&quot;"
+      DefaultText="&quot;Signed Fields&quot;"
+      LocalDefaultText="&quot;חתימה דיגיטלית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

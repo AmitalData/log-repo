@@ -261,6 +261,26 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="HSM"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="HSMtoken"
+    Type="varchar"
+    Size="36">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="HSMaddress"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DefaultVATTypeId"
     ReferencedTable="VatTypes"

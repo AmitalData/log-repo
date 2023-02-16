@@ -2720,6 +2720,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralOChartOfAccountsTypesOrder = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.ChartOfAccountsTypesOrder", DefaultText = "Chart Of Accounts Types Order",LocalDefaultText = @"Chart Of Accounts Types Order", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode GeneralTextCode_AccountingOChangeMadeToConnectedAccounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ChangeMadeToConnectedAccounts", DefaultText = "A change was made in the connected accounts. The connected accounts must be returned to their state as it was when the original journal was prodiced. Line ",LocalDefaultText = @"בוצע שינוי בחיבור החשבונות. יש להחזיר את חיבור החשבונות למצבם כפי שהיה בעת רישום פקודת היומן המקורית. שורה ", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMCCustomObjectsCustomObjects = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.CustomObjects.CustomObjects", DefaultText = "Custom Objects",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -2727,8 +2728,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralMHContainers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Containers", DefaultText = "Containers",LocalDefaultText = @"Containers", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-   
-	    
+ 		   TextCode GeneralTextCode_AccountingGeneralOSigneds = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Signeds", DefaultText = "Signed Fields",LocalDefaultText = @"חתימה דיגיטלית", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
 }
 
