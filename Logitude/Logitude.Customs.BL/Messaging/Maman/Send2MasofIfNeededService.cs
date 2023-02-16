@@ -107,10 +107,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                             dataHaveChangeSendIt = true;
                             sb.AppendLine("Message:Changed-SEND!!!");
                         }
-                        bool forceDueEcomUpsert = !string.IsNullOrWhiteSpace(drityEntityPM?.MyEcomInsert?.MyDeclarationCourierStatusPM?.DeclarationId)
-                            ||
-                            drityEntityPM?.MyEcomInsert?.MyDeclarationCourierStatusPM != null
-                            ;
+                        bool forceDueEcomUpsert = !string.IsNullOrWhiteSpace(drityEntityPM?.MyEcomInsert?.MyDeclarationCourierStatusPM?.DeclarationId);
 
 
                         if (forceSend || forceDueEcomUpsert)
