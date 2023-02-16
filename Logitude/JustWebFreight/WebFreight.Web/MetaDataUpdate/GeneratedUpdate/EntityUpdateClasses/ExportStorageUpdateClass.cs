@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExportStorageUpdateClass
    {  		
-		public const string HashString = "9a977ffe18e20c5d7744428cd5965714";
+		public const string HashString = "a03dc8bb925449bc4ee4141d28f6daee";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3020,6 +3020,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode ExportStorageTextCode_CustomsExportStorageOLevel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportStorage.O.Level", DefaultText = "Level",LocalDefaultText = @"רמה", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ExportStorageTextCode_CustomsExportStorageOErrorCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportStorage.O.ErrorCode", DefaultText = "Error Code",LocalDefaultText = @"קוד שגיאה", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ExportStorageTextCode_CustomsExportStorageOConnectedAllToDeclartion = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportStorage.O.ConnectedAllToDeclartion", DefaultText = "Are you sure you want to link ",LocalDefaultText = @"האם אתה בטוח שברצונך לקשר ", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ExportStorageTextCode_CustomsExportStorageOExportStoragesToDeclartion = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportStorage.O.ExportStoragesToDeclartion", DefaultText = "exportstorage to declaration",LocalDefaultText = @"אחסנות להצהרה הנוכחית?", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
