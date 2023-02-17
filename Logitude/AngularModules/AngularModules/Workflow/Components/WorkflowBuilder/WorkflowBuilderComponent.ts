@@ -190,7 +190,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
             if (!serviceResponse.HasError) {
                 let objectTables = serviceResponse.Result.filter((o: any) => o.Tenant === 0 || o.Tenant === (SessionLocator.Tenant || 0));
                 if (isLoadedBefore) {
-                    ObjectTables.resetCustom(objectTables);
+                    ObjectTables.replace(objectTables);
                 } else {
                     ObjectTables.set(objectTables);
                 }
@@ -208,7 +208,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
             if (!serviceResponse.HasError) {
                 let objectFields = serviceResponse.Result.filter((o: any) => o.Tenant === 0 || o.Tenant === (SessionLocator.Tenant || 0));
                 if (isLoadedBefore) {
-                    ObjectFields.resetCustom(objectFields);
+                    ObjectFields.replace(objectFields);
                 } else {
                     ObjectFields.set(objectFields);
                 }
