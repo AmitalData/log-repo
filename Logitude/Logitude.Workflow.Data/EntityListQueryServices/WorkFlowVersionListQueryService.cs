@@ -55,7 +55,11 @@ namespace Logitude.Workflow.Data.EntityListQueryServices
 
 											 Entity = a.Entity,
 
-											 ActivatedDate = a.ActivatedDate
+											 ActivatedDate = a.ActivatedDate,
+
+											 CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact != null ? a.CreatedByUser.Contact.EnglishName : null : null,
+
+										     UpdatedByUserName = a.UpdatedByUser != null ? a.UpdatedByUser.Contact != null ? a.UpdatedByUser.Contact.EnglishName : null : null
 
 											});
             return query;
