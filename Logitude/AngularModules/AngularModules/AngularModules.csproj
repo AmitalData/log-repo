@@ -8330,7 +8330,6 @@
     <TypeScriptCompile Include="Workflow\Pipes\IsObjectTypePipe.ts" />
     <TypeScriptCompile Include="Workflow\Pipes\ListItemPipe.ts" />
     <TypeScriptCompile Include="Workflow\Pipes\ObjectFieldPipe.ts" />
-    <TypeScriptCompile Include="Workflow\Pipes\ObjectFieldsQueryFiltersPipe.ts" />
     <TypeScriptCompile Include="Workflow\Pipes\SetValuesOperatorsItemsPipe.ts" />
     <TypeScriptCompile Include="Workflow\Pipes\ShowEditableVariablesTreeItemPipe.ts" />
     <TypeScriptCompile Include="Workflow\Pipes\ShowEntitiesTreeItemPipe.ts" />

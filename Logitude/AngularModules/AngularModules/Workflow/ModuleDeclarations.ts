@@ -21,7 +21,6 @@ import { TreeSelectComponent } from "./Components/Base/TreeSelectComponent";
 import { SetValuesComponent } from "./Components/Base/SetValuesComponent";
 import { DeleteNodeWarningComponent } from "./Components/Messages/DeleteNodeWarningComponent";
 import { ObjectFieldPipe } from "./Pipes/ObjectFieldPipe";
-import { ObjectFieldsQueryFiltersPipe } from "./Pipes/ObjectFieldsQueryFiltersPipe";
 import { ListItemPipe } from "./Pipes/ListItemPipe";
 import { IsDateTimeTypePipe } from "./Pipes/IsDateTimeTypePipe";
 import { IsNoObjectFieldVariablePipe } from "./Pipes/IsNoObjectFieldVariablePipe";
@@ -88,7 +87,6 @@ export const Components = [
 
 export const Pipes = [
     ObjectFieldPipe,
-    ObjectFieldsQueryFiltersPipe,
     ListItemPipe,
     IsDateTimeTypePipe,
     IsNoObjectFieldVariablePipe,
