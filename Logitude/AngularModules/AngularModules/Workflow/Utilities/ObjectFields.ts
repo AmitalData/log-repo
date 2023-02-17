@@ -19,10 +19,10 @@ export class ObjectFields {
         }
     }
 
-    static resetCustom(customObjectFields: ObjectFieldList[]) {
-        if (customObjectFields) {
-            this.AllObjectFields = this.AllObjectFields.filter(o => !o.IsCustom);
-            this.AllObjectFields = this.AllObjectFields.concat(customObjectFields.filter(o => o.IsCustom));
+    static replace(objectFields: ObjectFieldList[]) {
+        if (objectFields) {
+            let objectFieldsCodes = objectFields.map(o => { return o.FieldCode });
+            this.AllObjectFields = this.AllObjectFields.filter(o => !objectFieldsCodes.includes(o.FieldCode)).concat(objectFields);
         }
     }
 
