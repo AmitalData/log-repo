@@ -736,6 +736,8 @@
   <ItemGroup>
     <Compile Include="ContainerTracking\ContainerTrackingHelper.cs" />
     <Compile Include="Controllers\AccountingModel\ChartOfAccountsTypesExtendedController.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\CopyFromTenant0ViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\CopyFromTenant0Controller.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\ChargesTypeAPiHelper.cs" />
     <Compile Include="Controllers\DashboardModel\Extended\DashboardListExtendedController.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\ListControllers\DashboardGlobalPresetFilterViewsController.Generated.cs" />
@@ -3446,6 +3448,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ConsignmentPackDangerUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContainerSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContinuousRequestTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CopyFromTenant0UpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CourierCustomStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CourierDeclarationStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CourierDeclarationUpdateClass.cs" />
