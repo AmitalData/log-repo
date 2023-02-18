@@ -3697,7 +3697,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             if (entityPM.ShipmentLevelCode == "H")
             {
-                MethodHelper.AddToSearchFields(ref mySearchFields, entityMasterData.MasterShipmentNumber);
+                MethodHelper.AddToSearchFields(ref mySearchFields, entityMasterData?.MasterShipmentNumber);
             }
 
             if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
