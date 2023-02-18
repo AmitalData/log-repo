@@ -52,6 +52,7 @@ namespace WebFreight.Web.ReportsWebServices
         private AddressRepository addressRepository;
         private ContactRepository contactRepository;
         private RoutingDataProvider routingDataProvider;
+        private CountryRepository countryRepository;
         public byte[] StartLoadingDataToAWB(string shipmentId, int tenant, string documentTypeCopyId, bool isPrint)
         {
             this.tenant = tenant;
@@ -73,6 +74,7 @@ namespace WebFreight.Web.ReportsWebServices
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
             addressRepository = new AddressRepository(commonContext);
             contactRepository = new ContactRepository(commonContext);
+            countryRepository = new CountryRepository(commonContext);
             shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);
             this.contactEmail = AuthenticationUtil.GetLoggedUserEmail(tenant);
 
@@ -906,9 +908,12 @@ namespace WebFreight.Web.ReportsWebServices
         {
             int tenant = shipmentPM.Tenant;
             Address issuingCarrierAddress = addressRepository.GetSingleAddress(shipmentPM.IssuingCarrierAddressId, tenant);
+            
             if (issuingCarrierAddress != null)
             {
                 awbDp.TenantCompanyNameAddress = issuingCarrierAddress.Name + Environment.NewLine + this.GetAddress(issuingCarrierAddress) + Environment.NewLine;
+                Country issuingCarrierAgentCountry = countryRepository.GetSingleCountry(issuingCarrierAddress.CountryId, tenant);
+                awbDp.TenantAddress_WithCountry = issuingCarrierAgentCountry.EnglishName;
             }
         }
         private void GetMAWBOBLDate()
