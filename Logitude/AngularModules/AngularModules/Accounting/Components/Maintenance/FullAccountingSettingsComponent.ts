@@ -220,6 +220,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             }
 
             this.ToggleAgingDefinitionTab(value);
+            this.ToggleCopyingDataFromTenant0Tab(value);
 
             this.ReloadTenantPM();
             this.SetUIProperties();
@@ -240,6 +241,14 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             this.AddAgingDefinitionTab();
         else
             this.RemoveAgingDefinitionTab();
+    }
+
+    private ToggleCopyingDataFromTenant0Tab(value: boolean)
+    {
+        if (value)
+            this.AddCopyFromTenant0Tab();
+        else
+            this.RemoveCopyFromTenant0Tab();
     }
 
     get IsPaymentChequesActivated() { return this.EntityPM.IsPaymentChequesActivated; }
@@ -827,9 +836,12 @@ SubmitChanges(ControlAccountId:string) {
         this.TabsSource.push({ Name: "FullAccoutingSetting", isSelected: true, Header: TextCodeTranslator.Translate("General.O.General") }); //Accounting.O.FullAccountingSettings
         this.TabsSource.push({ Name: "ControlAccounts", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.O.ControlGLAccounts") });
         this.TabsSource.push({ Name: "Logo", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.General.O.Cheques") });
-        this.TabsSource.push({ Name: "Signed", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.General.O.Signeds") });
-        if(this.AccountingActivated)
+        
+        if(this.AccountingActivated){
             this.AddAgingDefinitionTab();
+            this.AddCopyFromTenant0Tab();
+        }
+           
     }
 
     RemoveAgingDefinitionTab(){
@@ -838,9 +850,21 @@ SubmitChanges(ControlAccountId:string) {
         this.TabsSource.splice(tabIndex,1);
     }
     AddAgingDefinitionTab(){
+        debugger
         var tabIndex = this.TabsSource.findIndex(d=>d.Name == "AgingDefinition");
         if(tabIndex < 0)
             this.TabsSource.push({ Name: "AgingDefinition", isSelected: false, Header: TextCodeTranslator.Translate("FullAccountingSetting.O.AgingDefinition") });
+    }
+    AddCopyFromTenant0Tab(){
+        
+        var tabIndex = this.TabsSource.findIndex(d=>d.Name == "CopyFromTenant0");
+        if(tabIndex < 0)
+            this.TabsSource.push({ Name: "CopyFromTenant0", isSelected: false, Header: TextCodeTranslator.Translate("FullAccountingSetting.O.CopyingDataFromTenant0") });
+    }
+    RemoveCopyFromTenant0Tab(){
+        var tabIndex = this.TabsSource.findIndex(d=>d.Name == "CopyFromTenant0");
+        if(tabIndex > 0)
+        this.TabsSource.splice(tabIndex,1);
     }
 
     SelectionChanged(tab: any) {

@@ -128,6 +128,8 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new ChartOfAccountsTypeMap());
 	
+            modelBuilder.Configurations.Add(new CopyFromTenant0Map());
+	
             modelBuilder.Configurations.Add(new ExternalPageAdditionalDataMap());
 	
             modelBuilder.Configurations.Add(new ExternalReconciliationMap());
@@ -898,6 +900,12 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<ChartOfAccountsType> ChartOfAccountsTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CopyFromTenant0> CopyFromTenant0 
 	 {
 	      get; set;
 	 

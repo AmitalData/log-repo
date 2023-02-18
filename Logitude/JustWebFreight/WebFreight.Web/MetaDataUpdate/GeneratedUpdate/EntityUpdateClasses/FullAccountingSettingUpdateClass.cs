@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class FullAccountingSettingUpdateClass
    {  		
-		public const string HashString = "d631f12edbbe5dd49547cbf6ff36c30d";
+		public const string HashString = "8ab96dfdb48ad8372d3705a99be089f5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -130,7 +130,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "הגדרות הנהלת חשבונות",
 			      				    DefaultText =  "Full Accounting Settings",
-			      				    Code =  "d54d",
+			      				    Code =  "3426",
 			      				    Name =  "FullAccountingSetting Query Group",
 			      				    GenerateDomainService =  true,
 			      				    ClientModuleName =  "Accounting",
@@ -3920,6 +3920,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode FullAccountingSettingTextCode_FullAccountingSettingONoOfAgingMonthsBW1n9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FullAccountingSetting.O.NoOfAgingMonthsBW1n9", DefaultText = "You can enter aging values from 1 to 9 only",LocalDefaultText = @"ניתן להזין בין 1 ל 9 חודשים לגיול", ObjectTableId = FullAccountingSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode FullAccountingSettingTextCode_FullAccountingSettingOAgingDefinition = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FullAccountingSetting.O.AgingDefinition", DefaultText = "Aging Definition",LocalDefaultText = @"הגדרות גיול", ObjectTableId = FullAccountingSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode FullAccountingSettingTextCode_FullAccountingSettingOCopyFromTenant0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FullAccountingSetting.O.CopyFromTenant0", DefaultText = "Copying Data From Tenant0",LocalDefaultText = @"העתקת נתונים מדייר 0", ObjectTableId = FullAccountingSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
