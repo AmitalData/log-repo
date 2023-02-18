@@ -11,6 +11,8 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="true"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -39,7 +41,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;הגדרות הנהלת חשבונות&quot;"
   DefaultText="&quot;Full Accounting Settings&quot;"
-  Code="&quot;19d4&quot;"
+  Code="&quot;3426&quot;"
   Name="&quot;FullAccountingSetting Query Group&quot;"
   GenerateDomainService="true"
   ClientModuleName="&quot;Accounting&quot;"
@@ -54,6 +56,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;1b42&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -4215,6 +4218,12 @@
       Code="&quot;FullAccountingSetting.O.AgingDefinition&quot;"
       DefaultText="&quot;Aging Definition&quot;"
       LocalDefaultText="&quot;הגדרות גיול&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;FullAccountingSetting.O.CopyFromTenant0&quot;"
+      DefaultText="&quot;Copying Data From Tenant0&quot;"
+      LocalDefaultText="&quot;העתקת נתונים מדייר 0&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
