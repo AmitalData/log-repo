@@ -366,10 +366,10 @@ namespace WebFreight.Web.WebServices
                 }
                 if (!string.IsNullOrEmpty(shipment.AccountManagerUserId)) 
                 {
-                    
-                    User user = userRepository.GetSingleUser(shipment.AccountManagerUserId, tenant);
 
-                    if (user != null) myDataProvider.AccountManagerMobileNumber = user.Contact.Mobile;
+                    Contact contact = contactRepository.GetSingleContact(shipment.AccountManagerUserId, tenant);
+
+                    if (contact != null) myDataProvider.AccountManagerMobileNumber = contact.Mobile;
 
                 }
 
