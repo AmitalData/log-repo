@@ -724,6 +724,11 @@ export class TenantManagementPM {
     public set BackgroundId(newValue: string) { if (this.backgroundId != newValue) { this.backgroundId = newValue; this.MarkAsDirty("BackgroundId"); } }
        
 	 
+    private mobileBackgroundId: string;
+    public get MobileBackgroundId() { return this.mobileBackgroundId; }
+    public set MobileBackgroundId(newValue: string) { if (this.mobileBackgroundId != newValue) { this.mobileBackgroundId = newValue; this.MarkAsDirty("MobileBackgroundId"); } }
+       
+	 
     private comapnylogoId: string;
     public get ComapnylogoId() { return this.comapnylogoId; }
     public set ComapnylogoId(newValue: string) { if (this.comapnylogoId != newValue) { this.comapnylogoId = newValue; this.MarkAsDirty("ComapnylogoId"); } }
@@ -997,4 +1002,4 @@ export class TenantManagementPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
