@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CopyFromTenant0UpdateClass
    {  		
-		public const string HashString = "97129767ef5ade39b748110991f11ae9";
+		public const string HashString = "a911617afea7945019826a7a969c8073";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -112,7 +112,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
-			      				    HasCounter =  false,
+			      				    HasCounter =  true,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  true,
@@ -128,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Copy From Tenant 0",
-			      				    Code =  "95e7",
+			      				    Code =  "07f0",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -173,6 +173,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Id",
 					  						ListPropertyPath =  "Id",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -234,6 +235,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Tenant",
 					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -295,6 +297,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CreateDate",
 					  						ListPropertyPath =  "CreateDate",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -357,6 +360,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CreatedByUserId",
 					  						ListPropertyPath =  "CreatedByUserId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -417,6 +421,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SearchFields",
 					  						ListPropertyPath =  "SearchFields",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -479,6 +484,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "TableName",
 					  						ListPropertyPath =  "TableName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -524,7 +530,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable CopyFromTenant0ObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CopyFromTenant0" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> CopyFromTenant0ObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CopyFromTenant0").ToList();
+		       
+	      
+
+	         Screen CopyFromTenant0CopyFromTenant0HeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CopyFromTenant0.HeaderScreen", Name = "CopyFromTenant0HeaderScreen", ObjectTableId = CopyFromTenant0ObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    CopyFromTenant0ObjectTable.HeaderScreenId = CopyFromTenant0CopyFromTenant0HeaderScreenScreen0.Id;
+		    CopyFromTenant0ObjectTable.HeaderScreenCode = CopyFromTenant0CopyFromTenant0HeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

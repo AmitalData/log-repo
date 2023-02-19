@@ -30,6 +30,7 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { BookingWizardPackageItem } from 'Booking/Components/BookingWizard/Packages/PackagesTabComponent';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
+import { Data } from '@microsoft/applicationinsights-common';
 
 const DebtorsAndCreditorsChartOfAccountTypeCode = '7';
 @Component({
@@ -55,7 +56,9 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     tenantPMService: TenantPMService;
     private CurrentSession = SessionLocator.SelectedSession;
     public TaxInstitutionGLAccountFilterItems: ApiQueryFilters = new ApiQueryFilters();
-
+    disabledCopyFromTenant0=true
+    date=new Date()
+    user="amital "
 
 
     constructor(public serviceArgs: ServiceArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
@@ -246,9 +249,9 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     private ToggleCopyingDataFromTenant0Tab(value: boolean)
     {
         if (value)
-            this.AddCopyFromTenant0Tab();
+           this.disabledCopyFromTenant0=false
         else
-            this.RemoveCopyFromTenant0Tab();
+        this.disabledCopyFromTenant0=true
     }
 
     get IsPaymentChequesActivated() { return this.EntityPM.IsPaymentChequesActivated; }
@@ -695,7 +698,7 @@ SubmitChanges(ControlAccountId:string) {
     //#region Tabs Code
     TabsSource: any[] = [];
     SelectedTab: string = "";
-
+    
     BuildTabs() {
         this.SelectedTab = "FullAccoutingSetting";
         this.TabsSource.push({ Name: "FullAccoutingSetting", isSelected: true, Header: TextCodeTranslator.Translate("General.O.General") }); //Accounting.O.FullAccountingSettings
@@ -704,8 +707,10 @@ SubmitChanges(ControlAccountId:string) {
         
         if(this.AccountingActivated){
             this.AddAgingDefinitionTab();
-            this.AddCopyFromTenant0Tab();
+           this.disabledCopyFromTenant0=false
         }
+        this.TabsSource.push({ Name: "CopyFromTenant0", isSelected: false, Header: TextCodeTranslator.Translate("FullAccountingSetting.O.CopyFromTenant0") });
+
            
     }
 
@@ -720,17 +725,8 @@ SubmitChanges(ControlAccountId:string) {
         if(tabIndex < 0)
             this.TabsSource.push({ Name: "AgingDefinition", isSelected: false, Header: TextCodeTranslator.Translate("FullAccountingSetting.O.AgingDefinition") });
     }
-    AddCopyFromTenant0Tab(){
-        
-        var tabIndex = this.TabsSource.findIndex(d=>d.Name == "CopyFromTenant0");
-        if(tabIndex < 0)
-            this.TabsSource.push({ Name: "CopyFromTenant0", isSelected: false, Header: TextCodeTranslator.Translate("FullAccountingSetting.O.CopyingDataFromTenant0") });
-    }
-    RemoveCopyFromTenant0Tab(){
-        var tabIndex = this.TabsSource.findIndex(d=>d.Name == "CopyFromTenant0");
-        if(tabIndex > 0)
-        this.TabsSource.splice(tabIndex,1);
-    }
+    
+    
 
     SelectionChanged(tab: any) {
 
