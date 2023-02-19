@@ -1478,7 +1478,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
                 this.CurrentSession.StopBusyIndicator();
 
-
+                this.ReloadScreen();
+                //this.SelectedLines.Clear();
+                this.CalculateTotals();
 
             }
 
