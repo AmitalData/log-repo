@@ -64,6 +64,27 @@ namespace WebFreight.Web.ContainerTracking
             return false;
         }
 
+        public bool IsSameLocationAndTenant(string entityPortId, string responsePortCode, int Tenant)
+        {
+            Port responsePort = GetPortByCode(responsePortCode, Tenant);
+            Port responsePort_zero = GetPortByCode(responsePortCode, 0);
+            Port entityPort = GetPortById(entityPortId, Tenant);
+            Port entityPort_Zero = GetPortByCode(entityPort?.CombinedCode, 0);
+
+            if (responsePort == null) return false;
+
+            if (string.IsNullOrEmpty(entityPortId))
+                return true;
+
+            else if (entityPortId == responsePort.Id)
+                return true;
+
+            else if (responsePort_zero?.PortGroupId != null && entityPort_Zero?.PortGroupId != null && responsePort_zero?.PortGroupId == entityPort_Zero?.PortGroupId)
+                return true;
+
+            return false;
+        }
+
         private Port GetPortByCode(string portCode, int tenant)
         {
             return portRepository.GetOceanPortByCombinedCode(portCode, tenant);
@@ -151,7 +172,7 @@ namespace WebFreight.Web.ContainerTracking
                     containerCode = code.Substring(0, 3),
                     shipmentCode = code.Substring(3),
                     containerLocation = containerPM.PODLocation,
-                    shipmentLocation = shipmentPM.MainCarriageFromPortId,
+                    shipmentLocation = shipmentPM.MainCarriageFinalDestinationPortId,
                     containerActualDate = containerPM.ActualPODVesselArrival,
                     shipmentActualDate = shipmentPM.MainCarriageATA,
                     containerEstimatedDateName = "ETA",
@@ -178,10 +199,8 @@ namespace WebFreight.Web.ContainerTracking
         {
             if (!IsSameLocationUsingId(discrepancyParams.containerLocation, discrepancyParams.shipmentLocation))
             {
-                AddNotSameLocationDiscrepancy2(discrepancyParams, discrepancyParams.containerEstimatedDateName);
-                AddNotSameLocationDiscrepancy2(discrepancyParams, discrepancyParams.containerActualDateName);
-                // AddNotSameLocationDiscrepancy(discrepancyParams.containerPM, discrepancyParams.shipmentPM, discrepancyParams.code, discrepancyParams.containerEstimatedDateName);
-                // AddNotSameLocationDiscrepancy(discrepancyParams.containerPM, discrepancyParams.shipmentPM, discrepancyParams.code, discrepancyParams.containerActualDateName);
+                AddNotSameLocationDiscrepancy(discrepancyParams, discrepancyParams.containerEstimatedDateName);
+                AddNotSameLocationDiscrepancy(discrepancyParams, discrepancyParams.containerActualDateName);
             }
             else
             {
@@ -190,12 +209,10 @@ namespace WebFreight.Web.ContainerTracking
         }
         private void CheckIsSameLocation(dynamic discrepancyParams)
         {
-            if (!IsSameLocation(discrepancyParams.shipmentLocation, discrepancyParams.containerLocation))
+            if (!IsSameLocationAndTenant(discrepancyParams.shipmentLocation, discrepancyParams.containerLocation, discrepancyParams.containerPM.Tenant))
             {
-                AddNotSameLocationDiscrepancy2(discrepancyParams, discrepancyParams.containerEstimatedDateName);
-                AddNotSameLocationDiscrepancy2(discrepancyParams, discrepancyParams.containerActualDateName);
-                // AddNotSameLocationDiscrepancy(discrepancyParams.containerPM, discrepancyParams.shipmentPM, discrepancyParams.code, discrepancyParams.containerEstimatedDateName);
-                // AddNotSameLocationDiscrepancy(discrepancyParams.containerPM, discrepancyParams.shipmentPM, discrepancyParams.code, discrepancyParams.containerActualDateName);
+                AddNotSameLocationDiscrepancy(discrepancyParams, discrepancyParams.containerEstimatedDateName);
+                AddNotSameLocationDiscrepancy(discrepancyParams, discrepancyParams.containerActualDateName); 
             }
             else
             {
@@ -206,7 +223,7 @@ namespace WebFreight.Web.ContainerTracking
         {
             if (discrepancyParams.shipmentActualDate != discrepancyParams.containerActualDate)
             {
-                AddActualDateDiscrepancy2(discrepancyParams);
+                AddActualDateDiscrepancy(discrepancyParams);
             }
         }
         public void AddDeliveryContainerDiscrepancy(ShipmentDeliveryPM delivery, ShipmentPM shipmentPM, ContainerPM containerPM)
@@ -235,7 +252,7 @@ namespace WebFreight.Web.ContainerTracking
                 }
             }
         }
-        private void AddNotSameLocationDiscrepancy2 (dynamic discrepancyParams, string time)
+        private void AddNotSameLocationDiscrepancy (dynamic discrepancyParams, string time)
         {
             var shipmentUnloCode = GetUnloCodeFromPortId(discrepancyParams.shipmentLocation);
             var discrepancyReason = "Shipment " + discrepancyParams.shipmentCode + " from port is empty - shipment " + time + " not updated.";
@@ -276,7 +293,7 @@ namespace WebFreight.Web.ContainerTracking
 
             return GetUnloCodeFromPortId(shipmentPM.Transshipment3FromPortId);
         }
-        private void AddActualDateDiscrepancy2(dynamic discrepancyParams)
+        private void AddActualDateDiscrepancy(dynamic discrepancyParams)
         {
             var actualdateName = discrepancyParams.code + discrepancyParams.containerActualDateName;
             
