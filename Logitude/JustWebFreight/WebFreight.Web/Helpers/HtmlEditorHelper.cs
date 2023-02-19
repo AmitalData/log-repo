@@ -723,7 +723,7 @@ namespace WebFreight.Web.Helpers
         {
             int tenant = htmlEditorResolveArgs.Tenant;
 
-
+            allEntities = new Dictionary<string, Dictionary<string, object>>();
             ICommonDataContext context = CommonDataContext.GetContext(tenant);
             System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
             CurrentTenant = context.Tenants.Where(t => t.Id == tenant).FirstOrDefault();
