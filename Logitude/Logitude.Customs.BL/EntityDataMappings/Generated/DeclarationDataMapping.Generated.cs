@@ -416,7 +416,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsExportDeclarationAmendments, 
 	         ExportLoadingPortCode, 
 	         PhysicalCheckName, 
-	         CasualImporterCountry,
+	         CasualImporterCountry, 
+	         IsAramex,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
