@@ -77,4 +77,9 @@ export class ScreenPM {
     private disableMarkAsDirty: boolean;
     public get DisableMarkAsDirty() { return this.disableMarkAsDirty; }
     public set DisableMarkAsDirty(newValue: boolean) { this.disableMarkAsDirty = newValue; }
+
+    private isHeaderScreen: boolean;
+    public get IsHeaderScreen() { return this.isHeaderScreen; }
+    public set IsHeaderScreen(newValue: boolean) { this.isHeaderScreen = newValue; }
+
 }
