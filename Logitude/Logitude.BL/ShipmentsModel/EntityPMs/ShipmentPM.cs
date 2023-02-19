@@ -2642,6 +2642,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string OldShipmentNumber { get; set; }
         public bool FromCountryIsEC { get; set; }
         public bool ToCountryIsEC { get; set; }
+        public bool Transshipment1ToCountryIsEC { get; set; }
+        public bool Transshipment2ToCountryIsEC { get; set; }
+        public bool Transshipment3ToCountryIsEC { get; set; }
         public bool PackagesDeleted { get; set; }
         public string MasterCreatedFromHouseId { get; set; }
         public bool IsDeletingAllPayables { get; set; }

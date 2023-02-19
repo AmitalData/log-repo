@@ -1880,6 +1880,17 @@ export class AWBWizardComponent implements AfterViewInit{
                     }
                 }
             }
+
+            if ((this.IsFWB || this.IsFHL) && AppTool.IsNullOrEmpty(this.EntityPM.MainHarmonize)) {
+                if (this.EntityPM.ToCountryIsEC
+                    || this.EntityPM.Transshipment1ToCountryIsEC
+                    || this.EntityPM.Transshipment2ToCountryIsEC
+                    || this.EntityPM.Transshipment3ToCountryIsEC)
+                    isValid = false;
+
+                if (!isValid) 
+                    screenWarnings.push("Main Harmonize is Required for EC Countries");
+            }
         }
     }
     private ValidateScreen_GEN_Declared(screenErrors: string[], screenWarnings: string[]) {
