@@ -77,7 +77,14 @@ namespace Simplog.Server.Infrastructure
                 {
                     this.Database.CommandTimeout = to;
                 }
-
+                else if(ApplicationAppInfo.WorkerRoleCall)
+                {
+                    this.Database.CommandTimeout = 10; 
+                }
+                else if (!ApplicationAppInfo.WorkerRoleCall)
+                {
+                    this.Database.CommandTimeout = 30; 
+                }
                 var intSave = base.SaveChanges();
                 var testEx = false;
                 if (testEx)
