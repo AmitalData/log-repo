@@ -339,13 +339,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         invoiceItem.TradeAgreementCode = invoiceItemFromFile.TradeAgreement;
                     }
                 }
-                else
+                /*else
                 {
                     if (invoiceFromDB.SupplierInvoiceItems != null)
                     {
                         invoiceItem.TradeAgreementCode = invoiceFromDB.SupplierInvoiceItems.FirstOrDefault()?.TradeAgreementCode;
                     }
-                }
+                }*/
                 if (!string.IsNullOrWhiteSpace(invoiceItemFromFile.OriginCountryCode))
                 {
                     CustomsCountryQueryService countryQueryService = new CustomsCountryQueryService(invoice.Tenant);
