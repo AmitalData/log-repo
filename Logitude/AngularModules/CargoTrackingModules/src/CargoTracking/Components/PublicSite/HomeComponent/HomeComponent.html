@@ -1,4 +1,5 @@
-<div class="app-content" style="background-size: cover;background-repeat: no-repeat;background-size: 100% 100%;" [ngStyle]="{ 'background-image': BackGroundImg}">
+<div class="app-content" style="display: flex;
+flex-direction: column;">
     <!-- Mobile Menu -->
     <div *ngIf="displayMenu" class="side-menu" [style.left]="displayMenu ? '0' : '-65%'">
         <div style="width: 60%; float: left; background-color: #965982;">
@@ -56,17 +57,17 @@
 
     <!-- <div style="width: 100%;height: 55px;"></div> -->
 
-    <div style="min-height: calc(82vh - 110px);">
+    <div style="min-height: calc(82vh - 110px);" style="background-size: cover;background-repeat: no-repeat;background-size: 100% 100%;flex: 1;" [ngStyle]="{ 'background-image': BackGroundImg}">
         <router-outlet *ngIf="IsBrandingDataLoaded"></router-outlet>
+        <footer>
+            <span style="color: black;">Powered By</span> &nbsp;
+            <img width="16" src="./assets/images/misc/poweredby.png" alt="powered by">
+            <span style="color: black;">{{companyName}}</span> &nbsp;
+    
+    
+        </footer>
     </div>
 
-    <footer>
-        <!-- {{ currentDate | date:'y'}} {{companyLabel}} &copy; &nbsp; -->
-        <span style="color: black;">Powered By</span> &nbsp;
-        <img width="16" src="./assets/images/misc/poweredby.png" alt="powered by">
-        <span style="color: black;">{{companyName}}</span> &nbsp;
-
-
-    </footer>
+    
 
 </div>

@@ -467,6 +467,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             newContact.Id = IdCounter.GetNumber("Contact", entityPM.Tenant).ToString();
             newContact.ComputedKey = (!string.IsNullOrEmpty(newContact.Email) ? newContact.Email : newContact.Id);
             newContact.UserType = "R";
+            newContact.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             newContact.IndexColor = rnd.Next(1, 20);
             RoleQuery roleQuery = new RoleQuery(roleRepository);
 
@@ -563,6 +564,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             contact.UserType = "R";
+            contact.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             if (!string.IsNullOrEmpty(contact.Email))
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())

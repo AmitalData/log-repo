@@ -86,7 +86,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
    public class ContainerUpdateClass
    {  		
 
-		public const string HashString = "d53a1172fd92d8123925c8bc858e7eaf";
+		public const string HashString = "c1df29a642b301ce0cfc9ee2c3875607";
 
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
@@ -4770,7 +4770,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "EstimatedTrans2VesselDeparture",
 					  						DefaultText =  "Trans2 Vessel ETD",
 					  						ListFieldLable =  "EstimatedTrans2VesselDepartureListLable",
-					  						ListLableDefaultText =  "Trans2 Vessel ATD",
+					  						ListLableDefaultText =  "Trans2 Vessel ETD",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,

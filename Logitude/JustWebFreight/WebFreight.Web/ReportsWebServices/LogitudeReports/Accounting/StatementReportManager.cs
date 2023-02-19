@@ -42,7 +42,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private StatementDataProvider dataProvider;
         private ARInvoiceTotalVATRepository arInvoiceTotalVATRepository;
         private APInvoiceTotalVATRepository apInvoiceTotalVATRepository;
-
         public StatementReportManager(byte[] xmlFilters, int tenant)
         {
             this.tenant = tenant;
@@ -237,6 +236,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                                  group p by p.Currency into g
                                                  select new StatementGroup()
                                                  {
+                                                   
                                                      Currency = g.Key,
                                                      StatementRecordList = g.ToList(),
                                                  }).ToList();
@@ -246,7 +246,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             {
                 this.HandelStatementRecordListOfGroup(group);
                 List<StatmentAging> agingList = dataProvider.StatementAgingSummaryRecordList.Where(d => d.Currency == group.Currency).ToList();
-                group.StatementAgingSummaryRecordList = agingList;
+                group.StatementAgingSummaryRecordList = agingList;        
             }
 
             dataProvider.StatementGroupList = finalResults.OrderBy(d => d.Currency).ToList();            
@@ -867,9 +867,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             List<string> allShipmentIds = totalList.Select(s => s.ShipmentId).ToList();
             List<ShipmentEntityClass> allShipmentData = (from d in shipmentsContext.Shipments.Include("ShipperCard").Include("ConsigneeCard").Include("Direction")
-                                                         join sc in shipmentsContext.ShipmentComputedFields 
-                                                         on d.Id equals sc.Id into shipmentJoin
+                                                         join sc in shipmentsContext.ShipmentComputedFields on d.Id equals sc.Id into shipmentJoin
+                                                         join ms in shipmentsContext.ShipmentMasterDatas on d.Id equals ms.Id into masterJoin
                                                          from m in shipmentJoin.DefaultIfEmpty()
+                                                         from master in masterJoin.DefaultIfEmpty()
                                                          where d.Tenant == tenant && allShipmentIds.Contains(d.Id)
                                                          select new ShipmentEntityClass
                                                          {
@@ -882,6 +883,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                                              Direction = d.Direction == null ? null : d.Direction.Name,
                                                              ContainersNumbersArray = m.ContainersNumbers,
                                                              ProjectNumber = d.ProjectNumber,
+                                                             NumberOfContainers = d.NumberOfContainers,
+                                                             FinalDestinationETA =  master.MainCarriageFinalDestinationETA,
+                                                             FinalDestinationETD = m.FinalDeliveryETD == null ? master.MainCarriageETD : m.FinalDeliveryETD,                                    
                                                          }).ToList();
 
             List<Branch> branches = (from d in commonContext.Branches where d.Tenant == tenant select d).ToList();
@@ -943,6 +947,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.ShipmentDirection = shipmentEntity.Direction;
                     record.ContainersNumbersArray = shipmentEntity.ContainersNumbersArray;
                     record.ProjectNumber = shipmentEntity.ProjectNumber;
+                    record.ContainersQuantity = shipmentEntity.NumberOfContainers;
+                    record.FinalDestinationETA = shipmentEntity.FinalDestinationETA;
+                    record.FinalDestinationETD = shipmentEntity.FinalDestinationETD;
                 }
 
                 if (record.BranchId != null)
@@ -995,6 +1002,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 item.DebitSubtotalLocalCurrency = d.SubTotalInLocalCurrency == null ? null : ((d.ARInvoiceTypeCode == "CD" || d.ARInvoiceTypeCode == "CC") ? null : d.SubTotalInLocalCurrency);
                 item.CreditSubtotalInvoiceCurrency = d.SubTotalInInvoiceCurrency == null ? null : ((d.ARInvoiceTypeCode != "CD" && d.ARInvoiceTypeCode != "CC") ? null : d.SubTotalInInvoiceCurrency);
                 item.CreditSubtotalLocalCurrency = d.SubTotalInLocalCurrency == null ? null : ((d.ARInvoiceTypeCode != "CD" && d.ARInvoiceTypeCode != "CC") ? null : d.SubTotalInLocalCurrency);
+                item.PaymentTerm = d.PaymentTerm == null ? null : d.PaymentTerm.EnglishName;
                 this.ComputeARTotalVATs(item, d);
 
                 customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, d, item);
@@ -1055,6 +1063,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 item.DebitSubtotalLocalCurrency = d.SubTotalInLocalCurrency == null ? null : (d.SubTotalInLocalCurrency > 0 ? null : d.SubTotalInLocalCurrency);
                 item.CreditSubtotalInvoiceCurrency = d.SubTotalInInvoiceCurrency == null ? null : (d.SubTotalInInvoiceCurrency > 0 ? d.SubTotalInInvoiceCurrency : null);
                 item.CreditSubtotalLocalCurrency = d.SubTotalInLocalCurrency == null ? null : (d.SubTotalInLocalCurrency > 0 ? d.SubTotalInLocalCurrency : null);
+                item.PaymentTerm = d.PaymentTerm == null ? null : d.PaymentTerm.EnglishName;
                 this.ComputeAPTotalVATs(item, d);
                 myList.Add(item);
             }
@@ -1157,5 +1166,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         public string Direction { get; set; }
         public string ContainersNumbersArray { get; set; }
         public string ProjectNumber { get; set; }
+        public int? NumberOfContainers { get; set; }
+        public DateTime? FinalDestinationETD { get; set; }
+        public DateTime? FinalDestinationETA { get; set; }
     }
 }

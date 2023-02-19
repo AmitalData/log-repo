@@ -3695,6 +3695,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.SealNo);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.HSCode);
 
+            if (entityPM.ShipmentLevelCode == "H")
+            {
+                MethodHelper.AddToSearchFields(ref mySearchFields, entityMasterData?.MasterShipmentNumber);
+            }
 
             if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
             {

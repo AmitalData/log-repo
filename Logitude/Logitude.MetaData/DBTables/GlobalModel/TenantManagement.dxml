@@ -1014,6 +1014,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="MobileBackgroundId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="GlobalTenants"
