@@ -98,8 +98,12 @@ namespace WebFreight.Web.WebPages
                     if (isDigitalPortal)
                     {
                         var query = new DocumentsFilingQuery(tenant);
-                        var cc = query.GetDocumentsFilingByDocumentId(myDoc.Id, tenant);
-                        documentType = cc.DocumentTypeName;
+                        var documentsFilingPM = query.GetDocumentsFilingByDocumentId(myDoc.Id, tenant);
+
+                        if (documentsFilingPM != null)
+                        {
+                            documentType = documentsFilingPM.DocumentTypeName;
+                        }
                     }
                     
                     if (filestrings.Length >= 4 && !isDigitalPortal)
