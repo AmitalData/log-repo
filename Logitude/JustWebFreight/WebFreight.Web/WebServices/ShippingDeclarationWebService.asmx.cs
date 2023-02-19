@@ -172,6 +172,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.DangerousMaterialDescription = shipment.DangerousMaterialDescription;
                 myDataProvider.MainCarriageTruckNumber = shipment.MainCarriageCarrierNumber;
                 myDataProvider.AccountManager = shipment.AccountManagerUserName;
+                myDataProvider.NotesSharedWithCustomer = shipment.NotesSharedWithCustomer;
                 myDataProvider.TotalCollectReceivablesLocal = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "C").Sum(s => s.TotalAmountLocal);
                 myDataProvider.TotalPrepaidReceivablesLocal = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "P").Sum(s => s.TotalAmountLocal);
                 myDataProvider.TotalCollectReceivablesProfit = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "C").Sum(s => s.TotalAmount);
