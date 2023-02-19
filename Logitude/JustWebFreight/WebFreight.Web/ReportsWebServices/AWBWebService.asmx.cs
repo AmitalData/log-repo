@@ -912,7 +912,6 @@ namespace WebFreight.Web.ReportsWebServices
             if (issuingCarrierAddress != null)
             {
                 awbDp.TenantCompanyNameAddress = issuingCarrierAddress.Name + Environment.NewLine + this.GetAddress(issuingCarrierAddress) + Environment.NewLine;
-                Country issuingCarrierAgentCountry = countryRepository.GetSingleCountry(issuingCarrierAddress.CountryId, tenant);
                 awbDp.TenantAddress_WithCountry = issuingCarrierAddress.Name + Environment.NewLine + this.GetAddress(issuingCarrierAddress, true) + Environment.NewLine; 
             }
         }
