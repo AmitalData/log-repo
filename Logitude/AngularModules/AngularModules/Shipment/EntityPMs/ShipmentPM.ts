@@ -2493,12 +2493,7 @@ export class ShipmentPM {
     private transshipment3ToPortCountryName: string;
     public get Transshipment3ToPortCountryName() { return this.transshipment3ToPortCountryName; }
     public set Transshipment3ToPortCountryName(newValue: string) { if (this.transshipment3ToPortCountryName != newValue) { this.transshipment3ToPortCountryName = newValue; this.MarkAsDirty("Transshipment3ToPortCountryName"); } }
-       
-	 
- 
-	 
-   
-	 
+     
     private fromCountryIsEC: boolean;
     public get FromCountryIsEC() { return this.fromCountryIsEC; }
     public set FromCountryIsEC(newValue: boolean) { if (this.fromCountryIsEC != newValue) { this.fromCountryIsEC = newValue; this.MarkAsDirty("FromCountryIsEC"); } }
@@ -2506,6 +2501,18 @@ export class ShipmentPM {
     private toCountryIsEC: boolean;
     public get ToCountryIsEC() { return this.toCountryIsEC; }
     public set ToCountryIsEC(newValue: boolean) { if (this.toCountryIsEC != newValue) { this.toCountryIsEC = newValue; this.MarkAsDirty("ToCountryIsEC"); } }
+
+    private transshipment1ToCountryIsEC: boolean;
+    public get Transshipment1ToCountryIsEC() { return this.transshipment1ToCountryIsEC; }
+    public set Transshipment1ToCountryIsEC(newValue: boolean) { if (this.transshipment1ToCountryIsEC != newValue) { this.transshipment1ToCountryIsEC = newValue; this.MarkAsDirty("Transshipment1ToCountryIsEC"); } }
+
+    private transshipment2ToCountryIsEC: boolean;
+    public get Transshipment2ToCountryIsEC() { return this.transshipment2ToCountryIsEC; }
+    public set Transshipment2ToCountryIsEC(newValue: boolean) { if (this.transshipment2ToCountryIsEC != newValue) { this.transshipment2ToCountryIsEC = newValue; this.MarkAsDirty("Transshipment2ToCountryIsEC"); } }
+
+    private transshipment3ToCountryIsEC: boolean;
+    public get Transshipment3ToCountryIsEC() { return this.transshipment3ToCountryIsEC; }
+    public set Transshipment3ToCountryIsEC(newValue: boolean) { if (this.transshipment3ToCountryIsEC != newValue) { this.transshipment3ToCountryIsEC = newValue; this.MarkAsDirty("Transshipment3ToCountryIsEC"); } }
 
     private finalDistenationPortId: string;
     public get FinalDistenationPortId() { return this.finalDistenationPortId; }
