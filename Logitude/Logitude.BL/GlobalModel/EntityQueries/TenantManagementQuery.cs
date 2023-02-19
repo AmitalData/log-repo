@@ -290,6 +290,12 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
                                                      CargoTokenTimeout = a.CargoTokenTimeout,
                                                      IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
+                                                     DigitalPortalLastDate = a.DigitalPortalLastDate,
+                                                     DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
+                                                     DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
+                                                     DigitalPortalMobileLastDate = a.DigitalPortalMobileLastDate,
+                                                     DigitalPortalMobTotalLastWeek = a.DigitalPortalMobTotalLastWeek,
+                                                     DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth
                                                  }).FirstOrDefault();
                     if (tenant != null)
                     {
@@ -497,7 +503,12 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
                                                   CargoTokenTimeout = a.CargoTokenTimeout,
                                                   IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
-
+                                                  DigitalPortalLastDate = a.DigitalPortalLastDate,
+                                                  DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
+                                                  DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
+                                                  DigitalPortalMobileLastDate = a.DigitalPortalMobileLastDate,
+                                                  DigitalPortalMobTotalLastWeek = a.DigitalPortalMobTotalLastWeek,
+                                                  DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth
                                               }).FirstOrDefault();
 
                 if (tenant1 != null)
@@ -695,7 +706,12 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
                         CargoTokenTimeout = a.CargoTokenTimeout,
                         IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
-
+                        DigitalPortalLastDate = a.DigitalPortalLastDate,
+                        DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
+                        DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
+                        DigitalPortalMobileLastDate = a.DigitalPortalMobileLastDate,
+                        DigitalPortalMobTotalLastWeek = a.DigitalPortalMobTotalLastWeek,
+                        DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth
                     });
         }
         public TenantManagementList MapSingleList(TenantManagement entity)
@@ -839,7 +855,12 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     ScheduledTasksLimitPerReport = entity.ScheduledTasksLimitPerReport,
                     WhatsAppMessagingPhoneNumber = entity.WhatsAppMessagingPhoneNumber,
                     IsContainerTrackingPrepaid = entity.IsContainerTrackingPrepaid,
-
+                    DigitalPortalLastDate = entity.DigitalPortalLastDate,
+                    DigitalPortalTotalLastWeek = entity.DigitalPortalTotalLastWeek,
+                    DigitalPortalTotalLastMonth = entity.DigitalPortalTotalLastMonth,
+                    DigitalPortalMobileLastDate = entity.DigitalPortalMobileLastDate,
+                    DigitalPortalMobileTotalLastWeek = entity.DigitalPortalMobTotalLastWeek,
+                    DigitalPortalMobileTotalLastMonth = entity.DigitalPortalMobTotalLastMonth
                 };
             }
 
@@ -985,6 +1006,12 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
                        PrivateLabelId = a.GlobalTenant != null ? a.GlobalTenant.PrivateLabelId : "",
                        PrivateLabelName = a.GlobalTenant != null ? a.GlobalTenant.TenantManagmentPrivateLabel != null ? a.GlobalTenant.TenantManagmentPrivateLabel.PrivateLabelName : "" : "",
+                       DigitalPortalLastDate = a.DigitalPortalLastDate,
+                       DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
+                       DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
+                       DigitalPortalMobileLastDate = a.DigitalPortalMobileLastDate,
+                       DigitalPortalMobileTotalLastWeek = a.DigitalPortalMobTotalLastWeek,
+                       DigitalPortalMobileTotalLastMonth = a.DigitalPortalMobTotalLastMonth
                    };
         }
 
@@ -1268,7 +1295,13 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              SecondaryColor = a.SecondaryColor,
                                              TertiaryColor = a.TertiaryColor,
                                              ComapnylogoId = a.ComapnylogoId,
-                                             IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid
+                                             IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
+                                             DigitalPortalLastDate = a.DigitalPortalLastDate,
+                                             DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
+                                             DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
+                                             DigitalPortalMobileLastDate = a.DigitalPortalMobileLastDate,
+                                             DigitalPortalMobTotalLastWeek = a.DigitalPortalMobTotalLastWeek,
+                                             DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth
                                          }).FirstOrDefault();
 
             return tenant;

@@ -170,8 +170,15 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.WhatsAppMessagingPhoneNumber = entityPM.WhatsAppMessagingPhoneNumber;
             entityPOCO.CargoTokenTimeout = entityPM.CargoTokenTimeout;
             entityPOCO.IsContainerTrackingPrepaid = entityPM.IsContainerTrackingPrepaid;
+            entityPOCO.DigitalPortalLastDate = entityPM.DigitalPortalLastDate;
+            entityPOCO.DigitalPortalTotalLastWeek = entityPM.DigitalPortalTotalLastWeek;
+            entityPOCO.DigitalPortalTotalLastMonth = entityPM.DigitalPortalTotalLastMonth;
+            entityPOCO.DigitalPortalMobileLastDate = entityPM.DigitalPortalMobileLastDate;
+            entityPOCO.DigitalPortalMobTotalLastWeek = entityPM.DigitalPortalMobTotalLastWeek;
+            entityPOCO.DigitalPortalMobTotalLastMonth = entityPM.DigitalPortalMobTotalLastMonth;
 
-            string packageName = null;
+
+        string packageName = null;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 TenantRepository tenantRepository = new TenantRepository(entityPM.Id);

@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
 				BluesnapContractTypeRepository  bluesnapContractTypeRepository = new BluesnapContractTypeRepository(MyContext);
 				BluesnapContractTypeList entityList = null;
 				BluesnapContractType entityPoco = bluesnapContractTypeRepository.GetSingleBluesnapContractType(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<BluesnapContractType> singleEntityList = new List<BluesnapContractType>();
 					singleEntityList.Add(entityPoco);

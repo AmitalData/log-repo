@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
 				HelpResourceRepository  helpResourceRepository = new HelpResourceRepository(MyContext);
 				HelpResourceList entityList = null;
 				HelpResource entityPoco = helpResourceRepository.GetSingleHelpResource(code , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<HelpResource> singleEntityList = new List<HelpResource>();
 					singleEntityList.Add(entityPoco);

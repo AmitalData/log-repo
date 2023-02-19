@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
 				ApiCredintialsRepository  apiCredintialsRepository = new ApiCredintialsRepository(MyContext);
 				ApiCredintialsList entityList = null;
 				ApiCredintials entityPoco = apiCredintialsRepository.GetSingleApiCredintials(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<ApiCredintials> singleEntityList = new List<ApiCredintials>();
 					singleEntityList.Add(entityPoco);

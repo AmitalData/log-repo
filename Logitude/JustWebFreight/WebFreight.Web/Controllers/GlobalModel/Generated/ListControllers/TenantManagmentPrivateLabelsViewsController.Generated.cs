@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
 				TenantManagmentPrivateLabelsRepository  tenantManagmentPrivateLabelsRepository = new TenantManagmentPrivateLabelsRepository(MyContext);
 				TenantManagmentPrivateLabelsList entityList = null;
 				TenantManagmentPrivateLabels entityPoco = tenantManagmentPrivateLabelsRepository.GetSingleTenantManagmentPrivateLabels(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<TenantManagmentPrivateLabels> singleEntityList = new List<TenantManagmentPrivateLabels>();
 					singleEntityList.Add(entityPoco);
