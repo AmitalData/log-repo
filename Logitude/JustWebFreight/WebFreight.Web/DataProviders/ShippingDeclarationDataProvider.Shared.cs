@@ -609,5 +609,6 @@ namespace WebFreight.Web.DataProviders
         public DateTime? DeliveryETD_DateTime { get; set; }
         public string AccountManager { get; set; }
         public string NotesSharedWithCustomer { get; set; }
+        public string AccountManagerMobileNumber { get; set; }
     }
 }
