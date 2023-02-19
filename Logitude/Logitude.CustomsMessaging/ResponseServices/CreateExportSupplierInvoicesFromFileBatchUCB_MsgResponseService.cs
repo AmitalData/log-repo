@@ -283,7 +283,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     break;
                 default:
                     valid = false;
-                    res = value;
+                    //res = value;
                     break;
             }
             
