@@ -155,6 +155,9 @@ namespace Logitude.Customs.BL.TraceEvents
                     break;
 
                 case "CFIFILEM":
+                    queueName = "ImportDeclarationStatus";
+                    break;
+
                 default:
                     //throw new Exception("GetQueueNameByUnifreightEntity():expected only MSCSTORAGE/BFIFILE");
                     
