@@ -3,7 +3,7 @@ export enum SetValueOperators {
     EqualsField = "Equals <field>",
     Expression = "Expression",
     EqualsCollection = "Equals <collection>",
-    Add = "Add <constant>",
-    AddField = "Add <field>",
+    //Add = "Add <constant>",
+    //AddField = "Add <field>",
     EqualsRecord = "Equals <record>",
 }

@@ -7,7 +7,7 @@ import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
 export class ShowEntitiesTreeItemPipe implements PipeTransform {
 
-    transform(excludedEntities: string[], checkItemKey: boolean = true, excludeCustomEntities: boolean = true) {
+    transform(excludedEntities: string[], checkItemKey: boolean = true, excludeCustomEntities: boolean = false) {
         if (excludedEntities && excludedEntities.length > 0) {
             return (item: TreeSelectItem) => checkItemKey ?
                 this.showItemByKey(excludedEntities, item, excludeCustomEntities) :

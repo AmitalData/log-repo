@@ -92,7 +92,7 @@ export class SetValuePropertiesComponent extends BaseComponent {
     saveButtonClicked() {
         this.ValidationErrorsList = [];
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
-        let isValidName = !this.IsNew || !FlowReader.isNodeNameExists(this.FlowObject, this.Name);
+        let isValidName = !this.IsNew || !FlowReader.isNodeCodeExists(this.FlowObject, this.Name);
         if (notValidUIProperties.length === 0 && this.IsValidSetValues && isValidName) {
             this.setValuesData();
             //console.log(this.Data);
@@ -104,9 +104,9 @@ export class SetValuePropertiesComponent extends BaseComponent {
             if (!this.IsValidSetValues)
                 this.ValidationErrorsList.push("Invalid Set Values");
 
-                if (!isValidName) {
-                    this.ValidationErrorsList.push("The Name Should be Unique.");
-                    }
+            if (!isValidName) {
+                this.ValidationErrorsList.push("The Name Should be Unique.");
+            }
         }
     }
 
