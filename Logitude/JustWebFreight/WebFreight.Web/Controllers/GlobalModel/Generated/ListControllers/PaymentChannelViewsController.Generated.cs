@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
 				PaymentChannelRepository  paymentChannelRepository = new PaymentChannelRepository(MyContext);
 				PaymentChannelList entityList = null;
 				PaymentChannel entityPoco = paymentChannelRepository.GetSinglePaymentChannel(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<PaymentChannel> singleEntityList = new List<PaymentChannel>();
 					singleEntityList.Add(entityPoco);

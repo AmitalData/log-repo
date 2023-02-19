@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
 				RecurringPeriodRepository  recurringPeriodRepository = new RecurringPeriodRepository(MyContext);
 				RecurringPeriodList entityList = null;
 				RecurringPeriod entityPoco = recurringPeriodRepository.GetSingleRecurringPeriod(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<RecurringPeriod> singleEntityList = new List<RecurringPeriod>();
 					singleEntityList.Add(entityPoco);
