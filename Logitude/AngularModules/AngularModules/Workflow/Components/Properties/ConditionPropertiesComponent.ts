@@ -26,7 +26,6 @@ export class ConditionPropertiesComponent extends BaseComponent {
     public IsValidConditions: boolean = true;
     public ValidationErrorsList: string[];
     public WorkflowEntityTable: ObjectTableList;
-
     public FlowObject: any;
     public CurrentNodeId: string;
 
@@ -136,7 +135,7 @@ export class ConditionPropertiesComponent extends BaseComponent {
         if (this.WorkflowEntity) {
             this.ValidationErrorsList = [];
             let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
-            let isValidName = !this.IsNew || !FlowReader.isNodeNameExists(this.FlowObject, this.Name);
+            let isValidName = !this.IsNew || !FlowReader.isNodeCodeExists(this.FlowObject, this.Name);
             if (notValidUIProperties.length === 0 && this.IsValidConditions && isValidName) {
                 this.setConditionsData();
                 //console.log(this.Data);

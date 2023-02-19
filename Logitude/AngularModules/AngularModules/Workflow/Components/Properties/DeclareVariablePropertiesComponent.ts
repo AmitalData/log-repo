@@ -160,7 +160,7 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
     saveButtonClicked() {
         this.ValidationErrorsList = [];
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
-        let isValidName = !this.IsNew || !FlowReader.isNodeNameExists(this.FlowObject, this.VariableName);
+        let isValidName = !this.IsNew || !FlowReader.isNodeCodeExists(this.FlowObject, this.VariableName);
         if (notValidUIProperties.length === 0 && isValidName) {
             //console.log(this.Data);
             this.CurrentSession.CurrentWindow.Close(this.Data);

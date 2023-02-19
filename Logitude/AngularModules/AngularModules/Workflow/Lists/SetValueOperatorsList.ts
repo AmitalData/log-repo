@@ -38,9 +38,9 @@ export class SetValueOperatorsList {
     private setNotRecordSetValueOperators() {
         if (this.SetValueType.toString().endsWith("[]")) {
             this.Items = [
-                new ListItem(SetValueOperators.EqualsCollection),
-                new ListItem(SetValueOperators.Add),
-                new ListItem(SetValueOperators.AddField)
+                new ListItem(SetValueOperators.EqualsCollection)//,
+                //new ListItem(SetValueOperators.Add),
+                //new ListItem(SetValueOperators.AddField)
             ];
         } else {
             this.Items = [
