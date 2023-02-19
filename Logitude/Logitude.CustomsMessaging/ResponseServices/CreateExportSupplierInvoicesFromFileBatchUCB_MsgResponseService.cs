@@ -300,7 +300,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     DeclarationId = declarationid,
                     Tenant = tenant,
                     InvoiceQuantity = invoiceItemFromFile.InvoiceQuentity,
-                    StatisticQuantity = invoiceItemFromFile.InvoiceQuentity,
+                    //StatisticQuantity = invoiceItemFromFile.InvoiceQuentity,
                     //ItemDescription = invoiceItemFromFile.ItemDescription,
                     //ClassificationCode = invoiceItemFromFile.ClassificationCode,//"84253990000"//todo
                     ItemPrice = invoiceItemFromFile.ItemPrice,
@@ -417,7 +417,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 
                 CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(tenant);
                 invoiceItem.InvoiceQuantityType = customsItemQueryService.GetQuantityTypeByClassificationWithMultiCustomItems(invoiceItem.ClassificationCode, tenant, true);
-                invoiceItem.StatisticQuantityType = invoiceItem.InvoiceQuantityType;
+                //invoiceItem.StatisticQuantityType = invoiceItem.InvoiceQuantityType;
 
                 if(invoiceItem.InvoiceQuantity== null || string.IsNullOrEmpty(invoiceItem.ClassificationCode) || invoiceItem.ItemPrice==null || string.IsNullOrEmpty(invoiceItemFromFile.OriginCountryCode))
                 {
