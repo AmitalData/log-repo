@@ -262,8 +262,13 @@ namespace WebFreight.Web.ContainerTracking
             var index4 = 4;
             Vessel polLegVessel = this.GetVessel(containerUpdatedFields.POLLegVessel);
             Vessel podLegVessel = this.GetVessel(containerUpdatedFields.PODLegVessel);
-            var polLeg = new { Index = index1, Vessel = containerUpdatedFields.POLLegVessel, VesselId = polLegVessel?.Id, Voyage = containerUpdatedFields.POLLegVoyage };
-            var podLeg = new { Index = index4, Vessel = containerUpdatedFields.PODLegVessel, VesselId = podLegVessel?.Id, Voyage = containerUpdatedFields.PODLegVoyage };
+            var polLeg = new { Vessel = containerUpdatedFields.POLLegVessel, VesselId = polLegVessel?.Id, Voyage = containerUpdatedFields.POLLegVoyage };
+            dynamic podLeg = null;
+            
+            if (!string.IsNullOrEmpty(containerUpdatedFields.PODLegVessel) &&!string.IsNullOrEmpty(containerUpdatedFields.PODLegVoyage))
+            {
+                podLeg = new { Vessel = containerUpdatedFields.PODLegVessel, VesselId = podLegVessel?.Id, Voyage = containerUpdatedFields.PODLegVoyage };
+            }
 
             UpdateVesselVoyageVizionTransshipments(polLeg, index1, containerPM);
             if (leg3 != null)
@@ -306,7 +311,13 @@ namespace WebFreight.Web.ContainerTracking
             Vessel polLegVessel = this.GetVessel(containerUpdatedFields.POLLegVessel);
             Vessel podLegVessel = this.GetVessel(containerUpdatedFields.PODLegVessel);
             var polLeg = new { Vessel = containerUpdatedFields.POLLegVessel, VesselId = polLegVessel?.Id, Voyage = containerUpdatedFields.POLLegVoyage };
-            var podLeg = new { Vessel = containerUpdatedFields.PODLegVessel, VesselId = podLegVessel?.Id, Voyage = containerUpdatedFields.PODLegVoyage };
+
+            dynamic podLeg = null;
+
+            if (!string.IsNullOrEmpty(containerUpdatedFields.PODLegVessel) && !string.IsNullOrEmpty(containerUpdatedFields.PODLegVoyage))
+            {
+                podLeg = new { Vessel = containerUpdatedFields.PODLegVessel, VesselId = podLegVessel?.Id, Voyage = containerUpdatedFields.PODLegVoyage };
+            }
 
             if (leg3 != null)
             {
