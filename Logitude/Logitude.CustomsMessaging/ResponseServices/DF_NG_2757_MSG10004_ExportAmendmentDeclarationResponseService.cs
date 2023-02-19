@@ -769,11 +769,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     consignmentPM.ConsignmentType = "I";
                     var consignmentQueryService = new ConsignmentQueryService(context);
 
-                    if (declarationPM != null)
-                    {
-                        var maxCounter = consignmentQueryService.GetMaxCounterKey(declarationPM.Id, tenant) ?? 0;
-                        consignmentPM.SequenceNumeric = maxCounter + 1;
-                    }
+                    //if (declarationPM != null)
+                    //{
+                    //    var maxCounter = consignmentQueryService.GetMaxCounterKey(declarationPM.Id, tenant) ?? 0;
+                    //    consignmentPM.SequenceNumeric = maxCounter + 1;
+                    //}
+                    consignmentPM.SequenceNumeric = Convert.ToInt32(consignment.SequenceNumeric);
+
                     if (consignment.TransportContractDocument != null)
                     {
                         consignmentPM.CargoTypeCode = GetValueCodeType(consignment.TransportContractDocument.TypeCode);
@@ -1212,13 +1214,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 supplierInvoiceItemPM.ItemDescription = invoiceItem.ItemDescription;
                                 supplierInvoiceItemPM.ItemAdditionalStatus = invoiceItem.ItemAdditionalStatus;
                                 supplierInvoiceItemPM.CertificatesStatusCode = invoiceItem.CertificatesStatusCode;
+                                supplierInvoiceItemPM.TaxExemptCode = invoiceItem.TaxExemptCode;
                             }
                         }
                         else
                         {
                             supplierInvoiceItemPM.SupplierInvoiceItemVehicles = GetSupplierInvoiceItemVehicles(governmentAgencyGoodsItem, declaration, declarationId, tenant);
                         }
-                    }
+                    }                   
                     supplierInvoiceItemPM.PreferenceDocumentNumber = GetValueIDType(governmentAgencyGoodsItem.DMExtensions.PreferenceDocumentNumber);
                     supplierInvoiceItemPM.ActualInvoiceLines = governmentAgencyGoodsItem.DMExtensions.InvoiceLineNumbers;
                     supplierInvoiceItemPM.SupplierInvoiceItemsMods = GetSupplierInvoiceItemsMods(governmentAgencyGoodsItem, declaration, declarationId, tenant);

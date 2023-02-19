@@ -836,6 +836,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new VendorCommunicationMap());
 	
+            modelBuilder.Configurations.Add(new VendorCurrencyMap());
+	
             modelBuilder.Configurations.Add(new VendorStatusMap());
 	
             modelBuilder.Configurations.Add(new VendorTransactionTypeMap());
@@ -3652,6 +3654,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<VendorCommunication> VendorCommunications 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<VendorCurrency> VendorCurrencies 
 	 {
 	      get; set;
 	 

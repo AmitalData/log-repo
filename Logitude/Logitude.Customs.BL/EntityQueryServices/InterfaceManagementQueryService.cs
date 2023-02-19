@@ -241,7 +241,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 summry.Add(new CustomsRequestsSheetSummary()
                 {
                     count = qm.count,
-                    InterfaceTypeName = interfaceManagements.Find(im => im.Code == qm.InterfaceTypeName).Description
+                    InterfaceTypeName = interfaceManagements.Find(im => im.Code == qm.InterfaceTypeName)?.Description
                 }));
 
             return summry;

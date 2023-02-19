@@ -253,6 +253,7 @@
     <Compile Include="EntityKeys\UIMessageAdditionalKeys.cs" />
     <Compile Include="EntityKeys\UIMessageKeys.cs" />
     <Compile Include="EntityKeys\UpdateCodeKeys.cs" />
+    <Compile Include="EntityKeys\VendorCurrencyKeys.cs" />
     <Compile Include="EntityListQueryServices\AcceptanceStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ActionCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AgentTalkBackTypeListQueryService.cs" />
@@ -492,6 +493,7 @@
     <Compile Include="EntityListQueryServices\Generated\UIMessageAdditionalListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\UIMessageListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\UpdateCodeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\VendorCurrencyListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\GTBFUSTATUListQueryService.cs" />
     <Compile Include="EntityListQueryServices\HandingCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\HazardousSubstanceListQueryService.cs" />
@@ -550,6 +552,8 @@
     <Compile Include="EntityListQueryServices\UIMessageAdditionalListQueryService.cs" />
     <Compile Include="EntityListQueryServices\UIMessageListQueryService.cs" />
     <Compile Include="EntityListQueryServices\UpdateCodeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\VendorCurrencyListQueryService.cs" />
+    <Compile Include="EntityLists\Generated\VendorCurrencyList.Generated.cs" />
     <Compile Include="EntityLists\JoinCustomsItemList.cs" />
     <Compile Include="EntityLists\CustomsPartnersItemList.cs" />
     <Compile Include="EntityLists\Generated\AcceptanceStatusList.Generated.cs" />
@@ -853,6 +857,7 @@
     <Compile Include="EntityMapping\UIMessageAdditionalMap.cs" />
     <Compile Include="EntityMapping\UIMessageMap.cs" />
     <Compile Include="EntityMapping\UpdateCodeMap.cs" />
+    <Compile Include="EntityMapping\VendorCurrencyMap.cs" />
     <Compile Include="EntityPOCOs\AcceptanceStatus.cs" />
     <Compile Include="EntityPOCOs\ActionCode.cs" />
     <Compile Include="EntityPOCOs\AgentTalkBackType.cs" />
@@ -1004,6 +1009,7 @@
     <Compile Include="EntityPOCOs\UIMessage.cs" />
     <Compile Include="EntityPOCOs\UIMessageAdditional.cs" />
     <Compile Include="EntityPOCOs\UpdateCode.cs" />
+    <Compile Include="EntityPOCOs\VendorCurrency.cs" />
     <Compile Include="Repsitories\AcceptanceStatusRepository.cs" />
     <Compile Include="Repsitories\ActionCodeRepository.cs" />
     <Compile Include="Repsitories\AgentTalkBackTypeRepository.cs" />
@@ -1244,6 +1250,7 @@
     <Compile Include="Repsitories\Generated\UIMessageAdditionalRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\UIMessageRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\UpdateCodeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\VendorCurrencyRepository.Generated.cs" />
     <Compile Include="Repsitories\HandingCodeRepository.cs" />
     <Compile Include="Repsitories\HazardousSubstanceRepository.cs" />
     <Compile Include="Repsitories\IncotemrsFileValidationRepository.cs" />
@@ -1302,6 +1309,7 @@
     <Compile Include="Repsitories\UIMessageAdditionalRepository.cs" />
     <Compile Include="Repsitories\UIMessageRepository.cs" />
     <Compile Include="Repsitories\UpdateCodeRepository.cs" />
+    <Compile Include="Repsitories\VendorCurrencyRepository.cs" />
     <Compile Include="Utils\CacheHelper.cs" />
     <Compile Include="Utils\FreelancerCustomersUtil.cs" />
     <None Include="CustomContext.Views.cs" />
