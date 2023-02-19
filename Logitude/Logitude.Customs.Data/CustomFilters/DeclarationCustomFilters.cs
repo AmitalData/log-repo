@@ -14,50 +14,35 @@ using System.Threading.Tasks;
 
 namespace Logitude.Customs.Data.CustomFilters
 {
-   public class DeclarationCustomFilters
+    public class DeclarationCustomFilters
     {
+        public IQueryable<Declaration> GetFilteredQuery(QueryOperations operations, IQueryable<Declaration> queryableData, int tenant, ICustomContext context)
+        {
+            List<QueryFilterItem> queryFilters = operations.QueryFilterItems;
 
-       public IQueryable<Declaration> GetFilteredQuery(QueryOperations operations, IQueryable<Declaration> queryableData, int tenant)
-       {
-           List<QueryFilterItem> queryFilters = operations.QueryFilterItems;
-
-
-
-           foreach (QueryFilterItem item in queryFilters)
-           {
-               if (item.FieldName == "DeclarationWithoutRelease")
-               {
+            foreach (QueryFilterItem item in queryFilters)
+            {
+                if (item.FieldName == "DeclarationWithoutRelease")
+                {
                     //queryableData = queryableData.Where(d => (d.HatraDate == null));
                     queryableData = queryableData.Where(d => (d.IsClose == false));
-
                 }
 
-               if (item.FieldName == "PaidDeclarationWithoutRelease")
-               {
-                   queryableData = queryableData.Where(d => (d.PaymentDate != null) && (d.HatraDate == null));
-               }
+                if (item.FieldName == "PaidDeclarationWithoutRelease")
+                {
+                    queryableData = queryableData.Where(d => (d.PaymentDate != null) && (d.HatraDate == null));
+                }
 
                 if (item.FieldName == "CourierPendingReasonList")
                 {
-                    //&& (x.CourierPendingReasonList== item.FieldValue || x.CourierPendingReasonList.Contains("," + item.FieldValue+","))
-                    List<string> declarations = queryableData.Select(x => (string)x.Id ).ToList();
-                    var repoDeclarationCourierStatus = new DeclarationCourierStatusRepository(tenant);
-                    var pocoDeclarationCourierStatus = repoDeclarationCourierStatus
-                        .GetDeclarationsByPendings(declarations, tenant, item.FieldValue.ToString());
-                        //.Where(x=> x.CourierPendingReasonList != null ).ToList();
-
-                 //   pocoDeclarationCourierStatus = pocoDeclarationCourierStatus.Where(x=> x.CourierPendingReasonList.Split(',').Contains(item.FieldValue)).ToList();
-                    var decs = pocoDeclarationCourierStatus.Select(x => (string) x.DeclarationId).ToList();
-                    queryableData = queryableData.Where(d => decs.Contains( d.Id));
+                    queryableData = queryableData.Join(context.DeclarationCourierStatuses, x => x.Id, x => x.DeclarationId, (dec, sta) => new { dec = dec, sta = sta })
+                        .Where(x => x.sta.Tenant == tenant && ("," + x.sta.CourierPendingReasonList + ",").Contains("," + item.FieldValue.ToString() + ","))
+                        .Select(x => x.dec);
                 }
-                //     queryableData = queryableData.Where(d => (d.AmendmentDontDisplayInList == false));
-
             }
 
             return queryableData;
-
-
-       }
+        }
 
         public IQueryable<Declaration> GetFreelancerDeclarations(QueryOperations operations, IQueryable<Declaration> queryableData, int tenant)
         {
@@ -70,7 +55,7 @@ namespace Logitude.Customs.Data.CustomFilters
                     queryableData = queryableData.Where(d => customersIds.Contains(d.CustomerId));
                 }
             }
-            
+
             return queryableData;
         }
 
