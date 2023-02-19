@@ -310,7 +310,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 invoiceItem.ClassificationCode = setClassificationCode(invoiceItemFromFile.ClassificationCode,out bool valid);
                 if(!valid)
                 {
-                    errorItems += invoice.InvoiceNumber + ":ClassificationCode = "+ invoiceItem.ClassificationCode + " not valid";
+                    errorItems += invoice.InvoiceNumber + "line[" + invoiceItemFromFile.rownum + "]:ClassificationCode = "+ invoiceItem.ClassificationCode + " not valid";
                 }
                 if (!string.IsNullOrWhiteSpace(invoiceItemFromFile.DutyRegimeProtocolCode))
                 {
@@ -318,7 +318,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     var dutyRegimeProtocolCode = queryService.GetSingle(invoiceItemFromFile.DutyRegimeProtocolCode, false, true);
                     if (dutyRegimeProtocolCode == null)
                     {
-                        errorItems += invoice.InvoiceNumber + ":DutyRegimeProtocolCode = " + invoiceItemFromFile.DutyRegimeProtocolCode + " could not translate to Logitude Id \n";
+                        errorItems += invoice.InvoiceNumber + "line[" + invoiceItemFromFile.rownum + "]:DutyRegimeProtocolCode = " + invoiceItemFromFile.DutyRegimeProtocolCode + " could not translate to Logitude Id \n";
                     }
                     else
                     {
@@ -332,7 +332,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     var tradeAgreementCode = queryService.GetSingle(invoiceItemFromFile.TradeAgreement, false, true);
                     if (tradeAgreementCode == null)
                     {
-                        errorItems += invoice.InvoiceNumber + ":TradeAgreementCode = " + invoiceItemFromFile.TradeAgreement + " could not translate to Logitude Id \n";
+                        errorItems += invoice.InvoiceNumber +"line[" + invoiceItemFromFile.rownum + "]:TradeAgreementCode = " + invoiceItemFromFile.TradeAgreement + " could not translate to Logitude Id \n";
                     }
                     else
                     {
@@ -352,7 +352,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     CustomsCountryPM country = countryQueryService.GetSingle(invoiceItemFromFile.OriginCountryCode, false, true);
                     if (country == null)
                     {
-                        errorItems += invoice.InvoiceNumber + ":OriginCountryCode = " + invoiceItemFromFile.OriginCountryCode + " could not translate to Logitude Id \n";
+                        errorItems += invoice.InvoiceNumber + "line[" + invoiceItemFromFile.rownum + "]:OriginCountryCode = " + invoiceItemFromFile.OriginCountryCode + " could not translate to Logitude Id \n";
 
                     }
                     else
@@ -375,7 +375,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     else
                     {
-                        errorItems += invoice.InvoiceNumber + ":InvoiceCurrencyTypeCode = " + invoiceItemFromFile.InvoiceCurrency + " could not translate to Logitude Id \n";
+                        errorItems += invoice.InvoiceNumber + "line[" + invoiceItemFromFile.rownum + "]:InvoiceCurrencyTypeCode = " + invoiceItemFromFile.InvoiceCurrency + " could not translate to Logitude Id \n";
                     }
                 }
                 if (!string.IsNullOrWhiteSpace(invoiceItemFromFile.ProcessType))
@@ -397,7 +397,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     else
                     {
-                        errorItems += invoice.InvoiceNumber + ":ProcessType = " + invoiceItemFromFile.ProcessType + " could not translate to Logitude Id \n";
+                        errorItems += invoice.InvoiceNumber + "line[" + invoiceItemFromFile.rownum + "]:ProcessType = " + invoiceItemFromFile.ProcessType + " could not translate to Logitude Id \n";
                     }
                 }
                     
@@ -407,7 +407,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     var transactionNatureType = queryService.GetSingle(invoiceItemFromFile.TransactionNatureCode, false, true);
                     if (transactionNatureType == null)
                     {
-                        errorItems += invoice.InvoiceNumber + ":TransactionNatureCode = " + invoiceItemFromFile.TransactionNatureCode + " could not translate to Logitude Id \n";
+                        errorItems += invoice.InvoiceNumber + "line[" + invoiceItemFromFile.rownum + "]:TransactionNatureCode = " + invoiceItemFromFile.TransactionNatureCode + " could not translate to Logitude Id \n";
                     }
                     else
                     {
@@ -421,7 +421,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 if(invoiceItem.InvoiceQuantity== null || string.IsNullOrEmpty(invoiceItem.ClassificationCode) || invoiceItem.ItemPrice==null || string.IsNullOrEmpty(invoiceItemFromFile.OriginCountryCode))
                 {
-                    errorItems += invoice.InvoiceNumber + ":some fields is required. \n";
+                    errorItems += invoice.InvoiceNumber + "line[" + invoiceItemFromFile.rownum + "]:some fields is required. \n";
                     //break;
                 }
 
@@ -466,6 +466,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         row.SupplierInvoiceItems = new List<InvoiceItemFromFile> {
                             new InvoiceItemFromFile
                             {
+                                rownum = (i + 1).ToString(),
                                 ClassificationCode = data[1],
                                 OriginCountryCode = data[2],
                                 InvoiceQuentity = string.IsNullOrWhiteSpace(data[3]) ? (int?)null : Convert.ToInt32(data[3]),
@@ -488,6 +489,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         
                         currentInvoice.SupplierInvoiceItems.Add(new InvoiceItemFromFile
                         {
+                            rownum = (i + 1).ToString(),
                             ClassificationCode = data[1],
                             OriginCountryCode = data[2],
                             InvoiceQuentity = string.IsNullOrWhiteSpace(data[3]) ? (int?)null : Convert.ToInt32(data[3]),
@@ -556,6 +558,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private class InvoiceItemFromFile
         {
+            public string rownum;
             public string TradeAgreement;// - קוד הסכם
             public int? InvoiceQuentity;//כמות
             public string TransactionNatureCode;//אופי עסקה
