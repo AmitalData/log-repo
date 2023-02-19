@@ -724,6 +724,7 @@
     <Compile Include="EntityQueryServices\TaxWithholdingAssessOfficeQueryService.cs" />
     <Compile Include="EntityQueryServices\UserDefinedReportQueryService.cs" />
     <Compile Include="EntityQueryServices\WithholdingTaxDeductionTypeQueryService.cs" />
+    <Compile Include="EntityUpdateServiceExt\APPaymentInvoicesTransactionFetcherExt.cs" />
     <Compile Include="EntityUpdateServiceExt\ARPaymentChequeUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\GLAccountCardsDataUpdateService.cs" />
     <Compile Include="EntityUpdateServiceExt\InterestReportsConnectedInvoiceUpdateServiceExt.cs" />
