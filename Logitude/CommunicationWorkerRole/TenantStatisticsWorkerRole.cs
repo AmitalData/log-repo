@@ -416,12 +416,13 @@ namespace CommunicationWorkerRole
                     using (TransactionScope scope2 = TransactionFactory.GetNewTransaction())
                     {
                         contactActivityLogRepository = new ContactActivityLogRepository();
-                        IQueryable<ContactActivityLog> contactActivityLogs = contactActivityLogRepository.GetContactActivityLogsInLogin(tenantManagement.Id);
+                        IQueryable<ContactActivityLog> contactActivityLogIn = contactActivityLogRepository.GetContactActivityLogsInLogin(tenantManagement.Id);
+                        IQueryable<ContactActivityLog> digitalActivity = contactActivityLogRepository.GetContactActivityLogs(tenantManagement.Id);
 
-                        if (contactActivityLogs.Any())
+                        if (contactActivityLogIn.Any())
                         {
-                            IQueryable<ContactActivityLog> MobileContactActivityLogs = contactActivityLogs.Where(d => d.Via == "Mobile");
-                            IQueryable<ContactActivityLog> ShardContactActivityLogs = contactActivityLogs.Where(d => d.Via == "PC");
+                            IQueryable<ContactActivityLog> MobileContactActivityLogs = contactActivityLogIn.Where(d => d.Via == "Mobile");
+                            IQueryable<ContactActivityLog> ShardContactActivityLogs = contactActivityLogIn.Where(d => d.Via == "PC");
 
                             if (MobileContactActivityLogs.Any())
                             {
@@ -455,12 +456,12 @@ namespace CommunicationWorkerRole
                                 tenantManagement.ShardLogisticTotalLastMonth = ShardContactActivityLogs.Count(s => s.LogDateTime >= lastmonth);
                             }
 
-                            IQueryable<ContactActivityLog> DigitalPortalMobileContactActivityLogs = contactActivityLogs.Where(d => d.Module
-                                                                                                                                    .Equals("Digital Portal", StringComparison.InvariantCultureIgnoreCase)
-                                                                                                                                   && d.Via == "Mobile");
-                            IQueryable<ContactActivityLog> DigitalPortalActivityLogs = contactActivityLogs.Where(d => d.Module
-                                                                                                                       .Equals("Digital Portal", StringComparison.InvariantCultureIgnoreCase)
-                                                                                                                      && d.Via == "PC");
+                            IQueryable<ContactActivityLog> DigitalPortalMobileContactActivityLogs = digitalActivity.Where(d => d.Module
+                                                                                                                                .Equals("Digital Portal")
+                                                                                                                               && d.Via == "Mobile");
+                            IQueryable<ContactActivityLog> DigitalPortalActivityLogs = digitalActivity.Where(d => d.Module
+                                                                                                                   .Equals("Digital Portal")
+                                                                                                                  && d.Via == "PC");
                             if (DigitalPortalMobileContactActivityLogs.Any())
                             {
                                 if (tenantManagement.DigitalPortalMobileLastDate == null)
@@ -473,8 +474,8 @@ namespace CommunicationWorkerRole
                                                                                                                          .Max(s => (DateTime?)s.LogDateTime);
                                 }
 
-                                tenantManagement.DigitalPortalMobileTotalLastWeek = DigitalPortalMobileContactActivityLogs.Count(s => s.LogDateTime >= lastweek);
-                                tenantManagement.DigitalPortalMobileTotalLastMonth = DigitalPortalMobileContactActivityLogs.Count(s => s.LogDateTime >= lastmonth);
+                                tenantManagement.DigitalPortalMobTotalLastWeek = DigitalPortalMobileContactActivityLogs.Count(s => s.LogDateTime >= lastweek);
+                                tenantManagement.DigitalPortalMobTotalLastMonth = DigitalPortalMobileContactActivityLogs.Count(s => s.LogDateTime >= lastmonth);
                             }
 
                             if (DigitalPortalActivityLogs.Any())

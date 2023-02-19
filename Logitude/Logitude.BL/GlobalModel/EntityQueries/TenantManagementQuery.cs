@@ -294,8 +294,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
                                                      DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
                                                      DigitalPortalMobileLastDate = a.DigitalPortalMobileLastDate,
-                                                     DigitalPortalMobileTotalLastWeek = a.DigitalPortalMobileTotalLastWeek,
-                                                     DigitalPortalMobileTotalLastMonth = a.DigitalPortalMobileTotalLastMonth
+                                                     DigitalPortalMobTotalLastWeek = a.DigitalPortalMobTotalLastWeek,
+                                                     DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth
                                                  }).FirstOrDefault();
                     if (tenant != null)
                     {
@@ -507,8 +507,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
                                                   DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
                                                   DigitalPortalMobileLastDate = a.DigitalPortalMobileLastDate,
-                                                  DigitalPortalMobileTotalLastWeek = a.DigitalPortalMobileTotalLastWeek,
-                                                  DigitalPortalMobileTotalLastMonth = a.DigitalPortalMobileTotalLastMonth
+                                                  DigitalPortalMobTotalLastWeek = a.DigitalPortalMobTotalLastWeek,
+                                                  DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth
                                               }).FirstOrDefault();
 
                 if (tenant1 != null)
@@ -710,8 +710,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
                         DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
                         DigitalPortalMobileLastDate = a.DigitalPortalMobileLastDate,
-                        DigitalPortalMobileTotalLastWeek = a.DigitalPortalMobileTotalLastWeek,
-                        DigitalPortalMobileTotalLastMonth = a.DigitalPortalMobileTotalLastMonth
+                        DigitalPortalMobTotalLastWeek = a.DigitalPortalMobTotalLastWeek,
+                        DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth
                     });
         }
         public TenantManagementList MapSingleList(TenantManagement entity)
@@ -859,8 +859,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     DigitalPortalTotalLastWeek = entity.DigitalPortalTotalLastWeek,
                     DigitalPortalTotalLastMonth = entity.DigitalPortalTotalLastMonth,
                     DigitalPortalMobileLastDate = entity.DigitalPortalMobileLastDate,
-                    DigitalPortalMobileTotalLastWeek = entity.DigitalPortalMobileTotalLastWeek,
-                    DigitalPortalMobileTotalLastMonth = entity.DigitalPortalMobileTotalLastMonth
+                    DigitalPortalMobileTotalLastWeek = entity.DigitalPortalMobTotalLastWeek,
+                    DigitalPortalMobileTotalLastMonth = entity.DigitalPortalMobTotalLastMonth
                 };
             }
 
@@ -1010,8 +1010,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
                        DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
                        DigitalPortalMobileLastDate = a.DigitalPortalMobileLastDate,
-                       DigitalPortalMobileTotalLastWeek = a.DigitalPortalMobileTotalLastWeek,
-                       DigitalPortalMobileTotalLastMonth = a.DigitalPortalMobileTotalLastMonth
+                       DigitalPortalMobileTotalLastWeek = a.DigitalPortalMobTotalLastWeek,
+                       DigitalPortalMobileTotalLastMonth = a.DigitalPortalMobTotalLastMonth
                    };
         }
 
@@ -1300,8 +1300,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
                                              DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
                                              DigitalPortalMobileLastDate = a.DigitalPortalMobileLastDate,
-                                             DigitalPortalMobileTotalLastWeek = a.DigitalPortalMobileTotalLastWeek,
-                                             DigitalPortalMobileTotalLastMonth = a.DigitalPortalMobileTotalLastMonth
+                                             DigitalPortalMobTotalLastWeek = a.DigitalPortalMobTotalLastWeek,
+                                             DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth
                                          }).FirstOrDefault();
 
             return tenant;

@@ -173,8 +173,8 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.DigitalPortalTotalLastWeek).HasColumnName("DigitalPortalTotalLastWeek");
             this.Property(t => t.DigitalPortalTotalLastMonth).HasColumnName("DigitalPortalTotalLastMonth");
             this.Property(t => t.DigitalPortalMobileLastDate).HasColumnName("DigitalPortalMobileLastDate");
-            this.Property(t => t.DigitalPortalMobileTotalLastWeek).HasColumnName("DigitalPortalMobileTotalLastWeek");
-            this.Property(t => t.DigitalPortalMobileTotalLastMonth).HasColumnName("DigitalPortalMobileTotalLastMonth");
+            this.Property(t => t.DigitalPortalMobTotalLastWeek).HasColumnName("DigitalPortalMobTotalLastWeek");
+            this.Property(t => t.DigitalPortalMobTotalLastMonth).HasColumnName("DigitalPortalMobTotalLastMonth");
 
 
         string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

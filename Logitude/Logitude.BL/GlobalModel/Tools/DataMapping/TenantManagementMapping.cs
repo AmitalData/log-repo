@@ -174,8 +174,8 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.DigitalPortalTotalLastWeek = entityPM.DigitalPortalTotalLastWeek;
             entityPOCO.DigitalPortalTotalLastMonth = entityPM.DigitalPortalTotalLastMonth;
             entityPOCO.DigitalPortalMobileLastDate = entityPM.DigitalPortalMobileLastDate;
-            entityPOCO.DigitalPortalMobileTotalLastWeek = entityPM.DigitalPortalMobileTotalLastWeek;
-            entityPOCO.DigitalPortalMobileTotalLastMonth = entityPM.DigitalPortalMobileTotalLastMonth;
+            entityPOCO.DigitalPortalMobTotalLastWeek = entityPM.DigitalPortalMobTotalLastWeek;
+            entityPOCO.DigitalPortalMobTotalLastMonth = entityPM.DigitalPortalMobTotalLastMonth;
 
 
         string packageName = null;
