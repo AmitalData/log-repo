@@ -345,7 +345,7 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
                
                     using (var command = Database.Connection.CreateCommand())
                     {
-                        if (Transaction.Current != null)
+                        if (Transaction.Current == null)
                         {
                             command.CommandText = "SET TRANSACTION ISOLATION LEVEL SNAPSHOT";
                         }
