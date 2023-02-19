@@ -1882,6 +1882,8 @@ export class AWBWizardComponent implements AfterViewInit{
             }
 
             if ((this.IsFWB || this.IsFHL) && AppTool.IsNullOrEmpty(this.EntityPM.MainHarmonize)) {
+                var isValid = true;
+
                 if (this.EntityPM.ToCountryIsEC
                     || this.EntityPM.Transshipment1ToCountryIsEC
                     || this.EntityPM.Transshipment2ToCountryIsEC
