@@ -63,6 +63,7 @@ using System.Web;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.BL.Security;
 using Logitude.BL.AnalyticTableServices;
+using System.Data.SqlClient;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -423,7 +424,32 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
+        private void InsertInShipmnetUpdateLog(int StartOrEnd)
+        {
+            try
+            {
+                string strConnString = entityRepository.context.GetConnection().ConnectionString;
+                string query = "INSERT INTO ShipmentUpdateLog (MessageID, EntityID, Tenant,LogDateTime,StartOrEnd) " +
+                                    "VALUES (@MessageID, @EntityID, @Tenant, @LogDateTime,@StartOrEnd) ";
 
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.Add("@MessageID", SqlDbType.VarChar, 50).Value = DbQueueService.MessageID;
+                    cmd.Parameters.Add("@EntityId", SqlDbType.VarChar, 50).Value = entityPM.Id.ToString();
+                    cmd.Parameters.Add("@Tenant", SqlDbType.Int).Value = tenant;
+                    cmd.Parameters.Add("@LogDateTime", SqlDbType.DateTime).Value = DateTime.Now;
+                    cmd.Parameters.Add("@StartOrEnd", SqlDbType.VarChar, 50).Value = StartOrEnd;
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandTimeout = 5;
+                    cn.Open();
+                    var output = cmd.ExecuteNonQuery();
+                    cn.Close();
+                }
+
+            }
+            catch { }
+        }
         private void AddVIRExternalTaskQueue()
         {
             if (entityPM.IsHybrid && entityPM.ExternalStatuses == "VIR")
@@ -439,6 +465,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             //bool isPatchUpdate = false;
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
+                InsertInShipmnetUpdateLog(0);
                 initializer.IsMappingComposition = mapComposition;
                 initializer.IsUpdateFromUpdateTool = isFromUpdateTool;
 
@@ -609,7 +636,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.ComputeAgentComputed(entityPM, entityPoco);
 
                     entityRepository.Update(entityPoco);
+                    ////
                     entityRepository.SubmitChanges();
+
                     shipmentAdditionalCloudDataRepository.SubmitChanges();
                     followUpRepository.SubmitChanges();
                     shipmentPickUpDeliveryRepository.SubmitChanges();
@@ -692,6 +721,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }.Produce();
 
                 scope.Complete();
+                InsertInShipmnetUpdateLog(1);
                 #endregion
             }
         }

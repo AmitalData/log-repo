@@ -29,7 +29,7 @@ namespace CustomsWorkerRole
         List<WorkerEntryPoint> workers;
         protected EventWaitHandle EventWaitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
         //public static string DeploymentStage = "Dev";//Dev//Test1//Simplog
-
+        
         public override void Run()
         {
             foreach (WorkerEntryPoint worker in workers)
