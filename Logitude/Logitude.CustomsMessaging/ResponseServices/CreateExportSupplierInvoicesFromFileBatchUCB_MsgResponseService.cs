@@ -264,6 +264,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (digit != checkDigit.GetValueOrDefault().ToString())
                     {
                         valid = false;
+                        res = value;
                     }
                     break;
                 case 10:
@@ -274,6 +275,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 case 11:
                     var digit_ = value.Substring(10);
                     checkDigit = CalculateLuhnAlgorithm(value.Substring(0, 10));
+                    res = value;
                     if (digit_ != checkDigit.GetValueOrDefault().ToString())
                     {
                         valid = false;
@@ -281,6 +283,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     break;
                 default:
                     valid = false;
+                    res = value;
                     break;
             }
             
@@ -413,7 +416,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 
                 CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(tenant);
-                invoiceItem.InvoiceQuantityType = customsItemQueryService.GetQuantityTypeByClassificationCode(invoiceItem.ClassificationCode, tenant);
+                invoiceItem.InvoiceQuantityType = customsItemQueryService.GetQuantityTypeByClassificationWithMultiCustomItems(invoiceItem.ClassificationCode, tenant, true);
                 invoiceItem.StatisticQuantityType = invoiceItem.InvoiceQuantityType;
 
                 if(invoiceItem.InvoiceQuantity== null || string.IsNullOrEmpty(invoiceItem.ClassificationCode) || invoiceItem.ItemPrice==null || string.IsNullOrEmpty(invoiceItemFromFile.OriginCountryCode))
