@@ -876,6 +876,13 @@ namespace Logitude.Infrastructure.BL
                 Description = "Toggle Feature for Digital Portal Required Documents", 
                 SearchFields = "RDT,Digital Portal Required Documents", 
 			});
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Remove Exception Logic", 
+                Code = "REL", 
+                SearchFields = "REL,Remove Exception Logic", 
+                Description = "Remove Exception Logic", 
+			});
 			
             return all;
        }
