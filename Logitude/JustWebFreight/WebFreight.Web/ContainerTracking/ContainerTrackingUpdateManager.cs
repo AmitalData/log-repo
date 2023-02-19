@@ -298,7 +298,6 @@ namespace WebFreight.Web.ContainerTracking
         }
         private void MapVizionTransshipments()
         {
-
             this.SetRelatedTransshipmentLeg(containerUpdatedFields.LoadedTransshipment, "From");
             this.SetRelatedTransshipmentLeg(containerUpdatedFields.VesselDeparted, "From");
             this.SetRelatedTransshipmentLeg(containerUpdatedFields.VesselArrived, "To");
@@ -312,7 +311,6 @@ namespace WebFreight.Web.ContainerTracking
             var leg1 = allTrasshipmentLegs.Where(a=>a.Index == 1).FirstOrDefault();
             var leg2 = allTrasshipmentLegs.Where(a => a.Index == 2).FirstOrDefault();
             var leg3 = allTrasshipmentLegs.Where(a => a.Index == 3).FirstOrDefault();
-            var leg4 = allTrasshipmentLegs.Where(a => a.Index == 4).FirstOrDefault();
             var index1 = 1;
             var index2= 2;
             var index3 = 3;
@@ -325,18 +323,22 @@ namespace WebFreight.Web.ContainerTracking
             UpdateVesselVoyageVizionTransshipments(polLeg, index1, containerPM);
             if (leg3 != null)
             {
-                UpdateVesselVoyageVizionTransshipments(leg3, index2, containerPM);
-                UpdateVesselVoyageVizionTransshipments(podLeg, index3, containerPM);
-                UpdateVesselVoyageVizionTransshipments(podLeg, index4, containerPM);
+                UpdateVesselVoyageVizionTransshipments(leg2 != null ? leg2 : leg1, index2, containerPM);
+                UpdateVesselVoyageVizionTransshipments(leg3 != null ? leg3 : leg2, index3, containerPM);
+                UpdateVesselVoyageVizionTransshipments(podLeg != null ? podLeg : leg3, index4, containerPM);
             }
             else if (leg2 != null)
             {
-                UpdateVesselVoyageVizionTransshipments(podLeg, index2, containerPM);
-                UpdateVesselVoyageVizionTransshipments(podLeg, index3, containerPM);
+                UpdateVesselVoyageVizionTransshipments(leg1 != null ? leg1 : polLeg, index2, containerPM);
+                UpdateVesselVoyageVizionTransshipments(podLeg != null ? podLeg : leg2, index3, containerPM);
+            }
+            else if (leg1 != null)
+            {
+                UpdateVesselVoyageVizionTransshipments(podLeg != null ? podLeg : leg1, index2, containerPM);
             }
             else
             {
-                UpdateVesselVoyageVizionTransshipments(podLeg, index1, containerPM);
+                UpdateVesselVoyageVizionTransshipments(podLeg != null ? podLeg : polLeg, index1, containerPM);
             }
         }
 
@@ -361,23 +363,27 @@ namespace WebFreight.Web.ContainerTracking
             var polLeg = new { Vessel = containerUpdatedFields.POLLegVessel, VesselId = polLegVessel?.Id, Voyage = containerUpdatedFields.POLLegVoyage };
             var podLeg = new { Vessel = containerUpdatedFields.PODLegVessel, VesselId = podLegVessel?.Id, Voyage = containerUpdatedFields.PODLegVoyage };
 
-            
             if (leg3 != null)
             {
                 UpdateShipmentVesselVoyage(polLeg, null, shipmentPM);
-                UpdateShipmentVesselVoyage(podLeg, index3, shipmentPM);
-                UpdateShipmentVesselVoyage(leg3, index2, shipmentPM);
-                UpdateShipmentVesselVoyage(leg2, index1, shipmentPM);
+                UpdateShipmentVesselVoyage(leg1 != null ? leg1 : polLeg, index1, shipmentPM);
+                UpdateShipmentVesselVoyage(leg3 != null ? leg3 : leg2, index2, shipmentPM);
+                UpdateShipmentVesselVoyage(podLeg != null ? podLeg : leg3, index3, shipmentPM);
             }
             else if (leg2 != null)
             {
                 UpdateShipmentVesselVoyage(polLeg, null, shipmentPM);
-                UpdateShipmentVesselVoyage(podLeg, index2, shipmentPM);
-                UpdateShipmentVesselVoyage(leg1, index1, shipmentPM);
+                UpdateShipmentVesselVoyage(leg1 != null ? leg1 : polLeg, index1, shipmentPM);
+                UpdateShipmentVesselVoyage(podLeg != null ? podLeg : leg2, index2, shipmentPM);
+            }
+            else if (leg1 != null)
+            {
+                UpdateShipmentVesselVoyage(polLeg, null, shipmentPM);
+                UpdateShipmentVesselVoyage(podLeg != null ? podLeg : leg1, index1, shipmentPM);
             }
             else
             {
-                UpdateShipmentVesselVoyage(podLeg, null, shipmentPM);
+                UpdateShipmentVesselVoyage(podLeg != null ? podLeg : polLeg, null, shipmentPM);
             }
         }
 
