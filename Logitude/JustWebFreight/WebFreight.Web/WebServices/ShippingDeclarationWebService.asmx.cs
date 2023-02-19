@@ -174,9 +174,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.DangerousFlashPoint = shipment.DangerousFlashPoint;
                 myDataProvider.DangerousMaterialDescription = shipment.DangerousMaterialDescription;
                 myDataProvider.MainCarriageTruckNumber = shipment.MainCarriageCarrierNumber;
-                myDataProvider.AccountManager = shipment.AccountManagerUserName;
-                //myDataProvider.AccountManagerPhoneNumber = shipment.AccountMan
-              
+                myDataProvider.AccountManager = shipment.AccountManagerUserName;              
                 myDataProvider.TotalCollectReceivablesLocal = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "C").Sum(s => s.TotalAmountLocal);
                 myDataProvider.TotalPrepaidReceivablesLocal = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "P").Sum(s => s.TotalAmountLocal);
                 myDataProvider.TotalCollectReceivablesProfit = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "C").Sum(s => s.TotalAmount);
@@ -368,10 +366,10 @@ namespace WebFreight.Web.WebServices
                 }
                 if (!string.IsNullOrEmpty(shipment.AccountManagerUserId)) 
                 {
-                    UserQuery userQuery = new UserQuery(tenant);
-                    UserPM userPM = userQuery.GetSinglePM(shipment.AccountManagerUserId, tenant);
+                    
+                    User user = userRepository.GetSingleUser(shipment.AccountManagerUserId, tenant);
 
-                    if (userPM != null) myDataProvider.AccountManagerMobileNumber = userPM.Mobile;
+                    if (user != null) myDataProvider.AccountManagerMobileNumber = user.Contact.Mobile;
 
                 }
 
