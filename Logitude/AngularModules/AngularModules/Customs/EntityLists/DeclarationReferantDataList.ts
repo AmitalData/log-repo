@@ -212,6 +212,7 @@ export class DeclarationReferantDataList {
 	FieldR18: string;
 	FieldR19: string;
 	FieldR20: string;
+	CustomerId: string;
 	
 }
  
