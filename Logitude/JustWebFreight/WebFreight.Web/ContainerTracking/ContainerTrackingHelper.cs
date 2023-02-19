@@ -76,6 +76,7 @@ namespace WebFreight.Web.ContainerTracking
         {
             if(code == "PreCarriage")
             {
+               // string containerLoc, string shipmentLoc, 
                 if (!IsSameLocationUsingId(containerPM.PreCarriageLocationPortId, shipmentPM.PreCarriageFromPortId))
                 {
                     AddNotSameLocationDiscrepancy(containerPM, shipmentPM, code, "ETD");
@@ -86,9 +87,6 @@ namespace WebFreight.Web.ContainerTracking
                     if (shipmentPM.PreCarriageATD != containerPM.PreCarriageATD)
                     {
                         AddActualDateDiscrepancy(containerPM, shipmentPM, code);
-                        //var discrepancyReason = $@"Shipment Pre Carriage ATD already has a value of {shipmentPM.PreCarriageATD} 
-                        //                    - did not update new container value {containerPM.PreCarriageATD}.";
-                        //AddContainerDiscrepancyToService(containerPM, shipmentPM, discrepancyReason);
                     }
                 }
             }
@@ -158,6 +156,10 @@ namespace WebFreight.Web.ContainerTracking
                     AddActualDateDiscrepancy(containerPM, shipmentPM, code);
                 }
             }
+        }
+        private void CheckIsSameLocation(ContainerPM containerPM, ShipmentPM shipmentPM, string code)
+        {
+
         }
         public void AddDeliveryContainerDiscrepancy(ShipmentDeliveryPM delivery, ShipmentPM shipmentPM, ContainerPM containerPM)
         {
@@ -249,19 +251,6 @@ namespace WebFreight.Web.ContainerTracking
 
             return GetUnloCodeFromPortId(shipmentPM.Transshipment3FromPortId);
         }
-        //private void AddMainCarriageNotSameLocationDiscrepancy(ContainerPM containerPM, ShipmentPM shipmentPM, string location)
-        //{
-        //    string shipmentLocation = shipmentPM.MainCarriageFromPortId;
-        //    string containerLocation = containerPM.PODLocation;
-        //    var shipmentUnloCode = GetUnloCodeFromPortId(shipmentLocation);
-        //    var discrepancyReason = "Shipment Main Carriage from port is empty - shipment ETD not updated.";
-        //    if (shipmentUnloCode != null)
-        //    {
-        //        discrepancyReason = $@"Shipment Main Carriage from port {shipmentUnloCode} not equal to container {location} port {containerLocation} - shipment ETD not updated.";
-        //    }
-
-        //    AddContainerDiscrepancyToService(containerPM, shipmentPM, discrepancyReason);
-        //}
         private void AddActualDateDiscrepancy(ContainerPM containerPM, ShipmentPM shipmentPM, string code)
         {
             var actualdateName = "";
