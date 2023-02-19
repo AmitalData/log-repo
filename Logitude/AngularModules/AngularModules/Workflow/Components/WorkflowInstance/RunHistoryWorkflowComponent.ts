@@ -73,9 +73,7 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
     }
 
     private loadComponentList() {
-        var versionsIdList = this.EntityPM.WorkFlowVersions.map(v => v.Id);
-
-        let filterItem = new FilterItem("WorkFlowVersionId", versionsIdList.join(","), null, null, "InListExact", false, false, false, "Text");
+        let filterItem = new FilterItem("WorkflowId", this.EntityPM.Id, null, null, "Equals", false, false, false, "String");
 
         var listArgs = new ListComponentArgs();
         listArgs.DefaultFilterItems = [filterItem];

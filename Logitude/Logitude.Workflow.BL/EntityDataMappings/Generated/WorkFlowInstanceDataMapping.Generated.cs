@@ -35,7 +35,8 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         BusinessKey, 
 	         Duration, 
 	         WorkFlowVersionId, 
-	         RetryAttemptsNumber,
+	         RetryAttemptsNumber, 
+	         WorkflowId,
 	      }
 
 
@@ -57,7 +58,8 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         StatusName, 
 	         WorkFlowVersionId, 
 	         WorkFlowVersionNumber, 
-	         RetryAttemptsNumber,
+	         RetryAttemptsNumber, 
+	         WorkflowId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -129,6 +131,11 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RetryAttemptsNumber))
             {
 				entityPOCO.RetryAttemptsNumber = entityPM.RetryAttemptsNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WorkflowId))
+            {
+				entityPOCO.WorkflowId = entityPM.WorkflowId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -207,6 +214,11 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 					entityPM.RetryAttemptsNumber = entityPOCO.RetryAttemptsNumber;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.WorkflowId))
+            {
+					entityPM.WorkflowId = entityPOCO.WorkflowId;
+            }
+
 		}
 
 		public void PMToOldPM(WorkFlowInstancePM entityPM, WorkFlowInstancePM oldEntityPM)
@@ -276,6 +288,11 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RetryAttemptsNumber))
             {
                 oldEntityPM.RetryAttemptsNumber = entityPM.RetryAttemptsNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WorkflowId))
+            {
+                oldEntityPM.WorkflowId = entityPM.WorkflowId;
             }
 			
 		}
