@@ -46,8 +46,11 @@ export class AddEditScreenComponent extends BaseComponent {
     }
 
     FillScreenTypes() {
-        this.ScreenTypes.push(new ScreenTypeDetails("Grid", "Grid Screen Layout"));
+        if (this.IsSubEntity && this.IsCustomObjectTable)
+            this.ScreenTypes.push(new ScreenTypeDetails("Grid", "Grid Screen Layout"));
         this.ScreenTypes.push(new ScreenTypeDetails("LIGHTENING", "Form Screen Layout"));
+        if (!this.IsSubEntity && this.IsCustomObjectTable)
+            this.ScreenTypes.push(new ScreenTypeDetails("HeaderScreen", "Header Screen Layout"));
     }
 
     SetWindowArgs(args: any) {
@@ -82,6 +85,10 @@ export class AddEditScreenComponent extends BaseComponent {
         }
         if (this.IsEditMode) {
             this.selectedScreenType = this.ScreenTypes.filter(screenType => screenType.Code == this.EntityPM.Type)[0];
+            return;
+        }
+        if (!this.IsSubEntity && this.IsCustomObjectTable) {
+            this.selectedScreenType = this.ScreenTypes.filter(screenType => screenType.Code == "HeaderScreen")[0];
             return;
         }
     }
@@ -142,7 +149,11 @@ export class AddEditScreenComponent extends BaseComponent {
        this.EntityPM.Name = this.Name;
        this.EntityPM.Inactive = this.Inactive;
        this.EntityPM.Type = this.selectedScreenType.Code;
-
+       if (this.selectedScreenType.Code == "HeaderScreen") {
+           this.EntityPM.IsHeaderScreen = true;
+           this.EntityPM.NumberOfColumns = 4;
+           this.EntityPM.NumberOfRows = 2;
+       }
     }
 
     private SubmitNewScreen()
