@@ -146,8 +146,13 @@
                                             </tr>
 
                                             <tr *ngIf="AnswerForCollateralStatusVisibility">
-                                                <td style="color:#282E30" width="100px"> סטטוס מענה</td>
-                                                <td style="color:#282E30"> {{AnswerForCollateralStatusName}}</td>
+                                                    <td style="color:#282E30" width="100px"> סטטוס מענה</td>
+                                                    <td style="color:#282E30"> {{AnswerForCollateralStatusName}}</td> 
+                                                
+                                                
+                                            </tr>
+                                            <tr *ngIf="AnswerForCollateralStatusVisibility">
+                                                <td colspan="2" style="color:#282E30;word-wrap: break-word;white-space: normal;"> {{Errors}}</td>
                                             </tr>
                                             <tr>
                                                 <td style="color:#282E30" width="100px"> {{'Customs.PaymentOrder.F.PaymentStatusCode' | TextCodeTranslationPipe}}</td>
