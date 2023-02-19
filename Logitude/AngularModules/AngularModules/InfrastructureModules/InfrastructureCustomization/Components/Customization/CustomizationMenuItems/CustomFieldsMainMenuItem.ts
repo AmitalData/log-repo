@@ -28,7 +28,7 @@ export class CustomFieldsMainMenuItem extends CustomizationMainMenuItem {
     }
     CheckFeaturePermission(args: any): boolean {
         let IsShowCustomFields = CustomizationPermissionService.HasFeaturePermession("General", "CustomFieldsCustomization");
-        return (!args.IsObjectTableFilterEnabled || IsShowCustomFields);
+        return (!args.IsObjectTableFilterEnabled || IsShowCustomFields || args.IsCustomFieldsMenue);
     }
 
 }
