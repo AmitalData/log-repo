@@ -22,48 +22,48 @@ using Logitude.DashboardModule.Data;
 
 namespace Logitude.DashboardModule.BL.EntityUpdateServices
 { 
-   public partial class UserPinnedDashboardUpdateService:EntityUpdateService<UserPinnedDashboard,UserPinnedDashboardPM,EntityPM>
+   public partial class DashboardsUserSettingUpdateService:EntityUpdateService<DashboardsUserSetting,DashboardsUserSettingPM,EntityPM>
    {
    
-        UserPinnedDashboardRepository entityRepository;
-        public UserPinnedDashboardUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+        DashboardsUserSettingRepository entityRepository;
+        public DashboardsUserSettingUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
             : base(mainContext,additionalContexts, tenant)
         {
             IDashboardContext  context = mainContext as DashboardContext;
             context = context ??mainContext as IDashboardContext ; //Up line is A BUG -and i need it 4 Fakes
-            Mapping = new UserPinnedDashboardDataMapping();
-            Repository = new UserPinnedDashboardRepository(context);
+            Mapping = new DashboardsUserSettingDataMapping();
+            Repository = new DashboardsUserSettingRepository(context);
         }
 
        
         private IDashboardContext currentContext;
-        public UserPinnedDashboardUpdateService(int tenant)
+        public DashboardsUserSettingUpdateService(int tenant)
         {
             currentContext = DashboardContext.GetContext(tenant);
         }
 
-        public UserPinnedDashboardUpdateService(IDashboardContext context)
+        public DashboardsUserSettingUpdateService(IDashboardContext context)
         {
             currentContext = context;
         }
 
 		
-		protected override EntityKeyFields GetKeys(UserPinnedDashboardPM entityPM)
+		protected override EntityKeyFields GetKeys(DashboardsUserSettingPM entityPM)
         {
-            UserPinnedDashboardKeys entityKeys = new UserPinnedDashboardKeys() { Id = entityPM.Id };
+            DashboardsUserSettingKeys entityKeys = new DashboardsUserSettingKeys() { Id = entityPM.Id };
             return entityKeys;
         }
 
 		
-		protected override void FillDefaultValuesOnCreate(UserPinnedDashboardPM entityPM)
+		protected override void FillDefaultValuesOnCreate(DashboardsUserSettingPM entityPM)
         {     
   
 		
-		    entityPM.Id = IdCounter.GetNumber("UserPinnedDashboard", entityPM.Tenant); 
+		    entityPM.Id = IdCounter.GetNumber("DashboardsUserSetting", entityPM.Tenant); 
 					
 	    }
         
-		protected override void FillDefaultValuesOnUpdate(UserPinnedDashboardPM entityPM)
+		protected override void FillDefaultValuesOnUpdate(DashboardsUserSettingPM entityPM)
         {       
            
         }

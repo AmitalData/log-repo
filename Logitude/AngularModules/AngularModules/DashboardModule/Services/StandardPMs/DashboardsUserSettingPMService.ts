@@ -19,17 +19,17 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 
-import {UserPinnedDashboardPM} from '../../EntityPMs/UserPinnedDashboardPM';
+import {DashboardsUserSettingPM} from '../../EntityPMs/DashboardsUserSettingPM';
 
 
 @Injectable()
 
-export class UserPinnedDashboardPMService {
+export class DashboardsUserSettingPMService {
  private _http: HttpClient;
  private _apiUrl: string;
  constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/userpinneddashboards';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/dashboardsusersettings';      
     }
 
 	get(id: string) {       
@@ -42,7 +42,7 @@ export class UserPinnedDashboardPMService {
 					map((response: HttpResponse<any>) => {
 						var pm = response.body;
 				
-						var entity: UserPinnedDashboardPM;
+						var entity: DashboardsUserSettingPM;
 						if (pm) {
 							entity = this.MapJsonToEntityPM(pm);
 						}
@@ -51,7 +51,7 @@ export class UserPinnedDashboardPMService {
 						serviceResponse.Result = entity;
               
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "UserPinnedDashboard", "GetSinglePM", 'id=' + id);
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DashboardsUserSetting", "GetSinglePM", 'id=' + id);
 				 
 						return serviceResponse;
 
@@ -61,7 +61,7 @@ export class UserPinnedDashboardPMService {
 		});                    
 	}
 
-	insert(entityPM: UserPinnedDashboardPM) {
+	insert(entityPM: DashboardsUserSettingPM) {
  
 		var callTime = new Date();  
 		
@@ -69,12 +69,12 @@ export class UserPinnedDashboardPMService {
 
 			var serviceResponse: ServiceResponse = new ServiceResponse();
 			var validator: ClassLevelValidator = new ClassLevelValidator();                
-			var errorsArray = validator.Validate("UserPinnedDashboard", entityPM);
+			var errorsArray = validator.Validate("DashboardsUserSetting", entityPM);
 
 
 			if (errorsArray.length == 0) {
 
-				var mappedEntity: UserPinnedDashboardPM = this.MapJsonToEntityPM(entityPM, false);
+				var mappedEntity: DashboardsUserSettingPM = this.MapJsonToEntityPM(entityPM, false);
 				
 				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
@@ -82,12 +82,12 @@ export class UserPinnedDashboardPMService {
 
 							var pm = response.body;
 							if (pm) {
-								var mappedResult: UserPinnedDashboardPM = this.MapJsonToEntityPM(pm, true, entityPM);
+								var mappedResult: DashboardsUserSettingPM = this.MapJsonToEntityPM(pm, true, entityPM);
 								serviceResponse.Result = mappedResult;
 							}						
 
 							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "UserPinnedDashboard", "SaveChanges", "");                    
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DashboardsUserSetting", "SaveChanges", "");                    
 												                             
 							return serviceResponse;
 						}),
@@ -103,7 +103,7 @@ export class UserPinnedDashboardPMService {
 		});
 	}
 
-	update(entityPM: UserPinnedDashboardPM) {
+	update(entityPM: DashboardsUserSettingPM) {
 
 		var callTime = new Date();     
 		
@@ -111,12 +111,12 @@ export class UserPinnedDashboardPMService {
 
 			var serviceResponse: ServiceResponse = new ServiceResponse();
 			var validator: ClassLevelValidator = new ClassLevelValidator();               
-			var errorsArray = validator.Validate("UserPinnedDashboard", entityPM);
+			var errorsArray = validator.Validate("DashboardsUserSetting", entityPM);
 
 
 			if (errorsArray.length == 0) {
 
-				var mappedEntity: UserPinnedDashboardPM = this.MapJsonToEntityPM(entityPM, false);
+				var mappedEntity: DashboardsUserSettingPM = this.MapJsonToEntityPM(entityPM, false);
 				
 				return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
@@ -124,12 +124,12 @@ export class UserPinnedDashboardPMService {
                  
 							var pm = response.body;
 							if (pm) {
-								var mappedResult: UserPinnedDashboardPM = this.MapJsonToEntityPM(pm, true, entityPM);
+								var mappedResult: DashboardsUserSettingPM = this.MapJsonToEntityPM(pm, true, entityPM);
 								serviceResponse.Result = mappedResult;
 							}
 							 
 							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "UserPinnedDashboard", "SaveChanges", "");                    
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DashboardsUserSetting", "SaveChanges", "");                    
 					                           
 							return serviceResponse;
 						}),
@@ -147,12 +147,12 @@ export class UserPinnedDashboardPMService {
 
    
 
-	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: UserPinnedDashboardPM = null) {
+	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: DashboardsUserSettingPM = null) {
 
          
         if (!entityPM) {
             
-            entityPM = new UserPinnedDashboardPM();
+            entityPM = new DashboardsUserSettingPM();
 			entityPM.DisableMarkAsDirty = true;
         }
 
@@ -219,8 +219,8 @@ export class UserPinnedDashboardPMService {
     }
 
 	  public GetNewEntityPM() {		 
-		    var entityPM: UserPinnedDashboardPM;
-			entityPM = new UserPinnedDashboardPM();
+		    var entityPM: DashboardsUserSettingPM;
+			entityPM = new DashboardsUserSettingPM();
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }

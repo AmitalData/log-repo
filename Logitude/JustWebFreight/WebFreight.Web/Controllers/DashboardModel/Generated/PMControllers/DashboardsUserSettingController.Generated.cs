@@ -47,7 +47,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
 
     
-    public partial class UserPinnedDashboardsController : ApiController
+    public partial class DashboardsUserSettingsController : ApiController
     {
 	  
        
@@ -61,13 +61,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 
                 IDashboardContext MyContext = DashboardContext.GetContext(authToken.Tenant);
-                UserPinnedDashboardQueryService userPinnedDashboardQuery = new UserPinnedDashboardQueryService(MyContext);
-				userPinnedDashboardQuery.InitializeSettings();
-                UserPinnedDashboardPM userPinnedDashboardPM = userPinnedDashboardQuery.GetSingle(id,true,false);
+                DashboardsUserSettingQueryService dashboardsUserSettingQuery = new DashboardsUserSettingQueryService(MyContext);
+				dashboardsUserSettingQuery.InitializeSettings();
+                DashboardsUserSettingPM dashboardsUserSettingPM = dashboardsUserSettingQuery.GetSingle(id,true,false);
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
             
-                return Request.CreateResponse(HttpStatusCode.OK, userPinnedDashboardPM);
+                return Request.CreateResponse(HttpStatusCode.OK, dashboardsUserSettingPM);
 			 }
             catch (Exception ex)
             {
@@ -79,7 +79,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
          
 		
 		
-	   public HttpResponseMessage Post(UserPinnedDashboardPM entityPM)
+	   public HttpResponseMessage Post(DashboardsUserSettingPM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -93,12 +93,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                     
                         IDashboardContext MyContext = DashboardContext.GetContext(entityPM.Tenant);
-                        UserPinnedDashboardUpdateService service = new UserPinnedDashboardUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        DashboardsUserSettingUpdateService service = new DashboardsUserSettingUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
                         service.Update(entityPM, true);
 
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("UserPinnedDashboard", 0, true);
+                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("DashboardsUserSetting", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
                         //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
@@ -125,7 +125,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         }
 
 
-        public HttpResponseMessage Put(UserPinnedDashboardPM entityPM)
+        public HttpResponseMessage Put(DashboardsUserSettingPM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -139,12 +139,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                         IDashboardContext MyContext = DashboardContext.GetContext(entityPM.Tenant);
-                        UserPinnedDashboardUpdateService service = new UserPinnedDashboardUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        DashboardsUserSettingUpdateService service = new DashboardsUserSettingUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 						service.InitializeEntityPM(entityPM);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                         service.Update(entityPM, true);
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("UserPinnedDashboard", 0, true);
+                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("DashboardsUserSetting", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
                         //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);

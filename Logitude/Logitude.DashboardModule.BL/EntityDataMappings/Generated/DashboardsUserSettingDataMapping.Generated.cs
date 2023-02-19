@@ -17,7 +17,7 @@ using Logitude.DashboardModule.Data;
 namespace Logitude.DashboardModule.BL.EntityDataMappings
 {
    
-   public partial class UserPinnedDashboardDataMapping: IMapping<UserPinnedDashboardPM, UserPinnedDashboard>,IMappingEncodeBase64NVARCHARFields<UserPinnedDashboardPM>
+   public partial class DashboardsUserSettingDataMapping: IMapping<DashboardsUserSettingPM, DashboardsUserSetting>,IMappingEncodeBase64NVARCHARFields<DashboardsUserSettingPM>
    {
           public enum POCOPropertyNames
           { 
@@ -25,7 +25,7 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         Id, 
 	         Tenant, 
 	         UserId, 
-	         Dashboards,
+	         PinnedDashboards,
 	      }
 
 
@@ -35,13 +35,13 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         Id, 
 	         Tenant, 
 	         UserId, 
-	         Dashboards,
+	         PinnedDashboards,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
     
-	    public void PMToPOCO(UserPinnedDashboardPM entityPM, UserPinnedDashboard entityPOCO)
+	    public void PMToPOCO(DashboardsUserSettingPM entityPM, DashboardsUserSetting entityPOCO)
         {
 			 
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
@@ -54,13 +54,13 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 				entityPOCO.UserId = entityPM.UserId;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Dashboards))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PinnedDashboards))
             {
-				entityPOCO.Dashboards = entityPM.Dashboards;
+				entityPOCO.PinnedDashboards = entityPM.PinnedDashboards;
 			}
 			}
 
-		public void POCOToPM(UserPinnedDashboardPM entityPM, UserPinnedDashboard entityPOCO)
+		public void POCOToPM(DashboardsUserSettingPM entityPM, DashboardsUserSetting entityPOCO)
         {
 			 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
@@ -78,14 +78,14 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 					entityPM.UserId = entityPOCO.UserId;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Dashboards))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PinnedDashboards))
             {
-					entityPM.Dashboards = entityPOCO.Dashboards;
+					entityPM.PinnedDashboards = entityPOCO.PinnedDashboards;
             }
 
 		}
 
-		public void PMToOldPM(UserPinnedDashboardPM entityPM, UserPinnedDashboardPM oldEntityPM)
+		public void PMToOldPM(DashboardsUserSettingPM entityPM, DashboardsUserSettingPM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
@@ -99,14 +99,14 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
                 oldEntityPM.UserId = entityPM.UserId;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Dashboards))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PinnedDashboards))
             {
-                oldEntityPM.Dashboards = entityPM.Dashboards;
+                oldEntityPM.PinnedDashboards = entityPM.PinnedDashboards;
             }
 			
 		}
 
-	    public void EncodeBase64NVARCHARFields(UserPinnedDashboardPM entityPM)
+	    public void EncodeBase64NVARCHARFields(DashboardsUserSettingPM entityPM)
         {
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {

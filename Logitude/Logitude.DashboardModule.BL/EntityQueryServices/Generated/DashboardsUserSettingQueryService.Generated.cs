@@ -17,48 +17,48 @@ using Logitude.DashboardModule.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.DashboardModule.BL.EntityQueryServices
 { 
-   public partial class UserPinnedDashboardQueryService: EntityQueryService<UserPinnedDashboard,UserPinnedDashboardKeys,UserPinnedDashboardPM,object,UserPinnedDashboardKeys>
+   public partial class DashboardsUserSettingQueryService: EntityQueryService<DashboardsUserSetting,DashboardsUserSettingKeys,DashboardsUserSettingPM,object,DashboardsUserSettingKeys>
    {
    
-        UserPinnedDashboardRepository repository;
+        DashboardsUserSettingRepository repository;
 		IDashboardContext  context;
-        public UserPinnedDashboardQueryService(int tenant)
+        public DashboardsUserSettingQueryService(int tenant)
         {
 		    context = DashboardContext.GetContext(tenant);
             MainContext = context;
-            repository = new UserPinnedDashboardRepository(context);
+            repository = new DashboardsUserSettingRepository(context);
             Repository = repository;
-            mapping = new UserPinnedDashboardDataMapping();
+            mapping = new DashboardsUserSettingDataMapping();
         }
 
-        public UserPinnedDashboardQueryService(UserPinnedDashboardRepository repository)
+        public DashboardsUserSettingQueryService(DashboardsUserSettingRepository repository)
         {
             this.repository = repository;
             Repository = repository;
-            mapping = new UserPinnedDashboardDataMapping();
+            mapping = new DashboardsUserSettingDataMapping();
         }
 
-        public UserPinnedDashboardQueryService(IDashboardContext context)
+        public DashboardsUserSettingQueryService(IDashboardContext context)
         {
-            this.repository = new UserPinnedDashboardRepository(context);
+            this.repository = new DashboardsUserSettingRepository(context);
             this.context = context;
 
             MainContext = context;
             Repository = repository;
-            mapping = new UserPinnedDashboardDataMapping();
+            mapping = new DashboardsUserSettingDataMapping();
         }
 		 
-		public  UserPinnedDashboardPM GetSingle(string id,bool getComposition, bool getFromCache)
+		public  DashboardsUserSettingPM GetSingle(string id,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new UserPinnedDashboardKeys(){ Id = id };
+             EntityKeys = new DashboardsUserSettingKeys(){ Id = id };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
 
        
-	    protected override EntityKeyFields GetKeys(UserPinnedDashboard entityPOCO)
+	    protected override EntityKeyFields GetKeys(DashboardsUserSetting entityPOCO)
         {
-            UserPinnedDashboardKeys entityKeys = new UserPinnedDashboardKeys() { Id = entityPOCO.Id,  };
+            DashboardsUserSettingKeys entityKeys = new DashboardsUserSettingKeys() { Id = entityPOCO.Id,  };
             return entityKeys;
         }
      

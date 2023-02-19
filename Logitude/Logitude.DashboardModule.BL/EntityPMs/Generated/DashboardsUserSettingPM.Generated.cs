@@ -16,7 +16,7 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 {
    [CustomValidation(typeof(DashboardModuleClassLevelValidator), "ValidateClass")]
    [DataContract]
-   public partial class UserPinnedDashboardPM : EntityPM
+   public partial class DashboardsUserSettingPM : EntityPM
    {
    	  private string id ;
 	  
@@ -89,30 +89,30 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 			
 		 }
 	   }
-	  private string dashboards ;
+	  private string pinnedDashboards ;
 	  	  
        
 	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Dashboards  
+       public string PinnedDashboards  
 	   {
 	    
 	     get
 		{
-		   return dashboards;
+		   return pinnedDashboards;
 		 }
 		 set
 		 {
-		   if(dashboards != value)
+		   if(pinnedDashboards != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Dashboards",OldValue=dashboards,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PinnedDashboards",OldValue=pinnedDashboards,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   dashboards=value;
+		   pinnedDashboards=value;
 		   }
 			
 		 }
 	   }
-   }
+	    }
    
 }
 	 

@@ -14,8 +14,8 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
-export class UserPinnedDashboardPM {
-
+export class DashboardsUserSettingPM {
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
@@ -39,13 +39,13 @@ export class UserPinnedDashboardPM {
     public set UserId(newValue: string) { if (this.userId != newValue) { this.userId = newValue; this.MarkAsDirty("UserId"); } }
        
 	 
-    private dashboards: string;
-    public get Dashboards() { return this.dashboards; }
-    public set Dashboards(newValue: string) { if (this.dashboards != newValue) { this.dashboards = newValue; this.MarkAsDirty("Dashboards"); } }
+    private pinnedDashboards: string;
+    public get PinnedDashboards() { return this.pinnedDashboards; }
+    public set PinnedDashboards(newValue: string) { if (this.pinnedDashboards != newValue) { this.pinnedDashboards = newValue; this.MarkAsDirty("PinnedDashboards"); } }
        
 	 
 
-    public OldEntityPM: UserPinnedDashboardPM;
+    public OldEntityPM: DashboardsUserSettingPM;
 		
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
@@ -56,13 +56,13 @@ export class UserPinnedDashboardPM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "UserPinnedDashboard");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "DashboardsUserSetting");
            
         }
        }
     }
 
-    private MyClone: UserPinnedDashboardPM;
+    private MyClone: DashboardsUserSettingPM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);

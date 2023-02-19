@@ -6,12 +6,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class UserPinnedDashboardList {
+export class DashboardsUserSettingList {
    
 	Id: string;
 	Tenant: number;
 	UserId: string;
-	Dashboards: string;
+	PinnedDashboards: string;
 	
 }
  

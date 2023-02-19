@@ -83,24 +83,25 @@ using Logitude.DashboardModule.BL;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
-   public class UserPinnedDashboardUpdateClass
+   public class DashboardsUserSettingUpdateClass
    {  		
-		public const string HashString = "c3d1a2d44fdff9db3730de3c2bdfb9fa";
+		public const string HashString = "bce3503ee6bc938bec0a44d8fe8623fb";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "UserPinnedDashboard",
+	             				    ObjectTableName =  "DashboardsUserSetting",
 			      				    IsNew =  true,
-			      				    DBTableName =  "UserPinnedDashboards",
-			      				    ObjectTableSingular =  "UserPinnedDashboard",
-			      				    ObjectTablePlural =  "UserPinnedDashboards",
+			      				    DBTableName =  "DashboardsUserSettings",
+			      				    ObjectTableSingular =  "DashboardsUserSetting",
+			      				    ObjectTablePlural =  "DashboardsUserSettings",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  false,
 			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -126,8 +127,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "UserPinnedDashboards",
-			      				    Code =  "e4b9",
+			      				    DefaultText =  "DashboardsUserSettings",
+			      				    Code =  "d31b",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "DashboardModule",
@@ -140,7 +141,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
-			      				    HashString =  UserPinnedDashboardUpdateClass.HashString,
+			      				    HashString =  DashboardsUserSettingUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -152,7 +153,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Id",
-					  						ObjectTableName =  "UserPinnedDashboard",
+					  						ObjectTableName =  "DashboardsUserSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  15,
@@ -211,7 +212,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Tenant",
-					  						ObjectTableName =  "UserPinnedDashboard",
+					  						ObjectTableName =  "DashboardsUserSetting",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -270,7 +271,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UserId",
-					  						ObjectTableName =  "UserPinnedDashboard",
+					  						ObjectTableName =  "DashboardsUserSetting",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
 					  						MinLength =  0,
@@ -331,8 +332,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "Dashboards",
-					  						ObjectTableName =  "UserPinnedDashboard",
+					 						FieldName =  "PinnedDashboards",
+					  						ObjectTableName =  "DashboardsUserSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
@@ -350,8 +351,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "Dashboards",
-					  						ListPropertyPath =  "Dashboards",
+					  						PMPropertyPath =  "PinnedDashboards",
+					  						ListPropertyPath =  "PinnedDashboards",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -368,8 +369,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Dashboards",
-					  						DefaultText =  "Dashboards",
+					  						FullFieldLable =  "PinnedDashboards",
+					  						DefaultText =  "Pinned Dashboards",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -403,18 +404,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
-		   ObjectTable UserPinnedDashboardObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "UserPinnedDashboard" && d.Tenant == 0).FirstOrDefault(); 
+		   ObjectTable DashboardsUserSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DashboardsUserSetting" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature UserPinnedDashboardFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = UserPinnedDashboardObjectTable.Id, Tenant = 0, NameTextCodeCode = "UserPinnedDashboard.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,UserPinnedDashboardObjectTable);
-		   Feature UserPinnedDashboardFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = UserPinnedDashboardObjectTable.Id, Tenant = 0, NameTextCodeCode = "UserPinnedDashboard.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,UserPinnedDashboardObjectTable);
-		   Feature UserPinnedDashboardFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = UserPinnedDashboardObjectTable.Id, Tenant = 0, NameTextCodeCode = "UserPinnedDashboard.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,UserPinnedDashboardObjectTable);
-		   Feature UserPinnedDashboardFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = UserPinnedDashboardObjectTable.Id, Tenant = 0, NameTextCodeCode = "UserPinnedDashboard.Features.PackageFeature", NameTextCodeDefaultText = "UserPinnedDashboard Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,UserPinnedDashboardObjectTable);    
+		   Feature DashboardsUserSettingFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = DashboardsUserSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DashboardsUserSetting.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DashboardsUserSettingObjectTable);
+		   Feature DashboardsUserSettingFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = DashboardsUserSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DashboardsUserSetting.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DashboardsUserSettingObjectTable);
+		   Feature DashboardsUserSettingFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = DashboardsUserSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DashboardsUserSetting.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DashboardsUserSettingObjectTable);
+		   Feature DashboardsUserSettingFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = DashboardsUserSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DashboardsUserSetting.Features.PackageFeature", NameTextCodeDefaultText = "DashboardsUserSetting Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DashboardsUserSettingObjectTable);    
 	    
 		}
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable UserPinnedDashboardObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "UserPinnedDashboard" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable DashboardsUserSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DashboardsUserSetting" && d.Tenant == 0).FirstOrDefault(); 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "CREV",
+                EnglishName =  "Created",
+                LocalName =  "Created",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = DashboardsUserSettingObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "UPEV",
+                EnglishName =  "Updated",
+                LocalName =  "Updated",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = DashboardsUserSettingObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)

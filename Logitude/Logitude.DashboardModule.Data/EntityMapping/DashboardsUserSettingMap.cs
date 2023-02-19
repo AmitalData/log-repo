@@ -14,12 +14,12 @@ using Logitude.DashboardModule.Data;
 namespace Logitude.DashboardModule.Data.EntityMapping
 {
  
-    public class UserPinnedDashboardMap : EntityTypeConfiguration<UserPinnedDashboard>
+    public class DashboardsUserSettingMap : EntityTypeConfiguration<DashboardsUserSetting>
     {
 	    string dbms;
-        public UserPinnedDashboardMap()
+        public DashboardsUserSettingMap()
         { 
-				this.ToTable("UserPinnedDashboards");
+				this.ToTable("DashboardsUserSettings");
 		
 		    this.HasKey(t => new { t.Id });
 	 
@@ -29,7 +29,7 @@ namespace Logitude.DashboardModule.Data.EntityMapping
 
             this.Property(t => t.UserId).HasColumnName("UserId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.Dashboards).HasColumnName("Dashboards").HasMaxLength(1000).IsUnicode(false);
+            this.Property(t => t.PinnedDashboards).HasColumnName("PinnedDashboards").HasMaxLength(1000).IsUnicode(false);
         }
     }
 }

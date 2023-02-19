@@ -18,7 +18,7 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 import { DashboardPMExtendedService, PinnedDashboard } from '../../../../DashboardModule/Services/ExtendedPMs/DashboardPMExtendedService';
 import { DashboardListExtendedService } from '../../../../DashboardModule/Services/ExtendedLists/DashboardListExtendedService';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
-import { UserPinnedDashboardPM } from 'DashboardModule/EntityPMs/UserPinnedDashboardPM';
+import { DashboardsUserSettingPM } from 'DashboardModule/EntityPMs/DashboardsUserSettingPM';
 import { AnalyticsFactsFieldsMetaDataPMExtendedService } from 'DashboardModule/Services/ExtendedPMs/AnalyticsFactsFieldsMetaDataExtendedService';
 import { AnalyticsFactsFieldsMetaDataPM } from 'DashboardModule/EntityPMs/AnalyticsFactsFieldsMetaDataPM';
 
@@ -47,10 +47,11 @@ export class CustomDashboardComponent extends BaseComponent {
     public SectionsItemsSource: CodeNameClass[];
     public SelectedFromDashboardDropDown: boolean = false;
     public PinnedDashboards: DashboardList[];
-    public UserPinnedDashboard: UserPinnedDashboardPM;
+    public DashboardsUserSetting: DashboardsUserSettingPM;
     private DashboardListExtendedService: DashboardListExtendedService;
     private AnalyticsFactsFieldsMetaDataPMExtendedService: AnalyticsFactsFieldsMetaDataPMExtendedService;
     public PresetFilters: AnalyticsFactsFieldsMetaDataPM[];
+    public IsPredfineds: boolean;
 
     constructor() {
         super();
@@ -127,31 +128,33 @@ export class CustomDashboardComponent extends BaseComponent {
 
 
     GetPinnedDashboards() {
-        this.dashboardPMEstendedService.GetoggedUserPinnedDashboards(SessionLocator.LoggedUserId).subscribe((myResponse: ServiceResponse) => {
+        this.dashboardPMEstendedService.GetDashboardsUserSettings(SessionLocator.LoggedUserId).subscribe((myResponse: ServiceResponse) => {
             if (myResponse.HasError) return;
             SessionLocator.SelectedSession.StopBusyIndicator();
-
-            this.UserPinnedDashboard = myResponse.Result;
-            if (myResponse.Result) {
-                this.PinnedDashboards = [];
-                var pinnedDashboards = (JSON.parse(myResponse.Result.Dashboards) as any[]) ?? [];
-                pinnedDashboards.forEach(item => {
-                    var pinned = this.ItemsSource.find(x => x.Id == item.Id);
-                    if (pinned) this.PinnedDashboards.push(pinned);
-                });
-            }
+            this.DashboardsUserSetting = myResponse.Result;
+            if (myResponse.Result) this.BuildPinnedDashboards(myResponse);
             this.BuildTabs();
         });
     }
 
+
+    private BuildPinnedDashboards(myResponse: ServiceResponse) {
+        this.PinnedDashboards = [];
+        var pinnedDashboards = (JSON.parse(myResponse.Result.PinnedDashboards) as any[]) ?? [];
+        pinnedDashboards.forEach(item => {
+            var pinned = this.ItemsSource.find(x => x.Id == item.Id);
+            if (pinned) this.PinnedDashboards.push(pinned);
+        });
+    }
 
     BuildTabs() {
         if (!this.ItemsSource || this.ItemsSource.length == 0) return;
         this.DashboardsTabs = [];
 
         if (!this.PinnedDashboards && SessionLocator.Tenant != 0) {
-            this.ShowPredinedDashboards();
+            this.ShowPredfinedDashboards();
             this.SelectFirstDashboard();
+            this.IsPredfineds = true;
             return;
         }
         if (this.PinnedDashboards.length == 0) return;
@@ -163,19 +166,19 @@ export class CustomDashboardComponent extends BaseComponent {
     ShowPinnedDashboards() {
         let pinneds = this.PinnedDashboards.slice(0, this.MaxPinnedTabsCount);
         pinneds.forEach((dashboard) => {
-            this.DashboardsTabs.push(new DashboardTab(dashboard, this, false, true));
+            this.DashboardsTabs.push(new DashboardTab(dashboard, this, true));
         });
     }
 
-    ShowPredinedDashboards() {
-        var predineds = this.ItemsSource.filter(x => x.LoadedAutomatically && x.Tenant == 0).sort(function (a, b) {
+    ShowPredfinedDashboards() {
+        var predineds = this.ItemsSource.filter(x => x.PinnedByDefault && x.Tenant == 0).sort(function (a, b) {
             return (a.PredefinedOrder ?? 1000) - (b.PredefinedOrder ?? 1000) || a.CreateDate.valueOf() - b.CreateDate.valueOf();
         });
         if (predineds.length == 0) return;
 
         predineds = predineds.slice(0, this.MaxTabsCount);
         predineds.forEach((dashboard) => {
-            this.DashboardsTabs.push(new DashboardTab(dashboard, this, true, false));
+            this.DashboardsTabs.push(new DashboardTab(dashboard, this, true));
         });
     }
 
@@ -260,7 +263,7 @@ export class CustomDashboardComponent extends BaseComponent {
     }
 
     AppendClickedDashboard(dashboard: DashboardList) {
-        var tab = new DashboardTab(dashboard, this, false, false);
+        var tab = new DashboardTab(dashboard, this, false);
 
         if (this.DashboardsTabs.length == 0) {
             this.DashboardsTabs.push(tab);
@@ -362,34 +365,85 @@ export class CustomDashboardComponent extends BaseComponent {
     }
 
     UnpinDashboardTabClicked(item: DashboardTab, close: boolean = false) {
-        this.dashboardPMEstendedService.UnpinDashboard(this.UserPinnedDashboard.Id, item.Dashboard.Id).subscribe((myResponse: ServiceResponse) => {
+        if (this.IsPredfineds) {
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+            this.PinPredfinedDashboard(item, 0, close);
+            return;
+        }
+        this.UnpinDashboard(item, close);
+    }
+
+    private UnpinDashboard(item: DashboardTab, close: boolean) {
+        this.dashboardPMEstendedService.UnpinDashboard(this.DashboardsUserSetting.Id, item.Dashboard.Id).subscribe((myResponse: ServiceResponse) => {
+            SessionLocator.SelectedSession.StopBusyIndicator();
             if (myResponse.HasError) return;
             const oldIndex = this.DashboardsTabs.indexOf(item, 0);
             let newIndex = this.DashboardsTabs.indexOf(this.DashboardsTabs.find(x => !x.IsPinned));
             if (newIndex == -1) newIndex = this.DashboardsTabs.length - 1;
             else newIndex = newIndex - 1;
-            item.IsPinned = false;
 
+            item.IsPinned = false;
             if (close) this.RemoveTab(item.Id);
             else this.arraymove(this.DashboardsTabs, oldIndex, newIndex);
         });
     }
 
     PinDashboardTabClicked(item: DashboardTab) {
+        if (this.IsPredfineds) {
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+            this.PinPredfinedDashboard(null, 0);
+            this.SubmitPinDashboard(item);
+            return;
+        }
+        this.PinDashboard(item);
+    }
+
+    PinDashboard(pinnedDashboardTab: DashboardTab) {
         var pinnedDashboard: PinnedDashboard = new PinnedDashboard();
-        pinnedDashboard.Id = item.Dashboard.Id;
-        pinnedDashboard.IsPredefined = item.Dashboard.Tenant == 0;
+        pinnedDashboard.Id = pinnedDashboardTab.Dashboard.Id;
+
+        this.dashboardPMEstendedService.PinDashboard(pinnedDashboard).subscribe((myResponse: ServiceResponse) => {
+            SessionLocator.SelectedSession.StopBusyIndicator();
+            if (myResponse.HasError) return;
+            this.DashboardsUserSetting = myResponse.Result;
+            this.SubmitPinDashboard(pinnedDashboardTab);
+        });
+    }
+
+    private SubmitPinDashboard(pinnedDashboardTab: DashboardTab) {
+        const oldIndex = this.DashboardsTabs.indexOf(pinnedDashboardTab, 0);
+        let newIndex = this.DashboardsTabs.indexOf(this.DashboardsTabs.find(x => !x.IsPinned));
+        if (newIndex == -1) newIndex = this.DashboardsTabs.length - 1;
+        pinnedDashboardTab.IsPinned = true;
+        this.arraymove(this.DashboardsTabs, oldIndex, newIndex);
+    }
+
+    PinPredfinedDashboard(dashboardTab: DashboardTab, index: number, close: boolean = false) {
+        if (this.DashboardsTabs == null || this.DashboardsTabs.length == 0) return;
+        if (!this.DashboardsTabs[index]) return this.PinPredfinedDashboardFinished(dashboardTab, close);
+
+        var pinnedDashboard: PinnedDashboard = new PinnedDashboard();
+        pinnedDashboard.Id = this.DashboardsTabs[index].Dashboard.Id;
 
         this.dashboardPMEstendedService.PinDashboard(pinnedDashboard).subscribe((myResponse: ServiceResponse) => {
             if (myResponse.HasError) return;
-            this.UserPinnedDashboard = myResponse.Result;
+            this.PinPredfinedDashboard(dashboardTab, index + 1, close);
+        });
+    }
 
-            const oldIndex = this.DashboardsTabs.indexOf(item, 0);
-            let newIndex = this.DashboardsTabs.indexOf(this.DashboardsTabs.find(x => !x.IsPinned));
-            if (newIndex == -1) newIndex = this.DashboardsTabs.length - 1;
-            item.IsPinned = true;
+    private PinPredfinedDashboardFinished(unpinnedDashboardTab: DashboardTab, close: boolean) {
+        this.IsPredfineds = false;
+        if (unpinnedDashboardTab) return this.GetDashboardsUserSettings(unpinnedDashboardTab, close, true);
 
-            this.arraymove(this.DashboardsTabs, oldIndex, newIndex);
+        this.GetDashboardsUserSettings(unpinnedDashboardTab, close, false);
+        SessionLocator.SelectedSession.StopBusyIndicator();
+    }
+
+    GetDashboardsUserSettings(dashboardTab: DashboardTab, close: boolean, unpin: boolean) {
+        this.dashboardPMEstendedService.GetDashboardsUserSettings(SessionLocator.LoggedUserId).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse.HasError) return;
+            this.DashboardsUserSetting = myResponse.Result;
+            if (unpin) this.UnpinDashboard(dashboardTab, close);
         });
     }
 
@@ -397,24 +451,6 @@ export class CustomDashboardComponent extends BaseComponent {
         var element = arr[fromIndex];
         arr.splice(fromIndex, 1);
         arr.splice(toIndex, 0, element);
-    }
-
-
-    @HostListener('document:click', ['$event'])
-    clickout(event: any) {
-        if (event == this.SelectedDashboard?.Id) {
-            this.DashboardsTabs.filter(d => d.Id != event).forEach(item => {
-                if (item.IsTabMenuOpened)
-                    item.IsTabMenuOpened = false;
-            });
-        }
-
-        else {
-            this.DashboardsTabs.forEach(item => {
-                if (item.IsTabMenuOpened)
-                    item.IsTabMenuOpened = false;
-            });
-        }
     }
 
     public get MainMessage(): string {
@@ -435,14 +471,12 @@ export class CustomDashboardComponent extends BaseComponent {
 class DashboardTab {
     public Dashboard: DashboardList;
     public DropdownId: string = null;
-    public IsPredfined: boolean = false;
     public IsPinned: boolean = false;
     public FatherComponent: CustomDashboardComponent
 
-    constructor(dashboard: DashboardList, fatherComponent: CustomDashboardComponent, isPredfined: boolean, isPinned: boolean) {
+    constructor(dashboard: DashboardList, fatherComponent: CustomDashboardComponent, isPinned: boolean) {
         this.Dashboard = dashboard;
         this.DropdownId = "DahboardDropdownId" + dashboard.Id;
-        this.IsPredfined = isPredfined
         this.IsPinned = isPinned
         this.FatherComponent = fatherComponent
     }
@@ -455,19 +489,4 @@ class DashboardTab {
         return this.Dashboard.Name;
     }
 
-    private isTabMenuOpened: boolean = false;
-    get IsTabMenuOpened() { return this.isTabMenuOpened; }
-    set IsTabMenuOpened(value: boolean) {
-        if (value != undefined) {
-            if (this.isTabMenuOpened != value) {
-                this.isTabMenuOpened = value;
-            }
-        }
-    }
-
-    onRightClick(event: any) {
-        event.preventDefault();
-        this.FatherComponent.clickout(this.Id);
-        this.IsTabMenuOpened = !this.IsTabMenuOpened;
-    }
 }
