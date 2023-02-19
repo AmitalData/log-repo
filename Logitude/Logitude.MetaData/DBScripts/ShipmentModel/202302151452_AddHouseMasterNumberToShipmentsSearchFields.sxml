@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="Shipments">
-  <Sql Version="1">
+  <Sql Version="3">
     <![CDATA[
       If(OBJECT_ID('tempdb..#temp') Is Not Null)
       Begin
@@ -16,7 +16,7 @@
       select Shipments.Id,Shipments.Tenant,Shipments.MasterShipmentDataId,Shipments.SearchFields
       into #temp
       from Shipments 
-	  where  Shipments.ShipmentLevelCode = 'H' and $LastCounterWhere$
+	  where  Shipments.ShipmentLevelCode = 'H' and Shipments.MasterShipmentDataId is not null and $LastCounterWhere$
 	  declare @Tenant as int
 	  declare @MasterId as varchar(15)
 	  declare @MasterShipmnetNumber as varchar(20)
