@@ -56,7 +56,7 @@ export class EditWorkflowComponent extends BaseComponent {
     }
     
     showAdvancedSettings(){
-        this.ShowAdvancedSettings = true;
+        this.ShowAdvancedSettings = !this.ShowAdvancedSettings;
     }
 
     setUIProperties() {

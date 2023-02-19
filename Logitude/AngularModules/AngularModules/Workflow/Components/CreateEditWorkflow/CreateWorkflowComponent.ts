@@ -74,7 +74,7 @@ export class CreateWorkflowComponent extends BaseComponent implements OnInit {
     }
 
     showAdvancedSettings(){
-        this.ShowAdvancedSettings = true;
+        this.ShowAdvancedSettings = !this.ShowAdvancedSettings;
     }
 
     ngOnInit() {

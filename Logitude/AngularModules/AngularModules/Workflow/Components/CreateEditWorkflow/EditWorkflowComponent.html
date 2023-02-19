@@ -81,6 +81,9 @@
         width: 180px;
         min-width: 180px;
     }
+    .margin-5{
+        margin: 5px;
+    }
 </style>
 
 <div class="MediaFillAbsolute workflow-builder-wrapper">
@@ -93,7 +96,7 @@
             <tr>
                 <td>
                     <div class="MediaFill CurvedArea">
-                        <table>
+                        <table class="margin-5">
                             <!-- Name -->
                             <tr class="FormFieldRow">
                                 <td style="width:110px;">
@@ -161,21 +164,10 @@
                                 </td>
                             </tr>
 
-                            <tr class="title clickable" (click)="showAdvancedSettings()" *ngIf="!ShowAdvancedSettings">
-                                <td class="title-width">
-                                    <div class="SectionTitle">
-                                        Show Advanced Settings
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr class="title" *ngIf="ShowAdvancedSettings">
+                            <tr class="title clickable" (click)="showAdvancedSettings()">
                                 <td class="title-width">
                                     <div class="SectionTitle">
                                         Advanced Settings
-                                    </div>
-                                    <div class="Label margin-l-10">
-                                        Workflow retry policy:
                                     </div>
                                 </td>
                             </tr>
@@ -189,11 +181,10 @@
 
                                 <td style="width:230px;">
                                     <LogTextBox [ObjectFieldName]="'RetriesNumber'" [Text]="RetriesNumber"
-                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true" [HideColumns]="true"></LogTextBox>
                                 </td>
-                                <td style="width: 18px; float:left;">
-                                    <HelpIcon [HideHeader]="true" [Text]="'Number of retries once the flow fails'">
-                                    </HelpIcon>
+                                <td >
+                                    <HelpIcon [HideHeader]="true" [Text]="'Number of retries once the flow fails'"></HelpIcon>
                                 </td>
                                 <td>
                                     <div></div>
@@ -209,9 +200,9 @@
 
                                 <td>
                                     <LogTextBox [ObjectFieldName]="'RetriesDelay'" [Text]="RetriesDelay"
-                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true" [HideColumns]="true"></LogTextBox>
                                 </td>
-                                <td style="width: 18px; float:left;">
+                                <td>
                                     <HelpIcon [HideHeader]="true" [Text]="'Waiting time before each retry'"></HelpIcon>
                                 </td>
                                 <td>
