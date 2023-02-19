@@ -1314,9 +1314,9 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <Query
-    Code="&quot;All WorkFlow Instance&quot;"
-    TextCode="&quot;All WorkFlow Instance&quot;"
-    LocalTextCode="&quot;All WorkFlow Instance&quot;"
+    Code="&quot;All Workflow Instances&quot;"
+    TextCode="&quot;All Workflow Instances&quot;"
+    LocalTextCode="&quot;All Workflow Instances&quot;"
     QueryGroupCode="&quot;6122&quot;"
     IndexOrder="0"
     ObjectTableName="&quot;WorkFlowInstance&quot;"
@@ -1329,27 +1329,27 @@
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;All WorkFlow Instance&quot;"
+        QueryCode="&quot;All Workflow Instances&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;BusinessKey&quot;"
         ColumnWidth="400" />
       <QueryColumn
-        QueryCode="&quot;All WorkFlow Instance&quot;"
+        QueryCode="&quot;All Workflow Instances&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;WorkFlowVersionNumber&quot;"
         ColumnWidth="400" />
       <QueryColumn
-        QueryCode="&quot;All WorkFlow Instance&quot;"
+        QueryCode="&quot;All Workflow Instances&quot;"
         IndexOrder="2"
         ObjectFieldName="&quot;StartTime&quot;"
         ColumnWidth="400" />
       <QueryColumn
-        QueryCode="&quot;All WorkFlow Instance&quot;"
+        QueryCode="&quot;All Workflow Instances&quot;"
         IndexOrder="3"
         ObjectFieldName="&quot;Duration&quot;"
         ColumnWidth="400" />
       <QueryColumn
-        QueryCode="&quot;All WorkFlow Instance&quot;"
+        QueryCode="&quot;All Workflow Instances&quot;"
         IndexOrder="4"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="400" />

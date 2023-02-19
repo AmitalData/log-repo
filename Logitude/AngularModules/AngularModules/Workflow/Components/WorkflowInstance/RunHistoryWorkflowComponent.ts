@@ -77,9 +77,9 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
 
         var listArgs = new ListComponentArgs();
         listArgs.DefaultFilterItems = [filterItem];
-        listArgs.QueryCode = "All WorkFlow Instance";
+        listArgs.QueryCode = "All Workflow Instances";
         listArgs.ObjectTableName = "WorkFlowInstance";
-        listArgs.DisplayTitle = "Workflow Instance";
+        listArgs.DisplayTitle = "Workflow Instances";
         listArgs.HideBackButton = true;
 
         this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, this.EntityPM.Tenant).subscribe((response: any) => {
