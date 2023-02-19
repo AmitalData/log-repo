@@ -23,7 +23,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using WebFreight.Web.Helpers;
+using WebFreight.Web.Helpers; 
 using WebFreight.Web.Security;
 using System.Transactions;
 using Logitude.BL.Helpers;
@@ -38,6 +38,7 @@ using Logitude.CargoTracking.BL.EntityQueryServices;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.Helpers;
+using Logitude.BL.CommonDataModel.Tools.MixPanelTracker;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
@@ -47,11 +48,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 
 
+
         public HttpResponseMessage GetCargoShipmentPMByEntityId(string entityId)
         {
             try
             {
-                int tenant = GetAuthinticatedTenant();
+                int tenant = GetAuthinticated().Tenant;
 
                 CargoTrackingShipmentQueryService cargoTrackingShipmentQuery = new CargoTrackingShipmentQueryService(tenant);
                 CargoTrackingShipmentPM cargoTrackingShipmentPM = cargoTrackingShipmentQuery.GetSinglePMById(entityId, tenant);
@@ -72,6 +74,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 CargoTrackingShipmentQueryService cargoTrackingShipmentQuery = new CargoTrackingShipmentQueryService(tenant);
                 CargoTrackingShipmentPM cargoTrackingShipmentPM = cargoTrackingShipmentQuery.GetSinglePMBySecurityKey(securityKey, tenant);
 
+                CreateZoomEventForMixPanel(tenant, cargoTrackingShipmentPM, false);
                 return Request.CreateResponse(HttpStatusCode.OK, cargoTrackingShipmentPM);
             }
             catch (Exception ex)
@@ -79,6 +82,27 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
+        }
+        private void CreateZoomEventForMixPanel(int tenant, CargoTrackingShipmentPM cargoTrackingShipmentPM, bool isPublic)
+        {
+            var userName ="";
+            const string ProjectToken = "99de9de5af6505a670b915020e51380e";
+            MixPanelEvent zoomEvent = BuildMixPanelZoomEvent(cargoTrackingShipmentPM.ShipmentNumber, isPublic);
+            var authinticated = GetAuthinticated();
+            if(authinticated==null)
+                 userName = "";
+            else
+                userName = authinticated.Email;
+            MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, userName, tenant);
+            eventTracker.TrackEvent(zoomEvent);
+        }
+        private static MixPanelEvent BuildMixPanelZoomEvent(string shipmentNumber, bool isPublic)
+        {
+            MixPanelEvent mixPanelEvent = new MixPanelEvent();
+            mixPanelEvent.Name = "Zoom";
+            mixPanelEvent.AddProperty("shipment_number", shipmentNumber);
+            mixPanelEvent.AddProperty("is_public", isPublic.ToString());
+            return mixPanelEvent;
         }
         public HttpResponseMessage GetMainCargoShipmentPMBySecurityKey(string securityKey, int tenant)
         {
@@ -103,31 +127,31 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             //using (var scope = new TransactionScope(TransactionScopeOption.Required,
             //                         new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
             //{
-                try
-                {
-                    CargoTrackingShipmentsDeclarationApprovalService declarationApprovalService = new CargoTrackingShipmentsDeclarationApprovalService();
-                    declarationApprovalService.HandleDeclarationApproval(declarationApprovalArgs);
+            try
+            {
+                CargoTrackingShipmentsDeclarationApprovalService declarationApprovalService = new CargoTrackingShipmentsDeclarationApprovalService();
+                declarationApprovalService.HandleDeclarationApproval(declarationApprovalArgs);
 
-                  //  scope.Complete();
+                //  scope.Complete();
 
-                    return Request.CreateResponse(HttpStatusCode.OK);
-                }
-                catch (Exception ex)
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-                }
-           // }
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+            // }
 
 
         }
 
-        private int GetAuthinticatedTenant()
+        private AuthenticationToken GetAuthinticated()
         {
             string logKey = PerformanceLogger.LogCurrentTime();
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            return authToken.Tenant;
+            return authToken;
         }
     }
 
