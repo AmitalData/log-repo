@@ -23,7 +23,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using WebFreight.Web.Helpers;
+using WebFreight.Web.Helpers; 
 using WebFreight.Web.Security;
 using System.Transactions;
 using Logitude.BL.Helpers;
@@ -46,6 +46,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
     public partial class CargoTrackingShipmentsController
     {
+
 
 
         public HttpResponseMessage GetCargoShipmentPMByEntityId(string entityId)
@@ -84,9 +85,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         }
         private void CreateZoomEventForMixPanel(int tenant, CargoTrackingShipmentPM cargoTrackingShipmentPM, bool isPublic)
         {
+            var userName ="";
             const string ProjectToken = "99de9de5af6505a670b915020e51380e";
             MixPanelEvent zoomEvent = BuildMixPanelZoomEvent(cargoTrackingShipmentPM.ShipmentNumber, isPublic);
-            var userName = GetAuthinticated().Email;
+            var authinticated = GetAuthinticated();
+            if(authinticated==null)
+                 userName = "";
+            else
+                userName = authinticated.Email;
             MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, userName, tenant);
             eventTracker.TrackEvent(zoomEvent);
         }
