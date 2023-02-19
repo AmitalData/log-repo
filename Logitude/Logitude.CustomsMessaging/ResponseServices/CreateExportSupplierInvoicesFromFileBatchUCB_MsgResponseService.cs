@@ -243,6 +243,50 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 return 10 - x;
             }
         }
+
+        private string setClassificationCode(string value, out bool valid)
+        {
+            int? checkDigit = null;
+            valid = true;
+            string res = "";
+            switch (value.Length)
+            {
+                case 8:
+                    res = value + "00";
+                    checkDigit = CalculateLuhnAlgorithm(res);
+                    if (checkDigit.HasValue)
+                        res += checkDigit.Value.ToString();
+                    break;
+                case 9:
+                    var digit = value.Substring(8);
+                    res = value.Substring(0, 8) + "00" + value.Substring(8);
+                    checkDigit = CalculateLuhnAlgorithm(res.Substring(0, 10));
+                    if (digit != checkDigit.GetValueOrDefault().ToString())
+                    {
+                        valid = false;
+                    }
+                    break;
+                case 10:
+                    checkDigit = CalculateLuhnAlgorithm(value);
+                    if (checkDigit.HasValue)
+                        res = value + "" + checkDigit.Value.ToString();
+                    break;
+                case 11:
+                    var digit_ = value.Substring(10);
+                    checkDigit = CalculateLuhnAlgorithm(value.Substring(0, 10));
+                    if (digit_ != checkDigit.GetValueOrDefault().ToString())
+                    {
+                        valid = false;
+                    }
+                    break;
+                default:
+                    valid = false;
+                    break;
+            }
+            
+            return res;
+        }
+
         private void CreateSupplierInvoiceItems(SupplierInvoicePM invoice, int tenant, string declarationid, InvoiceFromFile invoiceFromFile, SupplierInvoicePM invoiceFromDB, out string errorItems)
         {
               errorItems = "";
@@ -255,17 +299,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     InvoiceQuantity = invoiceItemFromFile.InvoiceQuentity,
                     StatisticQuantity = invoiceItemFromFile.InvoiceQuentity,
                     //ItemDescription = invoiceItemFromFile.ItemDescription,
-                    ClassificationCode = invoiceItemFromFile.ClassificationCode,//"84253990000"//todo
+                    //ClassificationCode = invoiceItemFromFile.ClassificationCode,//"84253990000"//todo
                     ItemPrice = invoiceItemFromFile.ItemPrice,
                     InvoiceNumber = invoiceFromFile.InvoiceNumber,
                     // ItemCode = invoiceItemFromFile.ItemDescription,
                 };
-                if(invoiceItem.ClassificationCode.Length == 10)
+                invoiceItem.ClassificationCode = setClassificationCode(invoiceItemFromFile.ClassificationCode,out bool valid);
+                if(!valid)
                 {
-                    var checkDigit = CalculateLuhnAlgorithm(invoiceItemFromFile.ClassificationCode);
-                    if (checkDigit.HasValue)
-                        invoiceItem.ClassificationCode += checkDigit.Value.ToString();
-
+                    errorItems += invoice.InvoiceNumber + ":ClassificationCode = "+ invoiceItem.ClassificationCode + " not valid";
                 }
                 if (!string.IsNullOrWhiteSpace(invoiceItemFromFile.DutyRegimeProtocolCode))
                 {
