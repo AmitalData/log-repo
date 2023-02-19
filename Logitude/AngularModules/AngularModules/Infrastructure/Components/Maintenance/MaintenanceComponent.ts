@@ -818,9 +818,6 @@ export class MaintenanceComponent {
         if (SessionLocator.Tenant == 261) {
             return true;
         }
-        if (CustomizationPermissionService.HasFeaturePermession("General", "General.Features.CustomizationSettings")) {
-            return true;
-        }
         if (CustomizationPermissionService.HasFeaturePermession("General", "General.Features.CustomizationSettings") && CustomizationPermissionService.HasToggleFeaturePermession("CUS")) {
             return true;
         }

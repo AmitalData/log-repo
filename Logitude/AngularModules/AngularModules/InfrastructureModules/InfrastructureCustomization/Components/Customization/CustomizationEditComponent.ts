@@ -113,7 +113,7 @@ export class CustomizationEditComponent {
     }
 
     BuildCustomizationMainMenuItems() {
-        this.MainMenuItems = this.GetCustomizationMainMenuItems();
+        this.MainMenuItems = this.GetCustomizationMainMenuItems().filter(item => item.IsVisible == true);
         if (this.MainMenuItems && this.MainMenuItems.length > 0) {
             this.SelectedMenu = this.MainMenuItems[0];
         }
