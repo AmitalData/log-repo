@@ -913,7 +913,7 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 awbDp.TenantCompanyNameAddress = issuingCarrierAddress.Name + Environment.NewLine + this.GetAddress(issuingCarrierAddress) + Environment.NewLine;
                 Country issuingCarrierAgentCountry = countryRepository.GetSingleCountry(issuingCarrierAddress.CountryId, tenant);
-                awbDp.TenantAddress_WithCountry = issuingCarrierAgentCountry.EnglishName;
+                awbDp.TenantAddress_WithCountry = issuingCarrierAddress.Name + Environment.NewLine + this.GetAddress(issuingCarrierAddress, true) + Environment.NewLine; 
             }
         }
         private void GetMAWBOBLDate()
@@ -2427,7 +2427,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             return hasValue;
         }
-        private string GetAddress(Address address)
+        private string GetAddress(Address address, bool isCountryName = false)
         {
             string resultAddress = "";
 
@@ -2450,7 +2450,8 @@ namespace WebFreight.Web.ReportsWebServices
             }
             if (address.Country != null)
             {
-                resultAddress = resultAddress + " " + address.Country.Code;
+                if (isCountryName) resultAddress = resultAddress + " " + address.Country.EnglishName;
+                else resultAddress = resultAddress + " " + address.Country.Code;
             }
 
             return resultAddress;
