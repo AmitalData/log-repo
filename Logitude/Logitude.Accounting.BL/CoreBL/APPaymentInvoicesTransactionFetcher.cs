@@ -14,11 +14,11 @@ namespace Logitude.Accounting.BL.CoreBL
         int tenant;
         string paymentId;
         string glaccountId;
-
+        bool _excludeCancelledReconciliations = false;
         LedgerTransaction paymentTransaction;
         List<LedgerTransactionPM> transactions;
 
-        public APPaymentInvoicesTransactionFetcher(string appaymentId, string glaccountId, int tenant)
+        public APPaymentInvoicesTransactionFetcher(string appaymentId, string glaccountId, int tenant, bool? excludeCancelledReconciliations = null)
         {
             this.tenant = tenant;
             paymentId = appaymentId;
@@ -28,7 +28,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 paymentTransaction = GetPaymentTransaction();
 
             transactions = new List<LedgerTransactionPM>();
+            _excludeCancelledReconciliations = excludeCancelledReconciliations != null && excludeCancelledReconciliations == true;
         }
+
 
         public List<LedgerTransactionPM> FetchSorted()
         {
@@ -65,19 +67,23 @@ namespace Logitude.Accounting.BL.CoreBL
             List<ReconciliationLinePM> reconciliationLines = GetReconciliationLinesForTransactions(transactions);
 
             List<ReconciliationPM> reconciliations = GetReconciliationsByReconcileLines(tenant, reconciliationLines);
-
-            foreach (LedgerTransactionPM transaction in transactions)
-            {
-                string recoNumbers = GetReconciliationNumbersForTransaction(reconciliationLines, reconciliations, transaction);
-                transaction.RecoNumber = recoNumbers;
+            if (_excludeCancelledReconciliations) {
+                reconciliations = reconciliations.Where(x => !x.IsCancelled).ToList();
             }
 
+            string APPaymentRecoNumbers = GetReconciliationNumbersForAPPayment(reconciliationLines, reconciliations, paymentTransaction?.Id);
+            foreach (LedgerTransactionPM transaction in transactions)
+            {
+                string recoNumbers = GetReconciliationNumbersForTransaction(reconciliationLines, reconciliations, transaction.Id);
+                transaction.RecoNumber = recoNumbers;
+                transaction.Reference3 = paymentId != null ? APPaymentRecoNumbers : null;
+            }
             return transactions;
         }
-        private string GetReconciliationNumbersForTransaction(List<ReconciliationLinePM> reconciliationLines, List<ReconciliationPM> reconciliations, LedgerTransactionPM transactions)
+        private string GetReconciliationNumbersForTransaction(List<ReconciliationLinePM> reconciliationLines, List<ReconciliationPM> reconciliations, string transactionId)
         {
             List<ReconciliationLinePM> transactionRecoLines = reconciliationLines
-                                .Where(d => d.TransactionId == transactions.Id).ToList();
+                                .Where(d => d.TransactionId == transactionId).ToList();
 
             List<string> reconciliationsId = transactionRecoLines.Select(a => a.ReconciliationId).ToList();
             List<ReconciliationPM> reconciliationsForTransaction = reconciliations.Where(d => reconciliationsId.Contains(d.Id)).ToList();
@@ -88,6 +94,28 @@ namespace Logitude.Accounting.BL.CoreBL
             string numbersString = string.Join(",", reconciliationsNumbersForTransaction);
             return numbersString;
         }
+
+        private string GetReconciliationNumbersForAPPayment(List<ReconciliationLinePM> reconciliationLines, List<ReconciliationPM> reconciliations, string transactionId)
+        {
+            List<ReconciliationLinePM> transactionRecoLines = new List<ReconciliationLinePM>();
+            if (transactionId != null)
+            {
+                transactionRecoLines = reconciliationLines
+                                    .Where(d => d.ReconciledWithTransactionId == transactionId).ToList();
+            }
+            else {
+                transactionRecoLines = reconciliationLines.ToList();
+            }
+            List<string> reconciliationsId = transactionRecoLines.Select(a => a.ReconciliationId).ToList();
+            List<ReconciliationPM> reconciliationsForTransaction = reconciliations.Where(d => reconciliationsId.Contains(d.Id)).ToList();
+
+            string[] reconciliationsNumbersForTransaction = reconciliationsForTransaction
+                .Where(d => d.IsCancelled == false).Select(d => d.Number).ToArray();
+
+            string numbersString = string.Join(",", reconciliationsNumbersForTransaction);
+            return numbersString;
+        }
+
         private List<ReconciliationPM> GetReconciliationsByReconcileLines(int tenant, List<ReconciliationLinePM> recoLines)
         {
             List<string> recosIds = recoLines.Select(d => d.ReconciliationId).ToList();
@@ -123,7 +151,7 @@ namespace Logitude.Accounting.BL.CoreBL
             reconciledTransactions = GetTransactionsById(recoLinesTransactionsId);
 
             // exclude partially reconcile transactions
-            reconciledTransactions = reconciledTransactions.Where(d => d.IsReconciled == true && d.SourceTypeCode == CloseTables.AccountingEntityValues.APInvoice).ToList();
+            reconciledTransactions = reconciledTransactions.Where(d => d.SourceTypeCode == CloseTables.AccountingEntityValues.APInvoice).ToList();
 
             FillTransactionsAmountToReconcile(reconciledTransactions);
 
@@ -206,7 +234,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private List<LedgerTransactionPM> GetInvoicesTransactions()
         {
             LedgerTransactionQueryService transactionQueryService = new LedgerTransactionQueryService(tenant);
-            IQueryable<LedgerTransactionPM> invoicesTransactions = transactionQueryService.GetInvoicesTransactions(tenant);
+            IQueryable<LedgerTransactionPM> invoicesTransactions = transactionQueryService.GetInvoicesTransactions(tenant, AccountingEntities.APInvoice);
             invoicesTransactions = invoicesTransactions
                     .Where(d =>
                         d.AccountId == glaccountId

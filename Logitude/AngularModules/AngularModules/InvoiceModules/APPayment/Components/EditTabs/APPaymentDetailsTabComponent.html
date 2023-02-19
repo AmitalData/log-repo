@@ -842,10 +842,9 @@
                                                 [header]="'Accounting.O.ARP.ReconciliationNumber' | TextCodeTranslationPipe">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [TabIndex]="-1">
-                                                <div class="TextTrimming" text-start>
-                                                    <!-- <a *ngFor="let recoNum of item.RecociliationNumbers; let i = index"
-                                                       (click)="OpenReco(recoNum)">{{recoNum}}{{ i>=item.RecociliationNumbers.length-1?'':', ' }}</a> -->
-                                                    <a  (click)="OpenReco(item.RecoNumber)">{{item.RecoNumber}}</a>
+                                                <div *ngIf="item.RecoNumber" class="TextTrimming" text-start>
+                                                    <a *ngFor="let recoNum of item.RecoNumber.split(','); let i = index"
+                                                       (click)="OpenReco(recoNum)">{{recoNum}}{{ i>=item.RecoNumber.split(',').length-1?'':', ' }}</a>
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>
