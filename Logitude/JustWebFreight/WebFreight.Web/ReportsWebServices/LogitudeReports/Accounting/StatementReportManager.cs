@@ -884,8 +884,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                                              ContainersNumbersArray = m.ContainersNumbers,
                                                              ProjectNumber = d.ProjectNumber,
                                                              NumberOfContainers = d.NumberOfContainers,
-                                                             FinalDestinationATA = master.MainCarriageFinalDestinationATA,
-                                                             FinalDestinationETA = m.FinalDeliveryETA == null ? master.MainCarriageFinalDestinationETA : m.FinalDeliveryETA
+                                                             FinalDestinationETA =  master.MainCarriageFinalDestinationETA,
+                                                             FinalDestinationETD = m.FinalDeliveryETD == null ? master.MainCarriageETD : m.FinalDeliveryETD,                                    
                                                          }).ToList();
 
             List<Branch> branches = (from d in commonContext.Branches where d.Tenant == tenant select d).ToList();
@@ -948,8 +948,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.ContainersNumbersArray = shipmentEntity.ContainersNumbersArray;
                     record.ProjectNumber = shipmentEntity.ProjectNumber;
                     record.ContainersQuantity = shipmentEntity.NumberOfContainers;
-                    record.FinalDestinationATA = shipmentEntity.FinalDestinationATA;
                     record.FinalDestinationETA = shipmentEntity.FinalDestinationETA;
+                    record.FinalDestinationETD = shipmentEntity.FinalDestinationETD;
                 }
 
                 if (record.BranchId != null)
@@ -1165,7 +1165,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         public string ContainersNumbersArray { get; set; }
         public string ProjectNumber { get; set; }
         public int? NumberOfContainers { get; set; }
-        public DateTime? FinalDestinationATA { get; set; }
+        public DateTime? FinalDestinationETD { get; set; }
         public DateTime? FinalDestinationETA { get; set; }
     }
 }
