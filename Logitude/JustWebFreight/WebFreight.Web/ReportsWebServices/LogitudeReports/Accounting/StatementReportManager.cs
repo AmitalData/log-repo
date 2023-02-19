@@ -42,7 +42,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private StatementDataProvider dataProvider;
         private ARInvoiceTotalVATRepository arInvoiceTotalVATRepository;
         private APInvoiceTotalVATRepository apInvoiceTotalVATRepository;
-
         public StatementReportManager(byte[] xmlFilters, int tenant)
         {
             this.tenant = tenant;
@@ -237,6 +236,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                                  group p by p.Currency into g
                                                  select new StatementGroup()
                                                  {
+                                                   
                                                      Currency = g.Key,
                                                      StatementRecordList = g.ToList(),
                                                  }).ToList();
@@ -246,7 +246,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             {
                 this.HandelStatementRecordListOfGroup(group);
                 List<StatmentAging> agingList = dataProvider.StatementAgingSummaryRecordList.Where(d => d.Currency == group.Currency).ToList();
-                group.StatementAgingSummaryRecordList = agingList;
+                group.StatementAgingSummaryRecordList = agingList;        
             }
 
             dataProvider.StatementGroupList = finalResults.OrderBy(d => d.Currency).ToList();            
@@ -995,6 +995,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 item.DebitSubtotalLocalCurrency = d.SubTotalInLocalCurrency == null ? null : ((d.ARInvoiceTypeCode == "CD" || d.ARInvoiceTypeCode == "CC") ? null : d.SubTotalInLocalCurrency);
                 item.CreditSubtotalInvoiceCurrency = d.SubTotalInInvoiceCurrency == null ? null : ((d.ARInvoiceTypeCode != "CD" && d.ARInvoiceTypeCode != "CC") ? null : d.SubTotalInInvoiceCurrency);
                 item.CreditSubtotalLocalCurrency = d.SubTotalInLocalCurrency == null ? null : ((d.ARInvoiceTypeCode != "CD" && d.ARInvoiceTypeCode != "CC") ? null : d.SubTotalInLocalCurrency);
+                item.PaymentTerm = d.PaymentTerm == null ? null : d.PaymentTerm.EnglishName;
                 this.ComputeARTotalVATs(item, d);
 
                 customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, d, item);
@@ -1055,6 +1056,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 item.DebitSubtotalLocalCurrency = d.SubTotalInLocalCurrency == null ? null : (d.SubTotalInLocalCurrency > 0 ? null : d.SubTotalInLocalCurrency);
                 item.CreditSubtotalInvoiceCurrency = d.SubTotalInInvoiceCurrency == null ? null : (d.SubTotalInInvoiceCurrency > 0 ? d.SubTotalInInvoiceCurrency : null);
                 item.CreditSubtotalLocalCurrency = d.SubTotalInLocalCurrency == null ? null : (d.SubTotalInLocalCurrency > 0 ? d.SubTotalInLocalCurrency : null);
+                item.PaymentTerm = d.PaymentTerm == null ? null : d.PaymentTerm.EnglishName;
                 this.ComputeAPTotalVATs(item, d);
                 myList.Add(item);
             }

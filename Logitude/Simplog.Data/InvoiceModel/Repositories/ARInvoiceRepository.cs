@@ -595,7 +595,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
         }
         public IQueryable<ARInvoice> GetUnpaidAndDraftARInvoices(int tenant)
         {
-            return context.ARInvoices.Include("Status").Where(d => d.Tenant == tenant && d.StatusCode != "VD" && d.StatusCode != "LL" && !d.IsAutoCredit && !d.IsCancelled && d.IsClosed == false);
+            return context.ARInvoices.Include("Status").Include("PaymentTerm").Where(d => d.Tenant == tenant && d.StatusCode != "VD" && d.StatusCode != "LL" && !d.IsAutoCredit && !d.IsCancelled && d.IsClosed == false);
         }
 
         public IQueryable<ARInvoice> FilterInvoicesStatuses(IQueryable<ARInvoice> invoices)
