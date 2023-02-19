@@ -1,0 +1,14 @@
+﻿<Script DBType="Main" Module="Accounting">
+  <Sql Version="1">
+    <![CDATA[
+insert into CopyFromTenant0(Tenant,TableName)values(0,'Chart Of Accounts')
+insert into CopyFromTenant0(Tenant,TableName)values(0,'GLAccounts')
+insert into CopyFromTenant0(Tenant,TableName)values(0,'Automatic Reconcile Methods')
+insert into CopyFromTenant0(Tenant,TableName)values(0,'VatTypes')
+insert into CopyFromTenant0(Tenant,TableName)values(0,'Computing Partners')
+insert into CopyFromTenant0(Tenant,TableName)values(0,'Tenants')
+insert into CopyFromTenant0(Tenant,TableName)values(0,'Tasks Scheduler')
+	
+     ]]>
+  </Sql>
+</Script>
