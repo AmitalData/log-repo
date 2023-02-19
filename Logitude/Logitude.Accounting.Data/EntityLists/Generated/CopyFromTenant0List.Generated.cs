@@ -19,7 +19,7 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public int Tenant  { get; set; }
        [DataMember]
-       public DateTime CreateDate  { get; set; }
+       public DateTime? CreateDate  { get; set; }
        [DataMember]
        public string CreatedByUserId  { get; set; }
        [DataMember]

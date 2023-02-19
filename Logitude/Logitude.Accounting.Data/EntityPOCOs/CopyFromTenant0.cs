@@ -24,7 +24,7 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         [Column("Tenant")]
 	    public int Tenant { get; set; }
         [Column("CreateDate")]
-	    public DateTime CreateDate { get; set; }
+	    public DateTime? CreateDate { get; set; }
         [ForeignKey("CreatedByUser")]
         [Column("CreatedByUserId")]
 	    public string CreatedByUserId { get; set; }
