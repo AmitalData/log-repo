@@ -164,5 +164,11 @@ export class TenantManagementList {
 		DeclarationMessage: string;
 		ActivatePrivateSite: boolean;
 		IsContainerTrackingPrepaid: boolean;
+		DigitalPortalLastDate: Date;
+		DigitalPortalTotalLastWeek: number;
+		DigitalPortalTotalLastMonth: number;
+		DigitalPortalMobileLastDate: Date;
+		DigitalPortalMobileTotalLastWeek: number;
+		DigitalPortalMobileTotalLastMonth: number;
 	
 }
