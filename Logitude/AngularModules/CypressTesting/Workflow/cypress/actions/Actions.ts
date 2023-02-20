@@ -423,30 +423,35 @@ export function FillAssignmentDetails(assignmentDetails: AssignmentDetails, inde
     cy.FillLogTextBox(WorkflowSelectors.WorkflowAssignmentName, assignmentDetails.Name);
 }
 
-export function FillAssignVariablesDetails(assignVariablesDetails: AssignVariablesDetails[]) {
+export function FillAssignVariablesDetails(assignVariablesDetails: AssignVariablesDetails[], matchedType: boolean) {
     for (let i = 0; i < assignVariablesDetails.length; i++) {
-        fillVariableNameAssignment(i+1, assignVariablesDetails[i].VariableName);
-        cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowAssignFieldOperation(i+1), assignVariablesDetails[i].Operation, 0)
-        fillVariableValueAssignment(i+1, assignVariablesDetails[i].FromList, assignVariablesDetails[i].Value)
-        if (i < (assignVariablesDetails.length -1)) {
+        fillVariableNameAssignment(i + 1, assignVariablesDetails[i].VariableName);
+        cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowAssignFieldOperation(i + 1), assignVariablesDetails[i].Operation, 0)
+        fillVariableValueAssignment(i + 1, assignVariablesDetails[i].FromList, assignVariablesDetails[i].Value, matchedType)
+        if (i < (assignVariablesDetails.length - 1)) {
             cy.Click(WorkflowSelectors.AddNewAssignVariable, null)
         }
     }
 }
 
-function fillVariableValueAssignment(index: number, isListValue: string, variableVaue: string) {
+function fillVariableValueAssignment(index: number, isListValue: string, variableVaue: string, matchedType: boolean) {
     if (isListValue == 'True') {
-        fillVariableValueListAssignment(index, variableVaue)
+        fillVariableValueListAssignment(index, variableVaue, matchedType)
     }
     else {
         cy.get(WorkflowSelectors.WorkflowAssignFieldValueInput(index)).type(variableVaue)
     }
 }
 
-function fillVariableValueListAssignment(index: number, VaraibleValue: string) {
-    cy.get(WorkflowSelectors.WorkflowAssignFieldValue(index)).find(BaseSelectors.input).click().type(VaraibleValue).then(() => {
-        cy.get(WorkflowSelectors.WorkflowfieldsListTitle).contains(VaraibleValue).eq(0).click()
-    });
+function fillVariableValueListAssignment(index: number, VaraibleValue: string, matchedType) {
+    if(matchedType) {
+        cy.get(WorkflowSelectors.WorkflowAssignFieldValue(index)).find(BaseSelectors.input).click().type(VaraibleValue).then(() => {
+            cy.get(WorkflowSelectors.WorkflowfieldsListTitle).contains(VaraibleValue).eq(0).click()
+        });
+    }
+    else {
+        cy.get(WorkflowSelectors.WorkflowAssignFieldValue(index)).find(BaseSelectors.input).click().type(VaraibleValue)
+    }
 }
 
 function fillVariableNameAssignment(index: number, VaraibleName: string) {
@@ -454,6 +459,11 @@ function fillVariableNameAssignment(index: number, VaraibleName: string) {
         cy.get(WorkflowSelectors.WorkflowfieldsListTitle).contains(VaraibleName).eq(0).click()
     });
 }
+
+export function AssertFieldDoseNotExists() {
+    BaseAssertion.AssertElementContain('.ant-select-tree-dropdown', 'No Results Found')
+}
+
 
 function FillConditionValue(selector: string, value: string, condition: string) {
     switch (condition) {

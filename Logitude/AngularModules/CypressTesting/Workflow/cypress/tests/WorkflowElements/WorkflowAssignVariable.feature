@@ -40,3 +40,11 @@ Feature: Workflow node
             | NumberVar    | Equals <field>    | Packages QTY | True     |
         When save flow
         Then the flow should save successfully
+
+    Scenario: assign primitive variable to different datatype
+        Given add second assign element with following details
+            | Name | Assign variables2 |
+        When assign primitive varaibles in second assignment with following details
+            | VariableName | Operation      | Value           | FromList |
+            | NumberVar    | Equals <field> | Account Manager | True     |
+        Then the field should not appear

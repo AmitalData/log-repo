@@ -75,7 +75,7 @@ Given("add assign element with following details", (dataTable) => {
 
 Given("assign primitive varaibles with following details", (dataTable) => {
     let assignVariablesDetails = Assists.CreateSet<AssignVariablesDetails>(dataTable);
-    Actions.FillAssignVariablesDetails(assignVariablesDetails);
+    Actions.FillAssignVariablesDetails(assignVariablesDetails, true);
 });
 
 When("save flow", () => {
@@ -84,4 +84,18 @@ When("save flow", () => {
 
 Then("the flow should save successfully", () => {
     Actions.AssertSaveWorkflow();
+});
+
+Given("add second assign element with following details", (dataTable) => {
+    let assignmentDetails = Assists.CreateInstance<AssignmentDetails>(dataTable, true);
+    Actions.FillAssignmentDetails(assignmentDetails, ConnectorCount);
+});
+
+When("assign primitive varaibles in second assignment with following details", (dataTable) => {
+    let assignVariablesDetails = Assists.CreateSet<AssignVariablesDetails>(dataTable);
+    Actions.FillAssignVariablesDetails(assignVariablesDetails, false);
+});
+
+Then("the field should not appear", () => {
+    Actions.AssertFieldDoseNotExists();
 });
