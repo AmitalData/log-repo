@@ -188,6 +188,11 @@
     <Compile Include="Repositories\WorkFlowVersionStatusRepository.cs" />
     <Compile Include="WorkflowContext.cs" />
     <Compile Include="WorkflowStorage\ArchivedJsonDeserializer.cs" />
+    <Compile Include="WorkflowValidation\Constants\ExternalApiURLs.cs" />
+    <Compile Include="WorkflowValidation\Exceptions\Builders\WorkflowValidationExceptionBuilder.cs" />
+    <Compile Include="WorkflowValidation\Exceptions\WorkflowValidationException.cs" />
+    <Compile Include="WorkflowValidation\Models\WorkflowActivationError.cs" />
+    <Compile Include="WorkflowValidation\Models\WorkflowValidationResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
