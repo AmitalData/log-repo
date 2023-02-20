@@ -3,6 +3,7 @@ using Logitude.BL.DataContracts;
 using Logitude.BL.ShipmentsModel.CloseTables;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
+using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -34,7 +35,8 @@ namespace WebFreight.Web.ContainerTracking
         private bool isUpdatingEmptyLeg = false;
         private Tenant myTenant;
         private readonly ContainerTrackingHelper containerTrackingHelper;
-        
+        private ContainerDiscrepancyService containerDiscrepancyService;
+
 
         public ContainerTrackingUpdateManager(ContainerUpdatedFields containerUpdatedFields)
         {
@@ -140,6 +142,8 @@ namespace WebFreight.Web.ContainerTracking
             this.MapTransshipments();
         }
 
+       
+
         private void MapPreCarriage()
         {
             containerPM.PreCarriageLocation = containerUpdatedFields.OriginLocation;
@@ -164,21 +168,26 @@ namespace WebFreight.Web.ContainerTracking
             containerPM.PreCarriageLocationPortId = this.GetPortId(containerUpdatedFields.VisionPreCarriage);
             containerPM.PreCarriageLocation = containerUpdatedFields.VisionPreCarriage;
         }
-        
+
         private void MapVizionPreCarriageDates()
         {
+            
             if (containerUpdatedFields.OriginLocation == null) return;
             string portId = this.GetPortId(containerUpdatedFields.OriginLocation);
+            
             if (!containerTrackingHelper.IsSameLocationUsingId(portId, containerPM.PreCarriageLocationPortId)) return;
 
             containerPM.PreCarriageETD = containerUpdatedFields.EstimatedOriginPickup;
             containerPM.PreCarriageATD = containerUpdatedFields.ActualOriginPickup;
-
+            containerTrackingHelper.AddContainerDiscrepancy("PreCarriage", containerPM, shipmentPM);
             if (!containerTrackingHelper.IsSameLocationUsingId(containerPM.PreCarriageLocationPortId, shipmentPM.PreCarriageFromPortId)) return;
-            
+           
             shipmentPM.PreCarriageETD = containerPM.PreCarriageETD;
-            shipmentPM.PreCarriageATD = shipmentPM.PreCarriageATD ?? containerPM.PreCarriageATD;
+            shipmentPM.PreCarriageATD = shipmentPM.PreCarriageATD ?? containerPM.PreCarriageATD; 
+            
         }
+        
+
         private void MapVizionOnCarriage()
         {
             this.MapVizionOnCarriageLocation();
@@ -190,20 +199,24 @@ namespace WebFreight.Web.ContainerTracking
             containerPM.OnCarriageLocation = containerUpdatedFields.VisionOnCarriage;
         }
         private void MapVizionOnCarriageDates()
-        {
+        {           
             if (containerUpdatedFields.OnCarriageLocation == null) return;
             string portId = this.GetPortId(containerUpdatedFields.OnCarriageLocation);
+           
             if (!containerTrackingHelper.IsSameLocationUsingId(portId, containerPM.OnCarriageLocationPortId)) return;
 
             containerPM.OnCarriageETA = containerUpdatedFields.OnCarriageETA;
             containerPM.OnCarriageATA = containerUpdatedFields.OnCarriageATA;
 
-            if (!containerTrackingHelper.IsSameLocationUsingId(containerPM.OnCarriageLocationPortId, shipmentPM.OnCarriageToPortId)) return;
+            containerTrackingHelper.AddContainerDiscrepancy("OnCarriage", containerPM, shipmentPM);
 
+            if (!containerTrackingHelper.IsSameLocationUsingId(containerPM.OnCarriageLocationPortId, shipmentPM.OnCarriageToPortId))return;
+            
             shipmentPM.OnCarriageETA = containerPM.OnCarriageETA;
-            shipmentPM.OnCarriageATA = shipmentPM.OnCarriageATA ?? containerPM.OnCarriageATA;
-        }
 
+            shipmentPM.OnCarriageATA = shipmentPM.OnCarriageATA ?? containerPM.OnCarriageATA;        
+        }
+   
         public void SetContainer(ContainerPM containerPM)
         {
             this.containerPM = containerPM;
@@ -342,18 +355,25 @@ namespace WebFreight.Web.ContainerTracking
         {
             if (key == "VesselArrived")
             {
+                containerTrackingHelper.AddTranshipmentDiscrepancyContainer(transshipmentLegIndex, "to", containerPM, shipmentPM, portId, updatedFields);
                 if (!containerTrackingHelper.IsSameLocationUsingId((string)GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + "ToPortId"), portId)) return;
+                
                 this.FillFieldsNewValues("Transshipment" + transshipmentLegIndex + "ETA", updatedFields.EstimatedDate, shipmentPM);
-                if (GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + "ATA") == null) this.FillFieldsNewValues("Transshipment" + transshipmentLegIndex + "ATA", updatedFields.ActualDate, shipmentPM);
+                var transshipmentATAInShipment = GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + "ATA");
+                if (transshipmentATAInShipment == null) this.FillFieldsNewValues("Transshipment" + transshipmentLegIndex + "ATA", updatedFields.ActualDate, shipmentPM);         
             }
 
             else if (key == "VesselDeparted")
             {
+                containerTrackingHelper.AddTranshipmentDiscrepancyContainer(transshipmentLegIndex, "from", containerPM, shipmentPM, portId, updatedFields);
                 if (!containerTrackingHelper.IsSameLocationUsingId((string)GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + "FromPortId"), portId)) return;
+                
                 this.FillFieldsNewValues("Transshipment" + transshipmentLegIndex + "ETD", updatedFields.EstimatedDate, shipmentPM);
-                if (GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + "ATD") == null) this.FillFieldsNewValues("Transshipment" + transshipmentLegIndex + "ATD", updatedFields.ActualDate, shipmentPM);
+                var transshipmentATDInShipment = GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + "ATD");
+                if (transshipmentATDInShipment == null) this.FillFieldsNewValues("Transshipment" + transshipmentLegIndex + "ATD", updatedFields.ActualDate, shipmentPM);
             }
         }
+       
         private void SetTransshipmentLegDates(int? transshipmentLegIndex, MilestoneDataUpdatedFields updatedFields, string key)
         {
             if (key == "LoadedTransshipment")
@@ -427,13 +447,16 @@ namespace WebFreight.Web.ContainerTracking
         }
         private void UpdateEmptyReturnLeg()
         {
+            
             this.isUpdatingEmptyLeg = false;
             ShipmentDeliveryPM delivery = this.GetEmptyReturnLeg();
+            
             if (delivery != null)
             {
                 this.isUpdatingEmptyLeg = true;
                 delivery.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                 delivery.ETA = containerPM.EstimatedEmptyReturn;
+                containerTrackingHelper.AddDeliveryContainerDiscrepancy(delivery, shipmentPM, containerPM);
                 delivery.ATA = delivery.ATA ?? containerPM.ActualEmptyReturn;
             }
         }
@@ -453,7 +476,14 @@ namespace WebFreight.Web.ContainerTracking
         }
         private void UpdateShipment(bool isUpdatingShipment)
         {
-            if (!isUpdatingShipment) return;
+            if (!isUpdatingShipment)
+            {
+               string location = "POLMainCarriage";
+                containerTrackingHelper.AddContainerDiscrepancy(location, containerPM, shipmentPM);
+                location = "PODMainCarriage";
+                containerTrackingHelper.AddContainerDiscrepancy(location, containerPM, shipmentPM);
+                return;
+            }
 
             if (FeatureToggleHelper.HasFeatureToggle("OIU", tenant))
             {
@@ -537,16 +567,20 @@ namespace WebFreight.Web.ContainerTracking
         {
             if (POLShipmentUpdateIndicator == "Pre Carriage")
             {
+                containerTrackingHelper.AddContainerDiscrepancy("POLPreCarriage", containerPM, shipmentPM);
                 this.FillFieldsShipmentNewValues("PreCarriageETD", containerPM.EstimatedPOLVesselDeparture, shipmentPM);
 
                 if (shipmentPM.PreCarriageATD == null)
                 {
                     this.FillFieldsShipmentNewValues("PreCarriageATD", containerPM.ActualPOLVesselDeparture, shipmentPM);
+                   
                 }
             }
 
+
             else if (POLShipmentUpdateIndicator == "Main Carriage")
             {
+                containerTrackingHelper.AddContainerDiscrepancy("POLMainCarriage", containerPM, shipmentPM);
                 if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.Vizion)
                     shipmentPM.IsUpdatedVizionMainCarriageDates = true;
                 if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.OceanInsights)
@@ -558,12 +592,14 @@ namespace WebFreight.Web.ContainerTracking
                 {
                     this.FillFieldsShipmentNewValues("MainCarriageATD", containerPM.ActualPOLVesselDeparture, shipmentPM);
                 }
+
             }
         }
         private void UpdatePODDates()
         {
             if (PODShipmentUpdateIndicator == "On Carriage")
             {
+                containerTrackingHelper.AddContainerDiscrepancy("PODOnCarriage", containerPM, shipmentPM);
                 this.FillFieldsShipmentNewValues("OnCarriageETA", containerPM.EstimatedPODVesselArrival, shipmentPM);
 
                 if (shipmentPM.OnCarriageATA == null)
@@ -580,11 +616,12 @@ namespace WebFreight.Web.ContainerTracking
                 if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.OceanInsights)
                     shipmentPM.IsUpdatedOceanInsightsMainCarriageDates = true;
 
+                containerTrackingHelper.AddContainerDiscrepancy("PODMainCarriage", containerPM, shipmentPM);
                 this.FillFieldsShipmentNewValues("MainCarriageETA", containerPM.EstimatedPODVesselArrival, shipmentPM);
-
                 if (shipmentPM.MainCarriageATA == null)
                 {
                     this.FillMainCarriageATA();
+                   
                 }
             }
         }

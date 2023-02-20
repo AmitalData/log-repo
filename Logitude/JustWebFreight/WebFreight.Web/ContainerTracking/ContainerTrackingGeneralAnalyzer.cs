@@ -1,4 +1,5 @@
-﻿using Logitude.BL.DataContracts;
+﻿using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.DataContracts;
 using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.CloseTables;
 using Logitude.BL.ShipmentsModel.EntityPMs;
@@ -42,6 +43,8 @@ namespace WebFreight.Web.ContainerTracking
         private string trackingSource;
         private ContainerUpdatedFields containerUpdatedFields;
         private ContainerTrackingHelper containerTrackingHelper;
+        private PortQuery portQuery;
+        private PortRepository portRepository;
         public ContainerTrackingGeneralAnalyzer(string trackingSource, AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
         {
             if (analyzeQueue != null)
@@ -51,6 +54,8 @@ namespace WebFreight.Web.ContainerTracking
                 this.analyzeQueueRepository = analyzeQueueRepository;
                 this.trackingSource = trackingSource;
             }
+            this.portRepository = new PortRepository(tenant_Zero);
+            this.portQuery = new PortQuery(portRepository);
         }
 
         public void Run()
@@ -191,7 +196,7 @@ namespace WebFreight.Web.ContainerTracking
                     manager.SetContainer(container);
                     manager.SetShipment(shipment);
                     MapContainersExternalData(container);
-                    manager.Update(IsUpdateContainerAllowed(container), IsUpdateShipmentAllowed(shipment));
+                    manager.Update(IsUpdateContainerAllowed(container), IsUpdateShipmentAllowed(shipment, container));
                     analyz = IsUpdateContainerAllowed(container);
                 }
 
@@ -213,19 +218,19 @@ namespace WebFreight.Web.ContainerTracking
 
             return true;
         }
-        private bool IsUpdateShipmentAllowed(ShipmentPM shipment)
+        private bool IsUpdateShipmentAllowed(ShipmentPM shipment, ContainerPM container)
         {
             if (shipment.IsOperationalClosed)            
                 return false;
-            
-            if (!containerTrackingHelper.IsSameLocation(shipment.MainCarriageFromPortId, containerUpdatedFields.POLLocation))            
+            if (!containerTrackingHelper.IsSameLocation(shipment.MainCarriageFromPortId, containerUpdatedFields.POLLocation))
                 return false;
-            
-            if (!containerTrackingHelper.IsSameLocation(shipment.MainCarriageFinalDestinationPortId, containerUpdatedFields.PODLocation))            
-                return false;            
-            
-            return true;
+            if (!containerTrackingHelper.IsSameLocation(shipment.MainCarriageFinalDestinationPortId, containerUpdatedFields.PODLocation))
+                return false;
+                return true;
         }
+        
+
+ 
         private bool IsValidToAnalyze(ShipmentPM shipment, ContainerPM container, ContainerTrackingRequest containerTrackingRequest)
         {
             return (
