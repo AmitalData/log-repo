@@ -268,7 +268,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         if (digit != checkDigit.GetValueOrDefault().ToString())
                         {
                             valid = false;
-                            res = value;
+                            res = "";
                         }
                         break;
                     case 10:
@@ -283,6 +283,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         if (digit_ != checkDigit.GetValueOrDefault().ToString())
                         {
                             valid = false;
+                            res = "";
                         }
                         break;
                     default:
