@@ -141,6 +141,8 @@ namespace WebFreight.Web.ContainerTracking
                     shipmentCode = code.Substring(3),
                     containerActualDate = containerPM.ActualPODVesselArrival,
                     shipmentActualDate = shipmentPM.OnCarriageATA,
+                    containerEstimatedDateName = "ETD",
+                    containerActualDateName = "ATD",
                 };
                 CheckIsActaulDateFilled(discreapancyParams);
             }
@@ -191,6 +193,8 @@ namespace WebFreight.Web.ContainerTracking
                     shipmentCode = code.Substring(3),
                     containerActualDate = containerPM.ActualPODVesselArrival,
                     shipmentActualDate = shipmentPM.OnCarriageATA,
+                    containerEstimatedDateName = "ETD",
+                    containerActualDateName = "ATD",
                 };
                 CheckIsActaulDateFilled(discreapancyParams);
             }
@@ -295,7 +299,7 @@ namespace WebFreight.Web.ContainerTracking
         }
         private void AddActualDateDiscrepancy(dynamic discrepancyParams)
         {
-            var actualdateName = discrepancyParams.code + discrepancyParams.containerActualDateName;
+            var actualdateName = discrepancyParams.containerCode + discrepancyParams.containerActualDateName;
             
             var discrepancyReason = $@"Shipment {actualdateName} already has a value of {discrepancyParams.shipmentActualDate} - did not update new container value {discrepancyParams.containerActualDate}.";
 
