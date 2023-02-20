@@ -64,6 +64,27 @@ namespace WebFreight.Web.ContainerTracking
             return false;
         }
 
+        public bool IsSameLocationAndTenant(string entityPortId, string responsePortCode, int Tenant)
+        {
+            Port responsePort = GetPortByCode(responsePortCode, Tenant);
+            Port responsePort_zero = GetPortByCode(responsePortCode, 0);
+            Port entityPort = GetPortById(entityPortId, Tenant);
+            Port entityPort_Zero = GetPortByCode(entityPort?.CombinedCode, 0);
+
+            if (responsePort == null) return false;
+
+            if (string.IsNullOrEmpty(entityPortId))
+                return true;
+
+            else if (entityPortId == responsePort.Id)
+                return true;
+
+            else if (responsePort_zero?.PortGroupId != null && entityPort_Zero?.PortGroupId != null && responsePort_zero?.PortGroupId == entityPort_Zero?.PortGroupId)
+                return true;
+
+            return false;
+        }
+
         private Port GetPortByCode(string portCode, int tenant)
         {
             return portRepository.GetOceanPortByCombinedCode(portCode, tenant);
@@ -72,91 +93,137 @@ namespace WebFreight.Web.ContainerTracking
         {
             return portRepository.GetSinglePort(portId, tenant);
         }
-        public void AddContainerDiscrepancy(string code, ContainerPM containerPM, ShipmentPM shipmentPM)
+       
+            public void AddContainerDiscrepancy(string code, ContainerPM containerPM, ShipmentPM shipmentPM)
         {
             if(code == "PreCarriage")
             {
-                if (!IsSameLocationUsingId(containerPM.PreCarriageLocationPortId, shipmentPM.PreCarriageFromPortId))
-                {
-                    AddNotSameLocationDiscrepancy(containerPM, shipmentPM, code, "ETD");
-                    AddNotSameLocationDiscrepancy(containerPM, shipmentPM, code, "ATD");
-                }
-                else
-                {
-                    if (shipmentPM.PreCarriageATD != containerPM.PreCarriageATD)
-                    {
-                        AddActualDateDiscrepancy(containerPM, shipmentPM, code);
-                        //var discrepancyReason = $@"Shipment Pre Carriage ATD already has a value of {shipmentPM.PreCarriageATD} 
-                        //                    - did not update new container value {containerPM.PreCarriageATD}.";
-                        //AddContainerDiscrepancyToService(containerPM, shipmentPM, discrepancyReason);
-                    }
-                }
+                var preCarriageParams = new  { 
+                    containerPM = containerPM,
+                    shipmentPM = shipmentPM,
+                    containerCode = code,
+                    shipmentCode = code,
+                    containerLocation = containerPM.PreCarriageLocationPortId,
+                    shipmentLocation = shipmentPM.PreCarriageFromPortId,
+                    containerActualDate = containerPM.PreCarriageATD,
+                    shipmentActualDate = shipmentPM.PreCarriageATD,
+                    containerEstimatedDateName = "ETD",
+                    containerActualDateName = "ATD",
+                };
+                CheckIsSameLocationUsingId(preCarriageParams);               
             }
 
             if (code == "OnCarriage")
             {
-                if (!IsSameLocationUsingId(containerPM.OnCarriageLocationPortId, shipmentPM.OnCarriageToPortId))
+                var preCarriageParams = new
                 {
-                    AddNotSameLocationDiscrepancy(containerPM, shipmentPM, code, "ETA");
-                    AddNotSameLocationDiscrepancy(containerPM, shipmentPM, code, "ATA");
-                }
-                else
-                {
-                    if (shipmentPM.OnCarriageATA != containerPM.OnCarriageATA)
-                    {
-                        AddActualDateDiscrepancy(containerPM, shipmentPM, code);
-                    }
-                }
+                    containerPM = containerPM,
+                    shipmentPM = shipmentPM,
+                    containerCode = code,
+                    shipmentCode = code,
+                    containerLocation = containerPM.OnCarriageLocationPortId,
+                    shipmentLocation = shipmentPM.OnCarriageToPortId,
+                    containerActualDate = containerPM.OnCarriageATA,
+                    shipmentActualDate = shipmentPM.OnCarriageATA,
+                    containerEstimatedDateName = "ETA",
+                    containerActualDateName = "ATA",
+                };
+                CheckIsSameLocationUsingId(preCarriageParams);
             }
 
             if(code == "POLPreCarriage")
             {
-                if (shipmentPM.PreCarriageATD != containerPM.ActualPOLVesselDeparture)
+                var discreapancyParams = new
                 {
-                    AddActualDateDiscrepancy(containerPM, shipmentPM, code);
-                }
+                    containerPM = containerPM,
+                    shipmentPM = shipmentPM,
+                    containerCode = code.Substring(0,3),
+                    shipmentCode = code.Substring(3),
+                    containerActualDate = containerPM.ActualPODVesselArrival,
+                    shipmentActualDate = shipmentPM.OnCarriageATA,
+                };
+                CheckIsActaulDateFilled(discreapancyParams);
             }
 
             if (code == "POLMainCarriage")
             {
-                if (!IsSameLocation(shipmentPM.MainCarriageFromPortId, containerPM.POLLocation))
+                var preCarriageParams = new
                 {
-                    AddNotSameLocationDiscrepancy(containerPM, shipmentPM, code.Substring(0, 3), "ETD");
-                    AddNotSameLocationDiscrepancy(containerPM, shipmentPM, code.Substring(0, 3), "ATD");
-                }
-                else
-                {
-                    if (shipmentPM.MainCarriageATD != containerPM.ActualPOLVesselDeparture)
-                    {
-                        AddActualDateDiscrepancy(containerPM, shipmentPM, code);
-                    }
-                }
-                 
+                    containerPM = containerPM,
+                    shipmentPM = shipmentPM,
+                    containerCode = code.Substring(0, 3),
+                    shipmentCode = code.Substring(3),
+                    containerLocation = containerPM.POLLocation,
+                    shipmentLocation = shipmentPM.MainCarriageFromPortId,
+                    containerActualDate = containerPM.ActualPOLVesselDeparture,
+                    shipmentActualDate = shipmentPM.MainCarriageATD,
+                    containerEstimatedDateName = "ETD",
+                    containerActualDateName = "ATD",
+                };
+                CheckIsSameLocation(preCarriageParams);            
             }
             
             if(code == "PODMainCarriage")
             {
-                if (IsSameLocation(shipmentPM.MainCarriageFromPortId, containerPM.PODLocation))
+                var preCarriageParams = new
                 {
-                    AddNotSameLocationDiscrepancy(containerPM, shipmentPM, code.Substring(0, 3), "ETA");
-                    AddNotSameLocationDiscrepancy(containerPM, shipmentPM, code.Substring(0, 3), "ATA");
-                }
-                else
-                {
-                    if (shipmentPM.MainCarriageATA != containerPM.ActualPODVesselArrival)
-                    {
-                        AddActualDateDiscrepancy(containerPM, shipmentPM, code);
-                    }
-                }
-                
+                    containerPM = containerPM,
+                    shipmentPM = shipmentPM,
+                    containerCode = code.Substring(0, 3),
+                    shipmentCode = code.Substring(3),
+                    containerLocation = containerPM.PODLocation,
+                    shipmentLocation = shipmentPM.MainCarriageFinalDestinationPortId,
+                    containerActualDate = containerPM.ActualPODVesselArrival,
+                    shipmentActualDate = shipmentPM.MainCarriageATA,
+                    containerEstimatedDateName = "ETA",
+                    containerActualDateName = "ATA",
+                };
+                CheckIsSameLocation(preCarriageParams);              
             }
 
             if (code == "PODOnCarriage") 
             {
-                if (shipmentPM.OnCarriageATA != containerPM.ActualPODVesselArrival)
+                var discreapancyParams = new
                 {
-                    AddActualDateDiscrepancy(containerPM, shipmentPM, code);
-                }
+                    containerPM = containerPM,
+                    shipmentPM = shipmentPM,
+                    containerCode = code.Substring(0, 3),
+                    shipmentCode = code.Substring(3),
+                    containerActualDate = containerPM.ActualPODVesselArrival,
+                    shipmentActualDate = shipmentPM.OnCarriageATA,
+                };
+                CheckIsActaulDateFilled(discreapancyParams);
+            }
+        }
+        private void CheckIsSameLocationUsingId(dynamic discrepancyParams)
+        {
+            if (!IsSameLocationUsingId(discrepancyParams.containerLocation, discrepancyParams.shipmentLocation))
+            {
+                AddNotSameLocationDiscrepancy(discrepancyParams, discrepancyParams.containerEstimatedDateName);
+                AddNotSameLocationDiscrepancy(discrepancyParams, discrepancyParams.containerActualDateName);
+            }
+            else
+            {
+                CheckIsActaulDateFilled(discrepancyParams);
+            }
+        }
+        private void CheckIsSameLocation(dynamic discrepancyParams)
+        {
+            if (!IsSameLocationAndTenant(discrepancyParams.shipmentLocation, discrepancyParams.containerLocation, discrepancyParams.containerPM.Tenant))
+            {
+                AddNotSameLocationDiscrepancy(discrepancyParams, discrepancyParams.containerEstimatedDateName);
+                AddNotSameLocationDiscrepancy(discrepancyParams, discrepancyParams.containerActualDateName); 
+            }
+            else
+            {
+                CheckIsActaulDateFilled(discrepancyParams);
+            }
+        }
+        private void CheckIsActaulDateFilled(dynamic discrepancyParams)
+        {
+            if (discrepancyParams.shipmentActualDate != discrepancyParams.containerActualDate)
+            {
+                AddActualDateDiscrepancy(discrepancyParams);
             }
         }
         public void AddDeliveryContainerDiscrepancy(ShipmentDeliveryPM delivery, ShipmentPM shipmentPM, ContainerPM containerPM)
@@ -185,39 +252,16 @@ namespace WebFreight.Web.ContainerTracking
                 }
             }
         }
-        private void AddNotSameLocationDiscrepancy(ContainerPM containerPM, ShipmentPM shipmentPM,/*,string containerLocation, string shipmentLocation, */string location, string time)
+        private void AddNotSameLocationDiscrepancy (dynamic discrepancyParams, string time)
         {
-            var shipmentLocation = "";
-            var containerLocation = "";
-            if (location == "PreCarriage")
-            {
-              shipmentLocation = shipmentPM.PreCarriageFromPortId;
-              containerLocation = containerPM.PreCarriageLocation;
-            }
-            else if (location == "OnCarriage")
-            {
-                shipmentLocation = shipmentPM.OnCarriageToPortId;
-                containerLocation = containerPM.OnCarriageLocation;
-            }
-            else if (location == "POL")
-            {
-                shipmentLocation = shipmentPM.MainCarriageToPortId;
-                containerLocation = containerPM.POLLocation;
-            }
-            else
-            {
-                shipmentLocation = shipmentPM.MainCarriageFromPortId;
-                containerLocation = containerPM.PODLocation;
-            }
-
-            var shipmentUnloCode = GetUnloCodeFromPortId(shipmentLocation);
-            var discrepancyReason = "Shipment " + location + " from port is empty - shipment " + time + " not updated.";
+            var shipmentUnloCode = GetUnloCodeFromPortId(discrepancyParams.shipmentLocation);
+            var discrepancyReason = "Shipment " + discrepancyParams.shipmentCode + " from port is empty - shipment " + time + " not updated.";
             if (shipmentUnloCode != null)
             {
-                discrepancyReason = $@"Shipment {location} from port {shipmentUnloCode} not equal to container {location} port {containerLocation} - shipment {time} not updated.";
+                discrepancyReason = $@"Shipment {discrepancyParams.shipmentCode} from port {shipmentUnloCode} not equal to container {discrepancyParams.containerCode} port {discrepancyParams.containerLocation} - shipment {time} not updated.";
             }
 
-            AddContainerDiscrepancyToService(containerPM, shipmentPM, discrepancyReason);
+            AddContainerDiscrepancyToService(discrepancyParams.containerPM, discrepancyParams.shipmentPM, discrepancyReason);
         }
         private string GetUnloCodeFromPortId(string portId)
         {
@@ -249,67 +293,14 @@ namespace WebFreight.Web.ContainerTracking
 
             return GetUnloCodeFromPortId(shipmentPM.Transshipment3FromPortId);
         }
-        //private void AddMainCarriageNotSameLocationDiscrepancy(ContainerPM containerPM, ShipmentPM shipmentPM, string location)
-        //{
-        //    string shipmentLocation = shipmentPM.MainCarriageFromPortId;
-        //    string containerLocation = containerPM.PODLocation;
-        //    var shipmentUnloCode = GetUnloCodeFromPortId(shipmentLocation);
-        //    var discrepancyReason = "Shipment Main Carriage from port is empty - shipment ETD not updated.";
-        //    if (shipmentUnloCode != null)
-        //    {
-        //        discrepancyReason = $@"Shipment Main Carriage from port {shipmentUnloCode} not equal to container {location} port {containerLocation} - shipment ETD not updated.";
-        //    }
-
-        //    AddContainerDiscrepancyToService(containerPM, shipmentPM, discrepancyReason);
-        //}
-        private void AddActualDateDiscrepancy(ContainerPM containerPM, ShipmentPM shipmentPM, string code)
+        private void AddActualDateDiscrepancy(dynamic discrepancyParams)
         {
-            var actualdateName = "";
-            DateTime? shimpmentActualDate;
-            DateTime? containerActualDate;
-            if (code == "PreCarriage")
-            {
-                actualdateName = "Pre Carriage ATD";
-                shimpmentActualDate = shipmentPM.PreCarriageATD;
-                containerActualDate = containerPM.PreCarriageATD;
-            }
-            else if (code == "OnCarriage")
-            {
-                actualdateName = "On Carriage ATA";
-                shimpmentActualDate = shipmentPM.OnCarriageATA;
-                containerActualDate = containerPM.OnCarriageATA;
+            var actualdateName = discrepancyParams.code + discrepancyParams.containerActualDateName;
+            
+            var discrepancyReason = $@"Shipment {actualdateName} already has a value of {discrepancyParams.shipmentActualDate} - did not update new container value {discrepancyParams.containerActualDate}.";
 
-            }
-            else if (code == "POLPreCarriage")
-            {
-                actualdateName = "Pre Carriage ATD";
-                shimpmentActualDate = shipmentPM.PreCarriageATD;
-                containerActualDate = containerPM.ActualPOLVesselDeparture;
-            }
-            else if (code == "POLMainCarriage")
-            {
-                actualdateName = "Main Carriage ATD";
-                shimpmentActualDate = shipmentPM.PreCarriageATD;
-                containerActualDate = containerPM.ActualPOLVesselDeparture;
-            }
-            else if (code == "PODMainCarriage")
-            {
-                actualdateName = "Main Carriage ATA";
-                shimpmentActualDate = shipmentPM.MainCarriageATA;
-                containerActualDate = containerPM.ActualPODVesselArrival;
-            }
-            else
-            {
-                actualdateName = "On Carriage ATA";
-                shimpmentActualDate = shipmentPM.MainCarriageATA;
-                containerActualDate = containerPM.ActualPODVesselArrival;
-            }
-
-            var discrepancyReason = $@"Shipment {actualdateName} already has a value of {shimpmentActualDate} - did not update new container value {containerActualDate}.";
-
-            AddContainerDiscrepancyToService(containerPM, shipmentPM, discrepancyReason);
-
-        }        
+            AddContainerDiscrepancyToService(discrepancyParams.containerPM, discrepancyParams.shipmentPM, discrepancyReason);
+        }
         private static object GetPropValue(object src, string propName)
         {
             return src.GetType().GetProperty(propName).GetValue(src, null);
