@@ -26,6 +26,7 @@ namespace Logitude.Server.Tools.QueueService
         protected string QueueCode { get; set; }
         protected string CurrentMessageId { get; set; }
         private const int messageBodyLength = 2000;
+        [ThreadStatic] public static int? MessageID = null;
         public DbQueueService()
         {
 
@@ -205,6 +206,14 @@ namespace Logitude.Server.Tools.QueueService
                                 if (!String.IsNullOrWhiteSpace(sQueueMessageId))
                                 {
                                     queueMessageId = sQueueMessageId.ChangeValue<int>();
+                                    try
+                                    {
+                                        MessageID = queueMessageId;
+                                    }
+                                    catch
+                                    {
+
+                                    }
                                 }
                             }
 
