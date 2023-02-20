@@ -63,6 +63,7 @@
     <None Include="DBScripts\FillSearchFieldsForWorkflowVersionsAndInstances.sxml" />
     <None Include="DBScripts\FillWorkflowIdForInstances.sxml" />
     <None Include="DBScripts\PrepareWorkflowStatuses.sxml" />
+    <None Include="DBScripts\DeleteDateDifExpression.sxml" />
     <None Include="DBScripts\ReplaceWorkflowsJsonEntityNameKeyWithEntityKey.sxml" />
     <None Include="DBScripts\FillWorkflowsTriggerField.sxml" />
     <None Include="DBTables\Expression.dxml" />
