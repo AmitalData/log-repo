@@ -223,8 +223,7 @@ namespace WebFreight.Web.Controllers.DashboardModel.Extended
             pinnedDashboards.Add(new PinnedDashboard()
             {
                 Id = pinnedDashboardTab.Id,
-                Order = 0,
-                IsPredefined = pinnedDashboardTab.IsPredefined,
+                Order = 0
             });
 
             return new DashboardsUserSetting()
@@ -244,8 +243,7 @@ namespace WebFreight.Web.Controllers.DashboardModel.Extended
                 pinnedDashs.Add(new PinnedDashboard()
                 {
                     Id = pinnedDashboardTab.Id,
-                    Order = 0,
-                    IsPredefined = pinnedDashboardTab.IsPredefined,
+                    Order = 0
                 });
             }
 
@@ -257,8 +255,7 @@ namespace WebFreight.Web.Controllers.DashboardModel.Extended
                 pinnedDashs.Add(new PinnedDashboard()
                 {
                     Id = pinnedDashboardTab.Id,
-                    Order = maxOrder + 1,
-                    IsPredefined = pinnedDashboardTab.IsPredefined,
+                    Order = maxOrder + 1
                 });
             }
 
@@ -304,6 +301,5 @@ namespace WebFreight.Web.Controllers.DashboardModel.Extended
     {
         public string Id { get; set; }
         public int Order { get; set; }
-        public bool IsPredefined { get; set; }
     }
 }
