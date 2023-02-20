@@ -981,7 +981,8 @@ export class CustomsDocumentTicketViewModel {
                         if (this.isDisplayOnly) {
                             var message: string = TextCodeTranslator.Translate("Customs.Declaration.O.DisconnectNotAllowed");
                             if (AppTool.IsNullOrEmpty(message) || message == "Customs.Declaration.O.DisconnectNotAllowed") {
-                                message = ".לם ניתן לנתק מסמך עם סימוכין - הצהרה לתצוגה בלבד";
+                                message =TextCodeTranslator.Translate("Customs.General.O.CannotDetachDocumentWithCustomsDocId")
+                              
                             }
                             var confirmWindow = new ConfirmWindow();
                             confirmWindow.Width = 400;
@@ -1064,16 +1065,17 @@ export class CustomsDocumentTicketViewModel {
             var entitySpecialCondition = this.iCustomsDocumentsController.GetAddEditDocumentsEntitySpecialCondition();
             if ((this.isDisplayOnly || !entitySpecialCondition) && AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId)) {//(Regular doc in a paid declaration) or just disabled declaration
                 applyDisconnect = false;
-                message = "ההצהרה לתצוגה בלבד - לם ניתן לנתק מסמכים";
+                message = "ההצהרה לתצוגה בלבד - לא ניתן לנתק מסמכים";
             }
             if (this.isDisplayOnly && AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId) && !AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.CustomsDocId)) {//(Regular doc that was already sent to customs)
                 applyDisconnect = false;
-                message = ".לם ניתן לנתק מסמך עם סימוכין - הצהרה לתצוגה בלבד";
+                message = TextCodeTranslator.Translate("Customs.General.O.CannotDetachDocumentWithCustomsDocId")
+               
             }
 
             if (!AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId) && !AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.VerificationStatusTypeCode)) {//(Requested doc that was verified/denied/in verification process)
                 applyDisconnect = false;
-                message = ".לם ניתן לנתק מסמך םומת/נדחה/בתהליך םימות";
+                message = ".לא ניתן לנתק מסמך אומת/נדחה/בתהליך אימות";
             }
 
             if (!AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId) && AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.VerificationStatusTypeCode)) {//Requested Doc that wasn't send to customs for verification allow disconnect according to design.
@@ -1269,7 +1271,7 @@ export class CustomsDocumentTicketViewModel {
             messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
             if(this.DataContext.DisplayOnlyMessage=="לתצוגה בלבד - אילוץ אושר")
                messageWindow.Show(TextCodeTranslator.Translate("Customs.General.O.HappinessConstraintDocumentsCannotBeLinked"));
-            if(this.DataContext.DisplayOnlyMessage=="הצהרה סגורה"){
+            if(this.DataContext.EntityPM.declarationStatusTypeCode=="36"){
                 messageWindow.Show(TextCodeTranslator.Translate("Customs.General.O.ClosedDeclarationDocumentsCannotBeLinked"));
             }
             else
