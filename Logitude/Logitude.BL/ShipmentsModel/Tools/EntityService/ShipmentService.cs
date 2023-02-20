@@ -352,7 +352,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
 
-                new ShipmentAnalyticTableService(objectContext.GetActiveDbContext()).AddUpdate(entityPoco);
+                new ShipmentAnalyticTableService(objectContext.GetActiveDbContext()).AddUpdate(entityPoco, tenant);
 
                 if (!string.IsNullOrEmpty(entityPM.MasterCreatedFromHouseId))
                 {
@@ -613,7 +613,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     shipmentAdditionalCloudDataRepository.SubmitChanges();
                     followUpRepository.SubmitChanges();
                     shipmentPickUpDeliveryRepository.SubmitChanges();
-                    new ShipmentAnalyticTableService(objectContext.GetActiveDbContext()).AddUpdate(entityPoco);
+                    new ShipmentAnalyticTableService(objectContext.GetActiveDbContext()).AddUpdate(entityPoco, tenant);
 
                     if (entityPM.IsStandalonePickupDelivery)
                     {

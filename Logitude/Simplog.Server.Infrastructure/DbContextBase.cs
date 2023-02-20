@@ -77,7 +77,14 @@ namespace Simplog.Server.Infrastructure
                 {
                     this.Database.CommandTimeout = to;
                 }
-
+                else if(ApplicationAppInfo.WorkerRoleCall)
+                {
+                    this.Database.CommandTimeout = 10; 
+                }
+                else if (!ApplicationAppInfo.WorkerRoleCall)
+                {
+                    this.Database.CommandTimeout = 30; 
+                }
                 var intSave = base.SaveChanges();
                 var testEx = false;
                 if (testEx)
@@ -338,7 +345,7 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
                
                     using (var command = Database.Connection.CreateCommand())
                     {
-                        if (Transaction.Current != null)
+                        if (Transaction.Current == null)
                         {
                             command.CommandText = "SET TRANSACTION ISOLATION LEVEL SNAPSHOT";
                         }

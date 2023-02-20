@@ -1,7 +1,7 @@
-﻿using Simplog.Data.CommonDataModel;
+﻿using Logitude.Server.Tools.AnalyticTableServices;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using Simplog.Server.Infrastructure.AnalyticTableServices;
 using System.Data.Entity;
 
 namespace Logitude.BL.AnalyticTableServices
