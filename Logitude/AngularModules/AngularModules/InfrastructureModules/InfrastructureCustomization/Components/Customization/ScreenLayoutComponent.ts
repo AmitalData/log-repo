@@ -512,7 +512,10 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
 
         let position = this.GetElementPosition(event, screenRowDetails);
         let myitem: ObjectFieldPM = this.banckStackFields.filter(d => d.Id == objectFieldId)[0];
-
+        if (this.newSelectedItem.ScreenPM.IsHeaderScreen && position >= 2) {
+            this.ShowMessageWindow("Header Screen Has two rows only", "Message");
+            return;
+        }
         if (myitem) {
             let objectField = this.GetObjectField(myitem);
             if (objectField && !objectField.IsCustom && objectField.DisplayOnly && this.IsSubEntity && section.Type != "Summary") {

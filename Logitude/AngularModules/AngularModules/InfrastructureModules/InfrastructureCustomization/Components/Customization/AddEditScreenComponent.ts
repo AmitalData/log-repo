@@ -8,6 +8,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { AppTool } from '../../../../Infrastructure/Tools';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
 
@@ -41,8 +42,7 @@ export class AddEditScreenComponent extends BaseComponent {
 
     constructor() {
         super();
-        this.screenExtendedService = new ScreenExtendedService();
-        this.FillScreenTypes();
+        this.screenExtendedService = new ScreenExtendedService();    
     }
 
     FillScreenTypes() {
@@ -50,7 +50,7 @@ export class AddEditScreenComponent extends BaseComponent {
             this.ScreenTypes.push(new ScreenTypeDetails("Grid", "Grid Screen Layout"));
         this.ScreenTypes.push(new ScreenTypeDetails("LIGHTENING", "Form Screen Layout"));
         if (!this.IsSubEntity && this.IsCustomObjectTable)
-            this.ScreenTypes.push(new ScreenTypeDetails("HeaderScreen", "Header Screen Layout"));
+            this.ScreenTypes.push(new ScreenTypeDetails(null, "Header Screen Layout"));
     }
 
     SetWindowArgs(args: any) {
@@ -62,6 +62,7 @@ export class AddEditScreenComponent extends BaseComponent {
         this.Inactive = this.EntityPM?.Inactive;
 
         this.SetObjectTableFields(this.EntityPM);
+        this.FillScreenTypes();
         this.IsEditMode = args.Screen != null;
         this.SetScreenType();
     }
@@ -85,10 +86,6 @@ export class AddEditScreenComponent extends BaseComponent {
         }
         if (this.IsEditMode) {
             this.selectedScreenType = this.ScreenTypes.filter(screenType => screenType.Code == this.EntityPM.Type)[0];
-            return;
-        }
-        if (!this.IsSubEntity && this.IsCustomObjectTable) {
-            this.selectedScreenType = this.ScreenTypes.filter(screenType => screenType.Code == "HeaderScreen")[0];
             return;
         }
     }
@@ -135,8 +132,13 @@ export class AddEditScreenComponent extends BaseComponent {
         }
 
 
-        if (!this.selectedScreenType || AppTool.IsNullOrEmpty(this.selectedScreenType.Code)) {
+        if (!this.selectedScreenType) {
             this.ValidationErrorsList.push("Type is Required");
+            return;
+        }
+
+        if (this.selectedScreenType.Name == "Header Screen Layout" && this.CheckHeaderScreenAvailability()) {
+            this.ValidationErrorsList.push("You already have a header screen");
             return;
         }
 
@@ -149,11 +151,18 @@ export class AddEditScreenComponent extends BaseComponent {
        this.EntityPM.Name = this.Name;
        this.EntityPM.Inactive = this.Inactive;
        this.EntityPM.Type = this.selectedScreenType.Code;
-       if (this.selectedScreenType.Code == "HeaderScreen") {
-           this.EntityPM.IsHeaderScreen = true;
-           this.EntityPM.NumberOfColumns = 4;
-           this.EntityPM.NumberOfRows = 2;
+       if (this.selectedScreenType.Name == "Header Screen Layout") {
+           this.MapHeaderScreenFields();
        }
+    }
+    MapHeaderScreenFields() {
+        this.EntityPM.IsHeaderScreen = true;
+        this.EntityPM.NumberOfColumns = 4;
+        this.EntityPM.NumberOfRows = 2;
+    }
+    CheckHeaderScreenAvailability() {
+        if (this.screenLayoutComponent.TableScreensCollection.filter(screen => screen.ScreenPM.IsHeaderScreen == true)[0])
+            return true;
     }
 
     private SubmitNewScreen()
