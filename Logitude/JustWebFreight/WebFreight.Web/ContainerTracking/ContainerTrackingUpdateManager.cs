@@ -264,20 +264,20 @@ namespace WebFreight.Web.ContainerTracking
            
             if (leg3 != null)
             {
-                UpdateShipmentVesselVoyage(polLeg != null ? polLeg : leg1, null, containerPM);
+                UpdateVesselVoyageVizionTransshipments(polLeg != null ? polLeg : leg1, index1, containerPM);
                 UpdateVesselVoyageVizionTransshipments(leg1 != null ? leg1 : polLeg, index2, containerPM);
                 UpdateVesselVoyageVizionTransshipments(leg2 != null ? leg2 : leg3, index3, containerPM);
                 UpdateVesselVoyageVizionTransshipments(leg3 != null ? leg3 : podLeg, index4, containerPM);
             }
             else if (leg2 != null)
             {
-                UpdateShipmentVesselVoyage(polLeg != null ? polLeg : leg1, null, containerPM);
+                UpdateVesselVoyageVizionTransshipments(polLeg != null ? polLeg : leg1, index1, containerPM);
                 UpdateVesselVoyageVizionTransshipments(leg1 != null ? leg1 : polLeg, index2, containerPM);
                 UpdateVesselVoyageVizionTransshipments(podLeg != null ? podLeg : leg2, index3, containerPM);
             }
             else if (leg1 != null)
             {
-                UpdateShipmentVesselVoyage(polLeg != null ? polLeg : leg1, null, containerPM);
+                UpdateVesselVoyageVizionTransshipments(polLeg != null ? polLeg : leg1, index1, containerPM);
                 UpdateVesselVoyageVizionTransshipments(podLeg != null ? podLeg : leg1, index2, containerPM);
             }
             else
