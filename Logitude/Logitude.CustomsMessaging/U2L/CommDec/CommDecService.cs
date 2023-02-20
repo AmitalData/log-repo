@@ -644,14 +644,6 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     myDeclarationUpsertService.UpdateTrucker();
 
                     
-                    string defValue = GetDefault("ISRAEL", "CGO_CUST_CAS", "NON", "NON",_tenant);
-
-                       
-                        if(!string.IsNullOrEmpty(defValue) && _MyDeclarationPM.CustomerCode != defValue)
-                        {
-                            UpdateDeclarationPending("906");
-                        }
-
                         if (this.IsAutonomy)
                     {
                         UpdateDeclarationPending("901");

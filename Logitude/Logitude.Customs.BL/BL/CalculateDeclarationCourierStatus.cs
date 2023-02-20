@@ -141,6 +141,9 @@ namespace Logitude.Customs.BL.BL
                 CalcSpecialActionStatus(myDeclarationCourierStatusPM);
                 CalcFastIndividualProcess(myDeclarationCourierStatusPM);
                 CalcDeclarationPendings902(myDeclarationCourierStatusPM);
+                string defValue = GetDefault("ISRAEL", "CGO_CUST_CAS", "NON", "NON");
+                if (!string.IsNullOrEmpty(defValue) && declarationPM.CustomerCode != defValue && declarationPM.ChangeSetOp == ChangeSetOperation.Insert)
+                    CalcDeclarationPendings906(myDeclarationCourierStatusPM);
 
 
                 var updateDeclarationPending903InvalidPhoneNumberService = new UpdateDeclarationPending903InvalidPhoneNumberService(declarationPM);
@@ -573,6 +576,43 @@ namespace Logitude.Customs.BL.BL
                 declarationPendingPM_902.Status = "S";
                 //LogMessagingUtil.Instance.AppendLine("Courier Pending Reason Code 900 Set as Solved");
             }
+        }
+
+        public void CalcDeclarationPendings906(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
+        {
+            if (declarationPM == null || myDeclarationCourierStatusPM == null) return;
+
+            DeclarationPendingPM declarationPendingPM_906 = null;
+            if (myDeclarationCourierStatusPM.DeclarationPendings != null && myDeclarationCourierStatusPM.DeclarationPendings.Count() > 0)
+            {
+                declarationPendingPM_906 = myDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.CourierPendingReasonCode == "906").FirstOrDefault();
+            }
+
+
+
+
+            CourierPendingReasonRepository courierPendingReasonRepositoryRepository = new CourierPendingReasonRepository(declarationPM.Tenant);
+            Boolean isActive = courierPendingReasonRepositoryRepository.IsActive("906", myDeclarationCourierStatusPM.Tenant);
+                if (isActive)
+                {
+                    if (declarationPendingPM_906 == null)
+                    {
+
+                        declarationPendingPM_906 = new DeclarationPendingPM();
+                        declarationPendingPM_906.CourierPendingReasonCode = "906";
+                        declarationPendingPM_906.Status = "A";
+                        declarationPendingPM_906.ChangeSetOp = ChangeSetOperation.Insert;
+                        myDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_906);
+                    }
+
+                    else if (declarationPendingPM_906.Status != "A")
+                    {
+                        declarationPendingPM_906.ChangeSetOp = ChangeSetOperation.Update;
+                        declarationPendingPM_906.Status = "A";
+                    }
+                }
+            
+            
         }
     }
 
