@@ -295,7 +295,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
         this.CustomerListService.getSingle(this.EntityPM.CustomerId).subscribe((response: any) => {
             this.CurrentSession.StartBusyIndicatorLoading();
             this.Customer = response.Result;
-            if (this.Customer.SharedLogisticsInvitationStatusName != "Not Invited")
+            if (this.Customer && this.Customer.SharedLogisticsInvitationStatusName != "Not Invited")
                 this.IsDigitalPortalInvitedCustomer = true;
             this.CurrentSession.StopBusyIndicator();
         });
