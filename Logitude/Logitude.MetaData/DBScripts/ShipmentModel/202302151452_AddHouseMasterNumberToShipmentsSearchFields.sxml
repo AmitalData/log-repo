@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="Shipments">
-  <Sql Version="3">
+  <Sql Version="4">
     <![CDATA[
       If(OBJECT_ID('tempdb..#temp') Is Not Null)
       Begin
@@ -11,7 +11,7 @@
         Drop Table #temp_Shipments
       End
 
-      CREATE TABLE #temp_Shipments(ShipmentId varchar(15) not null,SearchFields nvarchar(max) null)
+      CREATE TABLE #temp_Shipments(ShipmentId varchar(15) not null,SearchFields nvarchar(4000) null)
       
       select Shipments.Id,Shipments.Tenant,Shipments.MasterShipmentDataId,Shipments.SearchFields
       into #temp
@@ -20,7 +20,7 @@
 	  declare @Tenant as int
 	  declare @MasterId as varchar(15)
 	  declare @MasterShipmnetNumber as varchar(20)
-	  declare @SearchFields as nvarchar(max)
+	  declare @SearchFields as nvarchar(4000)
 	  declare @Id as varchar(15)
 	  declare @Count as int
       set @Count = 0;
@@ -38,7 +38,7 @@
 
 			if(@MasterShipmnetNumber is not null)
 			begin
-				declare @NewSearchFieldValue nvarchar(max) = @SearchFields
+				declare @NewSearchFieldValue nvarchar(4000) = @SearchFields
 				set @NewSearchFieldValue = @NewSearchFieldValue + ',' + @MasterShipmnetNumber			
 				insert into #temp_Shipments(ShipmentId, SearchFields) values (@Id, @NewSearchFieldValue)
                 set @Count = @Count + 1;
