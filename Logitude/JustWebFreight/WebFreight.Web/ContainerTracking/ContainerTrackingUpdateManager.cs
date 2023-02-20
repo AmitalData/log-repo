@@ -34,7 +34,7 @@ namespace WebFreight.Web.ContainerTracking
         private bool isUpdatingEmptyLeg = false;
         private Tenant myTenant;
         private readonly ContainerTrackingHelper containerTrackingHelper;
-        private List<dynamic> allTrasshipmentLegs;
+        public List<dynamic> allTrasshipmentLegs;
 
         public ContainerTrackingUpdateManager(ContainerUpdatedFields containerUpdatedFields)
         {
