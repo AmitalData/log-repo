@@ -539,6 +539,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         PortPM transshipment1ToPort = portQuery.GetSinglePM(masterData.Transshipment1ToPortId, masterData.Tenant);
                         if (transshipment1ToPort != null)
                         {
+                            shipmentPM.Transshipment1ToCountryIsEC = transshipment1ToPort.CountryEC;
                             shipmentPM.Transshipment1ToPortCode = transshipment1ToPort.Code;
                             shipmentPM.Transshipment1ToPortName = transshipment1ToPort.EnglishName;
                             shipmentPM.Transshipment1ToPortCountryCode = transshipment1ToPort.CountryCode;
@@ -591,6 +592,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         PortPM transshipment2ToPort = portQuery.GetSinglePM(masterData.Transshipment2ToPortId, masterData.Tenant);
                         if (transshipment2ToPort != null)
                         {
+                            shipmentPM.Transshipment2ToCountryIsEC = transshipment2ToPort.CountryEC;
                             shipmentPM.Transshipment2ToPortCode = transshipment2ToPort.Code;
                             shipmentPM.Transshipment2ToPortName = transshipment2ToPort.EnglishName;
                             shipmentPM.Transshipment2ToPortCountryCode = transshipment2ToPort.CountryCode;
@@ -644,16 +646,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         PortPM transshipment3ToPort = portQuery.GetSinglePM(masterData.Transshipment3ToPortId, masterData.Tenant);
                         if (transshipment3ToPort != null)
                         {
+                            shipmentPM.Transshipment3ToCountryIsEC = transshipment3ToPort.CountryEC;
                             shipmentPM.Transshipment3ToPortCode = transshipment3ToPort.Code;
                             shipmentPM.Transshipment3ToPortName = transshipment3ToPort.EnglishName;
                             shipmentPM.Transshipment3ToPortCountryCode = transshipment3ToPort.CountryCode;
                             shipmentPM.Transshipment3ToPortCountryName = transshipment3ToPort.CountryName;
                             shipmentPM.Transshipment3ToPortStateCode = transshipment3ToPort.StateCode;
-
                             shipmentPM.FinalDistenationPortId = masterData.Transshipment3ToPortId;
                         }
                     }
-
 
                     if (!string.IsNullOrEmpty(masterData.Transshipment3CarrierId))
                     {
