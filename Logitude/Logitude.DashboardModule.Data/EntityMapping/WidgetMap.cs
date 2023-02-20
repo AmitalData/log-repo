@@ -78,6 +78,8 @@ namespace Logitude.DashboardModule.Data.EntityMapping
             this.Property(t => t.DecimalPlaces).HasColumnName("DecimalPlaces");
 
             this.Property(t => t.UseAbbreviationAfter).HasColumnName("UseAbbreviationAfter").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.LabelsPosition).HasColumnName("LabelsPosition").HasMaxLength(100).IsUnicode(false);
         }
     }
 }

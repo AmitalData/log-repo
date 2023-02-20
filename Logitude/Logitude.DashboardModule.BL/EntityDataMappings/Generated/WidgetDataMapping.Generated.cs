@@ -49,7 +49,8 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         ThousandSeparator, 
 	         UseNumberAbbreviation, 
 	         DecimalPlaces, 
-	         UseAbbreviationAfter,
+	         UseAbbreviationAfter, 
+	         LabelsPosition,
 	      }
 
 
@@ -85,7 +86,8 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         ThousandSeparator, 
 	         UseNumberAbbreviation, 
 	         DecimalPlaces, 
-	         UseAbbreviationAfter,
+	         UseAbbreviationAfter, 
+	         LabelsPosition,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -227,6 +229,11 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UseAbbreviationAfter))
             {
 				entityPOCO.UseAbbreviationAfter = entityPM.UseAbbreviationAfter;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LabelsPosition))
+            {
+				entityPOCO.LabelsPosition = entityPM.LabelsPosition;
 			}
 			}
 
@@ -373,6 +380,11 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 					entityPM.UseAbbreviationAfter = entityPOCO.UseAbbreviationAfter;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LabelsPosition))
+            {
+					entityPM.LabelsPosition = entityPOCO.LabelsPosition;
+            }
+
 		}
 
 		public void PMToOldPM(WidgetPM entityPM, WidgetPM oldEntityPM)
@@ -512,6 +524,11 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UseAbbreviationAfter))
             {
                 oldEntityPM.UseAbbreviationAfter = entityPM.UseAbbreviationAfter;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LabelsPosition))
+            {
+                oldEntityPM.LabelsPosition = entityPM.LabelsPosition;
             }
 			
 		}

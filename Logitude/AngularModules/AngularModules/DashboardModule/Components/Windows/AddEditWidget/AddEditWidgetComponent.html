@@ -316,6 +316,24 @@
                                         </td>
                                     </tr>
 
+                                    <tr class="FormFieldRow" *ngIf="TypeCode && (TypeCode == 'pie' || TypeCode == 'donut')">
+                                        <td style="width: 120px;">
+                                            <LogLabel [ObjectFieldName]="'LabelsPosition'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" style="width: 2px;"></LogLabel>
+                                        </td>
+                                        <td style="width: 250px;">
+                                            <ComboBox 
+                                                (SelectedItemChanged)="LabelsPosition = $event.code"
+                                                [ItemsSource]="LabelsPositions"
+                                                [SelectedItem]="GetSelectedLabelsPosition()"
+                                                [Binding]="'name'">
+                                            </ComboBox>
+                                        </td>
+        
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
                                     <tr class="FormFieldRow" *ngIf="IsTimeOverTimeVisible">
                                         <td style="width:160px;">
                                             <LogLabel [Text]="'Time Over Time'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
