@@ -713,7 +713,7 @@ namespace WebFreight.Web.Helpers
             }
 
             var entities = new Dictionary<string, object>();
-            entities.Add(entityCacheArgs.EntityKey, entity);
+            entities.Add(entityCacheArgs.EntityKey, entityCacheArgs.Entity);
             allEntities.Add(entityCacheArgs.ObjectTableName, entities);
         }
 
