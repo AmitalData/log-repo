@@ -876,6 +876,14 @@ namespace Logitude.Infrastructure.BL
                 Description = "Toggle Feature for Digital Portal Required Documents", 
                 SearchFields = "RDT,Digital Portal Required Documents", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "DBA", 
+                Name = "Dashboard Analytics", 
+                SearchFields = "DBA,Dashboard Analytics", 
+                Description = "Dashboard Analytics", 
+			});
 			
             return all;
        }

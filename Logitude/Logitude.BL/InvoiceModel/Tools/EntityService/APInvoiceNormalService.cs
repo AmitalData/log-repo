@@ -198,7 +198,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.RunStoredProcedures();
             }
             entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
-            new APInvoiceAnalyticTableService(initializer.Context.GetActiveDbContext()).AddUpdate(invoice);
+            new APInvoiceAnalyticTableService(initializer.Context.GetActiveDbContext()).AddUpdate(invoice, tenant);
 
         }
 
@@ -546,7 +546,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.RunStoredProcedures();
             }
 
-            new APInvoiceAnalyticTableService(initializer.Context.GetActiveDbContext()).AddUpdate(invoice);
+            new APInvoiceAnalyticTableService(initializer.Context.GetActiveDbContext()).AddUpdate(invoice, tenant);
         }
 
         private void UpdatePaidDate()

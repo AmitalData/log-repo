@@ -1,5 +1,5 @@
-﻿using Simplog.Data.InvoiceModel.EntityPOCOs;
-using Simplog.Server.Infrastructure.AnalyticTableServices;
+﻿using Logitude.Server.Tools.AnalyticTableServices;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
 using System.Data.Entity;
 
 

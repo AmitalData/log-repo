@@ -42,7 +42,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;afcf&quot;"
+  Code="&quot;257b&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -935,6 +935,11 @@
       Name="&quot;Digital Portal Required Documents&quot;"
       Description="&quot;Toggle Feature for Digital Portal Required Documents&quot;"
       SearchFields="&quot;RDT,Digital Portal Required Documents&quot;" />
+    <Record
+      Code="&quot;DBA&quot;"
+      Name="&quot;Dashboard Analytics&quot;"
+      SearchFields="&quot;DBA,Dashboard Analytics&quot;"
+      Description="&quot;Dashboard Analytics&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
