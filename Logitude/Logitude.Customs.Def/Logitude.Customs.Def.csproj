@@ -149,6 +149,7 @@
     <Compile Include="EntityPMs\Generated\TransportMeansTypePM.Generated.cs" />
     <Compile Include="EntityPMs\ContainerTypePM.cs" />
     <Compile Include="EntityPMs\CertificateExemptionTypePM.cs" />
+    <Compile Include="EntityPMs\Generated\VendorCurrencyPM.Generated.cs" />
     <Compile Include="EntityPMs\IncotemrsFileValidationPM.cs" />
     <Compile Include="EntityPMs\NDMessageActionCodePM.cs" />
     <Compile Include="EntityPMs\ModificationAndDiscountTypePM.cs" />

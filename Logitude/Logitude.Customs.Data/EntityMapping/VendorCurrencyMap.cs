@@ -23,9 +23,9 @@ namespace Logitude.Customs.Data.EntityMapping
 		
 		    this.HasKey(t => new { t.VendorId, t.Currency });
 	 
-            this.Property(t => t.VendorId).HasColumnName("VendorId").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.VendorId).HasColumnName("VendorId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.Tenant).HasColumnName("Tenant");
+            this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
             this.Property(t => t.LineNumber).HasColumnName("LineNumber");
 

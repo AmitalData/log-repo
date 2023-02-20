@@ -25,9 +25,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                             select new VendorCurrencyList()
 											{
                      
-					                          Tenant = a.Tenant,
-					
-		                    	            });
+					                            Tenant = a.Tenant,
+												LineNumber=a.LineNumber,
+												VendorId=a.VendorId,
+												Currency=a.Currency,
+
+											});
             return query;
 		}
 
@@ -35,7 +38,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         {
 			throw new NotImplementedException();
 		}
-			}
+    }
 
 
 }

@@ -23,13 +23,13 @@
   HasCounter="false"
   EnableAddFromLOV="false"
   IsRestrictable="false"
-  IsMain="false"
+  IsMain="true"
   IsAutoComplete="false"
   EnableEditFromLOV="false"
   SortingByObjectField="&quot;LineNumber&quot;"
   InActive="false"
   IsSaveButtonVisible="false"
-  IsComposition="true"
+  IsComposition="false"
   EnableSecurity="false"
   AllowCustomFields="false"
   HasDynamicHeader="false"
@@ -38,7 +38,7 @@
   ParentTableName="CustomsVendor"
   LocalDefaultText="&quot;מטבעות ספק&quot;"
   DefaultText="&quot;Vendor Currency&quot;"
-  Code="&quot;e6cd&quot;"
+  Code="&quot;9f64&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -74,7 +74,7 @@
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="15"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -150,7 +150,7 @@
     FieldsDataType="&quot;Integer&quot;"
     MinLength="0"
     MaxLength="0"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -159,7 +159,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -403,6 +403,19 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;Customs.VendorCurrency.O.DeleteCurrency&quot;"
+      DefaultText="&quot;Delete this Currency?&quot;"
+      LocalDefaultText="&quot;האם למחוק סוג מטבע זה?&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.VendorCurrency.O.CurrencyType&quot;"
+      DefaultText="&quot;Currencies Type&quot;"
+      LocalDefaultText="&quot;סוגי מטבעות ספק&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
