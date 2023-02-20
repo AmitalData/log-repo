@@ -15122,6 +15122,42 @@
       LocalDefaultText="&quot;Digital Portal Branding&quot;"
       TextCodeTypeCode="&quot;TH&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TenantManagement.F.DigitalPortalLastDate&quot;"
+      DefaultText="&quot;Digital Portal Last Date&quot;"
+      LocalDefaultText="&quot;Digital Portal Last Date&quot;"
+      TextCodeTypeCode="&quot;F&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TenantManagement.F.DigitalPortalTotalLastWeek&quot;"
+      DefaultText="&quot;Digital Portal Total Last Week&quot;"
+      LocalDefaultText="&quot;Digital Portal Total Last Week&quot;"
+      TextCodeTypeCode="&quot;F&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TenantManagement.F.DigitalPortalTotalLastMonth&quot;"
+      DefaultText="&quot;Digital Portal Total Last Month&quot;"
+      LocalDefaultText="&quot;Digital Portal Total Last Month&quot;"
+      TextCodeTypeCode="&quot;F&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TenantManagement.F.DigitalPortalMobileLastDate&quot;"
+      DefaultText="&quot;Digital Portal Mobile Last Date&quot;"
+      LocalDefaultText="&quot;Digital Portal Mobile Last Date&quot;"
+      TextCodeTypeCode="&quot;F&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TenantManagement.F.DigitalPortalMobTotalLastWeek&quot;"
+      DefaultText="&quot;Digital Portal Mobile Total Last Week&quot;"
+      LocalDefaultText="&quot;Digital Portal Mobile Total Last Week&quot;"
+      TextCodeTypeCode="&quot;F&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TenantManagement.F.DigitalPortalMobTotalLastMonth&quot;"
+      DefaultText="&quot;Digital Portal Mobile Total Last Month&quot;"
+      LocalDefaultText="&quot;Digital Portal Mobile Total Last Month&quot;"
+      TextCodeTypeCode="&quot;F&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

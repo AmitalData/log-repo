@@ -170,4 +170,5 @@ export class TenantManagementList {
 		DigitalPortalMobileLastDate: Date;
 		DigitalPortalMobTotalLastWeek: number;
 		DigitalPortalMobTotalLastMonth: number;
-}
+	
+}
