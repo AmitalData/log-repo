@@ -14,7 +14,6 @@ import {DocumentTypeTemplateListExtendedService} from '../../../../Common/Servic
 import {DocumentTypeCustomFieldService} from '../../../../Common/Services/ExtendedPMs/DocumentTypeCustomFieldService';
 import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper';
 import {HtmlEditorService} from '../../../../Common/Services/DocumentServices/HtmlEditorService';
-import {DocumentTypeTemplateList} from '../../../../Common/EntityLists/DocumentTypeTemplateList';
 import {DocumentOutPM} from '../../../../Common/EntityPMs/DocumentOutPM';
 import {DocumentTypePM} from '../../../../Common/EntityPMs/DocumentTypePM';
 import {DocumentTypeCustomFieldPM} from '../../../../Common/EntityPMs/DocumentTypeCustomFieldPM';
@@ -26,7 +25,6 @@ import {DocumentCustomFieldsArgs} from './DocsOut/Filters/DocumentCustomFieldsAr
 import {FroalaEditorFilters} from './DocsOut/Filters/FroalaEditorFilters';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
 import {ExportDocumentArgs} from '../../../../Infrastructure/DataContracts/ExportDocumentArgs';
@@ -36,8 +34,7 @@ import { interval } from 'rxjs';
 import { timeInterval } from 'rxjs/operators';
 declare var Base64ToString: any;
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
-
-
+import {ObjectsLocator} from "../../../../Infrastructure/Locators/ObjectsLocator";
 
 
 @Component({
@@ -87,7 +84,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     public PrintAllCopiesBtnDisable: boolean;
     IsBuildDocumentViaWorkerRole: boolean = false;
 
-    IsEnableEditDocument: boolean = false; 
+    IsEnableEditDocument: boolean = false;
     IsEnableManageDocument: boolean = false;
     IsAWBPackage: boolean = false;
 
@@ -106,10 +103,28 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
         this.CheckAWBPackage();
     }
 
-
     ngOnInit() {
+        if (ObjectsLocator.GlobalSetting.WorkEnvironment === 'cloud') {
+            this.UpdateDocumentsAutomatically();
+        }
+    }
 
-       
+    UpdateDocumentsAutomatically()
+    {
+        this._documentOutPMService.getSingleDocumentOutPM(this.DataContext.CurrentDocument.Id,
+            this.DataContext.CurrentDocument.Tenant).subscribe((res: any) => {
+        const pmResponse: ServiceResponse = res;
+        if (!pmResponse.HasError) {
+            const myResult = pmResponse.Result;
+            if (myResult) {
+                this.CurrentDocumentOut = myResult;
+                this.DataContext.CurrentDocument = myResult;
+                this.UpdateDocument();
+            }
+        }
+
+        });
+
 
     }
     CheckManageDocumentFeature() {
@@ -167,9 +182,6 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
 
     }
-
-
-
 
     public LoadDocumentCustomFields() {
 
@@ -467,12 +479,6 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
         }
     }
 
-
-
-
-
-
-
     SetDataContext(dataContext: any) {
 
         this.DataContext = dataContext;
@@ -543,9 +549,6 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
     }
 
-
-
-
     LoadDocumentTemplateStimulSoftData() {
 
         this.CurrentDocumentOut.DocumentTemplateId = this.CurrentDocumentTypeTemplateList.Id;
@@ -563,8 +566,6 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
         });
 
     }
-
-
 
     alertselected(selectedTemplate) {
 
@@ -639,7 +640,6 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
     }
 
-
     OnmMouseOver(item: DocumentCopiesViewModel) {
 
         this.Items.forEach((item) => { item.VisiblePrint = false; });
@@ -647,15 +647,12 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
     }
 
-
     OnmMouseleave(item: DocumentCopiesViewModel) {
 
         this.Items.forEach((item) => { item.VisiblePrint = false; });
 
 
     }
-
-
 
 
     SortItemSource() {
@@ -1032,10 +1029,10 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
             if (this.IsBuildDocumentViaWorkerRole) {
 
-         
+
                     this.BliudDocumentViewWorkerRole(this.AddedDocumentTypeCopyViewModels.filter(d => d.IsSelected));
 
-              
+
             }
 
 
@@ -1140,7 +1137,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
             if (!pmResponse.HasError && pmResponse.Result) {
                 var myResult = pmResponse.Result;
                 this.LoadDocumentOut();
-               
+
 
 
             } else this.StopBusyIndicator();
@@ -1168,7 +1165,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
             exportDocumentArgs.CurrentDocumentTypeCode = this.DataContext.DocumentTypePM.Code;
             exportDocumentArgs.ObjectTableName = this.ObjectTableName;
             exportDocumentArgs.DocumentTemplateEditorTool = this.CurrentDocumentOut.DocumentTemplateEditorTool;
-        
+
             exportDocumentArgs.DocumentTypeCopyIdsList = documentTypeCopyLists.map(function (a) { return a.Id; });
             this._exportDocumentService.BuildDocumentViaWorkerRole(exportDocumentArgs).subscribe((myResponse: ServiceResponse) => {
                 var result: any = myResponse.Result;
@@ -1286,13 +1283,6 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
     }
 
-
-
-
-
-
-
-
     PrintMethod(item: DocumentCopiesViewModel) {
         if (item.CurrentDocumentOutCopy) {
 
@@ -1314,10 +1304,6 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
         }
     }
-
-
-
-
 
 
     ViewPage(docoumentTypeCopyName: string, id: string) {
@@ -1453,6 +1439,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
     public UpdateDocument() {
 
+        console.log('UpdateDocument');
         this.CurrentSession.CurrentWindow = this.CurrentSession.Windows.filter(d => d.Title == "Print " + this.DataContext.DocumentTypePM.Name)[0];
 
         ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, this.DocumentTypeload.Name + " Building");
@@ -1468,7 +1455,6 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
         }
     }
-
 
     PrintAllCopiesBtnClick() {
 
@@ -1528,8 +1514,6 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
         });
 
     }
-
-
 
     PrintAllDocs() {
         var token = ServiceHelper.GetLDocumentDownloadToken();
