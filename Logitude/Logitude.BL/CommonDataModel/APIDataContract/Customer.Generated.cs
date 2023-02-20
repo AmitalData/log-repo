@@ -71,6 +71,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     public CustomerSize CustomerSize { get; set; }
     
     public bool IsPotential { get; set; }
+    
+    public Contact PrimaryContact { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

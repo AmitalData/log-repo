@@ -94,7 +94,9 @@ using Simplog.Data.CommonDataModel;
 				   temp.Position = MyEntityPM.Position;
 				   temp.BusinessPhone = MyEntityPM.BusinessPhone;
 				   temp.Mobile = MyEntityPM.Mobile;
-				   temp.IsPrimaryContact = MyEntityPM.SetAsPrimaryForCard;					
+				   temp.IsPrimaryContact = MyEntityPM.SetAsPrimaryForCard;
+				   temp.InActive = MyEntityPM.InActive;
+				   temp.Notes = MyEntityPM.Notes;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -201,6 +203,22 @@ using Simplog.Data.CommonDataModel;
 					if(!IsUpdate)
 					{							
 						temp.SetAsPrimaryForCard = MyEntity.IsPrimaryContact;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.InActive = MyEntity.InActive;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.Notes = MyEntity.Notes;
 
 										}  
 
