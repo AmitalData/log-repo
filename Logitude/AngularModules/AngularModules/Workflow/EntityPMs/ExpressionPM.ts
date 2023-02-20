@@ -54,6 +54,11 @@ export class ExpressionPM {
     public set CategoryCode(newValue: string) { if (this.categoryCode != newValue) { this.categoryCode = newValue; this.MarkAsDirty("CategoryCode"); } }
        
 	 
+    private title: string;
+    public get Title() { return this.title; }
+    public set Title(newValue: string) { if (this.title != newValue) { this.title = newValue; this.MarkAsDirty("Title"); } }
+       
+	 
 
     public OldEntityPM: ExpressionPM;
 		

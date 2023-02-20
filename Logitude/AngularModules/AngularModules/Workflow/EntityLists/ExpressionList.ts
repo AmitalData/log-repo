@@ -14,6 +14,7 @@ export class ExpressionList {
 	Body: string;
 	Description: string;
 	CategoryCode: string;
+	Title: string;
 	
 }
  

@@ -34,6 +34,8 @@ namespace Logitude.Workflow.Data.EntityPOCOs
 	    public string CategoryCode { get; set; }
 	      
         public virtual ExpressionCategory Category { get; set; }
+        [Column("Title")]
+	    public string Title { get; set; }
     }
 }
 	 

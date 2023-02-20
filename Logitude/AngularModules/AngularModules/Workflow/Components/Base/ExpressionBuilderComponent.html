@@ -133,7 +133,7 @@
                                 [PlaceHolder]="FunctionPlaceHolder">
                             </TreeSelect>
                             <ng-template #expressionsTreeSelectTemplate let-item>
-                                <div class="item-container">
+                                <div class="item-container" [attr.title]="item.origin.data.Description">
                                     <div class="item-title">{{ item.title }}</div>
                                     <div class="item-description">{{ item.origin.data.Description }}</div>
                                 </div>

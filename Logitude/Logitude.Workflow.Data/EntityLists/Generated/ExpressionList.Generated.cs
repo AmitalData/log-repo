@@ -26,6 +26,8 @@ namespace Logitude.Workflow.Data.EntityLists
        public string Description  { get; set; }
        [DataMember]
        public string CategoryCode  { get; set; }
+       [DataMember]
+       public string Title  { get; set; }
    }
 
 }

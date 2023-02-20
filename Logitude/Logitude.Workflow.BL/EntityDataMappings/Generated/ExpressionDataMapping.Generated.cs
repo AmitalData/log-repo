@@ -27,7 +27,8 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         SearchFields, 
 	         Body, 
 	         Description, 
-	         CategoryCode,
+	         CategoryCode, 
+	         Title,
 	      }
 
 
@@ -39,7 +40,8 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         SearchFields, 
 	         Body, 
 	         Description, 
-	         CategoryCode,
+	         CategoryCode, 
+	         Title,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -71,6 +73,11 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CategoryCode))
             {
 				entityPOCO.CategoryCode = entityPM.CategoryCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Title))
+            {
+				entityPOCO.Title = entityPM.Title;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -109,6 +116,11 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 					entityPM.CategoryCode = entityPOCO.CategoryCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Title))
+            {
+					entityPM.Title = entityPOCO.Title;
+            }
+
 		}
 
 		public void PMToOldPM(ExpressionPM entityPM, ExpressionPM oldEntityPM)
@@ -138,6 +150,11 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CategoryCode))
             {
                 oldEntityPM.CategoryCode = entityPM.CategoryCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Title))
+            {
+                oldEntityPM.Title = entityPM.Title;
             }
 			
 		}
