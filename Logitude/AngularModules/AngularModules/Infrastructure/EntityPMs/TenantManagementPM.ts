@@ -975,6 +975,36 @@ export class TenantManagementPM {
     public set IsContainerTrackingPrepaid(newValue: boolean) { if (this.isContainerTrackingPrepaid != newValue) { this.isContainerTrackingPrepaid = newValue; this.MarkAsDirty("IsContainerTrackingPrepaid"); } }
        
 	 
+    private digitalPortalLastDate: Date;
+    public get DigitalPortalLastDate() { return this.digitalPortalLastDate; }
+    public set DigitalPortalLastDate(newValue: Date) { if (this.digitalPortalLastDate != newValue) { this.digitalPortalLastDate = newValue; this.MarkAsDirty("DigitalPortalLastDate"); } }
+       
+	 
+    private digitalPortalTotalLastWeek: number;
+    public get DigitalPortalTotalLastWeek() { return this.digitalPortalTotalLastWeek; }
+    public set DigitalPortalTotalLastWeek(newValue: number) { if (this.digitalPortalTotalLastWeek != newValue) { this.digitalPortalTotalLastWeek = newValue; this.MarkAsDirty("DigitalPortalTotalLastWeek"); } }
+       
+	 
+    private digitalPortalTotalLastMonth: number;
+    public get DigitalPortalTotalLastMonth() { return this.digitalPortalTotalLastMonth; }
+    public set DigitalPortalTotalLastMonth(newValue: number) { if (this.digitalPortalTotalLastMonth != newValue) { this.digitalPortalTotalLastMonth = newValue; this.MarkAsDirty("DigitalPortalTotalLastMonth"); } }
+       
+	 
+    private digitalPortalMobileLastDate: Date;
+    public get DigitalPortalMobileLastDate() { return this.digitalPortalMobileLastDate; }
+    public set DigitalPortalMobileLastDate(newValue: Date) { if (this.digitalPortalMobileLastDate != newValue) { this.digitalPortalMobileLastDate = newValue; this.MarkAsDirty("DigitalPortalMobileLastDate"); } }
+       
+	 
+    private digitalPortalMobileTotalLastWeek: number;
+    public get DigitalPortalMobileTotalLastWeek() { return this.digitalPortalMobileTotalLastWeek; }
+    public set DigitalPortalMobileTotalLastWeek(newValue: number) { if (this.digitalPortalMobileTotalLastWeek != newValue) { this.digitalPortalMobileTotalLastWeek = newValue; this.MarkAsDirty("DigitalPortalMobileTotalLastWeek"); } }
+       
+	 
+    private digitalPortalMobileTotalLastMonth: number;
+    public get DigitalPortalMobileTotalLastMonth() { return this.digitalPortalMobileTotalLastMonth; }
+    public set DigitalPortalMobileTotalLastMonth(newValue: number) { if (this.digitalPortalMobileTotalLastMonth != newValue) { this.digitalPortalMobileTotalLastMonth = newValue; this.MarkAsDirty("DigitalPortalMobileTotalLastMonth"); } }
+       
+	 
 
     public OldEntityPM: TenantManagementPM;
 		
@@ -1002,4 +1032,4 @@ export class TenantManagementPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

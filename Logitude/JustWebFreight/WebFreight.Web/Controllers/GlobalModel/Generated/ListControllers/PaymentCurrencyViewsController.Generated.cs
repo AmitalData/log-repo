@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
 				PaymentCurrencyRepository  paymentCurrencyRepository = new PaymentCurrencyRepository(MyContext);
 				PaymentCurrencyList entityList = null;
 				PaymentCurrency entityPoco = paymentCurrencyRepository.GetSinglePaymentCurrency(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<PaymentCurrency> singleEntityList = new List<PaymentCurrency>();
 					singleEntityList.Add(entityPoco);
