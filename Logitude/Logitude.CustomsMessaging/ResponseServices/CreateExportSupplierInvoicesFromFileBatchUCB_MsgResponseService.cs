@@ -469,7 +469,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 rownum = (i + 1).ToString(),
                                 ClassificationCode = data[1],
                                 OriginCountryCode = data[2],
-                                InvoiceQuentity = string.IsNullOrWhiteSpace(data[3]) ? (int?)null : Convert.ToInt32(data[3]),
+                                InvoiceQuentity = string.IsNullOrWhiteSpace(data[3]) ? (int?)null : (Convert.ToInt32(data[3])> 0 ? Convert.ToInt32(data[3]) : (int?)null),
                                 ItemPrice = string.IsNullOrWhiteSpace(data[4]) ? (decimal?)null : Convert.ToDecimal(data[4]),
                                 TransactionNatureCode = data[5],
                                 ProcessType = data[6],
