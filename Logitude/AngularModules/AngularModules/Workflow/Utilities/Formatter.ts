@@ -18,4 +18,11 @@ export class Formatter {
         return null;
     }
 
+    static removeSpaces(name: string) {
+        if (name) {
+            return name.replace(/\ /gi, "");
+        }
+        return null;
+    }
+
 }

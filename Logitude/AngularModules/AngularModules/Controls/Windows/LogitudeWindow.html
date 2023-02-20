@@ -123,6 +123,14 @@
         overflow-x: hidden;
         overflow-y: auto;
     }
+    
+    :host ::ng-deep .ViewModeContainer > * {
+        opacity: 0.65 !important;
+    }
+
+    :host ::ng-deep .ViewModeContainer * {
+        cursor: default !important;
+    }
 </style>
 
 <div class="WindowLayout" tabindex="-1" contenteditable="false" *ngIf="ShowModal" [ngStyle]="ZIndexModified && {'z-index': ZIndex}"></div>

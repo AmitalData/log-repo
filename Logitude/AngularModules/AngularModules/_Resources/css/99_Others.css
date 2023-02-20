@@ -179,14 +179,6 @@
   cursor: pointer;
 }
 
-.ViewModeContainer > * {
-    opacity: 0.6 !important;
-}
-
-.ViewModeContainer * {
-    pointer-events: none !important;
-}
-
 
 /* Change width of VERTICAL SCROLLBAR */
 /*scrollbar[orient="vertical"], scrollbar[orient="vertical"] thumb, scrollbar[orient="vertical"] scrollbarbutton {

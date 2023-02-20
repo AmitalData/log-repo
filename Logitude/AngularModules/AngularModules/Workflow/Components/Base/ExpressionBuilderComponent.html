@@ -149,14 +149,13 @@
                         <div class="operators-tree">
                             <TreeSelect [Items]="OperatorsTreeItems" [Width]="'180px'" [SetSelectedValue]="false"
                                 (ValueChanged)="selectOperator($event)" [AllowClear]="false" [DisplayTitle]="false"
-                                [IsReturnedTreeSelectItem]="true"
-                                [PlaceHolder]="OperatorPlaceHolder">
+                                [IsReturnedTreeSelectItem]="true" [PlaceHolder]="OperatorPlaceHolder">
                             </TreeSelect>
                         </div>
                     </div>
                 </div>
                 <div>
-                    <textarea class="expression-editor" [ngModel]="ExpressionValue.expression | ExpressionPipe"
+                    <textarea class="expression-editor" [ngModel]="ExpressionValue.expression"
                         (click)="updateCursorPointer($event?.target?.selectionStart, $event?.target?.selectionEnd)"
                         (input)="updateExpressionValue($event.target.value)"
                         (keyup)="updateCursorPointerFromEvent($event)" autocorrect="off" autocapitalize="off"

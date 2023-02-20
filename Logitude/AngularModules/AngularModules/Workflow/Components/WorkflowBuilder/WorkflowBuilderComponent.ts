@@ -283,12 +283,12 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         confirmWindow.ShowCancelButton = true;
         confirmWindow.YesButtonText = "Ok";
         confirmWindow.Title = "Delete Element";
-        confirmWindow.Show("Are you sure to delete element " + deletedNodeName + " ?");
         confirmWindow.WindowClosed.subscribe(() => {
             if (confirmWindow.Yes) {
                 document.dispatchEvent(new CustomEvent(this.returnDeleteNodeConfirmationEventKey, { detail: true }));
             }
         });
+        confirmWindow.Show("Are you sure to delete element " + deletedNodeName + " ?");
     }
 
     showDeleteNodeWarning(deletedNodeName: string, usedInNodes: string[] | null) {
@@ -450,7 +450,6 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         if (propertiesComponentPath) {
             let propertiesWindow = this.buildPropertiesWindow(openPropertiesEventObject);
             propertiesWindow.Show(propertiesComponentPath);
-            propertiesWindow.WindowClosed.subscribe((data: any) => { this.handlePropertiesWindowClosed(data, openPropertiesEventObject.nodeType); });
         }
     }
 
@@ -475,18 +474,19 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         propertiesWindow.WindowArgs = propertiesWindowArgs;
         propertiesWindow.ShowFooterButtons = true;
         propertiesWindow.IsViewMode = this.IsViewMode;
+        propertiesWindow.WindowClosed.subscribe((data: any) => { this.handlePropertiesWindowClosed(data, openPropertiesEventObject.nodeType); });
         return propertiesWindow;
     }
 
     getPropertiesWindowTitle(nodeLabel: string) {
-        let subTitle = "Configure";
+        let subTitle = "Configure ";
         switch (nodeLabel) {
             case "Append Item":
-                return subTitle + " Append to Collection";
+                return subTitle + "Append to Collection";
             case "Delete Item":
-                return subTitle + " Delete from Collection";
+                return subTitle + "Delete from Collection";
             default:
-                return nodeLabel ? (subTitle + " " + nodeLabel) : (subTitle + " Element");
+                return subTitle + (nodeLabel || "Element");
         }
     }
 
