@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class VendorCurrencyUpdateClass
    {  		
-		public const string HashString = "d64ffb4ae02bfa3396cfede1090ba0ff";
+		public const string HashString = "de6912fccdeb74c417df624803b22c11";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -112,13 +112,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
-			      				    IsMain =  false,
+			      				    IsMain =  true,
 			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "LineNumber",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
-			      				    IsComposition =  true,
+			      				    IsComposition =  false,
 			      				    EnableSecurity =  false,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "מטבעות ספק",
 			      				    DefaultText =  "Vendor Currency",
-			      				    Code =  "e6cd",
+			      				    Code =  "9f64",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -155,7 +155,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  15,
-					  						IsRequired =  false,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -358,7 +358,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+		   ObjectTable VendorCurrencyObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.VendorCurrency" && d.Tenant == 0).FirstOrDefault(); 
+
+		   Feature VendorCurrencyFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = VendorCurrencyObjectTable.Id, Tenant = 0, NameTextCodeCode = "VendorCurrency.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,VendorCurrencyObjectTable);
+		   Feature VendorCurrencyFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = VendorCurrencyObjectTable.Id, Tenant = 0, NameTextCodeCode = "VendorCurrency.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,VendorCurrencyObjectTable);
+		   Feature VendorCurrencyFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = VendorCurrencyObjectTable.Id, Tenant = 0, NameTextCodeCode = "VendorCurrency.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,VendorCurrencyObjectTable);
+		   Feature VendorCurrencyFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = VendorCurrencyObjectTable.Id, Tenant = 0, NameTextCodeCode = "VendorCurrency.Features.PackageFeature", NameTextCodeDefaultText = "VendorCurrency Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,VendorCurrencyObjectTable);    
 	    
 		}
 
@@ -408,7 +414,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable VendorCurrencyObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.VendorCurrency" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode VendorCurrencyTextCode_CustomsVendorCurrencyODeleteCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.VendorCurrency.O.DeleteCurrency", DefaultText = "Delete this Currency?",LocalDefaultText = @"האם למחוק סוג מטבע זה?", ObjectTableId = VendorCurrencyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode VendorCurrencyTextCode_CustomsVendorCurrencyOCurrencyType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.VendorCurrency.O.CurrencyType", DefaultText = "Currencies Type",LocalDefaultText = @"סוגי מטבעות ספק", ObjectTableId = VendorCurrencyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 
