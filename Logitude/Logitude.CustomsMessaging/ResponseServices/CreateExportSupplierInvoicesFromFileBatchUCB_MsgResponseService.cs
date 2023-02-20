@@ -246,47 +246,56 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private string setClassificationCode(string value, out bool valid)
         {
-            int? checkDigit = null;
-            valid = true;
+            string pattern= "^[0-9]+$";
+            bool ValueIsValidNumber = Regex.IsMatch(value, pattern);
             string res = "";
-            switch (value.Length)
+            valid = true;
+            if (ValueIsValidNumber)
             {
-                case 8:
-                    res = value + "00";
-                    checkDigit = CalculateLuhnAlgorithm(res);
-                    if (checkDigit.HasValue)
-                        res += checkDigit.Value.ToString();
-                    break;
-                case 9:
-                    var digit = value.Substring(8);
-                    res = value.Substring(0, 8) + "00" + value.Substring(8);
-                    checkDigit = CalculateLuhnAlgorithm(res.Substring(0, 10));
-                    if (digit != checkDigit.GetValueOrDefault().ToString())
-                    {
-                        valid = false;
+                int? checkDigit = null;
+                switch (value.Length)
+                {
+                    case 8:
+                        res = value + "00";
+                        checkDigit = CalculateLuhnAlgorithm(res);
+                        if (checkDigit.HasValue)
+                            res += checkDigit.Value.ToString();
+                        break;
+                    case 9:
+                        var digit = value.Substring(8);
+                        res = value.Substring(0, 8) + "00" + value.Substring(8);
+                        checkDigit = CalculateLuhnAlgorithm(res.Substring(0, 10));
+                        if (digit != checkDigit.GetValueOrDefault().ToString())
+                        {
+                            valid = false;
+                            res = "";
+                        }
+                        break;
+                    case 10:
+                        checkDigit = CalculateLuhnAlgorithm(value);
+                        if (checkDigit.HasValue)
+                            res = value + "" + checkDigit.Value.ToString();
+                        break;
+                    case 11:
+                        var digit_ = value.Substring(10);
+                        checkDigit = CalculateLuhnAlgorithm(value.Substring(0, 10));
                         res = value;
-                    }
-                    break;
-                case 10:
-                    checkDigit = CalculateLuhnAlgorithm(value);
-                    if (checkDigit.HasValue)
-                        res = value + "" + checkDigit.Value.ToString();
-                    break;
-                case 11:
-                    var digit_ = value.Substring(10);
-                    checkDigit = CalculateLuhnAlgorithm(value.Substring(0, 10));
-                    res = value;
-                    if (digit_ != checkDigit.GetValueOrDefault().ToString())
-                    {
+                        if (digit_ != checkDigit.GetValueOrDefault().ToString())
+                        {
+                            valid = false;
+                            res = "";
+                        }
+                        break;
+                    default:
                         valid = false;
-                    }
-                    break;
-                default:
-                    valid = false;
-                    //res = value;
-                    break;
+                        //res = value;
+                        break;
+                }
             }
-            
+            else
+            {
+                valid = false;
+            }
             return res;
         }
 
