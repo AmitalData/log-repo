@@ -513,7 +513,7 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
         let position = this.GetElementPosition(event, screenRowDetails);
         let myitem: ObjectFieldPM = this.banckStackFields.filter(d => d.Id == objectFieldId)[0];
         if (this.newSelectedItem.ScreenPM.IsHeaderScreen && position >= 2) {
-            this.ShowMessageWindow("Header Screen Has two rows only", "Message");
+            this.ShowMessageWindow("You can't add Fields to the third row, The Header screen is limited to two rows only", "Message");
             return;
         }
         if (myitem) {
