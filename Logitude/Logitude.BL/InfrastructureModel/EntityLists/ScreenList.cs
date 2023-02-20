@@ -18,6 +18,6 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string SearchFields { get; set; }
         public string ChildScreenGrid { get; set; }
         public string RelatedScreenCode { get; set; }
-
+        public bool IsHeaderScreen { get; set; }
     }
 }

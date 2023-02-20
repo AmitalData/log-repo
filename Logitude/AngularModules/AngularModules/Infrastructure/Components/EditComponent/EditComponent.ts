@@ -519,7 +519,7 @@ export class EditComponent implements OnDestroy {
 
     BuildStandardHeaderScreen() {
 
-        var myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code.indexOf("HeaderScreen") != -1 )[0];
+        var myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && (d.Code.indexOf("HeaderScreen") != -1 || d.IsHeaderScreen == true))[0];
 
         var myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === this.ObjectTableId);
 
