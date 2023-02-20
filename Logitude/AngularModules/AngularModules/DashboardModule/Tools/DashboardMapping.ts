@@ -38,6 +38,7 @@ export class DashboardMapping {
             myWidget.UseNumberAbbreviation = widget.UseNumberAbbreviation;
             myWidget.UseAbbreviationAfter = widget.UseAbbreviationAfter;
             myWidget.DecimalPlaces = widget.DecimalPlaces;
+            myWidget.LabelsPosition = widget.LabelsPosition;
             myWidget.Layout = {
                 minH: 5,
                 minW: 3,

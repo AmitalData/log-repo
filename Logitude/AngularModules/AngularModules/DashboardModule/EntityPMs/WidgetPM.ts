@@ -212,6 +212,11 @@ export class WidgetPM {
     public set UseAbbreviationAfter(newValue: string) { if (this.useAbbreviationAfter != newValue) { this.useAbbreviationAfter = newValue; this.MarkAsDirty("UseAbbreviationAfter"); } }
        
 	 
+    private labelsPosition: string;
+    public get LabelsPosition() { return this.labelsPosition; }
+    public set LabelsPosition(newValue: string) { if (this.labelsPosition != newValue) { this.labelsPosition = newValue; this.MarkAsDirty("LabelsPosition"); } }
+       
+	 
 
     public OldEntityPM: WidgetPM;
 	

@@ -90,6 +90,8 @@ namespace Logitude.DashboardModule.Data.EntityPOCOs
 	    public int? DecimalPlaces { get; set; }
         [Column("UseAbbreviationAfter")]
 	    public string UseAbbreviationAfter { get; set; }
+        [Column("LabelsPosition")]
+	    public string LabelsPosition { get; set; }
     }
 }
 	 
