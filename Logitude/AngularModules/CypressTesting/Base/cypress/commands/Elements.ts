@@ -22,6 +22,7 @@ declare global {
             SelectQuickSearchFirstElement(quickSearchDetails: QuickSearchDetails): Chainable<Element>
             BackButton(contains: string): Chainable<Element>
             getAttached(selector: any): Chainable<Element>
+            SelectDefinedComboDropDownListItem2(Selector: string, selectorIndex: number, contain: string, index: number): Chainable<Element>
 
             ClickingAfterHovering(LogLovSelector: string, HiddenElementSelector: string): Chainable<Element>
             SelectCheckBox(Selector: string): Chainable<Element>
@@ -33,6 +34,11 @@ declare global {
         }
     }
 }
+
+Cypress.Commands.add("SelectDefinedComboDropDownListItem2", (Selector: string,selectorIndex: number, contain: string, index: number) => {
+    cy.get(Selector).eq(selectorIndex).find(BaseSelectors.DownArrow).eq(index).click()
+    cy.get(Selector).find(BaseSelectors.ComboBoxItem).contains(contain).click()
+})
 Cypress.Commands.add("SelectDropDownListItem", (Selector: string, contain: string) => {
     cy.get(Selector).find(BaseSelectors.DownArrow).click()
     cy.get(BaseSelectors.DropDownList).find(BaseSelectors.DropDownListItem).contains(contain).click()
