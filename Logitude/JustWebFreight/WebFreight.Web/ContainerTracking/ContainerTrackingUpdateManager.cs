@@ -274,9 +274,9 @@ namespace WebFreight.Web.ContainerTracking
             UpdateVesselVoyageVizionTransshipments(polLeg, index1, containerPM);
             if (leg3 != null)
             {
-                UpdateVesselVoyageVizionTransshipments(leg2 != null ? leg2 : leg1, index2, containerPM);
-                UpdateVesselVoyageVizionTransshipments(leg3 != null ? leg3 : leg2, index3, containerPM);
-                UpdateVesselVoyageVizionTransshipments(podLeg != null ? podLeg : leg3, index4, containerPM);
+                UpdateVesselVoyageVizionTransshipments(leg1 != null ? leg1 : polLeg, index2, containerPM);
+                UpdateVesselVoyageVizionTransshipments(leg2 != null ? leg2 : leg3, index3, containerPM);
+                UpdateVesselVoyageVizionTransshipments(leg3 != null ? leg3 : podLeg, index4, containerPM);
             }
             else if (leg2 != null)
             {
