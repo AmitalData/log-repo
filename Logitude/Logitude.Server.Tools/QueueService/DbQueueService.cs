@@ -26,7 +26,7 @@ namespace Logitude.Server.Tools.QueueService
         protected string QueueCode { get; set; }
         protected string CurrentMessageId { get; set; }
         private const int messageBodyLength = 2000;
-        [ThreadStatic] public static int? MessageID = -1;
+        [ThreadStatic] public static int? MessageID = null;
         public DbQueueService()
         {
 

@@ -426,29 +426,36 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void InsertInShipmnetUpdateLog(int StartOrEnd)
         {
-            try
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                string strConnString = entityRepository.context.GetConnection().ConnectionString;
-                string query = "INSERT INTO ShipmentUpdateLog (MessageID, EntityID, Tenant,LogDateTime,StartOrEnd) " +
-                                    "VALUES (@MessageID, @EntityID, @Tenant, @LogDateTime,@StartOrEnd) ";
-
-                using (SqlConnection cn = new SqlConnection(strConnString))
+                try
                 {
-                    SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.Add("@MessageID", SqlDbType.VarChar, 50).Value = DbQueueService.MessageID;
-                    cmd.Parameters.Add("@EntityId", SqlDbType.VarChar, 50).Value = entityPM.Id.ToString();
-                    cmd.Parameters.Add("@Tenant", SqlDbType.Int).Value = tenant;
-                    cmd.Parameters.Add("@LogDateTime", SqlDbType.DateTime).Value = DateTime.Now;
-                    cmd.Parameters.Add("@StartOrEnd", SqlDbType.VarChar, 50).Value = StartOrEnd;
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandTimeout = 5;
-                    cn.Open();
-                    var output = cmd.ExecuteNonQuery();
-                    cn.Close();
-                }
+                    string strConnString = entityRepository.context.GetConnection().ConnectionString;
+                    string query = "INSERT INTO ShipmentUpdateLog (MessageID, EntityID, Tenant,LogDateTime,StartOrEnd) " +
+                                        "VALUES (@MessageID, @EntityID, @Tenant, @LogDateTime,@StartOrEnd) ";
 
+                    using (SqlConnection cn = new SqlConnection(strConnString))
+                    {
+                        SqlCommand cmd = new SqlCommand(query, cn);
+
+                        cmd.Parameters.Add("@MessageID", SqlDbType.Int).Value = DbQueueService.MessageID == null ? (object)DBNull.Value : DbQueueService.MessageID;
+                        cmd.Parameters.Add("@EntityId", SqlDbType.VarChar, 50).Value = entityPM.Id.ToString();
+                        cmd.Parameters.Add("@Tenant", SqlDbType.Int).Value = tenant;
+                        cmd.Parameters.Add("@LogDateTime", SqlDbType.DateTime).Value = DateTime.Now;
+                        cmd.Parameters.Add("@StartOrEnd", SqlDbType.VarChar, 50).Value = StartOrEnd;
+                        cmd.CommandType = CommandType.Text;
+                        cmd.CommandTimeout = 5;
+                        cn.Open();
+                        var output = cmd.ExecuteNonQuery();
+                        cn.Close();
+                    }
+                   
+                }
+                catch (Exception ex)
+                {
+                }
+                scope.Complete();
             }
-            catch { }
         }
         private void AddVIRExternalTaskQueue()
         {
@@ -463,9 +470,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         public void Update(bool mapComposition = false, bool isFromUpdateTool = false, bool isPatchUpdate = false)
         {
             //bool isPatchUpdate = false;
+            InsertInShipmnetUpdateLog(0);
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
-                InsertInShipmnetUpdateLog(0);
+                
                 initializer.IsMappingComposition = mapComposition;
                 initializer.IsUpdateFromUpdateTool = isFromUpdateTool;
 
@@ -719,11 +727,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     Tenant = entityPM.Tenant,
                     Type = QueueMessagesTypes.Update
                 }.Produce();
-
+            
                 scope.Complete();
-                InsertInShipmnetUpdateLog(1);
+               
                 #endregion
             }
+            InsertInShipmnetUpdateLog(1);
         }
 
         private AuditLog AddShipmentAuditLogChanges(Shipment entityPoco)
