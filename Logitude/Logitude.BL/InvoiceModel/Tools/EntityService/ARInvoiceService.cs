@@ -349,7 +349,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.UpdateInterestReportsConnectedInvoice(entityPM);
             }
 
-            new ARInvoiceAnalyticTableService(objectContext.GetActiveDbContext()).AddUpdate(invoice);
+            new ARInvoiceAnalyticTableService(objectContext.GetActiveDbContext()).AddUpdate(invoice, tenant);
 
             entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
 
@@ -670,7 +670,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     entityAutomationService.RunAutomation();
                 }
 
-                new ARInvoiceAnalyticTableService(objectContext.GetActiveDbContext()).AddUpdate(invoice);
+                new ARInvoiceAnalyticTableService(objectContext.GetActiveDbContext()).AddUpdate(invoice, tenant);
             }
 
 

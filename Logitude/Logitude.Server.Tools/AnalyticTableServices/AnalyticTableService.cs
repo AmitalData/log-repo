@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Logitude.Server.Tools.Helpers;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
 
-namespace Simplog.Server.Infrastructure.AnalyticTableServices
+namespace Logitude.Server.Tools.AnalyticTableServices
 {
     public abstract class AnalyticTableService<TEntity, TAnalyticTable> where TAnalyticTable : class
     {
@@ -14,8 +15,9 @@ namespace Simplog.Server.Infrastructure.AnalyticTableServices
             this.context = context;
         }
 
-        public void AddUpdate(TEntity entity)
+        public void AddUpdate(TEntity entity, int tenant)
         {
+            if (!FeatureToggleHelper.HasFeatureToggle("DBA", tenant)) return;
             var analyticTable = AutoMapToAnalyticTable<TAnalyticTable>(entity);
             CustomMap(entity, analyticTable);
             SubmitChanges(analyticTable);
