@@ -1002,7 +1002,7 @@ export class TenantManagementPM {
 	 
     private digitalPortalMobTotalLastMonth: number;
     public get DigitalPortalMobTotalLastMonth() { return this.digitalPortalMobTotalLastMonth; }
-    public set DigitalPortalMobTotalLastMonth(newValue: number) { if (this.digitalPortalMobTotalLastMonth!= newValue) { this.digitalPortalMobTotalLastMonth= newValue; this.MarkAsDirty("DigitalPortalMobTotalLastMonth"); } }
+    public set DigitalPortalMobTotalLastMonth(newValue: number) { if (this.digitalPortalMobTotalLastMonth != newValue) { this.digitalPortalMobTotalLastMonth = newValue; this.MarkAsDirty("DigitalPortalMobTotalLastMonth"); } }
        
 	 
 
@@ -1032,4 +1032,4 @@ export class TenantManagementPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
