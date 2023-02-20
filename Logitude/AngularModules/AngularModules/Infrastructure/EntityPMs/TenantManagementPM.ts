@@ -995,14 +995,14 @@ export class TenantManagementPM {
     public set DigitalPortalMobileLastDate(newValue: Date) { if (this.digitalPortalMobileLastDate != newValue) { this.digitalPortalMobileLastDate = newValue; this.MarkAsDirty("DigitalPortalMobileLastDate"); } }
        
 	 
-    private digitalPortalMobileTotalLastWeek: number;
-    public get DigitalPortalMobileTotalLastWeek() { return this.digitalPortalMobileTotalLastWeek; }
-    public set DigitalPortalMobileTotalLastWeek(newValue: number) { if (this.digitalPortalMobileTotalLastWeek != newValue) { this.digitalPortalMobileTotalLastWeek = newValue; this.MarkAsDirty("DigitalPortalMobileTotalLastWeek"); } }
+    private digitalPortalMobTotalLastWeek: number;
+    public get DigitalPortalMobTotalLastWeek() { return this.digitalPortalMobTotalLastWeek; }
+    public set DigitalPortalMobTotalLastWeek(newValue: number) { if (this.digitalPortalMobTotalLastWeek != newValue) { this.digitalPortalMobTotalLastWeek = newValue; this.MarkAsDirty("DigitalPortalMobTotalLastWeek"); } }
        
 	 
-    private digitalPortalMobileTotalLastMonth: number;
-    public get DigitalPortalMobileTotalLastMonth() { return this.digitalPortalMobileTotalLastMonth; }
-    public set DigitalPortalMobileTotalLastMonth(newValue: number) { if (this.digitalPortalMobileTotalLastMonth != newValue) { this.digitalPortalMobileTotalLastMonth = newValue; this.MarkAsDirty("DigitalPortalMobileTotalLastMonth"); } }
+    private digitalPortalMobTotalLastMonth: number;
+    public get DigitalPortalMobTotalLastMonth() { return this.digitalPortalMobTotalLastMonth; }
+    public set DigitalPortalMobTotalLastMonth(newValue: number) { if (this.digitalPortalMobTotalLastMonth != newValue) { this.digitalPortalMobTotalLastMonth = newValue; this.MarkAsDirty("DigitalPortalMobTotalLastMonth"); } }
        
 	 
 

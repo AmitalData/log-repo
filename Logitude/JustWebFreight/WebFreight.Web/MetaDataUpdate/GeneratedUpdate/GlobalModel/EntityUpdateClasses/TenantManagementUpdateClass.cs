@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 {
    public class TenantManagementUpdateClass
    {  		
-		public const string HashString = "182dd2d25fbf3648e12c83a14609c60a";
+		public const string HashString = "0fec84078c647f79aec8208d161d5914";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -12987,6 +12987,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
  		   ObjectTable TenantManagementObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TenantManagement" && d.Tenant == 0).FirstOrDefault(); 
 
  		   TextCode TenantManagementTextCode_TenantManagementTHLogitudeDigitalBranding = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.LogitudeDigitalBranding", DefaultText = "Digital Portal Branding",LocalDefaultText = @"Digital Portal Branding", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TenantManagementTextCode_TenantManagementFDigitalPortalLastDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.F.DigitalPortalLastDate", DefaultText = "Digital Portal Last Date",LocalDefaultText = @"Digital Portal Last Date", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TenantManagementTextCode_TenantManagementFDigitalPortalTotalLastWeek = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.F.DigitalPortalTotalLastWeek", DefaultText = "Digital Portal Total Last Week",LocalDefaultText = @"Digital Portal Total Last Week", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TenantManagementTextCode_TenantManagementFDigitalPortalTotalLastMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.F.DigitalPortalTotalLastMonth", DefaultText = "Digital Portal Total Last Month",LocalDefaultText = @"Digital Portal Total Last Month", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TenantManagementTextCode_TenantManagementFDigitalPortalMobileLastDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.F.DigitalPortalMobileLastDate", DefaultText = "Digital Portal Mobile Last Date",LocalDefaultText = @"Digital Portal Mobile Last Date", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TenantManagementTextCode_TenantManagementFDigitalPortalMobTotalLastWeek = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.F.DigitalPortalMobTotalLastWeek", DefaultText = "Digital Portal Mobile Total Last Week",LocalDefaultText = @"Digital Portal Mobile Total Last Week", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TenantManagementTextCode_TenantManagementFDigitalPortalMobTotalLastMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.F.DigitalPortalMobTotalLastMonth", DefaultText = "Digital Portal Mobile Total Last Month",LocalDefaultText = @"Digital Portal Mobile Total Last Month", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
