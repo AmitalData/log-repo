@@ -141,6 +141,8 @@ namespace WebFreight.Web.ContainerTracking
                     shipmentCode = code.Substring(3),
                     containerActualDate = containerPM.ActualPODVesselArrival,
                     shipmentActualDate = shipmentPM.OnCarriageATA,
+                    containerEstimatedDateName = "ETD",
+                    containerActualDateName = "ATD",
                 };
                 CheckIsActaulDateFilled(discreapancyParams);
             }
@@ -191,6 +193,8 @@ namespace WebFreight.Web.ContainerTracking
                     shipmentCode = code.Substring(3),
                     containerActualDate = containerPM.ActualPODVesselArrival,
                     shipmentActualDate = shipmentPM.OnCarriageATA,
+                    containerEstimatedDateName = "ETD",
+                    containerActualDateName = "ATD",
                 };
                 CheckIsActaulDateFilled(discreapancyParams);
             }
