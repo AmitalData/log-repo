@@ -299,7 +299,7 @@ namespace WebFreight.Web.ContainerTracking
         }
         private void AddActualDateDiscrepancy(dynamic discrepancyParams)
         {
-            var actualdateName = discrepancyParams.containerCode + discrepancyParams.containerActualDateName;
+            var actualdateName = discrepancyParams.containerCode + " " + discrepancyParams.containerActualDateName;
             
             var discrepancyReason = $@"Shipment {actualdateName} already has a value of {discrepancyParams.shipmentActualDate} - did not update new container value {discrepancyParams.containerActualDate}.";
 
