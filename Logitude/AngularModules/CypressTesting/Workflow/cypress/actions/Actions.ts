@@ -11,6 +11,10 @@ import { ConditionDetails } from "../models/ConditionDetails";
 import { WorkflowRunHistoryFixturePath } from '../fixtures/WorkflowRunHistory/WorkflowRunHistoryFixturePath'
 import { DecisionElementDetails } from "../models/DecisionElementDetails";
 import { WorkflowlistFixturePath } from "../fixtures/WorkflowList/WorkflowListFixturePath";
+import { PrimitiveVariableDetails } from "../models/PrimitiveVariableDetails";
+import { RecordVariableDetails } from "../models/RecordVariableDetails";
+import { AssignmentDetails } from "../models/AssignmentDetails";
+import { AssignVariablesDetails } from "../models/AssignVariablesDetails";
 
 let ConditionCounter = 2;
 let ConditionGroupButton = 1;
@@ -72,7 +76,7 @@ export function FillEditFlowStartNodeDetails(startNodeDetails: StartNodeDetails)
     });
     cy.ClickRadio(WorkflowSelectors.FlowTriggerRadioButton(startNodeDetails.ConfigureTrigger));
     cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
-    FillConditionFieldName(false, 1, 'Notes');
+    FillConditionFieldName(true, 1, 'Notes');
 }
 
 export function FillWorkflowDetails(workflowDetails: WorkflowDetails) {
@@ -154,7 +158,7 @@ export function FillRootConditionsDetails(groupCondition: string, conditionDetai
     cy.Click(WorkflowSelectors.WorkflowAddRootCondition, null);
     cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
     cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowRootOperation, groupCondition, 0);
-    FillConditionsGroup(conditionDetailsList, true, (ConditionCounter + conditionDetailsList.length), false);
+    FillConditionsGroup(conditionDetailsList, true, (ConditionCounter + conditionDetailsList.length), true);
     ConditionGroupButton = ConditionCounter;
 }
 
@@ -325,12 +329,12 @@ export function FillDecisionRootConditionsDetails(groupCondition: string, condit
     ConditionGroupButton = ConditionCounter;
 }
 
-export function CloseEditDecisionNodeWindow() {
-    cy.Click(WorkflowSelectors.WorkflowDecisionOkButton, null);
+export function CloseEditNodeWindow() {
+    cy.Click(WorkflowSelectors.WorkflowEditOkButton, null);
 }
 
 export function SaveDecisionWorkflow() {
-    CloseEditDecisionNodeWindow();
+    CloseEditNodeWindow();
     cy.DefineRequestWait(RestAPI.PUT, URLs.WorkflowVersionRequest, RequestAliases.PutWorkflowFlowBuilder);
     cy.Click(WorkflowSelectors.WorkflowSaveDraft, null);
 }
@@ -367,6 +371,98 @@ function FillConditionFieldName(IsList: boolean, index: number, FieldName: strin
         BaseAssertion.AssertStatusCode(RequestAliases.GetObjectFieldViews, 200);
     }
 }
+
+//Variables
+function addDeclareVaraible(index: number) {
+    cy.get(WorkflowSelectors.WorkflowConnector(index)).find('img').click().then(() => {
+        cy.Click(WorkflowSelectors.WorkflowAddDeclareVariableNode, null)
+    })
+}
+
+export function FillPrimitiveVariableDetails(primitivevariableDetails: PrimitiveVariableDetails, index: number) {
+    addDeclareVaraible(index);
+    let VariableName = primitivevariableDetails.Name.toLocaleLowerCase() == "random" ?
+        GenerateRandoms.GenerateRandomString(5, true) : primitivevariableDetails.Name;
+    cy.FillLogTextBox(WorkflowSelectors.WorkflowDeclareVariableName, VariableName);
+    cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowDeclareVariableDataType, primitivevariableDetails.DataType, 0);
+    let VariableDefaultValue = primitivevariableDetails.DefaultValue.toLocaleLowerCase() == "random" ?
+        GenerateRandoms.GenerateRandomString(5, true) : null;
+    cy.FillLogTextBox(WorkflowSelectors.WorkflowDeclareVariabledefaultValue, VariableDefaultValue);
+}
+
+export function FillRecordVariableDetails(recordvariableDetails: RecordVariableDetails, index: number) {
+    addDeclareVaraible(index);
+    let VariableName = recordvariableDetails.Name.toLocaleLowerCase() == "random" ?
+        GenerateRandoms.GenerateRandomString(5, true) : recordvariableDetails.Name;
+    cy.FillLogTextBox(WorkflowSelectors.WorkflowDeclareVariableName, VariableName);
+    cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowDeclareVariableDataType, recordvariableDetails.DataType, 0);
+    cy.get(WorkflowSelectors.WorkflowRecordVariableObject).find(BaseSelectors.input).click().type(recordvariableDetails.Object).then(() => {
+        cy.get(WorkflowSelectors.WorkflowfieldsListTitle).contains(recordvariableDetails.Object).eq(0).click()
+    });
+}
+
+export function CloseEditDeclareVariableNodeWindow() {
+    cy.Click(WorkflowSelectors.WorkflowEditOkButton, null);
+}
+
+export function SaveDeclareVariableWorkflow() {
+    CloseEditNodeWindow();
+    cy.DefineRequestWait(RestAPI.PUT, URLs.WorkflowVersionRequest, RequestAliases.PutWorkflowFlowBuilder);
+    cy.Click(WorkflowSelectors.WorkflowSaveDraft, null);
+}
+
+function addAssignmentNode(index: number) {
+    cy.get(WorkflowSelectors.WorkflowConnector(index)).find('img').click().then(() => {
+        cy.Click(WorkflowSelectors.WorkflowAddAssignmentNode, null)
+    })
+}
+
+export function FillAssignmentDetails(assignmentDetails: AssignmentDetails, index: number) {
+    addAssignmentNode(index);
+    cy.FillLogTextBox(WorkflowSelectors.WorkflowAssignmentName, assignmentDetails.Name);
+}
+
+export function FillAssignVariablesDetails(assignVariablesDetails: AssignVariablesDetails[], matchedType: boolean) {
+    for (let i = 0; i < assignVariablesDetails.length; i++) {
+        fillVariableNameAssignment(i + 1, assignVariablesDetails[i].VariableName);
+        cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowAssignFieldOperation(i + 1), assignVariablesDetails[i].Operation, 0)
+        fillVariableValueAssignment(i + 1, assignVariablesDetails[i].FromList, assignVariablesDetails[i].Value, matchedType)
+        if (i < (assignVariablesDetails.length - 1)) {
+            cy.Click(WorkflowSelectors.AddNewAssignVariable, null)
+        }
+    }
+}
+
+function fillVariableValueAssignment(index: number, isListValue: string, variableVaue: string, matchedType: boolean) {
+    if (isListValue == 'True') {
+        fillVariableValueListAssignment(index, variableVaue, matchedType)
+    }
+    else {
+        cy.get(WorkflowSelectors.WorkflowAssignFieldValueInput(index)).type(variableVaue)
+    }
+}
+
+function fillVariableValueListAssignment(index: number, VaraibleValue: string, matchedType) {
+    if(matchedType) {
+        cy.get(WorkflowSelectors.WorkflowAssignFieldValue(index)).find(BaseSelectors.input).click().type(VaraibleValue).then(() => {
+            cy.get(WorkflowSelectors.WorkflowfieldsListTitle).contains(VaraibleValue).eq(0).click()
+        });
+    }
+    else {
+        cy.get(WorkflowSelectors.WorkflowAssignFieldValue(index)).find(BaseSelectors.input).click().type(VaraibleValue)
+    }
+}
+
+function fillVariableNameAssignment(index: number, VaraibleName: string) {
+    cy.get(WorkflowSelectors.WorkflowAssignFieldName(index)).find(BaseSelectors.input).click().type(VaraibleName).then(() => {
+        cy.get(WorkflowSelectors.WorkflowfieldsListTitle).contains(VaraibleName).eq(0).click()
+    });
+}
+
+export function AssertFieldDoseNotExists() {
+    BaseAssertion.AssertElementContain('.ant-select-tree-dropdown', 'No Results Found')
+}
+
 
 function FillConditionValue(selector: string, value: string, condition: string) {
     switch (condition) {
