@@ -1076,6 +1076,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
     public UserId: string = SessionInfo.LoggedUserId;
     public Tenant: number = SessionInfo.LoggedUserTenant;
+
     ApplyQueriesAdvancedFilter(allQueries:any) {
         if (this.ObjectTableName != "Shipment")
             return this.Queries;
