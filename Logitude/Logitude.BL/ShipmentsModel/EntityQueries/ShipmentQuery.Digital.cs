@@ -2894,6 +2894,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private string GetCarrierNameOfDischargeLeg(ShipmentPM shipment)
         {
+            bool isInlandDomesticShipment = (shipment.DirectionId == "D" && shipment.TransportModeId == "I");
+            if (isInlandDomesticShipment)
+            {
+                return shipment.MainCarriageCarrierName;
+            }
+
             if (!string.IsNullOrEmpty(shipment.Transshipment3ToPortId))
             {
                 return shipment.Transshipment3CarrierName;
@@ -2919,6 +2925,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private string GetCarrierNameOfDischargeLegTitle(ShipmentPM shipment)
         {
+            bool isInlandDomesticShipment = (shipment.DirectionId == "D" && shipment.TransportModeId == "I");
+            if (isInlandDomesticShipment)
+            {
+                return "Shipment.MainCarriageCarrierName";
+            }
+
             if (!string.IsNullOrEmpty(shipment.Transshipment3ToPortId))
             {
                 return "Shipment.Transshipment3CarrierName";
