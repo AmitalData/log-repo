@@ -1,0 +1,9 @@
+﻿<Script DBType="Main" Module="Accounting" AOT="true" TargetTableName="GLAccounts" Env="cloud">
+  <Sql Version="1">
+    <![CDATA[
+    
+    delete from [dbo].[GLAccounts] where tenant = 116 and isControlAccount = 0 and $LastCounterWhere$;
+
+    ]]>
+  </Sql>
+</Script>
