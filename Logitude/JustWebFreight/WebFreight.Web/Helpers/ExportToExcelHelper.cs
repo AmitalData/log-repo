@@ -1155,7 +1155,7 @@ class ReflectionProperties
 
 }
 
-class ExcelTotals
+public class ExcelTotals
 {
     public ExcelTotals(string fieldCode, double total, int indexOrder)
     {
