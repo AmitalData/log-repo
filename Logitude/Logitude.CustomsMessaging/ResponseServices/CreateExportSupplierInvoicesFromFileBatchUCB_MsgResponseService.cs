@@ -403,6 +403,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                ChangeSetOp = ChangeSetOperation.Insert
                             }
                         };
+                        invoiceItem.ItemAdditionalStatus = true;
                     }
                     else
                     {
