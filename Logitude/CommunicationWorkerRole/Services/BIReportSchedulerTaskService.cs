@@ -130,6 +130,10 @@ namespace CommunicationWorkerRole.Services
             schedulerDetails.ReportDetails.DWQueryFilterData.FilterItems.ForEach(filter => {
                 filter.TextValue = filter.TextValue?.ToString() == xmlNodeString ? null : filter.TextValue;
             });
+            if(schedulerDetails.ReportDetails.DWQueryFilterData.FilterItems != null && schedulerDetails.ReportDetails.DWQueryFilterData.FilterItems.Count == 0)
+            {
+                schedulerDetails.ReportDetails.DWQueryFilterData = null;
+            }
         }
 
         private void SendBIReportToReceipent(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, byte[] biReportData)
