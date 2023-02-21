@@ -4457,9 +4457,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 if (this.isApprovingInvoice || entityPM.IsAutoCredit)
                 {
-                    this.sATInterfaceHelper.SendSATRequestFile(entityPM, invoice);
-                    invoiceRepository.Update(invoice);
-                    invoiceRepository.SubmitChanges();
+                    SendInvoiceToSAT();
                 }
 
                 if (entityPM.IsAutoCredit)
@@ -4477,6 +4475,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
         }
 
+        private void SendInvoiceToSAT()
+        {
+            this.sATInterfaceHelper.SendSATRequestFile(entityPM, invoice);
+            entityPM.SATTransferStatusName = "Transferring";
+            invoiceRepository.Update(invoice);
+            invoiceRepository.SubmitChanges();
+        }
+
         private void OnResendToSAT()
         {
             if (!entityPM.ResendToSAT) return;
@@ -4489,7 +4495,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
             else
             {
-                this.sATInterfaceHelper.SendSATRequestFile(entityPM, invoice);
+                SendInvoiceToSAT();
             }
         }
 
@@ -4578,7 +4584,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (!this.isNewEntity)
                 {
                     // Approval on Create is handled inside the Create Method
-                    this.sATInterfaceHelper.SendSATRequestFile(entityPM, invoice);
+                    SendInvoiceToSAT();
                 }
 
                 this.UpdateShipmentRegistryDate();
