@@ -98,33 +98,40 @@ export  class ServiceHelper{
 
     private static SetBackgroundImg(BrandingData:any,baseUrl:string)
     {
-        var backGndId = this.getBackgroundId(BrandingData);
-        if(backGndId && BrandingData.BackgroundBytes){
+        var isMobile = this.IsMobile(BrandingData);
+        if(BrandingData.BackgroundBytes){
         CargoTrackingBrandingData.BackgroundURL = "url("+ServiceHelper.GetImageFromBytes(BrandingData.BackgroundBytes)+")";
         this.StoreImageInStorage("BackgroundImg",BrandingData.BackgroundId,BrandingData.BackgroundBytes);
         }
-        else if(BrandingData.MobileBackgroundBytes){
+        else if(isMobile && BrandingData.MobileBackgroundBytes){
             CargoTrackingBrandingData.BackgroundURL = "url("+ServiceHelper.GetImageFromBytes(BrandingData.MobileBackgroundBytes)+")";
-            this.StoreImageInStorage("BackgroundImg",BrandingData.MobileBackgroundId,BrandingData.MobileBackgroundBytes);
+            this.StoreImageInStorage("ImageBackgroundImg",BrandingData.MobileBackgroundId,BrandingData.MobileBackgroundBytes);
         }
         else{
+           
+            if(isMobile && BrandingData.BackgroundId)
             var StorageBackground:CargoTrackingImage = ServiceHelper.GetImageFromStorage("BackgroundImg");
-                if(StorageBackground && StorageBackground.Id!=null && StorageBackground.Id == BrandingData.BackgroundId){
-                    CargoTrackingBrandingData.BackgroundURL ="url("+ServiceHelper.GetImageFromBytes(StorageBackground.Data)+")";
-                }
-                else{
-                    CargoTrackingBrandingData.BackgroundURL ="url('"+baseUrl+"assets/images/misc/map-bg.svg')"
-                }
+            else if(isMobile)
+            var StorageBackground:CargoTrackingImage = ServiceHelper.GetImageFromStorage("ImageBackgroundImg"); 
+            else 
+            var StorageBackground:CargoTrackingImage = ServiceHelper.GetImageFromStorage("BackgroundImg");
+
+            if(StorageBackground && StorageBackground.Id!=null && StorageBackground.Id == BrandingData.BackgroundId){
+                CargoTrackingBrandingData.BackgroundURL ="url("+ServiceHelper.GetImageFromBytes(StorageBackground.Data)+")";
+            }
+            else{
+                CargoTrackingBrandingData.BackgroundURL ="url('"+baseUrl+"assets/images/misc/map-bg.svg')"
+            }
         }
     }
 
-    private static  getBackgroundId(BrandingData:any)
+    private static  IsMobile(BrandingData:any)
     {
         const mobileScreenMaxWidth = 470;
         const isPortrait = window.innerHeight > window.innerWidth;
         if((window.innerWidth <= mobileScreenMaxWidth && isPortrait)|| ( window.innerHeight <= mobileScreenMaxWidth && !isPortrait))
-        return false;
         return true;
+        return false;
     }
 
     private static SetCompanyLogo(BrandingData:any,baseUrl:string)
