@@ -115,7 +115,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                            || item.Value.Contains($"{item.Key}.{attr.Name}"))
                                         ||(attr.Name.Contains(".") && item.Value.Contains($"{attr.Name}")))
                         .ToList()
-                        .ForEach(attr => attr.Value ="");
+                        .ForEach(attr => attr.Remove());
                     }
                     
                     var json = JsonConvert.SerializeObject(temp);
@@ -206,8 +206,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
                     var lastOneYearDate = currentDateTime.AddDays(-365);
                     var lastNinetyDaysDate = currentDateTime.AddDays(-90);
-                    shipments.Where(a => a.CreateDateTime < lastOneYearDate
-                                         && a.MainCarriageFinalDestinationATA < lastNinetyDaysDate)
+                    shipments.Where(a => (helper.DoesPropertyExistInDynamic(a, "CreateDateTime")
+                                            && a.CreateDateTime < lastOneYearDate)
+                                         && (helper.DoesPropertyExistInDynamic(a, "MainCarriageFinalDestinationATA") 
+                                             && a.MainCarriageFinalDestinationATA < lastNinetyDaysDate))
                             .ToList()
                             .ForEach(i => i.IsCustomerArchived = true);
                 }
