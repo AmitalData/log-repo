@@ -264,16 +264,7 @@ namespace CommunicationWorkerRole
         private ShipmentPM GetShipment(string shipmentId, int tenant)
         {
             if (shipmentPM != null) return shipmentPM;
-            var thread = new Thread(() =>
-            {
-                ContactRepository contactRepository = new ContactRepository(tenant);
-                Contact receivedBy = contactRepository.GetSingleContact(documentsFilingPM.ReceivedByUserId, tenant);
-                AuthenticationUtil.AuthenticatedUserEmail = receivedBy.Email;
-                shipmentPM = new ShipmentQuery(shipmentRepository).GetSinglePM(shipmentId, tenant);
-            });
-
-            thread.Start();
-            thread.Join();
+            shipmentPM = new ShipmentQuery(shipmentRepository).GetSinglePM(shipmentId, tenant);
             return shipmentPM;
         }
 
