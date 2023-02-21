@@ -5,6 +5,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts.Models;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 
 namespace Logitude.BL.Helpers
@@ -126,6 +127,14 @@ namespace Logitude.BL.Helpers
             }
 
             return res;
+        }
+
+        public bool DoesPropertyExistInDynamic(dynamic settings, string name)
+        {
+            if (settings is ExpandoObject)
+                return ((IDictionary<string, object>)settings).ContainsKey(name);
+
+            return settings.GetType().GetProperty(name) != null;
         }
 
         #region private
