@@ -90,7 +90,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     //ExportFreightAmount = invoiceFromDB.ExportFreightAmount,
                     //ExportInsuranceAmount = invoiceFromDB.ExportInsuranceAmount
                 };
-                errorItems += invoiceFromFile.Errors;
+                error += invoiceFromFile.Errors;
                 if (!string.IsNullOrWhiteSpace(invoiceFromFile.OriginCountryCode))
                 {
                     CustomsCountryQueryService countryQueryService = new CustomsCountryQueryService(invoice.Tenant);
@@ -478,7 +478,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                         else
                         {
-                            row.Errors += row.InvoiceNumber + " line[" + i + " IsPreference is not valid boolean value \n ";
+                            if (string.IsNullOrWhiteSpace(data[9]))
+                            {
+                                row.IsPreference = false; ;
+                            }
+                            else
+                            {
+                                row.Errors += " InvoiceNumber:" + row.InvoiceNumber + " Line: " + i + " IsPreference is not valid boolean value:" + data[9] +" ";
+                            }
                         }
 
 
