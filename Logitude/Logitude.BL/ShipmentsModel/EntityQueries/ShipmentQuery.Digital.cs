@@ -2501,14 +2501,22 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private Dictionary<string, string> FillTerminalLegDetails(ShipmentPM shipment)
         {
-            var storageDays = GetStorageDays(shipment);
-            var storageDaysText = storageDays == 0 ? "–" : storageDays + " days";
-            var warehouseLegCutOffDate = shipment.WarehouseLegCutOffDate == null ? "–" : shipment.WarehouseLegCutOffDate?.ToString("dd/MM/yyyy");
+            var warehouseLegCutOffDate = CheckIsPermissonField("Shipment", "Shipment.WarehouseLegCutOffDate") 
+                                         ? (shipment.WarehouseLegCutOffDate == null ? "–" : shipment.WarehouseLegCutOffDate?.ToString("dd/MM/yyyy"))
+                                         : "";
+
             var legDetails = new Dictionary<string, string>
             {
                 { "Shipment.WarehouseLegCutOffDate", warehouseLegCutOffDate},
-                { "Shipment.G.StorageDays", storageDaysText }
             };
+
+            if (CheckIsPermissonField("Shipment", "Shipment.WarehouseLegActualReleaseDate") 
+                 && CheckIsPermissonField("Shipment", "Shipment.WarehouseLegActualEntryDate"))
+            {
+                var storageDays = GetStorageDays(shipment);
+                var storageDaysText = storageDays == 0 ? "–" : storageDays + " days";
+                legDetails.Add("Shipment.G.StorageDays", storageDaysText );
+            }
 
             return legDetails;
         }
@@ -2602,27 +2610,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 legDetails.Add(GetCarrierTextCode(shipment), CheckEmptyValue(shipment.MainCarriageCarrierName));
             }
-            else
-            {
-                legDetails.Add(GetCarrierTextCode(shipment), "");
-            }
 
             if (CheckIsPermissonField("Shipment", "Shipment.MainCarriageCarrierNumber"))
             {
                 legDetails.Add(GetVerticalTimelineCarrierNumberTextCode(shipment), CheckEmptyValue(shipment.MainCarriageCarrierNumber));
             }
-            else
-            {
-                legDetails.Add(GetVerticalTimelineCarrierNumberTextCode(shipment), "");
-            }
 
             if (CheckIsPermissonField("Shipment", "Shipment.Master"))
             {
                 legDetails.Add(GetVerticalTimeLineMasterTextCode(shipment), CheckEmptyValue(master));
-            }
-            else
-            {
-                legDetails.Add(GetVerticalTimeLineMasterTextCode(shipment), "");
             }
 
             if (shipment.TransportModeId == "O")
@@ -2699,29 +2695,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 legDetails.Add(GetCarrierTextCode(shipment), CheckEmptyValue(shipment.Transshipment1CarrierName));
             }
-            else
-            {
-                legDetails.Add(GetCarrierTextCode(shipment), "");
-            }
 
             if (CheckIsPermissonField("Shipment", "Shipment.Transshipment1CarrierNumber"))
             {
                 legDetails.Add(GetVerticalTimelineCarrierNumberTextCode(shipment), CheckEmptyValue(shipment.Transshipment1CarrierNumber));
-            }
-            else
-            {
-                legDetails.Add(GetVerticalTimelineCarrierNumberTextCode(shipment), "");
             }
 
             if (CheckIsPermissonField("Shipment", "Shipment.Transshipment1AdditionalMAWBOBLBL"))
             {
                 legDetails.Add(GetVerticalTimeLineMasterTextCode(shipment), CheckEmptyValue(master));
             }
-            else
-            {
-                legDetails.Add(GetVerticalTimeLineMasterTextCode(shipment), "");
-            }
-
+            
             if (shipment.TransportModeId == "O")
             {
                 legDetails.Add("Shipment.Transshipment1VesselName", CheckEmptyValue(shipment.Transshipment1VesselName));
@@ -2739,27 +2723,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 legDetails.Add(GetCarrierTextCode(shipment), CheckEmptyValue(shipment.Transshipment2CarrierName));
             }
-            else
-            {
-                legDetails.Add(GetCarrierTextCode(shipment), "");
-            }
 
             if (CheckIsPermissonField("Shipment", "Shipment.Transshipment2CarrierNumber"))
             {
                 legDetails.Add(GetVerticalTimelineCarrierNumberTextCode(shipment), CheckEmptyValue(shipment.Transshipment2CarrierNumber));
             }
-            else
-            {
-                legDetails.Add(GetVerticalTimelineCarrierNumberTextCode(shipment), "");
-            }
 
             if (CheckIsPermissonField("Shipment", "Shipment.Transshipment2AdditionalMAWBOBLBL"))
             {
                 legDetails.Add(GetVerticalTimeLineMasterTextCode(shipment), CheckEmptyValue(master));
-            }
-            else
-            {
-                legDetails.Add(GetVerticalTimeLineMasterTextCode(shipment), "");
             }
 
             if (shipment.TransportModeId == "O")
@@ -2779,27 +2751,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 legDetails.Add(GetCarrierTextCode(shipment), CheckEmptyValue(shipment.Transshipment3CarrierName));
             }
-            else
-            {
-                legDetails.Add(GetCarrierTextCode(shipment), "");
-            }
 
             if (CheckIsPermissonField("Shipment", "Shipment.Transshipment3CarrierNumber"))
             {
                 legDetails.Add(GetVerticalTimelineCarrierNumberTextCode(shipment), CheckEmptyValue(shipment.Transshipment3CarrierNumber));
             }
-            else
-            {
-                legDetails.Add(GetVerticalTimelineCarrierNumberTextCode(shipment), "");
-            }
 
             if (CheckIsPermissonField("Shipment", "Shipment.Transshipment3AdditionalMAWBOBLBL"))
             {
                 legDetails.Add(GetVerticalTimeLineMasterTextCode(shipment), CheckEmptyValue(master));
-            }
-            else
-            {
-                legDetails.Add(GetVerticalTimeLineMasterTextCode(shipment), "");
             }
 
             if (shipment.TransportModeId == "O")
@@ -2888,27 +2848,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 legDetails.Add(GetCarrierTextCode(shipment), CheckEmptyValue(GetCarrierNameOfDischargeLeg(shipment)));
             }
-            else
-            {
-                legDetails.Add(GetCarrierTextCode(shipment), "");
-            }
 
             if (CheckIsPermissonField("Shipment", GetCarrierNumberOfDischargeLegTitle(shipment)))
             {
                 legDetails.Add(GetVerticalTimelineCarrierNumberTextCode(shipment), CheckEmptyValue(GetCarrierNumberOfDischargeLeg(shipment)));
             }
-            else
-            {
-                legDetails.Add(GetVerticalTimelineCarrierNumberTextCode(shipment), "");
-            }
 
             if (CheckIsPermissonField("Shipment", "Shipment.Master"))
             {
                 legDetails.Add(GetVerticalTimeLineMasterTextCode(shipment), CheckEmptyValue(master));
-            }
-            else
-            {
-                legDetails.Add(GetVerticalTimeLineMasterTextCode(shipment), "");
             }
 
             if (shipment.TransportModeId == "O")
