@@ -1,5 +1,5 @@
 {
-  "HashString": "e11b61d29ee0431f8d2f1fde7a9d1665",
+  "HashString": "2fa5ac561e484fa8be9b9cb35b5cb1ff",
   "Name": "AP Invoices Statistics",
   "TableName": "APInvoiceAnalytics",
   "ObjectTableName": "APInvoice",
@@ -313,13 +313,6 @@
       "FieldCode": "TotalVATOnly",
       "DisplayName": "Total VAT Only",
       "DisplayNamePlural": "TotalVATOnly"
-    },
-    {
-      "HashString": "b41d1dd7ea3d4c909c4143b3a7f9e076",
-      "DataTypeCode": "Boolean",
-      "FieldCode": "IsInvoiceNumberManuallySet",
-      "DisplayName": "Is Invoice Number Manually Set",
-      "DisplayNamePlural": "IsInvoiceNumberManuallySet"
     }
   ]
 }
