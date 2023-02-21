@@ -27,6 +27,7 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { EntityStatusExtendedListService } from '../../../../Infrastructure/Services/ExtendedLists/EntityStatusExtendedListService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
+import { ShipmentAdditionalData } from '../../../../Shipment/DataContract/ShipmentAdditionalData';
 
 @Component({
 
@@ -475,6 +476,9 @@ export class AddEditPrivateLabelCustomsShipmentComponent extends BaseComponent i
         }
         if (args.EntityPM) {
             this.EntityPM = args.EntityPM;
+
+            if (!this.EntityPM.ShipmentAdditionalData) this.EntityPM.ShipmentAdditionalData = new ShipmentAdditionalData();
+
             //if (!this.IsNew) {
             if (this.EntityPM.TransportModeId == "O") {
                 this.TransportationTypes = [new TransportationTypes("Ashdod", "O", "ASH", "IL"), new TransportationTypes("Haifa", "O", "HFA", "IL"), new TransportationTypes("Eilat", "O", "ETH", "IL")];
@@ -530,7 +534,7 @@ export class AddEditPrivateLabelCustomsShipmentComponent extends BaseComponent i
                 this.SelectedTransportationTypes = new TransportationTypes("Tel-Aviv", "A", "TLV", "IL");
             }
 
-            if (this.EntityPM.ShipmentAddtionalDataXML == "<PLForwarding>true</PLForwarding>") {
+            if (this.EntityPM.ShipmentAdditionalData?.PLForwarding) {
                 this.PLForwarding = true;
             }
             else {
@@ -962,10 +966,10 @@ export class AddEditPrivateLabelCustomsShipmentComponent extends BaseComponent i
                     this.EntityPM.ForwarderPartnerId = SessionLocator.PrivateLableSettings.HybridPartnerId;
                 }
                 if (this.PLForwarding == true) {
-                    this.EntityPM.ShipmentAddtionalDataXML = "<PLForwarding>true</PLForwarding>";
+                    this.EntityPM.ShipmentAdditionalData.PLForwarding = true;
                 }
                 else {
-                    this.EntityPM.ShipmentAddtionalDataXML = "<PLForwarding>false</PLForwarding>";
+                    this.EntityPM.ShipmentAdditionalData.PLForwarding = false;
                 }
 
                 this.EntityPM.StatusId = !this.IsDSVTenant ? this.EntityProgressStatusId : this.EntityPM.StatusId;
@@ -996,10 +1000,10 @@ export class AddEditPrivateLabelCustomsShipmentComponent extends BaseComponent i
                 this.EntityPM.ForwarderPartnerId = SessionLocator.PrivateLableSettings.HybridPartnerId;
 
                 if (this.PLForwarding == true) {
-                    this.EntityPM.ShipmentAddtionalDataXML = "<PLForwarding>true</PLForwarding>";
+                    this.EntityPM.ShipmentAdditionalData.PLForwarding = true;
                 }
                 else {
-                    this.EntityPM.ShipmentAddtionalDataXML = "<PLForwarding>false</PLForwarding>";
+                    this.EntityPM.ShipmentAdditionalData.PLForwarding = false;
                 }
                 this._ShipmentPMService.update(this.EntityPM).subscribe((myResult: any) => {
                     if (!myResult.HasError) {

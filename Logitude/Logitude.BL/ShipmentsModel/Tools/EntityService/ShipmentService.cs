@@ -2786,7 +2786,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     shipmentAdditionalCloudData.DocumentsApprovedByUserName = entityPM.DocumentsApprovedByUserName;
                 }
-                shipmentAdditionalCloudData.ShipmentAddtionalDataXML = entityPM.ShipmentAddtionalDataXML;
+                shipmentAdditionalCloudData.ShipmentAddtionalDataXML = ShipmentAdditionalDataService.SerializeShipmentAdditionalXmlData(entityPM.ShipmentAdditionalData);
 
                 if (!string.IsNullOrEmpty(entityPM.PaymentRequestXML) && shipmentAdditionalCloudData.PaymentRequestXML != entityPM.PaymentRequestXML)
                 {
@@ -3099,9 +3099,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         {
                             shipmentAdditionalCloudData.VersionApproved = entityPM.VersionApproved;
                         }
-                        if (!string.IsNullOrEmpty(entityPM.ShipmentAddtionalDataXML))
+                        if (entityPM.ShipmentAdditionalData != null)
                         {
-                            shipmentAdditionalCloudData.ShipmentAddtionalDataXML = entityPM.ShipmentAddtionalDataXML;
+                            shipmentAdditionalCloudData.ShipmentAddtionalDataXML = ShipmentAdditionalDataService.SerializeShipmentAdditionalXmlData(entityPM.ShipmentAdditionalData);
                         }
 
                         if (!string.IsNullOrEmpty(entityPM.PaymentRequestXML) && shipmentAdditionalCloudData.PaymentRequestXML != entityPM.PaymentRequestXML)

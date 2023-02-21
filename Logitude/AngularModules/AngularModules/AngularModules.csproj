@@ -7894,6 +7894,7 @@
     <TypeScriptCompile Include="Shipment\Components\Workspaces\ContainerComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\Workspaces\ContainersFUsComponent.ts" />
     <TypeScriptCompile Include="Shipment\DataContract\LogboxShipmentExportExcelArgs.ts" />
+    <TypeScriptCompile Include="Shipment\DataContract\ShipmentAdditionalData.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\ContainerFollowUpList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\ContainerList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\ContainerStatusList.ts" />

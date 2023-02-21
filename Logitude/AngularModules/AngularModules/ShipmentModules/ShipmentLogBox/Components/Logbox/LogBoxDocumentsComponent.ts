@@ -1345,4 +1345,17 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     public IsSHOVisible(selectedShipment: any) : boolean {
         return selectedShipment && selectedShipment.DirectionId != 'C' && selectedShipment.TransportModeId == 'O' && selectedShipment.IsShipmentOrder == true;
     }
+
+    public IsSHONumberVisible(): boolean {
+        if (this.ShipmentPM && this.ShipmentPM.ShipmentAdditionalData && this.ShipmentPM.ShipmentAdditionalData.ShipmentOrderNumber) {
+            return this.ShipmentPM && this.ShipmentPM.DirectionId != 'C' && this.ShipmentPM.TransportModeId == 'O' && this.ShipmentPM.IsShipmentOrder != true;
+        }
+        return false;
+    }
+
+    public GetSHONumber(): string {
+        if (this.ShipmentPM && this.ShipmentPM.ShipmentAdditionalData && this.ShipmentPM.ShipmentAdditionalData.ShipmentOrderNumber)
+            return this.ShipmentPM.ShipmentAdditionalData.ShipmentOrderNumber;
+        return "SHO NotFound";
+    }
 }

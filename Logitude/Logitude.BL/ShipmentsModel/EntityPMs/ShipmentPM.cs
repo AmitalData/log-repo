@@ -2210,6 +2210,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? ApproveDateTime { get; set; }
         public bool IsNewARInvoiceBlocked { get; set; }
         public string ShipmentAddtionalDataXML { get; set; }
+        public ShipmentAdditionalData ShipmentAdditionalData { get; set; }
         //public bool IsMappingXSDFields { get; set; }
         //public bool StopConcurrencyValidating { get; set; }
         public string OriginShipmentId { get; set; }
