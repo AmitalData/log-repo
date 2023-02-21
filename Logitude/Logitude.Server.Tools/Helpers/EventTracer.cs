@@ -13,6 +13,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Helpers;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure;
+using System.Transactions;
 
 namespace Logitude.Server.Tools.Helpers
 {
@@ -155,7 +156,8 @@ namespace Logitude.Server.Tools.Helpers
                         ChildObjectTableId = childObjectTable?.Id,
                     };
 
-                    if (LogitudeSettings.WorkEnvironment != "cloud")
+                    if ((Transaction.Current != null && Transaction.Current.IsolationLevel == System.Transactions.IsolationLevel.Snapshot)
+                        || Transaction.Current == null)
                     {
                         using (var scope = objectContext.GetSnapshotTransaction())
                         {
