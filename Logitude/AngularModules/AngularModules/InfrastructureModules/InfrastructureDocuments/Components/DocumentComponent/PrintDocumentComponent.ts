@@ -104,7 +104,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (ObjectsLocator.GlobalSetting.WorkEnvironment === 'cloud') {
+        if (ObjectsLocator.GlobalSetting.WorkEnvironment === 'cloud' && SessionLocator.TenantPM.AccountingActivated) {
             this.UpdateDocumentsAutomatically();
         }
     }
