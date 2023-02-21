@@ -83,7 +83,7 @@ export class StimulsoftViewerComponent implements OnInit {
 
     TemplateType: string = "R";
     TemplateTypeName: string = "PDF Template";
-    
+
     SelectedReportsTemplateList: ReportsTemplateList;
     ReportsTemplatesLists: ReportsTemplateList[] = [];
     public documentTypeTemplatePMService: DocumentTypeTemplatePMService;
@@ -496,7 +496,7 @@ export class StimulsoftViewerComponent implements OnInit {
     }
 
 
-    
+
     SetSelectedFontSize() {
 
         if (!this.SelectTextBoxElement) return;
@@ -541,7 +541,7 @@ export class StimulsoftViewerComponent implements OnInit {
         if (AppTool.IsNullOrEmpty(this.OrginalImageWidth)) return fontSize;
         return (this.ImageWidthNumber / (Number(this.OrginalImageWidth) / fontSize));
     }
-  
+
     SetElementFontSize(fontSize: number, element: HTMLElement) {
         element.style.fontSize = (this.CalculateFontSizeDependedOnScreenSize(fontSize) + "px");
     }
@@ -572,7 +572,7 @@ export class StimulsoftViewerComponent implements OnInit {
 
         }
 
-        var imagewidth = screenWidth - 30;//Marge 15 left and 15 right 
+        var imagewidth = screenWidth - 30;//Marge 15 left and 15 right
         var imageheight = imagewidth * this.Precentage;
         if (imageheight > screenHeight) {
             imagewidth -= 15;// scrol 15
@@ -694,7 +694,7 @@ export class StimulsoftViewerComponent implements OnInit {
         if (!this.EmailSender || (this.EmailSender && !this.EmailSender.LoadingSendingComponent)) {
             this.EmailSender = new GeneralEmailSender("Report", "", entityId, "StimualReport", null, null, "", subject, attachmentsList);
             this.EmailSender.PartnersObslist = this.StimulsoftArgData.PartnersObslist;
-            this.EmailSender.SendMessage();
+            this.EmailSender.SendMessage(this.StimulsoftArgData.ReportFilterConmponent.GLAccountId);
         }
     }
 
@@ -814,8 +814,8 @@ ResetEditableField(field: EditableFieldPosition){
                     if (!pmResponse.HasError) {
                         this.EditableField.filter(d => d.Status == "Change" ).forEach((field) => {
 
-                           this.ResetEditableField(field);  
-    
+                           this.ResetEditableField(field);
+
                         });
 
                         if (this.StimulsoftArgData.EditDocumentComponent && this.StimulsoftArgData.EditDocumentComponent.DataViewModel) {

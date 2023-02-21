@@ -74,7 +74,7 @@ export class GeneralEmailSender {
         this.IsShareDocumentsViaEmail = true;
     }
 
-    SendMessage() {
+    SendMessage(glAccountId: string = '') {
 
         var widthwindow = window.innerWidth;
         var heighthwindow = window.innerHeight;
@@ -104,6 +104,7 @@ export class GeneralEmailSender {
         windowArgs.PartnersObslist = this.PartnersObslist;
         windowArgs.IsUserFromReport = this.PartnersObslist ? true : false;
         windowArgs.EntityPM = this.EntityPM;
+        windowArgs.GlaccountId = glAccountId;
 
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = sendWindowWidth;
@@ -237,7 +238,7 @@ export class GeneralEmailSender {
         logWindow.Title = "Send Message";
         logWindow.DataContext = SelectedInternalDocument;
         logWindow.NotifyOnClose = true;
-        logWindow.IsShowCloseButton = true; 
+        logWindow.IsShowCloseButton = true;
         logWindow.WindowArgs = windowArgs;
         logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/SendDocumentComponent");
         logWindow.WindowClosed.subscribe(($event: any) => {
@@ -248,4 +249,4 @@ export class GeneralEmailSender {
         });
         this.LoadingSendingComponent = false;
     }
-}   
+}

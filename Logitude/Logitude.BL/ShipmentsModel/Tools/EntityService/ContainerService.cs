@@ -481,7 +481,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }        
         private void MapLocationFromLastDelivery(ShipmentDeliveryPM lastDelivery, ShipmentDeliveryPM emptyReturn)
         {
-            switch (lastDelivery.PickUpDeliveryFromTypeCode)
+            switch (lastDelivery.PickUpDeliveryToTypeCode)
             {
                 case "PART":
                     {

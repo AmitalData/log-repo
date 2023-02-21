@@ -30,6 +30,7 @@ using System.Net.Http;
 using System.ServiceModel.DomainServices.Server;
 using System.Web;
 using System.Web.Http;
+using Logitude.Accounting.BL.EntityQueryServices;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
@@ -122,9 +123,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             }
         }
 
-    
 
-        public HttpResponseMessage GetDocumentOutByDocumentTypeEntityAndChild(string entityId,int tenant ,  string childEntityId, string documentTypeId )
+
+        public HttpResponseMessage GetDocumentOutByDocumentTypeEntityAndChild(string entityId, int tenant, string childEntityId, string documentTypeId)
         {
             try
             {
@@ -189,7 +190,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 //            item.DocumentId = documentOutCopy.DocumentId;
                 //        }
                 //    }
-                   
+
                 //    DocumentOutCopy  documentCopy = MapDocumentOutCopyDocumentOutCopyPM(item, documentOutCopy);
                 //    documentOutCopyRepository.Update(documentCopy);
                 //}
@@ -220,7 +221,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
         public void DeleteDocumentOut(DocumentOut entity)
-        {     
+        {
             ICommonDataContext objectContext = CommonDataContext.GetContext(entity.Tenant);
             DocumentOutRepository documentOutRepository = new DocumentOutRepository(objectContext);
             DocumentOut doc = documentOutRepository.GetSingleDocumentOut(entity.Id, entity.Tenant);
@@ -279,9 +280,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 if (documentOutPM == null)
                 {
                     DocumentHelper documentHelper = new DocumentHelper();
-                    documentOutPM = documentHelper.CreateDocumentOut(createDocumentOutArgs.DocumentTypeId, createDocumentOutArgs.EntityId, createDocumentOutArgs.ChildEntityId, createDocumentOutArgs.ChildReference, createDocumentOutArgs.ObjectTableId, createDocumentOutArgs.Tenant,null, createDocumentOutArgs.DocumentTypeTemplateId);
+                    documentOutPM = documentHelper.CreateDocumentOut(createDocumentOutArgs.DocumentTypeId, createDocumentOutArgs.EntityId, createDocumentOutArgs.ChildEntityId, createDocumentOutArgs.ChildReference, createDocumentOutArgs.ObjectTableId, createDocumentOutArgs.Tenant, null, createDocumentOutArgs.DocumentTypeTemplateId);
                 }
-         
+
                 return Request.CreateResponse(HttpStatusCode.OK, documentOutPM);
             }
             catch (Exception ex)
@@ -290,17 +291,17 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             }
         }
 
-     
+
         private static void Authentication()
         {
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-           // SecurityUtility.CheckContactFeature("DocumentOut", "READ", authToken.Tenant);
+            // SecurityUtility.CheckContactFeature("DocumentOut", "READ", authToken.Tenant);
         }
-        
-        public HttpResponseMessage GetEntityPartners(string entityId, string objectTableName , string childEntityId , string childobjectTableName)
-        {            
+
+        public HttpResponseMessage GetEntityPartners(string entityId, string objectTableName, string childEntityId, string childobjectTableName, string gLAccountId = null)
+        {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
@@ -357,7 +358,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                             }
                         }
 
-                        if (shipment.AgentId != null )
+                        if (shipment.AgentId != null)
                         {
                             list.Add(new EntityPartner()
                             {
@@ -374,7 +375,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                             {
                                 Id = idCounter++,
                                 PartnerId = shipment.IssuingCarrierAgentId,
-                                PartnerType = "Issuing Carrier Agent",                                
+                                PartnerType = "Issuing Carrier Agent",
                             });
                         }
 
@@ -389,7 +390,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                             });
                         }
 
-                        if (shipment.CustomAgentImportId != null )
+                        if (shipment.CustomAgentImportId != null)
                         {
                             list.Add(new EntityPartner()
                             {
@@ -433,7 +434,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                             });
                         }
 
-                        if (shipment.ConsigneeNotImporterId != null )
+                        if (shipment.ConsigneeNotImporterId != null)
                         {
                             list.Add(new EntityPartner()
                             {
@@ -444,7 +445,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                             });
                         }
 
-                        if (shipment.FreightForwarderId != null )
+                        if (shipment.FreightForwarderId != null)
                         {
                             list.Add(new EntityPartner()
                             {
@@ -477,7 +478,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                             });
                         }
 
-                        if (shipment.ConsolidatorId != null )
+                        if (shipment.ConsolidatorId != null)
                         {
                             list.Add(new EntityPartner()
                             {
@@ -586,7 +587,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                             {
                                 Id = idCounter++,
                                 PartnerId = quote.MainCarriageCarrierId,
-                                PartnerType = "Carrier",                                
+                                PartnerType = "Carrier",
                             });
                         }
                     }
@@ -600,7 +601,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     OpportunityPM entityPM = opportunityQuery.GetSingle(entityId, false, false);
                     if (entityPM != null)
                     {
-                        if (!string.IsNullOrEmpty(entityPM.CustomerId) )
+                        if (!string.IsNullOrEmpty(entityPM.CustomerId))
                         {
                             list.Add(new EntityPartner()
                             {
@@ -612,6 +613,23 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                         }
                     }
 
+                    #endregion
+                }
+
+                else if (objectTableName == "Report")
+                {
+                    #region Report
+
+                    GLAccountConnectedPartnerService gLAccountConnectedPartnerService = new GLAccountConnectedPartnerService(authToken.Tenant);
+                    List<ShortPartnersDetails> connectedPartners = gLAccountConnectedPartnerService.GetAllConnectedPartnersByGLAccountId(gLAccountId);
+
+
+                    list.Add(new EntityPartner()
+                    {
+                        Id = 1,
+                        PartnerId = string.Join(",", connectedPartners.Select(a => a.PartnerId)),
+                        PartnerType = "Customer Contacts"
+                    });
                     #endregion
                 }
 
@@ -638,9 +656,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                         case "ARInvoice":
                             {
                                 ARInvoice iEntity = (from d in invoiceContext.ARInvoices where d.Id == entityId select d).FirstOrDefault();
-                                if(iEntity != null)
+                                if (iEntity != null)
                                 {
-                                    if(iEntity.BillToId != null)
+                                    if (iEntity.BillToId != null)
                                     {
                                         list.Add(new EntityPartner()
                                         {
@@ -724,7 +742,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             }
         }
 
-        public HttpResponseMessage GetCalculatedFileNameForDocumentOutCopy(string documentOutId , string documentTypeCopyId)
+        public HttpResponseMessage GetCalculatedFileNameForDocumentOutCopy(string documentOutId, string documentTypeCopyId)
         {
             try
             {
@@ -734,7 +752,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
 
                 DocumentOutQuery documentOutQuery = new DocumentOutQuery(authToken.Tenant);
-                string fileName = documentOutQuery.GetCalculatedFileNameForDocumentOutCopy(documentOutId, documentTypeCopyId , authToken.Tenant);
+                string fileName = documentOutQuery.GetCalculatedFileNameForDocumentOutCopy(documentOutId, documentTypeCopyId, authToken.Tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, fileName);
             }
             catch (Exception ex)

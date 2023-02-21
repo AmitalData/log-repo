@@ -109,6 +109,7 @@ namespace WebFreight.Web.ContainerTracking
                     shipmentActualDate = shipmentPM.PreCarriageATD,
                     containerEstimatedDateName = "ETD",
                     containerActualDateName = "ATD",
+                    shipmentDirection = "from",
                 };
                 CheckIsSameLocationUsingId(preCarriageParams);               
             }
@@ -127,6 +128,7 @@ namespace WebFreight.Web.ContainerTracking
                     shipmentActualDate = shipmentPM.OnCarriageATA,
                     containerEstimatedDateName = "ETA",
                     containerActualDateName = "ATA",
+                    shipmentDirection = "to",
                 };
                 CheckIsSameLocationUsingId(preCarriageParams);
             }
@@ -143,6 +145,7 @@ namespace WebFreight.Web.ContainerTracking
                     shipmentActualDate = shipmentPM.OnCarriageATA,
                     containerEstimatedDateName = "ETD",
                     containerActualDateName = "ATD",
+                    shipmentDirection = "from",
                 };
                 CheckIsActaulDateFilled(discreapancyParams);
             }
@@ -161,6 +164,7 @@ namespace WebFreight.Web.ContainerTracking
                     shipmentActualDate = shipmentPM.MainCarriageATD,
                     containerEstimatedDateName = "ETD",
                     containerActualDateName = "ATD",
+                    shipmentDirection = "from",
                 };
                 CheckIsSameLocation(preCarriageParams);            
             }
@@ -179,6 +183,7 @@ namespace WebFreight.Web.ContainerTracking
                     shipmentActualDate = shipmentPM.MainCarriageATA,
                     containerEstimatedDateName = "ETA",
                     containerActualDateName = "ATA",
+                    shipmentDirection = "to",
                 };
                 CheckIsSameLocation(preCarriageParams);              
             }
@@ -195,6 +200,7 @@ namespace WebFreight.Web.ContainerTracking
                     shipmentActualDate = shipmentPM.OnCarriageATA,
                     containerEstimatedDateName = "ETD",
                     containerActualDateName = "ATD",
+                    shipmentDirection = "to",
                 };
                 CheckIsActaulDateFilled(discreapancyParams);
             }
@@ -249,7 +255,7 @@ namespace WebFreight.Web.ContainerTracking
             {
                 var transshipmentATAInShipment = GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + "ATA");
 
-                if ((DateTime)transshipmentATAInShipment != updatedFields.ActualDate)
+                if (transshipmentATAInShipment != null && (DateTime)transshipmentATAInShipment != updatedFields.ActualDate)
                 {
                     var discrepancyReason = $@"Transshipment{transshipmentLegIndex} ATA already has a value of {transshipmentATAInShipment} - did not update new container value {updatedFields.ActualDate}.";
                     AddContainerDiscrepancyToService(containerPM, shipmentPM, discrepancyReason);
@@ -259,10 +265,10 @@ namespace WebFreight.Web.ContainerTracking
         private void AddNotSameLocationDiscrepancy (dynamic discrepancyParams, string time)
         {
             var shipmentUnloCode = GetUnloCodeFromPortId(discrepancyParams.shipmentLocation);
-            var discrepancyReason = "Shipment " + discrepancyParams.shipmentCode + " from port is empty - shipment " + time + " not updated.";
+            var discrepancyReason = "Shipment " + discrepancyParams.shipmentCode + discrepancyParams.shipmentDirection + " port is empty - shipment " + time + " not updated.";
             if (shipmentUnloCode != null)
             {
-                discrepancyReason = $@"Shipment {discrepancyParams.shipmentCode} from port {shipmentUnloCode} not equal to container {discrepancyParams.containerCode} port {discrepancyParams.containerLocation} - shipment {time} not updated.";
+                discrepancyReason = $@"Shipment {discrepancyParams.shipmentCode} {discrepancyParams.shipmentDirection} port {shipmentUnloCode} not equal to container {discrepancyParams.containerCode} port {discrepancyParams.containerLocation} - shipment {time} not updated.";
             }
 
             AddContainerDiscrepancyToService(discrepancyParams.containerPM, discrepancyParams.shipmentPM, discrepancyReason);
