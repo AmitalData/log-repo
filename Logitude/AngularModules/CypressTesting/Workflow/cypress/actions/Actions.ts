@@ -21,7 +21,6 @@ let ConditionGroupButton = 1;
 let SearchworkflowName;
 let InstanceBusinessKey;
 let SearchInstanceBusinessKey;
-let connecterCountVariable = 1;
 
 export function NavigatesToAutomationsWorkspace() {
     cy.Click(WorkflowSelectors.AutomationsTab, null)
