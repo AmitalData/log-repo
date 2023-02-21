@@ -11,11 +11,8 @@ namespace Logitude.Customs.Data.DataContracts
 {
     public class CustomsRequestsSheetSummary
     {
-        [Key]
-        public Guid Id { get; set; }
         public int count { get; set; }
         public string InterfaceTypeName { get; set; }
-
     }
 
 

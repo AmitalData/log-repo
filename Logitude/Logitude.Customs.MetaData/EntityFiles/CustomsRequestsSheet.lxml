@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Customs Requests Sheet&quot;"
-  Code="&quot;f213&quot;"
+  Code="&quot;6053&quot;"
   Name="&quot;Customs.CustomsRequestsSheet Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -1896,6 +1896,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;TenantPriority&quot;"
     ListPropertyPath="&quot;TenantPriority&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -2059,6 +2060,12 @@
       Code="&quot;Customs.RequestSheet.O.Regular&quot;"
       DefaultText="&quot;Regular&quot;"
       LocalDefaultText="&quot;רגיל&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.RequestSheet.O.IncludingFuture&quot;"
+      DefaultText="&quot;including future&quot;"
+      LocalDefaultText="&quot;כולל עתידי&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

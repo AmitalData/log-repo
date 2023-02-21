@@ -2,9 +2,10 @@
 import {InfrastructureModule} from '../../Infrastructure/Module_INFR';
 //import {CustomsModule} from '../../Customs/Module_CUST';
 import {Components, ModuleDeclarations} from './ModuleDeclarations';
+import { TooltipModule } from '../../Infrastructure/Directives/tooltip/tooltip.module';
 
 @NgModule({
-    imports: [InfrastructureModule],
+    imports: [InfrastructureModule, TooltipModule],
     declarations: [...Components],
     entryComponents: [...Components],
     exports:  [...Components],
