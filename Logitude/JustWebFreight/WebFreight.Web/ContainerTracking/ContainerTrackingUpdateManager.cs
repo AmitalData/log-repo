@@ -275,7 +275,8 @@ namespace WebFreight.Web.ContainerTracking
                 podLeg = new { Vessel = containerUpdatedFields.PODLegVessel, VesselId = podLegVessel?.Id, Voyage = containerUpdatedFields.PODLegVoyage };
             }
 
-           
+            if (leg1 == null && leg2 == null && leg3 == null && polLeg == null && podLeg == null) return;
+
             if (leg3 != null)
             {
                 UpdateVesselVoyageVizionTransshipments(polLeg != null ? polLeg : leg1, index1, containerPM);
@@ -312,7 +313,6 @@ namespace WebFreight.Web.ContainerTracking
             var leg1 = allTrasshipmentLegs.Where(a => a.Index == 1).FirstOrDefault();
             var leg2 = allTrasshipmentLegs.Where(a => a.Index == 2).FirstOrDefault();
             var leg3 = allTrasshipmentLegs.Where(a => a.Index == 3).FirstOrDefault();
-            var leg4 = allTrasshipmentLegs.Where(a => a.Index == 4).FirstOrDefault();
             var index1 = 1;
             var index2 = 2;
             var index3 = 3;
@@ -330,6 +330,8 @@ namespace WebFreight.Web.ContainerTracking
             {
                 podLeg = new { Vessel = containerUpdatedFields.PODLegVessel, VesselId = podLegVessel?.Id, Voyage = containerUpdatedFields.PODLegVoyage };
             }
+
+            if (leg1 == null && leg2 == null && leg3 == null && polLeg == null && podLeg == null) return;
 
             if (leg3 != null)
             {
