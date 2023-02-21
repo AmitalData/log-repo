@@ -90,7 +90,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     //ExportFreightAmount = invoiceFromDB.ExportFreightAmount,
                     //ExportInsuranceAmount = invoiceFromDB.ExportInsuranceAmount
                 };
-
+                errorItems += invoiceFromFile.Errors;
                 if (!string.IsNullOrWhiteSpace(invoiceFromFile.OriginCountryCode))
                 {
                     CustomsCountryQueryService countryQueryService = new CustomsCountryQueryService(invoice.Tenant);
@@ -471,7 +471,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         row.IssueDate = issueDate;
                         row.PreferenceDocumentTypeCode = data[7];
                         row.TradeAgreementProtocol = data[8];
-                        row.IsPreference = string.IsNullOrWhiteSpace(data[9]) ? false : Convert.ToBoolean(data[9]);
+                        //row.IsPreference = string.IsNullOrWhiteSpace(data[9]) ? false : Boolean.TryParse(data[9],out row.IsPreference);
+                        if (Boolean.TryParse(data[9], out Boolean parsedValue))
+                        {
+                            row.IsPreference = parsedValue;
+                        }
+                        else
+                        {
+                            row.Errors += row.InvoiceNumber + " line[" + i + " IsPreference is not valid boolean value \n ";
+                        }
+
+
                         row.OriginCountryCode = data[2];
                         row.SupplierInvoiceItems = new List<InvoiceItemFromFile> {
                             new InvoiceItemFromFile
@@ -564,6 +574,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //public string BuyerRoleCode;
             //public string PartyRelationCode;
             public List<InvoiceItemFromFile> SupplierInvoiceItems;
+            public string Errors;
         }
 
         private class InvoiceItemFromFile
