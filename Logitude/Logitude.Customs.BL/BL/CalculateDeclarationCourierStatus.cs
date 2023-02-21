@@ -141,8 +141,7 @@ namespace Logitude.Customs.BL.BL
                 CalcSpecialActionStatus(myDeclarationCourierStatusPM);
                 CalcFastIndividualProcess(myDeclarationCourierStatusPM);
                 CalcDeclarationPendings902(myDeclarationCourierStatusPM);
-                string defValue = GetDefault("ISRAEL", "CGO_CUST_CAS", "NON", "NON");
-                if (!string.IsNullOrEmpty(defValue) && declarationPM.CustomerCode != defValue && declarationPM.ChangeSetOp == ChangeSetOperation.Insert)
+               
                     CalcDeclarationPendings906(myDeclarationCourierStatusPM);
 
 
@@ -582,17 +581,20 @@ namespace Logitude.Customs.BL.BL
         {
             if (declarationPM == null || myDeclarationCourierStatusPM == null) return;
 
-            DeclarationPendingPM declarationPendingPM_906 = null;
-            if (myDeclarationCourierStatusPM.DeclarationPendings != null && myDeclarationCourierStatusPM.DeclarationPendings.Count() > 0)
+            string defValue = GetDefault("ISRAEL", "CGO_CUST_CAS", "NON", "NON");
+            if (!string.IsNullOrEmpty(defValue) && declarationPM.CustomerCode != defValue && declarationPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
-                declarationPendingPM_906 = myDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.CourierPendingReasonCode == "906").FirstOrDefault();
-            }
+                DeclarationPendingPM declarationPendingPM_906 = null;
+                if (myDeclarationCourierStatusPM.DeclarationPendings != null && myDeclarationCourierStatusPM.DeclarationPendings.Count() > 0)
+                {
+                    declarationPendingPM_906 = myDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.CourierPendingReasonCode == "906").FirstOrDefault();
+                }
 
 
 
 
-            CourierPendingReasonRepository courierPendingReasonRepositoryRepository = new CourierPendingReasonRepository(declarationPM.Tenant);
-            Boolean isActive = courierPendingReasonRepositoryRepository.IsActive("906", myDeclarationCourierStatusPM.Tenant);
+                CourierPendingReasonRepository courierPendingReasonRepositoryRepository = new CourierPendingReasonRepository(declarationPM.Tenant);
+                Boolean isActive = courierPendingReasonRepositoryRepository.IsActive("906", myDeclarationCourierStatusPM.Tenant);
                 if (isActive)
                 {
                     if (declarationPendingPM_906 == null)
@@ -611,9 +613,11 @@ namespace Logitude.Customs.BL.BL
                         declarationPendingPM_906.Status = "A";
                     }
                 }
-            
-            
+
+
+            }
         }
+                
     }
 
 
