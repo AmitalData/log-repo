@@ -256,7 +256,8 @@ export class CustomsRequestsSheetsComponent
                         for (var request of (this.customsRequestsSheetSummary as any[])) {
                             this.SumRequests += request.count;
                             this.IsTherecustomsRequestsSheetSummary = true;
-                        }                        
+                        }
+                        this._CD.detectChanges();
                     }                    
                 });
            // }
