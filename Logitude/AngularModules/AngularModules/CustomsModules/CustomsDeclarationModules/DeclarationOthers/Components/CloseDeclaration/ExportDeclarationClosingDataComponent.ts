@@ -725,7 +725,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                         if (!AppTool.IsNullOrEmpty(FlightDate)) {
                             this.FlightDate = new Date(Number(FlightDate.substring(0, 4)), Number(FlightDate.substring(4, 6)) - 1, Number(FlightDate.substring(6, 8)), 2, 2, 2);;
                             if (this.IsNew) {
-                                this.LoadingDateTime = this.FlightDate;
+                                this.LoadingDateTime = new Date(Number(FlightDate.substring(0, 4)), Number(FlightDate.substring(4, 6)) - 1, Number(FlightDate.substring(6, 8)), 2, 2, 2);
                             }
                         }
                         SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
