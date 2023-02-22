@@ -134,8 +134,6 @@
     <None Include="DBScripts\20230130_UpdateSearchFieldsForBankDepositsLocalAmountsOnly.sxml" />
     <None Include="DBScripts\20230130_UpdateSearchFieldsForBankDepositsLocalAndForeignAmounts.sxml" />
     <None Include="DBScripts\20230207_JournalsExternalCodeAndExternalSystemConstraint.sxml" />
-    <None Include="DBScripts\20230221_DeleteGLAccountsFor_T_116.sxml" />
-    <None Include="DBScripts\20230221_DeleteGLAccountsFor_T_39.sxml" />
     <None Include="DBScripts\20230131_UpdateSearchFieldsForBankDepositsWithNoLine.sxml" />
     <None Include="DBScripts\Post\202103160820_ RebuildGLAccountRecocileDatas.sxml" />
     <None Include="DBScripts\202103180820_ InsertGLAccountAgingDatas.sxml" />
