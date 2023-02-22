@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "cffe91e8bea41b8fcbb34a7332457a1c";
+		public const string HashString = "cffe91e8bea41b8fcbb34a7332457a1c1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -101,6 +101,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    HasCustomFields =  true,
 			      				    AvailableInCustomization =  true,
 			      				    SupportSubEntity =  true,
+			      				    ApplyGenericCustomFields =  false,
 			      				    HasHelper =  true,
 			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  false,
@@ -5112,7 +5113,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						MinLength =  0,
 					  						MaxLength =  2,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -15703,7 +15704,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   TextCode ARInvoiceTextCode_ARInvoiceOTheReceivableGLAccountOfTheChargeNULL = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.TheReceivableGLAccountOfTheChargeNULL", DefaultText = "The Receivable GLAccount of the Charge Type Interest is NULL",LocalDefaultText = @"לא הוגדר חשבון נגדי בסעיף החיוב", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ARInvoiceTextCode_ARInvoiceOInterestInvoiceReconciledAlready = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.InterestInvoiceReconciledAlready", DefaultText = "The interest invoice made for this report has already been reconciled,\nIn order to cancel the report and the interest invoice, first cancel the reconciliation of the existing invoice.",LocalDefaultText = @"חשבונית הריבית שבוצעה לדוח זה כבר הותאמה,\nעל מנת לבטל את הדוח ואת חשבונית הריבית יש לבטל תחילה את ההתאמה של החשבונית הקיימת.", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ARInvoiceTextCode_ARInvoiceOInterestInvoiceReconciledAlready = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.InterestInvoiceReconciledAlready", DefaultText = "The interest invoice made for this report has already been reconciled. In order to cancel the report and the interest invoice, first cancel the reconciliation of the existing invoice.",LocalDefaultText = @"חשבונית הריבית שבוצעה לדוח זה כבר הותאמה. על מנת לבטל את הדוח ואת חשבונית הריבית יש לבטל תחילה את ההתאמה של החשבונית הקיימת.", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARInvoiceTextCode_ARInvoiceOCreditARInvoiceForCreditNote = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.CreditARInvoiceForCreditNote", DefaultText = "Auto Credit for Credit Note %InvoiceNumber",LocalDefaultText = @"ביטול של חשבונית זיכוי %InvoiceNumber", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -15753,8 +15754,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   TextCode ARInvoiceTextCode_ARInvoiceGNoInvoiceMSG = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.G.NoInvoiceMSG", DefaultText = "You don't have invoices yetInformation about invoices will be displayed here, when they will be added by the forwarder.",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-   
-	    
+
+   	 
 }
 
     
