@@ -365,7 +365,7 @@ namespace WebFreight.Web.ContainerTracking
                 fieldName = "MainCarriage";
             }
 
-            if (string.IsNullOrEmpty((string)GetPropValue(entity, fieldName + index + "VesselName"))) 
+            if (string.IsNullOrEmpty((string)GetPropValue(entity, fieldName + index + "VesselName")))
                 this.FillFieldsNewValues(fieldName + index + "VesselName", leg.Vessel, entity);
 
             if (string.IsNullOrEmpty((string)GetPropValue(entity, fieldName + index + "VesselId")))
@@ -373,6 +373,15 @@ namespace WebFreight.Web.ContainerTracking
 
             if (string.IsNullOrEmpty((string)GetPropValue(entity, fieldName + index + "CarrierNumber")))
                 this.FillFieldsNewValues(fieldName + index + "CarrierNumber", leg.Voyage, entity);
+
+            if (fieldName == "Transshipment")
+            {
+                if (string.IsNullOrEmpty((string)GetPropValue(entity, fieldName + index + "CarrierId")))
+                {
+                    var mainCarriageCarrierId = (string)GetPropValue(entity, "MainCarriageCarrierId");
+                    this.FillFieldsNewValues(fieldName + index + "CarrierId", mainCarriageCarrierId, entity);
+                }
+            }
         }
 
 
