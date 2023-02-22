@@ -1429,6 +1429,15 @@
 
 
         LoginToAngular = function (userdata) {
+
+            if (document && document.location && document.location.href &&  document.location.href.indexOf('?HowToDownloadPage=') > 0) {
+                let documentArgs = document.location.href.split('?HowToDownloadPage=');
+                let documentId = documentArgs.length > 1 ? documentArgs[1] : null;
+                if (documentId) {
+                    OpenHowToDownloadPage(userdata, documentId);
+                    return;
+                }
+            }
             var isTenantAllowed = false;
             var Tenant = userdata.CurrentTenant;
             if (Tenant == 42 || Tenant == 1232 || Tenant == 1586 || Tenant == 1637 || Tenant == 1638 || Tenant == 341) {
@@ -1521,7 +1530,6 @@
                     }
                 }
             }
-
             if (document.location.href.indexOf('?Menu=') > 0) {
                 document.location.href = document.location.href.replace("/Login.aspx", "/").replace("/login.aspx", "/").split('?')[0] + angularUrl;
             }
@@ -1532,6 +1540,29 @@
             $("#loginBusyindicator").hide();
 
         };
+
+        OpenHowToDownloadPage = function (userdata, DocumentId) {
+            var url = document.location.href.replace("/Login.aspx", "/").split('?')[0] + 'WebPages/HowToDownloadPage.aspx?id=' + DocumentId;
+            var params = [{ name: "Token", value: userdata.DocumentDownloadToken }, { name: "id", value: DocumentId }]
+            var form = document.createElement("form");
+            form.target = "_self";
+            form.method = "POST";
+            form.action = url;
+            for (var i = 0; i < params.length; i++) {
+                var input = PrepareInput(params[i]);
+                form.appendChild(input);
+            }
+            document.body.appendChild(form);
+            form.submit();
+            document.body.removeChild(form);
+        }
+        PrepareInput = function (input) {
+            var mappedInput = document.createElement("input");
+            mappedInput.type = "hidden";
+            mappedInput.name = input.name;
+            mappedInput.setAttribute("value", input.value);
+            return mappedInput;
+        }
 
         function setCookie(cname, cvalue, exdays) {
             const d = new Date();
