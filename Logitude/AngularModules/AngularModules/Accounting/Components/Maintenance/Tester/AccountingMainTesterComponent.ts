@@ -707,8 +707,8 @@ Line3
             return;
         }
         let objToCheck1 = JSON.parse(this._TextBoxParam);
-        let _GLAccountInterestActivationBalanceUrl = ServiceHelper.GetLogitudeURL() + '/api/GLAccountInterestActivationBalance';
-        let myUrl = _GLAccountInterestActivationBalanceUrl + "?tenant=" + objToCheck1.Tenant;
+        let _GLAccountInterestDeactivationBalanceUrl = ServiceHelper.GetLogitudeURL() + '/api/GLAccountInterestDeactivationBalance';
+        let myUrl = _GLAccountInterestDeactivationBalanceUrl + "?tenant=" + objToCheck1.Tenant;
         myUrl = myUrl + "&gLAccountId=" + objToCheck1.GLAccountId;
         myUrl = myUrl + "&accountTypeCode=" + objToCheck1.AccountTypeCode;
         myUrl = myUrl + "&interestActivationDate=" + objToCheck1.InterestActivationDate;
@@ -734,6 +734,51 @@ Line3
                 () => { this.CurrentSession.StopBusyIndicator(); }
             );
     }
+
+
+    ButtonGLAccountInterestDeactivationBalance_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+        defaultParam.GLAccountId = "Id - a must";
+//        defaultParam.AccountTypeCode = "Id, or empty value to get all (2=Client, 3=Vendor)";
+//        defaultParam.InterestActivationDate = "DD.MM.YYYY";
+        defaultParam.BatchIt = 0;
+//        defaultParam.LastMadeGLAccountId = "";
+//        defaultParam.MaxGLAccountsPerQuery = 100;
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _GLAccountInterestActivationBalanceUrl = ServiceHelper.GetLogitudeURL() + '/api/GLAccountInterestActivationBalance';
+        let myUrl = _GLAccountInterestActivationBalanceUrl + "?tenant=" + objToCheck1.Tenant;
+        myUrl = myUrl + "&gLAccountId=" + objToCheck1.GLAccountId;
+//        myUrl = myUrl + "&accountTypeCode=" + objToCheck1.AccountTypeCode;
+//        myUrl = myUrl + "&interestActivationDate=" + objToCheck1.InterestActivationDate;
+        myUrl = myUrl + "&batchIt=" + objToCheck1.BatchIt;
+//        myUrl = myUrl + "&lastMadeGLAccountId=" + objToCheck1.LastMadeGLAccountId;
+//        myUrl = myUrl + "&maxGLAccountsPerQuery=" + objToCheck1.MaxGLAccountsPerQuery;
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => {
+                    this.CurrentSession.StopBusyIndicator();
+                    this._LabelLog = JSON.stringify(r);
+                    let resObj = JSON.parse(this.JsonOut);
+                    if (Array.isArray(resObj)) {
+                        this.JsonList = resObj;
+                    }
+                },
+                e => {
+                    this.CurrentSession.StopBusyIndicator();
+                    this._LabelLog = JSON.stringify(e);
+                },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+    }
+
+
 
 
     ButtonAllOpenRevaluationsNoBatch_Click() {
