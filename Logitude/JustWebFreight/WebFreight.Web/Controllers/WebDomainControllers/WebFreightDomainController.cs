@@ -40,6 +40,7 @@ using Simplog.Server.Infrastructure;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using Logitude.SystemLogs;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -333,6 +334,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
             catch (Exception ex)
             {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", $"Digital portal generate domain {tenant}", "", null);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
