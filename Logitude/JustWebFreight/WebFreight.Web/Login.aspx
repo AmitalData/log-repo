@@ -1429,6 +1429,15 @@
 
 
         LoginToAngular = function (userdata) {
+
+            if (document && document.location && document.location.href &&  document.location.href.indexOf('?HowToDownloadPage=') > 0) {
+                let documentArgs = document.location.href.split('?HowToDownloadPage=');
+                let documentId = documentArgs.length > 1 ? documentArgs[1] : null;
+                if (documentId) {
+                    OpenHowToDownloadPage(userdata, documentId);
+                    return;
+                }
+            }
             var isTenantAllowed = false;
             var Tenant = userdata.CurrentTenant;
             if (Tenant == 42 || Tenant == 1232 || Tenant == 1586 || Tenant == 1637 || Tenant == 1638 || Tenant == 341) {
@@ -1521,13 +1530,7 @@
                     }
                 }
             }
-            if (document.location.href.indexOf('?HowToDownloadPage=') > 0) {
-                var DocumentId = document.location.href.split('?HowToDownloadPage=')[1];
-                if (DocumentId) {
-                    OpenHowToDownloadPage(userdata, DocumentId);
-                }
-            }
-            else if (document.location.href.indexOf('?Menu=') > 0) {
+            if (document.location.href.indexOf('?Menu=') > 0) {
                 document.location.href = document.location.href.replace("/Login.aspx", "/").replace("/login.aspx", "/").split('?')[0] + angularUrl;
             }
             else {
