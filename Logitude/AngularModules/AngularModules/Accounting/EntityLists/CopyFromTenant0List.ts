@@ -14,6 +14,7 @@ export class CopyFromTenant0List {
 	CreatedByUserId: string;
 	SearchFields: string;
 	TableName: string;
+	CreatedByUserName: string;
 	
 }
  
