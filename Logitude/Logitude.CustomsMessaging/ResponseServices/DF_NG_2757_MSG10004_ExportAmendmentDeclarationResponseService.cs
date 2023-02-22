@@ -1293,22 +1293,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (!IsExist&&GetValueCodeType(GoodsItemAmount.AmountType) != "1" && GoodsItemAmount.CustomsValueAmount.currencyID.ToString()== cur)
                     {
                         SupplierInvoiceItemsPricePM supplierInvoiceItemsPrice = new SupplierInvoiceItemsPricePM();
-
-                        if (!isFromImporter && AdditionalPriceTypeCodes.Contains(AdditionalPriceTypeCode))
-                        {
-                            supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Update;
-                        }
-                        else if (isFromImporter)
-                        {
-                            supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Insert;
-                        }
-                        else
-                        {
-                            continue;
-                        }
-
+                        supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Insert;
                         supplierInvoiceItemsPrice.DeclarationId = declarationId;
-                       
                         supplierInvoiceItemsPrice.AdditionalPrice = GetValueAmountType(GoodsItemAmount.CustomsValueAmount);
                        
                         supplierInvoiceItemsPrice.AdditionalPriceTypeCode = GetValueCodeType(GoodsItemAmount.AmountType);
