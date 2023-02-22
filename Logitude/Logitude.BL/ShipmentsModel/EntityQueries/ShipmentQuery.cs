@@ -4498,7 +4498,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return mixPanelEvent;
         }
 
-        public ShipmentPM GetSinglePM(string id, int tenant, string cardId = null)
+        public ShipmentPM GetSinglePM(string id, int tenant, string cardId = null,bool ignoreRestrictions = false)
         {
             if (!string.IsNullOrEmpty(id))
             {
@@ -4530,9 +4530,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentPM securedPM = new ShipmentPM();
 
                     securedPM = SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
-
-                    ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);//securedPM;
-                    returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), securedPM, tenant);
+                    ShipmentPM returnShipment = securedPM;
+                    if (!ignoreRestrictions)
+                    {
+                        returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);
+                        returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), securedPM, tenant);
+                    }
+                   
 
                     var CLoudData = repository.context
                                               .ShipmentAdditionalCloudDatas
@@ -4568,6 +4572,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
             return null;
+        }
+
+        public ShipmentPM GetSinglePMWithNoRestriction(string id, int tenant)
+        {
+            return GetSinglePM(id,tenant,null,true);
         }
 
         public ShipmentPM GetSinglePMWithLists(string id, int tenant)

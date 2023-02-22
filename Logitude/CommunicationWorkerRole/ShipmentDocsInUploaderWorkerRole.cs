@@ -264,7 +264,7 @@ namespace CommunicationWorkerRole
         private ShipmentPM GetShipment(string shipmentId, int tenant)
         {
             if (shipmentPM != null) return shipmentPM;
-            shipmentPM = new ShipmentQuery(shipmentRepository).GetSinglePM(shipmentId, tenant);
+            shipmentPM = new ShipmentQuery(shipmentRepository).GetSinglePMWithNoRestriction(shipmentId, tenant);
             return shipmentPM;
         }
 
