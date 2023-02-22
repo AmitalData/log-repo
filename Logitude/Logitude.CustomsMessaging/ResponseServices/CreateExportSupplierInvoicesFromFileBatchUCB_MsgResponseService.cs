@@ -170,7 +170,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             Tenant = tenant,
                             ChangeSetOp = ChangeSetOperation.Insert,
                             PaymentAmount = sum,
-                            PaymentTypeCode = "2"
+                            PaymentTypeCode = "2",
+                            SequenceNumeric=1,
                         }
                     };
                 }
