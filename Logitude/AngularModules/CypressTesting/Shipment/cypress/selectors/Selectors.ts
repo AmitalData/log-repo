@@ -122,6 +122,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ReceivablesTab = '#ShipmentTHReceivables';
   public static readonly RoutingsTab = '#ShipmentTHRoutings';
   public static readonly RoutingsTab_Number = '[id^=ShipmentTHRoutings]'
+  public static readonly RoutingsTabDataCy = '[data-cy="ShipmentTHRoutings"]'
   public static readonly PayablesTab = '#ShipmentTHPayables';
   public static readonly DocsOutTab = '#ShipmentTHDocsOut';
   public static readonly DocsInTabb = '#ShipmentTHDocsIn';

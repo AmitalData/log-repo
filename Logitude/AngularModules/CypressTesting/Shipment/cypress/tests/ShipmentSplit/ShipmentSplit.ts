@@ -64,7 +64,7 @@ When("split the shipment with the second container", () => {
 });
 
 Then("the direct shipment should split successfully", () => {
-    cy.DefineRequestWait(RestAPI.GET, URLs.GetAll, RequestAliases.GetAll)
+    //cy.DefineRequestWait(RestAPI.GET, URLs.GetAll, RequestAliases.GetAll)
     BaseAssertion.AssertStatusCode(RequestAliases.SplitShipmentRequest, 200);
 
     //#region Validate for new shipment 
