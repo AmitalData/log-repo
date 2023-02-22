@@ -218,6 +218,7 @@
     <Compile Include="CoreBL\AccountBalanceService.cs" />
     <Compile Include="CoreBL\AccountingSettingResolver.cs" />
     <Compile Include="CoreBL\ARPaymentChequeReturnService.cs" />
+    <Compile Include="CoreBL\APPaymentInvoicesTransactionFetcher.cs" />
     <Compile Include="CoreBL\ARPaymentInvoicesTransactionFetcher.cs" />
     <Compile Include="CoreBL\AutomaticExternalReconcileService.cs" />
     <Compile Include="CoreBL\AutomaticReconcileService.cs" />
@@ -723,6 +724,7 @@
     <Compile Include="EntityQueryServices\TaxWithholdingAssessOfficeQueryService.cs" />
     <Compile Include="EntityQueryServices\UserDefinedReportQueryService.cs" />
     <Compile Include="EntityQueryServices\WithholdingTaxDeductionTypeQueryService.cs" />
+    <Compile Include="EntityUpdateServiceExt\APPaymentInvoicesTransactionFetcherExt.cs" />
     <Compile Include="EntityUpdateServiceExt\ARPaymentChequeUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\GLAccountCardsDataUpdateService.cs" />
     <Compile Include="EntityUpdateServiceExt\InterestReportsConnectedInvoiceUpdateServiceExt.cs" />

@@ -418,6 +418,25 @@ export class LedgerTransactionExtendedListService {
 
     }
 
+    GetTransactionsForAPPayment(appaymentId: string, billToGLAccountId: string, paymentCurrencyId:string) {
+
+
+
+        var url = this._apiUrl + '/GetTransactionsForAPPayment?appaymentId=' + appaymentId
+            + '&billToGLAccountId=' + billToGLAccountId + '&paymentCurrencyId=' + paymentCurrencyId;
+
+        return this.httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(
+            map((response: ServiceResponse) => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse = response;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+    }
+
+    
+
     GetTransactionsCurrencies(AccountId:string, splittedByCurrencyCheckBox: boolean, attachedGLAccountChanged: boolean) {
 
         var urlparameters = '/GetTransactionsCurrencies?AccountId=' + AccountId + '&splittedByCurrencyCheckBox=' + splittedByCurrencyCheckBox
