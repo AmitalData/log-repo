@@ -53,13 +53,8 @@ export class LoopPropertiesComponent extends BaseComponent {
 
     initializeFlowVariablesTree() {
         let props = {
-            ShowRecordsVariables: false,
-            ShowDeclaredVariables: false,
             ShowRecordsCollectionVariables: true,
-            ShowDeclaredCollectionVariables: true,
-            OnlyCurrentLoopItemVariables: false,
-            IsObjectVariableSelectable: false,
-            IsNoChildrenObjectVariables: false
+            ShowDeclaredCollectionVariables: true
         };
         this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props).Items;
         this.SingleEditableEntitiesTreeItems = new SingleEditableEntitiesTreeList(this.FlowObject, this.CurrentNodeId).Items;

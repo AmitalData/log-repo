@@ -56,11 +56,9 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         let props = {
             ShowRecordsVariables: true,
             ShowDeclaredVariables: true,
-            ShowRecordsCollectionVariables: false,
             ShowDeclaredCollectionVariables: true,
-            OnlyCurrentLoopItemVariables: false,
-            IsObjectVariableSelectable: true,
-            IsNoChildrenObjectVariables: false
+            ShowGlobalVariables: true,
+            IsObjectVariableSelectable: true
         };
         this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props).Items;
     }
@@ -109,7 +107,9 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
             if (field) {
                 if (this.isNoObjectFieldVariable(field)) {
                     let fieldType = fieldItem.data["type"] || null;
-                    this.updateSetValueFieldByDeclaredVariableField(field, fieldType, setValueIndex);
+                    let lookupType = fieldItem.data["lookupType"] || null;
+                    let picklistType = fieldItem.data["picklistType"] || null;
+                    this.updateSetValueFieldByDeclaredVariableField(field, fieldType, lookupType, picklistType, setValueIndex);
                 } else {
                     let objectField = this.getObjectField(field);
                     this.updateSetValueFieldByObjectField(objectField, setValueIndex, field);
@@ -138,12 +138,12 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         this.SetValues[setValueIndex].fieldChangedToggle = !this.SetValues[setValueIndex].fieldChangedToggle;
     }
 
-    updateSetValueFieldByDeclaredVariableField(field: string, fieldType: string, setValueIndex: number) {
+    updateSetValueFieldByDeclaredVariableField(field: string, fieldType: string, lookupType: string, picklistType: string, setValueIndex: number) {
         this.SetValues[setValueIndex].fieldCode = field ? field : null;
         this.SetValues[setValueIndex].field = field ? field : null;
         this.SetValues[setValueIndex].type = fieldType;
-        this.SetValues[setValueIndex].lookupType = null;
-        this.SetValues[setValueIndex].picklistType = null;
+        this.SetValues[setValueIndex].lookupType = lookupType;
+        this.SetValues[setValueIndex].picklistType = picklistType;
         this.SetValues[setValueIndex].operator = this.getSetValueDefaultOperator(fieldType);
         this.SetValues[setValueIndex].value = null;
         this.SetValues[setValueIndex].fieldChangedToggle = !this.SetValues[setValueIndex].fieldChangedToggle;
