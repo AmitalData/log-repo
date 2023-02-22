@@ -672,10 +672,10 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return (ObjectField)CacheManager.CacheWrapper.Get(fieldCacheKey);
         }
 
-        public bool IsExistsObjectFieldByCode(string code, string objectTableId, int tenant)
+        public bool IsExistsCustomObjectFieldByCode(string code, string objectTableId, int tenant)
         {
             return (from a in context.ObjectFields
-                    where a.Code == code && a.ObjectTableId == objectTableId && a.Tenant == tenant
+                    where a.Code == code && a.ObjectTableId == objectTableId && a.Tenant == tenant && a.IsCustom == true
                     select a).Any();
         }
     }
