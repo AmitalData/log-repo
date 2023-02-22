@@ -79,6 +79,7 @@ export class DashboardCopyService {
             newWidgetMeasure.MeasureCode = itemMeasure.MeasureCode;
             newWidgetMeasure.MeasureFieldId = itemMeasure.MeasureFieldId;
             newWidgetMeasure.RenderAs = itemMeasure.RenderAs;
+            newWidgetMeasure.YAxisType = itemMeasure.YAxisType;
             widget.WidgetMeasures.push(newWidgetMeasure);
         });
 
