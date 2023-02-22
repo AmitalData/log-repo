@@ -145,6 +145,10 @@ namespace WebFreight.Web.Helpers
         string ticketHeader = " ", ticketFooter = " ";
         string ticketHeaderHtml = " ", ticketFooterHtml = " ";
         string ObjectTableName = "";
+
+        private Dictionary<string, Dictionary<string, object>> allEntities = new Dictionary<string, Dictionary<string, object>>();
+
+       
         public byte[] GetEditorXamlData(string docOutId, string entityId, string objectTableId, string childEntityId, string childEntityObjectTableId, int tenant, string userId, bool theIsSendMail, string documentTemplateId, ref string subject, ref string from, ref string replyTo)
         {
             ICommonDataContext context = CommonDataContext.GetContext(tenant);
@@ -682,11 +686,44 @@ namespace WebFreight.Web.Helpers
             return htmlString;
         }
 
+
+        private object GetEntityFromCache(EntityCacheArgs entityCacheArgs)
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("FHR", entityCacheArgs.Tenant)) return null;
+            if (allEntities == null) allEntities = new Dictionary<string, Dictionary<string, object>>();
+            if (!allEntities.ContainsKey(entityCacheArgs.ObjectTableName)) return null;
+            Dictionary<string, object> entities = allEntities[entityCacheArgs.ObjectTableName];
+            if (entities == null || entities.Count == 0 || !entities.ContainsKey(entityCacheArgs.EntityKey)) return null;
+            return  entities[entityCacheArgs.EntityKey];
+        }
+
+        private void AddEntityToCache(EntityCacheArgs entityCacheArgs)
+        {
+
+            if (!FeatureToggleHelper.HasFeatureToggle("FHR", entityCacheArgs.Tenant)) return;
+     
+            if (allEntities == null) allEntities = new Dictionary<string, Dictionary<string, object>>();
+
+            if (allEntities.ContainsKey(entityCacheArgs.ObjectTableName) && allEntities[entityCacheArgs.ObjectTableName].ContainsKey(entityCacheArgs.EntityKey)) return;
+           
+            if (allEntities.ContainsKey(entityCacheArgs.ObjectTableName))
+            {
+                allEntities[entityCacheArgs.ObjectTableName].Add(entityCacheArgs.EntityKey, entityCacheArgs.Entity);
+                return;
+            }
+
+            var entities = new Dictionary<string, object>();
+            entities.Add(entityCacheArgs.EntityKey, entityCacheArgs.Entity);
+            allEntities.Add(entityCacheArgs.ObjectTableName, entities);
+        }
+
+
+
         public HtmlEditorResolveResult GetEditorHtmlData(HtmlEditorResolveArgs htmlEditorResolveArgs)
         {
             int tenant = htmlEditorResolveArgs.Tenant;
 
-
+            allEntities = new Dictionary<string, Dictionary<string, object>>();
             ICommonDataContext context = CommonDataContext.GetContext(tenant);
             System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
             CurrentTenant = context.Tenants.Where(t => t.Id == tenant).FirstOrDefault();
@@ -1462,10 +1499,10 @@ namespace WebFreight.Web.Helpers
 
         private static IEnumerable<HtmlNode> GetDocumentSpanNode(int tenant, HtmlDocument document)
         {
-            if (FeatureToggleHelper.HasFeatureToggle("FHR", tenant))
-            {
-                return document.DocumentNode.SelectNodes("//span")?.Where(n => n.InnerText.Contains("[") && n.InnerText.Contains("[") && (n.LastChild.Name != "span" || n.FirstChild.Name != "span"));
-            }
+            //if (FeatureToggleHelper.HasFeatureToggle("FHR", tenant))
+            //{
+            //    return document.DocumentNode.SelectNodes("//span")?.Where(n => n.InnerText.Contains("[") && n.InnerText.Contains("[") && (n.LastChild.Name != "span" || n.FirstChild.Name != "span"));
+            //}
 
             return document.DocumentNode.SelectNodes("//span")?.Where(n => n.InnerText.Contains("[") && n.InnerText.Contains("["));
 
@@ -4568,6 +4605,14 @@ namespace WebFreight.Web.Helpers
                         break;
                     }
 
+                    if (value != null && value.GetType() == typeof(CustomFieldClass))
+                    {
+                        CustomFieldClass c = value as CustomFieldClass;
+                        value = c.Value;
+                    }
+
+                    if(value== null) break; 
+
                     ObjectField objectField = currentEntityObjectFields.Where(f => f.FieldName == fields[i]).FirstOrDefault();
 
 
@@ -4595,216 +4640,202 @@ namespace WebFreight.Web.Helpers
                         {
                             insideObjectField = insideEntityObjectFields.Where(f => f.FieldName == fields[i + 1] && f.Tenant == tenant).FirstOrDefault();
                         }
-
-
-
-                        Assembly blAssembly = Assembly.Load("Logitude.BL");
-
-                        string insideTypePath = "Logitude.BL.ShipmentsModel.EntityQueries." + insideEntityName + "Query";
-
-                        Type insideEntityType = blAssembly.GetType(insideTypePath);
-                        if (insideEntityType == null)
-                        {
-                            insideTypePath = "Logitude.BL.CommonDataModel.EntityQueries." + insideEntityName + "Query";
-                            insideEntityType = blAssembly.GetType(insideTypePath);
-                        }
-
-                        if (insideEntityType == null)
-                        {
-                            insideTypePath = "Logitude.BL." + insideEntityName + "Query";
-                            insideEntityType = blAssembly.GetType(insideTypePath);
-                        }
-
-                        if (insideEntityType == null)
+                        object insideEntity  = GetEntityFromCache(new EntityCacheArgs() { ObjectTableName = insideEntityName, EntityKey = value?.ToString(),  Tenant = tenant });
+                     
+                        if (insideEntity == null)
                         {
 
-                            insideTypePath = "Logitude.BL.InfrastructureModel.EntityQueries." + insideEntityName + "Query";
-                            insideEntityType = blAssembly.GetType(insideTypePath);
-                        }
+                            Assembly blAssembly = Assembly.Load("Logitude.BL");
 
-                        if (insideEntityType == null)
-                        {
+                            string insideTypePath = "Logitude.BL.ShipmentsModel.EntityQueries." + insideEntityName + "Query";
 
-                            insideTypePath = "Logitude.BL.QuoteModel.EntityQueries." + insideEntityName + "Query";
-                            insideEntityType = blAssembly.GetType(insideTypePath);
-                        }
+                            Type insideEntityType = blAssembly.GetType(insideTypePath);
+                            if (insideEntityType == null)
+                            {
+                                insideTypePath = "Logitude.BL.CommonDataModel.EntityQueries." + insideEntityName + "Query";
+                                insideEntityType = blAssembly.GetType(insideTypePath);
+                            }
 
-                        if (insideEntityType == null)
-                        {
+                            if (insideEntityType == null)
+                            {
+                                insideTypePath = "Logitude.BL." + insideEntityName + "Query";
+                                insideEntityType = blAssembly.GetType(insideTypePath);
+                            }
 
-                            Assembly assembly = Assembly.Load("Logitude.CRM.BL");
-                            insideTypePath = "Logitude.CRM.BL.EntityQueryServices." + insideEntityName + "QueryService";
-                            insideEntityType = assembly.GetType(insideTypePath);
+                            if (insideEntityType == null)
+                            {
 
-                        }
+                                insideTypePath = "Logitude.BL.InfrastructureModel.EntityQueries." + insideEntityName + "Query";
+                                insideEntityType = blAssembly.GetType(insideTypePath);
+                            }
 
-                        if (insideEntityType == null)
-                        {
+                            if (insideEntityType == null)
+                            {
 
-                            Assembly assembly = Assembly.Load("Logitude.Customs.BL");
-                            insideTypePath = "Logitude.Customs.BL.EntityQueryServices." + insideEntityName + "QueryService";
-                            insideEntityType = assembly.GetType(insideTypePath);
+                                insideTypePath = "Logitude.BL.QuoteModel.EntityQueries." + insideEntityName + "Query";
+                                insideEntityType = blAssembly.GetType(insideTypePath);
+                            }
 
-                        }
+                            if (insideEntityType == null)
+                            {
 
-                        if (insideEntityType == null)
-                        {
+                                Assembly assembly = Assembly.Load("Logitude.CRM.BL");
+                                insideTypePath = "Logitude.CRM.BL.EntityQueryServices." + insideEntityName + "QueryService";
+                                insideEntityType = assembly.GetType(insideTypePath);
 
-                            Assembly assembly = Assembly.Load("Logitude.BookingLib.BL");
-                            insideTypePath = "Logitude.BookingLib.BL.EntityQueryServices." + insideEntityName + "QueryService";
-                            insideEntityType = assembly.GetType(insideTypePath);
+                            }
 
-                        }
+                            if (insideEntityType == null)
+                            {
 
-                        if (insideEntityType == null)
-                        {
+                                Assembly assembly = Assembly.Load("Logitude.Customs.BL");
+                                insideTypePath = "Logitude.Customs.BL.EntityQueryServices." + insideEntityName + "QueryService";
+                                insideEntityType = assembly.GetType(insideTypePath);
 
-                            Assembly assembly = Assembly.Load("Logitude.WarehouseLib.BL");
-                            insideTypePath = "Logitude.WarehouseLib.BL.EntityQueryServices." + insideEntityName + "QueryService";
-                            insideEntityType = assembly.GetType(insideTypePath);
+                            }
 
-                        }
+                            if (insideEntityType == null)
+                            {
+
+                                Assembly assembly = Assembly.Load("Logitude.BookingLib.BL");
+                                insideTypePath = "Logitude.BookingLib.BL.EntityQueryServices." + insideEntityName + "QueryService";
+                                insideEntityType = assembly.GetType(insideTypePath);
+
+                            }
+
+                            if (insideEntityType == null)
+                            {
+
+                                Assembly assembly = Assembly.Load("Logitude.WarehouseLib.BL");
+                                insideTypePath = "Logitude.WarehouseLib.BL.EntityQueryServices." + insideEntityName + "QueryService";
+                                insideEntityType = assembly.GetType(insideTypePath);
+
+                            }
 
 
 
 
-                        object insideEntityRepository = null;
-                        if (insideEntityType != null)
-                        {
+                            object insideEntityRepository = null;
+
+                            if (insideEntityType == null) break;
+
                             insideEntityRepository = Activator.CreateInstance(insideEntityType, new object[] { tenant });
-
-                            //MethodInfo insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSinglePM");
                             MethodInfo[] MethodInfoList = insideEntityRepository.GetType().GetMethods();
                             MethodInfo insideMethodInfo = MethodInfoList.Where(d => d.Name == "GetSinglePM").FirstOrDefault();
 
-                            object insideEntity = null;
-                            if (insideMethodInfo != null)
+
+                            if (insideMethodInfo == null) break;
+
+                            ParameterInfo[] parametersInfo = insideMethodInfo.GetParameters();
+                            object[] parameters = new object[] { };
+                            switch (parametersInfo.Count())
                             {
-
-                                if (value != null && value.GetType() == typeof(CustomFieldClass))
-                                {
-                                    CustomFieldClass c = value as CustomFieldClass;
-                                    value = c.Value;
-                                }
-
-
-                                ParameterInfo[] parametersInfo = insideMethodInfo.GetParameters();
-                                object[] parameters = new object[] { };
-                                switch (parametersInfo.Count())
-                                {
-                                    case 1:
-                                        parameters = new object[] { value };
-                                        break;
-                                    case 2:
-                                        parameters = new object[] { value, tenant };
-                                        break;
-                                    case 3:
-                                        parameters = new object[] { value, tenant, false };
-                                        break;
-                                    default:
-                                        parameters = new object[] { value, tenant };
-                                        break;
-                                }
+                                case 1:
+                                    parameters = new object[] { value };
+                                    break;
+                                case 2:
+                                    parameters = new object[] { value, tenant };
+                                    break;
+                                case 3:
+                                    parameters = new object[] { value, tenant, false };
+                                    break;
+                                default:
+                                    parameters = new object[] { value, tenant };
+                                    break;
+                            }
 
 
-                                //InsideEntity = insideMethodInfo.Invoke(InsideEntityRepository, parameters);
-
+                            insideEntity = insideMethodInfo.Invoke(insideEntityRepository, parameters);
+                            if (insideEntity == null && insideEntityName == "User")
+                            {
+                                parameters = new object[] { value, 0 };
                                 insideEntity = insideMethodInfo.Invoke(insideEntityRepository, parameters);
-                                if (insideEntity == null && insideEntityName == "User")
-                                {
-                                    parameters = new object[] { value, 0 };
-                                    insideEntity = insideMethodInfo.Invoke(insideEntityRepository, parameters);
-                                    if (insideEntity != null)
-                                    {
-                                        MethodInfo userMethodInfo = insideEntityRepository.GetType().GetMethod("GetSingleUserPMByEmail");
-                                        parameters = new object[] { "system@tenant" + tenant + ".com", tenant, false };
-                                        insideEntity = userMethodInfo.Invoke(insideEntityRepository, parameters);
-                                    }
-                                }
-
                                 if (insideEntity != null)
                                 {
-                                    if ((i + 1) < fields.Count())
+                                    MethodInfo userMethodInfo = insideEntityRepository.GetType().GetMethod("GetSingleUserPMByEmail");
+                                    parameters = new object[] { "system@tenant" + tenant + ".com", tenant, false };
+                                    insideEntity = userMethodInfo.Invoke(insideEntityRepository, parameters);
+                                }
+                            }
+
+                        }
+
+                        if (insideEntity != null)
+                        {
+                            AddEntityToCache(new EntityCacheArgs() {ObjectTableName = insideEntityName , EntityKey = value?.ToString() , Entity = insideEntity, Tenant= tenant });
+
+                            if ((i + 1) < fields.Count())
+                            {
+                                PropertyInfo insidePropertyPathPi = insideEntity.GetType().GetProperty(fields[i + 1].Trim());
+                                if (insidePropertyPathPi != null)
+                                {
+                                    object insideValue = insidePropertyPathPi.GetValue(insideEntity, null);
+                                    if (insideValue != null)
                                     {
-                                        PropertyInfo insidePropertyPathPi = insideEntity.GetType().GetProperty(fields[i + 1].Trim());
-                                        if (insidePropertyPathPi != null)
+                                        if (insideValue.GetType() == typeof(CustomFieldClass))
                                         {
-                                            object insideValue = insidePropertyPathPi.GetValue(insideEntity, null);
-                                            if (insideValue != null)
+                                            if (insideObjectField.IsCustom)
                                             {
-                                                if (insideValue.GetType() == typeof(CustomFieldClass))
-                                                {
-                                                    if (insideObjectField.IsCustom)
-                                                    {
-                                                        CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
-                                                        object newValue = customFieldResolver.GetFieldValue(insideEntity, insideObjectField, tenant);
-                                                        resultValue = (newValue != null ? newValue.ToString() : " ");
-                                                    }
-                                                }
-
-                                                else if (insideValue is DateTime)
-                                                {
-                                                    DateTime date = (DateTime)insideValue;
-                                                    insideValue = date.ToShortDateString();
-                                                    resultValue = (insideValue != null ? insideValue.ToString() : " ");
-                                                }
-
-                                                else resultValue = insideValue.ToString();
+                                                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+                                                object newValue = customFieldResolver.GetFieldValue(insideEntity, insideObjectField, tenant);
+                                                resultValue = (newValue != null ? newValue.ToString() : " ");
                                             }
-                                            else resultValue = string.Empty;
-
-
-                                            resultValue = ResolveFieldValue(resultValue, insideObjectField, tenant);
                                         }
-                                        else
+
+                                        else if (insideValue is DateTime)
                                         {
-                                            resultValue = propertyNameFullName;
-                                            break;
+                                            DateTime date = (DateTime)insideValue;
+                                            insideValue = date.ToShortDateString();
+                                            resultValue = (insideValue != null ? insideValue.ToString() : " ");
                                         }
-                                    }
-                                    else
-                                    {
 
-                                        break;
+                                        else resultValue = insideValue.ToString();
                                     }
+                                    else resultValue = string.Empty;
 
-                                    if (insideObjectField != null)
-                                    {
-                                        if (insideObjectField.DataTypeCode == "LookUp" || !string.IsNullOrEmpty(insideObjectField.LookUpTableId))
-                                        {
-                                            currentEntity = insideEntity;
-                                            currentEntityObjectFields = insideEntityObjectFields;
-                                            i++;
-                                        }
-                                        else
-                                        {
-                                            // check if its a multi value
-                                            // ResolveObjectFieldValue
-                                            break;
-                                        }
-                                    }
-                                    else
-                                    {
 
-                                        break;
-                                    }
+                                    resultValue = ResolveFieldValue(resultValue, insideObjectField, tenant);
                                 }
                                 else
                                 {
+                                    resultValue = propertyNameFullName;
                                     break;
-
                                 }
                             }
                             else
                             {
+
+                                break;
+                            }
+
+                            if (insideObjectField != null)
+                            {
+                                if (insideObjectField.DataTypeCode == "LookUp" || !string.IsNullOrEmpty(insideObjectField.LookUpTableId))
+                                {
+                                    currentEntity = insideEntity;
+                                    currentEntityObjectFields = insideEntityObjectFields;
+                                    i++;
+                                }
+                                else
+                                {
+                                    // check if its a multi value
+                                    // ResolveObjectFieldValue
+                                    break;
+                                }
+                            }
+                            else
+                            {
+
                                 break;
                             }
                         }
                         else
                         {
-
                             break;
+
                         }
+                        
+                      
 
                     }
 
@@ -7447,4 +7478,16 @@ namespace WebFreight.Web.Helpers
         public int Tenant { get; set; }
         public bool HideSharedlogistics { get; set; }
     }
+
+
+
+    public class EntityCacheArgs
+    {
+        public string ObjectTableName { get; set; }
+        public string EntityKey { get; set; }
+        public object Entity { get; set; }
+        public int Tenant { get; set; }
+    }
+
+
 }
