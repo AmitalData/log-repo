@@ -26,13 +26,21 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
                         <img width="18" height="15" style="vertical-align: middle;margin-left: -7px;" [src]="TransportModSRC" title="{{rowData ? rowData['TransportModeName']:''}}" />
                        </div>
                 </td>
+                <td style="width:4%;" *ngIf="IsSHOVisible(rowData)">
+                    <div></div>
+                </td>
+                <td *ngIf="IsSHOVisible(rowData)">
+                    <div style="font-size: 9px;color: white;background: black;border: 2px solid black;border-radius: 15px 15px;padding-right: 3px;padding-left: 3px;font-weight: bold;display: inline;">
+                        SHO
+                    </div>
+                </td>
                 <td style="width:10%;">
                     <div></div>
                 </td>
                 <td style="width:100%;">
-                        <div style="text-indent: 10px; overflow: hidden; text-overflow: ellipsis;float:left; position: absolute;top: 0;bottom: 0;left: 0;right: 0;">
-                        <span style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;" *ngIf="fieldName == 'My Shipments'">{{rowData ? rowData['CustomerReference1']:''}}</span>
-                        <span style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;" *ngIf="fieldName != 'My Shipments'">{{rowData ? rowData['ForwarderShipmentNumber']:''}}</span>
+                        <div style="text-indent: 10px; overflow: hidden; text-overflow: ellipsis;float:left; position: absolute;top: 0;bottom: 0;left: 0;right: 0;text-align: right;padding-right:10px;">
+                        <span style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;" *ngIf="fieldName == 'My Shipments'" title="{{rowData ? rowData['CustomerReference1']:''}}">{{rowData ? rowData['CustomerReference1']:''}}</span>
+                        <span style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;" *ngIf="fieldName != 'My Shipments'" title="{{rowData ? rowData['ForwarderShipmentNumber']:''}}">{{rowData ? rowData['ForwarderShipmentNumber']:''}}</span>
                         </div>
                 </td>
                 </tr>
@@ -107,6 +115,9 @@ export class ReferenceNumberCellDisplayListTemplate {
         }
     }
 
+    public IsSHOVisible(selectedShipment: any): boolean {
+        return selectedShipment && selectedShipment.DirectionId != 'C' && selectedShipment.TransportModeId == 'O' && selectedShipment.IsShipmentOrder == true;
+    }
 }
 
 export class Logosdictionary {

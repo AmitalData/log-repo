@@ -59,6 +59,7 @@ namespace WebFreight.Web.Helpers.ImporterShipmentOrders
             shipment.NumberOfPackages = shipmentOrder.Quantity;
             shipment.PackagesQuantity = shipmentOrder.Quantity;
             shipment.GrossWeight = shipmentOrder.Weight;
+            MapShipmentAdditionalCloudData(shipment, shipmentOrder);
             return shipment;
         }
 
@@ -128,6 +129,12 @@ namespace WebFreight.Web.Helpers.ImporterShipmentOrders
             {
                 shipment.ShipperId = shipperId;
             }
+        }
+
+        private void MapShipmentAdditionalCloudData(ShipmentPM shipment, ShipmentOrderAM shipmentOrder)
+        {
+            if (shipment.ShipmentAdditionalData == null) shipment.ShipmentAdditionalData = new ShipmentAdditionalData();
+            shipment.ShipmentAdditionalData.ShipmentOrderNumber = shipmentOrder.OrderNumber;
         }
     }
 }
