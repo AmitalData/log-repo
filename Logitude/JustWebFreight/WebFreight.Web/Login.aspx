@@ -1543,7 +1543,7 @@
 
         OpenHowToDownloadPage = function (userdata, DocumentId) {
             var url = document.location.href.replace("/Login.aspx", "/").split('?')[0] + 'WebPages/HowToDownloadPage.aspx?id=' + DocumentId;
-            var params = [{ name: "Token", value: userdata.DocumentDownloadToken }, { name: "id", value: DocumentId }]
+            var params = [{ name: "Token", value: userdata.DocumentDownloadToken }, { name: "Code", value: DocumentId }]
             var form = document.createElement("form");
             form.target = "_self";
             form.method = "POST";
