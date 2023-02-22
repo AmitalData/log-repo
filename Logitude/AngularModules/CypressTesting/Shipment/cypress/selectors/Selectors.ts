@@ -117,6 +117,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly PartnersTab = '#ShipmentTHPartners';
   public static readonly ShipmentsTab = '#ShipmentTHConsolidation';
   public static readonly PackagesTab = '[id="ShipmentTHPackages"]';
+  public static readonly PackagesTabDataCy = '[data-cy="ShipmentTHPackages"]';
   public static readonly PackagesTab_Number = '[id^=ShipmentTHPackages]'
   public static readonly ReceivablesTab = '#ShipmentTHReceivables';
   public static readonly RoutingsTab = '#ShipmentTHRoutings';
@@ -569,5 +570,6 @@ public static readonly WarehouseOKBtn="#WarehouseOKBtn"
   public static readonly LogitudeCheckBox = '.LogitudeCheckBox'
   public static readonly Refresh="img[src='./Images/Buttons/Refresh.png']"
   public static readonly TabTitleRow="[class='TabTitleRow']"
+  public static readonly TabTitleRowDataCy='[data-cy="TabTitleRow"]'
   //#endregion
 }

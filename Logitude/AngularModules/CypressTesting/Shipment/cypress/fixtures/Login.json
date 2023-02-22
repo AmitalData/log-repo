@@ -1,8 +1,11 @@
 {
-  "url": "https://test.logitudeworld.com/test",
-  "email": "specflowstable@mail.com",
+  
+  "url": "http://localhost:4200/",
+  "email": "releasetesting1@mail.com",
   "password": "!Cypress1",
-  "customerCareEmail": "specflowtest_customercare@logitudeworld.com",
-  "customerCarePassword": "Spec_Flow_CC21",
-  "tenant": 1396
+  "customerCareEmail": "ahmada@logitudeworld.com",
+  "customerCarePassword": "!A123a123",
+  "tenant": 2700,
+  "secondTenant": 2089
 }
+

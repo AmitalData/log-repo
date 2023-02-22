@@ -2187,13 +2187,15 @@ export class TabItem {
     public Code: string;
     public EntityPM: any;
     public TextCode: string;
+    public TextCodeId: string;
     public IsDisabled: boolean = false;
     private entityId: string;
     constructor(itemPM: any, entityId: any, public fatherComponent: EditComponent) {
         this.Code = itemPM.Code;
         this.EntityPM = itemPM;
         this.entityId = entityId;
-        this.TextCode = this.GetTextCode(itemPM);
+        this.TextCode = this.GetTextCode(itemPM);        
+        this.TextCodeId = AppTool.Replace(this.TextCode, ".", "");        
     }
 
     private GetTextCode(itemPM: any) {
