@@ -71,5 +71,12 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             catch { }
             context.SetAsModified(entity);
         }
+        public ContainerDiscrepancy GetContainerDiscrepancyByContainerIdAndDiscrepancyReason(string containerId, string discrepancyReason)
+        {
+            return (from containerDiscrepancy in context.ContainerDiscrepancies
+                    where containerDiscrepancy.ContainerId == containerId &&  
+                    containerDiscrepancy.Discrepancy == discrepancyReason
+                    select containerDiscrepancy).FirstOrDefault();
+        }
     }
 }

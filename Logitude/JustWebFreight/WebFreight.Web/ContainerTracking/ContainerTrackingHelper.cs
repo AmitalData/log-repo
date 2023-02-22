@@ -312,7 +312,14 @@ namespace WebFreight.Web.ContainerTracking
         private void AddContainerDiscrepancyToService(ContainerPM containerPM, ShipmentPM shipmentPM, string reasonOfDiscrepancy)
         {
             this.containerDiscrepancyService = new ContainerDiscrepancyService(containerPM.Tenant);
+            if (CheckIsDiscrepancyExist(containerPM.Id, reasonOfDiscrepancy)) return;
             this.containerDiscrepancyService.Create(containerPM, shipmentPM, reasonOfDiscrepancy);
+        }
+        private bool CheckIsDiscrepancyExist(string containerId, string containerDiscrepancy)
+        {
+            var discrepancy = this.containerDiscrepancyService.GetContainerDiscrepancyByContainerIdAndDiscrepancyReason(containerId, containerDiscrepancy);
+            if (discrepancy != null) return true;
+            return false;
         }
     }
 }
