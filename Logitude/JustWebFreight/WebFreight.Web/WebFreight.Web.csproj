@@ -742,6 +742,7 @@
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\ChargesTypeAPiHelper.cs" />
     <Compile Include="Controllers\DashboardModel\Extended\DashboardListExtendedController.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\ListControllers\DashboardGlobalPresetFilterViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\GLAccountInterestDeactivationBalanceController.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\ListControllers\UserPinnedDashboardViewsController.Generated.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\PMControllers\DashboardGlobalPresetFilterController.Generated.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\PMControllers\UserPinnedDashboardController.Generated.cs" />

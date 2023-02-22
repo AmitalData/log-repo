@@ -34,7 +34,7 @@ using Microsoft.Practices.Unity;
 
 namespace Logitude.Accounting.BL.Utils
 {
-    public class GLAccountInterestActivationBalanceBatch
+    public class GLAccountInterestDeactivationBalanceBatch
     {
         private string _ResponseText;
         private HttpStatusCode _StatusCode;
@@ -45,21 +45,14 @@ namespace Logitude.Accounting.BL.Utils
         private List<string> _WrongSumToMatch;
 
         private const string WorksChartOfAccountTypeCode = "6";
-        public const int LT_LinesMaximum_MIN = 2;
-        public const int LT_LinesMaximum_MAX = 200;
-        public const int MaxPageSize_MAX = 1000; 
-        public const int MaxGLAccountsPerQuery_Def = 100;
-        public DateTime InterestActivationDate;
         public DateTime ActionDate = DateTime.Today; // this may be not equal to args.ActionDate, when the WR runs later 
-        public string LastMadeGLAccountId = "";
-        public int MaxGLAccountsPerQuery = 100;
         private List<string> badList;
         private List<string> goodList;
         private List<string> madeList;
         private bool _errors = false;
-        public GLAccountInterestActivationBalanceBatchResult _MyResult = new  GLAccountInterestActivationBalanceBatchResult();
+        public GLAccountInterestDeactivationBalanceBatchResult _MyResult = new GLAccountInterestDeactivationBalanceBatchResult();
 
-        public GLAccountInterestActivationBalanceBatch()
+        public GLAccountInterestDeactivationBalanceBatch()
         {
             _ResponseText = "";
             _StatusCode = HttpStatusCode.Accepted;
@@ -75,18 +68,13 @@ namespace Logitude.Accounting.BL.Utils
         {
             return _StatusCode;
         }
-        public void RunGLAccountInterestActivationBalance(GLAccountInterestActivationBalanceArgs gLAccountInterestActivationBalanceArgs)
+        public void RunGLAccountInterestDeactivationBalance(GLAccountInterestDeactivationBalanceArgs gLAccountInterestDeactivationBalanceArgs)
         {
             try
             {
-                int tenant = gLAccountInterestActivationBalanceArgs.Tenant;
-                string myGLAccountId = gLAccountInterestActivationBalanceArgs.GLAccountId;
-                string accountTypeCode = gLAccountInterestActivationBalanceArgs.AccountTypeCode;
-                InterestActivationDate = gLAccountInterestActivationBalanceArgs.InterestActivationDate;
-                LastMadeGLAccountId = gLAccountInterestActivationBalanceArgs.LastMadeGLAccountId;
-                MaxGLAccountsPerQuery = gLAccountInterestActivationBalanceArgs.MaxGLAccountsPerQuery;
-                ActionDate = gLAccountInterestActivationBalanceArgs.ActionDate;
-                if (MaxGLAccountsPerQuery <= 0) MaxGLAccountsPerQuery = MaxGLAccountsPerQuery_Def;
+                int tenant = gLAccountInterestDeactivationBalanceArgs.Tenant;
+                string myGLAccountId = gLAccountInterestDeactivationBalanceArgs.GLAccountId;
+                ActionDate = gLAccountInterestDeactivationBalanceArgs.ActionDate;
                 badList = new List<string>();
                 goodList = new List<string>();
                 madeList = new List<string>();
@@ -101,12 +89,12 @@ namespace Logitude.Accounting.BL.Utils
 
 
                 GLAccountPM gLAccountPM = null;
-                if (String.IsNullOrWhiteSpace(myGLAccountId) && String.IsNullOrWhiteSpace(accountTypeCode))
+                if (String.IsNullOrWhiteSpace(myGLAccountId))
                 {
                     this.AddErrorRow($"GLAccount Id is empty");
                     _errors = true;
                 }
-                else if(!String.IsNullOrWhiteSpace(myGLAccountId))
+                else
                 {
                     gLAccountPM = gLAccountQueryService.GetSinglePM(myGLAccountId, tenant);
                     if (gLAccountPM == null)
@@ -128,43 +116,7 @@ namespace Logitude.Accounting.BL.Utils
 
                 if (!_errors)
                 {
-                    if (String.IsNullOrEmpty(myGLAccountId))
-                    {
-                        // single or parent. (must be multi-currency)
-                        if (gLAccountPM.ParentAccountId == null)
-                        {
-                            List<string> gLAccountIdList;
-                            gLAccountIdList = gLAccountQueryService.GetNextGLAccountIdByTypeControlNoParent(tenant, accountTypeCode, false, LastMadeGLAccountId, MaxGLAccountsPerQuery);
-
-                            if (gLAccountIdList != null && gLAccountIdList.Count > 0)
-                            {
-                                _MyResult.LastMadeGLAccountId = gLAccountIdList.Last();
-                                gLAccountIdList.ForEach(accId =>
-                                {
-                                    ActivationBalanceCalculation(accId, gLAccountInterestActivationBalanceArgs.InterestActivationDate, ActionDate, tenant);
-                                });
-                            }
-                        }
-                        else
-                        {
-                            // descendant. (must not be multi-currency)
-                            List<string> gLAccountIdList;
-                            gLAccountIdList = gLAccountQueryService.GetNextGLAccountIdByTypeControlDescendant(tenant, accountTypeCode, false, LastMadeGLAccountId, MaxGLAccountsPerQuery);
-
-                            if (gLAccountIdList != null && gLAccountIdList.Count > 0)
-                            {
-                                _MyResult.LastMadeGLAccountId = gLAccountIdList.Last();
-                                gLAccountIdList.ForEach(accId =>
-                                {
-                                    ActivationBalanceCalculation(accId, gLAccountInterestActivationBalanceArgs.InterestActivationDate, ActionDate, tenant);
-                                });
-                            }
-                        }
-                    }
-                    else
-                    {
-                        ActivationBalanceCalculation(myGLAccountId, gLAccountInterestActivationBalanceArgs.InterestActivationDate, ActionDate, tenant);
-                    }
+                    DeactivationBalanceCalculation(myGLAccountId, ActionDate, tenant);
                 }
 
                 _ResponseText = $"Good: {_MyResult.SuccessAccountLineCount},  Bad: {_MyResult.BadAccountLineCount}, \n  Lines: \n{String.Join("\n", _MyResult.ErrorRowList.ToArray())}";
@@ -200,7 +152,7 @@ namespace Logitude.Accounting.BL.Utils
 
 
 
-        public void ActivationBalanceCalculation(string gLAccountId, DateTime interestActivationDate, DateTime actionDate, int _Tenant)
+        public void DeactivationBalanceCalculation(string gLAccountId, DateTime actionDate, int _Tenant)
         {
             IAccountingContext context = AccountingContext.GetContext(_Tenant);
             try
@@ -209,7 +161,7 @@ namespace Logitude.Accounting.BL.Utils
                 {
                     try
                     {
-                        _AggregateKey = "ActivationBalanceCalculation-" + gLAccountId; // VarChar 128 
+                        _AggregateKey = "DeactivationBalanceCalculation-" + gLAccountId; // VarChar 128 
                         LockIt(_Tenant);
                     }
                     catch (Exception eee)
@@ -241,10 +193,10 @@ namespace Logitude.Accounting.BL.Utils
                     AccountBalanceByDateCodeService ac = new AccountBalanceByDateCodeService(null, _Tenant, gLAccountId, null);
                     ac.ReSetAccountList(false, IncludeRelatedCurrenciesAccount);
                     bool openBalancePlease_ReCalcYearTransfer = //true;//Yaron said this is Default !!!
-                        (interestActivationDate.Day == 1 && interestActivationDate.Month == 1);
+                        (actionDate.Day == 1 && actionDate.Month == 1);
                     ac.CalculateBalance(
                         openBalancePlease_ReCalcYearTransfer,
-                        totalDateType, interestActivationDate, false, true, false,
+                        totalDateType, actionDate, false, true, false,
                         false, SumOpenTransactions);
 
                     ac.AccountBalance.LogMessage = null;
@@ -263,8 +215,8 @@ namespace Logitude.Accounting.BL.Utils
                                 from intTrans in myInterestTransactionRepository.GetAll(_Tenant)
                                     .Where(intTrans => intTrans.GLAccountId == gLAccountId
                                     && !intTrans.IsClosed
-                                    && intTrans.InterestValueDate < interestActivationDate)
-                                select new InterestTransactionBefore
+                                    && intTrans.InterestValueDate < actionDate)
+                                select new InterestTransactionBeforeDeactivation
                                 {
                                     Tenant = intTrans.Tenant,
                                     Id = intTrans.Id,
@@ -272,7 +224,7 @@ namespace Logitude.Accounting.BL.Utils
                                 }
                              );
                     decimal amount_before = 0m;
-                    List<InterestTransactionBefore> before_list = calcBeforeInterestTrans.ToList();
+                    List<InterestTransactionBeforeDeactivation> before_list = calcBeforeInterestTrans.ToList();
                     if (before_list != null)
                     {
                         decimal? amount_before_qm = before_list.Select(c => c.LocalAmount).Sum();
@@ -293,8 +245,8 @@ namespace Logitude.Accounting.BL.Utils
                                 from intTrans in myInterestTransactionRepository.GetAll(_Tenant)
                                     .Where(intTrans => intTrans.GLAccountId == gLAccountId
                                     && intTrans.IsClosed && (intTrans.InterestReportId != ourInterestReportId || String.IsNullOrEmpty(intTrans.InterestReportId))
-                                    && intTrans.InterestValueDate < interestActivationDate)
-                                select new InterestTransactionBefore
+                                    && intTrans.InterestValueDate < actionDate)
+                                select new InterestTransactionBeforeDeactivation
                                 {
                                     Tenant = intTrans.Tenant,
                                     Id = intTrans.Id,
@@ -302,7 +254,7 @@ namespace Logitude.Accounting.BL.Utils
                                 }
                              );
                     decimal amount_closed_before = 0m;
-                    List<InterestTransactionBefore> closed_before_list = calcBeforeInterestTrans.ToList();
+                    List<InterestTransactionBeforeDeactivation> closed_before_list = calcBeforeInterestTrans.ToList();
                     if (before_list != null)
                     {
                         decimal? amount_before_qm = before_list.Select(c => c.LocalAmount).Sum();
@@ -311,7 +263,7 @@ namespace Logitude.Accounting.BL.Utils
 
                     ////////////////
                     /// 3.Compute interestOpenBalance
-                    decimal interestOpenBalance = amount_before + balance_on_act_date - amount_closed_before; // nis
+                    decimal interestOpenBalance = (amount_before + balance_on_act_date - amount_closed_before) * (-1.00m); // nis
 
 
 
@@ -327,18 +279,18 @@ namespace Logitude.Accounting.BL.Utils
                         InterestTransactionUpdateService myInterestTransactionUpdateService = new InterestTransactionUpdateService(context, new Dictionary<string, IContext>(), _Tenant);
 
                         before_list.ForEach(intt =>
+                        {
+                            count++;
+                            bool commit = (count >= total_count || count % each == 0);
+                            InterestTransactionPM interestTransactionPM = myInterestTransactionService.GetSingle(intt.Id, false, false);
+                            if (interestTransactionPM != null)
                             {
-                                count++;
-                                bool commit = (count >= total_count || count % each == 0);
-                                InterestTransactionPM interestTransactionPM = myInterestTransactionService.GetSingle(intt.Id, false, false);
-                                if (interestTransactionPM != null)
-                                {
-                                    interestTransactionPM.IsClosed = true;
-                                    interestTransactionPM.ChangeSetOp = ChangeSetOperation.Update;
-                                    interestTransactionPM.InterestReportId = ourInterestReportId;
-                                    myInterestTransactionUpdateService.Update(interestTransactionPM, commit);
-                                }
+                                interestTransactionPM.IsClosed = true;
+                                interestTransactionPM.ChangeSetOp = ChangeSetOperation.Update;
+                                interestTransactionPM.InterestReportId = ourInterestReportId;
+                                myInterestTransactionUpdateService.Update(interestTransactionPM, commit);
                             }
+                        }
                             );
                     }
 
@@ -372,10 +324,26 @@ namespace Logitude.Accounting.BL.Utils
                             IInterestTransactionUpdateServiceExt interestTransactionUpdateService = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionUpdateServiceExt), "InterestTransactionUpdateServiceExt", new ParameterOverride("", 1)) as IInterestTransactionUpdateServiceExt;
                             interestTransactionUpdateService.Create(interestTransaction);
 
+                            InterestTransactionPM interestTransaction_Desc = new InterestTransactionPM()
+                            {
+                                InterestEntityTypeCode = "4", // Open Balance 
+                                EntityId = gLAccountPM.Id,
+                                AccountingEntityCode = "1", // GLAccount ?
+                                OriginalEntityLineNumber = 1,
+                                LocalAmount = - interestOpenBalance,
+                                GLAccountId = gLAccountPM.Id,
+                                ForeignAmount = - interestOpenBalance,
+                                InterestValueDate = actionDate,
+                                Tenant = _Tenant,
+                                ChangeSetOp = ChangeSetOperation.Insert,
+                                CurrencyId = accountingCurrencyId,  // NIS
+                            };
+                            interestTransactionUpdateService.Create(interestTransaction_Desc);
+
                         }
 
 
-                        gLAccountPM.InterestOpenBalance = interestOpenBalance; 
+                        gLAccountPM.InterestOpenBalance = interestOpenBalance;
                         gLAccountPM.ChangeSetOp = ChangeSetOperation.Update;
                         gLAccountUpdateService.Update(gLAccountPM, true);
 
@@ -472,7 +440,7 @@ namespace Logitude.Accounting.BL.Utils
 
 
 
-    public class InterestTransactionBefore
+    public class InterestTransactionBeforeDeactivation
     {
         public int Tenant { get; set; }
 
@@ -482,21 +450,21 @@ namespace Logitude.Accounting.BL.Utils
 
     }
 
-    public class GLAccountInterestActivationBalanceArgs
+    public class GLAccountInterestDeactivationBalanceArgs
     {
         public int Tenant { get; set; }
 
         public string GLAccountId { get; set; }
 
-        public string AccountTypeCode { get; set; }
+//        public string AccountTypeCode { get; set; }
 
-        public DateTime InterestActivationDate { get; set; }
+//        public DateTime InterestDeactivationDate { get; set; }
 
         public int BatchIt { get; set; }
 
-        public string LastMadeGLAccountId { get; set; }
+//        public string LastMadeGLAccountId { get; set; }
 
-        public int MaxGLAccountsPerQuery { get; set; }
+//        public int MaxGLAccountsPerQuery { get; set; }
         public string CommunicationLogId { get; set; }
 
         public DateTime ActionDate { get; set; }
@@ -504,7 +472,7 @@ namespace Logitude.Accounting.BL.Utils
     }
 
 
-    public class GLAccountInterestActivationBalanceBatchResult
+    public class GLAccountInterestDeactivationBalanceBatchResult
     {
         public string LastMadeGLAccountId = "";
         public long SuccessAccountLineCount = 0;
