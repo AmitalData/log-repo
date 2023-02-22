@@ -26,6 +26,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string SearchFields  { get; set; }
        [DataMember]
        public string TableName  { get; set; }
+       [DataMember]
+       public string CreatedByUserName  { get; set; }
    }
 
 }

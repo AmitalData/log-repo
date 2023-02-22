@@ -158,6 +158,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string createdByUserName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CreatedByUserName  
+	   {
+	    
+	     get
+		{
+		   return createdByUserName;
+		 }
+		 set
+		 {
+		   if(createdByUserName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserName",OldValue=createdByUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   createdByUserName=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

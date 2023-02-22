@@ -27,7 +27,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CreateDate, 
 	         CreatedByUserId, 
 	         SearchFields, 
-	         TableName,
+	         TableName, 
+	         CreatedByUserName,
 	      }
 
 
@@ -39,7 +40,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CreateDate, 
 	         CreatedByUserId, 
 	         SearchFields, 
-	         TableName,
+	         TableName, 
+	         CreatedByUserName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -71,6 +73,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TableName))
             {
 				entityPOCO.TableName = entityPM.TableName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedByUserName))
+            {
+				entityPOCO.CreatedByUserName = entityPM.CreatedByUserName;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -109,6 +116,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.TableName = entityPOCO.TableName;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreatedByUserName))
+            {
+					entityPM.CreatedByUserName = entityPOCO.CreatedByUserName;
+            }
+
 		}
 
 		public void PMToOldPM(CopyFromTenant0PM entityPM, CopyFromTenant0PM oldEntityPM)
@@ -140,6 +152,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.TableName = entityPM.TableName;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedByUserName))
+            {
+                oldEntityPM.CreatedByUserName = entityPM.CreatedByUserName;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(CopyFromTenant0PM entityPM)
@@ -156,6 +173,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.TableName)) //T4 find type == nText 
             {
                 entityPM.TableName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.TableName));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CreatedByUserName)) //T4 find type == nText 
+            {
+                entityPM.CreatedByUserName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CreatedByUserName));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

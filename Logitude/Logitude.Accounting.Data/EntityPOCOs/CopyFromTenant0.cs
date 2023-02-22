@@ -34,6 +34,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string SearchFields { get; set; }
         [Column("TableName")]
 	    public string TableName { get; set; }
+        [Column("CreatedByUserName")]
+	    public string CreatedByUserName { get; set; }
     }
 }
 	 
