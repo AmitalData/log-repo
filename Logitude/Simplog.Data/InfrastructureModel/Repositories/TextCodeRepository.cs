@@ -317,5 +317,12 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
             return textcodes;
         }
+
+        public TextCode GetTextCodeByCodeAndTenant(string code, int tenant)
+        {
+            return (from a in context.TextCodes
+                    where a.Code == code && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
     }
 }
