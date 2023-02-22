@@ -487,9 +487,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public bool IsCustomerExist(string Id, int tenant)
         {
-            return context.Customers
-                          .Any(c => c.Id == Id 
-                                    && c.Tenant == tenant);
+            return GetSingleCustomerWithCardOnly(Id, tenant, true) != null ? true : false ;
         }
     }
 }
