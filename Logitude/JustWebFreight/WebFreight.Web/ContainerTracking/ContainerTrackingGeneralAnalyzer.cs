@@ -155,6 +155,7 @@ namespace WebFreight.Web.ContainerTracking
 
             if (trackingSource == ContainerStatusSourceValues.OceanInsights)
             {
+                manager.Initialize(containerUpdatedFields.Tenant);
                 manager.Update(true, true);
             }
 
@@ -193,10 +194,11 @@ namespace WebFreight.Web.ContainerTracking
 
                 if (IsValidToAnalyze(shipment, container, containerTrackingRequest))
                 {
+                    manager.Initialize(containerTrackingRequest.Tenant);
                     manager.SetContainer(container);
                     manager.SetShipment(shipment);
                     MapContainersExternalData(container);
-                    manager.Update(IsUpdateContainerAllowed(container), IsUpdateShipmentAllowed(shipment, container));
+                    manager.Update(IsUpdateContainerAllowed(container), IsUpdateShipmentAllowed(shipment));
                     analyz = IsUpdateContainerAllowed(container);
                 }
 
@@ -218,7 +220,7 @@ namespace WebFreight.Web.ContainerTracking
 
             return true;
         }
-        private bool IsUpdateShipmentAllowed(ShipmentPM shipment, ContainerPM container)
+        private bool IsUpdateShipmentAllowed(ShipmentPM shipment)
         {
             if (shipment.IsOperationalClosed)            
                 return false;

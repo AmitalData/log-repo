@@ -34,16 +34,18 @@ namespace WebFreight.Web.ContainerTracking
         private bool isUpdatingShipmentDateFields = false;
         private bool isUpdatingEmptyLeg = false;
         private Tenant myTenant;
-        private readonly ContainerTrackingHelper containerTrackingHelper;
-        private ContainerDiscrepancyService containerDiscrepancyService;
-
+        private ContainerTrackingHelper containerTrackingHelper;
 
         public ContainerTrackingUpdateManager(ContainerUpdatedFields containerUpdatedFields)
         {
-            this.containerUpdatedFields = containerUpdatedFields;
-            this.tenant = containerUpdatedFields.Tenant;
+            this.containerUpdatedFields = containerUpdatedFields;            
             this.containerPM = containerUpdatedFields.ContainerPM;
-            this.shipmentPM = containerUpdatedFields.ShipmentPM;
+            this.shipmentPM = containerUpdatedFields.ShipmentPM;            
+        }
+        public void Initialize(int tenant)
+        {
+            this.tenant = tenant;
+
             this.portRepository = new PortRepository(tenant);
             this.portQuery = new PortQuery(portRepository);
             this.vesselRepository = new VesselRepository(tenant);
