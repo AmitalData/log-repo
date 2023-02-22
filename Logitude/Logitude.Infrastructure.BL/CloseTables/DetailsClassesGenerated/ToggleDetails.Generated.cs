@@ -884,6 +884,13 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "DBA,Dashboard Analytics", 
                 Description = "Dashboard Analytics", 
 			});
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Remove Exception Logic", 
+                Code = "REL", 
+                SearchFields = "REL,Remove Exception Logic", 
+                Description = "Remove Exception Logic", 
+			});
 			
             return all;
        }
