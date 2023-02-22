@@ -54,6 +54,11 @@ export class CopyFromTenant0PM {
     public set TableName(newValue: string) { if (this.tableName != newValue) { this.tableName = newValue; this.MarkAsDirty("TableName"); } }
        
 	 
+    private createdByUserName: string;
+    public get CreatedByUserName() { return this.createdByUserName; }
+    public set CreatedByUserName(newValue: string) { if (this.createdByUserName != newValue) { this.createdByUserName = newValue; this.MarkAsDirty("CreatedByUserName"); } }
+       
+	 
 
     public OldEntityPM: CopyFromTenant0PM;
 		

@@ -1004,30 +1004,30 @@
                             </div>
                             <!-- #region CopyFromTenant0 Tab -->
                             <div *ngSwitchCase="'CopyFromTenant0'" style="height: 100%;" aria-disabled="false">
-                                <table *ngIf="EntityPM">
+                                <table *ngIf="listCopyFromTenant0" >
 
                                     <tr class="FormFieldRow">
                                         <td>
-                                            <table class="FixedTable">
+                                            <table class="FixedTable" *ngFor="let cft0 of listCopyFromTenant0;let entity of CopyFromTenant0PM">
 
                                                 <!-- CustomerControlAccountId -->
                                                 <tr class="FormFieldRow">
-                                                    <td style="width:150px">
-                                                        <LogLabel [ObjectFieldName]="'chartofaccounts'"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext">chartofaccounts</LogLabel>
+                                                    <td style="width:170px">
+                                                        <div>
+                                                            {{cft0.TableName}}
+                                                        </div>
                                                     </td>
 
                                                     <td style="width: 75px;">
-                                                        <button class="Button" [disabled]="disabledCopyFromTenant0"
-                                                            (click)="CreateControlAccount('CustomerControlAccountId')">העתק</button>
+                                                        <button class="Button" [disabled]="disabledCopyFromTenant0 ? false:cft0.CreateDate?true:false"
+                                                            (click)="CopyTable(cft0.TableName)">העתק</button>
                                                     </td>
                                                     <td style="width: 20px;">
                                                         <div></div>
                                                     </td>
                                                     <td style="width: 75px;">
                                                         <div>
-                                                            <span>{{date | date:'short' }}</span>
+                                                            <span>{{cft0.CreateDate | date:'short' }}</span>
                                                            
                                                         </div>
 
@@ -1038,7 +1038,7 @@
                                                     <td style="width: 75px;">
                                                         <div>
                                                           
-                                                            <span>{{user}}</span>
+                                                            <span>{{cft0.CreatedByUserId}}</span>
                                                         </div>
 
                                                     </td>
@@ -1048,112 +1048,8 @@
                                                     </td>
                                                 </tr>
 
-                                                <!-- VendorControlAccountId -->
-                                                <tr class="FormFieldRow">
-                                                    <td>
-                                                        <LogLabel [ObjectFieldName]="'VendorControlAccountId'"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"></LogLabel>
-                                                    </td>
-
-                                                    <td style="width: 75px">
-                                                        <button class="Button"
-                                                            (click)="CreateControlAccount('CustomerControlAccountId')">העתק</button>
-                                                    </td>
-
-                                                    <td>
-                                                        <div></div>
-                                                    </td>
-                                                </tr>
-
-                                                <!-- FileControlAccountId -->
-                                                <tr class="FormFieldRow">
-                                                    <td>
-                                                        <LogLabel [ObjectFieldName]="'FileControlAccountId'"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"></LogLabel>
-                                                    </td>
-
-                                                    <td style="width: 75px">
-                                                        <button class="Button"
-                                                            (click)="CreateControlAccount('CustomerControlAccountId')">העתק</button>
-                                                    </td>
-
-                                                    <td>
-                                                        <div></div>
-                                                    </td>
-                                                </tr>
-
-                                                <!-- OceanExportJobControlAccountId -->
-                                                <tr class="FormFieldRow">
-                                                    <td style="width: 180px;">
-                                                        <LogLabel [ObjectFieldName]="'OceanExportJobControlAccountId'"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"></LogLabel>
-                                                    </td>
-
-                                                    <td style="width: 75px">
-                                                        <button class="Button"
-                                                            (click)="CreateControlAccount('CustomerControlAccountId')">העתק</button>
-                                                    </td>
-                                                    <td>
-                                                        <div></div>
-                                                    </td>
-                                                </tr>
-
-                                                <!-- OceanImportJobControlAccountId -->
-                                                <tr class="FormFieldRow">
-                                                    <td>
-                                                        <LogLabel [ObjectFieldName]="'OceanImportJobControlAccountId'"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"></LogLabel>
-                                                    </td>
-
-                                                    <td style="width: 75px">
-                                                        <button class="Button"
-                                                            (click)="CreateControlAccount('CustomerControlAccountId')">העתק</button>
-                                                    </td>
-
-                                                    <td>
-                                                        <div></div>
-                                                    </td>
-                                                </tr>
-
-                                                <!-- AirExportJobControlAccountId -->
-                                                <tr class="FormFieldRow">
-                                                    <td>
-                                                        <LogLabel [ObjectFieldName]="'AirExportJobControlAccountId'"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"></LogLabel>
-                                                    </td>
-
-                                                    <td style="width: 75px">
-                                                        <button class="Button"
-                                                            (click)="CreateControlAccount('CustomerControlAccountId')">העתק</button>
-                                                    </td>
-
-                                                    <td>
-                                                        <div></div>
-                                                    </td>
-                                                </tr>
-
-                                                <!-- AirImportJobControlAccountId -->
-                                                <tr class="FormFieldRow">
-                                                    <td>
-                                                        <LogLabel [ObjectFieldName]="'AirImportJobControlAccountId'"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"></LogLabel>
-                                                    </td>
-
-                                                    <td style="width: 75px">
-                                                        <button class="Button"
-                                                            (click)="CreateControlAccount('CustomerControlAccountId')">העתק</button>
-                                                    </td>
-
-                                                    <td>
-                                                        <div></div>
-                                                    </td>
-                                                </tr>
+                                              
+                                              
 
                                                 <tr>
                                                     <td>

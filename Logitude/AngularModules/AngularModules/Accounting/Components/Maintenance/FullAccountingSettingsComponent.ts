@@ -1,29 +1,29 @@
-import {Component, OnInit, AfterViewInit, ChangeDetectorRef} from '@angular/core';
-import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
-import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {LogLabelComponent} from '../../../Infrastructure/Components/LogitudeComponents/LogLabelComponent';
-import {LogTextBoxComponent} from '../../../Infrastructure/Components/LogitudeComponents/LogTextBoxComponent';
-import {LogLovComponent} from '../../../Infrastructure/Components/LogitudeComponents/LogLovComponent';
-import {Validator} from '../../../Infrastructure/Validators/Validator';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {TextCodeTranslationPipe} from '../../../Controls/Pipes/TextCodeTranslationPipe';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
-import {FullAccountingSettingPM} from '../../EntityPMs/FullAccountingSettingPM';
-import {FullAccountingSettingList} from '../../EntityLists/FullAccountingSettingList';
-import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
-import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {TenantPMService} from '../../../Common/Services/StandardPMs/TenantPMService';
-import {PaymentTermList} from '../../../Common/EntityLists/PaymentTermList';
-import {FullAccountingSettingPMService} from '../../Services/StandardPMs/FullAccountingSettingPMService';
-import {FullAccountingSettingListService} from '../../Services/StandardLists/FullAccountingSettingListService';
-import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { ServiceArgs } from '../../../Infrastructure/DataContracts/ServiceArgs';
+import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { LogLabelComponent } from '../../../Infrastructure/Components/LogitudeComponents/LogLabelComponent';
+import { LogTextBoxComponent } from '../../../Infrastructure/Components/LogitudeComponents/LogTextBoxComponent';
+import { LogLovComponent } from '../../../Infrastructure/Components/LogitudeComponents/LogLovComponent';
+import { Validator } from '../../../Infrastructure/Validators/Validator';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { TextCodeTranslationPipe } from '../../../Controls/Pipes/TextCodeTranslationPipe';
+import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
+import { FullAccountingSettingPM } from '../../EntityPMs/FullAccountingSettingPM';
+import { FullAccountingSettingList } from '../../EntityLists/FullAccountingSettingList';
+import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
+import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { TenantPMService } from '../../../Common/Services/StandardPMs/TenantPMService';
+import { PaymentTermList } from '../../../Common/EntityLists/PaymentTermList';
+import { FullAccountingSettingPMService } from '../../Services/StandardPMs/FullAccountingSettingPMService';
+import { FullAccountingSettingListService } from '../../Services/StandardLists/FullAccountingSettingListService';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { GLAccountPM } from '../../EntityPMs/GLAccountPM';
 //import {AutomaticExternalRconcilMthodsPM}  '../../Services/StandardPMs/AutomaticExternalRconcilMthodsPM';
-import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
-import {ObjectsUpdater} from '../../../Infrastructure/Locators/ObjectsUpdater';
+import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
+import { ObjectsUpdater } from '../../../Infrastructure/Locators/ObjectsUpdater';
 import { AppTool } from '../../../Infrastructure/Tools';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
@@ -31,6 +31,10 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { BookingWizardPackageItem } from 'Booking/Components/BookingWizard/Packages/PackagesTabComponent';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { Data } from '@microsoft/applicationinsights-common';
+import { CopyFromTenant0ExtendedListService } from 'Accounting/Services/ExtendedLists/CopyFromTenant0ExtendedListService';
+import { CopyFromTenant0PM } from 'Accounting/EntityPMs/CopyFromTenant0PM';
+import { List } from 'cypress/types/lodash';
+import { CopyFromTenant0PMService } from 'Accounting/Services/StandardPMs/CopyFromTenant0PMService';
 
 const DebtorsAndCreditorsChartOfAccountTypeCode = '7';
 @Component({
@@ -48,10 +52,14 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     public ObjectTableName: string = "FullAccountingSetting";
     public TenantPM: TenantPM;
     public EntityPM: FullAccountingSettingPM;
+    public listCopyFromTenant0: CopyFromTenant0PM[];
+    public CopyFromTenant0PM: CopyFromTenant0PM[];
     public isRTL: boolean = false;
     ImageId: string;
     EntityId: string;
     fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();;
+    copyFromTenant0ExtendedListService: CopyFromTenant0ExtendedListService = new CopyFromTenant0ExtendedListService();;
+    copyFromTenant0PMService: CopyFromTenant0PMService = new CopyFromTenant0PMService()
     fullAccountingSettingListService: FullAccountingSettingListService;
     tenantPMService: TenantPMService;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -68,15 +76,13 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
         this.CurrentSession.StartBusyIndicatorLoading();
 
-        this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((responseGLAccount: any) =>
-        {
-            this._entityResourceService.getEntityResourceByTableName("ChartOfAccount").subscribe((response1: any) =>
-            {
-                this._entityResourceService.getEntityResourceByTableName("FullAccountingSetting").subscribe((response1: any) =>
-                {
-                    this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response =>
-                    {
-                        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => { });
+        this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((responseGLAccount: any) => {
+            this._entityResourceService.getEntityResourceByTableName("ChartOfAccount").subscribe((response1: any) => {
+                this._entityResourceService.getEntityResourceByTableName("FullAccountingSetting").subscribe((response1: any) => {
+                    this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
+                        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+
+                        });
                     });
 
                 });
@@ -108,6 +114,9 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
         });
 
+        this.GetValueCopyFromTenant0()
+
+
         this.UIProperties.SetEnabled("AccountingActivationDate", "Tenant", false);
 
 
@@ -115,8 +124,35 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
 
     }
-    private BuildTaxInstituationFilterItems()
-    {
+    GetValueCopyFromTenant0() {
+        this.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.copyFromTenant0ExtendedListService.getAll(SessionLocator.Tenant).subscribe((myResult: any) => {
+            
+            this.CopyFromTenant0PM = myResult;
+            this.copyFromTenant0ExtendedListService.getAll(0).subscribe((myResult: any) => {
+                
+                this.listCopyFromTenant0 = myResult;
+                if (this.CopyFromTenant0PM && this.listCopyFromTenant0) {
+                    this.listCopyFromTenant0.forEach(element => {
+                        var value = this.CopyFromTenant0PM.find(t => t.TableName == element.TableName)
+                        if (value) {
+                            element.CreateDate = value.CreateDate;
+                            element.CreatedByUserId = value.CreatedByUserId;
+                        }
+
+                    });
+                }
+
+
+            });
+
+
+            this.CurrentSession.StopBusyIndicator();
+        });
+
+    }
+    private BuildTaxInstituationFilterItems() {
         this.TaxInstitutionGLAccountFilterItems.addAdditionalFilter('ChartOfAccountsTypeCode', DebtorsAndCreditorsChartOfAccountTypeCode, null, null, 'Equals', false, false, false, 'string', false);
     }
 
@@ -164,8 +200,8 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         SessionLocator.TenantPM.AccountingActivated = this.AccountingActivated;
 
     }
-   public activateSecurityLevel: boolean = false;
-   public enableAllFields: boolean = false;
+    public activateSecurityLevel: boolean = false;
+    public enableAllFields: boolean = false;
     SetUIProperties() {
 
 
@@ -204,7 +240,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         }
     }
 
- get AllowMultiRatesInInvoiceLines() { return this.EntityPM.AllowMultiRatesInInvoiceLines; }
+    get AllowMultiRatesInInvoiceLines() { return this.EntityPM.AllowMultiRatesInInvoiceLines; }
     set AllowMultiRatesInInvoiceLines(value: boolean) {
         if (this.EntityPM.AllowMultiRatesInInvoiceLines != value) {
             this.EntityPM.AllowMultiRatesInInvoiceLines = value;
@@ -239,20 +275,18 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         }
     }
 
-    private ToggleAgingDefinitionTab(value: boolean)
-    {
+    private ToggleAgingDefinitionTab(value: boolean) {
         if (value)
             this.AddAgingDefinitionTab();
         else
             this.RemoveAgingDefinitionTab();
     }
 
-    private ToggleCopyingDataFromTenant0Tab(value: boolean)
-    {
+    private ToggleCopyingDataFromTenant0Tab(value: boolean) {
         if (value)
-           this.disabledCopyFromTenant0=false
+            this.disabledCopyFromTenant0 = false
         else
-        this.disabledCopyFromTenant0=true
+            this.disabledCopyFromTenant0 = true
     }
 
     get IsPaymentChequesActivated() { return this.EntityPM.IsPaymentChequesActivated; }
@@ -397,11 +431,11 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         }
     }
 
-  get CustomsGLAccountId() { return this.EntityPM.CustomsGLAccountId; }
-  set CustomsGLAccountId(value: string) {
-    if (this.EntityPM.CustomsGLAccountId != value) {
-      this.EntityPM.CustomsGLAccountId = value;
-    }
+    get CustomsGLAccountId() { return this.EntityPM.CustomsGLAccountId; }
+    set CustomsGLAccountId(value: string) {
+        if (this.EntityPM.CustomsGLAccountId != value) {
+            this.EntityPM.CustomsGLAccountId = value;
+        }
     }
 
     get PaymentChequesLogoId() { return this.EntityPM.PaymentChequesLogoId; }
@@ -523,14 +557,14 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         }
     }
 
-    get NumberOfAgingMonths () { return this.EntityPM.NumberOfAgingMonths ; }
-    set NumberOfAgingMonths (value: number) {
-        if (this.EntityPM.NumberOfAgingMonths  != value) {
-            this.EntityPM.NumberOfAgingMonths  = value;
+    get NumberOfAgingMonths() { return this.EntityPM.NumberOfAgingMonths; }
+    set NumberOfAgingMonths(value: number) {
+        if (this.EntityPM.NumberOfAgingMonths != value) {
+            this.EntityPM.NumberOfAgingMonths = value;
 
             if (value < 1 || value > 9) {
                 this.UIProperties.SetValidity("NumberOfAgingMonths", this.ObjectTableName, false, TextCodeTranslator.Translate("FullAccountingSetting.O.NoOfAgingMonthsBW1n9"));
-            }else{
+            } else {
                 this.UIProperties.SetValidity("NumberOfAgingMonths", this.ObjectTableName, true, "");
             }
         }
@@ -716,19 +750,19 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
     }
 
-SubmitChanges(ControlAccountId:string) {
-    //console.log("EntityPM: ", this.EntityPM);
+    SubmitChanges(ControlAccountId: string) {
+        //console.log("EntityPM: ", this.EntityPM);
 
-    this.SetAgingPeriodsFields();
+        this.SetAgingPeriodsFields();
 
-    this.fullAccountingSettingPMService.update(this.EntityPM).subscribe(myResult => {
+        this.fullAccountingSettingPMService.update(this.EntityPM).subscribe(myResult => {
 
-        var mm: ServiceResponse = myResult;
-        if (!mm.HasError) { // Success
-            this.CurrentSession.CloseCurrentWindow();
-            this.CurrentSession.StopBusyIndicator();
-            if (!AppTool.IsNullOrEmpty(ControlAccountId)) {
-                this.FullAccountingAddControl(ControlAccountId);
+            var mm: ServiceResponse = myResult;
+            if (!mm.HasError) { // Success
+                this.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.StopBusyIndicator();
+                if (!AppTool.IsNullOrEmpty(ControlAccountId)) {
+                    this.FullAccountingAddControl(ControlAccountId);
                 }
             }
 
@@ -745,50 +779,49 @@ SubmitChanges(ControlAccountId:string) {
         });
     }
 
-    SetAgingPeriodsFields(){
+    SetAgingPeriodsFields() {
         this.EntityPM.FirstPeriodsMonths = this.JoinCodesOfPeriods(this.SelectedPeriods1);
         this.EntityPM.SecondPeriodsMonths = this.JoinCodesOfPeriods(this.SelectedPeriods2);
         this.EntityPM.ThirdsPeriodsMonths = this.JoinCodesOfPeriods(this.SelectedPeriods3);
     }
 
-    ResetAgingPeriodsFields(){
+    ResetAgingPeriodsFields() {
         const thirdPeriodIsNotSelected = this.NumberOfPeriods <= 2;
-        if(thirdPeriodIsNotSelected)
+        if (thirdPeriodIsNotSelected)
             this.ResetThirdPeriod();
 
         const secondPeriodIsNotSelected = this.NumberOfPeriods == 1;
-        if(secondPeriodIsNotSelected)
+        if (secondPeriodIsNotSelected)
             this.ResetSecondPeriod();
     }
 
-    private ResetSecondPeriod()
-    {
+    private ResetSecondPeriod() {
         this.EntityPM.SecondPeriodsMonths = null;
         this.SelectedPeriods2 = [];
     }
 
-    private ResetThirdPeriod()
-    {
+    
+    private ResetThirdPeriod() {
         this.EntityPM.ThirdsPeriodsMonths = null;
         this.SelectedPeriods3 = [];
     }
 
-    SetSelectedAgingPeriods(){
+    SetSelectedAgingPeriods() {
 
         this.SelectedPeriods1 = this.SetSelectedPeriods(this.EntityPM.FirstPeriodsMonths);
         this.SelectedPeriods2 = this.SetSelectedPeriods(this.EntityPM.SecondPeriodsMonths);
         this.SelectedPeriods3 = this.SetSelectedPeriods(this.EntityPM.ThirdsPeriodsMonths);
     }
 
-    JoinCodesOfPeriods(periods: any[]){
-        if(periods)
-            return periods.map(d=>d.Code)?.join(',');
+    JoinCodesOfPeriods(periods: any[]) {
+        if (periods)
+            return periods.map(d => d.Code)?.join(',');
     }
 
-    SetSelectedPeriods(joinedPeriodsCodes: string){
-        if(joinedPeriodsCodes){
+    SetSelectedPeriods(joinedPeriodsCodes: string) {
+        if (joinedPeriodsCodes) {
             var codes = joinedPeriodsCodes.split(',');
-            return this.Periods.filter(d=>codes.includes(d.Code));
+            return this.Periods.filter(d => codes.includes(d.Code));
         }
         return [];
     }
@@ -834,35 +867,35 @@ SubmitChanges(ControlAccountId:string) {
     //#region Tabs Code
     TabsSource: any[] = [];
     SelectedTab: string = "";
-    
+
     BuildTabs() {
         this.SelectedTab = "FullAccoutingSetting";
         this.TabsSource.push({ Name: "FullAccoutingSetting", isSelected: true, Header: TextCodeTranslator.Translate("General.O.General") }); //Accounting.O.FullAccountingSettings
         this.TabsSource.push({ Name: "ControlAccounts", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.O.ControlGLAccounts") });
         this.TabsSource.push({ Name: "Logo", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.General.O.Cheques") });
-        
-        if(this.AccountingActivated){
+
+        if (this.AccountingActivated) {
             this.AddAgingDefinitionTab();
-           this.disabledCopyFromTenant0=false
+            this.disabledCopyFromTenant0 = false
         }
         this.TabsSource.push({ Name: "CopyFromTenant0", isSelected: false, Header: TextCodeTranslator.Translate("FullAccountingSetting.O.CopyFromTenant0") });
 
-           
+
     }
 
-    RemoveAgingDefinitionTab(){
-        var tabIndex = this.TabsSource.findIndex(d=>d.Name == "AgingDefinition");
-        if(tabIndex > 0)
-        this.TabsSource.splice(tabIndex,1);
+    RemoveAgingDefinitionTab() {
+        var tabIndex = this.TabsSource.findIndex(d => d.Name == "AgingDefinition");
+        if (tabIndex > 0)
+            this.TabsSource.splice(tabIndex, 1);
     }
-    AddAgingDefinitionTab(){
-        debugger
-        var tabIndex = this.TabsSource.findIndex(d=>d.Name == "AgingDefinition");
-        if(tabIndex < 0)
+    AddAgingDefinitionTab() {
+        
+        var tabIndex = this.TabsSource.findIndex(d => d.Name == "AgingDefinition");
+        if (tabIndex < 0)
             this.TabsSource.push({ Name: "AgingDefinition", isSelected: false, Header: TextCodeTranslator.Translate("FullAccountingSetting.O.AgingDefinition") });
     }
-    
-    
+
+
 
     SelectionChanged(tab: any) {
 
@@ -880,24 +913,24 @@ SubmitChanges(ControlAccountId:string) {
     }
     //#endregion
     _ControlAccountId: string;
-    CreateControlAccount(ControlAccountId: string) {
-        this._ControlAccountId = ControlAccountId
-        if (!AppTool.IsNullOrEmpty(this[ControlAccountId])) {
-            var myMessageWindow = new MessageWindow();
-            myMessageWindow.Show("כרטיס מרכז מוגדר");
-            return;
+    CopyTable(tableName: string) {
+        
+
+        var copyfromtenant0 = new CopyFromTenant0PM();
+        if (!AppTool.IsNullOrEmpty(tableName)) {
+            copyfromtenant0.TableName = tableName;
+            copyfromtenant0.CreatedByUserId = SessionLocator.LoggedUserId;
+            
+            this.copyFromTenant0PMService.update(copyfromtenant0).subscribe(res => {
+                this.GetValueCopyFromTenant0()
+            });
+
+
         }
 
-        let confirmWindow = new ConfirmWindow();
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                this.CurrentSession.StartBusyIndicatorLoading();
-                this.SubmitChanges(ControlAccountId);
-            }
-        });
-        confirmWindow.Show("אנא אשר שמירה והוספה של חשבון מרכז");
+
     }
-    FullAccountingAddControl(ControlAccountId:string) {
+    FullAccountingAddControl(ControlAccountId: string) {
         var windowTitle = TextCodeTranslator.Translate("TaxReport.B.Download");
 
         var windowArgs: any = {};
@@ -924,23 +957,23 @@ SubmitChanges(ControlAccountId:string) {
     isRTL = ObjectsLocator.GlobalSetting ? (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl") : false;
 
 
-    public get NumberOfPeriods() : number {
+    public get NumberOfPeriods(): number {
         return this.EntityPM.NumberofPeriods;
     }
-    public set NumberOfPeriods(value : number) {
+    public set NumberOfPeriods(value: number) {
         this.EntityPM.NumberofPeriods = value;
 
         this.ResetAgingPeriodsFields();
     }
 
     Periods: any[] = [
-        {EnglishName: 'Period 0', LocalName: 'תקופה גיול 0', Code: 'Period0'},
-        {EnglishName: 'Period 1', LocalName: 'תקופה גיול 1', Code: 'Period1'},
-        {EnglishName: 'Period 2', LocalName: 'תקופה גיול 2', Code: 'Period2'},
-        {EnglishName: 'Period 3', LocalName: 'תקופה גיול 3', Code: 'Period3'},
-        {EnglishName: 'Period 4', LocalName: 'תקופה גיול 4', Code: 'Period4'},
-        {EnglishName: 'Period 5', LocalName: 'תקופה גיול 5', Code: 'Period5'},
-        {EnglishName: 'Period Past', LocalName: 'לפני התקופה', Code: 'PeriodPast'}
+        { EnglishName: 'Period 0', LocalName: 'תקופה גיול 0', Code: 'Period0' },
+        { EnglishName: 'Period 1', LocalName: 'תקופה גיול 1', Code: 'Period1' },
+        { EnglishName: 'Period 2', LocalName: 'תקופה גיול 2', Code: 'Period2' },
+        { EnglishName: 'Period 3', LocalName: 'תקופה גיול 3', Code: 'Period3' },
+        { EnglishName: 'Period 4', LocalName: 'תקופה גיול 4', Code: 'Period4' },
+        { EnglishName: 'Period 5', LocalName: 'תקופה גיול 5', Code: 'Period5' },
+        { EnglishName: 'Period Past', LocalName: 'לפני התקופה', Code: 'PeriodPast' }
         // {EnglishName: 'Period Future', LocalName: 'xxxx התקופה', Code: 'PeriodFuture'}
     ];
 
