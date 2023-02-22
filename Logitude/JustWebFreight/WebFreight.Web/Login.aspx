@@ -1521,8 +1521,14 @@
                     }
                 }
             }
-
-            if (document.location.href.indexOf('?Menu=') > 0) {
+            if (document.location.href.indexOf('?HowToDownloadPage=') > 0) {
+                var DocumentId = document.location.href.split('?HowToDownloadPage=')[1];
+                if (DocumentId) {
+                    OpenHowToDownloadPage(userdata, DocumentId);
+                    document.location.href = document.location.href.replace("/Login.aspx", "/").split('?')[0] + angularUrl
+                }
+            }
+            else if (document.location.href.indexOf('?Menu=') > 0) {
                 document.location.href = document.location.href.replace("/Login.aspx", "/").replace("/login.aspx", "/").split('?')[0] + angularUrl;
             }
             else {
@@ -1532,6 +1538,29 @@
             $("#loginBusyindicator").hide();
 
         };
+
+        OpenHowToDownloadPage = function (userdata, DocumentId) {
+            var url = document.location.href.replace("/Login.aspx", "/").split('?')[0] + 'WebPages/HowToDownloadPage.aspx?id=' + DocumentId;
+            var params = [{ name: "Token", value: userdata.DocumentDownloadToken }, { name: "id", value: DocumentId }]
+            var form = document.createElement("form");
+            form.target = "_blank";
+            form.method = "POST";
+            form.action = url;
+            for (var i = 0; i < params.length; i++) {
+                var input = PrepareInput(params[i]);
+                form.appendChild(input);
+            }
+            document.body.appendChild(form);
+            form.submit();
+            document.body.removeChild(form);
+        }
+        PrepareInput = function (input) {
+            var mappedInput = document.createElement("input");
+            mappedInput.type = "hidden";
+            mappedInput.name = input.name;
+            mappedInput.setAttribute("value", input.value);
+            return mappedInput;
+        }
 
         function setCookie(cname, cvalue, exdays) {
             const d = new Date();

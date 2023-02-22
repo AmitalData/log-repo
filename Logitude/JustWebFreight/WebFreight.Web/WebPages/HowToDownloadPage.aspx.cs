@@ -15,6 +15,7 @@ namespace WebFreight.Web.WebPages
         protected void Page_Load(object sender, EventArgs e)
         {
             string headerRequest = Request["Code"];
+            string id = Request["id"];
             int? tenant = null;
             string token = Request["Token"] ?? "";
             SecurityDocumentResult securityDocumentResult = SecurityDocumentHelper.ValidationDocumentToken(token);
@@ -30,12 +31,12 @@ namespace WebFreight.Web.WebPages
                 Contact contact = contactRepository.GetSingleContactByEmail(email, tenant1);
                 if (contact == null)
                 {
-                    this.Context.Response.Redirect("../Login.aspx");
+                    this.Context.Response.Redirect("../Login.aspx?HowToDownloadPage="+id);
                 }
             }
             else
             {
-                this.Context.Response.Redirect("../Login.aspx");
+                this.Context.Response.Redirect("../Login.aspx?HowToDownloadPage="+id);
             }
 
             Uploader manager = new Uploader();
