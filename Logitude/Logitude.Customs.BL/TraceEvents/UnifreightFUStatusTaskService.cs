@@ -3,6 +3,7 @@ using Logitude.AmitalMessaging.Customs.CustomFile;
 using Logitude.AmitalMessaging.Infrastructure.FuStatus;
 using Logitude.AmitalMessaging.Infrastructure.Transmission;
 using Logitude.AmitalMessaging.Utils;
+using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -29,9 +30,15 @@ namespace Logitude.Customs.BL.TraceEvents
         {
         }
 
-        public void DeleteINAFUStatus(int Tenant ,string CustomFileNo)
+        public void DeleteINAFUStatus(int Tenant, string CustomFileNo)
         {
-            var myGDFDATAQueryService = new Unifreight.BL.EntityQueryServices.GDFDATAQueryService(AmitalContext.GetContext(Tenant));
+            
+            if (!CustomsSettingQueryService.GetSettingByTenant(Tenant).IsConnectedToUniFreight)
+            {
+                return;
+            }
+                
+                var myGDFDATAQueryService = new Unifreight.BL.EntityQueryServices.GDFDATAQueryService(AmitalContext.GetContext(Tenant));
             var def = myGDFDATAQueryService.GetSingle("ISRAEL", "GGG_DEL_INA", "NON", "NON", false, true);
             def = def ?? new GDFDATAPM();
             if (def.DEFDATA == "Y")
