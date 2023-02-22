@@ -1525,7 +1525,6 @@
                 var DocumentId = document.location.href.split('?HowToDownloadPage=')[1];
                 if (DocumentId) {
                     OpenHowToDownloadPage(userdata, DocumentId);
-                    document.location.href = document.location.href.replace("/Login.aspx", "/").split('?')[0] + angularUrl
                 }
             }
             else if (document.location.href.indexOf('?Menu=') > 0) {
@@ -1543,7 +1542,7 @@
             var url = document.location.href.replace("/Login.aspx", "/").split('?')[0] + 'WebPages/HowToDownloadPage.aspx?id=' + DocumentId;
             var params = [{ name: "Token", value: userdata.DocumentDownloadToken }, { name: "id", value: DocumentId }]
             var form = document.createElement("form");
-            form.target = "_blank";
+            form.target = "_self";
             form.method = "POST";
             form.action = url;
             for (var i = 0; i < params.length; i++) {
