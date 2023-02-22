@@ -1081,7 +1081,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         supplierInvoiceItemPM.DutyRegimeProtocolCode = GetValueCodeType(governmentAgencyGoodsItem.Commodity.Classification[0].DMExtensions.DutyRegimeProtocolCode);
                         supplierInvoiceItemPM.TradeAgreementCode = GetValueCodeType(governmentAgencyGoodsItem.Commodity.Classification[0].DMExtensions.DutyRegimeCode);
                         supplierInvoiceItemPM.ClassificationTypeCode = GetValueCodeType(governmentAgencyGoodsItem.Commodity.Classification[0].IdentificationTypeCode);
-                        supplierInvoiceItemPM.TaxExemptCode = GetValueCodeType(governmentAgencyGoodsItem.Commodity.Classification[0].DMExtensions.TaxExemptCode);
+
+                        supplierInvoiceItemPM.TaxExemptCode = GetValueCodeType(governmentAgencyGoodsItem.Commodity.Classification[0].DMExtensions.TaxExemptCode).Replace("/", "");
+
+
 
 
                     }
@@ -1296,22 +1299,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         SupplierInvoiceItemsPricePM supplierInvoiceItemsPrice = new SupplierInvoiceItemsPricePM();
 
 
-                        if (!isFromImporter && AdditionalPriceTypeCodes.Contains(AdditionalPriceTypeCode))
-                        {
-                            supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Update;
-                        }
-                       else if (isFromImporter)
-                        {
-
-                            supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Insert;
-                        }
-                        else
-                        {
-                            continue;
-                        }
-
+                        supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Insert;
                         supplierInvoiceItemsPrice.DeclarationId = declarationId;
-                       
                         supplierInvoiceItemsPrice.AdditionalPrice = GetValueAmountType(GoodsItemAmount.CustomsValueAmount);
                        
                         supplierInvoiceItemsPrice.AdditionalPriceTypeCode = GetValueCodeType(GoodsItemAmount.AmountType);
