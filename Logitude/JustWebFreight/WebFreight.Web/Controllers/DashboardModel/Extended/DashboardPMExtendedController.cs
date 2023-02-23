@@ -295,7 +295,47 @@ namespace WebFreight.Web.Controllers.DashboardModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage PostPinPredefinedDashboards(string[] dashboardIds)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                var tenant = authToken.Tenant;
+                var loggedUserId = this.GetLoggedContactId(authToken.Email, tenant);
+
+                IDashboardContext myContext = DashboardContext.GetContext(tenant);
+                DashboardsUserSettingRepository dashboardsUserSettingRepository = new DashboardsUserSettingRepository(myContext);
+                DashboardsUserSettingQueryService dashboardsUserSettingQueryService = new DashboardsUserSettingQueryService(myContext);
+                var existSettings = dashboardsUserSettingQueryService.GetDashboardsUserSettingsByUserId(loggedUserId, tenant);
+                if (existSettings != null) return Request.CreateResponse(HttpStatusCode.OK, existSettings);
+
+                List<PinnedDashboard> pinnedDashboards = new List<PinnedDashboard>();
+                pinnedDashboards.AddRange(dashboardIds.Select((x, i) => new PinnedDashboard { Id = x, Order = i }));
+                var dashboardsUserSetting = new DashboardsUserSetting()
+                {
+                    Id = IdCounter.GetNumber("DashboardsUserSetting", tenant),
+                    Tenant = tenant,
+                    UserId = loggedUserId,
+                    PinnedDashboards = JsonConvert.SerializeObject(pinnedDashboards),
+                };
+                dashboardsUserSettingRepository.Add(dashboardsUserSetting);
+                dashboardsUserSettingRepository.SubmitChanges();
+                DashboardsUserSettingPM dashboardsUserSettingPM = dashboardsUserSettingQueryService.GetSingle(dashboardsUserSetting.Id, false, false);
+                return Request.CreateResponse(HttpStatusCode.OK, dashboardsUserSettingPM);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
     }
+
 
     public class PinnedDashboard
     {
