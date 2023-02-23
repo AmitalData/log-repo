@@ -147,7 +147,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = "2716",
                 //NeedSignature = true,
-                SignatureTypeCode = "C"
+                SignatureTypeCode = null //"C"
             });
 
             //DCAInD_NG_2716_MSG22001_AddAttachmentMessagingService
