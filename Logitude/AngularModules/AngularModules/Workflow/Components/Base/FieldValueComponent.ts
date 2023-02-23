@@ -14,11 +14,12 @@ import { ObjectTables } from "Workflow/Utilities/ObjectTables";
 
 export class FieldValueComponent extends BaseComponent implements OnInit {
 
-    @Input() ObjectField: ObjectFieldList;
     @Input() Name: string;
     @Input() CurrentValue: string;
+    @Input() ObjectField: ObjectFieldList | null = null;
     @Input() IsIntegerNumberInput: boolean = false;
-    @Input() DataType: string;
+    @Input() DataType: string | null = null;
+    @Input() LookupType: string | null = null;
     @Input() IsDisabled: boolean = false;
 
     @Output() ValueChanged = new EventEmitter<string>();
@@ -27,6 +28,7 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
     public LookupTable: ObjectTableList;
     public PickListTable: ObjectTableList;
     public DateTimeCurrentValue: Date;
+    public LookupDataTypeTable: ObjectTableList;
 
     public BooleanValuesItems: ListItem[] = new BooleanValuesList().Items;
 
@@ -52,6 +54,7 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
     initializeDataType() {
         if (this.DataType) {
             this.DataType = this.DataType.replace("[]", "");
+            this.LookupDataTypeTable = this.isLookupDataType() ? ObjectTables.getByName(this.LookupType) : null;
         }
     }
 
@@ -88,8 +91,12 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
     updateValue(value: any) {
         if ((this.isDateTimeObjectField() || this.isDataTypeDateTime()) && !this.IsIntegerNumberInput) {
             value = this.getDateValue(value);
-        } else if (this.isLookupObjectField() && this.LookupTable) {
+        }
+        else if (this.isLookupObjectField() && this.LookupTable) {
             value = this.getLookupValue(value, this.LookupTable.KeyPropertyPath);
+        }
+        else if (this.isLookupDataType() && this.LookupDataTypeTable) {
+            value = this.getLookupValue(value, this.LookupDataTypeTable.KeyPropertyPath);
         }
         this.ValueChanged.emit(value);
     }
@@ -133,5 +140,9 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
 
     isDataTypeDateTime() {
         return (this.DataType && (this.DataType === FieldTypes.DateTime || this.DataType === FieldTypes.Date));
+    }
+
+    isLookupDataType() {
+        return this.DataType && this.DataType === FieldTypes.LookUp;
     }
 }

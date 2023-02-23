@@ -104,13 +104,7 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
 
     initializeCollectionTreeItems() {
         let props = {
-            ShowRecordsVariables: false,
-            ShowDeclaredVariables: false,
-            ShowRecordsCollectionVariables: false,
-            ShowDeclaredCollectionVariables: true,
-            OnlyCurrentLoopItemVariables: false,
-            IsObjectVariableSelectable: false,
-            IsNoChildrenObjectVariables: false
+            ShowDeclaredCollectionVariables: true
         };
 
         this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props);
