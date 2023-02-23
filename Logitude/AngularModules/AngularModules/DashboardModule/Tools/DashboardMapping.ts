@@ -70,6 +70,7 @@ export class DashboardMapping {
             myWidgetMeasuer.MeasureCode = widgetMeasure.MeasureCode;
             myWidgetMeasuer.MeasureFieldId = widgetMeasure.MeasureFieldId;
             myWidgetMeasuer.RenderAs = widgetMeasure.RenderAs;
+            myWidgetMeasuer.YAxisType = widgetMeasure.YAxisType;
         }
 
         return myWidgetMeasuer;
