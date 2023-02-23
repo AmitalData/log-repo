@@ -1,5 +1,5 @@
 {
-  "HashString": "dde33e8a82fc4940a6959cb86892be0d",
+  "HashString": "5017551c18d04dcf8efdf8048392d4af",
   "Name": "Shipment Statistics",
   "TableName": "ShipmentAnalytics",
   "ObjectTableName": "Shipment",
@@ -448,6 +448,18 @@
       "JoinedTableDBName": "Countries",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "472a5669206d459c8d11debea85a2915",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "ProductCode",
+      "DisplayName": "Product",
+      "DisplayNamePlural": "Product",
+      "JoinedTableName": "ProductType",
+      "JoinedTableDBName": "ProductTypes",
+      "JoinedTableKey": "Code",
+      "JoinedTableDisplayField": "Name"
     }
   ]
 }
