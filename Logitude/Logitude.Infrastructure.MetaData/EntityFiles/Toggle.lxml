@@ -42,7 +42,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;7feb&quot;"
+  Code="&quot;7b99&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -930,6 +930,7 @@
       Name="&quot;Dashboard Analytics&quot;"
       SearchFields="&quot;DBA,Dashboard Analytics&quot;"
       Description="&quot;Dashboard Analytics&quot;" />
+ 
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
