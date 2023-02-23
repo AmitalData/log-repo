@@ -206,14 +206,14 @@ namespace WebFreight.Web.ContainerTracking
         }
         private void CheckIsActaulDateFilled(dynamic discrepancyParams)
         {
-            if (discrepancyParams.shipmentActualDate != null && discrepancyParams.containerActualDate && discrepancyParams.shipmentActualDate != discrepancyParams.containerActualDate)
+            if (discrepancyParams.shipmentActualDate != null && discrepancyParams.containerActualDate != null && discrepancyParams.shipmentActualDate != discrepancyParams.containerActualDate)
             {
                 AddActualDateDiscrepancy(discrepancyParams);
             }
         }
         public void AddDeliveryContainerDiscrepancy(ShipmentDeliveryPM delivery, ShipmentPM shipmentPM, ContainerPM containerPM)
         {
-            if (delivery.ATA != containerPM.ActualEmptyReturn)
+            if (containerPM.ActualEmptyReturn != null && delivery.ATA != null && delivery.ATA != containerPM.ActualEmptyReturn)
             {
                 var discrepancyReason = $@"Actual Empty Return already has a value of {delivery.ATA} - did not update new container value {containerPM.ActualEmptyReturn}.";
                 AddContainerDiscrepancyToService(containerPM, shipmentPM, discrepancyReason);
