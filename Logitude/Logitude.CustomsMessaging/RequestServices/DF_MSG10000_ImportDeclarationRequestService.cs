@@ -1328,10 +1328,9 @@ namespace Logitude.CustomsMessaging.RequestServices
                 //}
             }
 
-            var itemCrQueryService = new Unifreight.BL.EntityQueryServices.GITITEMCRQueryService(AmitalContext.GetContext(supplierInvoiceItemPM.Tenant));
-            List<Unifreight.BL.EntityPMs.GITITEMCRPM> itemCrList = itemCrQueryService.GetMulti(supplierInvoiceItemPM.ItemCode,true);
+            List<Unifreight.BL.EntityPMs.GITITEMCRPM> itemCrList = GetItemCrList(supplierInvoiceItemPM);
             //Get supplier Item Certificate - From SupplierInvioceItemsCertificates Table
-            foreach (var CertificateItem in supplierInvoiceItemPM.SupplierInvioceItemCertificats.OrderBy(x=>x.SequenceNumeric))
+            foreach (var CertificateItem in supplierInvoiceItemPM.SupplierInvioceItemCertificats.OrderBy(x => x.SequenceNumeric))
             {
                 var itemCert = itemCrList.Where(r => r.REQCERT.TrimStart('0') == CertificateItem.ReqConfirmationTypeCode).FirstOrDefault();
                 if (!(string.IsNullOrWhiteSpace(CertificateItem.ResConfirmationTypeCode) && string.IsNullOrWhiteSpace(CertificateItem.CertificateNumber) && string.IsNullOrWhiteSpace(CertificateItem.CertificateExemptionTypeCode) && string.IsNullOrWhiteSpace(CertificateItem.AttachmentTypeCode) && string.IsNullOrWhiteSpace(CertificateItem.CustomsAttachmentID)) || (itemCert != null && !string.IsNullOrWhiteSpace(itemCert.REQCERT)))
@@ -1355,6 +1354,17 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
 
             return goodsItemAdditionalDocumentList.ToArray();
+        }
+
+        private static List<Unifreight.BL.EntityPMs.GITITEMCRPM> GetItemCrList(SupplierInvoiceItemPM supplierInvoiceItemPM)
+        {
+            if (!CustomsSettingQueryService.GetLogitudeCustomsSettingsM(supplierInvoiceItemPM.Tenant).IsConnectedToUniFreight)
+            {
+                return new List<Unifreight.BL.EntityPMs.GITITEMCRPM>();
+            }
+            var itemCrQueryService = new Unifreight.BL.EntityQueryServices.GITITEMCRQueryService(AmitalContext.GetContext(supplierInvoiceItemPM.Tenant));
+            List<Unifreight.BL.EntityPMs.GITITEMCRPM> itemCrList = itemCrQueryService.GetMulti(supplierInvoiceItemPM.ItemCode, true);
+            return itemCrList;
         }
 
         private DeclarationGoodsShipmentGovernmentAgencyGoodsItemAdditionalDocument[] GetGoodsItemAdditionalDocument(List<SupplierInvioceItemCertificatPM> supplierInvoiceItemsCertificatesPM)

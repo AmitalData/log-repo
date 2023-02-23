@@ -127,7 +127,9 @@ namespace Logitude.Customs.BL.TraceEvents
             finally
             {
 
-                if (myAmitalEventTracer.MyUnifreightEventParam != null && myAmitalEventTracer.MyUnifreightEventParam.IsValid())
+                if (
+                    Logitude.Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(myAmitalEventTracer.Tenant).IsConnectedToUniFreight && 
+                    myAmitalEventTracer.MyUnifreightEventParam != null && myAmitalEventTracer.MyUnifreightEventParam.IsValid())
                 {
 
                     var myOpenUnifreighTask = new UnifreightEventTaskService();

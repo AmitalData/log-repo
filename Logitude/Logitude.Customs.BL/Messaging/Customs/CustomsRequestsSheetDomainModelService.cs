@@ -407,7 +407,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 {
                     return true;//in courier CompanyType -AvoidSign
                 }
-                if (!String.IsNullOrWhiteSpace(requestParams.LoggingEntityId) & !string.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId))
+                if (CustomsSettingQueryService.GetLogitudeCustomsSettingsM(requestParams.Tenant).IsConnectedToUniFreight &&   !String.IsNullOrWhiteSpace(requestParams.LoggingEntityId) & !string.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId))
                 {
                     string defValue = GDFDATAQueryService.GetDefault(_Tenant, "ISRAEL", "CGO_HIGH_VALUE", "NON", "NON");
                     decimal defaultAmount = 0;
