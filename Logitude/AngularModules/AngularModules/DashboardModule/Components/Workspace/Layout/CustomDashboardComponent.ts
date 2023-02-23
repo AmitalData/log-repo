@@ -365,15 +365,12 @@ export class CustomDashboardComponent extends BaseComponent {
     }
 
     UnpinDashboardTabClicked(item: DashboardTab, close: boolean = false) {
-        if (this.IsPredfineds) {
-            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-            this.PinPredfinedDashboard(item, 0, close);
-            return;
-        }
+        if (this.IsPredfineds) return this.PinPredfinedDashboard(item, false, close);
         this.UnpinDashboard(item, close);
     }
 
     private UnpinDashboard(item: DashboardTab, close: boolean) {
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
         this.dashboardPMEstendedService.UnpinDashboard(this.DashboardsUserSetting.Id, item.Dashboard.Id).subscribe((myResponse: ServiceResponse) => {
             SessionLocator.SelectedSession.StopBusyIndicator();
             if (myResponse.HasError) return;
@@ -389,16 +386,12 @@ export class CustomDashboardComponent extends BaseComponent {
     }
 
     PinDashboardTabClicked(item: DashboardTab) {
-        if (this.IsPredfineds) {
-            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-            this.PinPredfinedDashboard(null, 0);
-            this.SubmitPinDashboard(item);
-            return;
-        }
+        if (this.IsPredfineds) return this.PinPredfinedDashboard(item, true);
         this.PinDashboard(item);
     }
 
     PinDashboard(pinnedDashboardTab: DashboardTab) {
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
         var pinnedDashboard: PinnedDashboard = new PinnedDashboard();
         pinnedDashboard.Id = pinnedDashboardTab.Dashboard.Id;
 
@@ -410,41 +403,26 @@ export class CustomDashboardComponent extends BaseComponent {
         });
     }
 
+    PinPredfinedDashboard(dashboardTab: DashboardTab, isPin: boolean, close: boolean = false) {
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+        var predfinedDashboardIds = this.DashboardsTabs.map(x => x.Id);
+        if (!predfinedDashboardIds || predfinedDashboardIds.length == 0) return;
+        this.dashboardPMEstendedService.PinPredefinedDashboards(predfinedDashboardIds).subscribe((myResponse: ServiceResponse) => {
+            SessionLocator.SelectedSession.StopBusyIndicator();
+            if (myResponse.HasError) return;
+            this.DashboardsUserSetting = myResponse.Result;
+            this.IsPredfineds = false;
+            if (isPin) return this.SubmitPinDashboard(dashboardTab);
+            this.UnpinDashboard(dashboardTab, close);
+        });
+    }
+
     private SubmitPinDashboard(pinnedDashboardTab: DashboardTab) {
         const oldIndex = this.DashboardsTabs.indexOf(pinnedDashboardTab, 0);
         let newIndex = this.DashboardsTabs.indexOf(this.DashboardsTabs.find(x => !x.IsPinned));
         if (newIndex == -1) newIndex = this.DashboardsTabs.length - 1;
         pinnedDashboardTab.IsPinned = true;
         this.arraymove(this.DashboardsTabs, oldIndex, newIndex);
-    }
-
-    PinPredfinedDashboard(dashboardTab: DashboardTab, index: number, close: boolean = false) {
-        if (this.DashboardsTabs == null || this.DashboardsTabs.length == 0) return;
-        if (!this.DashboardsTabs[index]) return this.PinPredfinedDashboardFinished(dashboardTab, close);
-
-        var pinnedDashboard: PinnedDashboard = new PinnedDashboard();
-        pinnedDashboard.Id = this.DashboardsTabs[index].Dashboard.Id;
-
-        this.dashboardPMEstendedService.PinDashboard(pinnedDashboard).subscribe((myResponse: ServiceResponse) => {
-            if (myResponse.HasError) return;
-            this.PinPredfinedDashboard(dashboardTab, index + 1, close);
-        });
-    }
-
-    private PinPredfinedDashboardFinished(unpinnedDashboardTab: DashboardTab, close: boolean) {
-        this.IsPredfineds = false;
-        if (unpinnedDashboardTab) return this.GetDashboardsUserSettings(unpinnedDashboardTab, close, true);
-
-        this.GetDashboardsUserSettings(unpinnedDashboardTab, close, false);
-        SessionLocator.SelectedSession.StopBusyIndicator();
-    }
-
-    GetDashboardsUserSettings(dashboardTab: DashboardTab, close: boolean, unpin: boolean) {
-        this.dashboardPMEstendedService.GetDashboardsUserSettings(SessionLocator.LoggedUserId).subscribe((myResponse: ServiceResponse) => {
-            if (myResponse.HasError) return;
-            this.DashboardsUserSetting = myResponse.Result;
-            if (unpin) this.UnpinDashboard(dashboardTab, close);
-        });
     }
 
     private arraymove(arr: any, fromIndex: number, toIndex: number) {

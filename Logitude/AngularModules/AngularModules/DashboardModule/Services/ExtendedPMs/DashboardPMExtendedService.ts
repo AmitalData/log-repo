@@ -118,6 +118,19 @@ export class DashboardPMExtendedService {
         });
     }
 
+    PinPredefinedDashboards(dashboardIds: string[]) {
+        var url = this._apiUrl + '/PostPinPredefinedDashboards';
+
+        return defer(() => {
+            return this._http.post(url, JSON.stringify(dashboardIds), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                var myResponse = new ServiceResponse();
+                myResponse.Result = res;
+                return myResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
     UnpinDashboard(dashboardsUserSettingId: string, dashboardId: string) {
         var url = this._apiUrl + '/GetUnPinDashboard?dashboardsUserSettingsId=' + dashboardsUserSettingId + '&dashboardId=' + dashboardId;
 
