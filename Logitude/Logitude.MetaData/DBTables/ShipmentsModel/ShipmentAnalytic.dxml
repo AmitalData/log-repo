@@ -295,4 +295,11 @@
 		<Constraints
 		  Nullable="true" />
 	</Column>
+	<Column
+	  Name="ProductCode"
+	  Type="varchar"
+	  Size="2">
+		<Constraints
+		  Nullable="true" />
+	</Column>
 </Table>
