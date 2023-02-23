@@ -231,7 +231,8 @@
                                  style="display: block;position: absolute;min-width:25px;"
                                  *ngFor="let col of columns; let colIndex = index" [class.DisabledCell]="Disabled"
                                  [ngStyle]="col.Styles"
-                                 [id]="'row'+rowIndex+'col'+colIndex">
+                                 [id]="'row'+rowIndex+'col'+colIndex"
+                                 [attr.data-cy]="DataCy + '_' +rowIndex + '_col_' + colIndex">
 
                                 <!--[IsChecked]="row.rowData.IsChecked == true"-->
                                 <!--{{row.rowData[col.FieldName]}}-->

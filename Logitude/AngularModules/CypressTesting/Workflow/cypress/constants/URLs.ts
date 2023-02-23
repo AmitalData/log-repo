@@ -9,5 +9,5 @@ export class URLs {
     public static readonly GetQueryExportExecution = '**/WebFreightDomain/getquerytoexceldata?**';
     public static readonly Getworkflowinstance = '**/workflowinstanceviews/getbyfilters?**';
     public static readonly GetSingleInstanceActivityList = '**/workflowinstanceactivityviews/getbyfilters?**';
-    public static readonly PostGetQueryToExcelData = '**/LogitudeGridExportToExcel/PostGetQueryToExcelData';
+    public static readonly GetQueryToExcelData = '**/WebFreightDomain/getquerytoexceldata?**';
 }

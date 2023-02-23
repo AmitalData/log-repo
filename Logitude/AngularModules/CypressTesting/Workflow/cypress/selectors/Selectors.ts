@@ -33,9 +33,9 @@ export class WorkflowSelectors {
     public static readonly WorkflowRootOperation = "[data-cy^='ConditionsOperation']";
     public static readonly WorkflowDescription = "#WorkFlow_Description";
     public static readonly WorkflowOwner = "#WorkFlow_OwnerId";
-    public static readonly RunHistoryRefreshButton = "[data-cy^='RunHistoryRefresh']";
-    public static readonly RunHistorySearchBox = "[data-cy^='RunHistorySearchBox']";
-    public static readonly FirstWorkflowInstanceBusinessKey = "[data-cy^='HistoryRow_0_Text']";
+    public static readonly RunHistoryRefreshButton = "[data-cy^='RefreshWorkFlowInstance']";
+    public static readonly RunHistorySearchBox = "[data-cy^='SearchWorkFlowInstance']";
+    public static readonly FirstWorkflowInstanceBusinessKey = "[data-cy^='WorkFlowInstance_0_col_0']";
     public static readonly SingleInstanceActivityListRefreshButton = "[data-cy^='SingleInstanceActivityListRefresh']";
     public static readonly FirstConnectorButton = "[data-selector^='connector-node-1']";
     public static readonly DecisionElementName = "[data-cy^='condition-title']";
@@ -47,7 +47,7 @@ export class WorkflowSelectors {
     public static readonly WorkflowEditElementButton = ".edit-label";
     public static readonly WorkflowfieldsListTitle = "nz-tree-node-title";
     public static readonly RunHistoryDatePicker = "[data-cy^='RunHistoryDatePicker']";
-    public static readonly RunHistoryExportFile = "[data-cy^='RunHistoryExport']";
+    public static readonly RunHistoryExportFile = "[data-cy^='ExportWorkFlowInstance']";
     public static readonly DatePickerList = "[data-cy^='RunHistoryDatePickerdropDown']";
     public static readonly DatePickertodayDate = "[data-cy^='TodayDateItem']";
     public static readonly WorkflowSaveDraft = "[data-cy^='EditWorkFlow_Save']";

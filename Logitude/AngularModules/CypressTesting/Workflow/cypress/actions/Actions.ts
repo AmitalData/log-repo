@@ -235,12 +235,12 @@ export function AssertRefreshRunHistory() {
 }
 
 export function ExportRunHistoryInstances() {
-    cy.DefineRequestWait(RestAPI.POST, URLs.PostGetQueryToExcelData, RequestAliases.PostGetQueryToExcelData);
+    cy.DefineRequestWait(RestAPI.GET, URLs.GetQueryToExcelData, RequestAliases.GetQueryToExcelData);
     cy.Click(WorkflowSelectors.RunHistoryExportFile, null)
 }
 
 export function AsserExportRunHistoryInstances() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PostGetQueryToExcelData, 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.GetQueryToExcelData, 200);
     BaseAssertion.AssertElementContain(WorkflowSelectors.WorkflowLinkButton, 'Download file');
     cy.Click(BaseSelectors.button, BaseSelectors.ContainsCancel);
 }
