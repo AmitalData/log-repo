@@ -280,6 +280,7 @@
     <Compile Include="AnalyticTableServices\APInvoiceAnalyticTableService.cs" />
     <Compile Include="AnalyticTableServices\ARInvoiceAnalyticTableService.cs" />
     <Compile Include="AnalyticTableServices\QuoteAnalyticTableService.cs" />
+    <Compile Include="AnalyticTableServices\ContainerAnalyticTableService.cs" />
     <Compile Include="AnalyticTableServices\ShipmentAnalyticTableService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Address.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\AddressType.Generated.cs" />

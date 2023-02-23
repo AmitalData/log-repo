@@ -1,4 +1,5 @@
-﻿using Logitude.BL.ExternalService;
+﻿using Logitude.BL.AnalyticTableServices;
+using Logitude.BL.ExternalService;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.BL.Security;
@@ -103,6 +104,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             MapShipmentConcurrencyFields();
             entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
             new GeneralContainerTrackingService(GetGeneralContainerTrackingArgs(entityPM)).AutomaticTrackContainer();
+            new ContainerAnalyticTableService(shipmentsContext.GetActiveDbContext()).AddUpdate(containerPoco, tenant);
         }
 
         private GeneralContainerTrackingArgs GetGeneralContainerTrackingArgs(ContainerPM entityPM)
@@ -188,6 +190,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             MapShipmentConcurrencyFields();
             
             new GeneralContainerTrackingService(GetGeneralContainerTrackingArgs(entityPM)).AutomaticTrackContainer();
+            new ContainerAnalyticTableService(shipmentsContext.GetActiveDbContext()).AddUpdate(containerPoco, tenant);
         }
         private AuditLog AddContainerAuditLogChanges(Container entityPoco, List<FieldChange> FieldChanges)
         {

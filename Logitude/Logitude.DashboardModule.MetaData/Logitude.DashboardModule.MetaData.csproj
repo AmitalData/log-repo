@@ -62,6 +62,7 @@
     </Compile>
     <None Include="AnalyticsEntityFiles\APInvoiceAnalytic.ljson" />
     <None Include="AnalyticsEntityFiles\ARInvoiceAnalytic.ljson" />
+    <None Include="AnalyticsEntityFiles\Container.ljson" />
     <None Include="AnalyticsEntityFiles\OpportunityAnalytic.ljson" />
     <None Include="AnalyticsEntityFiles\QuoteAnalytic.ljson" />
     <None Include="DBScripts\202209010934_AddARInvoiceAnalyticColumnStoreIndex.sxml" />
@@ -79,6 +80,7 @@
     <None Include="DBScripts\20220913_SetDefaultPermissionLevelOnDashboard.sxml" />
     <None Include="DBTables\APInvoiceAnalytic.dxml" />
     <None Include="DBTables\ARInvoiceAnalytic.dxml" />
+    <None Include="DBTables\ContainerAnalytic.dxml" />
     <None Include="DBTables\DashboardGlobalFilter.dxml" />
     <None Include="DBTables\DashboardGlobalPresetFilter.dxml" />
     <None Include="DBTables\DashboardSharedUser.dxml" />

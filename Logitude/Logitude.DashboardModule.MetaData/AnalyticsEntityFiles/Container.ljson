@@ -1,0 +1,51 @@
+{
+  "HashString": "7d973b1a68f4403c888aa9b300de84b8",
+  "Name": "Container Statistics",
+  "TableName": "ContainerAnalytics",
+  "ObjectTableName": "Container",
+  "AnalyticsFactsFieldsMetaDatas": [
+    {
+      "HashString": "983e708d8ede4048868a747997932be8",
+      "DataTypeCode": "DateTime",
+      "CanMeasure": true,
+      "CanGroup": true,
+      "FieldCode": "CreateDate",
+      "DisplayName": "CreateDate",
+      "DisplayNamePlural": "CreateDate",
+      "CommonFilterCode": "CreateDate"
+    },
+    {
+      "HashString": "abb18f0d87ad45a4a0a55e8488f9d691",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "CreatedByUserId",
+      "DisplayName": "Created By User",
+      "DisplayNamePlural": "CreatedByUserId",
+      "JoinedTableName": "Contact",
+      "JoinedTableDBName": "Contacts",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "1f3d3e3c482046c5ae987c4cedb5da3b",
+      "DataTypeCode": "DateTime",
+      "CanMeasure": true,
+      "CanGroup": true,
+      "FieldCode": "UpdateDate",
+      "DisplayName": "Update Date",
+      "DisplayNamePlural": "UpdateDate"
+    },
+    {
+      "HashString": "2dde236e6bae44d5a17be7d3b697b241",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "UpdatedByUserId",
+      "DisplayName": "Updated By User",
+      "DisplayNamePlural": "Updated By User",
+      "JoinedTableName": "Contact",
+      "JoinedTableDBName": "Contacts",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    }
+  ]
+}
