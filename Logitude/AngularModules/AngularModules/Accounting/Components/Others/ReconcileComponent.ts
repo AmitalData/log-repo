@@ -789,6 +789,11 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
         //#region filters
         var filterAgrs = new ApiQueryFilters;
+
+        if (this.dateFilter) {
+            filterAgrs.AdditionalFilters.push(this.dateFilter);
+        }
+
         if (this.currencyFilter) {
             filterAgrs.AdditionalFilters.push(this.currencyFilter);
         }
