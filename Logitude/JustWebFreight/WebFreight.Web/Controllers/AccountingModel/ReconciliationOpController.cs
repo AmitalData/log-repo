@@ -646,8 +646,9 @@ tenant);
 
                         string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
                         object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
-
-                        queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
+                        bool displayInList = field.DisplayInList;
+                        if (displayInList && !filter.DisplayInList) displayInList = false;
+                        queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, displayInList);
                     }
                     else
                     {
