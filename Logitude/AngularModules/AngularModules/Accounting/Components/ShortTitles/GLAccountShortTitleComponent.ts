@@ -114,6 +114,18 @@ export class GLAccountShortTitleComponent {
             this.ObjectTableName = "Vendor";
             this.SelectedTabCode = null;
         }
+        else if (this.EntityPM.AccountTypeCode == "1") {
+            this.ObjectTableName = "Card";
+            this.SelectedTabCode = "CARC";
+        }
+        else if (this.EntityPM.AccountTypeCode == "4") {
+            this.ObjectTableName = "Job";
+            this.SelectedTabCode = "CARC";
+        }
+        else if (this.EntityPM.AccountTypeCode == "5") {
+            this.ObjectTableName = "File";
+            this.SelectedTabCode = "SHCF";
+        }
         else if (this.EntityPM.AccountTypeCode == "2") {
             this.ObjectTableName = "Customer";
             this.SelectedTabCode = "CLOV";
