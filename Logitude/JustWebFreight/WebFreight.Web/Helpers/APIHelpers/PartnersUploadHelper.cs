@@ -615,7 +615,11 @@ namespace WebFreight.Web.Helpers.APIHelpers
                                     this.CreateCustomerPartner(item);
                                     break;
                                 }
-
+                            case "SC":
+                                {
+                                    this.CreateShipperConsigneePartner(item);
+                                    break;
+                                }
                             case "CG":
                                 {
                                     this.CreateCustomAgentPartner(item);
@@ -970,6 +974,35 @@ namespace WebFreight.Web.Helpers.APIHelpers
             service.Create();
         }
 
+        private void CreateShipperConsigneePartner(PartnerExcel item)
+        {
+            CustomerPM customer = new CustomerPM()
+            {
+                Id = IdCounter.GetNumber("Card", tenant).ToString(),
+                EnglishName = item.Name,
+                VatNumber = item.VatNO,
+                Tenant = tenant,
+                IsHybrid = true,
+                Code = CodeCounter.GetNumber("Customer", tenant).ToString(),
+                PartnerTypeId = "CS",
+                CustomerStatusCode = "ACT",
+                IsCustomer = false,
+                UploadingUniqueKey = item.UniqueCode,
+                ReceivablesAccountingCard = item.ReceivablesExternalID,
+                PayablesAccountingCard = item.PayablesExternalID,
+            };
+            var address = CreateAddress(item, customer.Id);
+            customer.Addresses.Add(address);
+            var contactPM = CreatContact(item);
+            if (contactPM != null)
+            {
+                customer.Contacts.Add(contactPM);
+            }
+
+            CustomerService service = new CustomerService(commonDataContext, customer, systemContact.Id);
+            service.Create();
+        }
+       
         private void CreateAgentPartner(PartnerExcel item)
         {
             AgentPM agent = new AgentPM()
