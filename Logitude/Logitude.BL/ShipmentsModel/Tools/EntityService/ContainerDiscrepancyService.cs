@@ -48,6 +48,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             containerDiscrepancyRepository.SubmitChanges();
 
         }
+
+        public ContainerDiscrepancy GetContainerDiscrepancyByContainerIdAndDiscrepancyReason(string containerId, string discrepancyReason)
+        {
+            return containerDiscrepancyRepository.GetContainerDiscrepancyByContainerIdAndDiscrepancyReason(containerId, discrepancyReason);
+            
+        }
         public void Update(ContainerDiscrepancyPM entityPM)
         {
 
