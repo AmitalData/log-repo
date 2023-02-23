@@ -17,7 +17,7 @@ namespace WebFreight.Web.Helpers.BIReport
         List<string> ChargesFactMeasurementFields = new List<string>()
        {"Gross Weight Per Ton", "Order Gross Weight", "Order Gross Weight in Ton",
         "Order Volume", "Total Volume (CBM)", "Volumetric Weight", "Number of Packages",
-        "Order Number of Packages", "Gross Weight (KG)"
+        "Order Number of Packages", "Gross Weight (KG)","Open Payables ( Foreign )","Open Receivable ( Foreign )","Invoice Line Amount (Foreign)"
         };
 
         private BIReportXMLData bIReportXMLData = new BIReportXMLData();
