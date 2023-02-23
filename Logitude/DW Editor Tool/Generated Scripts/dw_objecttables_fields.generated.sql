@@ -1568,6 +1568,9 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ChargesOpenReceivableForeignNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesOpenReceivableForeignNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection,UseUnitSelection) Values(@Fact_ChargesOpenReceivableForeignNewId,0,'Fact_Charges','[Open Receivable Foreign]','Open Receivable ( Foreign )','Decimal','false',0,0,'false','true','SUM','true','Charges','false','false','false','ShipmentReceivable.TotalAmount','false','false','false')  
+declare @Fact_ChargesForeignCurrencyNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ChargesForeignCurrencyNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection,UseUnitSelection) Values(@Fact_ChargesForeignCurrencyNewId,0,'Fact_Charges','[Foreign Currency]','Foreign Currency','Dimension','false',0,0,'DIM_Currencies','false','false','true','Charges','false','false','false','false','false','false')  
 ------------------------------------------------------------------------------------
 declare @Fact_ContainersNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ContainersNewId OUTPUT,'DWObjectTable' 
