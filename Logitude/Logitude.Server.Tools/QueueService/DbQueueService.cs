@@ -458,6 +458,14 @@ namespace Logitude.Server.Tools.QueueService
 
                                 if (long.TryParse(cmd.Parameters["@MessageId"].Value.ToString(), out messageId))
                                 {
+                                    try
+                                    {
+                                        MessageID = (int)messageId;
+                                    }
+                                    catch
+                                    {
+
+                                    }
                                     this.CurrentMessageId = response.MessageId = messageId.ToString();
                                     response.RetryNumber = (int)cmd.Parameters["@RetryNumber"].Value;
                                     string messageBody = cmd.Parameters["@MessageBody"].Value as string;
