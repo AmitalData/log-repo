@@ -48,6 +48,7 @@ Feature: Automations Create, and Edit from Automations
         Then the new automation should create successfully
 
     Scenario: Edit an automation
+        Given the user logged in
         Given the user navigates to automations menu
         And the user select "Shipments" as entity
         And choose the first automation from "onCreate"
