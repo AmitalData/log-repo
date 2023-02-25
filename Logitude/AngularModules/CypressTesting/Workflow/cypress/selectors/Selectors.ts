@@ -36,7 +36,7 @@ export class WorkflowSelectors {
     public static readonly RunHistoryRefreshButton = "[data-cy^='RefreshWorkFlowInstance']";
     public static readonly RunHistorySearchBox = "[data-cy^='SearchWorkFlowInstance']";
     public static readonly FirstWorkflowInstanceBusinessKey = "[data-cy^='WorkFlowInstance_0_col_0']";
-    public static readonly SingleInstanceActivityListRefreshButton = "[data-cy^='SingleInstanceActivityListRefresh']";
+    public static readonly SingleInstanceActivityListRefreshButton = "[data-cy^='RefreshDetailsButton']";
     public static readonly FirstConnectorButton = "[data-selector^='connector-node-1']";
     public static readonly DecisionElementName = "[data-cy^='condition-title']";
     public static readonly DecisionMetLabel = "[data-cy^='met-label']";
@@ -46,10 +46,10 @@ export class WorkflowSelectors {
     public static readonly AddDecisionNode = ".add-condition-node";
     public static readonly WorkflowEditElementButton = ".edit-label";
     public static readonly WorkflowfieldsListTitle = "nz-tree-node-title";
-    public static readonly RunHistoryDatePicker = "[data-cy^='RunHistoryDatePicker']";
+    public static readonly RunHistoryFilterIcon = "#WorkFlowInstance_AddFilterIcon";
     public static readonly RunHistoryExportFile = "[data-cy^='ExportWorkFlowInstance']";
     public static readonly DatePickerList = "[data-cy^='RunHistoryDatePickerdropDown']";
-    public static readonly DatePickertodayDate = "[data-cy^='TodayDateItem']";
+    public static readonly RunHistoryAddFilter = "[data-cy^='WorkFlowInstance_AddFilterBtn']";
     public static readonly WorkflowSaveDraft = "[data-cy^='EditWorkFlow_Save']";
     public static readonly WorkflowRunHistory = "#WorkFlowTHRunHistory";
     public static readonly WorkflowEditOkButton = "[data-cy^='SubmitButton']";
@@ -60,11 +60,16 @@ export class WorkflowSelectors {
     public static readonly WorkflowRecordVariableObject = ".ant-tree-select";
     public static readonly WorkflowAddAssignmentNode = ".add-set-value-node";
     public static readonly WorkflowAssignmentName = "[data-cy^='name']";
-   // public static readonly AssignmentVariableName = ".ant-tree-select";
+    // public static readonly AssignmentVariableName = ".ant-tree-select";
     public static readonly AssignmentVariableOperation = '.set-value-operator-row'
-   // public static readonly AssignmentVariableValue = ".set-value-value-container";
+    // public static readonly AssignmentVariableValue = ".set-value-value-container";
     public static readonly AssignmentValueInput = "[data-cy^='setValue_']";
     public static readonly AddNewAssignVariable = "[data-cy^='AddSetValue']";
+    public static readonly FilterStartDateCheckBox = "[data-cy^='CheckBox_WorkFlowInstance.F.StartTime']";
+    public static readonly FilterCreateDateCheckBox = "[data-cy^='CheckBox_WorkFlowInstance.F.CreateDate']";
+
+    public static readonly CustomDatePicker = "customdatepicker";
+    public static readonly DatePickertodayDate = "[data-cy^='TodayDateItem']";
 
     public static WorkflowAssignFieldName(index: number) {
         return "[data-cy^='SetValueField_" + index.toString() + "']";
@@ -77,7 +82,7 @@ export class WorkflowSelectors {
     public static WorkflowAssignFieldValueInput(index: number) {
         return "input[data-cy^='SetValueValue_" + index.toString() + "']";
     }
-    
+
     public static WorkflowAssignFieldOperation(index: number) {
         return "[data-cy^='SetValueOperator_" + index.toString() + "']";
     }

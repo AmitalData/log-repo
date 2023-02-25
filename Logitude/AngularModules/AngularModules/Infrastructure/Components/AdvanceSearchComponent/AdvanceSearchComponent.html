@@ -119,7 +119,7 @@
 
 
         <div class="dropdown" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'" [style.pointer-events]="IsQueryViewOnly ? 'none' : ''"  [style.opacity]="IsQueryViewOnly ? '0.7' : ''" >
-            <div tabindex="0" class="ToggleButton" style="margin: auto; width: 80px !important; " [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" attr.data-cy="{{'AddFilterBtn'}}">
+            <div tabindex="0" class="ToggleButton" style="margin: auto; width: 80px !important; " [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" [attr.data-cy]="ObjectTableName + '_AddFilterBtn'">
                 <!--<div (click)="FiltersBtnClicked()">-->
                 <label [ngStyle]="LayoutDirection == 'rtl' ? {'right': '5px','left': 'initial'} : {'left': '5px'}">{{'General.B.AddFilter' | TextCodeTranslationPipe}}</label>
                 <img [ngStyle]="LayoutDirection == 'rtl' ? {'left': '3px','right': 'initial'} : {'right': '3px'}" src="./Images/ToggleIcon.png" />

@@ -324,5 +324,7 @@ export class RequestAliases {
     public static readonly GetMockWorkflowInstances = 'GetMockWorkflowInstances';
     public static readonly GetMockWorkflowSingleInstance = 'GetMockWorkflowSingleInstance';
     public static readonly GetMockSingleInstanceActivityList = 'GetMockSingleInstanceActivityList';
+    public static readonly GetMockSingleInstanceVariables = 'GetMockSingleInstanceVariables';
+
     public static readonly GetQueryToExcelData = 'GetQueryToExcelData';
 }
