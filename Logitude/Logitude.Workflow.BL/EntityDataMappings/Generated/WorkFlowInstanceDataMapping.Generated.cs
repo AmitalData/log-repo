@@ -36,7 +36,8 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         Duration, 
 	         WorkFlowVersionId, 
 	         RetryAttemptsNumber, 
-	         WorkflowId,
+	         WorkflowId, 
+	         NumberOfActivities,
 	      }
 
 
@@ -61,7 +62,8 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         RetryAttemptsNumber, 
 	         WorkflowId, 
 	         CreatedByUserName, 
-	         UpdatedByUserName,
+	         UpdatedByUserName, 
+	         NumberOfActivities,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -138,6 +140,11 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WorkflowId))
             {
 				entityPOCO.WorkflowId = entityPM.WorkflowId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NumberOfActivities))
+            {
+				entityPOCO.NumberOfActivities = entityPM.NumberOfActivities;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -221,6 +228,11 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 					entityPM.WorkflowId = entityPOCO.WorkflowId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.NumberOfActivities))
+            {
+					entityPM.NumberOfActivities = entityPOCO.NumberOfActivities;
+            }
+
 		}
 
 		public void PMToOldPM(WorkFlowInstancePM entityPM, WorkFlowInstancePM oldEntityPM)
@@ -295,6 +307,11 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WorkflowId))
             {
                 oldEntityPM.WorkflowId = entityPM.WorkflowId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NumberOfActivities))
+            {
+                oldEntityPM.NumberOfActivities = entityPM.NumberOfActivities;
             }
 			
 		}

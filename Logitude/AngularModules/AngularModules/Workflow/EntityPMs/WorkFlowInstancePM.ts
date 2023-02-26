@@ -119,6 +119,11 @@ export class WorkFlowInstancePM {
     public set UpdatedByUserName(newValue: string) { if (this.updatedByUserName != newValue) { this.updatedByUserName = newValue; this.MarkAsDirty("UpdatedByUserName"); } }
        
 	 
+    private numberOfActivities: number;
+    public get NumberOfActivities() { return this.numberOfActivities; }
+    public set NumberOfActivities(newValue: number) { if (this.numberOfActivities != newValue) { this.numberOfActivities = newValue; this.MarkAsDirty("NumberOfActivities"); } }
+       
+	 
 
     public OldEntityPM: WorkFlowInstancePM;
 		
