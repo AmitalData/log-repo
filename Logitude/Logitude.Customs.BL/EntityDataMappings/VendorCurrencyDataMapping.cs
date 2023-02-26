@@ -20,6 +20,15 @@ namespace Logitude.Customs.BL.EntityDataMappings
         public void CustomPMToPOCO(VendorCurrencyPM entityPM, VendorCurrency entityPOCO)
         {
             //throw new NotImplementedException();
+            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VendorId))
+            {
+                entityPOCO.VendorId = entityPM.VendorId;
+            }
+
+            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Currency))
+            {
+                entityPOCO.Currency = entityPM.Currency;
+            }
         }
 
         public void CustomPOCOToPM(VendorCurrencyPM entityPM, VendorCurrency entityPOCO)

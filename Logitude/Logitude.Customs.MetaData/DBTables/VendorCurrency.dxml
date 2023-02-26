@@ -34,11 +34,6 @@
       Nullable="false" />
   </Column>
   <Relation
-    ForeignKeyColumn="VendorId"
-    ReferencedTable="CustomsVendors"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="Customs" />
-  <Relation
     ForeignKeyColumn="Currency"
     ReferencedTable="CurrencyTypes"
     ReferencedColumn="Code"

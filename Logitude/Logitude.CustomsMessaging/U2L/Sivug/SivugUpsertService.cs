@@ -3,36 +3,29 @@ using Logitude.AmitalMessaging.Infrastructure;
 using Logitude.AmitalMessaging.Utils;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.Customs.Def.Contracts;
-using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.Def.Messaging.Customs;
 using Logitude.Server.Tools.Contracts;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Models;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Logitude.CustomsMessaging;
-using Logitude.BL.Security;
-using Simplog.Server.Infrastructure.Helpers;
-using Logitude.Customs.Def.Messaging.Customs;
-using Logitude.Customs.Data.Repsitories;
-using Unifreight.Data.AmitalModel;
-using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityPMs.UGenerated;
-using System.Configuration;
+using Unifreight.BL.EntityQueryServices;
+using Unifreight.Data.AmitalModel;
 
 namespace Logitude.CustomsMessaging.U2L.Sivug
 {
-    public class SivugUpsertService : UnifreightGenericService
+	public class SivugUpsertService : UnifreightGenericService
     {
         private LOGISIVUG _LOGISIVUG;
         private SIVUG _SIVUG;
@@ -599,6 +592,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
 
             var myQueryService = new CustomsVendorQueryService(this._context);
+            var vendorCurrencyQueryService = new VendorCurrencyQueryService(this._context);
 
             int int1 = 0;
             decimal decimal1 = 0;
@@ -773,12 +767,24 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 this._MySupplierInvoicePM.VendorId = myQueryService.GetIdByVendorNumber(this._INVOICE.VENDORNUMBER, ResolvedTenant());
                 if (!string.IsNullOrWhiteSpace(this._MySupplierInvoicePM.VendorId))
                 {
+
+                    //IssueCountryCode
                     CustomsVendorPM customsVendorPM = myQueryService.GetSingle(this._MySupplierInvoicePM.VendorId, true, false);
                     if (customsVendorPM == null)
                     {
                         throw new BusinessErrorException("customsVendorPM '" + this._MySupplierInvoicePM.VendorId + "' is not found");
                     }
                     this._MySupplierInvoicePM.IssueCountryCode = customsVendorPM.CountryCode;
+
+					//InvoiceCurrencyTypeCode
+					if (String.IsNullOrWhiteSpace(this._INVOICE.CURRENCYCODE))
+					{
+                      var vendorCurrencyList=  vendorCurrencyQueryService.GetVendorCurrencyByVendorId(ResolvedTenant(), this._MySupplierInvoicePM.VendorId);
+                        if(vendorCurrencyList!=null&& vendorCurrencyList.Count() == 1)
+						{
+                            this._MySupplierInvoicePM.InvoiceCurrencyTypeCode = vendorCurrencyList[0].Currency;
+                        }
+                    }
                 }
             }
             if (!(!String.IsNullOrWhiteSpace(this._MySupplierInvoicePM.InvoiceCurrencyTypeCode) && String.IsNullOrWhiteSpace(this._INVOICE.CURRENCYCODE)))

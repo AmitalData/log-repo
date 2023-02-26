@@ -29,14 +29,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 												LineNumber=a.LineNumber,
 												VendorId=a.VendorId,
 												Currency=a.Currency,
-
+												CurrencyTypeName= a.CurrencyType.LocalName
 											});
             return query;
 		}
 
 		private IQueryable<VendorCurrency> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<VendorCurrency> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
+			return iQueryable;
 		}
     }
 

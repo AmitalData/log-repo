@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class VendorCurrencyUpdateClass
    {  		
-		public const string HashString = "de6912fccdeb74c417df624803b22c11";
+		public const string HashString = "d3b1d836cb2037350cd45584dcb04d53";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -113,7 +113,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  true,
-			      				    IsAutoComplete =  false,
+			      				    IsAutoComplete =  true,
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "LineNumber",
 			      				    InActive =  false,
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "מטבעות ספק",
 			      				    DefaultText =  "Vendor Currency",
-			      				    Code =  "9f64",
+			      				    Code =  "a6b9",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -294,7 +294,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListPropertyPath =  "Currency",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
-					  						UniqueField =  false,
+					  						UniqueField =  true,
 					  						DisplayInSearchWindowListIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
@@ -314,6 +314,67 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "סוג מטבע",
 					  						ListFieldLable =  "CurrencyListLable",
 					  						ListLableDefaultText =  "Currency",
+					  						ListLocalDefaultText =  "סוג מטבע",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CurrencyTypeName",
+					  						ObjectTableName =  "Customs.VendorCurrency",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  100,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CurrencyTypeName",
+					  						ListPropertyPath =  "CurrencyTypeName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.VendorCurrency",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CurrencyTypeName",
+					  						DefaultText =  "Currency Type Name",
+					  						ListFieldLable =  "CurrencyTypeNameListLable",
+					  						ListLableDefaultText =  "Currency Type Name",
 					  						ListLocalDefaultText =  "סוג מטבע",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -423,6 +484,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode VendorCurrencyTextCode_CustomsVendorCurrencyODeleteCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.VendorCurrency.O.DeleteCurrency", DefaultText = "Delete this Currency?",LocalDefaultText = @"האם למחוק סוג מטבע זה?", ObjectTableId = VendorCurrencyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode VendorCurrencyTextCode_CustomsVendorCurrencyOCurrencyType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.VendorCurrency.O.CurrencyType", DefaultText = "Currencies Type",LocalDefaultText = @"סוגי מטבעות ספק", ObjectTableId = VendorCurrencyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode VendorCurrencyTextCode_CustomsVendorCurrencyOUpdateCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.VendorCurrency.O.UpdateCurrency", DefaultText = "successfully updated currency",LocalDefaultText = @"סוגי מטבעות עודכנו בהצלחה", ObjectTableId = VendorCurrencyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode VendorCurrencyTextCode_CustomsVendorCurrencyODoubleCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.VendorCurrency.O.DoubleCurrency", DefaultText = "Dual currency type",LocalDefaultText = @"סוג מטבע כפול", ObjectTableId = VendorCurrencyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

@@ -35,7 +35,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         VendorId, 
 	         Tenant, 
 	         LineNumber, 
-	         Currency,
+	         Currency, 
+	         CurrencyTypeName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

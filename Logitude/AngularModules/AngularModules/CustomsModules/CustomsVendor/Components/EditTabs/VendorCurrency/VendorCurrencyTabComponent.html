@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .FormFieldRow {
         height: 30px;
     }
@@ -62,18 +62,10 @@
                                                                         <log-cell-template #logcelltemplate>
                                                                             <div style="text-align: right;"
                                                                                 class="TextTrimming"
-                                                                                *ngIf="logcelltemplate.IsDisplayMode">
+                                                                                >
                                                                                 <span>{{item.LineNumber}}</span>
                                                                             </div>
-                                                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                                                <LogTextBox
-                                                                                    [ObjectFieldName]="'LineNumber'"
-                                                                                    [InputType]="'ntext'"
-                                                                                    [DataContext]="item"
-                                                                                    [ObjectTableName]="'Customs.VendorCurrency'"
-                                                                                    [HideColumns]="true"
-                                                                                    [FocusOnMe]="true"></LogTextBox>
-                                                                            </div>
+                                                                    
                                                                         </log-cell-template>
                                                                     </ng-template>
                                                                 </log-column>
@@ -87,7 +79,7 @@
                                                                             <div style="text-align: right;"
                                                                                 class="TextTrimming"
                                                                                 *ngIf="logcelltemplate.IsDisplayMode">
-                                                                                <span>{{item.Currency}}</span>
+                                                                                <span>{{item.CurrencyTypeName}}</span>
                                                                             </div>
                                                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                                                 <LogLov
@@ -96,6 +88,7 @@
                                                                                     [DataContext]="item"
                                                                                     [HideColumns]="true"
                                                                                     [LookUpTableName]="'Customs.CurrencyType'"
+                                                                                    (SelectedItemChanged)="item.SetLocalName($event, 'CurrencyTypeName')"
                                                                                     [FocusOnMe]="true">
                                                                                 </LogLov>
 
@@ -137,11 +130,9 @@
 
                     <!-- footer -->
                     <tr style="height: 28px;">
-                        <td colspan="3" style="width: 100px;">
-                            <custom-send-options *ngIf="!IsNewEntity" style="float: right;"
-                                #MyCustomSendOptionsComponent (SendButtonClicked)="DeleteButtonClicked(false,$event)"
-                                [ButtonText]="'Customs.Vendor.O.Delete' | TextCodeTranslationPipe">
-                            </custom-send-options>
+                        <td colspan="3" style="direction:ltr;">
+                            <button class="RedButton" style="width: 60px;" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+
                         </td>
                     </tr>
 

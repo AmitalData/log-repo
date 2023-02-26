@@ -20,8 +20,22 @@ namespace Logitude.Customs.Data.Repsitories
             
 			throw new NotImplementedException();
         }
+      
 
-   }
+        public void FastDelete(string vendorId ,int tenant) {
+            (context as DbContextBase)
+                   .DeleteWhere<VendorCurrency>(rec => rec.VendorId == vendorId && rec.Tenant == tenant);
+        }
+        public List<VendorCurrency> GetVendorCurrencyByVendorId(int tenant, string vendorId)
+        {
+
+          return (from a in context.VendorCurrencies
+                   where a.Tenant == tenant && a.VendorId == vendorId
+                   select a).ToList();
+ 
+           
+        }
+    }
 
 }
    
