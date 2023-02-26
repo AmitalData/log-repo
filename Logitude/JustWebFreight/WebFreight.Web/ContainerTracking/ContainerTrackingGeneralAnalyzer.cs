@@ -190,6 +190,7 @@ namespace WebFreight.Web.ContainerTracking
 
                 ContainerPM container = GetContainerPM(containerTrackingRequest);
                 ShipmentPM shipment = GetShipmentPM(containerTrackingRequest);
+                manager.allTrasshipmentLegs = new List<dynamic>();
 
                 if (IsValidToAnalyze(shipment, container, containerTrackingRequest))
                 {
@@ -649,6 +650,13 @@ namespace WebFreight.Web.ContainerTracking
         public MilestoneData VesselDeparted;
         public MilestoneData DischargedTransshipment;
         public string OnCarriageLocation;
+
+        public string POLLegVessel;
+        public string POLLegVoyage;
+
+        public string PODLegVessel;
+        public string PODLegVoyage;
+
         public string VisionPreCarriage { get; set; }
         public string VisionOnCarriage { get; set; }
     }
