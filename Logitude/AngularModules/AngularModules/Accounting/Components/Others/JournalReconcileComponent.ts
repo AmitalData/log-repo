@@ -403,7 +403,6 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         } else {
             this.Reconcile(reconciliationLines);
         }
-        this.checkSelectedLinesClosedMonth();
     }
 
     ReconcileSplit(myReconciliationLines: ReconciliationLinePM[]) {
@@ -444,6 +443,9 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
                 (res: ServiceResponse) => {
 
                     this.CurrentSession.StopBusyIndicator();
+
+                    this.checkSelectedLinesClosedMonth();
+
                     if (res.HasError) {
                         this.ValidationErrorsList = res.ErrorsArray;
 
@@ -455,13 +457,6 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
 
                 });
     }
-
-
-
-    //
-    //     this.checkSelectedLinesClosedMonth();
-    // }
-
 
     _NewJournalPM: JournalPM;
     _NewJournals: JournalPM[];
