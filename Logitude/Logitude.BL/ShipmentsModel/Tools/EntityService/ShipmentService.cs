@@ -824,25 +824,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             return shipmentPM;
         }
 
-        private void AddShipmentUpdateKafkaQueueMessage(string queueName)
-        {
-            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
-            {
-                return;
-            }
-            AddKafkaQueueMessage(queueName);
-        }
-
-        private void AddKafkaQueueMessage(string queueName)
-        {
-            IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue(queueName, 0);
-            var queueMessage = new Dictionary<string, string>() {
-                { "ShipmentId", entityPM.Id },
-                { "Tenant", tenant.ToString()}};
-            queueservice.Send(queueMessage, tenant);
-        }
-
         private void UpdatePayablesLinesVatAmounts()
         {
             if (initializer.ShipmentPayablesChangeSet != null && initializer.ShipmentPayablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.None).Any())
