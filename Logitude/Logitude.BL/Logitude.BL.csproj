@@ -805,6 +805,7 @@
     <Compile Include="ShipmentsModel\CustomFilters\DigitalPortalCustomFilter.cs" />
     <Compile Include="ShipmentsModel\EntityLists\DigitalShipmentList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\ShipmentDigitalFieldList.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\AccountingInformationIdentifierPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ContainerDiscrepancyPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentDigitalFieldPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentRoutingLeg.cs" />
