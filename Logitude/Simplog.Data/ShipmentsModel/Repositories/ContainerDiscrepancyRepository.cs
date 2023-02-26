@@ -71,10 +71,12 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             catch { }
             context.SetAsModified(entity);
         }
-        public ContainerDiscrepancy GetContainerDiscrepancyByContainerIdAndDiscrepancyReason(string containerId, string discrepancyReason)
+        public ContainerDiscrepancy GetContainerDiscrepancyByContainerIdAndDiscrepancyReason(int tenant, string containerId, string shipmentId, string discrepancyReason)
         {
             return (from containerDiscrepancy in context.ContainerDiscrepancies
-                    where containerDiscrepancy.ContainerId == containerId &&  
+                    where containerDiscrepancy.Tenant == tenant &&
+                    containerDiscrepancy.ContainerId == containerId &&  
+                    containerDiscrepancy.ShipmentId == shipmentId &&
                     containerDiscrepancy.Discrepancy == discrepancyReason
                     select containerDiscrepancy).FirstOrDefault();
         }

@@ -357,7 +357,7 @@ namespace WebFreight.Web.ContainerTracking
         {
             if (key == "VesselArrived")
             {
-                containerTrackingHelper.AddTranshipmentDiscrepancyContainer(transshipmentLegIndex, "to", containerPM, shipmentPM, portId, updatedFields);
+                containerTrackingHelper.AddTranshipmentDiscrepancyContainer(transshipmentLegIndex, "To", containerPM, shipmentPM, portId, updatedFields, "ETA");
                 if (!containerTrackingHelper.IsSameLocationUsingId((string)GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + "ToPortId"), portId)) return;
                 
                 this.FillFieldsNewValues("Transshipment" + transshipmentLegIndex + "ETA", updatedFields.EstimatedDate, shipmentPM);
@@ -367,7 +367,7 @@ namespace WebFreight.Web.ContainerTracking
 
             else if (key == "VesselDeparted")
             {
-                containerTrackingHelper.AddTranshipmentDiscrepancyContainer(transshipmentLegIndex, "from", containerPM, shipmentPM, portId, updatedFields);
+                containerTrackingHelper.AddTranshipmentDiscrepancyContainer(transshipmentLegIndex, "From", containerPM, shipmentPM, portId, updatedFields, "ETD");
                 if (!containerTrackingHelper.IsSameLocationUsingId((string)GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + "FromPortId"), portId)) return;
                 
                 this.FillFieldsNewValues("Transshipment" + transshipmentLegIndex + "ETD", updatedFields.EstimatedDate, shipmentPM);
@@ -480,9 +480,9 @@ namespace WebFreight.Web.ContainerTracking
         {
             if (!isUpdatingShipment)
             {
-               string location = "POLMainCarriage";
+               string location = "POL MainCarriage";
                 containerTrackingHelper.AddContainerDiscrepancy(location, containerPM, shipmentPM);
-                location = "PODMainCarriage";
+                location = "POD MainCarriage";
                 containerTrackingHelper.AddContainerDiscrepancy(location, containerPM, shipmentPM);
                 return;
             }
@@ -569,7 +569,7 @@ namespace WebFreight.Web.ContainerTracking
         {
             if (POLShipmentUpdateIndicator == "Pre Carriage")
             {
-                containerTrackingHelper.AddContainerDiscrepancy("POLPreCarriage", containerPM, shipmentPM);
+                containerTrackingHelper.AddContainerDiscrepancy("POL PreCarriage", containerPM, shipmentPM);
                 this.FillFieldsShipmentNewValues("PreCarriageETD", containerPM.EstimatedPOLVesselDeparture, shipmentPM);
 
                 if (shipmentPM.PreCarriageATD == null)
@@ -582,7 +582,7 @@ namespace WebFreight.Web.ContainerTracking
 
             else if (POLShipmentUpdateIndicator == "Main Carriage")
             {
-                containerTrackingHelper.AddContainerDiscrepancy("POLMainCarriage", containerPM, shipmentPM);
+                containerTrackingHelper.AddContainerDiscrepancy("POL MainCarriage", containerPM, shipmentPM);
                 if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.Vizion)
                     shipmentPM.IsUpdatedVizionMainCarriageDates = true;
                 if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.OceanInsights)
@@ -601,7 +601,7 @@ namespace WebFreight.Web.ContainerTracking
         {
             if (PODShipmentUpdateIndicator == "On Carriage")
             {
-                containerTrackingHelper.AddContainerDiscrepancy("PODOnCarriage", containerPM, shipmentPM);
+                containerTrackingHelper.AddContainerDiscrepancy("POD OnCarriage", containerPM, shipmentPM);
                 this.FillFieldsShipmentNewValues("OnCarriageETA", containerPM.EstimatedPODVesselArrival, shipmentPM);
 
                 if (shipmentPM.OnCarriageATA == null)
@@ -618,7 +618,7 @@ namespace WebFreight.Web.ContainerTracking
                 if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.OceanInsights)
                     shipmentPM.IsUpdatedOceanInsightsMainCarriageDates = true;
 
-                containerTrackingHelper.AddContainerDiscrepancy("PODMainCarriage", containerPM, shipmentPM);
+                containerTrackingHelper.AddContainerDiscrepancy("POD MainCarriage", containerPM, shipmentPM);
                 this.FillFieldsShipmentNewValues("MainCarriageETA", containerPM.EstimatedPODVesselArrival, shipmentPM);
                 if (shipmentPM.MainCarriageATA == null)
                 {
