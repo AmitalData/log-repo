@@ -109,6 +109,16 @@ export class WorkFlowInstancePM {
     public set WorkflowId(newValue: string) { if (this.workflowId != newValue) { this.workflowId = newValue; this.MarkAsDirty("WorkflowId"); } }
        
 	 
+    private createdByUserName: string;
+    public get CreatedByUserName() { return this.createdByUserName; }
+    public set CreatedByUserName(newValue: string) { if (this.createdByUserName != newValue) { this.createdByUserName = newValue; this.MarkAsDirty("CreatedByUserName"); } }
+       
+	 
+    private updatedByUserName: string;
+    public get UpdatedByUserName() { return this.updatedByUserName; }
+    public set UpdatedByUserName(newValue: string) { if (this.updatedByUserName != newValue) { this.updatedByUserName = newValue; this.MarkAsDirty("UpdatedByUserName"); } }
+       
+	 
 
     public OldEntityPM: WorkFlowInstancePM;
 		
