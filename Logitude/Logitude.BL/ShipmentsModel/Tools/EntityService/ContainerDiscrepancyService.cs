@@ -49,9 +49,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         }
 
-        public ContainerDiscrepancy GetContainerDiscrepancyByContainerIdAndDiscrepancyReason(string containerId, string discrepancyReason)
+        public ContainerDiscrepancy GetContainerDiscrepancyByContainerIdAndDiscrepancyReason(int tenant, string containerId, string shipmentId, string discrepancyReason)
         {
-            return containerDiscrepancyRepository.GetContainerDiscrepancyByContainerIdAndDiscrepancyReason(containerId, discrepancyReason);
+            return containerDiscrepancyRepository.GetContainerDiscrepancyByContainerIdAndDiscrepancyReason(tenant, containerId, shipmentId, discrepancyReason);
             
         }
         public void Update(ContainerDiscrepancyPM entityPM)
