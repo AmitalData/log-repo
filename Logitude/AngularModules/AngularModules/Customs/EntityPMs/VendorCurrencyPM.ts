@@ -77,4 +77,4 @@ export class VendorCurrencyPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

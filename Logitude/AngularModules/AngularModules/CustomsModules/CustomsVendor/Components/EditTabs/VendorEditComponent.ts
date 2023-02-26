@@ -89,7 +89,6 @@ export class VendorEditComponent extends BaseComponent {
 
     public SelectedTab: TabItem;
     SelectionChanged() {
-        debugger
         if (!AppTool.IsNullOrEmpty(this.SelectedTabCode)) {
             let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == this.SelectedTabCode)[0];
             if (myLocation != null) {
