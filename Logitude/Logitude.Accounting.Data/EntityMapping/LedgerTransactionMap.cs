@@ -95,6 +95,19 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.ReconcileRemarks).HasColumnName("ReconcileRemarks").HasMaxLength(400).IsUnicode(true);
 
             this.Property(t => t.InProgressExternalReconcile).HasColumnName("InProgressExternalReconcile");
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.InternalNote).HasMaxLength(2000);
+			}
+            else
+            {
+              this.Property(t => t.InternalNote).HasMaxLength(4000);
+			}
+
+
+            this.Property(t => t.InternalNote).HasColumnName("InternalNote").IsUnicode(true);
         }
     }
 }

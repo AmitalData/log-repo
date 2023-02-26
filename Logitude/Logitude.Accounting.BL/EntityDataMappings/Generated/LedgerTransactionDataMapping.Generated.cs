@@ -52,7 +52,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         IsExternalReconcile, 
 	         InReconcileProgress, 
 	         ReconcileRemarks, 
-	         InProgressExternalReconcile,
+	         InProgressExternalReconcile, 
+	         InternalNote,
 	      }
 
 
@@ -127,7 +128,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         AccountDisplayNumber, 
 	         PaymentValueDate, 
 	         PaymentChequeStatus, 
-	         AccountLocalName,
+	         AccountLocalName, 
+	         UpdateDateTime, 
+	         UpdatedByUserName, 
+	         InternalNote,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -284,6 +288,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InProgressExternalReconcile))
             {
 				entityPOCO.InProgressExternalReconcile = entityPM.InProgressExternalReconcile;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InternalNote))
+            {
+				entityPOCO.InternalNote = entityPM.InternalNote;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -447,6 +456,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.InProgressExternalReconcile = entityPOCO.InProgressExternalReconcile;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InternalNote))
+            {
+					entityPM.InternalNote = entityPOCO.InternalNote;
+            }
+
 		}
 
 		public void PMToOldPM(LedgerTransactionPM entityPM, LedgerTransactionPM oldEntityPM)
@@ -603,6 +617,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.InProgressExternalReconcile = entityPM.InProgressExternalReconcile;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InternalNote))
+            {
+                oldEntityPM.InternalNote = entityPM.InternalNote;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(LedgerTransactionPM entityPM)
@@ -635,6 +654,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.ReconcileRemarks)) //T4 find type == nText 
             {
                 entityPM.ReconcileRemarks = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ReconcileRemarks));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.InternalNote)) //T4 find type == nText 
+            {
+                entityPM.InternalNote = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.InternalNote));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

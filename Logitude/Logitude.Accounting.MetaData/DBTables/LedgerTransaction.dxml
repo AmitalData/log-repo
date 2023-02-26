@@ -218,6 +218,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="InternalNote"
+    Type="nvarchar"
+    Size="4000">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="JournalId,JournalLineNumber"
     ReferencedTable="JournalLines"

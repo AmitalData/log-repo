@@ -78,6 +78,9 @@ export class LedgerTransactionList {
 	PaymentChequeStatus: string;
 	JournalCreatedByUser: string;
 	AccountLocalName: string;
+	UpdateDateTime: Date;
+	UpdatedByUserName: string;
+	InternalNote: string;
 	
 }
  
