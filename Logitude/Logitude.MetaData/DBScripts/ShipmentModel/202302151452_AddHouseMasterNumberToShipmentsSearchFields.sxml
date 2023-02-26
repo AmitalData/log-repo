@@ -1,5 +1,5 @@
-﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="Shipments">
-  <Sql Version="4">
+﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="Shipments" Env="Logitude">
+  <Sql Version="5">
     <![CDATA[
       If(OBJECT_ID('tempdb..#temp') Is Not Null)
       Begin
