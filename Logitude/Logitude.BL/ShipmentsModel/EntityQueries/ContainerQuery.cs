@@ -1509,6 +1509,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     OnCarriageETA = container.OnCarriageETA,
                     OnCarriageATA = container.OnCarriageATA,
                 };
+
+                MapCustomFields(containerPM, container);
             }
 
             return containerPM;
