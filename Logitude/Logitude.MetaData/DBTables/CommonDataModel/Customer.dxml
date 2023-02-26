@@ -467,6 +467,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="EmailForSendingContactName"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EmailForSendingContactPhone"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Cards"
