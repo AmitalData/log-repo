@@ -61,6 +61,8 @@ namespace Logitude.DashboardModule.Data.EntityPOCOs
 	    public string CommonFilterCode { get; set; }
         [Column("CanSecondaryGroup")]
 	    public bool CanSecondaryGroup { get; set; }
+        [Column("AllowTenantZeroFilter")]
+	    public bool AllowTenantZeroFilter { get; set; }
     }
 }
 	 
