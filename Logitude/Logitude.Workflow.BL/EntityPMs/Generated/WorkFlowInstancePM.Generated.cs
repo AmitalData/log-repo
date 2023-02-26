@@ -457,6 +457,29 @@ namespace Logitude.Workflow.BL.EntityPMs
 			
 		 }
 	   }
+	  private int numberOfActivities ;
+	  	  
+       
+	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int NumberOfActivities  
+	   {
+	    
+	     get
+		{
+		   return numberOfActivities;
+		 }
+		 set
+		 {
+		   if(numberOfActivities != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NumberOfActivities",OldValue=numberOfActivities,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   numberOfActivities=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

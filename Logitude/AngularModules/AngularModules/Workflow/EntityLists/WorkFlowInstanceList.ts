@@ -27,6 +27,7 @@ export class WorkFlowInstanceList {
 	WorkflowId: string;
 	CreatedByUserName: string;
 	UpdatedByUserName: string;
+	NumberOfActivities: number;
 	
 }
  

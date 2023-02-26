@@ -61,6 +61,8 @@ namespace Logitude.Workflow.Data.EntityPOCOs
 	    public int RetryAttemptsNumber { get; set; }
         [Column("WorkflowId")]
 	    public string WorkflowId { get; set; }
+        [Column("NumberOfActivities")]
+	    public int NumberOfActivities { get; set; }
     }
 }
 	 
