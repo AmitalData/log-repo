@@ -342,7 +342,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.ComputeAgentComputed(entityPM, entityPoco);
                 this.ComputeETAAndETDHouseFields();
 
-               
+
                 entityRepository.Add(entityPoco);
                 entityRepository.SubmitChanges();
 
@@ -424,12 +424,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
-        private void InsertInShipmnetUpdateLog(int StartOrEnd,string errorMessage = null)
+        private void InsertInShipmnetUpdateLog(int StartOrEnd, string errorMessage = null)
         {
             string mySubError = errorMessage;
             if (errorMessage != null && errorMessage.Length > 4000)
             {
-                mySubError = errorMessage.Substring(0,3999);
+                mySubError = errorMessage.Substring(0, 3999);
             }
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
@@ -448,14 +448,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         cmd.Parameters.Add("@Tenant", SqlDbType.Int).Value = tenant;
                         cmd.Parameters.Add("@LogDateTime", SqlDbType.DateTime).Value = DateTime.Now;
                         cmd.Parameters.Add("@StartOrEnd", SqlDbType.VarChar, 50).Value = StartOrEnd;
-                        cmd.Parameters.Add("@ErrorMessage", SqlDbType.VarChar, 4000).Value = mySubError == null ? DBNull.Value : mySubError;
+                        if (errorMessage == null)
+                        {
+                            cmd.Parameters.AddWithValue("@ErrorMessage", DBNull.Value);
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@ErrorMessage", mySubError);
+                        }
                         cmd.CommandType = CommandType.Text;
                         cmd.CommandTimeout = 5;
                         cn.Open();
                         var output = cmd.ExecuteNonQuery();
                         cn.Close();
                     }
-                   
+
                 }
                 catch (Exception ex)
                 {
@@ -744,7 +751,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
             catch (Exception ex)
             {
-                
+
                 string errorMessage = ex.Message + Environment.NewLine;
 
                 if (ex.InnerException != null)
@@ -758,7 +765,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 InsertInShipmnetUpdateLog(-1, errorMessage);
                 throw ex;
             }
-           
+
         }
 
         private AuditLog AddShipmentAuditLogChanges(Shipment entityPoco)
@@ -6066,7 +6073,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private void ValidatePayableConnectedInvoice(ShipmentPayablePM payablePM)
         {
             APInvoiceLineRepository invoiceLineRepository = new APInvoiceLineRepository(tenant);
-            if(invoiceLineRepository.IsPayableConnectedToInvoiceLines(payablePM.Id, tenant))
+            if (invoiceLineRepository.IsPayableConnectedToInvoiceLines(payablePM.Id, tenant))
             {
                 throw new ApplicationException("Can't delete payable " + payablePM.ChargesTypeName + " since it is connected to invoice");
             }
