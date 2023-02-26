@@ -151,7 +151,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.IsPrivateLabelExportActivated = SessionLocator.PrivateLableSettings.IsExportActivated;
             this.IsPrivateLabelCustomsActivated = SessionLocator.PrivateLableSettings.IsCustomsActivated;
             this.SetCustomerTenantAccessRequestsDirections(SessionLocator.PrivateLableSettings.HybridPartnerId);
-
+            if (this.IsPrivateLabelExportActivated) this.RefTemplateWidth = '165px';
         }
         else {
             this.RefTemplateWidth =  '250px';
