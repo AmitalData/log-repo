@@ -219,6 +219,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         Tenant = authToken.Tenant,
                         IsConfirmationByUser = filter.IsConfirmationByUser,
                         FileName = filter.FileName,
+                        ComputingPartnerCode = filter.ComputingPartnerCode,
                     };
 
                     if (string.IsNullOrEmpty(args.DocumentId))

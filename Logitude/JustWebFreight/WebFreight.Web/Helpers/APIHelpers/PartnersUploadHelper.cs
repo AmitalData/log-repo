@@ -22,6 +22,9 @@ using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.Data.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.Helpers;
 
 namespace WebFreight.Web.Helpers.APIHelpers
 {
@@ -52,6 +55,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
         private AddressQuery addressQuery;
         private bool IsConfirmationByUser;
         List<SystemUser> systemUsers;
+        private ComputingPartnerTable computingPartnerTable;
+        private bool computingPartnerNotFound = false;
         public PartnersUploadHelper(BatchTaskExecutionPM batchTaskExecution) : base(batchTaskExecution)
         {
             this.batchTaskExecutionPM = batchTaskExecution;
@@ -88,6 +93,27 @@ namespace WebFreight.Web.Helpers.APIHelpers
             addressQuery = new AddressQuery(tenant);
             batchTaskExecutionRepository = new BatchTaskExecutionRepository(infrastructureContext);
             systemUsers = new List<SystemUser>();
+            this.InitializeComputingPartner();
+        }
+
+        private void InitializeComputingPartner()
+        {
+            if (string.IsNullOrEmpty(parameterArgs.ComputingPartnerCode)) return;
+
+            ComputingPartnerRepository computingPartnerRepository = new ComputingPartnerRepository(tenant);
+            ComputingPartner computingPartner = computingPartnerRepository.GetSingleComputingPartnerByCode(parameterArgs.ComputingPartnerCode, tenant);
+            if (computingPartner == null)
+            {
+                computingPartnerNotFound = true;
+                return;
+            }
+
+            ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
+            ObjectTable objectTable = objectTableRepository.GetObjectTableByName("Card", 0, true);
+            if (objectTable == null) return;
+
+            ComputingPartnerTableRepository computingPartnerTableRepository = new ComputingPartnerTableRepository(tenant);
+            computingPartnerTable = computingPartnerTableRepository.GetSingleComputingPartnerTable(tenant, objectTable.Id, computingPartner.Id);
         }
 
         private void FillDefaultValues()
@@ -483,6 +509,11 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 errorMsg = "You can't upload more than 1000 Partners,";
             }
 
+            if(string.IsNullOrEmpty(errorMsg))
+            {
+                errorMsg = this.ValidateComputingPartner();
+            }
+
             if (!string.IsNullOrEmpty(errorMsg))
             {
                 HandelErrorMsg();
@@ -496,8 +527,18 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 }
             }
         }
+        private string ValidateComputingPartner()
+        {
+            if (computingPartnerNotFound)
+                return "Computing Partner with code " + parameterArgs.ComputingPartnerCode + " not exists";
 
-       
+            else if (parameterArgs.ComputingPartnerCode != null && computingPartnerTable == null)
+                return "Card Table not exists in computing partner";
+
+            else
+                return null;
+        }
+
         private void ValidateSalesMan()
         {
             var items = (from b in PartnerExcelList where (b.Type == "CS" || b.Type == "PO") && !string.IsNullOrEmpty(b.SalesmanEmail) select b).ToList();
@@ -1153,7 +1194,32 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
         private void AddComputingPartnerTranslation(string code, string uploadingUniqueKey)
         {
-            throw new NotImplementedException();
+            if (!AllowAddingComputingPartnerTranslation(code, uploadingUniqueKey)) return;
+            this.CreatTranslation(code, uploadingUniqueKey, computingPartnerTable);
+        }
+        private bool AllowAddingComputingPartnerTranslation(string code, string uploadingUniqueKey)
+        {
+            if (string.IsNullOrEmpty(code)) 
+                return false;
+
+            if (string.IsNullOrEmpty(uploadingUniqueKey))
+                return false;
+
+            return true;
+        }
+        private void CreatTranslation(string code, string uploadingUniqueKey, ComputingPartnerTable computingPartnerTable)
+        {
+            ComputingPartnerTranslationPM computingPartnerTranslation = new ComputingPartnerTranslationPM()
+            {
+                Tenant = tenant,
+                ComputingPartnerId = computingPartnerTable.ComputingPartnerId,
+                ObjectTableId = computingPartnerTable.ObjectTableId,                
+                OurCode = code,
+                PartnerCode = uploadingUniqueKey,
+            };
+
+            ComputingPartnerTranslationService service = new ComputingPartnerTranslationService(commonDataContext, tenant, systemContact.Id);
+            service.Create(computingPartnerTranslation);
         }
     }
     public class PartnerExcel
