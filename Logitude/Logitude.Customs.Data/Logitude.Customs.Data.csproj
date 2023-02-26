@@ -105,6 +105,7 @@
     <Compile Include="DataContracts\DeclarationCourierPendingTabRecord.cs" />
     <Compile Include="EntityKeys\AcceptanceStatusKeys.cs" />
     <Compile Include="EntityKeys\ActionCodeKeys.cs" />
+    <Compile Include="EntityKeys\AddressCurrencyKeys.cs" />
     <Compile Include="EntityKeys\AgentTalkBackTypeKeys.cs" />
     <Compile Include="EntityKeys\AmedmentTypeKeys.cs" />
     <Compile Include="EntityKeys\AmendCancellRequestInitiatorKeys.cs" />
@@ -256,6 +257,7 @@
     <Compile Include="EntityKeys\VendorCurrencyKeys.cs" />
     <Compile Include="EntityListQueryServices\AcceptanceStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ActionCodeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\AddressCurrencyListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AgentTalkBackTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AmedmentTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AmendCancellRequestInitiatorListQueryService.cs" />
@@ -347,6 +349,7 @@
     <Compile Include="EntityListQueryServices\GatepassReturnCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\Generated\AcceptanceStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ActionCodeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\AddressCurrencyListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AgentTalkBackTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AmedmentTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AmendCancellRequestInitiatorListQueryService.Generated.cs" />
@@ -553,6 +556,7 @@
     <Compile Include="EntityListQueryServices\UIMessageListQueryService.cs" />
     <Compile Include="EntityListQueryServices\UpdateCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\VendorCurrencyListQueryService.cs" />
+    <Compile Include="EntityLists\Generated\AddressCurrencyList.Generated.cs" />
     <Compile Include="EntityLists\Generated\VendorCurrencyList.Generated.cs" />
     <Compile Include="EntityLists\JoinCustomsItemList.cs" />
     <Compile Include="EntityLists\CustomsPartnersItemList.cs" />
@@ -709,6 +713,7 @@
     <Compile Include="EntityLists\Generated\UpdateCodeList.Generated.cs" />
     <Compile Include="EntityMapping\AcceptanceStatusMap.cs" />
     <Compile Include="EntityMapping\ActionCodeMap.cs" />
+    <Compile Include="EntityMapping\AddressCurrencyMap.cs" />
     <Compile Include="EntityMapping\AgentTalkBackTypeMap.cs" />
     <Compile Include="EntityMapping\AmedmentTypeMap.cs" />
     <Compile Include="EntityMapping\AmendCancellRequestInitiatorMap.cs" />
@@ -860,6 +865,7 @@
     <Compile Include="EntityMapping\VendorCurrencyMap.cs" />
     <Compile Include="EntityPOCOs\AcceptanceStatus.cs" />
     <Compile Include="EntityPOCOs\ActionCode.cs" />
+    <Compile Include="EntityPOCOs\AddressCurrency.cs" />
     <Compile Include="EntityPOCOs\AgentTalkBackType.cs" />
     <Compile Include="EntityPOCOs\AmedmentType.cs" />
     <Compile Include="EntityPOCOs\AmendCancellRequestInitiator.cs" />
@@ -1012,6 +1018,7 @@
     <Compile Include="EntityPOCOs\VendorCurrency.cs" />
     <Compile Include="Repsitories\AcceptanceStatusRepository.cs" />
     <Compile Include="Repsitories\ActionCodeRepository.cs" />
+    <Compile Include="Repsitories\AddressCurrencyRepository.cs" />
     <Compile Include="Repsitories\AgentTalkBackTypeRepository.cs" />
     <Compile Include="Repsitories\AmedmentTypeRepository.cs" />
     <Compile Include="Repsitories\AmendCancellRequestInitiatorRepository.cs" />
@@ -1103,6 +1110,7 @@
     <Compile Include="Repsitories\GatepassReturnCodeRepository.cs" />
     <Compile Include="Repsitories\Generated\AcceptanceStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ActionCodeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\AddressCurrencyRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\AgentTalkBackTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\AmedmentTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\AmendCancellRequestInitiatorRepository.Generated.cs" />

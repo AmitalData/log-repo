@@ -19,6 +19,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<AccumalationState> AccumalationStates { get; }
 		 IDbSet<ActionCode> ActionCodes { get; }
 		 IDbSet<AddressContactState> AddressContactStates { get; }
+		 IDbSet<AddressCurrency> AddressCurrencies { get; }
 		 IDbSet<AddressPurpose> AddressPurposes { get; }
 		 IDbSet<AgentTalkBackType> AgentTalkBackTypes { get; }
 		 IDbSet<AmedmentType> AmedmentTypes { get; }
