@@ -197,6 +197,7 @@
     <None Include="DBTables\AccumalationState.dxml" />
     <None Include="DBTables\ActionCode.dxml" />
     <None Include="DBTables\AddressContactState.dxml" />
+    <None Include="DBTables\AddressCurrency.dxml" />
     <None Include="DBTables\AddressPurpose.dxml" />
     <None Include="DBTables\AgentTalkBackType.dxml" />
     <None Include="DBTables\AmedmentType.dxml" />
@@ -568,9 +569,11 @@
     <None Include="DBTables\VehicleType.dxml" />
     <None Include="DBTables\VendorCommission.dxml" />
     <None Include="DBTables\VendorCommunication.dxml" />
+    <None Include="DBTables\VendorCurrency.dxml" />
     <None Include="DBTables\VendorStatus.dxml" />
     <None Include="DBTables\VendorTransactionType.dxml" />
     <None Include="DBTables\VendorType.dxml" />
+    <None Include="EntityFiles\AddressCurrency.lxml" />
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
     <None Include="EntityFiles\ClientsTapag.lxml" />
     <None Include="EntityFiles\DeclarationFollowUp.lxml" />
