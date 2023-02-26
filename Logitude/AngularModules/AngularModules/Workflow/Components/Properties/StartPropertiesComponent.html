@@ -113,7 +113,7 @@
             </div>
             <div class="table-row-cell-block entity-list-container">
                 <TreeSelect [Items]="EntitiesTreeItems" [Width]="'300px'" [Value]="Entity" [ShowExpand]="false"
-                    [ShowItem]="ExcludedEntities | ShowEntitiesTreeItemPipe : true : true"
+                    [ShowItem]="'Start' | ShowEntitiesTreeItemPipe : true"
                     (ValueChanged)="updateEntity($event)" [DataCy]="'TriggerEntity'">
                 </TreeSelect>
             </div>

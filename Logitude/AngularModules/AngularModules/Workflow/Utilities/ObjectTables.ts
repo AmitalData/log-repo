@@ -74,7 +74,15 @@ export class ObjectTables {
     static getDisplayNameById(id: string) {
         if (id) {
             let objectTable = this.getById(id);
-            return objectTable ? objectTable.FullNameTextCodeDefaultText : null;
+            return objectTable ? (objectTable.FullNameTextCodeDefaultText || objectTable.Name) : null;
+        }
+        return null;
+    }
+
+    static getDisplayNameByName(name: string) {
+        if (name) {
+            let objectTable = this.getByName(name);
+            return objectTable ? (objectTable.FullNameTextCodeDefaultText || objectTable.Name) : null;
         }
         return null;
     }

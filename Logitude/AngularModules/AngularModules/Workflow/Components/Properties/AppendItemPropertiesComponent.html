@@ -101,7 +101,7 @@
             </div>
             <div class="table-row-cell-block">
                 <TreeSelect [Items]="SingleEditableEntitiesTreeItems" [Width]="'300px'" [Value]="Collection"
-                    [ShowItem]="ExcludedEntities | ShowEntitiesTreeItemPipe : false" [IsReturnedTreeSelectItem]="true"
+                    [ShowItem]="'AppendItem' | ShowEntitiesTreeItemPipe" [IsReturnedTreeSelectItem]="true"
                     (ValueChanged)="updateCollection($event)">
                 </TreeSelect>
             </div>
