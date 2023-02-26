@@ -207,7 +207,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.IsShowCreateTaskResult = true;
         }
 
-        if (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "AEV")[0]) {
+        if (FeatureLocator.HasFeaturePermession("Automation", "AutomationEventCreation")) {
             this.IsShowEventCreationResult = true;
         }
     }
