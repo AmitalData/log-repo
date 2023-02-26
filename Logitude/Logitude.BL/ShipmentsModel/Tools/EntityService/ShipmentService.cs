@@ -448,7 +448,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         cmd.Parameters.Add("@Tenant", SqlDbType.Int).Value = tenant;
                         cmd.Parameters.Add("@LogDateTime", SqlDbType.DateTime).Value = DateTime.Now;
                         cmd.Parameters.Add("@StartOrEnd", SqlDbType.VarChar, 50).Value = StartOrEnd;
-                        cmd.Parameters.Add("@ErrorMessage", SqlDbType.VarChar, 4000).Value = mySubError == null ? DBNull.Value : mySubError;
+                        cmd.Parameters.Add("@ErrorMessage", SqlDbType.VarChar, 4000).Value = mySubError == null ? (object)DBNull.Value : mySubError;
                         cmd.CommandType = CommandType.Text;
                         cmd.CommandTimeout = 5;
                         cn.Open();
