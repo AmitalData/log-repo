@@ -43,6 +43,9 @@ export class BranchGeneralTabComponent extends BaseComponent implements OnDestro
     }
 
     private SetUIProperties() {
+        this.SetCounterCode_UIProperties();
+    }
+    private SetCounterCode_UIProperties() {
         this.UIProperties.SetRequired("CounterCode", this.ObjectTableName, AppTool.IsNullOrEmpty(this.CounterCode));
     }
     private SaveCompletedEvent: any = null;
@@ -106,7 +109,7 @@ export class BranchGeneralTabComponent extends BaseComponent implements OnDestro
         if (this.EntityPM.CounterCode != value) {
             this.EntityPM.CounterCode = value;
         }
-        this.SetUIProperties();
+        this.SetCounterCode_UIProperties();
     }
 
     get InActive() { return this.EntityPM.InActive; }
