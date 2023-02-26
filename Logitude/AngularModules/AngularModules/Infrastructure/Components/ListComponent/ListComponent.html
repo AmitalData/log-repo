@@ -380,7 +380,7 @@
                                       (AfterViewInitCompleted)="ViewInitCompleted($event)" [ReattachToDetection]="ReattachToDetection" [MyScrollTop]="MyScrollTop" [MySelectedRowIndex]="MySelectedRowIndex" [SortServerProp]="SortServerProp" (SortInvoked)="OnSortInvoked($event)"
                                        [FilterChangedEvent]="FilterChangedEvent">
                     </logitude-grid> -->
-                    <logitude-grid-v2 [DataCy]="ObjectTableName" [dataSource]="dataSource" [QueryChangeEvent]="onQueryChangeEvent" [pubSubAdvanceQueryFiltersServiceRecived]="pubSubAdvanceQueryFiltersServiceRecived" [Filterchangeevent]="Filterchangeevent"
+                    <logitude-grid-v2 [dataSource]="dataSource" [QueryChangeEvent]="onQueryChangeEvent" [pubSubAdvanceQueryFiltersServiceRecived]="pubSubAdvanceQueryFiltersServiceRecived" [Filterchangeevent]="Filterchangeevent"
                                       [rows]="items" [SearchFieldchangeevent]="SearchFieldchangeevent" [MenuHeaderchangeevent]="MenuHeaderchangeevent"
                                       [columns]="columns" (ColumnResisedevent)="ColumnResisedevent($event)" (MenuHeaderchanged)="onMenuHeaderchanged($event)"
                                       [ObjectTable]="ObjectTable" [ColumnsReady]="ColumnsReady" [HasPermition]="HasPermition" [DontApplyVirtualization]="DontApplyVirtualization"
