@@ -173,7 +173,7 @@
                                             </td>
 
                                             <td style="width:120px;max-width:120px;min-width:120px;" *ngIf="!item.ShowOtherEntity && item.Operator && (item.Operator != 'IsEmpty' && item.Operator != 'IsNotEmpty') && item.FieldDataType == 'PickList'">
-                                                <PickList [ObjectFieldName]="item.FieldName"
+                                                <PickList [ObjectFieldName]="item.ObjectFieldName"
                                                           [ObjectTableName]="item.ObjectTableName"
                                                           [SelectedValue]="item.FieldValue"
                                                           [DataContext]="item"
