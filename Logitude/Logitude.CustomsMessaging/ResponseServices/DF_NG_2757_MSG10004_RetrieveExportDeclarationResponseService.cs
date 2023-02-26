@@ -1033,7 +1033,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         supplierInvoiceItemPM.DutyRegimeProtocolCode = GetValueCodeType(governmentAgencyGoodsItem.Commodity.Classification[0].DMExtensions.DutyRegimeProtocolCode);
                         supplierInvoiceItemPM.TradeAgreementCode = GetValueCodeType(governmentAgencyGoodsItem.Commodity.Classification[0].DMExtensions.DutyRegimeCode);
                         supplierInvoiceItemPM.ClassificationTypeCode = GetValueCodeType(governmentAgencyGoodsItem.Commodity.Classification[0].IdentificationTypeCode);
-                        supplierInvoiceItemPM.TaxExemptCode = GetValueCodeType(governmentAgencyGoodsItem.Commodity.Classification[0].DMExtensions.TaxExemptCode).Replace("/", "");
+                        supplierInvoiceItemPM.TaxExemptCode = GetValueCodeType(governmentAgencyGoodsItem.Commodity.Classification[0].DMExtensions?.TaxExemptCode)?.Replace("/", "");
 
 
                     }
