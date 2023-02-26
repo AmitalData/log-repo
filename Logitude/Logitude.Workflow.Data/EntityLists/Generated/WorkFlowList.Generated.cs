@@ -53,7 +53,7 @@ namespace Logitude.Workflow.Data.EntityLists
        [DataMember]
        public int RetriesNumber  { get; set; }
        [DataMember]
-       public int RetriesDelay  { get; set; }
+       public string RetriesDelay  { get; set; }
    }
 
 }

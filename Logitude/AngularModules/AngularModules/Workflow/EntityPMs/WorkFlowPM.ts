@@ -134,9 +134,9 @@ export class WorkFlowPM {
     public set RetriesNumber(newValue: number) { if (this.retriesNumber != newValue) { this.retriesNumber = newValue; this.MarkAsDirty("RetriesNumber"); } }
        
 	 
-    private retriesDelay: number;
+    private retriesDelay: string;
     public get RetriesDelay() { return this.retriesDelay; }
-    public set RetriesDelay(newValue: number) { if (this.retriesDelay != newValue) { this.retriesDelay = newValue; this.MarkAsDirty("RetriesDelay"); } }
+    public set RetriesDelay(newValue: string) { if (this.retriesDelay != newValue) { this.retriesDelay = newValue; this.MarkAsDirty("RetriesDelay"); } }
        
 	 
 

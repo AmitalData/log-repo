@@ -62,7 +62,7 @@ namespace Logitude.Workflow.Data.EntityPOCOs
         [Column("RetriesNumber")]
 	    public int RetriesNumber { get; set; }
         [Column("RetriesDelay")]
-	    public int RetriesDelay { get; set; }
+	    public string RetriesDelay { get; set; }
     }
 }
 	 

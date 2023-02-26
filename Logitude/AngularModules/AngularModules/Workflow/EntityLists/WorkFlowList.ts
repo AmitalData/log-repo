@@ -27,7 +27,7 @@ export class WorkFlowList {
 	Entity: string;
 	Trigger: string;
 	RetriesNumber: number;
-	RetriesDelay: number;
+	RetriesDelay: string;
 	
 }
  
