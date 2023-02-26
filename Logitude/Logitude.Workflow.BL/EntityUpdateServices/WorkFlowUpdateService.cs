@@ -65,9 +65,9 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
 
         private void ValidateRetriesNumber(WorkFlowPM entityPM)
         {
-            if (entityPM.RetriesNumber > 5)
+            if (entityPM.RetriesNumber > MaxRetryNumber)
             {
-                throw new ApplicationException("The maximum number of retries is "+ MaxRetryNumber.ToString());
+                throw new ApplicationException("The maximum number of retries is " + MaxRetryNumber.ToString());
             }
         }
 
