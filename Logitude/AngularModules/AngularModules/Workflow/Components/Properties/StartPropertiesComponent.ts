@@ -26,7 +26,6 @@ export class StartPropertiesComponent extends BaseComponent {
     public ValidationErrorsList: string[];
     public IsValidConditions: boolean = true;
     public EntitiesTreeItems: TreeSelectItem[];
-    public ExcludedEntities: string[] = ["Customer", "User", "Opportunity", "ShipmentStoragePricing"];
     public CurrentSession = SessionLocator.SelectedSession;
 
     SetWindowArgs(args: any) {

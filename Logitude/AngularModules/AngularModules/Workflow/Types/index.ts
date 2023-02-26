@@ -43,14 +43,9 @@ export type ExpressionValue = {
 export type Entity = {
     Code: string,
     Name: string,
-    IsCustom: boolean
-};
-
-export type ChildEntity = {
-    Code: string,
-    Name: string,
-    ParentEntityCode: string,
-    IsCustom: boolean
+    IsCustom: boolean,
+    IsChild: boolean,
+    ParentEntity: string | null
 };
 
 export type EntitiesType = "all" | "parent" | "child";

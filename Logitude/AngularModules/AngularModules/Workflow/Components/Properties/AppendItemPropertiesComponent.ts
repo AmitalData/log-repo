@@ -38,7 +38,6 @@ export class AppendItemPropertiesComponent extends BaseComponent {
     public IsValidSetValues: boolean = true;
     public ValidationErrorsList: string[];
     public CollectionChanged: boolean = false;
-    public ExcludedEntities: string[] = ["Container"];
     public SetRecordFieldsTypes = SetRecordFieldsTypes;
     public CurrentSession = SessionLocator.SelectedSession;
     public SetValuesTitleText: string = null;

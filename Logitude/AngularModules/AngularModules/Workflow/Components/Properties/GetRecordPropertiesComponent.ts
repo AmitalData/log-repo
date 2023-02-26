@@ -50,7 +50,6 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     public EntitiesTreeItems: TreeSelectItem[];
     public ObjectFieldsTreeItems: TreeSelectItem[];
 
-    public ExcludedEntities: string[];
     public ExcludeCustomEntities: boolean = false;
     public EnableAddConditions: boolean;
     public ShowConditionsOperation: boolean;
@@ -220,13 +219,11 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         if (recordsType === GetRecordTypes.ReadOnly) {
             this.EnableAddConditions = true;
             this.ShowConditionsOperation = true;
-            this.ExcludedEntities = ["Opportunity"];
             this.ExcludeCustomEntities = false;
         }
         else if (recordsType === GetRecordTypes.Editable) {
             this.EnableAddConditions = false;
             this.ShowConditionsOperation = false;
-            this.ExcludedEntities = ["Customer", "User", "Opportunity", "ShipmentStoragePricing"];
             this.ExcludeCustomEntities = true;
         }
     }

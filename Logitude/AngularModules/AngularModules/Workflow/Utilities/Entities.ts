@@ -1,6 +1,6 @@
 import { ObjectTableList } from "Infrastructure/EntityLists/ObjectTableList";
 import { ObjectTables } from "Workflow/Utilities/ObjectTables";
-import { Entity, ChildEntity } from "Workflow/Types";
+import { Entity } from "Workflow/Types";
 
 export class Entities {
 
@@ -10,7 +10,19 @@ export class Entities {
         "Customer",
         "User",
         "Opportunity",
-        "ShipmentStoragePricing"
+        "ShipmentStoragePricing",
+        "Card",
+        "Contact",
+        "Country",
+        "Currency",
+        "CustomerTeam",
+        "Department",
+        "DocumentType",
+        "EntityStatus",
+        "PackageType",
+        "Port",
+        "SpecialServicesType",
+        "Vessel"
     ];
 
     private static DefaultChildren: string[] = [
@@ -29,21 +41,26 @@ export class Entities {
                 return {
                     Code: objectTable.Name,
                     Name: this.getEntityDisplayName(objectTable),
-                    IsCustom: objectTable.IsCustom
+                    IsCustom: objectTable.IsCustom,
+                    IsChild: false,
+                    ParentEntity: null
                 };
             });
     }
 
-    public static getChildren(): ChildEntity[] {
+    public static getChildren(parentEntity: string | null = null, excludeInvoiceEntity: boolean = true): Entity[] {
         return ObjectTables.getAll()
+            .filter(o => !excludeInvoiceEntity || (o.Name !== "ARInvoice" && o.Name !== "APInvoice"))
+            .filter(o => !parentEntity || (this.getParentEntity(o) === parentEntity))
             .filter(o => this.DefaultChildren.includes(o.Name) || (o.IsCustom && o.ParentObjectTableId))
             .sort((a, b) => this.getEntityOrder(a, true) - this.getEntityOrder(b, true))
             .map(objectTable => {
                 return {
                     Code: objectTable.Name,
                     Name: this.getEntityDisplayName(objectTable),
-                    ParentEntityCode: this.getParentEntityCode(objectTable),
-                    IsCustom: objectTable.IsCustom
+                    IsCustom: objectTable.IsCustom,
+                    IsChild: true,
+                    ParentEntity: this.getParentEntity(objectTable)
                 };
             });
     }
@@ -65,7 +82,7 @@ export class Entities {
         return null;
     }
 
-    private static getParentEntityCode(objectTable: ObjectTableList): string | null {
+    private static getParentEntity(objectTable: ObjectTableList): string | null {
         let objectTableName = objectTable ? objectTable.Name : null;
         switch (objectTableName) {
             case "ShipmentPackage":
