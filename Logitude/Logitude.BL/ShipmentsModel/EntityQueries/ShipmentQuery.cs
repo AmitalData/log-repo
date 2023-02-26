@@ -15796,7 +15796,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          AccountedPayablesInProfitCurrency = shipment.AccountedPayablesInProfitCurrency,
                                                          OpenPayablesInLocalCurrency = shipment.OpenPayablesInLocalCurrency,
                                                          AccountedPayablesInLocalCurrency = shipment.AccountedPayablesInLocalCurrency,
-                                                     });
+                                                        
+
+                                                     }) ;
 
                 myResult = myResult.OrderByDescending(d => d.CreateDateTime);
                 myResult = System.Data.Entity.QueryableExtensions.Skip(myResult, () => 0);
