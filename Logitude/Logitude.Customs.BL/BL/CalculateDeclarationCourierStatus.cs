@@ -101,6 +101,7 @@ namespace Logitude.Customs.BL.BL
         }
         public DeclarationCourierStatusPM CalcAll()
         {
+            LogMessagingUtil.Instance.AppendLine("CalcAll()");
             if (declarationPM == null) return null;
             if (declarationPM.IsCourierDeclaration)
             {
@@ -157,6 +158,7 @@ namespace Logitude.Customs.BL.BL
 
         public void CalcDocumentStatusCode(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
         {
+            LogMessagingUtil.Instance.AppendLine("CalcDocumentStatusCode()");
             if (myDeclarationCourierStatusPM == null) return;
             //Set DocumentStatusCode
             if (string.IsNullOrWhiteSpace(myDeclarationCourierStatusPM.DocumentStatusCode))
@@ -349,6 +351,7 @@ namespace Logitude.Customs.BL.BL
 
         public void CalcCourierDeclarationStatusCode(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
         {
+            LogMessagingUtil.Instance.AppendLine("CalcCourierDeclarationStatusCode()");
             if (declarationPM == null || myDeclarationCourierStatusPM == null) return;
             //Set CourierDeclarationStatusCode according to Declaration Message Required fields
             CustomsRequiredFieldErrors errorsForDeclaration = CustomsRequiredFieldsValidator.GetRequiredFieldErrorsForDeclaration(declarationPM.Id, declarationPM.Tenant, declarationPM);
@@ -476,6 +479,7 @@ namespace Logitude.Customs.BL.BL
 
         public void CalcCourierManifestStatusCode(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
         {
+            LogMessagingUtil.Instance.AppendLine("CalcCourierManifestStatusCode()");
             if (declarationPM == null || myDeclarationCourierStatusPM == null) return;
             //Set CourierManifestStatusCode according to Manifest Message Required fields
             CustomsRequiredFieldErrors errorsForCourierDeclaration = CustomsRequiredFieldsValidator.GetRequiredFieldErrorsForCourierDeclaration(declarationPM.Id, declarationPM.Tenant, declarationPM);
