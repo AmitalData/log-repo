@@ -110,8 +110,7 @@
   <Column
     Name="RetriesDelay"
     Type="varchar"
-    Size="500"
-    DefaultValue="'(1,5,30,90,180)'">
+    Size="500">
     <Constraints
       Nullable="false" />
   </Column>
