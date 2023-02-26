@@ -14,6 +14,8 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
 {
     public partial class WorkFlowUpdateService
     {
+        public readonly int MaxDifferenceTime = 1;
+        public readonly int MaxRetryNumber = 5;
         protected override void OnCreating(WorkFlowPM entityPM, EntityPM entityParentPM)
         {
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
@@ -63,17 +65,29 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
 
         private void ValidateRetriesNumber(WorkFlowPM entityPM)
         {
-            if (entityPM.RetriesNumber > 10)
+            if (entityPM.RetriesNumber > 5)
             {
-                throw new ApplicationException("The maximum number of retries is 10");
+                throw new ApplicationException("The maximum number of retries is "+ MaxRetryNumber.ToString());
             }
         }
 
         private void ValidateRetriesDelay(WorkFlowPM entityPM)
         {
-            if (entityPM.RetriesDelay > 0 && entityPM.RetriesDelay < 120)
+            var delayString = entityPM.RetriesDelay.Split(',');
+            if (delayString.Count() != entityPM.RetriesNumber)
             {
-                throw new ApplicationException("The minimum number of retries delay is 120");
+                throw new ApplicationException("Retries Delay is not valid");
+            }
+            for (int i = 0; i < delayString.Count(); i++)
+            {
+                if (delayString[i] == null || string.IsNullOrEmpty(delayString[i]) || int.Parse(delayString[i]) == 0)
+                {
+                    throw new ApplicationException("Retries Delay is not valid");
+                }
+                else if (i != 0 && (int.Parse(delayString[i]) - int.Parse(delayString[i - 1])) < MaxDifferenceTime)
+                {
+                    throw new ApplicationException("Retries Delay is not valid");
+                }
             }
         }
 
