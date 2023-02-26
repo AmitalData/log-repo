@@ -1758,6 +1758,75 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 			
 		 }
 	   }
+	  private string customerPrimaryContactId ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerPrimaryContactId  
+	   {
+	    
+	     get
+		{
+		   return customerPrimaryContactId;
+		 }
+		 set
+		 {
+		   if(customerPrimaryContactId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerPrimaryContactId",OldValue=customerPrimaryContactId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customerPrimaryContactId=value;
+		   }
+			
+		 }
+	   }
+	  private string shipperPrimaryContactId ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShipperPrimaryContactId  
+	   {
+	    
+	     get
+		{
+		   return shipperPrimaryContactId;
+		 }
+		 set
+		 {
+		   if(shipperPrimaryContactId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipperPrimaryContactId",OldValue=shipperPrimaryContactId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   shipperPrimaryContactId=value;
+		   }
+			
+		 }
+	   }
+	  private string consigneePrimaryContactId ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ConsigneePrimaryContactId  
+	   {
+	    
+	     get
+		{
+		   return consigneePrimaryContactId;
+		 }
+		 set
+		 {
+		   if(consigneePrimaryContactId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ConsigneePrimaryContactId",OldValue=consigneePrimaryContactId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   consigneePrimaryContactId=value;
+		   }
+			
+		 }
+	   }
 
 	   private List<CustomChildEntity> customChildEntities;
 	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
