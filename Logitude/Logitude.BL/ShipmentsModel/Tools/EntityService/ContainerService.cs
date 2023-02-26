@@ -116,7 +116,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 Tenant = entityPM.Tenant,
                 IsSimulator = false,
                 Data = null,
-                ContainerStatusSourceCode = "VZN",
+                ContainerStatusSourceCode = "2",
                 DirectionId = this.GetShipment()?.DirectionId,
                 IsUpdatedFromRequest = entityPM.IsUpdatedFromRequest,
             };

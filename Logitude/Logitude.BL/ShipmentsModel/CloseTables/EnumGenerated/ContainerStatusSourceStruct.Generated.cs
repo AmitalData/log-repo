@@ -12,7 +12,7 @@ namespace Logitude.BL.ShipmentsModel.CloseTables
     {   
        public const string INTTRA = "INT";  
        public const string OceanInsights = "OIN";  
-       public const string Vizion = "VZN";  
+       public const string Vizion = "2";  
     }
 }
 
