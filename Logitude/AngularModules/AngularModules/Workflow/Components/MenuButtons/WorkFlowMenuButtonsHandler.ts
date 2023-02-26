@@ -139,7 +139,8 @@ export class WorkFlowMenuButtonsHandler {
         if (isActivate) {
             this.WorkFlowVersionExtendedService.putActivate(version.Id).subscribe((serviceResponse: ServiceResponse) => {
                 if (serviceResponse != null && !serviceResponse.HasError) {
-                    this.handleActivateWorkflowResponse(serviceResponse.Result)
+                    this.handleActivateWorkflowResponse(serviceResponse.Result);
+                    this.entityArgs.SendMessage({ Code: "SetWorkflowErrorMessages", Messages: null });
                     this.StopBusyIndicator();
                 } else {
                     this.entityArgs.SendMessage({ Code: "SetWorkflowErrorMessages", Messages: serviceResponse.ErrorsArray });
