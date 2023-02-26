@@ -757,7 +757,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
 
                 }
                 else {
-                    this.shipmentService.CheckHousesOpenAmounts(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+                    this.shipmentService.CheckHousesOpenAmounts(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
                         if (myResponse != null) {
                             if (myResponse.Result != null && myResponse.Result != "") {
                                 var Result: string = myResponse.Result;
@@ -767,11 +767,11 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                                     if (Result.includes('P'))
                                         hasOpenPayables = true;
                                 }
+
+                                this.RunAccountingCloseWindow(hasOpenPayables, hasOpenReceivables);
                             }
                         }
-                    });
-
-                    this.RunAccountingCloseWindow(hasOpenPayables, hasOpenReceivables);
+                    });                    
                 }
             }
             else {
