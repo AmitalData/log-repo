@@ -240,7 +240,7 @@
     <tr class="table-row">
         <td>
 
-            <FooterButtons [SaveButtonLabel]="IsNewEntity ? 'Create' : 'Save'" (SaveButtonClicked)="saveButtonClicked()"
+            <FooterButtons [SaveButtonLabel]="'Create'" (SaveButtonClicked)="saveButtonClicked()"
                 (CancelButtonClicked)="cancelButtonClicked()" [SaveButtonDataCy]="'workflow-save-button'"
                 [CancelButtonDataCy]="'workflow-cancel-button'">
             </FooterButtons>
