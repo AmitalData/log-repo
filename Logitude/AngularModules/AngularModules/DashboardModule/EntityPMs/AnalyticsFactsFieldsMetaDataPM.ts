@@ -119,6 +119,11 @@ export class AnalyticsFactsFieldsMetaDataPM {
     public set CanSecondaryGroup(newValue: boolean) { if (this.canSecondaryGroup != newValue) { this.canSecondaryGroup = newValue; this.MarkAsDirty("CanSecondaryGroup"); } }
        
 	 
+    private allowTenantZeroFilter: boolean;
+    public get AllowTenantZeroFilter() { return this.allowTenantZeroFilter; }
+    public set AllowTenantZeroFilter(newValue: boolean) { if (this.allowTenantZeroFilter != newValue) { this.allowTenantZeroFilter = newValue; this.MarkAsDirty("AllowTenantZeroFilter"); } }
+       
+	 
 
     public OldEntityPM: AnalyticsFactsFieldsMetaDataPM;
 		
