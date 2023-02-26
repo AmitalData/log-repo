@@ -1155,7 +1155,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void AfterUpdating(DeclarationPM entityPM, EntityPM entityParentPM)
         {
-
+            LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating start");
             bool fromcache = true; // why i need the Name ?? 
             _AfterCommitUpdate = true;
             if (entityPM.CustomerCode != null)
@@ -1167,7 +1167,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     entityPM.CustomerName = customerCard.LocalName != null ? customerCard.LocalName : customerCard.EnglishName;
                 }
             }
-
+            LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step1");
             if (!string.IsNullOrEmpty(entityPM.DepartmentId))
             {
                 DepartmentRepository departmentRep = new DepartmentRepository(entityPM.Tenant);
@@ -1177,7 +1177,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     entityPM.DepartmentName = department.LocalName != null ? department.LocalName : department.EnglishName;
                 }
             }
-
+            LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step2");
 
             if (entityPM.DeclarationOfficeCode != null)
             {
@@ -1188,6 +1188,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     entityPM.DeclarationOfficeName = declarationOffice.LocalName;
                 }
             }
+            LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step3");
 
             if (entityPM.AutonomyRegionTypeCode != null)
             {
@@ -1198,9 +1199,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     entityPM.AutonomyRegionTypeName = autonomyType.LocalName;
                 }
             }
+            LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step4");
 
             if (entityPM.ImporterEntitlementTypeCode != null)
             {
+                LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step5");
                 EntitlementTypeQueryService entitlementTypeQueryService = new EntitlementTypeQueryService(entityPM.Tenant);
                 EntitlementTypePM entitlementType = entitlementTypeQueryService.GetSingle(entityPM.ImporterEntitlementTypeCode, false, fromcache);
                 if (entitlementType != null)
@@ -1211,6 +1214,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             if (entityPM.ImporterPassCountryCode != null)
             {
+                LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step6");
                 CustomsCountryQueryService countryQueryService = new CustomsCountryQueryService(entityPM.Tenant);
                 CustomsCountryPM country = countryQueryService.GetSingle(entityPM.ImporterPassCountryCode, false, fromcache);
                 if (country != null)
@@ -1221,6 +1225,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             if (entityPM.TransferImporterCountryCode != null)
             {
+                LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step7");
                 CustomsCountryQueryService countryQueryService = new CustomsCountryQueryService(entityPM.Tenant);
                 CustomsCountryPM country = countryQueryService.GetSingle(entityPM.TransferImporterCountryCode, false, fromcache);
                 if (country != null)
@@ -1231,6 +1236,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             if (entityPM.ProcedureCurrentCode != null)
             {
+                LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step8");
                 GovernmentProcedureTypeQueryService governmentProcedureTypeQueryService = new GovernmentProcedureTypeQueryService(entityPM.Tenant);
                 GovernmentProcedureTypePM governmentProcedureType = governmentProcedureTypeQueryService.GetSingle(entityPM.ProcedureCurrentCode, false, fromcache);
                 if (governmentProcedureType != null)
@@ -1241,6 +1247,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             if (entityPM.ImporterId != null)
             {
+                LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step9");
                 ClientQueryService clientQueryService = new ClientQueryService(entityPM.Tenant);
                 ClientPM client = clientQueryService.GetSingle(entityPM.ImporterId, false, fromcache);
                 if (client != null)
@@ -1251,6 +1258,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             if (entityPM.DeclarationStatusTypeCode != null)
             {
+                LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step10");
                 DeclarationStatusTypeQueryService declarationStatusTypeQueryService = new DeclarationStatusTypeQueryService(entityPM.Tenant);
                 DeclarationStatusTypePM declarationStatusType = declarationStatusTypeQueryService.GetSingle(entityPM.DeclarationStatusTypeCode, false, fromcache);
                 if (declarationStatusType != null)
@@ -1279,6 +1287,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             else if (entityPM.ImporterCode != null)
             {
+                LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step11");
                 ClientQueryService clientQueryService = new ClientQueryService(entityPM.Tenant);
                 ClientPM client = clientQueryService.GetClientByCode(entityPM.ImporterCode, entityPM.Tenant);
                 if (client != null)
@@ -1297,7 +1306,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             if (!string.IsNullOrEmpty(entityPM.CalculatedImporterName) && entityPM.CalculatedImporterName.Length > 35) entityPM.CalculatedImporterName = entityPM.CalculatedImporterName.Substring(0, 35);
             if (!string.IsNullOrEmpty(entityPM.ImporterName) && entityPM.ImporterName.Length > 35) entityPM.ImporterName = entityPM.ImporterName.Substring(0, 35);
-
+            LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating _step12");
             bool isSubmitChanges = false;
             //----- consignment 
             bool isConsignmentInsert = (from a in entityPM.Consignments
@@ -1309,6 +1318,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             if (isConsignmentInsert || isConsignmentDelete)
             {
+                LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step12");
                 if (!isSubmitChanges)
                 {
                     SubmitChanges();
@@ -1361,7 +1371,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //-------------consignment packages
             foreach (ConsignmentPM consignmentPM in entityPM.Consignments.Where(d => d.ChangeSetOp == ChangeSetOperation.Update || d.ChangeSetOp == ChangeSetOperation.Insert))
             {
-
+                LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step13");
                 bool isConsignmentPackageInsert = (from a in consignmentPM.ConsignmentPackages
                                                    where a.ChangeSetOp == ChangeSetOperation.Insert
                                                    select a).Any();
@@ -1404,9 +1414,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             if (entityPM.IsCourierDeclaration)
             {
+                LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step14");
+
                 //if (entityPM.ChangeSetOp != ChangeSetOperation.Insert)
                 {
-
+                    LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating, entityPM.IsCourierDeclaration = true");
                     var context = CustomContext.GetContext(entityPM.Tenant);
                     DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
                     DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(entityPM);
