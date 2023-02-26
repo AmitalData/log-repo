@@ -144,7 +144,8 @@ export class QueryFilterViewItem extends FilterItem  {
 
     public get ObjectTableName() {
         if (AppTool.IsNullOrEmpty(this.FieldName)) return "";
-        return this.FieldName.split('.')[0];
+        if (this.FieldName.indexOf('.') > -1) return this.FieldName.split('.')[0];
+        return this.MainEntityName;
     }
 
     public get ObjectFieldName() {
