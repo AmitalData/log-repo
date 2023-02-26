@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class WorkFlowVersionUpdateClass
    {  		
-		public const string HashString = "67a4c9945bdb12d61f6a7e0357d99c30";
+		public const string HashString = "c91106de39c3fc068e4dbb7d4bafe3ab";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1175,6 +1175,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CreatedByUserName",
 					  						ListPropertyPath =  "CreatedByUserName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1236,6 +1237,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "UpdatedByUserName",
 					  						ListPropertyPath =  "UpdatedByUserName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1306,15 +1308,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query AllWorkflowVersionsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WorkFlowVersionTextCode_0.Id, NameTextCodeCode = WorkFlowVersionTextCode_0.Code, ObjectTableName = "WorkFlowVersion", Code = "All Workflow Versions",  QueryGroupCode = "ee73", IndexOrder = 0, Tenant = 0, ObjectTableId = WorkFlowVersionObjectTable.Id, QuerySection = "WorkFlowVersion", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = WorkFlowVersionFeature_0.Id,FeatureUniqeCode= WorkFlowVersionFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AllWorkflowVersionsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllWorkflowVersionsQuery.Id,QueryCode = AllWorkflowVersionsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "WorkFlowVersion.VersionNumber" , ColumnWidth = 400 }, addedQueryColumns);
+			 QueryColumn AllWorkflowVersionsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllWorkflowVersionsQuery.Id,QueryCode = AllWorkflowVersionsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "WorkFlowVersion.VersionNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllWorkflowVersionsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllWorkflowVersionsQuery.Id,QueryCode = AllWorkflowVersionsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "WorkFlowVersion.Description" , ColumnWidth = 400 }, addedQueryColumns);
+			 QueryColumn AllWorkflowVersionsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllWorkflowVersionsQuery.Id,QueryCode = AllWorkflowVersionsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "WorkFlowVersion.Description" , ColumnWidth = 350 }, addedQueryColumns);
 
-			 QueryColumn AllWorkflowVersionsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllWorkflowVersionsQuery.Id,QueryCode = AllWorkflowVersionsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "WorkFlowVersion.CreateDate" , ColumnWidth = 400 }, addedQueryColumns);
+			 QueryColumn AllWorkflowVersionsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllWorkflowVersionsQuery.Id,QueryCode = AllWorkflowVersionsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "WorkFlowVersion.StatusName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllWorkflowVersionsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllWorkflowVersionsQuery.Id,QueryCode = AllWorkflowVersionsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "WorkFlowVersion.StatusName" , ColumnWidth = 400 }, addedQueryColumns);
-
-			 QueryColumn AllWorkflowVersionsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllWorkflowVersionsQuery.Id,QueryCode = AllWorkflowVersionsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "WorkFlowVersion.ActivatedDate" , ColumnWidth = 400 }, addedQueryColumns);
+			 QueryColumn AllWorkflowVersionsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllWorkflowVersionsQuery.Id,QueryCode = AllWorkflowVersionsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "WorkFlowVersion.ActivatedDate" , ColumnWidth = 150 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

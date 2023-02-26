@@ -59,7 +59,9 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         WorkFlowVersionId, 
 	         WorkFlowVersionNumber, 
 	         RetryAttemptsNumber, 
-	         WorkflowId,
+	         WorkflowId, 
+	         CreatedByUserName, 
+	         UpdatedByUserName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
