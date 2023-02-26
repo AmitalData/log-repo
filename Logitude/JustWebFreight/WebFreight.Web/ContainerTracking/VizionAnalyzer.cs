@@ -91,12 +91,20 @@ namespace WebFreight.Web.ContainerTracking
             var myMilestones = MilestonesDictinoary[VizionMilestoneDescriptionCodes.VesselArrivedAtDestinationPort].Where(d => d.location.unlocode == containerUpdatedFields.PODLocation);
 
             var plannedMilistone = myMilestones.FirstOrDefault(e => e.planned);
-            if (plannedMilistone != null)            
-                containerUpdatedFields.EstimatedPODVesselArrival = plannedMilistone.timestamp;            
+            if (plannedMilistone != null)
+            {
+                containerUpdatedFields.EstimatedPODVesselArrival = plannedMilistone.timestamp;
+                containerUpdatedFields.PODLegVessel = plannedMilistone.vessel;
+                containerUpdatedFields.PODLegVoyage = plannedMilistone.voyage;
+            }
 
             var milistone = myMilestones.FirstOrDefault(e => !e.planned);
-            if (milistone != null)            
-                containerUpdatedFields.ActualPODVesselArrival = milistone.timestamp;            
+            if (milistone != null)
+            {
+                containerUpdatedFields.ActualPODVesselArrival = milistone.timestamp;
+                containerUpdatedFields.PODLegVessel = milistone.vessel;
+                containerUpdatedFields.PODLegVoyage = milistone.voyage;
+            }
         }
         private void MapDepartureField()
         {
@@ -112,12 +120,16 @@ namespace WebFreight.Web.ContainerTracking
             if (plannedMilistone != null)
             {
                 containerUpdatedFields.EstimatedPOLVesselDeparture = plannedMilistone.timestamp;
+                containerUpdatedFields.POLLegVessel = plannedMilistone.vessel;
+                containerUpdatedFields.POLLegVoyage = plannedMilistone.voyage;
             }
 
             var milistone = myMilestones.FirstOrDefault(e => !e.planned);
             if (milistone != null)
             {
                 containerUpdatedFields.ActualPOLVesselDeparture = milistone.timestamp;
+                containerUpdatedFields.POLLegVessel = milistone.vessel;
+                containerUpdatedFields.POLLegVoyage = milistone.voyage;
             }
         }
         private void MapEmptyPickup()
