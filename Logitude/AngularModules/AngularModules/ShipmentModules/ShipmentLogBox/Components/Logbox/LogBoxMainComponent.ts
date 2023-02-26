@@ -151,7 +151,6 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.IsPrivateLabelExportActivated = SessionLocator.PrivateLableSettings.IsExportActivated;
             this.IsPrivateLabelCustomsActivated = SessionLocator.PrivateLableSettings.IsCustomsActivated;
             this.SetCustomerTenantAccessRequestsDirections(SessionLocator.PrivateLableSettings.HybridPartnerId);
-            if (this.IsPrivateLabelExportActivated) this.RefTemplateWidth = '165px';
         }
         else {
             this.RefTemplateWidth =  '250px';
@@ -171,6 +170,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         this.CustomerTenantAccessRequestPartner = res.Result;
         this.IsCustomsActivated = (res.Result.IsCustoms && this.IsPrivateLabelCustomsActivated);
         this.IsExportActivated = (res.Result.IsExport && this.IsPrivateLabelExportActivated);
+        if (this.IsExportActivated) this.RefTemplateWidth = '165px';
         this.SetDirectionsFilters();
     }
     private HasOneDirectionFilter() {
