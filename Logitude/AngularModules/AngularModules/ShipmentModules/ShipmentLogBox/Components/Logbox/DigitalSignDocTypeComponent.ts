@@ -31,7 +31,6 @@ import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper'
 import {DocumentTypePMExtendedService} from '../../../../Common/Services/ExtendedPMs/DocumentTypePMExtendedService';
 import {DocumentTypePMService} from '../../../../Common/Services/StandardPMs/DocumentTypePMService';
 import {DocumentTypePM} from '../../../../Common/EntityPMs/DocumentTypePM';
-import { SystemEnvironmentService } from '../../../../Infrastructure/Utilities/SystemEnvironmentService';
 
 @Component({
     
@@ -47,7 +46,7 @@ export class DigitalSignDocTypeComponent extends BaseComponent implements OnInit
     _DocumentTypeListService: DocumentTypePMExtendedService;
     _DocumentTypePMService: DocumentTypePMService
     private CurrentSession = SessionLocator.SelectedSession;
-    Name: string;
+    SystemName: string;
     constructor() {
         super();
         this._DocumentTypeListService = new DocumentTypePMExtendedService();
@@ -60,7 +59,7 @@ export class DigitalSignDocTypeComponent extends BaseComponent implements OnInit
             this.DocTypes = res.Result;
             this.DocTypes = this.DocTypes.sort((a, b) => { return (a.OrderBy === b.OrderBy) ? 0 : (a.OrderBy < b.OrderBy) ? -1 : 1 });
         });
-        this.FillName();
+        this.FillSystemName();
     }
     ngAfterViewInit() {
 
@@ -69,15 +68,12 @@ export class DigitalSignDocTypeComponent extends BaseComponent implements OnInit
         //this.AdditionalData = args.AdditionalData;
     } 
 
-    FillName() {
-        if (SystemEnvironmentService.IsLogBox()) {
-            this.Name = "Logbox";
-            return;
-        }
+    FillSystemName() {
         if (SessionLocator.PrivateLableSettings) {
-            this.Name = SessionLocator.PrivateLableSettings.PrivateLabelName;
+            this.SystemName = SessionLocator.PrivateLableSettings.PrivateLabelName;
             return;
         }
+        this.SystemName = "Logbox";
     }
 
     onCheckBoxChecked(Type: any) {
