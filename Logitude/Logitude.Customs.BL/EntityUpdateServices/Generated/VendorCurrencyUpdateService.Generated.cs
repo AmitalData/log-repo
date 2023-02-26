@@ -22,7 +22,7 @@ using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 { 
-   public partial class VendorCurrencyUpdateService:EntityUpdateService<VendorCurrency,VendorCurrencyPM,CustomsVendorPM>
+   public partial class VendorCurrencyUpdateService:EntityUpdateService<VendorCurrency,VendorCurrencyPM,EntityPM>
    {
    
         VendorCurrencyRepository entityRepository;

@@ -14,6 +14,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 
 import {CustomsVendorPM} from '../../../../Customs/EntityPMs/CustomsVendorPM';
 import { VendorGeneralTabComponent } from './General/VendorGeneralTabComponent';
+import { VendorCurrencyTabComponent } from './VendorCurrency/VendorCurrencyTabComponent';
 
 @Component({
     
@@ -37,7 +38,7 @@ export class VendorEditComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
-        this.BuildTabs();
+      
     }
 
     SetWindowArgs(args: any) {
@@ -48,6 +49,7 @@ export class VendorEditComponent extends BaseComponent {
 
         this.entityArgs.EntityPM = this.EntityPM;
         this.entityArgs.ObjectTableName = "Customs.CustomsVendor";
+        this.BuildTabs()
     }
 
     //#region Tabs Code
@@ -58,7 +60,9 @@ export class VendorEditComponent extends BaseComponent {
         this.TabsItemsSource.push(new TabItem("COMMUNICATION", "Customs.Vendor.TH.Communications"));
         this.TabsItemsSource.push(new TabItem("EVENTS", "Customs.Vendor.TH.Events"));
         this.TabsItemsSource.push(new TabItem("REQUESTSHEET", "General.MH.CustomsRequestsSheets"));
-        this.TabsItemsSource.push(new TabItem("VENDORCURRENCY", "Customs.CustomsVendor.TH.VendorCurrency"));
+        if(!this.IsNewEntity) {
+          this.TabsItemsSource.push(new TabItem("VENDORCURRENCY", "Customs.CustomsVendor.TH.VendorCurrency"));
+        }
 
         this.timerToken = setTimeout(() => {
             this.SelectedTabCode = "General"; // to ensure the component was painted
@@ -79,13 +83,12 @@ export class VendorEditComponent extends BaseComponent {
     private COMMUNICATION: any = null;
     private EVENTS: any = null;
     private REQUESTSHEET: any = null;
-    private VENDORCURRENCY: any = null;
+    private VENDORCURRENCY: VendorCurrencyTabComponent = null;
 
     private CustomsRequestsSheets: any = null;
 
     public SelectedTab: TabItem;
     SelectionChanged() {
-        debugger
         if (!AppTool.IsNullOrEmpty(this.SelectedTabCode)) {
             let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == this.SelectedTabCode)[0];
             if (myLocation != null) {
@@ -167,13 +170,15 @@ export class VendorEditComponent extends BaseComponent {
                     case "VENDORCURRENCY": {
 
                         if (this.VENDORCURRENCY == null) {
-                            this.entityResourceService.getEntityResourceByTableName("VendorCurrency").subscribe((response:any) => {
-                                SessionLocator.DynamicLoader.Load("./CustomsModules/CustomsVendor/Components/EditTabs/VendorCurrency/VendorCurrencyTabComponent", myLocation.viewContainerRef)
+                            this.entityResourceService.getEntityResourceByTableName("Customs.VendorCurrency").subscribe((response:any) => {
+                                    SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsVendor/Components/EditTabs/VendorCurrency/VendorCurrencyTabComponent',
+                                    myLocation.viewContainerRef)
                                     .then(cmpRef => {
-                                        this.VENDORCURRENCY = cmpRef.instance;
-                                        this.VENDORCURRENCY.IsTitleHidden = false;
-                                        this.VENDORCURRENCY.InitTab();
-
+                                        this.GENERAL = cmpRef.instance;
+                                        this.GENERAL.SetTabArgs({ EntityPM: this.EntityPM, IsNewEntity: this.IsNewEntity });
+                                        this.GENERAL.FillValidationErrorList.subscribe((response: any) => {
+                                            this.ValdationErrorList = response;
+                                        });
                                     });
                             });
 

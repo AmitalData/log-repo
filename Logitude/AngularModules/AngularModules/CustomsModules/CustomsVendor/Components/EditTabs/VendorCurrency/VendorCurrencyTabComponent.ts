@@ -29,11 +29,12 @@ import { VendorCurrencyPM } from 'Customs/EntityPMs/VendorCurrencyPM';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { VendorCurrencyListService } from 'Customs/Services/StandardLists/VendorCurrencyListService';
+import { VendorCurrencyService } from 'Customs/Services/WebServices/VendorCurrencyService';
 
 
 @Component({
     
-    templateUrl: './VendorGeneralTabComponent.html',
+    templateUrl: './VendorCurrencyTabComponent.html',
 })
 
 export class VendorCurrencyTabComponent extends BaseComponent {
@@ -46,12 +47,11 @@ export class VendorCurrencyTabComponent extends BaseComponent {
     public ValdationErrorList: any[];
     public isEntityChange: boolean = false;
     IsDelete: boolean = false;
-    vendorCurrencyListService:VendorCurrencyListService
+    vendorCurrencyListService:VendorCurrencyListService=new VendorCurrencyListService();
+    vendorCurrencyService:VendorCurrencyService=new VendorCurrencyService();
     VendorCurrencyList: ObservableCollection;
     line = 0;
-    //vendorMessagesService: VendorMessagesService = new VendorMessagesService();
-    //customsVendorPMService: CustomsVendorPMService = new CustomsVendorPMService();
-
+   
     RequestVIA: SendRequestVIA;
 
     private CurrentSession = SessionLocator.SelectedSession;
@@ -68,8 +68,9 @@ export class VendorCurrencyTabComponent extends BaseComponent {
         console.log("EntityPM", this.EntityPM);
 
         this.EntityResourceService.getEntityResourceByTableName("Customs.VendorCurrency").subscribe((response: any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.CurrencyType").subscribe((response: any) => {
             this.getRows();
-      
+         });
         });
 
     }
@@ -90,45 +91,76 @@ export class VendorCurrencyTabComponent extends BaseComponent {
             return this.vendorCurrencyListService.getByFilters(filters)
                 .subscribe(r => {
                     this.VendorCurrencyList = new ObservableCollection([]);
-                    for (let item of r.Result) {
-                        this.VendorCurrencyList.Insert(item);
+                    this.vendorCurrencyListPM = [];
+                    if(!r.HasError) {
+                       for (let item of r.Result) {
+                           this.VendorCurrencyList.Insert(new VendorCurrencyItemModel(item));
+                       }
+                       this.getRowNumbers();
+                       this.line = r.Result.length;
+                       this.vendorCurrencyListPM = this.VendorCurrencyList.Collection;
                     }
-                    this.line = r.Result.length;
-                    this.vendorCurrencyListPM = r.Result;
                 });
            
         }
    
-
+        getRowNumbers() {
+            this.line = 0;
+            for (let item of this.VendorCurrencyList.Collection) {
+                this.line += +1;
+                item.LineNumber = this.line;
+            }
+        }
 
     //#region Properties
 
-    // get Currency() { return this.VendorCurrencyPM.Currency; }
-    // set Currency(value: string) {
-    //     if (this.VendorCurrencyPM.Currency != value) {
-    //         this.VendorCurrencyPM.Currency = value;
-
-    //     }
-    // }
+   
 
     //#endregion
+    OkButtonClicked(){
 
+
+       
+
+        var errors = [];
+        this.FillValidationErrorList.emit(errors); // clear validation msgs
+            this.vendorCurrencyListPM.forEach((item) => {
+                Validator.TryValidateObject(item, "Customs.VendorCurrency", errors);
+                if(this.vendorCurrencyListPM.filter(x=>x.Currency==item.Currency).length>1){
+                    errors.push(TextCodeTranslator.Translate('Customs.VendorCurrency.O.DoubleCurrency'));
+                    
+                }
+            });
+      
+        if (errors.length > 0) {
+            this.ValdationErrorList = errors;
+            this.FillValidationErrorList.emit(errors);
+        } else {
+         
+           this.vendorCurrencyService.UpadateListCurrencyByVendor(this.vendorCurrencyListPM).subscribe(res=>{
+               if(!res.HasError){
+                   var message=new ConfirmWindow();
+                   message.YesButtonText = TextCodeTranslator.Translate('General.B.Ok');
+                   message.ShowNoButton=false;
+                   message.Show(TextCodeTranslator.Translate('Customs.VendorCurrency.O.UpdateCurrency'));
+               }
+           })
+        }
+    }
+ 
     
     AddButonClicked() {
-       
-            var newVendorCurrencyPM = new VendorCurrencyPM(this.EntityPM);
+            var newVendorCurrencyPM = new VendorCurrencyPM();
             newVendorCurrencyPM.Tenant = SessionLocator.Tenant;
             newVendorCurrencyPM.VendorId = this.EntityPM.Id;
-            newVendorCurrencyPM.LineNumber = this.line++; // it will be override by EntityUpdateService.OnCreating() in server.
+            newVendorCurrencyPM.LineNumber = ++this.line; // it will be override by EntityUpdateService.OnCreating() in server.
 
-            if (!this.vendorCurrencyListPM.includes(newVendorCurrencyPM)) {
               
-                this.VendorCurrencyList.Insert(newVendorCurrencyPM);
-                this.AddVendorCurrency(newVendorCurrencyPM)
-            }
+                this.VendorCurrencyList.Insert(new VendorCurrencyItemModel(newVendorCurrencyPM));
+
        
     }
-    RemoveRow(item: VendorCurrencyPM) {
+    RemoveRow(item: VendorCurrencyItemModel) {
         if (!AppTool.IsNullOrEmpty(item)) {
 
             var confirmWindow = new ConfirmWindow();
@@ -138,7 +170,6 @@ export class VendorCurrencyTabComponent extends BaseComponent {
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
                     this.VendorCurrencyList.Remove(item);
-                    this.RemoveVendorCurrency(item)
                 }
 
             });
@@ -146,27 +177,72 @@ export class VendorCurrencyTabComponent extends BaseComponent {
         }
     }
 
-    public AddVendorCurrency(item: VendorCurrencyPM) {
-        if (item != null) {
-            var index = this. vendorCurrencyListPM.indexOf(item);
-            if (index == -1) {
-                item.EntityParentPM = this;
-                this. vendorCurrencyListPM.push(item);
-               
-            }
-        }
-    }
-    public RemoveVendorCurrency(item: VendorCurrencyPM) {
-        if (item != null) {
-            var index = this. vendorCurrencyListPM.indexOf(item);
-            if (index > -1) {
-                this. vendorCurrencyListPM.splice(index, 1);
-                
-            }
-        }
-    }
 
 
+    
     //#endregion
+}
+
+export class VendorCurrencyItemModel extends BaseComponent {
+    public VendorCurrencyPM: VendorCurrencyPM = null;
+    public ObjectTableName = "Customs.VendorCurrency";
+    public DataContext = this;
+
+    constructor(private vendorCurrencyPM: VendorCurrencyPM) {
+        super();
+        this.VendorCurrencyPM = vendorCurrencyPM;
+    }
+
+    //#region Properties
+
+    get LineNumber() { return this.VendorCurrencyPM.LineNumber; }
+    set LineNumber(value: number) {
+        if (this.VendorCurrencyPM.LineNumber != value) {
+            this.VendorCurrencyPM.LineNumber = value;
+
+        }
+    }
+
+    get VendorId() { return this.VendorCurrencyPM.VendorId; }
+    set VendorId(value: string) {
+        if (this.VendorCurrencyPM.VendorId != value) {
+            this.VendorCurrencyPM.VendorId = value;
+
+        }
+    }
+    get Tenant() { return this.VendorCurrencyPM.Tenant; }
+    set Tenant(value: number) {
+        if (this.VendorCurrencyPM.Tenant != value) {
+            this.VendorCurrencyPM.Tenant = value;
+
+        }
+    }
+    get Currency() { return this.VendorCurrencyPM.Currency; }
+    set Currency(value: string) {
+        if (this.VendorCurrencyPM.Currency != value) {
+            this.VendorCurrencyPM.Currency = value;
+
+        }
+    }
+    get CurrencyTypeName() { return this.VendorCurrencyPM.CurrencyTypeName; }
+    set CurrencyTypeName(value: string) {
+        if (this.VendorCurrencyPM.CurrencyTypeName != value) {
+            this.VendorCurrencyPM.CurrencyTypeName = value;
+
+        }
+    }
+
+    
+    //#endregion
+
+    SetLocalName(entity, fieldName) {
+       
+        if (!AppTool.IsNullOrEmpty(entity)) {
+            this[fieldName] = entity.LocalName;
+        } else {
+            this[fieldName] = null;
+        }
+
+    }
 }
 

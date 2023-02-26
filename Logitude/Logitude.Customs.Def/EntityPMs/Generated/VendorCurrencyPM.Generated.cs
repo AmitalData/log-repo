@@ -114,6 +114,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string currencyTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CurrencyTypeName  
+	   {
+	    
+	     get
+		{
+		   return currencyTypeName;
+		 }
+		 set
+		 {
+		   if(currencyTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyTypeName",OldValue=currencyTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   currencyTypeName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

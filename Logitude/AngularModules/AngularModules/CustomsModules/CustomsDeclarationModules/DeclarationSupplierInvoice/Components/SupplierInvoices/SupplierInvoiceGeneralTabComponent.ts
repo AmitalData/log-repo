@@ -69,6 +69,7 @@ import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/componen
 import { IncotemrsFileValidationList } from 'Customs/EntityLists/IncotemrsFileValidationList';
 import { customsItemsService } from 'QuoteOPM/Utilities/customsItems.service';
 import { SupplierInvoiceSharedService } from './Services/SupplierInvoiceSharedService';
+import { VendorCurrencyService } from 'Customs/Services/WebServices/VendorCurrencyService';
 
 
 @Component({
@@ -119,7 +120,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     itemGovernmentProcedureTypeListService: ItemGovernmentProcedureTypeListService = new ItemGovernmentProcedureTypeListService();
     customsSettingListService: CustomsSettingListService = new CustomsSettingListService();
     private modificationAndDiscountTypeListService: ModificationAndDiscountTypeListService = new ModificationAndDiscountTypeListService();
-
+    vendorCurrencyService:VendorCurrencyService=new VendorCurrencyService();
     IsActionButtonsEnabled: boolean = true;
 
     ikeaFeature: any;
@@ -3119,14 +3120,28 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
         if (this.old_amount != this.EntityPM.InvoiceAmount ||
             this.old_currency != this.EntityPM.InvoiceCurrencyTypeCode ||
-            this.old_vendor != this.EntityPM.VendorId)
+            this.old_vendor != this.EntityPM.VendorId) {
             this.Parent.CalculateCommissionPercentage();
+            this.CalculateCurrencyTypeCode();
+        }
 
         this.old_amount = this.EntityPM.InvoiceAmount;
         this.old_currency = this.EntityPM.InvoiceCurrencyTypeCode;
         this.old_vendor = this.EntityPM.VendorId;
     }
-
+    CalculateCurrencyTypeCode(){
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.VendorId) && AppTool.IsNullOrEmpty(this.EntityPM.InvoiceCurrencyTypeCode)){
+            this.vendorCurrencyService.GenListVendorCurrencyByVendorId(this.EntityPM.VendorId).subscribe(res=>{
+                
+                if(!res.HasError) {
+                    if(res.Result?.length==1) {
+                        this.EntityPM.InvoiceCurrencyTypeCode= res.Result[0].Currency;
+                    }
+                 }
+            })
+           
+        }
+    }
     //#region Remark tooltip
     onCellSelected($event, Item: SupplierInvoiceItemLine) {
         if (this.SelectedRow != Item) {

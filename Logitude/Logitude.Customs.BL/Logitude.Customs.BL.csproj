@@ -933,6 +933,7 @@
     <Compile Include="EntityDataMappings\Generated\VehicleTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\VendorCommissionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\VendorCommunicationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\VendorCurrencyDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\VendorStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\VendorTransactionTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\VendorTypeDataMapping.Generated.cs" />
@@ -1114,6 +1115,7 @@
     <Compile Include="EntityDataMappings\VehicleTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\VendorCommissionDataMapping.cs" />
     <Compile Include="EntityDataMappings\VendorCommunicationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\VendorCurrencyDataMapping.cs" />
     <Compile Include="EntityDataMappings\VendorStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\VendorTransactionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\VendorTypeDataMapping.cs" />
@@ -1122,6 +1124,7 @@
     <Compile Include="EntityQueryServices\ConfirmationTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\CurrencyTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationFollowUpQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\VendorCurrencyQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\SchedulerParamQueryService.cs" />
     <Compile Include="EntityQueryServices\ExternalFieldMappingQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\ClientsTapagQueryService.Generated.cs" />
@@ -1641,11 +1644,14 @@
     <Compile Include="EntityQueryServices\TradeAgreementQueryService.cs" />
     <Compile Include="EntityQueryServices\VehicleQueryService.cs" />
     <Compile Include="EntityQueryServices\VendorCommissionQueryService.cs" />
+    <Compile Include="EntityQueryServices\VendorCurrencyQueryService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealIdentifierUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientsTapagUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConfirmationTypeUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\VendorCurrencyUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeclarationFollowUpUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\VendorCurrencyUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\ServersNameUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ExportDeclarationClosingDataUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\ClientsTapagUpdateService.Generated.cs" />

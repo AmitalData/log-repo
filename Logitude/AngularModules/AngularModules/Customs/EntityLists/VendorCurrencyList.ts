@@ -12,6 +12,7 @@ export class VendorCurrencyList {
 	Tenant: number;
 	LineNumber: number;
 	Currency: string;
+	CurrencyTypeName: string;
 	
 }
  

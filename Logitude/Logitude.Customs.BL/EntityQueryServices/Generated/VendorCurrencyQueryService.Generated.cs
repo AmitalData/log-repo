@@ -17,7 +17,7 @@ using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.Customs.BL.EntityQueryServices
 { 
-   public partial class VendorCurrencyQueryService: EntityQueryService<VendorCurrency,VendorCurrencyKeys,VendorCurrencyPM,CustomsVendorPM,CustomsVendorKeys>
+   public partial class VendorCurrencyQueryService: EntityQueryService<VendorCurrency,VendorCurrencyKeys,VendorCurrencyPM,object,VendorCurrencyKeys>
    {
    
         VendorCurrencyRepository repository;

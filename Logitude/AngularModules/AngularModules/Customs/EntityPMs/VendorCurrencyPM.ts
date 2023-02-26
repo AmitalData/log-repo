@@ -7,7 +7,6 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-import {CustomsVendorPM} from './CustomsVendorPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -19,13 +18,11 @@ export class VendorCurrencyPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
-	        constructor(_entityParentPM: any) {
-          this.EntityParentPM = _entityParentPM;
+	  constructor() {
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
-
-	 
+ 	 
     
     private vendorId: string;
     public get VendorId() { return this.vendorId; }
@@ -47,28 +44,21 @@ export class VendorCurrencyPM {
     public set Currency(newValue: string) { if (this.currency != newValue) { this.currency = newValue; this.MarkAsDirty("Currency"); } }
        
 	 
+    private currencyTypeName: string;
+    public get CurrencyTypeName() { return this.currencyTypeName; }
+    public set CurrencyTypeName(newValue: string) { if (this.currencyTypeName != newValue) { this.currencyTypeName = newValue; this.MarkAsDirty("CurrencyTypeName"); } }
+       
+	 
 
     public OldEntityPM: VendorCurrencyPM;
-	
-    private entityParentPM: any;
-    public get EntityParentPM() { return this.entityParentPM; }
-    public set EntityParentPM(newValue: any) { this.entityParentPM = newValue; }
-
-    private changeSetOp: string;
-    public get ChangeSetOp() { return this.changeSetOp; }
-    public set ChangeSetOp(newValue: string) { this.changeSetOp = newValue;  }//this.MarkAsDirty(); mohammad removed it because it sets the dirty bool to true when there is no changes.
-
-    public UniqueKey: string;
-	 	
+		
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
        if(!this.DisableMarkAsDirty)
        {
         this.IsDirty = true;
-		  if (this.EntityParentPM) {
-            this.EntityParentPM.MarkAsDirty();
-        }	
+		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.VendorCurrency");
@@ -87,4 +77,4 @@ export class VendorCurrencyPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
