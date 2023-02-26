@@ -232,7 +232,7 @@
                                  *ngFor="let col of columns; let colIndex = index" [class.DisabledCell]="Disabled"
                                  [ngStyle]="col.Styles"
                                  [id]="'row'+rowIndex+'col'+colIndex"
-                                 [attr.data-cy]="DataCy + '_' +rowIndex + '_col_' + colIndex">
+                                 [attr.data-cy]="ObjectTable?.Name + '_' +rowIndex + '_col_' + colIndex">
 
                                 <!--[IsChecked]="row.rowData.IsChecked == true"-->
                                 <!--{{row.rowData[col.FieldName]}}-->

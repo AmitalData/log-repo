@@ -317,7 +317,7 @@
                             <div></div>
                         </td>
 
-                        <td [id]="ObjectTableName + '_AddFilterIcon'" [attr.data-cy]="ObjectTableName + '_AddFilterIcon'" style="width: 17px; vertical-align: middle; position:relative;">
+                        <td [attr.data-cy]="ObjectTableName + '_AddFilterIcon'" style="width: 17px; vertical-align: middle; position:relative;">
                             <img  *ngIf="HasFilters == false" src="./Images/FilterGrayTrans.png" style="cursor: pointer;" title="No filters have been set" (click)="onOpenFilterAreaClick()" class="CenterCenter" [style.pointer-events] ="SelectedQuery ? 'all' : 'none'" [style.opacity] ="SelectedQuery ? '1' : '0.5'"/>
                             <img *ngIf="HasFilters == true" src="./Images/Filter.png" style="cursor: pointer;" title="Some filters have been set" (click)="onCloseFilterAreaClick()" class="CenterCenter" [style.pointer-events] ="SelectedQuery ? 'all' : 'none'" [style.opacity] ="SelectedQuery ? '1' : '0.5'"/>
                         </td>

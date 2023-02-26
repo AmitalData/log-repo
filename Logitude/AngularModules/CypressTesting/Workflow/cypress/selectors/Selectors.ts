@@ -46,10 +46,10 @@ export class WorkflowSelectors {
     public static readonly AddDecisionNode = ".add-condition-node";
     public static readonly WorkflowEditElementButton = ".edit-label";
     public static readonly WorkflowfieldsListTitle = "nz-tree-node-title";
-    public static readonly RunHistoryFilterIcon = "#WorkFlowInstance_AddFilterIcon";
+    public static readonly RunHistoryFilterIcon = "[data-cy^='WorkFlowInstance_AddFilterIcon']";
     public static readonly RunHistoryExportFile = "[data-cy^='ExportWorkFlowInstance']";
     public static readonly DatePickerList = "[data-cy^='RunHistoryDatePickerdropDown']";
-    public static readonly RunHistoryAddFilter = "[data-cy^='WorkFlowInstance_AddFilterBtn']";
+    public static readonly RunHistoryAddFilter = "[data-selector^='WorkFlowInstance_AddFilterBtn']";
     public static readonly WorkflowSaveDraft = "[data-cy^='EditWorkFlow_Save']";
     public static readonly WorkflowRunHistory = "#WorkFlowTHRunHistory";
     public static readonly WorkflowEditOkButton = "[data-cy^='SubmitButton']";
