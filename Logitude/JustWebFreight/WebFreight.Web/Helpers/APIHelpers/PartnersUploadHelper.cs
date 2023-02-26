@@ -601,69 +601,71 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     var checkIfCardExist = this.partnersUniqueKeys.Where(a => a == item.UniqueCode).FirstOrDefault();
                     if (checkIfCardExist == null)
                     {
+                        string code = null;
                         switch (item.Type)
                         {
                             case "AG":
                                 {
-                                    this.CreateAgentPartner(item);
+                                    code = this.CreateAgentPartner(item);
                                     break;
                                 }
 
                             case "CS":
                             case "PO":
                                 {
-                                    this.CreateCustomerPartner(item);
+                                    code = this.CreateCustomerPartner(item);
                                     break;
                                 }
                             case "SC":
                                 {
-                                    this.CreateShipperConsigneePartner(item);
+                                    code = this.CreateShipperConsigneePartner(item);
                                     break;
                                 }
                             case "CG":
                                 {
-                                    this.CreateCustomAgentPartner(item);
+                                    code = this.CreateCustomAgentPartner(item);
                                     break;
                                 }
 
                             case "SG":
                                 {
-                                    this.CreateShippingAgentPartner(item);
+                                    code = this.CreateShippingAgentPartner(item);
                                     break;
                                 }
 
                             case "VD":
                                 {
-                                    this.CreateVendorPartner(item);
+                                    code = this.CreateVendorPartner(item);
                                     break;
                                 }
                             case "WH":
                                 {
-                                    this.CreateWarehousePartner(item);
+                                    code = this.CreateWarehousePartner(item);
                                     break;
                                 }
                             case "AL":
                                 {
-                                    this.CreateAirlinePartner(item);
+                                    code = this.CreateAirlinePartner(item);
                                     break;
                                 }
                             case "SL":
                                 {
-                                    this.CreateShippingLinePartner(item);
+                                    code = this.CreateShippingLinePartner(item);
                                     break;
                                 }
                             case "TR":
                                 {
-                                    this.CreateTruckerPartner(item);
+                                    code = this.CreateTruckerPartner(item);
                                     break;
                                 }
                             case "AC":
                                 {
-                                    this.CreateAccountingPartnerPartner(item);
+                                    code = this.CreateAccountingPartnerPartner(item);
                                     break;
                                 }
                         }
                         this.partnersUniqueKeys.Add(item.UniqueCode);
+                        this.AddComputingPartnerTranslation(code, item.UniqueCode);
                     }
                     else
                     {
@@ -740,7 +742,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
             }
         }
 
-        private void CreateVendorPartner(PartnerExcel item)
+        private string CreateVendorPartner(PartnerExcel item)
         {
             VendorPM vendor = new VendorPM()
             {
@@ -754,7 +756,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 UploadingUniqueKey = item.UniqueCode,
                 ReceivablesAccountingCard = item.ReceivablesExternalID,
                 PayablesAccountingCard = item.PayablesExternalID,
-
             };
 
             var address = CreateAddress(item, vendor.Id);
@@ -766,9 +767,10 @@ namespace WebFreight.Web.Helpers.APIHelpers
             }
             VendorService service = new VendorService(commonDataContext, vendor, systemContact.Id);
             service.Create(vendor);
+            return vendor.Code;
         }
 
-        private void CreateAccountingPartnerPartner(PartnerExcel item)
+        private string CreateAccountingPartnerPartner(PartnerExcel item)
         {
             AccountingPartnerPM accountingPartner = new AccountingPartnerPM()
             {
@@ -794,9 +796,10 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             AccountingPartnerService service = new AccountingPartnerService(commonDataContext, accountingPartner, systemContact.Id);
             service.Create(accountingPartner);
+            return accountingPartner.Code;
         }
 
-        private void CreateTruckerPartner(PartnerExcel item)
+        private string CreateTruckerPartner(PartnerExcel item)
         {
             TruckerPM trucker = new TruckerPM()
             {
@@ -822,9 +825,10 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             TruckerService service = new TruckerService(commonDataContext, trucker, systemContact.Id);
             service.Create(trucker);
+            return trucker.Code;
         }
 
-        private void CreateShippingLinePartner(PartnerExcel item)
+        private string CreateShippingLinePartner(PartnerExcel item)
         {
             ShippingLinePM shippingLine = new ShippingLinePM()
             {
@@ -841,9 +845,10 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             ShippingLineService service = new ShippingLineService(commonDataContext, shippingLine, systemContact.Id);
             service.Create(shippingLine);
+            return shippingLine.Code;
         }
 
-        private void CreateAirlinePartner(PartnerExcel item)
+        private string CreateAirlinePartner(PartnerExcel item)
         {
             AirlinePM airline = new AirlinePM()
             {
@@ -860,9 +865,10 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             AirlineService service = new AirlineService(commonDataContext, airline, systemContact.Id);
             service.Create(airline);
+            return airline.Code;
         }
 
-        private void CreateWarehousePartner(PartnerExcel item)
+        private string CreateWarehousePartner(PartnerExcel item)
         {
             WarehousePM warehouse = new WarehousePM()
             {
@@ -888,9 +894,10 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             WarehouseService service = new WarehouseService(commonDataContext, warehouse, systemContact.Id);
             service.Create(warehouse);
+            return warehouse.Code;
         }
 
-        private void CreateShippingAgentPartner(PartnerExcel item)
+        private string CreateShippingAgentPartner(PartnerExcel item)
         {
             ShippingAgentPM shippingAgent = new ShippingAgentPM()
             {
@@ -915,9 +922,10 @@ namespace WebFreight.Web.Helpers.APIHelpers
             }
             ShippingAgentService service = new ShippingAgentService(commonDataContext, shippingAgent, systemContact.Id);
             service.Create(shippingAgent);
+            return shippingAgent.Code;
         }
 
-        private void CreateCustomAgentPartner(PartnerExcel item)
+        private string CreateCustomAgentPartner(PartnerExcel item)
         {
             CustomAgentPM customAgent = new CustomAgentPM()
             {
@@ -943,9 +951,10 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             CustomAgentService service = new CustomAgentService(commonDataContext, customAgent, systemContact.Id);
             service.Create(customAgent);
+            return customAgent.Code;
         }
 
-        private void CreateCustomerPartner(PartnerExcel item)
+        private string CreateCustomerPartner(PartnerExcel item)
         {
             CustomerPM customer = new CustomerPM()
             {
@@ -972,9 +981,10 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             CustomerService service = new CustomerService(commonDataContext, customer, systemContact.Id);
             service.Create();
+            return customer.Code;
         }
 
-        private void CreateShipperConsigneePartner(PartnerExcel item)
+        private string CreateShipperConsigneePartner(PartnerExcel item)
         {
             CustomerPM customer = new CustomerPM()
             {
@@ -1001,9 +1011,10 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             CustomerService service = new CustomerService(commonDataContext, customer, systemContact.Id);
             service.Create();
+            return customer.Code;
         }
        
-        private void CreateAgentPartner(PartnerExcel item)
+        private string CreateAgentPartner(PartnerExcel item)
         {
             AgentPM agent = new AgentPM()
             {
@@ -1029,6 +1040,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             AgentService service = new AgentService(commonDataContext, agent, systemContact.Id);
             service.Create(agent);
+            return agent.Code;
         }
 
         private AddressPM CreateAddress(PartnerExcel item, string partnerId)
@@ -1137,6 +1149,11 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     customerRepository.SubmitChanges();
                 }
             }
+        }
+
+        private void AddComputingPartnerTranslation(string code, string uploadingUniqueKey)
+        {
+            throw new NotImplementedException();
         }
     }
     public class PartnerExcel

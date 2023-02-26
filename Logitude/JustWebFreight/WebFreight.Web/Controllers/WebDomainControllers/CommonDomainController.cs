@@ -3252,6 +3252,7 @@ public class PartnersUploadExcelParameter
     public string LoggedUserEmail { get; set; }
     public bool IsConfirmationByUser { get; set; }
     public string FileName { get; set; }
+    public string ComputingPartnerCode { get; set; }
 }
 
 public class ChargifyAWBStock
