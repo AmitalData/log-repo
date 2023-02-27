@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "572bcc7598da6761a6a0873c868b8440";
+		public const string HashString = "f3f1d1caea2a98fc326f311bdee4bbe4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -8033,7 +8033,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						PMPropertyPath =  "DepartmentId",
 					  						ListPropertyPath =  "DepartmentId",
 					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  true,
+					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
 					  						IsMulti =  false,

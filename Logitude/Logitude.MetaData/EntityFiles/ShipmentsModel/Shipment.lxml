@@ -9241,7 +9241,7 @@
     PMPropertyPath="&quot;DepartmentId&quot;"
     ListPropertyPath="&quot;DepartmentId&quot;"
     DisplayInLookUpIndex="0"
-    AutomaticField="true"
+    AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
     IsMulti="false"
