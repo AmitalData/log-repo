@@ -93,7 +93,7 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Name = "Day", 
                 SearchFields = "DAY,Day", 
                 Body = "(date)", 
-                Description = "Returns a day from dateTime", 
+                Description = "Returns a day of the month in the form of a number between 1 and 31.", 
                 CategoryCode = "DTE", 
                 Title = "Day(date)", 
 			});
@@ -104,7 +104,7 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Name = "Month", 
                 SearchFields = "MONTH,Month", 
                 Body = "(date)", 
-                Description = "Returns a month from dateTime", 
+                Description = "Returns the month, a number between 1 (January) and 12 (December) in number format of a given date.", 
                 CategoryCode = "DTE", 
                 Title = "Month(date)", 
 			});
@@ -173,6 +173,39 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Description = "Calculate the number of years between two dates.", 
                 CategoryCode = "DTE", 
                 Title = "Years(Start_date,End_date)", 
+			});
+			 
+            all.Add(new ExpressionDetails()
+            {    
+                Code = "LOWER", 
+                Name = "Lower", 
+                SearchFields = "LOWER,Lower", 
+                Body = "(text)", 
+                Description = "Convert all letters in the value to lower case.", 
+                CategoryCode = "TXT", 
+                Title = "Lower(text)", 
+			});
+			 
+            all.Add(new ExpressionDetails()
+            {    
+                Code = "UPPER", 
+                Name = "Upper", 
+                SearchFields = "UPPER,Upper", 
+                Body = "(text)", 
+                Description = "Convert all letters in the value to upper case.", 
+                CategoryCode = "TXT", 
+                Title = "Upper(text)", 
+			});
+			 
+            all.Add(new ExpressionDetails()
+            {    
+                Name = "Concat", 
+                SearchFields = "CONCAT,Concat", 
+                Code = "CONCAT", 
+                Body = "(value1,value2,...)", 
+                Description = "Concates values.", 
+                CategoryCode = "TXT", 
+                Title = "Concat(value1,value2,...)", 
 			});
 			
             return all;

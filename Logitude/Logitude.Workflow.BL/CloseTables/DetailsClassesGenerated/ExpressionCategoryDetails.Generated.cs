@@ -34,6 +34,13 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Code = "DTE", 
                 SearchFields = "Date & Time,DTE", 
 			});
+			 
+            all.Add(new ExpressionCategoryDetails()
+            {    
+                Name = "Text", 
+                Code = "TXT", 
+                SearchFields = "TXT,Text", 
+			});
 			
             return all;
        }
