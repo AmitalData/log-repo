@@ -94,10 +94,10 @@
                     </log-column>
 
                     <!-- Duration -->
-                    <log-column [width]="'110'" [header]="'Duration'" [SortFieldName]="'Duration'">
+                    <log-column [width]="'110'" [header]="'Duration (ms)'" [SortFieldName]="'Duration'">
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate [IsEditMode]="false">
-                                {{item.Duration}}
+                                {{item.Duration | number : '1.0-1'}}
                             </log-cell-template>
                         </ng-template>
                     </log-column>
