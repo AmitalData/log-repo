@@ -4748,6 +4748,32 @@ User/Pass",
             MappUnifreightTables mappUnifreightTables = new MappUnifreightTables();
             mappUnifreightTables.ShowDialog(this);
         }
+
+        private void UpdateTable1344_Click(object sender, EventArgs e)
+        {
+            // Create an instance of the open file dialog box.
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+
+            // Set filter options and filter index.
+            openFileDialog1.Filter = "csv Files (.csv)|*.csv|All Files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 1;
+
+            openFileDialog1.Multiselect = false;
+
+            // Call the ShowDialog method to show the dialog box.
+            DialogResult res = openFileDialog1.ShowDialog();
+
+            // Process input if the user clicked OK.
+            if (res == System.Windows.Forms.DialogResult.OK)
+            {
+                // Open the selected file to read.
+                var lines = new List<String>(File.ReadAllLines(openFileDialog1.FileName));
+
+                var log = Logitude.CustomsMessaging.ResponseServices.SYSTBL_NG_9001_MSG_SystemTablesResponseService
+                    .UNLOCODEinternationalSiteUpSert(lines);
+                MessageBox.Show(log);
+            }
+        }
     }
 
     public class TenantMailBox

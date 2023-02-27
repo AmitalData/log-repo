@@ -1,17 +1,20 @@
 ﻿using Logitude.AmitalMessaging.Utils;
 using Logitude.BL.Helpers;
 using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.Helpers;
 using Logitude.CustomsMessaging.Helpers.ClosedTable;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -1009,7 +1012,103 @@ ID List :
         }
 
 
+        public static string UNLOCODEinternationalSiteUpSert(List<string> lines)
+        {
+            var sw = Stopwatch.StartNew();
+            var sb = new StringBuilder();
+            try
+            {
+                int i = 0;
+                var CSVParser = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
+                string name = "";
+                string code = "";
+                string country = "";
+                ICustomContext MyContext = CustomContext.GetContext(1);
+                var updateService = new InternationalSiteUpdateService(MyContext, new System.Collections.Generic.Dictionary<string, IContext>(),1);
+                var queryService = new InternationalSiteQueryService(MyContext);
 
+                foreach (var line in lines)
+                {
+                    //Separating columns to array
+                    //string[] X = CSVParser.Split(line);
+
+                    var parts = //line.Split(',');
+                        CSVParser.Split(line);
+                    if (parts.Length < 5)
+                    {
+                        throw new System.Exception(@"(parts.Length < 12) Line no " + i + @"" + line);
+                    }
+
+                    country = parts[1];
+                    if(country.Length > 3)
+                    {
+                       country= country.Substring(1, country.Length - 2);
+                    }
+                    if (parts[2].Length > 3)
+                    {
+                        parts[2]=parts[2].Substring(1, parts[2].Length - 2);
+                    }
+                    code = country + parts[2];
+                    if (parts[3].Length > 3)
+                    {
+                        parts[3]=parts[3].Substring(1, parts[3].Length - 2);
+                    }
+                    name = code+ " " + parts[3];
+                    if (name.Length > 40)
+                    {
+                        name = name.Substring(0, 40);
+                    }
+
+                    var entity = queryService.GetSingle(code, false, false);
+                    if (entity != null)
+                    {
+                        Boolean changes = false;
+                        //if (entity.CountryTypeCode != country) {
+                        //    entity.CountryTypeCode = country;
+                        //    entity.ChangeSetOp = ChangeSetOperation.Update;
+                        //}
+                        if(entity.EnglishName != name)
+                        {
+                            entity.CountryTypeCode = country;
+                            entity.EnglishName = name;
+                            entity.LocalName = name;
+                            entity.SearchFields = name;
+                            entity.ChangeSetOp = ChangeSetOperation.Update;
+                        }
+                        if (entity.ChangeSetOp == ChangeSetOperation.Update)
+                        {
+                            updateService.Update(entity, true);
+                        }
+                    }
+                    else
+                    {
+                        var newEntity= new InternationalSitePM();
+                        newEntity.CountryTypeCode = country;
+                        newEntity.ChangeSetOp = ChangeSetOperation.Insert;
+                        newEntity.LocalName = name;
+                        newEntity.EnglishName = name;
+                        newEntity.Code = code;
+                        newEntity.SearchFields = name;
+                        updateService.Update(newEntity, true);
+                    }
+
+                }
+                
+
+            }
+            catch (System.Exception eee)
+            {
+
+                sb.AppendLine(eee.ToString());
+            }
+            sb
+                .Append("end")
+                .AppendLine(sw.Elapsed.ToString());
+
+            return sb.ToString();
+
+
+        }
         public static string internationalSiteUpSert(List<string> lines)
         {
             var sw = Stopwatch.StartNew();
