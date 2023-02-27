@@ -182,6 +182,7 @@
             this.lblUInvoice = new System.Windows.Forms.Label();
             this.lblUQuote = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.MapUnifreightTables = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.button6 = new System.Windows.Forms.Button();
             this.linkLabel3 = new System.Windows.Forms.LinkLabel();
@@ -221,7 +222,7 @@
             this.button52 = new System.Windows.Forms.Button();
             this.fixJournalsButton = new System.Windows.Forms.Button();
             this.button51 = new System.Windows.Forms.Button();
-            this.MapUnifreightTables = new System.Windows.Forms.Button();
+            this.UpdateTable1344 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -518,7 +519,7 @@
             this.expPackagesToolStripMenuItem,
             this.expRolesToolStripMenuItem});
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             this.exportToolStripMenuItem.Text = "Export";
             // 
             // expPackagesToolStripMenuItem
@@ -541,7 +542,7 @@
             this.impPackagesToolStripMenuItem,
             this.impRolesToolStripMenuItem});
             this.importToolStripMenuItem1.Name = "importToolStripMenuItem1";
-            this.importToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.importToolStripMenuItem1.Size = new System.Drawing.Size(110, 22);
             this.importToolStripMenuItem1.Text = "Import";
             // 
             // impPackagesToolStripMenuItem
@@ -578,14 +579,14 @@
             // rTLToolStripMenuItem
             // 
             this.rTLToolStripMenuItem.Name = "rTLToolStripMenuItem";
-            this.rTLToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.rTLToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.rTLToolStripMenuItem.Text = "RTL";
             this.rTLToolStripMenuItem.Click += new System.EventHandler(this.rtlBtn_Click);
             // 
             // lTRToolStripMenuItem
             // 
             this.lTRToolStripMenuItem.Name = "lTRToolStripMenuItem";
-            this.lTRToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.lTRToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.lTRToolStripMenuItem.Text = "LTR";
             this.lTRToolStripMenuItem.Click += new System.EventHandler(this.ltrBtn_Click);
             // 
@@ -600,7 +601,7 @@
             // executeToolStripMenuItem
             // 
             this.executeToolStripMenuItem.Name = "executeToolStripMenuItem";
-            this.executeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.executeToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.executeToolStripMenuItem.Text = "Execute";
             this.executeToolStripMenuItem.Click += new System.EventHandler(this.executeToolStripMenuItem_Click);
             // 
@@ -1754,6 +1755,7 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage2.Controls.Add(this.UpdateTable1344);
             this.tabPage2.Controls.Add(this.MapUnifreightTables);
             this.tabPage2.Controls.Add(this.groupBox3);
             this.tabPage2.Controls.Add(this.uploadPackagesLabel);
@@ -1820,6 +1822,16 @@
             this.tabPage2.Size = new System.Drawing.Size(850, 622);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Other";
+            // 
+            // MapUnifreightTables
+            // 
+            this.MapUnifreightTables.Location = new System.Drawing.Point(271, 579);
+            this.MapUnifreightTables.Name = "MapUnifreightTables";
+            this.MapUnifreightTables.Size = new System.Drawing.Size(184, 23);
+            this.MapUnifreightTables.TabIndex = 105;
+            this.MapUnifreightTables.Text = "Map Unifreight Tables";
+            this.MapUnifreightTables.UseVisualStyleBackColor = true;
+            this.MapUnifreightTables.Click += new System.EventHandler(this.MapUnifreightTables_Click);
             // 
             // groupBox3
             // 
@@ -2209,15 +2221,15 @@
             this.button51.UseVisualStyleBackColor = true;
             this.button51.Click += new System.EventHandler(this.button51_Click_1);
             // 
-            // MapUnifreightTables
+            // UpdateTable1344
             // 
-            this.MapUnifreightTables.Location = new System.Drawing.Point(271, 579);
-            this.MapUnifreightTables.Name = "MapUnifreightTables";
-            this.MapUnifreightTables.Size = new System.Drawing.Size(184, 23);
-            this.MapUnifreightTables.TabIndex = 105;
-            this.MapUnifreightTables.Text = "Map Unifreight Tables";
-            this.MapUnifreightTables.UseVisualStyleBackColor = true;
-            this.MapUnifreightTables.Click += new System.EventHandler(this.MapUnifreightTables_Click);
+            this.UpdateTable1344.Location = new System.Drawing.Point(733, 23);
+            this.UpdateTable1344.Name = "UpdateTable1344";
+            this.UpdateTable1344.Size = new System.Drawing.Size(109, 23);
+            this.UpdateTable1344.TabIndex = 106;
+            this.UpdateTable1344.Text = "update table 1344";
+            this.UpdateTable1344.UseVisualStyleBackColor = true;
+            this.UpdateTable1344.Click += new System.EventHandler(this.UpdateTable1344_Click);
             // 
             // Form1
             // 
@@ -2467,6 +2479,7 @@
         private System.Windows.Forms.Button buttonQuoteOPMZIP;
         private System.Windows.Forms.ToolStripMenuItem tESTToolStripMenuItem;
         private System.Windows.Forms.Button MapUnifreightTables;
+        private System.Windows.Forms.Button UpdateTable1344;
     }
 }
 
