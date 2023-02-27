@@ -85,7 +85,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "9523316047728db4dc6f06d369817f49";
+
+		public const string HashString = "ae7bae4ccff8de18255acc04e724c3f7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +126,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "5510",
+
+			      				    Code =  "604a",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2143,6 +2145,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsGeneralODeclarationSubmittedDocumentsCannotBeLinked = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.DeclarationSubmittedDocumentsCannotBeLinked", DefaultText = "The declaration has already been submitted - new documents cannot be linked",LocalDefaultText = @"ההצהרה כבר הוגשה - לא ניתן לקשר מסמכים חדשים", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOCannotDetachDocumentWithCustomsDocId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CannotDetachDocumentWithCustomsDocId", DefaultText = "Cannot detach a document with CustomsDocId - declaration for display only",LocalDefaultText = @"לא ניתן לנתק מסמך עם סימוכין - הצהרה לתצוגה בלבד", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomsGeneralTextCode_CustomsCreditGoldQueryOCustomFileNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CreditGoldQuery.O.CustomFileNo", DefaultText = "Custom File No",LocalDefaultText = @"תיק עמילות", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
