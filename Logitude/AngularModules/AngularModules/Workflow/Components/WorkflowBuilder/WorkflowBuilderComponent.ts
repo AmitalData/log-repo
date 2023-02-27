@@ -468,7 +468,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
             CurrentNodeId: openPropertiesEventObject.nodeId
         };
         propertiesWindow.Height = openPropertiesEventObject.nodeType == "declareVariableNode" ? 320 : 850;
-        propertiesWindow.Width = 985;
+        propertiesWindow.Width = 1000;
         propertiesWindow.RTL = false;
         propertiesWindow.Title = this.getPropertiesWindowTitle(openPropertiesEventObject.nodeLabel);
         propertiesWindow.WindowArgs = propertiesWindowArgs;
