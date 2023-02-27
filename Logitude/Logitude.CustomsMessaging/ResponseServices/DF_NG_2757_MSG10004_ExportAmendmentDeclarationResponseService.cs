@@ -1298,8 +1298,32 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         SupplierInvoiceItemsPricePM supplierInvoiceItemsPrice = new SupplierInvoiceItemsPricePM();
 
+                        if (isFromImporter)//פתיחת בקשה לתיקון
+                        {
+                            supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Insert;
+                        }
+                        else //משוב לתיקון
+                        {
+                            if ((new string[]{"5","11","16" }).Contains(GetValueCodeType(GoodsItemAmount.AmountType)))
+                                supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Insert;
+                            else
+                                continue;
+                        }
+                       
 
-                        supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Insert;
+                        /*if (!isFromImporter && AdditionalPriceTypeCodes.Contains(AdditionalPriceTypeCode))
+                        {
+                            //supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Update;
+                        }
+                        else if (isFromImporter)
+                        {
+                            supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Insert;
+                        }
+                        else
+                        {
+                            continue;
+                        }*/
+
                         supplierInvoiceItemsPrice.DeclarationId = declarationId;
                         supplierInvoiceItemsPrice.AdditionalPrice = GetValueAmountType(GoodsItemAmount.CustomsValueAmount);
                        
