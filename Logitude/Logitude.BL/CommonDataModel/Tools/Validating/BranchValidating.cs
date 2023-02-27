@@ -1,4 +1,6 @@
-﻿using Simplog.Data.CommonDataModel.Repositories;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,18 +11,18 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
     public class BranchValidating
     {
 
-        public static void Validate(EntityPMs.BranchPM entityPM, BranchRepository entityRepository)
+        public static void Validate(BranchPM entityPM, BranchRepository entityRepository)
         {
             if (string.IsNullOrEmpty(entityPM.CounterCode))
             {
                 throw new Exception("Counter Code is Required");
             }
 
-            string branchName = entityRepository.GetBranchNameByCounterCode(entityPM.CounterCode, entityPM.Tenant);
+            Branch branch = entityRepository.GetBranchByCounterCode(entityPM.CounterCode, entityPM.Tenant);
 
-            if (!string.IsNullOrEmpty(branchName))
+            if (branch != null && branch.Id != entityPM.Id)
             {
-                throw new Exception("Counter Code is already used in " + branchName + " branch ");
+                throw new Exception("Counter Code is already used in " + branch.EnglishName + " branch ");
             }
         }
     }
