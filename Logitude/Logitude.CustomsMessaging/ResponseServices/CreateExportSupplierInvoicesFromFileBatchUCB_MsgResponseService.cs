@@ -449,7 +449,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 var lines = decodedString.Split(new string[] { "\n" }, StringSplitOptions.None).ToList();
                
                 InvoiceFromFile currentInvoice = null;
-                for (int i = 2; i < lines.Count; i++)
+                for (int i = 1; i < lines.Count; i++)
                 {
                     if (string.IsNullOrWhiteSpace(lines[i])) continue;
                     string[] data = Regex.Split(lines[i], ",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
