@@ -78,5 +78,6 @@ export class DocumentsFilingList {
 		SignDueDate: Date;
 		IsDigitalSignRequired: boolean;
 		BackedupExternally: boolean;
+		ReceivedByPartner: string;
 	
 }
