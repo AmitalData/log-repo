@@ -26,11 +26,12 @@
         <td class="table-row-cell">
             <div class="title">
                 <LogLabel [NoObjectField]="true" [Text]="'Description'" [ObjectFieldName]="'Description'"
-                    [HideColumns]="true" [DataContext]="DataContext"></LogLabel>
+                    [DataContext]="DataContext" [HideColumns]="true">
+                </LogLabel>
             </div>
             <div class="version-description">
-                <textarea class="version-textarea" id="version_description" [(ngModel)]='VersionDescription'
-                    (ngChange)='updateVersionDescription($event.Value)'></textarea>
+                <textarea class="version-textarea" id="version_description" [(ngModel)]='Description'
+                    (ngChange)='Description($event.Value)'></textarea>
             </div>
         </td>
     </tr>
@@ -43,7 +44,7 @@
 
     <tr class="table-row">
         <td>
-            <FooterButtons [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="saveButtonClicked()"
+            <FooterButtons [SaveButtonLabel]="'Save'" (SaveButtonClicked)="saveButtonClicked()"
                 (CancelButtonClicked)="cancelButtonClicked()" [SaveButtonDataCy]="'expression-save-button'"
                 [CancelButtonDataCy]="'expression-cancel-button'">
             </FooterButtons>
