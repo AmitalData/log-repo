@@ -1,0 +1,13 @@
+﻿<Script DBType="Main" Module="Common" TargetTableName="Roles">
+  <Sql Version="1">
+    <![CDATA[
+
+      if exists (select Id from Roles where Tenant = 0 and Code = 'BILL')
+       begin       
+         update Roles set Description = 'Billing against Logitude. Can manage Chargify account and edit the payment options.'
+         where Code = 'BILL' and Tenant = 0                   
+       end 
+      
+    ]]>
+  </Sql>
+</Script>
