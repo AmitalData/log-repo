@@ -161,9 +161,9 @@ namespace Simplog.Data.CommonDataModel.Repositories
             throw new NotImplementedException();
         }
 
-        public string GetBranchNameByCounterCode(string counterCode, int tenant)
+        public Branch GetBranchByCounterCode(string counterCode, int tenant)
         {
-            return (from branch in context.Branches where branch.CounterCode == counterCode && branch.Tenant == tenant select branch)?.FirstOrDefault()?.EnglishName;
+            return (from branch in context.Branches where branch.CounterCode == counterCode && branch.Tenant == tenant select branch)?.FirstOrDefault();
         }
     }
 }
