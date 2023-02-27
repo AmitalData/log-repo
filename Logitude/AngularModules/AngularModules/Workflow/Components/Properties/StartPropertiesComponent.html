@@ -1,8 +1,11 @@
 <style>
+    .table-container {
+        table-layout: fixed;
+    }
+
     .link-button {
         cursor: pointer;
         color: #2b78e4;
-        float: left;
     }
 
     .link-button .plus-sign {
@@ -17,6 +20,10 @@
 
     .link-button.disabled {
         opacity: 0.5;
+    }
+
+    .add-group-button {
+        margin-left: 20px;
     }
 
     .table-row {
@@ -65,9 +72,8 @@
 
     .start-conditions-container {
         overflow: auto;
-        width: 936px;
+        width: 100%;
         height: 337px;
-        pointer-events: auto !important;
     }
 
     .min-start-conditions-container {
@@ -81,7 +87,7 @@
 
 
 
-<table>
+<table class="table-container">
 
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
         <td>
@@ -113,8 +119,8 @@
             </div>
             <div class="table-row-cell-block entity-list-container">
                 <TreeSelect [Items]="EntitiesTreeItems" [Width]="'300px'" [Value]="Entity" [ShowExpand]="false"
-                    [ShowItem]="'Start' | ShowEntitiesTreeItemPipe : true"
-                    (ValueChanged)="updateEntity($event)" [DataCy]="'TriggerEntity'">
+                    [ShowItem]="'Start' | ShowEntitiesTreeItemPipe : true" (ValueChanged)="updateEntity($event)"
+                    [DataCy]="'TriggerEntity'">
                 </TreeSelect>
             </div>
         </td>
@@ -204,9 +210,14 @@
                 [ngClass]="{'min-start-conditions-container': (ValidationErrorsList != null && ValidationErrorsList.length > 0)}">
 
                 <div *ngIf="Conditions && Conditions.length === 0">
-                    <span class="link-button" [ngClass]="{'disabled': !EntityId}"
-                        (click)="initializeConditions(true, true)" [attr.data-cy]="'AddConditionButton'">
+                    <span class="link-button" [ngClass]="{'disabled': !EntityId}" (click)="addCondition()"
+                        [attr.data-cy]="'AddConditionButton'">
                         <span class="plus-sign">+</span><span>Add Condition</span>
+                    </span>
+
+                    <span class="link-button add-group-button" [ngClass]="{'disabled': !EntityId}"
+                        (click)="addCondition(true)" [attr.data-cy]="'AddGroupButton'">
+                        <span class="plus-sign">+</span><span>Add Group</span>
                     </span>
                 </div>
 
