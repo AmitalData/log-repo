@@ -142,7 +142,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
                 if (this.DecPM.Direction === 'E' && this.DecPM.TransportModeId === 'O') {
 
-                    if(this.FinalShipCode)
+                    if(!this.FinalShipCode)
                         this.FinalShipCode = this.DecPM.Consignments.find(x => x.ConsignmentType == "E")?.ShipCode;
                     if (this.FinalCargoTypeCode == null) {
 
