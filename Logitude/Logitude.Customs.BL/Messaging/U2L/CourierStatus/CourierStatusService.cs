@@ -30,6 +30,7 @@ using Unifreight.BL.EntityUpdateServices;
 using Unifreight.Data.AmitalModel;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.Customs.BL.Messaging.U2L.CourierStatus
 {
@@ -99,39 +100,47 @@ namespace Logitude.Customs.BL.Messaging.U2L.CourierStatus
             DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
             if(newDeclarationCourierStatusPM != null)
             {
-                DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
 
-                newDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                newDeclarationCourierStatusPM.LastMileStatusCode = _LogitudeCourierStatus.LastMileStatus;
-                newDeclarationCourierStatusPM.LastMileStatusName = _LogitudeCourierStatus.LastMileStatusName;
-                newDeclarationCourierStatusPM.LastMileStatusDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCourierStatus.LastMileStatusDate, "_LogitudeCourierStatus.LastMileStatusDate");
-                newDeclarationCourierStatusPM.LastMileStatusRemarks = _LogitudeCourierStatus.LastMileStatusRemarks;
-                if (string.IsNullOrWhiteSpace(_LogitudeCourierStatus.Delivered) || (!string.IsNullOrWhiteSpace(_LogitudeCourierStatus.Delivered) && _LogitudeCourierStatus.Delivered.ToLower().Substring(0, 1) != "t"))
+                FeatureQuery featureQuery = new FeatureQuery();
+                var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(_MyDeclarationPM.Tenant), _MyDeclarationPM.Tenant);
+                var feature = features.Features.FirstOrDefault(x => x.Code == "UpdateDistributionStatus");
+         
+                if(feature == null || (feature != null && (newDeclarationCourierStatusPM.LastMileStatusDate == null || newDeclarationCourierStatusPM.LastMileStatusDate < AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCourierStatus.LastMileStatusDate, "_LogitudeCourierStatus.LastMileStatusDate"))))
                 {
-                    //newDeclarationCourierStatusPM.Delivered = false;
+                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
 
-                    //Update NoOfCourierHawbwWithoutDeliverys
-                    var myCourierMasterQueryService = new CourierMasterQueryService(_context);
-                    CourierMasterPM _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(_MyDeclarationPM.Id, _MyDeclarationPM.Tenant);
-                    IUpdateOpenDeclarationInCourierMasterService myIUpdateOpenDeclarationInCourierMasterService = ContainerAccessor.Container.Resolve(typeof(IUpdateOpenDeclarationInCourierMasterService), "UpdateOpenDeclarationInCourierMasterService", new ParameterOverride("", _MyDeclarationPM.Tenant)) as IUpdateOpenDeclarationInCourierMasterService;
-                    myIUpdateOpenDeclarationInCourierMasterService.UpdateOpenDeclarationInCourierMaster(_MyDeclarationPM.Tenant, _CourierMasterPM.Id, null);
+                    newDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    newDeclarationCourierStatusPM.LastMileStatusCode = _LogitudeCourierStatus.LastMileStatus;
+                    newDeclarationCourierStatusPM.LastMileStatusName = _LogitudeCourierStatus.LastMileStatusName;
+                    newDeclarationCourierStatusPM.LastMileStatusDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCourierStatus.LastMileStatusDate, "_LogitudeCourierStatus.LastMileStatusDate");
+                    newDeclarationCourierStatusPM.LastMileStatusRemarks = _LogitudeCourierStatus.LastMileStatusRemarks;
+                    if (string.IsNullOrWhiteSpace(_LogitudeCourierStatus.Delivered) || (!string.IsNullOrWhiteSpace(_LogitudeCourierStatus.Delivered) && _LogitudeCourierStatus.Delivered.ToLower().Substring(0, 1) != "t"))
+                    {
+                        //newDeclarationCourierStatusPM.Delivered = false;
 
-                }
-                else
-                {
-                    newDeclarationCourierStatusPM.Delivered = true;
+                        //Update NoOfCourierHawbwWithoutDeliverys
+                        var myCourierMasterQueryService = new CourierMasterQueryService(_context);
+                        CourierMasterPM _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(_MyDeclarationPM.Id, _MyDeclarationPM.Tenant);
+                        IUpdateOpenDeclarationInCourierMasterService myIUpdateOpenDeclarationInCourierMasterService = ContainerAccessor.Container.Resolve(typeof(IUpdateOpenDeclarationInCourierMasterService), "UpdateOpenDeclarationInCourierMasterService", new ParameterOverride("", _MyDeclarationPM.Tenant)) as IUpdateOpenDeclarationInCourierMasterService;
+                        myIUpdateOpenDeclarationInCourierMasterService.UpdateOpenDeclarationInCourierMaster(_MyDeclarationPM.Tenant, _CourierMasterPM.Id, null);
 
-                }
-                if (string.IsNullOrWhiteSpace(_LogitudeCourierStatus.IsClosedForFollowUp) || (!string.IsNullOrWhiteSpace(_LogitudeCourierStatus.IsClosedForFollowUp) && _LogitudeCourierStatus.IsClosedForFollowUp.ToLower().Substring(0, 1) != "t"))
-                {
-                    //newDeclarationCourierStatusPM.IsClosedForFollowUp = false;
+                    }
+                    else
+                    {
+                        newDeclarationCourierStatusPM.Delivered = true;
 
+                    }
+                    if (string.IsNullOrWhiteSpace(_LogitudeCourierStatus.IsClosedForFollowUp) || (!string.IsNullOrWhiteSpace(_LogitudeCourierStatus.IsClosedForFollowUp) && _LogitudeCourierStatus.IsClosedForFollowUp.ToLower().Substring(0, 1) != "t"))
+                    {
+                        //newDeclarationCourierStatusPM.IsClosedForFollowUp = false;
+
+                    }
+                    else
+                    {
+                        newDeclarationCourierStatusPM.IsClosedForFollowUp = true;
+                    }
+                    declarationCourierStatusUpdateService.Update(newDeclarationCourierStatusPM, true);
                 }
-                else
-                {
-                    newDeclarationCourierStatusPM.IsClosedForFollowUp = true;
-                }
-                declarationCourierStatusUpdateService.Update(newDeclarationCourierStatusPM, true);
             }
 
             AppendLogLine("send request:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
