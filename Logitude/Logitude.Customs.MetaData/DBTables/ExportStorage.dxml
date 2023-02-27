@@ -247,10 +247,7 @@
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Index
-     Columns="Tenant" />
-
+    Columns="Tenant" />
   <Index
-       Columns="ExporterID,StorageStatus" />
-
-  
+    Columns="ExporterID,StorageStatus" />
 </Table>
