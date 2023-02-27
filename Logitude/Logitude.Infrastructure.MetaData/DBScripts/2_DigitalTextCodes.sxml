@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="26">
+  <Sql Version="27">
     <![CDATA[
 	  delete from DigitalTextCodes where Tenant = 0
 	  
@@ -2945,8 +2945,8 @@
 			{
 				"TextCode": "ARInvoice.G.MyReference",
 				"DefaultText": "My reference",
-				"FieldCode": "",
-				"DisplayText": "ARInvoice.MyReference"
+				"FieldCode": "ARInvoice.MyReference",
+				"DisplayText": ""
 			},
 			{
 				"TextCode": "ARInvoice.G.DawnloadInvoice",
@@ -5799,8 +5799,8 @@
 			{
 				"TextCode": "ARInvoice.G.MyReference",
 				"DefaultText": "My reference",
-				"FieldCode": "",
-				"DisplayText": "ARInvoice.MyReference"
+				"FieldCode": "ARInvoice.MyReference",
+				"DisplayText": ""
 			},
 			{
 				"TextCode": "ARInvoice.G.DawnloadInvoice",
