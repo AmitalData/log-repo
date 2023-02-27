@@ -577,7 +577,11 @@ export class HelpResourceArgs {
     get HowToContent() { return this.entity.Name; }
     get Code() { return this.entity.Code; }
     get IsNew() { return this.entity.IsNew; }
+
     private HowToMethod() {
+        if (this.entity.Type == "REL")
+            ServiceLocator.SendTotangoUserActivity("How-To", "View Release Notes");
+
         ServiceLocator.SendTotangoUserActivity("Help Center", "How-To");
         var url = ServiceHelper.GetLogitudeURL() + 'WebPages/HowToDownloadPage.aspx?id=' + this.entity.Code;
         var params: any[] = [{ name: "Token", value: SessionInfo.DocumentDownloadToken }, { name: "Code", value: this.Code } ]

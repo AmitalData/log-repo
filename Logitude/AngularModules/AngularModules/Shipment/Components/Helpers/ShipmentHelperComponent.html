@@ -40,9 +40,11 @@
         <td style="padding-right: 5px;" *ngIf="IsShipmentContainersVisible">
             <button class="Button" (click)="ContainersRequestStatusClicked()">Containers Request Status</button>
         </td>
+
         <td style="padding-right: 5px;" *ngIf="IsGeneralSimulatorVisible">
             <button class="Button" (click)="GeneralShipmentContainersSimulatorClicked()">General Container Statuses Simulator</button>
         </td>
+
         <td *ngIf="IsAWBWizardButtonVisible">
             <button class="Button" (click)="AWBButtonClicked()">{{AWBWizardButtonLabel}}</button>
         </td>
@@ -50,12 +52,15 @@
         <td *ngIf="IsImportAWBWizardButtonVisible" style="padding-left: 10px; padding-right: 5px;">
             <button class="Button" (click)="AWBImportButtonClicked()">{{AWBImportWizardButtonLabel}}</button>
         </td>
-        <td style="padding-right: 5px;" *ngIf="IsVisionRequestStatus" >
-            <button class="Button" (click)="VizionStatusClicked()">Track Container</button>
+
+        <td style="padding-right: 5px;" *ngIf="IsTrackContainerVisible" >
+            <button class="Button" (click)="TrackContainerClicked()">Track Container</button>
         </td>
+
         <td *ngIf="NotesSharedWithCustomerActivated" style="padding-left: 5px; padding-right: 0px;">
             <HelperNotes [IconCode]="'R'" [Title]="'Notes Shared with Customer'" [IsCustom]="true" [Text]="NotesSharedWithCustomer" (TextChanged)="NotesSharedWithCustomer = $event" [ShipmentPM]="EntityPM"></HelperNotes>
         </td>
+
         <td style="padding-left: 10px; padding-right: 5px;">
             <HelperNotes [Title]="'Notes'" [EntityTitle]="EntityTitle" [Text]="Notes" (TextChanged)="Notes = $event" [ShipmentPM]="EntityPM"></HelperNotes>
         </td>
