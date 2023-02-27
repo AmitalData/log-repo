@@ -965,6 +965,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
         }
 
+
         private void UpdateDeclarationCourierStatus380(CustomsDocumentPM entityPM)
         {
             ICustomContext context = MainContext as CustomContext;

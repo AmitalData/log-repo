@@ -389,6 +389,8 @@ namespace Logitude.CustomsMessaging.RequestServices
             var myCustomsDocumentPM = myQueryService.GetSingle(requestParams.DocumentsFilingId, true, false);
             myCustomsDocumentPM.DocumentStatusCode = "2";
             myCustomsDocumentPM.ChangeSetOp = ChangeSetOperation.Update;
+
+            myCustomsDocumentUpdateService.Update(myCustomsDocumentPM, true);
             base.OnRequestFail(requestParams);
         }
     }
