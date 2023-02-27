@@ -1,7 +1,7 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
 	<Sql Version="24">
       <![CDATA[
-	    delete from DigitalPortalScreens where Id != ''
+	    delete from DigitalPortalScreens where Tenant = 0
 		declare @customerProfileId as varchar(15)
 		set @customerProfileId = (select Id from DigitalProfiles where [Name] = 'Customer' and Tenant = 0 )
 		declare @agentProfileId as varchar(15)
