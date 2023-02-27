@@ -619,7 +619,7 @@ export class DocsInDataViewModel extends BaseComponent{
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
         
             this.DocsInComponent.IsClickToUpload = false;
-            if (this.DocsInComponent.IsShipmentPendingApprovalList())
+            if (this.DocsInComponent.IsShipmentPendingApprovalList() && this.DocumentHasFile)
                 this.DocsInComponent.RefreshButtonClicked();
         });
 
