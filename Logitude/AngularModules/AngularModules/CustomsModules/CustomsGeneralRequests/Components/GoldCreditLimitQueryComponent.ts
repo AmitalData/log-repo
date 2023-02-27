@@ -216,6 +216,9 @@ export class GoldCreditLimitQueryComponent
             "שליחת שאילתא לנתוני העברת זהב", true)
             .then((res) => {
                 this.ResponseData = res;
+                if(this.ResponseData  && !this.ResponseData.ContinueProcessInBackground)
+                    this.MyLastCustomsRequestSheetId = currRequestParams.PBId;
+
                 this.OnMassageDisplayMethod();
             }
             ).catch((err) => {

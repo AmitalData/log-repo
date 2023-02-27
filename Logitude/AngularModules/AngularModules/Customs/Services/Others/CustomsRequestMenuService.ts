@@ -113,7 +113,11 @@ export class CustomsRequestMenuService {
         //string uri = Simplog.Infrastructure.App.Current.Host.Source.AbsoluteUri;
         //if (!uri.StartsWith("http://amitaliis.cloudapp.net/unifreightIIG/")) {
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CreditQuery"), "CreditQuery", './CustomsModules/CustomsGeneralRequests/Components/CreditLimitQueryComponent', 650, 610, "8289"));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem("שאילתא לתקרת זהב", "CreditGoldQuery", './CustomsModules/CustomsGeneralRequests/Components/GoldCreditLimitQueryComponent', 850, 610, "8289Z"));
+       
+        var my8289Z = (new CustomsMenuItem("שאילתא לתקרת זהב", "CreditGoldQuery", './CustomsModules/CustomsGeneralRequests/Components/GoldCreditLimitQueryComponent', 1040, 610, "8289Z"))
+        my8289Z.CanExportExcel = true;
+        this._CustomsRequestMenuItems.push(my8289Z);
+
         const my8285 = new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.PaymentQuery"), "Payments", './CustomsModules/CustomsRequests/Components/PaymentOrderRequests/PaymentOrderQueryComponent', 950, 650, "8285")
         my8285.CanExportExcel = true;
         this._CustomsRequestMenuItems.push(my8285);
@@ -171,6 +175,11 @@ export class CustomsRequestMenuService {
         this._CustomsRequestMenuItems.push(new CustomsMenuItem("קליטת זמינויות", "StorageEntranceComponent", './CustomsModules/CustomsRequests/Components/Courier/StorageEntranceComponent', 800, 500, ""));
 
         this._CustomsRequestMenuItems.push(new CustomsMenuItem("מסר התרה לתיק", "ReleaseGoods", './CustomsModules/CustomsRequests/Components/DeclarationRequests/ReleaseGoodsComponent', 1010, 610, "2470", null, null, null, true));
+    
+    
+        const my9060 = (new CustomsMenuItem("שאילתא לתקרת זהב", "CreditGoldQuery", './CustomsModules/CustomsGeneralRequests/Components/GoldCreditLimitQueryComponent', 1040, 610, "9060"));
+        my9060.CanExportExcel = true;
+        this._CustomsRequestMenuItems.push(my9060);
     }
     public ShowModalByIdAndIntreface(id: string, InterfaceTypeCode: string, RequestDescription: string) {
         if (AppTool.IsNullOrEmpty(id)) {
