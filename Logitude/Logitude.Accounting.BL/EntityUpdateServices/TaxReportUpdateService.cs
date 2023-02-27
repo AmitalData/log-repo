@@ -43,7 +43,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             FullAccountingSettingPM setting = GetFullAccountingSetting(entityPM.Tenant);
             entityPM.LastUpdateDate = new DateTime(date.Year, date.Month, 15);
             entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
-            entityPM.UpdatedByUserName = GetLoggedContact(entityPM.Tenant).LocalName != null ? GetLoggedContact(entityPM.Tenant).LocalName : GetLoggedContact(entityPM.Tenant).EnglishName ;
             TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
             TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
             entityPM.VatNumber = setting.ConsolidationVAT != null ? setting.ConsolidationVAT : tenantPM.VatNumber;
@@ -157,7 +156,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
 
-               //TaxReportService.CreateTaxReportFileInBatch(entityPM.Id, entityPM.Tenant);
+                //TaxReportService.CreateTaxReportFileInBatch(entityPM.Id, entityPM.Tenant);
 
             }
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
@@ -256,12 +255,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         linesPM.Add(item);
                     });
                     TaxReportService.CalculateReportTotals(entityPM, linesPM);
-                   
-                } 
-               // entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
+
+                }
+                // entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
                 ContactPM loggedContact = GetLoggedContact(entityPM.Tenant);
                 entityPM.UpdatedByUserName = loggedContact.LocalName != null ? loggedContact.LocalName : loggedContact.EnglishName;
-                
+
             }
 
             base.OnUpdating(entityPM, entityPOCO);
@@ -331,12 +330,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             JournalAdditionalDataQueryService additionalDataQueryService = new JournalAdditionalDataQueryService(taxReportLine.Tenant);
             return additionalDataQueryService.GetSingle(taxReportLine.JournalId, taxReportLine.JournalLineNumber, false, false);
         }
-  
+
 
         private void CheckLaterReports(TaxReportPM entityPM)
         {
             bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
-            
+
 
             TaxReportQueryService reportQuery = new TaxReportQueryService(entityPM.Tenant);
             List<TaxReport> futureReports = reportQuery.GetFutureActiveReports(entityPM.CreateDate, entityPM.Tenant);
@@ -359,6 +358,141 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     IsAddedManually = false,
                     EventTypeCode = "CREV",
                     Notes = "",
+                };
+                EventTracer.CreateTraceEvent(eventTracerArgs);
+            }
+            if (entityPM.VatNumber != entityPOCO.VatNumber)
+            {
+                string notes = TranslateTextsClass.Translate("TaxReport.F.VatNumber", entityPOCO.Tenant) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPOCO.Tenant) + entityPOCO.VatNumber + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPOCO.Tenant) + entityPM.VatNumber;
+                EventTracerArgs eventTracerArgs = new EventTracerArgs()
+                {
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    UserId = loggedContact.Id,
+                    ObjectTableName = "TaxReport",
+                    IsAddedManually = false,
+                    EventTypeCode = "UPEV",
+                    Notes = notes,
+                };
+                EventTracer.CreateTraceEvent(eventTracerArgs);
+            }
+            if (entityPM.ExemptTaxableOutput != entityPOCO.ExemptTaxableOutput)
+            {
+                string notes = TranslateTextsClass.Translate("TaxReport.F.ExemptTaxableOutput", entityPOCO.Tenant) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPOCO.Tenant) + entityPOCO.ExemptTaxableOutput + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPOCO.Tenant) + entityPM.ExemptTaxableOutput;
+                EventTracerArgs eventTracerArgs = new EventTracerArgs()
+                {
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    UserId = loggedContact.Id,
+                    ObjectTableName = "TaxReport",
+                    IsAddedManually = false,
+                    EventTypeCode = "UPEV",
+                    Notes = notes,
+                };
+                EventTracer.CreateTraceEvent(eventTracerArgs);
+            }
+            if (entityPM.EquipmentInputsTaxAmount != entityPOCO.EquipmentInputsTaxAmount)
+            {
+                string notes = TranslateTextsClass.Translate("TaxReport.F.EquipmentInputsTaxAmount", entityPOCO.Tenant) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPOCO.Tenant) + entityPOCO.EquipmentInputsTaxAmount + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPOCO.Tenant) + entityPM.EquipmentInputsTaxAmount;
+                EventTracerArgs eventTracerArgs = new EventTracerArgs()
+                {
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    UserId = loggedContact.Id,
+                    ObjectTableName = "TaxReport",
+                    IsAddedManually = false,
+                    EventTypeCode = "UPEV",
+                    Notes = notes,
+                };
+                EventTracer.CreateTraceEvent(eventTracerArgs);
+            }
+            if (entityPM.OtherInputsTaxAmount != entityPOCO.OtherInputsTaxAmount)
+            {
+                string notes = TranslateTextsClass.Translate("TaxReport.F.OtherInputsTaxAmount", entityPOCO.Tenant) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPOCO.Tenant) + entityPOCO.OtherInputsTaxAmount + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPOCO.Tenant) + entityPM.OtherInputsTaxAmount;
+                EventTracerArgs eventTracerArgs = new EventTracerArgs()
+                {
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    UserId = loggedContact.Id,
+                    ObjectTableName = "TaxReport",
+                    IsAddedManually = false,
+                    EventTypeCode = "UPEV",
+                    Notes = notes,
+                };
+                EventTracer.CreateTraceEvent(eventTracerArgs);
+            }
+            if (entityPM.EquipmentInputsTaxAmount != entityPOCO.EquipmentInputsTaxAmount)
+            {
+                string notes = TranslateTextsClass.Translate("TaxReport.F.EquipmentInputsTaxAmount", entityPOCO.Tenant) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPOCO.Tenant) + entityPOCO.EquipmentInputsTaxAmount + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPOCO.Tenant) + entityPM.EquipmentInputsTaxAmount;
+                EventTracerArgs eventTracerArgs = new EventTracerArgs()
+                {
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    UserId = loggedContact.Id,
+                    ObjectTableName = "TaxReport",
+                    IsAddedManually = false,
+                    EventTypeCode = "UPEV",
+                    Notes = notes,
+                };
+                EventTracer.CreateTraceEvent(eventTracerArgs);
+            }
+            if (entityPM.AmountForPayRefund != entityPOCO.AmountForPayRefund)
+            {
+                string notes = TranslateTextsClass.Translate("TaxReport.F.AmountForPayRefund", entityPOCO.Tenant) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPOCO.Tenant) + entityPOCO.AmountForPayRefund + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPOCO.Tenant) + entityPM.AmountForPayRefund;
+                EventTracerArgs eventTracerArgs = new EventTracerArgs()
+                {
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    UserId = loggedContact.Id,
+                    ObjectTableName = "TaxReport",
+                    IsAddedManually = false,
+                    EventTypeCode = "UPEV",
+                    Notes = notes,
+                };
+                EventTracer.CreateTraceEvent(eventTracerArgs);
+            }
+            if (entityPM.LastUpdateDate != entityPOCO.LastUpdateDate)
+            {
+                string notes = TranslateTextsClass.Translate("TaxReport.F.LastUpdateDate", entityPOCO.Tenant) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPOCO.Tenant) + entityPOCO.LastUpdateDate + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPOCO.Tenant) + entityPM.LastUpdateDate;
+                EventTracerArgs eventTracerArgs = new EventTracerArgs()
+                {
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    UserId = loggedContact.Id,
+                    ObjectTableName = "TaxReport",
+                    IsAddedManually = false,
+                    EventTypeCode = "UPEV",
+                    Notes = notes,
+                };
+                EventTracer.CreateTraceEvent(eventTracerArgs);
+            }
+            if (entityPM.TaxableOutputAmount != entityPOCO.TaxableOutputAmount)
+            {
+                string notes = TranslateTextsClass.Translate("TaxReport.F.TaxableOutputAmount", entityPOCO.Tenant) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPOCO.Tenant) + entityPOCO.TaxableOutputAmount + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPOCO.Tenant) + entityPM.TaxableOutputAmount;
+                EventTracerArgs eventTracerArgs = new EventTracerArgs()
+                {
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    UserId = loggedContact.Id,
+                    ObjectTableName = "TaxReport",
+                    IsAddedManually = false,
+                    EventTypeCode = "UPEV",
+                    Notes = notes,
+                };
+                EventTracer.CreateTraceEvent(eventTracerArgs);
+            }
+            if (entityPM.TaxReportMonth != entityPOCO.TaxReportMonth)
+            {
+                string notes = TranslateTextsClass.Translate("TaxReport.F.TaxReportMonth", entityPOCO.Tenant) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPOCO.Tenant) + entityPOCO.TaxReportMonth + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPOCO.Tenant) + entityPM.TaxReportMonth;
+                EventTracerArgs eventTracerArgs = new EventTracerArgs()
+                {
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    UserId = loggedContact.Id,
+                    ObjectTableName = "TaxReport",
+                    IsAddedManually = false,
+                    EventTypeCode = "UPEV",
+                    Notes = notes,
                 };
                 EventTracer.CreateTraceEvent(eventTracerArgs);
             }
