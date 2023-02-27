@@ -1,5 +1,3 @@
-import {Customer} from "./CargoTrackingShipmentDataSource";
-
 export class MoreFilter{
     public HasException: boolean = false;
     public OrdersOnly: boolean = false;
@@ -11,7 +9,6 @@ export class CargoTrackingShipmentSearchInput extends MoreFilter
     public Tenant: number;
     public SearchText: string;
     public CustomersIds: string[] = [];
-    public Customers: Customer[] = [];
     public MilestonesCodes: string[] = [];
     public TransportModeCodes: string[] = [];
     public DirectionCodes: string[] = [];
