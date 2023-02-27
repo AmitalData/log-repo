@@ -49,6 +49,7 @@ import { ObjectVariableComponent } from "./Components/Base/ObjectVariableCompone
 import { AppendItemPropertiesComponent } from './Components/Properties/AppendItemPropertiesComponent';
 import { DeleteItemPropertiesComponent } from './Components/Properties/DeleteItemPropertiesComponent';
 import { WorkFlowHelperComponent } from "./Components/Helpers/WorkFlowHelperComponent";
+import { EditWorkflowVersionComponent } from "./Components/WorkflowVersion/EditWorkflowVersionComponent";
 
 export const Components = [
     WorkflowBuilderComponent,
@@ -80,6 +81,7 @@ export const Components = [
     ExpressionBuilderComponent,
     WorkflowVersionComponent,
     CreateWorkflowVersionComponent,
+    EditWorkflowVersionComponent,
     WorkFlowShortTitleComponent,
     ObjectVariableComponent,
     WorkFlowHelperComponent,
@@ -140,6 +142,7 @@ export class ModuleDeclarations {
             case "ExpressionBuilderComponent": { result = ExpressionBuilderComponent; break; }
             case "WorkflowVersionComponent": { result = WorkflowVersionComponent; break; }
             case "CreateWorkflowVersionComponent": { result = CreateWorkflowVersionComponent; break; }
+            case "EditWorkflowVersionComponent": { result = EditWorkflowVersionComponent; break; }
             case "WorkFlowShortTitleComponent": { result = WorkFlowShortTitleComponent; break; }
             case "ObjectVariableComponent": { result = ObjectVariableComponent; break; }
             case "WorkFlowHelperComponent": { result = WorkFlowHelperComponent; break; }

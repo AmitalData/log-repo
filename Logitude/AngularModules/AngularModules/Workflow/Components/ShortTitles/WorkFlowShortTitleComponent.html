@@ -4,8 +4,6 @@
     }
 
     .short-title {
-        width: 25%;
-        margin-right: 125px;
         white-space: nowrap;
         overflow: hidden !important;
         text-overflow: ellipsis;
@@ -15,12 +13,23 @@
         font-size: 18px;
         color: #1B90CB;
     }
+
+    .edit-button {
+        display: flex;
+        align-items: center;
+        margin-left: 5px;
+    }
+
 </style>
 
 <div class="short-title-row">
-    <div class="short-title">
+    <div *ngIf="EntityPM" class="short-title">
         <span class="title-span">
             {{WorkflowName}} - V{{WorkflowVersionNumber}}
         </span>
+    </div>
+    <div *ngIf="EntityPM" class="edit-button">
+        <IconButton [Name]="'Edit'" [Title]="'Edit Workflow Version'" (click)="editWorkflowVersionClicked()" [DataCy] = "EditWorkflowVersion">
+        </IconButton>
     </div>
 </div>

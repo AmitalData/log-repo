@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { WorkFlowPM } from 'Workflow/EntityPMs/WorkFlowPM';
 import { WorkFlowVersionPM } from 'Workflow/EntityPMs/WorkFlowVersionPM';
+import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
+import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 
 @Component({
     templateUrl: "WorkFlowShortTitleComponent.html",
@@ -60,6 +62,33 @@ export class WorkFlowShortTitleComponent {
             return activeVersion;
         } else {
             return newestVersion;
+        }
+    }
+
+    editWorkflowVersionClicked(){
+        var CurrentDisplayedVersionId = this.entityArgs.EditComponentArgument?.CurrentDisplayedVersionId
+        var version = this.EntityPM.WorkFlowVersions.find(v => v.Id == CurrentDisplayedVersionId);
+
+        let propertiesComponentPath = "./Workflow/Components/WorkflowBuilder/EditWorkflowVersionComponent";
+        let propertiesWindow = new LogitudeWindow();
+        let propertiesWindowArgs: any = {
+            WorkFlowVersion : version
+        };
+        propertiesWindow.Height = 340;
+        propertiesWindow.Width = 985;
+        propertiesWindow.RTL = false;
+        propertiesWindow.Title = "Edit Workflow Verison";
+        propertiesWindow.WindowArgs = propertiesWindowArgs;
+
+        propertiesWindow.Show(propertiesComponentPath);
+        propertiesWindow.WindowClosed.subscribe((data: any) => { this.handleCreateNewVersionResponse(data); });
+    }
+
+    handleCreateNewVersionResponse(data: WorkFlowVersionPM) {
+        if (data) {
+            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, UpdatedVersion: data.Id }
+            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, ClickedVersionRow: null }
+            this.entityArgs.SendMessage("WorkflowVersionsUpdated");
         }
     }
 }
