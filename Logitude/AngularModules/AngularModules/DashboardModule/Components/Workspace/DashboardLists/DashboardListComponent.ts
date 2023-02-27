@@ -102,6 +102,7 @@ export class DashboardListComponent extends BaseComponent implements OnInit {
         if ((metaDataField.FieldCode == "ShipmentNumber" && this.ObjectTableName == "Shipment") ||
             (metaDataField.FieldCode == "InvoiceNumber" && this.ObjectTableName == "APInvoice") ||
             (metaDataField.FieldCode == "InvoiceNumber" && this.ObjectTableName == "ARInvoice") ||
+            (metaDataField.FieldCode == "ContainerNumber" && this.ObjectTableName == "Container") ||
             (metaDataField.FieldCode == "QuoteNumber" && this.ObjectTableName == "Quote") ||
             (metaDataField.FieldCode == "Subject" && this.ObjectTableName == "Opportunity")) {
             column["cellRendererFramework"] = DashboardListLinkRendererComponent;
