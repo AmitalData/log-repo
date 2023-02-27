@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "9d2e68192e24fec15df816256d10d9f0";
+		public const string HashString = "ae7bae4ccff8de18255acc04e724c3f7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "d949",
+			      				    Code =  "604a",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2125,6 +2125,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsExpOrImpDeclarationDataQueryFDeclarationNubmer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExpOrImpDeclarationDataQuery.F.DeclarationNubmer", DefaultText = "Declaration Nubmer",LocalDefaultText = @"מספר הצהרה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsExpOrImpDeclarationDataQueryODeclarationNubmerMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExpOrImpDeclarationDataQuery.O.DeclarationNubmerMandatory", DefaultText = "Declaration Nubmer field is mandatory",LocalDefaultText = @"מספר הצהרה הוא שדה חובה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsCreditGoldQueryOCustomFileNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CreditGoldQuery.O.CustomFileNo", DefaultText = "Custom File No",LocalDefaultText = @"תיק עמילות", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

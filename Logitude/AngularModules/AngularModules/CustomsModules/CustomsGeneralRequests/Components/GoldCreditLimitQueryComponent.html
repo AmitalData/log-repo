@@ -94,8 +94,8 @@
         </div>
 
         <!-- Response -->
-        <div class="class-response-content" style="width: 820px;height: 320px;">
-            <table style="width: 820px;height: 320px;padding-top: 10px;">
+        <div class="class-response-content" style="width: 1010px;height: 320px;">
+            <table style="width: 100%;height: 320px;padding-top: 10px;">
 
                 <!--Balance Details List-->
                 <tr style="height: 46px;">
@@ -152,8 +152,8 @@
                     </td>
                 </tr>
                 <tr class="FormFieldRow" style="height:1px">
-                    <td colspan="10" style="width: 100% ; height : 30%">
-                        <div div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                    <td colspan="11" style="width: 100% ; height : 30%">
+                        <div div class="GeneratedGridContainer" style="width: 100% ; height : 100%; min-height: 250px;">
                             <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="TransactionsResultList">
 
                                 <!-- TransactionType -->
@@ -170,7 +170,7 @@
                                 </log-column>
 
                                 <!-- PaymentID -->
-                                <log-column [width]="'80'" [Alignment]="'right'"
+                                <log-column [width]="'95'" [Alignment]="'right'"
                                             [header]="'Customs.CreditGoldQuery.O.PaymentID' | TextCodeTranslationPipe"
                                             [binding]="'PaymentID'">
                                     <ng-template let-item>
@@ -208,6 +208,19 @@
 </ng-template>
                                 </log-column>
 
+                                <!-- CustomFileNo -->
+                                <log-column [width]="'90'" [Alignment]="'right'"
+                                            [header]="'Customs.CreditGoldQuery.O.CustomFileNo' | TextCodeTranslationPipe"
+                                            [binding]="'CustomFileNo'">
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.CustomFileNo}}</span>
+                                        </div>
+                                    </log-cell-template>
+</ng-template>
+                                </log-column>
+
                                 <!-- EntityType -->
                                 <log-column [width]="'80'" [Alignment]="'right'"
                                             [header]="'Customs.CreditGoldQuery.O.EntityType' | TextCodeTranslationPipe"
@@ -222,7 +235,7 @@
                                 </log-column>
 
                                 <!-- EntityID -->
-                                <log-column [width]="'80'" [Alignment]="'right'"
+                                <log-column [width]="'100'" [Alignment]="'right'"
                                             [header]="'Customs.CreditGoldQuery.O.EntityID' | TextCodeTranslationPipe"
                                             [binding]="'EntityID'">
                                     <ng-template let-item>
@@ -235,7 +248,7 @@
                                 </log-column>
 
                                 <!-- TransactionAmount -->
-                                <log-column [width]="'70'" [Alignment]="'right'"
+                                <log-column [width]="'80'" [Alignment]="'right'"
                                             [header]="'Customs.CreditGoldQuery.O.TransactionAmount' | TextCodeTranslationPipe"
                                             [binding]="'TransactionAmount'">
                                     <ng-template let-item>
@@ -248,7 +261,7 @@
                                 </log-column>
 
                                 <!-- RTGSBalance -->
-                                <log-column [width]="'70'" [Alignment]="'right'"
+                                <log-column [width]="'90'" [Alignment]="'right'"
                                             [header]="'Customs.CreditGoldQuery.O.RTGSBalance' | TextCodeTranslationPipe"
                                             [binding]="'RTGSBalance'">
                                     <ng-template let-item>
@@ -261,7 +274,7 @@
                                 </log-column>
 
                                 <!-- RTGSRefund -->
-                                <log-column [width]="'70'" [Alignment]="'right'"
+                                <log-column [width]="'90'" [Alignment]="'right'"
                                             [header]="'Customs.CreditGoldQuery.O.RTGSRefund' | TextCodeTranslationPipe"
                                             [binding]="'RTGSRefund'">
                                     <ng-template let-item>

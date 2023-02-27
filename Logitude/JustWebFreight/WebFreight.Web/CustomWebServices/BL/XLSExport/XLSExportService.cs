@@ -24,7 +24,10 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
         }
         static XLSExportService()
         {
-          
+            ContainerAccessor.Container.RegisterType<IExcelExport, CreditGoldExport>
+                ((new CreditGoldExport()).MainInterfaceCode);
+
+
             ContainerAccessor.Container.RegisterType<IExcelExport, ExchangeRateExport>
                 ((new ExchangeRateExport()).MainInterfaceCode);
 

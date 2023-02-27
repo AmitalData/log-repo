@@ -624,15 +624,12 @@
       <HintPath>..\..\packages\UltimatePDF.1.0.0\lib\Net40\UltimatePdf.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-
       <HintPath>..\..\packages\UnifreightIIG.3.1803.60\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-
       <HintPath>..\..\packages\UnifreightIIG.3.1803.60\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.UServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-
       <HintPath>..\..\packages\UnifreightIIG.3.1803.60\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -1179,6 +1176,7 @@
     <Compile Include="Controllers\WebServices\ShipmentContainersWebServiceController.cs" />
     <Compile Include="CustomModel\DomainServices\Generated\LogisticActionRequestTypeDomainService.Generated.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.CustomsDocumentUpload.cs" />
+    <Compile Include="CustomWebServices\BL\XLSExport\CreditGoldExport.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\InterfaceManagementWSheetExport .cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\PaymentQueryExport.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\PaymentQueryProvider.cs" />

@@ -1,4 +1,5 @@
 ﻿using Logitude.Customs.Data;
+using Logitude.Customs.Data.Repsitories;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using System;
@@ -78,6 +79,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     newTransactionResult.TransactionType = transactionItem.TransactionType;
                     newTransactionResult.UpdateUser = transactionItem.UpdateUser;
+
+                    if(transactionItem.EntityType.Equals("הצהרת יבוא") && !string.IsNullOrEmpty(transactionItem.EntityID))
+                    {
+                        DeclarationRepository declarationRepository = new DeclarationRepository(context);
+                        var myDeclaration = declarationRepository.GetSingleDeclarationByNumber(transactionItem.EntityID, requestParams.Tenant);
+                        if(myDeclaration != null)
+                        newTransactionResult.CustomFileNo = !string.IsNullOrEmpty(myDeclaration.CustomFileNo) ? myDeclaration.CustomFileNo : "";
+
+                    }
 
                     MyResponseData.TransactionsList.Add(newTransactionResult);
                 }
