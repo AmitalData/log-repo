@@ -236,15 +236,12 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 email = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
-
                 var entityQuery = new ARInvoiceQuery(authToken.Tenant);
-
                 var entityPM = entityQuery.GetSinglePM(id, authToken.Tenant);
-
                 string documentTypeCode = GetDocumentTypeCodeByInvoiceType(entityPM.ARInvoiceTypeCode, entityPM.IsConsolidationInvoice);
                 var documentOutQuery = new DocumentOutQuery(authToken.Tenant);
                 var query = new DocumentTypeQuery(authToken.Tenant);
-                var docType = query.GetSinglePMByCodeAndTenant(documentTypeCode, authToken.Tenant);
+                var docType = query.GetDigitalSinglePMByCodeAndTenant(documentTypeCode, authToken.Tenant);
                 var mainEntityId = entityPM.MainEntityId;
                 var childEntityId = entityPM.Id;
                 if (entityPM.IsConsolidationInvoice)
@@ -300,6 +297,39 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var aRInvoiceQuery = new ARInvoiceQuery(authToken.Tenant);
                 var entityLists = aRInvoiceQuery.GetByFilters(newFilters);
                 var res = entityLists.GetPaged(newFilters.PageIndex, newFilters.PageSize);
+
+                foreach (var entityPM in res.Data)
+                {
+                    var mainEntityId = entityPM.MainEntityId;
+                    var childEntityId = entityPM.Id;
+                    if (entityPM.IsConsolidationInvoice)
+                    {
+                        mainEntityId = entityPM.Id;
+                        childEntityId = null;
+                    }
+
+                    var documentOutQuery = new DocumentOutQuery(authToken.Tenant);
+
+                    string documentTypeCode = GetDocumentTypeCodeByInvoiceType(entityPM.ARInvoiceTypeCode, entityPM.IsConsolidationInvoice);
+                    var query = new DocumentTypeQuery(authToken.Tenant);
+
+                    var docType = query.GetDigitalSinglePMByCodeAndTenant(documentTypeCode, authToken.Tenant);
+
+                    var docsOutData = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(mainEntityId, childEntityId, docType.Id, authToken.Tenant);
+
+                    if (docsOutData != null)
+                    {
+                        var docId = docsOutData.Id;
+
+                        if (docsOutData.DocumentOutCopies.Count() > 0)
+                        {
+                            docId = docsOutData.DocumentOutCopies.FirstOrDefault().DocumentId;
+                        }
+
+                        string url = "../WebPages/SharedDownloadPage.aspx?id=" + authToken.Tenant + ":" + docId + ":invc:" + entityPM.Id + ":isFromDigital:true:cardId:" + newFilters.CardId;
+                        entityPM.ReportUrl = url;
+                    }
+                }
 
                 return Request.CreateResponse(HttpStatusCode.OK, res);
             }
