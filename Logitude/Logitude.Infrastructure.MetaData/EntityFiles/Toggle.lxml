@@ -42,7 +42,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;7feb&quot;"
+  Code="&quot;62bd&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -930,7 +930,11 @@
       Name="&quot;Dashboard Analytics&quot;"
       SearchFields="&quot;DBA,Dashboard Analytics&quot;"
       Description="&quot;Dashboard Analytics&quot;" />
- 
+    <Record
+      Name="&quot;Remove Shared Logistics&quot;"
+      Code="&quot;RSL&quot;"
+      Description="&quot;Remove Shared Logistics Tab Feature&quot;"
+      SearchFields="&quot;RSL,Remove Shared Logistics Tab Feature&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
