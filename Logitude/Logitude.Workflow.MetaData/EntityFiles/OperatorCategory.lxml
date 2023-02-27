@@ -42,7 +42,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Operator Category&quot;"
-  Code="&quot;f2df&quot;"
+  Code="&quot;27c8&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -335,10 +335,6 @@
       Code="&quot;BOL&quot;"
       Name="&quot;Logical&quot;"
       SearchFields="&quot;BOL,Logical&quot;" />
-    <Record
-      Code="&quot;TXT&quot;"
-      Name="&quot;Text&quot;"
-      SearchFields="&quot;TXT,Text&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

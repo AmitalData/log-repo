@@ -196,6 +196,17 @@ namespace Logitude.Workflow.BL.CLoseTable
                 CategoryCode = "TXT", 
                 Title = "Upper(text)", 
 			});
+			 
+            all.Add(new ExpressionDetails()
+            {    
+                Name = "Concat", 
+                SearchFields = "CONCAT,Concat", 
+                Code = "CONCAT", 
+                Body = "(value1,value2,...)", 
+                Description = "Concates values.", 
+                CategoryCode = "TXT", 
+                Title = "Concat(value1,value2,...)", 
+			});
 			
             return all;
        }

@@ -42,7 +42,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Expression&quot;"
-  Code="&quot;9275&quot;"
+  Code="&quot;b13f&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -739,6 +739,14 @@
       Description="&quot;Convert all letters in the value to upper case.&quot;"
       CategoryCode="&quot;TXT&quot;"
       Title="&quot;Upper(text)&quot;" />
+    <Record
+      Name="&quot;Concat&quot;"
+      SearchFields="&quot;CONCAT,Concat&quot;"
+      Code="&quot;CONCAT&quot;"
+      Body="&quot;(value1,value2,...)&quot;"
+      Description="&quot;Concates values.&quot;"
+      CategoryCode="&quot;TXT&quot;"
+      Title="&quot;Concat(value1,value2,...)&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

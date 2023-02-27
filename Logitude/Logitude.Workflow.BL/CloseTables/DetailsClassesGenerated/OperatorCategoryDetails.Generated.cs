@@ -34,13 +34,6 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Name = "Logical", 
                 SearchFields = "BOL,Logical", 
 			});
-			 
-            all.Add(new OperatorCategoryDetails()
-            {    
-                Code = "TXT", 
-                Name = "Text", 
-                SearchFields = "TXT,Text", 
-			});
 			
             return all;
        }
