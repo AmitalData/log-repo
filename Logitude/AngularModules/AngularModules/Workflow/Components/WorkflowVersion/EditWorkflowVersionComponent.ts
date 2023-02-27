@@ -18,8 +18,6 @@ export class EditWorkflowVersionComponent extends BaseComponent {
     public ObjectTableName: string = "WorkFlowVersion";
     public WorkFlowVersion: WorkFlowVersionPM;
 
-    public VersionDescription: string
-
     public BusyIndicatorText: string = null;
     public ShowBusyIndicator: boolean = false;
     public BusyIndicatorWidth: number = 200;
