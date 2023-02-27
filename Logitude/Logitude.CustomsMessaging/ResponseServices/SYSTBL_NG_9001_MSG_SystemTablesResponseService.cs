@@ -485,7 +485,7 @@ ID List :
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
                                                         newExt.MyModificationAndDiscountType.IsCustomsValueComponentExport = true;
                                                     }
-                                                    
+
                                                     if (dr["CurrencyMustBeSameAsInvoice"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
                                                     {
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
@@ -578,7 +578,7 @@ ID List :
                                                 });
                         return extList;
 
-                    }                
+                    }
                 case "2009":
                 case "TradeAgreementTypeView":
                     {
@@ -600,8 +600,8 @@ ID List :
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
                                                         int.TryParse(dr["CustomsBookTypeID"]?.ToString(), out int val);
                                                         newExt.MyTradeAgreement.CustomsBookTypeID = val;
-                                                    }                                                 
-                                                
+                                                    }
+
                                                     extList.Add(newExt);
                                                 });
                         return extList;
@@ -838,7 +838,7 @@ ID List :
                                                     {
                                                         writeHighlight = true;
                                                     }
-                                                    if (dr["StartDate"].ToString() != null )
+                                                    if (dr["StartDate"].ToString() != null)
                                                     {
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
                                                         newExt.MyNDMessageActionCode.StartDate = DateTime.Parse(dr["StartDate"].ToString());
@@ -961,16 +961,16 @@ ID List :
         }
 
         private static bool CheckDRString(object data) =>
-            data.ToString() != null;            
+            data.ToString() != null;
 
 
         private static bool CheckDRBool(object data) =>
             data.ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase);
-        
 
-        private static void LogAddRow(SYSTBL_NG_9001_MSG_SystemTablesResponseTableData newResponseTableData) =>        
+
+        private static void LogAddRow(SYSTBL_NG_9001_MSG_SystemTablesResponseTableData newResponseTableData) =>
             LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-        
+
 
         private SYSTBL_NG_9001_MSG_SystemTablesResponseTableData[] TruncateNameTo(SYSTBL_NG_9001_MSG_SystemTablesResponseTableData[] sYSTBL_NG_9001_MSG_SystemTablesResponseTableData, int iTrancateNameTo)
         {
@@ -1024,7 +1024,7 @@ ID List :
                 string code = "";
                 string country = "";
                 ICustomContext MyContext = CustomContext.GetContext(1);
-                var updateService = new InternationalSiteUpdateService(MyContext, new System.Collections.Generic.Dictionary<string, IContext>(),1);
+                var updateService = new InternationalSiteUpdateService(MyContext, new System.Collections.Generic.Dictionary<string, IContext>(), 1);
                 var queryService = new InternationalSiteQueryService(MyContext);
 
                 foreach (var line in lines)
@@ -1040,61 +1040,64 @@ ID List :
                     }
 
                     country = parts[1];
-                    if(country.Length > 3)
+                    if (country.Length > 3)
                     {
-                       country= country.Substring(1, country.Length - 2);
+                        country = country.Substring(1, country.Length - 2);
                     }
                     if (parts[2].Length > 3)
                     {
-                        parts[2]=parts[2].Substring(1, parts[2].Length - 2);
+                        parts[2] = parts[2].Substring(1, parts[2].Length - 2);
                     }
-                    code = country + parts[2];
-                    if (parts[3].Length > 3)
+                     if (country.Length == 2 && parts[2].Length == 3)
                     {
-                        parts[3]=parts[3].Substring(1, parts[3].Length - 2);
-                    }
-                    name = code+ " " + parts[3];
-                    if (name.Length > 40)
-                    {
-                        name = name.Substring(0, 40);
-                    }
 
-                    var entity = queryService.GetSingle(code, false, false);
-                    if (entity != null)
-                    {
-                        Boolean changes = false;
-                        if (entity.CountryTypeCode != country)
+                        code = country + parts[2];
+                        if (parts[4].Length > 3)
                         {
-                            entity.CountryTypeCode = country;
-                            entity.ChangeSetOp = ChangeSetOperation.Update;
+                            parts[4] = parts[4].Substring(1, parts[4].Length - 2);
                         }
-                        if (entity.EnglishName != name)
+                        name = code + " " + parts[4];
+                        if (name.Length > 40)
                         {
-                            entity.CountryTypeCode = country;
-                            entity.EnglishName = name;
-                            entity.LocalName = name;
-                            entity.SearchFields = name;
-                            entity.ChangeSetOp = ChangeSetOperation.Update;
+                            name = name.Substring(0, 40);
                         }
-                        if (entity.ChangeSetOp == ChangeSetOperation.Update)
-                        {
-                            updateService.Update(entity, true);
-                        }
-                    }
-                    else
-                    {
-                        var newEntity= new InternationalSitePM();
-                        newEntity.CountryTypeCode = country;
-                        newEntity.ChangeSetOp = ChangeSetOperation.Insert;
-                        newEntity.LocalName = name;
-                        newEntity.EnglishName = name;
-                        newEntity.Code = code;
-                        newEntity.SearchFields = name;
-                        updateService.Update(newEntity, true);
-                    }
 
+                        var entity = queryService.GetSingle(code, false, false);
+                        if (entity != null)
+                        {
+                            Boolean changes = false;
+                            if (entity.CountryTypeCode != country)
+                            {
+                                entity.CountryTypeCode = country;
+                                entity.ChangeSetOp = ChangeSetOperation.Update;
+                            }
+                            if (entity.EnglishName != name)
+                            {
+                                entity.CountryTypeCode = country;
+                                entity.EnglishName = name;
+                                entity.LocalName = name;
+                                entity.SearchFields = name;
+                                entity.ChangeSetOp = ChangeSetOperation.Update;
+                            }
+                            if (entity.ChangeSetOp == ChangeSetOperation.Update)
+                            {
+                                updateService.Update(entity, true);
+                            }
+                        }
+                        else
+                        {
+                            var newEntity = new InternationalSitePM();
+                            newEntity.CountryTypeCode = country;
+                            newEntity.ChangeSetOp = ChangeSetOperation.Insert;
+                            newEntity.LocalName = name;
+                            newEntity.EnglishName = name;
+                            newEntity.Code = code;
+                            newEntity.SearchFields = name;
+                            updateService.Update(newEntity, true);
+                        }
+
+                    }
                 }
-                
 
             }
             catch (System.Exception eee)
