@@ -582,7 +582,7 @@ namespace Logitude.Customs.BL.BL
             if (declarationPM == null || myDeclarationCourierStatusPM == null) return;
 
             string defValue = GetDefault("ISRAEL", "CGO_CUST_CAS", "NON", "NON");
-            if (!string.IsNullOrEmpty(defValue) && declarationPM.CustomerCode != defValue && declarationPM.ChangeSetOp == ChangeSetOperation.Insert)
+            if (!string.IsNullOrEmpty(defValue) && declarationPM.CustomerCode != defValue)
             {
                 DeclarationPendingPM declarationPendingPM_906 = null;
                 if (myDeclarationCourierStatusPM.DeclarationPendings != null && myDeclarationCourierStatusPM.DeclarationPendings.Count() > 0)
