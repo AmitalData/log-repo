@@ -229,7 +229,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         throw new ApplicationException("House shipment already connected to a Master, in order to connect to another please disconnect it first");
                     }
                 }
-                if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive && !entityPM.IsHybrid)
+                if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
                 {
                     ShipmentValidating.ValidateBranch(entityPM);
                 }
@@ -493,7 +493,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
 
                     #region
-                    if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive && !entityPM.IsHybrid)
+                    if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
                     {
                         ShipmentValidating.ValidateBranch(entityPM);
                     }

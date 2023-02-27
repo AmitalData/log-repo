@@ -1486,6 +1486,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         }
         public static void ValidateBranch(ShipmentPM entityPM)
         {
+            if (entityPM.IsHybrid) return;
             if (!FeatureToggleHelper.HasFeatureToggle("BCC", entityPM.Tenant)) return;
             if (string.IsNullOrEmpty(entityPM.BranchId)) return;
             BranchRepository branchRepository = new BranchRepository(entityPM.Tenant);
