@@ -1,10 +1,18 @@
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+
 using Logitude.CargoTracking.Data.EntityPOCOs;
 using Logitude.CargoTracking.Data.EntityLists;
-using Logitude.CargoTracking.Data.Model;
 using Logitude.CargoTracking.Data.Repositories;
 using Logitude.CargoTracking.Def.DataContracts;
 
@@ -58,7 +66,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         public void AddSearchsToShipments(List<CargoTrackingShipmentList> shipments, int tenant)
         {
             CargoTrackingShipmentSearchRepository repo = new CargoTrackingShipmentSearchRepository(tenant);
-            List<CargoTrackingShipmentSearch> shipmentSearchs = repo.GetConnectedShipmentNumbersByShipmentIds(shipments.Where(e => e.EntityType != OrderType).Select(e=>e.EntityId).ToList());
+            List<CargoTrackingShipmentSearch> shipmentSearchs = repo.GetConnectedShipmentNumbersByShipmentIds(shipments.Where(e => e.EntityType != OrderType).Select(e => e.EntityId).ToList());
             var searchesGroupDictionary = shipmentSearchs.GroupBy(e => e.ShipmentId).ToDictionary(e => e.Key, e => e);
             foreach (var item in shipments)
             {
@@ -73,7 +81,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             if (!searchesGroupDictionary.ContainsKey(item.EntityId))
                 return null;
             var connectedShipmentsNumbers = searchesGroupDictionary[item.EntityId].ToList();
-            var maxConnectedShipmentsNumbers = connectedShipmentsNumbers.GroupBy(e => e.ReferenceType).Select(e => e.Max(f=>f.SearchFields)).ToList();
+            var maxConnectedShipmentsNumbers = connectedShipmentsNumbers.GroupBy(e => e.ReferenceType).Select(e => e.Max(f => f.SearchFields)).ToList();
             return string.Join("\n", maxConnectedShipmentsNumbers);
         }
 
@@ -87,7 +95,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             else
             {
                 var partOfSearchText = searchText.Contains('-') ? searchText.Substring(searchText.IndexOf('-') + 1) : searchText.Substring(searchText.IndexOf('/') + 1);
-                IQueryable<CargoTrackingShipmentSearch>  shipmentsSearchEntitiesThatMatchSecondPart = repo.GetShipmentSearchEntities(partOfSearchText, tenant);
+                IQueryable<CargoTrackingShipmentSearch> shipmentsSearchEntitiesThatMatchSecondPart = repo.GetShipmentSearchEntities(partOfSearchText, tenant);
                 return shipmentsSearchEntitiesThatMatchWhole.Union(shipmentsSearchEntitiesThatMatchSecondPart);
             }
         }
@@ -110,7 +118,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         public CargoTrackingShipmentSearch GetFirstShipmentSearchesForWarmCargoTracking()
         {
             CargoTrackingShipmentSearchRepository repo = new CargoTrackingShipmentSearchRepository(0);
-            CargoTrackingShipmentSearch  shipmentsSearchEntiy= repo.GetFirstShipmentSearchesForWarmCargoTracking();
+            CargoTrackingShipmentSearch shipmentsSearchEntiy = repo.GetFirstShipmentSearchesForWarmCargoTracking();
             return shipmentsSearchEntiy;
         }
         public List<CargoTrackingShipmentList> GetShipmentsByFilters(int pageIndex, int pageSize, CargoTrackingShipmentSearchInput shipmentSearchInput)
@@ -130,21 +138,15 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         public List<CargoTrackingShipmentList> GetFilteredShipmentsByIds(int pageIndex, int pageSize, CargoTrackingShipmentSearchInput shipmentSearchInput, List<string> shipmentsIds)
         {
             CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(context);
-            List<CargoTrackingShipmentList> shipments = shipmentsQuery.GetCargoTrackingShipments(pageIndex, pageSize,shipmentsIds.ToList(), shipmentSearchInput);
+            List<CargoTrackingShipmentList> shipments = shipmentsQuery.GetCargoTrackingShipments(pageIndex, pageSize, shipmentsIds.ToList(), shipmentSearchInput);
             return shipments;
         }
-        public List<CargoTrackingShipmentList> GetFilteredShipments( CargoTrackingShipmentSearchInput shipmentSearchInput)
+        public List<CargoTrackingShipmentList> GetFilteredShipments(CargoTrackingShipmentSearchInput shipmentSearchInput)
         {
             CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(context);
-            List<CargoTrackingShipmentList> shipments = shipmentsQuery.GetFilteredSortedShipments( shipmentSearchInput);
+            List<CargoTrackingShipmentList> shipments = shipmentsQuery.GetFilteredSortedShipments(shipmentSearchInput);
             return shipments;
         }
-        public List<Customer> GetShipmentsCustomers(CargoTrackingShipmentSearchInput shipmentSearchInput)
-        {
-            CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(context);
-            return shipmentsQuery.GetShipmentsCustomers(shipmentSearchInput);
-        }
-
         public IQueryable<CargoTrackingShipmentList> GetFilteredShipmentsByIds(CargoTrackingShipmentSearchInput shipmentSearchInput, List<string> shipmentsIds)
         {
             CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(context);
