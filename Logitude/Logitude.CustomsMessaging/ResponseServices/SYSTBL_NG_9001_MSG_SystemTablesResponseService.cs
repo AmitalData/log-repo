@@ -1063,11 +1063,12 @@ ID List :
                     if (entity != null)
                     {
                         Boolean changes = false;
-                        //if (entity.CountryTypeCode != country) {
-                        //    entity.CountryTypeCode = country;
-                        //    entity.ChangeSetOp = ChangeSetOperation.Update;
-                        //}
-                        if(entity.EnglishName != name)
+                        if (entity.CountryTypeCode != country)
+                        {
+                            entity.CountryTypeCode = country;
+                            entity.ChangeSetOp = ChangeSetOperation.Update;
+                        }
+                        if (entity.EnglishName != name)
                         {
                             entity.CountryTypeCode = country;
                             entity.EnglishName = name;
