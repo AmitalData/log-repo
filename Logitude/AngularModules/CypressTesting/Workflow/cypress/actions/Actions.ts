@@ -235,12 +235,12 @@ export function AssertRefreshRunHistory() {
 }
 
 export function ExportRunHistoryInstances() {
-    cy.DefineRequestWait(RestAPI.POST, URLs.PostGetQueryToExcelData, RequestAliases.PostGetQueryToExcelData);
+    cy.DefineRequestWait(RestAPI.GET, URLs.GetQueryToExcelData, RequestAliases.GetQueryToExcelData);
     cy.Click(WorkflowSelectors.RunHistoryExportFile, null)
 }
 
 export function AsserExportRunHistoryInstances() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PostGetQueryToExcelData, 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.GetQueryToExcelData, 200);
     BaseAssertion.AssertElementContain(WorkflowSelectors.WorkflowLinkButton, 'Download file');
     cy.Click(BaseSelectors.button, BaseSelectors.ContainsCancel);
 }
@@ -260,14 +260,18 @@ export function FilterInstancesBycurrentdate() {
     cy.fixture(WorkflowRunHistoryFixturePath.MockWorkflowInstaces).then(response => {
         cy.DefineMockRequestWait(RestAPI.GET, URLs.Getworkflowinstance, RequestAliases.GetMockWorkflowInstances, response);
     });
-    cy.Click(WorkflowSelectors.RunHistoryDatePicker, null).then(() => {
-        cy.get(WorkflowSelectors.DatePickertodayDate).click();
+    cy.Click(WorkflowSelectors.RunHistoryFilterIcon, null).then(() => {
+        cy.get(WorkflowSelectors.RunHistoryAddFilter).click();
+        cy.ClickCheckBox(WorkflowSelectors.FilterCreateDateCheckBox).then(() => {
+            cy.Click(WorkflowSelectors.CustomDatePicker, null).then(() => {
+                cy.get(WorkflowSelectors.DatePickertodayDate).click();
+            })
+        });
     });
 }
 
 export function AssertFilterInstancesBycurrentdate() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetMockWorkflowInstances, 200);
-
 }
 
 export function SearchInstanceByBusinessKey() {
@@ -290,22 +294,31 @@ export function OpenSingleInstanceActivityList() {
     cy.fixture(WorkflowRunHistoryFixturePath.MockSingleInstaceActivityList).then(response => {
         cy.DefineMockRequestWait(RestAPI.GET, URLs.GetSingleInstanceActivityList, RequestAliases.GetMockSingleInstanceActivityList, response);
     });
-    cy.Click(WorkflowSelectors.FirstWorkflowInstanceBusinessKey + BaseSelectors.FirstElement, null)
+    cy.fixture(WorkflowRunHistoryFixturePath.MockSingleInstaceVariables).then(response => {
+        cy.DefineMockRequestWait(RestAPI.GET, URLs.GetSingleInstanceVariables, RequestAliases.GetMockSingleInstanceVariables, response);
+    });
+    cy.Click(WorkflowSelectors.FirstWorkflowInstanceBusinessKey + BaseSelectors.FirstElement, null,true)
 }
 
 export function AssertOpenSingleInstanceActivityList() {
-    BaseAssertion.AssertStatusCode(RequestAliases.GetMockSingleInstanceActivityList, 200)
+    BaseAssertion.AssertStatusCode(RequestAliases.GetMockSingleInstanceActivityList, 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.GetMockSingleInstanceVariables, 200);
+
 }
 
 export function RefreshSingleInstanceActivityList() {
     cy.fixture(WorkflowRunHistoryFixturePath.MockSingleInstaceActivityList).then(response => {
         cy.DefineMockRequestWait(RestAPI.GET, URLs.GetSingleInstanceActivityList, RequestAliases.GetMockSingleInstanceActivityList, response);
     });
+    cy.fixture(WorkflowRunHistoryFixturePath.MockSingleInstaceVariables).then(response => {
+        cy.DefineMockRequestWait(RestAPI.GET, URLs.GetSingleInstanceVariables, RequestAliases.GetMockSingleInstanceVariables, response);
+    });
     cy.Click(WorkflowSelectors.SingleInstanceActivityListRefreshButton, null)
 }
 
 export function AssertRefreshSingleInstanceActivityList() {
-    BaseAssertion.AssertStatusCode(RequestAliases.GetMockSingleInstanceActivityList, 200)
+    BaseAssertion.AssertStatusCode(RequestAliases.GetMockSingleInstanceActivityList, 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.GetMockSingleInstanceVariables, 200);
 }
 
 /// decision 
@@ -443,7 +456,7 @@ function fillVariableValueAssignment(index: number, isListValue: string, variabl
 }
 
 function fillVariableValueListAssignment(index: number, VaraibleValue: string, matchedType) {
-    if(matchedType) {
+    if (matchedType) {
         cy.get(WorkflowSelectors.WorkflowAssignFieldValue(index)).find(BaseSelectors.input).click().type(VaraibleValue).then(() => {
             cy.get(WorkflowSelectors.WorkflowfieldsListTitle).contains(VaraibleValue).eq(0).click()
         });
@@ -473,7 +486,7 @@ function FillConditionValue(selector: string, value: string, condition: string) 
         case "Containers Numbers":
             return cy.FillLogTextBox(selector, value);
         case "Agent":
-            return cy.SelectDropDownListItem2(selector, value);
+            return cy.FillLogTextBox(selector, value);
         case "Description of Goods":
             return cy.FillLogTextBox(selector, value);
         case "Create Date":

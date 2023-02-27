@@ -40,6 +40,8 @@ namespace Logitude.DashboardModule.Data.EntityPOCOs
         public virtual AnalyticsFactsFieldsMetaData MeasureField { get; set; }
         [Column("RenderAs")]
 	    public string RenderAs { get; set; }
+        [Column("YAxisType")]
+	    public string YAxisType { get; set; }
     }
 }
 	 

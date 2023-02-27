@@ -180,6 +180,7 @@
                     <FieldValue *ngIf="setValue.fieldChangedToggle"
                         [ObjectField]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? null : (setValue.fieldCode | ObjectFieldPipe)"
                         [DataType]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? setValue.type : null"
+                        [LookupType]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? setValue.lookupType : null"
                         [CurrentValue]="setValue.value" [IsDisabled]="setValue.isDisabled"
                         (ValueChanged)="updateSetValue($event, setValueIndex)" [Name]="'SetValueValue_' + setValue.id">
                     </FieldValue>
@@ -187,6 +188,7 @@
                     <FieldValue *ngIf="!setValue.fieldChangedToggle"
                         [ObjectField]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? null : (setValue.fieldCode | ObjectFieldPipe)"
                         [DataType]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? setValue.type : null"
+                        [LookupType]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? setValue.lookupType : null"
                         [CurrentValue]="setValue.value" [IsDisabled]="setValue.isDisabled"
                         (ValueChanged)="updateSetValue($event, setValueIndex)" [Name]="'SetValueValue_' + setValue.id">
                     </FieldValue>

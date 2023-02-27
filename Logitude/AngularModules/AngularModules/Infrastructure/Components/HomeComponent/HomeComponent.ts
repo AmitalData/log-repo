@@ -1868,6 +1868,8 @@ export class HomeComponent implements OnDestroy{
     }
 
     ViewReleaseNotes() {
+        ServiceLocator.SendTotangoUserActivity("Release Pop-up", "View Release Notes");
+
         var url = ServiceHelper.GetLogitudeURL() + 'WebPages/HowToDownloadPage.aspx';
         var params: any[] = [{ name: "Token", value: SessionInfo.DocumentDownloadToken }, { name: "Code", value: ObjectsLocator.GlobalSetting.ReleaseNotesURL }]
         ServiceHelper.OpenWindowWithParams(url, params);

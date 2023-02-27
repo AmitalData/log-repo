@@ -141,7 +141,7 @@ namespace WebFreight.Web.Helpers
                 Tenant = myTenant,
                 IsSimulator = false,
                 Data = null,
-                ContainerStatusSourceCode = "VZN",                
+                ContainerStatusSourceCode = "2",                
             };
         }
         private Container GetContainerForSinding(string shipmentId)

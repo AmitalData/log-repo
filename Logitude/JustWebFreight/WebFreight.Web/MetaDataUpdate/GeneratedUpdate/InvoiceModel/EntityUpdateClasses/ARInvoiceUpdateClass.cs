@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "4366d447af20dd870b41b921bef9cc3f";
+		public const string HashString = "cffe91e8bea41b8fcbb34a7332457a1c1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -100,7 +100,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    HasCustomFilter =  true,
 			      				    HasCustomFields =  true,
 			      				    AvailableInCustomization =  true,
-			      				    SupportSubEntity =  false,
+			      				    SupportSubEntity =  true,
 			      				    ApplyGenericCustomFields =  false,
 			      				    HasHelper =  true,
 			      				    HasShortTitle =  true,
@@ -15816,8 +15816,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   TextCode ARInvoiceTextCode_GeneralGReferenceNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.ReferenceNo", DefaultText = "Reference no",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-   
-	    
+
+   	 
 }
 
     

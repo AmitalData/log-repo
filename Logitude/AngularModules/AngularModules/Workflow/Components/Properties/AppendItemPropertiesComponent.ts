@@ -38,7 +38,6 @@ export class AppendItemPropertiesComponent extends BaseComponent {
     public IsValidSetValues: boolean = true;
     public ValidationErrorsList: string[];
     public CollectionChanged: boolean = false;
-    public ExcludedEntities: string[] = ["Container"];
     public SetRecordFieldsTypes = SetRecordFieldsTypes;
     public CurrentSession = SessionLocator.SelectedSession;
     public SetValuesTitleText: string = null;
@@ -112,10 +111,6 @@ export class AppendItemPropertiesComponent extends BaseComponent {
         let props = {
             ShowRecordsVariables: true,
             ShowDeclaredVariables: true,
-            ShowRecordsCollectionVariables: false,
-            ShowDeclaredCollectionVariables: false,
-            OnlyCurrentLoopItemVariables: false,
-            IsObjectVariableSelectable: false,
             IsNoChildrenObjectVariables: true
         };
         this.VariablesTreeItems = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props).Items;
@@ -123,13 +118,7 @@ export class AppendItemPropertiesComponent extends BaseComponent {
 
     initializeDeclaredCollectionVariables() {
         let props = {
-            ShowRecordsVariables: false,
-            ShowDeclaredVariables: false,
-            ShowRecordsCollectionVariables: false,
-            ShowDeclaredCollectionVariables: true,
-            OnlyCurrentLoopItemVariables: false,
-            IsObjectVariableSelectable: false,
-            IsNoChildrenObjectVariables: false
+            ShowDeclaredCollectionVariables: true
         };
         let flowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props).Items;
         this.SingleEditableEntitiesTreeItems = this.SingleEditableEntitiesTreeItems.concat(flowVariablesTreeItems);
@@ -139,11 +128,9 @@ export class AppendItemPropertiesComponent extends BaseComponent {
         let props = {
             ShowRecordsVariables: true,
             ShowDeclaredVariables: true,
-            ShowRecordsCollectionVariables: false,
             ShowDeclaredCollectionVariables: true,
-            OnlyCurrentLoopItemVariables: false,
-            IsObjectVariableSelectable: true,
-            IsNoChildrenObjectVariables: false
+            ShowGlobalVariables: true,
+            IsObjectVariableSelectable: true
         };
         this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props).Items;
     }

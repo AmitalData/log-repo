@@ -145,6 +145,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.SignDueDate = entityPM.SignDueDate;
             poco.EntityNumber = entityPM.EntityNumber;
             poco.IsTransferdToQBO = entityPM.IsTransferdToQBO;
+            poco.ReceivedByPartner = entityPM.ReceivedByPartner;
         }
 
         private static void MapUpdatedByUserId(DocumentsFilingPM entityPM, DocumentsFiling poco, ContactPM loggedContact)

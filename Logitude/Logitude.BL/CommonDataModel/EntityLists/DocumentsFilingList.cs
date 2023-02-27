@@ -91,6 +91,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool IsDigitalSignRequired { get; set; }
         public bool BackedupExternally { get; set; }
         public string ReceivedByByContactId { get; set; }
-        
+        public string ReceivedByPartner { get; set; }
     }
 }

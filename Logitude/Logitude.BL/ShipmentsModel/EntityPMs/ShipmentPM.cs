@@ -249,6 +249,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string DepartmentId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string DepartmentName { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string Notes { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string NotesSharedWithCustomer { get; set; }
@@ -2210,6 +2213,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? ApproveDateTime { get; set; }
         public bool IsNewARInvoiceBlocked { get; set; }
         public string ShipmentAddtionalDataXML { get; set; }
+        public ShipmentAdditionalData ShipmentAdditionalData { get; set; }
         //public bool IsMappingXSDFields { get; set; }
         //public bool StopConcurrencyValidating { get; set; }
         public string OriginShipmentId { get; set; }

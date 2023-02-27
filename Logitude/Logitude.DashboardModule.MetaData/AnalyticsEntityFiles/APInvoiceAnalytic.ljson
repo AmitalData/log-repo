@@ -1,5 +1,5 @@
 {
-  "HashString": "2fa5ac561e484fa8be9b9cb35b5cb1ff",
+  "HashString": "04f6a2044839469da0d414e708573c82",
   "Name": "AP Invoices Statistics",
   "TableName": "APInvoiceAnalytics",
   "ObjectTableName": "APInvoice",
@@ -79,7 +79,8 @@
       "JoinedTableName": "APInvoiceStatus",
       "JoinedTableDBName": "APInvoiceStatus",
       "JoinedTableKey": "Code",
-      "JoinedTableDisplayField": "Name"
+      "JoinedTableDisplayField": "Name",
+      "AllowTenantZeroFilter": true
     },
     {
       "HashString": "f3de0a0e39dc4e30be9ead5565948750",
@@ -211,7 +212,8 @@
       "JoinedTableName": "APInvoiceTransferStatus",
       "JoinedTableDBName": "APInvoiceTransferStatus",
       "JoinedTableKey": "Code",
-      "JoinedTableDisplayField": "Name"
+      "JoinedTableDisplayField": "Name",
+      "AllowTenantZeroFilter": true
     },
     {
       "HashString": "127dfd8923ab470685e7a847fcf2cdca",

@@ -158,6 +158,29 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string yAxisType ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string YAxisType  
+	   {
+	    
+	     get
+		{
+		   return yAxisType;
+		 }
+		 set
+		 {
+		   if(yAxisType != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="YAxisType",OldValue=yAxisType,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   yAxisType=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

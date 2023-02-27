@@ -12,13 +12,10 @@ import { WorkFlowPMService } from 'Workflow/Services/StandardPMs/WorkFlowPMServi
 })
 
 export class CreateWorkflowComponent extends BaseComponent implements OnInit {
-    public IsNewEntity: boolean = true;
     public EntityPM: WorkFlowPM;
-    public EntityId: string;
     public ObjectTableName: string = "WorkFlow";
     public DataContext: CreateWorkflowComponent = this;
     public ValidationErrorsList: string[];
-    public ShowAdvancedSettings: boolean = false;
 
     public CurrentSession = SessionLocator.SelectedSession;
 
@@ -26,14 +23,40 @@ export class CreateWorkflowComponent extends BaseComponent implements OnInit {
     public ShowBusyIndicator: boolean = false;
     public BusyIndicatorWidth: number = 200;
 
+    public ShowAdvancedSettings: boolean = false;
+    public AdvancedSettingsTitle: string = "Show Advanced Settings";
+    public RetriesDelayArray: string[]
+    public RetriedDelayDictionary: number[] = [1, 5, 30, 90, 180]
+    public MaxDifferenceTime: number = 1
+    public MaxRetryNumber: number = 5
+    public SelectedRetryNumber: number = 5
+
     public WorkFlowPMService: WorkFlowPMService = new WorkFlowPMService();
 
     constructor() {
         super();
     }
 
-    SetWindowArgs(args: any) {
-        this.EntityId = args['EntityId'];
+    ngOnInit() {
+        this.initializeWorkFlow();
+    }
+
+    trackByFn(idx) {
+        return idx;
+    }
+
+    initializeWorkFlow() {
+        let todayDate: Date = DateTool.GetCurrentDateAsUtc();
+        this.EntityPM = new WorkFlowPM();
+        this.EntityPM.Tenant = SessionLocator.Tenant;
+        this.EntityPM.CreateDate = todayDate;
+        this.EntityPM.UpdateDate = todayDate;
+        this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
+        this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
+        this.EntityPM.StatusCode = "DRFT";
+        this.EntityPM.RetriesNumber = this.MaxRetryNumber;
+        this.EntityPM.RetriesDelay = "1,5,30,90,180";
+        this.RetriesDelayArray = this.EntityPM.RetriesDelay.split(',');
     }
 
     get Name() { return this.EntityPM.Name; }
@@ -61,68 +84,84 @@ export class CreateWorkflowComponent extends BaseComponent implements OnInit {
     set RetriesNumber(value: number) {
         if (this.EntityPM.RetriesNumber != value) {
             this.EntityPM.RetriesNumber = value;
+            this.resetRetriesDelay(value);
             this.setUIProperties()
         }
     }
 
-    get RetriesDelay() { return this.EntityPM.RetriesDelay; }
-    set RetriesDelay(value: number) {
-        if (this.EntityPM.RetriesDelay != value) {
-            this.EntityPM.RetriesDelay = value;
-            this.setUIProperties()
+    resetRetriesDelay(retriesNumber: number) {
+        if (!retriesNumber || retriesNumber > this.MaxRetryNumber) {
+            return;
         }
-    }
-
-    showAdvancedSettings(){
-        this.ShowAdvancedSettings = !this.ShowAdvancedSettings;
-    }
-
-    ngOnInit() {
-        if (this.IsNewEntity) {
-            this.initializeWorkFlow();
+        let retriesDelayArray = this.EntityPM.RetriesDelay.split(',');
+        var numberOfStoredDelaies = retriesDelayArray.length;
+        if (numberOfStoredDelaies > retriesNumber) {
+            retriesDelayArray = this.handleDecreaseRetryNumber(retriesDelayArray, retriesNumber, numberOfStoredDelaies);
         } else {
-            this.loadWorkflow();
+            retriesDelayArray = this.handleIncreaseRetryNumber(retriesDelayArray, retriesNumber, numberOfStoredDelaies);
+        }
+        this.RetriesDelayArray = retriesDelayArray;
+        this.EntityPM.RetriesDelay = retriesDelayArray.join(',');
+        this.SelectedRetryNumber = retriesNumber;
+        this.ValidateRetryDelayDifference();
+    }
+
+    handleDecreaseRetryNumber(retriesDelayArray: string[], retriesNumber: number, numberOfStoredDelaies: number) {
+        retriesDelayArray = retriesDelayArray.slice(0, retriesNumber);
+        for (let i = retriesNumber; i < numberOfStoredDelaies; i++) {
+            this.UIProperties.SetValidity("RetriesDelay" + i, this.ObjectTableName, true, "");
+        }
+        return retriesDelayArray;
+    }
+
+    handleIncreaseRetryNumber(retriesDelayArray: string[], retriesNumber: number, numberOfStoredDelaies: number) {
+        for (let i = numberOfStoredDelaies; i < retriesNumber; i++) {
+            var defaultDelay = this.RetriedDelayDictionary[i]
+            retriesDelayArray.push(defaultDelay.toString())
+        }
+        return retriesDelayArray;
+    }
+
+    updateRetriesDelayValue(value, index) {
+        if (this.RetriesDelayArray[index] != value) {
+            this.updateRetriesDelay(index, value)
         }
     }
 
-    initializeWorkFlow() {
-        let todayDate: Date = DateTool.GetCurrentDateAsUtc();
-        this.EntityPM = new WorkFlowPM();
-        this.EntityPM.Tenant = SessionLocator.Tenant;
-        this.EntityPM.CreateDate = todayDate;
-        this.EntityPM.UpdateDate = todayDate;
-        this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
-        this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
-        this.EntityPM.StatusCode = "DRFT";
-        this.EntityPM.RetriesNumber = 5;
-        this.EntityPM.RetriesDelay = 300;
+    updateRetriesDelay(index: number, value: number) {
+        this.RetriesDelayArray[index] = value ? value.toString() : null;
+        this.EntityPM.RetriesDelay = this.RetriesDelayArray.join(',');
+        this.ValidateRetryDelayDifference();
     }
 
-    loadWorkflow() {
-        this.startBusyIndicator("Loading ...");
-        this.WorkFlowPMService.get(this.EntityId).subscribe((serviceResponse: ServiceResponse) => {
-            if (!serviceResponse.HasError) {
-                this.EntityPM = serviceResponse.Result;
-                this.stopBusyIndicator();
-            }
-        });
-    }
-
-    cancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
+    showAdvancedSettings() {
+        this.ShowAdvancedSettings = !this.ShowAdvancedSettings;
+        this.AdvancedSettingsTitle = this.ShowAdvancedSettings ? "Hide Advanced Settings" : "Show Advanced Settings"
     }
 
     setUIProperties() {
-        if (this.EntityPM.RetriesNumber && this.EntityPM.RetriesNumber > 10) {
-            this.UIProperties.SetValidity("RetriesNumber", this.ObjectTableName, false, "The maximum number of retries is 10");
+        if (this.EntityPM.RetriesNumber == 0) {
+            this.UIProperties.SetValidity("RetriesNumber", this.ObjectTableName, false, "Retries number field is required.")
+        }
+        else if (this.EntityPM.RetriesNumber && this.EntityPM.RetriesNumber > this.MaxRetryNumber) {
+            this.UIProperties.SetValidity("RetriesNumber", this.ObjectTableName, false, "The maximum number of retries is " + this.MaxRetryNumber.toString());
         } else {
             this.UIProperties.SetValidity("RetriesNumber", this.ObjectTableName, true, "");
         }
+    }
 
-        if (this.EntityPM.RetriesDelay && this.EntityPM.RetriesDelay < 120) {
-            this.UIProperties.SetValidity("RetriesDelay", this.ObjectTableName, false, "The minimum number of retries delay is 120");
-        } else {
-            this.UIProperties.SetValidity("RetriesDelay", this.ObjectTableName, true, "");
+    ValidateRetryDelayDifference() {
+        if (this.EntityPM.RetriesDelay && this.RetriesDelayArray.length > 0) {
+            for (let i = 0; i < this.RetriesDelayArray.length; i++) {
+                if (!Number(this.RetriesDelayArray[i])) {
+                    this.UIProperties.SetValidity("RetriesDelay" + i, this.ObjectTableName, false, "Retry No. " + (i + 1) + " is required.")
+                }
+                else if (i != 0 && ((Number(this.RetriesDelayArray[i]) - Number(this.RetriesDelayArray[i - 1])) < this.MaxDifferenceTime)) {
+                    this.UIProperties.SetValidity("RetriesDelay" + i, this.ObjectTableName, false, "Retry No. " + (i + 1) + " must be greater than Retry No. " + i + '.')
+                } else {
+                    this.UIProperties.SetValidity("RetriesDelay" + i, this.ObjectTableName, true, "");
+                }
+            }
         }
     }
 
@@ -135,11 +174,7 @@ export class CreateWorkflowComponent extends BaseComponent implements OnInit {
         this.ValidationErrorsList = [];
 
         if (errors.length == 0 && validationErrors.length == 0) {
-            if (this.IsNewEntity) {
-                this.createWorkflow();
-            } else {
-                this.editWorkflow();
-            }
+            this.createWorkflow();
         } else {
             this.ValidationErrorsList = this.ValidationErrorsList.concat(errors).concat(validationErrors)
         }
@@ -173,19 +208,8 @@ export class CreateWorkflowComponent extends BaseComponent implements OnInit {
         });
     }
 
-    editWorkflow() {
-        this.startBusyIndicator("Saving ...");
-        this.WorkFlowPMService.update(this.EntityPM).subscribe((serviceResponse: ServiceResponse) => {
-            if (serviceResponse) {
-                this.stopBusyIndicator();
-                if (!serviceResponse.HasError) {
-                    this.CurrentSession.CurrentWindow.Close(serviceResponse.Result);
-                }
-                else {
-                    this.ValidationErrorsList = serviceResponse.ErrorsArray;
-                }
-            }
-        });
+    cancelButtonClicked() {
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     startBusyIndicator(message: string) {

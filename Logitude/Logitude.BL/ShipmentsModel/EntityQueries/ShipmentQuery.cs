@@ -37,6 +37,7 @@ using Logitude.BL.ShipmentsModel.Tools.Initializers;
 using System.Web;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.Tools.DataMapping;
+using Logitude.BL.ShipmentsModel.Tools.ExternalService;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -111,6 +112,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         returnShipment.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
                         returnShipment.VersionApproved = CLoudData.VersionApproved;
                         returnShipment.ShipmentAddtionalDataXML = CLoudData.ShipmentAddtionalDataXML;
+                        returnShipment.ShipmentAdditionalData = ShipmentAdditionalDataService.DeserializeShipmentAdditionalXmlData(CLoudData.ShipmentAddtionalDataXML);
                         returnShipment.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                         returnShipment.DocsSentToAgent = CLoudData.DocsSentToAgent;
                         returnShipment.ApprovedBy = CLoudData.ApprovedByUserName;
@@ -4549,6 +4551,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         returnShipment.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
                         returnShipment.VersionApproved = CLoudData.VersionApproved;
                         returnShipment.ShipmentAddtionalDataXML = CLoudData.ShipmentAddtionalDataXML;
+                        returnShipment.ShipmentAdditionalData = ShipmentAdditionalDataService.DeserializeShipmentAdditionalXmlData(CLoudData.ShipmentAddtionalDataXML);
                         returnShipment.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                         returnShipment.DocsSentToAgent = CLoudData.DocsSentToAgent;
                         returnShipment.ApprovedBy = CLoudData.ApprovedByUserName;
@@ -4705,6 +4708,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
                         shipmentPM.VersionApproved = CLoudData.VersionApproved;
                         shipmentPM.ShipmentAddtionalDataXML = CLoudData.ShipmentAddtionalDataXML;
+                        shipmentPM.ShipmentAdditionalData = ShipmentAdditionalDataService.DeserializeShipmentAdditionalXmlData(CLoudData.ShipmentAddtionalDataXML);
                         shipmentPM.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                         shipmentPM.DocsSentToAgent = CLoudData.DocsSentToAgent;
                         shipmentPM.ApprovedBy = CLoudData.ApprovedByUserName;
@@ -4765,6 +4769,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
                         shipmentPM.VersionApproved = CLoudData.VersionApproved;
                         shipmentPM.ShipmentAddtionalDataXML = CLoudData.ShipmentAddtionalDataXML;
+                        shipmentPM.ShipmentAdditionalData = ShipmentAdditionalDataService.DeserializeShipmentAdditionalXmlData(CLoudData.ShipmentAddtionalDataXML);
                         shipmentPM.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                         shipmentPM.DocsSentToAgent = CLoudData.DocsSentToAgent;
                         shipmentPM.ApprovedBy = CLoudData.ApprovedByUserName;
@@ -4824,6 +4829,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 returnShipment.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
                 returnShipment.VersionApproved = CLoudData.VersionApproved;
                 returnShipment.ShipmentAddtionalDataXML = CLoudData.ShipmentAddtionalDataXML;
+                returnShipment.ShipmentAdditionalData = ShipmentAdditionalDataService.DeserializeShipmentAdditionalXmlData(CLoudData.ShipmentAddtionalDataXML);
                 returnShipment.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                 returnShipment.DocsSentToAgent = CLoudData.DocsSentToAgent;
                 returnShipment.ApprovedBy = CLoudData.ApprovedByUserName;
@@ -5950,6 +5956,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         returnShipment.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
                         returnShipment.VersionApproved = CLoudData.VersionApproved;
                         returnShipment.ShipmentAddtionalDataXML = CLoudData.ShipmentAddtionalDataXML;
+                        returnShipment.ShipmentAdditionalData = ShipmentAdditionalDataService.DeserializeShipmentAdditionalXmlData(CLoudData.ShipmentAddtionalDataXML);
                         returnShipment.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                         returnShipment.DocsSentToAgent = CLoudData.DocsSentToAgent;
                         returnShipment.ApprovedBy = CLoudData.ApprovedByUserName;
@@ -13520,7 +13527,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                InlandDomesticFromStateId = f.InlandDomesticFromStateId,
                                NumberOfTransshipments = f.NumberOfTransshipments,
                                Transshipments = f.Transshipments,
-                               IsDocumentsNeedApprove = f.IsDocumentsNeedApprove
+                               IsDocumentsNeedApprove = f.IsDocumentsNeedApprove,
+                               DepartmentName = f.DepartmentName,
+                              
 
                            };
             return myResult;
@@ -14553,6 +14562,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     InlandDomesticFromStateId = f.InlandDomesticFromStateId,
                     NumberOfTransshipments = f.NumberOfTransshipments,
                     Transshipments = f.Transshipments,
+                    DepartmentName = f.DepartmentName,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -15084,6 +15094,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
                         shipmentPM.VersionApproved = CLoudData.VersionApproved;
                         shipmentPM.ShipmentAddtionalDataXML = CLoudData.ShipmentAddtionalDataXML;
+                        shipmentPM.ShipmentAdditionalData = ShipmentAdditionalDataService.DeserializeShipmentAdditionalXmlData(CLoudData.ShipmentAddtionalDataXML);
                         shipmentPM.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                         shipmentPM.DocsSentToAgent = CLoudData.DocsSentToAgent;
                         shipmentPM.ApprovedBy = CLoudData.ApprovedByUserName;
@@ -15137,6 +15148,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
                         shipmentPM.VersionApproved = CLoudData.VersionApproved;
                         shipmentPM.ShipmentAddtionalDataXML = CLoudData.ShipmentAddtionalDataXML;
+                        shipmentPM.ShipmentAdditionalData = ShipmentAdditionalDataService.DeserializeShipmentAdditionalXmlData(CLoudData.ShipmentAddtionalDataXML);
                         shipmentPM.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                         shipmentPM.DocsSentToAgent = CLoudData.DocsSentToAgent;
                         shipmentPM.ApprovedBy = CLoudData.ApprovedByUserName;
@@ -15796,7 +15808,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          AccountedPayablesInProfitCurrency = shipment.AccountedPayablesInProfitCurrency,
                                                          OpenPayablesInLocalCurrency = shipment.OpenPayablesInLocalCurrency,
                                                          AccountedPayablesInLocalCurrency = shipment.AccountedPayablesInLocalCurrency,
-                                                     });
+                                                        
+
+                                                     }) ;
 
                 myResult = myResult.OrderByDescending(d => d.CreateDateTime);
                 myResult = System.Data.Entity.QueryableExtensions.Skip(myResult, () => 0);

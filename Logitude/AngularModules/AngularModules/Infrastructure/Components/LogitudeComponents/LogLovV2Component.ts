@@ -1756,7 +1756,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             && this.LocalFilterServerSearchTxtLength != null && searchText.length >= this.LocalFilterServerSearchTxtLength) {
             const arr =  Object.assign([], this.bufferData);
             this.ItemsSource = arr.filter( x => this.LocalFilterFields.some(fl => x[fl].toLowerCase().startsWith(searchText.toLowerCase())));
-                
+            this.HighlightSelectedValue();
             if(this.ItemsSource && this.ItemsSource.length > 0) {
                 return;
             }
@@ -3398,9 +3398,9 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     }
 
                     this.ItemsSourceStatic = this.ItemsSource;
-                    if(!(this.LocalFilterFields && this.LocalFilterFields.length > 0)) {
+                    //if(!(this.LocalFilterFields && this.LocalFilterFields.length > 0)) {
                         this.HighlightSelectedValue();
-                    }
+                    //}
 
                     //turn loading flag off
                     this.isLoading = false;

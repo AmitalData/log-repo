@@ -47,7 +47,10 @@ namespace Logitude.Workflow.Data.EntityListQueryServices
 											  Duration = a.Duration,
 											  WorkFlowVersionNumber = a.WorkFlowVersion.VersionNumber,
 											  RetryAttemptsNumber = a.RetryAttemptsNumber,
-											  WorkflowId = a.WorkflowId
+											  WorkflowId = a.WorkflowId,
+											  CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact != null ? a.CreatedByUser.Contact.EnglishName : null : null,
+											  UpdatedByUserName = a.UpdatedByUser != null ? a.UpdatedByUser.Contact != null ? a.UpdatedByUser.Contact.EnglishName : null : null,
+											  NumberOfActivities = a.NumberOfActivities
 											});
             return query;
 		}

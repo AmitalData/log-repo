@@ -80,6 +80,10 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         }
         public ContainerTrackingProvider GetBySourceCode(string sourceCode)
         {
+            if (sourceCode.Equals("2", StringComparison.InvariantCultureIgnoreCase))
+            {
+                sourceCode = "VZN";
+            }
             return context.ContainerTrackingProviders.Where(e => e.SourceCode == sourceCode).FirstOrDefault();
         }
 

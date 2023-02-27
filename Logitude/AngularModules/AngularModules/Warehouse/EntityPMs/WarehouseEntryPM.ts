@@ -432,6 +432,21 @@ export class WarehouseEntryPM extends ObjectCustomFieldPM {
     public set IsUpdateByAutomation(newValue: boolean) { if (this.isUpdateByAutomation != newValue) { this.isUpdateByAutomation = newValue; this.MarkAsDirty("IsUpdateByAutomation"); } }
        
 	 
+    private customerPrimaryContactId: string;
+    public get CustomerPrimaryContactId() { return this.customerPrimaryContactId; }
+    public set CustomerPrimaryContactId(newValue: string) { if (this.customerPrimaryContactId != newValue) { this.customerPrimaryContactId = newValue; this.MarkAsDirty("CustomerPrimaryContactId"); } }
+       
+	 
+    private shipperPrimaryContactId: string;
+    public get ShipperPrimaryContactId() { return this.shipperPrimaryContactId; }
+    public set ShipperPrimaryContactId(newValue: string) { if (this.shipperPrimaryContactId != newValue) { this.shipperPrimaryContactId = newValue; this.MarkAsDirty("ShipperPrimaryContactId"); } }
+       
+	 
+    private consigneePrimaryContactId: string;
+    public get ConsigneePrimaryContactId() { return this.consigneePrimaryContactId; }
+    public set ConsigneePrimaryContactId(newValue: string) { if (this.consigneePrimaryContactId != newValue) { this.consigneePrimaryContactId = newValue; this.MarkAsDirty("ConsigneePrimaryContactId"); } }
+       
+	 
     private customChildEntities: CustomChildEntity[];
     public get CustomChildEntities() { return this.customChildEntities; }
     public set CustomChildEntities(newValue: CustomChildEntity[]) { if (this.customChildEntities != newValue) { this.customChildEntities = newValue; this.MarkAsDirty("CustomChildEntities"); } }

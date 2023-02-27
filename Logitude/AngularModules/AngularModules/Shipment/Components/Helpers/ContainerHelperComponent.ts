@@ -24,7 +24,7 @@ export class ContainerHelperComponent implements OnDestroy {
     _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
     public IsSimulatorVisible: boolean = false;
-    public IsVisionRequestStatus: boolean = false;
+    public IsTrackContainerVisible: boolean = false;
     public IsGeneralSimulatorVisible: boolean = false;
     public IsContainersRequestStatusVisible: boolean = false;
     ValidationErrorsList: any[];
@@ -34,10 +34,22 @@ export class ContainerHelperComponent implements OnDestroy {
         if (this.EntityPM) {
             this.IsSimulatorVisible = FeatureLocator.HasFeaturePermession("Shipment", "ContainerStatusSimulator");
             this.IsGeneralSimulatorVisible = FeatureLocator.HasFeaturePermession("Shipment", "VisionContainerStatusSimulator") && SessionLocator.TenantManagementJS.IsContainerTrackingPrepaid;
-            this.IsVisionRequestStatus = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "VIP")[0] == null && FeatureLocator.HasFeaturePermession("Shipment", "VizionRequestStatus") && SessionLocator.TenantManagementJS.IsContainerTrackingPrepaid;
             this.IsContainersRequestStatusVisible = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0] != null;
+            this.IsTrackContainerVisible = this.IsTrackContainerAllowed();
             this.Listen();
         }
+    }
+    private IsTrackContainerAllowed(): boolean {
+        if (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "VIP")[0] != null)
+            return false;
+
+        if (!FeatureLocator.HasFeaturePermession("Shipment", "VizionRequestStatus"))
+            return false;
+
+        if (!SessionLocator.TenantManagementJS.IsContainerTrackingPrepaid)
+            return false;
+
+        return true;
     }
 
     private SaveCompletedEvent: any = null;
@@ -98,7 +110,7 @@ export class ContainerHelperComponent implements OnDestroy {
         logWindow.Title = "Shipment Containers Statuses Simulator";
         logWindow.Show('./ShipmentModules/ShipmentOthers/Components/GeneralContainersStatusesSimulator/GeneralContainersStatusesSimulatorComponent');
     }
-    VizionStatusClicked() {
+    TrackContainerClicked() {
         this.CurrentSession.StartBusyIndicator("Sending...");
         var args: GeneralContainerTrackingArgs = <GeneralContainerTrackingArgs> {
             ContainerId : this.EntityPM.Id,

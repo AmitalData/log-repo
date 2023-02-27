@@ -19,13 +19,14 @@ export type NodeType =
 export type ConditionDisabled = null | "d,f,o" | "d,o,v";
 
 export type FlowVariablesTreeListProperties = {
-    ShowRecordsVariables: boolean,
-    ShowDeclaredVariables: boolean,
-    ShowRecordsCollectionVariables: boolean,
-    ShowDeclaredCollectionVariables: boolean,
-    OnlyCurrentLoopItemVariables: boolean,
-    IsObjectVariableSelectable: boolean,
-    IsNoChildrenObjectVariables: boolean
+    ShowRecordsVariables?: boolean,
+    ShowDeclaredVariables?: boolean,
+    ShowRecordsCollectionVariables?: boolean,
+    ShowDeclaredCollectionVariables?: boolean,
+    ShowGlobalVariables?: boolean,
+    OnlyCurrentLoopItemVariables?: boolean,
+    IsObjectVariableSelectable?: boolean,
+    IsNoChildrenObjectVariables?: boolean
 };
 
 export type ExpressionVariable = {
@@ -42,14 +43,17 @@ export type ExpressionValue = {
 export type Entity = {
     Code: string,
     Name: string,
-    IsCustom: boolean
-};
-
-export type ChildEntity = {
-    Code: string,
-    Name: string,
-    ParentEntityCode: string,
-    IsCustom: boolean
+    IsCustom: boolean,
+    IsChild: boolean,
+    ParentEntity: string | null
 };
 
 export type EntitiesType = "all" | "parent" | "child";
+
+export type GlobalVariable = {
+    Code: string,
+    Name?: string | null,
+    Type: string,
+    LookupType?: string | null,
+    PicklistType?: string | null
+};

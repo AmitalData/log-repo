@@ -83,5 +83,6 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string SpecialServicesTypeId { get; set; }
         public string ValidByTypeCode { get; set; }
         public bool? ConnectedToOpportunity { get; set; }
+        public string ProductCode { get; set; }
     }
 }

@@ -109,8 +109,8 @@
   </Column>
   <Column
     Name="RetriesDelay"
-    Type="int"
-    DefaultValue="300">
+    Type="varchar"
+    Size="500">
     <Constraints
       Nullable="false" />
   </Column>

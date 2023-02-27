@@ -205,6 +205,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? LastUpdateDate { get; set; }
       
         public string DepartmentId { get; set; }
+        public string DepartmentName { get; set; }
         public string BranchId { get; set; }
 
         public string LongMaster { get; set; }

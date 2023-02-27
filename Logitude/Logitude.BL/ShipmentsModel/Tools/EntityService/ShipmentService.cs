@@ -229,6 +229,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         throw new ApplicationException("House shipment already connected to a Master, in order to connect to another please disconnect it first");
                     }
                 }
+                if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
+                {
+                    ShipmentValidating.ValidateBranch(entityPM);
+                }
 
                 this.isNewEntity = true;
                 this.calculateProfit = false;
@@ -342,7 +346,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.ComputeAgentComputed(entityPM, entityPoco);
                 this.ComputeETAAndETDHouseFields();
 
-               
+
                 entityRepository.Add(entityPoco);
                 entityRepository.SubmitChanges();
 
@@ -424,15 +428,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
-        private void InsertInShipmnetUpdateLog(int StartOrEnd)
+        private void InsertInShipmnetUpdateLog(int StartOrEnd, string errorMessage = null)
         {
+            string mySubError = errorMessage;
+            if (errorMessage != null && errorMessage.Length > 4000)
+            {
+                mySubError = errorMessage.Substring(0, 3999);
+            }
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 try
                 {
                     string strConnString = entityRepository.context.GetConnection().ConnectionString;
-                    string query = "INSERT INTO ShipmentUpdateLog (MessageID, EntityID, Tenant,LogDateTime,StartOrEnd) " +
-                                        "VALUES (@MessageID, @EntityID, @Tenant, @LogDateTime,@StartOrEnd) ";
+                    string query = "INSERT INTO ShipmentUpdateLog (MessageID, EntityID, Tenant,LogDateTime,StartOrEnd,ErrorMessage) " +
+                                        "VALUES (@MessageID, @EntityID, @Tenant, @LogDateTime,@StartOrEnd,@ErrorMessage) ";
 
                     using (SqlConnection cn = new SqlConnection(strConnString))
                     {
@@ -443,13 +452,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         cmd.Parameters.Add("@Tenant", SqlDbType.Int).Value = tenant;
                         cmd.Parameters.Add("@LogDateTime", SqlDbType.DateTime).Value = DateTime.Now;
                         cmd.Parameters.Add("@StartOrEnd", SqlDbType.VarChar, 50).Value = StartOrEnd;
+                        if (errorMessage == null)
+                        {
+                            cmd.Parameters.AddWithValue("@ErrorMessage", DBNull.Value);
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@ErrorMessage", mySubError);
+                        }
                         cmd.CommandType = CommandType.Text;
                         cmd.CommandTimeout = 5;
                         cn.Open();
                         var output = cmd.ExecuteNonQuery();
                         cn.Close();
                     }
-                   
+
                 }
                 catch (Exception ex)
                 {
@@ -471,268 +488,294 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             //bool isPatchUpdate = false;
             InsertInShipmnetUpdateLog(0);
-            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            try
             {
-                
-                initializer.IsMappingComposition = mapComposition;
-                initializer.IsUpdateFromUpdateTool = isFromUpdateTool;
-
-                #region
-                this.isNewEntity = false;
-                this.calculateProfit = false;
-                this.calculatePayables = false;
-                this.calculateReceivables = false;
-                Shipment shipmentPocoCopy = null;
-                ShipmentPM shipmentPMCopy = null;
-
-                if (!entityPoco.IsCancelled || !entityPM.IsCancelled)
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
+
+                    initializer.IsMappingComposition = mapComposition;
+                    initializer.IsUpdateFromUpdateTool = isFromUpdateTool;
+
                     #region
-                    string myOldCustomerId = "";
-                    string oldEntityStatusId = entityPoco.StatusId;
-                    if (entityPM.CustomerId != entityPoco.CustomerId)
+                    this.isNewEntity = false;
+                    this.calculateProfit = false;
+                    this.calculatePayables = false;
+                    this.calculateReceivables = false;
+                    Shipment shipmentPocoCopy = null;
+                    ShipmentPM shipmentPMCopy = null;
+
+                    if (!entityPoco.IsCancelled || !entityPM.IsCancelled)
                     {
-                        myOldCustomerId = entityPoco.CustomerId;
-                        CustomerChanged = "true";
-                    }
-                    this.OldCustomerId = myOldCustomerId;
 
-                    this.initializer.HandleBehaviours();
-
-                    this.entityMasterData = this.initializer.EntityMasterData;
-
-                    this.InitializeComponent();
-
+                        #region
                     if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
                     {
-                        this.initializer.HandleValidators();
-
-                        ShipmentValidating.Validate(entityPM, entityPoco, isNewEntity, myCommonContext, loggedTenant, isPatchUpdate);
-                        ShipmentValidating.ValidateFutureRoutingDates(entityPM, initializer.ShipmentPickUpsChangeSet, initializer.ShipmentDeliveriesChangeSet);
+                        ShipmentValidating.ValidateBranch(entityPM);
                     }
 
-                    if (entityPM.ShipmentDirectionConverted && entityPM.ShipmentConvertedNewNumber)
-                    {
-                        this.ChangePickupDliveryNumbersOnShipmentDirectionConverted();
-                    }
+                    string myOldCustomerId = "";
+                        string oldEntityStatusId = entityPoco.StatusId;
+                        if (entityPM.CustomerId != entityPoco.CustomerId)
+                        {
+                            myOldCustomerId = entityPoco.CustomerId;
+                            CustomerChanged = "true";
+                        }
+                        this.OldCustomerId = myOldCustomerId;
 
-                    if (ShipmentDocsFieldFromWorkerRole != null)
-                    {
-                        initializer.ShipmentDocsFieldFromWorkerRole = ShipmentDocsFieldFromWorkerRole;
-                        UpdateShipmentDocsFieldBehaviour updateShipmentDocsFieldBehaviour = new UpdateShipmentDocsFieldBehaviour(initializer);
-                        updateShipmentDocsFieldBehaviour.Handle();
-                    }
+                        this.initializer.HandleBehaviours();
 
-                    this.UpdateShipmentProductItems();
-                    this.ComputeIsHTSMissingField();
-                    this.UpdateShipmentPackagesCollection();
-                    this.UpdateShipmentPickUpsCollection();
-                    this.UpdateShipmentDeliveriesCollection();
-                    this.UpdateShipmentPayablesCollection();
-                    this.UpdateShipmentReceivablesCollection();
-                    this.UpdateShipmentAWBPrintOnliesCollection();
-                    this.UpdateShipmentConsoleShipmentsCollection();
-                    this.UpdateShipmentFollowUpsCollection("InSert");
-                    this.UpdateShipmentCarrierStatusesCollection();
-                    this.UpdateShipmentAWBOCIsCollection();
-                    this.UpdateShipmentCommoditiesCollection();
-                    this.UpdateShipmentAssembliesCollection();
-                    this.UpdateShipmentStoragePricingsCollection();
-                    this.UpdateShipmentProductItemsCollection();
-                    this.UpdateShipmentUnassignedFieldsCollection();
-                    this.initializer.HandleComposition();
-                    this.initializer.HandleStandalone();
-                    this.InitializeBookingData();
-                    this.RemoveDeletedItemsFromEntityPM();
+                        this.entityMasterData = this.initializer.EntityMasterData;
 
-                    if (entityPM.WarehouseStorageFreeDays != entityPoco.WarehouseStorageFreeDays)
-                    {
-                        calculatePayables = true;
-                        calculateReceivables = true;
-                    }
+                        this.InitializeComponent();
 
-                    if (initializer.IsUpdatingProfitFromConversion)
-                    {
-                        entityPM.CalculateProfit = true;
-                        entityPM.CalculatePayables = true;
-                        entityPM.CalculateReceivables = true;
+                        if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
+                        {
+                            this.initializer.HandleValidators();
+
+                            ShipmentValidating.Validate(entityPM, entityPoco, isNewEntity, myCommonContext, loggedTenant, isPatchUpdate);
+                            ShipmentValidating.ValidateFutureRoutingDates(entityPM, initializer.ShipmentPickUpsChangeSet, initializer.ShipmentDeliveriesChangeSet);
+                        }
+
+                        if (entityPM.ShipmentDirectionConverted && entityPM.ShipmentConvertedNewNumber)
+                        {
+                            this.ChangePickupDliveryNumbersOnShipmentDirectionConverted();
+                        }
+
+                        if (ShipmentDocsFieldFromWorkerRole != null)
+                        {
+                            initializer.ShipmentDocsFieldFromWorkerRole = ShipmentDocsFieldFromWorkerRole;
+                            UpdateShipmentDocsFieldBehaviour updateShipmentDocsFieldBehaviour = new UpdateShipmentDocsFieldBehaviour(initializer);
+                            updateShipmentDocsFieldBehaviour.Handle();
+                        }
+
+                        this.UpdateShipmentProductItems();
+                        this.ComputeIsHTSMissingField();
+                        this.UpdateShipmentPackagesCollection();
+                        this.UpdateShipmentPickUpsCollection();
+                        this.UpdateShipmentDeliveriesCollection();
+                        this.UpdateShipmentPayablesCollection();
+                        this.UpdateShipmentReceivablesCollection();
+                        this.UpdateShipmentAWBPrintOnliesCollection();
+                        this.UpdateShipmentConsoleShipmentsCollection();
+                        this.UpdateShipmentFollowUpsCollection("InSert");
+                        this.UpdateShipmentCarrierStatusesCollection();
+                        this.UpdateShipmentAWBOCIsCollection();
+                        this.UpdateShipmentCommoditiesCollection();
+                        this.UpdateShipmentAssembliesCollection();
+                        this.UpdateShipmentStoragePricingsCollection();
+                        this.UpdateShipmentProductItemsCollection();
+                        this.UpdateShipmentUnassignedFieldsCollection();
+                        this.initializer.HandleComposition();
+                        this.initializer.HandleStandalone();
+                        this.InitializeBookingData();
+                        this.RemoveDeletedItemsFromEntityPM();
+
+                        if (entityPM.WarehouseStorageFreeDays != entityPoco.WarehouseStorageFreeDays)
+                        {
+                            calculatePayables = true;
+                            calculateReceivables = true;
+                        }
+
+                        if (initializer.IsUpdatingProfitFromConversion)
+                        {
+                            entityPM.CalculateProfit = true;
+                            entityPM.CalculatePayables = true;
+                            entityPM.CalculateReceivables = true;
+                        }
+
+                        else
+                        {
+                            entityPM.CalculateProfit = calculateProfit;
+                            entityPM.CalculatePayables = calculatePayables;
+                            entityPM.CalculateReceivables = calculateReceivables;
+                        }
+
+                        if (!entityPM.IsHybrid && !loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
+                        {
+                            shipmentTracing.BeginTracing(isFromEventTrace);
+                            isEntityStatusUpdated = oldEntityStatusId != entityPM.StatusId ? true : false;
+                        }
+
+                        ShipmentContainersEntityBehaviour.UpdateConatinarStatus(this.entityPM, isEntityStatusUpdated, objectContext);
+
+                        if (string.IsNullOrEmpty(entityPM.CustomFileId) && !string.IsNullOrEmpty(entityPoco.CustomFileId))
+                        {
+                            entityPM.CustomFilePocoId = entityPoco.CustomFileId;
+                        }
+
+                        List<ShipmentPackagePM> myPackagesList = new List<ShipmentPackagePM>();
+                        if (initializer.ShipmentPackagesChangeSet != null)
+                        {
+                            myPackagesList = initializer.ShipmentPackagesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+                        }
+
+                        this.BuildShipmentExternalUpdate();
+                        this.ComputeIsAssemblyField();
+                        this.ComputeFinalDestination();
+                        this.CheckUpdatingMasterHouses();
+                        this.ComputeIsHTSMissingField();
+                        this.ComputeHasUnassignedField();
+                        this.ComputeNumberOfTransshipments();
+
+                        entityPM.IsConnectToMasterShipment = entityMasterData != null ? true : false;
+                        shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
+                        shipmentBehaviourFacade.Handle(FieldChanges);
+
+                        shipmentBehaviourFacade.HandleShipmentDigitalFields(shipmentDigitalFields);
+
+                        if (shipmentBehaviourFacade.ReceivablePricingUpdated_CrossDoc)
+                        {
+                            ShipmentReceivablePM storageReceivable = entityPM.ShipmentReceivables.Where(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && string.IsNullOrEmpty(d.ARInvoiceId)).FirstOrDefault();
+                            if (storageReceivable != null)
+                            {
+                                if (storageReceivable.ChangeSetOp == ChangeSetOperation.Insert)
+                                {
+                                    this.CreateShipmentReceivable(storageReceivable);
+                                }
+
+                                else if (storageReceivable.ChangeSetOp == ChangeSetOperation.Update)
+                                {
+                                    this.UpdateShipmentReceivable(storageReceivable);
+                                }
+
+                                else if (storageReceivable.ChangeSetOp == ChangeSetOperation.Delete)
+                                {
+                                    this.DeleteShipmentReceivable(storageReceivable);
+                                }
+                            }
+
+                            foreach (ShipmentStoragePricingPM pricingPM in entityPM.ShipmentStoragePricings.Where(d => d.ChangeSetOp == ChangeSetOperation.Update))
+                            {
+                                this.UpdateShipmentStoragePricing(pricingPM);
+                            }
+                        }
+
+                        if (shipmentBehaviourFacade.DatesUpdated_CrossDoc)
+                        {
+                            shipmentTracing.TraceTerminalData();
+                        }
+                        this.SaveChildEntitiesCustomFields();
+
+
+                        RunAutomation("OnUpdate", BuildShipmentChangeTracking());
+
+                        shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
+                        this.UpdateShipmentFollowUpsCollection();
+                        UpdateStandaloneShipments();
+
+                        shipmentPocoCopy = CloneObjectService.Clone(entityPoco);
+                        shipmentPMCopy = CloneObjectService.Clone(entityPM);
+                        ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, myPackagesList, objectContext, FieldChanges);
+                        this.ComputeAgentComputed(entityPM, entityPoco);
+
+                        entityRepository.Update(entityPoco);
+                        ////
+                        entityRepository.SubmitChanges();
+
+                        shipmentAdditionalCloudDataRepository.SubmitChanges();
+                        followUpRepository.SubmitChanges();
+                        shipmentPickUpDeliveryRepository.SubmitChanges();
+                        new ShipmentAnalyticTableService(objectContext.GetActiveDbContext()).AddUpdate(entityPoco, tenant);
+
+                        if (entityPM.IsStandalonePickupDelivery)
+                        {
+                            this.CopyForwarderShipmentPackagesFromStandalone();
+                        }
+
+                        UpdateMasterHouses();
+                        RunStoredProcedures();
+                        GetForeignFields();
+                        BuildActivityLog();
+                        BuildImportersQueue();
+                        SendAutomaticallyOceanOnsightsRequest();
+                        UpdatePayablesLinesVatAmounts();
+                        RemoveDeletedPackagesItemsFromEntityPM();
+                        RunAutomationThatDependencyOnLastEntityUpdate();
+                        #endregion
                     }
 
                     else
                     {
-                        entityPM.CalculateProfit = calculateProfit;
-                        entityPM.CalculatePayables = calculatePayables;
-                        entityPM.CalculateReceivables = calculateReceivables;
-                    }
-
-                    if (!entityPM.IsHybrid && !loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
-                    {
-                        shipmentTracing.BeginTracing(isFromEventTrace);
-                        isEntityStatusUpdated = oldEntityStatusId != entityPM.StatusId ? true : false;
-                    }
-
-                    ShipmentContainersEntityBehaviour.UpdateConatinarStatus(this.entityPM, isEntityStatusUpdated, objectContext);
-
-                    if (string.IsNullOrEmpty(entityPM.CustomFileId) && !string.IsNullOrEmpty(entityPoco.CustomFileId))
-                    {
-                        entityPM.CustomFilePocoId = entityPoco.CustomFileId;
-                    }
-
-                    List<ShipmentPackagePM> myPackagesList = new List<ShipmentPackagePM>();
-                    if (initializer.ShipmentPackagesChangeSet != null)
-                    {
-                        myPackagesList = initializer.ShipmentPackagesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
-                    }
-
-                    this.BuildShipmentExternalUpdate();
-                    this.ComputeIsAssemblyField();
-                    this.ComputeFinalDestination();
-                    this.CheckUpdatingMasterHouses();
-                    this.ComputeIsHTSMissingField();
-                    this.ComputeHasUnassignedField();
-                    this.ComputeNumberOfTransshipments();
-
-                    entityPM.IsConnectToMasterShipment = entityMasterData != null ? true : false;
-                    shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
-                    shipmentBehaviourFacade.Handle(FieldChanges);
-
-                    shipmentBehaviourFacade.HandleShipmentDigitalFields(shipmentDigitalFields);
-
-                    if (shipmentBehaviourFacade.ReceivablePricingUpdated_CrossDoc)
-                    {
-                        ShipmentReceivablePM storageReceivable = entityPM.ShipmentReceivables.Where(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && string.IsNullOrEmpty(d.ARInvoiceId)).FirstOrDefault();
-                        if (storageReceivable != null)
+                        #region
+                        // cancelled shipments
+                        // in case follow ups added
+                        // from client
+                        int indexComp = 0;
+                        if (initializer.ShipmentFollowUpsChangeSet != null)
                         {
-                            if (storageReceivable.ChangeSetOp == ChangeSetOperation.Insert)
+                            foreach (ShipmentFollowUpPM item in initializer.ShipmentFollowUpsChangeSet)
                             {
-                                this.CreateShipmentReceivable(storageReceivable);
-                            }
-
-                            else if (storageReceivable.ChangeSetOp == ChangeSetOperation.Update)
-                            {
-                                this.UpdateShipmentReceivable(storageReceivable);
-                            }
-
-                            else if (storageReceivable.ChangeSetOp == ChangeSetOperation.Delete)
-                            {
-                                this.DeleteShipmentReceivable(storageReceivable);
+                                if (string.IsNullOrEmpty(item.Id))
+                                {
+                                    indexComp++;
+                                    item.Id = "ShipmentFollowUpPM_" + indexComp;
+                                }
                             }
                         }
+                        #endregion
+                    }
 
-                        foreach (ShipmentStoragePricingPM pricingPM in entityPM.ShipmentStoragePricings.Where(d => d.ChangeSetOp == ChangeSetOperation.Update))
+                    if (entityPM.IsCancelled)
+                    {
+                        List<FollowUp> allFollowupLists = this.followUpRepository.GetFollowUpsByShipmentId(entityPM.Id, entityPM.Tenant);
+                        foreach (FollowUp item in allFollowupLists)
                         {
-                            this.UpdateShipmentStoragePricing(pricingPM);
+                            followUpRepository.Remove(item);
                         }
+
+                        followUpRepository.SubmitChanges();
+
+                        entityPM.FollowUps = new List<ShipmentFollowUpPM>();
                     }
 
-                    if (shipmentBehaviourFacade.DatesUpdated_CrossDoc)
+                    this.RefreshFollowUpDate();
+                    this.UpdateExtendedTasksDueDate();
+
+                    if (this.entityPM != null && !this.entityPM.FromCTool)
                     {
-                        shipmentTracing.TraceTerminalData();
+                        EntityChangesMessageProducer.ProduceShipmentUpdateMessage(shipmentPocoCopy, shipmentPMCopy);
                     }
-                    this.SaveChildEntitiesCustomFields();
 
-
-                    RunAutomation("OnUpdate", BuildShipmentChangeTracking());
-
-                    shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
-                    this.UpdateShipmentFollowUpsCollection();
-                    UpdateStandaloneShipments();
-
-                    shipmentPocoCopy = CloneObjectService.Clone(entityPoco);
-                    shipmentPMCopy = CloneObjectService.Clone(entityPM);
-                    ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, myPackagesList, objectContext, FieldChanges);
-                    this.ComputeAgentComputed(entityPM, entityPoco);
-
-                    entityRepository.Update(entityPoco);
-                    ////
-                    entityRepository.SubmitChanges();
-
-                    shipmentAdditionalCloudDataRepository.SubmitChanges();
-                    followUpRepository.SubmitChanges();
-                    shipmentPickUpDeliveryRepository.SubmitChanges();
-                    new ShipmentAnalyticTableService(objectContext.GetActiveDbContext()).AddUpdate(entityPoco, tenant);
-
-                    if (entityPM.IsStandalonePickupDelivery)
+                    AuditLog auditLog = null;
+                    if (entityPM != null && FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant))
                     {
-                        this.CopyForwarderShipmentPackagesFromStandalone();
+                        auditLog = AddShipmentAuditLogChanges(entityPoco);
+                        AuditLogRepository.Add(auditLog);
+                        AuditLogRepository.SubmitChanges();
                     }
 
-                    UpdateMasterHouses();
-                    RunStoredProcedures();
-                    GetForeignFields();
-                    BuildActivityLog();
-                    BuildImportersQueue();
-                    SendAutomaticallyOceanOnsightsRequest();
-                    UpdatePayablesLinesVatAmounts();
-                    RemoveDeletedPackagesItemsFromEntityPM();
-                    RunAutomationThatDependencyOnLastEntityUpdate();
+                    new WorkflowEntityQueueMessage()
+                    {
+                        Entity = WorkflowEntities.Shipment,
+                        EntityId = entityPM.Id,
+                        AuditLogId = auditLog?.Id,
+                        Tenant = entityPM.Tenant,
+                        Type = QueueMessagesTypes.Update
+                    }.Produce();
+
+                    scope.Complete();
+
                     #endregion
                 }
-
-                else
-                {
-                    #region
-                    // cancelled shipments
-                    // in case follow ups added
-                    // from client
-                    int indexComp = 0;
-                    if (initializer.ShipmentFollowUpsChangeSet != null)
-                    {
-                        foreach (ShipmentFollowUpPM item in initializer.ShipmentFollowUpsChangeSet)
-                        {
-                            if (string.IsNullOrEmpty(item.Id))
-                            {
-                                indexComp++;
-                                item.Id = "ShipmentFollowUpPM_" + indexComp;
-                            }
-                        }
-                    }
-                    #endregion
-                }
-
-                if (entityPM.IsCancelled)
-                {
-                    List<FollowUp> allFollowupLists = this.followUpRepository.GetFollowUpsByShipmentId(entityPM.Id, entityPM.Tenant);
-                    foreach (FollowUp item in allFollowupLists)
-                    {
-                        followUpRepository.Remove(item);
-                    }
-
-                    followUpRepository.SubmitChanges();
-
-                    entityPM.FollowUps = new List<ShipmentFollowUpPM>();
-                }
-
-                this.RefreshFollowUpDate();
-                this.UpdateExtendedTasksDueDate();
-
-                if (this.entityPM != null && !this.entityPM.FromCTool)
-                {
-                    EntityChangesMessageProducer.ProduceShipmentUpdateMessage(shipmentPocoCopy, shipmentPMCopy);
-                }
-
-                AuditLog auditLog = null;
-                if (entityPM != null && FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant))
-                {
-                    auditLog = AddShipmentAuditLogChanges(entityPoco);
-                    AuditLogRepository.Add(auditLog);
-                    AuditLogRepository.SubmitChanges();
-                }
-
-                new WorkflowEntityQueueMessage()
-                {
-                    Entity = WorkflowEntities.Shipment,
-                    EntityId = entityPM.Id,
-                    AuditLogId = auditLog?.Id,
-                    Tenant = entityPM.Tenant,
-                    Type = QueueMessagesTypes.Update
-                }.Produce();
-            
-                scope.Complete();
-               
-                #endregion
+                InsertInShipmnetUpdateLog(1);
             }
-            InsertInShipmnetUpdateLog(1);
+            catch (Exception ex)
+            {
+
+                string errorMessage = ex.Message + Environment.NewLine;
+
+                if (ex.InnerException != null)
+                {
+
+                    errorMessage = errorMessage + " (" + (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) + ")" + Environment.NewLine;
+
+                }
+
+                errorMessage = errorMessage + ex.StackTrace + Environment.NewLine;
+                InsertInShipmnetUpdateLog(-1, errorMessage);
+                throw ex;
+            }
+
         }
 
         private AuditLog AddShipmentAuditLogChanges(Shipment entityPoco)
@@ -2806,7 +2849,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     shipmentAdditionalCloudData.DocumentsApprovedByUserName = entityPM.DocumentsApprovedByUserName;
                 }
-                shipmentAdditionalCloudData.ShipmentAddtionalDataXML = entityPM.ShipmentAddtionalDataXML;
+                shipmentAdditionalCloudData.ShipmentAddtionalDataXML = ShipmentAdditionalDataService.SerializeShipmentAdditionalXmlData(entityPM.ShipmentAdditionalData);
 
                 if (!string.IsNullOrEmpty(entityPM.PaymentRequestXML) && shipmentAdditionalCloudData.PaymentRequestXML != entityPM.PaymentRequestXML)
                 {
@@ -3119,9 +3162,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         {
                             shipmentAdditionalCloudData.VersionApproved = entityPM.VersionApproved;
                         }
-                        if (!string.IsNullOrEmpty(entityPM.ShipmentAddtionalDataXML))
+                        if (entityPM.ShipmentAdditionalData != null)
                         {
-                            shipmentAdditionalCloudData.ShipmentAddtionalDataXML = entityPM.ShipmentAddtionalDataXML;
+                            shipmentAdditionalCloudData.ShipmentAddtionalDataXML = ShipmentAdditionalDataService.SerializeShipmentAdditionalXmlData(entityPM.ShipmentAdditionalData);
                         }
 
                         if (!string.IsNullOrEmpty(entityPM.PaymentRequestXML) && shipmentAdditionalCloudData.PaymentRequestXML != entityPM.PaymentRequestXML)
@@ -6040,7 +6083,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private void ValidatePayableConnectedInvoice(ShipmentPayablePM payablePM)
         {
             APInvoiceLineRepository invoiceLineRepository = new APInvoiceLineRepository(tenant);
-            if(invoiceLineRepository.IsPayableConnectedToInvoiceLines(payablePM.Id, tenant))
+            if (invoiceLineRepository.IsPayableConnectedToInvoiceLines(payablePM.Id, tenant))
             {
                 throw new ApplicationException("Can't delete payable " + payablePM.ChargesTypeName + " since it is connected to invoice");
             }

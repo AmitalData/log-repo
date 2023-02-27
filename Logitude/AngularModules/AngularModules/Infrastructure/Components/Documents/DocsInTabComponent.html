@@ -275,7 +275,7 @@
                     </log-column>
 
                     <!--ReceivedBy-->
-                    <log-column [width]="'90'" [header]="'DocsIn.O.ReceivedBy' | TextCodeTranslationPipe">
+                    <log-column [width]="'115'" [header]="'DocsIn.O.ReceivedBy' | TextCodeTranslationPipe">
 
 
                         <ng-template let-item>
@@ -283,14 +283,24 @@
 
                                 <table>
                                     <tr>
-
-
-                                        <td class="GridViewCell" [style.width]="IsRTL ? 'initial' : '90px'" [style.min-width]="IsRTL ? 'initial' : '90px'" [style.max-width]="IsRTL ? 'initial' : '90px'" style="position: relative;">
-
-                                            {{item.ReceivedByUserName}}
-
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td class="GridViewCell" [style.width]="IsRTL ? 'initial' : '90px'" [style.min-width]="IsRTL ? 'initial' : '90px'" [style.max-width]="IsRTL ? 'initial' : '90px'" style="position: relative;">
+                                                        {{item.ReceivedByUserName}}
+                                                    </td>
+                                                    <td style="width: 3px;">
+                                                        <div></div>
+                                                    </td>
+                                                    <td style="width:18px">
+                                                        <CellTooltip [Height]="110" [Width]="300" [IconPath]="'./Images/CellIcons/Info_Gray.png'" [Head]="'Document Source'" *ngIf="item.ReceivedByUserName && item.ReceivedByPartner">
+                                                            <div *ngIf="item.ReceivedByPartner == 'Digital'">This document is received by Digital Portal</div>
+                                                            <div *ngIf="item.ReceivedByPartner == 'External'">This document is received by External Partner</div>
+                                                        </CellTooltip>
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </td>
-
                                     </tr>
                                 </table>
                             </log-cell-template>
@@ -343,17 +353,17 @@
                     </log-column>
 
                     <!--Note-->
-                    <log-column [width]="'150'" [header]="'DocsIn.O.Notes' | TextCodeTranslationPipe">
+                    <log-column [width]="'300'" [header]="'DocsIn.O.Notes' | TextCodeTranslationPipe">
 
                         <ng-template let-item>
                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
 
                                 <table>
                                     <tr>
-                                        <td [style.width]="IsRTL ? 'initial' : '150px'" [style.min-width]="IsRTL ? 'initial' : '150px'" [style.max-width]="IsRTL ? 'initial' : '150px'" style="position:relative;">
+                                        <td [style.width]="IsRTL ? 'initial' : '300px'" [style.min-width]="IsRTL ? 'initial' : '300px'" [style.max-width]="IsRTL ? 'initial' : '300px'" style="position:relative;">
 
                                             <input [attr.id]="item.Key" (change)="item.EditNote(item)"
-                                                   type="text" autocomplete="off" style="height:22px;width:140px" [(ngModel)]="item.Note" value="" />
+                                                   type="text" autocomplete="off" style="height:22px;width:290px" [(ngModel)]="item.Note" value="" />
 
                                         </td>
 

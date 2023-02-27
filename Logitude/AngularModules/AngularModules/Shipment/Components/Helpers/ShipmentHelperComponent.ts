@@ -31,9 +31,8 @@ export class ShipmentHelperComponent implements OnDestroy {
     _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
     public IsSimulatorVisible: boolean = false; 
-    public IsVisionRequestStatus: boolean = false;
+    public IsTrackContainerVisible: boolean = false;
     public NotesSharedWithCustomerActivated: boolean = false;
-
     ShareDocumentsViaEmailDocumentTypeCode = "SDVE"; 
     public documentTypePMExtendedService: DocumentTypePMExtendedService = new DocumentTypePMExtendedService();
     public IsGeneralSimulatorVisible: boolean = false;
@@ -41,8 +40,7 @@ export class ShipmentHelperComponent implements OnDestroy {
 
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {        
         this.IsFollowupsVisible = FeatureLocator.HasFeaturePermession("Shipment", "Shipment.Followups");
-        this.IsSimulatorVisible = FeatureLocator.HasFeaturePermession("Shipment", "ContainerStatusSimulator");
-        this.IsVisionRequestStatus = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "VIP")[0] == null && FeatureLocator.HasFeaturePermession("Shipment", "VizionRequestStatus") && SessionLocator.TenantManagementJS.IsContainerTrackingPrepaid;
+        this.IsSimulatorVisible = FeatureLocator.HasFeaturePermession("Shipment", "ContainerStatusSimulator");        
         this.NotesSharedWithCustomerActivated = SessionLocator.TenantPM.IsSharedLogisticsActivated && FeatureLocator.HasFeaturePermession("Shipment", "NOTESSHAREDWITHCUSTOMER");
         
         this.EntityPM = this.entityArgs.EntityPM;
@@ -60,8 +58,30 @@ export class ShipmentHelperComponent implements OnDestroy {
             this.Listen();
             this.BuildComponent();
             this.IsGeneralSimulatorVisible = FeatureLocator.HasFeaturePermession("Shipment", "VisionContainerStatusSimulator") && this.EntityPM.ShipmentTypeId == "FCLD";
-
+            this.IsTrackContainerVisible = this.IsTrackContainerAllowed();
         }
+    }
+
+    private IsTrackContainerAllowed(): boolean {
+        if (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "VIP")[0] != null)
+            return false;
+
+        if (!FeatureLocator.HasFeaturePermession("Shipment", "VizionRequestStatus"))
+            return false;
+
+        if (!SessionLocator.TenantManagementJS.IsContainerTrackingPrepaid)
+            return false;
+
+        if (this.EntityPM.TransportModeId != "O")
+            return false;
+
+        if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentTypeId.toLocaleLowerCase() != "mygo")
+            return false;
+
+        if (this.EntityPM.ShipmentLevelCode != "C" && this.EntityPM.ShipmentTypeId.toLocaleLowerCase() != "fcld")
+            return false;
+
+        return true;
     }
 
     private SaveCompletedEvent: any = null;
@@ -156,7 +176,7 @@ export class ShipmentHelperComponent implements OnDestroy {
         logWindow.Title = "Shipment Containers Statuses Simulator";
         logWindow.Show('./ShipmentModules/ShipmentOthers/Components/GeneralContainersStatusesSimulator/GeneralContainersStatusesSimulatorComponent');
     }
-    VizionStatusClicked() {
+    TrackContainerClicked() {
         this.CurrentSession.StartBusyIndicator("Sending...");
         var args: GeneralContainerTrackingArgs = <GeneralContainerTrackingArgs> {
             ContainerId: null,

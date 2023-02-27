@@ -21,7 +21,6 @@ export class ShipmentList {
 		AccountedPayablesInLocalCurrency: number;
 		OpenPayablesInProfitCurrency: number;
 		AccountedPayablesInProfitCurrency: number;
-		IsDocumentsNeedApprove: boolean;
 		LocalCustomsTransmissionsStatusCode: string;
 		LocalCustomsTransmissionsStatusName: string;
 		LocalCustomsTransmissionsStatusError: string;
@@ -190,6 +189,7 @@ export class ShipmentList {
 		UpdatedByUserId: string;
 		LastUpdateDate: Date;
 		DepartmentId: string;
+		DepartmentName: string;
 		BranchId: string;
 		LongMaster: string;
 		TrailerNumber: string;
@@ -596,15 +596,6 @@ export class ShipmentList {
 		IsCustomerArchived: boolean;
 		NotesSharedWithCustomer: string;
 		Volume: number;
-		Pickup: string;
-		MainCarriageFrom: string;
-		MainCarriageTo: string;
-		Delivery: string;
-		CountryCode: string;
-		CountryName: string;
-		City: string;
-		Date: Date;
-		DateType: string;
-		IsViaPortsDatesFilled: boolean;
+		IsDocumentsNeedApprove: boolean;
 	
 }

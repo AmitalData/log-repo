@@ -28,7 +28,6 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
     public VariableTypeChangedToggle: boolean = false;
     public DataTypesItems: ListItem[] = new DataTypesList().Items;
     public EntitiesTreeItems: TreeSelectItem[];
-    public ExcludedEntities: string[] = ["Container", "ARInvoice", "APInvoice"];
     public FieldTypes = FieldTypes;
     public CurrentSession = SessionLocator.SelectedSession;
     public FlowObject: any;

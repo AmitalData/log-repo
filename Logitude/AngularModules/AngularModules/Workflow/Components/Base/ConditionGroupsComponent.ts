@@ -75,11 +75,7 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
             let props = {
                 ShowRecordsVariables: true,
                 ShowDeclaredVariables: true,
-                ShowRecordsCollectionVariables: false,
-                ShowDeclaredCollectionVariables: false,
-                OnlyCurrentLoopItemVariables: false,
-                IsObjectVariableSelectable: false,
-                IsNoChildrenObjectVariables: false
+                ShowGlobalVariables: true
             };
             this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props).Items;
         }
@@ -110,7 +106,9 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
             if (field) {
                 if (this.isNoObjectFieldVariable(field)) {
                     let fieldType = fieldItem.data["type"] || null;
-                    this.updateConditionFieldByDeclaredVariableField(field, fieldType, conditionIndex);
+                    let lookupType = fieldItem.data["lookupType"] || null;
+                    let picklistType = fieldItem.data["picklistType"] || null;
+                    this.updateConditionFieldByDeclaredVariableField(field, fieldType, lookupType, picklistType, conditionIndex);
                 } else {
                     let objectField = this.getObjectField(field);
                     this.updateConditionFieldByObjectField(objectField, conditionIndex, field);
@@ -145,12 +143,12 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
         this.Conditions[conditionIndex].fieldChangedToggle = !this.Conditions[conditionIndex].fieldChangedToggle;
     }
 
-    updateConditionFieldByDeclaredVariableField(field: string, fieldType: string, conditionIndex: number) {
+    updateConditionFieldByDeclaredVariableField(field: string, fieldType: string, lookupType: string, picklistType: string, conditionIndex: number) {
         this.Conditions[conditionIndex].fieldCode = field ? field : null;
         this.Conditions[conditionIndex].field = field ? field : null;
         this.Conditions[conditionIndex].type = fieldType;
-        this.Conditions[conditionIndex].lookupType = null;
-        this.Conditions[conditionIndex].picklistType = null;
+        this.Conditions[conditionIndex].lookupType = lookupType;
+        this.Conditions[conditionIndex].picklistType = picklistType;
 
         if (this.Conditions[conditionIndex].operator !== ConditionOperators.Changed && this.Conditions[conditionIndex].operator !== ConditionOperators.IsEmpty) {
             this.Conditions[conditionIndex].operator = ConditionOperators.Equals;

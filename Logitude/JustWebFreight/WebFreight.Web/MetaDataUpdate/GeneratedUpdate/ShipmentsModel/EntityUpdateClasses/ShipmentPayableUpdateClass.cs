@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentPayableUpdateClass
    {  		
-		public const string HashString = "fb0f463f9b09a3254cdc8d1d626ab3ef";
+		public const string HashString = "8cedbe18e2bac1d98c6db46a7e8394da";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -100,6 +100,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  true,
+			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -125,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Shipment Payable",
-			      				    Code =  "d9de",
+			      				    Code =  "835c",
 			      				    Name =  "ShipmentPayable",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",
@@ -2741,7 +2743,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  true,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,

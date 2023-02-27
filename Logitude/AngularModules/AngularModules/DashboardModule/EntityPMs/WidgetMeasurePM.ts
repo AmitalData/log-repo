@@ -57,6 +57,11 @@ export class WidgetMeasurePM {
     public set RenderAs(newValue: string) { if (this.renderAs != newValue) { this.renderAs = newValue; this.MarkAsDirty("RenderAs"); } }
        
 	 
+    private yAxisType: string;
+    public get YAxisType() { return this.yAxisType; }
+    public set YAxisType(newValue: string) { if (this.yAxisType != newValue) { this.yAxisType = newValue; this.MarkAsDirty("YAxisType"); } }
+       
+	 
 
     public OldEntityPM: WidgetMeasurePM;
 	

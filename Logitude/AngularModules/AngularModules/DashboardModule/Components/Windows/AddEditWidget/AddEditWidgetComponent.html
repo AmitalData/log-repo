@@ -271,6 +271,15 @@
                                                     [IsDisabled]="!EntityId">
                                             </ComboBox>
                                         </td>
+                                        <td *ngIf="item.ShowYAxisTypes" style="padding-left: 2px;width: 124px;">
+                                            <ComboBox
+                                                    [ItemsSource]="YAxisTypes"
+                                                    [SelectedItem]="item.DefaultYAxisType"
+                                                    [Binding]="'name'"
+                                                    (SelectedItemChanged)="item.YAxisType = $event.code"
+                                                    [IsDisabled]="!EntityId">
+                                            </ComboBox>
+                                        </td>
                                         <td>
                                             <div>
                                                 <IconButton *ngIf="IsAddNewMeasureVisible" [Left]="3" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="!IsSecondaryGroupByVisible && EntityId" (click)="AddNewMeasureClicked()"></IconButton>
