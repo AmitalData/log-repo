@@ -28,6 +28,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
             temp.Received = true;
             temp.ReceivedByUserId = GetContact(Tenant).Id;
             temp.EntityId = GetEntityIdForType(documentsFiling, Tenant);
+            temp.ReceivedByPartner = "External";
             return temp;
 
         }
