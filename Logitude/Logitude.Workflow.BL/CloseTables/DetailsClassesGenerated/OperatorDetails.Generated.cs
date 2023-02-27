@@ -146,6 +146,15 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Sign = "!", 
                 CategoryCode = "BOL", 
 			});
+			 
+            all.Add(new OperatorDetails()
+            {    
+                Name = "Concatenate", 
+                Sign = "&", 
+                Code = "CNT", 
+                SearchFields = "CNT,Concatenate", 
+                CategoryCode = "TXT", 
+			});
 			
             return all;
        }

@@ -11,6 +11,7 @@
   HasCustomFields="false"
   AvailableInCustomization="false"
   SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -41,7 +42,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;WorkFlow&quot;"
-  Code="&quot;bd57&quot;"
+  Code="&quot;4d83&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -552,6 +553,12 @@
       SearchFields="&quot;NGN,Negation&quot;"
       Sign="&quot;!&quot;"
       CategoryCode="&quot;BOL&quot;" />
+    <Record
+      Name="&quot;Concatenate&quot;"
+      Sign="&quot;&amp;&quot;"
+      Code="&quot;CNT&quot;"
+      SearchFields="&quot;CNT,Concatenate&quot;"
+      CategoryCode="&quot;TXT&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

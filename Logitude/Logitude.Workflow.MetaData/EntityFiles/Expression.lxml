@@ -42,7 +42,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Expression&quot;"
-  Code="&quot;667c&quot;"
+  Code="&quot;9275&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -664,7 +664,7 @@
       Name="&quot;Day&quot;"
       SearchFields="&quot;DAY,Day&quot;"
       Body="&quot;(date)&quot;"
-      Description="&quot;Returns a day from dateTime&quot;"
+      Description="&quot;Returns a day of the month in the form of a number between 1 and 31.&quot;"
       CategoryCode="&quot;DTE&quot;"
       Title="&quot;Day(date)&quot;" />
     <Record
@@ -672,7 +672,7 @@
       Name="&quot;Month&quot;"
       SearchFields="&quot;MONTH,Month&quot;"
       Body="&quot;(date)&quot;"
-      Description="&quot;Returns a month from dateTime&quot;"
+      Description="&quot;Returns the month, a number between 1 (January) and 12 (December) in number format of a given date.&quot;"
       CategoryCode="&quot;DTE&quot;"
       Title="&quot;Month(date)&quot;" />
     <Record
@@ -723,6 +723,22 @@
       Description="&quot;Calculate the number of years between two dates.&quot;"
       CategoryCode="&quot;DTE&quot;"
       Title="&quot;Years(Start_date,End_date)&quot;" />
+    <Record
+      Code="&quot;LOWER&quot;"
+      Name="&quot;Lower&quot;"
+      SearchFields="&quot;LOWER,Lower&quot;"
+      Body="&quot;(text)&quot;"
+      Description="&quot;Convert all letters in the value to lower case.&quot;"
+      CategoryCode="&quot;TXT&quot;"
+      Title="&quot;Lower(text)&quot;" />
+    <Record
+      Code="&quot;UPPER&quot;"
+      Name="&quot;Upper&quot;"
+      SearchFields="&quot;UPPER,Upper&quot;"
+      Body="&quot;(text)&quot;"
+      Description="&quot;Convert all letters in the value to upper case.&quot;"
+      CategoryCode="&quot;TXT&quot;"
+      Title="&quot;Upper(text)&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
