@@ -12,7 +12,7 @@ using WebFreight.Web.CustomWebServices.BL.XLSExport;
 
 namespace WebFreight.Web.CustomWebServices.BL.XLSExport
 {
-    //http://localhost:9996/api/CommunicationLogStep/GetExportExcelByLogId/?mainInterfaceCode=8347&logId=1-775051&tenant=1
+    //http://localhost:9996/api/CommunicationLogStep/GetExportExcelByLogId/?mainInterfaceCode=8289Z&logId=1-775051&tenant=1
     public class CreditGoldExport : XLSExportBase<CreditQueryRequestParams, RTGSInfoQueryResponseData>, IExcelExport
     {
         
@@ -37,15 +37,12 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
         protected override IRange AdjustAndFormatRequestRange(CreditQueryRequestParams requestParams, IWorksheet requestWorksheet)
         {
             requestWorksheet.IsGridLinesVisible = false;
-            //throw new NotImplementedException();
             var myRange = requestWorksheet[1, 1, 7, 5];
 
 
 
 
             myRange.CellStyle.Color = Color.FromArgb(198, 215, 239);
-            //myRange.AutofitRows();
-            //myRange.AutofitColumns();
 
 
             requestWorksheet.SetRowHeight(2, 10/*px*/);
@@ -196,11 +193,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
             {
                 rowsRange = worksheet.Range[2, 1, 2, 11];//Empty Row
             }
-            //IRanges responseRange = worksheet.CreateRangesCollection();
-
-            // range1 and range2 are considered as a single range
-            //responseRange.Add(headerRange);
-            //responseRange.Add(rowsRange);
+            
             var requestListObj = _MainWorksheet.ListObjects.Create("Request ", rowsRange);
             requestListObj.BuiltInTableStyle = TableBuiltInStyles.TableStyleLight9;//  "TableStyleLight9"
 
@@ -242,7 +235,6 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
 
             
             IRange thirdLine =
-               //GetResponse3Line(requestParams, responseData, secondLine);
                CreateLabelEditboxLine(responseData, firstLine, GetlineMetaData());
 
             IRange GuaranteeLettersList =
@@ -429,7 +421,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                 }
                 );
             
-            int identStartFromC = 5;//
+            int identStartFromC = 5;
             Ident3Columns(myline1.LastRow /*+ 2*/, myline5.Row,  identStartFromC);
 
             IRange requestSection = SetRequestSection1LineB4And1LineAfter(myline1.LastRow, myline5.Row);
