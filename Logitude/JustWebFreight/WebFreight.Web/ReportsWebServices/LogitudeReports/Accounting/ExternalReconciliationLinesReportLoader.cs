@@ -75,7 +75,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         public byte[] GetData()
         {
             BuildDataProvider();
-            return new ReportMemoryStreamService().Convert(dataProvider, typeof(ShipmentsStocksDataProvider), tenant);
+            return new ReportMemoryStreamService().Convert(dataProvider, typeof(ExternalReconciliationLinesReportDataProvider), tenant);
         }
         private void BuildDataProvider()
         {
