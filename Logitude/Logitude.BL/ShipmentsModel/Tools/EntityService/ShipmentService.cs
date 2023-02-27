@@ -491,11 +491,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 if (!entityPoco.IsCancelled || !entityPM.IsCancelled)
                 {
+
+                    #region
                     if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive && !entityPM.IsHybrid)
                     {
                         ShipmentValidating.ValidateBranch(entityPM);
                     }
-                    #region
+
                     string myOldCustomerId = "";
                     string oldEntityStatusId = entityPoco.StatusId;
                     if (entityPM.CustomerId != entityPoco.CustomerId)
