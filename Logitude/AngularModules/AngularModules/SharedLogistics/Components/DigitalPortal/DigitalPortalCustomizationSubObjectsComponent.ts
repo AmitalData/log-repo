@@ -44,7 +44,7 @@ export class DigitalPortalCustomizationSubObjectsComponent {
         windowArgs.ProfileCode = this.ProfileCode;
         windowArgs.ParentObjectTableId = this.ObjectTableId;
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "Fields Management";
+        logWindow.Title = (subObjectsItem.objectTableName + "Manager").replace(/([a-z])([A-Z])/g, '$1 $2');
         logWindow.IsFullScreen = true;
         logWindow.ShowCloseButton = true;
         logWindow.WindowArgs = windowArgs;

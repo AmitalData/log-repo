@@ -59,7 +59,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 {
                     var textCodeQuery = new DigitalTextCodeQueryService(0);
 
-                    var allowedTableNames = new List<string> { "Trucker", "Shipment", "ShipmentPackage", "ShipmentPickUpDelivery" };
+                    var allowedTableNames = new List<string> { "Shipment", "ShipmentPackage", "ShipmentPickUpDelivery" };
 
                     var objectFieldIds = textCodeQuery.GetDigitalTextCodesObjetTables(0)
                                                       .Where(a => allowedTableNames.Contains(a.ObjectTableName))
@@ -163,7 +163,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 entityLists = QueryableExtensions.Skip(entityLists, () => newFilters.PageIndex);
                 entityLists = QueryableExtensions.Take(entityLists, () => newFilters.PageSize);
 
-                var allowedTableNames = new List<string> { "Trucker", "Shipment", "ShipmentPackage", "ShipmentPickUpDelivery" };
+                var allowedTableNames = new List<string> { "Shipment", "ShipmentPackage", "ShipmentPickUpDelivery" };
 
                 var textCodeQuery = new DigitalTextCodeQueryService(0);
                 var objectFieldIds = textCodeQuery.GetDigitalTextCodesObjetTables(0)
