@@ -17,6 +17,7 @@ export class EditWorkflowVersionComponent extends BaseComponent {
 
     public ObjectTableName: string = "WorkFlowVersion";
     public WorkFlowVersion: WorkFlowVersionPM;
+    public VersionDescription: string
 
     public BusyIndicatorText: string = null;
     public ShowBusyIndicator: boolean = false;
@@ -30,12 +31,13 @@ export class EditWorkflowVersionComponent extends BaseComponent {
 
     SetWindowArgs(args: any) {
         this.WorkFlowVersion = args['WorkFlowVersion'];
+        this.VersionDescription = this.WorkFlowVersion.Description;
     }
 
-    get Description() { return this.WorkFlowVersion.Description; }
+    get Description() { return this.VersionDescription; }
     set Description(value: string) {
-        if (this.WorkFlowVersion.Description != value) {
-            this.WorkFlowVersion.Description = value;
+        if (this.VersionDescription != value) {
+            this.VersionDescription = value;
         }
     }
 
@@ -44,7 +46,7 @@ export class EditWorkflowVersionComponent extends BaseComponent {
     }
 
     saveButtonClicked() {
-        if (this.WorkFlowVersion.Description) {
+        if (this.VersionDescription) {
             this.updateWorkflowVersion();
         } else {
             this.ValidationErrorsList.push("Description is required");
@@ -53,6 +55,7 @@ export class EditWorkflowVersionComponent extends BaseComponent {
 
     updateWorkflowVersion() {
         this.startBusyIndicator("Saving ...");
+        this.WorkFlowVersion.Description = this.VersionDescription;
         this.WorkFlowVersionPMService.update(this.WorkFlowVersion).subscribe((serviceResponse: ServiceResponse) => {
             if (serviceResponse) {
                 this.stopBusyIndicator();
