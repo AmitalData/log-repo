@@ -1,6 +1,7 @@
 import { GLAccountsPageComponent } from './Components/Workspaces/GLAccounts/GLAccountsPageComponent';
 import { AccountingNoteComponent } from './Components/Others/AccountingNoteComponent';
 import { InterestTransactionNotesComponent } from './Components/Others/InterestTransactionNotesComponent';
+import { LedgerTransactionInternalNotesComponent } from './Components/Others/LedgerTransactionInternalNotesComponent';
 import { IntegrityCheckTabComponent } from './Components/EditTabs/AccountingIntegrityCheck/IntegrityCheckTabComponent';
 import {AccountingWorkspaceComponent} from './Components/Workspaces/AccountingWorkspaceComponent';
 import {MainPageComponent} from './Components/Workspaces/Main/MainPageComponent';
@@ -150,6 +151,7 @@ import { JournalCSVLoadComponent } from './Components/NewEntity/JournalCSVLoadCo
 
 import { GlAccountListTemplate } from './Components/ListTemplates/GlAccountListTemplate';
 import { GlAccountInterestTransactionsNotesTemplate } from './Components/ListTemplates/GlAccountInterestTransactionsNotesTemplate';
+import { GlAccountLedgerTransactionsInternalNotesTemplate } from './Components/ListTemplates/GlAccountLedgerTransactionsInternalNotesTemplate';
 import { CopyInvoiceComponent } from './Components/Others/CopyInvoiceComponent';
 import { TaxReportUploadLinesComponent } from './Components/Others/TaxReportUploadLinesComponent';
 import { CashbookTotalAdjustWindow } from './Components/EditTabs/CashBook/CashbookTotalAdjustWindow';
@@ -255,6 +257,7 @@ export const Components =
         GlAccountInterestTransactionsListTemplate,
         GlAccountListTemplate,
         GlAccountInterestTransactionsNotesTemplate,
+        GlAccountLedgerTransactionsInternalNotesTemplate,
         ReconcileExternalPageListTemplate,
         ReconcileExternalPageLineListTemplate,
         FieldTemplateComponent,
@@ -293,6 +296,7 @@ export const Components =
         IntegrityCheckTabComponent,
         AccountingNoteComponent,
         InterestTransactionNotesComponent,
+        LedgerTransactionInternalNotesComponent,
         NewIntegrityCheckComponent,
         AddEditInterestBasesPeriodComponent,
         InterestBasesTypeShortTitleComponent,
@@ -429,6 +433,7 @@ export class ModuleDeclarations {
             case "GlAccountInterestTransactionsListTemplate": { myResult = GlAccountInterestTransactionsListTemplate; break; }
             case "GlAccountListTemplate": { myResult = GlAccountListTemplate; break; }
             case "GlAccountInterestTransactionsNotesTemplate": { myResult = GlAccountInterestTransactionsNotesTemplate; break; }
+            case "GlAccountLedgerTransactionsInternalNotesTemplate": { myResult = GlAccountLedgerTransactionsInternalNotesTemplate; break; }
             case "ReconcileExternalPageListTemplate": { myResult = ReconcileExternalPageListTemplate; break; }
             case "ReconcileExternalPageLineListTemplate": { myResult = ReconcileExternalPageLineListTemplate; break; }
             case "FieldTemplateComponent": { myResult = FieldTemplateComponent; break; }
@@ -479,6 +484,7 @@ export class ModuleDeclarations {
             case "IntegrityCheckTabComponent": { myResult = IntegrityCheckTabComponent; break; }
             case "AccountingNoteComponent": { myResult = AccountingNoteComponent; break; }
             case "InterestTransactionNotesComponent": { myResult = InterestTransactionNotesComponent; break; }
+            case "LedgerTransactionInternalNotesComponent": { myResult = LedgerTransactionInternalNotesComponent; break; }
             case "NewIntegrityCheckComponent": { myResult = NewIntegrityCheckComponent; break; }
             case "AddEditInterestBasesPeriodComponent": { myResult = AddEditInterestBasesPeriodComponent; break; }
             case "InterestBasesTypeShortTitleComponent": { myResult = InterestBasesTypeShortTitleComponent; break; }

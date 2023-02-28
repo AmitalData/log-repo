@@ -467,6 +467,36 @@
                         </ng-template>
                     </log-column>
 
+                     <!-- InternalNote -->
+                      <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'80'" [header]="'Internal Notes'">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate>
+                            <table>
+                                <tr>
+                                    <td style="width:5px;">
+                                        <div></div>
+                                    </td>
+                                    <td style="width:16px;">
+                                        <img *ngIf="!item.InternalNote" style="vertical-align: middle; display: block;" src="./Images/Notes_notexists.png" />
+                                        <img *ngIf="item.InternalNote" style="vertical-align: middle; display: block;" src="./Images/Notes_exists.png" />
+                                    </td>
+                                    <td style="width:5px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width:20px;height:20px;padding-left:1px;">
+                                        <IconButton [Name]="'Edit'" [IsSmall]="true"  [Left]="3" (click)="OpenLedgerTransactionInternalNote(item.LedgerTransactionPM);$event.stopPropagation()"></IconButton>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                               </tr>
+                            </table>
+                        </log-cell-template>
+                        </ng-template>
+                    </log-column>
+
                     <!--  -->
                     <log-column [header]="''" [width]="'90'" [binding]="'button'">
                         <ng-template let-item>
