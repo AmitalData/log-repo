@@ -19,7 +19,7 @@ namespace Logitude.Infrastructure.Data.Repsitories
         {
             return context.DigitalPreDefinedComponents
                           .Where(a => (a.Tenant == tenant || a.Tenant == 0)
-                                      && a.ObjectTableId.Equals(objectTableId)
+                                      && (a.ObjectTableId.Equals(objectTableId) || string.IsNullOrEmpty(a.ObjectTableId))
                                       && (string.IsNullOrEmpty(name) || a.Name.Equals(name)));
         }
 

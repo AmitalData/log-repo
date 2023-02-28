@@ -33,7 +33,7 @@ namespace Logitude.Infrastructure.Data.EntityMapping
 
             this.Property(t => t.Name).HasColumnName("Name").IsRequired().HasMaxLength(255).IsUnicode(true);
 
-            this.Property(t => t.ObjectTableId).HasColumnName("ObjectTableId").IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ObjectTableId).HasColumnName("ObjectTableId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Content).HasColumnName("Content").IsRequired().IsMaxLength().IsUnicode(true);
         }
