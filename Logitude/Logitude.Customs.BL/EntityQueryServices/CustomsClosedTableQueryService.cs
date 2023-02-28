@@ -28,5 +28,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                          }).ToList();
             return closedTablePMs;
         }
+
+        
+            
+        public CustomsClosedTablePM GetCustomsClosedTableByObjectTableId(string ObjectTableId)
+        {
+            var poco =repository.GetCustomsClosedTableByObjectTableId(ObjectTableId);
+            if (poco==null) return null;
+            return this.GetEntityPM(poco);
+        }
     }
 }
