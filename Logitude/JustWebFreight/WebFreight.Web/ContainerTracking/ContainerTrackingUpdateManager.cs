@@ -34,6 +34,8 @@ namespace WebFreight.Web.ContainerTracking
         private bool isUpdatingShipmentDateFields = false;
         private bool isUpdatingEmptyLeg = false;
         private Tenant myTenant;
+
+        private ContainerDiscrepancyService containerDiscrepancyService;
         public List<dynamic> allTrasshipmentLegs;
         private ContainerTrackingHelper containerTrackingHelper;
 
@@ -42,9 +44,10 @@ namespace WebFreight.Web.ContainerTracking
             this.allTrasshipmentLegs = new List<dynamic>();
             this.containerUpdatedFields = containerUpdatedFields;
             this.containerPM = containerUpdatedFields.ContainerPM;
-            this.shipmentPM = containerUpdatedFields.ShipmentPM;
+            this.shipmentPM = containerUpdatedFields.ShipmentPM;            
             
         }
+
         public void Initialize(int tenant)
         {
             this.tenant = tenant;

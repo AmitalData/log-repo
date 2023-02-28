@@ -326,17 +326,18 @@
                         <div class="column seperator"></div>
 
                         <!-- Sender -->
-                        <div class="column col-md-2 sender" style="width: 14%;">
+                        <div class="column col-md-3 sender">
                             <div>
                                 <div class="subtitle">Origin Port</div>
                                 <div class="value uppercase truncateText">
-                                    <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.FromPortName }} , {{shipment.FromPortCountryCode}}
+                                    <img class="country-image" src="./assets/images/Flags/{{shipment.FromPortCountryCode}}.png" alt=" "/>
+                                    <span class="port-name" >{{ shipment.FromPortName }} , {{shipment.FromPortCountryCode}} </span>
                                 </div>
-
 
                                 <div class="subtitle">Destination Port</div>
                                 <div class="value uppercase truncateText">
-                                    <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.ToPortName }} , {{shipment.ToPortCountryCode}}
+                                    <img class="country-image" src="./assets/images/Flags/{{shipment.ToPortCountryCode}}.png" alt=" "/>
+                                    <span class="port-name" >{{ shipment.ToPortName }} , {{shipment.ToPortCountryCode}}</span>
                                 </div>
 
                             </div>
