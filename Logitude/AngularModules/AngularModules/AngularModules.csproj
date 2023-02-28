@@ -473,6 +473,7 @@
     <Content Include="Workflow\Components\Base\ObjectVariableComponent.html" />
     <Content Include="Workflow\Components\Base\SetValuesComponent.html" />
     <Content Include="Workflow\Components\Base\TreeSelectComponent.html" />
+    <Content Include="Workflow\Components\CreateEditWorkflow\CreateEditWorkflowComponent.html" />
     <Content Include="Workflow\Components\CreateEditWorkflow\CreateWorkflowComponent.html" />
     <Content Include="Workflow\Components\CreateEditWorkflow\EditWorkflowComponent.html" />
     <Content Include="Workflow\Components\Helpers\WorkFlowHelperComponent.html" />
@@ -495,6 +496,7 @@
     <Content Include="Workflow\Components\WorkflowInstance\RunHistoryWorkflowComponent.html" />
     <Content Include="Workflow\Components\WorkflowInstance\WorkflowInstanceDetailsComponent.html" />
     <Content Include="Workflow\Components\WorkflowVersion\CreateWorkflowVersionComponent.html" />
+    <Content Include="Workflow\Components\WorkflowVersion\EditWorkflowVersionComponent.html" />
     <Content Include="Workflow\Components\WorkflowVersion\WorkflowVersionComponent.html" />
     <Content Include="_Resources\css\PrimeWebComponent.css" />
     <Content Include="_Resources\Images\Icons\Tooltips\TootipBottom.png" />
@@ -8244,6 +8246,7 @@
     <TypeScriptCompile Include="Workflow\Components\Base\ObjectVariableComponent.ts" />
     <TypeScriptCompile Include="Workflow\Components\Base\SetValuesComponent.ts" />
     <TypeScriptCompile Include="Workflow\Components\Base\TreeSelectComponent.ts" />
+    <TypeScriptCompile Include="Workflow\Components\CreateEditWorkflow\CreateEditWorkflowComponent.ts" />
     <TypeScriptCompile Include="Workflow\Components\CreateEditWorkflow\CreateWorkflowComponent.ts" />
     <TypeScriptCompile Include="Workflow\Components\CreateEditWorkflow\EditWorkflowComponent.ts" />
     <TypeScriptCompile Include="Workflow\Components\Helpers\WorkFlowHelperComponent.ts" />
@@ -8267,6 +8270,7 @@
     <TypeScriptCompile Include="Workflow\Components\WorkflowInstance\RunHistoryWorkflowComponent.ts" />
     <TypeScriptCompile Include="Workflow\Components\WorkflowInstance\WorkflowInstanceDetailsComponent.ts" />
     <TypeScriptCompile Include="Workflow\Components\WorkflowVersion\CreateWorkflowVersionComponent.ts" />
+    <TypeScriptCompile Include="Workflow\Components\WorkflowVersion\EditWorkflowVersionComponent.ts" />
     <TypeScriptCompile Include="Workflow\Components\WorkflowVersion\WorkflowVersionComponent.ts" />
     <TypeScriptCompile Include="Workflow\Constants\BooleanValues.ts" />
     <TypeScriptCompile Include="Workflow\Constants\ConditionOperations.ts" />
@@ -8339,6 +8343,7 @@
     <TypeScriptCompile Include="Workflow\Pipes\ShowFlowVariablesTypeTreeItemPipe.ts" />
     <TypeScriptCompile Include="Workflow\Pipes\ShowTreeItemPipe.ts" />
     <TypeScriptCompile Include="Workflow\Services\Extended\WorkflowInstanceExtendedService.ts" />
+    <TypeScriptCompile Include="Workflow\Services\Extended\WorkflowVersionExtendedService.ts" />
     <TypeScriptCompile Include="Workflow\Services\StandardLists\ExpressionCategoryListService.ts" />
     <TypeScriptCompile Include="Workflow\Services\StandardLists\ExpressionListService.ts" />
     <TypeScriptCompile Include="Workflow\Services\StandardLists\OperatorCategoryListService.ts" />
