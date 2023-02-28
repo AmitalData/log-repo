@@ -16,6 +16,7 @@ export class SharedLogisticMainMenuComponent {
     public CargoTrackingAccessVisibility: boolean = false;
     public CtoolAccessVisibility: boolean = false;
     public IsDigitalPortalVisibile: boolean = false;
+    public IsSharedLogisticsDisabled: boolean = false;
 
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(private _entityResourceService: EntityResourceService) {
@@ -60,6 +61,7 @@ export class SharedLogisticMainMenuComponent {
         this.CargoTrackingAccessVisibility = false;
         this.CtoolAccessVisibility = false;
         this.IsDigitalPortalVisibile = false;
+        this.IsSharedLogisticsDisabled = false;
 
         this.SelectedItem = "SHLO";
 
@@ -78,6 +80,13 @@ export class SharedLogisticMainMenuComponent {
 
         if (FeatureLocator.HasFeaturePermession("General", "SHLOGDIGITALPORTAL")) {
             this.IsDigitalPortalVisibile = true;
+        }
+        
+        let isSharedLogisticsDisabled = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "RSL")[0];
+
+        if (isSharedLogisticsDisabled) {
+            this.IsSharedLogisticsDisabled = true;
+            this.SelectedItem = "DIGP";
         }
     }
 
@@ -106,7 +115,7 @@ export class SharedLogisticMainMenuComponent {
                     switch (this.SelectedItem) {
                         //SharedLogistics
                         case "SHLO": {
-                            if (this.Page_SHIP == null) {
+                            if (this.Page_SHIP == null && !this.IsSharedLogisticsDisabled) {
                                 SessionLocator.DynamicLoader.Load('./SharedLogistics/Components/SharedLogisticsMainComponent', myLocation.viewContainerRef)
                                     .then(cmpRef => {
                                         this.Page_SHIP = cmpRef.instance;
@@ -164,9 +173,6 @@ export class SharedLogisticMainMenuComponent {
                             }
                             break;
                         }
-
-
-
                     }
                 }
             }
