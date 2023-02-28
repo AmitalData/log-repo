@@ -104,9 +104,9 @@
         </div>
 
 
-        <div *ngIf="DataType === FieldTypes.Decimal">
+        <div *ngIf="DataType === FieldTypes.Decimal || DataType === FieldTypes.Integer">
             <LogTextBox [NoObjectField]="true" [ObjectFieldName]="Name" [IsFreeText]="true" [DataContext]="DataContext"
-                [Text]="CurrentValue" [InputType]="'decimal'" [NoValidation]="true" [HideColumns]="true"
+                [Text]="CurrentValue" [InputType]="DataType" [NoValidation]="true" [HideColumns]="true"
                 [RowsCount]="0.8" (ValueChanged)="updateValue($event)" [DataCy]="Name" [ForceDisabled]="IsDisabled">
             </LogTextBox>
         </div>
@@ -126,6 +126,16 @@
                 [NoValidation]="true" [HideColumns]="true" (ValueChanged)="updateValue($event)" [DataCy]="Name"
                 [ForceDisabled]="IsDisabled">
             </LogDatePicker>
+        </div>
+
+        <div *ngIf="DataType === FieldTypes.LookUp && LookupDataTypeTable">
+            <LogLov [NoObjectField]="true" [ObjectFieldName]="Name" [IsFreeText]="true" [DataContext]="DataContext"
+                [LookUpTableName]="LookupDataTypeTable.Name" [NoValidation]="true"
+                [DisplayMemberPath]="LookupDataTypeTable.LovDisplayMemberPath || LookupDataTypeTable.LookUp2 || LookupDataTypeTable.LookUp1"
+                [SelectedValue]="CurrentValue" [HideColumns]="!LookupDataTypeTable.AutoCompleteSearchWindow"
+                [HideLastColumn]="LookupDataTypeTable.AutoCompleteSearchWindow"
+                (SelectedItemChanged)="updateValue($event)" [DataCy]="Name" [ForceDisabled]="IsDisabled">
+            </LogLov>
         </div>
 
     </div>

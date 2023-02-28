@@ -355,25 +355,25 @@ namespace Logitude.DashboardModule.BL.EntityPMs
               }
              set {  deletedDashboardGlobalFilters = value; }
 	    }
-	  	  private bool loadedAutomatically ;
+	  	  private bool pinnedByDefault ;
 	  	  
        
 	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
 	   [DataMember]
-       public bool LoadedAutomatically  
+       public bool PinnedByDefault  
 	   {
 	    
 	     get
 		{
-		   return loadedAutomatically;
+		   return pinnedByDefault;
 		 }
 		 set
 		 {
-		   if(loadedAutomatically != value)
+		   if(pinnedByDefault != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LoadedAutomatically",OldValue=loadedAutomatically,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PinnedByDefault",OldValue=pinnedByDefault,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
-		   loadedAutomatically=value;
+		   pinnedByDefault=value;
 		   }
 			
 		 }
@@ -401,7 +401,7 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 			
 		 }
 	   }
-   }
+	    }
    
 }
 	 

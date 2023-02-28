@@ -46,6 +46,14 @@ namespace Logitude.Workflow.Data.EntityLists
        public int WorkFlowVersionNumber  { get; set; }
        [DataMember]
        public int RetryAttemptsNumber  { get; set; }
+       [DataMember]
+       public string WorkflowId  { get; set; }
+       [DataMember]
+       public string CreatedByUserName  { get; set; }
+       [DataMember]
+       public string UpdatedByUserName  { get; set; }
+       [DataMember]
+       public int NumberOfActivities  { get; set; }
    }
 
 }

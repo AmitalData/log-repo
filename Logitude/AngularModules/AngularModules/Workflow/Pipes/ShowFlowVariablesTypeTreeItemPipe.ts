@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { FlowVariablesTreeList } from "Workflow/TreeLists/FlowVariablesTreeList";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
+import { CompareVariableItemType } from "Workflow/Utilities/CompareVariableItemType";
 
 @Pipe({
     name: "ShowFlowVariablesTypeTreeItemPipe"
@@ -8,10 +8,9 @@ import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
 export class ShowFlowVariablesTypeTreeItemPipe implements PipeTransform {
 
-    transform(type:string, flowVariablesTreeList: FlowVariablesTreeList) {
-        if (type && flowVariablesTreeList) {
-            let compareWithLookupOrPickListType: string | null = null;
-            return (item: TreeSelectItem) => flowVariablesTreeList.compareItemType(item, type, compareWithLookupOrPickListType);
+    transform(type: string) {
+        if (type) {
+            return (item: TreeSelectItem) => CompareVariableItemType.compare(item, type, null);
         }
         return (_treeSelectItem: TreeSelectItem) => { return true };
     }

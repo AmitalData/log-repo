@@ -8,6 +8,8 @@ export class URLs {
     public static readonly GetBackToWorkflowsList = '**/workflowviews/getsingle/**';
     public static readonly GetQueryExportExecution = '**/WebFreightDomain/getquerytoexceldata?**';
     public static readonly Getworkflowinstance = '**/workflowinstanceviews/getbyfilters?**';
-    public static readonly GetSingleInstanceActivityList = '**/workflowinstanceactivityviews/getbyfilters?**';
-    public static readonly PostGetQueryToExcelData = '**/LogitudeGridExportToExcel/PostGetQueryToExcelData';
+    public static readonly GetSingleInstanceActivityList = '**/workflowinstanceextended/getactivities?workflowinstanceid=**';
+    public static readonly GetQueryToExcelData = '**/WebFreightDomain/getquerytoexceldata?**';
+    public static readonly GetSingleInstanceVariables = '**/workflowinstanceextended/getvariables?workflowinstanceid=**';
+
 }

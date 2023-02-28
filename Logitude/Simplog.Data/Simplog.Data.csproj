@@ -755,6 +755,7 @@
     <Compile Include="QuoteModel\Repositories\QuoteComputedFieldRepository.cs" />
     <Compile Include="QuoteModel\Repositories\ValidByTypeRepository.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\Container.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\ContainerAnalytic.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ContainerDiscrepancy.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ContainersExternalData.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ContainerStatus.cs" />

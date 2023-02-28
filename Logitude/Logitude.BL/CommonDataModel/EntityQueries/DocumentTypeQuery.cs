@@ -480,9 +480,20 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return docTypePm;
         }
-
-
-
+        
+        public DocumentTypePM GetDigitalSinglePMByCodeAndTenant(string code, int tenant)
+        {
+            DocumentTypePM docTypePm = repository.context
+                                                 .DocumentTypes
+                                                 .Where(a => a.Code == code 
+                                                             && a.Tenant == tenant)
+                                                 .Select(a => new DocumentTypePM()
+                                                 {
+                                                    Id = a.Id
+                                                 })
+                                                .FirstOrDefault();
+            return docTypePm;
+        }
 
         public DocumentTypeList GetDocumentTypeListById(string id, int tenant)
         {

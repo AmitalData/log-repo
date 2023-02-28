@@ -145,6 +145,7 @@ export class EditComponent implements OnDestroy {
     }
 
     private QuerySection: string;
+    private SelectedQueryCode: string;
     private EntityFields: any[] = null;
     public Run(args: any) {
 
@@ -155,7 +156,7 @@ export class EditComponent implements OnDestroy {
         this.ObjectTableName = args['ObjectTableName'];
         this.PreSelectedTabCode = args['SelectedTabCode'];
         this.QuerySection = !AppTool.IsNullOrEmpty(args['QuerySection']) ? args['QuerySection']:null ;
-
+        this.SelectedQueryCode = !AppTool.IsNullOrEmpty(args['SelectedQueryCode']) ? args['SelectedQueryCode'] : null;
         this.BackButtonLabel = !AppTool.IsNullOrEmpty(args['BackButtonLabel']) ? args['BackButtonLabel'] : TextCodeTranslator.Translate("General.B.Back");  // "Back";
         this.ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
         this.ObjectTableId = this.ObjectTable.Id;
@@ -519,7 +520,7 @@ export class EditComponent implements OnDestroy {
 
     BuildStandardHeaderScreen() {
 
-        var myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code.indexOf("HeaderScreen") != -1 )[0];
+        var myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && (d.Code.indexOf("HeaderScreen") != -1 || d.IsHeaderScreen == true))[0];
 
         var myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === this.ObjectTableId);
 
@@ -1142,6 +1143,8 @@ export class EditComponent implements OnDestroy {
         else {
             if (this.TabsItemsSource != null) {
                 var selected: any = null;
+                if (this.IsPendingApprovalDocumentQuery())
+                    selected = this.TabsItemsSource.filter(d => d.Code == "SHDI")[0];
 
                 if (this.ObjectTableName == "Container" && FeatureLocator.IsFeatureGrantedByUniqeCode("Container.Container.Tab.Routings")) {
                     selected = this.TabsItemsSource.filter(d => d.Code == "CORO")[0];
@@ -1160,6 +1163,16 @@ export class EditComponent implements OnDestroy {
                 this.SelectionChanged(selected);
             }
         }
+    }
+
+    IsPendingApprovalDocumentQuery():boolean {
+        if (!FeatureLocator.IsFeatureGrantedByUniqeCode("Shipment.DOCSIN"))
+            return false;
+        if (this.ObjectTableName != "Shipment")
+            return false;
+        if (this.SelectedQueryCode != "Pending Approval Documents")
+            return false;
+        return true;
     }
 
     SelectionChanged(mySelectedTab: TabItem) {
@@ -2194,8 +2207,8 @@ export class TabItem {
         this.Code = itemPM.Code;
         this.EntityPM = itemPM;
         this.entityId = entityId;
-        this.TextCode = this.GetTextCode(itemPM);
-        this.TextCodeId = AppTool.Replace(this.TextCode, ".", "");
+        this.TextCode = this.GetTextCode(itemPM);        
+        this.TextCodeId = AppTool.Replace(this.TextCode, ".", "");        
     }
 
     private GetTextCode(itemPM: any) {

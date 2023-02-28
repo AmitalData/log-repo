@@ -50,16 +50,8 @@
         margin-left: 10px;
     }
 
-    .margin-l-10 {
-        margin-left: 10px;
-    }
-
     .FormFieldRow {
         height: 32px;
-    }
-
-    .title {
-        height: 20px;
     }
 
     .clickable {
@@ -68,7 +60,19 @@
 
     .field-name {
         width: 130px;
-        padding-left: 10px;
+    }
+
+    .field-input {
+        width: 230px;
+    }
+
+    .padding-l-5 {
+        padding-left: 5px;
+    }
+
+    .sub-title {
+        margin: 5px 0 5px 10px;
+        color: #45494A;
     }
 </style>
 
@@ -144,21 +148,10 @@
         </td>
     </tr>
 
-    <tr class="title clickable" (click)="showAdvancedSettings()" *ngIf="!ShowAdvancedSettings">
+    <tr class="table-row clickable" (click)="showAdvancedSettings()">
         <td>
             <div class="SectionTitle">
-                Show Advanced Settings
-            </div>
-        </td>
-    </tr>
-
-    <tr class="title" *ngIf="ShowAdvancedSettings">
-        <td>
-            <div class="SectionTitle">
-                Advanced Settings
-            </div>
-            <div class="Label margin-l-10">
-                Workflow retry policy:
+                {{AdvancedSettingsTitle}}
             </div>
         </td>
     </tr>
@@ -167,44 +160,74 @@
         <td>
             <div>
                 <table>
+                    <tr class="table-row">
+                        <td>
+                            <div class="Label sub-title">
+                                Recovery Settings
+                            </div>
+                        </td>
+                    </tr>
                     <tr class="FormFieldRow">
                         <td class="field-name">
                             <LogLabel [ObjectFieldName]="'RetriesNumber'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel>
+                                [DataContext]="DataContext" [Text]="'Number of Retries'"></LogLabel>
                         </td>
 
-                        <td style="width:230px;">
+                        <td class="field-input">
                             <LogTextBox [ObjectFieldName]="'RetriesNumber'" [Text]="RetriesNumber"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true"
+                                [HideColumns]="true"></LogTextBox>
                         </td>
-                        <td style="width: 18px; float:left;">
+                        <td class="padding-l-5">
                             <HelpIcon [HideHeader]="true" [Text]="'Number of retries once the flow fails'"></HelpIcon>
                         </td>
                         <td>
                             <div></div>
                         </td>
                     </tr>
-
-                    <tr class="FormFieldRow">
-                        <td class="field-name">
-                            <LogLabel [ObjectFieldName]="'RetriesDelay'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel>
-                        </td>
-
+                </table>
+                <table>
+                    <tr class="table-row">
                         <td>
-                            <LogTextBox [ObjectFieldName]="'RetriesDelay'" [Text]="RetriesDelay"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                        </td>
-                        <td style="width: 18px; float:left;">
-                            <HelpIcon [HideHeader]="true" [Text]="'Waiting time before each retry'"></HelpIcon>
-                        </td>
-                        <td>
-                            <div></div>
+                            <div class="Label sub-title">
+                                Waiting time before each retry (minutes)
+                            </div>
                         </td>
                     </tr>
+
+                    <ng-container *ngFor="let delay of RetriesDelayArray; let i = index; trackBy: trackByFn">
+                        <tr *ngIf="i % 2 == 0">
+                            <td *ngFor="let currentIndex of [i, i+1]">
+                                <div *ngIf="currentIndex < SelectedRetryNumber">
+                                    <table>
+                                        <tr class="FormFieldRow">
+                                            <td class="field-name">
+                                                <LogLabel [ObjectFieldName]="'RetriesDelay'+currentIndex"
+                                                    [NoObjectField]="true" [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [Text]="'Retry No. '+ (currentIndex + 1) "></LogLabel>
+                                            </td>
+
+                                            <td class="field-input">
+                                                <LogTextBox [NoObjectField]="true" [ObjectTableName]="ObjectTableName"
+                                                    [ObjectFieldName]="'RetriesDelay' + currentIndex"
+                                                    [IsFreeText]="true" [DataContext]="DataContext"
+                                                    [Text]="RetriesDelayArray[currentIndex]" [InputType]="'integer'"
+                                                    [HideColumns]="true" [HideLastColumn]="true"
+                                                    (ValueChanged)="updateRetriesDelayValue($event , currentIndex)">
+                                                </LogTextBox>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
                 </table>
             </div>
-
         </td>
     </tr>
 
@@ -217,7 +240,7 @@
     <tr class="table-row">
         <td>
 
-            <FooterButtons [SaveButtonLabel]="IsNewEntity ? 'Create' : 'Save'" (SaveButtonClicked)="saveButtonClicked()"
+            <FooterButtons [SaveButtonLabel]="'Create'" (SaveButtonClicked)="saveButtonClicked()"
                 (CancelButtonClicked)="cancelButtonClicked()" [SaveButtonDataCy]="'workflow-save-button'"
                 [CancelButtonDataCy]="'workflow-cancel-button'">
             </FooterButtons>

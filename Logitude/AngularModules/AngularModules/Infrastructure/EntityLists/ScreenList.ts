@@ -20,4 +20,5 @@ export class ScreenList {
 		SearchFields: string;
 		ChildScreenGrid: string;
         RelatedScreenCode: string;
+        isHeaderScreen: boolean;
 }

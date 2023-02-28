@@ -29,7 +29,7 @@ Feature: Workflow add decision element
         When save flow
         Then the flow should save successfully
 
-    Scenario: add secound level group in start configration
+    Scenario: add secound level group in decision element
         Given add second level condition group met with 'Or' with the following details
             | Field             | Operation    | Value |
             | Create Date       | Greater Than | TODAY |

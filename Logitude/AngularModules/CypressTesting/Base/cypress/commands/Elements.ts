@@ -33,6 +33,7 @@ declare global {
         }
     }
 }
+
 Cypress.Commands.add("SelectDropDownListItem", (Selector: string, contain: string) => {
     cy.get(Selector).find(BaseSelectors.DownArrow).click()
     cy.get(BaseSelectors.DropDownList).find(BaseSelectors.DropDownListItem).contains(contain).click()

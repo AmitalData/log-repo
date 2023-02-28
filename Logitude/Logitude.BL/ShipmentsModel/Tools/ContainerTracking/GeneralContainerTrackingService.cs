@@ -46,6 +46,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
 
         public GeneralContainerTrackingService(GeneralContainerTrackingArgs simulatorArgs)
         {
+            if(!string.IsNullOrEmpty(simulatorArgs?.ContainerStatusSourceCode) && simulatorArgs.ContainerStatusSourceCode.Equals("VZN", StringComparison.InvariantCultureIgnoreCase))
+            {
+                simulatorArgs.ContainerStatusSourceCode = "2";
+            }
             this.generalContainerTrackingArgs = simulatorArgs;
             this.tenant = simulatorArgs.Tenant;
             CommonContext = CommonDataContext.GetContext(tenant);
@@ -93,7 +97,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
 
         private void ValidateAndTrack()
         {
-            if (!generalContainerTrackingArgs.IsSimulator) supportedCarriers = GetSupportedCarriers();
+            if (!generalContainerTrackingArgs.IsSimulator) 
+                supportedCarriers = GetSupportedCarriers();
             if (!CheckValidation()) return;
             SetCarriarCode();
 

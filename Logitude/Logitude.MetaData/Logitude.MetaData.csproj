@@ -133,6 +133,7 @@
     <None Include="DBScripts\CommonModel\202208160224_AddBinaryTypeToFieldDataTypes.sxml" />
     <None Include="DBScripts\CommonModel\202212070128_AddSaleTextCodesQuotationTemplate.sxml" />
     <None Include="DBScripts\CommonModel\202217101053_UpdateLastLoginUserIP.sxml" />
+    <None Include="DBScripts\CommonModel\202302220800UpdateBillingRoleDescription.sxml" />
     <None Include="DBScripts\CommonModel\FillCodeForCustomerSizes.sxml" />
     <None Include="DBScripts\GlobalModel\2023010151536_AddWorkflowsEnginWR.sxml" />
     <None Include="DBScripts\GlobalModel\2022090261326_AddDigitalPortalExportWR.sxml" />
@@ -168,6 +169,7 @@
     <None Include="DBScripts\GlobalModel\202203271236_AddImporterShipmentOrderDocumentsWR.sxml" />
     <None Include="DBScripts\InvoiceModel\202203021250_FillAPInvoicePaymentsNumbers.sxml" />
     <None Include="DBScripts\CommonModel\202208071040_FillCustomerGroupOnCardLevel.sxml" />
+    <None Include="DBScripts\GlobalModel\AddStarWorkflowInstanceRetryWorkerBatchService.sxml" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

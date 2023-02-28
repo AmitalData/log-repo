@@ -487,12 +487,12 @@ namespace Logitude.Workflow.BL.EntityPMs
 			
 		 }
 	   }
-	  private int retriesDelay ;
+	  private string retriesDelay ;
 	  	  
        
 	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int RetriesDelay  
+       public string RetriesDelay  
 	   {
 	    
 	     get
@@ -503,7 +503,7 @@ namespace Logitude.Workflow.BL.EntityPMs
 		 {
 		   if(retriesDelay != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RetriesDelay",OldValue=retriesDelay,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RetriesDelay",OldValue=retriesDelay,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   retriesDelay=value;
 		   }

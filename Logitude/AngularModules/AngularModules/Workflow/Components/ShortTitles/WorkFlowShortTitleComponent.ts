@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { WorkFlowPM } from 'Workflow/EntityPMs/WorkFlowPM';
 import { WorkFlowVersionPM } from 'Workflow/EntityPMs/WorkFlowVersionPM';
+import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
+import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 
 @Component({
     templateUrl: "WorkFlowShortTitleComponent.html",
@@ -10,60 +12,31 @@ import { WorkFlowVersionPM } from 'Workflow/EntityPMs/WorkFlowVersionPM';
 export class WorkFlowShortTitleComponent {
     public EntityPM: WorkFlowPM;
     public ValidVersion: WorkFlowVersionPM;
-    public WarningErrorsList: string[] = [];
-    public WarningErrorTitle: string = null;
 
-    constructor(public entityArgs: EntityArgs) {
-    }
+    constructor(public entityArgs: EntityArgs) { }
 
     ngOnInit() {
-        this.Listen()
+        this.listen()
     }
 
-    private Listen() {
+    private listen() {
         if (this.entityArgs.EditComponent) {
-            this.entityArgs.EntityArgEventEmitter.subscribe(
-                theMessage => {
-                    if (theMessage == "RefreshWorkflowShortTitle") {
-                        this.EntityPM = this.entityArgs.EntityPM;
-                        this.ValidVersion = this.getValidVersion();
-                        var clickedRowId = this.entityArgs.EditComponentArgument?.ClickedVersionRow!
-                        var updatedVersionId = this.entityArgs.EditComponentArgument?.UpdatedVersion!
-                        if (updatedVersionId) {
-                            var version = this.EntityPM.WorkFlowVersions.find(e => e.Id == updatedVersionId);
-                            this.ValidVersion = version;
-                        }
-                        else if (clickedRowId) {
-                            var version = this.EntityPM.WorkFlowVersions.find(e => e.Id == clickedRowId);
-                            this.ValidVersion = version;
-                        }
-                        this.setWarningErrorMessage();
+            this.entityArgs.EntityArgEventEmitter.subscribe((message: any) => {
+                if (message == "RefreshWorkflowShortTitle") {
+                    this.EntityPM = this.entityArgs.EntityPM;
+                    this.ValidVersion = this.getValidVersion();
+                    var clickedRowId = this.entityArgs.EditComponentArgument?.ClickedVersionRow!;
+                    var updatedVersionId = this.entityArgs.EditComponentArgument?.UpdatedVersion!;
+                    if (updatedVersionId) {
+                        var version = this.EntityPM.WorkFlowVersions.find(e => e.Id == updatedVersionId);
+                        this.ValidVersion = version;
+                    } else if (clickedRowId) {
+                        var version = this.EntityPM.WorkFlowVersions.find(e => e.Id == clickedRowId);
+                        this.ValidVersion = version;
                     }
                 }
-            );
+            });
         }
-    }
-
-    setWarningErrorMessage() {
-        var warnings: string[] = [];
-        var IsActiveDisabled: boolean = this.entityArgs.EditComponentArgument?.IsActiveDisabled ? true : false
-        var IsNewVersionDisabled: boolean = this.entityArgs.EditComponentArgument?.IsNewVersionDisabled ? true : false
-
-        if (this.ValidVersion.StatusCode != "DRFT") {
-            this.WarningErrorTitle = "This version is currently active or was activated at least once. To make changes create a new version."
-            warnings.push(this.WarningErrorTitle);
-        }
-        if(this.ValidVersion.StatusCode == "DRFT" && IsActiveDisabled && IsNewVersionDisabled  ){
-            this.WarningErrorTitle = "The start element is not configured, you need to select the object whose records trigger the flow."
-            warnings.push(this.WarningErrorTitle);
-        }
-
-        if(this.ValidVersion.StatusCode == "DRFT" && IsActiveDisabled && !IsNewVersionDisabled  ){
-            this.WarningErrorTitle = "To activate the version, connect at least one element to the start element."
-            warnings.push(this.WarningErrorTitle);
-        }
-
-        this.WarningErrorsList = warnings;
     }
 
     get WorkflowName() {
@@ -86,10 +59,36 @@ export class WorkFlowShortTitleComponent {
         var activeVersion = versions.find(e => e.StatusCode == "ACVE");
         var newestVersion = versions[0];
         if (activeVersion) {
-            return activeVersion
+            return activeVersion;
         } else {
-            return newestVersion
+            return newestVersion;
         }
     }
 
+    editWorkflowVersionClicked(){
+        var CurrentDisplayedVersionId = this.entityArgs.EditComponentArgument?.CurrentDisplayedVersionId
+        var version = this.EntityPM.WorkFlowVersions.find(v => v.Id == CurrentDisplayedVersionId);
+
+        let propertiesComponentPath = "./Workflow/Components/WorkflowBuilder/EditWorkflowVersionComponent";
+        let propertiesWindow = new LogitudeWindow();
+        let propertiesWindowArgs: any = {
+            WorkFlowVersion : version
+        };
+        propertiesWindow.Height = 340;
+        propertiesWindow.Width = 985;
+        propertiesWindow.RTL = false;
+        propertiesWindow.Title = "Edit Workflow Verison";
+        propertiesWindow.WindowArgs = propertiesWindowArgs;
+
+        propertiesWindow.Show(propertiesComponentPath);
+        propertiesWindow.WindowClosed.subscribe((data: any) => { this.handleCreateNewVersionResponse(data); });
+    }
+
+    handleCreateNewVersionResponse(data: WorkFlowVersionPM) {
+        if (data) {
+            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, UpdatedVersion: data.Id }
+            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, ClickedVersionRow: null }
+            this.entityArgs.SendMessage("WorkflowVersionsUpdated");
+        }
+    }
 }

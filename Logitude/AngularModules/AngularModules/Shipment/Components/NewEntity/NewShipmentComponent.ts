@@ -4665,6 +4665,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
 
                                 if (this.IsBuildFromQuote) {
                                     this.CurrentSession.FireEvent("LoadConnectedShipments");
+                                    this.CurrentSession.FireEvent("ReloadNewQuote");
                                 }
 
                                 else if (this.IsStandalone && !this.IsNewStandAlonePickupDelivery) {

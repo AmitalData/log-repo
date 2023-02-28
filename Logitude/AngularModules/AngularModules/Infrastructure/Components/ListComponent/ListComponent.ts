@@ -67,6 +67,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     @Output() ColumnsReady = new EventEmitter();
     @Output() QueryListSourceChanged = new EventEmitter();
     @Output() FiltersBarLoaded: EventEmitter<any> = new EventEmitter<any>();
+    @Output() RowClicked = new EventEmitter();
     RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);
     public SeachBoxIsDisabled: boolean = false;
     //@Output() ShowTipEvent = new EventEmitter();
@@ -694,6 +695,8 @@ export class ListComponent implements OnInit, AfterViewInit {
         if (!this.ReloadAllListEvent) {
             this.ReloadAllListEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "ReloadAllList") {
+                    this.RefreshBtnClick();
+                }else if(s == "ReloadAllList" + this.ObjectTableName){
                     this.RefreshBtnClick();
                 }
             });
@@ -1756,6 +1759,13 @@ export class ListComponent implements OnInit, AfterViewInit {
         //if (filters == null) {
         //    filters = new ApiQueryFilters();
         //}
+        
+        if (this.listArgs.DefaultFilterItems && this.listArgs.DefaultFilterItems.length > 0) {
+            this.listArgs.DefaultFilterItems.forEach((filter) => {
+                MyFilters.AdditionalFilters.push(filter)
+            });
+        }
+
         filters.AdditionalFilters.forEach((filter, key) => {
             if (filter.FieldName == "CompetitorFields")
                 filter.Operator = "Contains";
@@ -2383,7 +2393,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                             .then(cmpRef => {
                                 cmpRef.instance.ComponentRef = cmpRef;
-                                cmpRef.instance.Run({ EntityId: $event.rowData.Id, EntityPM: entitypm, ObjectTableName: 'WorkFlow', BackButtonLabel: "WorkFlows" });
+                                cmpRef.instance.Run({ EntityId: $event.rowData.Id, EntityPM: entitypm, ObjectTableName: 'WorkFlow', BackButtonLabel: "Workflows" });
 
                                 cmpRef.instance.BackCompleted.subscribe(() => {
                                     this.isEditControlOpened = false;
@@ -2391,6 +2401,10 @@ export class ListComponent implements OnInit, AfterViewInit {
                                     //this.RefreshBtnClick();
                                 });
                             });
+                    }
+                    else if (myObjectTableName == "WorkFlowVersion" || myObjectTableName == "WorkFlowInstance") {
+                        this.isEditControlOpened = false;
+                        this.RowClicked.emit($event);
                     }
                     else if (this.ObjectTableName == "Customs.DeclarationReferantData") {
                         var customFile = "";
@@ -2556,7 +2570,8 @@ export class ListComponent implements OnInit, AfterViewInit {
                                     EntityId: selectedEntityId,///$event.rowData.Id
                                     ObjectTableName: myObjectTableName,
                                     BackButtonLabel: label,
-                                    QuerySection: this.MenuTableQuerySection
+                                    QuerySection: this.MenuTableQuerySection,
+                                    SelectedQueryCode: this.SelectedQuery.Code
                                 });
                                 cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
                                     this.isEditControlOpened = false;
@@ -2883,6 +2898,16 @@ export class ListComponent implements OnInit, AfterViewInit {
                             isVisible = false;
                             break;
                         }
+                    case "WorkFlowVersion":
+                        {
+                            isVisible = false;
+                            break;
+                        }
+                    case "WorkFlowInstance":
+                        {
+                            isVisible = false;
+                            break;
+                        }
                 }
             }
         }
@@ -2990,7 +3015,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         var messageWindow = new MessageWindow();
         messageWindow.Width = 450;
         messageWindow.Height = 190;
-        messageWindow.Show("You can define the \"New " + this.ObjectTableDisplayName + "\" screen by selecting a one from the Views tab of the " + this.ObjectTableDisplayName+" object in the Customization");
+        messageWindow.Show("You can define the \"New " + this.ObjectTableDisplayName + "\" screen by selecting a one from the Views tab of the " + this.ObjectTableDisplayName + " object in the Customization");
     }
     RunNewExportDeclaration() {
         var logWindow = new LogitudeWindow();
@@ -3817,6 +3842,12 @@ export class ListComponent implements OnInit, AfterViewInit {
 
         var MyFilters = new ApiQueryFilters();
 
+        if (this.listArgs.DefaultFilterItems && this.listArgs.DefaultFilterItems.length > 0) {
+            this.listArgs.DefaultFilterItems.forEach((filter) => {
+                MyFilters.AdditionalFilters.push(filter)
+            });
+        }
+
         this.currentFilters.AdditionalFilters.forEach((filter, key) => {
             if (filter.FieldName == "CompetitorFields")
                 filter.Operator = "Contains";
@@ -3872,8 +3903,6 @@ export class ListComponent implements OnInit, AfterViewInit {
             });
 
         });
-
-
     }
 
     public SortServerProp: any;

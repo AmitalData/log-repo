@@ -11,6 +11,7 @@
   HasCustomFields="false"
   AvailableInCustomization="false"
   SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -39,7 +40,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;DigitalPreDefinedComponent&quot;"
-  Code="&quot;1e03&quot;"
+  Code="&quot;ffa8&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;DigitalPreDefinedComponent&quot;"
@@ -92,6 +93,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Id&quot;"
     ListPropertyPath="&quot;Id&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -164,6 +166,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Tenant&quot;"
     ListPropertyPath="&quot;Tenant&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -236,6 +239,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CreateDate&quot;"
     ListPropertyPath="&quot;CreateDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -308,6 +312,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;UpdateDate&quot;"
     ListPropertyPath="&quot;UpdateDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -380,6 +385,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Name&quot;"
     ListPropertyPath="&quot;Name&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -433,7 +439,7 @@
     LookUpTableName="&quot;ObjectTable&quot;"
     MinLength="0"
     MaxLength="15"
-    IsRequired="true"
+    IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -450,6 +456,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ObjectTableId&quot;"
     ListPropertyPath="&quot;ObjectTableId&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -467,7 +474,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ObjectTableId&quot;"
     DefaultText="&quot;Object Table&quot;"
-    IsNullable="false"
+    IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="&quot;ObjectTable&quot;"
     DontBuildRelationOnDB="false"
@@ -521,6 +528,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Content&quot;"
     ListPropertyPath="&quot;Content&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -562,6 +570,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;DigitalPreDefinedComponentHeaderScreen&quot;"
+    ObjectTableName="&quot;DigitalPreDefinedComponent&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -590,6 +607,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />

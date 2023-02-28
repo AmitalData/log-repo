@@ -1,5 +1,5 @@
 {
-  "HashString": "dde33e8a82fc4940a6959cb86892be0d",
+  "HashString": "c3530dda16334bf3bcd24db466b610ca",
   "Name": "Shipment Statistics",
   "TableName": "ShipmentAnalytics",
   "ObjectTableName": "Shipment",
@@ -37,7 +37,8 @@
       "JoinedTableName": "ShipmentType",
       "JoinedTableDBName": "ShipmentTypes",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "Name"
+      "JoinedTableDisplayField": "Name",
+      "AllowTenantZeroFilter": true
     },
     {
       "HashString": "eca85f5129814bf8a1f7cb3e520be59e",
@@ -51,7 +52,8 @@
       "JoinedTableDBName": "TransportModes",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "Name",
-      "CommonFilterCode": "TransportMode"
+      "CommonFilterCode": "TransportMode",
+      "AllowTenantZeroFilter": true
     },
     {
       "HashString": "ea35b042864d47d6aa008ba0aad38e56",
@@ -169,7 +171,8 @@
       "JoinedTableDBName": "Directions",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "Name",
-      "CommonFilterCode": "Direction"
+      "CommonFilterCode": "Direction",
+      "AllowTenantZeroFilter": true
     },
     {
       "HashString": "a434bea8d8cb4af6bfdee16976a03e83",
@@ -182,7 +185,8 @@
       "JoinedTableName": "ShipmentLevel",
       "JoinedTableDBName": "ShipmentLevels",
       "JoinedTableKey": "Code",
-      "JoinedTableDisplayField": "Name"
+      "JoinedTableDisplayField": "Name",
+      "AllowTenantZeroFilter": true
     },
     {
       "HashString": "49c34741b8294e74938472c657e3fd4d",
@@ -448,6 +452,19 @@
       "JoinedTableDBName": "Countries",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "472a5669206d459c8d11debea85a2915",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "ProductCode",
+      "DisplayName": "Product",
+      "DisplayNamePlural": "Product",
+      "JoinedTableName": "ProductType",
+      "JoinedTableDBName": "ProductTypes",
+      "JoinedTableKey": "Code",
+      "JoinedTableDisplayField": "Name",
+      "AllowTenantZeroFilter": true
     }
   ]
 }

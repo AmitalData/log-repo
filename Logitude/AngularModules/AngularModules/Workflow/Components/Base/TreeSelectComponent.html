@@ -8,7 +8,10 @@
     </nz-tree-select>
 
     <ng-template #default let-item>
-        {{ item.title }}
+        <div [attr.title]="(item?.origin?.data ? item.origin.data['tooltip'] : null) || item.title"
+            style="padding:0 4px;">
+            {{ item.title }}
+        </div>
     </ng-template>
 
 </div>

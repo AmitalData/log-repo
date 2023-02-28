@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="28">
+  <Sql Version="30">
     <![CDATA[
 	  delete from DigitalTextCodes where Tenant = 0
 	  
@@ -1508,7 +1508,7 @@
 		},
 		{
 			"TextCode": "Shipment.F.NumberOfPackages",
-			"DefaultText": "Packages",
+			"DefaultText": "No of Package",
 			"FieldCode": "Shipment.NumberOfPackages",
 			"DisplayText": ""
 		},
@@ -2804,15 +2804,33 @@
 		    "DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.G.VolumeInCBF",
+			"DefaultText": "Volume in CBF",
+			"FieldCode": "",
+		    "DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.F.GrossWeightInKG",
 			"DefaultText": "Gross weight In KG",
 			"FieldCode": "Shipment.GrossWeightInKG",
 		    "DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.G.GrossWeightInLB",
+			"DefaultText": "Gross weight In LB",
+			"FieldCode": "",
+		    "DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.F.ChargeableWeightInKG",
 			"DefaultText": "Chargeable Weight",
 			"FieldCode": "Shipment.ChargeableWeightInKG",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.G.ChargeableWeightInLB",
+			"DefaultText": "Chargeable Weight in LB",
+			"FieldCode": "",
 		    "DisplayText": ""
 		},
 		{
@@ -2969,7 +2987,7 @@
 			{
 				"TextCode": "ARInvoice.G.GeneralInformation",
 				"DefaultText": "General information",
-				"FieldCode": "",
+				"FieldCode": "ARInvoice.GeneralInformation",
 				"DisplayText": ""
 			},
 			{
@@ -4372,7 +4390,7 @@
 		},
 		{
 			"TextCode": "Shipment.F.NumberOfPackages",
-			"DefaultText": "Packages",
+			"DefaultText": "No of Package",
 			"FieldCode": "Shipment.NumberOfPackages",
 			"DisplayText": ""
 		},
@@ -5661,15 +5679,33 @@
 		    "DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.G.VolumeInCBF",
+			"DefaultText": "Volume in CBF",
+			"FieldCode": "",
+		    "DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.F.GrossWeightInKG",
 			"DefaultText": "Gross weight In KG",
 			"FieldCode": "Shipment.GrossWeightInKG",
 		    "DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.G.GrossWeightInLB",
+			"DefaultText": "Gross weight In LB",
+			"FieldCode": "",
+		    "DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.F.ChargeableWeightInKG",
 			"DefaultText": "Chargeable Weight",
 			"FieldCode": "Shipment.ChargeableWeightInKG",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.G.ChargeableWeightInLB",
+			"DefaultText": "Chargeable Weight in LB",
+			"FieldCode": "",
 		    "DisplayText": ""
 		},
 		{
@@ -5823,7 +5859,7 @@
 			{
 				"TextCode": "ARInvoice.G.GeneralInformation",
 				"DefaultText": "General information",
-				"FieldCode": "",
+				"FieldCode": "ARInvoice.GeneralInformation",
 				"DisplayText": ""
 			},
 			{

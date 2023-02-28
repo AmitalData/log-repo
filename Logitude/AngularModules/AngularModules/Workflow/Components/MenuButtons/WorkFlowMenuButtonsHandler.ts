@@ -6,6 +6,7 @@ import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { WorkFlowVersionPM } from 'Workflow/EntityPMs/WorkFlowVersionPM';
 import { WorkFlowVersionPMService } from 'Workflow/Services/StandardPMs/WorkFlowVersionPMService';
+import { WorkflowVersionExtendedService } from 'Workflow/Services/Extended/WorkflowVersionExtendedService';
 
 export class WorkFlowMenuButtonsHandler {
     public EntityPM: WorkFlowPM;
@@ -13,6 +14,7 @@ export class WorkFlowMenuButtonsHandler {
     public MenuButtons: MenuButtonPM[]
     private CurrentSession = SessionLocator.SelectedSession;
     public WorkFlowVersionPMService: WorkFlowVersionPMService = new WorkFlowVersionPMService();
+    public WorkFlowVersionExtendedService: WorkflowVersionExtendedService = new WorkflowVersionExtendedService();
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
@@ -56,7 +58,11 @@ export class WorkFlowMenuButtonsHandler {
             switch (button.EventCode) {
                 case "NewVersion":
                     {
-                        button.IsDisabled = IsNewVersionDisabled;
+                        if (!HasChanges) {
+                            button.IsDisabled = IsNewVersionDisabled;
+                        } else {
+                            button.IsDisabled = true;
+                        }
                         break;
                     }
                 case "Activate":
@@ -130,15 +136,29 @@ export class WorkFlowMenuButtonsHandler {
         this.StartBusyIndicator("Saving ...");
 
         let isActivate: boolean = version.StatusCode == "INVE" || version.StatusCode == "DRFT"
-        version.StatusCode = isActivate ? "ACVE" : "INVE"
-        this.WorkFlowVersionPMService.update(version).subscribe((serviceResponse: ServiceResponse) => {
-            if (serviceResponse != null && !serviceResponse.HasError) {
-                this.handleActivateWorkflowResponse(serviceResponse.Result)
-                this.StopBusyIndicator();
-            } else {
-                this.StopBusyIndicator();
-            }
-        });
+        if (isActivate) {
+            this.WorkFlowVersionExtendedService.putActivate(version.Id).subscribe((serviceResponse: ServiceResponse) => {
+                if (serviceResponse != null && !serviceResponse.HasError) {
+                    this.handleActivateWorkflowResponse(serviceResponse.Result);
+                    this.entityArgs.SendMessage({ Code: "SetWorkflowErrorMessages", Messages: null });
+                    this.StopBusyIndicator();
+                } else {
+                    this.entityArgs.SendMessage({ Code: "SetWorkflowErrorMessages", Messages: serviceResponse.ErrorsArray });
+                    this.StopBusyIndicator();
+                }
+            });
+        }
+        else {
+            version.StatusCode = "INVE";
+            this.WorkFlowVersionPMService.update(version).subscribe((serviceResponse: ServiceResponse) => {
+                if (serviceResponse != null && !serviceResponse.HasError) {
+                    this.handleActivateWorkflowResponse(serviceResponse.Result)
+                    this.StopBusyIndicator();
+                } else {
+                    this.StopBusyIndicator();
+                }
+            });
+        }
     }
 
     handleActivateWorkflowResponse(data: WorkFlowVersionPM) {

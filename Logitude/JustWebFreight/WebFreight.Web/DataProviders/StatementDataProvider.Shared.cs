@@ -161,11 +161,10 @@ namespace WebFreight.Web.DataProviders
         public double? DebitVATAmountLocalCurrency { get; set; }
         public double? CreditSubtotalLocalCurrency { get; set; }
         public double? CreditVATAmountLocalCurrency { get; set; }
-        public string PaymentTerm { get; set; }
         public int? ContainersQuantity { get; set; }
         public DateTime? FinalDestinationETA { get; set; }
+        public string PaymentTerm { get; set; }
         public DateTime? FinalDestinationETD { get; set; }
-
     }
 
     public class StatmentAging

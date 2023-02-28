@@ -67,7 +67,6 @@
     margin-top: 0px !important;
     background: white !important;
     border: 1px solid #AAAAAA !important;
-    border-top: none !important;
     box-shadow: 0px 4px 2px 0 #e8e8e8 !important;
     border-radius: 3px !important;
     -moz-border-radius: 3px !important;
@@ -90,6 +89,11 @@
 .ant-select-disabled .ant-select-selector {
     background: white !important;
     opacity: 0.6 !important;
+}
+
+.ant-tree .ant-tree-node-content-wrapper {
+    width: 100% !important;
+    padding: 0 !important;
 }
 
 .mention-menu {

@@ -34,6 +34,8 @@ namespace Logitude.DashboardModule.Data.EntityMapping
             this.Property(t => t.MeasureFieldId).HasColumnName("MeasureFieldId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.RenderAs).HasColumnName("RenderAs").HasMaxLength(100).IsUnicode(false);
+
+            this.Property(t => t.YAxisType).HasColumnName("YAxisType").HasMaxLength(100).IsUnicode(false);
         }
     }
 }

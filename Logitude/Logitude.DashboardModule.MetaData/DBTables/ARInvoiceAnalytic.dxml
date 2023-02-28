@@ -46,13 +46,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="IssuedByUserId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="DraftNumber"
     Type="varchar"
     Size="20">
@@ -198,18 +191,6 @@
     <Constraints
       Nullable="false" />
   </Column>
-  <Column
-    Name="IsAutoCredit"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="IsCancelled"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column> 
   <Column
     Name="DueDate"
     Type="datetime">

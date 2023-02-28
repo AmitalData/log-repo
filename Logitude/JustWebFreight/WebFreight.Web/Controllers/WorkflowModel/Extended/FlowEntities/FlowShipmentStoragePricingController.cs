@@ -18,6 +18,7 @@ using System.Web.Script.Serialization;
 using WebFreight.Web.Controllers.WorkflowModel.Models;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Helpers.Workflow;
 using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Controllers.WorkflowModel.Extended.FlowEntities
@@ -26,12 +27,14 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Extended.FlowEntities
     {
         public HttpResponseMessage PostByFilterTree(ApiQueryTreeFilters apiQueryTreeFilters)
         {
+            int tenant = 0;
+
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                int tenant = authToken.Tenant;
+                tenant = authToken.Tenant;
 
                 ShipmentStoragePricingQuery shipmentStoragePricingQuery = new ShipmentStoragePricingQuery(authToken.Tenant);
                 IQueryable<ShipmentStoragePricingPM> StoragePricingQuery = shipmentStoragePricingQuery.GetShipmentStoragePricingsIQueryable(authToken.Tenant);
@@ -59,7 +62,7 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Extended.FlowEntities
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                return Request.CreateResponse(HttpStatusCode.BadRequest, WorkflowApiExceptionBuilder.BuildException(ex, tenant));
             }
         }
     }

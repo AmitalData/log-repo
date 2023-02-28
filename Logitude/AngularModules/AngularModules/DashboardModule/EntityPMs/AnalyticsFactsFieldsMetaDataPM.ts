@@ -15,7 +15,7 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class AnalyticsFactsFieldsMetaDataPM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
@@ -117,6 +117,11 @@ export class AnalyticsFactsFieldsMetaDataPM {
     private canSecondaryGroup: boolean;
     public get CanSecondaryGroup() { return this.canSecondaryGroup; }
     public set CanSecondaryGroup(newValue: boolean) { if (this.canSecondaryGroup != newValue) { this.canSecondaryGroup = newValue; this.MarkAsDirty("CanSecondaryGroup"); } }
+       
+	 
+    private allowTenantZeroFilter: boolean;
+    public get AllowTenantZeroFilter() { return this.allowTenantZeroFilter; }
+    public set AllowTenantZeroFilter(newValue: boolean) { if (this.allowTenantZeroFilter != newValue) { this.allowTenantZeroFilter = newValue; this.MarkAsDirty("AllowTenantZeroFilter"); } }
        
 	 
 

@@ -537,7 +537,12 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
 
 
     SortItemSource(ItemsSource: any) {
+        if (!this.IsShipmentPendingApprovalList())
+            return this.AlphabeticalSort(ItemsSource);
+        return this.RecievedDateSort(ItemsSource);
+    }
 
+    AlphabeticalSort(ItemsSource: any) {
         ItemsSource.sort((a, b) => {
             if (a.Name.toLowerCase() < b.Name.toLowerCase()) {
                 return -1;
@@ -553,6 +558,31 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
         return ItemsSource;
     }
 
+    IsShipmentPendingApprovalList() : boolean{
+        if (this.ObjectTableName != "Shipment") return false;
+        if (!this.IsApprovePendingDocumentsEnabled) return false;
+        return true;
+    }
+
+    RecievedDateSort(ItemsSource: any) {
+        ItemsSource.sort((a, b) => {
+            let firstDate = this.getRecievedDate(a);
+            let secondDate = this.getRecievedDate(b);
+            if (firstDate > secondDate) {
+                return -1;
+            }
+            else if (firstDate < secondDate) {
+                return 1;
+            }
+            else {
+                return 0;
+            }
+        });
+        return ItemsSource;
+    }
+    getRecievedDate(item: any) {
+        return item.ReceivedDate ? item.ReceivedDate : "1955-02-02T12:55:32.32";
+    }
     OnMouseOver(item: DocsInDataViewModel) {
 
         var selectedId: string = this.SelectedExternalViewModel ? this.SelectedExternalViewModel.Id:null;

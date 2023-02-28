@@ -473,6 +473,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             return myResult;
         }
 
+        private bool IsCustomObjectHeaderScreen(Screen screen)
+        {
+            if (screen == null)
+                return false;
+            return screen.IsHeaderScreen;
+        }
+
         public HttpResponseMessage PutScreenFields(ScreenLayoutArgs args)
         {
             try
@@ -489,7 +496,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 ScreenFieldService MyService = new ScreenFieldService(objectContext, authToken.Tenant);
                 ScreensRepository myRepo = new ScreensRepository(authToken.Tenant);
                 var screen  = myRepo.GetByCode(args.ScreenCode, authToken.Tenant);
-                if(screen == null)
+                if(screen == null || IsCustomObjectHeaderScreen(screen))
                 {
                     var ScreenModification = myRepo.GetScreenModificationByScreen(args.ScreenCode, authToken.Tenant);
 

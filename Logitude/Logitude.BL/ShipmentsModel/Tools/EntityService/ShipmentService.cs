@@ -229,6 +229,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         throw new ApplicationException("House shipment already connected to a Master, in order to connect to another please disconnect it first");
                     }
                 }
+                if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
+                {
+                    ShipmentValidating.ValidateBranch(entityPM);
+                }
 
                 this.isNewEntity = true;
                 this.calculateProfit = false;
@@ -455,7 +459,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         else
                         {
                             cmd.Parameters.AddWithValue("@ErrorMessage", mySubError);
-                        } 
+                        }
                         cmd.CommandType = CommandType.Text;
                         cmd.CommandTimeout = 5;
                         cn.Open();
@@ -502,8 +506,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     if (!entityPoco.IsCancelled || !entityPM.IsCancelled)
                     {
+
                         #region
-                        string myOldCustomerId = "";
+                    if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
+                    {
+                        ShipmentValidating.ValidateBranch(entityPM);
+                    }
+
+                    string myOldCustomerId = "";
                         string oldEntityStatusId = entityPoco.StatusId;
                         if (entityPM.CustomerId != entityPoco.CustomerId)
                         {
@@ -2839,7 +2849,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     shipmentAdditionalCloudData.DocumentsApprovedByUserName = entityPM.DocumentsApprovedByUserName;
                 }
-                shipmentAdditionalCloudData.ShipmentAddtionalDataXML = entityPM.ShipmentAddtionalDataXML;
+                shipmentAdditionalCloudData.ShipmentAddtionalDataXML = ShipmentAdditionalDataService.SerializeShipmentAdditionalXmlData(entityPM.ShipmentAdditionalData);
 
                 if (!string.IsNullOrEmpty(entityPM.PaymentRequestXML) && shipmentAdditionalCloudData.PaymentRequestXML != entityPM.PaymentRequestXML)
                 {
@@ -3152,9 +3162,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         {
                             shipmentAdditionalCloudData.VersionApproved = entityPM.VersionApproved;
                         }
-                        if (!string.IsNullOrEmpty(entityPM.ShipmentAddtionalDataXML))
+                        if (entityPM.ShipmentAdditionalData != null)
                         {
-                            shipmentAdditionalCloudData.ShipmentAddtionalDataXML = entityPM.ShipmentAddtionalDataXML;
+                            shipmentAdditionalCloudData.ShipmentAddtionalDataXML = ShipmentAdditionalDataService.SerializeShipmentAdditionalXmlData(entityPM.ShipmentAdditionalData);
                         }
 
                         if (!string.IsNullOrEmpty(entityPM.PaymentRequestXML) && shipmentAdditionalCloudData.PaymentRequestXML != entityPM.PaymentRequestXML)

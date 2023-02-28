@@ -61,7 +61,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                    SortedByFieldCode = a.SortedByFieldCode,
                                    SortedType = a.SortedType,
                                    SearchFields = a.SearchFields,
-                                   RelatedScreenCode = a.RelatedScreenCode
+                                   RelatedScreenCode = a.RelatedScreenCode,
+                                   IsHeaderScreen = a.IsHeaderScreen
                                }).ToList();
 
 
@@ -113,7 +114,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                       SortedByFieldCode = a.SortedByFieldCode,
                                       SortedType = a.SortedType,
                                       SearchFields = a.SearchFields,
-                                      RelatedScreenCode = a.RelatedScreenCode
+                                      RelatedScreenCode = a.RelatedScreenCode,
+                                      IsHeaderScreen = a.IsHeaderScreen
                                   }).ToList();
 
             }
@@ -145,7 +147,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         SortedByFieldCode = a.SortedByFieldCode,
                         SortedType = a.SortedType,
                         SearchFields = a.SearchFields,
-                        RelatedScreenCode = a.RelatedScreenCode
+                        RelatedScreenCode = a.RelatedScreenCode,
+                        IsHeaderScreen = a.IsHeaderScreen
                     }).FirstOrDefault();
 
         }
@@ -173,7 +176,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         SortedByFieldCode = a.SortedByFieldCode,
                         SortedType = a.SortedType,
                         SearchFields = a.SearchFields,
-                        RelatedScreenCode = a.RelatedScreenCode
+                        RelatedScreenCode = a.RelatedScreenCode,
+                        IsHeaderScreen = a.IsHeaderScreen
                     }).ToList();
         }
 
@@ -193,7 +197,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      Tenant = a.Tenant,
                                                      Type = a.Type,
                                                      SearchFields = a.SearchFields,
-                                                     RelatedScreenCode = a.RelatedScreenCode
+                                                     RelatedScreenCode = a.RelatedScreenCode,
+                                                     IsHeaderScreen = a.IsHeaderScreen
                                                  };
             return result;
         }

@@ -59,6 +59,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private bool transferToFTPActivated;
         private bool canTransferToFTP;
         private InvoicePaymentNumbersBehaviour invoicePaymentNumbersBehaviour;
+        private bool isAccountingActivated = false;
         public APPaymentService(IInvoiceContext objectContext, int tenant)
         {
             this.tenant = tenant;
@@ -71,6 +72,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.loggedContact = new ContactQuery(tenant).GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedUser(), tenant, true);
             invoicePaymentNumbersBehaviour = new InvoicePaymentNumbersBehaviour(tenant);
             this.GetAccountingSystem();
+
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+            isAccountingActivated = tenantPOCO.AccountingActivated;
         }
 
         private bool isTransferEnabled = false;
@@ -697,7 +702,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         #region PaymentInvoice
         private void CreatePaymentInvoice(APPaymentInvoicePM item)
         {
-            this.ValidateIfSameRecordAdded(item);
+            if (!isAccountingActivated) {
+                this.ValidateIfSameRecordAdded(item);
+            }
 
             item.APPaymentId = entityPM.Id;
             item.ForeignCurrencyId = entityPM.PaymentCurrencyId;
@@ -711,11 +718,39 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private void UpdatePaymentInvoice(APPaymentInvoicePM item)
         {
             APInvoicePayment invoicePayment = invoicePaymentRepository.GetSingleAPInvoicePayment(item.Id, entityPM.Tenant);
-
+            ValidatePaymentReconciliation(item, invoicePayment, entityPM);
+            
             if (invoicePayment != null)
             {
                 APPaymentMapping.MapEntityInvoicePyament(item, invoicePayment, false);
                 invoicePaymentRepository.Update(invoicePayment);
+            }
+        }
+
+        private void ValidatePaymentReconciliation(APPaymentInvoicePM item, APInvoicePayment invoicePayment, APPaymentPM entityPM)
+        {
+            
+            if (isAccountingActivated && item.PaymentAmount != invoicePayment.PaymentAmount)
+            {
+                bool useLocal = true;
+                var user = GetLoggedContact(tenant);
+                if (user != null) useLocal = !(GetLoggedContact(tenant).DontShowLocal);
+                string glaccountId = null;
+                var paymentGLAccount = GetGLAccountByCard(entityPM);
+                if (entityPM.VendorGLAccountId != null)
+                {
+                    glaccountId = entityPM.VendorGLAccountId;
+                }
+                else if (paymentGLAccount != null)
+                {
+                    glaccountId = paymentGLAccount.Id;
+                }
+                var recoNumber = GetInvoiceRecociliationsNumbers(entityPM.Id, glaccountId, entityPM.Tenant, item.APInvoiceNumber);
+                if (!string.IsNullOrWhiteSpace(recoNumber))
+                {
+                    var msg = TranslateTextsClass.Translate("APPayment.M.AlreadyReconciledInvoice", tenant, useLocal);
+                    throw new ApplicationException(String.Format(msg, recoNumber));
+                }
             }
         }
 
@@ -1204,6 +1239,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;
             journalUpdate.Update(journal);
+        }
+
+        private static string GetInvoiceRecociliationsNumbers(string appaymentId, string accountId, int tenant, string invoiceNumber)
+        {
+            
+            IAPPaymentInvoicesTransactionFetcherExt aPPaymentInvoicesTransactionFetcher = ContainerAccessor.Container.Resolve(typeof(IAPPaymentInvoicesTransactionFetcherExt), "APPaymentInvoicesTransactionFetcherExt", new ParameterOverride("", 1)) as IAPPaymentInvoicesTransactionFetcherExt;
+            return aPPaymentInvoicesTransactionFetcher.GetInvoiceRecociliationsNumbers(appaymentId, accountId, tenant, invoiceNumber);
         }
 
         private void AddCreditJournalLineForTaxGLAccount(APPaymentPM paymentPM, int tenant, Tenant tenantPOCO, JournalPM journal)

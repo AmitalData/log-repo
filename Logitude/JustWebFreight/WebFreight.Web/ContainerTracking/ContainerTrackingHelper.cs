@@ -239,7 +239,7 @@ namespace WebFreight.Web.ContainerTracking
             {
                 var transshipmentATAInShipment = GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + time);
 
-                if (transshipmentATAInShipment != null && (DateTime)transshipmentATAInShipment != updatedFields.ActualDate)
+                if (updatedFields.ActualDate != null && transshipmentATAInShipment != null && (DateTime)transshipmentATAInShipment != updatedFields.ActualDate)
                 {
                     var actualTime = string.Concat("A", time.Substring(1));
                     var discrepancyReason = $@"Transshipment{transshipmentLegIndex} {actualTime} already has a value of {transshipmentATAInShipment} - did not update new container value {updatedFields.ActualDate}.";

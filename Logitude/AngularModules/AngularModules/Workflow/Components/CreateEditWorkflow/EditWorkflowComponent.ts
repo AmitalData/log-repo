@@ -12,10 +12,21 @@ export class EditWorkflowComponent extends BaseComponent {
     public ObjectTableName: string = "WorkFlow";
     public DataContext: EditWorkflowComponent = this;
     public ShowAdvancedSettings: boolean = false;
-    
+    public AdvancedSettingsTitle: string = "Show Advanced Settings";
+
+    public RetriesDelayArray: string[]
+    public RetriedDelayDictionary: number[] = [1, 5, 30, 90, 180]
+    public MaxDifferenceTime: number = 1
+    public MaxRetryNumber: number = 5
+
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
+        this.RetriesDelayArray = this.EntityPM.RetriesDelay.split(',');
+    }
+
+    trackByFn(idx) {
+        return idx;
     }
 
     get Name() { return this.EntityPM.Name; }
@@ -43,33 +54,80 @@ export class EditWorkflowComponent extends BaseComponent {
     set RetriesNumber(value: number) {
         if (this.EntityPM.RetriesNumber != value) {
             this.EntityPM.RetriesNumber = value;
+            this.resetRetriesDelay(value);
             this.setUIProperties()
         }
     }
 
-    get RetriesDelay() { return this.EntityPM.RetriesDelay; }
-    set RetriesDelay(value: number) {
-        if (this.EntityPM.RetriesDelay != value) {
-            this.EntityPM.RetriesDelay = value;
-            this.setUIProperties()
+    resetRetriesDelay(retriesNumber: number) {
+        if (!retriesNumber || retriesNumber > this.MaxRetryNumber) {
+            return;
+        }
+        let retriesDelayArray = this.EntityPM.RetriesDelay.split(',');
+        var numberOfStoredDelaies = retriesDelayArray.length;
+        if (numberOfStoredDelaies > retriesNumber) {
+            retriesDelayArray = this.handleDecreaseRetryNumber(retriesDelayArray, retriesNumber, numberOfStoredDelaies);
+        } else {
+            retriesDelayArray = this.handleIncreaseRetryNumber(retriesDelayArray, retriesNumber, numberOfStoredDelaies);
+        }
+        this.RetriesDelayArray = retriesDelayArray;
+        this.EntityPM.RetriesDelay = retriesDelayArray.join(',');
+        this.ValidateRetryDelayDifference();
+    }
+
+    handleDecreaseRetryNumber(retriesDelayArray: string[], retriesNumber: number, numberOfStoredDelaies: number) {
+        retriesDelayArray = retriesDelayArray.slice(0, retriesNumber);
+        for (let i = retriesNumber; i < numberOfStoredDelaies; i++) {
+            this.UIProperties.SetValidity("RetriesDelay" + i, this.ObjectTableName, true, "");
+        }
+        return retriesDelayArray;
+    }
+
+    handleIncreaseRetryNumber(retriesDelayArray: string[], retriesNumber: number, numberOfStoredDelaies: number) {
+        for (let i = numberOfStoredDelaies; i < retriesNumber; i++) {
+            var defaultDelay = this.RetriedDelayDictionary[i]
+            retriesDelayArray.push(defaultDelay.toString())
+        }
+        return retriesDelayArray;
+    }
+
+    updateRetriesDelayValue(value, index) {
+        if (this.RetriesDelayArray[index] != value) {
+            this.updateRetriesDelay(index, value)
         }
     }
-    
-    showAdvancedSettings(){
-        this.ShowAdvancedSettings = true;
+
+    updateRetriesDelay(index: number, value: number) {
+        this.RetriesDelayArray[index] = value ? value.toString() : null;
+        this.EntityPM.RetriesDelay = this.RetriesDelayArray.join(',');
+        this.ValidateRetryDelayDifference();
+    }
+
+    showAdvancedSettings() {
+        this.ShowAdvancedSettings = !this.ShowAdvancedSettings;
+        this.AdvancedSettingsTitle = this.ShowAdvancedSettings ? "Hide Advanced Settings" : "Show Advanced Settings"
     }
 
     setUIProperties() {
-        if (this.EntityPM.RetriesNumber > 10) {
-            this.UIProperties.SetValidity("RetriesNumber", this.ObjectTableName, false, "The maximum number of retries is 10");
+        if (this.EntityPM.RetriesNumber > this.MaxRetryNumber) {
+            this.UIProperties.SetValidity("RetriesNumber", this.ObjectTableName, false, "The maximum number of retries is " + this.MaxRetryNumber);
         } else {
             this.UIProperties.SetValidity("RetriesNumber", this.ObjectTableName, true, "");
         }
+    }
 
-        if (this.EntityPM.RetriesDelay < 120) {
-            this.UIProperties.SetValidity("RetriesDelay", this.ObjectTableName, false, "The minimum number of retries delay is 120");
-        } else {
-            this.UIProperties.SetValidity("RetriesDelay", this.ObjectTableName, true, "");
+    ValidateRetryDelayDifference() {
+        if (this.EntityPM.RetriesDelay && this.RetriesDelayArray.length > 0) {
+            for (let i = 0; i < this.RetriesDelayArray.length; i++) {
+                if (!Number(this.RetriesDelayArray[i])) {
+                    this.UIProperties.SetValidity("RetriesDelay" + i, this.ObjectTableName, false, "Retry No. " + (i + 1) + " is required.")
+                }
+                else if (i != 0 && ((Number(this.RetriesDelayArray[i]) - Number(this.RetriesDelayArray[i - 1])) < this.MaxDifferenceTime)) {
+                    this.UIProperties.SetValidity("RetriesDelay" + i, this.ObjectTableName, false, "Retry No. " + (i + 1) + " must be greater than Retry No. " + i + '.')
+                } else {
+                    this.UIProperties.SetValidity("RetriesDelay" + i, this.ObjectTableName, true, "");
+                }
+            }
         }
     }
 }

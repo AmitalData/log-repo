@@ -1,0 +1,7 @@
+﻿<Script DBType="Main" Module="Dashboard" Env="Logitude,local,test">
+  <Sql Version="1">
+	  <![CDATA[
+			DROP TABLE IF EXISTS DropUserPinnedDashboards
+       ]]>
+  </Sql>
+</Script>

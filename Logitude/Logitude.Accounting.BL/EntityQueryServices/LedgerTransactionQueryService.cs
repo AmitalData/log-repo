@@ -743,7 +743,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             //List<LedgerTransactionPM> paymentTransactions = paymentTransactionIQ.ToList();
             //LedgerTransactionPM paymentTransaction = paymentTransactionIQ.FirstOrDefault();
 
-            var invoicesTransactions = GetInvoicesTransactions(tenant);
+            var invoicesTransactions = GetInvoicesTransactions(tenant, AccountingEntities.ARInvoice);
 
             // filter transactions by account and source type
             invoicesTransactions = invoicesTransactions
@@ -905,6 +905,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     //SourceType = _journal.accounting,
                     OpenAmountCurrencyId = _transaction.OpenAmountCurrencyId,
                     Notes = _transaction.Notes,
+                    InternalNote= _transaction.InternalNote,
                     //CumulativeLocalAmount = _transaction.CumulativeLocalAmount,
                     //CumulativeForeignAmount = _transaction.CumulativeForeignAmount,
                     AmountToReconcile = _transaction.AmountToReconcile,
@@ -930,7 +931,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return query;
         }
-        public IQueryable<LedgerTransactionPM> GetInvoicesTransactions(int tenant)
+        public IQueryable<LedgerTransactionPM> GetInvoicesTransactions(int tenant, string accountingEntityCode)
         {
 
             IQueryable<LedgerTransactionPM> query =
@@ -939,7 +940,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 join _journal in context.Journals
                 on _transaction.JournalId equals _journal.Id
 
-                where _journal.AccountingEntityCode == AccountingEntities.ARInvoice
+                where _journal.AccountingEntityCode == accountingEntityCode
                     && _journal.Tenant == tenant
 
                 select new LedgerTransactionPM()
@@ -974,6 +975,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     //SourceType = _journal.accounting,
                     OpenAmountCurrencyId = _transaction.OpenAmountCurrencyId,
                     Notes = _transaction.Notes,
+                    InternalNote=_transaction.InternalNote,
                     //CumulativeLocalAmount = _transaction.CumulativeLocalAmount,
                     //CumulativeForeignAmount = _transaction.CumulativeForeignAmount,
                     AmountToReconcile = _transaction.AmountToReconcile,

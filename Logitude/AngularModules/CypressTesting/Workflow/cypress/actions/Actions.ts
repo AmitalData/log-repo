@@ -11,6 +11,10 @@ import { ConditionDetails } from "../models/ConditionDetails";
 import { WorkflowRunHistoryFixturePath } from '../fixtures/WorkflowRunHistory/WorkflowRunHistoryFixturePath'
 import { DecisionElementDetails } from "../models/DecisionElementDetails";
 import { WorkflowlistFixturePath } from "../fixtures/WorkflowList/WorkflowListFixturePath";
+import { PrimitiveVariableDetails } from "../models/PrimitiveVariableDetails";
+import { RecordVariableDetails } from "../models/RecordVariableDetails";
+import { AssignmentDetails } from "../models/AssignmentDetails";
+import { AssignVariablesDetails } from "../models/AssignVariablesDetails";
 
 let ConditionCounter = 2;
 let ConditionGroupButton = 1;
@@ -72,7 +76,7 @@ export function FillEditFlowStartNodeDetails(startNodeDetails: StartNodeDetails)
     });
     cy.ClickRadio(WorkflowSelectors.FlowTriggerRadioButton(startNodeDetails.ConfigureTrigger));
     cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
-    FillConditionFieldName(false, 1, 'Notes');
+    FillConditionFieldName(true, 1, 'Notes');
 }
 
 export function FillWorkflowDetails(workflowDetails: WorkflowDetails) {
@@ -154,7 +158,7 @@ export function FillRootConditionsDetails(groupCondition: string, conditionDetai
     cy.Click(WorkflowSelectors.WorkflowAddRootCondition, null);
     cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
     cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowRootOperation, groupCondition, 0);
-    FillConditionsGroup(conditionDetailsList, true, (ConditionCounter + conditionDetailsList.length), false);
+    FillConditionsGroup(conditionDetailsList, true, (ConditionCounter + conditionDetailsList.length), true);
     ConditionGroupButton = ConditionCounter;
 }
 
@@ -231,12 +235,12 @@ export function AssertRefreshRunHistory() {
 }
 
 export function ExportRunHistoryInstances() {
-    cy.DefineRequestWait(RestAPI.POST, URLs.PostGetQueryToExcelData, RequestAliases.PostGetQueryToExcelData);
+    cy.DefineRequestWait(RestAPI.GET, URLs.GetQueryToExcelData, RequestAliases.GetQueryToExcelData);
     cy.Click(WorkflowSelectors.RunHistoryExportFile, null)
 }
 
 export function AsserExportRunHistoryInstances() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PostGetQueryToExcelData, 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.GetQueryToExcelData, 200);
     BaseAssertion.AssertElementContain(WorkflowSelectors.WorkflowLinkButton, 'Download file');
     cy.Click(BaseSelectors.button, BaseSelectors.ContainsCancel);
 }
@@ -256,14 +260,18 @@ export function FilterInstancesBycurrentdate() {
     cy.fixture(WorkflowRunHistoryFixturePath.MockWorkflowInstaces).then(response => {
         cy.DefineMockRequestWait(RestAPI.GET, URLs.Getworkflowinstance, RequestAliases.GetMockWorkflowInstances, response);
     });
-    cy.Click(WorkflowSelectors.RunHistoryDatePicker, null).then(() => {
-        cy.get(WorkflowSelectors.DatePickertodayDate).click();
+    cy.Click(WorkflowSelectors.RunHistoryFilterIcon, null).then(() => {
+        cy.get(WorkflowSelectors.RunHistoryAddFilter).click();
+        cy.ClickCheckBox(WorkflowSelectors.FilterCreateDateCheckBox).then(() => {
+            cy.Click(WorkflowSelectors.CustomDatePicker, null).then(() => {
+                cy.get(WorkflowSelectors.DatePickertodayDate).click();
+            })
+        });
     });
 }
 
 export function AssertFilterInstancesBycurrentdate() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetMockWorkflowInstances, 200);
-
 }
 
 export function SearchInstanceByBusinessKey() {
@@ -286,22 +294,31 @@ export function OpenSingleInstanceActivityList() {
     cy.fixture(WorkflowRunHistoryFixturePath.MockSingleInstaceActivityList).then(response => {
         cy.DefineMockRequestWait(RestAPI.GET, URLs.GetSingleInstanceActivityList, RequestAliases.GetMockSingleInstanceActivityList, response);
     });
-    cy.Click(WorkflowSelectors.FirstWorkflowInstanceBusinessKey + BaseSelectors.FirstElement, null)
+    cy.fixture(WorkflowRunHistoryFixturePath.MockSingleInstaceVariables).then(response => {
+        cy.DefineMockRequestWait(RestAPI.GET, URLs.GetSingleInstanceVariables, RequestAliases.GetMockSingleInstanceVariables, response);
+    });
+    cy.Click(WorkflowSelectors.FirstWorkflowInstanceBusinessKey + BaseSelectors.FirstElement, null,true)
 }
 
 export function AssertOpenSingleInstanceActivityList() {
-    BaseAssertion.AssertStatusCode(RequestAliases.GetMockSingleInstanceActivityList, 200)
+    BaseAssertion.AssertStatusCode(RequestAliases.GetMockSingleInstanceActivityList, 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.GetMockSingleInstanceVariables, 200);
+
 }
 
 export function RefreshSingleInstanceActivityList() {
     cy.fixture(WorkflowRunHistoryFixturePath.MockSingleInstaceActivityList).then(response => {
         cy.DefineMockRequestWait(RestAPI.GET, URLs.GetSingleInstanceActivityList, RequestAliases.GetMockSingleInstanceActivityList, response);
     });
+    cy.fixture(WorkflowRunHistoryFixturePath.MockSingleInstaceVariables).then(response => {
+        cy.DefineMockRequestWait(RestAPI.GET, URLs.GetSingleInstanceVariables, RequestAliases.GetMockSingleInstanceVariables, response);
+    });
     cy.Click(WorkflowSelectors.SingleInstanceActivityListRefreshButton, null)
 }
 
 export function AssertRefreshSingleInstanceActivityList() {
-    BaseAssertion.AssertStatusCode(RequestAliases.GetMockSingleInstanceActivityList, 200)
+    BaseAssertion.AssertStatusCode(RequestAliases.GetMockSingleInstanceActivityList, 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.GetMockSingleInstanceVariables, 200);
 }
 
 /// decision 
@@ -325,12 +342,12 @@ export function FillDecisionRootConditionsDetails(groupCondition: string, condit
     ConditionGroupButton = ConditionCounter;
 }
 
-export function CloseEditDecisionNodeWindow() {
-    cy.Click(WorkflowSelectors.WorkflowDecisionOkButton, null);
+export function CloseEditNodeWindow() {
+    cy.Click(WorkflowSelectors.WorkflowEditOkButton, null);
 }
 
 export function SaveDecisionWorkflow() {
-    CloseEditDecisionNodeWindow();
+    CloseEditNodeWindow();
     cy.DefineRequestWait(RestAPI.PUT, URLs.WorkflowVersionRequest, RequestAliases.PutWorkflowFlowBuilder);
     cy.Click(WorkflowSelectors.WorkflowSaveDraft, null);
 }
@@ -368,6 +385,98 @@ function FillConditionFieldName(IsList: boolean, index: number, FieldName: strin
     }
 }
 
+//Variables
+function addDeclareVaraible(index: number) {
+    cy.get(WorkflowSelectors.WorkflowConnector(index)).find('img').click().then(() => {
+        cy.Click(WorkflowSelectors.WorkflowAddDeclareVariableNode, null)
+    })
+}
+
+export function FillPrimitiveVariableDetails(primitivevariableDetails: PrimitiveVariableDetails, index: number) {
+    addDeclareVaraible(index);
+    let VariableName = primitivevariableDetails.Name.toLocaleLowerCase() == "random" ?
+        GenerateRandoms.GenerateRandomString(5, true) : primitivevariableDetails.Name;
+    cy.FillLogTextBox(WorkflowSelectors.WorkflowDeclareVariableName, VariableName);
+    cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowDeclareVariableDataType, primitivevariableDetails.DataType, 0);
+    let VariableDefaultValue = primitivevariableDetails.DefaultValue.toLocaleLowerCase() == "random" ?
+        GenerateRandoms.GenerateRandomString(5, true) : null;
+    cy.FillLogTextBox(WorkflowSelectors.WorkflowDeclareVariabledefaultValue, VariableDefaultValue);
+}
+
+export function FillRecordVariableDetails(recordvariableDetails: RecordVariableDetails, index: number) {
+    addDeclareVaraible(index);
+    let VariableName = recordvariableDetails.Name.toLocaleLowerCase() == "random" ?
+        GenerateRandoms.GenerateRandomString(5, true) : recordvariableDetails.Name;
+    cy.FillLogTextBox(WorkflowSelectors.WorkflowDeclareVariableName, VariableName);
+    cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowDeclareVariableDataType, recordvariableDetails.DataType, 0);
+    cy.get(WorkflowSelectors.WorkflowRecordVariableObject).find(BaseSelectors.input).click().type(recordvariableDetails.Object).then(() => {
+        cy.get(WorkflowSelectors.WorkflowfieldsListTitle).contains(recordvariableDetails.Object).eq(0).click()
+    });
+}
+
+export function CloseEditDeclareVariableNodeWindow() {
+    cy.Click(WorkflowSelectors.WorkflowEditOkButton, null);
+}
+
+export function SaveDeclareVariableWorkflow() {
+    CloseEditNodeWindow();
+    cy.DefineRequestWait(RestAPI.PUT, URLs.WorkflowVersionRequest, RequestAliases.PutWorkflowFlowBuilder);
+    cy.Click(WorkflowSelectors.WorkflowSaveDraft, null);
+}
+
+function addAssignmentNode(index: number) {
+    cy.get(WorkflowSelectors.WorkflowConnector(index)).find('img').click().then(() => {
+        cy.Click(WorkflowSelectors.WorkflowAddAssignmentNode, null)
+    })
+}
+
+export function FillAssignmentDetails(assignmentDetails: AssignmentDetails, index: number) {
+    addAssignmentNode(index);
+    cy.FillLogTextBox(WorkflowSelectors.WorkflowAssignmentName, assignmentDetails.Name);
+}
+
+export function FillAssignVariablesDetails(assignVariablesDetails: AssignVariablesDetails[], matchedType: boolean) {
+    for (let i = 0; i < assignVariablesDetails.length; i++) {
+        fillVariableNameAssignment(i + 1, assignVariablesDetails[i].VariableName);
+        cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowAssignFieldOperation(i + 1), assignVariablesDetails[i].Operation, 0)
+        fillVariableValueAssignment(i + 1, assignVariablesDetails[i].FromList, assignVariablesDetails[i].Value, matchedType)
+        if (i < (assignVariablesDetails.length - 1)) {
+            cy.Click(WorkflowSelectors.AddNewAssignVariable, null)
+        }
+    }
+}
+
+function fillVariableValueAssignment(index: number, isListValue: string, variableVaue: string, matchedType: boolean) {
+    if (isListValue == 'True') {
+        fillVariableValueListAssignment(index, variableVaue, matchedType)
+    }
+    else {
+        cy.get(WorkflowSelectors.WorkflowAssignFieldValueInput(index)).type(variableVaue)
+    }
+}
+
+function fillVariableValueListAssignment(index: number, VaraibleValue: string, matchedType) {
+    if (matchedType) {
+        cy.get(WorkflowSelectors.WorkflowAssignFieldValue(index)).find(BaseSelectors.input).click().type(VaraibleValue).then(() => {
+            cy.get(WorkflowSelectors.WorkflowfieldsListTitle).contains(VaraibleValue).eq(0).click()
+        });
+    }
+    else {
+        cy.get(WorkflowSelectors.WorkflowAssignFieldValue(index)).find(BaseSelectors.input).click().type(VaraibleValue)
+    }
+}
+
+function fillVariableNameAssignment(index: number, VaraibleName: string) {
+    cy.get(WorkflowSelectors.WorkflowAssignFieldName(index)).find(BaseSelectors.input).click().type(VaraibleName).then(() => {
+        cy.get(WorkflowSelectors.WorkflowfieldsListTitle).contains(VaraibleName).eq(0).click()
+    });
+}
+
+export function AssertFieldDoseNotExists() {
+    BaseAssertion.AssertElementContain('.ant-select-tree-dropdown', 'No Results Found')
+}
+
+
 function FillConditionValue(selector: string, value: string, condition: string) {
     switch (condition) {
         case "Main Carriage Final ATA":
@@ -377,7 +486,7 @@ function FillConditionValue(selector: string, value: string, condition: string) 
         case "Containers Numbers":
             return cy.FillLogTextBox(selector, value);
         case "Agent":
-            return cy.SelectDropDownListItem2(selector, value);
+            return cy.FillLogTextBox(selector, value);
         case "Description of Goods":
             return cy.FillLogTextBox(selector, value);
         case "Create Date":

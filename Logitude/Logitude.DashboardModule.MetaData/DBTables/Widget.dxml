@@ -195,6 +195,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="LabelsPosition"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="GroupById"
     ReferencedTable="AnalyticsFactsFieldsMetaDatas"

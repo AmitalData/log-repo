@@ -106,29 +106,30 @@
             <div class="delete-set-value-container" [ngClass]="{'padding-top-22': setValueIndex === 0}">
                 <img *ngIf="!(SetValues.length == 1) && !setValue.isDisabled" class="delete-set-value-button"
                     src="./Images/Trash-can.png" (click)="deleteSetValue(setValueIndex)"
-                    [attr.data-cy]="'DeleteSetValueButton'" />
+                    [attr.data-cy]="'DeleteSetValueButton_' + setValue.id" />
             </div>
 
             <!-- field -->
             <div class="set-value-field-row">
                 <div *ngIf="isFirstSetValue">
-                    <LogLabel [NoObjectField]="true" [Text]="'Variable'" [HideColumns]="true" [DataContext]="DataContext">
+                    <LogLabel [NoObjectField]="true" [Text]="'Variable'" [HideColumns]="true"
+                        [DataContext]="DataContext">
                     </LogLabel>
                 </div>
                 <div class="set-value-field-container">
 
-                    <LogLov *ngIf="IsEntityField" [NoObjectField]="true" [DataContext]="DataContext"
-                        [QueryFilterItems]="(null | ObjectFieldsQueryFiltersPipe : EntityId)"
-                        [IsFreeText]="true" [LookUpTableName]="'ObjectField'" [NoValidation]="true" [HideColumns]="true"
-                        [SelectedValue]="setValue.fieldCode" [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
-                        [ForceDisabled]="setValue.isDisabled"
-                        (SelectedItemChanged)="updateSetValueEntityField($event, setValueIndex)">
-                    </LogLov>
+                    <TreeSelect *ngIf="IsEntityField" [Items]="ObjectFieldsTreeItems" [Width]="'300px'"
+                        [IsDisabled]="setValue.isDisabled" [Value]="setValue.fieldCode"
+                        [IsReturnedTreeSelectItem]="true" [ShowExpand]="false"
+                        (ValueChanged)="updateSetValueEntityField($event, setValueIndex)"
+                        [DataCy]="'SetValueField_' + setValue.id">
+                    </TreeSelect>
 
                     <TreeSelect *ngIf="!IsEntityField" [Items]="FlowVariablesTreeItems" [Width]="'300px'"
                         [Value]="setValue.field" [ShowItem]="null | ShowEditableVariablesTreeItemPipe"
                         [IsDisabled]="setValue.isDisabled" [IsReturnedTreeSelectItem]="true"
-                        (ValueChanged)="updateSetValueField($event, setValueIndex)">
+                        (ValueChanged)="updateSetValueField($event, setValueIndex)"
+                        [DataCy]="'SetValueField_' + setValue.id">
                     </TreeSelect>
 
                 </div>
@@ -144,7 +145,8 @@
                 <div class="set-value-operator-container">
                     <ComboBox [ItemsSource]="setValue.type | SetValuesOperatorsItemsPipe" [Binding]="'Name'"
                         [SelectedItem]="setValue.operator | ListItemPipe" [IsDisabled]="setValue.isDisabled"
-                        (SelectedItemChanged)="updateSetValueOperator($event.Code, setValueIndex)" [ListType]="''">
+                        (SelectedItemChanged)="updateSetValueOperator($event.Code, setValueIndex)" [ListType]="''"
+                        [CyData]="'SetValueOperator_' + setValue.id">
                     </ComboBox>
                 </div>
             </div>
@@ -158,17 +160,17 @@
                 <div *ngIf="(setValue.operator | IsFieldOperatorPipe)" class="set-value-value-container">
 
                     <TreeSelect *ngIf="setValue.fieldChangedToggle" [Items]="FlowVariablesTreeItems" [Width]="'300px'"
-                        [Value]="setValue.value"
-                        [ShowItem]="setValue | ShowFlowVariablesTreeItemPipe : FlowVariablesTreeList"
+                        [Value]="setValue.value" [ShowItem]="setValue | ShowFlowVariablesTreeItemPipe"
                         [IsDisabled]="setValue.isDisabled" [IsReturnedTreeSelectItem]="true"
-                        (ValueChanged)="updateSetValue(($event ? $event.key : null), setValueIndex, ($event && $event.data ? ($event.data.nodeId || null) : null))">
+                        (ValueChanged)="updateSetValue(($event ? $event.key : null), setValueIndex, ($event && $event.data ? ($event.data.nodeId || null) : null))"
+                        [DataCy]="'SetValueValue_' + setValue.id">
                     </TreeSelect>
 
                     <TreeSelect *ngIf="!setValue.fieldChangedToggle" [Items]="FlowVariablesTreeItems" [Width]="'300px'"
-                        [Value]="setValue.value"
-                        [ShowItem]="setValue | ShowFlowVariablesTreeItemPipe : FlowVariablesTreeList"
+                        [Value]="setValue.value" [ShowItem]="setValue | ShowFlowVariablesTreeItemPipe"
                         [IsDisabled]="setValue.isDisabled" [IsReturnedTreeSelectItem]="true"
-                        (ValueChanged)="updateSetValue(($event ? $event.key : null), setValueIndex, ($event && $event.data ? ($event.data.nodeId || null) : null))">
+                        (ValueChanged)="updateSetValue(($event ? $event.key : null), setValueIndex, ($event && $event.data ? ($event.data.nodeId || null) : null))"
+                        [DataCy]="'SetValueValue_' + setValue.id">
                     </TreeSelect>
 
                 </div>
@@ -178,23 +180,25 @@
                     <FieldValue *ngIf="setValue.fieldChangedToggle"
                         [ObjectField]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? null : (setValue.fieldCode | ObjectFieldPipe)"
                         [DataType]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? setValue.type : null"
-                        [Name]="'setValue_'" [CurrentValue]="setValue.value" [IsDisabled]="setValue.isDisabled"
-                        (ValueChanged)="updateSetValue($event, setValueIndex)">
+                        [LookupType]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? setValue.lookupType : null"
+                        [CurrentValue]="setValue.value" [IsDisabled]="setValue.isDisabled"
+                        (ValueChanged)="updateSetValue($event, setValueIndex)" [Name]="'SetValueValue_' + setValue.id">
                     </FieldValue>
 
                     <FieldValue *ngIf="!setValue.fieldChangedToggle"
                         [ObjectField]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? null : (setValue.fieldCode | ObjectFieldPipe)"
                         [DataType]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? setValue.type : null"
-                        [Name]="'setValue_'" [CurrentValue]="setValue.value" [IsDisabled]="setValue.isDisabled"
-                        (ValueChanged)="updateSetValue($event, setValueIndex)">
+                        [LookupType]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? setValue.lookupType : null"
+                        [CurrentValue]="setValue.value" [IsDisabled]="setValue.isDisabled"
+                        (ValueChanged)="updateSetValue($event, setValueIndex)" [Name]="'SetValueValue_' + setValue.id">
                     </FieldValue>
 
                 </div>
                 <div *ngIf="(setValue.operator == 'Expression')" class="set-value-value-container">
                     <Expression [CurrentValue]="setValue.expressionValue"
                         (ValueChanged)="updateSetValueExpression($event, setValueIndex)" [FlowObject]="FlowObject"
-                        [CurrentNodeId]="CurrentNodeId"
-                        [IsDisabled]="setValue.isDisabled" [Width]="'300px'">
+                        [CurrentNodeId]="CurrentNodeId" [IsDisabled]="setValue.isDisabled" [Width]="'300px'"
+                        [DataCy]="'SetValueValue_' + setValue.id">
                     </Expression>
                 </div>
             </div>
@@ -202,7 +206,7 @@
 
         <div *ngIf="isLastSetValue" class="add-buttons-container margin-left-0">
             <span class="link-button" [ngClass]="{'disabled': !IsValidSetValues}" (click)="addSetValue()"
-                [attr.data-cy]="'AddSetValue'">
+                [attr.data-cy]="'AddSetValueButton'">
                 <span class="plus-sign">+</span><span>Add Field</span>
             </span>
         </div>

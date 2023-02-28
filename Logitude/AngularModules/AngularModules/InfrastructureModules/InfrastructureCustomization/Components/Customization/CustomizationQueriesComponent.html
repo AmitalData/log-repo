@@ -32,7 +32,7 @@
                         <div class="MediaFill" style="overflow-x: hidden;">
                             <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="CustomQueriesCollection">
                                 <!-- QueryName -->
-                                <log-column [header]="'View Name'" [width]="'95'" [Alignment]="'left'">
+                                <log-column [header]="'View Name'" [width]="'260'" [Alignment]="'left'">
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate [IgnoreMods]="true">
                                             <div class="TextTrimming">
@@ -45,8 +45,8 @@
                                 <log-column [header]="'Is Default'" [width]="'80'" [Alignment]="'left'">
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate [IgnoreMods]="true">
-                                            <div class="TextTrimming">
-                                                <img *ngIf="item.IsDefault" src="./Images/CheckBoxIcon.png" style="width:15px; height:12px" />
+                                            <div class="CheckBox" style="margin-left:3px; margin-top:5px;">
+                                                <CheckBox [DataCy]="'Is Default'" [IsChecked]="item.IsDefault" (Checked)="IsDefaultClicked(item,$event)"></CheckBox>
                                             </div>
                                         </log-cell-template>
                                     </ng-template>

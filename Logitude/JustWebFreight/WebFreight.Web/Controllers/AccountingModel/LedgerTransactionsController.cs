@@ -546,6 +546,32 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         }
 
+        [HttpGet]
+        public HttpResponseMessage GetTransactionsForAPPayment(string appaymentId, string billToGLAccountId, string paymentCurrencyId)
+        {
+            try
+
+            {
+                int tenant = GetAuthinticatedTenant();
+
+                if (appaymentId == "undefined") appaymentId = null;
+
+                string accountId = GetGLAccountIdForReconciledTransactions(billToGLAccountId, tenant, paymentCurrencyId);
+
+                APPaymentInvoicesTransactionFetcher invoiceTransactionsFetcher = new APPaymentInvoicesTransactionFetcher(appaymentId, accountId, tenant);
+                var transactions = invoiceTransactionsFetcher.FetchSorted();
+
+                HttpResponseMessage reponseMessage = BuildResponseMessage(transactions);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
         private HttpResponseMessage BuildResponseMessage(List<LedgerTransactionPM> transactions)
         {
             ServiceResponse response = new ServiceResponse();

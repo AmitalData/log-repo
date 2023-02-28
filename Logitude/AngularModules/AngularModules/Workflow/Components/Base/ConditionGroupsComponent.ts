@@ -1,7 +1,6 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
-import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
 import { BooleanValues } from "Workflow/Constants/BooleanValues";
 import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
 import { DateTimeValueExpressions } from "Workflow/Constants/DateTimeValueExpressions";
@@ -20,13 +19,14 @@ import { IsDateTimeTypePipe } from "Workflow/Pipes/IsDateTimeTypePipe";
 import { IsNoObjectFieldVariablePipe } from "Workflow/Pipes/IsNoObjectFieldVariablePipe";
 import { IsFieldOperatorPipe } from "Workflow/Pipes/IsFieldOperatorPipe";
 import { IsNoValueOperatorPipe } from "Workflow/Pipes/IsNoValueOperatorPipe";
+import { ObjectFieldsTreeList } from "Workflow/TreeLists/ObjectFieldsTreeList";
 
 @Component({
     selector: "ConditionGroups",
     templateUrl: "./ConditionGroupsComponent.html"
 })
 
-export class ConditionGroupsComponent extends BaseComponent implements OnInit {
+export class ConditionGroupsComponent extends BaseComponent implements OnInit, OnChanges {
 
     @Input() EntityId: string;
     @Input() ShowChangedOperator: boolean = true;
@@ -49,8 +49,8 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit {
     public DataContext: any = this;
     public DateTimeValueExpressions = DateTimeValueExpressions;
 
-    public FlowVariablesTreeList: FlowVariablesTreeList;
     public FlowVariablesTreeItems: TreeSelectItem[];
+    public ObjectFieldsTreeItems: TreeSelectItem[];
 
     public ConditionOperationsItems: ListItem[] = new ConditionOperationsList().Items;
     public BooleanValuesItems: ListItem[] = new BooleanValuesList().Items;
@@ -64,19 +64,20 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit {
         this.initializeFlowVariablesTree();
     }
 
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes && changes.EntityId && changes.EntityId.currentValue !== changes.EntityId.previousValue && (this.IsEntityField || this.IsEntityFieldValue)) {
+            this.ObjectFieldsTreeItems = new ObjectFieldsTreeList(changes.EntityId.currentValue).Items;
+        }
+    }
+
     initializeFlowVariablesTree() {
         if (!this.IsEntityField || !this.IsEntityFieldValue) {
             let props = {
                 ShowRecordsVariables: true,
                 ShowDeclaredVariables: true,
-                ShowRecordsCollectionVariables: false,
-                ShowDeclaredCollectionVariables: false,
-                OnlyCurrentLoopItemVariables: false,
-                IsObjectVariableSelectable: false,
-                IsNoChildrenObjectVariables: false
+                ShowGlobalVariables: true
             };
-            this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props);
-            this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;
+            this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props).Items;
         }
     }
 
@@ -87,7 +88,8 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit {
         }
     }
 
-    updateConditionEntityField(objectField: ObjectFieldPM, conditionIndex: number) {
+    updateConditionEntityField(objectFieldItem: TreeSelectItem, conditionIndex: number) {
+        let objectField = objectFieldItem ? (objectFieldItem.data["objectField"] || null) : null;
         if (objectField?.FieldCode !== this.Conditions[conditionIndex]?.fieldCode) {
             if (objectField) {
                 this.updateConditionFieldByObjectField(objectField, conditionIndex);
@@ -104,7 +106,9 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit {
             if (field) {
                 if (this.isNoObjectFieldVariable(field)) {
                     let fieldType = fieldItem.data["type"] || null;
-                    this.updateConditionFieldByDeclaredVariableField(field, fieldType, conditionIndex);
+                    let lookupType = fieldItem.data["lookupType"] || null;
+                    let picklistType = fieldItem.data["picklistType"] || null;
+                    this.updateConditionFieldByDeclaredVariableField(field, fieldType, lookupType, picklistType, conditionIndex);
                 } else {
                     let objectField = this.getObjectField(field);
                     this.updateConditionFieldByObjectField(objectField, conditionIndex, field);
@@ -122,7 +126,7 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit {
         }
     }
 
-    updateConditionFieldByObjectField(objectField: ObjectFieldPM | ObjectFieldList, conditionIndex: number, field: string | null = null) {
+    updateConditionFieldByObjectField(objectField: ObjectFieldList, conditionIndex: number, field: string | null = null) {
         this.Conditions[conditionIndex].fieldCode = field ? field : (objectField ? objectField.FieldCode : null);
         this.Conditions[conditionIndex].field = field ? field : (objectField ? objectField.FieldName : null);
         this.Conditions[conditionIndex].type = objectField ? objectField.DataTypeCode : null;
@@ -139,12 +143,12 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit {
         this.Conditions[conditionIndex].fieldChangedToggle = !this.Conditions[conditionIndex].fieldChangedToggle;
     }
 
-    updateConditionFieldByDeclaredVariableField(field: string, fieldType: string, conditionIndex: number) {
+    updateConditionFieldByDeclaredVariableField(field: string, fieldType: string, lookupType: string, picklistType: string, conditionIndex: number) {
         this.Conditions[conditionIndex].fieldCode = field ? field : null;
         this.Conditions[conditionIndex].field = field ? field : null;
         this.Conditions[conditionIndex].type = fieldType;
-        this.Conditions[conditionIndex].lookupType = null;
-        this.Conditions[conditionIndex].picklistType = null;
+        this.Conditions[conditionIndex].lookupType = lookupType;
+        this.Conditions[conditionIndex].picklistType = picklistType;
 
         if (this.Conditions[conditionIndex].operator !== ConditionOperators.Changed && this.Conditions[conditionIndex].operator !== ConditionOperators.IsEmpty) {
             this.Conditions[conditionIndex].operator = ConditionOperators.Equals;
@@ -215,7 +219,8 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit {
         }
     }
 
-    updateConditionFieldValue(objectField: ObjectFieldPM, conditionIndex: number) {
+    updateConditionFieldValue(objectFieldItem: TreeSelectItem, conditionIndex: number) {
+        let objectField = objectFieldItem ? (objectFieldItem.data["objectField"] || null) : null;
         if (objectField?.FieldCode !== this.Conditions[conditionIndex]?.valueCode) {
             this.Conditions[conditionIndex].value = objectField ? objectField.FieldName : null;
             this.Conditions[conditionIndex].valueCode = objectField ? objectField.FieldCode : null;

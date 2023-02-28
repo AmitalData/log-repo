@@ -457,7 +457,30 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 			
 		 }
 	   }
-   }
+	  private bool allowTenantZeroFilter ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool AllowTenantZeroFilter  
+	   {
+	    
+	     get
+		{
+		   return allowTenantZeroFilter;
+		 }
+		 set
+		 {
+		   if(allowTenantZeroFilter != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AllowTenantZeroFilter",OldValue=allowTenantZeroFilter,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   allowTenantZeroFilter=value;
+		   }
+			
+		 }
+	   }
+	    }
    
 }
 	 

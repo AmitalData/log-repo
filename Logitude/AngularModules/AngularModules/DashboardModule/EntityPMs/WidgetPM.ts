@@ -17,7 +17,7 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class WidgetPM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
@@ -210,6 +210,11 @@ export class WidgetPM {
     private useAbbreviationAfter: string;
     public get UseAbbreviationAfter() { return this.useAbbreviationAfter; }
     public set UseAbbreviationAfter(newValue: string) { if (this.useAbbreviationAfter != newValue) { this.useAbbreviationAfter = newValue; this.MarkAsDirty("UseAbbreviationAfter"); } }
+       
+	 
+    private labelsPosition: string;
+    public get LabelsPosition() { return this.labelsPosition; }
+    public set LabelsPosition(newValue: string) { if (this.labelsPosition != newValue) { this.labelsPosition = newValue; this.MarkAsDirty("LabelsPosition"); } }
        
 	 
 

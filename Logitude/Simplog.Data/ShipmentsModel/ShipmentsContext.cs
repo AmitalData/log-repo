@@ -428,6 +428,7 @@ namespace Simplog.Data.ShipmentsModel
         public IDbSet<ContainerStatusSource> ContainerStatusSources { get; set; }
         public IDbSet<PayableProratedAmount> PayableProratedAmounts { get; set; }
         public IDbSet<ShipmentAnalytic> ShipmentAnalytics { get; set; }
+        public IDbSet<ContainerAnalytic> ContainerAnalytics { get; set; }
         public IDbSet<ContainerDiscrepancy> ContainerDiscrepancies { get; set; }
 
 

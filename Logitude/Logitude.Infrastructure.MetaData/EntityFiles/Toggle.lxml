@@ -921,15 +921,15 @@
       Description="&quot;Toggle Feature for Digital Portal Required Documents&quot;"
       SearchFields="&quot;RDT,Digital Portal Required Documents&quot;" />
     <Record
-      Code="&quot;DBA&quot;"
-      Name="&quot;Dashboard Analytics&quot;"
-      SearchFields="&quot;DBA,Dashboard Analytics&quot;"
-      Description="&quot;Dashboard Analytics&quot;" />
-    <Record
       Name="&quot;Remove Exception Logic&quot;"
       Code="&quot;REL&quot;"
       SearchFields="&quot;REL,Remove Exception Logic&quot;"
       Description="&quot;Remove Exception Logic&quot;" />
+    <Record
+      Code="&quot;DBA&quot;"
+      Name="&quot;Dashboard Analytics&quot;"
+      SearchFields="&quot;DBA,Dashboard Analytics&quot;"
+      Description="&quot;Dashboard Analytics&quot;" />
     <Record
       Name="&quot;Remove Shared Logistics&quot;"
       Code="&quot;RSL&quot;"

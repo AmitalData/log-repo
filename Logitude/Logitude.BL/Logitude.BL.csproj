@@ -280,6 +280,7 @@
     <Compile Include="AnalyticTableServices\APInvoiceAnalyticTableService.cs" />
     <Compile Include="AnalyticTableServices\ARInvoiceAnalyticTableService.cs" />
     <Compile Include="AnalyticTableServices\QuoteAnalyticTableService.cs" />
+    <Compile Include="AnalyticTableServices\ContainerAnalyticTableService.cs" />
     <Compile Include="AnalyticTableServices\ShipmentAnalyticTableService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Address.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\AddressType.Generated.cs" />
@@ -746,6 +747,7 @@
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentBankTranfer.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentCheque.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentChequeStatusReplica.Generated.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\ARPaymentChqSts.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentInvoice.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentStatus.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\QueryService\APInvoiceLineQueryService.Generated.cs" />
@@ -803,6 +805,7 @@
     <Compile Include="ShipmentsModel\APIDataContract\Shipments.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\VizionModels.cs" />
     <Compile Include="ShipmentsModel\CustomFilters\DigitalPortalCustomFilter.cs" />
+    <Compile Include="ShipmentsModel\Tools\ExternalService\ShipmentAdditionalDataService.cs" />
     <Compile Include="ShipmentsModel\EntityLists\DigitalShipmentList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\ShipmentDigitalFieldList.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ContainerDiscrepancyPM.cs" />

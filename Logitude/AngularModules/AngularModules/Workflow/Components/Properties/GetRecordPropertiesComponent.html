@@ -225,12 +225,12 @@
                             <div class="table-row-cell-block">
                                 <TreeSelect *ngIf="RecordsTypeChanged" [Items]="EntitiesTreeItems" [Width]="'300px'"
                                     [Value]="Entity" [ShowExpand]="false"
-                                    [ShowItem]="ExcludedEntities | ShowEntitiesTreeItemPipe"
+                                    [ShowItem]="('Get' + RecordsType + 'Record') | ShowEntitiesTreeItemPipe : ExcludeCustomEntities"
                                     (ValueChanged)="updateEntity($event)">
                                 </TreeSelect>
                                 <TreeSelect *ngIf="!RecordsTypeChanged" [Items]="EntitiesTreeItems" [Width]="'300px'"
                                     [Value]="Entity" [ShowExpand]="false"
-                                    [ShowItem]="ExcludedEntities | ShowEntitiesTreeItemPipe"
+                                    [ShowItem]="('Get' + RecordsType + 'Record') | ShowEntitiesTreeItemPipe : ExcludeCustomEntities"
                                     (ValueChanged)="updateEntity($event)">
                                 </TreeSelect>
                             </div>
@@ -261,9 +261,9 @@
                                     [ShowChangedOperator]="false" [AtLeastOneCondition]="true"
                                     (IsValidConditionsChange)="updateIsValidConditions($event)"
                                     [(ConditionsOperation)]="ConditionsOperation" [(Conditions)]="Conditions"
-                                    [FlowObject]="FlowObject"
-                                    [CurrentNodeId]="CurrentNodeId" [IsEntityField]="true"
-                                    [EnableAdd]="EnableAddConditions" [ShowConditionsOperation]="ShowConditionsOperation">
+                                    [FlowObject]="FlowObject" [CurrentNodeId]="CurrentNodeId" [IsEntityField]="true"
+                                    [EnableAdd]="EnableAddConditions"
+                                    [ShowConditionsOperation]="ShowConditionsOperation">
                                 </Conditions>
 
                             </div>
@@ -350,14 +350,9 @@
                                         [DataContext]="DataContext"></LogLabel>
                                 </div>
                                 <div class="table-row-cell-block">
-                                    <LogLov [NoObjectField]="true" [ObjectFieldName]="'SortBy'"
-                                        [DataContext]="DataContext"
-                                        [QueryFilterItems]="(null | ObjectFieldsQueryFiltersPipe : EntityId)"
-                                        [IsFreeText]="true" [LookUpTableName]="'ObjectField'" [NoValidation]="true"
-                                        [HideColumns]="true" [SelectedValue]="SortBy"
-                                        [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
-                                        (SelectedItemChanged)="updateSortBy($event)" [DataCy]="'SortBy'">
-                                    </LogLov>
+                                    <TreeSelect [Items]="ObjectFieldsTreeItems" [Width]="'350px'" [Value]="SortBy"
+                                        [ShowExpand]="false" (ValueChanged)="updateSortBy($event)" [DataCy]="'SortBy'">
+                                    </TreeSelect>
                                 </div>
                             </div>
                         </td>
@@ -386,17 +381,12 @@
                                     class="selected-coulmn-container">
                                     <div class="selected-field-container">
                                         <div class="LogLov-selected-field-container">
-                                            <LogLov [NoObjectField]="true"
-                                                [ObjectFieldName]="'SelectedCoulmn_' + fieldIndex"
-                                                [DataContext]="DataContext"
-                                                [QueryFilterItems]="(null | ObjectFieldsQueryFiltersPipe : EntityId)"
-                                                [IsFreeText]="true" [LookUpTableName]="'ObjectField'"
-                                                [NoValidation]="true" [SelectedValue]="returnedField.fieldCode"
-                                                [HideColumns]="true" [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
-                                                (SelectedItemChanged)="updateSelectedField($event, fieldIndex)"
-                                                [ForceDisabled]="fieldIndex === 0"
+                                            <TreeSelect [Items]="ObjectFieldsTreeItems" [Width]="'320px'"
+                                                [IsReturnedTreeSelectItem]="true" [Value]="returnedField.fieldCode"
+                                                [ShowExpand]="false" [IsDisabled]="fieldIndex === 0"
+                                                (ValueChanged)="updateSelectedField($event, fieldIndex)"
                                                 [DataCy]="'SelectedCoulmn_' + fieldIndex">
-                                            </LogLov>
+                                            </TreeSelect>
                                         </div>
                                         <div class="delete-coulmn-container">
                                             <img *ngIf="fieldIndex > 1 || (ReturnedFields.length > 2 && fieldIndex > 0)"

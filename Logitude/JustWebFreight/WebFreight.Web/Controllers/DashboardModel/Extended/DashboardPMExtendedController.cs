@@ -131,7 +131,7 @@ namespace WebFreight.Web.Controllers.DashboardModel.Extended
             }
         }
 
-        public HttpResponseMessage GetUserHasPinnedDashboards(string userId)
+        public HttpResponseMessage GetDashboardsUserSettings(string userId)
         {
             try
             {
@@ -140,9 +140,9 @@ namespace WebFreight.Web.Controllers.DashboardModel.Extended
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 IDashboardContext myContext = DashboardContext.GetContext(authToken.Tenant);
-                UserPinnedDashboardQueryService userPinnedDashboardQueryService = new UserPinnedDashboardQueryService(myContext);
-                UserPinnedDashboardPM userPinnedDashboardsRecord = userPinnedDashboardQueryService.GetPinnedDashboardsByUserId(userId, authToken.Tenant);
-                return Request.CreateResponse(HttpStatusCode.OK, userPinnedDashboardsRecord);
+                DashboardsUserSettingQueryService DashboardsUserSettingQueryService = new DashboardsUserSettingQueryService(myContext);
+                DashboardsUserSettingPM DashboardsUserSettingsRecord = DashboardsUserSettingQueryService.GetDashboardsUserSettingsByUserId(userId, authToken.Tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, DashboardsUserSettingsRecord);
             }
 
             catch (Exception ex)
@@ -162,7 +162,7 @@ namespace WebFreight.Web.Controllers.DashboardModel.Extended
                 IDashboardContext myContext = DashboardContext.GetContext(authToken.Tenant);
                 DashboardRepository dashboardRepository = new DashboardRepository(myContext);
                 DashboardListQueryService dashboardListQueryService = new DashboardListQueryService(myContext);
-                IQueryable<Dashboard> predefinedDashboards = dashboardRepository.GetAll(0).Where(d => d.LoadedAutomatically);
+                IQueryable<Dashboard> predefinedDashboards = dashboardRepository.GetAll(0).Where(d => d.PinnedByDefault);
                 IQueryable<DashboardList> dashboards = dashboardListQueryService.GetIqueryableList(predefinedDashboards);
                 return Request.CreateResponse(HttpStatusCode.OK, dashboards);
             }
@@ -183,32 +183,32 @@ namespace WebFreight.Web.Controllers.DashboardModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                //SecurityUtility.CheckContactFeature("UserPinnedDashboard", "NEW", authToken.Tenant);
+                //SecurityUtility.CheckContactFeature("DashboardsUserSetting", "NEW", authToken.Tenant);
 
                 this.tenant = authToken.Tenant;
                 loggedUserId = this.GetLoggedContactId(authToken.Email, tenant);
 
                 IDashboardContext myContext = DashboardContext.GetContext(tenant);
-                UserPinnedDashboardRepository userPinnedDashboardRepository = new UserPinnedDashboardRepository(myContext);
-                UserPinnedDashboardQueryService userPinnedDashboardQueryService = new UserPinnedDashboardQueryService(myContext);
-                UserPinnedDashboard userPinnedDashboards = userPinnedDashboardRepository.GetPinnedDashboardsByUserId(loggedUserId, tenant);
+                DashboardsUserSettingRepository DashboardsUserSettingRepository = new DashboardsUserSettingRepository(myContext);
+                DashboardsUserSettingQueryService DashboardsUserSettingQueryService = new DashboardsUserSettingQueryService(myContext);
+                DashboardsUserSetting DashboardsUserSettings = DashboardsUserSettingRepository.GetPinnedDashboardsByUserId(loggedUserId, tenant);
 
-                if (userPinnedDashboards == null)
+                if (DashboardsUserSettings == null)
                 {
-                    userPinnedDashboards = this.AddPinnedDashboardRecord(pinnedDashboardTab);
-                    userPinnedDashboardRepository.Add(userPinnedDashboards);
+                    DashboardsUserSettings = this.AddPinnedDashboardRecord(pinnedDashboardTab);
+                    DashboardsUserSettingRepository.Add(DashboardsUserSettings);
                 }
 
                 else
                 {
-                    this.UpdatePinnedDashboardRecord(userPinnedDashboards, pinnedDashboardTab);
-                    userPinnedDashboardRepository.Update(userPinnedDashboards);
+                    this.UpdatePinnedDashboardRecord(DashboardsUserSettings, pinnedDashboardTab);
+                    DashboardsUserSettingRepository.Update(DashboardsUserSettings);
                 }
 
-                userPinnedDashboardRepository.SubmitChanges();
+                DashboardsUserSettingRepository.SubmitChanges();
 
-                UserPinnedDashboardPM userPinnedDashboardsPM = userPinnedDashboardQueryService.GetSingle(userPinnedDashboards.Id, false, false);
-                return Request.CreateResponse(HttpStatusCode.OK, userPinnedDashboardsPM);
+                DashboardsUserSettingPM DashboardsUserSettingsPM = DashboardsUserSettingQueryService.GetSingle(DashboardsUserSettings.Id, false, false);
+                return Request.CreateResponse(HttpStatusCode.OK, DashboardsUserSettingsPM);
             }
 
             catch (Exception ex)
@@ -217,55 +217,52 @@ namespace WebFreight.Web.Controllers.DashboardModel.Extended
             }
         }
 
-        private UserPinnedDashboard AddPinnedDashboardRecord(PinnedDashboard pinnedDashboardTab)
+        private DashboardsUserSetting AddPinnedDashboardRecord(PinnedDashboard pinnedDashboardTab)
         {
             List<PinnedDashboard> pinnedDashboards = new List<PinnedDashboard>();
             pinnedDashboards.Add(new PinnedDashboard()
             {
                 Id = pinnedDashboardTab.Id,
-                Order = 0,
-                IsPredefined = pinnedDashboardTab.IsPredefined,
+                Order = 0
             });
 
-            return new UserPinnedDashboard()
+            return new DashboardsUserSetting()
             {
-                Id = IdCounter.GetNumber("UserPinnedDashboard", tenant),
+                Id = IdCounter.GetNumber("DashboardsUserSetting", tenant),
                 Tenant = tenant,
                 UserId = loggedUserId,
-                Dashboards = JsonConvert.SerializeObject(pinnedDashboards),
+                PinnedDashboards = JsonConvert.SerializeObject(pinnedDashboards),
             };
         }
-        private void UpdatePinnedDashboardRecord(UserPinnedDashboard userPinnedDashboards, PinnedDashboard pinnedDashboardTab)
+        private void UpdatePinnedDashboardRecord(DashboardsUserSetting DashboardsUserSettings, PinnedDashboard pinnedDashboardTab)
         {
             List<PinnedDashboard> pinnedDashs = new List<PinnedDashboard>();
 
-            if (string.IsNullOrEmpty(userPinnedDashboards.Dashboards))
+            if (string.IsNullOrEmpty(DashboardsUserSettings.PinnedDashboards))
             {
                 pinnedDashs.Add(new PinnedDashboard()
                 {
                     Id = pinnedDashboardTab.Id,
-                    Order = 0,
-                    IsPredefined = pinnedDashboardTab.IsPredefined,
+                    Order = 0
                 });
             }
 
             else
             {
-                pinnedDashs = JsonConvert.DeserializeObject<List<PinnedDashboard>>(userPinnedDashboards.Dashboards);
+                pinnedDashs = JsonConvert.DeserializeObject<List<PinnedDashboard>>(DashboardsUserSettings.PinnedDashboards);
                 int maxOrder = !pinnedDashs.Any() ? 0 : pinnedDashs.Max(s => s.Order);
 
                 pinnedDashs.Add(new PinnedDashboard()
                 {
                     Id = pinnedDashboardTab.Id,
-                    Order = maxOrder + 1,
-                    IsPredefined = pinnedDashboardTab.IsPredefined,
+                    Order = maxOrder + 1
                 });
             }
 
-            userPinnedDashboards.Dashboards = JsonConvert.SerializeObject(pinnedDashs);
+            DashboardsUserSettings.PinnedDashboards = JsonConvert.SerializeObject(pinnedDashs);
         }
 
-        public HttpResponseMessage GetUnPinDashboard(string userPinnedDashboardsId, string dashboardId)
+        public HttpResponseMessage GetUnPinDashboard(string dashboardsUserSettingsId, string dashboardId)
         {
             try
             {
@@ -277,17 +274,17 @@ namespace WebFreight.Web.Controllers.DashboardModel.Extended
                 loggedUserId = this.GetLoggedContactId(authToken.Email, tenant);
 
                 IDashboardContext myContext = DashboardContext.GetContext(tenant);
-                UserPinnedDashboardRepository userPinnedDashboardRepository = new UserPinnedDashboardRepository(myContext);
-                UserPinnedDashboardQueryService userPinnedDashboardQueryService = new UserPinnedDashboardQueryService(myContext);
-                UserPinnedDashboard userPinnedDashboards = userPinnedDashboardRepository.GetSingle(userPinnedDashboardsId, tenant);
+                DashboardsUserSettingRepository DashboardsUserSettingRepository = new DashboardsUserSettingRepository(myContext);
+                DashboardsUserSettingQueryService DashboardsUserSettingQueryService = new DashboardsUserSettingQueryService(myContext);
+                DashboardsUserSetting DashboardsUserSettings = DashboardsUserSettingRepository.GetSingle(dashboardsUserSettingsId, tenant);
 
-                if (userPinnedDashboards != null)
+                if (DashboardsUserSettings != null)
                 {
-                    List<PinnedDashboard> pinnedDashs = JsonConvert.DeserializeObject<List<PinnedDashboard>>(userPinnedDashboards.Dashboards);
+                    List<PinnedDashboard> pinnedDashs = JsonConvert.DeserializeObject<List<PinnedDashboard>>(DashboardsUserSettings.PinnedDashboards);
                     pinnedDashs = pinnedDashs.Where(d => d.Id != dashboardId).ToList();
-                    userPinnedDashboards.Dashboards = JsonConvert.SerializeObject(pinnedDashs);
-                    userPinnedDashboardRepository.Update(userPinnedDashboards);
-                    userPinnedDashboardRepository.SubmitChanges();
+                    DashboardsUserSettings.PinnedDashboards = JsonConvert.SerializeObject(pinnedDashs);
+                    DashboardsUserSettingRepository.Update(DashboardsUserSettings);
+                    DashboardsUserSettingRepository.SubmitChanges();
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, "OK");
@@ -298,12 +295,51 @@ namespace WebFreight.Web.Controllers.DashboardModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage PostPinPredefinedDashboards(string[] dashboardIds)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                var tenant = authToken.Tenant;
+                var loggedUserId = this.GetLoggedContactId(authToken.Email, tenant);
+
+                IDashboardContext myContext = DashboardContext.GetContext(tenant);
+                DashboardsUserSettingRepository dashboardsUserSettingRepository = new DashboardsUserSettingRepository(myContext);
+                DashboardsUserSettingQueryService dashboardsUserSettingQueryService = new DashboardsUserSettingQueryService(myContext);
+                var existSettings = dashboardsUserSettingQueryService.GetDashboardsUserSettingsByUserId(loggedUserId, tenant);
+                if (existSettings != null) return Request.CreateResponse(HttpStatusCode.OK, existSettings);
+
+                List<PinnedDashboard> pinnedDashboards = new List<PinnedDashboard>();
+                pinnedDashboards.AddRange(dashboardIds.Select((x, i) => new PinnedDashboard { Id = x, Order = i }));
+                var dashboardsUserSetting = new DashboardsUserSetting()
+                {
+                    Id = IdCounter.GetNumber("DashboardsUserSetting", tenant),
+                    Tenant = tenant,
+                    UserId = loggedUserId,
+                    PinnedDashboards = JsonConvert.SerializeObject(pinnedDashboards),
+                };
+                dashboardsUserSettingRepository.Add(dashboardsUserSetting);
+                dashboardsUserSettingRepository.SubmitChanges();
+                DashboardsUserSettingPM dashboardsUserSettingPM = dashboardsUserSettingQueryService.GetSingle(dashboardsUserSetting.Id, false, false);
+                return Request.CreateResponse(HttpStatusCode.OK, dashboardsUserSettingPM);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
     }
+
 
     public class PinnedDashboard
     {
         public string Id { get; set; }
         public int Order { get; set; }
-        public bool IsPredefined { get; set; }
     }
 }

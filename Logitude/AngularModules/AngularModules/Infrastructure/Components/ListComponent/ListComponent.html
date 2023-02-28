@@ -224,7 +224,7 @@
                 <table>
                     <tr>
                         <td style="width: 21px;">
-                            <IconButton [disabled]="!SelectedQuery" [Name]="'Refresh'" (click)="RefreshBtnClick()"></IconButton>
+                            <IconButton [disabled]="!SelectedQuery" [Name]="'Refresh'" (click)="RefreshBtnClick()" [DataCy]="'Refresh' + ObjectTableName"></IconButton>
                         </td>
 
                         <td style="width: 5px;" *ngIf="IsNewEntityButtonVisible">
@@ -249,7 +249,7 @@
                         </td>
 
                         <td style="width: 22px; vertical-align: middle;" *ngIf="HasExcelExportButton">
-                            <button [disabled]="!SelectedQuery" class="Button" (click)="btnExcelCLicked()"><img class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
+                            <button [disabled]="!SelectedQuery" class="Button" (click)="btnExcelCLicked()" [attr.data-cy]="'Export' + ObjectTableName"><img class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
                         </td>
 
                         <td style="width: 10px;" *ngIf="HasExcelExportButton">
@@ -309,7 +309,7 @@
                         </td>
 
                         <td style="width: 250px; vertical-align: middle;">
-                            <SearchTextBox [IsDisabled]="SeachBoxIsDisabled || !SelectedQuery" [SearchText]="searchFields" [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox>
+                            <SearchTextBox [IsDisabled]="SeachBoxIsDisabled || !SelectedQuery" [SearchText]="searchFields" [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)" [DataCy]="'Search' + ObjectTableName"></SearchTextBox>
                         </td>
 
 
@@ -317,8 +317,8 @@
                             <div></div>
                         </td>
 
-                        <td style="width: 17px; vertical-align: middle; position:relative;">
-                            <img *ngIf="HasFilters == false" src="./Images/FilterGrayTrans.png" style="cursor: pointer;" title="No filters have been set" (click)="onOpenFilterAreaClick()" class="CenterCenter" [style.pointer-events] ="SelectedQuery ? 'all' : 'none'" [style.opacity] ="SelectedQuery ? '1' : '0.5'"/>
+                        <td [attr.data-cy]="ObjectTableName + '_AddFilterIcon'" style="width: 17px; vertical-align: middle; position:relative;">
+                            <img  *ngIf="HasFilters == false" src="./Images/FilterGrayTrans.png" style="cursor: pointer;" title="No filters have been set" (click)="onOpenFilterAreaClick()" class="CenterCenter" [style.pointer-events] ="SelectedQuery ? 'all' : 'none'" [style.opacity] ="SelectedQuery ? '1' : '0.5'"/>
                             <img *ngIf="HasFilters == true" src="./Images/Filter.png" style="cursor: pointer;" title="Some filters have been set" (click)="onCloseFilterAreaClick()" class="CenterCenter" [style.pointer-events] ="SelectedQuery ? 'all' : 'none'" [style.opacity] ="SelectedQuery ? '1' : '0.5'"/>
                         </td>
 

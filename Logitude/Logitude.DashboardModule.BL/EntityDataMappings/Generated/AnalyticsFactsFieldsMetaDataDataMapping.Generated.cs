@@ -39,7 +39,8 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         HasUnit, 
 	         Unit, 
 	         CommonFilterCode, 
-	         CanSecondaryGroup,
+	         CanSecondaryGroup, 
+	         AllowTenantZeroFilter,
 	      }
 
 
@@ -64,7 +65,8 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         HasUnit, 
 	         Unit, 
 	         CommonFilterCode, 
-	         CanSecondaryGroup,
+	         CanSecondaryGroup, 
+	         AllowTenantZeroFilter,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -156,6 +158,11 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CanSecondaryGroup))
             {
 				entityPOCO.CanSecondaryGroup = entityPM.CanSecondaryGroup;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AllowTenantZeroFilter))
+            {
+				entityPOCO.AllowTenantZeroFilter = entityPM.AllowTenantZeroFilter;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -254,6 +261,11 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 					entityPM.CanSecondaryGroup = entityPOCO.CanSecondaryGroup;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AllowTenantZeroFilter))
+            {
+					entityPM.AllowTenantZeroFilter = entityPOCO.AllowTenantZeroFilter;
+            }
+
 		}
 
 		public void PMToOldPM(AnalyticsFactsFieldsMetaDataPM entityPM, AnalyticsFactsFieldsMetaDataPM oldEntityPM)
@@ -343,6 +355,11 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CanSecondaryGroup))
             {
                 oldEntityPM.CanSecondaryGroup = entityPM.CanSecondaryGroup;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AllowTenantZeroFilter))
+            {
+                oldEntityPM.AllowTenantZeroFilter = entityPM.AllowTenantZeroFilter;
             }
 			
 		}

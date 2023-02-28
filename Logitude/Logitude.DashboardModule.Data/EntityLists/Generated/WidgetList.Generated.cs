@@ -46,6 +46,8 @@ namespace Logitude.DashboardModule.Data.EntityLists
        public int? DecimalPlaces  { get; set; }
        [DataMember]
        public string UseAbbreviationAfter  { get; set; }
+       [DataMember]
+       public string LabelsPosition  { get; set; }
    }
 
 }

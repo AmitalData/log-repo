@@ -93,6 +93,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
 
+
             base.OnUpdating(entityPM, entityPOCO);
         }
 

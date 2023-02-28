@@ -47,6 +47,14 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="Title"
+    Type="varchar"
+    Size="-1"
+    DefaultValue="'title'">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CategoryCode"
     ReferencedTable="ExpressionCategories"

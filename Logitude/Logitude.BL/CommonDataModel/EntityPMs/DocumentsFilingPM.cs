@@ -177,5 +177,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool IsCustomerUploadPermission { get; set; }
         public bool IsApprovalRequired { get; set; }
         public bool IsFromDigital { get; set; }
+        public string ReceivedByPartner { get; set; }
     }
 }

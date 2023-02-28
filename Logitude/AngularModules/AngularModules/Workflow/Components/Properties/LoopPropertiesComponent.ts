@@ -5,6 +5,8 @@ import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { FlowVariablesTreeList } from "Workflow/TreeLists/FlowVariablesTreeList";
 import { SingleEditableEntitiesTreeList } from "Workflow/TreeLists/SingleEditableEntitiesTreeList";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
+import { ObjectTables } from "Workflow/Utilities/ObjectTables";
+import { FlowReader } from "Workflow/Utilities/FlowReader";
 
 @Component({
     templateUrl: "./LoopPropertiesComponent.html"
@@ -51,13 +53,8 @@ export class LoopPropertiesComponent extends BaseComponent {
 
     initializeFlowVariablesTree() {
         let props = {
-            ShowRecordsVariables: false,
-            ShowDeclaredVariables: false,
             ShowRecordsCollectionVariables: true,
-            ShowDeclaredCollectionVariables: true,
-            OnlyCurrentLoopItemVariables: false,
-            IsObjectVariableSelectable: false,
-            IsNoChildrenObjectVariables: false
+            ShowDeclaredCollectionVariables: true
         };
         this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props).Items;
         this.SingleEditableEntitiesTreeItems = new SingleEditableEntitiesTreeList(this.FlowObject, this.CurrentNodeId).Items;
@@ -97,10 +94,12 @@ export class LoopPropertiesComponent extends BaseComponent {
         let isEditableEntity = collectionVariableItem ? (collectionVariableItem.data["isEditableEntity"] || false) : null;
         let isCollectionFilterVariable = collectionVariableItem ? (collectionVariableItem.data["isCollectionFilterVariable"] || false) : null;
         let isDeclaredCollectionVariable = collectionVariableItem ? (collectionVariableItem.data["isDeclaredCollectionVariable"] || false) : null;
-        this.Data["isEditableEntity"] = isEditableEntity;
+
         this.Data["collectionVariable"] = collectionVariable;
+        this.Data["isEditableEntity"] = isEditableEntity;
         this.Data["isCollectionFilterVariable"] = isCollectionFilterVariable;
         this.Data["isDeclaredCollectionVariable"] = isDeclaredCollectionVariable;
+        this.Data["isCustomEntity"] = isEditableEntity ? ObjectTables.getIsCustomByName(collectionVariable ? collectionVariable.split("_")[1] : null) : null;
         this.CollectionVariable = collectionVariable;
 
         this.Data["collectionUsedFrom"] = collectionVariableItem && collectionVariableItem.data && collectionVariableItem.data["nodeId"] ? collectionVariableItem.data["nodeId"] : null;
@@ -120,12 +119,17 @@ export class LoopPropertiesComponent extends BaseComponent {
     saveButtonClicked() {
         this.ValidationErrorsList = [];
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
-        if (notValidUIProperties.length === 0) {
+        let isValidName = !this.IsNew || !FlowReader.isNodeCodeExists(this.FlowObject, this.Name);
+        if (notValidUIProperties.length === 0 && isValidName) {
             //console.log(this.Data);
             this.CurrentSession.CurrentWindow.Close(this.Data);
         } else {
             let validationErrors = notValidUIProperties.map(t => { return t.ValidationError ? t.ValidationError.replace(/\_/gi, " ") : null });
             this.ValidationErrorsList = validationErrors;
+
+            if (!isValidName) {
+                this.ValidationErrorsList.push("The Name Should be Unique.");
+            }
         }
     }
 }

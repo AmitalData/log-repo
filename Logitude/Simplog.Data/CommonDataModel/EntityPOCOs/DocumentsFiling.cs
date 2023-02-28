@@ -141,5 +141,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         [ForeignKey("ReceivedByByContactId")]
         public virtual User ReceivedByByContact { get; set; }
         public string ReceivedByByContactId { get; set; }
+        public string ReceivedByPartner { get; set; }
     }
 }

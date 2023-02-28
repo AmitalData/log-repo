@@ -72,8 +72,26 @@ namespace Logitude.Server.Tools
 
         }
 
+        public static string SerializeObjectToXmlElementStringWithoutIndentation<T>(T objectToBeSerialized)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            XmlSerializerNamespaces namespaces = new XmlSerializerNamespaces();
+            namespaces.Add("", ""); // Add an empty namespace to remove any namespace declarations
+            XmlWriterSettings settings = new XmlWriterSettings
+            {
+                OmitXmlDeclaration = true, // Remove the XML declaration
+                Indent = false // Disable indentation and new lines
+            };
+            using (var stringWriter = new StringWriter())
+            {
+                using (var xmlWriter = XmlWriter.Create(stringWriter, settings))
+                {
+                    serializer.Serialize(xmlWriter, objectToBeSerialized, namespaces);
+                }
+                return stringWriter.ToString();
+            }
+        }
 
-        
         public static string SerializeObjectToXmlString<T>(T myObject , bool useObjectGetType = false)
         {
             MemoryStream memstream = new MemoryStream();
