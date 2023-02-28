@@ -240,7 +240,6 @@ export class LoginComponent implements OnInit {
         sessionStorage.setItem("LoggedUserTenant", userData.CurrentTenant);
         sessionStorage.setItem("LoggedUserEmail", userData.UserName);
         sessionStorage.setItem("LoggedUserId", userData.Id);
-        sessionStorage.setItem("LoggedUserIsUser", userData.IsUser);
         sessionStorage.setItem("DocumentDownloadToken", userData.DocumentDownloadToken);
 
         SessionInfo.LoggedUserEmail = userData.UserName;
