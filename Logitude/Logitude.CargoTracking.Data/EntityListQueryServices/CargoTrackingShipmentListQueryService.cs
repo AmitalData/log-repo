@@ -7,6 +7,7 @@ using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Logitude.CargoTracking.Data.Model;
 
 
 namespace Logitude.CargoTracking.Data.EntityListQueryServices
@@ -542,6 +543,11 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
             List<CargoTrackingShipmentList> shipmentsLists = GetPageOfShipmentsLists(shipmentSearchInput.PageIndex, shipmentSearchInput.PageSize, shipments);
             return shipmentsLists;
+        }
+        public List<Customer> GetShipmentsCustomers(int tenant)
+        {
+            CargoTrackingShipmentRepository shipmentRepository = new CargoTrackingShipmentRepository(context);
+            return shipmentRepository.GetFilteredShipmentsByTenant(tenant).ToList();
         }
         public IQueryable<CargoTrackingShipmentList> GetShipments(List<string> ShipmentIds, CargoTrackingShipmentSearchInput shipmentSearchInput)
         {
