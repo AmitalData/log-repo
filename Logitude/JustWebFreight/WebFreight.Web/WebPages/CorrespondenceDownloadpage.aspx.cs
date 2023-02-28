@@ -81,7 +81,10 @@ namespace WebFreight.Web.WebPages
                     int tenant = Convert.ToInt32(filestrings[1]);
                     string copyId = filestrings.Length > 2 ? filestrings[2].ToString() : null;
 
-                    bool isDigitalPortal = filestrings.Length > 3 ? Convert.ToBoolean(filestrings[3].ToString()) : false;
+                    bool isDigitalPortal = false;
+                    if (filestrings.Length > 3) {
+                        Boolean.TryParse(filestrings[3].ToString(), out isDigitalPortal);
+                    }
 
                     Uploader up = new Uploader();
 
