@@ -868,13 +868,21 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "DBA,Dashboard Analytics", 
                 Description = "Dashboard Analytics", 
 			});
-			 
+            
             all.Add(new ToggleDetails()
             {    
                 Name = "Remove Shared Logistics", 
                 Code = "RSL", 
                 Description = "Remove Shared Logistics Tab Feature", 
                 SearchFields = "RSL,Remove Shared Logistics Tab Feature", 
+			});
+            
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Remove Shared Logistics", 
+                Code = "RSL", 
+                Description = "Remove Shared Logistics Tab Feature", 
+                SearchFields = "RSLTF,Remove Shared Logistics Tab Feature", 
 			});
 			
             return all;
