@@ -39,10 +39,10 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         var containerObjectTableName = "Container";
                         var allStatuses = GetAllStatusesByObjecTableName(containerObjectTableName, Tenant);
                         var allowedStatusWeight = allStatuses.FirstOrDefault(a => a.Code == "ARPD")?.StatusWeight;
-                        queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture != null 
+                        queryableData = queryableData.Where(d => (d.ActualPOLVesselDeparture != null || d.ShipmentMainCarriageATD != null)
                                                              && (d.TransshipmentCount == 0 || d.TransshipmentCount == null) 
-                                                             && d.ActualPODVesselArrival == null 
-                                                             && d.EstimatedPODVesselArrival != todayDate
+                                                             && (d.ActualPODVesselArrival == null && d.ShipmentMainCarriageATA == null)
+                                                             && (d.EstimatedPODVesselArrival != todayDate && d.ShipmentMainCarriageETA != todayDate)
                                                              && d.EntityStatus.StatusWeight < allowedStatusWeight);
                     }
 
@@ -51,10 +51,10 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         var containerObjectTableName = "Container";
                         var allStatuses = GetAllStatusesByObjecTableName(containerObjectTableName, Tenant);
                         var allowedStatusWeight = allStatuses.FirstOrDefault(a => a.Code == "ARPD")?.StatusWeight;
-                        queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture != null 
+                        queryableData = queryableData.Where(d => (d.ActualPOLVesselDeparture != null || d.ShipmentMainCarriageATD != null)
                                                              && (d.TransshipmentCount != null && d.TransshipmentCount > 0) 
-                                                             && d.ActualPODVesselArrival == null 
-                                                             && d.EstimatedPODVesselArrival != todayDate
+                                                             && (d.ActualPODVesselArrival == null && d.ShipmentMainCarriageATA == null)
+                                                             && (d.EstimatedPODVesselArrival != todayDate && d.ShipmentMainCarriageETA != todayDate)
                                                              && d.EntityStatus.StatusWeight < allowedStatusWeight);
                     }
 
@@ -63,8 +63,8 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         var containerObjectTableName = "Container";
                         var allStatuses = GetAllStatusesByObjecTableName(containerObjectTableName, Tenant);
                         var allowedStatusWeight = allStatuses.FirstOrDefault(a => a.Code == "GTOT")?.StatusWeight;
-                        queryableData = queryableData.Where(d => d.ActualPODVesselArrival != null 
-                                                              && d.GateOut == null 
+                        queryableData = queryableData.Where(d => (d.ActualPODVesselArrival != null || d.ShipmentMainCarriageATA != null)
+                                                              && d.GateOut == null
                                                               && d.ActualPODDischarge != null
                                                               && d.EntityStatus.StatusWeight < allowedStatusWeight);
                     }
@@ -74,8 +74,8 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         var containerObjectTableName = "Container";
                         var allStatuses = GetAllStatusesByObjecTableName(containerObjectTableName, Tenant);
                         var allowedStatusWeight = allStatuses.FirstOrDefault(a => a.Code == "EMRT")?.StatusWeight;
-                        queryableData = queryableData.Where(d => d.GateOut != null && d.ActualEmptyReturn == null
-                                                              || (d.ShipmentDeliveryATA != null && (d.GateOut == null || d.ActualEmptyReturn == null))
+                        queryableData = queryableData.Where(d => d.GateOut != null && (d.ActualEmptyReturn == null && d.EmptyContainerReturnATA == null)
+                                                              || (d.ShipmentDeliveryATA != null && (d.GateOut == null || (d.ActualEmptyReturn == null && d.EmptyContainerReturnATA == null)))
                                                               && d.EntityStatus.StatusWeight < allowedStatusWeight);
                     }
 
@@ -90,9 +90,9 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         var containerObjectTableName = "Container";
                         var allStatuses = GetAllStatusesByObjecTableName(containerObjectTableName, Tenant);
                         var allowedStatusWeight = allStatuses.FirstOrDefault(a => a.Code == "ARPD")?.StatusWeight;
-                        queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture != null 
-                                                              && d.ActualPODVesselArrival == null 
-                                                              && d.EstimatedPODVesselArrival == todayDate
+                        queryableData = queryableData.Where(d => (d.ActualPOLVesselDeparture != null || d.ShipmentMainCarriageATD != null)
+                                                              && (d.ActualPODVesselArrival == null && d.ShipmentMainCarriageATA == null)
+                                                              && (d.EstimatedPODVesselArrival == todayDate || (d.EstimatedPODVesselArrival == null && d.ShipmentMainCarriageETA == todayDate))
                                                               && d.EntityStatus.StatusWeight < allowedStatusWeight);
                     }
 
@@ -101,8 +101,8 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         var containerObjectTableName = "Container";
                         var allStatuses = GetAllStatusesByObjecTableName(containerObjectTableName, Tenant);
                         var allowedStatusWeight = allStatuses.FirstOrDefault(a => a.Code == "DSCH")?.StatusWeight;
-                        queryableData = queryableData.Where(d => d.ActualPODDischarge == null 
-                                                              && d.ActualPODVesselArrival != null
+                        queryableData = queryableData.Where(d => d.ActualPODDischarge == null
+                                                              && (d.ActualPODVesselArrival != null || d.ShipmentMainCarriageATA != null)
                                                               && d.EntityStatus.StatusWeight < allowedStatusWeight);
                     }
 
@@ -123,9 +123,9 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         var allowedStatusWeight = allStatuses.FirstOrDefault(a => a.Code == "POLD")?.StatusWeight;
                         DateTime afterTwoDaysDate = todayDate.AddDays(2);
 
-                        queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture == null
-                                                              && d.EstimatedPOLVesselDeparture != null
-                                                              && d.EstimatedPOLVesselDeparture <= afterTwoDaysDate
+                        queryableData = queryableData.Where(d => (d.ActualPOLVesselDeparture == null && d.ShipmentMainCarriageATD == null)
+                                                              && (d.EstimatedPOLVesselDeparture != null || d.ShipmentMainCarriageETD != null)
+                                                              && (d.EstimatedPOLVesselDeparture <= afterTwoDaysDate || (d.EstimatedPOLVesselDeparture == null && d.ShipmentMainCarriageETD <= afterTwoDaysDate))
                                                               && d.EntityStatus.StatusWeight < allowedStatusWeight);
 
 
