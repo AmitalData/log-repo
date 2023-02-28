@@ -30,6 +30,7 @@ namespace CommunicationWorkerRole
         private bool isDocumentUploaded = false;
         private bool isDocumentDeleted = false;
         private DateTime? recivedDate;
+        private string recivedDateString;
         private ICommonDataContext commonContext;
         private ShipmentRepository shipmentRepository;
         private ShipmentDocsFieldRepository shipmentDocsFieldRepository;
@@ -81,8 +82,14 @@ namespace CommunicationWorkerRole
                 try
                 {
                     MapQueueResponse(queueResponse);
-                    InitializeServices();
-                    HandelShipmentFields();
+                    GetReceivedDate();
+
+                    if (recivedDate != null)
+                    {
+                        InitializeServices();
+                        HandelShipmentFields();
+                    }
+
                     queueService.Complete();
                 }
                 catch (Exception ex)
@@ -105,9 +112,14 @@ namespace CommunicationWorkerRole
             documentCode = queueResponse.MessageValues["DocumentCode"].ToString();
             isDocumentUploaded = bool.Parse(queueResponse.MessageValues["IsDocumentUploaded"].ToString());
             isDocumentDeleted = bool.Parse(queueResponse.MessageValues["IsDocumentDeleted"].ToString());
-            recivedDate = DateTime.Parse(queueResponse.MessageValues["RecivedDate"].ToString());
+            recivedDateString = queueResponse.MessageValues["RecivedDate"].ToString();
             isApprovalRequired = queueResponse.MessageValues != null && queueResponse.MessageValues.Keys.Contains("IsApprovalRequired") ? bool.Parse(queueResponse.MessageValues["IsApprovalRequired"].ToString()) : false;
             isUploadShipmentDocs = queueResponse.MessageValues != null && queueResponse.MessageValues.Keys.Contains("IsUploadShipmentDocs") ? bool.Parse(queueResponse.MessageValues["IsUploadShipmentDocs"].ToString()) : true;
+        }
+        private void GetReceivedDate()
+        {
+            if (!string.IsNullOrEmpty(recivedDateString))
+                recivedDate = Convert.ToDateTime(recivedDateString);
         }
 
         private void InitializeServices()
@@ -250,7 +262,12 @@ namespace CommunicationWorkerRole
             if (shipmentPM == null || !isShipmentChange) return;
             ContactRepository contactRepository = new ContactRepository(tenant);
             Contact receivedBy = contactRepository.GetSingleContact(documentsFilingPM.ReceivedByUserId, tenant);
-            ShipmentService shipmentService = new ShipmentService(shipmentContext, shipmentPM, receivedBy.Email);
+
+            string email = "";
+            if (receivedBy != null)
+                email = "";
+
+            ShipmentService shipmentService = new ShipmentService(shipmentContext, shipmentPM, email);
 
             if (shipmentDocsField != null)
             {
