@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-	<Sql Version="25">
+	<Sql Version="26">
       <![CDATA[
 	    delete from DigitalPortalScreens where Tenant = 0
 		declare @customerProfileId as varchar(15)
@@ -3422,7 +3422,7 @@
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-red" is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
+						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-date-overdue" is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
 						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} !== [true]'' is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
@@ -3598,7 +3598,7 @@
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-red" is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
+						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-date-overdue" is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
 						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} !== [true]'' is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
@@ -3778,7 +3778,7 @@
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-red" is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
+						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-date-overdue" is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
 						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} !== [true]'' is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
@@ -3954,7 +3954,7 @@
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-red" is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
+						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-date-overdue" is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
 						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} !== [true]'' is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
@@ -4143,7 +4143,7 @@
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-red" is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
+						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-date-overdue" is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
 						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} !== [true]'' is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
@@ -4322,7 +4322,7 @@
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-red" is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
+						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-date-overdue" is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
 						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} !== [true]'' is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
@@ -4506,7 +4506,7 @@
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-red" is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
+						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-date-overdue" is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
 						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} !== [true]'' is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
@@ -4685,7 +4685,7 @@
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-red" is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
+						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-date-overdue" is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
 						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} !== [true]'' is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
@@ -4816,7 +4816,7 @@
 		<LogColumn>
 			<LogFieldContainer>
 				<LogLabel field-code=''ARInvoice.DueDate''></LogLabel>
-				<LogField max-width=''70%'' log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-red" is-date=''true''
+				<LogField max-width=''70%'' log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-date-overdue" is-date=''true''
 					disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
 				<LogField max-width=''70%'' log-if=''{ARInvoice.IsDigitalDueDateColorRed} !== [true]'' is-date=''true'' disable-copy=''true''
 					field-code=''ARInvoice.DueDate''></LogField>
@@ -4961,7 +4961,7 @@
 		<LogColumn>
 			<LogFieldContainer>
 				<LogLabel field-code=''ARInvoice.DueDate''></LogLabel>
-				<LogField max-width=''70%'' log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-red" is-date=''true''
+				<LogField max-width=''70%'' log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-date-overdue" is-date=''true''
 					disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
 				<LogField max-width=''70%'' log-if=''{ARInvoice.IsDigitalDueDateColorRed} !== [true]'' is-date=''true'' disable-copy=''true''
 					field-code=''ARInvoice.DueDate''></LogField>
@@ -5111,7 +5111,7 @@
 		<LogColumn>
 			<LogFieldContainer>
 				<LogLabel field-code=''ARInvoice.DueDate''></LogLabel>
-				<LogField max-width=''70%'' log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-red" is-date=''true''
+				<LogField max-width=''70%'' log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-date-overdue" is-date=''true''
 					disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
 				<LogField max-width=''70%'' log-if=''{ARInvoice.IsDigitalDueDateColorRed} !== [true]'' is-date=''true'' disable-copy=''true''
 					field-code=''ARInvoice.DueDate''></LogField>
@@ -5256,7 +5256,7 @@
 		<LogColumn>
 			<LogFieldContainer>
 				<LogLabel field-code=''ARInvoice.DueDate''></LogLabel>
-				<LogField max-width=''70%'' log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-red" is-date=''true''
+				<LogField max-width=''70%'' log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-date-overdue" is-date=''true''
 					disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
 				<LogField max-width=''70%'' log-if=''{ARInvoice.IsDigitalDueDateColorRed} !== [true]'' is-date=''true'' disable-copy=''true''
 					field-code=''ARInvoice.DueDate''></LogField>
@@ -5338,6 +5338,1543 @@
 		.log-invoice-date-overdue {
 		    /* Edit here to change invoice due date passed styles for this card */
 		}
+</style>');
+
+			EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
+			INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
+			values (@EntityId, 0, @invocieObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single invoice card item - Desktop', 'SIGID', 0, @customerProfileId, 
+			'<LogTable>
+	<LogRow class=''border-0''>
+		<LogColumn>
+			<LogLabel hide-colon=''true'' class=''log-font-medium''	field-code=''ARInvoice.GeneralInformation''></LogLabel>
+		</LogColumn>
+	</LogRow>
+	<LogRow>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.MainEntityReference''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField tooltip=''true'' disable-copy=''true''
+							log-if=''{ARInvoice.IsConsolidationInvoice} === [true]''
+							field-code=''Invoice.ShipmentsNumbers''></LogField>
+						<LogField tooltip=''true'' disable-copy=''true''
+							log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]''
+							field-code=''Invoice.MainEntityReference''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.AmountInInvoiceCurrency''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField max-width=''80%'' is-decimal=''true'' disable-copy=''true'' margin=''0 0.25 0 0''
+							field-code=''ARInvoice.AmountInInvoiceCurrency''></LogField>
+						<LogField disable-copy=''true'' field-code=''ARInvoice.InvoiceCurrencyCode''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.PaymentTermName''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField disable-copy=''true'' field-code=''ARInvoice.PaymentTermName''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.DueDate''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-date-overdue"
+							is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
+						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} !== [true]'' is-date=''true''
+							disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.InvoiceDate''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+
+	</LogRow>
+	<LogRow class=''border-0 padding-0'' margin=''1 0 0 0''>
+		<LogColumn>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.PrintNotes''></LogLabel>
+			</LogFieldContainer>
+		</LogColumn>
+		<LogColumn max-width=''90%''>
+			<LogFieldContainer>
+				<LogField disable-copy=''true'' field-code=''Invoice.PrintNotes''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+	</LogRow>
+</LogTable>
+
+<style>
+	@media screen and (min-width: 992px) {
+		.log-label {
+			/* Edit here to change labels styles for this card */
+		}
+
+		.log-field {
+			/* Edit here to change fields styles for this card */
+		}
+
+		.log-icon {
+			/* Edit here to change icons styles for this card */
+		}
+
+		.log-field-container {
+			/* Edit here to change fields containers styles for this card */
+		}
+
+		.log-column {
+			/* Edit here to change columns styles for this card */
+		}
+
+		.log-row {
+			/* Edit here to change rows styles for this card */
+		}
+
+		.log-table {
+			/* Edit here to change tables styles for this card */
+		}
+
+		.log-separator {
+			/* Edit here to change vertical separator styles for this card */
+		}
+</style>',
+			'<LogTable>
+	<LogRow class=''border-0''>
+		<LogColumn>
+			<LogLabel hide-colon=''true'' class=''log-font-medium''	field-code=''ARInvoice.GeneralInformation''></LogLabel>
+		</LogColumn>
+	</LogRow>
+	<LogRow>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.MainEntityReference''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField tooltip=''true'' disable-copy=''true''
+							log-if=''{ARInvoice.IsConsolidationInvoice} === [true]''
+							field-code=''Invoice.ShipmentsNumbers''></LogField>
+						<LogField tooltip=''true'' disable-copy=''true''
+							log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]''
+							field-code=''Invoice.MainEntityReference''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.AmountInInvoiceCurrency''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField max-width=''80%'' is-decimal=''true'' disable-copy=''true'' margin=''0 0.25 0 0''
+							field-code=''ARInvoice.AmountInInvoiceCurrency''></LogField>
+						<LogField disable-copy=''true'' field-code=''ARInvoice.InvoiceCurrencyCode''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.PaymentTermName''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField disable-copy=''true'' field-code=''ARInvoice.PaymentTermName''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.DueDate''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-date-overdue"
+							is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
+						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} !== [true]'' is-date=''true''
+							disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.InvoiceDate''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+
+	</LogRow>
+	<LogRow class=''border-0 padding-0'' margin=''1 0 0 0''>
+		<LogColumn>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.PrintNotes''></LogLabel>
+			</LogFieldContainer>
+		</LogColumn>
+		<LogColumn max-width=''90%''>
+			<LogFieldContainer>
+				<LogField disable-copy=''true'' field-code=''Invoice.PrintNotes''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+	</LogRow>
+</LogTable>
+
+<style>
+	@media screen and (min-width: 992px) {
+		.log-label {
+			/* Edit here to change labels styles for this card */
+		}
+
+		.log-field {
+			/* Edit here to change fields styles for this card */
+		}
+
+		.log-icon {
+			/* Edit here to change icons styles for this card */
+		}
+
+		.log-field-container {
+			/* Edit here to change fields containers styles for this card */
+		}
+
+		.log-column {
+			/* Edit here to change columns styles for this card */
+		}
+
+		.log-row {
+			/* Edit here to change rows styles for this card */
+		}
+
+		.log-table {
+			/* Edit here to change tables styles for this card */
+		}
+
+		.log-separator {
+			/* Edit here to change vertical separator styles for this card */
+		}
+</style>');
+      
+      EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
+			INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
+			values (@EntityId, 0, @invocieObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single invoice card item - Desktop', 'SIGID', 0, @agentProfileId, 
+			'<LogTable>
+	<LogRow class=''border-0''>
+		<LogColumn>
+			<LogLabel hide-colon=''true'' class=''log-font-medium''	field-code=''ARInvoice.GeneralInformation''></LogLabel>
+		</LogColumn>
+	</LogRow>
+	<LogRow>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.MainEntityReference''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField tooltip=''true'' disable-copy=''true''
+							log-if=''{ARInvoice.IsConsolidationInvoice} === [true]''
+							field-code=''Invoice.ShipmentsNumbers''></LogField>
+						<LogField tooltip=''true'' disable-copy=''true''
+							log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]''
+							field-code=''Invoice.MainEntityReference''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.AmountInInvoiceCurrency''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField max-width=''80%'' is-decimal=''true'' disable-copy=''true'' margin=''0 0.25 0 0''
+							field-code=''ARInvoice.AmountInInvoiceCurrency''></LogField>
+						<LogField disable-copy=''true'' field-code=''ARInvoice.InvoiceCurrencyCode''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.PaymentTermName''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField disable-copy=''true'' field-code=''ARInvoice.PaymentTermName''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.DueDate''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-date-overdue"
+							is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
+						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} !== [true]'' is-date=''true''
+							disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.InvoiceDate''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+
+	</LogRow>
+	<LogRow class=''border-0 padding-0'' margin=''1 0 0 0''>
+		<LogColumn>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.PrintNotes''></LogLabel>
+			</LogFieldContainer>
+		</LogColumn>
+		<LogColumn max-width=''90%''>
+			<LogFieldContainer>
+				<LogField disable-copy=''true'' field-code=''Invoice.PrintNotes''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+	</LogRow>
+</LogTable>
+
+<style>
+	@media screen and (min-width: 992px) {
+		.log-label {
+			/* Edit here to change labels styles for this card */
+		}
+
+		.log-field {
+			/* Edit here to change fields styles for this card */
+		}
+
+		.log-icon {
+			/* Edit here to change icons styles for this card */
+		}
+
+		.log-field-container {
+			/* Edit here to change fields containers styles for this card */
+		}
+
+		.log-column {
+			/* Edit here to change columns styles for this card */
+		}
+
+		.log-row {
+			/* Edit here to change rows styles for this card */
+		}
+
+		.log-table {
+			/* Edit here to change tables styles for this card */
+		}
+
+		.log-separator {
+			/* Edit here to change vertical separator styles for this card */
+		}
+</style>',
+			'<LogTable>
+	<LogRow class=''border-0''>
+		<LogColumn>
+			<LogLabel hide-colon=''true'' class=''log-font-medium''	field-code=''ARInvoice.GeneralInformation''></LogLabel>
+		</LogColumn>
+	</LogRow>
+	<LogRow>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.MainEntityReference''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField tooltip=''true'' disable-copy=''true''
+							log-if=''{ARInvoice.IsConsolidationInvoice} === [true]''
+							field-code=''Invoice.ShipmentsNumbers''></LogField>
+						<LogField tooltip=''true'' disable-copy=''true''
+							log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]''
+							field-code=''Invoice.MainEntityReference''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.AmountInInvoiceCurrency''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField max-width=''80%'' is-decimal=''true'' disable-copy=''true'' margin=''0 0.25 0 0''
+							field-code=''ARInvoice.AmountInInvoiceCurrency''></LogField>
+						<LogField disable-copy=''true'' field-code=''ARInvoice.InvoiceCurrencyCode''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.PaymentTermName''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField disable-copy=''true'' field-code=''ARInvoice.PaymentTermName''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.DueDate''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-date-overdue"
+							is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
+						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} !== [true]'' is-date=''true''
+							disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.InvoiceDate''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+
+	</LogRow>
+	<LogRow class=''border-0 padding-0'' margin=''1 0 0 0''>
+		<LogColumn>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.PrintNotes''></LogLabel>
+			</LogFieldContainer>
+		</LogColumn>
+		<LogColumn max-width=''90%''>
+			<LogFieldContainer>
+				<LogField disable-copy=''true'' field-code=''Invoice.PrintNotes''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+	</LogRow>
+</LogTable>
+
+<style>
+	@media screen and (min-width: 992px) {
+		.log-label {
+			/* Edit here to change labels styles for this card */
+		}
+
+		.log-field {
+			/* Edit here to change fields styles for this card */
+		}
+
+		.log-icon {
+			/* Edit here to change icons styles for this card */
+		}
+
+		.log-field-container {
+			/* Edit here to change fields containers styles for this card */
+		}
+
+		.log-column {
+			/* Edit here to change columns styles for this card */
+		}
+
+		.log-row {
+			/* Edit here to change rows styles for this card */
+		}
+
+		.log-table {
+			/* Edit here to change tables styles for this card */
+		}
+
+		.log-separator {
+			/* Edit here to change vertical separator styles for this card */
+		}
+</style>');
+      
+      
+      EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
+			INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
+			values (@EntityId, 0, @invocieObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single invoice card item - Tablet', 'SIGIT', 0, @customerProfileId, 
+			'<LogTable>
+	<LogRow class=''border-0''>
+		<LogColumn>
+			<LogLabel hide-colon=''true'' class=''log-font-medium''	field-code=''ARInvoice.GeneralInformation''></LogLabel>
+		</LogColumn>
+	</LogRow>
+	<LogRow>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.MainEntityReference''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField tooltip=''true'' disable-copy=''true''
+							log-if=''{ARInvoice.IsConsolidationInvoice} === [true]''
+							field-code=''Invoice.ShipmentsNumbers''></LogField>
+						<LogField tooltip=''true'' disable-copy=''true''
+							log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]''
+							field-code=''Invoice.MainEntityReference''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.AmountInInvoiceCurrency''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField max-width=''80%'' is-decimal=''true'' disable-copy=''true'' margin=''0 0.25 0 0''
+							field-code=''ARInvoice.AmountInInvoiceCurrency''></LogField>
+						<LogField disable-copy=''true'' field-code=''ARInvoice.InvoiceCurrencyCode''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.PaymentTermName''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField disable-copy=''true'' field-code=''ARInvoice.PaymentTermName''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.DueDate''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-date-overdue"
+							is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
+						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} !== [true]'' is-date=''true''
+							disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.InvoiceDate''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+
+	</LogRow>
+	<LogRow class=''border-0 padding-0'' margin=''1 0 0 0''>
+		<LogColumn>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.PrintNotes''></LogLabel>
+			</LogFieldContainer>
+		</LogColumn>
+		<LogColumn max-width=''90%''>
+			<LogFieldContainer>
+				<LogField disable-copy=''true'' field-code=''Invoice.PrintNotes''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+	</LogRow>
+</LogTable>
+
+<style>
+	@media screen and (min-width: 992px) {
+		.log-label {
+			/* Edit here to change labels styles for this card */
+		}
+
+		.log-field {
+			/* Edit here to change fields styles for this card */
+		}
+
+		.log-icon {
+			/* Edit here to change icons styles for this card */
+		}
+
+		.log-field-container {
+			/* Edit here to change fields containers styles for this card */
+		}
+
+		.log-column {
+			/* Edit here to change columns styles for this card */
+		}
+
+		.log-row {
+			/* Edit here to change rows styles for this card */
+		}
+
+		.log-table {
+			/* Edit here to change tables styles for this card */
+		}
+
+		.log-separator {
+			/* Edit here to change vertical separator styles for this card */
+		}
+</style>',
+			'<LogTable>
+	<LogRow class=''border-0''>
+		<LogColumn>
+			<LogLabel hide-colon=''true'' class=''log-font-medium''	field-code=''ARInvoice.GeneralInformation''></LogLabel>
+		</LogColumn>
+	</LogRow>
+	<LogRow>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.MainEntityReference''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField tooltip=''true'' disable-copy=''true''
+							log-if=''{ARInvoice.IsConsolidationInvoice} === [true]''
+							field-code=''Invoice.ShipmentsNumbers''></LogField>
+						<LogField tooltip=''true'' disable-copy=''true''
+							log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]''
+							field-code=''Invoice.MainEntityReference''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.AmountInInvoiceCurrency''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField max-width=''80%'' is-decimal=''true'' disable-copy=''true'' margin=''0 0.25 0 0''
+							field-code=''ARInvoice.AmountInInvoiceCurrency''></LogField>
+						<LogField disable-copy=''true'' field-code=''ARInvoice.InvoiceCurrencyCode''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.PaymentTermName''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField disable-copy=''true'' field-code=''ARInvoice.PaymentTermName''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.DueDate''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-date-overdue"
+							is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
+						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} !== [true]'' is-date=''true''
+							disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.InvoiceDate''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+
+	</LogRow>
+	<LogRow class=''border-0 padding-0'' margin=''1 0 0 0''>
+		<LogColumn>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.PrintNotes''></LogLabel>
+			</LogFieldContainer>
+		</LogColumn>
+		<LogColumn max-width=''90%''>
+			<LogFieldContainer>
+				<LogField disable-copy=''true'' field-code=''Invoice.PrintNotes''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+	</LogRow>
+</LogTable>
+
+<style>
+	@media screen and (min-width: 992px) {
+		.log-label {
+			/* Edit here to change labels styles for this card */
+		}
+
+		.log-field {
+			/* Edit here to change fields styles for this card */
+		}
+
+		.log-icon {
+			/* Edit here to change icons styles for this card */
+		}
+
+		.log-field-container {
+			/* Edit here to change fields containers styles for this card */
+		}
+
+		.log-column {
+			/* Edit here to change columns styles for this card */
+		}
+
+		.log-row {
+			/* Edit here to change rows styles for this card */
+		}
+
+		.log-table {
+			/* Edit here to change tables styles for this card */
+		}
+
+		.log-separator {
+			/* Edit here to change vertical separator styles for this card */
+		}
+</style>');
+      
+       EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
+			INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
+			values (@EntityId, 0, @invocieObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single invoice card item - Tablet', 'SIGIT', 0, @agentProfileId, 
+			'<LogTable>
+	<LogRow class=''border-0''>
+		<LogColumn>
+			<LogLabel hide-colon=''true'' class=''log-font-medium''	field-code=''ARInvoice.GeneralInformation''></LogLabel>
+		</LogColumn>
+	</LogRow>
+	<LogRow>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.MainEntityReference''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField tooltip=''true'' disable-copy=''true''
+							log-if=''{ARInvoice.IsConsolidationInvoice} === [true]''
+							field-code=''Invoice.ShipmentsNumbers''></LogField>
+						<LogField tooltip=''true'' disable-copy=''true''
+							log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]''
+							field-code=''Invoice.MainEntityReference''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.AmountInInvoiceCurrency''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField max-width=''80%'' is-decimal=''true'' disable-copy=''true'' margin=''0 0.25 0 0''
+							field-code=''ARInvoice.AmountInInvoiceCurrency''></LogField>
+						<LogField disable-copy=''true'' field-code=''ARInvoice.InvoiceCurrencyCode''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.PaymentTermName''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField disable-copy=''true'' field-code=''ARInvoice.PaymentTermName''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.DueDate''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-date-overdue"
+							is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
+						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} !== [true]'' is-date=''true''
+							disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.InvoiceDate''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+
+	</LogRow>
+	<LogRow class=''border-0 padding-0'' margin=''1 0 0 0''>
+		<LogColumn>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.PrintNotes''></LogLabel>
+			</LogFieldContainer>
+		</LogColumn>
+		<LogColumn max-width=''90%''>
+			<LogFieldContainer>
+				<LogField disable-copy=''true'' field-code=''Invoice.PrintNotes''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+	</LogRow>
+</LogTable>
+
+<style>
+	@media screen and (min-width: 992px) {
+		.log-label {
+			/* Edit here to change labels styles for this card */
+		}
+
+		.log-field {
+			/* Edit here to change fields styles for this card */
+		}
+
+		.log-icon {
+			/* Edit here to change icons styles for this card */
+		}
+
+		.log-field-container {
+			/* Edit here to change fields containers styles for this card */
+		}
+
+		.log-column {
+			/* Edit here to change columns styles for this card */
+		}
+
+		.log-row {
+			/* Edit here to change rows styles for this card */
+		}
+
+		.log-table {
+			/* Edit here to change tables styles for this card */
+		}
+
+		.log-separator {
+			/* Edit here to change vertical separator styles for this card */
+		}
+</style>',
+			'<LogTable>
+	<LogRow class=''border-0''>
+		<LogColumn>
+			<LogLabel hide-colon=''true'' class=''log-font-medium''	field-code=''ARInvoice.GeneralInformation''></LogLabel>
+		</LogColumn>
+	</LogRow>
+	<LogRow>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.MainEntityReference''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField tooltip=''true'' disable-copy=''true''
+							log-if=''{ARInvoice.IsConsolidationInvoice} === [true]''
+							field-code=''Invoice.ShipmentsNumbers''></LogField>
+						<LogField tooltip=''true'' disable-copy=''true''
+							log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]''
+							field-code=''Invoice.MainEntityReference''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.AmountInInvoiceCurrency''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField max-width=''80%'' is-decimal=''true'' disable-copy=''true'' margin=''0 0.25 0 0''
+							field-code=''ARInvoice.AmountInInvoiceCurrency''></LogField>
+						<LogField disable-copy=''true'' field-code=''ARInvoice.InvoiceCurrencyCode''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.PaymentTermName''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField disable-copy=''true'' field-code=''ARInvoice.PaymentTermName''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.DueDate''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-date-overdue"
+							is-date=''true'' disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
+						<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} !== [true]'' is-date=''true''
+							disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+		<LogColumn width=''100%'' max-width=''20%''>
+			<LogRow class=''border-0 padding-0''>
+				<LogColumn>
+					<LogFieldContainer>
+						<LogLabel field-code=''ARInvoice.InvoiceDate''></LogLabel>
+					</LogFieldContainer>
+				</LogColumn>
+				<LogColumn max-width=''60%''>
+					<LogFieldContainer>
+						<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+					</LogFieldContainer>
+				</LogColumn>
+			</LogRow>
+		</LogColumn>
+
+	</LogRow>
+	<LogRow class=''border-0 padding-0'' margin=''1 0 0 0''>
+		<LogColumn>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.PrintNotes''></LogLabel>
+			</LogFieldContainer>
+		</LogColumn>
+		<LogColumn max-width=''90%''>
+			<LogFieldContainer>
+				<LogField disable-copy=''true'' field-code=''Invoice.PrintNotes''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+	</LogRow>
+</LogTable>
+
+<style>
+	@media screen and (min-width: 992px) {
+		.log-label {
+			/* Edit here to change labels styles for this card */
+		}
+
+		.log-field {
+			/* Edit here to change fields styles for this card */
+		}
+
+		.log-icon {
+			/* Edit here to change icons styles for this card */
+		}
+
+		.log-field-container {
+			/* Edit here to change fields containers styles for this card */
+		}
+
+		.log-column {
+			/* Edit here to change columns styles for this card */
+		}
+
+		.log-row {
+			/* Edit here to change rows styles for this card */
+		}
+
+		.log-table {
+			/* Edit here to change tables styles for this card */
+		}
+
+		.log-separator {
+			/* Edit here to change vertical separator styles for this card */
+		}
+</style>');
+      
+      EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
+			INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
+			values (@EntityId, 0, @invocieObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single invoice card item - Mobile', 'SIGIM', 0, @customerProfileId, 
+			'<LogTable>
+	<LogRow>
+		<LogColumn>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.MainEntityReference''></LogLabel>
+			</LogFieldContainer>
+			<LogFieldContainer>
+				<LogField tooltip=''true'' disable-copy=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]''
+					field-code=''Invoice.ShipmentsNumbers''></LogField>
+				<LogField tooltip=''true'' disable-copy=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]''
+					field-code=''Invoice.MainEntityReference''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+	</LogRow>
+	<LogRow class=''border-0''>
+		<LogColumn width=''50%''>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.InvoiceDate''></LogLabel>
+			</LogFieldContainer>
+			<LogFieldContainer>
+				<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+		<LogColumn width=''50%''>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.DueDate''></LogLabel>
+			</LogFieldContainer>
+			<LogFieldContainer>
+				<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-date-overdue" is-date=''true''
+					disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
+				<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} !== [true]'' is-date=''true'' disable-copy=''true''
+					field-code=''ARInvoice.DueDate''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+	</LogRow>
+	<LogRow>
+		<LogColumn>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.PaymentTermName''></LogLabel>
+			</LogFieldContainer>
+			<LogFieldContainer>
+				<LogField disable-copy=''true'' field-code=''ARInvoice.PaymentTermName''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+	</LogRow>
+	<LogRow>
+		<LogColumn>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.AmountDue''></LogLabel>
+			</LogFieldContainer>
+			<LogFieldContainer>
+				<LogField max-width=''90%'' is-decimal=''true'' disable-copy=''true'' margin=''0 0.25 0 0''
+					field-code=''ARInvoice.AmountDue''></LogField>
+				<LogField disable-copy=''true'' field-code=''ARInvoice.InvoiceCurrencyCode''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+	</LogRow>
+	<LogRow class=''border-0 margin-0 padding-0''>
+		<LogColumn>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.PrintNotes''></LogLabel>
+			</LogFieldContainer>
+			<LogFieldContainer>
+				<LogField disable-copy=''true'' field-code=''Invoice.PrintNotes''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+	</LogRow>
+</LogTable>
+
+<style>
+	@media screen and (max-width: 768px) {
+		.log-label {
+			/* Edit here to change labels styles for this card */
+		}
+
+		.log-field {
+			/* Edit here to change fields styles for this card */
+		}
+
+		.log-icon {
+			/* Edit here to change icons styles for this card */
+		}
+
+		.log-field-container {
+			/* Edit here to change fields containers styles for this card */
+		}
+
+		.log-column {
+			/* Edit here to change columns styles for this card */
+		}
+
+		.log-row {
+			/* Edit here to change rows styles for this card */
+		}
+
+		.log-table {
+			/* Edit here to change tables styles for this card */
+		}
+
+        .log-color-date-overdue{
+            /* Edit here to change red color for this card */
+        }
+	}
+</style>',
+			'<LogTable>
+	<LogRow>
+		<LogColumn>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.MainEntityReference''></LogLabel>
+			</LogFieldContainer>
+			<LogFieldContainer>
+				<LogField tooltip=''true'' disable-copy=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]''
+					field-code=''Invoice.ShipmentsNumbers''></LogField>
+				<LogField tooltip=''true'' disable-copy=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]''
+					field-code=''Invoice.MainEntityReference''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+	</LogRow>
+	<LogRow class=''border-0''>
+		<LogColumn width=''50%''>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.InvoiceDate''></LogLabel>
+			</LogFieldContainer>
+			<LogFieldContainer>
+				<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+		<LogColumn width=''50%''>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.DueDate''></LogLabel>
+			</LogFieldContainer>
+			<LogFieldContainer>
+				<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-date-overdue" is-date=''true''
+					disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
+				<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} !== [true]'' is-date=''true'' disable-copy=''true''
+					field-code=''ARInvoice.DueDate''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+	</LogRow>
+	<LogRow>
+		<LogColumn>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.PaymentTermName''></LogLabel>
+			</LogFieldContainer>
+			<LogFieldContainer>
+				<LogField disable-copy=''true'' field-code=''ARInvoice.PaymentTermName''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+	</LogRow>
+	<LogRow>
+		<LogColumn>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.AmountDue''></LogLabel>
+			</LogFieldContainer>
+			<LogFieldContainer>
+				<LogField max-width=''90%'' is-decimal=''true'' disable-copy=''true'' margin=''0 0.25 0 0''
+					field-code=''ARInvoice.AmountDue''></LogField>
+				<LogField disable-copy=''true'' field-code=''ARInvoice.InvoiceCurrencyCode''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+	</LogRow>
+	<LogRow class=''border-0 margin-0 padding-0''>
+		<LogColumn>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.PrintNotes''></LogLabel>
+			</LogFieldContainer>
+			<LogFieldContainer>
+				<LogField disable-copy=''true'' field-code=''Invoice.PrintNotes''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+	</LogRow>
+</LogTable>
+
+<style>
+	@media screen and (max-width: 768px) {
+		.log-label {
+			/* Edit here to change labels styles for this card */
+		}
+
+		.log-field {
+			/* Edit here to change fields styles for this card */
+		}
+
+		.log-icon {
+			/* Edit here to change icons styles for this card */
+		}
+
+		.log-field-container {
+			/* Edit here to change fields containers styles for this card */
+		}
+
+		.log-column {
+			/* Edit here to change columns styles for this card */
+		}
+
+		.log-row {
+			/* Edit here to change rows styles for this card */
+		}
+
+		.log-table {
+			/* Edit here to change tables styles for this card */
+		}
+
+        .log-color-date-overdue{
+            /* Edit here to change red color for this card */
+        }
+	}
+</style>');
+      
+      EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
+			INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
+			values (@EntityId, 0, @invocieObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single invoice card item - Mobile', 'SIGIM', 0, @agentProfileId, 
+			'<LogTable>
+	<LogRow>
+		<LogColumn>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.MainEntityReference''></LogLabel>
+			</LogFieldContainer>
+			<LogFieldContainer>
+				<LogField tooltip=''true'' disable-copy=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]''
+					field-code=''Invoice.ShipmentsNumbers''></LogField>
+				<LogField tooltip=''true'' disable-copy=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]''
+					field-code=''Invoice.MainEntityReference''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+	</LogRow>
+	<LogRow class=''border-0''>
+		<LogColumn width=''50%''>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.InvoiceDate''></LogLabel>
+			</LogFieldContainer>
+			<LogFieldContainer>
+				<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+		<LogColumn width=''50%''>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.DueDate''></LogLabel>
+			</LogFieldContainer>
+			<LogFieldContainer>
+				<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-date-overdue" is-date=''true''
+					disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
+				<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} !== [true]'' is-date=''true'' disable-copy=''true''
+					field-code=''ARInvoice.DueDate''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+	</LogRow>
+	<LogRow>
+		<LogColumn>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.PaymentTermName''></LogLabel>
+			</LogFieldContainer>
+			<LogFieldContainer>
+				<LogField disable-copy=''true'' field-code=''ARInvoice.PaymentTermName''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+	</LogRow>
+	<LogRow>
+		<LogColumn>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.AmountDue''></LogLabel>
+			</LogFieldContainer>
+			<LogFieldContainer>
+				<LogField max-width=''90%'' is-decimal=''true'' disable-copy=''true'' margin=''0 0.25 0 0''
+					field-code=''ARInvoice.AmountDue''></LogField>
+				<LogField disable-copy=''true'' field-code=''ARInvoice.InvoiceCurrencyCode''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+	</LogRow>
+	<LogRow class=''border-0 margin-0 padding-0''>
+		<LogColumn>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.PrintNotes''></LogLabel>
+			</LogFieldContainer>
+			<LogFieldContainer>
+				<LogField disable-copy=''true'' field-code=''Invoice.PrintNotes''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+	</LogRow>
+</LogTable>
+
+<style>
+	@media screen and (max-width: 768px) {
+		.log-label {
+			/* Edit here to change labels styles for this card */
+		}
+
+		.log-field {
+			/* Edit here to change fields styles for this card */
+		}
+
+		.log-icon {
+			/* Edit here to change icons styles for this card */
+		}
+
+		.log-field-container {
+			/* Edit here to change fields containers styles for this card */
+		}
+
+		.log-column {
+			/* Edit here to change columns styles for this card */
+		}
+
+		.log-row {
+			/* Edit here to change rows styles for this card */
+		}
+
+		.log-table {
+			/* Edit here to change tables styles for this card */
+		}
+
+        .log-color-date-overdue{
+            /* Edit here to change red color for this card */
+        }
+	}
+</style>',
+			'<LogTable>
+	<LogRow>
+		<LogColumn>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.MainEntityReference''></LogLabel>
+			</LogFieldContainer>
+			<LogFieldContainer>
+				<LogField tooltip=''true'' disable-copy=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]''
+					field-code=''Invoice.ShipmentsNumbers''></LogField>
+				<LogField tooltip=''true'' disable-copy=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]''
+					field-code=''Invoice.MainEntityReference''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+	</LogRow>
+	<LogRow class=''border-0''>
+		<LogColumn width=''50%''>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.InvoiceDate''></LogLabel>
+			</LogFieldContainer>
+			<LogFieldContainer>
+				<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+		<LogColumn width=''50%''>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.DueDate''></LogLabel>
+			</LogFieldContainer>
+			<LogFieldContainer>
+				<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} === [true]'' class="log-color-date-overdue" is-date=''true''
+					disable-copy=''true'' field-code=''ARInvoice.DueDate''></LogField>
+				<LogField log-if=''{ARInvoice.IsDigitalDueDateColorRed} !== [true]'' is-date=''true'' disable-copy=''true''
+					field-code=''ARInvoice.DueDate''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+	</LogRow>
+	<LogRow>
+		<LogColumn>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.PaymentTermName''></LogLabel>
+			</LogFieldContainer>
+			<LogFieldContainer>
+				<LogField disable-copy=''true'' field-code=''ARInvoice.PaymentTermName''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+	</LogRow>
+	<LogRow>
+		<LogColumn>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.AmountDue''></LogLabel>
+			</LogFieldContainer>
+			<LogFieldContainer>
+				<LogField max-width=''90%'' is-decimal=''true'' disable-copy=''true'' margin=''0 0.25 0 0''
+					field-code=''ARInvoice.AmountDue''></LogField>
+				<LogField disable-copy=''true'' field-code=''ARInvoice.InvoiceCurrencyCode''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+	</LogRow>
+	<LogRow class=''border-0 margin-0 padding-0''>
+		<LogColumn>
+			<LogFieldContainer>
+				<LogLabel field-code=''ARInvoice.PrintNotes''></LogLabel>
+			</LogFieldContainer>
+			<LogFieldContainer>
+				<LogField disable-copy=''true'' field-code=''Invoice.PrintNotes''></LogField>
+			</LogFieldContainer>
+		</LogColumn>
+	</LogRow>
+</LogTable>
+
+<style>
+	@media screen and (max-width: 768px) {
+		.log-label {
+			/* Edit here to change labels styles for this card */
+		}
+
+		.log-field {
+			/* Edit here to change fields styles for this card */
+		}
+
+		.log-icon {
+			/* Edit here to change icons styles for this card */
+		}
+
+		.log-field-container {
+			/* Edit here to change fields containers styles for this card */
+		}
+
+		.log-column {
+			/* Edit here to change columns styles for this card */
+		}
+
+		.log-row {
+			/* Edit here to change rows styles for this card */
+		}
+
+		.log-table {
+			/* Edit here to change tables styles for this card */
+		}
+
+        .log-color-date-overdue{
+            /* Edit here to change red color for this card */
+        }
+	}
 </style>');
 	  ]]>
   </Sql>
