@@ -1,7 +1,7 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-	<Sql Version="24">
+	<Sql Version="25">
       <![CDATA[
-	    delete from DigitalPortalScreens where Id != ''
+	    delete from DigitalPortalScreens where Tenant = 0
 		declare @customerProfileId as varchar(15)
 		set @customerProfileId = (select Id from DigitalProfiles where [Name] = 'Customer' and Tenant = 0 )
 		declare @agentProfileId as varchar(15)
@@ -3307,9 +3307,12 @@
 </style>');
 
 
+			declare @invocieObjectTableId as varchar(15)
+    		set @invocieObjectTableId = (select Id from ObjectTables where [Name] = 'ARInvoice' and Tenant = 0)
+
 			EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
 			INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
-			values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Invoice list card item - Desktop', 'ILCID', 1, @customerProfileId, 
+			values (@EntityId, 0, @invocieObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Invoice list card item - Desktop', 'ILCID', 1, @customerProfileId, 
 			'<LogTable>
 	<LogRow class=''border-0 padding-0 margin-0''>
 		<LogColumn class="log-invoice-list-item-column" width=''20%''>
@@ -3665,7 +3668,7 @@
 
 			EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
 			INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
-			values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Invoice list card item - Desktop', 'ILCID', 1, @agentProfileId, 
+			values (@EntityId, 0, @invocieObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Invoice list card item - Desktop', 'ILCID', 1, @agentProfileId, 
 			'<LogTable>
 	<LogRow class=''border-0 padding-0 margin-0''>
 		<LogColumn class="log-invoice-list-item-column" width=''20%''>
@@ -4023,7 +4026,7 @@
 
 			EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
 			INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
-			values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Invoice list card item - Tablet', 'ILCIT', 1, @customerProfileId, 
+			values (@EntityId, 0, @invocieObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Invoice list card item - Tablet', 'ILCIT', 1, @customerProfileId, 
 			'<LogTable>
 	<LogRow class=''border-0 padding-0 margin-0''>
 		<LogColumn class="log-invoice-list-item-column" width=''20%''>
@@ -4386,7 +4389,7 @@
 
 			EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
 			INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
-			values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Invoice list card item - Tablet', 'ILCIT', 1, @agentProfileId, 
+			values (@EntityId, 0, @invocieObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Invoice list card item - Tablet', 'ILCIT', 1, @agentProfileId, 
 			'<LogTable>
 	<LogRow class=''border-0 padding-0 margin-0''>
 		<LogColumn class="log-invoice-list-item-column" width=''20%''>
@@ -4750,7 +4753,7 @@
 
 			EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
 			INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
-			values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Invoice list card item - Mobile', 'ILCIM', 1, @customerProfileId, 
+			values (@EntityId, 0, @invocieObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Invoice list card item - Mobile', 'ILCIM', 1, @customerProfileId, 
 			'<LogTable>
 	<LogRow class=''border-0 padding-0'' margin=''0 0 0.5 0''>
 		<LogColumn width=''100%''>
@@ -5045,7 +5048,7 @@
 			
 			EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
 			INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
-			values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Invoice list card item - Mobile', 'ILCIM', 1, @agentProfileId, 
+			values (@EntityId, 0, @invocieObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Invoice list card item - Mobile', 'ILCIM', 1, @agentProfileId, 
 			'<LogTable>
 	<LogRow class=''border-0 padding-0'' margin=''0 0 0.5 0''>
 		<LogColumn width=''100%''>
