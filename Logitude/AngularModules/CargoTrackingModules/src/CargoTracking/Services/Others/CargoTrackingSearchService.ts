@@ -78,6 +78,21 @@ export class CargoTrackingSearchService {
 					})));
 		});
     }
+
+    GetUserShipmentsCustomers(tenant: number) {
+        var authHeaders = ServiceHelper.GetHeadersWithToken();
+		return defer(() => {
+            return this._http.get(this._apiUrl + '/GetUserCustomers?tenant=' + tenant ,authHeaders)
+				.pipe(
+					map((response: HttpResponse<any>) => {
+						return response;
+					},catchError(error=>{
+						return error;
+					})));
+		});
+    }
+
+
     GetUserShipmentsCounter(shipmentFilters: CargoTrackingShipmentSearchInput) {
         var authHeaders = ServiceHelper.GetHeadersWithToken();
 		return defer(() => {
