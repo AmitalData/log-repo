@@ -42,7 +42,8 @@ Feature: Automations Creation and Updating for Follow Up Result
         And the automation with follow up creation result should executed successfully
 
     Scenario: Edit an automation
-        Given the user navigates to automations menu
+        Given the user logged in
+        And the user navigates to automations menu
         And the user select "Shipments" as entity
         And choose the first automation from "OnUpdate"
         And inactive the automation
@@ -87,6 +88,7 @@ Feature: Automations Creation and Updating for Follow Up Result
         And the automation with follow up creation result should executed successfully
 
     Scenario: Edit an automation
+        Given the user logged in
         Given the user navigates to automations menu
         And the user select "Shipments" as entity
         And choose the first automation from "OnUpdate"
@@ -132,6 +134,7 @@ Feature: Automations Creation and Updating for Follow Up Result
         And the automation with follow up creation result should executed successfully
 
     Scenario: Edit an automation
+        Given the user logged in
         Given the user navigates to automations menu
         And the user select "Shipments" as entity
         And choose the first automation from "OnUpdate"
@@ -177,6 +180,7 @@ Feature: Automations Creation and Updating for Follow Up Result
         And the automation shouldn't executed
 
     Scenario: Edit an automation
+        Given the user logged in
         Given the user navigates to automations menu
         And the user select "Shipments" as entity
         And choose the first automation from "OnUpdate"
@@ -222,6 +226,7 @@ Feature: Automations Creation and Updating for Follow Up Result
         And the automation shouldn't executed
 
     Scenario: Edit an automation
+        Given the user logged in
         Given the user navigates to automations menu
         And the user select "Shipments" as entity
         And choose the first automation from "OnUpdate"
@@ -249,6 +254,7 @@ Feature: Automations Creation and Updating for Follow Up Result
         Then the new automation should create successfully
 
     Scenario: Edit an automation
+        Given the user logged in
         Given the user navigates to automations menu
         And the user select "Shipments" as entity
         And choose the first automation from "OnCreate"
