@@ -5,6 +5,7 @@ using Logitude.CargoTracking.Data.EntityLists;
 using Logitude.CargoTracking.Def.DataContracts;
 using System.Collections.Generic;
 using System.Linq;
+using Logitude.CargoTracking.Data.Model;
 
 namespace Logitude.CargoTracking.BL.CoreBL
 {
@@ -17,6 +18,13 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Shipments = GetUserShipments(shipmentSearchInput),
                 ShipmentsCount = GetAllShipmentsCountForFirstPageOnly(shipmentSearchInput)
             };
+        }
+
+        public List<Customer> GetShipmentsCustomers(int tenant)
+        {
+            CargoTrackingShipmentSearchInput shipmentSearchInput = new CargoTrackingShipmentSearchInput() { Tenant = tenant };
+            CargoTrackingShipmentSearchListQueryService shipmentSearchQuery = GetCargoTrackingShipmentSearchQuery(shipmentSearchInput);
+            return shipmentSearchQuery.GetShipmentsCustomers(tenant);
         }
 
         public List<CargoTrackingShipmentList> GetUserShipments(CargoTrackingShipmentSearchInput shipmentSearchInput)
@@ -70,6 +78,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
     {
         public List<CargoTrackingShipmentList> Shipments { get; set; }
         public int ShipmentsCount { get; set; }
+        public List<Customer> Customers { get; set; }
     }
     public class CargoTrackingShipmentsCounter
     {

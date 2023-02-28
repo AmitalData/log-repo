@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.CargoTracking.Data.EntityPOCOs;
 using Logitude.CargoTracking.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
+using Logitude.CargoTracking.Data.Model;
 
 namespace Logitude.CargoTracking.Data.Repositories
 {
@@ -60,6 +61,22 @@ namespace Logitude.CargoTracking.Data.Repositories
 
                              select shipment).Distinct();
             return shipments;
+        }
+
+        public IQueryable<Customer> GetFilteredShipmentsByTenant(int tenant)
+        {
+            var customers = (from shipment in currentContext.CargoTrackingShipments
+                             join customer in context.CargoTrackingCards on shipment.CustomerId equals customer.Id
+
+                             where shipment.Tenant == tenant
+                             && shipment.IsMainRecord == true
+
+                             select new Customer
+                             {
+                                 Id = customer.Id,
+                                 Name = customer.EnglishName
+                             }).Distinct();
+            return customers;
         }
 
         public IQueryable<CargoTrackingShipment> GetBySecurityKey(string SecurityKey, int tenant)

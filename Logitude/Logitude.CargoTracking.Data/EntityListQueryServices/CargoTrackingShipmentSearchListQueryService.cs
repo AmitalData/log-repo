@@ -1,18 +1,10 @@
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
-
 using Logitude.CargoTracking.Data.EntityPOCOs;
 using Logitude.CargoTracking.Data.EntityLists;
+using Logitude.CargoTracking.Data.Model;
 using Logitude.CargoTracking.Data.Repositories;
 using Logitude.CargoTracking.Def.DataContracts;
 
@@ -147,6 +139,12 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             List<CargoTrackingShipmentList> shipments = shipmentsQuery.GetFilteredSortedShipments(shipmentSearchInput);
             return shipments;
         }
+        public List<Customer> GetShipmentsCustomers(int tenant)
+        {
+            CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(context);
+            return shipmentsQuery.GetShipmentsCustomers(tenant);
+        }
+
         public IQueryable<CargoTrackingShipmentList> GetFilteredShipmentsByIds(CargoTrackingShipmentSearchInput shipmentSearchInput, List<string> shipmentsIds)
         {
             CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(context);

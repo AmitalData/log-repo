@@ -285,6 +285,28 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         }
 
+        [HttpGet] // for private needs auth.
+        public HttpResponseMessage GetUserCustomers(int tenant)
+        {
+            try
+            {
+                AuthorizeTenant(tenant);
+                CargoTrackingUsersShipmentService usersShipmentService = new CargoTrackingUsersShipmentService();
+                List<Logitude.CargoTracking.Data.Model.Customer> response = usersShipmentService.GetShipmentsCustomers(tenant);
+
+                //CreateSearchEventForMixPanel(shipmentFilters.SearchText, shipmentFilters.Tenant, response.Shipments, false);
+
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
         [HttpPost] // for private needs auth.
         public HttpResponseMessage GetUserShipmentsCount([FromBody] CargoTrackingShipmentSearchInput shipmentFilters)
         {

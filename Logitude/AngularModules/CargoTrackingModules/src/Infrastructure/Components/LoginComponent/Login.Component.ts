@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
             if(response.Result){
                 if (response.Result?.ForceHttps) 
                     this.RedirectAppToHttps();
-
+                
                 this.Tenant = response.Result.Tenant;
                 ServiceHelper.SetCargoTrackingDate(response.Result, baseUrl);
                 this.LogoImgSrc = this.loginServiceHelper.GetLoginLogoImg();
@@ -240,6 +240,7 @@ export class LoginComponent implements OnInit {
         sessionStorage.setItem("LoggedUserTenant", userData.CurrentTenant);
         sessionStorage.setItem("LoggedUserEmail", userData.UserName);
         sessionStorage.setItem("LoggedUserId", userData.Id);
+        sessionStorage.setItem("LoggedUserIsUser", userData.IsUser);
         sessionStorage.setItem("DocumentDownloadToken", userData.DocumentDownloadToken);
 
         SessionInfo.LoggedUserEmail = userData.UserName;
