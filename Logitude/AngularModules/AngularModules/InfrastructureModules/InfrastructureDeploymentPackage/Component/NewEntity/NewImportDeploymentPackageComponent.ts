@@ -13,6 +13,7 @@ import { AppTool } from '../../../../Infrastructure/Tools';
 import { Guid } from '../../../../Infrastructure/Utilities/Guid';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { AddNewDeploymentPackageComponent } from './AddNewDeploymentPackageComponent';
 declare var attachmentUploader, ResultAsArray: any;
 
 
@@ -49,19 +50,56 @@ export class NewImportDeploymentPackageComponent extends BaseComponent {
     private uploadedDocumentId: string;
     public DeploymentPackageDetailsCollection = new ObservableCollection([]);
     private deploymentPackageDetailsList: Array<DeploymentPackageDetailsList>;
+    public AddNewDeploymentPackageComponent: AddNewDeploymentPackageComponent;
 
     constructor() {
         super();
         this.UploadFileId = Guid.NewRandomString();
         this.deploymentPackageDetailsList = [];
+        this.EntityPM = new DeploymentPackagePM();
+        this.UIProperties.SetRequired("Code", this.ObjectTableName, true);
+        this.UIProperties.SetRequired("Name", this.ObjectTableName, true);
     }
 
     Run() {
 
     }
+    public get Code() { return this.EntityPM.Code }
+    public set Code(value: string) {
+        if (this.EntityPM.Code == value) return;
+        this.EntityPM.Code = value;
+    }
+
+    public get Name() { return this.EntityPM.Name }
+    public set Name(value: string) {
+        if (this.EntityPM.Name == value) return;
+        this.EntityPM.Name = value;
+        this.Code = this.Code = AppTool.Replace(value?.toLowerCase(), " ", "_");
+    }
+
+    public get Description() { return this.EntityPM.Description }
+    public set Description(value: string) {
+        if (this.EntityPM.Description == value) return;
+        this.EntityPM.Description = value;
+    }
+
     public ValidateDeploymentPackage() {
 
-       
+        let errors = [];
+
+        if (!this.EntityPM.Code)
+            errors.push("Code Field is Required");
+
+        if (!this.EntityPM.Name)
+            errors.push("Name Field is Required");
+
+        if (this.EntityPM.Code && this.EntityPM.Code.length > 100)
+            errors.push("Maximum length of Code Field is 100");
+
+        if (this.EntityPM.Name && this.EntityPM.Name.length > 100)
+            errors.push("Maximum length of Name Field is 100");
+
+        this.ValidationErrorsList = errors;
 
     }
 
@@ -252,6 +290,7 @@ export class NewImportDeploymentPackageComponent extends BaseComponent {
             return;
         }
         this.IsNextClicked = true;
+        if (this.DeploymentPackageDetailsCollection.Length > 0) return;
         this.CurrentSession.StartBusyIndicatorLoading();
         this.deploymentPackageExtendedPMService.GetDeploymentPackageDetailsListByDocumentId(this.uploadedDocumentId).subscribe((response: ServiceResponse) => {
             if (response.HasError) return;
@@ -288,8 +327,9 @@ export class NewImportDeploymentPackageComponent extends BaseComponent {
         confirmWindow.Show("Once you deploy this package, the new changes are permanent. All components that are shown in the list will be added to the listed objects");
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                //start deploying
-                this.CurrentSession.CloseCurrentWindow();
+                this.EntityPM.DocumentId = this.uploadedDocumentId;
+
+                this.AddNewDeploymentPackageComponent.CreateButtonClicked();
             }
         });
 

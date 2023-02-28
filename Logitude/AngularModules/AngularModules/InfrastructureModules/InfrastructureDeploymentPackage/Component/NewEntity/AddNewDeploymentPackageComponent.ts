@@ -87,6 +87,7 @@ export class AddNewDeploymentPackageComponent extends BaseComponent {
             .then(cmpRef => {
                 this.SelectedDirectionComponent = cmpRef.instance;
                 cmpRef.instance.EntityPM = this.EntityPM;
+                cmpRef.instance.AddNewDeploymentPackageComponent = this;
                 cmpRef.instance.Run();
             });
     }
@@ -116,7 +117,7 @@ export class AddNewDeploymentPackageComponent extends BaseComponent {
         this.SelectedDirectionComponent.CancelButtonClicked();
     }
 
-    CreateButtonClicked() {
+    public CreateButtonClicked() {
         this.SelectedDirectionComponent.ValidateDeploymentPackage();
         if (this.SelectedDirectionComponent.ValidationErrorsList.length > 0) return;
         this.CurrentSession.StartBusyIndicator("Saving ...");
@@ -148,5 +149,10 @@ export class AddNewDeploymentPackageComponent extends BaseComponent {
     DeployButtonClicked() {
         if (!this.SelectedDirectionComponent) return;
         this.SelectedDirectionComponent.DeployButtonClicked();
+    }
+
+    PreviousButtonClicked() {
+        if (!this.SelectedDirectionComponent) return;
+        this.SelectedDirectionComponent.IsNextClicked = false;
     }
 }

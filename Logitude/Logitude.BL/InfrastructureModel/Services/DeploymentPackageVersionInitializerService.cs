@@ -39,7 +39,7 @@ namespace Logitude.BL.InfrastructureModel.Services
         }
         public DeploymentPackagesVersionPM Create()
         {
-            var documentId = deploymentPackageDocumentService.Create();
+            var documentId = deploymentPackagePM.DirectionId == "E" ? deploymentPackageDocumentService.Create() : deploymentPackagePM.DocumentId;
             deploymentPackagesVersionPM.DocumentId = documentId;
             deploymentPackagesVersionPM.DeploymentPackageID = deploymentPackagePM.Id;
             deploymentPackagesVersionPM.Tenant = deploymentPackagePM.Tenant;

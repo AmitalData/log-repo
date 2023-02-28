@@ -18,6 +18,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.InfrastructureModel.Services;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.Server.Tools.QueueService;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
@@ -49,10 +50,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         public void Create(DeploymentPackagePM deploymentPackagePM)
         {
 
-            if (!string.IsNullOrEmpty(deploymentPackagePM.Code) && entityRepository.CheckIfDeploymentPackageCodeExist(deploymentPackagePM.Code , deploymentPackagePM.Tenant))
-            {
-                throw new Exception("Another Deployment Package already exist with this Code ");
-            }
+            DeploymentPackageValidating.Validate(deploymentPackagePM, entityRepository);
 
             this.isNewEntity = true;
             this.entityPM = deploymentPackagePM;
@@ -67,6 +65,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             Context.SaveChanges();
             Poco.VersionId = new DeploymentPackageVersionInitializerService(deploymentPackagePM, Context).Create().Id;
             Context.SaveChanges();
+            if (entityPM.DirectionId == "E") return;
+            BuildImportQueueMessage();
         }
 
         public void Update(DeploymentPackagePM deploymentPackagePM)
@@ -99,6 +99,13 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 return;
             }
             this.loggedContact = new ContactRepository(tenant).GetSingleContactByEmail(("system@tenant" + tenant.ToString() + ".com"), tenant,true);
+        }
+
+        private void BuildImportQueueMessage()
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("DeploymentPackageQueue", 0);
+            queueservice.Send(new Dictionary<string, string>() { { "DeploymentPackageId", entityPM.Id }, { "Tenant", tenant.ToString() } }, tenant);
         }
     }
 }
