@@ -485,7 +485,7 @@
                                     </td>
 
                                     <td style="width:20px;height:20px;padding-left:1px;">
-                                        <IconButton [Name]="'Edit'" [IsSmall]="true"  [Left]="3" (click)="OpenLedgerTransactionInternalNote(item.LedgerTransactionPM)"></IconButton>
+                                        <IconButton [Name]="'Edit'" [IsSmall]="true"  [Left]="3" (click)="OpenLedgerTransactionInternalNote(item.LedgerTransactionPM);$event.stopPropagation()"></IconButton>
                                     </td>
 
                                     <td>
