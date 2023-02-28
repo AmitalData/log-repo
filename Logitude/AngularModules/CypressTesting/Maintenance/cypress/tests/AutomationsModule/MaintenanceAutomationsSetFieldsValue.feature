@@ -41,6 +41,7 @@ Feature: Automations Creation and Updating for Set Fields Value Result
         And the Automation should executed successfully
 
     Scenario: Edit an automation
+        Given the user logged in
         Given the user navigates to automations menu
         And the user select "Shipments" as entity
         And choose the first automation from "OnUpdate"
@@ -87,6 +88,7 @@ Feature: Automations Creation and Updating for Set Fields Value Result
         And the Automation should executed successfully
 
     Scenario: Edit an automation
+        Given the user logged in
         Given the user navigates to automations menu
         And the user select "Shipments" as entity
         And choose the first automation from "OnUpdate"
@@ -133,6 +135,7 @@ Feature: Automations Creation and Updating for Set Fields Value Result
         And the Automation should executed successfully
 
     Scenario: Edit an automation
+        Given the user logged in
         Given the user navigates to automations menu
         And the user select "Shipments" as entity
         And choose the first automation from "OnUpdate"
@@ -179,6 +182,7 @@ Feature: Automations Creation and Updating for Set Fields Value Result
         And the Automation shouldn't executed
 
     Scenario: Edit an automation
+        Given the user logged in
         Given the user navigates to automations menu
         And the user select "Shipments" as entity
         And choose the first automation from "OnUpdate"
@@ -225,6 +229,7 @@ Feature: Automations Creation and Updating for Set Fields Value Result
         And the Automation shouldn't executed
 
     Scenario: Edit an automation
+        Given the user logged in
         Given the user navigates to automations menu
         And the user select "Shipments" as entity
         And choose the first automation from "OnUpdate"
@@ -255,6 +260,7 @@ Feature: Automations Creation and Updating for Set Fields Value Result
         Then the new automation should create successfully
 
     Scenario: Edit an automation
+        Given the user logged in
         Given the user navigates to automations menu
         And the user select "Masters" as entity
         And choose the first automation from "OnUpdate"
@@ -284,6 +290,7 @@ Feature: Automations Creation and Updating for Set Fields Value Result
         Then the new automation should create successfully
 
     Scenario: Edit an automation
+        Given the user logged in
         Given the user navigates to automations menu
         And the user select "Tickets" as entity
         And choose the first automation from "OnUpdate"
