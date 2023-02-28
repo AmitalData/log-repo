@@ -765,7 +765,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                                 if (Result.includes('R'))
                                     hasOpenReceivables = true;
 
-                                if (SessionLocator.AccountingSettingPM.AllowClosureWithoutPayables && Result.includes('P'))
+                                if (!SessionLocator.AccountingSettingPM.AllowClosureWithoutPayables && Result.includes('P'))
                                     hasOpenPayables = true;                                
 
                                 this.RunAccountingCloseWindow(hasOpenPayables, hasOpenReceivables);
