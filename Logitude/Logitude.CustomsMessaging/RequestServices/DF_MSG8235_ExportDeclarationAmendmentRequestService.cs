@@ -1337,10 +1337,12 @@ namespace Logitude.CustomsMessaging.RequestServices
                 ID = SetIDTypeValue<DeclarationGoodsShipmentExportConsignmentUnloadingLocationID>(consignmentPM.ExportUnloadingPortCode), //consignmentPM.UnloadPortCode// new UnloadingLocationIdentificationIDType() { Value = consignmentPM.UnloadPortCode },
                                                                                                                                           // ArrivalDateTime = consignmentPM.UnloadDate.HasValue ? DataTypeConvertorUtil.Convert(consignmentPM.UnloadDate.Value) : null,
             };
-            declarationConsignment.LoadingLocation = new DeclarationGoodsShipmentExportConsignmentLoadingLocation()
-            {
-                ID = SetIDTypeValue<DeclarationGoodsShipmentExportConsignmentLoadingLocationID>(consignmentPM.ExportLoadingPortCode) //consignmentPM.LoadingPortCode new LoadingLocationIdentificationIDType() { Value = consignmentPM.LoadingPortCode }
-            };
+			if (!string.IsNullOrEmpty(consignmentPM.ExportLoadingPortCode)) { 
+              declarationConsignment.LoadingLocation = new DeclarationGoodsShipmentExportConsignmentLoadingLocation()
+              {
+                  ID = SetIDTypeValue<DeclarationGoodsShipmentExportConsignmentLoadingLocationID>(consignmentPM.ExportLoadingPortCode) //consignmentPM.LoadingPortCode new LoadingLocationIdentificationIDType() { Value = consignmentPM.LoadingPortCode }
+              };
+            }
             declarationConsignment.DMExtensions = GetDMExtensionsConsignment(consignmentPM);
 
 
@@ -1360,10 +1362,13 @@ namespace Logitude.CustomsMessaging.RequestServices
                 SequenceNumeric = Convert.ToDecimal(consignmentPM?.SequenceNumeric)
             };
             declarationConsignment.DMExtensions = GetImportConsignmentDMExtensions(consignmentPM, ProcedureCurrentCode);
-            declarationConsignment.LoadingLocation = new DeclarationGoodsShipmentImportConsignmentLoadingLocation
+            if (!string.IsNullOrEmpty(consignmentPM.LoadingPortCode))
             {
-                ID = SetIDTypeValue<DeclarationGoodsShipmentImportConsignmentLoadingLocationID>(consignmentPM.LoadingPortCode)
-            };
+                declarationConsignment.LoadingLocation = new DeclarationGoodsShipmentImportConsignmentLoadingLocation
+                {
+                    ID = SetIDTypeValue<DeclarationGoodsShipmentImportConsignmentLoadingLocationID>(consignmentPM.LoadingPortCode)
+                };
+            }
             declarationConsignment.UnloadingLocation = new DeclarationGoodsShipmentImportConsignmentUnloadingLocation()
             {
                 ID = SetIDTypeValue<DeclarationGoodsShipmentImportConsignmentUnloadingLocationID>(consignmentPM.UnloadPortCode)
