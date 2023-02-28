@@ -90,7 +90,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         if (this.MyRequestSheetParam == null)
                             this.MyRequestSheetParam = new RequestSheetParam();
 
-                        this.MyRequestSheetParam.CustomFileNo = Strings.Right(GetValueIDType(customResponse.Response.Declaration.DMExtensions?.ExternalDeclarationID), 10).TrimStart('0');
+                        this.MyRequestSheetParam.CustomFileNo = !string.IsNullOrEmpty(requestParams?.CustomsFile)? requestParams.CustomsFile:
+                            Strings.Right(GetValueIDType(customResponse.Response.Declaration.DMExtensions?.ExternalDeclarationID), 10).TrimStart('0');
 
                         xml = XmlGenericUtil<Declaration>.SerializeObject(customResponse.Response.Declaration);
                         _MyDefaultResponseData.ResponseStatusXML = xml;
