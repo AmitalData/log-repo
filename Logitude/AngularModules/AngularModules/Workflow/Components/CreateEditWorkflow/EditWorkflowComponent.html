@@ -1,200 +1,22 @@
 <style>
-    .table-row {
-        height: 1px;
-    }
-
-    .SectionTitle {
-        height: 20px;
-        line-height: 20px;
-        font-size: 14px;
-        color: #1B90CB;
-        user-select: text;
-        -webkit-user-select: text;
-        margin-left: 10px;
-    }
-
-    .split-row {
-        height: 30px;
-    }
-
-    .clickable {
-        cursor: pointer;
-    }
-
-    .field-name {
-        width: 230px;
-    }
-
-    .field-input {
-        width: 230px;
-    }
-
-    .padding-l-5 {
-        padding-left: 5px;
-    }
-
-    .margin-5 {
-        margin: 5px;
-    }
-
-    .sub-title {
-        margin: 5px 0 5px 10px;
-        color: #45494A;
+    .EditWorkflowContainer {
+        width: 40%;
+        padding-left: 10px;
     }
 </style>
 
-<div class="MediaFillAbsolute workflow-builder-wrapper">
-    <div class="MarginAbsolute10">
-        <table *ngIf="EntityPM">
-            <tr class="table-row">
-                <td></td>
-            </tr>
 
+<div class="MediaFillAbsolute">
+    <div class="MarginAbsolute10">
+        <table>
             <tr>
                 <td>
                     <div class="MediaFill CurvedArea">
-                        <table class="margin-5">
-                            <!-- Name -->
-                            <tr class="FormFieldRow">
-                                <td class="field-name">
-                                    <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName"
-                                        [DataContext]="DataContext"></LogLabel>
-                                </td>
 
-                                <td class="field-input">
-                                    <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name"
-                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                        [HideColumns]="true" [DataCy]="'Workflow_Name'">
-                                    </LogTextBox>
-                                </td>
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
+                        <div class="EditWorkflowContainer">
+                            <CreateEditWorkflow [Workflow]="Workflow"></CreateEditWorkflow>
+                        </div>
 
-                            <!-- Description -->
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName"
-                                        [DataContext]="DataContext"></LogLabel>
-                                </td>
-
-                                <td colspan="2">
-                                    <table>
-                                        <tr>
-                                            <td style="width:230px;height:85px;">
-                                                <div class="MediaFill">
-                                                    <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description"
-                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                        [IsMultiline]="true" [HideColumns]="true"
-                                                        [DataCy]="'Workflow_Description'">
-                                                    </LogTextBox>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-
-                            <!-- Owner-->
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'OwnerId'" [ObjectTableName]="ObjectTableName"
-                                        [DataContext]="DataContext"></LogLabel>
-                                </td>
-                                <td>
-                                    <LogLov [ObjectFieldName]="'OwnerId'" [ObjectTableName]="ObjectTableName"
-                                        [SelectedValue]="OwnerId" [DataContext]="DataContext" [LookUpTableName]="'User'"
-                                        [HideColumns]="true" [DataCy]="'Workflow_Owner'"></LogLov>
-                                </td>
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-
-                            <tr class="split-row">
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-
-                            <tr class="table-row clickable" (click)="showAdvancedSettings()">
-                                <td>
-                                    <div class="SectionTitle">
-                                        {{AdvancedSettingsTitle}}
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr class="table-row" *ngIf="ShowAdvancedSettings">
-                                <td>
-                                    <div class="Label sub-title">
-                                        Recovery Settings
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr class="FormFieldRow" *ngIf="ShowAdvancedSettings">
-                                <td class="field-name">
-                                    <LogLabel [ObjectFieldName]="'RetriesNumber'" [ObjectTableName]="ObjectTableName"
-                                        [DataContext]="DataContext" [Text]="'Number of Retries'"></LogLabel>
-                                </td>
-
-                                <td class="field-input">
-                                    <LogTextBox [ObjectFieldName]="'RetriesNumber'" [Text]="RetriesNumber"
-                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                        [HideLastColumn]="true" [HideColumns]="true"></LogTextBox>
-                                </td>
-                                <td class="padding-l-5">
-                                    <HelpIcon [HideHeader]="true" [Text]="'Number of retries once the flow fails'">
-                                    </HelpIcon>
-                                </td>
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-
-                            <tr class="table-row" *ngIf="ShowAdvancedSettings">
-                                <td>
-                                    <div class="Label sub-title">
-                                        Waiting time before each retry (minutes)
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <ng-container *ngIf="ShowAdvancedSettings">
-                                <tr class="FormFieldRow"
-                                    *ngFor="let delay of RetriesDelayArray; let currentIndex = index; trackBy: trackByFn">
-                                    <td class="field-name">
-                                        <LogLabel [ObjectFieldName]="'RetriesDelay'+currentIndex" [NoObjectField]="true"
-                                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                            [Text]="'Retry No. '+ (currentIndex + 1) "></LogLabel>
-                                    </td>
-
-                                    <td style="width:230px;">
-                                        <LogTextBox [ObjectFieldName]="'RetriesDelay' + currentIndex"
-                                            [NoObjectField]="true" [ObjectTableName]="ObjectTableName"
-                                            [DataContext]="DataContext" [Text]="delay" [IsFreeText]="true"
-                                            [InputType]="'integer'" [HideColumns]="true" [HideLastColumn]="true"
-                                            (ValueChanged)="updateRetriesDelayValue($event , currentIndex)">
-                                        </LogTextBox>
-                                    </td>
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
-                            </ng-container>
-
-                            <tr>
-                                <td colspan="3">
-                                    <div></div>
-                                </td>
-                            </tr>
-
-                        </table>
                     </div>
                 </td>
             </tr>
