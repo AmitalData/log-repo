@@ -494,6 +494,9 @@ export class PickListComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.DataContext[this.ObjectFieldName] || this.IsFreeText) {
 
             var value = this.IsFreeText ? this.selectedValue : this.DataContext[this.ObjectFieldName];
+            if (value && value instanceof CustomFieldClass) {
+                value = value.Value;
+            }
             if (this.ObjectField) {
                 if (this.ObjectField.IsCustom && this.IgnoreCustomFieldCheck == false) {
                     var customFieldClass: CustomFieldClass = this.DataContext[this.ObjectFieldName];
