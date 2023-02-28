@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="27">
+  <Sql Version="28">
     <![CDATA[
 	  delete from DigitalTextCodes where Tenant = 0
 	  
@@ -7599,7 +7599,7 @@
 			},
 			{
 				"TextCode": "ShipmentPickUpDelivery.F.Id",
-				"DefaultText": "Trucker Name",
+				"DefaultText": "Trucker name",
 				"FieldCode": "ShipmentPickUpDelivery.Id",
 				"DisplayText": ""
 			}]');
@@ -7724,7 +7724,7 @@
 			},
 			{
 				"TextCode": "ShipmentPickUpDelivery.F.Id",
-				"DefaultText": "Trucker Name",
+				"DefaultText": "Trucker name",
 				"FieldCode": "ShipmentPickUpDelivery.Id",
 				"DisplayText": ""
 			}]');
