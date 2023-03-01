@@ -26401,6 +26401,12 @@
       LocalDefaultText="&quot;מספר יצואן קצר מידי&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.MustCustomDocumentType&quot;"
+      DefaultText="&quot;Must Custom Document Type&quot;"
+      LocalDefaultText="&quot;יש לבחור סוג מסמך&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
