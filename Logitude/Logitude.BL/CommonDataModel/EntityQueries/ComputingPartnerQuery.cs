@@ -9,6 +9,9 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Accounting.Data;
+using Simplog.Server.Infrastructure;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -258,6 +261,62 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return (from a in repository.Context.ComputingPartners.Where(d => d.Id == id) select a.Name).FirstOrDefault();
         }
 
+        public void CopyFromTenant0(int tenant, int tenatToCopy)
+        {
 
+
+
+            ComputingPartner pocos = repository.Context.ComputingPartners.Where(r => r.Tenant == tenant && r.Name == "customs").FirstOrDefault();
+          
+            List<ComputingPartnerTranslation> pocosTranslation = repository.Context.ComputingPartnerTranslations.Where(r => r.Tenant == tenant && pocos.Id==r.ComputingPartnerId).ToList();
+
+            ComputingPartnerPM ComputingPartner = new ComputingPartnerPM()
+            {
+                Name = pocos.Name,
+                CreateDate = DateTime.UtcNow,
+                Remarks = pocos.Remarks,
+                Code = pocos.Code,
+                Tenant = tenatToCopy,
+                Description = pocos.Description,
+                InActive = pocos.InActive
+
+            };
+                ComputingPartnerService service = new ComputingPartnerService(this.repository.Context, ComputingPartner);
+
+         service.Create();
+
+         
+          string  ComputingPartnerId = repository.Context.ComputingPartners.Where(r => r.Tenant == tenatToCopy && r.Name == "customs").FirstOrDefault().Id;
+            foreach (var item in pocosTranslation)
+            {
+
+                ComputingPartnerTranslationPM computingPartnerTranslationPM = new ComputingPartnerTranslationPM()
+                {
+                    Tenant=item.Tenant,
+                    ObjectTableId=item.ObjectTableId,
+                    ComputingPartnerId= ComputingPartnerId,
+                    OurCode = item.OurCode, 
+                    PartnerCode=item.PartnerCode,
+                   
+
+                };
+
+
+                ComputingPartnerTranslationService computingPartnerTranslationService = new ComputingPartnerTranslationService(this.repository.Context, tenatToCopy);
+
+                computingPartnerTranslationService.Create(computingPartnerTranslationPM);
+
+            }
+
+
+
+            this.repository.Context.SaveChanges();
+
+
+
+
+        }
     }
+
+
 }

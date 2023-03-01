@@ -136,8 +136,10 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
                     this.listCopyFromTenant0.forEach(element => {
                         var value = this.CopyFromTenant0PM.find(t => t.TableName == element.TableName)
                         if (value) {
+                            
                             element.CreateDate = value.CreateDate;
                             element.CreatedByUserId = value.CreatedByUserId;
+                            element.CreatedByUserName=value.CreatedByUserName;
                         }
 
                     });
@@ -352,6 +354,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             this.EntityPM.DefaultTaxWithholdPercentage = value;
         }
     }
+
 
     get VATInputsGLAccountId() { return this.EntityPM.VATInputsGLAccountId; }
     set VATInputsGLAccountId(value: string) {
@@ -782,10 +785,13 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
         var copyfromtenant0 = new CopyFromTenant0PM();
         if (!AppTool.IsNullOrEmpty(tableName)) {
+            this.copyFromTenant0ExtendedListService.copyTableFromTenant0(tableName).subscribe(res => {
+               
+            });
             copyfromtenant0.TableName = tableName;
             copyfromtenant0.CreatedByUserId = SessionLocator.LoggedUserId;
-            
-            this.copyFromTenant0PMService.update(copyfromtenant0).subscribe(res => {
+            copyfromtenant0.CreatedByUserName=SessionLocator.LoggedUserPM.EnglishName;
+            this.copyFromTenant0PMService.insert(copyfromtenant0).subscribe(res => {
                 this.GetValueCopyFromTenant0()
             });
 
