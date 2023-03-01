@@ -27,6 +27,9 @@ import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator'
 import { HeaderScreenDataResult } from '../../Interface/IHeaderScreenService';
 import { AmitalGatewayUtil } from 'Infrastructure/Utilities/AmitalGatewayUtil';
 
+import { CustomsClosedTablePM } from '../../../Customs/EntityPMs/CustomsClosedTablePM';
+import { CustomsSettingExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
+
 
 @Component({    
     templateUrl: './EditComponent.html',
@@ -137,7 +140,9 @@ export class EditComponent implements OnDestroy {
 
     private QuerySection: string;
     private EntityFields: any[] = null;
-    public Run(args: any) {
+    private _CustomsClosedTablePM: CustomsClosedTablePM =null; 
+    private _CustomsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
+    public async Run(args: any) {
         this.EntityId = args['EntityId'];
         this.EntityPM = args['EntityPM'];
         this.EntityParentPM = args['EntityParentPM'];
@@ -148,6 +153,7 @@ export class EditComponent implements OnDestroy {
         this.BackButtonLabel = !AppTool.IsNullOrEmpty(args['BackButtonLabel']) ? args['BackButtonLabel'] : TextCodeTranslator.Translate("General.B.Back");  // "Back";
         this.ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
         this.ObjectTableId = this.ObjectTable.Id;
+        
         this.HasHelper = this.ObjectTable.HasHelper;
         this.HasShortTitle = this.ObjectTable.HasShortTitle;
         this.HasMenuButtons = this.ObjectTable.HasMenuButtons;
@@ -173,53 +179,70 @@ export class EditComponent implements OnDestroy {
             //this.PreviousButtonDisabled = true;
             this.SetNextPreviousButtonsEnablity();
         }
+        if (!AppTool.IsNullOrEmpty(this.ObjectTableId) && this.WorkEnvironment.toLowerCase() == "customs") {
+            await new Promise<void>(resolve => {
 
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
-        if (this.EntityPM != null) {
-            this.entityArgs.EntityPM = this.EntityPM;
-            this.entityArgs.ObjectTableName = this.ObjectTableName;
-            this.entityArgs.EditComponent = this;
-            this.BuildComponent();
+            this._CustomsSettingExtendedListService.GetCustomsClosedTablePMByObjectTableId(this.ObjectTableId)
+                .subscribe(
+                    res => {
+                        if (!AppTool.IsNullOrEmpty(res.Result)) {
+                            this._CustomsClosedTablePM = res.Result;
+                        }
+                        resolve()
+                    }
+                );
+            })
         }
+        await new Promise<void>(resolve => {
+            this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response: any) => {
+                if (this.EntityPM != null) {
+                    this.entityArgs.EntityPM = this.EntityPM;
+                    this.entityArgs.ObjectTableName = this.ObjectTableName;
+                    this.entityArgs.EditComponent = this;
+                    this.BuildComponent();
+                }
 
-        else if (this.EntityId != null) {
-            this.LoadEntityPM();
-        }
+                else if (this.EntityId != null) {
+                    this.LoadEntityPM();
+                }
 
-        if (this.ObjectTableName != "Country" && this.ObjectTableName != "PackageType") {
-            this._totangoService.SendTotangoUserActivity(this.ObjectTableName, "View " + this.ObjectTableName);
-        }
+                if (this.ObjectTableName != "Country" && this.ObjectTableName != "PackageType") {
+                    this._totangoService.SendTotangoUserActivity(this.ObjectTableName, "View " + this.ObjectTableName);
+                }
 
-        if (this.ObjectTableName == "CommunicationLog") {
-            this.IsSaveBtnDisable = true;
-        }
+                if (this.ObjectTableName == "CommunicationLog") {
+                    this.IsSaveBtnDisable = true;
+                }
 
 
-        this.IsSaveBtnVisible = this.ObjectTable.IsSaveButtonVisible;
+                this.IsSaveBtnVisible = this.ObjectTable.IsSaveButtonVisible;
 
-        // Split Component
-        var feature = FeatureLocator.Features.filter(d => d.Code == "SPLIT")[0];
-        if (!AppTool.IsNullOrEmpty(feature)) { // granted
+                // Split Component
+                var feature = FeatureLocator.Features.filter(d => d.Code == "SPLIT")[0];
+                if (!AppTool.IsNullOrEmpty(feature)) { // granted
 
-            //if (this.ObjectTable.Name == "Customs.Declaration")
-            //    this.IsSplitBtnVisible = true;
+                    //if (this.ObjectTable.Name == "Customs.Declaration")
+                    //    this.IsSplitBtnVisible = true;
 
-            if (!AppTool.IsNullOrEmpty(this.ObjectTable.SplitComponentPath)) {
-                this.IsSplitBtnVisible = true;
-                this.ShowWindowsOverEditComponent = true;
-            }
-        }
+                    if (!AppTool.IsNullOrEmpty(this.ObjectTable.SplitComponentPath)) {
+                        this.IsSplitBtnVisible = true;
+                        this.ShowWindowsOverEditComponent = true;
+                    }
+                }
 
-        //fullaccounting => hide arpayment save btn for new arp entity
-        var isNewEntity = true;
-        if (this.EntityId || (this.EntityId && this.EntityPM.Id))
-            isNewEntity = false;
+                //fullaccounting => hide arpayment save btn for new arp entity
+                var isNewEntity = true;
+                if (this.EntityId || (this.EntityId && this.EntityPM.Id))
+                    isNewEntity = false;
 
-        if ((this.ObjectTableName == "ARPayment" ) && SessionLocator.TenantPM.AccountingActivated && isNewEntity) {
-            this.IsSaveBtnVisible = false;
-        }
-        //
-    });
+                if ((this.ObjectTableName == "ARPayment") && SessionLocator.TenantPM.AccountingActivated && isNewEntity) {
+                    this.IsSaveBtnVisible = false;
+                }
+                resolve();
+                //
+            });
+            
+        });
 
     }
 
@@ -294,11 +317,15 @@ export class EditComponent implements OnDestroy {
             const entityTenant:number =result["Tenant"];
             if (entityTenant!= SessionLocator.Tenant)//SessionLocator.LoggedUserPM.Tenant) 
             {
-                
-                this.ValidationErrorsList=[];
-                this.ValidationErrorsList.push("You have no permission to view entities of this type. - Edit Component")
-                this.StopBusyIndicator();
-                throw new Error('You have no permission to view entities of this type. - Edit Component');
+                if (this._CustomsClosedTablePM?.ObjectTableId == this.ObjectTableId){
+                    console.warn(`_CustomsClosedTablePM={_CustomsClosedTablePM}`);
+                }
+                else   {
+                    this.ValidationErrorsList=[];
+                    this.ValidationErrorsList.push("You have no permission to view entities of this type. - Edit Component")
+                    this.StopBusyIndicator();
+                    throw new Error('You have no permission to view entities of this type. - Edit Component');
+                }
             }
         }
 
