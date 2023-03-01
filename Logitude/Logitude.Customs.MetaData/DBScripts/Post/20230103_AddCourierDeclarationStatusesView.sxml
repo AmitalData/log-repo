@@ -5,8 +5,6 @@
 
   <Oracle Version="4">
     <![CDATA[
-IF Object_ID('DeclarationCourierStatusesView') IS NOT NULL
-DROP VIEW DeclarationCourierStatusesView;
 
 CREATE VIEW DeclarationCourierStatusesView
     AS
