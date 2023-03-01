@@ -1,4 +1,4 @@
-@devrelease
+@release3
 Feature:  Invite Customers In Shared Logistics
     The user opens the Shared Logistics, Enter the Invite customers view, add contact, invite this contact to shared logistics, and test a customer who is not invited and a customer who is accepted
 

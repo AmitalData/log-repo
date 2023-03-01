@@ -1,4 +1,5 @@
 #@release 
+@devrelease
 @all @stable
 Feature: Advanced Generic Interface AR Invoice Transfer
     The user disables the Accounting Transfer in settings, creates AR invoice,

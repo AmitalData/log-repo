@@ -1,4 +1,5 @@
-@smokeAfterSwap @release
+@devrelease 
+#@smokeAfterSwap @release
 Feature: User Create, Search and Edit from Maintenance
     The user creates a User, searches for and edits it from the Maintenance Module.
     and Log in with inactive user.

@@ -1,4 +1,4 @@
-@standalone @devrelease
+@Devstandalone 
 Feature: Cancel standalone shipment
     The user creates a Direct Import Ocean FCL shipment, from Pickup Create standalone shipment,Cancel standalone shipment
     Reactivate standalone shipment

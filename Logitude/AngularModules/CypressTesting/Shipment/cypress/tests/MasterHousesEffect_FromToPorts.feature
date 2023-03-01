@@ -1,5 +1,5 @@
 #@release
-@fixReleaseBugs
+@devrelease
 Feature: Update the routing tab of master shipment
     The user creates a Master Export Air shipment, creates a House Export Air shipment from withing the Master shipment,
     update the routing tab of master shipment and the connceted house 

@@ -1,5 +1,5 @@
 #@release
-@fixReleaseBugs
+@devrelease
 Feature: Compute ActualFinalArrivalDate in Master And Connected Houses
     The user creates a Master Export Air shipment, creates a House Export Air shipment from withing the Master shipment,
     Compute ActualFinalArrivalDate in Master And Connected Houses.

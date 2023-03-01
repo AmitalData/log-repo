@@ -1,3 +1,4 @@
+@devrelease
 #@release 
 @FeatureToggle
 Feature: Ocean FCL Price Check
