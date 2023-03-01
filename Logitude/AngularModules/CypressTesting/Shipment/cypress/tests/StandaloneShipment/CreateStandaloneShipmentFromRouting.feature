@@ -1,4 +1,4 @@
-@devrelease @standalone
+@Devstandalone 
 Feature: Create Standalone Shipment from Routing
     The user creates a Direct Import Ocean FCL shipment, create standalone shipment from pickup,create standalone shipment  from pickup child,
     create standalone shipment from routing

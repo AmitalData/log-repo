@@ -1,4 +1,4 @@
-@standalone @devrelease
+@Devstandalone 
 Feature: Add containers
     Add Two Container with the same container number from two standalone shipment
     The user creates a Direct Import Ocean FCL shipment,Create standalone shipment from first pickup,

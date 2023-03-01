@@ -66,8 +66,8 @@ When("partial split the shipment with the following details", (dataTable) => {
 
 Then("the direct shipment should split into two shipment with packages with the following details", (dataTable) => {
     let expectedPackagesDetailList = Assists.CreateSet<PackagesDetails>(dataTable);
-   //cy.DefineRequestWait(RestAPI.GET, URLs.GetAll, RequestAliases.GetAll)
-    BaseAssertion.AssertStatusCode(RequestAliases.SplitShipmentRequest, 200);
+   cy.DefineRequestWait(RestAPI.GET, URLs.GetAll, RequestAliases.GetAll)
+   BaseAssertion.AssertStatusCode(RequestAliases.SplitShipmentRequest, 200);
 
     //#region Validate for new shipment 
     Actions.ValidateShipmentNumber(shipmentNumber)

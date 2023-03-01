@@ -1,4 +1,4 @@
-@standalone @devrelease
+@Devstandalone 
 Feature: Add Package to Standalone Shipment
     The user creates a Direct Import Ocean FCL shipment, add packages,create standalone from pickup,
     add package from standalone

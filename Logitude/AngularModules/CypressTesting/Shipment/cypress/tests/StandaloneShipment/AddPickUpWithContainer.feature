@@ -1,4 +1,4 @@
-@standalone @devrelease
+@Devstandalone 
 Feature: Add Container without container number
     The user creates a Direct Import Ocean FCL shipment, add packages,add pickup
 
