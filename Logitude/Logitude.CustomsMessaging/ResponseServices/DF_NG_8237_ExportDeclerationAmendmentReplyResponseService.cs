@@ -791,7 +791,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                                  //     requestParams.AppicationId = myDeclarationQueryService.GetIdByExternalDeclarationNumber(customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, requestParams.Tenant);
                                                                  //}
             }
-        }
+      
 
         public void SendManifest(DeclarationPM declarationPM, GenericRequestParams requestParams)
         {
