@@ -966,7 +966,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    OnCarriageATA = container.OnCarriageATA,
                                                    RequestDate = container.RequestDate,
                                                    RecentResponseDate = container.RecentResponseDate,
-                                                   ShipmentDepartmentId = container.Shipment.DepartmentId,
+                                                   ShipmentDepartmentId = container.ShipmentDepartmentId,
                                                    ShipmentDepartmentName = container.ShipmentDepartment != null ? container.ShipmentDepartment.EnglishName : "",
                                                };
             return result;
