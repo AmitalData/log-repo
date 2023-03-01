@@ -78,7 +78,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckContactFeature("CopyFromTenant0", "READ", authToken.Tenant);
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
-                string message = "";
+                string message = "Succeeded";
                 if (!string.IsNullOrEmpty(tableName)) {
                     string table = tableName.Replace(" ", "");
                    
