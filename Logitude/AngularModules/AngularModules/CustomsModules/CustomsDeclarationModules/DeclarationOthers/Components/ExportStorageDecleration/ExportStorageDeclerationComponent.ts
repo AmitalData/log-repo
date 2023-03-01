@@ -329,6 +329,8 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
             this.exportStorageExtendedListService.getByFilters(filters).subscribe(x => {
 
                 ArrayExportStorageId = (x.Result as ExportStorageList[]).map(x => x.Id);
+                if (!AppTool.IsNullOrEmpty(this.exportStorageExtendedListService.disconnectedExportStorage))
+                          ArrayExportStorageId = ArrayExportStorageId.filter(item => !this.exportStorageExtendedListService.disconnectedExportStorage.split(',').find(x => x == item));
                 var count=ArrayExportStorageId.length;
                 if(count>0){
                     var msg = TextCodeTranslator.Translate("Customs.ExportStorage.O.ConnectedAllToDeclartion")+" "+count +" "+TextCodeTranslator.Translate("Customs.ExportStorage.O.ExportStoragesToDeclartion");
@@ -361,10 +363,9 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
     
     async saveConnections(ArrayExportStorageId) {
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.Saving"));
- 
         if (!AppTool.IsNullOrEmpty(this.exportStorageExtendedListService.disconnectedExportStorage))
             ArrayExportStorageId = ArrayExportStorageId.filter(item => !this.exportStorageExtendedListService.disconnectedExportStorage.split(',').find(x => x == item));
-
+       
 
  
         let ConsignmentNumber = this.declarationPM.Consignments.length > 0 ? this.declarationPM.Consignments[this.declarationPM.Consignments.length - 1].ConsignmentNumber : 0;
