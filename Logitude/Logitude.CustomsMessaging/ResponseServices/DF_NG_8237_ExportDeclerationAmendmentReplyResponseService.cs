@@ -754,7 +754,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     RaiseEvent(this._MyDeclarationPM, null, status_id: "CLS");
                 }
-                
+            }
+            this.MyResponseData.ApplicationID = requestParams.AppicationId;
                 
             }
             this.MyResponseData.ApplicationID = requestParams.AppicationId;
