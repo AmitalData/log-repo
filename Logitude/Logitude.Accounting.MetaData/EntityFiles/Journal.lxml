@@ -5147,6 +5147,12 @@
       LocalDefaultText="&quot;חזור&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
+	<TextCode
+      Code="&quot;Journal.RE.ReconcilePeriodClosed&quot;"
+      DefaultText="&quot;Accounting date is closed for line (X)&quot;"
+      LocalDefaultText="&quot;התקופה החשבונאית לשורה (X) סגורה, יש לפתוח תחילה את התקופה החשבונאית.&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />  
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
