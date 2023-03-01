@@ -98,7 +98,7 @@ export class CustomizationMainComponent {
             myTablesItems = this.allTablesItems;
         }
 
-        var tablesList: ObjectTablePM[] = window.ObjectTables.filter(d => (d.IsMain && d.EnableSecurity && !d.IsClosed && !d.IsComposition) || d.Name == "Address" || (d.IsComposition && d.AllowCustomFields) || (d.IsCustom && AppTool.IsNullOrEmpty(d.ParentObjectTableId)));
+        var tablesList: ObjectTablePM[] = window.ObjectTables.filter(d => (d.IsMain && d.EnableSecurity && !d.IsClosed && !d.IsComposition) || d.Name == "Address" || d.Name == "Card" || (d.IsComposition && d.AllowCustomFields) || (d.IsCustom && AppTool.IsNullOrEmpty(d.ParentObjectTableId)));
         var myData: FieldsTranslations[] = [];
 
         myTablesItems.forEach(field => {

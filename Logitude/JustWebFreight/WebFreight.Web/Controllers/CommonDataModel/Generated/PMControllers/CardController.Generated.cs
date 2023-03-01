@@ -87,8 +87,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("Card", "NEW", authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("Card", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         CardService service = new CardService(MyContext, entityPM.Tenant);
@@ -135,8 +133,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("Card", "UPDATE", authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("Card", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "Card" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "CardPM" + entityPM.Id + entityPM.Tenant;

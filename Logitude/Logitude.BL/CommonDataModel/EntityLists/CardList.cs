@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Logitude.BL.InfrastructureModel.EntityLists;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Logitude.BL.CommonDataModel.EntityLists
 {
-    public class CardList
+    public class CardList : CustomFieldList
     {
         [Key]
         public string Id { get; set; }

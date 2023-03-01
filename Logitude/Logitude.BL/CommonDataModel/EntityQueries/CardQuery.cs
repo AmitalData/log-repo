@@ -29,6 +29,7 @@ using System.IO;
 using Logitude.BL.DataContracts;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
+using Logitude.Server.Tools.CustomFields;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -279,6 +280,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         if (entity != null)
                         {
                             entity.Addresses = addressQuery.GetAddressesByCardId(id, tenant);
+                            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<CardPM> { entity }.Cast<object>().ToList() }).Set();
 
                             string name = "CardPM" + entity.Id + tenant;
 
@@ -399,6 +401,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     if (entity != null)
                     {
                         entity.Addresses = addressQuery.GetAddressesByCardId(id, tenant);
+                        new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<CardPM> { entity }.Cast<object>().ToList() }).Set();
                     }
                 }
 
@@ -419,10 +422,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             EnglishName = a.EnglishName,
 
                                         }).ToList();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = cardLists.Cast<object>().ToList() }).Set();
             return cardLists;
         }
 
-        public List<CardPM> GetAllCardPMsByTenant(int tenant)
+        public List<CardPM> GetAllCardPMsByTenant(int tenant) 
         {
             List<CardPM> cardPMs = (from a in repository.context.Cards
                                     where a.Tenant == tenant
@@ -435,6 +439,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         PartnerTypeId = a.PartnerTypeId
 
                                     }).ToList();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = cardPMs.Cast<object>().ToList() }).Set();
             return cardPMs;
         }
         public CardPM GetSinglePMByCode(string code, int tenant)
