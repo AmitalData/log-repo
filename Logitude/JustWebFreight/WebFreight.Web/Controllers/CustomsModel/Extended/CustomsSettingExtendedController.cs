@@ -30,6 +30,31 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
     public class CustomsSettingExtendedController : ApiController
     {
 
+
+        public HttpResponseMessage GetCustomsClosedTablePMByObjectTableId(string objectTableId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+
+                var qs = new CustomsClosedTableQueryService(customContext);
+                CustomsClosedTablePM customsClosedTablePM = qs.GetCustomsClosedTableByObjectTableId(objectTableId);
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, customsClosedTablePM);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         public HttpResponseMessage GetSettingByTenant()
         {
             try

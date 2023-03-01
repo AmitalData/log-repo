@@ -11,10 +11,11 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomsSettingList} from '../../EntityLists/CustomsSettingList';
 import { GenericRequestParams } from '../../DataContract/RequestParams/GenericRequestParams';
+import { CustomsClosedTablePM } from '../../EntityPMs/CustomsClosedTablePM';
 
 
 export class CustomsSettingExtendedListService {
-   
+    
 
     private _http: HttpClient;
     private _apiUrl: string;
@@ -23,6 +24,21 @@ export class CustomsSettingExtendedListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomsSettingExtended';
     }
 
+    GetCustomsClosedTablePMByObjectTableId(objectTableId: string) {
+
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetCustomsClosedTablePMByObjectTableId/?objectTableId='+objectTableId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = response;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 
     GetSettingByTenant() {
 
