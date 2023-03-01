@@ -86,12 +86,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     bool doUpdateCustomsItem = true;
                     bool doUpdateCustomsItemDetailsHistory = true;
                     bool doUpdatePropertiesDetailsHistory = true;
+                    bool doNotAdd= mehesCustomsItemRow.isDiscountCode==true?false:true;
                     var currentDBListCustomsItemRow = new CustomsItemPM();
                     var currentDBListCustomsItemDetailsHistoryRow = new CustomsItemDetailsHistoryPM();
                     var currentDBListPropertiesDetailsHistoryRow = new PropertiesDetailsHistoryPM();
 
 
-                    if (dbListCustomsItemRows == null || dbListCustomsItemRows.Count() == 0)
+                    if ((dbListCustomsItemRows == null || dbListCustomsItemRows.Count() == 0 ))
                     {
                         currentDBListCustomsItemRow.ID = mehesCustomsItemRow.ID.ToString();
                         currentDBListCustomsItemRow.ChangeSetOp = ChangeSetOperation.Insert;
@@ -146,12 +147,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                     }
 
-                    if (doUpdateCustomsItem)
+                    if (doUpdateCustomsItem && !(currentDBListCustomsItemDetailsHistoryRow.ChangeSetOp == ChangeSetOperation.Insert && mehesCustomsItemRow.isDiscountCode == true))
                     {
                         currentDBListCustomsItemRow.FullClassification = mehesCustomsItemRow.Title;
                         currentDBListCustomsItemRow.CustomsItemHierarchicLocationID = mehesCustomsItemRow.HierarchicLocationID;
                         currentDBListCustomsItemRow.ComputedCheckDigit =mehesCustomsItemRow.fullClassification.Length>10 ?mehesCustomsItemRow.fullClassification.Substring(mehesCustomsItemRow.fullClassification.Length - 1):null ;
-                        currentDBListCustomsItemRow.CustomsBookTypeID = mehesCustomsItemRow.TypeID;
+                        currentDBListCustomsItemRow.CustomsBookTypeID = requestParams.CustomsBookType;
+                        currentDBListCustomsItemRow.CustomsBookTypeID = 1;
                        // currentDBListCustomsItemRow.CustomsItemCategoryID = mehesCustomsItemRow.statisticMeasurementUnitCode?? 0;
 
                         customsItemUpdateService.Update(currentDBListCustomsItemRow, false);
@@ -159,9 +161,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             logContext.SaveChanges();
                        
                     }
-
-                    if (doUpdateCustomsItemDetailsHistory)
-                    {
+                    if(doUpdateCustomsItemDetailsHistory &&!( currentDBListCustomsItemDetailsHistoryRow.ChangeSetOp==ChangeSetOperation.Insert && mehesCustomsItemRow.isDiscountCode==true))
+                     {
                         currentDBListCustomsItemDetailsHistoryRow.CustomsItemID = mehesCustomsItemRow.ID.ToString();
                         currentDBListCustomsItemDetailsHistoryRow.Title = mehesCustomsItemRow.GoodsDescription;
                         currentDBListCustomsItemDetailsHistoryRow.StartDate = DateTime.Today.AddDays(-30);
@@ -173,7 +174,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     }
 
-                    if (doUpdatePropertiesDetailsHistory)
+                    if (doUpdatePropertiesDetailsHistory && !(currentDBListCustomsItemDetailsHistoryRow.ChangeSetOp == ChangeSetOperation.Insert && mehesCustomsItemRow.isDiscountCode == true))
                     {
                         currentDBListPropertiesDetailsHistoryRow.CustomsItemID = mehesCustomsItemRow.ID.ToString();
                         currentDBListPropertiesDetailsHistoryRow.StartDate= DateTime.Today.AddDays(-30);
@@ -200,10 +201,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private static bool CompareMehesToDBCustomsItem(CB_NG_8888_CustomsItemOutCustomsItem mehesCustomsItemRow, CustomsItemPM currentDBListCustomsItemRow)
         {
-            if (mehesCustomsItemRow.Title != currentDBListCustomsItemRow.FullClassification ||
-               
-                mehesCustomsItemRow.HierarchicLocationID != currentDBListCustomsItemRow.CustomsItemHierarchicLocationID ||
-                mehesCustomsItemRow.fullClassification.Substring(mehesCustomsItemRow.fullClassification.Length - 1) != currentDBListCustomsItemRow.ComputedCheckDigit)
+            string fullClassification = currentDBListCustomsItemRow.FullClassification;
+              if (mehesCustomsItemRow.fullClassification.Contains("/"))
+            {
+                fullClassification = currentDBListCustomsItemRow.FullClassification + "/" + currentDBListCustomsItemRow.ComputedCheckDigit;
+            }
+            if (mehesCustomsItemRow.fullClassification != fullClassification ||
+
+                mehesCustomsItemRow.HierarchicLocationID != currentDBListCustomsItemRow.CustomsItemHierarchicLocationID )
+                
             {
                 return true;
             }
