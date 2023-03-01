@@ -49,6 +49,8 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     public DataContext: any = this;
     public DateTimeValueExpressions = DateTimeValueExpressions;
 
+    public ComboBoxMaxHeight: number = 120;
+
     public FlowVariablesTreeItems: TreeSelectItem[];
     public ObjectFieldsTreeItems: TreeSelectItem[];
 

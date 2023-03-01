@@ -31,7 +31,6 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         SearchFields, 
 	         Name, 
 	         Description, 
-	         OwnerId, 
 	         StatusCode, 
 	         FlowJson, 
 	         Entity, 
@@ -53,10 +52,8 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         SearchFields, 
 	         Name, 
 	         Description, 
-	         OwnerId, 
 	         StatusCode, 
 	         StatusName, 
-	         OwnerName, 
 	         CreatedByUserName, 
 	         UpdatedByUserName, 
 	         FlowJson, 
@@ -110,11 +107,6 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Description))
             {
 				entityPOCO.Description = entityPM.Description;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OwnerId))
-            {
-				entityPOCO.OwnerId = entityPM.OwnerId;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))
@@ -198,11 +190,6 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 					entityPM.Description = entityPOCO.Description;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OwnerId))
-            {
-					entityPM.OwnerId = entityPOCO.OwnerId;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StatusCode))
             {
 					entityPM.StatusCode = entityPOCO.StatusCode;
@@ -277,11 +264,6 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Description))
             {
                 oldEntityPM.Description = entityPM.Description;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OwnerId))
-            {
-                oldEntityPM.OwnerId = entityPM.OwnerId;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))

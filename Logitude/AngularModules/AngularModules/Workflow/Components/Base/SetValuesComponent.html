@@ -146,7 +146,7 @@
                     <ComboBox [ItemsSource]="setValue.type | SetValuesOperatorsItemsPipe" [Binding]="'Name'"
                         [SelectedItem]="setValue.operator | ListItemPipe" [IsDisabled]="setValue.isDisabled"
                         (SelectedItemChanged)="updateSetValueOperator($event.Code, setValueIndex)" [ListType]="''"
-                        [CyData]="'SetValueOperator_' + setValue.id">
+                        [MaxHeight]="ComboBoxMaxHeight" [CyData]="'SetValueOperator_' + setValue.id">
                     </ComboBox>
                 </div>
             </div>

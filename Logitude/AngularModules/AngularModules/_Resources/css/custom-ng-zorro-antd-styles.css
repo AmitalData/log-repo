@@ -75,6 +75,7 @@
 
 .ant-select-clear {
     right: 20px !important;
+    z-index: unset !important;
 }
 
 .ant-tree-icon-hide>div[role="tree"]>input {

@@ -9,7 +9,7 @@
         text-overflow: ellipsis;
     }
 
-    .title-span {
+    .short-title span {
         font-size: 18px;
         color: #1B90CB;
     }
@@ -23,9 +23,9 @@
 
 <div *ngIf="EntityPM" class="short-title-row">
     <div class="short-title">
-        <span class="title-span">
-            {{WorkflowName}} - V{{WorkflowVersionNumber}}
-        </span>
+        <span *ngIf="WorkflowName">{{WorkflowName}}</span>
+        <span *ngIf="WorkflowName && WorkflowVersionNumber"> - </span>
+        <span *ngIf="WorkflowVersionNumber">V{{WorkflowVersionNumber}}</span>
     </div>
     <div class="edit-button">
         <IconButton [Name]="'Edit'" [Title]="'Edit Workflow Version'" (click)="editWorkflowVersionClicked()"
