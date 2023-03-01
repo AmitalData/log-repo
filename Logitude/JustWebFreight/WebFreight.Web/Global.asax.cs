@@ -277,17 +277,19 @@ namespace WebFreight.Web
                 {
                     dataCacheTopic = StorageAcountDetails.NameSpaceManager.GetTopic(StorageAcountDetails.DataCacheTopicName);
                 }
-
-                SubscriptionDescription myAgentSubscription;
-                string subscribtionName = Environment.MachineName;
-                if (!StorageAcountDetails.NameSpaceManager.SubscriptionExists(dataCacheTopic.Path, subscribtionName))
+                if (!isDebug())
                 {
-                    myAgentSubscription = StorageAcountDetails.NameSpaceManager.CreateSubscription(dataCacheTopic.Path, subscribtionName);
-                }
+                    SubscriptionDescription myAgentSubscription;
+                    string subscribtionName = Environment.MachineName;
+                    if (!StorageAcountDetails.NameSpaceManager.SubscriptionExists(dataCacheTopic.Path, subscribtionName))
+                    {
+                        myAgentSubscription = StorageAcountDetails.NameSpaceManager.CreateSubscription(dataCacheTopic.Path, subscribtionName);
+                    }
 
-                CacheMessageHandler cacheMessageHandler = new CacheMessageHandler();
-                Thread cacheThread = new Thread(cacheMessageHandler.HandleTopicMessages);
-                cacheThread.Start();
+                    CacheMessageHandler cacheMessageHandler = new CacheMessageHandler();
+                    Thread cacheThread = new Thread(cacheMessageHandler.HandleTopicMessages);
+                    cacheThread.Start();
+                }
                 this.StartSignalRTopicThread();
             }
             catch (Exception ex)
@@ -306,6 +308,15 @@ namespace WebFreight.Web
 			};
 
 		}
+
+        private bool isDebug()
+        {
+            #if DEBUG
+                return true;
+            #else
+                return false;
+            #endif
+        }
 
         private void HandleSettingsChanges()
         {
