@@ -4091,10 +4091,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             ShipmentDeliveryQuery shipmentDeliveryQuery = new ShipmentDeliveryQuery(tenant);
             shipmentPM.ShipmentDeliveries = shipmentDeliveryQuery.GetShipmentDeliveryPMsByTenantAndShipment(shipment.Id, shipment.Tenant, true, false).ToList();
-            if (shipmentPM.ShipmentDeliveries.Count > 0)
-            {
-                MapFinalDeliveryFields(shipmentPM);
-            }
+            MapFinalDeliveryFields(shipmentPM);
+            
 
             shipmentPM.IncludesCustoms = shipment.IncludesCustoms;
             shipmentPM.CustomsClearanceDate = shipment.CustomsClearanceDate;
@@ -4288,13 +4286,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private static void MapFinalDeliveryFields(ShipmentPM shipmentPM)
         {
-            ShipmentDeliveryPM myFinalDelivery = shipmentPM.ShipmentDeliveries.Where(d => d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault(); if (myFinalDelivery != null)
-            {
-                shipmentPM.FinalDeliveryATA = myFinalDelivery.ATA;
-                shipmentPM.FinalDeliveryATD = myFinalDelivery.ATD;
-                shipmentPM.FinalDeliveryETA = myFinalDelivery.ETA;
-                shipmentPM.FinalDeliveryETD = myFinalDelivery.ETD;
-            }
+            if (shipmentPM.ShipmentDeliveries.Count == 0) return;
+            const string deliveryTypeCode = "DELV";
+            ShipmentDeliveryPM shipmentFinalDelivery = shipmentPM.ShipmentDeliveries.Where(d => d.PickUpDeliveryTypeCode == deliveryTypeCode).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+            if (shipmentFinalDelivery == null) return;
+            shipmentPM.FinalDeliveryATA = shipmentFinalDelivery.ATA;
+            shipmentPM.FinalDeliveryATD = shipmentFinalDelivery.ATD;
+            shipmentPM.FinalDeliveryETA = shipmentFinalDelivery.ETA;
+            shipmentPM.FinalDeliveryETD = shipmentFinalDelivery.ETD;
         }
 
         private static void MappingOldFieldsBeforeChanging(ShipmentPM shipmentPM, ShipmentPM shipmentPMBeforeNewMapping)
