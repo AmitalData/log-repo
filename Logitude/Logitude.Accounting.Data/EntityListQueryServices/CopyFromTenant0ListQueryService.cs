@@ -36,16 +36,17 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					                          SearchFields = a.SearchFields,
 					
 					                          TableName = a.TableName,
-					
+					                          CreatedByUserName=a.CreatedByUserName,
 		                    	            });
             return query;
 		}
 
 		private IQueryable<CopyFromTenant0> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<CopyFromTenant0> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
-		}
-				private IQueryable<CopyFromTenant0> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<CopyFromTenant0> iQueryable, int tenant)
+            return iQueryable;
+
+        }
+        private IQueryable<CopyFromTenant0> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<CopyFromTenant0> iQueryable, int tenant)
         {
 			return iQueryable;
 		}
