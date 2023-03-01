@@ -16,6 +16,7 @@ import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
+import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
 import { Validator } from '../../../../../Infrastructure/Validators/Validator';
 import { CustomsExchangeRateExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/CustomsExchangeRateExtendedPMService';
 import { CustomsExchangeRatePM } from '../../../../../Customs/EntityPMs/CustomsExchangeRatePM';
@@ -38,6 +39,8 @@ import { DeclarationEditComponentController } from '../../../../../Customs/Contr
 import { EntityPMService } from '../../../../../Infrastructure/Services/EntityPMService';
 import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
+import { ExportStorageExtendedListService } from '../../../../../Customs/Services/ExtendedLists/ExportStorageExtendedListService';
+
 
 @Component({
 
@@ -252,6 +255,40 @@ export class SendDeclarationService implements OnDestroy {
                 this.PostSendDeclarationChecksAndPrecalculationsThenCheckRequiredFields();
                 return;
             }
+
+            if(this.EntityPM.Direction == 'E' && !this.EntityPM.IsSubmitDeclaration){
+            var exportStorageExtendedListService: ExportStorageExtendedListService = new ExportStorageExtendedListService();
+            this.CurrentSession.StopBusyIndicator();
+
+            exportStorageExtendedListService.getConnectToFileNoNotToDeclaration(this.EntityPM.ExportFile).subscribe((myResponse: ServiceResponse) => {
+                var res = myResponse.Result;
+                if(res == true){
+                    
+                        var confirm = new ConfirmWindow(); 
+                        confirm.Width = 350;
+                        confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.StoragesNotConnectToDeclaration"));
+                        confirm.WindowClosed.subscribe(() => {
+                            if (confirm.No) {
+                                return;
+                            }
+                            confirm.Close();
+                            this.CurrentSession.StartBusyIndicator("");
+                            this.ContinueSending();
+                            
+                        });
+                    
+                }
+                else{
+                    this.CurrentSession.StartBusyIndicator("");
+                    this.ContinueSending();
+                }
+            })
+ 
+           
+            }
+            else{
+                this.ContinueSending();
+            }
             // this.CurrentSession.CurrentEditComponent.SaveChanges("");
 
             //var firstInvoice: SupplierInvoicePM = this.EntityPM.SupplierInvoices.filter(d => d.SequenceNumeric == 1)[0];
@@ -264,59 +301,57 @@ export class SendDeclarationService implements OnDestroy {
             //}
 
             //else {
-            {
-
-
-                this.declarationPMService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-
-                    if (myResponse.HasError) {
-
-                        this.ValidationErrors = myResponse.ErrorsArray;
-                        this.FillValidationErrors(this.presendValidationsTitle);
-                        this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
-                    }
-
-                    else {
-                        this.EntityPM = myResponse.Result;
-                        if (this.CurrentSession.CurrentEditComponent) {
-                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                            this.reloadEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
-                                this.reloadEvent.unsubscribe();
-                                if (isLoadSuccess) {
-                                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                                    let asREUSEService = true;
-                                    if (asREUSEService) {
-                                        this.PostSendDeclarationChecksAndPrecalculationsThenCheckRequiredFields();
-                                    } else {
-                                        this.CurrentSession.StartBusyIndicator("");
-                                        this.DeclarationService.PostSendDeclarationChecksAndPrecalculations(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
-                                            if (!response.Result.HasError) {
-                                                this.CheckRequiredFields();
-                                            }
-                                            else {
-                                                this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
-                                                this.ValidationErrors = response.Result.ErrorMessages;
-                                                this.FillValidationErrors(TextCodeTranslator.Translate(response.Result.ErrorsType));
-                                            }
-                                        });
-                                    }
-                                }
-                            });
-
-                        }
-                    }
-                });
-
-
-
-
-            }
+           
         }
         else {
             this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
             this.FillValidationErrors(this.presendValidationsTitle);
         }
     }
+
+    ContinueSending(){
+      
+        this.declarationPMService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+
+            if (myResponse.HasError) {
+
+                this.ValidationErrors = myResponse.ErrorsArray;
+                this.FillValidationErrors(this.presendValidationsTitle);
+                this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+            }
+
+            else {
+                this.EntityPM = myResponse.Result;
+                if (this.CurrentSession.CurrentEditComponent) {
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    this.reloadEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                        this.reloadEvent.unsubscribe();
+                        if (isLoadSuccess) {
+                            this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                            let asREUSEService = true;
+                            if (asREUSEService) {
+                                this.PostSendDeclarationChecksAndPrecalculationsThenCheckRequiredFields();
+                            } else {
+                                this.CurrentSession.StartBusyIndicator("");
+                                this.DeclarationService.PostSendDeclarationChecksAndPrecalculations(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
+                                    if (!response.Result.HasError) {
+                                        this.CheckRequiredFields();
+                                    }
+                                    else {
+                                        this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                                        this.ValidationErrors = response.Result.ErrorMessages;
+                                        this.FillValidationErrors(TextCodeTranslator.Translate(response.Result.ErrorsType));
+                                    }
+                                });
+                            }
+                        }
+                    });
+
+                }
+            }
+        });
+    }
+
     PostSendDeclarationChecksAndPrecalculationsThenCheckRequiredFields() {
         this.CurrentSession.StartBusyIndicator("");
         this.DeclarationService.PostSendDeclarationChecksAndPrecalculations(this.EntityPM.Id).subscribe((response: ServiceResponse) => {

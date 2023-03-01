@@ -26401,6 +26401,12 @@
       LocalDefaultText="&quot;מספר יצואן קצר מידי&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.StoragesNotConnectToDeclaration&quot;"
+      DefaultText="&quot;Note that there are storages that were not linked to the declaration, should we continue?&quot;"
+      LocalDefaultText="&quot;שים לב יש אחסנות שלא קושרו להצהרה , האם להמשיך ?&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

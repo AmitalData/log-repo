@@ -74,5 +74,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             return DeclarationExportStorageList;
         }
+
+
+        public List<ExportStorage> GetConnectToFileNoNotToDeclaration(string exportfileno, int tenant)
+        {
+            return this.repository.GetConnectToFileNoNotToDeclaration(exportfileno, tenant);
+        }
     }
 }
