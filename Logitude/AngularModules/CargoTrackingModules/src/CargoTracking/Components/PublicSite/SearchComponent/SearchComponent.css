@@ -39,6 +39,12 @@ li {
     align-items: center;
 }
 
+.truncateText1 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .port-name {
     margin-left: 5px;
 }

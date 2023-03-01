@@ -491,6 +491,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
         if (shipment.EntityType === this.EntityType_Customs) {
             this.SupplierOrClientTitle = 'SHIPPER';
+            this.SupplierOrClientValue = shipment.ShipperName;
         }
     }
 
