@@ -1142,8 +1142,11 @@ namespace Logitude.CustomsMessaging.RequestServices
                         {
                             declarationConsignmentList.AddRange(GetDeclarationExportConsignment(declarationPM.Consignments[consignmentSeq]));
                         }
-                        isFirstSupplierInvoice = false;
                     }
+                }
+                if (isFirstSupplierInvoice)
+                {
+                    isFirstSupplierInvoice = false;
                 }
                 declarationGoodsShipment.ExportConsignment = declarationConsignmentList.ToArray();
                 declarationGoodsShipment.AdditionalDocument = GetDeclarationGoodsShipmentAdditionalDocument(supplierInvoicePM);
