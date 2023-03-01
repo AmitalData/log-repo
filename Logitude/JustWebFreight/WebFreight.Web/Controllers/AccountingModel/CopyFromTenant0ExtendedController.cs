@@ -89,14 +89,14 @@ namespace WebFreight.Web.Controllers.AccountingModel
                         case "ChartOfAccounts":
                             {
                                 ChartOfAccountQueryService chartOfAccountQueryService = new ChartOfAccountQueryService(authToken.Tenant);
-                                chartOfAccountQueryService.CopyFromTenant0(1, authToken.Tenant);
+                                chartOfAccountQueryService.CopyFromTenant0(0, authToken.Tenant);
                                 break;
                             }
                    
                         case "GLAccounts":
                             {
                                 GLAccountQueryService glAccountQueryService = new GLAccountQueryService(authToken.Tenant);
-                                glAccountQueryService.CopyFromTenant0(1, authToken.Tenant);
+                                glAccountQueryService.CopyFromTenant0(0, authToken.Tenant);
                                 break;
                             }
                         
