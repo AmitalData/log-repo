@@ -72,6 +72,10 @@
     .retries-delay-table {
         margin-top: 12px;
     }
+
+    .padding-left-10 {
+        padding-left: 10px;
+    }
 </style>
 
 <table *ngIf="EntityPM">
@@ -193,7 +197,7 @@
 
                     <ng-container *ngFor="let RetryDelay of RetriesDelayArray; let i = index;">
                         <tr *ngIf="i % 2 == 0">
-                            <td *ngFor="let currentIndex of [i, i + 1]">
+                            <td *ngFor="let currentIndex of [i, i + 1]" [ngClass]="{'padding-left-10': currentIndex % 2 != 0}">
                                 <div *ngIf="currentIndex < RetriesDelayArray.length">
                                     <table>
                                         <tr class="FormFieldRow">

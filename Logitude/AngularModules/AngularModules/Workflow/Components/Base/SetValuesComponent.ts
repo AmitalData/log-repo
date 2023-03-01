@@ -56,7 +56,7 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         let props = {
             ShowRecordsVariables: true,
             ShowDeclaredVariables: true,
-            ShowDeclaredCollectionVariables: true,
+            //ShowDeclaredCollectionVariables: true,
             ShowGlobalVariables: true,
             IsObjectVariableSelectable: true
         };
@@ -206,9 +206,9 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
 
     getSetValueDefaultOperator(setValueType: string) {
         if (setValueType) {
-            if (setValueType.toString().endsWith("[]")) {
-                return SetValueOperators.EqualsCollection;
-            }
+            // if (setValueType.toString().endsWith("[]")) {
+            //     return SetValueOperators.EqualsCollection;
+            // }
             let types = Object.values(FieldTypes).map((type) => (type as string));
             if (!types.includes(setValueType)) {
                 return SetValueOperators.EqualsRecord;
