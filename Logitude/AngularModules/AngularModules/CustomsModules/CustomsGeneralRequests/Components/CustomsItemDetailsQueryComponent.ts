@@ -155,7 +155,7 @@ export class CustomsItemDetailsQueryComponent
             this.RequestParams.GoodsDescription = value;
         }
     }
-    get IsDiscountCode() { return this.RequestParams.IsDiscountCode; }
+    get IsDiscountCode() { return   this.RequestParams.IsDiscountCode; }
     set IsDiscountCode(value: boolean) {
         if (this.RequestParams.IsDiscountCode != value) {
             this.RequestParams.IsDiscountCode = value;
@@ -257,7 +257,7 @@ export class CustomsItemDetailsQueryComponent
         if (AppTool.IsNullOrEmpty(newValue)) {
             this.UIProperties.SetValidity("Classification", "Customs.Classification", true, "");
         }
-        else if (newValue.toString().length > 11) {
+        else if (newValue.toString().length > 10) {
             this.valid = false;
             this.UIProperties.SetValidity("Classification", "Customs.Classification", false, TextCodeTranslator.Translate("Customs.Declaration.O.CodeLong"));
 
