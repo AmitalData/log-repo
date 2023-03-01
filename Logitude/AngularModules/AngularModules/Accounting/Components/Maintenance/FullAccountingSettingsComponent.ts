@@ -800,6 +800,23 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
 
     }
+    CreateControlAccount(ControlAccountId: string) {
+        this._ControlAccountId = ControlAccountId
+        if (!AppTool.IsNullOrEmpty(this[ControlAccountId])) {
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Show("כרטיס מרכז מוגדר");
+            return;
+        }
+
+        let confirmWindow = new ConfirmWindow();
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.CurrentSession.StartBusyIndicatorLoading();
+                this.SubmitChanges(ControlAccountId);
+            }
+        });
+        confirmWindow.Show("אנא אשר שמירה והוספה של חשבון מרכז");
+    }
     FullAccountingAddControl(ControlAccountId: string) {
         var windowTitle = TextCodeTranslator.Translate("TaxReport.B.Download");
 
