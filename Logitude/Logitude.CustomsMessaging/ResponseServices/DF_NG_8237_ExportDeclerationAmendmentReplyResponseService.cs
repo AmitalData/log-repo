@@ -753,8 +753,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (requestParams.IsExportClose && this._MyDeclarationPM?.Direction == "E")
                 {
                     AmitalInsertToQueueService.insertToQueue(this._MyDeclarationPM);
+                if (_MyDeclarationPM.DeclarationStatusTypeCode == "36")
+                {
+                    RaiseEvent(this._MyDeclarationPM, null, status_id: "CLS");
                 }
-                this.MyResponseData.ApplicationID = requestParams.AppicationId;
+            }
+            this.MyResponseData.ApplicationID = requestParams.AppicationId;
                 this.MyResponseData.Succeeded = true;
                 this.MyResponseData.HasException = false;
                 if (requestParams.IsExportClose || isExportCloseFromMehes)
@@ -991,6 +995,43 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             LogMessagingUtil.Instance.AppendLine("Declaration Print Request Succeeded " + resData.CustomsRequestsSheetId);
             return true;
+        }
+
+        private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id)
+        {
+            //primary_number = $"{dirtyDeclarationPM.CustomFileNo},{dirtyDeclarationPM.TransportModeId == "A" ? "EFIFILEM" : "MFIFILEM" }",
+            string primary_number = $"{dirtyDeclarationPM.CustomFileNo},EFIFILEM";
+            if (dirtyDeclarationPM.TransportModeId != "A")
+            {
+                primary_number = $"{dirtyDeclarationPM.CustomFileNo},MFIFILEM";
+            }
+
+            var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+            {
+                Tenant = dirtyDeclarationPM.Tenant,
+                objectTableName = "Customs.Declaration",
+                EventCode = status_id,
+                notes = "",
+                CommunicationLoggingEntityReference = dirtyDeclarationPM.DeclarationNumber,
+                EntityId = dirtyDeclarationPM.Id,
+                UserId = loggingUserId,
+
+                CommunicationSubject = "FU Status " + status_id + " from logitude",
+                MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                {
+                    entname = dirtyDeclarationPM.Direction == "E" ? "BFIFILE" : "CFIFILEM",
+                    primary_number = primary_number,
+                    status = "new",
+                    xml_status = "new",
+                    status_id = status_id,
+                    status_DateTime =  DateTime.Now,
+                    comments = "",
+                }
+            };
+
+            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true);
+
+
         }
     }
 }
