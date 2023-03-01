@@ -26,6 +26,10 @@ using System;
 using System.Collections.Generic;
 using Logitude.Customs.Data.EntityListQueryServices;
 using Logitude.Customs.Data;
+using static Dropbox.Api.Sharing.ListFileMembersIndividualResult;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace WebFreight.Web.Controllers.AccountingModel
 {
@@ -38,9 +42,8 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
 
 
-      
 
-        [HttpGet]
+
 
         public HttpResponseMessage GetAll(int tenant)
         {
@@ -63,6 +66,92 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        [HttpGet]
+
+        public HttpResponseMessage CopyTableFromTenant0(string tableName)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("CopyFromTenant0", "READ", authToken.Tenant);
+                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                string message = "";
+                if (!string.IsNullOrEmpty(tableName)) {
+                    string table = tableName.Replace(" ", "");
+                   
+
+                    switch (table)
+                    {
+                     
+                        case "ChartOfAccounts":
+                            {
+                                ChartOfAccountQueryService chartOfAccountQueryService = new ChartOfAccountQueryService(authToken.Tenant);
+                                chartOfAccountQueryService.CopyFromTenant0(1, authToken.Tenant);
+                                break;
+                            }
+                   
+                        case "GLAccounts":
+                            {
+                                GLAccountQueryService glAccountQueryService = new GLAccountQueryService(authToken.Tenant);
+                                glAccountQueryService.CopyFromTenant0(1, authToken.Tenant);
+                                break;
+                            }
+                        
+                        case "AutomaticReconcileMethods":
+                            {
+                                AutomaticReconcileMethodQueryService automaticReconcileMethodQueryService = new AutomaticReconcileMethodQueryService(authToken.Tenant);
+                                automaticReconcileMethodQueryService.CopyFromTenant0(0, authToken.Tenant);
+                                break;
+                            }
+                    
+                        case "VatTypes":
+                            {
+                                VatTypeQueryService vatTypeQueryService = new VatTypeQueryService(authToken.Tenant);
+                                vatTypeQueryService.CopyFromTenant0(0, authToken.Tenant);
+                                break;
+                            }
+                        
+                        case "TasksScheduler":
+                            {
+                                TasksSchedulerQuery tasksSchedulerQuery = new TasksSchedulerQuery(authToken.Tenant);
+                                tasksSchedulerQuery.CopyFromTenant0(0, authToken.Tenant);
+                                break;
+                            }
+
+                          
+                        case "Tenants":
+                            {
+                                TenantQuery tenantQuery = new TenantQuery(authToken.Tenant);
+                             tenantQuery.CopyFromTenant0(0, authToken.Tenant);
+                                break;
+                            }
+                      
+                        case "ComputingPartners":
+                            {
+                                ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(authToken.Tenant);
+                                computingPartnerQuery.CopyFromTenant0(0, authToken.Tenant);
+                                break;
+                            }
+
+
+                        default:
+                            message = "No table found";
+                            break;
+                    }
+                }
+                
+                return Request.CreateResponse(HttpStatusCode.OK, message);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
 
     }
 }

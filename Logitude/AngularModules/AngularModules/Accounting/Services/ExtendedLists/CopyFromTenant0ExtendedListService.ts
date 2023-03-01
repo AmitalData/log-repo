@@ -36,6 +36,20 @@ export class CopyFromTenant0ExtendedListService {
   
     }
 
+    copyTableFromTenant0(tableName:string) {
+ 
+
+
+        return this.httpClient.get(this._apiUrl + '/CopyTableFromTenant0?tableName=' + tableName,  ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+                var allLists = response;
+               return allLists;
+            }),
+            catchError(ServiceHelper.HandleServiceError)); 
+
+  
+    }
+
     MapJsonToEntityList(jsonList: any) {
 
         var entityList: PaymentChequeList;
