@@ -279,8 +279,13 @@ namespace WebFreight.Web
                 }
                 if (!isDebug())
                 {
-                    SubscriptionDescription myAgentSubscription;
                     string subscribtionName = Environment.MachineName;
+                    var commandLineArgs = Environment.GetCommandLineArgs();
+                    if (commandLineArgs.Length > 1)
+                    {
+                        subscribtionName += ("_" + commandLineArgs[2]);
+                    }
+                    SubscriptionDescription myAgentSubscription;
                     if (!StorageAcountDetails.NameSpaceManager.SubscriptionExists(dataCacheTopic.Path, subscribtionName))
                     {
                         myAgentSubscription = StorageAcountDetails.NameSpaceManager.CreateSubscription(dataCacheTopic.Path, subscribtionName);
