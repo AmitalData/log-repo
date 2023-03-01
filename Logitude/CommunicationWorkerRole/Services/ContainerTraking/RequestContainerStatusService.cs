@@ -243,12 +243,18 @@ namespace CommunicationWorkerRole.Services.ContainerTraking
 
         private ContainerTrackingRequestPM CreateContainerTrackingRequests(string requestId)
         {
+            var provider = ContainerStatusSimulatorArgs.ContainerStatusSourceCode;
+            if (!string.IsNullOrEmpty(ContainerStatusSimulatorArgs?.ContainerStatusSourceCode) && ContainerStatusSimulatorArgs.ContainerStatusSourceCode.Equals("2", StringComparison.InvariantCultureIgnoreCase))
+            {
+                provider = "VZN";
+            }
+
             return new ContainerTrackingRequestPM()
             {
                 ContainerNumber = ContainerStatusSimulatorArgs.IsFromContainer ? ContainerStatusSimulatorArgs.ContainerNumber : null,
                 Master = ShipmentMasterData.Master,
                 Tenant = ContainerStatusSimulatorArgs.Tenant,
-                Provider = ContainerStatusSimulatorArgs.ContainerStatusSourceCode,
+                Provider = provider,
                 RequestId = requestId,
                 ShipmentId = Shipment.Id,
                 Status = ContainerTrackingRequestStatus.Active,
