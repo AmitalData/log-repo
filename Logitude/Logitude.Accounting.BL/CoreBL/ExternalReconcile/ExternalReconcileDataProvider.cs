@@ -149,5 +149,13 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
             return listOfGLAccountList;
         }
+
+        public BankAccountPM GetBankAccountByGLAccountId(string dAccountId, int tenant)
+        {
+            var bankAccountQS = new BankAccountQueryService(this._AccountingContext);
+            var bankAccount = bankAccountQS.GetByGLAccountId(dAccountId, tenant);
+            return bankAccount;
+
+        }
     }
 }

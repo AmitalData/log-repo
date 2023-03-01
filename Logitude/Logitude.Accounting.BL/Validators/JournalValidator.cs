@@ -731,12 +731,17 @@ accountingValidationContextServiceProvider
                 return;
             }
 
-            if (myJournalPM.JournalExternalReconciles.Any(r => string.IsNullOrWhiteSpace(r.LedgerTransactionId)))
+
+            if (!string.IsNullOrWhiteSpace(myJournalPM.OriginalJournalId))
+            {
+                //CancelDeposit no validation needed
+            }
+            else if (myJournalPM.JournalExternalReconciles.Any(r => string.IsNullOrWhiteSpace(r.LedgerTransactionId)))
             {
                 var myExternalReconcileAdjustBankFeesService = new ExternalReconcileAdjustBankFeesService();
                 myExternalReconcileAdjustBankFeesService.MustInit(myIExternalReconcileDataProvider);
 
-                List<string> reconcileExternalPageLineIdList = myJournalPM.JournalExternalReconciles.Where(r=>!string.IsNullOrWhiteSpace(r.ReconcileExternalPageLineId)).Select(r => r.ReconcileExternalPageLineId).ToList();
+                List<string> reconcileExternalPageLineIdList = myJournalPM.JournalExternalReconciles.Where(r => !string.IsNullOrWhiteSpace(r.ReconcileExternalPageLineId)).Select(r => r.ReconcileExternalPageLineId).ToList();
                 string adjustGLAccountId = CreateAutoExternalReconcileWhileStreamingService.GetAdjustGLAccountId(myJournalPM);
 
                 List<ReconcileExternalPageLineList> listOfpageLineList;
@@ -749,7 +754,7 @@ accountingValidationContextServiceProvider
 
                 myExternalReconcileAdjustBankFeesService.PrapareAndValid(myJournalPM.Tenant, reconcileExternalPageLineIdList, adjustGLAccountId, out listOfpageLineList, out listOfpageList, CheckWhileStreaming,
 
-            
+
                     ledgerTransactionIds,
                     out string accountingCurrencyId, out List<LedgerTransactionPM> ledgerTransactionList,
                     skipAccountValidation
@@ -778,7 +783,7 @@ accountingValidationContextServiceProvider
                     string errString;
                     myExternalReconcileMoveBankCheckFromTransfer2GLAccountService.PrepareAndValidate(myJournalPM.Tenant, false,
                         ///myJournalPM.JournalExternalReconciles[0].LedgerTransactionId
-                        myJournalPM.JournalExternalReconciles.Select(r=>r.LedgerTransactionId).ToList()
+                        myJournalPM.JournalExternalReconciles.Select(r => r.LedgerTransactionId).ToList()
                         , myJournalPM.JournalExternalReconciles[0].ReconcileExternalPageLineId, out myLedgerTransactionBankTransferPMs, out bankAccountFromTransfer, out myReconcileExternalPageLinePM, out errString);
                     if (!string.IsNullOrWhiteSpace(errString))
                     {
