@@ -4093,13 +4093,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ShipmentDeliveries = shipmentDeliveryQuery.GetShipmentDeliveryPMsByTenantAndShipment(shipment.Id, shipment.Tenant, true, false).ToList();
             if (shipmentPM.ShipmentDeliveries.Count > 0)
             {
-                ShipmentDeliveryPM myFinalDelivery = shipmentPM.ShipmentDeliveries.Where(d => d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault(); if (myFinalDelivery != null)
-                {
-                    shipmentPM.FinalDeliveryATA = myFinalDelivery.ATA;
-                    shipmentPM.FinalDeliveryATD = myFinalDelivery.ATD;
-                    shipmentPM.FinalDeliveryETA = myFinalDelivery.ETA;
-                    shipmentPM.FinalDeliveryETD = myFinalDelivery.ETD;
-                }
+                MapFinalDeliveryFields(shipmentPM);
             }
 
             shipmentPM.IncludesCustoms = shipment.IncludesCustoms;
@@ -4290,6 +4284,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             #endregion
 
             return null;
+        }
+
+        private static void MapFinalDeliveryFields(ShipmentPM shipmentPM)
+        {
+            ShipmentDeliveryPM myFinalDelivery = shipmentPM.ShipmentDeliveries.Where(d => d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault(); if (myFinalDelivery != null)
+            {
+                shipmentPM.FinalDeliveryATA = myFinalDelivery.ATA;
+                shipmentPM.FinalDeliveryATD = myFinalDelivery.ATD;
+                shipmentPM.FinalDeliveryETA = myFinalDelivery.ETA;
+                shipmentPM.FinalDeliveryETD = myFinalDelivery.ETD;
+            }
         }
 
         private static void MappingOldFieldsBeforeChanging(ShipmentPM shipmentPM, ShipmentPM shipmentPMBeforeNewMapping)
