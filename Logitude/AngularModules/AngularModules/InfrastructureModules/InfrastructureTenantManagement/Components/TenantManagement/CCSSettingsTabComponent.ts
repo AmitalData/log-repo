@@ -346,7 +346,7 @@ export class CCSSettingsTabComponent extends BaseComponent {
     EditPIMAClicked() {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Edit PIMA";
-        logWindow.Width = 500;
+        logWindow.Width = 350;
         logWindow.Height = 200;
         logWindow.WindowArgs = { EntityPM: this.EntityPM};
         logWindow.Show('./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/AddEditPIMAComponent');

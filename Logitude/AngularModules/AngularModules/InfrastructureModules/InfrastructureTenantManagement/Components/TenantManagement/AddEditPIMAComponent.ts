@@ -47,7 +47,7 @@ export class AddEditPIMAComponent extends BaseComponent {
 
     OkButtonClicked() {
         var errors: string[] = [];
-        this.iGlobalDomainService.CheckDigitalPortalAddsOn(this.EntityPM.Id).subscribe((result: any) => {
+        this.iGlobalDomainService.GetTenantManagmentPIMA(this.PIMA, this.EntityPM.Id).subscribe((result: any) => {
             var duplicationMsg = result.Result;
             if (AppTool.IsNullOrEmpty(duplicationMsg)) {
                 this.CurrentSession.CloseCurrentWindow();
