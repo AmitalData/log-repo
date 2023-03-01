@@ -41,7 +41,8 @@ export class ExportOrImportDeclarationDataComponent
     public GovernmentProcedureList: string[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     IsExport:boolean = true;
-   
+    SelectedRow: any;
+
     constructor() {
         super();
 
@@ -79,6 +80,10 @@ export class ExportOrImportDeclarationDataComponent
             if (this.ResponseData.InvoiceList) {
                 this.InvoiceList.InsertCollection(this.ResponseData.InvoiceList);
                 this.InvoiceList.Collection.sort((a, b) => { return (a.SequenceNumber > b.SequenceNumber) ? 1 : -1 })
+                if(this.InvoiceList.Length > 0){
+                    this.OnRowSelected( this.InvoiceList.Collection[0])
+                    
+                }
             }
 
             if (this.ResponseData.RequestList) {
@@ -188,7 +193,10 @@ export class ExportOrImportDeclarationDataComponent
             this.RequestList.InsertCollection(this.ResponseData.RequestList.filter(x=>x.InvoiceId==item.InvoiceId));
             //this.RequestList.Collection= this.InvoiceList.Collection.filter(x=>x.InvoiceId==item.InvoiceId)
         }
-     
+        if (item) {
+            this.SelectedRow =item
+        }
+
     }
     //#region General Commands
     CancelButtonClicked() {
@@ -238,17 +246,14 @@ export class ExportOrImportDeclarationDataComponent
     }
 
     EditButtonClicked(item) {
-        if (this.GovernmentProcedureList != null && this.GovernmentProcedureList.length > 0) {      
-            var GovernmentProcedureList=[];
-             item.GovernmentProcedureList.forEach((itemLine) => {
-                GovernmentProcedureList.push(itemLine.ItemGovernmentProcedureType);
-             });
+        if (item.GovernmentProcedureList != null && item.GovernmentProcedureList.length > 0) {      
+           
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Width = 300;
             logitudeWindow.Height = 380;
             logitudeWindow.IsShowCloseButton = true;
             logitudeWindow.Title = "תהליכים לסחורה";
-            logitudeWindow.WindowArgs = GovernmentProcedureList
+            logitudeWindow.WindowArgs = item.GovernmentProcedureList
             //logitudeWindow.WindowClosed.subscribe(($event: any) => this.OnCustomFilesScreenWindowClosed($event));
           logitudeWindow.Show('./CustomsModules/CustomsPaymentOrder/Components/EditTabs/General/AccountingCustomFilesComponent');
 
