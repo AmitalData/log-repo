@@ -762,24 +762,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             this.TabsSource.push({ Name: "AgingDefinition", isSelected: false, Header: TextCodeTranslator.Translate("FullAccountingSetting.O.AgingDefinition") });
     }
 
-    _ControlAccountId: string;
-    CreateControlAccount(ControlAccountId: string) {
-        this._ControlAccountId = ControlAccountId
-        if (!AppTool.IsNullOrEmpty(this[ControlAccountId])) {
-            var myMessageWindow = new MessageWindow();
-            myMessageWindow.Show("כרטיס מרכז מוגדר");
-            return;
-        }
-
-        let confirmWindow = new ConfirmWindow();
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                this.CurrentSession.StartBusyIndicatorLoading();
-                this.SubmitChanges(ControlAccountId);
-            }
-        });
-        confirmWindow.Show("אנא אשר שמירה והוספה של חשבון מרכז");
-    }
+ 
 
     SelectionChanged(tab: any) {
 
@@ -817,6 +800,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
 
     }
+    
     CreateControlAccount(ControlAccountId: string) {
         this._ControlAccountId = ControlAccountId
         if (!AppTool.IsNullOrEmpty(this[ControlAccountId])) {
