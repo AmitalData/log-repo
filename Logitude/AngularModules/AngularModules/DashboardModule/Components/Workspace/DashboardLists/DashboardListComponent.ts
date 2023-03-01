@@ -110,6 +110,7 @@ export class DashboardListComponent extends BaseComponent implements OnInit {
     }
 
     DateFormatter(params) {
+        if(!params?.value) return '';
         return moment(params.value).format('DD/MM/YYYY');
     }
 
