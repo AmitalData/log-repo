@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Script DBType="Main" Module="Customs" Pre="true">
+<Script DBType="Main" Module="Customs" >
   <Sql Version="1">
   </Sql>
 
