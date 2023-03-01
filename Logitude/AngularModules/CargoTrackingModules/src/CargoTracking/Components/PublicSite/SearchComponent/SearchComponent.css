@@ -633,7 +633,6 @@ li a {
 (max-height: 479px) and (orientation: landscape) {
     .search-wrapper {
         height: calc(96vh - 110px);
-        min-height: calc(96vh - 24px);
     }
 
     .no-result-div {
