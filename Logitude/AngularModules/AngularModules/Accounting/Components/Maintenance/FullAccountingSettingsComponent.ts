@@ -35,6 +35,7 @@ import { CopyFromTenant0ExtendedListService } from 'Accounting/Services/Extended
 import { CopyFromTenant0PM } from 'Accounting/EntityPMs/CopyFromTenant0PM';
 import { List } from 'cypress/types/lodash';
 import { CopyFromTenant0PMService } from 'Accounting/Services/StandardPMs/CopyFromTenant0PMService';
+import { any } from 'cypress/types/bluebird';
 
 const DebtorsAndCreditorsChartOfAccountTypeCode = '7';
 @Component({
@@ -127,19 +128,19 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         this.CurrentSession.StopBusyIndicator();
         this.CurrentSession.StartBusyIndicatorLoading();
         this.copyFromTenant0ExtendedListService.getAll(SessionLocator.Tenant).subscribe((myResult: any) => {
-            
+
             this.CopyFromTenant0PM = myResult;
             this.copyFromTenant0ExtendedListService.getAll(0).subscribe((myResult: any) => {
-                
+
                 this.listCopyFromTenant0 = myResult;
                 if (this.CopyFromTenant0PM && this.listCopyFromTenant0) {
                     this.listCopyFromTenant0.forEach(element => {
                         var value = this.CopyFromTenant0PM.find(t => t.TableName == element.TableName)
                         if (value) {
-                            
+
                             element.CreateDate = value.CreateDate;
                             element.CreatedByUserId = value.CreatedByUserId;
-                            element.CreatedByUserName=value.CreatedByUserName;
+                            element.CreatedByUserName = value.CreatedByUserName;
                         }
 
                     });
@@ -667,7 +668,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         this.SelectedPeriods2 = [];
     }
 
-    
+
     private ResetThirdPeriod() {
         this.EntityPM.ThirdsPeriodsMonths = null;
         this.SelectedPeriods3 = [];
@@ -756,7 +757,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             this.TabsSource.splice(tabIndex, 1);
     }
     AddAgingDefinitionTab() {
-        
+
         var tabIndex = this.TabsSource.findIndex(d => d.Name == "AgingDefinition");
         if (tabIndex < 0)
             this.TabsSource.push({ Name: "AgingDefinition", isSelected: false, Header: TextCodeTranslator.Translate("FullAccountingSetting.O.AgingDefinition") });
@@ -781,19 +782,34 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     //#endregion
     _ControlAccountId: string;
     CopyTable(tableName: string) {
-        
+
 
         var copyfromtenant0 = new CopyFromTenant0PM();
         if (!AppTool.IsNullOrEmpty(tableName)) {
-            this.copyFromTenant0ExtendedListService.copyTableFromTenant0(tableName).subscribe(res => {
-               
+            this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+            this.copyFromTenant0ExtendedListService.copyTableFromTenant0(tableName).subscribe((myResult: any) => {
+
+                var result: ServiceResponse = myResult;
+                if (!result.HasError) {
+                    copyfromtenant0.TableName = tableName;
+                    copyfromtenant0.CreatedByUserId = SessionLocator.LoggedUserId;
+                    copyfromtenant0.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
+                    this.copyFromTenant0PMService.insert(copyfromtenant0).subscribe((res: any) => {
+                        var result2: ServiceResponse = res;
+                        if (!result2.HasError)
+                            this.GetValueCopyFromTenant0()
+                         this.CurrentSession.StopBusyIndicator();
+
+                    });
+                }
+                else{
+                    this.CurrentSession.StopBusyIndicator();
+                    var myMessageWindow = new MessageWindow();
+                    var error=result.ErrorsArray.join();
+                    myMessageWindow.Show(error);
+                }
             });
-            copyfromtenant0.TableName = tableName;
-            copyfromtenant0.CreatedByUserId = SessionLocator.LoggedUserId;
-            copyfromtenant0.CreatedByUserName=SessionLocator.LoggedUserPM.EnglishName;
-            this.copyFromTenant0PMService.insert(copyfromtenant0).subscribe(res => {
-                this.GetValueCopyFromTenant0()
-            });
+
 
 
         }
