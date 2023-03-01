@@ -95,7 +95,15 @@
                                                         </td>
 
                                                         <td>
-                                                            <div></div>
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="padding-left: 5px;">
+                                                                        <div>
+                                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditPIMAClicked()" [IsEnabled]="IsEditingAllowed"></IconButton>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
                                                         </td>
 
                                                         <td>

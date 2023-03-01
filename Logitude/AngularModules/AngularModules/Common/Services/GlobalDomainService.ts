@@ -21,6 +21,20 @@ export class GlobalDomainService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/GlobalDomain';
     }
 
+    GetTenantManagmentPIMA(pIMA: string, id:number ) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/GetTenantManagmentPIMA?pIMA=' + pIMA + '&id=' + id;
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+                var itemJason: Boolean = response.body;
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = itemJason;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
     CheckDigitalPortalAddsOn(tenant) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());

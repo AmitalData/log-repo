@@ -88,13 +88,13 @@ namespace Logitude.BL.GlobalModel.Tools.Validating
                     }
                 }
 
-                if (!string.IsNullOrEmpty(entityPM.PIMA))
-                {
-                    if (iQueryable.Where(d => d.PIMA == entityPM.PIMA && d.Id != entityPM.Id).Any())
-                    {
-                        throw new ApplicationException("the PIMA field is alredy used by another tenant");
-                    }
-                }
+                //if (!string.IsNullOrEmpty(entityPM.PIMA))
+                //{
+                //    if (iQueryable.Where(d => d.PIMA == entityPM.PIMA && d.Id != entityPM.Id).Any())
+                //    {
+                //        throw new ApplicationException("the PIMA field is alredy used by another tenant");
+                //    }
+                //}
             }
         }
         private static void ValidateNumberOfUsers(TenantManagementPM entityPM)

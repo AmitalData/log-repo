@@ -38,6 +38,36 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 {
     public class GlobalDomainController : ApiController
     {
+        public HttpResponseMessage GetTenantManagmentPIMA(string pIMA, int id)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                if (string.IsNullOrEmpty(pIMA))
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, "");
+                }
+
+                IGlobalContext objectContext = GlobalContext.GetContext();
+                TenantManagementRepository entityRepository = new TenantManagementRepository(objectContext);
+                IQueryable<TenantManagement> iQueryable = entityRepository.GetAllTenants();
+                var duplicationMsg = "";
+                var tenantManagmentWithPIMA = iQueryable.Where(d => d.PIMA == pIMA && d.Id != id).FirstOrDefault();
+                if (tenantManagmentWithPIMA != null)
+                {
+                    duplicationMsg = "This PIMA is already used by another tenant " + tenantManagmentWithPIMA.Id + ", confirm using it again.";
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, duplicationMsg);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         public HttpResponseMessage GetCheckDigitalPortalAddsOn(int tenant)
         {
             try
