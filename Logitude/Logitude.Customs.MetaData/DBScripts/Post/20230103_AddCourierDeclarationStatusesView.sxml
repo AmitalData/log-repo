@@ -5,6 +5,15 @@
 
   <Oracle Version="4">
     <![CDATA[
+if exists(select 1 from sys.views where name='DeclarationCourierStatusesView' and type='v')
+drop DeclarationCourierStatusesView
+go
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
 
 CREATE VIEW DeclarationCourierStatusesView
     AS
@@ -54,7 +63,9 @@ FROM DeclarationCourierStatuses
 inner  JOIN CourierDeclarations  ON CourierDeclarations.DeclarationId = DeclarationCourierStatuses.DeclarationId
 inner join COURIERMASTERS on CourierDeclarations.CourierMasterId =COURIERMASTERS.ID 
 where  COURIERMASTERS.isopen =1
-group by COURIERMASTERS.ID  
+group by COURIERMASTERS.ID 
+
+GO
 
     ]]>
   </Oracle>
