@@ -4089,7 +4089,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 #endregion
             }
 
-
+            ShipmentDeliveryQuery shipmentDeliveryQuery = new ShipmentDeliveryQuery(tenant);
+            shipmentPM.ShipmentDeliveries = shipmentDeliveryQuery.GetShipmentDeliveryPMsByTenantAndShipment(shipment.Id, shipment.Tenant, true, false).ToList();
+            if (shipmentPM.ShipmentDeliveries.Count > 0)
+            {
+                ShipmentDeliveryPM myFinalDelivery = shipmentPM.ShipmentDeliveries.Where(d => d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault(); if (myFinalDelivery != null)
+                {
+                    shipmentPM.FinalDeliveryATA = myFinalDelivery.ATA;
+                    shipmentPM.FinalDeliveryATD = myFinalDelivery.ATD;
+                    shipmentPM.FinalDeliveryETA = myFinalDelivery.ETA;
+                    shipmentPM.FinalDeliveryETD = myFinalDelivery.ETD;
+                }
+            }
 
             shipmentPM.IncludesCustoms = shipment.IncludesCustoms;
             shipmentPM.CustomsClearanceDate = shipment.CustomsClearanceDate;
