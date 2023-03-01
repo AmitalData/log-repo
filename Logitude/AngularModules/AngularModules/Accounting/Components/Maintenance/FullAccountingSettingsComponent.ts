@@ -145,6 +145,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
                     });
                 }
+                this.listCopyFromTenant0.sort(function(a, b){return (a.Id < b.Id ? -1 : 1)});
 
 
             });
