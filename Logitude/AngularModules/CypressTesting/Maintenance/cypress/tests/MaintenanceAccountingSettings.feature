@@ -1,4 +1,4 @@
-@devrelease
+@release3
 Feature: Accounting Settings Search and Edit from Maintenance
     The user searches for the Accounting Settings, and edits it from the Maintenance Module.
 

@@ -1,4 +1,4 @@
-@devrelease
+@release3
 Feature: Create, Search, Open and Edit a Report from Maintenance
     The user creates, searches for, opens and edits a quote template from Maintenance Module.
 
