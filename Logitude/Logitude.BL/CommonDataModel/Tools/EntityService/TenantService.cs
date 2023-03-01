@@ -207,7 +207,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.LBtenantsettingPoco = LBsettingentityRepository.GetSingleLBTenant(theEntityPm.Id);
             this.LBtenantsettingPoco.IsDocumentsArchive = theEntityPm.IsDocumentsArchive;
             this.LBtenantsettingPoco.CustomerTenantShareImportFile = theEntityPm.CustomerTenantShareImportFile;
-            
+            this.LBtenantsettingPoco.AutoArchiveOnInvoice = theEntityPm.AutoArchiveOnInvoice;
+            this.LBtenantsettingPoco.AutoArchiveOnPODExport = theEntityPm.AutoArchiveOnPODExport;
+            this.LBtenantsettingPoco.DocumentShareAsDefault = theEntityPm.DocumentShareAsDefault;
+
             LBsettingentityRepository.Update(this.LBtenantsettingPoco);
             LBsettingentityRepository.SubmitChanges();
         }
