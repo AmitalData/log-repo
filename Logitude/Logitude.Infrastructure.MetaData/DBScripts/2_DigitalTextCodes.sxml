@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="30">
+  <Sql Version="31">
     <![CDATA[
 	  delete from DigitalTextCodes where Tenant = 0
 	  
@@ -2979,21 +2979,9 @@
 				"DisplayText": ""
 			},
 			{
-				"TextCode": "ARInvoice.G.Created",
-				"DefaultText": "Created",
-				"FieldCode": "ARInvoice.InvoiceDate",
-				"DisplayText": ""
-			},
-			{
 				"TextCode": "ARInvoice.G.GeneralInformation",
 				"DefaultText": "General information",
 				"FieldCode": "ARInvoice.GeneralInformation",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "ARInvoice.G.ReferenceNumber",
-				"DefaultText": "Reference #",
-				"FieldCode": "ARInvoice.MainEntityReference",
 				"DisplayText": ""
 			},
 			{
@@ -5851,21 +5839,9 @@
 				"DisplayText": ""
 			},
 			{
-				"TextCode": "ARInvoice.G.Created",
-				"DefaultText": "Created",
-				"FieldCode": "ARInvoice.InvoiceDate",
-				"DisplayText": ""
-			},
-			{
 				"TextCode": "ARInvoice.G.GeneralInformation",
 				"DefaultText": "General information",
 				"FieldCode": "ARInvoice.GeneralInformation",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "ARInvoice.G.ReferenceNumber",
-				"DefaultText": "Reference #",
-				"FieldCode": "ARInvoice.MainEntityReference",
 				"DisplayText": ""
 			},
 			{

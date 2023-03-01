@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-	<Sql Version="26">
+	<Sql Version="27">
       <![CDATA[
 	    delete from DigitalPortalScreens where Tenant = 0
 		declare @customerProfileId as varchar(15)
@@ -3319,25 +3319,25 @@
 			<LogRow class=''border-0 padding-0''>
 				<LogColumn margin=''0 0.25 0 0'' max-width=''40%''>
 					<LogFieldContainer>
-						<LogField class=''log-invoice-type-name'' font-size=''12'' disable-copy=''true'' field-code=''Invoice.ARInvoiceTypeName''>
+						<LogField class=''log-invoice-type-name'' font-size=''12'' disable-copy=''true'' field-code=''ARInvoice.ARInvoiceTypeName''>
 						</LogField>
 					</LogFieldContainer>
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField class=''log-font-medium'' field-code=''Invoice.InvoiceNumber''></LogField>
+						<LogField class=''log-font-medium'' field-code=''ARInvoice.InvoiceNumber''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
 			<LogRow class=''border-0 padding-0 margin-0''>
 				<LogColumn>
 					<LogFieldContainer>
-						<LogLabel field-code=''ARInvoice.InvoiceDate''></LogLabel>
+						<LogLabel field-code=''ARInvoice.CreateDate''></LogLabel>
 					</LogFieldContainer>
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+						<LogField disable-copy=''true'' is-date=''true'' field-code=''ARInvoice.CreateDate''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -3351,8 +3351,8 @@
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]'' field-code=''Invoice.ShipmentsNumbers''></LogField>
-						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]'' field-code=''Invoice.MainEntityReference''></LogField>
+						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]'' field-code=''ARInvoice.ShipmentsNumbers''></LogField>
+						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]'' field-code=''ARInvoice.MainEntityReference''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -3364,7 +3364,7 @@
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField tooltip=''true'' field-code=''Invoice.CustomerRef''></LogField>
+						<LogField tooltip=''true'' field-code=''ARInvoice.CustomerRef''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -3495,25 +3495,25 @@
 			<LogRow class=''border-0 padding-0''>
 				<LogColumn margin=''0 0.25 0 0'' max-width=''40%''>
 					<LogFieldContainer>
-						<LogField class=''log-invoice-type-name'' font-size=''12'' disable-copy=''true'' field-code=''Invoice.ARInvoiceTypeName''>
+						<LogField class=''log-invoice-type-name'' font-size=''12'' disable-copy=''true'' field-code=''ARInvoice.ARInvoiceTypeName''>
 						</LogField>
 					</LogFieldContainer>
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField class=''log-font-medium'' field-code=''Invoice.InvoiceNumber''></LogField>
+						<LogField class=''log-font-medium'' field-code=''ARInvoice.InvoiceNumber''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
 			<LogRow class=''border-0 padding-0 margin-0''>
 				<LogColumn>
 					<LogFieldContainer>
-						<LogLabel field-code=''ARInvoice.InvoiceDate''></LogLabel>
+						<LogLabel field-code=''ARInvoice.CreateDate''></LogLabel>
 					</LogFieldContainer>
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+						<LogField disable-copy=''true'' is-date=''true'' field-code=''ARInvoice.CreateDate''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -3527,8 +3527,8 @@
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]'' field-code=''Invoice.ShipmentsNumbers''></LogField>
-						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]'' field-code=''Invoice.MainEntityReference''></LogField>
+						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]'' field-code=''ARInvoice.ShipmentsNumbers''></LogField>
+						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]'' field-code=''ARInvoice.MainEntityReference''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -3540,7 +3540,7 @@
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField tooltip=''true'' field-code=''Invoice.CustomerRef''></LogField>
+						<LogField tooltip=''true'' field-code=''ARInvoice.CustomerRef''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -3675,25 +3675,25 @@
 			<LogRow class=''border-0 padding-0''>
 				<LogColumn margin=''0 0.25 0 0'' max-width=''40%''>
 					<LogFieldContainer>
-						<LogField class=''log-invoice-type-name'' font-size=''12'' disable-copy=''true'' field-code=''Invoice.ARInvoiceTypeName''>
+						<LogField class=''log-invoice-type-name'' font-size=''12'' disable-copy=''true'' field-code=''ARInvoice.ARInvoiceTypeName''>
 						</LogField>
 					</LogFieldContainer>
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField class=''log-font-medium'' field-code=''Invoice.InvoiceNumber''></LogField>
+						<LogField class=''log-font-medium'' field-code=''ARInvoice.InvoiceNumber''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
 			<LogRow class=''border-0 padding-0 margin-0''>
 				<LogColumn>
 					<LogFieldContainer>
-						<LogLabel field-code=''ARInvoice.InvoiceDate''></LogLabel>
+						<LogLabel field-code=''ARInvoice.CreateDate''></LogLabel>
 					</LogFieldContainer>
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+						<LogField disable-copy=''true'' is-date=''true'' field-code=''ARInvoice.CreateDate''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -3707,8 +3707,8 @@
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]'' field-code=''Invoice.ShipmentsNumbers''></LogField>
-						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]'' field-code=''Invoice.MainEntityReference''></LogField>
+						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]'' field-code=''ARInvoice.ShipmentsNumbers''></LogField>
+						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]'' field-code=''ARInvoice.MainEntityReference''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -3720,7 +3720,7 @@
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField tooltip=''true'' field-code=''Invoice.CustomerRef''></LogField>
+						<LogField tooltip=''true'' field-code=''ARInvoice.CustomerRef''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -3851,25 +3851,25 @@
 			<LogRow class=''border-0 padding-0''>
 				<LogColumn margin=''0 0.25 0 0'' max-width=''40%''>
 					<LogFieldContainer>
-						<LogField class=''log-invoice-type-name'' font-size=''12'' disable-copy=''true'' field-code=''Invoice.ARInvoiceTypeName''>
+						<LogField class=''log-invoice-type-name'' font-size=''12'' disable-copy=''true'' field-code=''ARInvoice.ARInvoiceTypeName''>
 						</LogField>
 					</LogFieldContainer>
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField class=''log-font-medium'' field-code=''Invoice.InvoiceNumber''></LogField>
+						<LogField class=''log-font-medium'' field-code=''ARInvoice.InvoiceNumber''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
 			<LogRow class=''border-0 padding-0 margin-0''>
 				<LogColumn>
 					<LogFieldContainer>
-						<LogLabel field-code=''ARInvoice.InvoiceDate''></LogLabel>
+						<LogLabel field-code=''ARInvoice.CreateDate''></LogLabel>
 					</LogFieldContainer>
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+						<LogField disable-copy=''true'' is-date=''true'' field-code=''ARInvoice.CreateDate''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -3883,8 +3883,8 @@
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]'' field-code=''Invoice.ShipmentsNumbers''></LogField>
-						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]'' field-code=''Invoice.MainEntityReference''></LogField>
+						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]'' field-code=''ARInvoice.ShipmentsNumbers''></LogField>
+						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]'' field-code=''ARInvoice.MainEntityReference''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -3896,7 +3896,7 @@
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField tooltip=''true'' field-code=''Invoice.CustomerRef''></LogField>
+						<LogField tooltip=''true'' field-code=''ARInvoice.CustomerRef''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -4033,25 +4033,25 @@
 			<LogRow class=''border-0 padding-0''>
 				<LogColumn margin=''0 0.25 0 0'' max-width=''40%''>
 					<LogFieldContainer>
-						<LogField class=''log-invoice-type-name'' font-size=''12'' disable-copy=''true'' field-code=''Invoice.ARInvoiceTypeName''>
+						<LogField class=''log-invoice-type-name'' font-size=''12'' disable-copy=''true'' field-code=''ARInvoice.ARInvoiceTypeName''>
 						</LogField>
 					</LogFieldContainer>
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField class=''log-font-medium'' field-code=''Invoice.InvoiceNumber''></LogField>
+						<LogField class=''log-font-medium'' field-code=''ARInvoice.InvoiceNumber''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
 			<LogRow class=''border-0 padding-0 margin-0''>
 				<LogColumn>
 					<LogFieldContainer>
-						<LogLabel field-code=''ARInvoice.InvoiceDate''></LogLabel>
+						<LogLabel field-code=''ARInvoice.CreateDate''></LogLabel>
 					</LogFieldContainer>
 				</LogColumn>
 				<LogColumn max-width=''50%''>
 					<LogFieldContainer>
-						<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+						<LogField disable-copy=''true'' is-date=''true'' field-code=''ARInvoice.CreateDate''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -4065,8 +4065,8 @@
 				</LogColumn>
 				<LogColumn max-width=''50%''>
 					<LogFieldContainer>
-						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]'' field-code=''Invoice.ShipmentsNumbers''></LogField>
-						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]'' field-code=''Invoice.MainEntityReference''></LogField>
+						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]'' field-code=''ARInvoice.ShipmentsNumbers''></LogField>
+						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]'' field-code=''ARInvoice.MainEntityReference''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -4078,7 +4078,7 @@
 				</LogColumn>
 				<LogColumn max-width=''45%''>
 					<LogFieldContainer>
-						<LogField tooltip=''true'' field-code=''Invoice.CustomerRef''></LogField>
+						<LogField tooltip=''true'' field-code=''ARInvoice.CustomerRef''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -4212,25 +4212,25 @@
 			<LogRow class=''border-0 padding-0''>
 				<LogColumn margin=''0 0.25 0 0'' max-width=''40%''>
 					<LogFieldContainer>
-						<LogField class=''log-invoice-type-name'' font-size=''12'' disable-copy=''true'' field-code=''Invoice.ARInvoiceTypeName''>
+						<LogField class=''log-invoice-type-name'' font-size=''12'' disable-copy=''true'' field-code=''ARInvoice.ARInvoiceTypeName''>
 						</LogField>
 					</LogFieldContainer>
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField class=''log-font-medium'' field-code=''Invoice.InvoiceNumber''></LogField>
+						<LogField class=''log-font-medium'' field-code=''ARInvoice.InvoiceNumber''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
 			<LogRow class=''border-0 padding-0 margin-0''>
 				<LogColumn>
 					<LogFieldContainer>
-						<LogLabel field-code=''ARInvoice.InvoiceDate''></LogLabel>
+						<LogLabel field-code=''ARInvoice.CreateDate''></LogLabel>
 					</LogFieldContainer>
 				</LogColumn>
 				<LogColumn max-width=''50%''>
 					<LogFieldContainer>
-						<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+						<LogField disable-copy=''true'' is-date=''true'' field-code=''ARInvoice.CreateDate''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -4244,8 +4244,8 @@
 				</LogColumn>
 				<LogColumn max-width=''50%''>
 					<LogFieldContainer>
-						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]'' field-code=''Invoice.ShipmentsNumbers''></LogField>
-						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]'' field-code=''Invoice.MainEntityReference''></LogField>
+						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]'' field-code=''ARInvoice.ShipmentsNumbers''></LogField>
+						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]'' field-code=''ARInvoice.MainEntityReference''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -4257,7 +4257,7 @@
 				</LogColumn>
 				<LogColumn max-width=''45%''>
 					<LogFieldContainer>
-						<LogField tooltip=''true'' field-code=''Invoice.CustomerRef''></LogField>
+						<LogField tooltip=''true'' field-code=''ARInvoice.CustomerRef''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -4396,25 +4396,25 @@
 			<LogRow class=''border-0 padding-0''>
 				<LogColumn margin=''0 0.25 0 0'' max-width=''40%''>
 					<LogFieldContainer>
-						<LogField class=''log-invoice-type-name'' font-size=''12'' disable-copy=''true'' field-code=''Invoice.ARInvoiceTypeName''>
+						<LogField class=''log-invoice-type-name'' font-size=''12'' disable-copy=''true'' field-code=''ARInvoice.ARInvoiceTypeName''>
 						</LogField>
 					</LogFieldContainer>
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField class=''log-font-medium'' field-code=''Invoice.InvoiceNumber''></LogField>
+						<LogField class=''log-font-medium'' field-code=''ARInvoice.InvoiceNumber''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
 			<LogRow class=''border-0 padding-0 margin-0''>
 				<LogColumn>
 					<LogFieldContainer>
-						<LogLabel field-code=''ARInvoice.InvoiceDate''></LogLabel>
+						<LogLabel field-code=''ARInvoice.CreateDate''></LogLabel>
 					</LogFieldContainer>
 				</LogColumn>
 				<LogColumn max-width=''50%''>
 					<LogFieldContainer>
-						<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+						<LogField disable-copy=''true'' is-date=''true'' field-code=''ARInvoice.CreateDate''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -4428,8 +4428,8 @@
 				</LogColumn>
 				<LogColumn max-width=''50%''>
 					<LogFieldContainer>
-						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]'' field-code=''Invoice.ShipmentsNumbers''></LogField>
-						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]'' field-code=''Invoice.MainEntityReference''></LogField>
+						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]'' field-code=''ARInvoice.ShipmentsNumbers''></LogField>
+						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]'' field-code=''ARInvoice.MainEntityReference''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -4441,7 +4441,7 @@
 				</LogColumn>
 				<LogColumn max-width=''45%''>
 					<LogFieldContainer>
-						<LogField tooltip=''true'' field-code=''Invoice.CustomerRef''></LogField>
+						<LogField tooltip=''true'' field-code=''ARInvoice.CustomerRef''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -4575,25 +4575,25 @@
 			<LogRow class=''border-0 padding-0''>
 				<LogColumn margin=''0 0.25 0 0'' max-width=''40%''>
 					<LogFieldContainer>
-						<LogField class=''log-invoice-type-name'' font-size=''12'' disable-copy=''true'' field-code=''Invoice.ARInvoiceTypeName''>
+						<LogField class=''log-invoice-type-name'' font-size=''12'' disable-copy=''true'' field-code=''ARInvoice.ARInvoiceTypeName''>
 						</LogField>
 					</LogFieldContainer>
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField class=''log-font-medium'' field-code=''Invoice.InvoiceNumber''></LogField>
+						<LogField class=''log-font-medium'' field-code=''ARInvoice.InvoiceNumber''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
 			<LogRow class=''border-0 padding-0 margin-0''>
 				<LogColumn>
 					<LogFieldContainer>
-						<LogLabel field-code=''ARInvoice.InvoiceDate''></LogLabel>
+						<LogLabel field-code=''ARInvoice.CreateDate''></LogLabel>
 					</LogFieldContainer>
 				</LogColumn>
 				<LogColumn max-width=''50%''>
 					<LogFieldContainer>
-						<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+						<LogField disable-copy=''true'' is-date=''true'' field-code=''ARInvoice.CreateDate''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -4607,8 +4607,8 @@
 				</LogColumn>
 				<LogColumn max-width=''50%''>
 					<LogFieldContainer>
-						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]'' field-code=''Invoice.ShipmentsNumbers''></LogField>
-						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]'' field-code=''Invoice.MainEntityReference''></LogField>
+						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]'' field-code=''ARInvoice.ShipmentsNumbers''></LogField>
+						<LogField tooltip=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]'' field-code=''ARInvoice.MainEntityReference''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -4620,7 +4620,7 @@
 				</LogColumn>
 				<LogColumn max-width=''45%''>
 					<LogFieldContainer>
-						<LogField tooltip=''true'' field-code=''Invoice.CustomerRef''></LogField>
+						<LogField tooltip=''true'' field-code=''ARInvoice.CustomerRef''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -4775,13 +4775,13 @@
         <LogColumn margin=''0 0.25 0 0'' max-width=''40%''>
 			<LogFieldContainer>
 				<LogField class=''log-invoice-type-name'' font-size=''12'' disable-copy=''true''
-					field-code=''Invoice.ARInvoiceTypeName''>
+					field-code=''ARInvoice.ARInvoiceTypeName''>
 				</LogField>
 			</LogFieldContainer>
 		</LogColumn>
 		<LogColumn max-width=''60%''>
 			<LogFieldContainer>
-				<LogField class=''log-font-medium'' field-code=''Invoice.InvoiceNumber''></LogField>
+				<LogField class=''log-font-medium'' field-code=''ARInvoice.InvoiceNumber''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 	</LogRow>
@@ -4789,9 +4789,9 @@
 		<LogColumn>
 			<LogFieldContainer>
 				<LogLabel label-value=''My reference'' field-code=''ARInvoice.MyReference''></LogLabel>
-				<LogField max-width=''60%'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]'' field-code=''Invoice.ShipmentsNumbers''>
+				<LogField max-width=''60%'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]'' field-code=''ARInvoice.ShipmentsNumbers''>
 				</LogField>
-				<LogField max-width=''60%'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]'' field-code=''Invoice.MainEntityReference''>
+				<LogField max-width=''60%'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]'' field-code=''ARInvoice.MainEntityReference''>
 				</LogField>
 			</LogFieldContainer>
 		</LogColumn>
@@ -4800,15 +4800,15 @@
 		<LogColumn>
 			<LogFieldContainer>
 				<LogLabel field-code=''ARInvoice.CustomerRef''></LogLabel>
-				<LogField max-width=''60%'' tooltip=''true'' field-code=''Invoice.CustomerRef''></LogField>
+				<LogField max-width=''60%'' tooltip=''true'' field-code=''ARInvoice.CustomerRef''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 	</LogRow>
 	<LogRow class=''border-0 padding-0''>
 		<LogColumn>
 			<LogFieldContainer>
-				<LogLabel field-code=''ARInvoice.InvoiceDate''></LogLabel>
-				<LogField max-width=''70%'' disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+				<LogLabel field-code=''ARInvoice.CreateDate''></LogLabel>
+				<LogField max-width=''70%'' disable-copy=''true'' is-date=''true'' field-code=''ARInvoice.CreateDate''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 	</LogRow>
@@ -4920,13 +4920,13 @@
         <LogColumn margin=''0 0.25 0 0'' max-width=''40%''>
 			<LogFieldContainer>
 				<LogField class=''log-invoice-type-name'' font-size=''12'' disable-copy=''true''
-					field-code=''Invoice.ARInvoiceTypeName''>
+					field-code=''ARInvoice.ARInvoiceTypeName''>
 				</LogField>
 			</LogFieldContainer>
 		</LogColumn>
 		<LogColumn max-width=''60%''>
 			<LogFieldContainer>
-				<LogField class=''log-font-medium'' field-code=''Invoice.InvoiceNumber''></LogField>
+				<LogField class=''log-font-medium'' field-code=''ARInvoice.InvoiceNumber''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 	</LogRow>
@@ -4934,9 +4934,9 @@
 		<LogColumn>
 			<LogFieldContainer>
 				<LogLabel label-value=''My reference'' field-code=''ARInvoice.MyReference''></LogLabel>
-				<LogField max-width=''60%'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]'' field-code=''Invoice.ShipmentsNumbers''>
+				<LogField max-width=''60%'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]'' field-code=''ARInvoice.ShipmentsNumbers''>
 				</LogField>
-				<LogField max-width=''60%'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]'' field-code=''Invoice.MainEntityReference''>
+				<LogField max-width=''60%'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]'' field-code=''ARInvoice.MainEntityReference''>
 				</LogField>
 			</LogFieldContainer>
 		</LogColumn>
@@ -4945,15 +4945,15 @@
 		<LogColumn>
 			<LogFieldContainer>
 				<LogLabel field-code=''ARInvoice.CustomerRef''></LogLabel>
-				<LogField max-width=''60%'' tooltip=''true'' field-code=''Invoice.CustomerRef''></LogField>
+				<LogField max-width=''60%'' tooltip=''true'' field-code=''ARInvoice.CustomerRef''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 	</LogRow>
 	<LogRow class=''border-0 padding-0''>
 		<LogColumn>
 			<LogFieldContainer>
-				<LogLabel field-code=''ARInvoice.InvoiceDate''></LogLabel>
-				<LogField max-width=''70%'' disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+				<LogLabel field-code=''ARInvoice.CreateDate''></LogLabel>
+				<LogField max-width=''70%'' disable-copy=''true'' is-date=''true'' field-code=''ARInvoice.CreateDate''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 	</LogRow>
@@ -5070,13 +5070,13 @@
         <LogColumn margin=''0 0.25 0 0'' max-width=''40%''>
 			<LogFieldContainer>
 				<LogField class=''log-invoice-type-name'' font-size=''12'' disable-copy=''true''
-					field-code=''Invoice.ARInvoiceTypeName''>
+					field-code=''ARInvoice.ARInvoiceTypeName''>
 				</LogField>
 			</LogFieldContainer>
 		</LogColumn>
 		<LogColumn max-width=''60%''>
 			<LogFieldContainer>
-				<LogField class=''log-font-medium'' field-code=''Invoice.InvoiceNumber''></LogField>
+				<LogField class=''log-font-medium'' field-code=''ARInvoice.InvoiceNumber''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 	</LogRow>
@@ -5084,9 +5084,9 @@
 		<LogColumn>
 			<LogFieldContainer>
 				<LogLabel label-value=''My reference'' field-code=''ARInvoice.MyReference''></LogLabel>
-				<LogField max-width=''60%'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]'' field-code=''Invoice.ShipmentsNumbers''>
+				<LogField max-width=''60%'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]'' field-code=''ARInvoice.ShipmentsNumbers''>
 				</LogField>
-				<LogField max-width=''60%'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]'' field-code=''Invoice.MainEntityReference''>
+				<LogField max-width=''60%'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]'' field-code=''ARInvoice.MainEntityReference''>
 				</LogField>
 			</LogFieldContainer>
 		</LogColumn>
@@ -5095,15 +5095,15 @@
 		<LogColumn>
 			<LogFieldContainer>
 				<LogLabel field-code=''ARInvoice.CustomerRef''></LogLabel>
-				<LogField max-width=''60%'' tooltip=''true'' field-code=''Invoice.CustomerRef''></LogField>
+				<LogField max-width=''60%'' tooltip=''true'' field-code=''ARInvoice.CustomerRef''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 	</LogRow>
 	<LogRow class=''border-0 padding-0''>
 		<LogColumn>
 			<LogFieldContainer>
-				<LogLabel field-code=''ARInvoice.InvoiceDate''></LogLabel>
-				<LogField max-width=''70%'' disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+				<LogLabel field-code=''ARInvoice.CreateDate''></LogLabel>
+				<LogField max-width=''70%'' disable-copy=''true'' is-date=''true'' field-code=''ARInvoice.CreateDate''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 	</LogRow>
@@ -5215,13 +5215,13 @@
         <LogColumn margin=''0 0.25 0 0'' max-width=''40%''>
 			<LogFieldContainer>
 				<LogField class=''log-invoice-type-name'' font-size=''12'' disable-copy=''true''
-					field-code=''Invoice.ARInvoiceTypeName''>
+					field-code=''ARInvoice.ARInvoiceTypeName''>
 				</LogField>
 			</LogFieldContainer>
 		</LogColumn>
 		<LogColumn max-width=''60%''>
 			<LogFieldContainer>
-				<LogField class=''log-font-medium'' field-code=''Invoice.InvoiceNumber''></LogField>
+				<LogField class=''log-font-medium'' field-code=''ARInvoice.InvoiceNumber''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 	</LogRow>
@@ -5229,9 +5229,9 @@
 		<LogColumn>
 			<LogFieldContainer>
 				<LogLabel label-value=''My reference'' field-code=''ARInvoice.MyReference''></LogLabel>
-				<LogField max-width=''60%'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]'' field-code=''Invoice.ShipmentsNumbers''>
+				<LogField max-width=''60%'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]'' field-code=''ARInvoice.ShipmentsNumbers''>
 				</LogField>
-				<LogField max-width=''60%'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]'' field-code=''Invoice.MainEntityReference''>
+				<LogField max-width=''60%'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]'' field-code=''ARInvoice.MainEntityReference''>
 				</LogField>
 			</LogFieldContainer>
 		</LogColumn>
@@ -5240,15 +5240,15 @@
 		<LogColumn>
 			<LogFieldContainer>
 				<LogLabel field-code=''ARInvoice.CustomerRef''></LogLabel>
-				<LogField max-width=''60%'' tooltip=''true'' field-code=''Invoice.CustomerRef''></LogField>
+				<LogField max-width=''60%'' tooltip=''true'' field-code=''ARInvoice.CustomerRef''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 	</LogRow>
 	<LogRow class=''border-0 padding-0''>
 		<LogColumn>
 			<LogFieldContainer>
-				<LogLabel field-code=''ARInvoice.InvoiceDate''></LogLabel>
-				<LogField max-width=''70%'' disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+				<LogLabel field-code=''ARInvoice.CreateDate''></LogLabel>
+				<LogField max-width=''70%'' disable-copy=''true'' is-date=''true'' field-code=''ARInvoice.CreateDate''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 	</LogRow>
@@ -5361,10 +5361,10 @@
 					<LogFieldContainer>
 						<LogField tooltip=''true'' disable-copy=''true''
 							log-if=''{ARInvoice.IsConsolidationInvoice} === [true]''
-							field-code=''Invoice.ShipmentsNumbers''></LogField>
+							field-code=''ARInvoice.ShipmentsNumbers''></LogField>
 						<LogField tooltip=''true'' disable-copy=''true''
 							log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]''
-							field-code=''Invoice.MainEntityReference''></LogField>
+							field-code=''ARInvoice.MainEntityReference''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -5373,13 +5373,13 @@
 			<LogRow class=''border-0 padding-0''>
 				<LogColumn>
 					<LogFieldContainer>
-						<LogLabel field-code=''ARInvoice.AmountInInvoiceCurrency''></LogLabel>
+						<LogLabel field-code=''ARInvoice.AmountDue''></LogLabel>
 					</LogFieldContainer>
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
 						<LogField max-width=''80%'' is-decimal=''true'' disable-copy=''true'' margin=''0 0.25 0 0''
-							field-code=''ARInvoice.AmountInInvoiceCurrency''></LogField>
+							field-code=''ARInvoice.AmountDue''></LogField>
 						<LogField disable-copy=''true'' field-code=''ARInvoice.InvoiceCurrencyCode''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
@@ -5425,7 +5425,7 @@
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+						<LogField disable-copy=''true'' is-date=''true'' field-code=''ARInvoice.InvoiceDate''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -5440,7 +5440,7 @@
 		</LogColumn>
 		<LogColumn max-width=''90%''>
 			<LogFieldContainer>
-				<LogField disable-copy=''true'' field-code=''Invoice.PrintNotes''></LogField>
+				<LogField disable-copy=''true'' field-code=''ARInvoice.PrintNotes''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 	</LogRow>
@@ -5498,10 +5498,10 @@
 					<LogFieldContainer>
 						<LogField tooltip=''true'' disable-copy=''true''
 							log-if=''{ARInvoice.IsConsolidationInvoice} === [true]''
-							field-code=''Invoice.ShipmentsNumbers''></LogField>
+							field-code=''ARInvoice.ShipmentsNumbers''></LogField>
 						<LogField tooltip=''true'' disable-copy=''true''
 							log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]''
-							field-code=''Invoice.MainEntityReference''></LogField>
+							field-code=''ARInvoice.MainEntityReference''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -5510,13 +5510,13 @@
 			<LogRow class=''border-0 padding-0''>
 				<LogColumn>
 					<LogFieldContainer>
-						<LogLabel field-code=''ARInvoice.AmountInInvoiceCurrency''></LogLabel>
+						<LogLabel field-code=''ARInvoice.AmountDue''></LogLabel>
 					</LogFieldContainer>
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
 						<LogField max-width=''80%'' is-decimal=''true'' disable-copy=''true'' margin=''0 0.25 0 0''
-							field-code=''ARInvoice.AmountInInvoiceCurrency''></LogField>
+							field-code=''ARInvoice.AmountDue''></LogField>
 						<LogField disable-copy=''true'' field-code=''ARInvoice.InvoiceCurrencyCode''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
@@ -5562,7 +5562,7 @@
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+						<LogField disable-copy=''true'' is-date=''true'' field-code=''ARInvoice.InvoiceDate''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -5577,7 +5577,7 @@
 		</LogColumn>
 		<LogColumn max-width=''90%''>
 			<LogFieldContainer>
-				<LogField disable-copy=''true'' field-code=''Invoice.PrintNotes''></LogField>
+				<LogField disable-copy=''true'' field-code=''ARInvoice.PrintNotes''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 	</LogRow>
@@ -5639,10 +5639,10 @@
 					<LogFieldContainer>
 						<LogField tooltip=''true'' disable-copy=''true''
 							log-if=''{ARInvoice.IsConsolidationInvoice} === [true]''
-							field-code=''Invoice.ShipmentsNumbers''></LogField>
+							field-code=''ARInvoice.ShipmentsNumbers''></LogField>
 						<LogField tooltip=''true'' disable-copy=''true''
 							log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]''
-							field-code=''Invoice.MainEntityReference''></LogField>
+							field-code=''ARInvoice.MainEntityReference''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -5651,13 +5651,13 @@
 			<LogRow class=''border-0 padding-0''>
 				<LogColumn>
 					<LogFieldContainer>
-						<LogLabel field-code=''ARInvoice.AmountInInvoiceCurrency''></LogLabel>
+						<LogLabel field-code=''ARInvoice.AmountDue''></LogLabel>
 					</LogFieldContainer>
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
 						<LogField max-width=''80%'' is-decimal=''true'' disable-copy=''true'' margin=''0 0.25 0 0''
-							field-code=''ARInvoice.AmountInInvoiceCurrency''></LogField>
+							field-code=''ARInvoice.AmountDue''></LogField>
 						<LogField disable-copy=''true'' field-code=''ARInvoice.InvoiceCurrencyCode''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
@@ -5703,7 +5703,7 @@
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+						<LogField disable-copy=''true'' is-date=''true'' field-code=''ARInvoice.InvoiceDate''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -5718,7 +5718,7 @@
 		</LogColumn>
 		<LogColumn max-width=''90%''>
 			<LogFieldContainer>
-				<LogField disable-copy=''true'' field-code=''Invoice.PrintNotes''></LogField>
+				<LogField disable-copy=''true'' field-code=''ARInvoice.PrintNotes''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 	</LogRow>
@@ -5776,10 +5776,10 @@
 					<LogFieldContainer>
 						<LogField tooltip=''true'' disable-copy=''true''
 							log-if=''{ARInvoice.IsConsolidationInvoice} === [true]''
-							field-code=''Invoice.ShipmentsNumbers''></LogField>
+							field-code=''ARInvoice.ShipmentsNumbers''></LogField>
 						<LogField tooltip=''true'' disable-copy=''true''
 							log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]''
-							field-code=''Invoice.MainEntityReference''></LogField>
+							field-code=''ARInvoice.MainEntityReference''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -5788,13 +5788,13 @@
 			<LogRow class=''border-0 padding-0''>
 				<LogColumn>
 					<LogFieldContainer>
-						<LogLabel field-code=''ARInvoice.AmountInInvoiceCurrency''></LogLabel>
+						<LogLabel field-code=''ARInvoice.AmountDue''></LogLabel>
 					</LogFieldContainer>
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
 						<LogField max-width=''80%'' is-decimal=''true'' disable-copy=''true'' margin=''0 0.25 0 0''
-							field-code=''ARInvoice.AmountInInvoiceCurrency''></LogField>
+							field-code=''ARInvoice.AmountDue''></LogField>
 						<LogField disable-copy=''true'' field-code=''ARInvoice.InvoiceCurrencyCode''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
@@ -5840,7 +5840,7 @@
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+						<LogField disable-copy=''true'' is-date=''true'' field-code=''ARInvoice.InvoiceDate''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -5855,7 +5855,7 @@
 		</LogColumn>
 		<LogColumn max-width=''90%''>
 			<LogFieldContainer>
-				<LogField disable-copy=''true'' field-code=''Invoice.PrintNotes''></LogField>
+				<LogField disable-copy=''true'' field-code=''ARInvoice.PrintNotes''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 	</LogRow>
@@ -5918,10 +5918,10 @@
 					<LogFieldContainer>
 						<LogField tooltip=''true'' disable-copy=''true''
 							log-if=''{ARInvoice.IsConsolidationInvoice} === [true]''
-							field-code=''Invoice.ShipmentsNumbers''></LogField>
+							field-code=''ARInvoice.ShipmentsNumbers''></LogField>
 						<LogField tooltip=''true'' disable-copy=''true''
 							log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]''
-							field-code=''Invoice.MainEntityReference''></LogField>
+							field-code=''ARInvoice.MainEntityReference''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -5930,13 +5930,13 @@
 			<LogRow class=''border-0 padding-0''>
 				<LogColumn>
 					<LogFieldContainer>
-						<LogLabel field-code=''ARInvoice.AmountInInvoiceCurrency''></LogLabel>
+						<LogLabel field-code=''ARInvoice.AmountDue''></LogLabel>
 					</LogFieldContainer>
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
 						<LogField max-width=''80%'' is-decimal=''true'' disable-copy=''true'' margin=''0 0.25 0 0''
-							field-code=''ARInvoice.AmountInInvoiceCurrency''></LogField>
+							field-code=''ARInvoice.AmountDue''></LogField>
 						<LogField disable-copy=''true'' field-code=''ARInvoice.InvoiceCurrencyCode''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
@@ -5982,7 +5982,7 @@
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+						<LogField disable-copy=''true'' is-date=''true'' field-code=''ARInvoice.InvoiceDate''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -5997,7 +5997,7 @@
 		</LogColumn>
 		<LogColumn max-width=''90%''>
 			<LogFieldContainer>
-				<LogField disable-copy=''true'' field-code=''Invoice.PrintNotes''></LogField>
+				<LogField disable-copy=''true'' field-code=''ARInvoice.PrintNotes''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 	</LogRow>
@@ -6055,10 +6055,10 @@
 					<LogFieldContainer>
 						<LogField tooltip=''true'' disable-copy=''true''
 							log-if=''{ARInvoice.IsConsolidationInvoice} === [true]''
-							field-code=''Invoice.ShipmentsNumbers''></LogField>
+							field-code=''ARInvoice.ShipmentsNumbers''></LogField>
 						<LogField tooltip=''true'' disable-copy=''true''
 							log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]''
-							field-code=''Invoice.MainEntityReference''></LogField>
+							field-code=''ARInvoice.MainEntityReference''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -6067,13 +6067,13 @@
 			<LogRow class=''border-0 padding-0''>
 				<LogColumn>
 					<LogFieldContainer>
-						<LogLabel field-code=''ARInvoice.AmountInInvoiceCurrency''></LogLabel>
+						<LogLabel field-code=''ARInvoice.AmountDue''></LogLabel>
 					</LogFieldContainer>
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
 						<LogField max-width=''80%'' is-decimal=''true'' disable-copy=''true'' margin=''0 0.25 0 0''
-							field-code=''ARInvoice.AmountInInvoiceCurrency''></LogField>
+							field-code=''ARInvoice.AmountDue''></LogField>
 						<LogField disable-copy=''true'' field-code=''ARInvoice.InvoiceCurrencyCode''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
@@ -6119,7 +6119,7 @@
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+						<LogField disable-copy=''true'' is-date=''true'' field-code=''ARInvoice.InvoiceDate''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -6134,7 +6134,7 @@
 		</LogColumn>
 		<LogColumn max-width=''90%''>
 			<LogFieldContainer>
-				<LogField disable-copy=''true'' field-code=''Invoice.PrintNotes''></LogField>
+				<LogField disable-copy=''true'' field-code=''ARInvoice.PrintNotes''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 	</LogRow>
@@ -6196,10 +6196,10 @@
 					<LogFieldContainer>
 						<LogField tooltip=''true'' disable-copy=''true''
 							log-if=''{ARInvoice.IsConsolidationInvoice} === [true]''
-							field-code=''Invoice.ShipmentsNumbers''></LogField>
+							field-code=''ARInvoice.ShipmentsNumbers''></LogField>
 						<LogField tooltip=''true'' disable-copy=''true''
 							log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]''
-							field-code=''Invoice.MainEntityReference''></LogField>
+							field-code=''ARInvoice.MainEntityReference''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -6208,13 +6208,13 @@
 			<LogRow class=''border-0 padding-0''>
 				<LogColumn>
 					<LogFieldContainer>
-						<LogLabel field-code=''ARInvoice.AmountInInvoiceCurrency''></LogLabel>
+						<LogLabel field-code=''ARInvoice.AmountDue''></LogLabel>
 					</LogFieldContainer>
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
 						<LogField max-width=''80%'' is-decimal=''true'' disable-copy=''true'' margin=''0 0.25 0 0''
-							field-code=''ARInvoice.AmountInInvoiceCurrency''></LogField>
+							field-code=''ARInvoice.AmountDue''></LogField>
 						<LogField disable-copy=''true'' field-code=''ARInvoice.InvoiceCurrencyCode''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
@@ -6260,7 +6260,7 @@
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+						<LogField disable-copy=''true'' is-date=''true'' field-code=''ARInvoice.InvoiceDate''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -6275,7 +6275,7 @@
 		</LogColumn>
 		<LogColumn max-width=''90%''>
 			<LogFieldContainer>
-				<LogField disable-copy=''true'' field-code=''Invoice.PrintNotes''></LogField>
+				<LogField disable-copy=''true'' field-code=''ARInvoice.PrintNotes''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 	</LogRow>
@@ -6333,10 +6333,10 @@
 					<LogFieldContainer>
 						<LogField tooltip=''true'' disable-copy=''true''
 							log-if=''{ARInvoice.IsConsolidationInvoice} === [true]''
-							field-code=''Invoice.ShipmentsNumbers''></LogField>
+							field-code=''ARInvoice.ShipmentsNumbers''></LogField>
 						<LogField tooltip=''true'' disable-copy=''true''
 							log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]''
-							field-code=''Invoice.MainEntityReference''></LogField>
+							field-code=''ARInvoice.MainEntityReference''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -6345,13 +6345,13 @@
 			<LogRow class=''border-0 padding-0''>
 				<LogColumn>
 					<LogFieldContainer>
-						<LogLabel field-code=''ARInvoice.AmountInInvoiceCurrency''></LogLabel>
+						<LogLabel field-code=''ARInvoice.AmountDue''></LogLabel>
 					</LogFieldContainer>
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
 						<LogField max-width=''80%'' is-decimal=''true'' disable-copy=''true'' margin=''0 0.25 0 0''
-							field-code=''ARInvoice.AmountInInvoiceCurrency''></LogField>
+							field-code=''ARInvoice.AmountDue''></LogField>
 						<LogField disable-copy=''true'' field-code=''ARInvoice.InvoiceCurrencyCode''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
@@ -6397,7 +6397,7 @@
 				</LogColumn>
 				<LogColumn max-width=''60%''>
 					<LogFieldContainer>
-						<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+						<LogField disable-copy=''true'' is-date=''true'' field-code=''ARInvoice.InvoiceDate''></LogField>
 					</LogFieldContainer>
 				</LogColumn>
 			</LogRow>
@@ -6412,7 +6412,7 @@
 		</LogColumn>
 		<LogColumn max-width=''90%''>
 			<LogFieldContainer>
-				<LogField disable-copy=''true'' field-code=''Invoice.PrintNotes''></LogField>
+				<LogField disable-copy=''true'' field-code=''ARInvoice.PrintNotes''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 	</LogRow>
@@ -6464,9 +6464,9 @@
 			</LogFieldContainer>
 			<LogFieldContainer>
 				<LogField tooltip=''true'' disable-copy=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]''
-					field-code=''Invoice.ShipmentsNumbers''></LogField>
+					field-code=''ARInvoice.ShipmentsNumbers''></LogField>
 				<LogField tooltip=''true'' disable-copy=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]''
-					field-code=''Invoice.MainEntityReference''></LogField>
+					field-code=''ARInvoice.MainEntityReference''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 	</LogRow>
@@ -6476,7 +6476,7 @@
 				<LogLabel field-code=''ARInvoice.InvoiceDate''></LogLabel>
 			</LogFieldContainer>
 			<LogFieldContainer>
-				<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+				<LogField disable-copy=''true'' is-date=''true'' field-code=''ARInvoice.InvoiceDate''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 		<LogColumn width=''50%''>
@@ -6519,7 +6519,7 @@
 				<LogLabel field-code=''ARInvoice.PrintNotes''></LogLabel>
 			</LogFieldContainer>
 			<LogFieldContainer>
-				<LogField disable-copy=''true'' field-code=''Invoice.PrintNotes''></LogField>
+				<LogField disable-copy=''true'' field-code=''ARInvoice.PrintNotes''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 	</LogRow>
@@ -6568,9 +6568,9 @@
 			</LogFieldContainer>
 			<LogFieldContainer>
 				<LogField tooltip=''true'' disable-copy=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]''
-					field-code=''Invoice.ShipmentsNumbers''></LogField>
+					field-code=''ARInvoice.ShipmentsNumbers''></LogField>
 				<LogField tooltip=''true'' disable-copy=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]''
-					field-code=''Invoice.MainEntityReference''></LogField>
+					field-code=''ARInvoice.MainEntityReference''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 	</LogRow>
@@ -6580,7 +6580,7 @@
 				<LogLabel field-code=''ARInvoice.InvoiceDate''></LogLabel>
 			</LogFieldContainer>
 			<LogFieldContainer>
-				<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+				<LogField disable-copy=''true'' is-date=''true'' field-code=''ARInvoice.InvoiceDate''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 		<LogColumn width=''50%''>
@@ -6623,7 +6623,7 @@
 				<LogLabel field-code=''ARInvoice.PrintNotes''></LogLabel>
 			</LogFieldContainer>
 			<LogFieldContainer>
-				<LogField disable-copy=''true'' field-code=''Invoice.PrintNotes''></LogField>
+				<LogField disable-copy=''true'' field-code=''ARInvoice.PrintNotes''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 	</LogRow>
@@ -6676,9 +6676,9 @@
 			</LogFieldContainer>
 			<LogFieldContainer>
 				<LogField tooltip=''true'' disable-copy=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]''
-					field-code=''Invoice.ShipmentsNumbers''></LogField>
+					field-code=''ARInvoice.ShipmentsNumbers''></LogField>
 				<LogField tooltip=''true'' disable-copy=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]''
-					field-code=''Invoice.MainEntityReference''></LogField>
+					field-code=''ARInvoice.MainEntityReference''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 	</LogRow>
@@ -6688,7 +6688,7 @@
 				<LogLabel field-code=''ARInvoice.InvoiceDate''></LogLabel>
 			</LogFieldContainer>
 			<LogFieldContainer>
-				<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+				<LogField disable-copy=''true'' is-date=''true'' field-code=''ARInvoice.InvoiceDate''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 		<LogColumn width=''50%''>
@@ -6731,7 +6731,7 @@
 				<LogLabel field-code=''ARInvoice.PrintNotes''></LogLabel>
 			</LogFieldContainer>
 			<LogFieldContainer>
-				<LogField disable-copy=''true'' field-code=''Invoice.PrintNotes''></LogField>
+				<LogField disable-copy=''true'' field-code=''ARInvoice.PrintNotes''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 	</LogRow>
@@ -6780,9 +6780,9 @@
 			</LogFieldContainer>
 			<LogFieldContainer>
 				<LogField tooltip=''true'' disable-copy=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} === [true]''
-					field-code=''Invoice.ShipmentsNumbers''></LogField>
+					field-code=''ARInvoice.ShipmentsNumbers''></LogField>
 				<LogField tooltip=''true'' disable-copy=''true'' log-if=''{ARInvoice.IsConsolidationInvoice} !== [true]''
-					field-code=''Invoice.MainEntityReference''></LogField>
+					field-code=''ARInvoice.MainEntityReference''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 	</LogRow>
@@ -6792,7 +6792,7 @@
 				<LogLabel field-code=''ARInvoice.InvoiceDate''></LogLabel>
 			</LogFieldContainer>
 			<LogFieldContainer>
-				<LogField disable-copy=''true'' is-date=''true'' field-code=''Invoice.CreateDate''></LogField>
+				<LogField disable-copy=''true'' is-date=''true'' field-code=''ARInvoice.InvoiceDate''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 		<LogColumn width=''50%''>
@@ -6835,7 +6835,7 @@
 				<LogLabel field-code=''ARInvoice.PrintNotes''></LogLabel>
 			</LogFieldContainer>
 			<LogFieldContainer>
-				<LogField disable-copy=''true'' field-code=''Invoice.PrintNotes''></LogField>
+				<LogField disable-copy=''true'' field-code=''ARInvoice.PrintNotes''></LogField>
 			</LogFieldContainer>
 		</LogColumn>
 	</LogRow>
