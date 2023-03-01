@@ -243,7 +243,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 tenant = authToken.Tenant;
                 email = authToken.Email;
                 var helper = new DigitalFieldSecuritesHelper();
-                var response = helper.GetDigitalTextCodeObjects(tenant, objectTableId, profileCode);
+                var response = helper.GetDigitalTextCodeObjects(tenant, objectTableId, profileCode, false);
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
             catch (AutenticationException ex)
@@ -264,7 +264,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             try
             {
                 var helper = new DigitalFieldSecuritesHelper();
-                var response = helper.GetDigitalTextCodeObjects(tenant, objectTableId, profileCode);
+                var response = helper.GetDigitalTextCodeObjects(tenant, objectTableId, profileCode, true);
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
             catch (AutenticationException ex)

@@ -11,7 +11,7 @@ namespace Logitude.BL.Helpers
 {
     public class DigitalFieldSecuritesHelper
     {
-        public List<DigitalTextCodeObject> GetDigitalTextCodeObjects(int tenant, string objectTableId, string profileCode)
+        public List<DigitalTextCodeObject> GetDigitalTextCodeObjects(int tenant, string objectTableId, string profileCode, bool isTranslation)
         {
             DigitalTextCodeRepository digitalTextCodeRepository = new DigitalTextCodeRepository(tenant);
 
@@ -45,17 +45,44 @@ namespace Logitude.BL.Helpers
                 }
             }
 
-            foreach (var item in customCodesObject)
+            if (isTranslation)
             {
-                var temp = defaultCodesObject.FirstOrDefault(a => a.TextCode.Equals(item.TextCode));
+                foreach (var item in customCodesObject)
+                {
+                    var data = defaultCodesObject.FirstOrDefault(a => a.TextCode.Equals(item.TextCode));
+                    if (data != null)
+                    {
+                        if (!string.IsNullOrWhiteSpace(item.DisplayText))
+                        {
+                            data.DefaultText = item.DisplayText;
+                        }
+                        continue;
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrWhiteSpace(item.DisplayText))
+                        {
+                            item.DefaultText = item.DisplayText;
+                        }
 
-                if (temp != null)
-                {
-                    temp.DisplayText = item.DisplayText;
+                        defaultCodesObject.Add(item);
+                    }
                 }
-                else
+            }
+            else
+            {
+                foreach (var item in customCodesObject)
                 {
-                    defaultCodesObject.Add(item);
+                    var temp = defaultCodesObject.FirstOrDefault(a => a.TextCode.Equals(item.TextCode));
+
+                    if (temp != null)
+                    {
+                        temp.DisplayText = item.DisplayText;
+                    }
+                    else
+                    {
+                        defaultCodesObject.Add(item);
+                    }
                 }
             }
 

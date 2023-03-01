@@ -198,6 +198,7 @@ namespace WebFreight.Web.Helpers
                 sheet1.Range["A3:V3"].AutofitColumns();
 
                 // Build excel headers 
+
                 table.Columns.Add(textCodeObjects["Shipment.F.ShipmentNumber"]);
                 table.Columns.Add(textCodeObjects["Shipment.G.TransportMode"]);
                 table.Columns.Add(textCodeObjects["Shipment.G.DirectionName"]);
@@ -225,7 +226,7 @@ namespace WebFreight.Web.Helpers
                 if (showMultiUnitsOfMeasurements)
                 {
                     table.Columns.Add(textCodeObjects["Shipment.F.ChargeableWeightInKG"]);
-                    table.Columns.Add(textCodeObjects["Shipment.F.ChargeableWeightInKG"]);
+                    table.Columns.Add(textCodeObjects["Shipment.G.ChargeableWeightInLB"]);
                 }
                 else
                 {
@@ -519,16 +520,17 @@ namespace WebFreight.Web.Helpers
                     var shipmentData = shipmentQuery.GetByFilters(args.QueryFilters);
 
                     var allowedShipmentsFieldSecurites = helper.GitDigitalSecuritesFeilds(args.QueryFilters.ObjectTableId, args.QueryFilters.ProfileCode, tenant, false)
-                                                      .Where(a => a.HasPermission)
-                                                      .Select(a => a.FieldCode.Replace("Shipment.", ""))
-                                                      .ToList();
+                                                               .Where(a => a.HasPermission)
+                                                               .Select(a => a.FieldCode.Replace($"Shipment.{tenant}.", ""))
+                                                               .Select(a => a.Replace("Shipment.", ""))
+                                                               .ToList();
 
                     var shipmentsFields = string.Join(",", allowedShipmentsFieldSecurites);
                     var shipmentsDynamicData = shipmentData.Select("new { " + shipmentsFields + " }").ToDynamicList();
                     FillContainerNumbers(shipmentsDynamicData);
 
-                    var textCodeObjects = helper.GetDigitalTextCodeObjects(tenant, args.QueryFilters.ObjectTableId, args.QueryFilters.ProfileCode)
-                                                .ToDictionary(x => x.TextCode, y => y.DisplayText);
+                    var textCodeObjects = helper.GetDigitalTextCodeObjects(tenant, args.QueryFilters.ObjectTableId, args.QueryFilters.ProfileCode, true)
+                                                .ToDictionary(x => x.TextCode, y => y.DefaultText);
 
                     data = DigitalPortalShipmentExportToExcel(shipmentsDynamicData, showMultiUnitsOfMeasurements, textCodeObjects);
 

@@ -197,7 +197,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                                   .ToList();
 
                 var fieldsToBeSelected = string.Join(",", allowedFieldSecurites);
-
                 var shipments = entityLists.Select("new { " + fieldsToBeSelected + " }").ToDynamicList();
 
                 var isAllShipmentsQuery = newFilters.AdditionalFilters.Where(a => a.FieldName == "AllShipments").Any();
