@@ -1031,7 +1031,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             //{
             //var supplierInvoicePM =declarationPM.SupplierInvoices[supplierInvoiceSeq];
             //declarationGoodsShipment.SequenceNumeric = supplierInvoiceSeq + 1;
-
+            bool isFirstSupplierInvoice = true;
             foreach (var supplierInvoicePM in declarationPM.SupplierInvoices
                 ///.Where( rec => rec.SequenceNumeric !=null)
                 .OrderBy(rec => rec.SequenceNumeric).ToList())
@@ -1077,14 +1077,21 @@ namespace Logitude.CustomsMessaging.RequestServices
                 for (int consignmentSeq = 0; consignmentSeq < declarationPM.Consignments.Count(); consignmentSeq++)
                 {
                     string consignmentType = declarationPM.Consignments[consignmentSeq].ConsignmentType;
-                    if (supplierInvoicePM.SequenceNumeric.Value == 1 && !declarationPM.ExcludeConsignment && consignmentType == "I") // I=Import
+                    if (isFirstSupplierInvoice)
                     {
-                        declarationImportConsignmentList.AddRange(GetDeclarationImportConsignment(declarationPM.Consignments[consignmentSeq], declarationPM.ProcedureCurrentCode));
+                        if (/*supplierInvoicePM.SequenceNumeric.Value == 1 &&*/ !declarationPM.ExcludeConsignment && consignmentType == "I") // I=Import
+                        {
+                            declarationImportConsignmentList.AddRange(GetDeclarationImportConsignment(declarationPM.Consignments[consignmentSeq], declarationPM.ProcedureCurrentCode));
+                        }
+                        else if (/*supplierInvoicePM.SequenceNumeric.Value == 1 &&*/ !declarationPM.ExcludeConsignment)
+                        {
+                            declarationConsignmentList.AddRange(GetDeclarationExportConsignment(declarationPM.Consignments[consignmentSeq]));
+                        }
                     }
-                    else if (supplierInvoicePM.SequenceNumeric.Value == 1 && !declarationPM.ExcludeConsignment)
-                    {
-                        declarationConsignmentList.AddRange(GetDeclarationExportConsignment(declarationPM.Consignments[consignmentSeq]));
-                    }
+                }
+                if (isFirstSupplierInvoice)
+                {
+                    isFirstSupplierInvoice = false;
                 }
                 declarationGoodsShipment.ImportConsignment = declarationImportConsignmentList.ToArray();
                 declarationGoodsShipment.ExportConsignment = declarationConsignmentList.ToArray();
