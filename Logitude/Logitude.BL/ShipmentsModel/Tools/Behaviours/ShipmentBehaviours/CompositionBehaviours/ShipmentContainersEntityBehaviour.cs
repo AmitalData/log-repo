@@ -493,6 +493,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             container.AdditionalReference2 = shipmentPackage.Reference2;
             container.AdditionalReference3 = shipmentPackage.Reference3;
             container.AdditionalReference4 = shipmentPackage.Reference4;
+            container.ShipmentDepartmentId = this.initializer.EntityPM.DepartmentId;
 
 
             this.MapContainerFieldsFromShipmentPickup(container);
