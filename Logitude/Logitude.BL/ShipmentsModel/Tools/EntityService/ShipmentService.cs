@@ -541,13 +541,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             this.ChangePickupDliveryNumbersOnShipmentDirectionConverted();
                         }
 
-                        if (ShipmentDocsFieldFromWorkerRole != null)
-                        {
-                            initializer.ShipmentDocsFieldFromWorkerRole = ShipmentDocsFieldFromWorkerRole;
-                            UpdateShipmentDocsFieldBehaviour updateShipmentDocsFieldBehaviour = new UpdateShipmentDocsFieldBehaviour(initializer);
-                            updateShipmentDocsFieldBehaviour.Handle();
-                        }
-
                         this.UpdateShipmentProductItems();
                         this.ComputeIsHTSMissingField();
                         this.UpdateShipmentPackagesCollection();
@@ -620,8 +613,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         entityPM.IsConnectToMasterShipment = entityMasterData != null ? true : false;
                         shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
                         shipmentBehaviourFacade.Handle(FieldChanges);
-
                         shipmentBehaviourFacade.HandleShipmentDigitalFields(shipmentDigitalFields);
+
+                        if (ShipmentDocsFieldFromWorkerRole != null)
+                        {
+                            shipmentBehaviourFacade.HandleShipmentDocsFields(ShipmentDocsFieldFromWorkerRole);                        
+                        }
 
                         if (shipmentBehaviourFacade.ReceivablePricingUpdated_CrossDoc)
                         {
