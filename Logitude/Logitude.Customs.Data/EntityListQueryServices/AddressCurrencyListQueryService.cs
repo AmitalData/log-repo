@@ -37,9 +37,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 		private IQueryable<AddressCurrency> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<AddressCurrency> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
+			return iQueryable;
 		}
-			}
+	}
 
 
 }

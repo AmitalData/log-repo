@@ -174,9 +174,9 @@ export class VendorEditComponent extends BaseComponent {
                                     SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsVendor/Components/EditTabs/VendorCurrency/VendorCurrencyTabComponent',
                                     myLocation.viewContainerRef)
                                     .then(cmpRef => {
-                                        this.GENERAL = cmpRef.instance;
-                                        this.GENERAL.SetTabArgs({ EntityPM: this.EntityPM, IsNewEntity: this.IsNewEntity });
-                                        this.GENERAL.FillValidationErrorList.subscribe((response: any) => {
+                                        this.VENDORCURRENCY = cmpRef.instance;
+                                        this.VENDORCURRENCY.SetTabArgs({ EntityPM: this.EntityPM, IsNewEntity: this.IsNewEntity });
+                                        this.VENDORCURRENCY.FillValidationErrorList.subscribe((response: any) => {
                                             this.ValdationErrorList = response;
                                         });
                                     });
