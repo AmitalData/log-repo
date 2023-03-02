@@ -345,6 +345,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void Trace(TaxReportPM entityPM, TaxReport entityPOCO, string changesXml)
         {
+            VatReportStatusQueryService queryService = new VatReportStatusQueryService(entityPOCO.Tenant);
             ContactPM loggedContact = GetLoggedContact(entityPM.Tenant);
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
@@ -361,129 +362,30 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 };
                 EventTracer.CreateTraceEvent(eventTracerArgs);
             }
-            if (entityPM.VatNumber != entityPOCO.VatNumber)
+            if (
+                 (entityPM.StatusCode == VatReportStatusValues.CancelationInProgress && entityPOCO.StatusCode == VatReportStatusValues.Draft) ||
+                 (entityPM.StatusCode == VatReportStatusValues.CancelationInProgress && entityPOCO.StatusCode == VatReportStatusValues.Error) ||
+                 (entityPM.StatusCode == VatReportStatusValues.CancelationInProgress && entityPOCO.StatusCode == VatReportStatusValues.Transmitted) ||
+                 (entityPM.StatusCode == VatReportStatusValues.Cancelled && entityPOCO.StatusCode == VatReportStatusValues.TransmittedAndClosingJournal) ||
+                 (entityPM.StatusCode == VatReportStatusValues.TransmittedAndClosingJournal && entityPOCO.StatusCode == VatReportStatusValues.Transmitted) ||
+                 (entityPM.StatusCode == VatReportStatusValues.Draft && entityPOCO.StatusCode == VatReportStatusValues.Transmitted) ||
+                 (entityPM.StatusCode == VatReportStatusValues.Transmitted && entityPOCO.StatusCode == VatReportStatusValues.Draft) ||
+                 (entityPM.StatusCode == VatReportStatusValues.CancelationFailed && entityPOCO.StatusCode == VatReportStatusValues.CancelationInProgress) ||
+                 (entityPM.StatusCode == VatReportStatusValues.Cancelled && entityPOCO.StatusCode == VatReportStatusValues.CancelationFailed) ||
+                 (entityPM.StatusCode == VatReportStatusValues.Error && entityPOCO.StatusCode == VatReportStatusValues.Draft) ||
+                 (entityPM.StatusCode == VatReportStatusValues.Draft && entityPOCO.StatusCode == VatReportStatusValues.Error) ||
+                 (entityPM.StatusCode == VatReportStatusValues.Error && entityPOCO.StatusCode == VatReportStatusValues.InProgress) ||
+                 (entityPM.StatusCode == VatReportStatusValues.Draft && entityPOCO.StatusCode == VatReportStatusValues.InProgress)
+                )
             {
-                string notes = TranslateTextsClass.Translate("TaxReport.F.VatNumber", entityPOCO.Tenant) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPOCO.Tenant) + entityPOCO.VatNumber + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPOCO.Tenant) + entityPM.VatNumber;
-                EventTracerArgs eventTracerArgs = new EventTracerArgs()
-                {
-                    EntityId = entityPM.Id,
-                    Tenant = entityPM.Tenant,
-                    UserId = loggedContact.Id,
-                    ObjectTableName = "TaxReport",
-                    IsAddedManually = false,
-                    EventTypeCode = "UPEV",
-                    Notes = notes,
-                };
-                EventTracer.CreateTraceEvent(eventTracerArgs);
-            }
-            if (entityPM.ExemptTaxableOutput != entityPOCO.ExemptTaxableOutput)
-            {
-                string notes = TranslateTextsClass.Translate("TaxReport.F.ExemptTaxableOutput", entityPOCO.Tenant) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPOCO.Tenant) + entityPOCO.ExemptTaxableOutput + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPOCO.Tenant) + entityPM.ExemptTaxableOutput;
-                EventTracerArgs eventTracerArgs = new EventTracerArgs()
-                {
-                    EntityId = entityPM.Id,
-                    Tenant = entityPM.Tenant,
-                    UserId = loggedContact.Id,
-                    ObjectTableName = "TaxReport",
-                    IsAddedManually = false,
-                    EventTypeCode = "UPEV",
-                    Notes = notes,
-                };
-                EventTracer.CreateTraceEvent(eventTracerArgs);
-            }
-            if (entityPM.EquipmentInputsTaxAmount != entityPOCO.EquipmentInputsTaxAmount)
-            {
-                string notes = TranslateTextsClass.Translate("TaxReport.F.EquipmentInputsTaxAmount", entityPOCO.Tenant) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPOCO.Tenant) + entityPOCO.EquipmentInputsTaxAmount + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPOCO.Tenant) + entityPM.EquipmentInputsTaxAmount;
-                EventTracerArgs eventTracerArgs = new EventTracerArgs()
-                {
-                    EntityId = entityPM.Id,
-                    Tenant = entityPM.Tenant,
-                    UserId = loggedContact.Id,
-                    ObjectTableName = "TaxReport",
-                    IsAddedManually = false,
-                    EventTypeCode = "UPEV",
-                    Notes = notes,
-                };
-                EventTracer.CreateTraceEvent(eventTracerArgs);
-            }
-            if (entityPM.OtherInputsTaxAmount != entityPOCO.OtherInputsTaxAmount)
-            {
-                string notes = TranslateTextsClass.Translate("TaxReport.F.OtherInputsTaxAmount", entityPOCO.Tenant) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPOCO.Tenant) + entityPOCO.OtherInputsTaxAmount + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPOCO.Tenant) + entityPM.OtherInputsTaxAmount;
-                EventTracerArgs eventTracerArgs = new EventTracerArgs()
-                {
-                    EntityId = entityPM.Id,
-                    Tenant = entityPM.Tenant,
-                    UserId = loggedContact.Id,
-                    ObjectTableName = "TaxReport",
-                    IsAddedManually = false,
-                    EventTypeCode = "UPEV",
-                    Notes = notes,
-                };
-                EventTracer.CreateTraceEvent(eventTracerArgs);
-            }
-            if (entityPM.EquipmentInputsTaxAmount != entityPOCO.EquipmentInputsTaxAmount)
-            {
-                string notes = TranslateTextsClass.Translate("TaxReport.F.EquipmentInputsTaxAmount", entityPOCO.Tenant) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPOCO.Tenant) + entityPOCO.EquipmentInputsTaxAmount + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPOCO.Tenant) + entityPM.EquipmentInputsTaxAmount;
-                EventTracerArgs eventTracerArgs = new EventTracerArgs()
-                {
-                    EntityId = entityPM.Id,
-                    Tenant = entityPM.Tenant,
-                    UserId = loggedContact.Id,
-                    ObjectTableName = "TaxReport",
-                    IsAddedManually = false,
-                    EventTypeCode = "UPEV",
-                    Notes = notes,
-                };
-                EventTracer.CreateTraceEvent(eventTracerArgs);
-            }
-            if (entityPM.AmountForPayRefund != entityPOCO.AmountForPayRefund)
-            {
-                string notes = TranslateTextsClass.Translate("TaxReport.F.AmountForPayRefund", entityPOCO.Tenant) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPOCO.Tenant) + entityPOCO.AmountForPayRefund + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPOCO.Tenant) + entityPM.AmountForPayRefund;
-                EventTracerArgs eventTracerArgs = new EventTracerArgs()
-                {
-                    EntityId = entityPM.Id,
-                    Tenant = entityPM.Tenant,
-                    UserId = loggedContact.Id,
-                    ObjectTableName = "TaxReport",
-                    IsAddedManually = false,
-                    EventTypeCode = "UPEV",
-                    Notes = notes,
-                };
-                EventTracer.CreateTraceEvent(eventTracerArgs);
-            }
-            if (entityPM.LastUpdateDate != entityPOCO.LastUpdateDate)
-            {
-                string notes = TranslateTextsClass.Translate("TaxReport.F.LastUpdateDate", entityPOCO.Tenant) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPOCO.Tenant) + entityPOCO.LastUpdateDate + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPOCO.Tenant) + entityPM.LastUpdateDate;
-                EventTracerArgs eventTracerArgs = new EventTracerArgs()
-                {
-                    EntityId = entityPM.Id,
-                    Tenant = entityPM.Tenant,
-                    UserId = loggedContact.Id,
-                    ObjectTableName = "TaxReport",
-                    IsAddedManually = false,
-                    EventTypeCode = "UPEV",
-                    Notes = notes,
-                };
-                EventTracer.CreateTraceEvent(eventTracerArgs);
-            }
-            if (entityPM.TaxableOutputAmount != entityPOCO.TaxableOutputAmount)
-            {
-                string notes = TranslateTextsClass.Translate("TaxReport.F.TaxableOutputAmount", entityPOCO.Tenant) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPOCO.Tenant) + entityPOCO.TaxableOutputAmount + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPOCO.Tenant) + entityPM.TaxableOutputAmount;
-                EventTracerArgs eventTracerArgs = new EventTracerArgs()
-                {
-                    EntityId = entityPM.Id,
-                    Tenant = entityPM.Tenant,
-                    UserId = loggedContact.Id,
-                    ObjectTableName = "TaxReport",
-                    IsAddedManually = false,
-                    EventTypeCode = "UPEV",
-                    Notes = notes,
-                };
-                EventTracer.CreateTraceEvent(eventTracerArgs);
-            }
-            if (entityPM.TaxReportMonth != entityPOCO.TaxReportMonth)
-            {
-                string notes = TranslateTextsClass.Translate("TaxReport.F.TaxReportMonth", entityPOCO.Tenant) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPOCO.Tenant) + entityPOCO.TaxReportMonth + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPOCO.Tenant) + entityPM.TaxReportMonth;
+
+                VatReportStatusPM oldStatus = queryService.GetSingle(entityPOCO.StatusCode, false, false);
+                var OldStatusEnglishName = oldStatus.EnglishName;
+                VatReportStatusPM newStatus = queryService.GetSingle(entityPM.StatusCode, false, false);
+                var NewStatusEnglishName = newStatus.EnglishName;
+
+
+                string notes = TranslateTextsClass.Translate("TaxReportStatus", entityPOCO.Tenant) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPOCO.Tenant) + OldStatusEnglishName + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPOCO.Tenant) + NewStatusEnglishName;
                 EventTracerArgs eventTracerArgs = new EventTracerArgs()
                 {
                     EntityId = entityPM.Id,
@@ -504,29 +406,29 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     EventTracerArgs eventTracerArgs = new EventTracerArgs()
                     {
                         EntityId = entityPM.Id,
-                        Tenant = entityPM.Tenant,
+                       Tenant = entityPM.Tenant,
                         UserId = loggedContact.Id,
                         ObjectTableName = "TaxReport",
                         IsAddedManually = false,
                         EventTypeCode = "CNCL",
                         Notes = "",
                     };
-                    EventTracer.CreateTraceEvent(eventTracerArgs);
+                   EventTracer.CreateTraceEvent(eventTracerArgs);
                 }
-                else
+            else
+            {
+                EventTracerArgs eventTracerArgs = new EventTracerArgs()
                 {
-                    EventTracerArgs eventTracerArgs = new EventTracerArgs()
-                    {
-                        EntityId = entityPM.Id,
-                        Tenant = entityPM.Tenant,
-                        UserId = loggedContact.Id,
-                        ObjectTableName = "TaxReport",
-                        IsAddedManually = false,
-                        EventTypeCode = "APRV",
-                        Notes = "",
-                    };
-                    EventTracer.CreateTraceEvent(eventTracerArgs);
-                }
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    UserId = loggedContact.Id,
+                    ObjectTableName = "TaxReport",
+                    IsAddedManually = false,
+                    EventTypeCode = "APRV",
+                    Notes = "",
+                };
+                EventTracer.CreateTraceEvent(eventTracerArgs);
+            }
                 CreateTraceEventWhenTransmittedReportReturnToDraft(entityPM,loggedContact);
             }
 
