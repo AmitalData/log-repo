@@ -120,6 +120,8 @@ namespace CommunicationWorkerRole
         {
             if (!string.IsNullOrEmpty(recivedDateString))
                 recivedDate = Convert.ToDateTime(recivedDateString);
+
+            //recivedDate = DateTime.TryParse(recivedDateString, out recivedDate);
         }
 
         private void InitializeServices()
@@ -190,7 +192,6 @@ namespace CommunicationWorkerRole
                 this.UpdateShipmentWhenDeletingDocument(documentsFilings, documentsFiling);
             }
         }
-
         private List<DocumentsFilingPM> GetShipmentDocumentFilings(DocumentsFilingPM documentsFiling, ICommonDataContext commonContext)
         {
             DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(commonContext);
@@ -231,16 +232,11 @@ namespace CommunicationWorkerRole
             }
         }
 
-
-
         private void UpdateShipment(DocumentsFilingPM documentFiling, bool isReceived, DateTime? receivedDate)
         {
             string shipmentId = documentFiling.EntityId;
-            if (string.IsNullOrEmpty(shipmentId))
-            {
-                return;
-            }
-
+            if (string.IsNullOrEmpty(shipmentId))            
+                return;           
 
             shipmentPM = GetShipment(shipmentId, tenant);
             if (shipmentPM == null) return;
@@ -255,17 +251,15 @@ namespace CommunicationWorkerRole
             isShipmentChange = true;
         }
 
-
-
         private void UpdateShipment()
         {
             if (shipmentPM == null || !isShipmentChange) return;
             ContactRepository contactRepository = new ContactRepository(tenant);
             Contact receivedBy = contactRepository.GetSingleContact(documentsFilingPM.ReceivedByUserId, tenant);
 
-            string email = "";
+            string email = "system@tenant" + tenant + ".com";
             if (receivedBy != null)
-                email = "";
+                email = receivedBy.Email;
 
             ShipmentService shipmentService = new ShipmentService(shipmentContext, shipmentPM, email);
 
@@ -277,15 +271,12 @@ namespace CommunicationWorkerRole
             shipmentService.Update(true);
         }
 
-
         private ShipmentPM GetShipment(string shipmentId, int tenant)
         {
             if (shipmentPM != null) return shipmentPM;
             shipmentPM = new ShipmentQuery(shipmentRepository).GetSinglePMWithNoRestriction(shipmentId, tenant);
             return shipmentPM;
         }
-
-
 
         private ShipmentDocsField GetEntity(string id)
         {
