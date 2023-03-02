@@ -8,6 +8,7 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using System.Collections.Generic;
 using System;
 using Logitude.BL.Helpers;
+using System.Threading.Tasks;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -166,7 +167,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             DWObjectTableQuery dwObjectTableQuery = new DWObjectTableQuery(tenant);
             List<DWObjectFieldPM> FinalList = new List<DWObjectFieldPM>();
             List<string> dwObjectTablesCodes = dwObjectTableQuery.GetDWObjectTablePMs(tenant).Where(dwTable => dwTable.TypeCode == "Fact" && string.IsNullOrEmpty(dwTable.ParentFactCode)).Select(dwTable => dwTable.Code).ToList();
-            dwObjectTablesCodes.ForEach(dwTableCode => {
+           
+            Parallel.ForEach(dwObjectTablesCodes, (dwTableCode) =>
+            {
                 FinalList.AddRange(GetDWObjectFieldWithChildrenFieldsPMsByDWObjectTabelAndTenant(tenant, dwTableCode));
             });
 
@@ -286,7 +289,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         private IEnumerable<IGrouping<string, DWObjectFieldPM>> GetDWObjectFieldPMDimensionListsGroups(int tenant ,List<string> dimensionTableLists)
         {
-            IEnumerable<IGrouping<string, DWObjectFieldPM>> list = (from a in repository.webFreightContext.DWObjectFields
+            IEnumerable<IGrouping<string, DWObjectFieldPM>> list = (from a in new DWObjectFieldRepository(tenant).webFreightContext.DWObjectFields
                                                                     where a.Tenant == tenant && dimensionTableLists.Contains(a.DWObjectTableCode) && a.DisplayInQueryBuilder == true
                                                                     select new DWObjectFieldPM()
                                                                     {
