@@ -187,12 +187,11 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.filterAgrs.SortDirection = this.ShipmentSearchInput.SortType;
         this.filterAgrs.SortBy = this.ShipmentSearchInput.SortFieldName;
 
-        if (this.ShipmentSearchInput.Customers.length > 0) {
-            this.filterAgrs.addAdditionalFilter("CustomersIds", this.ShipmentSearchInput.Customers.join("_"), null, null, "Equals", false, false, false, "string");
+        if (this.ShipmentSearchInput.CustomersIds.length > 0) {
+            this.filterAgrs.addAdditionalFilter("CustomersIds", this.ShipmentSearchInput.CustomersIds.join("_"), null, null, "Equals", false, false, false, "string");
         } else if (this.InvitedCustomers.length > 0) {
             this.filterAgrs.addAdditionalFilter("CustomersIds", this.InvitedCustomers.map(d => d.CardId).join("_"), null, null, "Equals", false, false, false, "string");
         }
-
 
         if (this.ShipmentSearchInput.MilestonesCodes.length > 0) {
             this.filterAgrs.addAdditionalFilter("MilestonesCodes", this.ShipmentSearchInput.MilestonesCodes.join("_"), null, null, "Equals", false, false, false, "string");
