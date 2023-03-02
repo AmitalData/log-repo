@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class WarehouseEntryUpdateClass
    {  		
-		public const string HashString = "c17e7dddf00dfc69edb399894a405150";
+		public const string HashString = "1439a35e4f051706dea6c7592c5adeda";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5181,6 +5181,183 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CustomerPrimaryContactId",
+					  						ObjectTableName =  "WarehouseEntry",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Contact",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CustomerPrimaryContactId",
+					  						ListPropertyPath =  "CustomerPrimaryContactId",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CustomerPrimaryContactId",
+					  						DefaultText =  "Customer Primary Contact",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  true,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ShipperPrimaryContactId",
+					  						ObjectTableName =  "WarehouseEntry",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Contact",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ShipperPrimaryContactId",
+					  						ListPropertyPath =  "ShipperPrimaryContactId",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ShipperPrimaryContactId",
+					  						DefaultText =  "Shipper Primary Contact",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  true,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ConsigneePrimaryContactId",
+					  						ObjectTableName =  "WarehouseEntry",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Contact",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ConsigneePrimaryContactId",
+					  						ListPropertyPath =  "ConsigneePrimaryContactId",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ConsigneePrimaryContactId",
+					  						DefaultText =  "Consignee Primary Contact",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  true,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -5478,12 +5655,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature WarehouseEntryConnectedEntitiesFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Tab.ConnectedEntities", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.ConnectedEntities", NameTextCodeDefaultText = "Connected Entities", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseEntryObjectTable);
  
                  
-			   TextCode WarehouseEntryEventsTextCode_TH7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.TH.Events", DefaultText = "Events",LocalDefaultText = "Events", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature WarehouseEntryEventsFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Tab.Events", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseEntryObjectTable);
+			   TextCode WarehouseEntryAuditTextCode_TH7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.TH.Audit", DefaultText = "Audit",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature WarehouseEntryAuditFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Tab.Audit", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntryFeatures.WEAU", NameTextCodeDefaultText = "Audit", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseEntryObjectTable);
  
                  
-			   TextCode WarehouseEntryAuditTextCode_TH8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.TH.Audit", DefaultText = "Audit",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature WarehouseEntryAuditFeature_TH8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Tab.Audit", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntryFeatures.WEAU", NameTextCodeDefaultText = "Audit", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseEntryObjectTable);
+			   TextCode WarehouseEntryEventsTextCode_TH8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.TH.Events", DefaultText = "Events",LocalDefaultText = "Events", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature WarehouseEntryEventsFeature_TH8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Tab.Events", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseEntryObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -5503,9 +5680,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COWE",HtmlComponentName = "WarehouseConnectionsTabComponent",HtmlComponentUrl = "./Warehouse/Components/EditTabs/ConnectionsTab/WarehouseConnectionsTabComponent", FeatureId = WarehouseEntryConnectedEntitiesFeature_TH6.Id,FeatureUniqeCode = WarehouseEntryConnectedEntitiesFeature_TH6.FeatureUniqeCode, ControlPath = "./Warehouse/Components/EditTabs/ConnectionsTab/WarehouseConnectionsTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryConnectedEntitiesTextCode_TH6.Id, TabNameTextCodeCode = WarehouseEntryConnectedEntitiesTextCode_TH6.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EVWE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = WarehouseEntryEventsFeature_TH7.Id,FeatureUniqeCode = WarehouseEntryEventsFeature_TH7.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryEventsTextCode_TH7.Id, TabNameTextCodeCode = WarehouseEntryEventsTextCode_TH7.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "WEAU",HtmlComponentName = "WarehouseEntryAuditTabComponent",HtmlComponentUrl = "./Warehouse/Components/EditTabs/Audit/WarehouseEntryAuditTabComponent", FeatureId = WarehouseEntryAuditFeature_TH7.Id,FeatureUniqeCode = WarehouseEntryAuditFeature_TH7.FeatureUniqeCode, ControlPath = "./Warehouse/Components/EditTabs/Audit/WarehouseEntryAuditTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryAuditTextCode_TH7.Id, TabNameTextCodeCode = WarehouseEntryAuditTextCode_TH7.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "WEAU",HtmlComponentName = "WarehouseEntryAuditTabComponent",HtmlComponentUrl = "./Warehouse/Components/EditTabs/Audit/WarehouseEntryAuditTabComponent", FeatureId = WarehouseEntryAuditFeature_TH8.Id,FeatureUniqeCode = WarehouseEntryAuditFeature_TH8.FeatureUniqeCode, ControlPath = "./Warehouse/Components/EditTabs/Audit/WarehouseEntryAuditTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryAuditTextCode_TH8.Id, TabNameTextCodeCode = WarehouseEntryAuditTextCode_TH8.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EVWE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = WarehouseEntryEventsFeature_TH8.Id,FeatureUniqeCode = WarehouseEntryEventsFeature_TH8.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryEventsTextCode_TH8.Id, TabNameTextCodeCode = WarehouseEntryEventsTextCode_TH8.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

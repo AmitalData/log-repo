@@ -70,11 +70,6 @@ export class WorkFlowPM {
     public set Description(newValue: string) { if (this.description != newValue) { this.description = newValue; this.MarkAsDirty("Description"); } }
        
 	 
-    private ownerId: string;
-    public get OwnerId() { return this.ownerId; }
-    public set OwnerId(newValue: string) { if (this.ownerId != newValue) { this.ownerId = newValue; this.MarkAsDirty("OwnerId"); } }
-       
-	 
     private statusCode: string;
     public get StatusCode() { return this.statusCode; }
     public set StatusCode(newValue: string) { if (this.statusCode != newValue) { this.statusCode = newValue; this.MarkAsDirty("StatusCode"); } }
@@ -83,11 +78,6 @@ export class WorkFlowPM {
     private statusName: string;
     public get StatusName() { return this.statusName; }
     public set StatusName(newValue: string) { if (this.statusName != newValue) { this.statusName = newValue; this.MarkAsDirty("StatusName"); } }
-       
-	 
-    private ownerName: string;
-    public get OwnerName() { return this.ownerName; }
-    public set OwnerName(newValue: string) { if (this.ownerName != newValue) { this.ownerName = newValue; this.MarkAsDirty("OwnerName"); } }
        
 	 
     private createdByUserName: string;
@@ -129,6 +119,16 @@ export class WorkFlowPM {
             this.workFlowVersions = newValue;
         }
     }
+    private retriesNumber: number;
+    public get RetriesNumber() { return this.retriesNumber; }
+    public set RetriesNumber(newValue: number) { if (this.retriesNumber != newValue) { this.retriesNumber = newValue; this.MarkAsDirty("RetriesNumber"); } }
+       
+	 
+    private retriesDelay: string;
+    public get RetriesDelay() { return this.retriesDelay; }
+    public set RetriesDelay(newValue: string) { if (this.retriesDelay != newValue) { this.retriesDelay = newValue; this.MarkAsDirty("RetriesDelay"); } }
+       
+	 
 
     public OldEntityPM: WorkFlowPM;
 		

@@ -32,9 +32,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string StatusCode { get; set; }
         public DateTime? CreateDate { get; set; }
         public string CreatedByUserId { get; set; }
-        public string IssuedByUserId { get; set; }
         public bool IsClosed { get; set; }
-        public bool IsCancelled { get; set; }
         public string ProfitCurrencyId { get; set; }
         public double? AmountInProfitCurrency { get; set; }
         public string UpdatedByUserId { get; set; }
@@ -53,7 +51,6 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public bool IsMultiCurrency { get; set; }
         public bool IsInvoiceNumberManuallySet { get; set; }
         public bool IsPrinted { get; set; }
-        public bool IsAutoCredit { get; set; }
         public string TransferStatusCode { get; set; }
         public string PartnerId { get; set; }
         public DateTime? ApprovedDate { get; set; }

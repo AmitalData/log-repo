@@ -41,7 +41,7 @@ namespace CommunicationWorkerRole.Services
                 queryExecutionLogRepository = new QueryExportExecutionLogRepository(tenant);
                 executionLog = queryExecutionLogRepository.GetSingle(logId, tenant);
 
-                if (executionLog != null && executionLog.StatusCode == "W")
+                if (executionLog != null)
                 {
                     UpdateExecutionLogStatus("P");
 

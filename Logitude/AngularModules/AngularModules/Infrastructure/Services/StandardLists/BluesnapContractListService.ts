@@ -117,7 +117,7 @@ export class BluesnapContractListService {
 			if (propName == "TreeFilters" && propValue && propValue.length > 0) {
                 urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
             }
-
+			
 			if (propName == "AdditionalFilters" && propValue.length > 0) {
 				addtionalFiltersValues = JSON.stringify(propValue);
 			}
@@ -261,7 +261,7 @@ export class BluesnapContractListService {
 			if (propName == "TreeFilters" && propValue && propValue.length > 0) {
                 urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
             }
-
+			
             if (propName == "AdditionalFilters" && propValue.length > 0) {
                 addtionalFiltersValues = JSON.stringify(propValue);
 			}

@@ -1262,6 +1262,75 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private int? hSM ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? HSM  
+	   {
+	    
+	     get
+		{
+		   return hSM;
+		 }
+		 set
+		 {
+		   if(hSM != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HSM",OldValue=hSM,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   hSM=value;
+		   }
+			
+		 }
+	   }
+	  private string hSMtoken ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string HSMtoken  
+	   {
+	    
+	     get
+		{
+		   return hSMtoken;
+		 }
+		 set
+		 {
+		   if(hSMtoken != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HSMtoken",OldValue=hSMtoken,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   hSMtoken=value;
+		   }
+			
+		 }
+	   }
+	  private string hSMaddress ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string HSMaddress  
+	   {
+	    
+	     get
+		{
+		   return hSMaddress;
+		 }
+		 set
+		 {
+		   if(hSMaddress != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HSMaddress",OldValue=hSMaddress,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   hSMaddress=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

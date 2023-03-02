@@ -70,8 +70,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				ShippingAgentRepository  shippingAgentRepository = new ShippingAgentRepository(MyContext);
 				ShippingAgentList entityList = null;
 				ShippingAgent entityPoco = shippingAgentRepository.GetSingleShippingAgent(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<ShippingAgent> singleEntityList = new List<ShippingAgent>();
 					singleEntityList.Add(entityPoco);

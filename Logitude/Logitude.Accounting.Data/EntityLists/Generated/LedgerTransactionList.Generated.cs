@@ -154,6 +154,12 @@ namespace Logitude.Accounting.Data.EntityLists
        public string JournalCreatedByUser  { get; set; }
        [DataMember]
        public string AccountLocalName  { get; set; }
+       [DataMember]
+       public DateTime? UpdateDateTime  { get; set; }
+       [DataMember]
+       public string UpdatedByUserName  { get; set; }
+       [DataMember]
+       public string InternalNote  { get; set; }
    }
 
 }

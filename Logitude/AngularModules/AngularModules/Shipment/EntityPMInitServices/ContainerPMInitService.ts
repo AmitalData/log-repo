@@ -23,6 +23,8 @@ export class ContainerPMInitService {
             entityPM.UIProperties.SetEnabled("ShipmentPickupETD", "Container", false);
             entityPM.UIProperties.SetEnabled("ShipmentPickupATA", "Container", false);
             entityPM.UIProperties.SetEnabled("ShipmentPickupATD", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentPickupFrom", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentPickupTo", "Container", false);
 
             entityPM.UIProperties.SetEnabled("ShipmentPreCarriageETA", "Container", false);
             entityPM.UIProperties.SetEnabled("ShipmentPreCarriageETD", "Container", false);
@@ -130,6 +132,8 @@ export class ContainerPMInitService {
             entityPM.UIProperties.SetEnabled("AdditionalReference2", "Container", false);
             entityPM.UIProperties.SetEnabled("AdditionalReference3", "Container", false);
             entityPM.UIProperties.SetEnabled("AdditionalReference4", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentDepartmentId", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentDepartmentName", "Container", false);
         }
     }
 }

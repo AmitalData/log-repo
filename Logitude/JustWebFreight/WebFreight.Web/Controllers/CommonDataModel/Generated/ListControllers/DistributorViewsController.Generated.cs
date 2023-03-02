@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				DistributorRepository  distributorRepository = new DistributorRepository(MyContext);
 				DistributorList entityList = null;
 				Distributor entityPoco = distributorRepository.GetSingleDistributor(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Distributor> singleEntityList = new List<Distributor>();
 					singleEntityList.Add(entityPoco);

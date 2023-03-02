@@ -14,11 +14,15 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
 {
     public partial class WorkFlowUpdateService
     {
+        public readonly int MaxDifferenceTime = 1;
+        public readonly int MaxRetryNumber = 5;
         protected override void OnCreating(WorkFlowPM entityPM, EntityPM entityParentPM)
         {
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
                 ValidateWorkflowName(entityPM, true);
+                ValidateRetriesNumber(entityPM);
+                ValidateRetriesDelay(entityPM);
                 CreateNewVersion(entityPM);
             }
         }
@@ -28,6 +32,8 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
             if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
                 ValidateWorkflowName(entityPM, false);
+                ValidateRetriesNumber(entityPM);
+                ValidateRetriesDelay(entityPM);
             }
         }
 
@@ -54,6 +60,34 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
             if (exists)
             {
                 throw new ApplicationException("Workflow name already exists");
+            }
+        }
+
+        private void ValidateRetriesNumber(WorkFlowPM entityPM)
+        {
+            if (entityPM.RetriesNumber > MaxRetryNumber)
+            {
+                throw new ApplicationException("The maximum number of retries is " + MaxRetryNumber.ToString());
+            }
+        }
+
+        private void ValidateRetriesDelay(WorkFlowPM entityPM)
+        {
+            var delayString = entityPM.RetriesDelay.Split(',');
+            if (delayString.Count() != entityPM.RetriesNumber)
+            {
+                throw new ApplicationException("Retries Delay is not valid");
+            }
+            for (int i = 0; i < delayString.Count(); i++)
+            {
+                if (delayString[i] == null || string.IsNullOrEmpty(delayString[i]) || int.Parse(delayString[i]) == 0)
+                {
+                    throw new ApplicationException("Retries Delay is not valid");
+                }
+                else if (i != 0 && (int.Parse(delayString[i]) - int.Parse(delayString[i - 1])) < MaxDifferenceTime)
+                {
+                    throw new ApplicationException("Retries Delay is not valid");
+                }
             }
         }
 

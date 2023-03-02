@@ -44,7 +44,7 @@ export class AddEditDashboardComponent extends BaseComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.UIProperties.SetEnabled("PredefinedOrder", this.ObjectTableName, this.LoadedAutomatically);
+        this.UIProperties.SetEnabled("PredefinedOrder", this.ObjectTableName, this.PinnedByDefault);
     }
 
     SetWindowArgs(windowArgs: any) {
@@ -103,11 +103,11 @@ export class AddEditDashboardComponent extends BaseComponent implements OnInit {
         }
     }
 
-    get LoadedAutomatically() { return this.EntityPM.LoadedAutomatically; }
-    set LoadedAutomatically(value: boolean) {
-        if (this.EntityPM.LoadedAutomatically != value) {
-            this.EntityPM.LoadedAutomatically = value;
-            this.UIProperties.SetEnabled("PredefinedOrder", this.ObjectTableName, this.LoadedAutomatically);
+    get PinnedByDefault() { return this.EntityPM.PinnedByDefault; }
+    set PinnedByDefault(value: boolean) {
+        if (this.EntityPM.PinnedByDefault != value) {
+            this.EntityPM.PinnedByDefault = value;
+            this.UIProperties.SetEnabled("PredefinedOrder", this.ObjectTableName, this.PinnedByDefault);
         }
     }
 

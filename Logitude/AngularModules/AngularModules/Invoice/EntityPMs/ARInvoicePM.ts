@@ -33,7 +33,7 @@ export class ARInvoicePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -1180,6 +1180,12 @@ export class ARInvoicePM {
     private documentTemplateId: string;
     public get DocumentTemplateId() { return this.documentTemplateId; }
     public set DocumentTemplateId(newValue: string) { if (this.documentTemplateId != newValue) { this.documentTemplateId = newValue; this.MarkAsDirty("DocumentTemplateId"); } }
+       
+	 
+    private vatsAmountsManulAdjuested: boolean;
+    public get VatsAmountsManulAdjuested() { return this.vatsAmountsManulAdjuested; }
+    public set VatsAmountsManulAdjuested(newValue: boolean) { if (this.vatsAmountsManulAdjuested != newValue) { this.vatsAmountsManulAdjuested = newValue; this.MarkAsDirty("VatsAmountsManulAdjuested"); } }
+
 
     public OldEntityPM: ARInvoicePM;
 		

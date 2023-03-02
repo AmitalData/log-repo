@@ -744,9 +744,11 @@
     <Compile Include="Controllers\DashboardModel\Generated\ListControllers\DashboardGlobalPresetFilterViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountInterestDeactivationBalanceController.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\ListControllers\UserPinnedDashboardViewsController.Generated.cs" />
+    <Compile Include="Controllers\DashboardModel\Generated\ListControllers\DashboardsUserSettingViewsController.Generated.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\PMControllers\DashboardGlobalPresetFilterController.Generated.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\PMControllers\UserPinnedDashboardController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountInterestActivationBalanceController.cs" />
+    <Compile Include="Controllers\DashboardModel\Generated\PMControllers\DashboardsUserSettingController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AddressTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\PortGroupViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\PortGroupController.Generated.cs" />
@@ -780,11 +782,23 @@
     <Compile Include="Controllers\ShipmentsModel\Extended\ContainersController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AWBAdditionalHandlingInfoViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\AWBAdditionalHandlingInfoController.Generated.cs" />
+    <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowCardController.cs" />
+    <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowContactController.cs" />
+    <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowCountryController.cs" />
+    <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowCurrencyController.cs" />
+    <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowCustomEntityController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowCustomerController.cs" />
+    <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowCustomerTeamController.cs" />
+    <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowDepartmentController.cs" />
+    <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowDocumentTypeController.cs" />
+    <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowEntityStatusController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowOpportunityController.cs" />
+    <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowPackageTypeController.cs" />
+    <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowPortController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentPayableController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentReceivableController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentStoragePricingController.cs" />
+    <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowSpecialServicesTypeController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowUserController.cs" />
     <Content Include="css\asp.css" />
     <Content Include="css\fonts\DejaVu\LICENSE.txt" />
@@ -1343,6 +1357,9 @@
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowContainerController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentPackageController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentController.cs" />
+    <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowVesselController.cs" />
+    <Compile Include="Controllers\WorkflowModel\Extended\WorkflowInstanceExtendedController.cs" />
+    <Compile Include="Controllers\WorkflowModel\Extended\WorkflowVersionExtendedController.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\ExpressionCategoryViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\ExpressionViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\OperatorCategoryViewsController.Generated.cs" />
@@ -1361,7 +1378,6 @@
     <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\WorkFlowInstanceController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\WorkFlowInstanceVariableController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\WorkFlowVersionController.Generated.cs" />
-    <Compile Include="Controllers\WorkflowModel\Generated\WorkFlowVersionViewsController.cs" />
     <Compile Include="Controllers\WorkflowModel\Models\ApiQueryTreeFilters.cs" />
     <Compile Include="DashboardModel\DomainServices\DashboardDomainService.cs" />
     <Compile Include="DataContracts\AccountingPartnerApiFilters.cs" />
@@ -2953,6 +2969,7 @@
     <Compile Include="Helpers\BatchPrint\BatchPrintService.cs" />
     <Compile Include="Helpers\BatchPrint\PrintingResult.cs" />
     <Compile Include="Helpers\BatchPrint\ShipmentBatchPrinter.cs" />
+    <Compile Include="Helpers\BIReport\BIReportTotalsService.cs" />
     <Compile Include="Helpers\BrandingHelper.cs" />
     <Compile Include="Helpers\BIReport\BIReportXMLDataService.cs" />
     <Compile Include="Helpers\CallBack\CallBackService.cs" />
@@ -3134,6 +3151,10 @@
     <Compile Include="Helpers\WorkerRole\PODImage\IPODImageConverter.cs" />
     <Compile Include="Helpers\WorkerRole\PODImage\PODImagePdfConverter.cs" />
     <Compile Include="Helpers\WorkerRole\ReportExecutionService.cs" />
+    <Compile Include="Helpers\Workflow\ErrorTypes.cs" />
+    <Compile Include="Helpers\Workflow\ShortErrorMessages.cs" />
+    <Compile Include="Helpers\Workflow\SqlExceptionNumbers.cs" />
+    <Compile Include="Helpers\Workflow\WorkflowApiExceptionBuilder.cs" />
     <Compile Include="InfrastructureModel\DomainServices\InfrastructureDomainService.cs" />
     <Compile Include="InfrastructureModel\DomainServices\WebFreightDomainService.EntityStatusType.cs" />
     <Compile Include="InfrastructureModel\DomainServices\WebFreightDomainService.QuoteChargesGruop.cs" />
@@ -3472,6 +3493,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DashboardGlobalFilterUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DashboardGlobalPresetFilterUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DashboardSharedUserUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DashboardsUserSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DashboardUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DBMigrationLineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DBMigrationUpdateClass.cs" />
@@ -3628,7 +3650,6 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\UIMessageUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\UpdateCodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\UserDefinedReportUpdateClass.cs" />
-    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\UserPinnedDashboardUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\VatReportStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\WarehouseEntryPackagesReleaseUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\WarehouseEntryPackageUpdateClass.cs" />
@@ -3803,6 +3824,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBChargesCodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBCustomsInformationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBInformationUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ContainerDiscrepancyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ContainerFollowUpUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ContainersExternalDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ContainerStatusSourceUpdateClass.cs" />
@@ -7717,6 +7739,7 @@
       <DependentUpon>XapFilesStorageService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="WorkflowModel\DomainServices\WorkFlowVersionDomainService.cs" />
     <Compile Include="WorkflowModel\DomainServices\WorkFlowInstanceDomainService.cs" />
     <Compile Include="WorkflowModel\DomainServices\WorkFlowDomainService.cs" />
     <Compile Include="XapFileDownloadHandler.ashx.cs">

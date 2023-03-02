@@ -59,7 +59,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 {
                     var textCodeQuery = new DigitalTextCodeQueryService(0);
 
-                    var allowedTableNames = new List<string> { "Trucker", "Shipment", "ShipmentPackage", "ShipmentPickUpDelivery" };
+                    var allowedTableNames = new List<string> { "Shipment", "ShipmentPackage", "ShipmentPickUpDelivery" };
 
                     var objectFieldIds = textCodeQuery.GetDigitalTextCodesObjetTables(0)
                                                       .Where(a => allowedTableNames.Contains(a.ObjectTableName))
@@ -75,9 +75,27 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     foreach (var item in objectFieldIds)
                     {
                         var blockedFields = helper.GitDigitalSecuritesFeilds(item.ObjectTableId, profileCode, tenant, true)
-                                                          .Where(a => !a.HasPermission)
-                                                          .Select(a => a.FieldCode)
-                                                          .ToList();
+                                                  .Where(a => !a.HasPermission)
+                                                  .Select(a => a.FieldCode)
+                                                  .ToList();
+
+                        if (item.ObjectTableName.Equals("Shipment", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            if (blockedFields.Contains("Shipment.VolumeInCBM"))
+                            {
+                                blockedFields.Add("Shipment.VolumeInCBF");
+                            }
+                            
+                            if (blockedFields.Contains("Shipment.ChargeableWeightInKG"))
+                            {
+                                blockedFields.Add("Shipment.ChargeableWeightInLB");
+                            }
+                            
+                            if (blockedFields.Contains("Shipment.GrossWeightInKG"))
+                            {
+                                blockedFields.Add("Shipment.GrossWeightInLB");
+                            }
+                        }
 
                         if (blockedFields.Any())
                         {
@@ -93,11 +111,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     {
                         temp.Descendants()
                         .OfType<JProperty>()
-                        .Where(attr => (item.Value.Contains($"{item.Key}.{tenant}.{attr.Name}") 
-                                           || item.Value.Contains($"{item.Key}.{attr.Name}"))
+                        .Where(attr => (item.Value.Equals($"{item.Key}.{tenant}.{attr.Name}") 
+                                           || item.Value.Equals($"{item.Key}.{attr.Name}"))
                                         ||(attr.Name.Contains(".") && item.Value.Contains($"{attr.Name}")))
                         .ToList()
-                        .ForEach(attr => attr.Value ="");
+                        .ForEach(attr => attr.Remove());
                     }
                     
                     var json = JsonConvert.SerializeObject(temp);
@@ -145,16 +163,41 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 entityLists = QueryableExtensions.Skip(entityLists, () => newFilters.PageIndex);
                 entityLists = QueryableExtensions.Take(entityLists, () => newFilters.PageSize);
 
+                var allowedTableNames = new List<string> { "Shipment", "ShipmentPackage", "ShipmentPickUpDelivery" };
+
+                var textCodeQuery = new DigitalTextCodeQueryService(0);
+                var objectFieldIds = textCodeQuery.GetDigitalTextCodesObjetTables(0)
+                                                  .Where(a => allowedTableNames.Contains(a.ObjectTableName))
+                                                  .Select(a => new
+                                                  {
+                                                      a.ObjectTableId,
+                                                      a.ObjectTableName
+                                                  })
+                                                  .ToList();
+
+                var fields = new Dictionary<string, List<string>>();
                 var helper = new DigitalFieldSecuritesHelper();
+                foreach (var item in objectFieldIds)
+                {
+                    var blockedFields = helper.GitDigitalSecuritesFeilds(item.ObjectTableId, newFilters.ProfileCode, tenant, false)
+                                                      .Where(a => !a.HasPermission)
+                                                      .Select(a => a.FieldCode)
+                                                      .ToList();
+
+                    if (blockedFields.Any())
+                    {
+                        fields.Add(item.ObjectTableName, blockedFields);
+                    }
+                }
+
                 var allowedFieldSecurites = helper.GitDigitalSecuritesFeilds(newFilters.ObjectTableId, newFilters.ProfileCode, tenant, false)
                                                   .Where(a => a.HasPermission)
                                                   .Select(a => a.FieldCode.Replace($"Shipment.{tenant}.", ""))
                                                   .Select(a => a.Replace("Shipment.", ""))
                                                   .ToList();
 
-                var fields = string.Join(",", allowedFieldSecurites);
-
-                var shipments = entityLists.Select("new { " + fields + " }").ToDynamicList();
+                var fieldsToBeSelected = string.Join(",", allowedFieldSecurites);
+                var shipments = entityLists.Select("new { " + fieldsToBeSelected + " }").ToDynamicList();
 
                 var isAllShipmentsQuery = newFilters.AdditionalFilters.Where(a => a.FieldName == "AllShipments").Any();
                 if (isAllShipmentsQuery)
@@ -162,8 +205,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
                     var lastOneYearDate = currentDateTime.AddDays(-365);
                     var lastNinetyDaysDate = currentDateTime.AddDays(-90);
-                    shipments.Where(a => a.CreateDateTime < lastOneYearDate
-                                         && a.MainCarriageFinalDestinationATA < lastNinetyDaysDate)
+                    shipments.Where(a => (helper.DoesPropertyExistInDynamic(a, "CreateDateTime")
+                                            && a.CreateDateTime < lastOneYearDate)
+                                         && (helper.DoesPropertyExistInDynamic(a, "MainCarriageFinalDestinationATA") 
+                                             && a.MainCarriageFinalDestinationATA < lastNinetyDaysDate))
                             .ToList()
                             .ForEach(i => i.IsCustomerArchived = true);
                 }
@@ -171,7 +216,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                 customFieldResolver.SetCustomFieldsValues("Shipment", tenant, shipments.Cast<object>().ToList());
 
-                var res = shipmentQuery.BuildShipmentListWithTimeLine(shipments, authToken.Tenant);
+                var res = shipmentQuery.BuildShipmentListWithTimeLine(shipments, authToken.Tenant, fields);
 
                 response.Result = res;
 
@@ -316,8 +361,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     {
                         temp.Descendants()
                         .OfType<JProperty>()
-                        .Where(attr => (item.Value.Contains($"{item.Key}.{tenant}.{attr.Name}")
-                                           || item.Value.Contains($"{item.Key}.{attr.Name}"))
+                        .Where(attr => (item.Value.Equals($"{item.Key}.{tenant}.{attr.Name}")
+                                           || item.Value.Equals($"{item.Key}.{attr.Name}"))
                                         || (attr.Name.Contains(".") && item.Value.Contains($"{attr.Name}")))
                         .ToList()
                         .ForEach(attr => attr.Value = "");

@@ -25,9 +25,10 @@ export class ExpressionPipe implements PipeTransform {
                             (customObjectField.FullNameTextCodeDefaultText || null) : null;
 
                         if (customObjectField && customObjectFieldName) {
-                            let customObjectTableName = ObjectTables.getNameById(customObjectField.ObjectTableId);
-                            if (customObjectTableName) {
-                                let formattedExpressionVariable = expressionVariable.replace(fieldCode, (customObjectTableName + "." + customObjectFieldName.replace(/\ /gi, "")));
+                            let objectTableDisplayName = ObjectTables.getDisplayNameById(customObjectField.ObjectTableId);
+                            if (objectTableDisplayName) {
+                                objectTableDisplayName = Formatter.removeSpaces(objectTableDisplayName);
+                                let formattedExpressionVariable = expressionVariable.replace(fieldCode, (objectTableDisplayName + "." + customObjectFieldName.replace(/\ /gi, "")));
                                 expression = expression.replace(expressionVariable, formattedExpressionVariable);
                             }
                         }

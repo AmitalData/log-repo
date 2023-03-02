@@ -8,7 +8,7 @@ import { DateTool } from '../../Infrastructure/Tools';
 import { DashboardMapping } from "./DashboardMapping";
 
 export class DashboardCopyService {
-   
+
     public static CopyDashboard(sourceDashboard: DashboardPM): DashboardPM {
         var dashboard: DashboardPM = new DashboardPM();
         dashboard.Tenant = SessionInfo.LoggedUserTenant;
@@ -22,18 +22,18 @@ export class DashboardCopyService {
         dashboard.PermissionLevelCode = sourceDashboard.PermissionLevelCode;
         this.CopyUsers(sourceDashboard, dashboard);
         this.CopyGlobalFiltyers(sourceDashboard, dashboard);
-        dashboard.LoadedAutomatically = sourceDashboard.LoadedAutomatically;
+        dashboard.PinnedByDefault = sourceDashboard.PinnedByDefault;
         dashboard.PredefinedOrder = sourceDashboard.PredefinedOrder;
- 
+
         return dashboard;
 
     }
-    
 
-    static CopyWidgets(sourceDashboard: DashboardPM, dashboard: DashboardPM){
-        sourceDashboard.Widgets.forEach (sourceWidget => {
-            var widget : WidgetPM = new WidgetPM(dashboard);
-            
+
+    static CopyWidgets(sourceDashboard: DashboardPM, dashboard: DashboardPM) {
+        sourceDashboard.Widgets.forEach(sourceWidget => {
+            var widget: WidgetPM = new WidgetPM(dashboard);
+
             widget.Tenant = SessionInfo.LoggedUserTenant;
             widget.DashboardId = dashboard.Id;
             widget.Title = sourceWidget.Title;
@@ -64,53 +64,55 @@ export class DashboardCopyService {
             widget.UseNumberAbbreviation = sourceWidget.UseNumberAbbreviation;
             widget.UseAbbreviationAfter = sourceWidget.UseAbbreviationAfter;
             widget.DecimalPlaces = sourceWidget.DecimalPlaces;
+            widget.LabelsPosition = sourceWidget.LabelsPosition;
             dashboard.Widgets.push(widget);
 
         });
 
     }
 
-    static CopyWidgetMeasures(sourceWidget: WidgetPM, widget: WidgetPM){   
-       sourceWidget.WidgetMeasures.forEach (itemMeasure => {
-           var newWidgetMeasure: WidgetMeasurePM = new WidgetMeasurePM(widget);
-           newWidgetMeasure.Tenant = SessionInfo.LoggedUserTenant;
-           newWidgetMeasure.WidgetId = widget.Id;
-           newWidgetMeasure.MeasureCode = itemMeasure.MeasureCode;
-           newWidgetMeasure.MeasureFieldId = itemMeasure.MeasureFieldId;
-           newWidgetMeasure.RenderAs = itemMeasure.RenderAs;
-           widget.WidgetMeasures.push(newWidgetMeasure);
-       });
+    static CopyWidgetMeasures(sourceWidget: WidgetPM, widget: WidgetPM) {
+        sourceWidget.WidgetMeasures.forEach(itemMeasure => {
+            var newWidgetMeasure: WidgetMeasurePM = new WidgetMeasurePM(widget);
+            newWidgetMeasure.Tenant = SessionInfo.LoggedUserTenant;
+            newWidgetMeasure.WidgetId = widget.Id;
+            newWidgetMeasure.MeasureCode = itemMeasure.MeasureCode;
+            newWidgetMeasure.MeasureFieldId = itemMeasure.MeasureFieldId;
+            newWidgetMeasure.RenderAs = itemMeasure.RenderAs;
+            newWidgetMeasure.YAxisType = itemMeasure.YAxisType;
+            widget.WidgetMeasures.push(newWidgetMeasure);
+        });
 
-   }
-    static CopyUsers( sourceDashboard: DashboardPM, dashboard: DashboardPM) {   
+    }
+    static CopyUsers(sourceDashboard: DashboardPM, dashboard: DashboardPM) {
         sourceDashboard.DashboardSharedUsers.forEach(sourceUser => {
-                var user: DashboardSharedUserPM = new DashboardSharedUserPM(dashboard);
-                user.Tenant = SessionInfo.LoggedUserTenant;
-                user.DashboardId = dashboard.Id;
-                user.UserId = sourceUser.UserId;
-                user.UserName = sourceUser.UserName;
-                dashboard.DashboardSharedUsers.push(user);
-            });
+            var user: DashboardSharedUserPM = new DashboardSharedUserPM(dashboard);
+            user.Tenant = SessionInfo.LoggedUserTenant;
+            user.DashboardId = dashboard.Id;
+            user.UserId = sourceUser.UserId;
+            user.UserName = sourceUser.UserName;
+            dashboard.DashboardSharedUsers.push(user);
+        });
     }
 
-    static CopyGlobalFiltyers( sourceDashboard: DashboardPM, dashboard: DashboardPM) {   
+    static CopyGlobalFiltyers(sourceDashboard: DashboardPM, dashboard: DashboardPM) {
         sourceDashboard.DashboardGlobalFilters.forEach(globalFilterItem => {
-                var newGlobalFilterItem: DashboardGlobalFilterPM = new DashboardGlobalFilterPM(dashboard);
-    
-                newGlobalFilterItem.Tenant = SessionInfo.LoggedUserTenant;
-                newGlobalFilterItem.DashboardId = dashboard.Id;
-                newGlobalFilterItem.IsCommonFilter = globalFilterItem.IsCommonFilter;
-                newGlobalFilterItem.CommonFilterField = globalFilterItem.CommonFilterField;
-                newGlobalFilterItem.DataSetId = globalFilterItem.DataSetId;
-                newGlobalFilterItem.DataSetFieldId = globalFilterItem.DataSetFieldId;
-                newGlobalFilterItem.FilterOperator = globalFilterItem.FilterOperator;
-                newGlobalFilterItem.DataTypeCode = globalFilterItem.DataTypeCode;
-                newGlobalFilterItem.LineNumber = globalFilterItem.LineNumber;
-                newGlobalFilterItem.JoinedTableName = globalFilterItem.JoinedTableName;
-                newGlobalFilterItem.FieldCode = globalFilterItem.FieldCode;
-                dashboard.DashboardGlobalFilters.push(newGlobalFilterItem);
-            });
+            var newGlobalFilterItem: DashboardGlobalFilterPM = new DashboardGlobalFilterPM(dashboard);
+
+            newGlobalFilterItem.Tenant = SessionInfo.LoggedUserTenant;
+            newGlobalFilterItem.DashboardId = dashboard.Id;
+            newGlobalFilterItem.IsCommonFilter = globalFilterItem.IsCommonFilter;
+            newGlobalFilterItem.CommonFilterField = globalFilterItem.CommonFilterField;
+            newGlobalFilterItem.DataSetId = globalFilterItem.DataSetId;
+            newGlobalFilterItem.DataSetFieldId = globalFilterItem.DataSetFieldId;
+            newGlobalFilterItem.FilterOperator = globalFilterItem.FilterOperator;
+            newGlobalFilterItem.DataTypeCode = globalFilterItem.DataTypeCode;
+            newGlobalFilterItem.LineNumber = globalFilterItem.LineNumber;
+            newGlobalFilterItem.JoinedTableName = globalFilterItem.JoinedTableName;
+            newGlobalFilterItem.FieldCode = globalFilterItem.FieldCode;
+            dashboard.DashboardGlobalFilters.push(newGlobalFilterItem);
+        });
     }
 
-    
+
 }

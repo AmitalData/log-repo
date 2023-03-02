@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
 				AnalyzeQueueRepository  analyzeQueueRepository = new AnalyzeQueueRepository(MyContext);
 				AnalyzeQueueList entityList = null;
 				AnalyzeQueue entityPoco = analyzeQueueRepository.GetSingleAnalyzeQueue(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<AnalyzeQueue> singleEntityList = new List<AnalyzeQueue>();
 					singleEntityList.Add(entityPoco);

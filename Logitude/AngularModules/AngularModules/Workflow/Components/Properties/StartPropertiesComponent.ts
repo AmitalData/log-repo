@@ -26,7 +26,6 @@ export class StartPropertiesComponent extends BaseComponent {
     public ValidationErrorsList: string[];
     public IsValidConditions: boolean = true;
     public EntitiesTreeItems: TreeSelectItem[];
-    public ExcludedEntities: string[] = ["Customer", "User", "Opportunity", "ShipmentStoragePricing"];
     public CurrentSession = SessionLocator.SelectedSession;
 
     SetWindowArgs(args: any) {
@@ -67,14 +66,14 @@ export class StartPropertiesComponent extends BaseComponent {
         this.setUIProperties();
     }
 
-    initializeConditions(reset: boolean = false, forceAdd: boolean = false) {
+    initializeConditions(reset: boolean = false, forceAdd: boolean = false, isGroup: boolean = true) {
         if (reset) {
             this.Conditions = [];
             this.ConditionsOperation = ConditionOperations.And;
         }
 
         if (this.Conditions.length === 0 && (forceAdd || this.Trigger !== this.CreateTrigger)) {
-            let condition = new Condition();
+            let condition = new Condition(isGroup);
             if (this.Trigger !== this.CreateTrigger) {
                 condition.operator = ConditionOperators.Changed;
                 condition.value = "True";
@@ -139,6 +138,12 @@ export class StartPropertiesComponent extends BaseComponent {
         }
 
         this.setUIProperties();
+    }
+
+    addCondition(isGroup: boolean = false) {
+        if (this.EntityId) {
+            this.initializeConditions(true, true, isGroup);
+        }
     }
 
     setUIProperties() {

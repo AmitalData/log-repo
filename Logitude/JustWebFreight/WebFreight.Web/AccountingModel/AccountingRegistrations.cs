@@ -34,7 +34,8 @@ namespace WebFreight.Web.AccountingModel
             ContainerAccessor.Container.RegisterType<IInterestReportUpdateServiceExt, InterestReportUpdateServiceExt>("InterestReportUpdateServiceExt", new InjectionFactory(c => new InterestReportUpdateServiceExt()));
             ContainerAccessor.Container.RegisterType<IInterestReportsConnectedInvoiceUpdateServiceExt, InterestReportsConnectedInvoiceUpdateServiceExt>("InterestReportsConnectedInvoiceUpdateServiceExt", new InjectionFactory(c => new InterestReportsConnectedInvoiceUpdateServiceExt()));
             ContainerAccessor.Container.RegisterType<IAccountingEntityJournalUpdateServiceExt, AccountingEntityJournalUpdateServiceExt>("AccountingEntityJournalUpdateServiceExt", new InjectionFactory(c => new AccountingEntityJournalUpdateServiceExt()));
-
+            ContainerAccessor.Container.RegisterType<IAPPaymentInvoicesTransactionFetcherExt, APPaymentInvoicesTransactionFetcherExt>("APPaymentInvoicesTransactionFetcherExt", new InjectionFactory(c => new APPaymentInvoicesTransactionFetcherExt()));
+            
             // Query Service
             ContainerAccessor.Container.RegisterType<ICashBookQueryServiceExt, CashBookQueryServiceExt>("CashBookQueryServiceExt", new InjectionFactory(c => new CashBookQueryServiceExt()));
             ContainerAccessor.Container.RegisterType<IBankCodeQueryServiceExt, BankCodeQueryServiceExt>("BankCodeQueryServiceExt", new InjectionFactory(c => new BankCodeQueryServiceExt()));

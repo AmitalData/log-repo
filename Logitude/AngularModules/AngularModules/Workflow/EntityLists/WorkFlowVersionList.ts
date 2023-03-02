@@ -24,6 +24,8 @@ export class WorkFlowVersionList {
 	Entity: string;
 	Trigger: string;
 	ActivatedDate: Date;
+	CreatedByUserName: string;
+	UpdatedByUserName: string;
 	
 }
  

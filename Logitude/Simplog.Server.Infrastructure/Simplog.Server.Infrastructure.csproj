@@ -173,7 +173,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnalyticTableServices\AnalyticTableService.cs" />
     <Compile Include="ApplicationAppInfo.cs" />
     <Compile Include="Azure\AzureRedisCacheDetails.cs" />
     <Compile Include="Azure\BlobExtensions.cs" />

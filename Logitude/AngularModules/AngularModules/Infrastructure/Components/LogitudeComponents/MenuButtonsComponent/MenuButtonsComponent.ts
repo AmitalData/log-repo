@@ -13,6 +13,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {MenuButtonsEvents, MenuButtonsStateChangedEventArgs} from '../../../../Infrastructure/Utilities/events/MenuButtonsEvents';
 import {ObjectsLocator} from '../../../Locators/ObjectsLocator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { CustomizationPermissionService } from '../../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
 
 @Component({
     
@@ -142,6 +143,12 @@ export class MenuButtonsComponent implements OnDestroy {
 
     }
 
+    public CheckFeature(featureUniqeCode : string) {
+        if (this.ObjectTableName == "DeploymentPackage")
+            return CustomizationPermissionService.IsFeatureGrantedByUniqeCode(featureUniqeCode);
+        return FeatureLocator.IsFeatureGrantedByUniqeCode(featureUniqeCode);
+    }
+
     public BuildMenuButtons() {
         this.Listen();
         this.ToggleButtonWidth = 60;
@@ -162,9 +169,8 @@ export class MenuButtonsComponent implements OnDestroy {
         var buttons: MenuButtonPM[] = [];
         for (var i = 0; i < btns.length; i++) {
             if (btns[i].FeatureUniqeCode != null && btns[i].FeatureUniqeCode != undefined) {//if (btns[i].FeatureId != null && btns[i].FeatureId != undefined) {
-                if (FeatureLocator.IsFeatureGrantedByUniqeCode(btns[i].FeatureUniqeCode)) {
+                if (this.CheckFeature(btns[i].FeatureUniqeCode))
                     buttons.push(btns[i]);
-                }
             }
             else {
                 buttons.push(btns[i]);

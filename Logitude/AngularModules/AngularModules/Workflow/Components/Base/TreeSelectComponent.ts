@@ -34,6 +34,8 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
     public SearchTerm: string = "";
     public Title: string | null = null;
 
+    private ItemsLimit: number = 10;
+
     ngOnInit() {
         this.TreeItems = JSON.parse(JSON.stringify(this.Items));
         this.TreeItems = this.checkItemsToShow(this.TreeItems);
@@ -115,6 +117,7 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
 
     setFilteredTreeItems(searchTerm: string) {
         this.FilteredTreeItems = this.getFilteredTreeItems(searchTerm);
+        this.limitParentFilteredTreeItems();
         this.limitFilteredTreeItems();
     }
 
@@ -133,16 +136,44 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
         return filteredTreeItems;
     }
 
+    limitParentFilteredTreeItems() {
+        if (this.FilteredTreeItems.length > this.ItemsLimit) {
+            let exactMatchItems = this.FilteredTreeItems.filter((i: TreeSelectItem) => i.title.toLowerCase() === this.SearchTerm.toLowerCase());
+            let limitedItems = this.FilteredTreeItems.slice(0, this.ItemsLimit);
+            if (this.Value) {
+                let selectedItem = this.FilteredTreeItems.filter((i: TreeSelectItem) => i.key.toLowerCase() === this.Value.toLowerCase())[0];
+                let isSelectedItemInLimitedItems = limitedItems.filter((i: TreeSelectItem) => i.key.toLowerCase() === this.Value.toLowerCase()).length > 0;
+                if (selectedItem && !isSelectedItemInLimitedItems) {
+                    this.FilteredTreeItems = this.FilteredTreeItems.slice(0, (this.ItemsLimit - 1));
+                    this.FilteredTreeItems.unshift(selectedItem);
+                } else {
+                    this.FilteredTreeItems = limitedItems;
+                }
+            } else {
+                this.FilteredTreeItems = limitedItems;
+            }
+
+            if (exactMatchItems.length > 0) {
+                exactMatchItems.forEach((exactMatchItem: TreeSelectItem) => {
+                    let isExactMatchItemInChildrenItems = this.FilteredTreeItems.filter((i: TreeSelectItem) => i.key.toLowerCase() === exactMatchItem.key.toLowerCase()).length > 0;
+                    if (!isExactMatchItemInChildrenItems) {
+                        this.FilteredTreeItems.unshift(exactMatchItem);
+                    }
+                });
+            }
+        }
+    }
+
     limitFilteredTreeItems(items: TreeSelectItem[] | null = null) {
         for (let item of (items || this.FilteredTreeItems)) {
-            if (item.children && item.children.length > 10) {
+            if (item.children && item.children.length > this.ItemsLimit) {
                 let exactMatchItems = item.children.filter((i: TreeSelectItem) => i.title.toLowerCase() === this.SearchTerm.toLowerCase());
-                let limitedItems = item.children.slice(0, 10);
+                let limitedItems = item.children.slice(0, this.ItemsLimit);
                 if (this.Value) {
                     let selectedItem = item.children.filter((i: TreeSelectItem) => i.key.toLowerCase() === this.Value.toLowerCase())[0];
                     let isSelectedItemInLimitedItems = limitedItems.filter((i: TreeSelectItem) => i.key.toLowerCase() === this.Value.toLowerCase()).length > 0;
                     if (selectedItem && !isSelectedItemInLimitedItems) {
-                        item.children = item.children.slice(0, 9);
+                        item.children = item.children.slice(0, (this.ItemsLimit - 1));
                         item.children.unshift(selectedItem);
                     } else {
                         item.children = limitedItems;
@@ -182,7 +213,7 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
 
     getDisplayTitle = (nzTreeItem: any) => {
         if (!this.DisplayTitle) {
-           this.NzTreeSelect.nzPlaceHolder = this.PlaceHolder
+            this.NzTreeSelect.nzPlaceHolder = this.PlaceHolder
             return null
         }
         if (nzTreeItem) {

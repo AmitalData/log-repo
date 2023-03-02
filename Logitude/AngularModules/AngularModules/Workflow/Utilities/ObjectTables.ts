@@ -19,10 +19,10 @@ export class ObjectTables {
         }
     }
 
-    static resetCustom(customObjectTables: ObjectTableList[]) {
-        if (customObjectTables) {
-            this.AllObjectTables = this.AllObjectTables.filter(o => !o.IsCustom);
-            this.AllObjectTables = this.AllObjectTables.concat(customObjectTables.filter(o => o.IsCustom));
+    static replace(objectTables: ObjectTableList[]) {
+        if (objectTables) {
+            let objectTablesNames = objectTables.map(o => { return o.Name });
+            this.AllObjectTables = this.AllObjectTables.filter(o => !objectTablesNames.includes(o.Name)).concat(objectTables);
         }
     }
 
@@ -55,6 +55,9 @@ export class ObjectTables {
     static getKeyPropertyPathByName(name: string) {
         if (name) {
             let objectTable = this.getByName(name);
+            if (objectTable && objectTable.IsCustom && !objectTable.KeyPropertyPath) {
+                return "Id";
+            }
             return objectTable ? objectTable.KeyPropertyPath : null;
         }
         return null;
@@ -64,6 +67,30 @@ export class ObjectTables {
         if (id) {
             let objectTable = this.getById(id);
             return objectTable ? objectTable.Name : null;
+        }
+        return null;
+    }
+
+    static getDisplayNameById(id: string) {
+        if (id) {
+            let objectTable = this.getById(id);
+            return objectTable ? (objectTable.FullNameTextCodeDefaultText || objectTable.Name) : null;
+        }
+        return null;
+    }
+
+    static getDisplayNameByName(name: string) {
+        if (name) {
+            let objectTable = this.getByName(name);
+            return objectTable ? (objectTable.FullNameTextCodeDefaultText || objectTable.Name) : null;
+        }
+        return null;
+    }
+
+    static getIsCustomByName(name: string) {
+        if (name) {
+            let objectTable = this.getByName(name);
+            return objectTable ? objectTable.IsCustom : null;
         }
         return null;
     }

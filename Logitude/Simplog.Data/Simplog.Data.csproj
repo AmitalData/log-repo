@@ -755,6 +755,8 @@
     <Compile Include="QuoteModel\Repositories\QuoteComputedFieldRepository.cs" />
     <Compile Include="QuoteModel\Repositories\ValidByTypeRepository.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\Container.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\ContainerAnalytic.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\ContainerDiscrepancy.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ContainersExternalData.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ContainerStatus.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ContainerStatusSource.cs" />
@@ -826,6 +828,7 @@
     <Compile Include="ShipmentsModel\Mapping\ShipmentProductItemMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentStoragePricingMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentSubTypeMap.cs" />
+    <Compile Include="ShipmentsModel\Repositories\ContainerDiscrepancyRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ContainerRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ContainersExternalDataRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ContainerStatusRepository.cs" />

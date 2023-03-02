@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Dashboard" Env="Logitude,local,test">
-  <Sql Version="3">
+  <Sql Version="4">
     <![CDATA[
       BEGIN
           IF EXISTS (SELECT *  FROM sys.indexes  WHERE NAME='IX_QuoteAnalytics_ColumnStore' AND object_id = OBJECT_ID('[QuoteAnalytics]'))
@@ -81,7 +81,7 @@ Id
 ,ValidByTypeCode
 ,ConnectedToOpportunity
 ,ShipperNotExporterId
-
+,ProductCode
 
                 
                 );

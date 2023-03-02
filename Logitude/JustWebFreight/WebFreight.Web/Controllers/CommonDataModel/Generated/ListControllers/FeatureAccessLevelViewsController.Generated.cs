@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				FeatureAccessLevelRepository  featureAccessLevelRepository = new FeatureAccessLevelRepository(MyContext);
 				FeatureAccessLevelList entityList = null;
 				FeatureAccessLevel entityPoco = featureAccessLevelRepository.GetSingleFeatureAccessLevel(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<FeatureAccessLevel> singleEntityList = new List<FeatureAccessLevel>();
 					singleEntityList.Add(entityPoco);

@@ -184,6 +184,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 EnableDeliveryOptions = a.EnableDeliveryOptions,
                                                 UseNewTermsOfUse = a.UseNewTermsOfUse,
                                                 ShipmentATADateIndicator = a.ShipmentATADateIndicator,
+                                                ApproveUploadedDocuments = a.ApproveUploadedDocuments,
                                             });
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -372,6 +373,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         EnableDeliveryOptions = tt.EnableDeliveryOptions,
                         UseNewTermsOfUse = tt.UseNewTermsOfUse,
                         ShipmentATADateIndicator = tt.ShipmentATADateIndicator,
+                        ApproveUploadedDocuments = tt.ApproveUploadedDocuments,
                     }; 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
@@ -547,6 +549,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     EnableDeliveryOptions = tt.EnableDeliveryOptions,
                     UseNewTermsOfUse = tt.UseNewTermsOfUse,
                     ShipmentATADateIndicator = tt.ShipmentATADateIndicator,
+                    ApproveUploadedDocuments = tt.ApproveUploadedDocuments,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -705,6 +708,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            AccountingActivated = a.AccountingActivated,
                                            UseNewTermsOfUse = a.UseNewTermsOfUse,
                                            ShipmentATADateIndicator = a.ShipmentATADateIndicator,
+                                           ApproveUploadedDocuments = a.ApproveUploadedDocuments
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -861,6 +865,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        AccountingActivated = a.AccountingActivated,
                                        UseNewTermsOfUse = a.UseNewTermsOfUse,
                                        ShipmentATADateIndicator = a.ShipmentATADateIndicator,
+                                       ApproveUploadedDocuments = a.ApproveUploadedDocuments,
                                    }).FirstOrDefault();
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1029,6 +1034,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                EnableDeliveryOptions = a.EnableDeliveryOptions,
                                                UseNewTermsOfUse = a.UseNewTermsOfUse,                                          
                                                ShipmentATADateIndicator = a.ShipmentATADateIndicator,
+                                               ApproveUploadedDocuments = a.ApproveUploadedDocuments,
                                            }).FirstOrDefault();
 
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1199,6 +1205,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            EnableDeliveryOptions = a.EnableDeliveryOptions,
                                            UseNewTermsOfUse = a.UseNewTermsOfUse,
                                            ShipmentATADateIndicator = a.ShipmentATADateIndicator,
+                                           ApproveUploadedDocuments = a.ApproveUploadedDocuments,
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1357,6 +1364,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        EnableDeliveryOptions = a.EnableDeliveryOptions,
                                        UseNewTermsOfUse = a.UseNewTermsOfUse,
                                        ShipmentATADateIndicator = a.ShipmentATADateIndicator,
+                                       ApproveUploadedDocuments = a.ApproveUploadedDocuments,
                                    }).FirstOrDefault();
                 if (tenant != null)
                 {
@@ -1534,6 +1542,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     EnableDeliveryOptions = myPOCO.EnableDeliveryOptions,
                     UseNewTermsOfUse = myPOCO.UseNewTermsOfUse,
                     ShipmentATADateIndicator = myPOCO.ShipmentATADateIndicator,
+                    ApproveUploadedDocuments = myPOCO.ApproveUploadedDocuments,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1659,7 +1668,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 EmptyReturnClosingDays = a.EmptyReturnClosingDays,
                                                 ShipmentATAClosingDays = a.ShipmentATAClosingDays,
                                                 EnableDeliveryOptions = a.EnableDeliveryOptions,
-                                                UseNewTermsOfUse = a.UseNewTermsOfUse
+                                                UseNewTermsOfUse = a.UseNewTermsOfUse,
+                                                ApproveUploadedDocuments = a.ApproveUploadedDocuments,
                                             };
             return result;
         }

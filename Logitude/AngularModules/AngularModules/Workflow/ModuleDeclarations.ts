@@ -11,8 +11,9 @@ import { SendEmailPropertiesComponent } from './Components/Properties/SendEmailP
 import { FieldTemplateComponent } from "./Components/Templates/FieldTemplateComponent";
 import { CreateWorkflowComponent } from "./Components/CreateEditWorkflow/CreateWorkflowComponent";
 import { EditWorkflowComponent } from "./Components/CreateEditWorkflow/EditWorkflowComponent";
+import { CreateEditWorkflowComponent } from "./Components/CreateEditWorkflow/CreateEditWorkflowComponent";
 import { RunHistoryWorkflowComponent } from "./Components/WorkflowInstance/RunHistoryWorkflowComponent";
-import { WorkflowInstanceActivityComponent } from "./Components/WorkflowInstance/WorkflowInstanceActivityComponent";
+import { WorkflowInstanceDetailsComponent } from "./Components/WorkflowInstance/WorkflowInstanceDetailsComponent";
 import { ConditionsComponent } from "./Components/Base/ConditionsComponent";
 import { ConditionGroupsComponent } from "./Components/Base/ConditionGroupsComponent";
 import { FieldValueComponent } from "./Components/Base/FieldValueComponent";
@@ -21,7 +22,6 @@ import { TreeSelectComponent } from "./Components/Base/TreeSelectComponent";
 import { SetValuesComponent } from "./Components/Base/SetValuesComponent";
 import { DeleteNodeWarningComponent } from "./Components/Messages/DeleteNodeWarningComponent";
 import { ObjectFieldPipe } from "./Pipes/ObjectFieldPipe";
-import { ObjectFieldsQueryFiltersPipe } from "./Pipes/ObjectFieldsQueryFiltersPipe";
 import { ListItemPipe } from "./Pipes/ListItemPipe";
 import { IsDateTimeTypePipe } from "./Pipes/IsDateTimeTypePipe";
 import { IsNoObjectFieldVariablePipe } from "./Pipes/IsNoObjectFieldVariablePipe";
@@ -46,9 +46,11 @@ import { WorkflowVersionComponent } from './Components/WorkflowVersion/WorkflowV
 import { CreateWorkflowVersionComponent } from './Components/WorkflowVersion/CreateWorkflowVersionComponent';
 import { WorkFlowShortTitleComponent } from './Components/ShortTitles/WorkFlowShortTitleComponent';
 import { IsObjectTypePipe } from "./Pipes/IsObjectTypePipe";
-import { WorkflowInstanceVariableObject } from "./Components/WorkflowInstance/WorkflowInstanceVariableObject";
+import { ObjectVariableComponent } from "./Components/Base/ObjectVariableComponent";
 import { AppendItemPropertiesComponent } from './Components/Properties/AppendItemPropertiesComponent';
 import { DeleteItemPropertiesComponent } from './Components/Properties/DeleteItemPropertiesComponent';
+import { WorkFlowHelperComponent } from "./Components/Helpers/WorkFlowHelperComponent";
+import { EditWorkflowVersionComponent } from "./Components/WorkflowVersion/EditWorkflowVersionComponent";
 
 export const Components = [
     WorkflowBuilderComponent,
@@ -67,12 +69,13 @@ export const Components = [
     FieldTemplateComponent,
     CreateWorkflowComponent,
     EditWorkflowComponent,
+    CreateEditWorkflowComponent,
     RunHistoryWorkflowComponent,
     ConditionsComponent,
     ConditionGroupsComponent,
     FieldValueComponent,
     FooterButtonsComponent,
-    WorkflowInstanceActivityComponent,
+    WorkflowInstanceDetailsComponent,
     TreeSelectComponent,
     SetValuesComponent,
     DeleteNodeWarningComponent,
@@ -80,13 +83,14 @@ export const Components = [
     ExpressionBuilderComponent,
     WorkflowVersionComponent,
     CreateWorkflowVersionComponent,
+    EditWorkflowVersionComponent,
     WorkFlowShortTitleComponent,
-    WorkflowInstanceVariableObject,
+    ObjectVariableComponent,
+    WorkFlowHelperComponent,
 ];
 
 export const Pipes = [
     ObjectFieldPipe,
-    ObjectFieldsQueryFiltersPipe,
     ListItemPipe,
     IsDateTimeTypePipe,
     IsNoObjectFieldVariablePipe,
@@ -127,12 +131,13 @@ export class ModuleDeclarations {
             case "FieldTemplateComponent": { result = FieldTemplateComponent; break; }
             case "CreateWorkflowComponent": { result = CreateWorkflowComponent; break; }
             case "EditWorkflowComponent": { result = EditWorkflowComponent; break; }
+            case "CreateEditWorkflowComponent": { result = CreateEditWorkflowComponent; break; }
             case "RunHistoryWorkflowComponent": { result = RunHistoryWorkflowComponent; break; }
             case "ConditionsComponent": { result = ConditionsComponent; break; }
             case "ConditionGroupsComponent": { result = ConditionGroupsComponent; break; }
             case "FieldValueComponent": { result = FieldValueComponent; break; }
             case "FooterButtonsComponent": { result = FooterButtonsComponent; break; }
-            case "WorkflowInstanceActivityComponent": { result = WorkflowInstanceActivityComponent; break; }
+            case "WorkflowInstanceDetailsComponent": { result = WorkflowInstanceDetailsComponent; break; }
             case "TreeSelectComponent": { result = TreeSelectComponent; break; }
             case "SetValuesComponent": { result = SetValuesComponent; break; }
             case "DeleteNodeWarningComponent": { result = DeleteNodeWarningComponent; break; }
@@ -140,8 +145,10 @@ export class ModuleDeclarations {
             case "ExpressionBuilderComponent": { result = ExpressionBuilderComponent; break; }
             case "WorkflowVersionComponent": { result = WorkflowVersionComponent; break; }
             case "CreateWorkflowVersionComponent": { result = CreateWorkflowVersionComponent; break; }
+            case "EditWorkflowVersionComponent": { result = EditWorkflowVersionComponent; break; }
             case "WorkFlowShortTitleComponent": { result = WorkFlowShortTitleComponent; break; }
-            case "WorkflowInstanceVariableObject": { result = WorkflowInstanceVariableObject; break; }
+            case "ObjectVariableComponent": { result = ObjectVariableComponent; break; }
+            case "WorkFlowHelperComponent": { result = WorkFlowHelperComponent; break; }
         }
         return result;
     }

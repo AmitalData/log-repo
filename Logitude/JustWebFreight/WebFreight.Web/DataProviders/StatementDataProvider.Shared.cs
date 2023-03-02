@@ -53,6 +53,7 @@ namespace WebFreight.Web.DataProviders
         public string Currency { get; set; }
         public List<StatementRecord> StatementRecordList { get; set; }
         public List<StatmentAging> StatementAgingSummaryRecordList { get; set; }
+        
     }
 
     public class StatementRecord
@@ -160,6 +161,10 @@ namespace WebFreight.Web.DataProviders
         public double? DebitVATAmountLocalCurrency { get; set; }
         public double? CreditSubtotalLocalCurrency { get; set; }
         public double? CreditVATAmountLocalCurrency { get; set; }
+        public int? ContainersQuantity { get; set; }
+        public DateTime? FinalDestinationETA { get; set; }
+        public string PaymentTerm { get; set; }
+        public DateTime? FinalDestinationETD { get; set; }
     }
 
     public class StatmentAging

@@ -37,9 +37,9 @@ namespace Logitude.BL.ShipmentsModel
 			 
             all.Add(new ContainerStatusSourceDetails()
             {    
-                Code = "VZN", 
+                Code = "2", 
                 Name = "Vizion", 
-                SearchFields = "VZN,Vizion", 
+                SearchFields = "2,Vizion", 
 			});
 			
             return all;

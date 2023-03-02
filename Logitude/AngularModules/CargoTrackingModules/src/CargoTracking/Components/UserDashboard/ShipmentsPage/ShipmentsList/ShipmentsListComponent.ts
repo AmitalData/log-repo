@@ -103,6 +103,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     MilestonesStatusDictionary: {} = {};
     InvitedCustomers: any[] = [];
     MoreFilterMobileValue: MoreFilter = new MoreFilter();
+    InvitedCustomersDictionary : {} = {};
 
     constructor(private router: Router,
         private route: ActivatedRoute,
@@ -123,11 +124,42 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         });
     }
 
+    private GetCompanyLoginsFromCache() {
+        SessionInfo.LoggedUserCompanyLogins = JSON.parse(sessionStorage.getItem("LoggedUserCompanyLogins"));
+        if(SessionInfo.LoggedUserCompanyLogins.filter(a => a.Tenant == this.tenant)[0].IsUser === false)
+        {
+            this.GetInvitedCustomers();
+        }
+    }
+
+    private GetInvitedCustomers() {
+        console.log('SessionInfo.LoggedUserCompanyLogins', SessionInfo.LoggedUserCompanyLogins);
+        this.InvitedCustomers = SessionInfo.LoggedUserCompanyLogins
+            .filter(d => d.CardType == 'CS' && d.CardId != null && d.Tenant == this.tenant)
+            .map(d => (
+                {
+                    IsSelected: false,
+                    Name: d.CompanyName.substring(0, d.CompanyName.lastIndexOf('(')),
+                    ...d
+                }
+            ));
+       this.FillInvitedCustomersDictionary(this.InvitedCustomers);
+    }
+
+    FillInvitedCustomersDictionary(InvitedCustomers: any[]) {
+        InvitedCustomers.forEach(element => {
+            this.InvitedCustomersDictionary[element.CardId] = element;
+        });
+    }
+
+
+
     ngOnInit(): void {
         this.setMaxNumberOfCarachter(window.innerWidth);
         this.setDefaultSort();
         this.GetMilstones();
         this.getPreviousScroll();
+        this.GetCompanyLoginsFromCache();
         this.fillFeltersDictionary();
         this.setViews();
     }
@@ -157,12 +189,11 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.filterAgrs.SortDirection = this.ShipmentSearchInput.SortType;
         this.filterAgrs.SortBy = this.ShipmentSearchInput.SortFieldName;
 
-        if (this.ShipmentSearchInput.Customers.length > 0) {
-            this.filterAgrs.addAdditionalFilter("CustomersIds", this.ShipmentSearchInput.Customers.join("_"), null, null, "Equals", false, false, false, "string");
+        if (this.ShipmentSearchInput.CustomersIds.length > 0) {
+            this.filterAgrs.addAdditionalFilter("CustomersIds", this.ShipmentSearchInput.CustomersIds.join("_"), null, null, "Equals", false, false, false, "string");
         } else if (this.InvitedCustomers.length > 0) {
             this.filterAgrs.addAdditionalFilter("CustomersIds", this.InvitedCustomers.map(d => d.CardId).join("_"), null, null, "Equals", false, false, false, "string");
         }
-
 
         if (this.ShipmentSearchInput.MilestonesCodes.length > 0) {
             this.filterAgrs.addAdditionalFilter("MilestonesCodes", this.ShipmentSearchInput.MilestonesCodes.join("_"), null, null, "Equals", false, false, false, "string");
@@ -343,20 +374,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
     }
 
-    UnselectCustomer(customerId) {
-        RootContext.ShipmentsScrollPosition = 0;
-
-        const index = this.InvitedCustomers.findIndex(obj => {
-            return obj.CustomerId === customerId;
-        });
-        this.InvitedCustomers[index].IsSelected = false;
-
-        this.ShipmentSearchInput.Customers = this.InvitedCustomers.filter(e => e.IsSelected)
-            .map(d => ({CustomerId: d.Id, CustomerName: d.Name} as Customer));
-
-        this.LoadScreenData();
-    }
-
     ClearHasExceptionChanged(event) {
         RootContext.ShipmentsScrollPosition = 0;
         this.ShipmentSearchInput.HasException = this.MoreFilterMobileValue.HasException = event;
@@ -480,6 +497,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
         if (shipment.EntityType === this.EntityType_Customs) {
             this.SupplierOrClientTitle = 'SHIPPER';
+            this.SupplierOrClientValue = shipment.ShipperName;
         }
     }
 
@@ -596,16 +614,29 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
     }
 
+    private filterWithAllCustomersWhenCustomersNotSelected() {
+        let filter = Object.assign({}, this.ShipmentSearchInput);
+        filter.CustomersIds = filter.CustomersIds.length == 0 ? this.InvitedCustomers.map(d => d.CardId) : filter.CustomersIds;
+        return filter;
+    }
+
+
     private InitiateShipmentDataSource() {
-        const searchFilter = Object.assign({}, this.ShipmentSearchInput);
-        this.ShipmentsDataSource = new ShipmentDataSource(this.changeDetector, this.searchService, searchFilter, this);
+        let filter = this.filterWithAllCustomersWhenCustomersNotSelected();
+        this.ShipmentsDataSource = new ShipmentDataSource(this.changeDetector, this.searchService, filter, this);
+        let s = SessionInfo.LoggedUserCompanyLogins.filter(a => a.Tenant == this.tenant)[0];
+        if(SessionInfo.LoggedUserCompanyLogins.filter(a => a.Tenant == this.tenant)[0].IsUser === true)
+        {
+            this.ShipmentsDataSource.GetShipmentsCustomers(this.tenant);
+        }
     }
 
     private ReloadShipments() {
-        const searchFilter = Object.assign({}, this.ShipmentSearchInput);
-        this.ShipmentsDataSource.ReloadData(searchFilter);
+        let filter = this.filterWithAllCustomersWhenCustomersNotSelected();
+        this.ShipmentsDataSource.ReloadData(filter);
         this.ResetShipmentsScrollbarPosition();
     }
+
 
     private ResetShipmentsScrollbarPosition() {
         this.virtualScroll.scrollToIndex(0);
@@ -813,6 +844,19 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         }
     }
 
+    UnselectCustomer(customerId) {
+
+        RootContext.ShipmentsScrollPosition = 0;
+
+        const index = this.InvitedCustomers.findIndex(obj => {
+            return obj.CardId === customerId;
+        });
+        this.InvitedCustomers[index].IsSelected = false;
+
+        this.ShipmentSearchInput.CustomersIds = this.InvitedCustomers.filter(e => e.IsSelected).map(d => d.CardId);
+
+        this.LoadScreenData();
+    }
 
     ClearFilters() {
         this.ClearAdvancedFilters();
@@ -821,7 +865,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.shipmentMoreFiltersMultipleSelection.ClearFilters();
         this.InvitedCustomers.map(e => e.IsSelected = false);
         this.MilestonesStatus.map(e => e.IsSelected = false);
-        this.ShipmentSearchInput.Customers = [];
+        this.ShipmentSearchInput.CustomersIds = this.InvitedCustomers.filter(e => e.IsSelected).map(d => d.CardId);
         this.ShipmentSearchInput.DirectionCodes = [];
         this.ShipmentSearchInput.MilestonesCodes = [];
         this.ShipmentSearchInput.TransportModeCodes = [];
@@ -845,8 +889,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
     ApplyFilterButtonClicked() {
         this.sharedService.updateValue(false);
-        this.ShipmentSearchInput.Customers = this.InvitedCustomers.filter(e => e.IsSelected)
-            .map(d => ({CustomerId: d.Id, CustomerName: d.Name} as Customer));
+        this.ShipmentSearchInput.CustomersIds = this.InvitedCustomers.filter(e => e.IsSelected).map(d => d.CardId);
 
         this.ShipmentSearchInput.MilestonesCodes = this.MilestonesStatus.filter(e => e.IsSelected).map(state => state.Code);
         if (this.isMobileView) {
@@ -867,7 +910,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
     CheckFiltersExists() {
-        return this.ShipmentSearchInput.Customers.length > 0
+        return this.ShipmentSearchInput.CustomersIds.length > 0
             || this.ShipmentSearchInput.DirectionCodes.length > 0
             || this.ShipmentSearchInput.MilestonesCodes.length > 0
             || this.ShipmentSearchInput.TransportModeCodes.length > 0
@@ -899,29 +942,16 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
     ShipmentsCount: number = 0;
+    ShipmentsCustomers: any ;
 
     ShipmentsLoadingError: string;
 
     OpenAdvancedFiltersSidebar() {
         this.sharedService.updateValue(true);
-        if (this.InvitedCustomers.length === 0) {
-            this.InvitedCustomers = this.ShipmentsDataSource.cachedCustomers
-                .map(customer => (
-                    {
-                        IsSelected: false,
-                        Id: customer.CustomerId,
-                        Name: customer.CustomerName,
-                        ...customer
-                    }
-                ));
-        }
     }
 
     OnCustomerValueChanged(value, customer) {
-        const index = this.InvitedCustomers.findIndex(obj => {
-            return obj.CustomerId === customer.CustomerId;
-        });
-        this.InvitedCustomers[index].IsSelected = value;
+        customer.IsSelected = value;
     }
 
 

@@ -33,6 +33,8 @@ export class ConditionsComponent extends BaseComponent implements OnInit, OnChan
     public IsValidConditions: boolean = true;
     public ConditionsCounter: number = 1;
 
+    public ComboBoxMaxHeight: number = 120;
+
     public ConditionOperationsItems: ListItem[] = new ConditionOperationsList().Items;
 
     constructor() {
@@ -80,9 +82,7 @@ export class ConditionsComponent extends BaseComponent implements OnInit, OnChan
 
     initializeConditionsIds(conditions: Condition[] | null = null) {
         for (let condition of (conditions || this.Conditions)) {
-            if (condition.id === undefined || condition.id === null) {
-                condition.id = this.ConditionsCounter;
-            }
+            condition.id = this.ConditionsCounter;
             this.increaseConditionsCounter();
             if (condition.isGroup && condition.conditions && condition.conditions.length > 0) {
                 this.initializeConditionsIds(condition.conditions);

@@ -40,6 +40,7 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
     }
 
     public BuildItemsSource() {
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.LabelsItemsSource = new ObservableCollection([]);
         var labelsList = [];
         
@@ -58,6 +59,7 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
                     labelsList.push(new CustomizationLabelItem(this, item));
                 });
                 this.LabelsItemsSource.InsertCollection(labelsList);
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }

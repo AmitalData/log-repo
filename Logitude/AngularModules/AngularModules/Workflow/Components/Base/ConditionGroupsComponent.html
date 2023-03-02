@@ -143,7 +143,7 @@
                 <ComboBox [ItemsSource]="ConditionOperationsItems" [Binding]="'Name'"
                     [SelectedItem]="Condition.groupOperation | ListItemPipe"
                     (SelectedItemChanged)="updateConditionGroupOperation($event.Code, conditionIndex)" [ListType]="''"
-                    [IsDisabled]="Condition.disabled | ConditionDisabledPipe : 'go'"
+                    [IsDisabled]="Condition.disabled | ConditionDisabledPipe : 'go'" [MaxHeight]="ComboBoxMaxHeight"
                     [CyData]="'ConditionOperation_' + Condition.id">
                 </ComboBox>
 
@@ -162,16 +162,12 @@
 
                     <div *ngIf="!IsDummyField" class="condition-field-container">
 
-                        <LogLov *ngIf="IsEntityField" [NoObjectField]="true"
-                            [ObjectFieldName]="'ConditionField_' + Condition.id" [DataContext]="DataContext"
-                            [QueryFilterItems]="(null | ObjectFieldsQueryFiltersPipe : EntityId)" [IsFreeText]="true"
-                            [LookUpTableName]="'ObjectField'" [NoValidation]="true"
-                            [SelectedValue]="Condition.fieldCode" [HideColumns]="true"
-                            [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
-                            (SelectedItemChanged)="updateConditionEntityField($event, conditionIndex)"
-                            [ForceDisabled]="Condition.disabled | ConditionDisabledPipe : 'f'"
+                        <TreeSelect *ngIf="IsEntityField" [Items]="ObjectFieldsTreeItems" [Width]="'300px'"
+                            [IsDisabled]="Condition.disabled | ConditionDisabledPipe : 'f'"
+                            [Value]="Condition.fieldCode" [IsReturnedTreeSelectItem]="true" [ShowExpand]="false"
+                            (ValueChanged)="updateConditionEntityField($event, conditionIndex)"
                             [DataCy]="'ConditionField_' + Condition.id">
-                        </LogLov>
+                        </TreeSelect>
 
                         <TreeSelect *ngIf="!IsEntityField" [Items]="FlowVariablesTreeItems" [Width]="'300px'"
                             [IsDisabled]="Condition.disabled | ConditionDisabledPipe : 'f'"
@@ -196,7 +192,7 @@
                             [Binding]="'Name'" [SelectedItem]="Condition.operator | ListItemPipe"
                             (SelectedItemChanged)="updateConditionOperator($event.Code, conditionIndex)" [ListType]="''"
                             [IsDisabled]="Condition.disabled | ConditionDisabledPipe : 'o'"
-                            [CyData]="'ConditionOperator_' + Condition.id">
+                            [MaxHeight]="ComboBoxMaxHeight" [CyData]="'ConditionOperator_' + Condition.id">
                         </ComboBox>
 
                     </div>
@@ -209,7 +205,7 @@
                             [SelectedItem]="Condition.valueExpression | ListItemPipe"
                             (SelectedItemChanged)="updateConditionValueExpression($event.Code, conditionIndex)"
                             [ListType]="''" [IsDisabled]="Condition.disabled | ConditionDisabledPipe : 've'"
-                            [CyData]="'ConditionValueExpression_' + Condition.id">
+                            [MaxHeight]="ComboBoxMaxHeight" [CyData]="'ConditionValueExpression_' + Condition.id">
                         </ComboBox>
 
                     </div>
@@ -222,6 +218,7 @@
                         <FieldValue *ngIf="Condition.fieldChangedToggle"
                             [ObjectField]="(Condition.fieldCode | IsNoObjectFieldVariablePipe) ? null : (Condition.fieldCode | ObjectFieldPipe)"
                             [DataType]="(Condition.fieldCode | IsNoObjectFieldVariablePipe) ? Condition.type : null"
+                            [LookupType]="(Condition.fieldCode | IsNoObjectFieldVariablePipe) ? Condition.lookupType : null"
                             [Name]="'ConditionValue_' + Condition.id"
                             [IsIntegerNumberInput]="(Condition.type | IsDateTimeTypePipe) && Condition.valueExpression === DateTimeValueExpressions.PlusMinusToday"
                             [CurrentValue]="Condition.value"
@@ -232,6 +229,7 @@
                         <FieldValue *ngIf="!Condition.fieldChangedToggle"
                             [ObjectField]="(Condition.fieldCode | IsNoObjectFieldVariablePipe) ? null : (Condition.fieldCode | ObjectFieldPipe)"
                             [DataType]="(Condition.fieldCode | IsNoObjectFieldVariablePipe) ? Condition.type : null"
+                            [LookupType]="(Condition.fieldCode | IsNoObjectFieldVariablePipe) ? Condition.lookupType : null"
                             [Name]="'ConditionValue_' + Condition.id"
                             [IsIntegerNumberInput]="(Condition.type | IsDateTimeTypePipe) && Condition.valueExpression === DateTimeValueExpressions.PlusMinusToday"
                             [CurrentValue]="Condition.value"
@@ -244,27 +242,22 @@
                     <div *ngIf="!(Condition.operator | IsNoValueOperatorPipe) && (Condition.operator | IsFieldOperatorPipe) && IsEntityFieldValue"
                         class="condition-value-container">
 
-                        <LogLov *ngIf="Condition.fieldChangedToggle" [NoObjectField]="true"
-                            [ObjectFieldName]="'ConditionFieldValue_' + Condition.id" [DataContext]="DataContext"
-                            [QueryFilterItems]="(Condition.fieldCode | ObjectFieldsQueryFiltersPipe : EntityId)"
-                            [IsFreeText]="true" [LookUpTableName]="'ObjectField'" [NoValidation]="true"
-                            [SelectedValue]="Condition.valueCode" [HideColumns]="true"
-                            [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
-                            (SelectedItemChanged)="updateConditionFieldValue($event, conditionIndex)"
-                            [ForceDisabled]="Condition.disabled | ConditionDisabledPipe : 'v'"
+                        <TreeSelect *ngIf="Condition.fieldChangedToggle" [Items]="ObjectFieldsTreeItems"
+                            [Width]="'300px'" [IsDisabled]="Condition.disabled | ConditionDisabledPipe : 'v'"
+                            [Value]="Condition.valueCode" [ShowItem]="Condition | ShowFlowVariablesTreeItemPipe"
+                            [IsReturnedTreeSelectItem]="true" [ShowExpand]="false"
+                            (ValueChanged)="updateConditionFieldValue($event, conditionIndex)"
                             [DataCy]="'ConditionFieldValue_' + Condition.id">
-                        </LogLov>
+                        </TreeSelect>
 
-                        <LogLov *ngIf="!Condition.fieldChangedToggle" [NoObjectField]="true"
-                            [ObjectFieldName]="'ConditionFieldValue_' + Condition.id" [DataContext]="DataContext"
-                            [QueryFilterItems]="(Condition.fieldCode | ObjectFieldsQueryFiltersPipe : EntityId)"
-                            [IsFreeText]="true" [LookUpTableName]="'ObjectField'" [NoValidation]="true"
-                            [SelectedValue]="Condition.valueCode" [HideColumns]="true"
-                            [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
-                            (SelectedItemChanged)="updateConditionFieldValue($event, conditionIndex)"
-                            [ForceDisabled]="Condition.disabled | ConditionDisabledPipe : 'v'"
+                        <TreeSelect *ngIf="!Condition.fieldChangedToggle" [Items]="ObjectFieldsTreeItems"
+                            [Width]="'300px'" [IsDisabled]="Condition.disabled | ConditionDisabledPipe : 'v'"
+                            [Value]="Condition.valueCode" [ShowItem]="Condition | ShowFlowVariablesTreeItemPipe"
+                            [IsReturnedTreeSelectItem]="true" [ShowExpand]="false"
+                            (ValueChanged)="updateConditionFieldValue($event, conditionIndex)"
                             [DataCy]="'ConditionFieldValue_' + Condition.id">
-                        </LogLov>
+                        </TreeSelect>
+
                     </div>
 
                     <div *ngIf="!(Condition.operator | IsNoValueOperatorPipe) && (Condition.operator | IsFieldOperatorPipe) && !IsEntityFieldValue"
@@ -272,8 +265,7 @@
                         <div [attr.data-cy]="'ConditionFieldValue_' + Condition.id">
                             <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'300px'" [Value]="Condition.value"
                                 [IsDisabled]="Condition.disabled | ConditionDisabledPipe : 'v'"
-                                [ShowItem]="Condition | ShowFlowVariablesTreeItemPipe : FlowVariablesTreeList"
-                                [IsReturnedTreeSelectItem]="true"
+                                [ShowItem]="Condition | ShowFlowVariablesTreeItemPipe" [IsReturnedTreeSelectItem]="true"
                                 (ValueChanged)="updateConditionValue(($event ? $event.key : null), conditionIndex, ($event && $event.data ? ($event.data.nodeId || null) : null))"
                                 [DataCy]="'ConditionFieldValue_' + Condition.id">
                             </TreeSelect>
@@ -285,7 +277,7 @@
                             [SelectedItem]="Condition.value | ListItemPipe"
                             (SelectedItemChanged)="updateConditionValue($event.Code, conditionIndex)" [ListType]="''"
                             [IsDisabled]="Condition.disabled | ConditionDisabledPipe : 'v'"
-                            [CyData]="'ConditionValue_' + Condition.id">
+                            [MaxHeight]="ComboBoxMaxHeight" [CyData]="'ConditionValue_' + Condition.id">
                         </ComboBox>
                     </div>
 

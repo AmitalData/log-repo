@@ -1,4 +1,4 @@
-@devrelease
+@release3
 Feature:  Adjust Documents Permissions In Shared Manifests Display Settings
     The user opens Shared Manifests tab in Operations and adjust the Documents Permissions
 

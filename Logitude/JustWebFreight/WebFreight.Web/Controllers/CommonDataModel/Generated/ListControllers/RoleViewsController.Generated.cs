@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				RoleRepository  roleRepository = new RoleRepository(MyContext);
 				RoleList entityList = null;
 				Role entityPoco = roleRepository.GetSingleRole(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Role> singleEntityList = new List<Role>();
 					singleEntityList.Add(entityPoco);

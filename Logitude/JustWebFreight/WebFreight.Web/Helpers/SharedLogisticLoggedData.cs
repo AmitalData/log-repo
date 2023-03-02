@@ -24,5 +24,7 @@ namespace WebFreight.Web.Helpers
         public string ImageFileData  { get; set; }
 
         public bool ShowMultiUnitsOfMeasurements { get; set; }
+        
+        public bool IsDigitalPortalRequiredDocumentsEnabled { get; set; }
     }
 }

@@ -98,7 +98,10 @@ namespace Simplog.Data.InfrastructureModel
 
         #endregion
 
-
+        public DbContextTransaction GetSnapshotTransaction()
+        {
+            throw new NotImplementedException();
+        }
         public IDbSet<User> Users
         {
             get
@@ -1924,7 +1927,6 @@ namespace Simplog.Data.InfrastructureModel
         {
             throw new NotImplementedException();
         }
-
 
         public IDbSet<ObjectTableLastUpdate> ObjectTableLastUpdates
         {

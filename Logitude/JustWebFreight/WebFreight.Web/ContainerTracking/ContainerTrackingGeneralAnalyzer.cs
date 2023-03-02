@@ -1,4 +1,5 @@
-﻿using Logitude.BL.DataContracts;
+﻿using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.DataContracts;
 using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.CloseTables;
 using Logitude.BL.ShipmentsModel.EntityPMs;
@@ -42,6 +43,8 @@ namespace WebFreight.Web.ContainerTracking
         private string trackingSource;
         private ContainerUpdatedFields containerUpdatedFields;
         private ContainerTrackingHelper containerTrackingHelper;
+        private PortQuery portQuery;
+        private PortRepository portRepository;
         public ContainerTrackingGeneralAnalyzer(string trackingSource, AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
         {
             if (analyzeQueue != null)
@@ -51,6 +54,8 @@ namespace WebFreight.Web.ContainerTracking
                 this.analyzeQueueRepository = analyzeQueueRepository;
                 this.trackingSource = trackingSource;
             }
+            this.portRepository = new PortRepository(tenant_Zero);
+            this.portQuery = new PortQuery(portRepository);
         }
 
         public void Run()
@@ -150,6 +155,7 @@ namespace WebFreight.Web.ContainerTracking
 
             if (trackingSource == ContainerStatusSourceValues.OceanInsights)
             {
+                manager.Initialize(containerUpdatedFields.Tenant);
                 manager.Update(true, true);
             }
 
@@ -185,9 +191,11 @@ namespace WebFreight.Web.ContainerTracking
 
                 ContainerPM container = GetContainerPM(containerTrackingRequest);
                 ShipmentPM shipment = GetShipmentPM(containerTrackingRequest);
+                manager.allTrasshipmentLegs = new List<dynamic>();
 
                 if (IsValidToAnalyze(shipment, container, containerTrackingRequest))
                 {
+                    manager.Initialize(containerTrackingRequest.Tenant);
                     manager.SetContainer(container);
                     manager.SetShipment(shipment);
                     MapContainersExternalData(container);
@@ -217,15 +225,15 @@ namespace WebFreight.Web.ContainerTracking
         {
             if (shipment.IsOperationalClosed)            
                 return false;
-            
-            if (!containerTrackingHelper.IsSameLocation(shipment.MainCarriageFromPortId, containerUpdatedFields.POLLocation))            
+            if (!containerTrackingHelper.IsSameLocation(shipment.MainCarriageFromPortId, containerUpdatedFields.POLLocation))
                 return false;
-            
-            if (!containerTrackingHelper.IsSameLocation(shipment.MainCarriageFinalDestinationPortId, containerUpdatedFields.PODLocation))            
-                return false;            
-            
-            return true;
+            if (!containerTrackingHelper.IsSameLocation(shipment.MainCarriageFinalDestinationPortId, containerUpdatedFields.PODLocation))
+                return false;
+                return true;
         }
+        
+
+ 
         private bool IsValidToAnalyze(ShipmentPM shipment, ContainerPM container, ContainerTrackingRequest containerTrackingRequest)
         {
             return (
@@ -645,9 +653,14 @@ namespace WebFreight.Web.ContainerTracking
         public MilestoneData DischargedTransshipment;
         public string OnCarriageLocation;
 
+        public string POLLegVessel;
+        public string POLLegVoyage;
 
-        public Location VisionPreCarriage { get; set; }
-        public Location VisionOnCarriage { get; set; }
+        public string PODLegVessel;
+        public string PODLegVoyage;
+
+        public string VisionPreCarriage { get; set; }
+        public string VisionOnCarriage { get; set; }
     }
 
     public class MilestoneData

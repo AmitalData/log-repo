@@ -58,7 +58,9 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         FlowJson, 
 	         Entity, 
 	         Trigger, 
-	         ActivatedDate,
+	         ActivatedDate, 
+	         CreatedByUserName, 
+	         UpdatedByUserName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

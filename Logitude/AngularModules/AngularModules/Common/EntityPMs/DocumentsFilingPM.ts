@@ -22,7 +22,7 @@ export class DocumentsFilingPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -598,6 +598,9 @@ export class DocumentsFilingPM {
     public set IsAgentSharedInMaster(newValue: boolean) { if (this.isAgentSharedInMaster != newValue) { this.isAgentSharedInMaster = newValue; this.MarkAsDirty("IsAgentSharedInMaster"); } }
        
 	 
+    private receivedByPartner: string;
+    public get ReceivedByPartner() { return this.receivedByPartner; }
+    public set ReceivedByPartner(newValue: string) { if (this.receivedByPartner != newValue) { this.receivedByPartner = newValue; this.MarkAsDirty("ReceivedByPartner"); } }
 
     public OldEntityPM: DocumentsFilingPM;
 		

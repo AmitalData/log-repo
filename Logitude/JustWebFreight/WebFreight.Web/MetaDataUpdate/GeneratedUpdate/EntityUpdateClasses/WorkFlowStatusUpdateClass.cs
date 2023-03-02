@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class WorkFlowStatusUpdateClass
    {  		
-		public const string HashString = "43fc68e7cdda9bf20b7d963844bfcd37";
+		public const string HashString = "01faf04e3ce8b48316b2863b97d1081e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -101,6 +101,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  false,
 			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -111,13 +112,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    KeyPropertyPath =  "Code",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  true,
-			      				    CacheOnClient =  true,
+			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  false,
-			      				    IsAutoComplete =  true,
+			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "Name",
 			      				    InActive =  false,
@@ -129,7 +130,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Workflow Status",
-			      				    Code =  "12d6",
+			      				    Code =  "ea2d",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",

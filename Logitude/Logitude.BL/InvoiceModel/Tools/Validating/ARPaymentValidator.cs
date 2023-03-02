@@ -494,7 +494,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     if (glAccount.CurrencyId != arguments.PaymentCurrencyId)
                     {
                         string msg = TranslateTextsClass.Translate("ARPayment.M.BillToGLAccountCurrency", arguments.Tenant, useLocal);
-                        msg += " " + glAccount.CurrencyCode;
+                        msg += " " + glAccount.CurrencyCode + " (" + glAccount.DisplayNumber + ")";
                         //throw new ApplicationException(msg);
                         errors += msg + ";";
                     }

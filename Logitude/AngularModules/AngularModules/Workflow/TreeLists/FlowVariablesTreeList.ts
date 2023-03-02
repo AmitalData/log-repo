@@ -7,7 +7,7 @@ import { ObjectFields } from "Workflow/Utilities/ObjectFields";
 import { ObjectTables } from "Workflow/Utilities/ObjectTables";
 import { ReturnedField } from "Workflow/Models/ReturnedField";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
-import { FlowVariablesTreeListProperties } from "Workflow/Types";
+import { FlowVariablesTreeListProperties, GlobalVariable } from "Workflow/Types";
 
 export class FlowVariablesTreeList {
     private FlowObject: any;
@@ -15,9 +15,13 @@ export class FlowVariablesTreeList {
     private FlowVariablesTreeListProperties: FlowVariablesTreeListProperties;
     private ItemKeySplitter: string = "_";
 
+    private RecordsVariablesPrefix: string = "recordsvariables";
+    private RecordsCollectionVariablesPrefix: string = "recordscollectionvariables";
     private TriggeringRecordPrefix: string = "triggeringrecord";
     private DeclaredVariablesPrefix: string = "declaredvariables";
     private DeclaredRecordVariablesPrefix: string = "declaredrecordvariables";
+    private DeclaredCollectionVariablesPrefix: string = "declaredcollectionvariables";
+    private GlobalVariablesPrefix: string = "globalvariables";
     private LoopCurrentItemPrefix: string = "Current item from loop ";
 
     public Items: TreeSelectItem[] = [];
@@ -35,109 +39,6 @@ export class FlowVariablesTreeList {
         return null;
     }
 
-    public compareItemType(item: TreeSelectItem, compareWithType: string, compareWithLookupOrPickListType: string) {
-        switch (compareWithType) {
-            case FieldTypes.LookUp:
-                return this.compareItemLookupType(item, compareWithLookupOrPickListType);
-            case FieldTypes.PickList:
-                return this.compareItemPickListType(item, compareWithLookupOrPickListType);
-            case FieldTypes.Text:
-            case FieldTypes.NText:
-                return this.compareItemTextType(item);
-            case FieldTypes.Boolean:
-                return this.compareItemBooleanType(item);
-            case FieldTypes.Date:
-            case FieldTypes.DateTime:
-                return this.compareItemDateType(item);
-            case FieldTypes.BigInteger:
-            case FieldTypes.Decimal:
-            case FieldTypes.Double:
-            case FieldTypes.Integer:
-            case FieldTypes.SigDouble:
-            case FieldTypes.UnsDecimal:
-            case FieldTypes.UnsInteger:
-                return this.compareItemNumberType(item);
-            default:
-                return this.compareItemDefaultType(item, compareWithType);
-        }
-    }
-
-    private compareItemLookupType(item: TreeSelectItem, compareWithLookupOrPickListType: string) {
-        let fieldItemType = item.data["type"];
-        let fieldItemLookupType = item.data["lookupType"];
-        let fieldItemCode = item.data["fieldCode"];
-        if (compareWithLookupOrPickListType) {
-            let lookupField = compareWithLookupOrPickListType + "." + ObjectTables.getKeyPropertyPathByName(compareWithLookupOrPickListType);
-            if (fieldItemCode === lookupField) {
-                return true;
-            }
-        }
-        if (fieldItemType !== undefined && (fieldItemType === null || fieldItemType !== FieldTypes.LookUp)) {
-            return false;
-        }
-        if (fieldItemLookupType !== undefined && (fieldItemLookupType === null || fieldItemLookupType !== compareWithLookupOrPickListType)) {
-            return false;
-        }
-        return true;
-    }
-
-    private compareItemPickListType(item: TreeSelectItem, compareWithLookupOrPickListType: string) {
-        let fieldItemType = item.data["type"];
-        let fieldItemPickListType = item.data["picklistType"];
-        if (fieldItemType !== undefined && (fieldItemType === null || fieldItemType !== FieldTypes.PickList)) {
-            return false;
-        }
-        if (fieldItemPickListType !== undefined && (fieldItemPickListType === null || fieldItemPickListType !== compareWithLookupOrPickListType)) {
-            return false;
-        }
-        return true;
-    }
-
-    private compareItemTextType(item: TreeSelectItem) {
-        let fieldItemType = item.data["type"];
-        let validTypes = [FieldTypes.Text, FieldTypes.NText, FieldTypes.LookUp, FieldTypes.PickList];
-        if (fieldItemType !== undefined && (fieldItemType === null || validTypes.indexOf(fieldItemType) === -1)) {
-            return false;
-        }
-        return true;
-    }
-
-    private compareItemBooleanType(item: TreeSelectItem) {
-        let fieldItemType = item.data["type"];
-        if (fieldItemType !== undefined && (fieldItemType === null || fieldItemType !== FieldTypes.Boolean)) {
-            return false;
-        }
-        return true;
-    }
-
-    private compareItemDateType(item: TreeSelectItem) {
-        let fieldItemType = item.data["type"];
-        let validTypes = [FieldTypes.Date, FieldTypes.DateTime];
-        if (fieldItemType !== undefined && (fieldItemType === null || validTypes.indexOf(fieldItemType) === -1)) {
-            return false;
-        }
-        return true;
-    }
-
-    private compareItemNumberType(item: TreeSelectItem) {
-        let fieldItemType = item.data["type"];
-        let validTypes = [FieldTypes.BigInteger, FieldTypes.Decimal, FieldTypes.Double, FieldTypes.Integer, FieldTypes.SigDouble, FieldTypes.UnsDecimal, FieldTypes.UnsInteger];
-        if (fieldItemType !== undefined && (fieldItemType === null || validTypes.indexOf(fieldItemType) === -1)) {
-            return false;
-        }
-        return true;
-    }
-
-    private compareItemDefaultType(item: TreeSelectItem, compareWithType: string) {
-        let fieldItemType = item.data["type"];
-        let fieldItemTypeToCompare = fieldItemType;
-        let compareWithTypeToCompare = compareWithType;
-        if (fieldItemType !== undefined && (fieldItemType === null || fieldItemTypeToCompare !== compareWithTypeToCompare)) {
-            return false;
-        }
-        return true;
-    }
-
     private initialize(flowObject: any, currentNodeId: string, flowVariablesTreeListProperties: FlowVariablesTreeListProperties) {
         this.FlowObject = flowObject;
         this.CurrentNodeId = currentNodeId;
@@ -145,15 +46,17 @@ export class FlowVariablesTreeList {
     }
 
     private getDefaultFlowVariablesTreeListProperties() {
-        return {
+        let defaultProperties: FlowVariablesTreeListProperties = {
             ShowRecordsVariables: false,
             ShowDeclaredVariables: false,
             ShowRecordsCollectionVariables: false,
             ShowDeclaredCollectionVariables: false,
+            ShowGlobalVariables: false,
             OnlyCurrentLoopItemVariables: false,
             IsObjectVariableSelectable: false,
             IsNoChildrenObjectVariables: false
         };
+        return defaultProperties;
     }
 
     private initializeTreeItems() {
@@ -161,28 +64,29 @@ export class FlowVariablesTreeList {
         this.initializeRecordsCollectionVariables();
         this.initializeDeclaredVariables();
         this.initializeDeclaredCollectionVariables();
+        this.initializeGlobalVariables();
     }
 
     private initializeRecordsVariables() {
-        if (this.FlowVariablesTreeListProperties && this.FlowVariablesTreeListProperties.ShowRecordsVariables) {
+        if (this.FlowVariablesTreeListProperties.ShowRecordsVariables) {
             let recordsVariablesItemChildren = this.getRecordsVariablesItemChildren();
-            let recordsVariablesItem = new TreeSelectItem("recordsvariables", "Records Variables", false, false, true, true, recordsVariablesItemChildren);
+            let recordsVariablesItem = new TreeSelectItem(this.RecordsVariablesPrefix, "Records Variables", false, false, true, true, recordsVariablesItemChildren);
             this.Items.push(recordsVariablesItem);
             this.ItemsList.push(recordsVariablesItem);
         }
     }
 
     private initializeRecordsCollectionVariables() {
-        if (this.FlowVariablesTreeListProperties && this.FlowVariablesTreeListProperties.ShowRecordsCollectionVariables && !this.FlowVariablesTreeListProperties.OnlyCurrentLoopItemVariables) {
+        if (this.FlowVariablesTreeListProperties.ShowRecordsCollectionVariables && !this.FlowVariablesTreeListProperties.OnlyCurrentLoopItemVariables) {
             let recordsCollectionVariablesItemChildren = this.getRecordsCollectionVariablesItemChildren();
-            let recordsCollectionVariablesItem = new TreeSelectItem("recordscollectionvariables", "Records Collection Variables", false, false, true, true, recordsCollectionVariablesItemChildren);
+            let recordsCollectionVariablesItem = new TreeSelectItem(this.RecordsCollectionVariablesPrefix, "Records Collection Variables", false, false, true, true, recordsCollectionVariablesItemChildren);
             this.Items.push(recordsCollectionVariablesItem);
             this.ItemsList.push(recordsCollectionVariablesItem);
         }
     }
 
     private initializeDeclaredVariables() {
-        if (this.FlowVariablesTreeListProperties && this.FlowVariablesTreeListProperties.ShowDeclaredVariables) {
+        if (this.FlowVariablesTreeListProperties.ShowDeclaredVariables) {
             let declaredVariablesItemChildren = this.getDeclaredVariablesItemChildren();
             let declaredVariablesItem = new TreeSelectItem(this.DeclaredVariablesPrefix, "Declared Variables", false, false, true, true, declaredVariablesItemChildren);
             this.Items.push(declaredVariablesItem);
@@ -191,11 +95,20 @@ export class FlowVariablesTreeList {
     }
 
     private initializeDeclaredCollectionVariables() {
-        if (this.FlowVariablesTreeListProperties && this.FlowVariablesTreeListProperties.ShowDeclaredCollectionVariables && !this.FlowVariablesTreeListProperties.OnlyCurrentLoopItemVariables) {
+        if (this.FlowVariablesTreeListProperties.ShowDeclaredCollectionVariables && !this.FlowVariablesTreeListProperties.OnlyCurrentLoopItemVariables) {
             let declaredCollectionVariablesItemChildren = this.getDeclaredCollectionVariablesItemChildren();
-            let declaredCollectionVariablesItem = new TreeSelectItem("declaredcollectionvariables", "Declared Collection Variables", false, false, true, true, declaredCollectionVariablesItemChildren);
+            let declaredCollectionVariablesItem = new TreeSelectItem(this.DeclaredCollectionVariablesPrefix, "Declared Collection Variables", false, false, true, true, declaredCollectionVariablesItemChildren);
             this.Items.push(declaredCollectionVariablesItem);
             this.ItemsList.push(declaredCollectionVariablesItem);
+        }
+    }
+
+    private initializeGlobalVariables() {
+        if (this.FlowVariablesTreeListProperties.ShowGlobalVariables && !this.FlowVariablesTreeListProperties.OnlyCurrentLoopItemVariables) {
+            let globalVariablesItemChildren = this.getGlobalVariablesItemChildren();
+            let globalVariablesItem = new TreeSelectItem(this.GlobalVariablesPrefix, "Global Variables", false, false, true, true, globalVariablesItemChildren);
+            this.Items.push(globalVariablesItem);
+            this.ItemsList.push(globalVariablesItem);
         }
     }
 
@@ -229,7 +142,7 @@ export class FlowVariablesTreeList {
         this.getLoopNodes().forEach((loopNode: any) => {
             let collectionVariable: string = loopNode.data["collectionVariable"] || null;
             let isCollectionFilterVariable: boolean = loopNode.data["isCollectionFilterVariable"] || false;
-            let isEditableEntity : boolean = loopNode.data["isEditableEntity"] || false;
+            let isEditableEntity: boolean = loopNode.data["isEditableEntity"] || false;
 
             let collectionNode: any;
 
@@ -356,6 +269,7 @@ export class FlowVariablesTreeList {
 
             let declareVariableNode = this.getDeclareVariableNodes(true).find(n => Formatter.getCodeFromName(n.data["name"]) === declareVariableNodeCode);
             if (declareVariableNode) {
+                let onlyCurrentLoopItem = this.FlowVariablesTreeListProperties.OnlyCurrentLoopItemVariables;
                 let variableType = declareVariableNode.data["variableType"] || null;
                 let recordType = declareVariableNode.data["recordType"] || null;
                 let loopName = loopNode.data["name"] || null;
@@ -365,10 +279,10 @@ export class FlowVariablesTreeList {
                 let treeSelectItemName = this.LoopCurrentItemPrefix + loopName;
                 let treeSelectItemKey = Formatter.getCodeFromName(loopName);
                 let declaredVariableType = this.formatDeclaredVariableType(variableType, recordType);
-                let treeSelectItemChildren = isRecordVariableType ? this.getObjectFieldsItems(treeSelectItemKey, recordType, null, loopNode.id) : [];
+                let treeSelectItemChildren = onlyCurrentLoopItem ? [] : (isRecordVariableType ? this.getObjectFieldsItems(treeSelectItemKey, recordType, null, loopNode.id) : []);
                 let treeSelectItemData = { type: (declaredVariableType ? declaredVariableType.replace("[]", "") : null), nodeId: loopNode.id };
                 let treeSelectItemSelectable = !isRecordVariableType || this.FlowVariablesTreeListProperties.IsObjectVariableSelectable || this.FlowVariablesTreeListProperties.IsNoChildrenObjectVariables;
-                let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemTitle || treeSelectItemName, !isRecordVariableType, treeSelectItemSelectable, false, false, treeSelectItemChildren, treeSelectItemData);
+                let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemTitle || treeSelectItemName, onlyCurrentLoopItem || !isRecordVariableType, onlyCurrentLoopItem || treeSelectItemSelectable, false, false, treeSelectItemChildren, treeSelectItemData);
                 declaredVariablesItemChildren.push(treeSelectItem);
                 this.ItemsList.push(treeSelectItem);
             }
@@ -402,6 +316,141 @@ export class FlowVariablesTreeList {
         return sortedDeclaredCollectionVariablesItemChildren;
     }
 
+    private getGlobalVariablesItemChildren() {
+        let globalVariablesItemChildren: TreeSelectItem[] = [];
+
+        let workflowItem = this.getGlobalVariablesItem("workflow", "Workflow");
+        let userItem = this.getGlobalVariablesItem("user", "User");
+        let tenantItem = this.getGlobalVariablesItem("tenant", "Tenant");
+        let currentDatetimeItem = this.getGlobalVariablesItem("currentdatetime", "Current Datetime");
+
+        globalVariablesItemChildren.push(workflowItem);
+        globalVariablesItemChildren.push(userItem);
+        globalVariablesItemChildren.push(tenantItem);
+        globalVariablesItemChildren.push(currentDatetimeItem);
+
+        this.ItemsList.push(workflowItem);
+        this.ItemsList.push(userItem);
+        this.ItemsList.push(tenantItem);
+        this.ItemsList.push(currentDatetimeItem);
+
+        return globalVariablesItemChildren;
+    }
+
+    private getGlobalVariablesItem(sectionCode: string, sectionName: string) {
+        sectionCode = sectionCode?.toLowerCase();
+        let itemKey = this.GlobalVariablesPrefix + this.ItemKeySplitter + sectionCode;
+        let globalVariables = this.getGlobalVariables(sectionCode);
+        let itemChildren = this.getGlobalVariablesItems(itemKey, globalVariables);
+        let item = new TreeSelectItem(itemKey, sectionName, false, false, false, false, itemChildren);
+        return item;
+    }
+
+    private getGlobalVariables(sectionCode: string) {
+        switch (sectionCode) {
+            case "workflow":
+                return this.getWorkflowGlobalVariables();
+            case "user":
+                return this.getUserGlobalVariables();
+            case "tenant":
+                return this.getTenantGlobalVariables();
+            case "currentdatetime":
+                return this.getCurrentDatetimeGlobalVariables();
+            default:
+                return [];
+        }
+    }
+
+    private getWorkflowGlobalVariables() {
+        let globalVariables: GlobalVariable[] = [
+            {
+                Code: "InstanceStartTime",
+                Name: "Instance Start Time",
+                Type: FieldTypes.DateTime,
+            },
+            {
+                Code: "FaultMessage",
+                Name: "Fault Message",
+                Type: FieldTypes.Text
+            }
+        ];
+        return globalVariables;
+    }
+
+    private getUserGlobalVariables() {
+        let globalVariables: GlobalVariable[] = [
+            {
+                Code: "Id",
+                Type: FieldTypes.LookUp,
+                LookupType: "User"
+            },
+            {
+                Code: "Name",
+                Type: FieldTypes.Text
+            },
+            {
+                Code: "Email",
+                Type: FieldTypes.Text
+            }
+        ];
+        return globalVariables;
+    }
+
+    private getTenantGlobalVariables() {
+        let globalVariables: GlobalVariable[] = [
+            {
+                Code: "Id",
+                Type: FieldTypes.Integer
+            },
+            {
+                Code: "Name",
+                Type: FieldTypes.Text
+            },
+            {
+                Code: "TimeZone",
+                Name: "Time Zone",
+                Type: FieldTypes.Text
+            }
+        ];
+        return globalVariables;
+    }
+
+    private getCurrentDatetimeGlobalVariables() {
+        let globalVariables: GlobalVariable[] = [
+            {
+                Code: "UTCDatetime",
+                Name: "UTC Time",
+                Type: FieldTypes.DateTime,
+            },
+            {
+                Code: "TenantDatetime",
+                Name: "Tenant Time",
+                Type: FieldTypes.DateTime,
+            }
+        ];
+        return globalVariables;
+    }
+
+    private getGlobalVariablesItems(prefix: string, globalVariables: GlobalVariable[]) {
+        let globalVariablesItems: TreeSelectItem[] = [];
+
+        globalVariables.forEach(globalVariable => {
+            let itemKey = prefix + this.ItemKeySplitter + globalVariable.Code;
+            let itemData = {
+                type: globalVariable.Type,
+                lookupType: (globalVariable.LookupType || null),
+                picklistType: (globalVariable.PicklistType || null),
+                fieldCode: itemKey,
+                isReadOnlyVariable: true
+            };
+            let treeSelectItem = new TreeSelectItem(itemKey, (globalVariable.Name || globalVariable.Code), true, true, false, false, [], itemData);
+            globalVariablesItems.push(treeSelectItem);
+            this.ItemsList.push(treeSelectItem);
+        });
+
+        return globalVariablesItems;
+    }
+
     private getGetRecordNodes(recordsLimit: "FirstRecord" | "AllRecords") {
         if (this.FlowObject) {
             return FlowReader.getAllPreviousNodes(this.FlowObject, this.CurrentNodeId, "getRecordNode")
@@ -425,9 +474,9 @@ export class FlowVariablesTreeList {
 
             if (isDeclaredCollectionVariable) {
                 return loopNodes.filter(n => n.data["isDeclaredCollectionVariable"] === true);
+            } else {
+                return loopNodes.filter(n => !n.data["isDeclaredCollectionVariable"]);
             }
-
-            return loopNodes;
         }
         return [];
     }
@@ -460,7 +509,8 @@ export class FlowVariablesTreeList {
                 picklistType: (objectField.DataTypeCode === FieldTypes.PickList ? objectField.CustomPickListCode : null),
                 fieldCode: objectField.FieldCode,
                 isReadOnlyVariable: isReadOnlyFields,
-                nodeId: nodeId
+                nodeId: nodeId,
+                tooltip: objectField.FieldName
             };
             let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, [], data);
             objectFieldsItems.push(treeSelectItem);

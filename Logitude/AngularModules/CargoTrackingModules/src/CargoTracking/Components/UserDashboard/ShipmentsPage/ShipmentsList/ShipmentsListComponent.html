@@ -139,8 +139,8 @@
                 <span class="filter-close-btn">×</span>
             </li>
 
-            <li *ngFor="let customer of ShipmentSearchInput.Customers" (click)="UnselectCustomer(customer.CustomerId)">
-                {{customer.CustomerName}}
+            <li *ngFor="let customerId of ShipmentSearchInput.CustomersIds" (click)="UnselectCustomer(customerId)">
+                {{InvitedCustomersDictionary[customerId].Name}}
                 <span class="filter-close-btn">×</span>
             </li>
 

@@ -23,21 +23,21 @@ namespace Logitude.Server.Tools.Counters
 
         public static string GetNumber(string connectionString, string tableName)
         {
-            if (FakeOverrideIIdCounter!=null)
+            if (FakeOverrideIIdCounter != null)
             {
                 return FakeOverrideIIdCounter.GetNumber(connectionString, tableName);
             }
             string number = null;
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-                
+
                 using (OracleConnection cn = new OracleConnection(connectionString))
                 {
                     OracleCommand cmd = new OracleCommand();
                     cmd.Connection = cn;
-                    cmd.CommandText = 
-                        //LogitudeDBSchema.LOGITUDE_MAIN.ToString() + "usp_GetNextTableIdValue";
-                    DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableIdValue", LogitudeDBSchema.LOGITUDE_MAIN ,
+                    cmd.CommandText =
+                    //LogitudeDBSchema.LOGITUDE_MAIN.ToString() + "usp_GetNextTableIdValue";
+                    DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableIdValue", LogitudeDBSchema.LOGITUDE_MAIN,
                     cmd.Connection.ConnectionString);
                     cmd.CommandType = CommandType.StoredProcedure;
                     /*
@@ -78,33 +78,33 @@ namespace Logitude.Server.Tools.Counters
             {
 
                 string strConnString = connectionString;
-            using (SqlConnection cn = new SqlConnection(strConnString))
-            {
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
 
 
-                SqlParameter lastNumberPar = new SqlParameter("@pLastNumber", SqlDbType.VarChar, 100);
-                SqlParameter tableNamePar = new SqlParameter("@pTableName", SqlDbType.VarChar);
+                    SqlParameter lastNumberPar = new SqlParameter("@pLastNumber", SqlDbType.VarChar, 100);
+                    SqlParameter tableNamePar = new SqlParameter("@pTableName", SqlDbType.VarChar);
 
-                lastNumberPar.Direction = ParameterDirection.Output;
-                tableNamePar.Direction = ParameterDirection.Input;
+                    lastNumberPar.Direction = ParameterDirection.Output;
+                    tableNamePar.Direction = ParameterDirection.Input;
 
-                tableNamePar.Value = tableName;
+                    tableNamePar.Value = tableName;
 
-                SqlCommand cmd = new SqlCommand("usp_GetNextTableIdValue", cn);
-                cmd.CommandType = CommandType.StoredProcedure;
+                    SqlCommand cmd = new SqlCommand("usp_GetNextTableIdValue", cn);
+                    cmd.CommandType = CommandType.StoredProcedure;
 
 
-                cmd.Parameters.Add(lastNumberPar);
-                cmd.Parameters.Add(tableNamePar);
-                cn.Open();
-                cmd.ExecuteNonQuery();
-                cn.Close();
-                number = (string)cmd.Parameters["@pLastNumber"].Value;
+                    cmd.Parameters.Add(lastNumberPar);
+                    cmd.Parameters.Add(tableNamePar);
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    cn.Close();
+                    number = (string)cmd.Parameters["@pLastNumber"].Value;
 
-            }
-            // scope.Complete();
-            //}
-            return number;
+                }
+                // scope.Complete();
+                //}
+                return number;
 
             }
         }
@@ -133,7 +133,7 @@ namespace Logitude.Server.Tools.Counters
 
                 if (LogitudeSettings.DatabaseManagementSystem == "oracle")
                 {
-                     
+
                     lock (thisLock)
                         using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
                         using (OracleConnection cn = new OracleConnection(strConnString))
@@ -145,7 +145,7 @@ namespace Logitude.Server.Tools.Counters
                             DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableIdsRange", LogitudeDBSchema.LOGITUDE_MAIN,
                             cmd.Connection.ConnectionString);
                             cmd.CommandType = CommandType.StoredProcedure;
-                           
+
                             OracleParameter startNumberPar = new OracleParameter("v_pStartNumber", OracleDbType.Integer);
                             OracleParameter endNumberPar = new OracleParameter("v_pEndNumber", OracleDbType.Integer);
                             OracleParameter dbStringNumber = new OracleParameter("v_DBStringNumber", OracleDbType.VarChar, 50);
@@ -189,11 +189,11 @@ namespace Logitude.Server.Tools.Counters
                             cn.Close();
                         }
 
-                    
+
                 }
                 else
                 {
-                    
+
                     lock (thisLock)
                     {
                         using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
@@ -273,7 +273,7 @@ namespace Logitude.Server.Tools.Counters
             string strConnString = GetConnection(tenant);
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-                
+
                 var sw = Stopwatch.StartNew();
                 lock (thisLock)
                     using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
@@ -323,9 +323,10 @@ namespace Logitude.Server.Tools.Counters
 
             else
             {
-                lock (thisLock)
-                {
-                    using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
+                TransactionScope scope = null;
+                try
+                { 
+                    using (scope = TransactionFactory.GetNewReadCommittedTransaction(TimeSpan.FromSeconds(3)))
                     {
                         using (SqlConnection cn = new SqlConnection(strConnString))
                         {
@@ -345,6 +346,7 @@ namespace Logitude.Server.Tools.Counters
 
                             cmd.Parameters.Add(lastNumberPar);
                             cmd.Parameters.Add(tableNamePar);
+                            //cmd.CommandTimeout = 3;
                             cn.Open();
                             cmd.ExecuteNonQuery();
                             cn.Close();
@@ -358,12 +360,21 @@ namespace Logitude.Server.Tools.Counters
                         return number;
                     }
                 }
+                catch (Exception ex)
+                {
+                    //if (scope != null)
+                    //{
+                    //    scope.Dispose();
+                    //}
+                     throw ex;
+                }
+                
 
 
             }
         }
 
-//************************************************************************************************************************************
+        //************************************************************************************************************************************
         //public
         static string GetConnection(int tenant)
         {
@@ -379,7 +390,7 @@ namespace Logitude.Server.Tools.Counters
             string dbConnectionInfo = currentDb.DBConnection;
             string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
             WebFreightContext context = new WebFreightContext(connection);
 
             return context.Database.Connection.ConnectionString;// entityBuilder.ConnectionString;
@@ -403,7 +414,7 @@ namespace Logitude.Server.Tools.Counters
 
         public string GetNumber(string connectionString, string tableName)
         {
-            return IdCounter.GetNumber(connectionString ,tableName);
+            return IdCounter.GetNumber(connectionString, tableName);
         }
     }
     public class FakeIdCounter : IIdCounter
@@ -423,4 +434,4 @@ namespace Logitude.Server.Tools.Counters
 }
 
 
-    
+

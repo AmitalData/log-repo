@@ -40,6 +40,7 @@ using Simplog.Server.Infrastructure;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using Logitude.SystemLogs;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -333,6 +334,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
             catch (Exception ex)
             {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", $"Digital portal generate domain {tenant}", "", null);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
@@ -340,13 +342,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
        
         private static async Task RunAddingDNSRecordAsync(string customerURL, int tenant)
         {
+            customerURL = customerURL.ToLower();
+
             if (!IsValidDomain(customerURL))
             {
                 throw new Exception("Invalid domain name");
             }
 
             var isSubDomainIOfTenantManagementUsed = IsSubDomainIOfTenantManagementUsed(customerURL, tenant);
-           
+
             if (isSubDomainIOfTenantManagementUsed.Item1)
             {
                 throw new Exception("The domain already defined for tenant No. " + isSubDomainIOfTenantManagementUsed.Item2);
@@ -366,19 +370,21 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SubscriptionId = subscriptionId
             };
 
+            if (CheckOnDNS(dnsClient, resourceGroupName, zoneName, customerURL, RecordType.CNAME) 
+                 || CheckOnDNS(dnsClient, resourceGroupName, zoneName, customerURL, RecordType.A))
+            {
+                throw new Exception("The domain already exist on the dns");
+            }
+
             try
             {
                 // Build the service credentials and DNS management client
                 var recordSetParams = new RecordSet
                 {
                     TTL = 3600,
-                    //ARecords = new List<ARecord>
-                    //{
-                    //    new ARecord(DNSIPAddress)
-                    //}
                     CnameRecord = new CnameRecord()
                     {
-                       Cname = LogitudeSettings.DeploymentStage.ToLower() == "simplog" ? "digital.logitudeworld.com" : "digital951.logitudeworld.com"
+                       Cname = GetDomainData()
                     }
                 };
 
@@ -390,9 +396,42 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
+        private static bool CheckOnDNS(DnsManagementClient dnsClient, string resourceGroupName, string zoneName, string customerURL, RecordType recordType)
+        {
+            try
+            {
+                if (dnsClient.RecordSets.Get(resourceGroupName, zoneName, customerURL, recordType) != null)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        private static string GetDomainData()
+        {
+            return LogitudeSettings.DeploymentStage.ToLower() == "simplog"
+                   ? "digital.logitudeworld.com" 
+                    : LogitudeSettings.DeploymentStage.ToLower() == "preproduction"
+                     ? "simplogpre.logitudeworld.com"
+                     : LogitudeSettings.DeploymentStage.ToLower() == "test2"
+                        ? "digital951.logitudeworld.com"
+                        : "";
+        }
+
         private static bool IsValidDomain(string subDomain)
         {
             if (string.IsNullOrWhiteSpace(subDomain))
+            {
+                return false;
+            }
+
+            if (char.IsDigit(subDomain[0]))
             {
                 return false;
             }

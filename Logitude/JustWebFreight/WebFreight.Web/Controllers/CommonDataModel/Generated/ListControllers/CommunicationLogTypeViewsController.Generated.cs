@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				CommunicationLogTypeRepository  communicationLogTypeRepository = new CommunicationLogTypeRepository(MyContext);
 				CommunicationLogTypeList entityList = null;
 				CommunicationLogType entityPoco = communicationLogTypeRepository.GetSingleCommunicationLogType(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<CommunicationLogType> singleEntityList = new List<CommunicationLogType>();
 					singleEntityList.Add(entityPoco);

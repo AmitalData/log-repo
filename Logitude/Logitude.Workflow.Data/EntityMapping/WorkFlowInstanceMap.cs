@@ -48,6 +48,12 @@ namespace Logitude.Workflow.Data.EntityMapping
             this.Property(t => t.Duration).HasColumnName("Duration").HasPrecision(18, 3);
 
             this.Property(t => t.WorkFlowVersionId).HasColumnName("WorkFlowVersionId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.RetryAttemptsNumber).HasColumnName("RetryAttemptsNumber").IsRequired();
+
+            this.Property(t => t.WorkflowId).HasColumnName("WorkflowId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.NumberOfActivities).HasColumnName("NumberOfActivities");
         }
     }
 }

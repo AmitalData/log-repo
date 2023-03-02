@@ -46,6 +46,10 @@ namespace Logitude.Workflow.Data.EntityLists
        public string Trigger  { get; set; }
        [DataMember]
        public DateTime? ActivatedDate  { get; set; }
+       [DataMember]
+       public string CreatedByUserName  { get; set; }
+       [DataMember]
+       public string UpdatedByUserName  { get; set; }
    }
 
 }

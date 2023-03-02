@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				AccountingSettingRepository  accountingSettingRepository = new AccountingSettingRepository(MyContext);
 				AccountingSettingList entityList = null;
 				AccountingSetting entityPoco = accountingSettingRepository.GetSingleAccountingSetting(id );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<AccountingSetting> singleEntityList = new List<AccountingSetting>();
 					singleEntityList.Add(entityPoco);

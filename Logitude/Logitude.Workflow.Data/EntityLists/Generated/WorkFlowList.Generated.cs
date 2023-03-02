@@ -33,13 +33,9 @@ namespace Logitude.Workflow.Data.EntityLists
        [DataMember]
        public string Description  { get; set; }
        [DataMember]
-       public string OwnerId  { get; set; }
-       [DataMember]
        public string StatusCode  { get; set; }
        [DataMember]
        public string StatusName  { get; set; }
-       [DataMember]
-       public string OwnerName  { get; set; }
        [DataMember]
        public string CreatedByUserName  { get; set; }
        [DataMember]
@@ -50,6 +46,10 @@ namespace Logitude.Workflow.Data.EntityLists
        public string Entity  { get; set; }
        [DataMember]
        public string Trigger  { get; set; }
+       [DataMember]
+       public int RetriesNumber  { get; set; }
+       [DataMember]
+       public string RetriesDelay  { get; set; }
    }
 
 }

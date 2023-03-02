@@ -175,6 +175,10 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.IsDigitalSignRequired)
                 .IsRequired();
 
+            this.Property(t => t.ReceivedByPartner)
+           .HasMaxLength(25)
+           .IsUnicode(false);
+
             // Table & Column Mappings
             this.ToTable("DocumentsFilings");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -240,6 +244,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.BackedupExternally).HasColumnName("BackedupExternally");
             this.Property(t => t.LastBackupDate).HasColumnName("LastBackupDate");
             this.Property(t => t.IsTransferdToQBO).HasColumnName("IsTransferdToQBO");
+            this.Property(t => t.ReceivedByPartner).HasColumnName("ReceivedByPartner");
 
             this.HasOptional(t => t.Document)
                 .WithMany()

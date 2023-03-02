@@ -365,6 +365,121 @@ namespace Logitude.Workflow.BL.EntityPMs
 			
 		 }
 	   }
+	  private int retryAttemptsNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int RetryAttemptsNumber  
+	   {
+	    
+	     get
+		{
+		   return retryAttemptsNumber;
+		 }
+		 set
+		 {
+		   if(retryAttemptsNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RetryAttemptsNumber",OldValue=retryAttemptsNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   retryAttemptsNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string workflowId ;
+	  	  
+       
+	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string WorkflowId  
+	   {
+	    
+	     get
+		{
+		   return workflowId;
+		 }
+		 set
+		 {
+		   if(workflowId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="WorkflowId",OldValue=workflowId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   workflowId=value;
+		   }
+			
+		 }
+	   }
+	  private string createdByUserName ;
+	  	  
+       
+	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CreatedByUserName  
+	   {
+	    
+	     get
+		{
+		   return createdByUserName;
+		 }
+		 set
+		 {
+		   if(createdByUserName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserName",OldValue=createdByUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   createdByUserName=value;
+		   }
+			
+		 }
+	   }
+	  private string updatedByUserName ;
+	  	  
+       
+	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UpdatedByUserName  
+	   {
+	    
+	     get
+		{
+		   return updatedByUserName;
+		 }
+		 set
+		 {
+		   if(updatedByUserName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserName",OldValue=updatedByUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   updatedByUserName=value;
+		   }
+			
+		 }
+	   }
+	  private int numberOfActivities ;
+	  	  
+       
+	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int NumberOfActivities  
+	   {
+	    
+	     get
+		{
+		   return numberOfActivities;
+		 }
+		 set
+		 {
+		   if(numberOfActivities != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NumberOfActivities",OldValue=numberOfActivities,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   numberOfActivities=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

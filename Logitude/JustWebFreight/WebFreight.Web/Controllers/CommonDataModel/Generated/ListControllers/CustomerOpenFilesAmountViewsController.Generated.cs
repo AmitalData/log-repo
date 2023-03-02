@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				CustomerOpenFilesAmountRepository  customerOpenFilesAmountRepository = new CustomerOpenFilesAmountRepository(MyContext);
 				CustomerOpenFilesAmountList entityList = null;
 				CustomerOpenFilesAmount entityPoco = customerOpenFilesAmountRepository.GetSingleCustomerOpenFilesAmount(customerid , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<CustomerOpenFilesAmount> singleEntityList = new List<CustomerOpenFilesAmount>();
 					singleEntityList.Add(entityPoco);

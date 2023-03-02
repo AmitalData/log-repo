@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				AddressTypeRepository  addressTypeRepository = new AddressTypeRepository(MyContext);
 				AddressTypeList entityList = null;
 				AddressType entityPoco = addressTypeRepository.GetSingleAddressType(id );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<AddressType> singleEntityList = new List<AddressType>();
 					singleEntityList.Add(entityPoco);

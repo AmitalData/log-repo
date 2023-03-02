@@ -28,7 +28,8 @@
 
         <ComboBox [ItemsSource]="ConditionOperationsItems" [Binding]="'Name'"
             [SelectedItem]="ConditionsOperation | ListItemPipe"
-            (SelectedItemChanged)="updateConditionsOperation($event)" [ListType]="''" [CyData]="'ConditionsOperation'">
+            (SelectedItemChanged)="updateConditionsOperation($event)" [ListType]="''" [MaxHeight]="ComboBoxMaxHeight"
+            [CyData]="'ConditionsOperation'">
         </ComboBox>
 
     </div>

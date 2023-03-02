@@ -227,29 +227,6 @@ namespace Logitude.Workflow.BL.EntityPMs
 			
 		 }
 	   }
-	  private string ownerId ;
-	  	  
-       
-	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string OwnerId  
-	   {
-	    
-	     get
-		{
-		   return ownerId;
-		 }
-		 set
-		 {
-		   if(ownerId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OwnerId",OldValue=ownerId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   ownerId=value;
-		   }
-			
-		 }
-	   }
 	  private string statusCode ;
 	  	  
        
@@ -292,29 +269,6 @@ namespace Logitude.Workflow.BL.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusName",OldValue=statusName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   statusName=value;
-		   }
-			
-		 }
-	   }
-	  private string ownerName ;
-	  	  
-       
-	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string OwnerName  
-	   {
-	    
-	     get
-		{
-		   return ownerName;
-		 }
-		 set
-		 {
-		   if(ownerName != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OwnerName",OldValue=ownerName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   ownerName=value;
 		   }
 			
 		 }
@@ -464,7 +418,53 @@ namespace Logitude.Workflow.BL.EntityPMs
               }
              set {  deletedWorkFlowVersions = value; }
 	    }
-	  	    }
+	  	  private int retriesNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int RetriesNumber  
+	   {
+	    
+	     get
+		{
+		   return retriesNumber;
+		 }
+		 set
+		 {
+		   if(retriesNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RetriesNumber",OldValue=retriesNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   retriesNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string retriesDelay ;
+	  	  
+       
+	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RetriesDelay  
+	   {
+	    
+	     get
+		{
+		   return retriesDelay;
+		 }
+		 set
+		 {
+		   if(retriesDelay != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RetriesDelay",OldValue=retriesDelay,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   retriesDelay=value;
+		   }
+			
+		 }
+	   }
+	    }
    
 }
 	 

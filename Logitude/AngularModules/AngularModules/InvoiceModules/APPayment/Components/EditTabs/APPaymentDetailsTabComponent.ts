@@ -32,6 +32,8 @@ import { PaymentChequeExtendedPMService } from '../../../../Accounting/Services/
 import { GLAccountListService } from '../../../../Accounting/Services/StandardLists/GLAccountListService';
 import { GLAccountList } from '../../../../Accounting/EntityLists/GLAccountList';
 import { LedgerTransactionPM } from 'Accounting/EntityPMs/LedgerTransactionPM';
+import { LedgerTransactionExtendedListService } from './../../../../Accounting/Services/ExtendedLists/LedgerTransactionExtendedListService';
+import { ReconciliationExtendedPMService } from './../../../../Accounting/Services/ExtendedPMs/ReconciliationExtendedPMService';
 
 @Component({
     templateUrl: './APPaymentDetailsTabComponent.html',
@@ -56,6 +58,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     private CurrentSession = SessionLocator.SelectedSession;
     public fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();
     PaymentChequePMService: PaymentChequeExtendedPMService = new PaymentChequeExtendedPMService();
+    _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
+	_ReconciliationExtendedPMService: ReconciliationExtendedPMService = new ReconciliationExtendedPMService();
     IsChequeLinkVisibile: boolean = false;
     DisplayFieldsFromList:string;
     DisplayLocalFieldsFromList:string;
@@ -665,7 +669,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     }
     FillBaselist() {
         this.ItemsSource.Clear();
-
         var connectedList: APPaymentInvoiceArgs[] = [];
         var unConnectedMatchedList: APPaymentInvoiceArgs[] = [];
         var unConnectedListNotMatched: APPaymentInvoiceArgs[] = [];
@@ -750,6 +753,20 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.ItemsSource.InsertCollection(itemsCollection);
         this.UpdateSummary();
         this.IsDataLoaded = true;
+        if(this.IsFullAccounting) {
+                // this.CurrentSession.StartBusyIndicatorLoading();
+                this.CardListService.getSingle(this.EntityPM.VendorId).subscribe((myResult:any) => {
+                    var myResponse: ServiceResponse = myResult;
+                    // this.CurrentSession.StopBusyIndicator();
+                    if (!myResponse.HasError) {
+                        var cardList: CardList = myResponse.Result;
+                        if (cardList != null) {
+                            this.GLAccountId = cardList.GLAccountId;
+                            this.GetTransactionsForAPPayment();
+                        }
+                    }
+                });
+        }
     }
 
     // Vendor Properties
@@ -874,6 +891,79 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
               this.EntityPM.VendorGLAccountId = null;
         }
     }
+    invoicesLedgerTransactions: any[] = [];
+    paymentLedgerTransactions: string[] = [];
+    GetTransactionsForAPPayment()
+	{
+		if (this.GLAccountId) {
+			this.invoicesLedgerTransactions = [];
+            this.paymentLedgerTransactions = [];
+			// this.CurrentSession.StartBusyIndicatorLoading();
+
+            this._LedgerTransactionExtendedListService.GetTransactionsForAPPayment(this.EntityPM.Id, this.GLAccountId, this.EntityPM.PaymentCurrencyId).subscribe((myResult: ServiceResponse) => {
+                // this.CurrentSession.StopBusyIndicator();
+				var mm: ServiceResponse = myResult;
+				if (!mm.HasError) {
+
+					var transactions = mm.Result;
+					if (transactions != null) {
+						for (var i = 0; i < transactions.length; i++) {
+							this.invoicesLedgerTransactions.push(transactions[i]);
+						}
+					}
+                    if(this.invoicesLedgerTransactions && this.invoicesLedgerTransactions.length > 0 && this.invoicesLedgerTransactions[0] && this.invoicesLedgerTransactions[0].Reference3) {
+
+                        this.paymentLedgerTransactions = this.invoicesLedgerTransactions[0].Reference3.split(',');
+                    }
+                    this.ItemsSource.Collection.forEach(item => {
+                        var ledgerTransaction = this.invoicesLedgerTransactions.filter(x=>x.Reference1 == item.InvoiceNumber)[0];
+                        if(ledgerTransaction) {
+
+                            item.RecoNumber = ledgerTransaction.RecoNumber;
+                            
+                        }
+                    });
+				}
+			});
+
+		} else {
+			console.error("No GLAccount for this payment ", this.EntityPM);
+		}
+	}
+
+    OpenReco(recoNumber)
+	{
+		if (!AppTool.IsNullOrEmpty(recoNumber)) {
+
+			this.CurrentSession.StartBusyIndicatorLoading()
+
+			this._ReconciliationExtendedPMService.getByNumber(recoNumber)
+				.subscribe((myResult: ServiceResponse) =>
+				{
+					this.CurrentSession.StopBusyIndicator()
+
+					var mm: ServiceResponse = myResult;
+					if (!mm.HasError) {
+
+						var reco: any = mm.Result;
+						var recoId = reco.Id;
+						SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+							.then(cmpRef =>
+							{
+								cmpRef.instance.ComponentRef = cmpRef;
+								cmpRef.instance.Run({ EntityId: recoId, ObjectTableName: 'Reconciliation' });
+							});
+					}
+					else {
+
+					}
+				});
+
+
+
+
+		}
+	}
 
     private LoadAddressAndGeneralTab() {
         this.PartnersDomainService.GetBillingOrMainAddressListByCardId(this.EntityPM.VendorId).subscribe((resp: any) => {
@@ -1646,6 +1736,7 @@ export class APPaymentInvoiceArgs extends BaseComponent {
     public CurrencyCode: string = null;
     public InvoiceAmount: number = 0;
     public TransferStatusCode: string = null;
+    public RecoNumber: string = null;
 
     InitProperties() {
         this.Id = this.Invoice.Id;

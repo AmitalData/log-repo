@@ -294,6 +294,21 @@ export class FullAccountingSettingPM {
     public set TaxInstitutionGLAccountId(newValue: string) { if (this.taxInstitutionGLAccountId != newValue) { this.taxInstitutionGLAccountId = newValue; this.MarkAsDirty("TaxInstitutionGLAccountId"); } }
        
 	 
+    private hSM: number;
+    public get HSM() { return this.hSM; }
+    public set HSM(newValue: number) { if (this.hSM != newValue) { this.hSM = newValue; this.MarkAsDirty("HSM"); } }
+       
+	 
+    private hSMtoken: string;
+    public get HSMtoken() { return this.hSMtoken; }
+    public set HSMtoken(newValue: string) { if (this.hSMtoken != newValue) { this.hSMtoken = newValue; this.MarkAsDirty("HSMtoken"); } }
+       
+	 
+    private hSMaddress: string;
+    public get HSMaddress() { return this.hSMaddress; }
+    public set HSMaddress(newValue: string) { if (this.hSMaddress != newValue) { this.hSMaddress = newValue; this.MarkAsDirty("HSMaddress"); } }
+       
+	 
 
     public OldEntityPM: FullAccountingSettingPM;
 		

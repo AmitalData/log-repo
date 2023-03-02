@@ -1483,7 +1483,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             PaymentReferences = a.PaymentReferences,
                             SATCancelReasonCode = a.SATCancelReasonCode,
                             TotalAmountNotForTaxReport = (a.SubTotalInLocalCurrency ?? 0)
-                                                         - (double)(a.TotalVAT)
                                                          - (double)(a.TotalAmountForTaxReport ?? 0)
                         };
 
@@ -1641,10 +1640,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              PaymentReferences = entity.PaymentReferences,
                              SATCancelReasonCode = entity.SATCancelReasonCode,
                              TotalExamptFortaxReport = entity.TotalExamptFortaxReport,
+                             ConcurrencyGUID = entity.ConcurrencyGUID,
                              DocumentTemplateId = entity.DocumentTemplateId,
                              TotalAmountNotForTaxReport =
                                  (entity.SubTotalInLocalCurrency ?? 0)
-                                 - (double)(entity.TotalVAT)
                                  - (double)(entity.TotalAmountForTaxReport ?? 0)
                          };
 
@@ -1814,7 +1813,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                          PaymentReferences = entity.PaymentReferences,
                                          SATCancelReasonCode = entity.SATCancelReasonCode,
                                          TotalExamptFortaxReport = entity.TotalExamptFortaxReport,
-                                         DocumentTemplateId = entity.DocumentTemplateId
+                                         DocumentTemplateId = entity.DocumentTemplateId,
+                                         ConcurrencyGUID = entity.ConcurrencyGUID
                                     });
             return result;
         }
@@ -2188,7 +2188,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                                      HouseNumber = d.HouseNumber,
                                                                      MainEntityReference = d.MainEntityReference,
                                                                      AmountInInvoiceCurrency = d.AmountInInvoiceCurrency,
-                                                                     SubTotalInInvoiceCurrency = d.SubTotalInInvoiceCurrency
+                                                                     SubTotalInInvoiceCurrency = d.SubTotalInInvoiceCurrency,
+                                                                     ConcurrencyGUID = d.ConcurrencyGUID,
                                                                  }).ToList();
 
                         var ids = entityPM.ConstituentInvoices
@@ -2208,6 +2209,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                              : 0.00;
                         }
                     }
+
                 }
 
                 var myPaymentTermRepository = new PaymentTermRepository(myCommonContext);
@@ -2485,7 +2487,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              SATCancelReasonCode = entity.SATCancelReasonCode,
                              DocumentTemplateId = entity.DocumentTemplateId,
                              TotalAmountNotForTaxReport = (entity.SubTotalInLocalCurrency ?? 0)
-                                                          - (double)(entity.TotalVAT)
                                                           - (double)(entity.TotalAmountForTaxReport ?? 0)
                          };
 

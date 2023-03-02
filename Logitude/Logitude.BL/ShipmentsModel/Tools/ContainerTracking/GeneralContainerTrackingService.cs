@@ -46,6 +46,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
 
         public GeneralContainerTrackingService(GeneralContainerTrackingArgs simulatorArgs)
         {
+            if(!string.IsNullOrEmpty(simulatorArgs?.ContainerStatusSourceCode) && simulatorArgs.ContainerStatusSourceCode.Equals("VZN", StringComparison.InvariantCultureIgnoreCase))
+            {
+                simulatorArgs.ContainerStatusSourceCode = "2";
+            }
             this.generalContainerTrackingArgs = simulatorArgs;
             this.tenant = simulatorArgs.Tenant;
             CommonContext = CommonDataContext.GetContext(tenant);
@@ -93,7 +97,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
 
         private void ValidateAndTrack()
         {
-            if (!generalContainerTrackingArgs.IsSimulator) supportedCarriers = GetSupportedCarriers();
+            if (!generalContainerTrackingArgs.IsSimulator) 
+                supportedCarriers = GetSupportedCarriers();
             if (!CheckValidation()) return;
             SetCarriarCode();
 
@@ -110,9 +115,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
         private bool AllowAutomaticTrackContainer()
         {
             var containerSettings = containerSettingRepository.GetAll(tenant).FirstOrDefault();
-            if (containerSettings == null || !containerSettings.AddedManually) return CheckAutomaticTrackContainerFromTenantZero();
+            if (containerSettings == null || !containerSettings.AddedManually) return BeforeActivationDate(containerSettings.ActivationDate) && CheckAutomaticTrackContainerFromTenantZero();
             if (!AutomaticTrackContainerDirectionAllowd(containerSettings, generalContainerTrackingArgs.DirectionId)) return false;
-            return CommonContext.ShippingLines.Any(x => x.Tenant == tenant && x.SCACCode == generalContainerTrackingArgs.ScacCode && x.IsAutomaticRequestsSent);
+            return BeforeActivationDate(containerSettings.ActivationDate) && CommonContext.ShippingLines.Any(x => x.Tenant == tenant && x.SCACCode == generalContainerTrackingArgs.ScacCode && x.IsAutomaticRequestsSent);
+        }
+
+        private bool BeforeActivationDate(DateTime? activationDate)
+        {
+            if (activationDate == null || generalContainerTrackingArgs.ShipmentCreateDateTime == null) return false;
+            return generalContainerTrackingArgs.ShipmentCreateDateTime.Value.Date >= activationDate.Value.Date;
         }
 
         private bool CheckAutomaticTrackContainerFromTenantZero()
@@ -166,6 +177,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
             generalContainerTrackingArgs.CarrierId = shipmentMasterData?.MainCarriageCarrierId;
             generalContainerTrackingArgs.ScacCode = shipmentMasterData?.MainCarriageCarrierCard?.ShippingLine?.SCACCode;
             generalContainerTrackingArgs.Master = shipmentMasterData?.Master;
+            generalContainerTrackingArgs.ShipmentCreateDateTime = shipment?.CreateDateTime;
         }
 
         private bool CheckValidation()

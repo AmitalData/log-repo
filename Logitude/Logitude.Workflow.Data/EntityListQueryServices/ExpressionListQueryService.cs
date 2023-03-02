@@ -36,6 +36,7 @@ namespace Logitude.Workflow.Data.EntityListQueryServices
 					                          Description = a.Description,
 					
 					                          CategoryCode = a.CategoryCode,
+											  Title = a.Title
 					
 		                    	            });
             return query;

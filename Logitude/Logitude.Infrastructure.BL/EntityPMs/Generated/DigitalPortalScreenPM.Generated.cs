@@ -273,6 +273,29 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool isList ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsList  
+	   {
+	    
+	     get
+		{
+		   return isList;
+		 }
+		 set
+		 {
+		   if(isList != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsList",OldValue=isList,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isList=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

@@ -23,7 +23,7 @@ using System.Transactions;
 
 namespace Logitude.Server.Tools.Helpers
 {
-   public class TotangoActivityLogger
+    public class TotangoActivityLogger
     {
         public static void SendUserActivity(string organizationId, string orgDisplayName, string userName, string module, string activity, string contactId, int tenant, bool isSharedLogisticsContact, string cardId, string partnerTypeId)
         {
@@ -35,7 +35,7 @@ namespace Logitude.Server.Tools.Helpers
                 try
                 {
                     UserRepository userRepository = new UserRepository(tenant);
-                  
+
                     User user = userRepository.GetSingleUser(contactId, tenant, false);
                     bool iscustomerCare = (user.Tenant == 0 && !user.IsDistributor);
                     if (user != null && !iscustomerCare)
@@ -110,20 +110,19 @@ namespace Logitude.Server.Tools.Helpers
             var ConfigConnectionString = ConfigurationManager.ConnectionStrings["SystemLogsStr"].ConnectionString;
             return DatabaseInitializer.GetConnection(ConfigConnectionString);
         }
-        public static void AddContactActivityLog(string cardId, string partnerTypeId, string contactId, string module, string activity, int tenant, bool isSharedLogisticsContact,string via = "")
+        public static void AddContactActivityLog(string cardId, string partnerTypeId, string contactId, string module, string activity, int tenant, bool isSharedLogisticsContact, string via = "")
         {
             ContactRepository contactRepository = new ContactRepository(tenant);
             Contact contact = contactRepository.GetSingleContact(contactId, tenant);
-
-            try
+            SqlTransaction transaction = null;
+            string strConnString = GetLogsDBConnection().ConnectionString;
+            using (SqlConnection cn = new SqlConnection(strConnString))
             {
-                string strConnString = GetLogsDBConnection().ConnectionString;
-                string query = "INSERT INTO ContactActivityLogs " +
-                    "(Id, ContactId, Module, Activity, LogDateTime, GMTLogDateTime,Tenant,IsSharedLogisticsContact,CardId,PartnerTypeId,Via) " +
-                 "VALUES (@Id, @ContactId, @Module, @Activity, @LogDateTime, @GMTLogDateTime, @Tenant, @IsSharedLogisticsContact, @CardId, @PartnerTypeId, @Via) ";
-
-                using (SqlConnection cn = new SqlConnection(strConnString))
+                try
                 {
+                    string query = "INSERT INTO ContactActivityLogs " +
+                    "(Id, ContactId, Module, Activity, LogDateTime, GMTLogDateTime,Tenant,IsSharedLogisticsContact,CardId,PartnerTypeId,Via) " +
+                    "VALUES (@Id, @ContactId, @Module, @Activity, @LogDateTime, @GMTLogDateTime, @Tenant, @IsSharedLogisticsContact, @CardId, @PartnerTypeId, @Via) ";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.Add("@Id", SqlDbType.VarChar, 50).Value = Guid.NewGuid().ToString();
                     if (contactId != null)
@@ -167,9 +166,13 @@ namespace Logitude.Server.Tools.Helpers
                     cmd.CommandType = CommandType.Text;
                     cmd.CommandTimeout = 5;
                     cn.Open();
+                    transaction = cn.BeginTransaction(System.Data.IsolationLevel.Snapshot);
+                    cmd.Transaction = transaction;
                     var output = cmd.ExecuteNonQuery();
+                    transaction.Commit();
                     cn.Close();
                 }
+                #region commited
                 //ContactActivityLogRepository contactActivityLogRepository = new ContactActivityLogRepository();
                 //ContactActivityLog log = new ContactActivityLog()
                 //{
@@ -187,20 +190,25 @@ namespace Logitude.Server.Tools.Helpers
 
                 //contactActivityLogRepository.Add(log);
                 //contactActivityLogRepository.SubmitChanges();
-            }
-            catch (Exception ex)
-            {
-                string ip = "";
-                if (HttpContext.Current != null && HttpContext.Current.Request != null)
+                #endregion
+                catch (Exception ex)
                 {
-                    string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
-                    if (string.IsNullOrEmpty(currentIP))
+                    if (transaction != null)
                     {
-                        currentIP = HttpContext.Current.Request.UserHostAddress;
+                        transaction.Rollback();
                     }
-                    ip = currentIP;
+                    string ip = "";
+                    if (HttpContext.Current != null && HttpContext.Current.Request != null)
+                    {
+                        string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+                        if (string.IsNullOrEmpty(currentIP))
+                        {
+                            currentIP = HttpContext.Current.Request.UserHostAddress;
+                        }
+                        ip = currentIP;
+                    }
+                    ExceptionHandler.HandleException(ex, DateTime.Now, 0, contact != null ? contact.Email : "", contact != null ? contact.Email : "", "SendUserActivity", ip);
                 }
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, contact != null ? contact.Email : "", contact != null ? contact.Email : "", "SendUserActivity", ip);
             }
         }
     }

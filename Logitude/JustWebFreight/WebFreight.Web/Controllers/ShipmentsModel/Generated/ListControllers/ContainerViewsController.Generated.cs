@@ -70,8 +70,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 				ContainerRepository  containerRepository = new ContainerRepository(MyContext);
 				ContainerList entityList = null;
 				Container entityPoco = containerRepository.GetSingleContainer(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Container> singleEntityList = new List<Container>();
 					singleEntityList.Add(entityPoco);

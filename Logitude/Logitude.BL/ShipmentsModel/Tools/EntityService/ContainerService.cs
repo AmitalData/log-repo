@@ -1,4 +1,5 @@
-﻿using Logitude.BL.ExternalService;
+﻿using Logitude.BL.AnalyticTableServices;
+using Logitude.BL.ExternalService;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.BL.Security;
@@ -103,6 +104,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             MapShipmentConcurrencyFields();
             entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
             new GeneralContainerTrackingService(GetGeneralContainerTrackingArgs(entityPM)).AutomaticTrackContainer();
+            new ContainerAnalyticTableService(shipmentsContext.GetActiveDbContext()).AddUpdate(containerPoco, tenant);
         }
 
         private GeneralContainerTrackingArgs GetGeneralContainerTrackingArgs(ContainerPM entityPM)
@@ -116,7 +118,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 Tenant = entityPM.Tenant,
                 IsSimulator = false,
                 Data = null,
-                ContainerStatusSourceCode = "VZN",
+                ContainerStatusSourceCode = "2",
                 DirectionId = this.GetShipment()?.DirectionId,
                 IsUpdatedFromRequest = entityPM.IsUpdatedFromRequest,
             };
@@ -188,6 +190,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             MapShipmentConcurrencyFields();
             
             new GeneralContainerTrackingService(GetGeneralContainerTrackingArgs(entityPM)).AutomaticTrackContainer();
+            new ContainerAnalyticTableService(shipmentsContext.GetActiveDbContext()).AddUpdate(containerPoco, tenant);
         }
         private AuditLog AddContainerAuditLogChanges(Container entityPoco, List<FieldChange> FieldChanges)
         {
@@ -318,7 +321,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private void HandleEmptyReturnLeg()
         {
             ShipmentPM shipmentPM = this.GetShipment();
-            if (shipmentPM == null || shipmentPM.DirectionId != "I") return;
+            if (shipmentPM == null || (shipmentPM.DirectionId != "I" && shipmentPM.DirectionId != "R")) return;
 
             ShipmentDeliveryPM emptyReturn = this.GetEmptyReturnLeg(shipmentPM);
             if (emptyReturn != null)
@@ -481,7 +484,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }        
         private void MapLocationFromLastDelivery(ShipmentDeliveryPM lastDelivery, ShipmentDeliveryPM emptyReturn)
         {
-            switch (lastDelivery.PickUpDeliveryFromTypeCode)
+            switch (lastDelivery.PickUpDeliveryToTypeCode)
             {
                 case "PART":
                     {

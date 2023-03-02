@@ -31,11 +31,12 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         SearchFields, 
 	         Name, 
 	         Description, 
-	         OwnerId, 
 	         StatusCode, 
 	         FlowJson, 
 	         Entity, 
-	         Trigger,
+	         Trigger, 
+	         RetriesNumber, 
+	         RetriesDelay,
 	      }
 
 
@@ -51,15 +52,15 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         SearchFields, 
 	         Name, 
 	         Description, 
-	         OwnerId, 
 	         StatusCode, 
 	         StatusName, 
-	         OwnerName, 
 	         CreatedByUserName, 
 	         UpdatedByUserName, 
 	         FlowJson, 
 	         Entity, 
-	         Trigger,
+	         Trigger, 
+	         RetriesNumber, 
+	         RetriesDelay,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -108,11 +109,6 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 				entityPOCO.Description = entityPM.Description;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OwnerId))
-            {
-				entityPOCO.OwnerId = entityPM.OwnerId;
-			}
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))
             {
 				entityPOCO.StatusCode = entityPM.StatusCode;
@@ -131,6 +127,16 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Trigger))
             {
 				entityPOCO.Trigger = entityPM.Trigger;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RetriesNumber))
+            {
+				entityPOCO.RetriesNumber = entityPM.RetriesNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RetriesDelay))
+            {
+				entityPOCO.RetriesDelay = entityPM.RetriesDelay;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -184,11 +190,6 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 					entityPM.Description = entityPOCO.Description;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OwnerId))
-            {
-					entityPM.OwnerId = entityPOCO.OwnerId;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StatusCode))
             {
 					entityPM.StatusCode = entityPOCO.StatusCode;
@@ -207,6 +208,16 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Trigger))
             {
 					entityPM.Trigger = entityPOCO.Trigger;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RetriesNumber))
+            {
+					entityPM.RetriesNumber = entityPOCO.RetriesNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RetriesDelay))
+            {
+					entityPM.RetriesDelay = entityPOCO.RetriesDelay;
             }
 
 		}
@@ -255,11 +266,6 @@ namespace Logitude.Workflow.BL.EntityDataMappings
                 oldEntityPM.Description = entityPM.Description;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OwnerId))
-            {
-                oldEntityPM.OwnerId = entityPM.OwnerId;
-            }
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))
             {
                 oldEntityPM.StatusCode = entityPM.StatusCode;
@@ -278,6 +284,16 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Trigger))
             {
                 oldEntityPM.Trigger = entityPM.Trigger;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RetriesNumber))
+            {
+                oldEntityPM.RetriesNumber = entityPM.RetriesNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RetriesDelay))
+            {
+                oldEntityPM.RetriesDelay = entityPM.RetriesDelay;
             }
 			
 		}

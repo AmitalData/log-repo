@@ -1,4 +1,4 @@
-import { FeatureLocator } from "../../../../../Infrastructure/Utilities/FeatureLocator";
+import { CustomizationPermissionService } from "../../../ExternalService/CustomizationPermissionService";
 import { CustomizationMainMenuItem } from "./CustomizationMainMenuItem";
 
 export class TabsMainMenuItem extends CustomizationMainMenuItem {
@@ -19,7 +19,7 @@ export class TabsMainMenuItem extends CustomizationMainMenuItem {
         }
     }
     CheckFeaturePermission(args: any): boolean {
-        let IsShowTabs = FeatureLocator.HasFeaturePermession("General", "TabsCustomization");
+        let IsShowTabs = CustomizationPermissionService.HasFeaturePermession("General", "TabsCustomization");
         return (!args.IsObjectTableFilterEnabled || IsShowTabs) && !args.IsCustomFieldsMenue && !args.IsSubEntity;
     }
 

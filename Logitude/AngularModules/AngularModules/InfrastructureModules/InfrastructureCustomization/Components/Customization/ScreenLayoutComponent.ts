@@ -27,7 +27,7 @@ import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { Guid } from '../../../../Infrastructure/Utilities/Guid';
 import { CustomizationEditComponent } from './CustomizationEditComponent';
 import { GridScreenLayoutService } from '../../ExternalService/GridScreenLayoutService';
-import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { CustomizationPermissionService } from '../../ExternalService/CustomizationPermissionService';
 
 
 
@@ -83,7 +83,7 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
         this.myService = new EntityResourceService();
         this.myGeneralService = new GeneralDomainService();
         this.loginService = new LoginService();
-        this.IsEnabledCreatingSubCustomObjects = FeatureLocator.HasFeaturePermession("General", "Customization.CreateSubObjects");
+        this.IsEnabledCreatingSubCustomObjects = CustomizationPermissionService.HasFeaturePermession("General", "Customization.CreateSubObjects");
     }
 
     ngOnInit() {
@@ -336,12 +336,16 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
 
         if (!this.screenLayoutService) return;
 
+        if (this.selectedScreenComponent.IsGridScreenComponent) {
+            this.selectedScreenComponent.MapAdvancedSettingsFields();
+        }
+
         this.screenLayoutService.BuildScreenUpdateArgs();
 
         if (!this.IsScreenSectionsValid()) return;
 
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
-
+       
         this.MyArgs.ScreenId = this.OldItem.ScreenPM.Id;
         this.MyArgs.ScreenCode = this.OldItem.ScreenPM.Code;
         this.myGeneralService.updateScreenFields(this.MyArgs).subscribe((myResult: ServiceResponse) => {
@@ -508,7 +512,10 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
 
         let position = this.GetElementPosition(event, screenRowDetails);
         let myitem: ObjectFieldPM = this.banckStackFields.filter(d => d.Id == objectFieldId)[0];
-
+        if (this.newSelectedItem.ScreenPM.IsHeaderScreen && position >= 2) {
+            this.ShowMessageWindow("You can't add Fields to the third row, The Header screen is limited to two rows only", "Message");
+            return;
+        }
         if (myitem) {
             let objectField = this.GetObjectField(myitem);
             if (objectField && !objectField.IsCustom && objectField.DisplayOnly && this.IsSubEntity && section.Type != "Summary") {
@@ -781,7 +788,7 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
         this.Modified = true;
     }
     IsEnabledAddingSummarySection(): boolean {
-        let summarySectionScreen = this.SectionScreens.filter(s => s.Section.Type == 'Summary' && s.Section.Inactive == false)[0];
+        let summarySectionScreen = this.SectionScreens.filter(s => s.Section.Type == 'Summary' && (s.Section.Inactive == false || s.Section.Inactive == undefined))[0];
         if (summarySectionScreen) return false;
         return true;
     }
@@ -859,6 +866,7 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
 
     }
 
+    private selectedScreenComponent:any;
     LoadScreen(screenType: string) {
 
         if (this.AllLocations && this.AllLocations.length > 0) {
@@ -866,7 +874,10 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
             if (myGeneratedComponentLocation != null) {
                 myGeneratedComponentLocation.viewContainerRef.clear();
                 SessionLocator.DynamicLoader.Load(this.GetScreenComponentPath(screenType), myGeneratedComponentLocation.viewContainerRef)
-                    .then(cmpRef => { cmpRef.instance.Run(this); });
+                    .then(cmpRef => {
+                        this.selectedScreenComponent = cmpRef.instance;
+                        cmpRef.instance.Run(this);
+                    });
             }
         }
     }

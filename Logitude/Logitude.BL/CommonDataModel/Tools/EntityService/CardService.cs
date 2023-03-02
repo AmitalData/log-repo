@@ -161,7 +161,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 CardContactRepository CardContactRepository = new Simplog.Data.CommonDataModel.Repositories.CardContactRepository(objectContext);
                 CardContact cardContact = CardContactRepository.GetCardContactByContactAndCard(entityPM.Id, entityPM.ContactId, entityPM.Tenant);
+
+                Contact contact = contactRepository.GetSingleContact(cardContact.ContactId, cardContact.Tenant);
+                contact.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+
                 AddDisconectFromContactKafkaQueueMessage(cardContact);
+
+                contactRepository.Update(contact);
+                contactRepository.SubmitChanges();
                 CardContactRepository.Remove(cardContact);
                 CardContactRepository.SubmitChanges();
             }

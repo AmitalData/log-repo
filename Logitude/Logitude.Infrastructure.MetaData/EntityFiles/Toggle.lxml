@@ -42,7 +42,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;38f3&quot;"
+  Code="&quot;62bd&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -636,20 +636,10 @@
       SearchFields="&quot;QBT,QBO Tax Id Calculations&quot;"
       Description="&quot;QBO Tax Id Calculations&quot;" />
     <Record
-      Code="&quot;AEV&quot;"
-      Name="&quot;Automation Event Creation&quot;"
-      SearchFields="&quot;AEV,Automation Event Creation&quot;"
-      Description="&quot;Automation Event Creation&quot;" />
-    <Record
       Code="&quot;OPS&quot;"
       Name="&quot;Operational Status&quot;"
       SearchFields="&quot;OPS,Operational Status&quot;"
       Description="&quot;Operational Status&quot;" />
-    <Record
-      Code="&quot;CAU&quot;"
-      Name="&quot;Container Automation&quot;"
-      Description="&quot;Container Automation&quot;"
-      SearchFields="&quot;CAU,Container Automation&quot;" />
     <Record
       Code="&quot;ODA&quot;"
       Name="&quot;On Update Document Automation Tab&quot;"
@@ -695,11 +685,6 @@
       Name="&quot;Customs Charges Tariffs&quot;"
       SearchFields="&quot;CCT,Customs Charges Tariffs&quot;"
       Description="&quot;Customs Charges Tariffs&quot;" />
-    <Record
-      Code="&quot;BCF&quot;"
-      Name="&quot;Containers DWH&quot;"
-      SearchFields="&quot;Containers DWH,Allow Tenants to Show Containers Fact on BI Report Screent,BCF&quot;"
-      Description="&quot;Allow Tenants to Show Containers Fact on BI Report Screen&quot;" />
     <Record
       Code="&quot;DFP&quot;"
       Name="&quot;Sharing Documents Via Shared links&quot;"
@@ -930,6 +915,26 @@
       Name="&quot;Stimulsoft Printing&quot;"
       SearchFields="&quot;SSP,Stimulsoft Printing&quot;"
       Description="&quot;Stimulsoft Printing&quot;" />
+    <Record
+      Code="&quot;RDT&quot;"
+      Name="&quot;Digital Portal Required Documents&quot;"
+      Description="&quot;Toggle Feature for Digital Portal Required Documents&quot;"
+      SearchFields="&quot;RDT,Digital Portal Required Documents&quot;" />
+    <Record
+      Name="&quot;Remove Exception Logic&quot;"
+      Code="&quot;REL&quot;"
+      SearchFields="&quot;REL,Remove Exception Logic&quot;"
+      Description="&quot;Remove Exception Logic&quot;" />
+    <Record
+      Code="&quot;DBA&quot;"
+      Name="&quot;Dashboard Analytics&quot;"
+      SearchFields="&quot;DBA,Dashboard Analytics&quot;"
+      Description="&quot;Dashboard Analytics&quot;" />
+    <Record
+      Name="&quot;Remove Shared Logistics&quot;"
+      Code="&quot;RSL&quot;"
+      Description="&quot;Remove Shared Logistics Tab Feature&quot;"
+      SearchFields="&quot;RSL,Remove Shared Logistics Tab Feature&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

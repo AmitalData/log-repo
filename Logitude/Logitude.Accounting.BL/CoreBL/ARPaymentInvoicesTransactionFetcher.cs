@@ -219,7 +219,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private List<LedgerTransactionPM> GetInvoicesTransactions()
         {
             LedgerTransactionQueryService transactionQueryService = new LedgerTransactionQueryService(tenant);
-            IQueryable<LedgerTransactionPM> invoicesTransactions = transactionQueryService.GetInvoicesTransactions(tenant);
+            IQueryable<LedgerTransactionPM> invoicesTransactions = transactionQueryService.GetInvoicesTransactions(tenant, AccountingEntities.ARInvoice);
             invoicesTransactions = invoicesTransactions
                     .Where(d =>
                         d.AccountId == glaccountId

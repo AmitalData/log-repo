@@ -92,6 +92,7 @@ export class DigitalPortalCustomizationMainComponent implements OnInit {
                 if (this.SelectedMenu.Code != "ChageLabels") {
                     objectTables = objectTables.filter(a => a.ObjectTableName != "General");
                 }
+                
                 objectTables.forEach(item => {
                     this.ObjectTablesFilterFullList.push({ "id": item.ObjectTableId, "name": item.ObjectTableName});
                 });
@@ -186,10 +187,12 @@ export class DigitalPortalCustomizationMainComponent implements OnInit {
     public get SelectedMenu() {
         return this.selectedMenu;
     }
+
     public set SelectedMenu(value: any) {
         this.selectedMenu = value;
         this.ChangeScreen();
     }
+
     public SelectionChanged(item: any) {
         if (this.SelectedMenu == item) return;
         if (this.IsDirty) {
@@ -202,7 +205,8 @@ export class DigitalPortalCustomizationMainComponent implements OnInit {
 
     ChangeScreen() {
 
-        if (this.SelectedMenu.Code == "ScreenLayout") {
+        if (this.SelectedMenu.Code == "ScreenLayout") 
+        {
             this.IsSaveButtonVisible = false;
             this.IsObjectTablesFilterVisible = false;
         }

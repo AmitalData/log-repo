@@ -18,7 +18,7 @@ declare var UploadLogoFile, HideImage, SetImage, ShowHideProgressDownload, Array
   inputs: ['EntityId', 'ImageId', "EntityName",
   'ImageId', 'WidthImage', 'HeightImage', 'ImageResizeWidth',
    'ImageResizeHeight', 'HideBorder', 'DisplayOnly',
-   'ConversationHeaderId','KeepOriginalSize','Extension', 'ValidWidth', 'ValidHeight'],
+   'ConversationHeaderId','KeepOriginalSize','Extension', 'ValidWidth', 'ValidHeight','SecondValidWidth','SecondValidHeight'],
   providers: [ImageLibraryService],
 })
 
@@ -44,7 +44,9 @@ export class ImageComponent implements AfterViewInit, OnInit {
   ImageResizeWidth: number;
   ImageResizeHeight: number;
   ValidWidth: number;
+  SecondValidWidth: number;
   ValidHeight: number;
+  SecondValidHeight: number;
   Extension:string;
   DefultImageHeight: string = "auto";
   ImageKey: string = Guid.newGuid();
@@ -196,7 +198,7 @@ export class ImageComponent implements AfterViewInit, OnInit {
   }
   
   FileChanged(event: any) {
-    if(this.ValidWidth && this.ValidHeight) {
+    if((this.ValidWidth && this.ValidHeight) || (this.SecondValidWidth && this.SecondValidHeight)) {
       this.validateImageDimensions(event);
      } else {
       this.UploadogoFile(event)
@@ -234,7 +236,7 @@ export class ImageComponent implements AfterViewInit, OnInit {
          image.onload = (rs) => {
            const width = rs.currentTarget['width'];
            const height = rs.currentTarget['height'];
-           if(width && height && (width == this.ValidWidth && height == this.ValidHeight)) {
+           if(width && height && ( (width == this.ValidWidth && height == this.ValidHeight) || (width == this.SecondValidWidth && height == this.SecondValidHeight) ) ) {
             this.ImageDimensionsValid.emit(true);
             this.UploadogoFile(data);
            } else {

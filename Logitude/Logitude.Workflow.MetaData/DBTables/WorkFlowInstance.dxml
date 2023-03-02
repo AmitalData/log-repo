@@ -93,6 +93,27 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="RetryAttemptsNumber"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="WorkflowId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NumberOfActivities"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

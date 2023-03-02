@@ -16,6 +16,7 @@ using System.Net;
 using System.Net.Http;
 using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -32,7 +33,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             {
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
                     // Create Docs In
                     tenant = authToken.Tenant;
@@ -48,10 +48,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                     var documentId = service.UploadDigitalDocument(info, tenant, loggedContact);
                     ImageParameter imageParameterfilter = UploadImage(documentId, info, tenant);
+                    
+                    HandelNoteInformation(info, loggedContact);
                     AddUploadEvent(info, loggedContact.Id, tenant);
-
                     scope.Complete();
-
                     return Request.CreateResponse(HttpStatusCode.OK, imageParameterfilter);
                 }
             }
@@ -68,6 +68,14 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         #region private 
 
+        private static void HandelNoteInformation(DigitalUploaderInfo info, Contact loggedContact)
+        {
+            info.Notes = $"{loggedContact.EnglishName} - {loggedContact.CompanyName} {Environment.NewLine}"
+                         + $"{info.FileName} {Environment.NewLine}"
+                         + $"{info.DocumentTypeName} {Environment.NewLine}"
+                         + info.Notes;
+        }
+
         private ImageParameter UploadImage(string documentId, DigitalUploaderInfo info, int tenant)
         {
             // Upload Image 
@@ -80,7 +88,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 FileSize = info.FileSize,
                 FileName = info.FileName,
                 Tenant = tenant,
-                Buffersize = info.Buffersize
+                Buffersize = info.Buffersize,
+                BufferNumber = -1
             };
 
             ImageParameter imageParameterfilter = imageLibraryControllerHelper.UploadAttachementOrChunk(filter);
@@ -88,13 +97,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         }
 
         private void AddUploadEvent(DigitalUploaderInfo info, string loggedContactId, int tenant)
-        {
-            // Notes & Events 
-            if (!string.IsNullOrEmpty(info.Notes))
-            {
-                if (info.Notes.Contains('.')) info.Notes = info.Notes.Split('.')[0];
-            }
-
+        {      
             UserRepository userRepository = new UserRepository(tenant);
             string loggedUserId = loggedContactId;
             bool isContactUser = false;
@@ -114,7 +117,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 UserId = loggedUserId,
                 EntityId = info.EntityId,
                 ObjectTableName = info.ObjectTableName,
-                Notes = info.Notes,
+                Notes = info.Notes
             });
         }
         

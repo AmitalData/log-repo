@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ContainerStatusSourceUpdateClass
    {  		
-		public const string HashString = "73397953937b6386308280df7f2232ff";
+		public const string HashString = "30e10702897ffbb3e31a011df8c11be1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -99,6 +99,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTablePlural =  "Container Status Sources",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
+			      				    AvailableInCustomization =  false,
+			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -127,7 +130,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Container Status Source",
-			      				    Code =  "5ece",
+			      				    Code =  "1e17",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
@@ -167,6 +170,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  3,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  true,
@@ -229,6 +233,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  40,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  true,
@@ -291,6 +296,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemMaxLength =  1000,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,

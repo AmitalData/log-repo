@@ -15,6 +15,7 @@ export class ExpressionComponent extends BaseComponent implements OnInit {
     @Input() CurrentNodeId: string;
     @Input() IsDisabled: boolean = false;
     @Input() Width: string = "300px";
+    @Input() DataCy: string | null = null;
     @Output() ValueChanged = new EventEmitter<string>();
 
     public ExpressionValue: ExpressionValue;

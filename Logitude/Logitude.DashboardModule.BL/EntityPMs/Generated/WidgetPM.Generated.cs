@@ -745,7 +745,30 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 			
 		 }
 	   }
-   }
+	  private string labelsPosition ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LabelsPosition  
+	   {
+	    
+	     get
+		{
+		   return labelsPosition;
+		 }
+		 set
+		 {
+		   if(labelsPosition != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LabelsPosition",OldValue=labelsPosition,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   labelsPosition=value;
+		   }
+			
+		 }
+	   }
+	    }
    
 }
 	 

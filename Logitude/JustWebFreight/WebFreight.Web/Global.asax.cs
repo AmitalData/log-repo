@@ -51,6 +51,7 @@ using Simplog.Server.Infrastructure.Interfaces;
 using Microsoft.Practices.Unity;
 using Logitude.Server.Tools.Interfaces;
 using Logitude.Server.Tools.TreeFilterQuery;
+using Microsoft.Azure.Management.ResourceManager;
 
 namespace WebFreight.Web
 {
@@ -72,7 +73,8 @@ namespace WebFreight.Web
                 LogitudeSettings.DatabaseManagementSystem = dbms;
                 LogitudeSettings.DebugKey = System.Configuration.ConfigurationManager.AppSettings.Get("DebugKey");
                 FillAppSettings();
-
+                Thread settingsThread = new Thread(HandleSettingsChanges);
+                settingsThread.Start();
 
 
                 //SessionContextConfiguration conf = new SessionContextConfiguration();
@@ -275,17 +277,24 @@ namespace WebFreight.Web
                 {
                     dataCacheTopic = StorageAcountDetails.NameSpaceManager.GetTopic(StorageAcountDetails.DataCacheTopicName);
                 }
-
-                SubscriptionDescription myAgentSubscription;
-                string subscribtionName = Environment.MachineName;
-                if (!StorageAcountDetails.NameSpaceManager.SubscriptionExists(dataCacheTopic.Path, subscribtionName))
+                if (!isDebug())
                 {
-                    myAgentSubscription = StorageAcountDetails.NameSpaceManager.CreateSubscription(dataCacheTopic.Path, subscribtionName);
-                }
+                    string subscribtionName = Environment.MachineName;
+                    var commandLineArgs = Environment.GetCommandLineArgs();
+                    if (commandLineArgs.Length > 1)
+                    {
+                        subscribtionName += ("_" + commandLineArgs[2]);
+                    }
+                    SubscriptionDescription myAgentSubscription;
+                    if (!StorageAcountDetails.NameSpaceManager.SubscriptionExists(dataCacheTopic.Path, subscribtionName))
+                    {
+                        myAgentSubscription = StorageAcountDetails.NameSpaceManager.CreateSubscription(dataCacheTopic.Path, subscribtionName);
+                    }
 
-                CacheMessageHandler cacheMessageHandler = new CacheMessageHandler();
-                Thread cacheThread = new Thread(cacheMessageHandler.HandleTopicMessages);
-                cacheThread.Start();
+                    CacheMessageHandler cacheMessageHandler = new CacheMessageHandler();
+                    Thread cacheThread = new Thread(cacheMessageHandler.HandleTopicMessages);
+                    cacheThread.Start();
+                }
                 this.StartSignalRTopicThread();
             }
             catch (Exception ex)
@@ -304,6 +313,29 @@ namespace WebFreight.Web
 			};
 
 		}
+
+        private bool isDebug()
+        {
+            #if DEBUG
+                return true;
+            #else
+                return false;
+            #endif
+        }
+
+        private void HandleSettingsChanges()
+        {
+            while (true)
+            {
+                try
+                {
+                    FillAppSettings();
+                    Thread.Sleep(2000);
+                }
+
+                catch { }
+            }
+        }
 
         private static void LogitudeSettings_AmitalInit()//itzik:CleanCode when is possible -should convert 2 ContainerAccessor
         {
@@ -524,6 +556,9 @@ namespace WebFreight.Web
             LogitudeSettings.AzurePrincipalSecretKey = setting.AzurePrincipalSecretKey;
             LogitudeSettings.DNSZone = setting.DNSZone;
             LogitudeSettings.DNSIPAddress = setting.DNSIPAddress;
+            LogitudeSettings.WorkflowStorageAccountName = setting.WorkflowStorageAccountName;
+            LogitudeSettings.WorkflowStorageAccountKey = setting.WorkflowStorageAccountKey;
+            LogitudeSettings.System2RedirectFraction = setting.System2RedirectFraction;
         }
 
         private void StartSignalRTopicThread()

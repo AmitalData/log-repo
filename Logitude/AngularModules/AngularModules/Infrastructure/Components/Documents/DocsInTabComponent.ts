@@ -31,6 +31,8 @@ import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { CardPMService } from '"../../../Common/Services/StandardPMs/CardPMService';
 import { ServiceLocator } from '../../Locators/ServiceLocator';
 import { ObjectsLocator } from '../../Locators/ObjectsLocator';
+import { CustomerListService } from '../../../Common/Services/StandardLists/CustomerListService';
+import { CustomerList } from '../../../Common/EntityLists/CustomerList';
 
 @Component({
     
@@ -83,6 +85,9 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     IsLoadDocumentTypeListsComplete: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     IsApprovePendingDocumentsEnabled:boolean = false;
+    public IsDigitalPortalInvitedCustomer: boolean = false;
+    public IsDocumentsNeedApprove: boolean = false;
+    public CustomerListService: CustomerListService;
     constructor(public _documentTypeListService: DocumentTypeListService , public _imageLibraryService: ImageLibraryService,public entityArgs: EntityArgs, public _documentTypeListExtendedService: DocumentTypeListExtendedService, public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService) {
         super();
         this.ItemsSource = new ObservableCollection([]);
@@ -127,11 +132,9 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
         if (FeatureLocator.HasFeaturePermession("Shipment", "DOCSINDOWNLOADDOCUMENTS") && this.ObjectTableName == "Shipment") {
             this.DownloadAllVisibile = true;
         }
-        this.IsApprovePendingDocumentsEnabled = this.CheckApprovePendingDocumentsAvailability();
-        if (this.IsApprovePendingDocumentsEnabled) {
-            this.ApprovePendingDocuments = !this.EntityPM.IsDocumentsNeedApprove;
-        }
 
+        this.CheckApproveDocumentsAvailability();
+        this.CheckCustomerInvitationStatus();
         // Ayman:
         // we need this for Translation
         // Please don't remove it
@@ -279,19 +282,36 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     //    });
 
     //}
-    private approvePendingDocuments: boolean;
-    public get ApprovePendingDocuments() { return this.approvePendingDocuments; }
-    public set ApprovePendingDocuments(newValue: boolean) {
-        if (this.approvePendingDocuments != newValue) {
-            this.approvePendingDocuments = newValue;
-            this.EntityPM.IsDocumentsNeedApprove = !this.approvePendingDocuments;
-        }
+
+    ApprovePendingDocuments() {
+        this.EntityPM.IsDocumentsNeedApprove = false;
+        this.IsDocumentsNeedApprove = false;
+        this.entityArgs.EditComponent.SaveChanges();
     }
 
-    CheckApprovePendingDocumentsAvailability() {
-        if (this.ObjectTableName == "Shipment" || ObjectsLocator.GlobalSetting.WorkEnvironment == "Logitude")
-            return true;
-        return false;
+    CheckCustomerInvitationStatus() {
+        if (this.ObjectTableName != "Shipment") return;
+        if (!this.EntityPM) return;
+        this.CustomerListService = new CustomerListService();
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.CustomerListService.getSingle(this.EntityPM.CustomerId).subscribe((response: any) => {
+            let customer = response.Result;
+            if (customer && customer.SharedLogisticsInvitationStatusName != "Not Invited")
+                this.IsDigitalPortalInvitedCustomer = true;
+            this.CurrentSession.StopBusyIndicator();
+        });
+    }
+
+    CheckApproveDocumentsAvailability() {
+        if (!FeatureLocator.HasFeaturePermession("General", "PendingApprovalDocuments")) {
+            this.IsApprovePendingDocumentsEnabled = false;
+            return;
+        }
+        if ((this.ObjectTableName == "Shipment" || ObjectsLocator.GlobalSetting.WorkEnvironment == "Logitude") && SessionLocator.TenantPM.ApproveUploadedDocuments)
+            this.IsApprovePendingDocumentsEnabled = true;
+        if (this.IsApprovePendingDocumentsEnabled) {
+            this.IsDocumentsNeedApprove = this.EntityPM.IsDocumentsNeedApprove;
+        }
     }
     LoadAllDocumentTypeList() {
 
@@ -517,7 +537,12 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
 
 
     SortItemSource(ItemsSource: any) {
+        if (!this.IsShipmentPendingApprovalList())
+            return this.AlphabeticalSort(ItemsSource);
+        return this.RecievedDateSort(ItemsSource);
+    }
 
+    AlphabeticalSort(ItemsSource: any) {
         ItemsSource.sort((a, b) => {
             if (a.Name.toLowerCase() < b.Name.toLowerCase()) {
                 return -1;
@@ -533,6 +558,31 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
         return ItemsSource;
     }
 
+    IsShipmentPendingApprovalList() : boolean{
+        if (this.ObjectTableName != "Shipment") return false;
+        if (!this.IsApprovePendingDocumentsEnabled) return false;
+        return true;
+    }
+
+    RecievedDateSort(ItemsSource: any) {
+        ItemsSource.sort((a, b) => {
+            let firstDate = this.getRecievedDate(a);
+            let secondDate = this.getRecievedDate(b);
+            if (firstDate > secondDate) {
+                return -1;
+            }
+            else if (firstDate < secondDate) {
+                return 1;
+            }
+            else {
+                return 0;
+            }
+        });
+        return ItemsSource;
+    }
+    getRecievedDate(item: any) {
+        return item.ReceivedDate ? item.ReceivedDate : "1955-02-02T12:55:32.32";
+    }
     OnMouseOver(item: DocsInDataViewModel) {
 
         var selectedId: string = this.SelectedExternalViewModel ? this.SelectedExternalViewModel.Id:null;

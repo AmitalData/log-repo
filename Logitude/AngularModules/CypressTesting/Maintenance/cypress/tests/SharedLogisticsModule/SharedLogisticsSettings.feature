@@ -1,4 +1,4 @@
-@devrelease
+@release3
 Feature:  Update Shared Logistics Settings
     The user opens the Shared Logistics Settings and update the Activation Settings, Display Settings, Documents Permissions, Partners Permissions, Money Permissions
 

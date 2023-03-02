@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				PortGroupRepository  portGroupRepository = new PortGroupRepository(MyContext);
 				PortGroupList entityList = null;
 				PortGroup entityPoco = portGroupRepository.GetSinglePortGroup(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<PortGroup> singleEntityList = new List<PortGroup>();
 					singleEntityList.Add(entityPoco);
@@ -106,7 +106,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 				PortGroupQuery portGroupQuery = new PortGroupQuery(portGroupRepository);
 			    IQueryable<PortGroupList> entityLists = portGroupQuery.GetIQueryableEntityList(entityPocos);
-				entityLists = entityLists.OrderBy(d => d.Id);
+				entityLists = entityLists.OrderBy(d => d.Name);
 				List<PortGroupList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 										
@@ -305,7 +305,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                             }
                         default:
                             {
-                                entityLists = entityLists.OrderBy(d => d.Id);
+                                entityLists = entityLists.OrderBy(d => d.Name);
                                 break;
                             }
                     }
@@ -314,7 +314,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
             }					  						
 	       else
             {
-                entityLists = entityLists.OrderBy(d => d.Id);
+                entityLists = entityLists.OrderBy(d => d.Name);
             } 
 
 			ServiceResponse response = new ServiceResponse();

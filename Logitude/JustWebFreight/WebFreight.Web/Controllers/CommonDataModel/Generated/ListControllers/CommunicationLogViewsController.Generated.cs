@@ -67,8 +67,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				CommunicationLogRepository  communicationLogRepository = new CommunicationLogRepository(MyContext);
 				CommunicationLogList entityList = null;
 				CommunicationLog entityPoco = communicationLogRepository.GetSingleCommunicationLog(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<CommunicationLog> singleEntityList = new List<CommunicationLog>();
 					singleEntityList.Add(entityPoco);

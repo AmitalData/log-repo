@@ -44,7 +44,7 @@ export class DocsInDataViewModel extends BaseComponent{
     //DocumentId: string;
     ReceivedByUserId: string;
     ReceivedByUserName: string;
-
+    ReceivedByPartner: string;
     private receivedDate: Date;
     public get ReceivedDate() {
         if (this.CurrentDocument) {
@@ -288,6 +288,7 @@ export class DocsInDataViewModel extends BaseComponent{
          
             this.ReceivedByUserId = this.CurrentDocument.ReceivedByUserId;
             this.ReceivedByUserName = this.CurrentDocument.ReceivedByUserName;
+            this.ReceivedByPartner = this.CurrentDocument.ReceivedByPartner;
             this.ExternalDocumentId = this.CurrentDocument.Id;
             this.FollowUpId = this.CurrentDocument.FollowUpId;
             this.ReceivedDate = this.CurrentDocument.ReceivedDate;
@@ -328,6 +329,7 @@ export class DocsInDataViewModel extends BaseComponent{
 
             this.ReceivedByUserId = this.CurrentDocument.ReceivedByUserId;
             this.ReceivedByUserName = this.CurrentDocument.ReceivedByUserName;
+            this.ReceivedByPartner = this.CurrentDocument.ReceivedByPartner;
             this.ReceivedDate = this.CurrentDocument.ReceivedDate;
             this.DocumentHasFile = true;
             this.SetAttachedButtonVisibility = false;
@@ -619,6 +621,8 @@ export class DocsInDataViewModel extends BaseComponent{
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
         
             this.DocsInComponent.IsClickToUpload = false;
+            if (this.DocsInComponent.IsShipmentPendingApprovalList() && this.DocumentHasFile)
+                this.DocsInComponent.RefreshButtonClicked();
         });
 
 

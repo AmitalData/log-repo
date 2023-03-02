@@ -43,7 +43,7 @@ namespace Logitude.DashboardModule.Data.EntityMapping
 
             this.Property(t => t.PermissionLevelCode).HasColumnName("PermissionLevelCode").HasMaxLength(3).IsUnicode(false);
 
-            this.Property(t => t.LoadedAutomatically).HasColumnName("LoadedAutomatically").IsRequired();
+            this.Property(t => t.PinnedByDefault).HasColumnName("PinnedByDefault").IsRequired();
 
             this.Property(t => t.PredefinedOrder).HasColumnName("PredefinedOrder");
         }

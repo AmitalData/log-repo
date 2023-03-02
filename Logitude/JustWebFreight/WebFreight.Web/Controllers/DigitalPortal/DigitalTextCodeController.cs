@@ -120,7 +120,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                                              .Select(a => a.Id)
                                                              .FirstOrDefault(),
                             CreateDate = todayDate,
-                            UpdateDate = todayDate
+                            UpdateDate = todayDate,
+                            IsList = item.IsList
                         });
                     }
                 }
@@ -140,7 +141,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("DigitalTextCode/GetFeildPermissionByFilters")]
-        public HttpResponseMessage GetFeildPermissionByFilters(string cardId, string objectTableId, string profileCode, string screenCode = "")
+        public HttpResponseMessage GetFeildPermissionByFilters(string cardId, string objectTableId, string profileCode, bool isList)
         {
             int tenant = 0;
             string email = "";
@@ -151,19 +152,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 email = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
-
-                bool isAll = true;
-                bool isSingle = true;
-
-                if (!string.IsNullOrWhiteSpace(screenCode))
-                {
-                    var listScreenCodes = new List<string> { "SLCI", "SLCIM", "SLCIT" };
-                    isAll = false;
-                    isSingle = !listScreenCodes.Contains(screenCode);
-                }
-
                 var helper = new DigitalFieldSecuritesHelper();
-                var defaultDigitalFieldSecurity = helper.GitDigitalSecuritesFeilds(objectTableId, profileCode, tenant, isSingle, isAll);
+                var defaultDigitalFieldSecurity = helper.GitDigitalSecuritesFeilds(objectTableId, profileCode, tenant, !isList, isList);
                 return Request.CreateResponse(HttpStatusCode.OK, defaultDigitalFieldSecurity);
             }
             catch (AutenticationException ex)
@@ -252,56 +242,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
                 tenant = authToken.Tenant;
                 email = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
-                var textCodeQuery = new DigitalTextCodeQueryService(tenant);
-
-                if (profileCode == "null")
-                {
-                    var digitalProfileQueryService = new DigitalProfileQueryService(0);
-                    profileCode = digitalProfileQueryService.GetDigitalProfileByName(0, "Customer").Code;
-                }
-
-                var defaultTextCode = textCodeQuery.GetDigitalTextCodesQuery(0, objectTableId, profileCode);
-
-                if (defaultTextCode == null)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, new List<DigitalTextCodeObject>());
-                }
-
-                var defaultCodesObject = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(defaultTextCode.Labels);
-
-                var customCodesObject = new List<DigitalTextCodeObject>();
-
-                if (tenant != 0)
-                {
-                    var customTextCodes = textCodeQuery.GetDigitalTextCodesQuery(tenant, objectTableId, profileCode);
-
-                    if (customTextCodes != null)
-                    {
-                        customCodesObject = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(customTextCodes.Labels);
-                    }
-                    else
-                    {
-                        return Request.CreateResponse(HttpStatusCode.OK, defaultCodesObject);
-                    }
-                }
-
-                foreach (var item in customCodesObject)
-                {
-                    var temp = defaultCodesObject.FirstOrDefault(a => a.TextCode.Equals(item.TextCode));
-
-                    if (temp != null)
-                    {
-                        temp.DisplayText = item.DisplayText;
-                    }
-                    else
-                    {
-                        defaultCodesObject.Add(item);
-                    }
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, defaultCodesObject);
+                var helper = new DigitalFieldSecuritesHelper();
+                var response = helper.GetDigitalTextCodeObjects(tenant, objectTableId, profileCode, false);
+                return Request.CreateResponse(HttpStatusCode.OK, response);
             }
             catch (AutenticationException ex)
             {
@@ -310,6 +253,27 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        [HttpGet]
+        [Route("DigitalTextCode/GetTranslationCodes")]
+        public HttpResponseMessage GetTranslationCodes(int tenant, string objectTableId, string profileCode)
+        {
+            try
+            {
+                var helper = new DigitalFieldSecuritesHelper();
+                var response = helper.GetDigitalTextCodeObjects(tenant, objectTableId, profileCode, true);
+                return Request.CreateResponse(HttpStatusCode.OK, response);
+            }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", $"Digital portal {tenant}", "", null);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
@@ -384,69 +348,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        [HttpGet]
-        [Route("DigitalTextCode/GetTranslationCodes")]
-        public HttpResponseMessage GetTranslationCodes(int tenant, string objectTableId, string profileCode)
-        {
-            try
-            {
-                var textCodeQuery = new DigitalTextCodeQueryService(tenant);
-                var defaultTextCodes = textCodeQuery.GetDigitalTextCodesQuery(0, objectTableId, profileCode);
-
-                if (defaultTextCodes == null)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, new List<DigitalTextCodeObject>());
-                }
-
-                var defaultCodesObject = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(defaultTextCodes.Labels);
-                var customCodesObject = new List<DigitalTextCodeObject>();
-
-                if (tenant != 0)
-                {
-                    var customTextCodes = textCodeQuery.GetDigitalTextCodesQuery(tenant, objectTableId, profileCode);
-
-                    if (customTextCodes != null)
-                    {
-                        customCodesObject = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(customTextCodes.Labels);
-                    }
-                    else
-                    {
-                        return Request.CreateResponse(HttpStatusCode.OK, defaultCodesObject);
-                    }
-
-                    foreach (var item in customCodesObject)
-                    {
-                        var data = defaultCodesObject.FirstOrDefault(a => a.TextCode.Equals(item.TextCode));
-
-                        if (data != null)
-                        {
-                            if (!string.IsNullOrWhiteSpace(item.DisplayText))
-                            {
-                                data.DefaultText = item.DisplayText;
-                            }
-
-                            continue;
-                        }
-                        else
-                        {
-                            defaultCodesObject.Add(item);
-                        }
-                    }
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, defaultCodesObject);
-            }
-            catch (AutenticationException ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", $"Digital portal {tenant}", "", null);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }

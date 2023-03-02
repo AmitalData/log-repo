@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 				ContainerStatusSourceRepository  containerStatusSourceRepository = new ContainerStatusSourceRepository(MyContext);
 				ContainerStatusSourceList entityList = null;
 				ContainerStatusSource entityPoco = containerStatusSourceRepository.GetSingleContainerStatusSource(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<ContainerStatusSource> singleEntityList = new List<ContainerStatusSource>();
 					singleEntityList.Add(entityPoco);

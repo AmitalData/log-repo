@@ -45,10 +45,10 @@ namespace Logitude.Server.Tools.TreeFilterQuery.Services
         {
             dynamic customFieldValue = value;
 
-            if (customFieldValue["Value"] == null || customFieldValue["Value"] == "") return "";
+            if (customFieldValue["value"] == null || customFieldValue["value"] == "") return "";
 
             CustomFieldClass customFilterClass = new CustomFieldClass();
-            return customFilterClass.SetFieldDataType(fieldDataType, customFieldValue["Value"]);
+            return customFilterClass.SetFieldDataType(fieldDataType, customFieldValue["value"]);
         }
         public static object GetFromEntity(object parentEntity, string fieldName, string fieldDataType)
         {

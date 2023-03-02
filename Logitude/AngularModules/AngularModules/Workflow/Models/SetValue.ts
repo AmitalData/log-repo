@@ -1,6 +1,7 @@
 import { ExpressionValue } from "Workflow/Types";
 
 export class SetValue {
+    public id: number;
     public field: string;
     public fieldCode: string;
     public type: string;
@@ -15,6 +16,7 @@ export class SetValue {
     public valueUsedFrom: string | null;
 
     constructor() {
+        this.id = null;
         this.field = null;
         this.fieldCode = null;
         this.type = null;

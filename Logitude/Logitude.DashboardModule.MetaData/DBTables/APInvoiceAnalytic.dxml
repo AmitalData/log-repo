@@ -183,12 +183,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="IsMultipleEntities"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="ApprovedDate"
     Type="datetime">
     <Constraints

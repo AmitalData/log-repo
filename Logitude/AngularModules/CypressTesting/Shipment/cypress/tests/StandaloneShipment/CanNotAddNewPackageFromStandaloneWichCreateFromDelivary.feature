@@ -1,4 +1,4 @@
-@standalone @devrelease
+@Devstandalone 
 Feature: add packages
    The User Can't add new packages in standalone shipment which created from delivery
     Create import ocean FCL shipment, Add Delivery,

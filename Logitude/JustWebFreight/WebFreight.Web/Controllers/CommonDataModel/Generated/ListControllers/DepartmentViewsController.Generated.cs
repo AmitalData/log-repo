@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				DepartmentRepository  departmentRepository = new DepartmentRepository(MyContext);
 				DepartmentList entityList = null;
 				Department entityPoco = departmentRepository.GetSingleDepartment(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Department> singleEntityList = new List<Department>();
 					singleEntityList.Add(entityPoco);

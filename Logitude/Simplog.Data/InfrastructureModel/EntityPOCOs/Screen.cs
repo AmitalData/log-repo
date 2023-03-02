@@ -29,7 +29,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string SortedType { get; set; }
         public string SearchFields { get; set; }
         public string RelatedScreenCode { get; set; }
-
+        public bool IsHeaderScreen { get; set; }
         //[Include]
         //[Association("ObjectTableScreen", "ObjectTableId", "Id",IsForeignKey=true)]
 

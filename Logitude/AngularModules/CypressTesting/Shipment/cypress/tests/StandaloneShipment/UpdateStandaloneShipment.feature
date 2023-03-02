@@ -1,4 +1,4 @@
-@standalone @devrelease
+@Devstandalone 
 Feature: Update Standalone shipment
     The user creates a Direct Import Ocean FCL shipment,Create standalone shipment from pickup
     Update routing tab in standalone shipment

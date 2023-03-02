@@ -4,6 +4,7 @@ import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 import { FlowVariablesTreeList } from "Workflow/TreeLists/FlowVariablesTreeList";
+import { FlowReader } from "Workflow/Utilities/FlowReader";
 
 @Component({
     templateUrl: "./DeleteItemPropertiesComponent.html"
@@ -58,11 +59,8 @@ export class DeleteItemPropertiesComponent extends BaseComponent {
         let props = {
             ShowRecordsVariables: true,
             ShowDeclaredVariables: true,
-            ShowRecordsCollectionVariables: false,
-            ShowDeclaredCollectionVariables: false,
             OnlyCurrentLoopItemVariables: true,
-            IsObjectVariableSelectable: true,
-            IsNoChildrenObjectVariables: false
+            IsObjectVariableSelectable: true
         };
         this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props).Items;
     }
@@ -100,12 +98,17 @@ export class DeleteItemPropertiesComponent extends BaseComponent {
     saveButtonClicked() {
         this.ValidationErrorsList = [];
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
-        if (notValidUIProperties.length === 0) {
+        let isValidName = !this.IsNew || !FlowReader.isNodeCodeExists(this.FlowObject, this.Name);
+        if (notValidUIProperties.length === 0 && isValidName) {
             //console.log(this.Data);
             this.CurrentSession.CurrentWindow.Close(this.Data);
         } else {
             let validationErrors = notValidUIProperties.map(t => { return t.ValidationError; });
             this.ValidationErrorsList = validationErrors;
+
+            if (!isValidName) {
+                this.ValidationErrorsList.push("The Name Should be Unique.");
+            }
         }
     }
 }

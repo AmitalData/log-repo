@@ -1335,6 +1335,7 @@ export class SubInvoiceLine {
                 var itemPM: ConstituentPM = new ConstituentPM(null);
                 itemPM.Id = this.entityList.Id;
                 itemPM.Tenant = this.entityList.Tenant;
+                itemPM.ConcurrencyGUID = this.entityList.ConcurrencyGUID;
                 itemPM.ConsolidationInvoiceId = this.fatherComponent.EntityPM.Id;
                 this.fatherComponent.EntityPM.AddConstituentPM(itemPM);
             }
@@ -1342,6 +1343,7 @@ export class SubInvoiceLine {
             else {
                 var itemPM: ConstituentPM = this.fatherComponent.EntityPM.ConstituentInvoices.filter(f => f.ConsolidationInvoiceId == this.fatherComponent.EntityPM.Id && f.Id == this.Id)[0];
                 if (itemPM) {
+                    itemPM.ConcurrencyGUID = this.entityList.ConcurrencyGUID;
                     this.fatherComponent.EntityPM.RemoveConstituentPM(itemPM);
                 }
             }

@@ -196,9 +196,9 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
         public Tuple<bool, int?> CheckSubDomainTenantManagement(string subDomain, int tenant)
         {
             bool isExist = false;
-            TenantManagement myTenant = (from a in context.TenantManagements
-                                         where a.CustomerURL == subDomain && a.Id != tenant
-                                         select a).FirstOrDefault();
+            TenantManagement myTenant = context.TenantManagements
+                                               .FirstOrDefault(a => a.CustomerURL == subDomain 
+                                                                    && a.Id != tenant);
             if (myTenant != null)
             {
                 isExist = true;

@@ -312,6 +312,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     OnCarriageATA = container.OnCarriageATA,
                     RequestDate = container.RequestDate,
                     RecentResponseDate = container.RecentResponseDate,
+                    ShipmentPreCarriageFromName = container.ShipmentPreCarriageFromPort == null ? null : container.ShipmentPreCarriageFromPort.EnglishName,
+                    ShipmentMainCarriageFromName = container.ShipmentMainCarriageFromPort == null ? null : container.ShipmentMainCarriageFromPort.EnglishName,
+                    ShipmentMainCarriageToName = container.ShipmentMainCarriageToPort == null ? null : container.ShipmentMainCarriageToPort.EnglishName,
+                    ShipmentOnCarriageToName = container.ShipmentOnCarriageToPort == null ? null : container.ShipmentOnCarriageToPort.EnglishName,
+                    ShipmentTransshipment1FromName = container.ShipmentTransshipment1FromPort == null ? null : container.ShipmentTransshipment1FromPort.EnglishName,
+                    ShipmentTransshipment2FromName = container.ShipmentTransshipment2FromPort == null ? null : container.ShipmentTransshipment2FromPort.EnglishName,
+                    ShipmentTransshipment3FromName = container.ShipmentTransshipment3FromPort == null ? null : container.ShipmentTransshipment3FromPort.EnglishName,
                 };
 
                 if (container.EntityStatus != null)
@@ -656,7 +663,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     .Include("ShipmentTransshipment1ToPort").Include("ShipmentTransshipment1FromPort").Include("ShipmentMainCarriageToPort").Include("ShipmentMainCarriageFromPort")
                     .Include("ShipmentPreCarriageToPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentEntityStatus").Include("TerminalCard")
                     .Include("ShipmentOriginAgent").Include("ShipmentDestinationAgent").Include("ShipmentType").Include("CustomerCard").Include("Handler").Include("EntityStatus").Include("TruckerCard")
-                    .Include("ContainerType").Include("ShipmentMainCarriageToPort.Country").Include("ShipmentMainCarriageFromPort.Country").Include("ShipmentMainCarriageFromPort.CountryName").Include("ShipmentMainCarriageToPort.CountryName").Include("ShipmentMainCarriageFromPort.CountryCode").Include("ShipmentMainCarriageToPort.CountryCode")
+                    .Include("ContainerType").Include("ShipmentMainCarriageToPort.Country").Include("ShipmentMainCarriageFromPort.Country").Include("ShipmentMainCarriageFromPort.CountryName").Include("ShipmentMainCarriageToPort.CountryName").Include("ShipmentMainCarriageFromPort.CountryCode").Include("ShipmentMainCarriageToPort.CountryCode").Include("ShipmentDepartment.EnglishName")
                                                select new ContainerList()
                                                {
                                                    Id = container.Id,
@@ -959,6 +966,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    OnCarriageATA = container.OnCarriageATA,
                                                    RequestDate = container.RequestDate,
                                                    RecentResponseDate = container.RecentResponseDate,
+                                                   ShipmentDepartmentId = container.ShipmentDepartmentId,
+                                                   ShipmentDepartmentName = container.ShipmentDepartment != null ? container.ShipmentDepartment.EnglishName : "",
                                                };
             return result;
         }
@@ -1502,6 +1511,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     OnCarriageETA = container.OnCarriageETA,
                     OnCarriageATA = container.OnCarriageATA,
                 };
+
+                MapCustomFields(containerPM, container);
             }
 
             return containerPM;

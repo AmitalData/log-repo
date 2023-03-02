@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				CarrierAreaRepository  carrierAreaRepository = new CarrierAreaRepository(MyContext);
 				CarrierAreaList entityList = null;
 				CarrierArea entityPoco = carrierAreaRepository.GetSingleCarrierArea(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<CarrierArea> singleEntityList = new List<CarrierArea>();
 					singleEntityList.Add(entityPoco);

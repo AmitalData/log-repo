@@ -117,7 +117,7 @@ export class PaymentCurrencyListService {
 			if (propName == "TreeFilters" && propValue && propValue.length > 0) {
                 urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
             }
-
+			
 			if (propName == "AdditionalFilters" && propValue.length > 0) {
 				addtionalFiltersValues = JSON.stringify(propValue);
 			}

@@ -17,6 +17,7 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System.Data.Entity;
 using Simplog.Data.ShipmentsModel;
+using Logitude.Server.Tools.Helpers;
 
 namespace CommunicationWorkerRole
 {
@@ -29,6 +30,7 @@ namespace CommunicationWorkerRole
         private bool isDocumentUploaded = false;
         private bool isDocumentDeleted = false;
         private DateTime? recivedDate;
+        private string recivedDateString;
         private ICommonDataContext commonContext;
         private ShipmentRepository shipmentRepository;
         private ShipmentDocsFieldRepository shipmentDocsFieldRepository;
@@ -56,6 +58,9 @@ namespace CommunicationWorkerRole
                 {
                     try
                     {
+                        shipmentPM = null;
+                        documentsFilingPM = null;
+                        shipmentDocsField = null;
                         ReadQueueMessage();
                     }
                     catch (Exception exception)
@@ -77,8 +82,14 @@ namespace CommunicationWorkerRole
                 try
                 {
                     MapQueueResponse(queueResponse);
-                    InitializeServices();
-                    HandelShipmentFields();
+                    GetReceivedDate();
+
+                    if (recivedDate != null)
+                    {
+                        InitializeServices();
+                        HandelShipmentFields();
+                    }
+
                     queueService.Complete();
                 }
                 catch (Exception ex)
@@ -101,9 +112,16 @@ namespace CommunicationWorkerRole
             documentCode = queueResponse.MessageValues["DocumentCode"].ToString();
             isDocumentUploaded = bool.Parse(queueResponse.MessageValues["IsDocumentUploaded"].ToString());
             isDocumentDeleted = bool.Parse(queueResponse.MessageValues["IsDocumentDeleted"].ToString());
-            recivedDate = DateTime.Parse(queueResponse.MessageValues["RecivedDate"].ToString());
+            recivedDateString = queueResponse.MessageValues["RecivedDate"].ToString();
             isApprovalRequired = queueResponse.MessageValues != null && queueResponse.MessageValues.Keys.Contains("IsApprovalRequired") ? bool.Parse(queueResponse.MessageValues["IsApprovalRequired"].ToString()) : false;
             isUploadShipmentDocs = queueResponse.MessageValues != null && queueResponse.MessageValues.Keys.Contains("IsUploadShipmentDocs") ? bool.Parse(queueResponse.MessageValues["IsUploadShipmentDocs"].ToString()) : true;
+        }
+        private void GetReceivedDate()
+        {
+            if (!string.IsNullOrEmpty(recivedDateString))
+                recivedDate = Convert.ToDateTime(recivedDateString);
+
+            //recivedDate = DateTime.TryParse(recivedDateString, out recivedDate);
         }
 
         private void InitializeServices()
@@ -145,8 +163,8 @@ namespace CommunicationWorkerRole
 
         private void MarkShipmentAsApprovalRequired()
         {
-            shipmentPM = GetShipment(documentsFilingPM.EntityId , documentsFilingPM.Tenant);
-            if (shipmentPM == null || shipmentPM.IsDocumentsNeedApprove) return;   
+            shipmentPM = GetShipment(documentsFilingPM.EntityId, documentsFilingPM.Tenant);
+            if (shipmentPM == null || shipmentPM.IsDocumentsNeedApprove) return;
             shipmentPM.IsDocumentsNeedApprove = true;
             shipmentPM.IsDocsKPIsUpdatedFromWR = true;
 
@@ -174,7 +192,6 @@ namespace CommunicationWorkerRole
                 this.UpdateShipmentWhenDeletingDocument(documentsFilings, documentsFiling);
             }
         }
-
         private List<DocumentsFilingPM> GetShipmentDocumentFilings(DocumentsFilingPM documentsFiling, ICommonDataContext commonContext)
         {
             DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(commonContext);
@@ -215,22 +232,17 @@ namespace CommunicationWorkerRole
             }
         }
 
-
-
         private void UpdateShipment(DocumentsFilingPM documentFiling, bool isReceived, DateTime? receivedDate)
         {
             string shipmentId = documentFiling.EntityId;
-            if (string.IsNullOrEmpty(shipmentId))
-            {
-                return;
-            }
-
+            if (string.IsNullOrEmpty(shipmentId))            
+                return;           
 
             shipmentPM = GetShipment(shipmentId, tenant);
             if (shipmentPM == null) return;
 
             shipmentDocsField = this.GetEntity(shipmentId);
-            if(shipmentDocsField != null)
+            if (shipmentDocsField != null)
             {
                 this.HandleShipmentFields(shipmentDocsField, isReceived, receivedDate);
             }
@@ -239,16 +251,19 @@ namespace CommunicationWorkerRole
             isShipmentChange = true;
         }
 
-
-
         private void UpdateShipment()
         {
             if (shipmentPM == null || !isShipmentChange) return;
             ContactRepository contactRepository = new ContactRepository(tenant);
             Contact receivedBy = contactRepository.GetSingleContact(documentsFilingPM.ReceivedByUserId, tenant);
-            ShipmentService shipmentService = new ShipmentService(shipmentContext, shipmentPM, receivedBy.Email);
-           
-            if (shipmentDocsField!=null)
+
+            string email = "system@tenant" + tenant + ".com";
+            if (receivedBy != null)
+                email = receivedBy.Email;
+
+            ShipmentService shipmentService = new ShipmentService(shipmentContext, shipmentPM, email);
+
+            if (shipmentDocsField != null)
             {
                 shipmentService.ShipmentDocsFieldFromWorkerRole = shipmentDocsField;
             }
@@ -256,18 +271,15 @@ namespace CommunicationWorkerRole
             shipmentService.Update(true);
         }
 
-
         private ShipmentPM GetShipment(string shipmentId, int tenant)
         {
             if (shipmentPM != null) return shipmentPM;
-            shipmentPM = new ShipmentQuery(shipmentRepository).GetSinglePM(shipmentId, tenant);
+            shipmentPM = new ShipmentQuery(shipmentRepository).GetSinglePMWithNoRestriction(shipmentId, tenant);
             return shipmentPM;
         }
 
-
-
         private ShipmentDocsField GetEntity(string id)
-        {            
+        {
             ShipmentDocsField shipmentDocsField = shipmentDocsFieldRepository.GetSingleShipmentDocsField(id, tenant);
 
             if (shipmentDocsField == null)
@@ -279,7 +291,7 @@ namespace CommunicationWorkerRole
         }
         private void HandleShipmentFields(ShipmentDocsField shipmentDocsField, bool isReceived, DateTime? receivedDate)
         {
-            if(documentCode == DocumentsCodes.POD)
+            if (documentCode == DocumentsCodes.POD)
             {
                 shipmentDocsField.IsPODReceived = isReceived;
                 shipmentDocsField.PODReceivedDate = receivedDate;

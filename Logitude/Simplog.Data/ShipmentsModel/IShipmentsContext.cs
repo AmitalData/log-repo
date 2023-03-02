@@ -100,8 +100,11 @@ namespace Simplog.Data.ShipmentsModel
         IDbSet<ARInvoice> ARInvoicesForReports{ get; }
         IDbSet<PayableProratedAmount> PayableProratedAmounts { get; }
         IDbSet<ShipmentAnalytic> ShipmentAnalytics { get; set; }
+        IDbSet<ContainerAnalytic> ContainerAnalytics { get; set; }
+        IDbSet<ContainerDiscrepancy> ContainerDiscrepancies { get; set; }
         IQueryable<TOutput> FunctionTableValue<TOutput>(string functionName, SqlParameter[] parameters);
         IQueryable<ShipmentDataView> ShipmentSearch(string SearchFields);
+
 
         void SetAsModified(object entity);
         void DetectChanges();

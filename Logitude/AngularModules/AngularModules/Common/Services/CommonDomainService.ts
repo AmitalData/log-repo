@@ -1555,4 +1555,5 @@ export class PartnersUploadExcelParameter {
     FileName: string;
     IsConfirmationByUser: boolean;
     DocumentId: string;
+    ComputingPartnerCode: string;
 }

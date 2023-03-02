@@ -366,30 +366,30 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 			
 		 }
 	   }
-		private string statusCode ;
-
-
-		[CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
-		[DataMember]
-		public string StatusCode
+	  private string statusCode ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StatusCode  
+	   {
+	    
+	     get
 		{
-
-			get
-			{
-				return statusCode;
-			}
-			set
-			{
-				if(statusCode != value)
-				{
-					NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusCode",OldValue=statusCode,NewValue=value,PropertyType="string"};
-					NotifyPropertyChanged(values);
-					statusCode=value;
-				}
-
-			}
-		}
-		private int totalPieces ;
+		   return statusCode;
+		 }
+		 set
+		 {
+		   if(statusCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusCode",OldValue=statusCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   statusCode=value;
+		   }
+			
+		 }
+	   }
+	  private int totalPieces ;
 	  	  
        
 	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
@@ -1409,6 +1409,29 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsUpdateByAutomation",OldValue=isUpdateByAutomation,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   isUpdateByAutomation=value;
+		   }
+			
+		 }
+	   }
+	  private string customerPrimaryContactId ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerPrimaryContactId  
+	   {
+	    
+	     get
+		{
+		   return customerPrimaryContactId;
+		 }
+		 set
+		 {
+		   if(customerPrimaryContactId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerPrimaryContactId",OldValue=customerPrimaryContactId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customerPrimaryContactId=value;
 		   }
 			
 		 }

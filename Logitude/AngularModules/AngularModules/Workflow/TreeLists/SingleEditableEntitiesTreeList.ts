@@ -49,13 +49,12 @@ export class SingleEditableEntitiesTreeList {
 
     private getGetRecordTreeSelectItemChildren(treeItemPrefix: string, entity: string, nodeId: string | null) {
         let getRecordTreeSelectItemChildren = [];
-        Entities.getChildren().filter(c => c.Code !== "ARInvoice" && c.Code !== "APInvoice").filter(c => c.ParentEntityCode === entity)
-            .forEach(childEntity => {
-                let itemData = { entity: childEntity.Code, nodeId: nodeId, isEditableEntity: true };
-                let treeSelectItemKey = treeItemPrefix + this.ItemKeySplitter + childEntity.Code;
-                let treeSelectItem = new TreeSelectItem(treeSelectItemKey, childEntity.Name, true, true, false, false, [], itemData);
-                getRecordTreeSelectItemChildren.push(treeSelectItem);
-            });
+        Entities.getChildren(entity).forEach(childEntity => {
+            let itemData = { entity: childEntity.Code, isCustom: childEntity.IsCustom, isEditableEntity: true, nodeId: nodeId };
+            let treeSelectItemKey = treeItemPrefix + this.ItemKeySplitter + childEntity.Code;
+            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, childEntity.Name, true, true, false, false, [], itemData);
+            getRecordTreeSelectItemChildren.push(treeSelectItem);
+        });
         return getRecordTreeSelectItemChildren;
     }
 

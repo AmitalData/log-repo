@@ -1,6 +1,6 @@
 ﻿using Logitude.CRM.BL.EntityPMs;
 using Logitude.CRM.Data.EntityPOCOs;
-using Simplog.Server.Infrastructure.AnalyticTableServices;
+using Logitude.Server.Tools.AnalyticTableServices;
 using System;
 using System.Data.Entity;
 

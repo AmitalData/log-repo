@@ -3,9 +3,12 @@ export class CargoTrackingBrandingData {
     public static MainColor: string;
     public static SecondaryColor: string;
     public static BackgroundId: string;
+    public static MobileBackgroundId: string;
     public static Domain: string;
     public static BackGroundImg:string;
     public static BackgroundURL:string;
+    public static MobileBackGroundImg:string;
+    public static MobileBackgroundURL:string;
     public static ComapnylogoId: string;
     public static ComapnylogoImg:string;
     public static ComapnylogoURL:string;
@@ -22,6 +25,7 @@ export class CargoTrackingBrandingData {
     public static ComapnylogoBytes:any;
     public static InvertedLogoBytes:any;
     public static BackgroundBytes:any;
+    public static MobileBackgroundBytes:any;
     public static ShipmentHeaderBytes:any;
     public static ForceHttps:boolean;
     public static ActivatePrivateSite: boolean;

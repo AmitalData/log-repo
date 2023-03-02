@@ -67,8 +67,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				LogitudeMessagesTransmissionLogRepository  logitudeMessagesTransmissionLogRepository = new LogitudeMessagesTransmissionLogRepository(MyContext);
 				LogitudeMessagesTransmissionLogList entityList = null;
 				LogitudeMessagesTransmissionLog entityPoco = logitudeMessagesTransmissionLogRepository.GetSingleLogitudeMessagesTransmissionLog(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<LogitudeMessagesTransmissionLog> singleEntityList = new List<LogitudeMessagesTransmissionLog>();
 					singleEntityList.Add(entityPoco);

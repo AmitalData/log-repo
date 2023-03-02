@@ -110,5 +110,3 @@ Then("the activity list should refresh successfully", () => {
 
 
 
-
-

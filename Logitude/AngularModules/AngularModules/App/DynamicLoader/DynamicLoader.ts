@@ -112,6 +112,9 @@ export class DynamicLoader {
 
   private static async GetModuleProfile(iModuleName: string) {
 
+    if(iModuleName == "WorkFlow"){
+      iModuleName = "Workflow"
+    }
     let Profile = await this.ModulesBank.filter(f => f.ModuleName == iModuleName)[0];
 
     if (!Profile) {

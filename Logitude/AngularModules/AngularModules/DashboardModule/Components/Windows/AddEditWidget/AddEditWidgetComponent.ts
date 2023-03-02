@@ -13,9 +13,7 @@ import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 import { Guid } from 'Infrastructure/Utilities/Guid';
 import { WidgetFilterItem } from '../Filter/WidgetFilter/WidgetFilterItem';
-import { Type } from '@angular/compiler';
 import { AnalyticsFactsFieldsMetaDataListService } from 'DashboardModule/Services/StandardLists/AnalyticsFactsFieldsMetaDataListService';
-import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
     templateUrl: './AddEditWidgetComponent.html',
@@ -40,6 +38,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     public SortByCodes = [];
     public PeriodOperators = ['Previous', 'Between'];
     public SortByDirections = [{ name: 'Ascending', code: 'asc' }, { name: 'Descending', code: 'desc' }];
+    public LabelsPositions = [{ name: 'On Chart', code: 'OnChart' }, { name: 'In Legend', code: 'InLegend' }];
     public IncreaseDecreases = ['Positive', 'Negative'];
     public GroupByQueryFilters: ApiQueryFilters;
     public SecondaryGroupByQueryFilters: ApiQueryFilters;
@@ -50,6 +49,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     public IsSecondaryGroupByVisible: boolean = false;
     public IsDeleteGroupByVisible: boolean = false;
     public MeasureRenderList = [];
+    public YAxisTypes = [];
     public ImgWitdh: number = 0;
     public Alignments = ['Left', 'Center'];
     public Abbreviations = ['1k', '10k', '100k', '1M', '10M', '100M'];
@@ -72,7 +72,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.FirstTimeForSecondaryGrouping = this.isNew != true;
         this.DataContext = this;
         this.ComputeChartImageSrc();
-        this.SetMeasureRenderList();
+        this.SetMeasureData();
         this.BuildMeasures();
         this.CheckMeasureAddVisiblity();
         this.Clone();
@@ -273,7 +273,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.SetTimeOverTimeValue();
             this.CheckGroupAddVisiblity();
             this.SetMaximumGrouping();
-            this.SetMeasureRenderList();
+            this.SetMeasureData();
             this.WidgetMeasuresList.forEach(item => {
                 item.FilterMeasureFields();
             });
@@ -283,17 +283,21 @@ export class AddEditWidgetComponent extends BaseComponent {
         }
     }
 
-    SetMeasureRenderList() {
+    SetMeasureData() {
         switch (this.EntityPM.TypeCode) {
             case "column":
                 this.MeasureRenderList = [{ name: 'Show as Column', code: 'default' }, { name: 'Show as Line', code: 'line' }];
+                this.YAxisTypes = [{ name: 'Single Y-Axis', code: 'single' }, { name: 'Dual Y-Axis', code: 'dual' }];
                 break;
             default:
                 this.MeasureRenderList = [];
+                this.YAxisTypes = [];
                 break;
         }
-        if (this.WidgetMeasuresList && this.WidgetMeasuresList.length > 1)
+        if (this.WidgetMeasuresList && this.WidgetMeasuresList.length > 1) {
             this.SetDefaultRender(this.WidgetMeasuresList[1]);
+            this.SetDefaultYAxisType(this.WidgetMeasuresList[1]);
+        }
     }
 
     private SetTimeOverTimeDefaultValue() {
@@ -336,6 +340,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.UseNumberAbbreviation = false;
         this.UseAbbreviationAfter = null;
         this.DecimalPlaces = null;
+        this.LabelsPosition = null;
 
         if (this.TypeCode == "kpi" && (this.WidgetMeasuresList[0].MeasureFieldId == null || this.WidgetMeasuresList[0].IsNumeric)) {
             this.ThousandSeparator = true;
@@ -343,6 +348,9 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.UseAbbreviationAfter = "100k";
             this.DecimalPlaces = 2;
             this.Alignment = "Center";
+        }
+        if (this.TypeCode == "pie" || this.TypeCode == "donut") {
+            this.LabelsPosition = 'OnChart';
         }
     }
     SetDisplaySettingsDefaultsForKpiAndMeasureCode() {
@@ -467,6 +475,15 @@ export class AddEditWidgetComponent extends BaseComponent {
         }
     }
 
+    get LabelsPosition() { return this.EntityPM.LabelsPosition; }
+    set LabelsPosition(value: string) {
+        if (this.EntityPM.LabelsPosition != value) {
+            this.EntityPM.LabelsPosition = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Labels Position Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+        }
+    }
+
+
     get MaximumGrouping() {
         return this.EntityPM.MaximumGrouping;
     }
@@ -544,6 +561,9 @@ export class AddEditWidgetComponent extends BaseComponent {
         return this.SortByDirections.find(x => x.code == this.SortDirection);
     }
 
+    public GetSelectedLabelsPosition() {
+        return this.LabelsPositions.find(x => x.code == this.LabelsPosition);
+    }
 
     public selectedGroupField: AnalyticsFactsFieldsMetaDataList = null;
     get SelectedGroupField() { return this.selectedGroupField; }
@@ -838,6 +858,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.myCloner.AddField('UseNumberAbbreviation');
         this.myCloner.AddField('UseAbbreviationAfter');
         this.myCloner.AddField('DecimalPlaces');
+        this.myCloner.AddField('LabelsPosition');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DashboardPM);
 
@@ -861,6 +882,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         newItem.MeasureCode = "Sum";
         var newWidgetMeasureItem: WidgetMeasureItem = new WidgetMeasureItem(newItem, true, this);
         this.SetDefaultRender(newWidgetMeasureItem);
+        this.SetDefaultYAxisType(newWidgetMeasureItem);
         this.WidgetMeasuresList.push(newWidgetMeasureItem);
         newWidgetMeasureItem.CheckMeasureDeleteVisiblity();
 
@@ -869,13 +891,13 @@ export class AddEditWidgetComponent extends BaseComponent {
     }
 
     private SetDefaultRender(widgetMeasureItem: WidgetMeasureItem) {
-        if (this.MeasureRenderList.length > 0) {
-            widgetMeasureItem.RenderAs = this.MeasureRenderList[0].code;
-        }
-        else {
-            widgetMeasureItem.RenderAs = null;
-        }
+        if (this.MeasureRenderList.length > 0) widgetMeasureItem.RenderAs = this.MeasureRenderList[0].code;
+        else widgetMeasureItem.RenderAs = null;
+    }
 
+    private SetDefaultYAxisType(widgetMeasureItem: WidgetMeasureItem) {
+        if (this.YAxisTypes.length > 0) widgetMeasureItem.YAxisType = this.YAxisTypes[0].code;
+        else widgetMeasureItem.YAxisType = null;
     }
 
     AddNewGroupByClicked() {
@@ -934,6 +956,10 @@ export class WidgetMeasureItem extends BaseComponent {
         return this.fatherComponent?.MeasureRenderList?.find(x => x.code == this.RenderAs);
     }
 
+    public get DefaultYAxisType(): any {
+        return this.fatherComponent?.YAxisTypes?.find(x => x.code == this.YAxisType);
+    }
+
     constructor(entityPM: WidgetMeasurePM, isNew: boolean, public fatherComponent: AddEditWidgetComponent) {
         super();
         this.EntityPM = entityPM;
@@ -955,6 +981,10 @@ export class WidgetMeasureItem extends BaseComponent {
     }
 
     public get ShowRenderList(): boolean {
+        return this.fatherComponent.WidgetMeasuresList.indexOf(this) == 1 && this.Widget.TypeCode == "column";
+    }
+
+    public get ShowYAxisTypes(): boolean {
         return this.fatherComponent.WidgetMeasuresList.indexOf(this) == 1 && this.Widget.TypeCode == "column";
     }
 
@@ -984,6 +1014,13 @@ export class WidgetMeasureItem extends BaseComponent {
         if (this.EntityPM.RenderAs == value) return;
         this.EntityPM.RenderAs = value;
         MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Show as Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+    }
+
+    get YAxisType() { return this.EntityPM.YAxisType; }
+    set YAxisType(value: string) {
+        if (this.EntityPM.YAxisType == value) return;
+        this.EntityPM.YAxisType = value;
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Y Axis Type as Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
     }
 
     get SelectedField() { return this.selectedField; }
@@ -1037,11 +1074,11 @@ export class WidgetMeasureItem extends BaseComponent {
         if (this.FielHasOldValue) {
             this.FielHasOldValue = false;
             this.selectedField = field;
-            if(!this.isNumericType(this.selectedField?.DataTypeCode)) this.fatherComponent.SetDefaultValuesForDisplaySettings();
+            if (!this.isNumericType(this.selectedField?.DataTypeCode)) this.fatherComponent.SetDefaultValuesForDisplaySettings();
             this.fatherComponent.SetUIProprtiesForDisplaySettings();
             return;
         }
-         
+
         var typeChange = this.selectedField == null || this.isNumericType(this.selectedField?.DataTypeCode) != this.isNumericType(field?.DataTypeCode);
         this.selectedField = field;
         this.fatherComponent.SetUIProprtiesForDisplaySettings();

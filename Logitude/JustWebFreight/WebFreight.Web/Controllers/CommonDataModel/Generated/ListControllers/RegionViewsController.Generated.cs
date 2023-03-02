@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				RegionRepository  regionRepository = new RegionRepository(MyContext);
 				RegionList entityList = null;
 				Region entityPoco = regionRepository.GetSingleRegion(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Region> singleEntityList = new List<Region>();
 					singleEntityList.Add(entityPoco);

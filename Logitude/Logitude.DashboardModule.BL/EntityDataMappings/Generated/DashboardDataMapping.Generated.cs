@@ -32,7 +32,7 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         Name, 
 	         Description, 
 	         PermissionLevelCode, 
-	         LoadedAutomatically, 
+	         PinnedByDefault, 
 	         PredefinedOrder,
 	      }
 
@@ -50,7 +50,7 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         Name, 
 	         Description, 
 	         PermissionLevelCode, 
-	         LoadedAutomatically, 
+	         PinnedByDefault, 
 	         PredefinedOrder,
 	      }
 
@@ -105,9 +105,9 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 				entityPOCO.PermissionLevelCode = entityPM.PermissionLevelCode;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LoadedAutomatically))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PinnedByDefault))
             {
-				entityPOCO.LoadedAutomatically = entityPM.LoadedAutomatically;
+				entityPOCO.PinnedByDefault = entityPM.PinnedByDefault;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PredefinedOrder))
@@ -171,9 +171,9 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 					entityPM.PermissionLevelCode = entityPOCO.PermissionLevelCode;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LoadedAutomatically))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PinnedByDefault))
             {
-					entityPM.LoadedAutomatically = entityPOCO.LoadedAutomatically;
+					entityPM.PinnedByDefault = entityPOCO.PinnedByDefault;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PredefinedOrder))
@@ -232,9 +232,9 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
                 oldEntityPM.PermissionLevelCode = entityPM.PermissionLevelCode;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LoadedAutomatically))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PinnedByDefault))
             {
-                oldEntityPM.LoadedAutomatically = entityPM.LoadedAutomatically;
+                oldEntityPM.PinnedByDefault = entityPM.PinnedByDefault;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PredefinedOrder))

@@ -369,6 +369,21 @@ export class LedgerTransactionPM {
     public set AccountLocalName(newValue: string) { if (this.accountLocalName != newValue) { this.accountLocalName = newValue; this.MarkAsDirty("AccountLocalName"); } }
        
 	 
+    private updateDateTime: Date;
+    public get UpdateDateTime() { return this.updateDateTime; }
+    public set UpdateDateTime(newValue: Date) { if (this.updateDateTime != newValue) { this.updateDateTime = newValue; this.MarkAsDirty("UpdateDateTime"); } }
+       
+	 
+    private updatedByUserName: string;
+    public get UpdatedByUserName() { return this.updatedByUserName; }
+    public set UpdatedByUserName(newValue: string) { if (this.updatedByUserName != newValue) { this.updatedByUserName = newValue; this.MarkAsDirty("UpdatedByUserName"); } }
+       
+	 
+    private internalNote: string;
+    public get InternalNote() { return this.internalNote; }
+    public set InternalNote(newValue: string) { if (this.internalNote != newValue) { this.internalNote = newValue; this.MarkAsDirty("InternalNote"); } }
+       
+	 
 
     public OldEntityPM: LedgerTransactionPM;
 		

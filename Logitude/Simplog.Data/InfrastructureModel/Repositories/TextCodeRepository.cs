@@ -317,5 +317,6 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
             return textcodes;
         }
+
     }
 }

@@ -16,7 +16,7 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class WidgetMeasurePM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
@@ -55,6 +55,11 @@ export class WidgetMeasurePM {
     private renderAs: string;
     public get RenderAs() { return this.renderAs; }
     public set RenderAs(newValue: string) { if (this.renderAs != newValue) { this.renderAs = newValue; this.MarkAsDirty("RenderAs"); } }
+       
+	 
+    private yAxisType: string;
+    public get YAxisType() { return this.yAxisType; }
+    public set YAxisType(newValue: string) { if (this.yAxisType != newValue) { this.yAxisType = newValue; this.MarkAsDirty("YAxisType"); } }
        
 	 
 

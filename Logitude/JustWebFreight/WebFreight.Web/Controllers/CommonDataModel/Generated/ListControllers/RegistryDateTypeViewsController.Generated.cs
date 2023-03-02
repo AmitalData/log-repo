@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				RegistryDateTypeRepository  registryDateTypeRepository = new RegistryDateTypeRepository(MyContext);
 				RegistryDateTypeList entityList = null;
 				RegistryDateType entityPoco = registryDateTypeRepository.GetSingleRegistryDateType(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<RegistryDateType> singleEntityList = new List<RegistryDateType>();
 					singleEntityList.Add(entityPoco);

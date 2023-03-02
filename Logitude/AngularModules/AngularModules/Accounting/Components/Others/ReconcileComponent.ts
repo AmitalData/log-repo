@@ -157,6 +157,7 @@ export class LineModel extends BaseComponent {
     get Reference2() { return this.LedgerTransactionPM.Reference2; }
     get Reference3() { return this.LedgerTransactionPM.Reference3; }
     get Notes() { return this.LedgerTransactionPM.Notes; }
+    get InternalNote() { return this.LedgerTransactionPM.InternalNote; }
     get IsPartial() { return this.OpenAmount != this.AmountToReconcile; }
     get OpenAmountCurrencyId() { return this.LedgerTransactionPM.OpenAmountCurrencyId; }
     get SourceTypeCode() { return this.LedgerTransactionPM.SourceTypeCode; }
@@ -164,8 +165,7 @@ export class LineModel extends BaseComponent {
     get GroupNumber() { return this.LedgerTransactionPM.GroupHash; }
 
     //#endregion
-
-
+    
     //#region Row Coloring
 
     ColorMe() {
@@ -302,6 +302,19 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
         this.SetTitle();
 
+    }
+    OpenLedgerTransactionInternalNote(line: any) {
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 450;
+        logWindow.Height = 350;
+        logWindow.Title = TextCodeTranslator.Translate("ARInvoice.F.InternalNotes");
+        logWindow.WindowArgs = { ledgerTransaction: line };
+        logWindow.Show('./Accounting/Components/Others/LedgerTransactionInternalNotesComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            this.CD.detectChanges();
+            this.CurrentSession.StopBusyIndicator();
+        });
     }
 
     openTransactionLabel;
@@ -1170,6 +1183,19 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             // SortByName: 'Notes'
         });
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Notes",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.Notes")));
+        
+        this.columns.push({
+            FieldName: 'InternalNote',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("ARInvoice.F.InternalNotes"),
+            Styles: { width: '350px' },
+            HtmlListComponentName: 'GlAccountLedgerTransactionsInternalNotesTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsInternalNotesTemplate',
+            IsCustomTemplate: true,
+            // ServerSideSortable: true,
+            // SortByName: 'Notes'
+        });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("InternalNotes",'Text',TextCodeTranslator.Translate("ARInvoice.F.InternalNotes")));
 
         ReconcileEventManager.CheckBoxChecked.subscribe(($event) => {
             if (!AppTool.IsNullOrEmpty($event)) {

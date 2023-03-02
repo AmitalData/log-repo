@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				VatUniquePartnerTypeRepository  vatUniquePartnerTypeRepository = new VatUniquePartnerTypeRepository(MyContext);
 				VatUniquePartnerTypeList entityList = null;
 				VatUniquePartnerType entityPoco = vatUniquePartnerTypeRepository.GetSingleVatUniquePartnerType(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<VatUniquePartnerType> singleEntityList = new List<VatUniquePartnerType>();
 					singleEntityList.Add(entityPoco);

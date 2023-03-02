@@ -16,7 +16,7 @@ export class ExpressionsTreeList {
 
     private initializeTreeItems() {
         this.Expressions.forEach((expression) => {
-            let treeSelectItem = new TreeSelectItem(expression.Code, expression.Name + expression.Body, false, true, true, false, [], expression);
+            let treeSelectItem = new TreeSelectItem(expression.Code, expression.Title, false, true, true, false, [], expression);
             this.Items.push(treeSelectItem);
         });
     }

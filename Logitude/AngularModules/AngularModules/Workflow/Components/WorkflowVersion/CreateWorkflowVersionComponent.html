@@ -26,7 +26,7 @@
         <td class="table-row-cell">
             <div class="title">
                 <LogLabel [NoObjectField]="true" [Text]="'Description'" [ObjectFieldName]="'Description'"
-                    [DataContext]="DataContext"></LogLabel>
+                    [HideColumns]="true" [DataContext]="DataContext"></LogLabel>
             </div>
             <div class="version-description">
                 <textarea class="version-textarea" id="version_description" [(ngModel)]='VersionDescription'

@@ -70,7 +70,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                ClearanceDate = shipment.ClearanceDate,
                                                                CreateDate = shipment.CreateDate,
                                                                DirectionId = shipment.DirectionId,
-                                                               CustomerReference =  shipment.EntityType == OrderType ? shipment.CustomerReference + ","+ shipment.BookingNotes +"," + shipment.PoNumber : shipment.CustomerReference,
+                                                               CustomerReference = shipment.EntityType == OrderType ? shipment.CustomerReference + "," + shipment.BookingNotes + "," + shipment.PoNumber : shipment.CustomerReference,
                                                                AssignedCustomsAgentDate = shipment.AssignedCustomsAgentDate,
                                                                AssignedCustomsAgentDone = shipment.AssignedCustomsAgentDone,
                                                                AssignedCustomsAgentEstDate = shipment.AssignedCustomsAgentEstDate,
@@ -159,7 +159,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                InvoicedExceptionReason = shipment.InvoicedExceptionReason,
                                                                InvoicedNotes = shipment.InvoicedNotes,
 
-                                                               ATAETASortingField = shipment.ArrivalDate != null ? shipment.ArrivalDate: shipment.ArrivalEstimationDate,
+                                                               ATAETASortingField = shipment.ArrivalDate != null ? shipment.ArrivalDate : shipment.ArrivalEstimationDate,
                                                                ATDETDSortingField = shipment.DepartureDate != null ? shipment.DepartureDate : shipment.DepartureEstimationDate,
                                                                CreatedDone = shipment.CreatedDone,
                                                                DeliveredDone = shipment.DeliveredDone,
@@ -524,7 +524,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
             return shipmentsLists;
         }
-        
+
         private List<CargoTrackingShipmentList> GetFilteredSortedShipmentsByIds(int pageIndex, int pageSize, List<string> shipmentIds, CargoTrackingShipmentSearchInput shipmentSearchInput)
         {
             IQueryable<CargoTrackingShipmentList> shipments = GetShipmentsQuerableByIds(shipmentIds, shipmentSearchInput.Tenant);
@@ -534,7 +534,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             List<CargoTrackingShipmentList> shipmentsLists = GetPageOfShipmentsLists(pageIndex, pageSize, shipments);
             return shipmentsLists;
         }
-        public List<CargoTrackingShipmentList> GetFilteredSortedShipments( CargoTrackingShipmentSearchInput shipmentSearchInput)
+        public List<CargoTrackingShipmentList> GetFilteredSortedShipments(CargoTrackingShipmentSearchInput shipmentSearchInput)
         {
             IQueryable<CargoTrackingShipmentList> shipments = GetQueryableShipmentsBySearchText(shipmentSearchInput.SearchText, shipmentSearchInput.Tenant);
 
@@ -544,16 +544,10 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             List<CargoTrackingShipmentList> shipmentsLists = GetPageOfShipmentsLists(shipmentSearchInput.PageIndex, shipmentSearchInput.PageSize, shipments);
             return shipmentsLists;
         }
-        public List<Customer> GetShipmentsCustomers(CargoTrackingShipmentSearchInput shipmentSearchInput)
+        public List<Customer> GetShipmentsCustomers(int tenant)
         {
-            IQueryable<CargoTrackingShipmentList> shipments = GetQueryableShipmentsBySearchText(shipmentSearchInput.SearchText, shipmentSearchInput.Tenant);
-            
-            return shipments.Select(a => new Customer
-            {
-                Id = a.CustomerId,
-                Name = a.CustomerEnglishName,
-            }).Distinct().ToList();
-
+            CargoTrackingShipmentRepository shipmentRepository = new CargoTrackingShipmentRepository(context);
+            return shipmentRepository.GetFilteredShipmentsByTenant(tenant).ToList();
         }
         public IQueryable<CargoTrackingShipmentList> GetShipments(List<string> ShipmentIds, CargoTrackingShipmentSearchInput shipmentSearchInput)
         {
@@ -657,7 +651,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
         private IQueryable<CargoTrackingShipmentList> FilterDirections(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
         {
-            if(shipmentSearchInput.DirectionCodes.Count <= 0)
+            if (shipmentSearchInput.DirectionCodes.Count <= 0)
                 return shipments;
             if (shipmentSearchInput.DirectionCodes.Contains(ImportDirectionCode))
                 shipmentSearchInput.DirectionCodes.Add(CustomeImportDirectionCode);
@@ -669,7 +663,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
         private IQueryable<CargoTrackingShipmentList> FilterTransportMode(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
         {
-            if(shipmentSearchInput.TransportModeCodes.Count <= 0)
+            if (shipmentSearchInput.TransportModeCodes.Count <= 0)
                 return shipments;
             shipments = shipments.Where(d =>
                 shipmentSearchInput.TransportModeCodes.Contains(d.TransportModeId)
@@ -708,8 +702,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             return shipments;
         }
 
-        
-        
+
+
         private IQueryable<CargoTrackingShipmentList> GetShipmentsQuerableByIds(List<string> ShipmentIds, int tenant)
         {
             CargoTrackingShipmentRepository repo = new CargoTrackingShipmentRepository(context);

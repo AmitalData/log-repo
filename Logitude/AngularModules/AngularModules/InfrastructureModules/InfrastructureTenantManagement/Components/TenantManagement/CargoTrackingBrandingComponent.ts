@@ -36,6 +36,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     IsVisibile: boolean;
     public EntityId: number;
     public BackgroundId: string;
+    public MobileBackgroundId: string;
     public ComapnylogoId: string;
     public InvertedLogoId: string;
     public BrowserIconId: string;
@@ -131,6 +132,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
 
     private InitializeImageIds() {
         this.BackgroundId = this.EntityPM.BackgroundId;
+        this.MobileBackgroundId = this.EntityPM.MobileBackgroundId;
         this.ComapnylogoId = this.EntityPM.ComapnylogoId;
         this.InvertedLogoId = this.EntityPM.InvertedLogoId;
         this.BrowserIconId = this.EntityPM.BrowserIconId;
@@ -154,6 +156,10 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         if (name == 'bg') {
             this.EntityPM.BackgroundId = null;
             this.BackgroundId = null;
+        }
+        if (name == 'mbg') {
+            this.EntityPM.MobileBackgroundId = null;
+            this.MobileBackgroundId = null;
         }
         if (name == 'ShipmentHeader') {
             this.EntityPM.ShipmentHeaderImageId = null;
@@ -435,6 +441,10 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         this.BackgroundId = code;
         this.EntityPM.BackgroundId = code;
     }
+    MobileBackgroundImageUploadedCompleted(code) {
+        this.MobileBackgroundId = code;
+        this.EntityPM.MobileBackgroundId = code;
+    }
     AreBackgroundImageDimensionsValid(value) {
         if (value) {
             SessionLocator.SelectedSession.CurrentEditComponent.IsEditValid = true;
@@ -442,6 +452,15 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         } else {
             SessionLocator.SelectedSession.CurrentEditComponent.IsEditValid = false;
             SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = ['Invalid Image Dimensions, the Valid Dimension are 1920 X 1080'];
+        }
+    }
+    AreMobileBackgroundImageDimensionsValid(value) {
+        if (value) {
+            SessionLocator.SelectedSession.CurrentEditComponent.IsEditValid = true;
+            SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = [];
+        } else {
+            SessionLocator.SelectedSession.CurrentEditComponent.IsEditValid = false;
+            SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = ['Invalid Image Dimensions, the Valid Dimension are 360 X 640 or 414 X 896'];
         }
     }
     ComapnylogoUploadedCompleted(code) {

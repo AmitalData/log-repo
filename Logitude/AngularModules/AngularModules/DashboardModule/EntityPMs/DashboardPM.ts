@@ -18,7 +18,7 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class DashboardPM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
@@ -179,9 +179,9 @@ export class DashboardPM {
         }
     }
     //public DashboardGlobalFilters: Array<DashboardGlobalFilterPM>= [];
-     private loadedAutomatically: boolean;
-    public get LoadedAutomatically() { return this.loadedAutomatically; }
-    public set LoadedAutomatically(newValue: boolean) { if (this.loadedAutomatically != newValue) { this.loadedAutomatically = newValue; this.MarkAsDirty("LoadedAutomatically"); } }
+     private pinnedByDefault: boolean;
+    public get PinnedByDefault() { return this.pinnedByDefault; }
+    public set PinnedByDefault(newValue: boolean) { if (this.pinnedByDefault != newValue) { this.pinnedByDefault = newValue; this.MarkAsDirty("PinnedByDefault"); } }
        
 	 
     private predefinedOrder: number;

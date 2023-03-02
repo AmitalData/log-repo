@@ -70,8 +70,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				VendorRepository  vendorRepository = new VendorRepository(MyContext);
 				VendorList entityList = null;
 				Vendor entityPoco = vendorRepository.GetSingleVendor(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Vendor> singleEntityList = new List<Vendor>();
 					singleEntityList.Add(entityPoco);

@@ -612,11 +612,12 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         XmlSerializer serializer = new XmlSerializer(typeof(FBLDataProvider));
                         FBLDataProvider fbLdataprovider = (FBLDataProvider)serializer.Deserialize(memorystream);
                         fbLdataprovider.InServerSide = true;
-                        DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() {EntityPM = oceanWebService.shipment, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = fbLdataprovider }).Create(true);
 
                         theT2 = System.DateTime.Now.Ticks;
                         //AzureLog.SaveLogsInStorage("Data provider :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P", tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "");
                         BaseDataProviderService.FillBaseVariableFields(fbLdataprovider, tenant);
+                        DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() { EntityPM = oceanWebService.shipment, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = fbLdataprovider }).Create(true);
+
 
                         StiDataColumnsCollection packagesLinesColumns = new StiDataColumnsCollection();
                         packagesLinesColumns.Add("PackageMarksAndNumbers", typeof(string));
@@ -697,12 +698,13 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         MemoryStream memorystream = new MemoryStream(byteArray);
                         XmlSerializer serializer = new XmlSerializer(typeof(ShippingDeclarationDataProvider));
                         ShippingDeclarationDataProvider shippingDeclarationdataprovider = (ShippingDeclarationDataProvider)serializer.Deserialize(memorystream);
-                        DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() {EntityPM = shippingDeclarationWebService.shipment, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = shippingDeclarationdataprovider }).Create(true);
 
                         theT2 = System.DateTime.Now.Ticks;
                         //AzureLog.SaveLogsInStorage("Data provider :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P", tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "");
 
                         BaseDataProviderService.FillBaseVariableFields(shippingDeclarationdataprovider, tenant);
+                        DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() { EntityPM = shippingDeclarationWebService.shipment, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = shippingDeclarationdataprovider }).Create(true);
+
 
                         StiDataColumnsCollection packagesLinesColumns = new StiDataColumnsCollection();
                         packagesLinesColumns.Add("PackageMarksAndNumbers", typeof(string));
@@ -742,7 +744,8 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         foreach (AWBLabelsDataProvider aWBLabelsDataProvider in awblabelsdataprovider)
                         {
                             BaseDataProviderService.FillBaseVariableFields(aWBLabelsDataProvider, tenant);
-                            documentDataProviders.Add(new DocumentDataProviderGreator(new DocumentDataProviderArgs() {EntityPM = awblabelsWebService.shipmentPM, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = aWBLabelsDataProvider }).Create(true));
+                            var documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() { EntityPM = awblabelsWebService.shipmentPM, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = aWBLabelsDataProvider }).Create(true);
+                            documentDataProviders.Add(documentDataProvider.BusinessObjectValue);
                         }
 
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "AWB Labels", Name = "AWBLabelsDataProvider", BusinessObjectValue = documentDataProviders };
@@ -847,11 +850,11 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         //MemoryStream memorystream = new MemoryStream(byteArray);
                         //XmlSerializer serializer = new XmlSerializer(typeof(InvoiceDataProvider));
                         InvoiceDataProvider invoicedataprovider = invoiceWebService.GetInvoiceDataProvider(childEntityId, documentTypeCopyId, tenant);//(InvoiceDataProvider)serializer.Deserialize(memorystream);
-                        DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() {EntityPM = invoiceWebService.invoicePM, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = invoicedataprovider }).Create(true);
 
                         theT2 = System.DateTime.Now.Ticks;
                         //AzureLog.SaveLogsInStorage("Data provider :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P");
                         BaseDataProviderService.FillBaseVariableFields(invoicedataprovider, tenant);
+                        DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() { EntityPM = invoiceWebService.invoicePM, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = invoicedataprovider }).Create(true);
 
 
                         StiDataColumnsCollection reportInvoiceLines = new StiDataColumnsCollection();
@@ -884,10 +887,10 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         MemoryStream memorystream = new MemoryStream(byteArray);
                         XmlSerializer serializer = new XmlSerializer(typeof(InvoiceDataProvider));
                         InvoiceDataProvider invoicedataprovider = (InvoiceDataProvider)serializer.Deserialize(memorystream);
-                        DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() {EntityPM = invoiceWebService.invoicePM, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = invoicedataprovider }).Create(true);
 
                         theT2 = System.DateTime.Now.Ticks;
                         BaseDataProviderService.FillBaseVariableFields(invoicedataprovider, tenant);
+                        DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() { EntityPM = invoiceWebService.invoicePM, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = invoicedataprovider }).Create(true);
 
                         StiDataColumnsCollection invoiceLinesColumnsCollection = new StiDataColumnsCollection();
                         invoiceLinesColumnsCollection.Add("Description", typeof(string));
@@ -949,10 +952,10 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         MemoryStream memorystream = new MemoryStream(byteArray);
                         XmlSerializer serializer = new XmlSerializer(typeof(CMRDataProvider));
                         CMRDataProvider cmrDataProvider = (CMRDataProvider)serializer.Deserialize(memorystream);
-                        DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() { DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = cmrDataProvider }).Create(true);
 
                         theT2 = System.DateTime.Now.Ticks;
                         BaseDataProviderService.FillBaseVariableFields(cmrDataProvider, tenant);
+                        DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() { DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = cmrDataProvider }).Create(true);
 
                         StiDataColumnsCollection containerColumnsCollection = new StiDataColumnsCollection();
                         containerColumnsCollection.Add("Weight", typeof(string));
@@ -1158,11 +1161,11 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         theT1 = System.DateTime.Now.Ticks;
                         APInvoiceWebService invoiceWebService = new APInvoiceWebService();
                         APInvoiceDataProvider invoicedataprovider = invoiceWebService.GetAPInvoiceDataProvider(childEntityId, tenant);
-                        DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() {EntityPM = invoiceWebService.myAPInvoice, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = invoicedataprovider }).Create(true);
 
                         theT2 = System.DateTime.Now.Ticks;
 
                         BaseDataProviderService.FillBaseVariableFields(invoicedataprovider, tenant);
+                        DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() { EntityPM = invoiceWebService.myAPInvoice, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = invoicedataprovider }).Create(true);
 
 
                         StiDataColumnsCollection reportInvoiceLines = new StiDataColumnsCollection();
@@ -1192,9 +1195,9 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         theT1 = System.DateTime.Now.Ticks;
                         APInvoiceWebService invoiceWebService = new APInvoiceWebService();
                         APInvoiceDataProvider invoicedataprovider = invoiceWebService.GetAPInvoiceDataProvider(entityId, tenant);
-                        DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() {EntityPM = invoiceWebService.myAPInvoice, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = invoicedataprovider }).Create(true);
                         theT2 = System.DateTime.Now.Ticks;
                         BaseDataProviderService.FillBaseVariableFields(invoicedataprovider, tenant);
+                        DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() { EntityPM = invoiceWebService.myAPInvoice, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = invoicedataprovider }).Create(true);
 
                         StiDataColumnsCollection multipleShipmentsColumnsCollection = new StiDataColumnsCollection();
                         multipleShipmentsColumnsCollection.Add("MasterNumber", typeof(string));
@@ -1223,10 +1226,10 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         theT1 = System.DateTime.Now.Ticks;
                         OpportunitySummaryWebService opportunitySummaryWebService = new OpportunitySummaryWebService();
                         OpportunitySummaryDataProvider opportunitySummaryDataProvider = opportunitySummaryWebService.GetOpportunitySummaryDataProvider(entityId, tenant, documentTypeCode);
-                        DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() { DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = opportunitySummaryDataProvider }).Create(true);
 
                         theT2 = System.DateTime.Now.Ticks;
                         BaseDataProviderService.FillBaseVariableFields(opportunitySummaryDataProvider, tenant);
+                        DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() { DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = opportunitySummaryDataProvider }).Create(true);
 
                         StiDataColumnsCollection opportunityProductColumnsCollection = new StiDataColumnsCollection();
                         opportunityProductColumnsCollection.Add("ProductName", typeof(string));
@@ -1349,10 +1352,10 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         XmlSerializer serializer = new XmlSerializer(typeof(FBLDataProvider));
                         FBLDataProvider fbLdataprovider = (FBLDataProvider)serializer.Deserialize(memorystream);
                         fbLdataprovider.InServerSide = true;
-                        DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() {EntityPM = oceanWebService.shipment, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = fbLdataprovider }).Create(true);
 
                         theT2 = System.DateTime.Now.Ticks;
                         BaseDataProviderService.FillBaseVariableFields(fbLdataprovider, tenant);
+                        DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() { EntityPM = oceanWebService.shipment, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = fbLdataprovider }).Create(true);
 
 
                         StiDataColumnsCollection packagesLinesColumns = new StiDataColumnsCollection();
@@ -1402,11 +1405,12 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         XmlSerializer serializer = new XmlSerializer(typeof(FBLDataProvider));
                         FBLDataProvider fbLdataprovider = (FBLDataProvider)serializer.Deserialize(memorystream);
                         fbLdataprovider.InServerSide = true;
-                        DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() {EntityPM = oceanWebService.shipment, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = fbLdataprovider }).Create(true);
 
                         theT2 = System.DateTime.Now.Ticks;
                         //AzureLog.SaveLogsInStorage("Data provider :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P", tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "");
                         BaseDataProviderService.FillBaseVariableFields(fbLdataprovider, tenant);
+                        DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() { EntityPM = oceanWebService.shipment, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = fbLdataprovider }).Create(true);
+
 
                         StiDataColumnsCollection packagesLinesColumns = new StiDataColumnsCollection();
                         packagesLinesColumns.Add("PackageMarksAndNumbers", typeof(string));
@@ -1434,6 +1438,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         ShippingDeclarationDataProvider shippingDeclarationdataprovider = (ShippingDeclarationDataProvider)serializer2.Deserialize(memorystream2);
                         theT2 = System.DateTime.Now.Ticks;
                         BaseDataProviderService.FillBaseVariableFields(shippingDeclarationdataprovider, tenant);
+                        DocumentDataProvider shippingDeclarationdatDocumentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() { EntityPM = oceanWebService.shipment, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = shippingDeclarationdataprovider }).Create(true);
 
 
 
@@ -1447,7 +1452,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         packagesLinesColumns2.Add("PackageVolume", typeof(string));
                         packagesLinesColumns2.Add("PackageQuantityAndType", typeof(string));
 
-                        StiBusinessObject currentBusinessObject2 = new StiBusinessObject() { Category = "Shipping declaration", Name = "ShippingDeclarationDataProvider", BusinessObjectValue = shippingDeclarationdataprovider };
+                        StiBusinessObject currentBusinessObject2 = new StiBusinessObject() { Category = "Shipping declaration", Name = "ShippingDeclarationDataProvider", BusinessObjectValue = shippingDeclarationdatDocumentDataProvider.BusinessObjectValue };
                         StiBusinessObject packageLinesBusinessObject2 = new StiBusinessObject() { Name = "PackagesLines", Alias = "PackagesLines", ParentBusinessObject = currentBusinessObject, Columns = packagesLinesColumns2 };
                         StiBusinessObject attachmentListBusinessObject2 = new StiBusinessObject() { Name = "AttachmentList", Alias = "AttachmentList", ParentBusinessObject = currentBusinessObject, Columns = packagesLinesColumns2 };
 

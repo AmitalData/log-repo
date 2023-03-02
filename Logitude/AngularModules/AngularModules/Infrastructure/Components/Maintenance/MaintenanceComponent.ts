@@ -19,6 +19,7 @@ import { AmitalGatewayUtil } from '../../Utilities/AmitalGatewayUtil';
 import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
 //import {RecallClientsForCutoms} from '../../../Customs/Components/CustomsRequests/GeneralRequests/RecallClientsForCutoms';
 import { TextCodeTranslationPipe } from '../../../Controls/Pipes/TextCodeTranslationPipe';
+import { CustomizationPermissionService } from '../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
 
 @Component({
     
@@ -187,6 +188,10 @@ export class MaintenanceComponent {
                     this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
                 }
             }
+
+            else if (item.Code == "DEPA" && this.CheckDeploymentPackageFeatures()) {
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            }
         });
 
         this.BuildPersonalSettings();
@@ -199,7 +204,11 @@ export class MaintenanceComponent {
         this.BuildCustomObjectsMenus();
         this.PageChanged(this.PagesMenu[0]);
     }
-
+    CheckDeploymentPackageFeatures() {
+        if (FeatureLocator.IsFeatureGrantedByUniqeCode("General.Customization.DeploymentPackage"))
+            return false;
+        return CustomizationPermissionService.HasFeaturePermession("General", "Customization.DeploymentPackage");
+    }
     private PushEntityStatusMenu(item: MenusTablePM) {
         if (SessionLocator.LoggedUserPM.IsCustomerCare || SessionLocator.LoggedUserPM.IsDistributor || this.EntityStatusToggle) {
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
@@ -817,17 +826,7 @@ export class MaintenanceComponent {
         if (SessionLocator.Tenant == 261) {
             return true;
         }
-        if (FeatureLocator.HasFeaturePermession("General", "General.Features.CustomizationSettings") && this.UserHasCustomizationAccess()) {
-            return true;
-        }
-        if (FeatureLocator.HasFeaturePermession("General", "General.Features.CustomizationSettings") && SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CUS")[0]) {
-            return true;
-        }
-        return false;
-    }
-
-    UserHasCustomizationAccess(): boolean {
-        if (SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting.DeploymentStage == "Dev" || SessionLocator.LoggedUserPM.IsDistributor) {
+        if (CustomizationPermissionService.HasFeaturePermession("General", "General.Features.CustomizationSettings") && CustomizationPermissionService.HasToggleFeaturePermession("CUS")) {
             return true;
         }
         return false;
@@ -838,7 +837,7 @@ export class MaintenanceComponent {
             return true;
         }
 
-        else if (FeatureLocator.HasFeaturePermession("General", "General.Features.Customization")) {
+        else if (CustomizationPermissionService.HasFeaturePermession("General", "General.Features.Customization")) {
             return true;
         }
         return false;
@@ -1616,12 +1615,14 @@ export class MaintenanceComponent {
                 }
 
                 case "ContainerSettings": {
-                    var logitudeWindow = new LogitudeWindow();
-                    logitudeWindow.ShowCloseButton = true;
-                    logitudeWindow.Width = 1200;
-                    logitudeWindow.Height = 600;
-                    logitudeWindow.Title = "Container Settings";
-                    logitudeWindow.Show('./ShipmentModules/ShipmentOthers/Components/ContainerSetting/ContainerSettingsComponent');
+                    this._entityResourceService.getEntityResourceByTableName("ContainerSetting").subscribe(() => {
+                        var logitudeWindow = new LogitudeWindow();
+                        logitudeWindow.ShowCloseButton = true;
+                        logitudeWindow.Width = 1200;
+                        logitudeWindow.Height = 600;
+                        logitudeWindow.Title = "Container Settings";
+                        logitudeWindow.Show('./ShipmentModules/ShipmentOthers/Components/ContainerSetting/ContainerSettingsComponent');
+                    });
                     break;
                 }
 

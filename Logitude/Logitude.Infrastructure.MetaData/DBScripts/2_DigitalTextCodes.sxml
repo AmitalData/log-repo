@@ -1,15 +1,13 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="19">
+  <Sql Version="31">
     <![CDATA[
-	  delete from DigitalTextCodes where Id != ''
+	  delete from DigitalTextCodes where Tenant = 0
 	  
       declare @NewEntityId as varchar(15)
 	  declare @generalObjectTableId as varchar(15)
 	  set @generalObjectTableId = (select Id from ObjectTables where [Name] = 'General' and Tenant = 0 )
 	  declare @commonProfileId as varchar(15)
-	  set @commonProfileId = (select Id from DigitalProfiles where [Name] = 'Common' and Tenant = 0 )
-	  
-	  
+	  set @commonProfileId = (select Id from DigitalProfiles where [Name] = 'Common' and Tenant = 0 )	  
 	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
 	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate,  ProfileId, Labels) 
 	  values (@NewEntityId, 0, @generalObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @commonProfileId,
@@ -20,9 +18,9 @@
 			"DisplayText": ""
 		},
 		{
-			"TextCode": "General.B.DownloadExcel",
-			"DefaultText": "Download Excel",
-			"FieldCode": "",
+			"TextCode": "General.G.NoInfoAvailableMsg",
+			"DefaultText": "All information will be displayed here, when it will be added by the forwarder.",
+			"FieldCode" : "",
 			"DisplayText": ""
 		},
 		{
@@ -80,12 +78,6 @@
 			"DisplayText": ""
 		},
 		{
-			"TextCode": "General.G.SessionExpired",
-			"DefaultText": "Your session has been expired",
-			"FieldCode": "",
-			"DisplayText": ""
-		},
-		{
 			"TextCode": "Shipment.G.LoginAgainMsg",
 			"DefaultText": "Please, login again to continue.",
 			"FieldCode": "",
@@ -100,12 +92,6 @@
 		{
 			"TextCode": "General.G.LoginBtn2",
 			"DefaultText": "Login",
-			"FieldCode": "",
-			"DisplayText": ""
-		},
-		{
-			"TextCode": "Contact.G.GeneralInformation",
-			"DefaultText": "General information",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
@@ -152,20 +138,8 @@
 			"DisplayText": ""
 		},
 		{
-			"TextCode": "General.B.Cancel",
-			"DefaultText": "Cancel",
-			"FieldCode": "",
-			"DisplayText": ""
-		},
-		{
 			"TextCode": "Contact.G.ChangePassword",
 			"DefaultText": "Change password",
-			"FieldCode": "",
-			"DisplayText": ""
-		},
-		{
-			"TextCode": "Contact.G.LogoutBtn",
-			"DefaultText": "Logout",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
@@ -374,8 +348,26 @@
 			"DisplayText": ""
 		},
 		{
+			"TextCode": "General.G.Browsefiles",
+			"DefaultText": "Browse files",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.OR",
+			"DefaultText": "OR",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
 			"TextCode": "General.G.NoDate",
 			"DefaultText": "No date",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.NoFileChosen",
+			"DefaultText": "No file chosen",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
@@ -1516,7 +1508,7 @@
 		},
 		{
 			"TextCode": "Shipment.F.NumberOfPackages",
-			"DefaultText": "Packages",
+			"DefaultText": "No of Package",
 			"FieldCode": "Shipment.NumberOfPackages",
 			"DisplayText": ""
 		},
@@ -1899,6 +1891,18 @@
 			"DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.F.OnCarriageATA",
+			"DefaultText": "OnCarriage ATA",
+			"FieldCode" : "Shipment.OnCarriageATA",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.OnCarriageETA",
+			"DefaultText": "OnCarriage ETA",
+			"FieldCode" : "Shipment.OnCarriageETA",
+			"DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.F.AgentName",
 			"DefaultText": "Agent",
 			"FieldCode" : "Shipment.AgentName",
@@ -2109,6 +2113,12 @@
 			"DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.G.UploadDataMSG",
+			"DefaultText": "Document being uploaded, this might take several seconds, please do not refresh the page or close this window",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.G.ATD",
 			"DefaultText": "ATD",
 			"FieldCode" : "Shipment.MainCarriageATD",
@@ -2185,6 +2195,12 @@
 			"TextCode": "Shipment.F.Id",
 			"DefaultText": "Id",
 			"FieldCode": "Shipment.Id",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.ValueOfGoods",
+			"DefaultText": "goods value",
+			"FieldCode": "Shipment.ValueOfGoods",
 		    "DisplayText": ""
 		},
 		{
@@ -2782,6 +2798,42 @@
 		    "DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.F.VolumeInCBM",
+			"DefaultText": "Volume in CBM",
+			"FieldCode": "Shipment.VolumeInCBM",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.G.VolumeInCBF",
+			"DefaultText": "Volume in CBF",
+			"FieldCode": "",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.GrossWeightInKG",
+			"DefaultText": "Gross weight In KG",
+			"FieldCode": "Shipment.GrossWeightInKG",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.G.GrossWeightInLB",
+			"DefaultText": "Gross weight In LB",
+			"FieldCode": "",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.ChargeableWeightInKG",
+			"DefaultText": "Chargeable Weight",
+			"FieldCode": "Shipment.ChargeableWeightInKG",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.G.ChargeableWeightInLB",
+			"DefaultText": "Chargeable Weight in LB",
+			"FieldCode": "",
+		    "DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.F.OnCarriageFromPortCountryCode",
 			"DefaultText": "OnCarriage from port country code",
 			"FieldCode": "Shipment.OnCarriageFromPortCountryCode",
@@ -2911,6 +2963,12 @@
 			{
 				"TextCode": "ARInvoice.G.MyReference",
 				"DefaultText": "My reference",
+				"FieldCode": "ARInvoice.MyReference",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ARInvoice.G.DawnloadInvoice",
+				"DefaultText": "Download invoice",
 				"FieldCode": "",
 				"DisplayText": ""
 			},
@@ -2921,21 +2979,9 @@
 				"DisplayText": ""
 			},
 			{
-				"TextCode": "ARInvoice.G.Created",
-				"DefaultText": "Created",
-				"FieldCode": "ARInvoice.InvoiceDate",
-				"DisplayText": ""
-			},
-			{
 				"TextCode": "ARInvoice.G.GeneralInformation",
 				"DefaultText": "General information",
-				"FieldCode": "",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "ARInvoice.G.ReferenceNumber",
-				"DefaultText": "Reference #",
-				"FieldCode": "ARInvoice.MainEntityReference",
+				"FieldCode": "ARInvoice.GeneralInformation",
 				"DisplayText": ""
 			},
 			{
@@ -3175,8 +3221,26 @@
 			"DisplayText": ""
 		},
 		{
+			"TextCode": "General.G.Browsefiles",
+			"DefaultText": "Browse files",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.OR",
+			"DefaultText": "OR",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
 			"TextCode": "General.G.NoDate",
 			"DefaultText": "No date",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.NoFileChosen",
+			"DefaultText": "No file chosen",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
@@ -4314,7 +4378,7 @@
 		},
 		{
 			"TextCode": "Shipment.F.NumberOfPackages",
-			"DefaultText": "Packages",
+			"DefaultText": "No of Package",
 			"FieldCode": "Shipment.NumberOfPackages",
 			"DisplayText": ""
 		},
@@ -4691,6 +4755,18 @@
 			"DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.F.OnCarriageATA",
+			"DefaultText": "OnCarriage ATA",
+			"FieldCode" : "Shipment.OnCarriageATA",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.OnCarriageETA",
+			"DefaultText": "OnCarriage ETA",
+			"FieldCode" : "Shipment.OnCarriageETA",
+			"DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.F.AgentName",
 			"DefaultText": "Agent",
 			"FieldCode" : "Shipment.AgentName",
@@ -4901,6 +4977,12 @@
 			"DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.G.UploadDataMSG",
+			"DefaultText": "Document being uploaded, this might take several seconds, please do not refresh the page or close this window",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.G.ATD",
 			"DefaultText": "ATD",
 			"FieldCode" : "Shipment.MainCarriageATD",
@@ -4976,6 +5058,12 @@
 			"TextCode": "Shipment.F.Id",
 			"DefaultText": "Id",
 			"FieldCode": "Shipment.Id",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.ValueOfGoods",
+			"DefaultText": "goods value",
+			"FieldCode": "Shipment.ValueOfGoods",
 		    "DisplayText": ""
 		},
 		{
@@ -5573,6 +5661,42 @@
 		    "DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.F.VolumeInCBM",
+			"DefaultText": "Volume in CBM",
+			"FieldCode": "Shipment.VolumeInCBM",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.G.VolumeInCBF",
+			"DefaultText": "Volume in CBF",
+			"FieldCode": "",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.GrossWeightInKG",
+			"DefaultText": "Gross weight In KG",
+			"FieldCode": "Shipment.GrossWeightInKG",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.G.GrossWeightInLB",
+			"DefaultText": "Gross weight In LB",
+			"FieldCode": "",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.ChargeableWeightInKG",
+			"DefaultText": "Chargeable Weight",
+			"FieldCode": "Shipment.ChargeableWeightInKG",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.G.ChargeableWeightInLB",
+			"DefaultText": "Chargeable Weight in LB",
+			"FieldCode": "",
+		    "DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.F.OnCarriageFromPortCountryCode",
 			"DefaultText": "OnCarriage from port country code",
 			"FieldCode": "Shipment.OnCarriageFromPortCountryCode",
@@ -5699,6 +5823,12 @@
 			{
 				"TextCode": "ARInvoice.G.MyReference",
 				"DefaultText": "My reference",
+				"FieldCode": "ARInvoice.MyReference",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ARInvoice.G.DawnloadInvoice",
+				"DefaultText": "Download invoice",
 				"FieldCode": "",
 				"DisplayText": ""
 			},
@@ -5709,21 +5839,9 @@
 				"DisplayText": ""
 			},
 			{
-				"TextCode": "ARInvoice.G.Created",
-				"DefaultText": "Created",
-				"FieldCode": "ARInvoice.InvoiceDate",
-				"DisplayText": ""
-			},
-			{
 				"TextCode": "ARInvoice.G.GeneralInformation",
 				"DefaultText": "General information",
-				"FieldCode": "",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "ARInvoice.G.ReferenceNumber",
-				"DefaultText": "Reference #",
-				"FieldCode": "ARInvoice.MainEntityReference",
+				"FieldCode": "ARInvoice.GeneralInformation",
 				"DisplayText": ""
 			},
 			{
@@ -7436,6 +7554,66 @@
 				"DefaultText": "ETA",
 				"FieldCode": "ShipmentPickUpDelivery.ETA",
 				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.FromPartnerCardId",
+				"DefaultText": "From Partner Card Id",
+				"FieldCode": "ShipmentPickUpDelivery.FromPartnerCardId",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.FromAddressId",
+				"DefaultText": "From Address Id",
+				"FieldCode": "ShipmentPickUpDelivery.FromAddressId",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.FromPortId",
+				"DefaultText": "From Port Id",
+				"FieldCode": "ShipmentPickUpDelivery.FromPortId",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.ToAddressCity",
+				"DefaultText": "To Address City",
+				"FieldCode": "ShipmentPickUpDelivery.ToAddressCity",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.ToAddressCountry",
+				"DefaultText": "To Address Country",
+				"FieldCode": "ShipmentPickUpDelivery.ToAddressCountry",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.PickUpDeliveryFromTypeCode",
+				"DefaultText": "PickUp Delivery From Type Code",
+				"FieldCode": "ShipmentPickUpDelivery.PickUpDeliveryFromTypeCode",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.PickUpDeliveryToTypeCode",
+				"DefaultText": "PickUp Delivery To Type Code",
+				"FieldCode": "ShipmentPickUpDelivery.PickUpDeliveryToTypeCode",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.ToPartnerCardId",
+				"DefaultText": "To Partner Card Id",
+				"FieldCode": "ShipmentPickUpDelivery.ToPartnerCardId",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.ToPortId",
+				"DefaultText": "To Port Id",
+				"FieldCode": "ShipmentPickUpDelivery.ToPortId",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.Id",
+				"DefaultText": "Trucker name",
+				"FieldCode": "ShipmentPickUpDelivery.Id",
+				"DisplayText": ""
 			}]');
 			
 			
@@ -7501,136 +7679,65 @@
 				"DefaultText": "ETA",
 				"FieldCode": "ShipmentPickUpDelivery.ETA",
 				"DisplayText": ""
-			}]');
-			
-			
-			declare @truckerObjectTableId as varchar(15)
-		    set @truckerObjectTableId = (select Id from ObjectTables where [Name] = 'Trucker' and Tenant = 0)
-			EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
-			INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, Labels) 
-			values (@NewEntityId, 0, @truckerObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @customerProfileId,
-			'[{
-				"TextCode": "Trucker.F.EnglishName",
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.FromPartnerCardId",
+				"DefaultText": "From Partner Card Id",
+				"FieldCode": "ShipmentPickUpDelivery.FromPartnerCardId",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.FromAddressId",
+				"DefaultText": "From Address Id",
+				"FieldCode": "ShipmentPickUpDelivery.FromAddressId",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.FromPortId",
+				"DefaultText": "From Port Id",
+				"FieldCode": "ShipmentPickUpDelivery.FromPortId",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.ToAddressCity",
+				"DefaultText": "To Address City",
+				"FieldCode": "ShipmentPickUpDelivery.ToAddressCity",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.ToAddressCountry",
+				"DefaultText": "To Address Country",
+				"FieldCode": "ShipmentPickUpDelivery.ToAddressCountry",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.PickUpDeliveryFromTypeCode",
+				"DefaultText": "PickUp Delivery From Type Code",
+				"FieldCode": "ShipmentPickUpDelivery.PickUpDeliveryFromTypeCode",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.PickUpDeliveryToTypeCode",
+				"DefaultText": "PickUp Delivery To Type Code",
+				"FieldCode": "ShipmentPickUpDelivery.PickUpDeliveryToTypeCode",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.ToPartnerCardId",
+				"DefaultText": "To Partner Card Id",
+				"FieldCode": "ShipmentPickUpDelivery.ToPartnerCardId",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.ToPortId",
+				"DefaultText": "To Port Id",
+				"FieldCode": "ShipmentPickUpDelivery.ToPortId",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.Id",
 				"DefaultText": "Trucker name",
-				"FieldCode": "Trucker.EnglishName",
-				"DisplayText": ""
-			},
-      {
-				"TextCode": "Trucker.F.TruckerNo",
-				"DefaultText": "Trucker no",
-				"FieldCode": "",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.Code",
-				"DefaultText": "Trucker code",
-				"FieldCode": "Trucker.Code",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.Notes",
-				"DefaultText": "Notes",
-				"FieldCode": "Trucker.Notes",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.Addresses",
-				"DefaultText": "Addresses",
-				"FieldCode": "Trucker.Addresses",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.CountryId",
-				"DefaultText": "Country id",
-				"FieldCode": "Trucker.CountryId",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.CountryCode",
-				"DefaultText": "Country code",
-				"FieldCode": "Trucker.CountryCode",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.CountryName",
-				"DefaultText": "Country name",
-				"FieldCode": "Trucker.CountryName",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.StateName",
-				"DefaultText": "State name",
-				"FieldCode": "Trucker.StateName",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.StateName",
-				"DefaultText": "State name",
-				"FieldCode": "Trucker.StateName",
-				"DisplayText": ""
-			}]');
-			
-			EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
-			INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, Labels) 
-			values (@NewEntityId, 0, @truckerObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @agentProfileId,
-			'[{
-				"TextCode": "Trucker.F.EnglishName",
-				"DefaultText": "Trucker name",
-				"FieldCode": "Trucker.EnglishName",
-				"DisplayText": ""
-			},
-      {
-				"TextCode": "Trucker.F.TruckerNo",
-				"DefaultText": "Trucker no",
-				"FieldCode": "",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.Code",
-				"DefaultText": "Trucker code",
-				"FieldCode": "Trucker.Code",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.Notes",
-				"DefaultText": "Notes",
-				"FieldCode": "Trucker.Notes",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.Addresses",
-				"DefaultText": "Addresses",
-				"FieldCode": "Trucker.Addresses",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.CountryId",
-				"DefaultText": "Country id",
-				"FieldCode": "Trucker.CountryId",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.CountryCode",
-				"DefaultText": "Country code",
-				"FieldCode": "Trucker.CountryCode",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.CountryName",
-				"DefaultText": "Country name",
-				"FieldCode": "Trucker.CountryName",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.StateName",
-				"DefaultText": "State name",
-				"FieldCode": "Trucker.StateName",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.StateName",
-				"DefaultText": "State name",
-				"FieldCode": "Trucker.StateName",
+				"FieldCode": "ShipmentPickUpDelivery.Id",
 				"DisplayText": ""
 			}]');
     ]]>       

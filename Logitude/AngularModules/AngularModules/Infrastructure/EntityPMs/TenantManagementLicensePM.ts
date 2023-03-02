@@ -21,7 +21,7 @@ export class TenantManagementLicensePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-	            this.EntityParentPM = _entityParentPM;
+	  		            this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
        }
@@ -103,4 +103,4 @@ export class TenantManagementLicensePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

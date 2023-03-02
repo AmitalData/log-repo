@@ -16,7 +16,7 @@ export class ApiQueryFiltersBuilder {
         return apiQueryFilters;
     }
 
-    static getObjectFieldFilters(objectTableId: string | null, dataTypeCode: string | null, lookupTableId: string | null, getAll: boolean = false, isCustom: boolean | null = null) {
+    static getObjectFieldFilters(objectTableId: string | null, dataTypeCode: string | null, lookupTableId: string | null, getAll: boolean = false, isFullCustom: boolean | null = null) {
         let apiQueryFilters = new ApiQueryFilters(getAll);
 
         if (objectTableId) {
@@ -31,8 +31,8 @@ export class ApiQueryFiltersBuilder {
             apiQueryFilters.addAdditionalFilter("LookUpTableId", lookupTableId, null, null, this.getOperator(lookupTableId), false, false, false, "Text");
         }
 
-        if (isCustom !== null) {
-            apiQueryFilters.addAdditionalFilter("IsCustom", isCustom, null, null, "Equals", false, false, false, "Boolean");
+        if (isFullCustom !== null) {
+            apiQueryFilters.addAdditionalFilter("IsFullCustom", isFullCustom, null, null, "Equals", true, false, false, "Boolean");
         }
 
         apiQueryFilters.addAdditionalFilter("IncludeMetaDataFields", true, null, null, "Equals", true, false, false, "Boolean");

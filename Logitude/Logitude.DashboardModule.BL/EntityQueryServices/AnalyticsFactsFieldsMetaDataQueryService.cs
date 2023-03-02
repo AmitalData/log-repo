@@ -38,7 +38,8 @@ namespace Logitude.DashboardModule.BL.EntityQueryServices
                 JoinedTableName = x.JoinedTableName,
                 JoinedTableKey = x.JoinedTableKey,
                 JoinedTableDisplayField = x.JoinedTableDisplayField,
-                CommonFilterCode = x.CommonFilterCode
+                CommonFilterCode = x.CommonFilterCode,
+                AllowTenantZeroFilter = x.AllowTenantZeroFilter
             };
         }
     }

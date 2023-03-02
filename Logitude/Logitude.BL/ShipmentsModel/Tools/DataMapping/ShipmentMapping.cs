@@ -226,6 +226,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             MapPartners(entityPM, entityPoco, isNewEntity, fieldChanges);
             MapAWBFields(entityPM, entityPoco, isNewEntity, fieldChanges);
             MapTotalsFields(entityPM, entityPoco, isNewEntity, fieldChanges);
+            MapTotalsOfPackages(entityPM, entityPoco);
             MapWeightsFields(entityPM, entityPoco, isNewEntity, fieldChanges);
             MapXSDMessagesFields(entityPM, entityPoco, entityMasterData, isNewEntity, fieldChanges);
 
@@ -1219,6 +1220,37 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPM.ConvertFromHouseToDirect = false;
 
             ValidateMAWBStackField(entityPoco, entityMasterData);
+        }
+
+        private static void MapTotalsOfPackages(ShipmentPM entityPM, Shipment entityPoco)
+        {
+            List<ShipmentPackagePM> shipmentPackages = entityPM.ShipmentPackages.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
+            if (shipmentPackages == null || (shipmentPackages != null && shipmentPackages.Count == 0))
+            {
+                entityPoco.NumberOfPackages = entityPM.NumberOfPackages = null;
+                entityPoco.NumberOfContainers = entityPM.NumberOfContainers = null;
+            }
+            else
+            {
+                MapLCLPackages(entityPM, entityPoco, shipmentPackages);
+                MapFCLPackages(entityPM, entityPoco, shipmentPackages);
+            }
+        }
+
+        private static void MapLCLPackages(ShipmentPM entityPM, Shipment entityPoco, List<ShipmentPackagePM> shipmentPackages)
+        {
+            if (MethodHelper.IsLCLEntity(entityPM.TransportModeId, entityPM.ShipmentTypeId))
+            {
+                entityPoco.NumberOfPackages = entityPM.NumberOfPackages = shipmentPackages.Sum(s => s.Quantity);
+            }
+        }
+
+        private static void MapFCLPackages(ShipmentPM entityPM, Shipment entityPoco, List<ShipmentPackagePM> shipmentPackages)
+        {
+            if (!MethodHelper.IsLCLEntity(entityPM.TransportModeId, entityPM.ShipmentTypeId))
+            {
+                entityPoco.NumberOfContainers = entityPM.NumberOfContainers = shipmentPackages.Sum(s => s.Quantity);
+            }
         }
 
         private static void MapShipmentStatus(ShipmentPM entityPM, Shipment entityPoco, 
@@ -2518,7 +2550,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     
                     FieldChange.Add(entityMasterData.MainCarriageVesselName, entityPM.MainCarriageVesselName, nameof(entityPM.MainCarriageVesselName), fieldChanges);
                     entityMasterData.MainCarriageVesselName = entityPM.MainCarriageVesselName;
-                    
+
                     FieldChange.Add(entityMasterData.MainCarriageIsFromStack, entityPM.MainCarriageIsFromStack, nameof(entityPM.MainCarriageIsFromStack), fieldChanges);
                     entityMasterData.MainCarriageIsFromStack = entityPM.MainCarriageIsFromStack;
                     
@@ -3695,6 +3727,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.SealNo);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.HSCode);
 
+            if(entityPM.ShipmentAdditionalData != null && !String.IsNullOrEmpty(entityPM.ShipmentAdditionalData.ShipmentOrderNumber))
+            {
+                MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ShipmentAdditionalData.ShipmentOrderNumber);
+            }
+
+            if (entityPM.ShipmentLevelCode == "H")
+            {
+                MethodHelper.AddToSearchFields(ref mySearchFields, entityMasterData?.MasterShipmentNumber);
+            }
 
             if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
             {
@@ -4066,6 +4107,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             AddFieldChangedProperties(changeTrackingPM, "MainCarriageATA", changeTrackingPM.MainCarriageATA, pm.MainCarriageATA, "DateTime?", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "MainCarriageFinalDestinationETA", changeTrackingPM.MainCarriageFinalDestinationETA, pm.MainCarriageFinalDestinationETA, "DateTime?", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "MainCarriageFinalDestinationATA", changeTrackingPM.MainCarriageFinalDestinationATA, pm.MainCarriageFinalDestinationATA, "DateTime?", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "FinalDeliveryATA", changeTrackingPM.FinalDeliveryATA, pm.FinalDeliveryATA, "DateTime?", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "FinalDeliveryATD", changeTrackingPM.FinalDeliveryATD, pm.FinalDeliveryATD, "DateTime?", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "FinalDeliveryETA", changeTrackingPM.FinalDeliveryETA, pm.FinalDeliveryETA, "DateTime?", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "FinalDeliveryETD", changeTrackingPM.FinalDeliveryETD, pm.FinalDeliveryETD, "DateTime?", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "CutoffDate", changeTrackingPM.CutoffDate, pm.CutoffDate, "DateTime?", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "IsCancelled", changeTrackingPM.IsCancelled, pm.IsCancelled, "bool", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "IsDocumentsNeedApprove", changeTrackingPM.IsDocumentsNeedApprove, pm.IsDocumentsNeedApprove, "bool", notifyPropertyChangeValuesList);

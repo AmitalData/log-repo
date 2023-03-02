@@ -126,6 +126,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="AllowTenantZeroFilter"
+    OldNames="IsPredefinedDashboardFilter"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="AnalyticsFactsMetaDataId"
     ReferencedTable="AnalyticsFactsMetaDatas"

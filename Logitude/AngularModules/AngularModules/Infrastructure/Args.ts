@@ -1,4 +1,5 @@
 import { AddressList } from '../Common/EntityLists/AddressList';
+import { FilterItem } from './DataContracts/ApiQueryFilters';
 
 export class ListComponentArgs {
     public QueryCode: string;
@@ -24,7 +25,7 @@ export class ListComponentArgs {
     public IsCargoTrackingMenuClicked: boolean = false;
     public DontCheckQueryFeature: boolean = false;
     public IsDigitalPortalMenuClicked: boolean = false;
-    
+    public DefaultFilterItems: FilterItem[] | null = null;
 }
 
 export class NewEntityArgs {

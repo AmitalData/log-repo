@@ -493,6 +493,29 @@
                             <div></div>
                         </td>
                     </tr>
+                     <!-- MobileBackgroundId -->
+                     <tr>
+                        <td style="width:18px;height:30px">
+                            <div></div>
+                        </td>
+                        <td style="width:180px;height:22px; vertical-align:top">
+                            <LogLabel [ObjectFieldName]="'MobileBackgroundId'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td style="vertical-align:top">
+                            <div style="width:160px;height:100px">
+                                <ImageComponent [KeepOriginalSize]="true" [WidthImage]="'200px'" [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="MobileBackgroundId" [EntityId]="EntityId" [EntityName]="'TenantManagement'" [Extension]="'png'"
+                                                [ValidWidth]="360" [ValidHeight]="640" [SecondValidWidth]="414" [SecondValidHeight]="896" (ImageDimensionsValid)="AreMobileBackgroundImageDimensionsValid($event)" (UploadCompleted)="MobileBackgroundImageUploadedCompleted($event)"
+                                                style="height:72px;width:72px">
+                                </ImageComponent>
+                            </div>
+                            <a (click)="RemoveImage('mbg')">remove</a>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                    <!--  -->
                     <tr style="height:10px">
                         <td colspan="3">
                             <div></div>

@@ -80,7 +80,9 @@ export class ServiceHelper {
                     //var message: string = TextCodeTranslator.Translate("General.M.CantUpdateRecord");
                     response.ErrorsArray.push(apiException.ShortErrorMessage);
                 }
-
+                else if (apiException.ErrorType == "WorkflowValidationException") {
+                    response.ErrorsArray = apiException?.ErrorMessages || [];
+                }
                 else {
                     ServiceHelper.LogServiceError(apiException.ShortErrorMessage, apiException.ErrorMessage);
                 }

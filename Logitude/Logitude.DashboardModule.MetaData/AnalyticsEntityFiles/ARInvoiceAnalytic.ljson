@@ -1,5 +1,5 @@
 {
-  "HashString": "ab959ab2b55e4c14b358beb591aac857",
+  "HashString": "cba2254e71ba4c0cb22ec62631c0657c",
   "Name": "AR Invoices Statistics",
   "TableName": "ARInvoiceAnalytics",
   "ObjectTableName": "ARInvoice",
@@ -79,7 +79,8 @@
       "JoinedTableName": "ARInvoiceStatus",
       "JoinedTableDBName": "ARInvoiceStatus",
       "JoinedTableKey": "Code",
-      "JoinedTableDisplayField": "Name"
+      "JoinedTableDisplayField": "Name",
+      "AllowTenantZeroFilter": true
     },
     {
       "HashString": "f3de0a0e39dc4e30be9ead5565948750",
@@ -220,7 +221,8 @@
       "JoinedTableName": "ARInvoiceTransferStatus",
       "JoinedTableDBName": "ARInvoiceTransferStatus",
       "JoinedTableKey": "Code",
-      "JoinedTableDisplayField": "Name"
+      "JoinedTableDisplayField": "Name",
+      "AllowTenantZeroFilter": true
     },
     {
       "HashString": "127dfd8923ab470685e7a847fcf2cdca",
@@ -279,7 +281,8 @@
       "JoinedTableName": "ARInvoiceType",
       "JoinedTableDBName": "ARInvoiceTypes",
       "JoinedTableKey": "Code",
-      "JoinedTableDisplayField": "Name"
+      "JoinedTableDisplayField": "Name",
+      "AllowTenantZeroFilter": true
     },
     {
       "HashString": "aa75e3e74d8f45eb9a2aec4be308627f",
@@ -291,7 +294,8 @@
       "JoinedTableName": "PrepaidCollect",
       "JoinedTableDBName": "PrepaidCollects",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "Name"
+      "JoinedTableDisplayField": "Name",
+      "AllowTenantZeroFilter": true
     },
     {
       "HashString": "3186034570e8459fa75749a402a625b4",

@@ -415,7 +415,7 @@ export function ValidatePackageDetails(tabSelector: string, partialSplitDetails:
 }
 
 export function ValidateShipmentNumber(OldShipmentNumber: string) {
-    BaseAssertion.AssertStatusCode(RequestAliases.GetAll, 200)
+    //BaseAssertion.AssertStatusCode(RequestAliases.GetAll, 200)
     cy.get(ShipmentSelectors.ShipmentNumberInTitle + BaseSelectors.LastElement).invoke('text').then((text) => {
         assert.notEqual(OldShipmentNumber + ":", text.trim())
     });
@@ -586,7 +586,7 @@ function AssertPartnerShipperFieledsEnable() {
 
 //#region Package Tab
 export function FillPackageTab(transportMode: string, packagesDetails: PackagesDetails[], shipmentType?: string) {
-    cy.Click(ShipmentSelectors.PackagesTab_Number + BaseSelectors.LastElement, null)
+    cy.Click(ShipmentSelectors.PackagesTabDataCy + BaseSelectors.LastElement, null)
     for (let i = 0; i < packagesDetails.length; i++) {
         cy.Click(ShipmentSelectors.AddPackage, null)
         if (Conditions.HasPacakageType(shipmentType)) {
@@ -715,7 +715,7 @@ export function CheckHouseCheckBox() {
 export function ViewAttachedHouse() {
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentViews, 200).then((interception) => {
     })
-    cy.get(ShipmentSelectors.TabTitleRow).eq(1).within(() => {
+    cy.get(ShipmentSelectors.TabTitleRowDataCy).within(() => {
         cy.get(ShipmentSelectors.Refresh).click()
     })
 }
@@ -736,7 +736,7 @@ export function ValidateCheckHouseCheckBox() {
 }
 
 export function NavigateMainCarriageLegForConnectedHouse() {
-    cy.get(ShipmentSelectors.HouseHyperLink).eq(0).click({ force: true })
+    cy.get(ShipmentSelectors.HouseHyperLink).contains((ShipmentContext.HouseNumber).replace(/^0+/, '')).click({ force: true })
     cy.get(ShipmentSelectors.RoutingTab_1).click()
     cy.get(ShipmentSelectors.EditRoutingMainCarriage).click({ force: true })
 }

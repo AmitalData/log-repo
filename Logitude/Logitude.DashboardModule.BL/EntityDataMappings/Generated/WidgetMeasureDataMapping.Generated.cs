@@ -27,7 +27,8 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         WidgetId, 
 	         MeasureCode, 
 	         MeasureFieldId, 
-	         RenderAs,
+	         RenderAs, 
+	         YAxisType,
 	      }
 
 
@@ -39,7 +40,8 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         WidgetId, 
 	         MeasureCode, 
 	         MeasureFieldId, 
-	         RenderAs,
+	         RenderAs, 
+	         YAxisType,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -71,6 +73,11 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RenderAs))
             {
 				entityPOCO.RenderAs = entityPM.RenderAs;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.YAxisType))
+            {
+				entityPOCO.YAxisType = entityPM.YAxisType;
 			}
 			}
 
@@ -107,6 +114,11 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 					entityPM.RenderAs = entityPOCO.RenderAs;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.YAxisType))
+            {
+					entityPM.YAxisType = entityPOCO.YAxisType;
+            }
+
 		}
 
 		public void PMToOldPM(WidgetMeasurePM entityPM, WidgetMeasurePM oldEntityPM)
@@ -136,6 +148,11 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RenderAs))
             {
                 oldEntityPM.RenderAs = entityPM.RenderAs;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.YAxisType))
+            {
+                oldEntityPM.YAxisType = entityPM.YAxisType;
             }
 			
 		}

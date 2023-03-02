@@ -136,7 +136,10 @@ export class SharedLogisticsDocumentPermissiosComponent implements OnInit {
         });
 
         documentUploadPermissiosLists.forEach((item) => {
-            this.DocumentUploadPermissiosLists.push(new DocumentPermissiosViewModel(null, item));
+            var _tenantZeroItem = this.myTenantZeroList.filter(t => t.Code == item.Code)[0];
+            if (_tenantZeroItem != null) {
+                this.DocumentUploadPermissiosLists.push(new DocumentPermissiosViewModel(_tenantZeroItem, item));
+            }
         });
     }
 

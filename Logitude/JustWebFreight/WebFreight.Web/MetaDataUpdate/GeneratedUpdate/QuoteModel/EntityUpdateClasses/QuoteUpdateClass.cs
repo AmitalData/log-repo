@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 {
    public class QuoteUpdateClass
    {  		
-		public const string HashString = "883c8f14555e18655627b727aa6ccf87";
+		public const string HashString = "0bca8c52e41ddbf6f93d239f6716fda0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -101,6 +101,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			      				    HasCustomFields =  true,
 			      				    AvailableInCustomization =  true,
 			      				    SupportSubEntity =  true,
+			      				    ApplyGenericCustomFields =  false,
 			      				    HasHelper =  true,
 			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  true,
@@ -2017,7 +2018,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						ValidForQuerySection1 =  "Quote",
 					  						ValidForQuerySection2 =  "QuoteFollowUp",
 					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
+					  						DisplayInEntityVariables =  true,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -2032,7 +2033,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						ListLocalDefaultText =  "AgentReference1",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
-					  						NoMetaDataField =  true,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2082,7 +2083,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						ValidForQuerySection1 =  "Quote",
 					  						ValidForQuerySection2 =  "QuoteFollowUp",
 					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
+					  						DisplayInEntityVariables =  true,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -2097,7 +2098,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						ListLocalDefaultText =  "AgentReference2",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
-					  						NoMetaDataField =  true,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,

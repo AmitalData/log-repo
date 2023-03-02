@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class WarehouseReleaseUpdateClass
    {  		
-		public const string HashString = "561e5f10d84558a56ee46b61c97a70da";
+		public const string HashString = "9658456bf1a950d9ba98083fe1584d80";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4388,6 +4388,65 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CustomerPrimaryContactId",
+					  						ObjectTableName =  "WarehouseRelease",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Contact",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CustomerPrimaryContactId",
+					  						ListPropertyPath =  "CustomerPrimaryContactId",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CustomerPrimaryContactId",
+					  						DefaultText =  "Customer Primary Contact",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  true,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -4616,12 +4675,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature WarehouseReleaseConnectedEntitiesFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseRelease.Tab.ConnectedEntities", ObjectTableId = WarehouseReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseRelease.Features.ConnectedEntities", NameTextCodeDefaultText = "Connected Entities", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseReleaseObjectTable);
  
                  
-			   TextCode WarehouseReleaseEventsTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseRelease.TH.Events", DefaultText = "Events",LocalDefaultText = "Events", ObjectTableId = WarehouseReleaseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature WarehouseReleaseEventsFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseRelease.Tab.Events", ObjectTableId = WarehouseReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseRelease.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseReleaseObjectTable);
+			   TextCode WarehouseReleaseAuditTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseRelease.TH.Audit", DefaultText = "Audit",LocalDefaultText = null, ObjectTableId = WarehouseReleaseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature WarehouseReleaseAuditFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseRelease.Tab.Audit", ObjectTableId = WarehouseReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseReleaseFeatures.WRAU", NameTextCodeDefaultText = "Audit", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseReleaseObjectTable);
  
                  
-			   TextCode WarehouseReleaseAuditTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseRelease.TH.Audit", DefaultText = "Audit",LocalDefaultText = null, ObjectTableId = WarehouseReleaseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature WarehouseReleaseAuditFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseRelease.Tab.Audit", ObjectTableId = WarehouseReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseReleaseFeatures.WRAU", NameTextCodeDefaultText = "Audit", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseReleaseObjectTable);
+			   TextCode WarehouseReleaseEventsTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseRelease.TH.Events", DefaultText = "Events",LocalDefaultText = "Events", ObjectTableId = WarehouseReleaseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature WarehouseReleaseEventsFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseRelease.Tab.Events", ObjectTableId = WarehouseReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseRelease.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseReleaseObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -4637,9 +4696,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COWR",HtmlComponentName = "WarehouseConnectionsTabComponent",HtmlComponentUrl = "./Warehouse/Components/EditTabs/ConnectionsTab/WarehouseConnectionsTabComponent", FeatureId = WarehouseReleaseConnectedEntitiesFeature_TH4.Id,FeatureUniqeCode = WarehouseReleaseConnectedEntitiesFeature_TH4.FeatureUniqeCode, ControlPath = "./Warehouse/Components/EditTabs/ConnectionsTab/WarehouseConnectionsTabComponent", ObjectTableId = WarehouseReleaseObjectTable.Id, TabNameTextCodeId = WarehouseReleaseConnectedEntitiesTextCode_TH4.Id, TabNameTextCodeCode = WarehouseReleaseConnectedEntitiesTextCode_TH4.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EVWR",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = WarehouseReleaseEventsFeature_TH5.Id,FeatureUniqeCode = WarehouseReleaseEventsFeature_TH5.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = WarehouseReleaseObjectTable.Id, TabNameTextCodeId = WarehouseReleaseEventsTextCode_TH5.Id, TabNameTextCodeCode = WarehouseReleaseEventsTextCode_TH5.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "WRAU",HtmlComponentName = "WarehouseReleaseAuditTabComponent",HtmlComponentUrl = "./Warehouse/Components/EditTabs/Audit/WarehouseReleaseAuditTabComponent", FeatureId = WarehouseReleaseAuditFeature_TH5.Id,FeatureUniqeCode = WarehouseReleaseAuditFeature_TH5.FeatureUniqeCode, ControlPath = "./Warehouse/Components/EditTabs/Audit/WarehouseReleaseAuditTabComponent", ObjectTableId = WarehouseReleaseObjectTable.Id, TabNameTextCodeId = WarehouseReleaseAuditTextCode_TH5.Id, TabNameTextCodeCode = WarehouseReleaseAuditTextCode_TH5.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "WRAU",HtmlComponentName = "WarehouseReleaseAuditTabComponent",HtmlComponentUrl = "./Warehouse/Components/EditTabs/Audit/WarehouseReleaseAuditTabComponent", FeatureId = WarehouseReleaseAuditFeature_TH6.Id,FeatureUniqeCode = WarehouseReleaseAuditFeature_TH6.FeatureUniqeCode, ControlPath = "./Warehouse/Components/EditTabs/Audit/WarehouseReleaseAuditTabComponent", ObjectTableId = WarehouseReleaseObjectTable.Id, TabNameTextCodeId = WarehouseReleaseAuditTextCode_TH6.Id, TabNameTextCodeCode = WarehouseReleaseAuditTextCode_TH6.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EVWR",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = WarehouseReleaseEventsFeature_TH6.Id,FeatureUniqeCode = WarehouseReleaseEventsFeature_TH6.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = WarehouseReleaseObjectTable.Id, TabNameTextCodeId = WarehouseReleaseEventsTextCode_TH6.Id, TabNameTextCodeCode = WarehouseReleaseEventsTextCode_TH6.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

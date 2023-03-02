@@ -100,6 +100,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 this.UpdateBankAccount(entityPM);
             }
+ 
             base.OnUpdating(entityPM, entityPOCO);
         }
 

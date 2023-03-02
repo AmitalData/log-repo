@@ -481,10 +481,11 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     public set SearchText(newValue: string) {
         this.searchText = newValue;
         if (newValue != null && newValue != "") {
-            if (this.timerToken) {
-                clearTimeout(this.timerToken);
-            }
-            this.timerToken = setTimeout(() => this.SearchFieldChanged(newValue), 600);
+            this.SearchFieldChanged(newValue);
+            //if (this.timerToken) {
+            //    clearTimeout(this.timerToken);
+            //}
+            //this.timerToken = setTimeout(() => this.SearchFieldChanged(newValue), 600);
         }
         else {
             this.OnEmptySearchField();

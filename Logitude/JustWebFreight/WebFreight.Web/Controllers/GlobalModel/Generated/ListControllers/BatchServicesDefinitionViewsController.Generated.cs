@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
 				BatchServicesDefinitionRepository  batchServicesDefinitionRepository = new BatchServicesDefinitionRepository(MyContext);
 				BatchServicesDefinitionList entityList = null;
 				BatchServicesDefinition entityPoco = batchServicesDefinitionRepository.GetSingleBatchServicesDefinition(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<BatchServicesDefinition> singleEntityList = new List<BatchServicesDefinition>();
 					singleEntityList.Add(entityPoco);

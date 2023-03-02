@@ -31,6 +31,7 @@ using System.Linq;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Microsoft.VisualStudio.Services.Common;
 using System.Dynamic;
+using Simplog.Server.Infrastructure.DataContracts.Models;
 
 namespace WebFreight.Web.Helpers
 {
@@ -154,8 +155,9 @@ namespace WebFreight.Web.Helpers
             return mappedFileName + "_" + DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss");
         }
 
-        private byte[] DigitalPortalShipmentExportToExcel(List<dynamic> digitalShipmentLists, bool showMultiUnitsOfMeasurements)
+        private byte[] DigitalPortalShipmentExportToExcel(List<dynamic> digitalShipmentLists, bool showMultiUnitsOfMeasurements, Dictionary<string, string> textCodeObjects)
         {
+            
             var excelEngine = new ExcelEngine();
             IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
             IWorksheet sheet1 = workbook.Worksheets[0];
@@ -196,52 +198,54 @@ namespace WebFreight.Web.Helpers
                 sheet1.Range["A3:V3"].AutofitColumns();
 
                 // Build excel headers 
-                table.Columns.Add("Shipment No.");
-                table.Columns.Add("Transport Mode");
-                table.Columns.Add("Direction");
-                table.Columns.Add("Routing");
-                table.Columns.Add("MainCarriage ATD");
-                table.Columns.Add("MainCarriage ATA");
-                table.Columns.Add("Master No.");
-                table.Columns.Add("Shipper");
-                table.Columns.Add("Consignee");
-                table.Columns.Add("Shipment Type");
-                table.Columns.Add("Status");
-                table.Columns.Add("TruckContainer Numbers");
-                table.Columns.Add("No of Package");
+
+                table.Columns.Add(textCodeObjects["Shipment.F.ShipmentNumber"]);
+                table.Columns.Add(textCodeObjects["Shipment.G.TransportMode"]);
+                table.Columns.Add(textCodeObjects["Shipment.G.DirectionName"]);
+                table.Columns.Add(textCodeObjects["Shipment.F.Routing"]);
+                table.Columns.Add(textCodeObjects["Shipment.G.ATD"]);
+                table.Columns.Add(textCodeObjects["Shipment.F.MainCarriageATA"]);
+                table.Columns.Add(textCodeObjects["Shipment.O.Master"]);
+                table.Columns.Add(textCodeObjects["Shipment.F.ShipperName"]);
+                table.Columns.Add(textCodeObjects["Shipment.F.ConsigneeName"]);
+                table.Columns.Add(textCodeObjects["Shipment.G.ShipmentTypeName"]);
+                table.Columns.Add(textCodeObjects["Shipment.G.ShipmentStatus"]);
+                table.Columns.Add(textCodeObjects["Shipment.F.TruckContainerNumber"]);
+                table.Columns.Add(textCodeObjects["Shipment.F.NumberOfPackages"]);
 
                 if (showMultiUnitsOfMeasurements)
                 {
-                    table.Columns.Add("Gross Weight KG");
-                    table.Columns.Add("Gross Weight LB");
+                    table.Columns.Add(textCodeObjects["Shipment.F.GrossWeightInKG"]);
+                    table.Columns.Add(textCodeObjects["Shipment.G.GrossWeightInLB"]);
                 }
                 else
                 {
-                    table.Columns.Add("Gross Weight KG");
+                    table.Columns.Add(textCodeObjects["Shipment.F.GrossWeightInKG"]);
                 }
 
                 if (showMultiUnitsOfMeasurements)
                 {
-                    table.Columns.Add("Chargable Weight KG");
-                    table.Columns.Add("Chargable Weight LB");
+                    table.Columns.Add(textCodeObjects["Shipment.F.ChargeableWeightInKG"]);
+                    table.Columns.Add(textCodeObjects["Shipment.G.ChargeableWeightInLB"]);
                 }
                 else
                 {
-                    table.Columns.Add("Chargable Weight KG");
-                }
-                table.Columns.Add("Incoterm");
-                if (showMultiUnitsOfMeasurements)
-                {
-                    table.Columns.Add("Volume CBF");
-                    table.Columns.Add("Volume CBM");
-                }
-                else
-                {
-                    table.Columns.Add("Volume CBM");
+                    table.Columns.Add(textCodeObjects["Shipment.F.ChargeableWeightInKG"]);
                 }
 
-                table.Columns.Add("Goods Value");
-                table.Columns.Add("Goods Description");
+                table.Columns.Add(textCodeObjects["Shipment.F.IncotermCode"]);
+                if (showMultiUnitsOfMeasurements)
+                {
+                    table.Columns.Add(textCodeObjects["Shipment.G.VolumeInCBF"]);
+                    table.Columns.Add(textCodeObjects["Shipment.F.VolumeInCBM"]);
+                }
+                else
+                {
+                    table.Columns.Add(textCodeObjects["Shipment.F.VolumeInCBM"]);
+                }
+
+                table.Columns.Add(textCodeObjects["Shipment.F.ValueOfGoods"]);
+                table.Columns.Add(textCodeObjects["Shipment.G.DescriptionOfGoods"]);
 
                 var index = 4;
                 foreach (var item in digitalShipmentLists)
@@ -321,25 +325,25 @@ namespace WebFreight.Web.Helpers
                 sheet1.Range["A3:S3"].AutofitColumns();
 
                 // Build excel headers 
-                table.Columns.Add("Shipment No.");
-                table.Columns.Add("Transport Mode");
-                table.Columns.Add("Direction");
-                table.Columns.Add("Routing");
-                table.Columns.Add("MainCarriage ATD");
-                table.Columns.Add("MainCarriage ATA");
-                table.Columns.Add("Master No.");
-                table.Columns.Add("Shipper");
-                table.Columns.Add("Consignee");
-                table.Columns.Add("Shipment Type");
-                table.Columns.Add("Status");
-                table.Columns.Add("TruckContainer Numbers");
-                table.Columns.Add("No of Package");
-                table.Columns.Add("Gross Weight");
-                table.Columns.Add("Chargable Weight");
-                table.Columns.Add("Incoterm");
-                table.Columns.Add("Volume");
-                table.Columns.Add("Goods Value");
-                table.Columns.Add("Goods Description");
+                table.Columns.Add(textCodeObjects["Shipment.F.ShipmentNumber"]);
+                table.Columns.Add(textCodeObjects["Shipment.G.TransportMode"]);
+                table.Columns.Add(textCodeObjects["Shipment.G.DirectionName"]);
+                table.Columns.Add(textCodeObjects["Shipment.F.Routing"]);
+                table.Columns.Add(textCodeObjects["Shipment.G.ATD"]);
+                table.Columns.Add(textCodeObjects["Shipment.F.MainCarriageATA"]);
+                table.Columns.Add(textCodeObjects["Shipment.O.Master"]);
+                table.Columns.Add(textCodeObjects["Shipment.F.ShipperName"]);
+                table.Columns.Add(textCodeObjects["Shipment.F.ConsigneeName"]);
+                table.Columns.Add(textCodeObjects["Shipment.G.ShipmentTypeName"]);
+                table.Columns.Add(textCodeObjects["Shipment.G.ShipmentStatus"]);
+                table.Columns.Add(textCodeObjects["Shipment.F.TruckContainerNumber"]);
+                table.Columns.Add(textCodeObjects["Shipment.F.NumberOfPackages"]);
+                table.Columns.Add(textCodeObjects["Shipment.F.GrossWeightInKG"]);
+                table.Columns.Add(textCodeObjects["Shipment.F.ChargeableWeightInKG"]);
+                table.Columns.Add(textCodeObjects["Shipment.F.IncotermCode"]);
+                table.Columns.Add(textCodeObjects["Shipment.F.VolumeInCBM"]);
+                table.Columns.Add(textCodeObjects["Shipment.F.ValueOfGoods"]);
+                table.Columns.Add(textCodeObjects["Shipment.G.DescriptionOfGoods"]);
 
                 var index = 4;
                 foreach (var item in digitalShipmentLists)
@@ -361,7 +365,7 @@ namespace WebFreight.Web.Helpers
                     row[0] = DoesPropertyExistInDynamic(item, "ShipmentNumber") ? item.ShipmentNumber : null;
                     row[1] = DoesPropertyExistInDynamic(item, "TransportModeName") ? item.TransportModeName : null;
                     row[2] = DoesPropertyExistInDynamic(item, "DirectionName") ? item.DirectionName : null;
-                    row[3] = item.MainCarriageFromPortName + ", " + item.MainCarriageToPortName;
+                    row[3] = DoesPropertyExistInDynamic(item, "MainCarriageFromPortName") ? $"{item.MainCarriageFromPortName}, " : "" + DoesPropertyExistInDynamic(item, "MainCarriageToPortName") ? item.MainCarriageToPortName : "";
                     row[4] = DoesPropertyExistInDynamic(item, "MainCarriageATD") ? item.MainCarriageATD?.ToString("dd MMM yyyy", CultureInfo.InvariantCulture) : null;
                     row[5] = DoesPropertyExistInDynamic(item, "MainCarriageATA") ? item.MainCarriageATA?.ToString("dd MMM yyyy", CultureInfo.InvariantCulture) : null; ;
                     row[6] = DoesPropertyExistInDynamic(item, "Master") ? item.Master : null;
@@ -516,15 +520,19 @@ namespace WebFreight.Web.Helpers
                     var shipmentData = shipmentQuery.GetByFilters(args.QueryFilters);
 
                     var allowedShipmentsFieldSecurites = helper.GitDigitalSecuritesFeilds(args.QueryFilters.ObjectTableId, args.QueryFilters.ProfileCode, tenant, false)
-                                                      .Where(a => a.HasPermission)
-                                                      .Select(a => a.FieldCode.Replace("Shipment.", ""))
-                                                      .ToList();
+                                                               .Where(a => a.HasPermission)
+                                                               .Select(a => a.FieldCode.Replace($"Shipment.{tenant}.", ""))
+                                                               .Select(a => a.Replace("Shipment.", ""))
+                                                               .ToList();
 
                     var shipmentsFields = string.Join(",", allowedShipmentsFieldSecurites);
                     var shipmentsDynamicData = shipmentData.Select("new { " + shipmentsFields + " }").ToDynamicList();
-
                     FillContainerNumbers(shipmentsDynamicData);
-                    data = DigitalPortalShipmentExportToExcel(shipmentsDynamicData, showMultiUnitsOfMeasurements);
+
+                    var textCodeObjects = helper.GetDigitalTextCodeObjects(tenant, args.QueryFilters.ObjectTableId, args.QueryFilters.ProfileCode, true)
+                                                .ToDictionary(x => x.TextCode, y => y.DefaultText);
+
+                    data = DigitalPortalShipmentExportToExcel(shipmentsDynamicData, showMultiUnitsOfMeasurements, textCodeObjects);
 
                     break;
                 case "DigitalInvoice":
@@ -565,15 +573,21 @@ namespace WebFreight.Web.Helpers
         {
             listQuery.ForEach(shipment =>
             {
-                bool isInlandDomesticShipment = (shipment.DirectionId == "D" && shipment.TransportModeId == "I");
+                bool isInlandDomesticShipment = DoesPropertyExistInDynamic(shipment, "DirectionId") 
+                                                && DoesPropertyExistInDynamic(shipment, "TransportModeId") 
+                                                ? (shipment.DirectionId == "D" && shipment.TransportModeId == "I")
+                                                : false;
+
                 if (DoesPropertyExistInDynamic(shipment, "ContainersNumbersandTypesArray") 
+                    && DoesPropertyExistInDynamic(shipment, "TransportModeId")
+                    && DoesPropertyExistInDynamic(shipment, "TruckContainerNumber")
                     && (shipment.TransportModeId != "O" || !string.IsNullOrEmpty(shipment.ContainersNumbersandTypesArray)))
                 {
                     shipment.TruckContainerNumber = shipment.TransportModeId == "O"
                                                     ? Regex.Replace(shipment.ContainersNumbersandTypesArray, "(\\[.*?\\])", "")
                                                     : isInlandDomesticShipment
-                                                        ? shipment.TruckNumber
-                                                        : shipment.CarrierNumber;
+                                                        ? DoesPropertyExistInDynamic(shipment, "TruckNumber") ? shipment.TruckNumber : ""
+                                                        : DoesPropertyExistInDynamic(shipment, "CarrierNumber") ? shipment.CarrierNumber : "";
                 }
             });
         }

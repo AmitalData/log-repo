@@ -11,6 +11,7 @@
         public string Notes { get; set; }
         public string ObjectTableName { get; set; }
         public string Base64String { get; set; }
+        public string DocumentTypeName { get; set; }
         public int FileSize { get; set; }
         public int Buffersize { get; set; }
         public bool IsApprovalRequired { get; set; }

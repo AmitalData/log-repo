@@ -157,6 +157,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
     SharedLogisticsMessageLinkEnable: boolean;
     SharedLogisticsMasterMessageLinkEnable: boolean = true;
     ShowMultiUnitsOfMeasurementsEnable: boolean = true;
+    ShowApproveUploadedDocumentsEnabled: boolean = true;
 
 
     IsSharedLogisticsActivatedCheckboxBoxId: string;
@@ -217,7 +218,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
         this.SharedLogisticsMasterMessageLink = this.TenantPM.SharedLogisMasterMessageLink;
         this.ShowMultiUnitsOfMeasurements = this.TenantPM.ShowMultiUnitsOfMeasurements;
         this.IsQuotesRequestActivatedInSharedLogistics = this.TenantPM.IsQuotesRequestActivatedInShared;
-
+        this.ApproveUploadedDocuments = this.TenantPM.ApproveUploadedDocuments;
         if (!FeatureLocator.HasFeaturePermession("General", "MOBILE") || this.SharedTitleType == "CargoTracking" || this.SharedTitleType == "DigitalPortal") {
             this.IsShowMobileActivateArea = false;
         }
@@ -237,7 +238,9 @@ export class SharedLogisticsSettingComponent implements OnInit {
             this.ShowMultiUnitsOfMeasurementsEnable = false;
         }
 
-
+        if (!FeatureLocator.HasFeaturePermession("General", "PendingApprovalDocuments")) {
+            this.ShowApproveUploadedDocumentsEnabled = false;
+        }
 
         this.IsSharedLogisticsActivatedCheckboxBoxId = Guid.newGuid();
         this.IsMobileActivatedCheckboxBoxId = Guid.newGuid();
@@ -299,7 +302,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
         if (this.TenantPM.IsDirty) {
             this.CurrentSession.StartBusyIndicatorSaving();
             this.tenantPMService.update(this.TenantPM).subscribe((res:any)=> {
-
+                SessionLocator.TenantPM.ApproveUploadedDocuments = this.TenantPM.ApproveUploadedDocuments;
                 this.CloseButtonClicked();
             });
         }
@@ -363,7 +366,17 @@ export class SharedLogisticsSettingComponent implements OnInit {
 
     }
 
-
+    public get ApproveUploadedDocuments() {
+        if (this.TenantPM) {
+            return this.TenantPM.ApproveUploadedDocuments;
+        }
+        else return false;
+    }
+    public set ApproveUploadedDocuments(value: boolean) {
+        if (this.TenantPM) {
+            this.TenantPM.ApproveUploadedDocuments = value;
+        }
+    }
 
 
 
@@ -382,7 +395,11 @@ export class SharedLogisticsSettingComponent implements OnInit {
 
     }
 
-
+    OnSharedLogisticsMessageLink() {
+        if(this.SharedTitleType == 'DigitalPortal'){
+            this.DisplayDocumentsAndEvents = false;
+        }
+    }
 
 
 

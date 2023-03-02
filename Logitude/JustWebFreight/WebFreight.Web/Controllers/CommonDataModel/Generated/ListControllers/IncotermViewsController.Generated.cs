@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				IncotermRepository  incotermRepository = new IncotermRepository(MyContext);
 				IncotermList entityList = null;
 				Incoterm entityPoco = incotermRepository.GetSingleIncoterm(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Incoterm> singleEntityList = new List<Incoterm>();
 					singleEntityList.Add(entityPoco);

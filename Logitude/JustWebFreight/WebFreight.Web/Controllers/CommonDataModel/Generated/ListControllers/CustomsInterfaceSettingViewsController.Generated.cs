@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				CustomsInterfaceSettingRepository  customsInterfaceSettingRepository = new CustomsInterfaceSettingRepository(MyContext);
 				CustomsInterfaceSettingList entityList = null;
 				CustomsInterfaceSetting entityPoco = customsInterfaceSettingRepository.GetSingleCustomsInterfaceSetting(tenant , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<CustomsInterfaceSetting> singleEntityList = new List<CustomsInterfaceSetting>();
 					singleEntityList.Add(entityPoco);

@@ -51,6 +51,7 @@ import { WorkFlowPMService } from 'Workflow/Services/StandardPMs/WorkFlowPMServi
 import { WorkFlowPM } from 'Workflow/EntityPMs/WorkFlowPM';
 import { TextCodeTranslationPipe } from '../../../Controls/Pipes/TextCodeTranslationPipe';
 import { QueryPM } from '../../EntityPMs/QueryPM';
+import { CustomizationPermissionService } from '../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
 
 @Component({
     templateUrl: './ListComponent.html',
@@ -66,6 +67,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     @Output() ColumnsReady = new EventEmitter();
     @Output() QueryListSourceChanged = new EventEmitter();
     @Output() FiltersBarLoaded: EventEmitter<any> = new EventEmitter<any>();
+    @Output() RowClicked = new EventEmitter();
     RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);
     public SeachBoxIsDisabled: boolean = false;
     //@Output() ShowTipEvent = new EventEmitter();
@@ -674,12 +676,12 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
         this.NewButtonId = "NewButton_" + this.ObjectTableName;
 
-        if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "NEW", false) && !this.ObjectTable?.IsCustom) {
+        if (!this.CheckPermissions(this.ObjectTableName, "NEW", false) && !this.ObjectTable?.IsCustom) {
             this.IsNewEntityButtonDisabled = true;
         }
 
         if (this.ObjectTableName != "PortTimeZone") {
-            if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "READ", false)) {
+            if (!this.CheckPermissions(this.ObjectTableName, "READ", false)) {
                 this.HasPermition = false;
             }
         }
@@ -693,6 +695,8 @@ export class ListComponent implements OnInit, AfterViewInit {
         if (!this.ReloadAllListEvent) {
             this.ReloadAllListEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "ReloadAllList") {
+                    this.RefreshBtnClick();
+                }else if(s == "ReloadAllList" + this.ObjectTableName){
                     this.RefreshBtnClick();
                 }
             });
@@ -720,6 +724,11 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     }
 
+    public CheckPermissions(objectTableName: string, featureCode: string, showWindow: boolean) {
+        if (objectTableName == "DeploymentPackage")
+            return CustomizationPermissionService.HasEntityPermessions(objectTableName, featureCode, showWindow);
+        return FeatureLocator.HasEntityPermessions(objectTableName, featureCode, showWindow);
+    }
 
 
     IsShowAddFromLibraryLink: boolean;
@@ -1065,27 +1074,47 @@ export class ListComponent implements OnInit, AfterViewInit {
         let querySection: string = !AppTool.IsNullOrEmpty(this.MenuTableQuerySection) ? this.MenuTableQuerySection : this.ObjectTableName;
         return allQueries.filter(d => d.QuerySection == querySection || d.QuerySection == (querySection + "FollowUp"));
     }
-
     public UserId: string = SessionInfo.LoggedUserId;
     public Tenant: number = SessionInfo.LoggedUserTenant;
+
+    ApplyQueriesAdvancedFilter(allQueries:any) {
+        if (this.ObjectTableName != "Shipment")
+            return this.Queries;
+        if (SessionLocator.TenantPM.ApproveUploadedDocuments == false) {
+            return allQueries.filter(x => (x.Code != "Pending Approval Documents" && x.UserId == null && x.SystemLevel == true));
+        }
+        return this.Queries;
+    }
+    CustomerCareDeploymentPackage(objectTableName : string){
+        if(objectTableName!="DeploymentPackage")
+            return false;
+        if(FeatureLocator.IsFeatureGrantedByUniqeCode("General.Customization.DeploymentPackage"))
+            return false;
+        if((SessionLocator.LoggedUserPM.IsCustomerCare || SessionLocator.LoggedUserPM.IsDistributor || ObjectsLocator.GlobalSetting.DeploymentStage == "Dev"))
+            return true;
+        return false;
+    }
     GetQueries() {
 
         var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
         allQueries = this.FilterQuerysByQuerySection(allQueries);
 
         this.Queries = allQueries.filter(x => x.UserId == null && x.SystemLevel == true);
-
+        if(this.ObjectTableName=="DeploymentPackage")
+            this.listArgs.DontCheckQueryFeature = true;
         if (!this.ObjectTable.IsClosed && !this.listArgs.DontCheckQueryFeature) {
-            this.Queries = allQueries.filter(x => (FeatureLocator.IsFeatureGrantedByUniqeCode(x.FeatureUniqeCode)));
+            this.Queries = allQueries.filter(x => (FeatureLocator.IsFeatureGrantedByUniqeCode(x.FeatureUniqeCode))|| this.CustomerCareDeploymentPackage(x.ObjectTableName) );
 
         }
+        this.Queries = this.ApplyQueriesAdvancedFilter(allQueries);
+
         this.UserQueries = allQueries.filter(x => x.UserId != null && x.Tenant == SessionInfo.LoggedUserTenant);
 
         if (this.listArgs.Perspective != null && this.listArgs.IgnoreSelectedPerspective == false) {
             //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Perspective == this.listArgs.Perspective)[0];
             this.SelectedQuery = allQueries.filter(f => f.Perspective == this.listArgs.Perspective)[0];
 
-            this.Queries = allQueries.filter(f => (f.UserId == null && (FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode) || this.ObjectTable?.IsCustom) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
+            this.Queries = allQueries.filter(f => (f.UserId == null && (FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode) || this.ObjectTable?.IsCustom ||this.CustomerCareDeploymentPackage(f.ObjectTableName)) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
         }
         else if (this.listArgs.Perspective != null && this.listArgs.IgnoreSelectedPerspective == true) {
             //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Code == this.QueryCode)[0];
@@ -1098,7 +1127,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             else {
                 this.SelectedQuery = allQueries.filter(f => f.UniqueCode == (this.ObjectTableName + (f.UserId != undefined ? "." + f.UserId : "") + '.' + this.QueryCode))[0];
             }
-            this.Queries = allQueries.filter(f => (f.UserId == null && FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
+            this.Queries = allQueries.filter(f => (f.UserId == null && (FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode)||this.CustomerCareDeploymentPackage(f.ObjectTableName)) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
         }
 
         else if (this.QueryCode) {
@@ -1730,6 +1759,13 @@ export class ListComponent implements OnInit, AfterViewInit {
         //if (filters == null) {
         //    filters = new ApiQueryFilters();
         //}
+        
+        if (this.listArgs.DefaultFilterItems && this.listArgs.DefaultFilterItems.length > 0) {
+            this.listArgs.DefaultFilterItems.forEach((filter) => {
+                MyFilters.AdditionalFilters.push(filter)
+            });
+        }
+
         filters.AdditionalFilters.forEach((filter, key) => {
             if (filter.FieldName == "CompetitorFields")
                 filter.Operator = "Contains";
@@ -2051,7 +2087,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                     var logWindow = new LogitudeWindow();
                                     logWindow.Width = 1100;
                                     logWindow.Height = 570;
-                                    logWindow.Title = this.ObjectTableName == "Card" ? "Invite Partners" : "Invite Customers";
+                                    logWindow.Title = this.ObjectTableName == "Card" ? "Invite Partners" : "Invite Contacts";
                                     logWindow.WindowArgs = windowArgs;
                                     logWindow.IsShowCloseButton = true;
                                     logWindow.Show('./SharedLogistics/Components/InviteCustomersComponent');
@@ -2357,7 +2393,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                             .then(cmpRef => {
                                 cmpRef.instance.ComponentRef = cmpRef;
-                                cmpRef.instance.Run({ EntityId: $event.rowData.Id, EntityPM: entitypm, ObjectTableName: 'WorkFlow', BackButtonLabel: "WorkFlows" });
+                                cmpRef.instance.Run({ EntityId: $event.rowData.Id, EntityPM: entitypm, ObjectTableName: 'WorkFlow', BackButtonLabel: "Workflows" });
 
                                 cmpRef.instance.BackCompleted.subscribe(() => {
                                     this.isEditControlOpened = false;
@@ -2365,6 +2401,10 @@ export class ListComponent implements OnInit, AfterViewInit {
                                     //this.RefreshBtnClick();
                                 });
                             });
+                    }
+                    else if (myObjectTableName == "WorkFlowVersion" || myObjectTableName == "WorkFlowInstance") {
+                        this.isEditControlOpened = false;
+                        this.RowClicked.emit($event);
                     }
                     else if (this.ObjectTableName == "Customs.DeclarationReferantData") {
                         var customFile = "";
@@ -2530,7 +2570,8 @@ export class ListComponent implements OnInit, AfterViewInit {
                                     EntityId: selectedEntityId,///$event.rowData.Id
                                     ObjectTableName: myObjectTableName,
                                     BackButtonLabel: label,
-                                    QuerySection: this.MenuTableQuerySection
+                                    QuerySection: this.MenuTableQuerySection,
+                                    SelectedQueryCode: this.SelectedQuery.Code
                                 });
                                 cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
                                     this.isEditControlOpened = false;
@@ -2699,7 +2740,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
     private SetNewEntityLabel() {
         if (this.HaveFeatureNewExportDeclararion()) {
-            this.NewEntityButtonLabel = "הצהרת יצוא חדשה"
+            this.NewEntityButtonLabel = "הצהרת יצום חדשה"
         } else
             if (this.listArgs.NewButtonLabel != null) {
                 this.NewEntityButtonLabel = this.listArgs.NewButtonLabel;
@@ -2857,6 +2898,16 @@ export class ListComponent implements OnInit, AfterViewInit {
                             isVisible = false;
                             break;
                         }
+                    case "WorkFlowVersion":
+                        {
+                            isVisible = false;
+                            break;
+                        }
+                    case "WorkFlowInstance":
+                        {
+                            isVisible = false;
+                            break;
+                        }
                 }
             }
         }
@@ -2876,7 +2927,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
         if (this.SelectedQuery != null) {
 
-            if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "NEW", true) && !this.ObjectTable?.IsCustom) {
+            if (!this.CheckPermissions(this.ObjectTableName, "NEW", true) && !this.ObjectTable?.IsCustom) {
                 return;
             }
 
@@ -2964,11 +3015,11 @@ export class ListComponent implements OnInit, AfterViewInit {
         var messageWindow = new MessageWindow();
         messageWindow.Width = 450;
         messageWindow.Height = 190;
-        messageWindow.Show("You can define the \"New " + this.ObjectTableDisplayName + "\" screen by selecting a one from the Views tab of the " + this.ObjectTableDisplayName+" object in the Customization");
+        messageWindow.Show("You can define the \"New " + this.ObjectTableDisplayName + "\" screen by selecting a one from the Views tab of the " + this.ObjectTableDisplayName + " object in the Customization");
     }
     RunNewExportDeclaration() {
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "פתיחת הצהרת יצוא חדשה";
+        logWindow.Title = "פתיחת הצהרת יצום חדשה";
         logWindow.Width = 800;
         logWindow.Height = 500;
         logWindow.NewWizardArgs = { IsNewEntity: true };
@@ -3395,7 +3446,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     btnExcelCLicked() {
-        if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "READ", true)) {
+        if (!this.CheckPermissions(this.ObjectTableName, "READ", true)) {
             return;
         }
         else {
@@ -3434,7 +3485,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         if (this.CurrentQueryFilters == null) {
             this.CurrentQueryFilters = new ApiQueryFilters();
         }
-        if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "READ", true) && !this.ObjectTable?.IsCustom) {
+        if (!this.CheckPermissions(this.ObjectTableName, "READ", true) && !this.ObjectTable?.IsCustom) {
             return;
         }
         else {
@@ -3791,6 +3842,12 @@ export class ListComponent implements OnInit, AfterViewInit {
 
         var MyFilters = new ApiQueryFilters();
 
+        if (this.listArgs.DefaultFilterItems && this.listArgs.DefaultFilterItems.length > 0) {
+            this.listArgs.DefaultFilterItems.forEach((filter) => {
+                MyFilters.AdditionalFilters.push(filter)
+            });
+        }
+
         this.currentFilters.AdditionalFilters.forEach((filter, key) => {
             if (filter.FieldName == "CompetitorFields")
                 filter.Operator = "Contains";
@@ -3846,8 +3903,6 @@ export class ListComponent implements OnInit, AfterViewInit {
             });
 
         });
-
-
     }
 
     public SortServerProp: any;
