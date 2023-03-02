@@ -11,10 +11,10 @@ import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
 
-    templateUrl: './AddEditPIMAComponent.html',
+    templateUrl: './AddEditTTYComponent.html',
 })
 
-export class AddEditPIMAComponent extends BaseComponent {
+export class AddEditTTYComponent extends BaseComponent {
     public EntityPM: TenantManagementPM;
     public ObjectTableName: string = "TenantManagement";
     public DataContext = this;
@@ -32,10 +32,10 @@ export class AddEditPIMAComponent extends BaseComponent {
         this.Clone();
     }
 
-    get PIMA() { return this.EntityPM.PIMA; }
-    set PIMA(newValue: string) {
-        if (this.EntityPM.PIMA != newValue) {
-            this.EntityPM.PIMA = newValue;
+    get TTY() { return this.EntityPM.TTY; }
+    set TTY(newValue: string) {
+        if (this.EntityPM.TTY != newValue) {
+            this.EntityPM.TTY = newValue;
         }
     }
 
@@ -47,20 +47,20 @@ export class AddEditPIMAComponent extends BaseComponent {
 
     OkButtonClicked() {
         var errors: string[] = [];
-        this.iGlobalDomainService.GetTenantManagmentPIMA(this.PIMA, this.EntityPM.Id).subscribe((result: any) => {
+        this.iGlobalDomainService.GetTenantManagmentTTY(this.TTY, this.EntityPM.Id).subscribe((result: any) => {
             var duplicationMsg = result.Result;
             if (AppTool.IsNullOrEmpty(duplicationMsg)) {
                 this.CurrentSession.CloseCurrentWindow();
             }
 
             else {
-                this.ViewPIMADuplicationConfirmationWindow(duplicationMsg);
+                this.ViewTTYDuplicationConfirmationWindow(duplicationMsg);
             }
         });
        
     }
 
-    ViewPIMADuplicationConfirmationWindow(duplicationMsg) {
+    ViewTTYDuplicationConfirmationWindow(duplicationMsg) {
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Show(duplicationMsg);
         confirmWindow.WindowClosed.subscribe((event: any) => {
@@ -74,7 +74,7 @@ export class AddEditPIMAComponent extends BaseComponent {
     private myCloner: Cloner;
     private Clone() {
         this.myCloner = new Cloner(this.DataContext);
-        this.myCloner.AddField('PIMA');
+        this.myCloner.AddField('TTY');
         this.myCloner.AddEntity(this.EntityPM);
     }
 

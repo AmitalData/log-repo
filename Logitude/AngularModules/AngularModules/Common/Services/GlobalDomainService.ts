@@ -21,10 +21,10 @@ export class GlobalDomainService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/GlobalDomain';
     }
 
-    GetTenantManagmentPIMA(pIMA: string, id:number ) {
+    GetTenantManagmentTTY(tty: string, id:number ) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        var url = this._apiUrl + '/GetTenantManagmentPIMA?pIMA=' + pIMA + '&id=' + id;
+        var url = this._apiUrl + '/GetTenantManagmentTTY?tty=' + tty + '&id=' + id;
         return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
                 var itemJason: Boolean = response.body;

@@ -70,8 +70,8 @@ export class CCSSettingsTabComponent extends BaseComponent {
         this.IsEditingAllowed = this.isTenantManagementEditable;
         this.AllowAirlinesIsEnabled = allowAirlinesEnabled;
 
-        this.UIProperties.SetEnabled("TTY", this.ObjectTableName, this.isTenantManagementEditable);
-        this.UIProperties.SetEnabled("PIMA", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("TTY", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("PIMA", this.ObjectTableName, this.isTenantManagementEditable);
         this.UIProperties.SetEnabled("AWBMessagesCCSTypeCode", this.ObjectTableName, this.isTenantManagementEditable);
         this.UIProperties.SetEnabled("IsCargonautEnabled", this.ObjectTableName, this.isTenantManagementEditable);
         this.UIProperties.SetEnabled("IsDEXXConnectionEnabled", this.ObjectTableName, this.isTenantManagementEditable);
@@ -343,17 +343,17 @@ export class CCSSettingsTabComponent extends BaseComponent {
         });
     }
 
-    EditPIMAClicked() {
+    EditTTYClicked() {
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "Edit PIMA";
+        logWindow.Title = "Edit TTY";
         logWindow.Width = 350;
         logWindow.Height = 200;
         logWindow.WindowArgs = { EntityPM: this.EntityPM};
-        logWindow.Show('./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/AddEditPIMAComponent');
+        logWindow.Show('./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/AddEditTTYComponent');
         logWindow.ComponentLoaded.subscribe(comp => {
             logWindow.WindowClosed.subscribe(s => {
                 if (s) {
-                    this.PIMA = comp.EntityPM.PIMA;
+                    this.TTY = comp.EntityPM.TTY;
                 }
             });
         });
