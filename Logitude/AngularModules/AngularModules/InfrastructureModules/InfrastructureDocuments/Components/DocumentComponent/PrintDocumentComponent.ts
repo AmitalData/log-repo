@@ -1218,6 +1218,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                     this.documentsExecutionLogListExtendedService = new DocumentsExecutionLogListExtendedService();
                 }
 
+                this.CurrentSession.StartBusyIndicator("Loading ...");
 
                 this.documentsExecutionLogListExtendedService.GetDocumentsExecutionLogList(documentExecutionLogId).subscribe((res: any) => {
                     var pmResponse: ServiceResponse = res;
@@ -1237,6 +1238,8 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                                     this.ShowMessage(documentsExecutionLogList.ExceptionMessage);
                                 }
                                 else if (documentsExecutionLogList.StatusCode == "D") {
+                                    this.StopBusyIndicator();
+
                                     documentTypeCopyLists.forEach((copy) => {
                                         copy.Status = "Success";
                                         copy.Exists = true;
