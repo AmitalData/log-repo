@@ -507,9 +507,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             theEntityPm.VoidedByJournalNumber = entityPM.VoidedByJournalNumber;
             paymentRepository.Update(payment);
             paymentRepository.SubmitChanges();
-            if (isAccountingActivated)
+            if (isAccountingActivated && !setApproved)
             {
-                if (theEntityPm.StatusCode != "VD")
+                if (theEntityPm.StatusCode != "VD" && theEntityPm.StatusCode != "DR")
                     CreateReconciliationForAPPayment(theEntityPm);
             }
             this.TraceConnected();
@@ -770,14 +770,24 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 bool useLocal = true;
                 var user = GetLoggedContact(tenant);
                 if (user != null) useLocal = !(GetLoggedContact(tenant).DontShowLocal);
-
+                if (entityPM.StatusCode == "DR") {
+                    throw new ApplicationException(TranslateTextsClass.Translate("APPayment.M.PaymentDraftCantBeApproved", tenant, useLocal));
+                }
                 if (_InvoicesLedgerTransactions.Count > 0) {
                     var invoiceTranasction =  _InvoicesLedgerTransactions.Where(x => x.Reference1 == item.APInvoiceNumber).FirstOrDefault();
-                    if (invoiceTranasction != null && !string.IsNullOrWhiteSpace(invoiceTranasction.RecoNumber) 
-                        && !string.IsNullOrWhiteSpace(invoiceTranasction.Reference3) && invoiceTranasction.RecoNumber.Contains(invoiceTranasction.Reference3))
+                    string[] invoiceRecons = new string[] { };
+                    string[] paymentRecons = new string[] { };
+                    if (invoiceTranasction != null && !string.IsNullOrWhiteSpace(invoiceTranasction.RecoNumber)
+                        && !string.IsNullOrWhiteSpace(invoiceTranasction.Reference3)) {
+                        invoiceRecons = invoiceTranasction.RecoNumber.Split(',');
+                        paymentRecons = invoiceTranasction.Reference3.Split(',');
+                    }
+                    
+                    if (invoiceRecons.Any(x => paymentRecons.Any(y => y == x)))
                     {
-                        var msg = TranslateTextsClass.Translate("APPayment.M.AlreadyReconciledInvoice", tenant, useLocal);
-                        throw new ApplicationException(String.Format(msg, invoiceTranasction.Reference3));
+                            var intesectedElements = invoiceRecons.Where(x => paymentRecons.Any(y => y == x)).ToList();
+                            var msg = TranslateTextsClass.Translate("APPayment.M.AlreadyReconciledInvoice", tenant, useLocal);
+                            throw new ApplicationException(String.Format(msg, String.Join(",", intesectedElements)));
                     }
                     else if (invoiceTranasction != null) {
                         invoiceTranasction.AmountToReconcile = item.PaymentAmount != null ? Convert.ToDecimal(item.PaymentAmount) : 0;

@@ -9184,6 +9184,12 @@
       LocalDefaultText="&quot;הוראת התשלום כבר הותאמה עם חשבונית זאת, על מנת להתאים מחדש יש לבטל תחילה את התאמה מספר {0}&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;APPayment.M.PaymentDraftCantBeApproved&quot;"
+      DefaultText="&quot;Payment draft cannot be reconciled until it is approved. Please approve the payment to proceed with the reconciliation&quot;"
+      LocalDefaultText="&quot;!לא ניתן לבצע התאמה לתשלום בסטאטוס טיוטה יש לאשר את התשלום כדי להמשיך , לחלופין ניתן ללהסיר את ההתאמות שסומנו ולשמור את התשלום כטיוטה.&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

@@ -111,7 +111,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                     .Where(d => d.ReconciledWithTransactionId == transactionId).ToList();
             }
             else {
-                transactionRecoLines = reconciliationLines.ToList();
+                //transactionRecoLines = reconciliationLines.ToList();
             }
             List<string> reconciliationsId = transactionRecoLines.Select(a => a.ReconciliationId).ToList();
             List<ReconciliationPM> reconciliationsForTransaction = reconciliations.Where(d => reconciliationsId.Contains(d.Id)).ToList();
