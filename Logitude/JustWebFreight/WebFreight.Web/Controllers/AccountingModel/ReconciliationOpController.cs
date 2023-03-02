@@ -90,7 +90,7 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
         {
             try
             {
-                using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(30)))
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
 
                     string token = HttpContext.Current.Request.Headers["Token"];
@@ -507,7 +507,7 @@ tenant);
         }
 
         [HttpGet]
-        public HttpResponseMessage GetFirst5000LedgerForReconciliation(string gLAccountId, [FromUri] ApiQueryFilters filters)
+        public HttpResponseMessage GetFirst500LedgerForReconciliation(string gLAccountId, [FromUri] ApiQueryFilters filters)
         {
             try
             {
@@ -528,7 +528,7 @@ tenant);
                     response.Count = count;
                 }
 
-                response.Result = openTransactions.Take(5000);
+                response.Result = openTransactions.Take(500);
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
                 return reponseMessage;
@@ -561,7 +561,7 @@ tenant);
                     int count = callback.TotalRecord;
                     response.Count = count;
                 }
-                int firstX = 10000;  // preparation fo a possible future parameter 
+                int firstX = 500;  // preparation fo a possible future parameter 
                 //response.Result = openTransactions.Take(5000);
                 response.Result = openTransactions.Take(firstX);
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
