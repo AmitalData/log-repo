@@ -52,7 +52,7 @@
     "fast-json-patch": "^3.1.1",
     "fusioncharts": "^3.19.0",
     "lodash.clonedeep": "^4.5.0",
-    "logitude-dashboard-library": "^1.4.40",
+    "logitude-dashboard-library": "^1.4.41",
     "logitude-workflow": "latest",
     "mochawesome-report-generator": "^5.1.0",
     "ng-zorro-antd": "^9.3.0",
