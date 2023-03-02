@@ -408,8 +408,8 @@ namespace Logitude.Accounting.BL.CoreBL
             var outputLines = GetTaxReportLines(TaxReportLineOutType);
 
             if (outputLines.Any()) {
-                var ledgerTranasctions = GetLedgerTransactionsForOutputTaxReportLines(outputLines);
-                AddJournalReconciles(ledgerTranasctions, journalLinePM);
+                var ledgerTranasactions = GetLedgerTransactionsForOutputTaxReportLines(outputLines);
+                AddJournalReconciles(ledgerTranasactions, journalLinePM);
             }
         }
 
@@ -418,8 +418,8 @@ namespace Logitude.Accounting.BL.CoreBL
             var inputLines = GetTaxReportLines(TaxReportLineInputType);
             if (inputLines.Any())
             {
-                var ledgerTranasctions = GetLedgerTransactionsForInputTaxReportLines(inputLines);
-                AddJournalReconciles(ledgerTranasctions, journalLinePM);
+                var ledgerTranasactions = GetLedgerTransactionsForInputTaxReportLines(inputLines);
+                AddJournalReconciles(ledgerTranasactions, journalLinePM);
             }
 
         }
@@ -452,7 +452,9 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             LedgerTransactionRepository ledgerTransactionRepository = new LedgerTransactionRepository(tenant);
             var journalIds = taxReportLines.Select(x => x.JournalId).ToList();
-            return ledgerTransactionRepository.GetLedgerTransactionsByJournalIdsAndAccountId(journalIds, fullAccountingSettings.VATOutputGLAccountId, tenant);
+            List<LedgerTransaction> ltList = ledgerTransactionRepository.GetLedgerTransactionsByJournalIdsAndAccountId(journalIds, fullAccountingSettings.VATOutputGLAccountId, tenant);
+            List<LedgerTransaction> rv = ltList.Where(lt => lt.IsReconciled != true && lt.InReconcileProgress != true).ToList();
+            return rv;
         }
 
         private List<LedgerTransaction> GetLedgerTransactionsForInputTaxReportLines(List<TaxReportLine> taxReportLines)
@@ -460,7 +462,9 @@ namespace Logitude.Accounting.BL.CoreBL
 
             LedgerTransactionRepository ledgerTransactionRepository = new LedgerTransactionRepository(tenant);
             var ledgerTranasctionsIds = taxReportLines.Select(x => x.LedgerTransactionId).ToList();
-            return ledgerTransactionRepository.GetLedgerTransactionsByIds(ledgerTranasctionsIds, tenant).ToList();
+            List<LedgerTransaction> ltList = ledgerTransactionRepository.GetLedgerTransactionsByIds(ledgerTranasctionsIds, tenant).ToList();
+            List<LedgerTransaction> rv = ltList.Where(lt => lt.IsReconciled != true && lt.InReconcileProgress != true).ToList();
+            return rv;
         }
     }
     public class TaxReportClosingJournalServiceArguments
