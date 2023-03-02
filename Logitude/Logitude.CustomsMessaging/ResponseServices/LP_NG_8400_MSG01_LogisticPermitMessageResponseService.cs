@@ -196,10 +196,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 exportStorageUpdateService.Update(exportstorage, true);
 
                 var ER1TaskStatus = new int?[] { 4, 6, 8 };
+                var DLYTaskStatus = new int?[] { 5, 7, 9 };
+                DateTime date = customResponse.ResponseContentHeader.TransmitionDateTime;
+
                 if (ER1TaskStatus.Contains(customResponse?.GeneralDetails?.actionCode))
                 {
-                    DateTime date = customResponse.ResponseContentHeader.TransmitionDateTime;
                     MN_MSG2791_ExportDeliveryAnswerMessageResponseService.RaiseExportStorageStatus("HTR", "HTR", exportstorage, "", date);
+                }
+                if (DLYTaskStatus.Contains(customResponse?.GeneralDetails?.actionCode))
+                {
+                    MN_MSG2791_ExportDeliveryAnswerMessageResponseService.RaiseExportStorageStatus("DLY", "DLY", exportstorage, "", date);
                 }
             }
 
