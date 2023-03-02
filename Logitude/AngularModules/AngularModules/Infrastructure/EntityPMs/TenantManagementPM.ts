@@ -614,6 +614,11 @@ export class TenantManagementPM {
     public set ActivatedforDeclarationApprove(newValue: boolean) { if (this.activatedforDeclarationApprove != newValue) { this.activatedforDeclarationApprove = newValue; this.MarkAsDirty("ActivatedforDeclarationApprove"); } }
        
 	 
+    private showMoneyOrder: boolean;
+    public get ShowMoneyOrder() { return this.showMoneyOrder; }
+    public set ShowMoneyOrder(newValue: boolean) { if (this.showMoneyOrder != newValue) { this.showMoneyOrder = newValue; this.MarkAsDirty("ShowMoneyOrder"); } }
+       
+	 
     private declarationMessage: string;
     public get DeclarationMessage() { return this.declarationMessage; }
     public set DeclarationMessage(newValue: string) { if (this.declarationMessage != newValue) { this.declarationMessage = newValue; this.MarkAsDirty("DeclarationMessage"); } }
@@ -753,10 +758,7 @@ export class TenantManagementPM {
     public get PrivateLabelId() { return this.privateLabelId; }
     public set PrivateLabelId(newValue: string) { if (this.privateLabelId != newValue) { this.privateLabelId = newValue; this.MarkAsDirty("PrivateLabelId"); } }
        
-    private showMoneyOrder: boolean;
-    public get ShowMoneyOrder() { return this.showMoneyOrder; }
-    public set ShowMoneyOrder(newValue: boolean) { if (this.showMoneyOrder != newValue) { this.showMoneyOrder = newValue; this.MarkAsDirty("ShowMoneyOrder"); } }
-
+	 
 
     public PackagesCodes_PK: Array<string>= [];
 		 
@@ -1035,4 +1037,4 @@ export class TenantManagementPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
