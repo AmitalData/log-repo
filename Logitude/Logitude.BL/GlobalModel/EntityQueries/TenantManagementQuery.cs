@@ -290,7 +290,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
                                                      CargoTokenTimeout = a.CargoTokenTimeout,
                                                      IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
-                                                     ShowMoneyOrder=a.ShowMoneyOrder
+                                                     ShowMoneyOrder=a.ShowMoneyOrder,
                                                      DigitalPortalLastDate = a.DigitalPortalLastDate,
                                                      DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
                                                      DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
@@ -504,7 +504,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
                                                   CargoTokenTimeout = a.CargoTokenTimeout,
                                                   IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
-                                                  ShowMoneyOrder = a.ShowMoneyOrder
+                                                  ShowMoneyOrder = a.ShowMoneyOrder,
 
                                                   DigitalPortalLastDate = a.DigitalPortalLastDate,
                                                   DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
@@ -709,7 +709,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
                         CargoTokenTimeout = a.CargoTokenTimeout,
                         IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
-                        ShowMoneyOrder = a.ShowMoneyOrder
+                        ShowMoneyOrder = a.ShowMoneyOrder,
 
                         DigitalPortalLastDate = a.DigitalPortalLastDate,
                         DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
@@ -867,7 +867,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     DigitalPortalTotalLastMonth = entity.DigitalPortalTotalLastMonth,
                     DigitalPortalMobileLastDate = entity.DigitalPortalMobileLastDate,
                     DigitalPortalMobTotalLastWeek = entity.DigitalPortalMobTotalLastWeek,
-                    DigitalPortalMobTotalLastMonth = entity.DigitalPortalMobTotalLastMonth
+                    DigitalPortalMobTotalLastMonth = entity.DigitalPortalMobTotalLastMonth,
 
                     ShowMoneyOrder = entity.ShowMoneyOrder
                 };
@@ -1015,7 +1015,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
                        PrivateLabelId = a.GlobalTenant != null ? a.GlobalTenant.PrivateLabelId : "",
                        PrivateLabelName = a.GlobalTenant != null ? a.GlobalTenant.TenantManagmentPrivateLabel != null ? a.GlobalTenant.TenantManagmentPrivateLabel.PrivateLabelName : "" : "",
-                       ShowMoneyOrder = a.ShowMoneyOrder
+                       ShowMoneyOrder = a.ShowMoneyOrder,
                        DigitalPortalLastDate = a.DigitalPortalLastDate,
                        DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
                        DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
@@ -1307,8 +1307,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
                                              IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
                                              ComapnylogoId = a.ComapnylogoId,
-                                             ShowMoneyOrder=a.ShowMoneyOrder
-                                             IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
+                                             ShowMoneyOrder=a.ShowMoneyOrder,
                                              DigitalPortalLastDate = a.DigitalPortalLastDate,
                                              DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
                                              DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
