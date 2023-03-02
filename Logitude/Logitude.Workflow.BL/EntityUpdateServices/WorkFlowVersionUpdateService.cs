@@ -1,6 +1,6 @@
-﻿using Logitude.BL.Helpers;
-using Logitude.Server.Tools;
+﻿using Logitude.Server.Tools;
 using Logitude.Workflow.BL.EntityPMs;
+using Logitude.Workflow.BL.ExternalAPI;
 using Logitude.Workflow.Data.EntityPOCOs;
 using Logitude.Workflow.Data.Repositories;
 using Logitude.Workflow.Data.WorkflowValidation.Constants;
@@ -156,11 +156,9 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
             string email = HttpContext.Current.User.Identity.Name;
             ContactRepository contactRepository = new ContactRepository(workflow.Tenant);
             Contact loggedContact = contactRepository.GetSingleContactByEmail(email, workflow.Tenant);
-            DateTime myDate = TenantServerConfigration.GetCurrentDateTime(workflow.Tenant);
+            DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(workflow.Tenant);
 
-
-            workflow.UpdateDate = myDate;
-
+            workflow.UpdateDate = currentDateTime;
 
             if (loggedContact != null)
             {
