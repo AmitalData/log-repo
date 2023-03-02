@@ -210,6 +210,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 return true;
             if (this.initializer.EntityPM.DestinationWarehouseId != this.initializer.EntityPOCO.DestinationWarehouseId)
                 return true;
+            if (this.initializer.EntityPM.DepartmentId != this.initializer.EntityPOCO.DepartmentId)
+                return true;
             return false;
         }
 
@@ -483,7 +485,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             container.ShipmentTypeId = this.initializer.EntityPM?.ShipmentTypeId;
             container.PODReceivedOnDate = this.initializer.EntityPM?.PODReceivedDate;
             container.TerminalId = this.initializer.EntityPM?.DestinationWarehouseId;
-
             container.ContainerTypeId  = shipmentPackage.PackageTypeId;
             container.Volume = shipmentPackage.Volume;
             container.VolumeUnitCode = this.initializer.EntityPM?.VolumeUnitCode;
@@ -493,8 +494,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             container.AdditionalReference2 = shipmentPackage.Reference2;
             container.AdditionalReference3 = shipmentPackage.Reference3;
             container.AdditionalReference4 = shipmentPackage.Reference4;
-            container.ShipmentDepartmentId = this.initializer.EntityPM.DepartmentId;
-
+            container.ShipmentDepartmentId = this.initializer.EntityPM?.DepartmentId;
 
             this.MapContainerFieldsFromShipmentPickup(container);
             this.MapContainerFieldsFromShipmentDelivery(container);
