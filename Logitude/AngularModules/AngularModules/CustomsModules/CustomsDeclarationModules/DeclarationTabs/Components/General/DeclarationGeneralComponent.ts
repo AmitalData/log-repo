@@ -1403,6 +1403,15 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
 
         if (this.EntityPM.Consignments.length > 0) {
             var maxObj = this.EntityPM.Consignments.reduce(function (prev, current) { return (prev.SequenceNumeric > current.SequenceNumeric) ? prev : current });
+
+            if (this.EntityPM.Direction == "E"){
+                var consignmentsSameType = this.EntityPM.Consignments.filter(x => x.ConsignmentType == "E");
+                if (consignmentsSameType.length > 0) {
+                    maxObj = consignmentsSameType.reduce(function (prev, current) { return (prev.SequenceNumeric > current.SequenceNumeric) ? prev : current });
+                }
+
+            }
+
             if (maxObj != null) {
                 if (this.consignmentIndex <= maxObj.SequenceNumeric)
                     this.consignmentIndex = maxObj.SequenceNumeric;
@@ -1430,7 +1439,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
         var tab = new LogTab();
         tab.EntityPM = consignment;
         tab.Parent = this.EntityPM;
-        tab.Code = consignment.SequenceNumeric.toString();
+        tab.Code = this.EntityPM.Direction == "E" ? consignment.ConsignmentNumber.toString() : consignment.SequenceNumeric.toString();
         tab.Header = consignment.SequenceNumeric.toString();
         tab.ComponentPath = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ConsigmentTabContent/ConsigmentTabContentComponent";
         this.ConsigmentTabs.push(tab);
@@ -1465,19 +1474,52 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
                     this.EntityPM.RemoveConsignment(tab.EntityPM);
                     this.ConsigmentTabs.splice(index, 1);
 
-                    if (this.EntityPM.AmendmentDontDisplayInList != true) {
-                        //resequence consignments
-                        for (var i = 0; i < this.EntityPM.Consignments.length; i++) {
-                            var consignment = this.EntityPM.Consignments[i];
-                            consignment.SequenceNumeric = i + 1;
-                            //consignment.ConsignmentNumber = i + 1;
+                    if (this.EntityPM.AmendmentDontDisplayInList != true || this.EntityPM.Direction == "I") {
+                        if (this.EntityPM.Direction == "E") {
+                            //resequence consignments
+                            var i_seq = 0, e_seq = 0;
+                            for (var i = 0; i < this.EntityPM.Consignments.length; i++) {
+                                var consignment = this.EntityPM.Consignments[i];
+                                if (consignment.ConsignmentType == "I") {
+                                    consignment.SequenceNumeric = i_seq + 1;
+                                    i_seq++;
+                                }
+                                else {
+                                    consignment.SequenceNumeric = e_seq + 1;
+                                    e_seq++;
+                                }
+                            }
+                            i_seq = 0;
+                            e_seq = 0;
+                            for (var i = 0; i < this.ConsigmentTabs.length; i++) {
+                                var consignment: ConsignmentPM = this.ConsigmentTabs[i].EntityPM;
+                                if (consignment.ConsignmentType == "I") {
+                                    consignment.SequenceNumeric = i_seq + 1;
+                                    i_seq++;
+                                }
+                                else {
+                                    consignment.SequenceNumeric = e_seq + 1;
+                                    e_seq++;
+                                }
+                                this.ConsigmentTabs[i].Code = (i + 1).toString();
+                                this.ConsigmentTabs[i].Header = (consignment.ManifestNumber ? (consignment.ManifestNumber + '-') : '') + consignment.SequenceNumeric;
+                            }
                         }
-                        for (var i = 0; i < this.ConsigmentTabs.length; i++) {
-                            var consignment: ConsignmentPM = this.ConsigmentTabs[i].EntityPM;
-                            consignment.SequenceNumeric = i + 1;
-                            this.ConsigmentTabs[i].Code = consignment.SequenceNumeric.toString();
-                            this.ConsigmentTabs[i].Header = (consignment.ManifestNumber ? (consignment.ManifestNumber + '-') : '') + consignment.SequenceNumeric;
+                        else {
+                            //resequence consignments
+                            for (var i = 0; i < this.EntityPM.Consignments.length; i++) {
+                                var consignment = this.EntityPM.Consignments[i];
+                                consignment.SequenceNumeric = i + 1;
+                                //consignment.ConsignmentNumber = i + 1;
+                            }
+                            for (var i = 0; i < this.ConsigmentTabs.length; i++) {
+                                var consignment: ConsignmentPM = this.ConsigmentTabs[i].EntityPM;
+                                consignment.SequenceNumeric = i + 1;
+                                this.ConsigmentTabs[i].Code = consignment.SequenceNumeric.toString();
+                                this.ConsigmentTabs[i].Header = (consignment.ManifestNumber ? (consignment.ManifestNumber + '-') : '') + consignment.SequenceNumeric;
+                            }
                         }
+                        
                     }
 
                     // select the last tab
@@ -1582,7 +1624,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
             var tab = new LogTab();
             tab.EntityPM = item;
             tab.Parent = this.EntityPM;
-            tab.Code = item.SequenceNumeric.toString();
+            tab.Code = this.EntityPM.Direction == "E" ? item.ConsignmentNumber.toString() :item.SequenceNumeric.toString();
             tab.Header = (item.ManifestNumber ? (item.ManifestNumber + '-') : '') + item.SequenceNumeric;
             if (this.EntityPM.Direction == 'E' && this.EntityPM.TransportModeId == 'O' && !AppTool.IsNullOrEmpty(item.ConsignmentPackages[0]?.MarksNumbers)) {
 
