@@ -90,7 +90,7 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
         {
             try
             {
-                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(30)))
                 {
 
                     string token = HttpContext.Current.Request.Headers["Token"];
