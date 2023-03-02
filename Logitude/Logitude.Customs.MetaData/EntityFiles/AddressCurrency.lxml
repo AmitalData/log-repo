@@ -37,7 +37,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;מטבעות ארץ&quot;"
   DefaultText="&quot;Address Currency&quot;"
-  Code="&quot;a471&quot;"
+  Code="&quot;c72a&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -89,6 +89,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;AddressId&quot;"
     ListPropertyPath="&quot;AddressId&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -161,6 +162,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Tenant&quot;"
     ListPropertyPath="&quot;Tenant&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -233,6 +235,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;LineNumber&quot;"
     ListPropertyPath="&quot;LineNumber&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -251,6 +254,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;LineNumber&quot;"
     DefaultText="&quot;Line Number&quot;"
+    FullLocalDefaultText="&quot;מספר שורה&quot;"
     ListFieldLable="&quot;LineNumberListLable&quot;"
     ListLableDefaultText="&quot;Line Number&quot;"
     ListLocalDefaultText="&quot;מספר שורה&quot;"
@@ -306,6 +310,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Currency&quot;"
     ListPropertyPath="&quot;Currency&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="true"
     DisplayInSearchWindowListIndex="0"
@@ -324,6 +329,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;Currency&quot;"
     DefaultText="&quot;Currency&quot;"
+    FullLocalDefaultText="&quot;סוג מטבע&quot;"
     ListFieldLable="&quot;CurrencyListLable&quot;"
     ListLableDefaultText="&quot;Currency&quot;"
     ListLocalDefaultText="&quot;סוג מטבע&quot;"
@@ -381,6 +387,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CurrencyTypeName&quot;"
     ListPropertyPath="&quot;CurrencyTypeName&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -427,6 +434,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;Customs.AddressCurrencyHeaderScreen&quot;"
+    ObjectTableName="&quot;Customs.AddressCurrency&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -455,6 +471,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes>
     <TextCode

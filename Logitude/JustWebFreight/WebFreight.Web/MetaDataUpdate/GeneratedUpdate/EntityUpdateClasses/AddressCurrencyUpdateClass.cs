@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class AddressCurrencyUpdateClass
    {  		
-		public const string HashString = "2646879db44c291a81db315fd7cb39fc";
+		public const string HashString = "003b3ef2aea5376bf536ea4adf940fbd";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "מטבעות ארץ",
 			      				    DefaultText =  "Address Currency",
-			      				    Code =  "a471",
+			      				    Code =  "c72a",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -170,6 +170,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "AddressId",
 					  						ListPropertyPath =  "AddressId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -229,6 +230,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "LineNumber",
 					  						ListPropertyPath =  "LineNumber",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -247,6 +249,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LineNumber",
 					  						DefaultText =  "Line Number",
+					  						FullLocalDefaultText =  "מספר שורה",
 					  						ListFieldLable =  "LineNumberListLable",
 					  						ListLableDefaultText =  "Line Number",
 					  						ListLocalDefaultText =  "מספר שורה",
@@ -289,6 +292,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Currency",
 					  						ListPropertyPath =  "Currency",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  true,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -307,6 +311,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Currency",
 					  						DefaultText =  "Currency",
+					  						FullLocalDefaultText =  "סוג מטבע",
 					  						ListFieldLable =  "CurrencyListLable",
 					  						ListLableDefaultText =  "Currency",
 					  						ListLocalDefaultText =  "סוג מטבע",
@@ -349,6 +354,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CurrencyTypeName",
 					  						ListPropertyPath =  "CurrencyTypeName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -392,7 +398,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable AddressCurrencyObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.AddressCurrency" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> AddressCurrencyObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.AddressCurrency").ToList();
+		       
+	      
+
+	         Screen AddressCurrencyCustomsAddressCurrencyHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AddressCurrency.HeaderScreen", Name = "Customs.AddressCurrencyHeaderScreen", ObjectTableId = AddressCurrencyObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    AddressCurrencyObjectTable.HeaderScreenId = AddressCurrencyCustomsAddressCurrencyHeaderScreenScreen0.Id;
+		    AddressCurrencyObjectTable.HeaderScreenCode = AddressCurrencyCustomsAddressCurrencyHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

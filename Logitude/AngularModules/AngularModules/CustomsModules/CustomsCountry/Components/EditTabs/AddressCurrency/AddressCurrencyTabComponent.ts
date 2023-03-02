@@ -30,6 +30,9 @@ import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { CustomsCountryPM } from 'Customs/EntityPMs/CustomsCountryPM';
 import { AddressCurrencyPM } from 'Customs/EntityPMs/AddressCurrencyPM';
 import { AddressCurrencyService } from 'Customs/Services/WebServices/AddressCurrencyService';
+import { AddressCurrencyListService } from 'Customs/Services/StandardLists/AddressCurrencyListService';
+import { EditTabComponent } from 'Infrastructure/Components/EditComponent/EditTabComponent';
+import { UIProperties } from 'Infrastructure/Components/LogitudeComponents/UIProperties';
 
 
 @Component({
@@ -37,13 +40,12 @@ import { AddressCurrencyService } from 'Customs/Services/WebServices/AddressCurr
     templateUrl: './AddressCurrencyTabComponent.html',
 })
 
-export class AddressCurrencyTabComponent extends BaseComponent {
+export class AddressCurrencyTabComponent extends EditTabComponent {
     @Output() FillValidationErrorList: EventEmitter<any> = new EventEmitter();
     public EntityPM: CustomsCountryPM;
     public AddressCurrencyListPM: AddressCurrencyPM[];
     public ObjectTableName: string = "Customs.AddressCurrency";
     public DataContext: any = this;
-    public IsNewEntity: boolean = false;
     public ValdationErrorList: any[];
     public isEntityChange: boolean = false;
     IsDelete: boolean = false;
@@ -51,27 +53,27 @@ export class AddressCurrencyTabComponent extends BaseComponent {
     addressCurrencyService:AddressCurrencyService=new AddressCurrencyService();
     AddressCurrencyList: ObservableCollection;
     line = 0;
-   
+    isLoad=false;
     RequestVIA: SendRequestVIA;
+    public UIProperties: UIProperties;
 
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor( private EntityResourceService: EntityResourceService) {
-        super();
+  
+    constructor(private cdr: ChangeDetectorRef,private entityResourceService: EntityResourceService) {
+        
+        super(cdr);
+        this.UIProperties = new UIProperties;
         this.AddressCurrencyList = new ObservableCollection([]);
-
-    }
-
-    SetTabArgs(args: any, valdationErrorList: any[] = []) {
-        this.EntityPM = args.EntityPM;
-        this.IsNewEntity = args.IsNewEntity;
+        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM
 
         console.log("EntityPM", this.EntityPM);
-
-        this.EntityResourceService.getEntityResourceByTableName("Customs.AddressCurrency").subscribe((response: any) => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.CurrencyType").subscribe((response: any) => {
+        this.entityResourceService.getEntityResourceByTableName("Customs.AddressCurrency").subscribe((response: any) => {
+         this.entityResourceService.getEntityResourceByTableName("Customs.VendorCurrency").subscribe((response: any) => {     
+            this.entityResourceService.getEntityResourceByTableName("Customs.CurrencyType").subscribe((response: any) => {
             this.getRows();
          });
         });
+    });
 
     }
     getRows() {
@@ -99,6 +101,7 @@ export class AddressCurrencyTabComponent extends BaseComponent {
                        this.getRowNumbers();
                        this.line = r.Result.length;
                        this.AddressCurrencyListPM = this.AddressCurrencyList.Collection;
+                       this.isLoad=true
                     }
                 });
            
@@ -121,11 +124,9 @@ export class AddressCurrencyTabComponent extends BaseComponent {
 
 
        
-
+        this.ValdationErrorList =[];
         var errors = [];
-        this.FillValidationErrorList.emit(errors); // clear validation msgs
             this.AddressCurrencyListPM.forEach((item) => {
-                Validator.TryValidateObject(item, "Customs.AddressCurrency", errors);
                 if(this.AddressCurrencyListPM.filter(x=>x.Currency==item.Currency).length>1){
                     errors.push(TextCodeTranslator.Translate('Customs.VendorCurrency.O.DoubleCurrency'));
                     
@@ -134,7 +135,6 @@ export class AddressCurrencyTabComponent extends BaseComponent {
       
         if (errors.length > 0) {
             this.ValdationErrorList = errors;
-            this.FillValidationErrorList.emit(errors);
         } else {
          
            this.addressCurrencyService.UpadateListCurrencyByAddress(this.AddressCurrencyListPM).subscribe(res=>{

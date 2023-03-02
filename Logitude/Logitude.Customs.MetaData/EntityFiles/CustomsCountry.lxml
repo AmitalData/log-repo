@@ -807,18 +807,6 @@
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
-    TabName="&quot;Address Currency&quot;"
-    TabLocalName="&quot;מטבעות ארץ&quot;"
-    ObjectTableName="&quot;Customs.CustomsCountry&quot;"
-    Code="&quot;CCAC&quot;"
-    ControlPath="&quot; &quot;"
-    TextCode="&quot;Customs.CustomsCountry.TH.AddressCurrency&quot;"
-    IsPackagable="false"
-    IndexOrder="0"
-    HtmlComponentURL="&quot;./CustomsModules/CustomsCountry/Components/EditTabs/AddressCurrency/AddressCurrencyTabComponent&quot;"
-    IsSpellChecked="false"
-    HasGeneralFeature="false" />
-  <Tab
     TabName="&quot;Events&quot;"
     TabLocalName="&quot;אירועים&quot;"
     ObjectTableName="&quot;Customs.CustomsCountry&quot;"
@@ -826,12 +814,24 @@
     ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
     TextCode="&quot;Customs.CustomsCountry.TH.Events&quot;"
     IsPackagable="false"
-    IndexOrder="1"
+    IndexOrder="0"
     HtmlComponentURL="&quot;&quot;"
     HtmlComponentName="&quot;&quot;"
     FeatureCode="&quot;CustomsCountry.Tab.Events&quot;"
     FeatureTextCodeCode="&quot;CustomsCountry.Features.Events&quot;"
     FeatureDefaultText="&quot;Events&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Address Currency&quot;"
+    TabLocalName="&quot;מטבעות ארץ&quot;"
+    ObjectTableName="&quot;Customs.CustomsCountry&quot;"
+    Code="&quot;CCAC&quot;"
+    ControlPath="&quot; &quot;"
+    TextCode="&quot;Customs.CustomsCountry.TH.AddressCurrency&quot;"
+    IsPackagable="false"
+    IndexOrder="1"
+    HtmlComponentURL="&quot;./CustomsModules/CustomsCountry/Components/EditTabs/AddressCurrency/AddressCurrencyTabComponent&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <EventTypes>

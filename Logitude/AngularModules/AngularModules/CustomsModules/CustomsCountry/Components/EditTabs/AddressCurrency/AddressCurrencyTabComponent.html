@@ -10,29 +10,34 @@
         padding-bottom: 2px;
     }
 </style>
-<table>
-
+<table *ngIf="isLoad">
+    <tr *ngIf="ValdationErrorList != null && ValdationErrorList.length > 0" style="height:1px;">
+        <td colspan="2">
+            <ValidationSummary [ItemsSource]="ValdationErrorList" [SingleLine]="false"></ValidationSummary>
+        </td>
+    </tr>
     <tr>
         <td>
             <div class="TableHolder">
                 <table>
 
-                    <!-- header -->
-
-
-                    <!-- Filters Fields -->
-
-
                     <!-- Toolbar-->
                     <tr>
                         <td colspan="2">
-                            <div class="subTitle">{{'Customs.VendorCurrency.O.CurrencyType' | TextCodeTranslationPipe}}</div>
+                            <div class="subTitle">{{'Customs.AddressCurrency.O.CurrencyType' | TextCodeTranslationPipe}}</div>
                         </td>
-                        <td style="width: 30px;">
-                            <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddButonClicked()"></IconButton>
-                        </td>
+                        <td style="display:flex;justify-content: end;align-items: center;">
+                          
+                           
+                            <div style="margin-left: 5px;">
+                              <button class="RedButton" style="height:21px" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}} מטבעות ארץ</button>
+                           </div> 
+                           <div>
+                             <IconButton [Name]="'Add'" [IsSmall]="false" (click)="AddButonClicked()"></IconButton>
+                           </div> 
+                        </td>                       
                     </tr>
-
+                   
                     <!-- Grid -->
                     <tr>
                         <td colspan="3" style="height: 100%;">
@@ -49,13 +54,13 @@
                                                     <td colspan="2" style="height: 100%;">
                                                         <div class="CellContent">
                                                             <logitude-edit-grid GridWidth="100%" GridHeight="100%"
-                                                                [ItemSource]="VendorCurrencyList">
+                                                                [ItemSource]="AddressCurrencyList">
 
 
 
                                                                 <!-- LineNumber -->
                                                                 <log-column
-                                                                    [header]="'Customs.VendorCurrency.F.LineNumber' | TextCodeTranslationPipe"
+                                                                    [header]="'Customs.AddressCurrency.F.LineNumber' | TextCodeTranslationPipe"
                                                                     [width]="'180'" [Alignment]="'right'"
                                                                     [binding]="'LineNumber'">
                                                                     <ng-template let-item>
@@ -71,7 +76,7 @@
                                                                 </log-column>
                                                                 <!-- Currency -->
                                                                 <log-column
-                                                                    [header]="'Customs.VendorCurrency.F.Currency' | TextCodeTranslationPipe"
+                                                                    [header]="'Customs.AddressCurrency.F.Currency' | TextCodeTranslationPipe"
                                                                     [width]="'130'" [Alignment]="'right'"
                                                                     [binding]="'Currency'">
                                                                     <ng-template let-item>
@@ -84,7 +89,7 @@
                                                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                                                 <LogLov
                                                                                     [ObjectFieldName]="'Currency'"
-                                                                                    [ObjectTableName]="'Customs.VendorCurrency'"
+                                                                                    [ObjectTableName]="'Customs.AddressCurrency'"
                                                                                     [DataContext]="item"
                                                                                     [HideColumns]="true"
                                                                                     [LookUpTableName]="'Customs.CurrencyType'"
@@ -129,12 +134,7 @@
                     </tr>
 
                     <!-- footer -->
-                    <tr style="height: 28px;">
-                        <td colspan="3" style="direction:ltr;">
-                            <button class="RedButton" style="width: 60px;" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
-
-                        </td>
-                    </tr>
+                   
 
                 </table>
             </div>
