@@ -11,8 +11,7 @@
         height: 20px;
     }
 
-    .name-row,
-    .owner-row {
+    .name-row {
         height: 50px;
     }
 
@@ -21,14 +20,12 @@
     }
 
     .name-input-container,
-    .description-input-container,
-    .owner-input-container {
+    .description-input-container {
         padding-left: 10px;
         padding-right: 10px;
     }
 
-    .name-input-container,
-    .owner-input-container {
+    .name-input-container {
         height: 30px;
     }
 
@@ -130,26 +127,6 @@
         </td>
     </tr>
 
-    <tr class="owner-row">
-        <td>
-            <div>
-                <LogLabel [ObjectFieldName]="'OwnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                </LogLabel>
-            </div>
-            <div class="owner-input-container">
-                <LogLov [ObjectFieldName]="'OwnerId'" [ObjectTableName]="ObjectTableName" [SelectedValue]="OwnerId"
-                    [DataContext]="DataContext" [LookUpTableName]="'User'" [HideColumns]="true"
-                    [DataCy]="'Workflow_Owner'"></LogLov>
-            </div>
-        </td>
-    </tr>
-
-    <tr class="split-row">
-        <td>
-            <div></div>
-        </td>
-    </tr>
-
     <tr class="table-row">
         <td>
             <div class="AdvancedSettings" (click)="showAdvancedSettings()">
@@ -197,7 +174,8 @@
 
                     <ng-container *ngFor="let RetryDelay of RetriesDelayArray; let i = index;">
                         <tr *ngIf="i % 2 == 0">
-                            <td *ngFor="let currentIndex of [i, i + 1]" [ngClass]="{'padding-left-10': currentIndex % 2 != 0}">
+                            <td *ngFor="let currentIndex of [i, i + 1]"
+                                [ngClass]="{'padding-left-10': currentIndex % 2 != 0}">
                                 <div *ngIf="currentIndex < RetriesDelayArray.length">
                                     <table>
                                         <tr class="FormFieldRow">

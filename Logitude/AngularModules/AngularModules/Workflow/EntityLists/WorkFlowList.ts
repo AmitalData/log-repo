@@ -17,10 +17,8 @@ export class WorkFlowList {
 	SearchFields: string;
 	Name: string;
 	Description: string;
-	OwnerId: string;
 	StatusCode: string;
 	StatusName: string;
-	OwnerName: string;
 	CreatedByUserName: string;
 	UpdatedByUserName: string;
 	FlowJson: string;

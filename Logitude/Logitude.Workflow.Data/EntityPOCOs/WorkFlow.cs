@@ -43,11 +43,6 @@ namespace Logitude.Workflow.Data.EntityPOCOs
 	    public string Name { get; set; }
         [Column("Description")]
 	    public string Description { get; set; }
-        [ForeignKey("Owner")]
-        [Column("OwnerId")]
-	    public string OwnerId { get; set; }
-	      
-        public virtual User Owner { get; set; }
         [ForeignKey("Status")]
         [Column("StatusCode")]
 	    public string StatusCode { get; set; }

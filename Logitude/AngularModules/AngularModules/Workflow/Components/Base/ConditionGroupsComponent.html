@@ -143,7 +143,7 @@
                 <ComboBox [ItemsSource]="ConditionOperationsItems" [Binding]="'Name'"
                     [SelectedItem]="Condition.groupOperation | ListItemPipe"
                     (SelectedItemChanged)="updateConditionGroupOperation($event.Code, conditionIndex)" [ListType]="''"
-                    [IsDisabled]="Condition.disabled | ConditionDisabledPipe : 'go'"
+                    [IsDisabled]="Condition.disabled | ConditionDisabledPipe : 'go'" [MaxHeight]="ComboBoxMaxHeight"
                     [CyData]="'ConditionOperation_' + Condition.id">
                 </ComboBox>
 
@@ -192,7 +192,7 @@
                             [Binding]="'Name'" [SelectedItem]="Condition.operator | ListItemPipe"
                             (SelectedItemChanged)="updateConditionOperator($event.Code, conditionIndex)" [ListType]="''"
                             [IsDisabled]="Condition.disabled | ConditionDisabledPipe : 'o'"
-                            [CyData]="'ConditionOperator_' + Condition.id">
+                            [MaxHeight]="ComboBoxMaxHeight" [CyData]="'ConditionOperator_' + Condition.id">
                         </ComboBox>
 
                     </div>
@@ -205,7 +205,7 @@
                             [SelectedItem]="Condition.valueExpression | ListItemPipe"
                             (SelectedItemChanged)="updateConditionValueExpression($event.Code, conditionIndex)"
                             [ListType]="''" [IsDisabled]="Condition.disabled | ConditionDisabledPipe : 've'"
-                            [CyData]="'ConditionValueExpression_' + Condition.id">
+                            [MaxHeight]="ComboBoxMaxHeight" [CyData]="'ConditionValueExpression_' + Condition.id">
                         </ComboBox>
 
                     </div>
@@ -277,7 +277,7 @@
                             [SelectedItem]="Condition.value | ListItemPipe"
                             (SelectedItemChanged)="updateConditionValue($event.Code, conditionIndex)" [ListType]="''"
                             [IsDisabled]="Condition.disabled | ConditionDisabledPipe : 'v'"
-                            [CyData]="'ConditionValue_' + Condition.id">
+                            [MaxHeight]="ComboBoxMaxHeight" [CyData]="'ConditionValue_' + Condition.id">
                         </ComboBox>
                     </div>
 

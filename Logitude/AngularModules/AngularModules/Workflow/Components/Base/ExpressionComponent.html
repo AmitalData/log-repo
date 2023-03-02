@@ -15,6 +15,7 @@
         left: 4px;
         bottom: 0;
         margin: auto;
+        cursor: pointer;
     }
 
     .open-expression-builder-btn {
@@ -33,7 +34,7 @@
         <div class="expression-element" [ngStyle]="{ 'width': Width }" [attr.data-cy]="DataCy">
             <input [disabled]="IsDisabled" class="expression-input" type="text" placeholder="Expression ..."
                 [(ngModel)]="ExpressionValue.expression" readonly [attr.data-cy]="DataCy" />
-            <img class="function-icon" src="./Images/function.png" />
+            <img class="function-icon" src="./Images/function.png" (click)="openExpressionBuilder()" />
         </div>
     </td>
 </tr>

@@ -66,13 +66,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="OwnerId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="StatusCode"
     Type="varchar"
     Size="4">
@@ -121,11 +114,6 @@
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="UpdatedByUserId"
-    ReferencedTable="Users"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="OwnerId"
     ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />

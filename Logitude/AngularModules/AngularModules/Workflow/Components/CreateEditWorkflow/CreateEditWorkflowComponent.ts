@@ -80,13 +80,6 @@ export class CreateEditWorkflowComponent extends BaseComponent implements OnInit
         }
     }
 
-    get OwnerId() { return this.EntityPM.OwnerId; }
-    set OwnerId(ownerId: string) {
-        if (this.EntityPM.OwnerId != ownerId) {
-            this.EntityPM.OwnerId = ownerId;
-        }
-    }
-
     get RetriesNumber() { return this.EntityPM.RetriesNumber }
     set RetriesNumber(retriesNumber: number) {
         if (this.EntityPM.RetriesNumber != retriesNumber) {

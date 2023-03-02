@@ -31,6 +31,8 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
     public IsValidSetValues: boolean = true;
     public SetValuesCounter: number = 1;
 
+    public ComboBoxMaxHeight: number = 120;
+
     public FlowVariablesTreeItems: TreeSelectItem[];
     public ObjectFieldsTreeItems: TreeSelectItem[];
 

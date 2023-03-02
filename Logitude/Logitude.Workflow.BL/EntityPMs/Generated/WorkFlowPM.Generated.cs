@@ -227,29 +227,6 @@ namespace Logitude.Workflow.BL.EntityPMs
 			
 		 }
 	   }
-	  private string ownerId ;
-	  	  
-       
-	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string OwnerId  
-	   {
-	    
-	     get
-		{
-		   return ownerId;
-		 }
-		 set
-		 {
-		   if(ownerId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OwnerId",OldValue=ownerId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   ownerId=value;
-		   }
-			
-		 }
-	   }
 	  private string statusCode ;
 	  	  
        
@@ -292,29 +269,6 @@ namespace Logitude.Workflow.BL.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusName",OldValue=statusName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   statusName=value;
-		   }
-			
-		 }
-	   }
-	  private string ownerName ;
-	  	  
-       
-	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string OwnerName  
-	   {
-	    
-	     get
-		{
-		   return ownerName;
-		 }
-		 set
-		 {
-		   if(ownerName != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OwnerName",OldValue=ownerName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   ownerName=value;
 		   }
 			
 		 }

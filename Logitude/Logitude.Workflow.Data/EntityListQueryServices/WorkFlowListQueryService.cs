@@ -42,14 +42,10 @@ namespace Logitude.Workflow.Data.EntityListQueryServices
 					                          Name = a.Name,
 					
 					                          Description = a.Description,
-					
-					                          OwnerId = a.OwnerId,
 
 											  StatusCode = a.StatusCode,
 
 											  StatusName = a.Status != null ? a.Status.Name : null,
-
-											  OwnerName = a.Owner != null ? a.Owner.Contact != null ? a.Owner.Contact.EnglishName : null : null,
 
 											  CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact != null ? a.CreatedByUser.Contact.EnglishName : null : null,
 

@@ -34,20 +34,5 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 
             entityPM.WorkFlowVersions = WorkflowVersions;
         }
-
-        //private void BuildSearchFields(WorkFlowPM entityPM, WorkFlow entityPOCO)
-        //{
-        //    string searchFields = "";
-        //    MethodHelper.AddToSearchFields(ref searchFields, entityPM.x);
-        //    MethodHelper.AddToSearchFields(ref searchFields, entityPM.y);
-        //    UserRepository userRepository = new UserRepository(entityPOCO.Tenant);
-        //    User user = userRepository.GetSingleUser(entityPM.OwnerId, entityPM.Tenant);
-        //    if (user != null)
-        //    {
-        //        MethodHelper.AddToSearchFields(ref searchFields, user.Contact.EnglishName);
-        //    }
-        //    entityPM.SearchFields = searchFields;
-        //    entityPOCO.SearchFields = searchFields;
-        //}
     }
 }

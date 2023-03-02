@@ -33,6 +33,8 @@ export class ConditionsComponent extends BaseComponent implements OnInit, OnChan
     public IsValidConditions: boolean = true;
     public ConditionsCounter: number = 1;
 
+    public ComboBoxMaxHeight: number = 120;
+
     public ConditionOperationsItems: ListItem[] = new ConditionOperationsList().Items;
 
     constructor() {
