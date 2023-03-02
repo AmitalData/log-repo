@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs">
+  <Sql Version="1">
+	  <![CDATA[
+	 update internationalsites set countrytypecode= substring(code,0,2)
+ ]]>
+
+  </Sql>
+
+  <Oracle Version="1">
+    <![CDATA[
+
+ update internationalsites set countrytypecode= substr(code,0,2);    
+ ]]>
+  </Oracle>
+</Script>
