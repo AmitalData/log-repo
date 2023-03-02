@@ -204,7 +204,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
 
         for (let i = 0; i < this._SelectedLines.Length; i++) {
             const selectedTransaction = this._SelectedLines.Collection[i];
-            if (!this.checkClosedMonth(new Date(selectedTransaction.AccountingDate))) {
+            if (this.checkClosedMonth(new Date(selectedTransaction.AccountingDate))) {
 
                 let lineErrorMessage = TextCodeTranslator.Translate('Journal.RE.ReconcilePeriodClosed');
 
