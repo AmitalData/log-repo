@@ -38,6 +38,37 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 {
     public class GlobalDomainController : ApiController
     {
+        public HttpResponseMessage GetTenantManagmentTTY(string tty, int id)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                if (string.IsNullOrEmpty(tty))
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, "");
+                }
+
+                IGlobalContext objectContext = GlobalContext.GetContext();
+                TenantManagementRepository entityRepository = new TenantManagementRepository(objectContext);
+                IQueryable<TenantManagement> iQueryable = entityRepository.GetAllTenants();
+                var duplicationMsg = "";
+                var tenantManagmentWithTTY = iQueryable.Where(d => d.TTY == tty && d.Id != id).ToList();
+                if (tenantManagmentWithTTY != null && tenantManagmentWithTTY.Count() > 0)
+                {
+                    var tenantsWithTheSameTTY = String.Join(",", tenantManagmentWithTTY.Select(a => a.Id));
+                    duplicationMsg = "This PIMA is already used by another tenant (" + tenantsWithTheSameTTY + "), confirm using it again.";
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, duplicationMsg);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         public HttpResponseMessage GetCheckDigitalPortalAddsOn(int tenant)
         {
             try
