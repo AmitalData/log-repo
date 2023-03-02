@@ -852,7 +852,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                         var line = new LineModel(result[i], this,-1);
                         array.push(line);
                         //this.MarkIsChecked.emit({ MyRecord: result[i], AllRecords: result });
-                        this.FireCheckBoxChecked.emit({ rowData: line.LedgerTransactionPM, IsChecked: true, RowIndex: -1, ById: true });
+                        // this.FireCheckBoxChecked.emit({ rowData: line.LedgerTransactionPM, IsChecked: true, RowIndex: -1, ById: true });
                     }
                     this.SelectedLines.InsertCollection(array);
                     //this.SelectedLines.Length = this.SelectedLines.length;
