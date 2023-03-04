@@ -15,6 +15,7 @@ namespace Logitude.BL.DataContracts
         public string BaseCurrencyCode { get; set; }       
         public DateTime? ValueDate { get; set; }        
         public double? Rate { get; set; }
+        public int? Unit { get; set; }
         public DateTime? LogDateTime { get; set; }
         public int? HistoryCount { get; set; }
         public string UpdatedByUderId { get; set; }

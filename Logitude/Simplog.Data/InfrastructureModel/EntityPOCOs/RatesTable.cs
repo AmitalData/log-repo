@@ -14,6 +14,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string BaseCurrencyId { get; set; }
         public string ForeignCurrencyId { get; set; }
         public double? Rate { get; set; }
+        public int? Unit { get; set; }
         public DateTime? ValueDate { get; set; }
         public DateTime LogDateTime { get; set; }
 

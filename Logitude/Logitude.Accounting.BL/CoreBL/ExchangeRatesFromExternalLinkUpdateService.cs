@@ -51,9 +51,10 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             string currencyCode = currencyNode["Key"]?.InnerText;
             string rate = currencyNode["CurrentExchangeRate"]?.InnerText;
+            string unit = currencyNode["Unit"]?.InnerText;
             string lastUpdateDate = currencyNode["LastUpdate"]?.InnerText;
 
-            RateUpdate rateUpdate = CreateRateUpdateInstance(currencyCode, rate, lastUpdateDate);
+            RateUpdate rateUpdate = CreateRateUpdateInstance(currencyCode, rate,unit, lastUpdateDate);
             
             return rateUpdate;
         }
@@ -65,7 +66,7 @@ namespace Logitude.Accounting.BL.CoreBL
             return ratesUpdate;
         }
 
-        private RateUpdate CreateRateUpdateInstance(string currencyCode, string rate, string date)
+        private RateUpdate CreateRateUpdateInstance(string currencyCode, string rate,string unit, string date)
         {
             Currency currency = new Currency()
             {
@@ -76,6 +77,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 Currency = currency,
                 Rate = Double.Parse(rate),
+                Unit = Int16.Parse(unit),
                 RateDate = DateTime.Parse(date),
             };
         }
