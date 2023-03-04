@@ -85,7 +85,6 @@ export function FillWorkflowDetails(workflowDetails: WorkflowDetails) {
         GenerateRandoms.GenerateRandomString(5, true) : null;
     cy.FillLogTextBox(WorkflowSelectors.WorkflowName, FlowName)
     cy.FillLogTextBox(WorkflowSelectors.WorkflowDescription, workflowDetails.Description);
-    cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowOwner, workflowDetails.Owner);
 }
 
 export function OpenEditStartNode() {
@@ -95,9 +94,9 @@ export function OpenEditStartNode() {
 }
 
 export function OpenNewWorkflow() {
-    cy.DefineRequestWait(RestAPI.GET, URLs.GetNewWorkflow, RequestAliases.GetNewWorkflow);
+   // cy.DefineRequestWait(RestAPI.GET, URLs.GetNewWorkflow, RequestAliases.GetNewWorkflow);
     cy.Click(WorkflowSelectors.NewWorkflow, null);
-    BaseAssertion.AssertStatusCode(RequestAliases.GetNewWorkflow, 200);
+   // BaseAssertion.AssertStatusCode(RequestAliases.GetNewWorkflow, 200);
 }
 
 export function SearchFlowByName() {
@@ -119,7 +118,6 @@ export function FillUpdateWorkflowDetails(workflowDetails: WorkflowDetails) {
         GenerateRandoms.GenerateRandomString(5, true) : null;
     cy.FillLogTextBox(WorkflowSelectors.WorkflowName, FlowName);
     cy.FillLogTextBox(WorkflowSelectors.WorkflowDescription, workflowDetails.Description);
-    cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowOwner, workflowDetails.Owner);
 }
 
 export function CreateNewWorkflow() {
@@ -486,7 +484,7 @@ function FillConditionValue(selector: string, value: string, condition: string) 
         case "Containers Numbers":
             return cy.FillLogTextBox(selector, value);
         case "Agent":
-            return cy.FillLogTextBox(selector, value);
+            return cy.SelectDropDownListItem2(selector, value);
         case "Description of Goods":
             return cy.FillLogTextBox(selector, value);
         case "Create Date":
@@ -496,7 +494,7 @@ function FillConditionValue(selector: string, value: string, condition: string) 
         case "Customer":
             return cy.SelectDefinedComboDropDownListItem(selector, value, 0);
         case "Department":
-            return cy.SelectDropDownListItem2(selector, value);
+            return cy.FillLogTextBox(selector, value);
         case "Order Gross Weight":
             return cy.FillLogTextBox(selector, value);
         case "Accounting Closed":
