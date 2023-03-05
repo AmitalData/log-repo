@@ -164,6 +164,11 @@ export class WorkFlowMenuButtonsHandler {
     handleActivateWorkflowResponse(data: WorkFlowVersionPM) {
         this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, UpdatedVersion: data.Id }
         this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, ClickedVersionRow: null }
+        this.EntityPM.StatusCode = data.StatusCode;
+        this.EntityPM.Entity = data.Entity;
+        this.EntityPM.Trigger = data.Trigger;
+        this.EntityPM.FlowJson = data.FlowJson;
+        this.EntityPM.IsDirty = false;
         this.entityArgs.SendMessage("WorkflowVersionsUpdated");
     }
 
