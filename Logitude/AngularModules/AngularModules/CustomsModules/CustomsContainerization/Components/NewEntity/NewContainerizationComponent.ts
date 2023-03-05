@@ -548,6 +548,12 @@ export class NewContainerizationComponent extends BaseComponent {
 
 
                                 if (response.Result.list[0].Id == "0") {
+                                    SessionLocator.SelectedSession.StopBusyIndicator();
+                                    myConfirmWindow.Show(`ההמכלה עם מזהי המטען: `+this.entityPM.ExistInCustoms+` קיימת במכס וכל עוד לא בוטלה לא ניתן יהיה להשתמש במונה ההמכלה הספציפי`);
+                                    myConfirmWindow.IsYesEnabled = false;
+
+                                }
+                                else if (response.Result.list[0].Id == "0") {
                                         SessionLocator.SelectedSession.StopBusyIndicator();
                                         myConfirmWindow.Show(`מתוך המכלה מבוטלת ניתן לעדכן המכלה אחת בלבד`);
                                         myConfirmWindow.IsYesEnabled = false;

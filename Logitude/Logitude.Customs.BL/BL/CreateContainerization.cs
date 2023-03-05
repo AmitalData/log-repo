@@ -27,7 +27,28 @@ namespace Logitude.Customs.BL.BL
             DeclarationRepository declarationRepository = new DeclarationRepository(context);
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(declarationRepository);
 
-            var list = declarationQueryService.GetContainerizationUniqueConsignment(connectedDeclarations);       
+            var list = declarationQueryService.GetContainerizationUniqueConsignment(connectedDeclarations);
+            if (entityPM.ContainerizationStatus == "3" && !string.IsNullOrEmpty(entityPM.ExistInCustoms))
+            {
+                var IsExist = list.Any(x =>
+                     ((!string.IsNullOrEmpty(x.CargoTypeCode) ? (x.CargoTypeCode) : "") + "-" +
+                              (!string.IsNullOrEmpty(x.ManifestNumber) ? (x.ManifestNumber) : "") + "-" +
+                              (!string.IsNullOrEmpty(x.SecondCargoId) ? (x.SecondCargoId) : "") + "-" +
+                              (!string.IsNullOrEmpty(x.ThirdCargoId) ? (x.ThirdCargoId) : "")) == entityPM.ExistInCustoms
+
+                 );
+
+                if (!IsExist)
+                {
+                    List<ContainerizationDetails> listCD = new List<ContainerizationDetails>();
+                    ContainerizationDetails CD = new ContainerizationDetails();
+                    CD.Id = "1";
+                    CD.ContainerizationNumber = "1";
+                    CD.Tenant = 0;
+                    listCD.Add(CD);
+                    return listCD;
+                }
+            }
             int counter = 0;
 
             var containerizationListKeys = new List<string>();

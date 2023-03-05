@@ -39,7 +39,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;סטטוסים להמכלה&quot;"
   DefaultText="&quot;Containerization Status Code&quot;"
-  Code="&quot;012e&quot;"
+  Code="&quot;7ce3&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -325,8 +325,8 @@
   <Records>
     <Record
       Code="&quot;1&quot;"
-      Name="&quot;המכלה תקינה, טרם הותרה&quot;"
-      SearchFields="&quot;המכלה תקינה, טרם הותרה&quot;" />
+      Name="&quot;המכלה תקינה&quot;"
+      SearchFields="&quot;המכלה תקינה&quot;" />
     <Record
       Code="&quot;2&quot;"
       Name="&quot;המכלה שגויה&quot;"
