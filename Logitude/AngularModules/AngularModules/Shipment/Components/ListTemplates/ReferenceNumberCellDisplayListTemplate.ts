@@ -31,8 +31,9 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
                 </td>
                 <td style="width:100%;">
                         <div style="text-indent: 10px; overflow: hidden; text-overflow: ellipsis;float:left; position: absolute;top: 0;bottom: 0;left: 0;right: 0;">
+                        <span style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;" *ngIf="fieldName == 'ForwarderShipmentNumber'">{{rowData ? (rowData['ForwarderShipmentNumber'] ? rowData['ForwarderShipmentNumber'] : rowData['CustomerReference1']) : ''}}</span>
                         <span style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;" *ngIf="fieldName == 'My Shipments'">{{rowData ? rowData['CustomerReference1']:''}}</span>
-                        <span style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;" *ngIf="fieldName != 'My Shipments'">{{rowData ? rowData['ForwarderShipmentNumber']:''}}</span>
+                        <span style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;" *ngIf="fieldName != 'My Shipments' && fieldName != 'ForwarderShipmentNumber'">{{rowData ? rowData['ForwarderShipmentNumber']:''}}</span>
                         </div>
                 </td>
                 </tr>
