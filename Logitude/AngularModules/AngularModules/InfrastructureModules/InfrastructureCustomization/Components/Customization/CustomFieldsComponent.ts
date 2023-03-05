@@ -29,7 +29,7 @@ export class CustomFieldsComponent {
     private MaxNumberOfCustomFields: number;
     public IsCustomFieldsMenue: boolean = false;
     public AllowCustomFields: boolean = false;
-
+    public IsPartner: boolean;
     public customizationEditComponent: CustomizationEditComponent;
 
     constructor() {
@@ -50,7 +50,7 @@ export class CustomFieldsComponent {
         this.ObjectTableName = args['ObjectTableName'];
         this.MaxNumberOfCustomFields = args['MaxNumberOfCustomFields'];
         this.LoadCustomFields();
-        
+        this.IsPartner = this.IsPartnerType();
         //this.BuildItemsSource();
     }
     public LoadCustomFields() {
@@ -122,7 +122,13 @@ export class CustomFieldsComponent {
         });
 
     }
-
+    IsPartnerType(): boolean {
+        let partnerTypes: string[] = ["Accounting Partner", "Agent", "AirLine", "Custom Clearance", "Custom Agent", "Customs Shipper", "Coloader", "Customer", "Freelancer", "Potential Customer", "Participant",
+            "Shipping Agent", "Shipping Line", "Trucker", "Vendor", "Warehouse"];
+        if (partnerTypes.indexOf(this.ObjectTableName) > -1)
+            return true;
+        return false;
+    }
     EditLine(item) {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Edit Custom Field";

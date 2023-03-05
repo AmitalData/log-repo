@@ -17,7 +17,7 @@
                                     <div></div>
                                 </td>
                                 <td *ngIf="!this.IsCustomFieldsMenue" style="width: 20px; padding-right: 2px;float:right;vertical-align:central;">
-                                    <IconButton [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsAddButtonEnabled && AllowCustomFields" (click)="AddCustomField()"></IconButton> <!--(click)="DataContext.AddPackageItemMethod()" [disabled]="!DataContext.IsEditingEnabled"-->
+                                    <IconButton *ngIf="!IsPartner" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsAddButtonEnabled && AllowCustomFields" (click)="AddCustomField()"></IconButton> <!--(click)="DataContext.AddPackageItemMethod()" [disabled]="!DataContext.IsEditingEnabled"-->
                                 </td>
                             </tr>
                         </table>
@@ -66,7 +66,7 @@
                                 </log-column>
 
                                 <!-- Buttons -->
-                                <log-column [width]="'30'" [Alignment]="'left'">
+                                <log-column [width]="'30'" [Alignment]="'left'" *ngIf="!IsPartner">
                                     <ng-template let-item>
                                         <log-cell-template [IgnoreMods]="true">
                                             <IconButton [DataCy]="item.FullNameTextCodeCode" [Name]="'edit'" [IsSmall]="true"
