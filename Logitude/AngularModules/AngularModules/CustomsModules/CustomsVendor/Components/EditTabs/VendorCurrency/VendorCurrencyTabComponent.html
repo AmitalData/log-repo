@@ -131,7 +131,7 @@
                     <!-- footer -->
                     <tr style="height: 28px;">
                         <td colspan="3" style="direction:ltr;">
-                            <button class="RedButton" style="width: 100px;" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}} מטבעות ספק</button>
+                            <button class="RedButton" style="width: 100px;" [disabled]="!IsDirty" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}} מטבעות ספק</button>
 
                         </td>
                     </tr>
