@@ -73,8 +73,8 @@ namespace WebFreight.Web
                 LogitudeSettings.DatabaseManagementSystem = dbms;
                 LogitudeSettings.DebugKey = System.Configuration.ConfigurationManager.AppSettings.Get("DebugKey");
                 FillAppSettings();
-                Thread settingsThread = new Thread(HandleSettingsChanges);
-                settingsThread.Start();
+                //Thread settingsThread = new Thread(HandleSettingsChanges);
+                //settingsThread.Start();
 
 
                 //SessionContextConfiguration conf = new SessionContextConfiguration();
