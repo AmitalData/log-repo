@@ -522,8 +522,7 @@ export class NewContainerizationComponent extends BaseComponent {
 
         }
         else {
-
-
+             
 
                 var windowArgs: any = {};
 
@@ -548,14 +547,19 @@ export class NewContainerizationComponent extends BaseComponent {
                             this.containerizationExtendedListService.CreateContainerizations(this.entityPM).subscribe((response: ServiceResponse) => {
 
 
+                                if (response.Result.list[0].Id == "0") {
+                                    SessionLocator.SelectedSession.StopBusyIndicator();
+                                    myConfirmWindow.Show(`ההמכלה עם מזהי המטען: `+this.entityPM.ExistInCustoms+` קיימת במכס וכל עוד לא בוטלה לא ניתן יהיה להשתמש במונה ההמכלה הספציפי`);
+                                    myConfirmWindow.IsYesEnabled = false;
 
-                                    if (response.Result.list[0].Id == "0") {
+                                }
+                                else if (response.Result.list[0].Id == "0") {
                                         SessionLocator.SelectedSession.StopBusyIndicator();
                                         myConfirmWindow.Show(`מתוך המכלה מבוטלת ניתן לעדכן המכלה אחת בלבד`);
                                         myConfirmWindow.IsYesEnabled = false;
 
-                                    }
-                                    else {
+                                }
+                                else {
                                         let confirmWindow = new ConfirmWindow();
                                         confirmWindow.Title = "המכלות שנוצרו";
                                         confirmWindow.Width = 350;
