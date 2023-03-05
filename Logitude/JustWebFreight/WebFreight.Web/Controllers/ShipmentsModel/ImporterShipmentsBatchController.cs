@@ -1032,11 +1032,11 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             {
                 RemoveExceptionDetails(entityPM, "Customs Clearance");
             }
-            else if (entityPM.DirectionId == "E" && entityAM.HasException && entityAM.StatusCode == "ARR" && IsRemoveExceptionLogicEnabled(entityAM.Tenant))
+            else if (entityPM.DirectionId == "E" && entityAM.HasException && entityAM.StatusCode == "ARR" && IsRemoveExceptionLogicEnabled(entityAM.ImporterTenant))
             {
                 RemoveExceptionDetails(entityPM, "Shipment Already arrived");
             }
-            else if (entityPM.DirectionId == "E" && entityAM.HasException && IsRemoveExceptionLogicEnabled(entityAM.Tenant))
+            else if (entityPM.DirectionId == "E" && entityAM.HasException && IsRemoveExceptionLogicEnabled(entityAM.ImporterTenant))
             {
                 HandleRemoveExceptionDetailsByEntityStatusWeight(entityAM, entityPM);
             }

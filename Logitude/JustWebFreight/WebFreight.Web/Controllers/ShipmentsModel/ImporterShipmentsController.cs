@@ -1276,11 +1276,11 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             {
                 RemoveExceptionDetails(entityPM, "Customs Clearance");
             }
-            else if (entityPM.DirectionId == "E" && entityAM.HasException && shipmentStatus != null && shipmentStatus.Code == "ARR" && IsRemoveExceptionLogicEnabled(entityAM.Tenant))
+            else if (entityPM.DirectionId == "E" && entityAM.HasException && shipmentStatus != null && shipmentStatus.Code == "ARR" && IsRemoveExceptionLogicEnabled(entityAM.ImporterTenant))
             {
                 RemoveExceptionDetails(entityPM, "Shipment Already arrived");
             }
-            else if (entityPM.DirectionId == "E" && entityAM.HasException && shipmentStatus != null && IsRemoveExceptionLogicEnabled(entityAM.Tenant))
+            else if (entityPM.DirectionId == "E" && entityAM.HasException && shipmentStatus != null && IsRemoveExceptionLogicEnabled(entityAM.ImporterTenant))
             {
                 HandleRemoveExceptionDetailsByEntityStatusWeight(entityPM, shipmentStatus);
             }
