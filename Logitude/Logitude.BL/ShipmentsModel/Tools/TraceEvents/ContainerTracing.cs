@@ -630,26 +630,102 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
         private void TracArrivedPOD()
         {
-            if ((containerPM.ActualPODVesselArrival != null && container.ActualPODVesselArrival == null) && containerPM.ShipmentMainCarriageATA == null)
+            if ((containerPM.ActualPODVesselArrival != null && container.ActualPODVesselArrival == null) && !CheckShipmentLastArrivalDate())
             {
                 this.DeleteTraceEvent("ARPD");
                 this.CreateTraceEventWithOutNotes("ARPD", containerPM.ActualPODVesselArrival);
             }
-            else if ((containerPM.ActualPODVesselArrival == null && container.ActualPODVesselArrival != null) && containerPM.ShipmentMainCarriageATA == null)
+            else if ((containerPM.ActualPODVesselArrival == null && container.ActualPODVesselArrival != null) && !CheckShipmentLastArrivalDate())
             {
                 this.DeleteTraceEvent("ARPD");
             }
-            else if ((containerPM.ShipmentMainCarriageATA != null && container.ShipmentMainCarriageATA == null) && containerPM.ActualPODVesselArrival == null)
+            else if (IsShipmentLastArrivalDateFilled() && containerPM.ActualPODVesselArrival == null)
             {
                 this.DeleteTraceEvent("ARPD");
                 this.CreateTraceEventWithOutNotes("ARPD", containerPM.ShipmentMainCarriageATA);
             }
-            else if ((containerPM.ShipmentMainCarriageATA == null && container.ShipmentMainCarriageATA != null) && containerPM.ActualPODVesselArrival == null)
+            else if (IsShipmentLastArrivalDateEvenRemoved() && containerPM.ActualPODVesselArrival == null)
             {
                 this.DeleteTraceEvent("ARPD");
             }
         }
 
+        private bool CheckShipmentLastArrivalDate()
+        {
+            if (!string.IsNullOrEmpty(containerPM.ShipmentTransshipment3ToId))
+            {
+                return containerPM.ShipmentTransshipment3ATA != null ? true : false;
+            }
+
+            if (!string.IsNullOrEmpty(containerPM.ShipmentTransshipment2ToId))
+            {
+                return containerPM.ShipmentTransshipment2ATA != null ? true : false;
+            }
+
+            if (!string.IsNullOrEmpty(containerPM.ShipmentTransshipment1ToId))
+            {
+                return containerPM.ShipmentTransshipment1ATA != null ? true : false;
+            }
+
+            if (!string.IsNullOrEmpty(containerPM.ShipmentMainCarriageToId))
+            {
+                return containerPM.ShipmentMainCarriageToId != null ? true : false;
+            }
+
+            return false;
+        }
+        private bool IsShipmentLastArrivalDateFilled()
+        {
+            if (!string.IsNullOrEmpty(containerPM.ShipmentTransshipment3ToId))
+            {
+                return containerPM.ShipmentTransshipment3ATA != null && container.ShipmentTransshipment3ATA == null ? true : false;
+            }
+
+            if (!string.IsNullOrEmpty(containerPM.ShipmentTransshipment2ToId))
+            {
+                return containerPM.ShipmentTransshipment2ATA != null && container.ShipmentTransshipment2ATA == null ? true : false;
+            }
+
+            if (!string.IsNullOrEmpty(containerPM.ShipmentTransshipment1ToId))
+            {
+                return containerPM.ShipmentTransshipment1ATA != null && container.ShipmentTransshipment1ATA == null ? true : false;
+            }
+
+            if (!string.IsNullOrEmpty(containerPM.ShipmentMainCarriageToId))
+            {
+                return containerPM.ShipmentMainCarriageATA != null && container.ShipmentMainCarriageATA == null ? true : false;
+            }
+
+            return false;
+        }
+        private bool IsShipmentLastArrivalDateEvenRemoved()
+        {
+            if (!string.IsNullOrEmpty(containerPM.ShipmentTransshipment3ToId))
+            {
+                return (containerPM.ShipmentTransshipment3ATA == null && container.ShipmentTransshipment3ATA != null)
+                    || (containerPM.ShipmentTransshipment3ATA == null && container.ShipmentTransshipment3ATA == null) ? true : false;
+            }
+
+            if (!string.IsNullOrEmpty(containerPM.ShipmentTransshipment2ToId))
+            {
+                return (containerPM.ShipmentTransshipment2ATA == null && container.ShipmentTransshipment2ATA != null)
+                    || (containerPM.ShipmentTransshipment2ATA == null && container.ShipmentTransshipment2ATA == null) ? true : false;
+            }
+
+            if (!string.IsNullOrEmpty(containerPM.ShipmentTransshipment1ToId))
+            {
+                return (containerPM.ShipmentTransshipment1ATA == null && container.ShipmentTransshipment1ATA != null) 
+                    || (containerPM.ShipmentTransshipment1ATA == null && container.ShipmentTransshipment1ATA == null) ? true : false;
+            }
+
+            if (!string.IsNullOrEmpty(containerPM.ShipmentMainCarriageToId))
+            {
+                return (containerPM.ShipmentMainCarriageATA == null && container.ShipmentMainCarriageATA != null)
+                    || (containerPM.ShipmentMainCarriageATA == null && container.ShipmentMainCarriageATA == null) ? true : false;
+            }
+
+            return false;
+        }
         private void TracDepartedPOD()
         {
             if ((containerPM.ActualPOLVesselDeparture != null && container.ActualPOLVesselDeparture == null) && containerPM.ShipmentMainCarriageATD == null)
