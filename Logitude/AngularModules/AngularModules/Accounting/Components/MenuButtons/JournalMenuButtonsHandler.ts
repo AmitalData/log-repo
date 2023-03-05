@@ -166,6 +166,7 @@ export class JournalMenuButtonsHandler {
 
 
         let IsVoidButtonEnabled: Boolean = this.EntityPM.AccountingEntityCode == JournalAccountingEntity ||
+            this.EntityPM.AccountingEntityCode == "12" ||
             this.EntityPM.AccountingEntityCode == RevaluationAccountingEntity ||
             this.EntityPM.AccountingEntityCode == AdjustmentAccountingEntity;
 
