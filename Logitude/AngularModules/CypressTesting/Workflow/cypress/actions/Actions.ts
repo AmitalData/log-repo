@@ -379,7 +379,7 @@ function FillConditionFieldName(IsList: boolean, index: number, FieldName: strin
             cy.get(WorkflowSelectors.WorkflowfieldsListTitle).contains(FieldName).eq(0).click()
         });
     } else {
-        cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowConditionField(index), FieldName);
+        cy.SelectDropDownListItemUsingSearch(WorkflowSelectors.WorkflowConditionField(index), FieldName);
         BaseAssertion.AssertStatusCode(RequestAliases.GetObjectFieldViews, 200);
     }
 }
@@ -517,11 +517,11 @@ function FillConditionValue(selector: string, value: string, condition: string) 
         case "Main Carriage Final ATA":
             return cy.FillDate("input" + selector, value);
         case "Profit Differences":
-            return cy.SelectDropDownListItem2(selector, value);
+            return cy.SelectDropDownListItemUsingSearch(selector, value);
         case "Containers Numbers":
             return cy.FillLogTextBox(selector, value);
         case "Agent":
-            return cy.SelectDropDownListItem2(selector, value);
+            return cy.FillLogTextBox(selector, value);
         case "Description of Goods":
             return cy.FillLogTextBox(selector, value);
         case "Create Date":
@@ -539,7 +539,7 @@ function FillConditionValue(selector: string, value: string, condition: string) 
         case "Notes":
             return cy.FillLogTextBox(selector, value);
         case "Main Carriage Transport Mode":
-            return cy.SelectDropDownListItem2(selector, value);
+            return cy.SelectDropDownListItemUsingSearch(selector, value);
         case "Incoterm":
             return cy.SelectDefinedComboDropDownListItem(selector, value, 0);
         case "Main Carriage ATA":
