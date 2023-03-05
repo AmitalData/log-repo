@@ -118,6 +118,11 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
                 this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
                 this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
 
+                if (this.isLoadHousesRequested) {
+                    this.isLoadHousesRequested = false;
+                    this.CurrentSession.SessionEvent.emit("RefreshConnections");
+                }
+
                 this.UpdateFiltersFields();
                 this.LoadAllHouses();
             }
