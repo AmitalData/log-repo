@@ -886,6 +886,25 @@
                                         </ng-template>
                                     </log-column>
 
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [SortFieldName]="'InternalNote'"
+                                                [header]="'LedgerTransaction.F.InternalNote' | TextCodeTranslationPipe" [width]="'120'"
+                                                [binding]="'InternalNote'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    
+                                                    <img *ngIf="!item.LedgerTransactionPM.InternalNote" style="vertical-align: middle; display: block;" src="./Images/Notes_notexists.png" />
+                                                    <img *ngIf="item.LedgerTransactionPM.InternalNote" style="vertical-align: middle; display: block;" src="./Images/Notes_exists.png" />
+                                                </div>
+                                           
+                                                <div  style="vertical-align: middle; display: block;">
+                                                       <IconButton [Name]="'Edit'" [IsSmall]="true"  [Left]="3" (click)="OpenLedgerTransactionInternalNote(item.LedgerTransactionPM);$event.stopPropagation()"></IconButton>
+                                                 </div>
+
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
                                 </logitude-edit-grid>
                             </div>
                         </td>
@@ -1027,7 +1046,8 @@
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
-
+                                    
+                                   
                                 </logitude-edit-grid>
 
                             </div>
