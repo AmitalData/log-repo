@@ -104,7 +104,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                     allowedCount = objectTable.MaxNumberOfCustomFields;
                 }
 
-                else if(objectTable.Name == "Shipment" || objectTable.Name == "Quote" || objectTable.Name == "Opportunity" || objectTable.Name == "Container" || objectTable.IsCustom)
+                else if(objectTable.Name == "Shipment" || objectTable.Name == "Quote" || objectTable.Name == "Opportunity" || objectTable.Name == "Container" || objectTable.Name == "Card" || objectTable.ApplyGenericCustomFields || objectTable.IsCustom)
                 {
                     allowedCount = objectTable.MaxNumberOfCustomFields;
                 }

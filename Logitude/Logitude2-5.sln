@@ -350,6 +350,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.DashboardModule.BL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.DashboardModule.MetaDataTool", "Logitude.DashboardModule.MetaDataTool\Logitude.DashboardModule.MetaDataTool.csproj", "{15DB9300-FB4E-415F-AEB4-965365250127}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogitudeCardsCustomFields", "LogitudeCardsCustomFields\LogitudeCardsCustomFields.csproj", "{BDEB7465-E507-4461-A884-5ECC88B8129A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		All Projects|Any CPU = All Projects|Any CPU
@@ -5556,6 +5558,48 @@ Global
 		{15DB9300-FB4E-415F-AEB4-965365250127}.SingleImage|Mixed Platforms.Build.0 = Debug|Any CPU
 		{15DB9300-FB4E-415F-AEB4-965365250127}.SingleImage|x86.ActiveCfg = Debug|Any CPU
 		{15DB9300-FB4E-415F-AEB4-965365250127}.SingleImage|x86.Build.0 = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.All Projects|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.All Projects|Any CPU.Build.0 = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.All Projects|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.All Projects|Mixed Platforms.Build.0 = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.All Projects|x86.ActiveCfg = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.All Projects|x86.Build.0 = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.CD_ROM|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.CD_ROM|Any CPU.Build.0 = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.CD_ROM|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.CD_ROM|Mixed Platforms.Build.0 = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.CD_ROM|x86.ActiveCfg = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.CD_ROM|x86.Build.0 = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.Debug|x86.Build.0 = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.DVD-5|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.DVD-5|Mixed Platforms.Build.0 = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.DVD-5|x86.ActiveCfg = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.DVD-5|x86.Build.0 = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.None|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.None|Any CPU.Build.0 = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.None|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.None|Mixed Platforms.Build.0 = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.None|x86.ActiveCfg = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.None|x86.Build.0 = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.Release|x86.ActiveCfg = Release|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.Release|x86.Build.0 = Release|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.SingleImage|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.SingleImage|Any CPU.Build.0 = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.SingleImage|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.SingleImage|Mixed Platforms.Build.0 = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.SingleImage|x86.ActiveCfg = Debug|Any CPU
+		{BDEB7465-E507-4461-A884-5ECC88B8129A}.SingleImage|x86.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -5698,6 +5742,7 @@ Global
 		{156BDC54-4D7D-4964-9B48-C0B86B571DE9} = {5D38F335-A7F5-4DD4-9F8A-379F493CC98E}
 		{D3F9042C-8B29-4882-BCCE-73AB5A06290B} = {5D38F335-A7F5-4DD4-9F8A-379F493CC98E}
 		{15DB9300-FB4E-415F-AEB4-965365250127} = {5D38F335-A7F5-4DD4-9F8A-379F493CC98E}
+		{BDEB7465-E507-4461-A884-5ECC88B8129A} = {EA704120-33C4-4C09-8831-B640B652A926}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {200673A7-D16A-4B01-A6B6-BEE63415EBD0}
