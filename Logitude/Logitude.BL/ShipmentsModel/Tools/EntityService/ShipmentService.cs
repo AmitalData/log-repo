@@ -3164,16 +3164,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             shipmentAdditionalCloudData.PaymentDateTime = entityPM.PaymentDateTime;
                             AddPaymentReceivedToQueue();
                         }
-                        if (true)
+                        AddVIRExternalTaskQueue();
+                        if (!string.IsNullOrEmpty(entityPM.UserIdNumberXMLData))
                         {
-                            AddVIRExternalTaskQueue();
                             shipmentAdditionalCloudData.IsUserIDNumberRequired = entityPM.IsUserIDNumberRequired;
                             shipmentAdditionalCloudData.UserIdNumberXMLData = entityPM.UserIdNumberXMLData;
-                            //shipmentAdditionalCloudData.UserIdNumberUpdateDate = entityPM.UserIdNumberUpdateDate;
-                            //shipmentAdditionalCloudData.UserIdNumber = entityPM.UserIdNumber;
                         }
                         shipmentAdditionalCloudDataRepository.Update(shipmentAdditionalCloudData);
-                        //shipmentAdditionalCloudDataRepository.SubmitChanges();
                     }
                 }
                 #endregion
