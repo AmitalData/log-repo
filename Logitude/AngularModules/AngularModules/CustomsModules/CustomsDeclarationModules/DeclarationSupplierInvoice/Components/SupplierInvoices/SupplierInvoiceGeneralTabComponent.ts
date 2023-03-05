@@ -69,6 +69,10 @@ import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/componen
 import { IncotemrsFileValidationList } from 'Customs/EntityLists/IncotemrsFileValidationList';
 import { customsItemsService } from 'QuoteOPM/Utilities/customsItems.service';
 import { SupplierInvoiceSharedService } from './Services/SupplierInvoiceSharedService';
+import { CustomMessageProgressComponent } from 'CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
+import { CustomsItemDetailsQueryRequestParams } from 'Customs/DataContract/RequestParams/CustomsItemDetailsQueryRequestParams';
+import { SendRequestVIA } from 'Customs/DataContract/RequestParams/RequestParamsBase';
+import { IIGGeneralMessagesService } from 'Customs/Services/WebServices/IIGGeneralMessagesService';
 import { VendorCurrencyService } from 'Customs/Services/WebServices/VendorCurrencyService';
 
 
@@ -197,7 +201,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     ngOnInit() {
         if (this.allowExport) {
             this.TooltipCopy = "שכפל שורה"; 
-            this.TooltipCertificate = "םישורים"
+            this.TooltipCertificate = "אישורים"
             this.TooltipCar = "נתוני רכב";
             this.TooltipEdit = "עריכת פריט";
             this.setAdjustmentsWarning(this.IncotermCode)
@@ -3675,7 +3679,8 @@ export class SupplierInvoiceItemLine extends BaseComponent {
 
 
     public get InvoiceQuantityType() { return this.entityPM.InvoiceQuantityType; }
-    public set InvoiceQuantityType(newValue: string) { this.entityPM.InvoiceQuantityType = newValue; }
+    public set InvoiceQuantityType(newValue: string) {  
+        this.entityPM.InvoiceQuantityType = newValue; }
 
     public get InvoiceQuantityTypeName() { return this.entityPM.InvoiceQuantityTypeName; }
     public set InvoiceQuantityTypeName(newValue: string) { this.entityPM.InvoiceQuantityTypeName = newValue; }
@@ -3745,10 +3750,11 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         ItemPriceTextBox.TextValue = this.oldvalue;
     }
 
-    GetQuantityType(isChangeInvoiceQuantityType: boolean = true) {
+    GetQuantityType(isChangeInvoiceQuantityType: boolean = true ,calcInvoiceQuantityType: boolean = false) {
+        
         if (this.ClassificationCode != null) {
             var keys = Object.keys(this.Parent.ClasificationQtyTypes);
-            if (keys.indexOf(this.ClassificationCode) > -1) {
+            if (keys.indexOf(this.ClassificationCode) > -1 && !calcInvoiceQuantityType) {
                 var result: string = this.Parent.ClasificationQtyTypes[this.ClassificationCode];
                 if (result) {
                     this.QunatityTypeCode = "(" + result + ")";
@@ -3764,14 +3770,18 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                 var code = this.ClassificationCode.toString().slice(0, this.ClassificationCode.toString().length - 1);
                 this.Parent.quantityTypeMessageService.GetQuantityType(code, this.Parent.declarationPM.Direction === 'E').subscribe((myServiceResponse: ServiceResponse) => {
                     if (!myServiceResponse.HasError) {
-
+                        this.Parent.declarationPM.ProcedureCurrentCode;
 
                         if (!myServiceResponse.HasError) {
                             if (myServiceResponse.Result) {
                                 this.QunatityTypeCode = "(" + myServiceResponse.Result + ")";
                             }
                             else {
-                                this.QunatityTypeCode = null;
+                                if(!calcInvoiceQuantityType){
+                                    this.Send8314()
+                                    this.QunatityTypeCode = null;
+                                }
+                               
                             }
 
 
@@ -3780,7 +3790,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                                     this.InvoiceQuantityType = myServiceResponse.Result;
                                 }
                             }
-                            if (!(keys.indexOf(this.ClassificationCode) > -1)) {
+                            if (!(keys.indexOf(this.ClassificationCode) > -1)|| calcInvoiceQuantityType) {
                                 this.Parent.ClasificationQtyTypes[this.ClassificationCode] = myServiceResponse.Result;
                             }
                             this.CurrentSession.QuantityTypeCodeLoadedEvent.emit({ ClassificationCode: this.ClassificationCode, QuantityTypeCode: this.QunatityTypeCode });
@@ -3812,7 +3822,45 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         }
 
     }
+    _IIGGeneralMessagesService: IIGGeneralMessagesService = new IIGGeneralMessagesService();
+    
+    Send8314(){
 
+            var currRequestParams = new CustomsItemDetailsQueryRequestParams();///Force new GUID On Each Send !!
+            currRequestParams.ValidToDate =new Date();
+            currRequestParams.Classification = this.ClassificationCode;
+            currRequestParams.CustomsBookType = this.Parent.declarationPM?.ProcedureCurrentName.indexOf("אוטונומיה")!=-1?3:this.Parent.declarationPM.Direction=='E'?2:1;
+    
+            currRequestParams.LoggingEnabled = true;
+            currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
+            currRequestParams.Tenant = SessionLocator.Tenant;
+            currRequestParams.RequestVIA = SendRequestVIA.WebServiceInteractive;
+            currRequestParams.ForcePersonalSign = false;
+            var ResponseData: any
+            CustomMessageProgressComponent
+                .ShowProgressBar(this.CurrentSession, currRequestParams.PBId, "שאילתא לנתוני פרט מכס", true)
+                .then((res) => {
+                    if(res){
+                        ResponseData=res;
+                        debugger
+                        if(!ResponseData.HasError)
+                           this.GetQuantityType(true,true)
+                    }
+                    
+                }
+                ).catch((err) => {
+                    
+                   
+                });
+    
+            this._IIGGeneralMessagesService.PostCustomsItemDetailsQuery(currRequestParams)
+                .subscribe((myServiceResponse: ServiceResponse) => {
+                   
+                });
+       
+    
+
+    }
     public pointers: CustomsDocumentPointerPM[];
     DeleteButtonClicked() {
         this.pointers = this.Parent.Pointers;
@@ -3985,6 +4033,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     }
 
     ClassificationKeyUp(event, logCellTemplate: any, classificationTextBox: any) {
+        
         var key = event.keyCode;
         if (key == 13) {
             this.OnClassificationLostFocus(logCellTemplate, classificationTextBox);
@@ -3992,6 +4041,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     }
 
     async OnClassificationLostFocus(logCellTemplate: any, classificationTextBox: any) {
+        
         var newValue = this.ClassificationCode;
         this.valid = true;
         this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", true, "");
@@ -4065,6 +4115,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             SessionLocator.SustainFocusOnCell = false;
 
             if (!AppTool.IsNullOrEmpty(this.ItemCode)) {
+                
                 //var itemCodeDetails = this.Parent.Parent.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
                 var itemCodeDetails = GITITEMCacheService.Instance.FirstItemCodeComponent(this.ItemCode);//.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
                 if (itemCodeDetails == null) {
@@ -4074,11 +4125,13 @@ export class SupplierInvoiceItemLine extends BaseComponent {
 
                 }
                 else {
+                    
                     if (itemCodeDetails.ClassificationCode != this.ClassificationCode || itemCodeDetails.ItemDescription != this.ItemDescription) {
                         itemCodeDetails.ClassificationCode = this.ClassificationCode;
                         itemCodeDetails.ItemDescription = this.ItemDescription;
                         itemCodeDetails.VendorNumber = this.Parent.vendorNumber;
                         if (GITITEMCacheService.Instance.IsUnitPURForItems) {
+                            
                             itemCodeDetails.InvoiceQuantityType = this.InvoiceQuantityType;
                         }
                         if (GITITEMCacheService.Instance.IsCountryPURForItems) {
@@ -4145,6 +4198,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             //tariffID = this.TradeAgreementCode;
         }
         if (GITITEMCacheService.Instance.IsUnitPURForItems) {
+            
             invoiceQuantityType = this.InvoiceQuantityType;
         }
         tariffID = this.TradeAgreementCode
@@ -4217,6 +4271,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                                         this.ClassificationCode = itemCodeDetails.ClassificationCode;
                                         this.ItemDescription = itemCodeDetails.ItemDescription;
                                         if (GITITEMCacheService.Instance.IsUnitPURForItems) {
+                                            
                                             this.InvoiceQuantityType = itemCodeDetails.InvoiceQuantityType;
                                         }
                                         if (/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
@@ -4413,6 +4468,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                                             item.OriginCountryName = partnersItem.OriginCountryName;
                                         }
                                         if (GITITEMCacheService.Instance.IsUnitPURForItems) {
+                                            
                                             item.InvoiceQuantityType = partnersItem.InvoiceQuantityType;
                                         }
                                         partnersItem.GITITEMCRs.
