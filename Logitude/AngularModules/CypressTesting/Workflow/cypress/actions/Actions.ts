@@ -15,6 +15,7 @@ import { PrimitiveVariableDetails } from "../models/PrimitiveVariableDetails";
 import { RecordVariableDetails } from "../models/RecordVariableDetails";
 import { AssignmentDetails } from "../models/AssignmentDetails";
 import { AssignVariablesDetails } from "../models/AssignVariablesDetails";
+import { GetEditableDetails } from "../models/GetEditableDetails";
 
 let ConditionCounter = 2;
 let ConditionGroupButton = 1;
@@ -474,6 +475,42 @@ export function AssertFieldDoseNotExists() {
     BaseAssertion.AssertElementContain('.ant-select-tree-dropdown', 'No Results Found')
 }
 
+//GetEditable
+function addGetEditableRecord(index: number) {
+    cy.get(WorkflowSelectors.WorkflowConnector(index)).find('img').click().then(() => {
+        cy.Click(WorkflowSelectors.WorkflowAddGetEditableRecordNode, null)
+    })
+}
+
+export function FilEditableRecordDetails(getEditablRecordDetails: GetEditableDetails, index: number) {
+    addGetEditableRecord(index);
+    let VariableName = getEditablRecordDetails.Name.toLocaleLowerCase() == "random" ?
+        GenerateRandoms.GenerateRandomString(5, true) : getEditablRecordDetails.Name;
+    cy.FillLogTextBox(WorkflowSelectors.WorkflowEditableRecordName, VariableName);
+    cy.ClickRadio(WorkflowSelectors.WorkflowGetRecordType);
+    fillGetRecordObject(getEditablRecordDetails.Object)
+    fillEditableRecordIDValue(getEditablRecordDetails.FilterRecord)
+}
+
+function fillGetRecordObject(recordObject: string) {
+    cy.get(WorkflowSelectors.WorkflowGetRecordObject).find(BaseSelectors.input).click().type(recordObject).then(() => {
+        cy.get(WorkflowSelectors.WorkflowfieldsListTitle).contains(recordObject).eq(0).click()
+    });
+}
+
+function fillEditableRecordIDValue(filterRecord: string) {
+    if(filterRecord == 'From Trigger record') {
+        cy.get(WorkflowSelectors.WorkflowEditableReordIDValue).find(BaseSelectors.input).click().type('Id').then(() => {
+            cy.get(WorkflowSelectors.WorkflowfieldsListTitle).contains('Id').eq(0).click()
+        });  
+    }
+}
+
+export function SaveGetEditableRecordWorkflow() {
+    CloseEditNodeWindow();
+    cy.DefineRequestWait(RestAPI.PUT, URLs.WorkflowVersionRequest, RequestAliases.PutWorkflowFlowBuilder);
+    cy.Click(WorkflowSelectors.WorkflowSaveDraft, null);
+}
 
 function FillConditionValue(selector: string, value: string, condition: string) {
     switch (condition) {
