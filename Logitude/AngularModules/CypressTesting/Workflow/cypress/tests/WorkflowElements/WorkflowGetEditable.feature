@@ -1,6 +1,6 @@
 @devTest
 Feature: Workflow node
-    The user open workflow list, open a flow, edit start configration, and save.
+    The user open workflow list, open a flow, edit start configration, declare primitive variable, and declare record variable .
 
     Scenario: create workflow
         Given the user logged in and navigates to automation workspace
@@ -18,19 +18,11 @@ Feature: Workflow node
         When save flow
         Then the flow should save successfully
 
-    Scenario: declare primitive variable
-        Given declare a primitive variable with following details
-            | Name         | random |
-            | DataType     | Text   |
-            | DefaultValue | random |
-
-        When save flow
-        Then the flow should save successfully
-
-    Scenario: declare record variable
-        And declare a Record variable with following details
-            | Name     | random  |
-            | DataType | Record  |
-            | Object   | Package |
+    Scenario: add editable shipment record
+        Given add editable record with following details
+            | Name         | Editable shipment   |
+            | RecordType   | Editable records    |
+            | Object       | Shipment            |
+            | FilterRecord | From Trigger record |
         When save flow
         Then the flow should save successfully
