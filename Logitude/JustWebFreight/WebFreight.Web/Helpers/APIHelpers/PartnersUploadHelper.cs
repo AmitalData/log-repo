@@ -1195,10 +1195,13 @@ namespace WebFreight.Web.Helpers.APIHelpers
         private void AddComputingPartnerTranslation(string code, string uploadingUniqueKey)
         {
             if (!AllowAddingComputingPartnerTranslation(code, uploadingUniqueKey)) return;
-            this.CreatTranslation(code, uploadingUniqueKey, computingPartnerTable);
+            this.CreatTranslation(code, uploadingUniqueKey);
         }
         private bool AllowAddingComputingPartnerTranslation(string code, string uploadingUniqueKey)
         {
+            if (computingPartnerTable == null)
+                return false;
+
             if (string.IsNullOrEmpty(code)) 
                 return false;
 
@@ -1207,7 +1210,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             return true;
         }
-        private void CreatTranslation(string code, string uploadingUniqueKey, ComputingPartnerTable computingPartnerTable)
+        private void CreatTranslation(string code, string uploadingUniqueKey)
         {
             ComputingPartnerTranslationPM computingPartnerTranslation = new ComputingPartnerTranslationPM()
             {
