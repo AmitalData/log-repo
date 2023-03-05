@@ -51,7 +51,8 @@ export class VendorCurrencyTabComponent extends BaseComponent {
     vendorCurrencyService:VendorCurrencyService=new VendorCurrencyService();
     VendorCurrencyList: ObservableCollection;
     line = 0;
-   
+
+    isDirty:boolean = false;
     RequestVIA: SendRequestVIA;
 
     private CurrentSession = SessionLocator.SelectedSession;
@@ -60,7 +61,8 @@ export class VendorCurrencyTabComponent extends BaseComponent {
         this.VendorCurrencyList = new ObservableCollection([]);
 
     }
-
+    get IsDirty() { return this.isDirty|| this.vendorCurrencyListPM.find(x=>x.IsDirty)?true:false; }
+   
     SetTabArgs(args: any, valdationErrorList: any[] = []) {
         this.EntityPM = args.EntityPM;
         this.IsNewEntity = args.IsNewEntity;
@@ -121,7 +123,7 @@ export class VendorCurrencyTabComponent extends BaseComponent {
 
 
        
-
+  
         var errors = [];
         this.FillValidationErrorList.emit(errors); // clear validation msgs
             this.vendorCurrencyListPM.forEach((item) => {
@@ -143,10 +145,12 @@ export class VendorCurrencyTabComponent extends BaseComponent {
                    message.YesButtonText = TextCodeTranslator.Translate('General.B.Ok');
                    message.ShowNoButton=false;
                    message.Show(TextCodeTranslator.Translate('Customs.VendorCurrency.O.UpdateCurrency'));
+                   this.vendorCurrencyListPM.forEach(x=>x.IsDirty=false); 
+                   this.isDirty=false;
                }
            })
         }
-    }
+}
  
     
     AddButonClicked() {
@@ -157,6 +161,7 @@ export class VendorCurrencyTabComponent extends BaseComponent {
 
               
                 this.VendorCurrencyList.Insert(new VendorCurrencyItemModel(newVendorCurrencyPM));
+                this.isDirty=true;
 
        
     }
@@ -170,6 +175,7 @@ export class VendorCurrencyTabComponent extends BaseComponent {
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
                     this.VendorCurrencyList.Remove(item);
+                    this.isDirty=true;
                 }
 
             });
@@ -188,6 +194,7 @@ export class VendorCurrencyItemModel extends BaseComponent {
     public ObjectTableName = "Customs.VendorCurrency";
     public DataContext = this;
 
+    public IsDirty = false;
     constructor(private vendorCurrencyPM: VendorCurrencyPM) {
         super();
         this.VendorCurrencyPM = vendorCurrencyPM;
@@ -221,6 +228,7 @@ export class VendorCurrencyItemModel extends BaseComponent {
     set Currency(value: string) {
         if (this.VendorCurrencyPM.Currency != value) {
             this.VendorCurrencyPM.Currency = value;
+            this.IsDirty = true;
 
         }
     }

@@ -54,6 +54,7 @@ export class AddressCurrencyTabComponent extends EditTabComponent {
     AddressCurrencyList: ObservableCollection;
     line = 0;
     isLoad=false;
+    isDirty:boolean = false;
     RequestVIA: SendRequestVIA;
     public UIProperties: UIProperties;
 
@@ -76,6 +77,8 @@ export class AddressCurrencyTabComponent extends EditTabComponent {
     });
 
     }
+    get IsDirty() { return this.isDirty|| this.AddressCurrencyListPM.find(x=>x.IsDirty)?true:false; }
+
     getRows() {
        
             let filters = new ApiQueryFilters();
@@ -143,6 +146,8 @@ export class AddressCurrencyTabComponent extends EditTabComponent {
                    message.YesButtonText = TextCodeTranslator.Translate('General.B.Ok');
                    message.ShowNoButton=false;
                    message.Show(TextCodeTranslator.Translate('Customs.VendorCurrency.O.UpdateCurrency'));
+                   this.AddressCurrencyListPM.forEach(x=>x.IsDirty=false); 
+                   this.isDirty=false;
                }
            })
         }
@@ -157,8 +162,9 @@ export class AddressCurrencyTabComponent extends EditTabComponent {
 
               
                 this.AddressCurrencyList.Insert(new AddressCurrencyItemModel(newAddressCurrencyPM));
+                this.isDirty=true;
 
-       
+
     }
     RemoveRow(item: AddressCurrencyItemModel) {
         if (!AppTool.IsNullOrEmpty(item)) {
@@ -170,6 +176,8 @@ export class AddressCurrencyTabComponent extends EditTabComponent {
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
                     this.AddressCurrencyList.Remove(item);
+                    this.isDirty=true;
+
                 }
 
             });
@@ -187,6 +195,7 @@ export class AddressCurrencyItemModel extends BaseComponent {
     public AddressCurrencyPM: AddressCurrencyPM = null;
     public ObjectTableName = "Customs.AddressCurrency";
     public DataContext = this;
+    public IsDirty = false;
 
     constructor(private addressCurrencyPM: AddressCurrencyPM) {
         super();
@@ -221,7 +230,7 @@ export class AddressCurrencyItemModel extends BaseComponent {
     set Currency(value: string) {
         if (this.AddressCurrencyPM.Currency != value) {
             this.AddressCurrencyPM.Currency = value;
-
+            this.IsDirty = true;
         }
     }
     get CurrencyTypeName() { return this.AddressCurrencyPM.CurrencyTypeName; }

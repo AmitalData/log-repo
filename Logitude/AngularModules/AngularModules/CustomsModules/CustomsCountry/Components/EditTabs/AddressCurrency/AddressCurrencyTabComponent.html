@@ -30,7 +30,7 @@
                           
                            
                             <div style="margin-left: 5px;">
-                              <button class="RedButton" style="height:21px" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}} מטבעות ארץ</button>
+                              <button class="RedButton" style="height:21px" [disabled]="!IsDirty"  (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}} מטבעות ארץ</button>
                            </div> 
                            <div>
                              <IconButton [Name]="'Add'" [IsSmall]="false" (click)="AddButonClicked()"></IconButton>
