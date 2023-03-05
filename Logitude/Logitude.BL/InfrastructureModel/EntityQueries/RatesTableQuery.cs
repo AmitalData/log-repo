@@ -136,7 +136,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                             Id = myRecord.Id,
                             Tenant = myRecord.Tenant,
                             ValueDate = myRecord.ValueDate,
-                            Rate = myRecord.Rate,
+                            Rate = getCurrencyRateAccordingUnit(myRecord),
+                            Unit = myRecord.Unit,
                             ForeignCurrencyId = myRecord.ForeignCurrency.Id,
                             ForeignCurrencyCode = myRecord.ForeignCurrency.Code,
                             ForeignCurrencyName = myRecord.ForeignCurrency.EnglishName,
@@ -149,6 +150,18 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             }
 
             return myResult;
+        }
+
+        public double getCurrencyRateAccordingUnit(RatesTable ratesTable)
+        {
+            if(ratesTable.Unit != null)
+            {
+                if(ratesTable.Unit > 0)
+                {
+                    return (double)(ratesTable.Rate * ratesTable.Unit);
+                }
+            }
+            return (double)ratesTable.Rate;
         }
 
         public RatesTablePM GetLastRateByValueDate(int tenant, string foreignCurrencyId, string baseCurrencyId, DateTime? date)

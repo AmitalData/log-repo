@@ -242,6 +242,7 @@ export class LastRate {
     ValueDate: Date;
     LogDateTime: Date;
     Rate: number;
+    Unit: number;
     HistoryCount: number;
     UpdatedByUserId: string;
     UpdatedByUserNameName: string; 

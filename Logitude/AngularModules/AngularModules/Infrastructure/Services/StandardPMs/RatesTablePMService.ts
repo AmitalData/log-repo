@@ -76,7 +76,7 @@ export class RatesTablePMService {
 
 				var mappedEntity: RatesTablePM = this.MapJsonToEntityPM(entityPM, false);
 				
-				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+				return this._http.post(this._apiUrl+"/UpdateRate", JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
 						map((response: HttpResponse<any>) => {
 
