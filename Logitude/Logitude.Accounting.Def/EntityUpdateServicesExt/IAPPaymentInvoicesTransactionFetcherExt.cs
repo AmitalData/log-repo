@@ -9,6 +9,6 @@ namespace Logitude.Accounting.Def.EntityUpdateServicesExt
 {
     public interface IAPPaymentInvoicesTransactionFetcherExt
     {
-        string GetInvoiceRecociliationsNumbers(string appaymentId, string accountId, int tenant, string invoiceNumber);
+        Tuple<LedgerTransactionPM, List<LedgerTransactionPM>> GetInvoicesLedgerTransactions(string appaymentId, string accountId, int tenant);
     }
 }

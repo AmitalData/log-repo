@@ -952,6 +952,10 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 							{
 								cmpRef.instance.ComponentRef = cmpRef;
 								cmpRef.instance.Run({ EntityId: recoId, ObjectTableName: 'Reconciliation' });
+                                cmpRef.instance.BackCompleted.subscribe(bk =>
+                                    {
+                                        this.GetTransactionsForAPPayment();
+                                    });
 							});
 					}
 					else {
