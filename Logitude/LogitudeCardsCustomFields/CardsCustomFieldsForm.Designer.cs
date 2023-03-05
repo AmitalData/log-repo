@@ -31,15 +31,16 @@
             this.BuildCardsCustomFieldsBtn = new System.Windows.Forms.Button();
             this.BuildCardsObjectFieldsCheckBox = new System.Windows.Forms.CheckBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.MetaDataTimeLabel = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.GenerateMetaDataScriptsCheckBox = new System.Windows.Forms.CheckBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.BuildCardsCustomFieldsDataButton = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.MetaDataTimeLabel = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.DataTimeLabel = new System.Windows.Forms.Label();
+            this.BuildCardsCustomFieldsDataButton = new System.Windows.Forms.Button();
+            this.ExecuteGeneratedScript_Btn = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -48,7 +49,7 @@
             // 
             this.BuildCardsCustomFieldsBtn.Location = new System.Drawing.Point(21, 118);
             this.BuildCardsCustomFieldsBtn.Name = "BuildCardsCustomFieldsBtn";
-            this.BuildCardsCustomFieldsBtn.Size = new System.Drawing.Size(315, 70);
+            this.BuildCardsCustomFieldsBtn.Size = new System.Drawing.Size(251, 70);
             this.BuildCardsCustomFieldsBtn.TabIndex = 0;
             this.BuildCardsCustomFieldsBtn.Text = "Build Cards Custom Object Fields";
             this.BuildCardsCustomFieldsBtn.UseVisualStyleBackColor = true;
@@ -67,6 +68,7 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.ExecuteGeneratedScript_Btn);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.MetaDataTimeLabel);
             this.panel1.Controls.Add(this.label1);
@@ -75,8 +77,38 @@
             this.panel1.Controls.Add(this.BuildCardsCustomFieldsBtn);
             this.panel1.Location = new System.Drawing.Point(72, 35);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(370, 229);
+            this.panel1.Size = new System.Drawing.Size(413, 229);
             this.panel1.TabIndex = 2;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(25, 200);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(39, 17);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Time";
+            // 
+            // MetaDataTimeLabel
+            // 
+            this.MetaDataTimeLabel.AutoSize = true;
+            this.MetaDataTimeLabel.ForeColor = System.Drawing.Color.Green;
+            this.MetaDataTimeLabel.Location = new System.Drawing.Point(81, 200);
+            this.MetaDataTimeLabel.Name = "MetaDataTimeLabel";
+            this.MetaDataTimeLabel.Size = new System.Drawing.Size(84, 17);
+            this.MetaDataTimeLabel.TabIndex = 4;
+            this.MetaDataTimeLabel.Text = "00:00:00.00";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.DarkGreen;
+            this.label1.Location = new System.Drawing.Point(18, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(88, 19);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Meta Data";
             // 
             // GenerateMetaDataScriptsCheckBox
             // 
@@ -97,29 +129,17 @@
             this.panel2.Controls.Add(this.BuildCardsCustomFieldsDataButton);
             this.panel2.Location = new System.Drawing.Point(72, 339);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(370, 176);
+            this.panel2.Size = new System.Drawing.Size(413, 176);
             this.panel2.TabIndex = 3;
             // 
-            // BuildCardsCustomFieldsDataButton
+            // label4
             // 
-            this.BuildCardsCustomFieldsDataButton.Location = new System.Drawing.Point(22, 63);
-            this.BuildCardsCustomFieldsDataButton.Name = "BuildCardsCustomFieldsDataButton";
-            this.BuildCardsCustomFieldsDataButton.Size = new System.Drawing.Size(315, 69);
-            this.BuildCardsCustomFieldsDataButton.TabIndex = 4;
-            this.BuildCardsCustomFieldsDataButton.Text = "Build Cards Custom Fields Data";
-            this.BuildCardsCustomFieldsDataButton.UseVisualStyleBackColor = true;
-            this.BuildCardsCustomFieldsDataButton.Click += new System.EventHandler(this.BuildCardsCustomFieldsDataButton_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.DarkGreen;
-            this.label1.Location = new System.Drawing.Point(18, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(88, 19);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Meta Data";
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(25, 145);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(39, 17);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Time";
             // 
             // label2
             // 
@@ -132,34 +152,6 @@
             this.label2.TabIndex = 5;
             this.label2.Text = "Data";
             // 
-            // MetaDataTimeLabel
-            // 
-            this.MetaDataTimeLabel.AutoSize = true;
-            this.MetaDataTimeLabel.ForeColor = System.Drawing.Color.Green;
-            this.MetaDataTimeLabel.Location = new System.Drawing.Point(81, 200);
-            this.MetaDataTimeLabel.Name = "MetaDataTimeLabel";
-            this.MetaDataTimeLabel.Size = new System.Drawing.Size(84, 17);
-            this.MetaDataTimeLabel.TabIndex = 4;
-            this.MetaDataTimeLabel.Text = "00:00:00.00";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(25, 200);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(39, 17);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Time";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(25, 145);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(39, 17);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Time";
-            // 
             // DataTimeLabel
             // 
             this.DataTimeLabel.AutoSize = true;
@@ -169,6 +161,26 @@
             this.DataTimeLabel.Size = new System.Drawing.Size(84, 17);
             this.DataTimeLabel.TabIndex = 6;
             this.DataTimeLabel.Text = "00:00:00.00";
+            // 
+            // BuildCardsCustomFieldsDataButton
+            // 
+            this.BuildCardsCustomFieldsDataButton.Location = new System.Drawing.Point(22, 63);
+            this.BuildCardsCustomFieldsDataButton.Name = "BuildCardsCustomFieldsDataButton";
+            this.BuildCardsCustomFieldsDataButton.Size = new System.Drawing.Size(315, 69);
+            this.BuildCardsCustomFieldsDataButton.TabIndex = 4;
+            this.BuildCardsCustomFieldsDataButton.Text = "Build Cards Custom Fields Data";
+            this.BuildCardsCustomFieldsDataButton.UseVisualStyleBackColor = true;
+            this.BuildCardsCustomFieldsDataButton.Click += new System.EventHandler(this.BuildCardsCustomFieldsDataButton_Click);
+            // 
+            // ExecuteGeneratedScript_Btn
+            // 
+            this.ExecuteGeneratedScript_Btn.Location = new System.Drawing.Point(302, 118);
+            this.ExecuteGeneratedScript_Btn.Name = "ExecuteGeneratedScript_Btn";
+            this.ExecuteGeneratedScript_Btn.Size = new System.Drawing.Size(93, 69);
+            this.ExecuteGeneratedScript_Btn.TabIndex = 6;
+            this.ExecuteGeneratedScript_Btn.Text = "Execute Generated Script";
+            this.ExecuteGeneratedScript_Btn.UseVisualStyleBackColor = true;
+            this.ExecuteGeneratedScript_Btn.Click += new System.EventHandler(this.ExecuteGeneratedScript_Btn_Click);
             // 
             // CardsCustomFieldsForm
             // 
@@ -201,6 +213,7 @@
         private System.Windows.Forms.Label MetaDataTimeLabel;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label DataTimeLabel;
+        private System.Windows.Forms.Button ExecuteGeneratedScript_Btn;
     }
 }
 

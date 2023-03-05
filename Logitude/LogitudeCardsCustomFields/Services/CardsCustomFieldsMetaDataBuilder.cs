@@ -95,7 +95,7 @@ namespace LogitudeCardsCustomFields.Services
         private void CreateNewCardObjectFieldAndBuildMetaDataScriptsForSpecificPartner(int cardFieldIndex, string cardObjectTableName, int oldCardFieldIndex, ObjectFieldPM selectedObjectFieldPM)
         {
             CreateNewCardObjectFieldPM(selectedObjectFieldPM, cardFieldIndex);
-
+            
             if (cardObjectTableName != "Customer")
             {
                 BuildScript(cardFieldIndex, oldCardFieldIndex, selectedObjectFieldPM);
@@ -107,7 +107,22 @@ namespace LogitudeCardsCustomFields.Services
             if (!IsBuildCardsCustomObjectFields) return;
 
             ObjectFieldPM objectFieldPM = GetNewCardObjectFieldPM(selectedObjectFieldPM, cardFieldIndex);
-            new ObjectFieldService(webFreightContext, selectedObjectFieldPM.Tenant).Create(objectFieldPM);
+            try
+            {
+                new ObjectFieldService(webFreightContext, selectedObjectFieldPM.Tenant).Create(objectFieldPM);
+            }
+            catch (Exception exception)
+            {
+                if (exception.Message == "An Object Field with the same code already exists")
+                {
+                    objectFieldPM.Code = objectFieldPM.Code + "C" + new Random().Next(0, 50);
+                    new ObjectFieldService(webFreightContext, selectedObjectFieldPM.Tenant).Create(objectFieldPM);
+                }
+                else
+                {
+                    throw new ApplicationException(exception.Message);
+                }
+            }
         }
 
         private List<ObjectFieldPM> GetAllCardsCusotomObjectFieldsPMs()

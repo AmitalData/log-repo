@@ -43,6 +43,12 @@ namespace LogitudeCardsCustomFields
 
         private void BuildCardsCustomFields()
         {
+            //--For Faliuer
+            //selecT * from TextCodes where id in (selecT FullNameTextCodeId from objectfields where tenant <> 0 and IsCustom = 1 and ObjectTableId = (select id from ObjectTables where name = 'card'))
+            //selecT * from TextCodes where id in (selecT ShortNameTextCodeId from objectfields where tenant <> 0 and IsCustom = 1 and ObjectTableId = (select id from ObjectTables where name = 'card'))
+            //selecT * from TextCodes where id in (selecT HelpTextCodeId from objectfields where tenant <> 0 and IsCustom = 1 and ObjectTableId = (select id from ObjectTables where name = 'card'))
+            //selecT * from TextCodes where id in (selecT ListTextCodeId from objectfields where tenant <> 0 and IsCustom = 1 and ObjectTableId = (select id from ObjectTables where name = 'card'))
+            //selecT * from objectfields where tenant <> 0 and IsCustom = 1 and ObjectTableId = (select id from ObjectTables where name = 'card')
             try
             {
                 CardsCustomFieldsMetaDataBuilder cardsCustomFieldsMetaDataBuilder = new CardsCustomFieldsMetaDataBuilder(this.BuildCardsObjectFieldsCheckBox.Checked, this.GenerateMetaDataScriptsCheckBox.Checked);
@@ -95,6 +101,7 @@ namespace LogitudeCardsCustomFields
             this.GenerateMetaDataScriptsCheckBox.Enabled = isEnabled;
             this.BuildCardsCustomFieldsDataButton.Enabled = isEnabled;
             this.BuildCardsObjectFieldsCheckBox.Enabled = isEnabled;
+            this.ExecuteGeneratedScript_Btn.Enabled = isEnabled;
         }
 
         private string GetFormatedElapsedTime(TimeSpan timeSpan)
@@ -103,6 +110,34 @@ namespace LogitudeCardsCustomFields
                 timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds,
                 timeSpan.Milliseconds / 10);
             return elapsedTime;
+        }
+
+        private void ExecuteGeneratedScript_Btn_Click(object sender, EventArgs e)
+        {
+
+            ChangeUIProperties(false);
+            Thread thread = new Thread(() => ExecuteCardsCustomFieldsGeneratedScript())
+            {
+                IsBackground = true
+            };
+            thread.Start();
+            thread.Join();
+            ChangeUIProperties(true);
+        }
+
+        private void ExecuteCardsCustomFieldsGeneratedScript()
+        {
+            try
+            {
+                CardsCustomFieldsGeneratedScriptExecuter cardsCustomFieldsGeneratedScriptExecuter = new CardsCustomFieldsGeneratedScriptExecuter();
+                cardsCustomFieldsGeneratedScriptExecuter.Execute();
+            }
+            catch (Exception exception)
+            {
+                string exceptionMessage = exception.Message + (exception.InnerException != null ? exception.InnerException.ToString() : "");
+                if (exceptionMessage.Length > 1500) exceptionMessage = exceptionMessage.Substring(0, 1500);
+                MessageBox.Show(exceptionMessage);
+            }
         }
     }
 }

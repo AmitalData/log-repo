@@ -66,6 +66,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CardsCustomFieldsDataBuilder.cs" />
+    <Compile Include="Services\CardsCustomFieldsGeneratedScriptExecuter.cs" />
     <Compile Include="Services\CardsCustomFieldsMetaDataBuilder.cs" />
     <EmbeddedResource Include="CardsCustomFieldsForm.resx">
       <DependentUpon>CardsCustomFieldsForm.cs</DependentUpon>
