@@ -66,7 +66,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         {
                             DeclarationPendingPM declarationPendingPM = new DeclarationPendingPM();
                             declarationPendingPM = dirtyDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.CourierPendingReasonCode == courierPendingReason).FirstOrDefault();
-                            if (declarationPendingPM != null && (courierPendingReasonPM.RequiresApproval == false || (courierPendingReasonPM.RequiresApproval == true && declarationPendingPM.Approval == true && declarationPendingPM.WasApproved == false)))
+                            if (declarationPendingPM != null && (courierPendingReasonPM.RequiresApproval != true || (courierPendingReasonPM.RequiresApproval == true && declarationPendingPM.Approval == true && declarationPendingPM.WasApproved == false)))
                             {
                                 //RaiseEventAndStatus(null, courierPendingReasonPM.UnifreightStatusCode, myDeclarationPM, declarationPendingPM.PendingRemarks, true);
                                 OpenUnifreighTask(myDeclarationPM, "L2U", courierPendingReasonPM.UnifreightStatusCode, true, "", declarationPendingPM.PendingRemarks);
