@@ -52,6 +52,8 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     JournalLines: ObservableCollection;//JournalLineModel[];
     creditTotal: number = 0;
     debitTotal: number = 0;
+    difference: number = 0;
+    differenceColor = '#9e4300';
     journalDisabled: boolean = false;
     forceFocus: boolean = false;
     PointerEvents: string = 'auto';
@@ -635,7 +637,7 @@ getHeaderCurrency(CurrencyId:string){
     }
 
     CalculateTotals() {
-        this.creditTotal = this.debitTotal = 0;
+        this.creditTotal = this.debitTotal = this.difference = 0;
         for (let line of this.JournalLines.Collection) {
 
             if (!AppTool.IsNullOrEmpty(line.LocalAmount)) {
@@ -655,6 +657,14 @@ getHeaderCurrency(CurrencyId:string){
 
 
         }
+        if(this.debitTotal - this.creditTotal > 0)
+            this.differenceColor ='#9e4300'
+        else if (this.debitTotal - this.creditTotal == 0)
+            this.differenceColor = 'black'
+        else
+            this.differenceColor = '#008c7a'        
+
+        this.difference = Math.abs(this.debitTotal - this.creditTotal);
     }
 
     GetAccountingPeriods() {
