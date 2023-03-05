@@ -2105,7 +2105,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             DocumentTypeCopyQuery documentCopiesQuery = new DocumentTypeCopyQuery(tenant);
 
             d = from a in repository.context.DocumentTypes.Include("DocumentTypeCategory")
-                where a.Tenant == tenant && a.IsAir == true
+                where a.Tenant == tenant
                 select new DocumentTypePM()
                 {
                     InActive = a.InActive,
