@@ -119,9 +119,12 @@ namespace CommunicationWorkerRole
         private void GetReceivedDate()
         {
             if (!string.IsNullOrEmpty(recivedDateString))
-                recivedDate = Convert.ToDateTime(recivedDateString);
-
-            //recivedDate = DateTime.TryParse(recivedDateString, out recivedDate);
+            {
+                DateTime parsedDate;
+                bool success = DateTime.TryParse(recivedDateString, out parsedDate);
+                if (success) 
+                    recivedDate = parsedDate;
+            }
         }
 
         private void InitializeServices()
