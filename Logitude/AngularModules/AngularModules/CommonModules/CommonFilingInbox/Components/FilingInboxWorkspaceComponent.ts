@@ -1520,27 +1520,30 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                 newWindow.Width = 960;
                 newWindow.Height = 570;
                 newWindow.Show('./Shipment/Components/NewShipment/NewShipmentComponent');
+                this.HandleNewShipmentWindowClosed(newWindow);
             }
+        });
+    }
 
-            newWindow.ComponentLoaded.subscribe(s => {
-                newWindow.WindowClosed.subscribe(d => {
-                    var shipment = s.EntityPM;
-                    if (shipment != null) {
-                        this.EntityId = shipment.Id;
-                        if ((ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2") || SessionLocator.PrivateLableSettings) {
-                            this.EntityNumber = AppTool.IsNullOrEmpty(shipment.ForwarderShipmentNumber) ? shipment.CustomerReference1 : shipment.ForwarderShipmentNumber;
-                            if (AppTool.IsNullOrEmpty(shipment.ForwarderShipmentNumber) && !AppTool.IsNullOrEmpty(shipment.StatusName) && shipment.StatusName.toLocaleLowerCase() != "in progress") {
-                                this.IsDSVConnectEnable = true;
-                            }
-                            else {
-                                this.IsDSVConnectEnable = false;
-                            }
+    private HandleNewShipmentWindowClosed(newWindow: LogitudeWindow) {
+        newWindow.ComponentLoaded.subscribe(s => {
+            newWindow.WindowClosed.subscribe(d => {
+                var shipment = s.EntityPM;
+                if (shipment != null) {
+                    this.EntityId = shipment.Id;
+                    if ((ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2") || SessionLocator.PrivateLableSettings) {
+                        this.EntityNumber = AppTool.IsNullOrEmpty(shipment.ForwarderShipmentNumber) ? shipment.CustomerReference1 : shipment.ForwarderShipmentNumber;
+                        if (AppTool.IsNullOrEmpty(shipment.ForwarderShipmentNumber) && !AppTool.IsNullOrEmpty(shipment.StatusName) && shipment.StatusName.toLocaleLowerCase() != "in progress") {
+                            this.IsDSVConnectEnable = true;
                         }
                         else {
-                            this.EntityNumber = shipment.ShipmentNumber;
+                            this.IsDSVConnectEnable = false;
                         }
                     }
-                });
+                    else {
+                        this.EntityNumber = shipment.ShipmentNumber;
+                    }
+                }
             });
         });
     }
@@ -1566,6 +1569,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
         let newWindowArgs: any = [];
         newWindowArgs.HideDocumentSection = true;
         let newWindow: LogitudeWindow = addEditLogboxShipmentService.GetNewShipmentWindow(newWindowArgs);
+        this.HandleNewShipmentWindowClosed(newWindow);
     }
 
     IsStopPreviewHtml: boolean = false;

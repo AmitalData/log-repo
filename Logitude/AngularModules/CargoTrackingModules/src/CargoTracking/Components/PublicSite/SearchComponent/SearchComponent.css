@@ -39,6 +39,12 @@ li {
     align-items: center;
 }
 
+.truncateText1 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .port-name {
     margin-left: 5px;
 }
@@ -633,7 +639,6 @@ li a {
 (max-height: 479px) and (orientation: landscape) {
     .search-wrapper {
         height: calc(96vh - 110px);
-        min-height: calc(96vh - 24px);
     }
 
     .no-result-div {

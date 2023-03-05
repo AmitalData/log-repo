@@ -1923,9 +1923,19 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
                                                 }).ToList();
 
-            return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);//.Take(800).ToList();
+            SetDefaultAdditionalFilters(objectFields);
+            return objectFields;// Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);//.Take(800).ToList();
         }
 
+        private void SetDefaultAdditionalFilters(List<ObjectFieldPM> objectfields)
+        {
+            foreach (ObjectFieldPM objectField in objectfields.Where(d => !string.IsNullOrEmpty(d.DefaultAdditionalFilters)))
+            {
+                objectField.DefaultAdditionalTreeFilters = GetDefaultAdditionalTreeFilters(objectField.DefaultAdditionalFilters);
+            }
+
+
+        }
         private static List<ObjectFieldPM> Get_List_Of_ObjectFields_With_Modifications_And_Validations(List<ObjectFieldPM> objectfields, int tenant)
         {
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())

@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
@@ -34,6 +35,7 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
                 entityPM.ReleaseNumber = TableCounter.GetNumber(entityPM.Tenant, "WARC", null, null).ToString();
                 this.BuildActivityLog("N", entityPM);
 
+                SetPartnerContactField(entityPM);
                 new MainEntityChangeService(new EntityChangeArgs()
                 {
                     EntityPM = entityPM,
@@ -87,12 +89,32 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
 
             if (!entityPM.IsUpdateByAutomation)
             {
+                SetPartnerContactField(entityPM);
                 new MainEntityChangeService(new EntityChangeArgs() {
-                    EntityPM = entityPM, OldEntityPM = this.OldEntityPM, ProcessType = "OnUpdate", EntityChangeFieldXml = this.EntityChangeFieldXml, ObjectTableName = "WarehouseRelease", EntityId = entityPM.Id, Tenant = entityPM.Tenant, EntityReference = entityPM.ReleaseNumber 
+                    EntityPM = entityPM,
+                    OldEntityPM = this.OldEntityPM, 
+                    ProcessType = "OnUpdate", 
+                    EntityChangeFieldXml = this.EntityChangeFieldXml, 
+                    ObjectTableName = "WarehouseRelease", 
+                    EntityId = entityPM.Id, 
+                    Tenant = entityPM.Tenant, 
+                    EntityReference = entityPM.ReleaseNumber 
                 }).AddEntityChange();
             }
         }
 
+        public void SetPartnerContactField(WarehouseReleasePM entityPM)
+        {
+            entityPM.CustomerPrimaryContactId = GetPrimaryContactId(entityPM.CustomerId, entityPM.Tenant);
+        }
+
+        private string GetPrimaryContactId(string cardId, int tenant)
+        {
+            CardQuery cardQuery = new CardQuery(tenant);
+            CardPM cardPM = cardQuery.GetSinglePM(cardId, tenant);
+            if (cardPM == null) return null;
+            return cardPM.PrimaryContactId;
+        }
 
         private void AddTraceEvents(WarehouseReleasePM entityPM, WarehouseRelease entityPOCO)
         {
