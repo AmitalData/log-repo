@@ -74,6 +74,7 @@ export class VehicleEditComponent extends BaseComponent {
         this.TabsItemsSource.push(new TabItem("VehicleMoreDetailsTabComponent", "Customs.Vehicle.TH.MoreDetails"));
         this.TabsItemsSource.push(new TabItem("VehiclesOwnersAndSafetyTabComponent", "Customs.Vehicle.TH.OwnersAndSafety"));
         this.TabsItemsSource.push(new TabItem("CustomsDocumentsComponent", "Customs.Vehicle.TH.CustomDocuments"));
+        this.TabsItemsSource.push(new TabItem("CopyRichbit", "Customs.Vehicle.TH.CopyRichbit"));
 
         this.timerToken = setTimeout(() => {
             this.SelectedTabCode = "General"; // to ensure the component was painted
