@@ -24,8 +24,8 @@ namespace Logitude.Customs.BL
             all.Add(new ContainerizationStatusCodeDetails()
             {    
                 Code = "1", 
-                Name = "המכלה תקינה, טרם הותרה", 
-                SearchFields = "המכלה תקינה, טרם הותרה", 
+                Name = "המכלה תקינה", 
+                SearchFields = "המכלה תקינה", 
 			});
 			 
             all.Add(new ContainerizationStatusCodeDetails()
