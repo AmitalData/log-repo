@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "6681083ce96ed7f72150a8d429039587";
+		public const string HashString = "e4f1f0384f5fc01c7c2ac94cc8de164b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -99,6 +99,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTablePlural =  "GL Accounts",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
+			      				    AvailableInCustomization =  false,
+			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  false,
@@ -170,6 +173,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -233,6 +237,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -296,6 +301,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -361,6 +367,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  1,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -427,6 +434,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -491,6 +499,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  105,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -555,6 +564,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  75,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -619,6 +629,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  4000,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -682,6 +693,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -747,6 +759,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -814,6 +827,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  2,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -880,6 +894,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -945,6 +960,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1011,6 +1027,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1075,6 +1092,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1139,6 +1157,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1203,6 +1222,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1267,6 +1287,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1332,6 +1353,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  1,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1398,6 +1420,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1462,6 +1485,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  5,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1527,6 +1551,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1593,6 +1618,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1658,6 +1684,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1724,6 +1751,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1788,6 +1816,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1852,6 +1881,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  30,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1916,6 +1946,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -1974,6 +2005,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -2033,6 +2065,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2099,6 +2132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2163,6 +2197,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  75,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2227,6 +2262,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Between",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2291,6 +2327,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  105,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2355,6 +2392,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Between",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2419,6 +2457,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2483,6 +2522,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Between",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2547,6 +2587,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2613,6 +2654,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Between",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2678,6 +2720,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2744,6 +2787,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2808,6 +2852,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2872,6 +2917,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "GreaterThanOrEqual",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2938,6 +2984,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3003,6 +3050,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3069,6 +3117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3133,6 +3182,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3197,6 +3247,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3262,6 +3313,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3328,6 +3380,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  30,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3393,6 +3446,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3459,6 +3513,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  30,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3524,6 +3579,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3590,6 +3646,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  30,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3655,6 +3712,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3721,6 +3779,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  30,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3786,6 +3845,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3852,6 +3912,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  30,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3916,6 +3977,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3980,6 +4042,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  5,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4043,6 +4106,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4106,6 +4170,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4169,6 +4234,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4229,6 +4295,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  40,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4289,6 +4356,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  40,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4349,6 +4417,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  20,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -4413,6 +4482,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4472,6 +4542,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4531,6 +4602,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4594,6 +4666,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4652,6 +4725,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "GreaterThanOrEqual",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -4718,6 +4792,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "GreaterThanOrEqual",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -4782,6 +4857,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  3,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4842,6 +4918,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  200,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4900,6 +4977,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  10,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4958,6 +5036,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5019,6 +5098,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  30,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5082,6 +5162,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5143,6 +5224,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  60,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5206,6 +5288,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5267,6 +5350,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5330,6 +5414,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5391,6 +5476,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5449,6 +5535,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5507,6 +5594,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5570,6 +5658,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5633,6 +5722,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5696,6 +5786,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5754,6 +5845,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  3,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5812,6 +5904,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5870,6 +5963,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5928,6 +6022,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5986,6 +6081,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "LessThan",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6052,6 +6148,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6112,6 +6209,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6172,6 +6270,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "LessThan",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6237,6 +6336,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6296,6 +6396,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6363,6 +6464,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6429,6 +6531,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "GreaterThanOrEqual",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6493,6 +6596,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "GreaterThanOrEqual",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6557,6 +6661,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  200,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6622,6 +6727,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  200,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6685,6 +6791,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  200,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6743,6 +6850,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  200,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6801,6 +6909,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6859,6 +6968,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6917,6 +7027,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6980,6 +7091,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -7044,6 +7156,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "GreaterThanOrEqual",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -7108,6 +7221,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -7172,6 +7286,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -7233,6 +7348,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "GreaterThanOrEqual",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -7299,6 +7415,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  1000,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -7358,6 +7475,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -7417,6 +7535,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "GreaterThanOrEqual",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -7481,6 +7600,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -7539,6 +7659,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  1000,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -7602,6 +7723,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  1000,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -7665,6 +7787,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  1000,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -7727,6 +7850,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  1000,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -7789,6 +7913,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -7850,6 +7975,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -7908,6 +8034,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -7970,6 +8097,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -8031,6 +8159,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  30,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -8092,6 +8221,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  30,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -8153,6 +8283,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  30,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -8214,6 +8345,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  30,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -8275,6 +8407,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  30,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -8336,6 +8469,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  1000,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -8398,6 +8532,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  300,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -8459,6 +8594,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  300,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -8518,6 +8654,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  300,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -8577,6 +8714,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  300,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -8636,6 +8774,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -8695,6 +8834,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -8755,6 +8895,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  50,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -8817,6 +8958,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -8883,6 +9025,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -8949,6 +9092,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9015,6 +9159,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9081,6 +9226,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9147,6 +9293,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9213,6 +9360,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9279,6 +9427,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9345,6 +9494,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9409,6 +9559,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9473,6 +9624,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "LessThan",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9537,6 +9689,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "LessThan",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9603,6 +9756,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  40,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9667,6 +9821,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "LessThan",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9733,6 +9888,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  40,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9797,6 +9953,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9861,6 +10018,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9925,6 +10083,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Between",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9989,6 +10148,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  1000,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -10053,6 +10213,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -10111,6 +10272,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  1000,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -10169,6 +10331,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -10234,6 +10397,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -10299,6 +10463,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -10364,6 +10529,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  200,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -10422,6 +10588,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  200,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -10480,6 +10647,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  200,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -10538,6 +10706,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -10604,6 +10773,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "LessThan",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -10670,6 +10840,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "GreaterThanOrEqual",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -10735,6 +10906,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "GreaterThanOrEqual",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -10800,6 +10972,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -10858,6 +11031,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -10918,6 +11092,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -10981,6 +11156,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -11043,6 +11219,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -11101,6 +11278,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -11159,6 +11337,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "GreaterThanOrEqual",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -11225,6 +11404,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -11290,6 +11470,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -11336,6 +11517,73 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CreditLimitDifference",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "Double",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						Operator =  "GreaterThanOrEqual",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CreditLimitDifference",
+					  						ListPropertyPath =  "CreditLimitDifference",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  18,
+					  						DigitsAfterPoint =  2,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CreditLimitDifference",
+					  						DefaultText =  "Credit Limit Difference",
+					  						FullLocalDefaultText =  "אחוז אשראי מבוטח",
+					  						ListFieldLable =  "CreditLimitDifferenceListLable",
+					  						ListLableDefaultText =  "Credit Limit Difference",
+					  						ListLocalDefaultText =  "אחוז אשראי מבוטח",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -11365,16 +11613,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature GLAccountFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLACCOUNTS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.GLAccounts", NameTextCodeDefaultText = "General Ledger Accounts", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode GLAccountTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Vendors", DefaultText = @"Vendor Accounts",LocalDefaultText = "ספקים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature GLAccountFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VENDORGLACCOUNTS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Vendors", NameTextCodeDefaultText = "Vendor Accounts", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes);
+			   TextCode GLAccountTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Clients", DefaultText = @"All Customers",LocalDefaultText = "לקוחות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature GLAccountFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CLIENTS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Clients", NameTextCodeDefaultText = "All Customers Accounts", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode GLAccountTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Clients", DefaultText = @"All Customers",LocalDefaultText = "לקוחות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature GLAccountFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CLIENTS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Clients", NameTextCodeDefaultText = "All Customers Accounts", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes);
+			   TextCode GLAccountTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Collectors", DefaultText = @"My Customers (As Collectors)",LocalDefaultText = "לקוחות שלי(כגובה)", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature GLAccountFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "collectorsGLA", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.collectorsGLA", NameTextCodeDefaultText = "My Customers (As Colectors)", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode GLAccountTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Collectors", DefaultText = @"My Customers (As Collectors)",LocalDefaultText = "לקוחות שלי(כגובה)", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature GLAccountFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "collectorsGLA", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.collectorsGLA", NameTextCodeDefaultText = "My Customers (As Colectors)", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes);
+			   TextCode GLAccountTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Vendors", DefaultText = @"Vendor Accounts",LocalDefaultText = "ספקים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature GLAccountFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VENDORGLACCOUNTS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Vendors", NameTextCodeDefaultText = "Vendor Accounts", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes);
  
 
 			   TextCode GLAccountTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.debetors", DefaultText = @"Debtors Customers",LocalDefaultText = "לקוחות חייבים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
@@ -11454,49 +11702,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query VendorAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_1.Id, NameTextCodeCode = GLAccountTextCode_1.Code, ObjectTableName = "GLAccount", Code = "Vendor Accounts",  QueryGroupCode = "VNAC", IndexOrder = 1, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_1.Id,FeatureUniqeCode= GLAccountFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
-	
-			 QueryColumn VendorAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id,QueryCode = VendorAccountsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "GLAccount.DisplayNumber" , ColumnWidth = 100 }, addedQueryColumns);
-
-			 QueryColumn VendorAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id,QueryCode = VendorAccountsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "GLAccount.LocalName" , ColumnWidth = 220 }, addedQueryColumns);
-
-			 QueryColumn VendorAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id,QueryCode = VendorAccountsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "GLAccount.EnglishName" , ColumnWidth = 220 }, addedQueryColumns);
-
-			 QueryColumn VendorAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id,QueryCode = VendorAccountsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "GLAccount.CurrencyCode" , ColumnWidth = 56 }, addedQueryColumns);
-
-			 QueryColumn VendorAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id,QueryCode = VendorAccountsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "GLAccount.VatNumber" , ColumnWidth = 90 }, addedQueryColumns);
-
-			 QueryColumn VendorAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id,QueryCode = VendorAccountsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "GLAccount.RevenueExpenseName" , ColumnWidth = 90 }, addedQueryColumns);
-
-			 QueryColumn VendorAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id,QueryCode = VendorAccountsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "GLAccount.ChartOfAccountsName" , ColumnWidth = 160 }, addedQueryColumns);
-
-			 QueryColumn VendorAccountsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id,QueryCode = VendorAccountsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeName" , ColumnWidth = 170 }, addedQueryColumns);
-
-			 QueryColumn VendorAccountsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id,QueryCode = VendorAccountsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "GLAccount.Inactive" , ColumnWidth = 60 }, addedQueryColumns);
-
-             AdvancedQueryFilter VendorAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "3",PredefinedValue2 = null, CustomPredefined = false, QueryId = VendorAccountsQuery.Id,QueryCode = VendorAccountsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
-
-
-             AdvancedQueryFilter VendorAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeCode", PredefinedValue = "4",PredefinedValue2 = null, CustomPredefined = false, QueryId = VendorAccountsQuery.Id,QueryCode = VendorAccountsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
-
-  
-	      
-
-			  Query AllCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_2.Id, NameTextCodeCode = GLAccountTextCode_2.Code, ObjectTableName = "GLAccount", Code = "All Customers",  QueryGroupCode = "GLAC", IndexOrder = 2, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_2.Id,FeatureUniqeCode= GLAccountFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query AllCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_1.Id, NameTextCodeCode = GLAccountTextCode_1.Code, ObjectTableName = "GLAccount", Code = "All Customers",  QueryGroupCode = "GLAC", IndexOrder = 1, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_1.Id,FeatureUniqeCode= GLAccountFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
 			 QueryColumn AllCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "GLAccount.DisplayNumber" , ColumnWidth = 73 }, addedQueryColumns);
 
-			 QueryColumn AllCustomersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "GLAccount.EnglishName" , ColumnWidth = 160 }, addedQueryColumns);
+			 QueryColumn AllCustomersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "GLAccount.CreditLimitDifference" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllCustomersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "GLAccount.LocalName" , ColumnWidth = 160 }, addedQueryColumns);
+			 QueryColumn AllCustomersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "GLAccount.EnglishName" , ColumnWidth = 160 }, addedQueryColumns);
 
-			 QueryColumn AllCustomersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "GLAccount.CurrencyCode" , ColumnWidth = 56 }, addedQueryColumns);
+			 QueryColumn AllCustomersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "GLAccount.LocalName" , ColumnWidth = 160 }, addedQueryColumns);
 
-			 QueryColumn AllCustomersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "GLAccount.RevenueExpenseName" , ColumnWidth = 90 }, addedQueryColumns);
+			 QueryColumn AllCustomersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "GLAccount.CurrencyCode" , ColumnWidth = 56 }, addedQueryColumns);
 
-			 QueryColumn AllCustomersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "GLAccount.ChartOfAccountsName" , ColumnWidth = 140 }, addedQueryColumns);
+			 QueryColumn AllCustomersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "GLAccount.RevenueExpenseName" , ColumnWidth = 90 }, addedQueryColumns);
 
-			 QueryColumn AllCustomersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "GLAccount.Inactive" , ColumnWidth = 56 }, addedQueryColumns);
+			 QueryColumn AllCustomersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "GLAccount.ChartOfAccountsName" , ColumnWidth = 140 }, addedQueryColumns);
+
+			 QueryColumn AllCustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "GLAccount.Inactive" , ColumnWidth = 56 }, addedQueryColumns);
 
              AdvancedQueryFilter AllCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "2",PredefinedValue2 = null, CustomPredefined = false, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
@@ -11506,7 +11728,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query MyCustomersAsCollectorsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_3.Id, NameTextCodeCode = GLAccountTextCode_3.Code, ObjectTableName = "GLAccount", Code = "MyCustomersAsCollectors",  QueryGroupCode = "GLAC", IndexOrder = 3, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_3.Id,FeatureUniqeCode= GLAccountFeature_3.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query MyCustomersAsCollectorsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_2.Id, NameTextCodeCode = GLAccountTextCode_2.Code, ObjectTableName = "GLAccount", Code = "MyCustomersAsCollectors",  QueryGroupCode = "GLAC", IndexOrder = 2, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_2.Id,FeatureUniqeCode= GLAccountFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
 			 QueryColumn MyCustomersAsCollectorsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id,QueryCode = MyCustomersAsCollectorsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "GLAccount.DisplayNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -11531,6 +11753,34 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 
              AdvancedQueryFilter MyCustomersAsCollectorsQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeCode", PredefinedValue = "3",PredefinedValue2 = null, CustomPredefined = false, QueryId = MyCustomersAsCollectorsQuery.Id,QueryCode = MyCustomersAsCollectorsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+  
+	      
+
+			  Query VendorAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_3.Id, NameTextCodeCode = GLAccountTextCode_3.Code, ObjectTableName = "GLAccount", Code = "Vendor Accounts",  QueryGroupCode = "VNAC", IndexOrder = 3, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_3.Id,FeatureUniqeCode= GLAccountFeature_3.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+	
+			 QueryColumn VendorAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id,QueryCode = VendorAccountsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "GLAccount.DisplayNumber" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn VendorAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id,QueryCode = VendorAccountsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "GLAccount.LocalName" , ColumnWidth = 220 }, addedQueryColumns);
+
+			 QueryColumn VendorAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id,QueryCode = VendorAccountsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "GLAccount.EnglishName" , ColumnWidth = 220 }, addedQueryColumns);
+
+			 QueryColumn VendorAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id,QueryCode = VendorAccountsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "GLAccount.CurrencyCode" , ColumnWidth = 56 }, addedQueryColumns);
+
+			 QueryColumn VendorAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id,QueryCode = VendorAccountsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "GLAccount.VatNumber" , ColumnWidth = 90 }, addedQueryColumns);
+
+			 QueryColumn VendorAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id,QueryCode = VendorAccountsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "GLAccount.RevenueExpenseName" , ColumnWidth = 90 }, addedQueryColumns);
+
+			 QueryColumn VendorAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id,QueryCode = VendorAccountsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "GLAccount.ChartOfAccountsName" , ColumnWidth = 160 }, addedQueryColumns);
+
+			 QueryColumn VendorAccountsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id,QueryCode = VendorAccountsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeName" , ColumnWidth = 170 }, addedQueryColumns);
+
+			 QueryColumn VendorAccountsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id,QueryCode = VendorAccountsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "GLAccount.Inactive" , ColumnWidth = 60 }, addedQueryColumns);
+
+             AdvancedQueryFilter VendorAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "3",PredefinedValue2 = null, CustomPredefined = false, QueryId = VendorAccountsQuery.Id,QueryCode = VendorAccountsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter VendorAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeCode", PredefinedValue = "4",PredefinedValue2 = null, CustomPredefined = false, QueryId = VendorAccountsQuery.Id,QueryCode = VendorAccountsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
