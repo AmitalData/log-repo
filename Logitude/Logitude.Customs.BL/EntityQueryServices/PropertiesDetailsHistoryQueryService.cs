@@ -16,10 +16,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return pms;
         }
 
-        public PropertiesDetailsHistoryPM GetPropertiesDetailsHistoryByCustomsItemId(string customsItemId)
+        public PropertiesDetailsHistoryPM GetPropertiesDetailsHistoryByCustomsItemId(string customsItemId, bool getFromCache=true)
         {
             PropertiesDetailsHistoryPM pm = null;
-            var poco = repository.GetPropertiesDetailsHistoryByCustomsItemIdMostAccurate(customsItemId);
+            var poco = repository.GetPropertiesDetailsHistoryByCustomsItemIdMostAccurate(customsItemId, getFromCache);
 
 
             if (poco != null)

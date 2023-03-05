@@ -25,6 +25,10 @@ namespace Logitude.CustomsMessaging.RequestServices
             myMsg.RequestContentHeader = new RequestContentHeader() { Convertor = "1", RecieverID = new int[] { 1 } };
 
             myMsg.CIDetailsHeaderIn = new CustomsBookItemHeaderIn();
+            if (requestParams.Classification.Length > 10)
+            {
+                requestParams.Classification = requestParams.Classification.Substring(0, 10);
+            }
             myMsg.CIDetailsHeaderIn.classification = requestParams.Classification;
             myMsg.CIDetailsHeaderIn.customsBookType = requestParams.CustomsBookType;
             myMsg.CIDetailsHeaderIn.validToDate = requestParams.ValidToDate;
