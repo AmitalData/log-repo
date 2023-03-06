@@ -441,6 +441,8 @@ export class NewImportDeploymentPackageComponent extends BaseComponent {
                 CachedDataManager.RefreshTenantTextCodes().subscribe((response: any) => {
                     this.CurrentSession.StopBusyIndicator();
                     this.CurrentSession.CloseCurrentWindow();
+                    this.ShowMessage("In Order to apply the changes, please logout and login again");
+
                 });
             }
             
