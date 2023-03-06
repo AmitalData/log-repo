@@ -355,7 +355,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     EntityId = entityPM.Id,
                     Tenant = entityPM.Tenant,
-                    UserId = loggedContact.Id,
+                    UserId = entityPM.CreatedByUserId,
                     ObjectTableName = "TaxReport",
                     IsAddedManually = false,
                     EventTypeCode = "CREV",
@@ -391,7 +391,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     EntityId = entityPM.Id,
                     Tenant = entityPM.Tenant,
-                    UserId = loggedContact.Id,
+                    UserId = entityPM.UpdatedByUserId,
                     ObjectTableName = "TaxReport",
                     IsAddedManually = false,
                     EventTypeCode = "UPEV",
@@ -399,39 +399,29 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 };
                 EventTracer.CreateTraceEvent(eventTracerArgs);
             }
-            else
-            {
+           
                 if (entityPM.IsCancelled != entityPOCO.IsCancelled)
                 {
+                    VatReportStatusPM oldStatus = queryService.GetSingle(entityPOCO.StatusCode, false, false);
+                    var OldStatusEnglishName = oldStatus.EnglishName;
+                    VatReportStatusPM newStatus = queryService.GetSingle(entityPM.StatusCode, false, false);
+                    var NewStatusEnglishName = newStatus.EnglishName;
+
+                    string notes = TranslateTextsClass.Translate("TaxReportStatus", entityPOCO.Tenant) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPOCO.Tenant) + OldStatusEnglishName + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPOCO.Tenant) + NewStatusEnglishName;
                     //create trace event with created type.
                     EventTracerArgs eventTracerArgs = new EventTracerArgs()
                     {
                         EntityId = entityPM.Id,
                        Tenant = entityPM.Tenant,
-                        UserId = loggedContact.Id,
+                        UserId = entityPM.UpdatedByUserId,
                         ObjectTableName = "TaxReport",
                         IsAddedManually = false,
                         EventTypeCode = "CNCL",
-                        Notes = "",
+                        Notes = notes,
                     };
                    EventTracer.CreateTraceEvent(eventTracerArgs);
+                    CreateTraceEventWhenTransmittedReportReturnToDraft(entityPM, loggedContact);
                 }
-            else
-            {
-                EventTracerArgs eventTracerArgs = new EventTracerArgs()
-                {
-                    EntityId = entityPM.Id,
-                    Tenant = entityPM.Tenant,
-                    UserId = loggedContact.Id,
-                    ObjectTableName = "TaxReport",
-                    IsAddedManually = false,
-                    EventTypeCode = "APRV",
-                    Notes = "",
-                };
-                EventTracer.CreateTraceEvent(eventTracerArgs);
-            }
-                CreateTraceEventWhenTransmittedReportReturnToDraft(entityPM,loggedContact);
-            }
 
             base.Trace(entityPM, entityPOCO, changesXml);
         }
@@ -443,7 +433,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     EntityId = entityPM.Id,
                     Tenant = entityPM.Tenant,
-                    UserId = loggedContact.Id,
+                    UserId = entityPM.UpdatedByUserId,
                     ObjectTableName = "TaxReport",
                     IsAddedManually = false,
                     EventTypeCode = "RTDR",
