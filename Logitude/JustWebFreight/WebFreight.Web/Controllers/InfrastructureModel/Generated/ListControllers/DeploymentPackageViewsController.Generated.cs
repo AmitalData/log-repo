@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				DeploymentPackageRepository  deploymentPackageRepository = new DeploymentPackageRepository(MyContext);
 				DeploymentPackageList entityList = null;
 				DeploymentPackage entityPoco = deploymentPackageRepository.GetSingleDeploymentPackage(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<DeploymentPackage> singleEntityList = new List<DeploymentPackage>();
 					singleEntityList.Add(entityPoco);

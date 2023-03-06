@@ -113,6 +113,11 @@ export class DeploymentPackagePM {
     public get IsExported() { return this.isExported; }
     public set IsExported(newValue: boolean) { if (this.isExported != newValue) { this.isExported = newValue; } }
 
+    private packageExecutionLogId: string;
+    public get PackageExecutionLogId() { return this.packageExecutionLogId; }
+    public set PackageExecutionLogId(newValue: string) { if (this.packageExecutionLogId != newValue) { this.packageExecutionLogId = newValue; this.MarkAsDirty("PackageExecutionLogId"); } }
+
+
     private deploymentPackageDetails: DeploymentPackageDetails;
     public get DeploymentPackageDetails() { return this.deploymentPackageDetails; }
     public set DeploymentPackageDetails(newValue: DeploymentPackageDetails) { if (this.deploymentPackageDetails != newValue) { this.deploymentPackageDetails = newValue; this.MarkAsDirty("DeploymentPackageDetails"); } }

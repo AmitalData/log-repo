@@ -124,6 +124,7 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<DeploymentPackage> DeploymentPackages { get; }
         IDbSet<DeploymentPackagesVersion> DeploymentPackagesVersions { get; }
         IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects { get; }
+        IDbSet<DeploymentPackageExecutionLog> DeploymentPackageExecutionLogs { get; }
         DbContextTransaction GetSnapshotTransaction();
 
         void SetAsModified(object entity);

@@ -26,6 +26,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string VersionId { get; set; }
         public string DocumentId { get; set; }
         public bool IsExported { get; set; }
+        public string PackageExecutionLogId { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
         public DeploymentPackageDetails DeploymentPackageDetails { get; set; }
     }
@@ -61,6 +62,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
     {
         public string Code { get; set; }
         public string Value { get; set; }
-        public string IsMultipleChoice { get; set; }
+        public bool IsMultipleChoice { get; set; }
     }
 }

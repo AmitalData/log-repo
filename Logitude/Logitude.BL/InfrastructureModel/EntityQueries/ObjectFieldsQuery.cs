@@ -3399,5 +3399,14 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                       });
             return objectFields;
         }
+
+        public QueryFilterItem DeserializeQueryFilterItem(string defaultAdditionalFilters)
+        {
+           return JsonSerializer.Deserialize<QueryFilterItem>(defaultAdditionalFilters);
+        }
+        public string SerializeQueryFilterItem(QueryFilterItem defaultAdditionalFilters)
+        {
+            return JsonSerializer.Serialize<QueryFilterItem>(defaultAdditionalFilters);
+        }
     }
 }

@@ -8,10 +8,10 @@
                         <td>{{'DeploymentPackage.O.CustomFields' | TextCodeTranslationPipe}}</td>
 
                         <td style="width: 25px;">
-                            <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddCustomFields()" [disabled]="EntityPM.IsExported"></IconButton>
+                            <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddCustomFields()" [disabled]="EntityPM.IsExported || EntityPM.DirectionId == 'I'"></IconButton>
                         </td>
                         <td style="width: 50px;">
-                            <button class="Button" (click)="DeleteAllCustomFields()" [disabled]="OriginalExportCustomFields.length == 0 || EntityPM.IsExported">Delete All</button>
+                            <button class="Button" (click)="DeleteAllCustomFields()" [disabled]="OriginalExportCustomFields.length == 0 || EntityPM.IsExported || EntityPM.DirectionId == 'I'">Delete All</button>
                         </td>
                     </tr>
                 </table>
@@ -54,7 +54,7 @@
                                     <IconButton [DataCy]="item.FieldCode"
                                                 [Name]="'edit'"
                                                 [IsSmall]="true"
-                                                [disabled]="EntityPM.IsExported"
+                                                [disabled]="EntityPM.IsExported || EntityPM.DirectionId == 'I'"
                                                 style="display: block; float: left; margin-left:3px; margin-top:4px;"
                                                 (click)="EditCustomField(item)">
                                     </IconButton>
@@ -64,7 +64,7 @@
                                     <IconButton [DataCy]="item.FieldCode"
                                                 [Name]="'Delete'"
                                                 [IsSmall]="true"
-                                                [disabled]="EntityPM.IsExported"
+                                                [disabled]="EntityPM.IsExported || EntityPM.DirectionId == 'I'"
                                                 style="display: block; float: left; margin-left:3px; margin-top:4px;"
                                                 (click)="DeleteCustomField(item)">
                                     </IconButton>

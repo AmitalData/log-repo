@@ -53,6 +53,10 @@ export class DeploymentPackageGeneralTabComponent extends BaseComponent {
             this.EntityPM.Description = newValue;
         }
     }
+
+    public get IsDisabledEntity() {
+        return this.EntityPM.IsExported || this.EntityPM.DirectionId == "I";
+    }
     Download() {
         this.EntityPM.IsExported = true;
         DownloadManager.DownloadPage(this.EntityPM.DocumentId,null, true);
