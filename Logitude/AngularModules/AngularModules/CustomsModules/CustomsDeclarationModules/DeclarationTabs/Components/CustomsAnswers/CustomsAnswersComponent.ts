@@ -544,6 +544,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
 
         var listversion = null;
         for (var error of declarationErrors) {
+            error.Description = error.Description.replace(/;/g, ',');
             if (error.Sort == 0 || error.Sort == null) {
                 ///???? error.OrderBy = 99999999;
             }

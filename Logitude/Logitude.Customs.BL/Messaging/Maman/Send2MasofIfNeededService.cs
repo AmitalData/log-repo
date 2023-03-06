@@ -109,6 +109,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                         }
                         bool forceDueEcomUpsert = !string.IsNullOrWhiteSpace(drityEntityPM?.MyEcomInsert?.MyDeclarationCourierStatusPM?.DeclarationId);
 
+
                         if (forceSend || forceDueEcomUpsert)
                         {
                             dataHaveChangeSendIt = true;
