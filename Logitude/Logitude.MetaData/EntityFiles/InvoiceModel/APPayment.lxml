@@ -9181,13 +9181,13 @@
     <TextCode
       Code="&quot;APPayment.M.AlreadyReconciledInvoice&quot;"
       DefaultText="&quot;This payment is already reconciled to the same invoice. To update AP invoice amount line, please cancel reconcile number {0}  before making a new reconcile&quot;"
-      LocalDefaultText="&quot;הוראת התשלום כבר הותאמה עם חשבונית זאת, על מנת להתאים מחדש יש לבטל תחילה את התאמה מספר {0}&quot;"
+      LocalDefaultText="&quot;התשלום כבר מותאם לחשבונית המסומנת . על מנת לבצע התאמה שונה , יש לבטל תחילה את ההתאמה הקיימת שמספרה {0}&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;APPayment.M.PaymentDraftCantBeApproved&quot;"
       DefaultText="&quot;Payment draft cannot be reconciled until it is approved. Please approve the payment to proceed with the reconciliation&quot;"
-      LocalDefaultText="&quot;!לא ניתן לבצע התאמה לתשלום בסטאטוס טיוטה יש לאשר את התשלום כדי להמשיך , לחלופין ניתן ללהסיר את ההתאמות שסומנו ולשמור את התשלום כטיוטה.&quot;"
+      LocalDefaultText="&quot;לא ניתן לבצע התאמה לתשלום בסטטוס טיוטה יש לאשר את התשלום כדי להמשיך  , לחלופין ניתן להסיר את ההתאמות שסומנו ולשמור את התשלום כטיוטה&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
