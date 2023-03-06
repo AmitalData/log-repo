@@ -239,6 +239,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
             messageWindow.Width = 600;
             messageWindow.Height = 300;
             messageWindow.IsMessageMultiLine = true;
+            messageWindow.RTL = (ObjectsLocator.GlobalSetting.LayoutDirection === 'rtl');
             messageWindow.Show(errorMessage);
         }
     }
