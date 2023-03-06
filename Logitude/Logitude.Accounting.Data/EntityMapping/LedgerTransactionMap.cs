@@ -96,6 +96,10 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.InProgressExternalReconcile).HasColumnName("InProgressExternalReconcile");
 
+            this.Property(t => t.UpdateDateTime).HasColumnName("UpdateDateTime");
+
+            this.Property(t => t.UpdatedByUserName).HasColumnName("UpdatedByUserName").HasMaxLength(200).IsUnicode(true);
+
             dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {

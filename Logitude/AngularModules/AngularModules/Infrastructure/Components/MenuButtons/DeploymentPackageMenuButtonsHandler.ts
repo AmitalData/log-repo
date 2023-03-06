@@ -43,7 +43,7 @@ export class DeploymentPackageMenuButtonsHandler {
         switch (menuButton.EventCode) {
             case "Export":
                 {
-                    menuButton.IsDisabled = false;
+                    menuButton.IsDisabled = this.DisableMenuButton(menuButton.FeatureUniqeCode);
                     break;
                 }
         }
@@ -59,6 +59,11 @@ export class DeploymentPackageMenuButtonsHandler {
         }
     }
 
+    DisableMenuButton(featureUniqeCode: string) {
+        if (featureUniqeCode != "DeploymentPackage.Export") return false;
+        if (this.EntityPM.DirectionId == 'E') return false;
+        return true;
+    }
     private ExportMenuButtonClicked() {
         if (this.EntityPM == null) return;
         this.OpenExportAfterSaving = this.EntityPM.IsDirty;

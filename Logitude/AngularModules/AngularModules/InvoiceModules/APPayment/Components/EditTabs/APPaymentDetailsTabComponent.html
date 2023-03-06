@@ -870,7 +870,7 @@
                         <td>
                             <table>
                                 <tr style="height: 21px;">
-                                    <td colspan="3" class="BlueTitle">{{'APPayment.S.Details.Totals' | TextCodeTranslationPipe}}</td>
+                                    <td colspan="3" class="BlueTitle" [style.text-align]="isRTL ? 'right' : 'left'" >{{'APPayment.S.Details.Totals' | TextCodeTranslationPipe}}</td>
                                 </tr>
 
                                 <tr style="width:100%;">
@@ -928,7 +928,7 @@
                         <td *ngIf="IsFullAccounting && paymentLedgerTransactions && paymentLedgerTransactions.length > 0">
                             <table>
                                 <tr style="height: 21px;">
-                                    <td colspan="3" class="BlueTitle">{{'Accounting.O.ARP.ReconciliationNumber' | TextCodeTranslationPipe}}</td>
+                                    <td colspan="3" class="BlueTitle" [style.text-align]="isRTL ? 'right' : 'left'" >Payment Reco. Numbers</td>
                                 </tr>
 
                                 <tr style="width:100%;">
@@ -936,7 +936,7 @@
 
                                         <!-- Payment Amount -->
                                         <div style="display:block;width:230px" [style.float]="isRTL ? 'right' : 'left'">
-                                            <div style="font-size: 14px; text-align: left;color:#282E30">
+                                            <div style="font-size: 14px;color:#282E30" [style.text-align]="isRTL ? 'right' : 'left'">
                                             <a *ngFor="let recoNum of paymentLedgerTransactions; let i = index"
                                                        (click)="OpenReco(recoNum)">{{recoNum}}{{ i>=paymentLedgerTransactions.length-1?'':', ' }}</a> 
                                                     </div>

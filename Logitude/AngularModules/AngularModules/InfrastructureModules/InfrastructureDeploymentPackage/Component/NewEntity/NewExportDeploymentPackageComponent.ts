@@ -16,6 +16,7 @@ export class NewExportDeploymentPackageComponent extends BaseComponent {
     public DataContext: NewExportDeploymentPackageComponent = this;
     public ObjectTableName: string = "DeploymentPackage";
     private CurrentSession = SessionLocator.SelectedSession;
+    public AddNewDeploymentPackageComponent: AddNewDeploymentPackageComponent;
     constructor() {
         super();
         this.UIProperties.SetRequired("Code", this.ObjectTableName, true);

@@ -39,12 +39,12 @@ export class LedgerTransactionInternalNotesComponent extends BaseComponent {
 
 
     SetWindowArgs(args: any) {
-        var loggedContact = SessionLocator.LoggedUserPM;
+       var loggedContact = SessionLocator.LoggedUserPM;
         this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((res: any) => {
             this.EntityPM = args['ledgerTransaction'];
             this.InternalNote=this.EntityPM.InternalNote;
-            this.EntityPM.UpdateDateTime = new Date();
-            this.EntityPM.UpdatedByUserName = loggedContact.DontShowLocal ? loggedContact.EnglishName : (loggedContact.LocalName||loggedContact.EnglishName);
+            this.EntityPM.UpdateDateTime = (this.EntityPM.UpdateDateTime && (this.InternalNote!=null))?this.EntityPM.UpdateDateTime:new Date();
+            this.EntityPM.UpdatedByUserName = this.EntityPM.UpdatedByUserName?this.EntityPM.UpdatedByUserName:(loggedContact.DontShowLocal ? loggedContact.EnglishName : (loggedContact.LocalName||loggedContact.EnglishName));
             this.IsResourcesReady = true;
         });
 
@@ -56,7 +56,7 @@ export class LedgerTransactionInternalNotesComponent extends BaseComponent {
 
     OkButtonClicked() {
         this.SetLedgerTransactionInternalNotes();
-
+        var loggedContact = SessionLocator.LoggedUserPM;
         this.CurrentSession.StartBusyIndicatorLoading();
         this.ledgerTransactionPMService.update(this.EntityPM).subscribe((myResult: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
@@ -64,6 +64,9 @@ export class LedgerTransactionInternalNotesComponent extends BaseComponent {
             if (!mm.HasError) {
                 this.EntityPM = mm.Result;
                 this.EntityPM.InternalNote = this.CurrentSession.CurrentEditComponent.EntityPM.InternalNote;
+                this.EntityPM.UpdateDateTime = new Date();
+                this.EntityPM.UpdatedByUserName = loggedContact.DontShowLocal ? loggedContact.EnglishName : (loggedContact.LocalName||loggedContact.EnglishName);
+                
                 this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
             }
             this.CD.detectChanges();
