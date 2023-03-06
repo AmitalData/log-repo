@@ -67,7 +67,7 @@ namespace CommunicationWorkerRole.Services.Logbox
                 GlobalTenant Globaltenant = globaltenantRep.GetGlobalTenantsByTenant(customerTenantAccessAM.CustomerTenant);
                 if (Globaltenant != null && !string.IsNullOrEmpty(Globaltenant.PrivateLabelId))
                 {
-                    customerTenantAccessAM.IsPrivateLabelCustomer = true;
+                    FillPrivateLabelCustomerDetails(customerTenantAccessAM, Globaltenant.PrivateLabelId);
                 }
                 scope.Complete();
             }
@@ -79,6 +79,20 @@ namespace CommunicationWorkerRole.Services.Logbox
             var content = new StringContent(serializedCustomerTenantAccessCreatorObject, Encoding.UTF8, "application/json");
             var result = customerTenantAccessCreatorArgs.Client.PostAsync(customerTenantAccessCreatorArgs.URI + "CustomerTenantAccess", content);
             return result;
+        }
+
+        private static void FillPrivateLabelCustomerDetails(CustomerTenantAccessAM customerTenantAccessAM, string privateLabelId)
+        {
+            customerTenantAccessAM.IsPrivateLabelCustomer = true;
+            try
+            {
+                TenantManagmentPrivateLabelsRepository tenantManagmentPrivateLabelsRepository = new TenantManagmentPrivateLabelsRepository();
+                TenantManagmentPrivateLabels tenantManagmentPrivateLabels = tenantManagmentPrivateLabelsRepository.GetSingleTenantManagmentPrivateLabels(privateLabelId);
+                customerTenantAccessAM.PrivateLabelName = tenantManagmentPrivateLabels.PrivateLabelName;
+            }catch(Exception exception)
+            {
+                customerTenantAccessAM.PrivateLabelName = "Private";
+            }
         }
 
         private static APILogsPM GetLogPM(CustomerTenantAccessCreatorArgs customerTenantAccessCreatorArgs)
