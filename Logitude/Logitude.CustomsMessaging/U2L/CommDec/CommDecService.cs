@@ -344,7 +344,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                         DeclarationUpdateService.Update(this._MyDeclarationPM, true);
                         AppendLogLine("Update:MarkToDeleteSupplierInvoice:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                     }
-             
+                }
 
 
                 /////////////////////////////////////////////////////////////
