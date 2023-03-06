@@ -72,7 +72,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                                  CustomFileNo = d.CustomFileNo,
 
-                                                                 CustomerName = d.CustomerCard.LocalName,
+                                                                 CustomerName = (d.CustomerCard.LocalName != null ? d.CustomerCard.LocalName : d.CustomerCard.EnglishName),
 
                                                                  TransportModeId = d.TransportModeId,
 
@@ -273,7 +273,7 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                  FieldR18 = s.FieldR18,
                                                                  FieldR19 = s.FieldR19,
                                                                  FieldR20 = s.FieldR20,
-
+                                                                 CustomerId=d.CustomerId,
 
                                                              });
             return query;
