@@ -404,7 +404,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             EnglishName = a.EnglishName,
 
                                         }).ToList();
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = cardLists.Cast<object>().ToList() }).Set();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "List", Entities = cardLists.Cast<object>().ToList() }).Set();
             return cardLists;
         }
 
