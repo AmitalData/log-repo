@@ -1484,23 +1484,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
             }
         }
-        public static void ValidateBranch(ShipmentPM entityPM)
-        {
-            if (entityPM.IsHybrid) return;
-            if (!FeatureToggleHelper.HasFeatureToggle("BCC", entityPM.Tenant)) return;
-            if (string.IsNullOrEmpty(entityPM.BranchId)) return;
-            BranchRepository branchRepository = new BranchRepository(entityPM.Tenant);
-            Branch branch = branchRepository.GetSingleBranch(entityPM.BranchId, entityPM.Tenant);
 
-            if (branch == null || branch.Tenant != entityPM.Tenant)
-            {
-                throw new ApplicationException("Branch Field is required");
-            }
-            if (string.IsNullOrEmpty(branch.CounterCode))
-            {
-                throw new ApplicationException("The Counter Code of the " + branch.EnglishName + " Branch is required.");
-            }
-        }
         private static bool HasPayablesAmounts(ShipmentPM entityPM)
         {
             bool hasAnyPayableAmount = false;

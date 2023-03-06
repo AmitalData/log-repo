@@ -1499,12 +1499,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private Dictionary<string, string> GetCounterAdditionalParameter()
         {
-            Dictionary<string, string> counterAdditionalParameters = new Dictionary<string, string>() { { "[B]", "" } };
+            Dictionary<string, string> counterAdditionalParameters = new Dictionary<string, string>() { { "[B]", "" }, { "[BranchName]", "" } };
             if (!string.IsNullOrEmpty(entityPM.BranchId))
             {
                 BranchRepository branchRepository = new BranchRepository(myCommonContext);
                 Branch myBranch = branchRepository.GetSingleBranch(entityPM.BranchId, entityPM.Tenant);
-
+                if (myBranch != null)
+                {
+                    counterAdditionalParameters["[BranchName]"] = myBranch.EnglishName;
+                }
                 if (myBranch != null && !string.IsNullOrEmpty(myBranch.CounterCode))
                 {
                     counterAdditionalParameters["[B]"] = myBranch.CounterCode;

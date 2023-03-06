@@ -63,6 +63,7 @@ namespace Logitude.Server.Tools.Helpers
             string branchCounterCode = null;
             if (FeatureToggleHelper.HasFeatureToggle("SPB", tenant) && counterDef.UsePerBranch && additionalParameters != null)
             {
+                ValidateBranchCounterCode(additionalParameters);
                 branchCounterCode = additionalParameters["[B]"];
             }
 
@@ -90,7 +91,17 @@ namespace Logitude.Server.Tools.Helpers
 
             return number;
         }
-
+        private static void ValidateBranchCounterCode(Dictionary<string, string> additionalParameters)
+        {
+            if (string.IsNullOrEmpty(additionalParameters["[BranchName]"]))
+            {
+                throw new ApplicationException("Branch Field is required");
+            }
+            if (string.IsNullOrEmpty(additionalParameters["[B]"]))
+            {
+                throw new ApplicationException("The Counter Code of the " + additionalParameters["[BranchName]"] + " Branch is required.");
+            }
+        }
         private static string ExecuteNextTableNumberValueProcedure(int tenant, Counter counter, string prefix, int startNumber, string strConnString, string branchCounterCode)
         {
             string counterLastNumberValue;
