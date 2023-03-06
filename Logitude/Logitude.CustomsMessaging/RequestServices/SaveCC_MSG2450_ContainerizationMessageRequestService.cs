@@ -32,28 +32,11 @@ namespace Logitude.CustomsMessaging.RequestServices
 
 
             req.ContainerizationDetails = new AV_MSG2_ContainerizationMessageContainerizationDetails();
-			if (containerization.OperationMode!="3")
-			{
-			   if (string.IsNullOrEmpty(containerization.ExistInCustoms))
-			   {
-                   req.ContainerizationDetails.operationCode = 1;
-               
-               }
-			   else
-			   {
-                   req.ContainerizationDetails.operationCode = 2;
-               
-               }
+            req.ContainerizationDetails.operationCode = Convert.ToInt32(containerization.OperationMode);
+            if (containerization.ContainerizationStatus == "4")
+            {
+                req.ContainerizationDetails.operationCode = 1;
             }
-            else
-		    {
-                req.ContainerizationDetails.operationCode = 3;
-            }
-            //req.ContainerizationDetails.operationCode = Convert.ToInt32(containerization.OperationMode);
-            //if (containerization.ContainerizationStatus == "4")
-            //{
-            //    req.ContainerizationDetails.operationCode = 1;
-            //}
             req.ContainerizationDetails.operationType = 2;
             req.ContainerizationDetails.CustomsAgentID = Convert.ToInt32(settings.CustomsAgentId);
             req.ContainerizationDetails.CustomsAgentIDSpecified = true;

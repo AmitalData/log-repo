@@ -139,11 +139,6 @@ export class ContainerizationPM {
     public set TransportModeId(newValue: string) { if (this.transportModeId != newValue) { this.transportModeId = newValue; this.MarkAsDirty("TransportModeId"); } }
        
 	 
-    private existInCustoms: string;
-    public get ExistInCustoms() { return this.existInCustoms; }
-    public set ExistInCustoms(newValue: string) { if (this.existInCustoms != newValue) { this.existInCustoms = newValue; this.MarkAsDirty("ExistInCustoms"); } }
-       
-	 
 
     public OldEntityPM: ContainerizationPM;
 		

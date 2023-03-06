@@ -111,6 +111,7 @@
     <None Include="DBScripts\Post\202005270157_SetNullableForCDROPColumns_Global.sxml" />
     <None Include="DBScripts\Post\202005270158_SetNullableForCDROPColumns_Main.sxml" />
     <None Include="DBScripts\Post\20220309_RenameAcceptenceCode.sxml" />
+    <None Include="DBScripts\Post\202211101140_UpdateInterfaceTenantDefSendTime.sxml" />
     <None Include="DBScripts\Post\20221124_AddAmendmentRequestNumberToLastCounter.sxml" />
     <None Include="DBScripts\Post\202208151232_AddCOURIERPENDINGREASONS904 .sxml" />
     <None Include="DBScripts\Post\202108011330_AddPhysicalCheckSearchResultTypes.sxml" />
@@ -136,6 +137,7 @@
     <None Include="DBScripts\Post\20220905_UpdateDeclarationPhysicalCheckAfter.sxml" />
     <None Include="DBScripts\Post\20221002_DropColumnExportContainerizationID.sxml" />
     <None Include="DBScripts\Post\20220905_UpdateDeclarationPhysicalCheckAfter.sxml" />
+    <None Include="DBScripts\Post\202211291005_CreateIndexQueueMessagesInterfaceTypeCode.sxml" />
     <None Include="DBScripts\Pre\202211290910_DropExportStorageShipCode.sxml" />
     <None Include="DBScripts\Pre\202108111402_AddONSearchResult.sxml" />
     <None Include="DBScripts\Post\202201031031_SearchFieldCourierMaster.sxml" />
