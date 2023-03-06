@@ -570,7 +570,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         this.columns.push({
             FieldName: 'InternalNote',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("ARInvoice.F.InternalNotes"), 
+            Display: TextCodeTranslator.Translate("LedgerTransaction.F.InternalNote"), 
             Styles: { width: '200px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsInternalNotesTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsInternalNotesTemplate',
