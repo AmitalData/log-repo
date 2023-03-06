@@ -43,7 +43,7 @@ export class LedgerTransactionInternalNotesComponent extends BaseComponent {
         this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((res: any) => {
             this.EntityPM = args['ledgerTransaction'];
             this.InternalNote=this.EntityPM.InternalNote;
-            this.EntityPM.UpdateDateTime = this.EntityPM.UpdateDateTime?this.EntityPM.UpdateDateTime:new Date();
+            this.EntityPM.UpdateDateTime = (this.EntityPM.UpdateDateTime && (this.InternalNote!=null))?this.EntityPM.UpdateDateTime:new Date();
             this.EntityPM.UpdatedByUserName = this.EntityPM.UpdatedByUserName?this.EntityPM.UpdatedByUserName:(loggedContact.DontShowLocal ? loggedContact.EnglishName : (loggedContact.LocalName||loggedContact.EnglishName));
             this.IsResourcesReady = true;
         });
