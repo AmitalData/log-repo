@@ -20,7 +20,11 @@ namespace WebFreight.Web.Helpers.BIReport
         List<string> ChargesFactMeasurementFields = new List<string>()
        {"Gross Weight Per Ton", "Order Gross Weight", "Order Gross Weight in Ton",
         "Order Volume", "Total Volume (CBM)", "Volumetric Weight", "Number of Packages", 
-        "Order Number of Packages", "Gross Weight (KG)","Open Payables ( Foreign )","Open Receivable ( Foreign )","Invoice Line Amount (Foreign)"
+        "Order Number of Packages", "Gross Weight (KG)","Open Payables ( Foreign )","Open Receivable ( Foreign )","Invoice Line Amount (Foreign)","Invoice Exchange Rate","Expected Payable Amount"
+        };
+        List<string> ARInvoicesFactMeasurementFields = new List<string>()
+        {
+            "Line Amount (Foreign)","Line VAT Percentage","Invoice Currency Exchange Rate","Regional Tax Percentage","Foreign Exchange Rate"
         };
 
         string FactTable; 
@@ -186,6 +190,10 @@ namespace WebFreight.Web.Helpers.BIReport
             if(this.FactTable == "Fact_Charges" || this.FactTable == "Fact_MasterCharges")
             {
                 return !ChargesFactMeasurementFields.Any(f => f == selectedColumn.Name);
+            }
+            else if (this.FactTable == "Fact_ARInvoices")
+            {
+                return !ARInvoicesFactMeasurementFields.Any(f => f == selectedColumn.Name) && !dWObjectMaxMeasurementFieldPMs.Any(f => f.Code == selectedColumn.FieldCode);
             }
 
             return !dWObjectMaxMeasurementFieldPMs.Any(f => f.Code == selectedColumn.FieldCode);
