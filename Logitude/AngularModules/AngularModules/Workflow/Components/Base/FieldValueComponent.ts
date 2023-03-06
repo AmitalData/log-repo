@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
+import { UIProperty } from "Infrastructure/Components/LogitudeComponents/UIProperties";
 import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { ObjectTableList } from "Infrastructure/EntityLists/ObjectTableList";
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
@@ -12,7 +13,7 @@ import { ObjectTables } from "Workflow/Utilities/ObjectTables";
     templateUrl: "./FieldValueComponent.html"
 })
 
-export class FieldValueComponent extends BaseComponent implements OnInit {
+export class FieldValueComponent extends BaseComponent implements OnInit, AfterViewInit {
 
     @Input() Name: string;
     @Input() CurrentValue: string;
@@ -23,6 +24,8 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
     @Input() IsDisabled: boolean = false;
 
     @Output() ValueChanged = new EventEmitter<string>();
+
+    public Value: any = null;
 
     public DataContext: any = this;
     public LookupTable: ObjectTableList;
@@ -40,6 +43,10 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
 
     ngOnInit() {
         this.initialize();
+    }
+
+    ngAfterViewInit() {
+        this.initializeFieldUIPropertyChangedEvent();
     }
 
     initialize() {
@@ -76,6 +83,29 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
         }
     }
 
+    initializeFieldUIPropertyChangedEvent() {
+        if (this.isDateTimeObjectField() || this.isDataTypeDateTime()) {
+            let fieldUIProperty = this.getFieldUIProperty();
+            if (fieldUIProperty) {
+                fieldUIProperty.UIPropertyChanged.subscribe((event: any) => {
+                    if (event && (event instanceof UIProperty) && !event.ValidValue) {
+                        this.handleUpdateValue(null);
+                    } else {
+                        this.handleUpdateValue(this.Value);
+                    }
+                });
+            }
+        }
+    }
+
+    getFieldUIProperty() {
+        if (this.Name) {
+            let uiProperties = this.UIProperties.UIPropertyList.filter(p => p.FieldName === this.Name);
+            return uiProperties && uiProperties.length > 0 ? (uiProperties[0] || null) : null;
+        }
+        return null;
+    }
+
     setLookupTable() {
         this.LookupTable = ObjectTables.getById(this.ObjectField.LookUpTableId);
     }
@@ -89,6 +119,17 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
     }
 
     updateValue(value: any) {
+        this.Value = value;
+
+        let notValidUIProperties = this.UIProperties.UIPropertyList.filter(p => !p.ValidValue);
+        if (notValidUIProperties.length === 0) {
+            this.handleUpdateValue(value);
+        } else {
+            this.handleUpdateValue(null);
+        }
+    }
+
+    handleUpdateValue(value: any) {
         if ((this.isDateTimeObjectField() || this.isDataTypeDateTime()) && !this.IsIntegerNumberInput) {
             value = this.getDateValue(value);
         }

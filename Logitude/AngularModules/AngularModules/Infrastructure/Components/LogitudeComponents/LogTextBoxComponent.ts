@@ -42,7 +42,7 @@ export function BeforeOnDestroy(target: NgxInstance, key: Key, descriptor: Descr
     inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext',
         "IsMultiline", "InputType", "HideColumns", "HideLastColumn",
         "DigitsAfterPoint", "FocusOnMe", "IsFreeText", "IsAccumulative",
-        "AllowPercentage", "UseArialFont", "DontAllowAutoSelect", 'IsRatioBox', 'IsDisabledWithColor', 'DataCy'],
+        "AllowPercentage", "UseArialFont", "DontAllowAutoSelect", 'IsRatioBox', 'IsDisabledWithColor', 'DataCy', 'ForceTextValueChanges'],
 })
 
 export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewInit, OnDestroy {
@@ -78,6 +78,8 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     IsDisabledWithColor: boolean;
 
     public DataCy: string;
+
+    public ForceTextValueChanges: boolean = false;
 
     private timerToken: any;
     private textValue;
@@ -1520,7 +1522,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
             }
         }
 
-        if (newValue + "" != this.TextValue) {
+        if (newValue + "" != this.TextValue || this.ForceTextValueChanges) {
 
             if (this.TextValue) {
                 switch (this.InputType) {
