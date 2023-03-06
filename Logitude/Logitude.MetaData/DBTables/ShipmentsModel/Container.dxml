@@ -1809,6 +1809,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ShipmentDepartmentId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
@@ -2039,6 +2046,11 @@
     ForeignKeyColumn="GrossWeightUnitCode"
     ReferencedTable="WeightUnits"
     ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShipmentDepartmentId"
+    ReferencedTable="Departments"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="ShipmentPackagesId" />

@@ -870,6 +870,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             
             FieldChange.Add(container.EmptyContainerReturnTo, containerPM.EmptyContainerReturnTo, nameof(containerPM.EmptyContainerReturnTo), fieldChanges);
             container.EmptyContainerReturnTo = containerPM.EmptyContainerReturnTo;
+
+            FieldChange.Add(container.ShipmentDepartmentId, containerPM.ShipmentDepartmentId, nameof(containerPM.ShipmentDepartmentId), fieldChanges);
+            container.ShipmentDepartmentId = containerPM.ShipmentDepartmentId;
         }
 
         public static void BuildSearchField(ContainerPM containerPM, Container container, List<FieldChange> fieldChanges)
