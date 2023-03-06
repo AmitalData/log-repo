@@ -67,9 +67,17 @@ export class WorkflowSelectors {
     public static readonly AddNewAssignVariable = "[data-cy^='AddSetValue']";
     public static readonly FilterStartDateCheckBox = "[data-cy^='CheckBox_WorkFlowInstance.F.StartTime']";
     public static readonly FilterCreateDateCheckBox = "[data-cy^='CheckBox_WorkFlowInstance.F.CreateDate']";
+    //getEditable Record
+    public static readonly WorkflowAddGetEditableRecordNode = ".add-get-record-node";
+    public static readonly WorkflowEditableRecordName = "[data-cy^='record-name']";
+    public static readonly WorkflowGetRecordType = "#Editablerecords_RecordsTypeRadio";
 
+    //
     public static readonly CustomDatePicker = "customdatepicker";
     public static readonly DatePickertodayDate = "[data-cy^='TodayDateItem']";
+    public static readonly WorkflowGetRecordObject = ".ant-tree-select";
+    public static readonly WorkflowEditableReordIDValue = "[data-cy^='ConditionFieldValue_1']";
+
 
     public static WorkflowAssignFieldName(index: number) {
         return "[data-cy^='SetValueField_" + index.toString() + "']";

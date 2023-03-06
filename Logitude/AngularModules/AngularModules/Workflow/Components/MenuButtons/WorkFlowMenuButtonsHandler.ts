@@ -139,7 +139,7 @@ export class WorkFlowMenuButtonsHandler {
         if (isActivate) {
             this.WorkFlowVersionExtendedService.putActivate(version.Id).subscribe((serviceResponse: ServiceResponse) => {
                 if (serviceResponse != null && !serviceResponse.HasError) {
-                    this.handleActivateWorkflowResponse(serviceResponse.Result);
+                    this.handleActivateDeactiveWorkflowVersionResponse(serviceResponse.Result);
                     this.entityArgs.SendMessage({ Code: "SetWorkflowErrorMessages", Messages: null });
                     this.StopBusyIndicator();
                 } else {
@@ -152,7 +152,7 @@ export class WorkFlowMenuButtonsHandler {
             version.StatusCode = "INVE";
             this.WorkFlowVersionPMService.update(version).subscribe((serviceResponse: ServiceResponse) => {
                 if (serviceResponse != null && !serviceResponse.HasError) {
-                    this.handleActivateWorkflowResponse(serviceResponse.Result)
+                    this.handleActivateDeactiveWorkflowVersionResponse(serviceResponse.Result)
                     this.StopBusyIndicator();
                 } else {
                     this.StopBusyIndicator();
@@ -161,9 +161,14 @@ export class WorkFlowMenuButtonsHandler {
         }
     }
 
-    handleActivateWorkflowResponse(data: WorkFlowVersionPM) {
+    handleActivateDeactiveWorkflowVersionResponse(data: WorkFlowVersionPM) {
         this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, UpdatedVersion: data.Id }
         this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, ClickedVersionRow: null }
+        this.EntityPM.StatusCode = data.StatusCode;
+        this.EntityPM.Entity = data.Entity;
+        this.EntityPM.Trigger = data.Trigger;
+        this.EntityPM.FlowJson = data.FlowJson;
+        this.EntityPM.IsDirty = false;
         this.entityArgs.SendMessage("WorkflowVersionsUpdated");
     }
 

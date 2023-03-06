@@ -40,6 +40,7 @@ export class EditLastRateComponent extends BaseComponent {
         this.RatesTable.Tenant = this.TenantPM.Id;
         this.RatesTable.BaseCurrencyId = this.TenantPM.CurrencyId;
         this.RatesTable.ForeignCurrencyId = this.EntityPM.ForeignCurrencyId;
+        this.RatesTable.Unit = this.EntityPM.Unit;
         this.RatesTable.LogDateTime = DateTool.GetCurrentDateAsUtc();      
     }
 

@@ -43,7 +43,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             FullAccountingSettingPM setting = GetFullAccountingSetting(entityPM.Tenant);
             entityPM.LastUpdateDate = new DateTime(date.Year, date.Month, 15);
             entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
-            entityPM.UpdatedByUserName = GetLoggedContact(entityPM.Tenant).LocalName != null ? GetLoggedContact(entityPM.Tenant).LocalName : GetLoggedContact(entityPM.Tenant).EnglishName ;
+            entityPM.UpdatedByUserName = GetLoggedContact(entityPM.Tenant).LocalName != null ? GetLoggedContact(entityPM.Tenant).LocalName : GetLoggedContact(entityPM.Tenant).EnglishName;
             TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
             TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
             entityPM.VatNumber = setting.ConsolidationVAT != null ? setting.ConsolidationVAT : tenantPM.VatNumber;
@@ -157,7 +157,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
 
-               //TaxReportService.CreateTaxReportFileInBatch(entityPM.Id, entityPM.Tenant);
+                //TaxReportService.CreateTaxReportFileInBatch(entityPM.Id, entityPM.Tenant);
 
             }
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
@@ -350,12 +350,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         linesPM.Add(item);
                     });
                     TaxReportService.CalculateReportTotals(entityPM, linesPM);
-                   
-                } 
-               // entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
+
+                }
+                // entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
                 ContactPM loggedContact = GetLoggedContact(entityPM.Tenant);
                 entityPM.UpdatedByUserName = loggedContact.LocalName != null ? loggedContact.LocalName : loggedContact.EnglishName;
-                
+
             }
 
             base.OnUpdating(entityPM, entityPOCO);
@@ -425,12 +425,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             JournalAdditionalDataQueryService additionalDataQueryService = new JournalAdditionalDataQueryService(taxReportLine.Tenant);
             return additionalDataQueryService.GetSingle(taxReportLine.JournalId, taxReportLine.JournalLineNumber, false, false);
         }
-  
+
 
         private void CheckLaterReports(TaxReportPM entityPM)
         {
             bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
-            
+
 
             TaxReportQueryService reportQuery = new TaxReportQueryService(entityPM.Tenant);
             List<TaxReport> futureReports = reportQuery.GetFutureActiveReports(entityPM.CreateDate, entityPM.Tenant);
@@ -440,6 +440,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void Trace(TaxReportPM entityPM, TaxReport entityPOCO, string changesXml)
         {
+            VatReportStatusQueryService queryService = new VatReportStatusQueryService(entityPOCO.Tenant);
             ContactPM loggedContact = GetLoggedContact(entityPM.Tenant);
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
@@ -456,6 +457,42 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 };
                 EventTracer.CreateTraceEvent(eventTracerArgs);
             }
+            if (
+                 (entityPM.StatusCode == VatReportStatusValues.CancelationInProgress && entityPOCO.StatusCode == VatReportStatusValues.Draft) ||
+                 (entityPM.StatusCode == VatReportStatusValues.CancelationInProgress && entityPOCO.StatusCode == VatReportStatusValues.Error) ||
+                 (entityPM.StatusCode == VatReportStatusValues.CancelationInProgress && entityPOCO.StatusCode == VatReportStatusValues.Transmitted) ||
+                 (entityPM.StatusCode == VatReportStatusValues.Cancelled && entityPOCO.StatusCode == VatReportStatusValues.TransmittedAndClosingJournal) ||
+                 (entityPM.StatusCode == VatReportStatusValues.TransmittedAndClosingJournal && entityPOCO.StatusCode == VatReportStatusValues.Transmitted) ||
+                 (entityPM.StatusCode == VatReportStatusValues.Draft && entityPOCO.StatusCode == VatReportStatusValues.Transmitted) ||
+                 (entityPM.StatusCode == VatReportStatusValues.Transmitted && entityPOCO.StatusCode == VatReportStatusValues.Draft) ||
+                 (entityPM.StatusCode == VatReportStatusValues.CancelationFailed && entityPOCO.StatusCode == VatReportStatusValues.CancelationInProgress) ||
+                 (entityPM.StatusCode == VatReportStatusValues.Cancelled && entityPOCO.StatusCode == VatReportStatusValues.CancelationFailed) ||
+                 (entityPM.StatusCode == VatReportStatusValues.Error && entityPOCO.StatusCode == VatReportStatusValues.Draft) ||
+                 (entityPM.StatusCode == VatReportStatusValues.Draft && entityPOCO.StatusCode == VatReportStatusValues.Error) ||
+                 (entityPM.StatusCode == VatReportStatusValues.Error && entityPOCO.StatusCode == VatReportStatusValues.InProgress) ||
+                 (entityPM.StatusCode == VatReportStatusValues.Draft && entityPOCO.StatusCode == VatReportStatusValues.InProgress)
+                )
+            {
+
+                VatReportStatusPM oldStatus = queryService.GetSingle(entityPOCO.StatusCode, false, false);
+                var OldStatusEnglishName = oldStatus.EnglishName;
+                VatReportStatusPM newStatus = queryService.GetSingle(entityPM.StatusCode, false, false);
+                var NewStatusEnglishName = newStatus.EnglishName;
+
+
+                string notes = TranslateTextsClass.Translate("TaxReportStatus", entityPOCO.Tenant) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPOCO.Tenant) + OldStatusEnglishName + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPOCO.Tenant) + NewStatusEnglishName;
+                EventTracerArgs eventTracerArgs = new EventTracerArgs()
+                {
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    UserId = loggedContact.Id,
+                    ObjectTableName = "TaxReport",
+                    IsAddedManually = false,
+                    EventTypeCode = "UPEV",
+                    Notes = notes,
+                };
+                EventTracer.CreateTraceEvent(eventTracerArgs);
+            }
             else
             {
                 if (entityPM.IsCancelled != entityPOCO.IsCancelled)
@@ -464,29 +501,29 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     EventTracerArgs eventTracerArgs = new EventTracerArgs()
                     {
                         EntityId = entityPM.Id,
-                        Tenant = entityPM.Tenant,
+                       Tenant = entityPM.Tenant,
                         UserId = loggedContact.Id,
                         ObjectTableName = "TaxReport",
                         IsAddedManually = false,
                         EventTypeCode = "CNCL",
                         Notes = "",
                     };
-                    EventTracer.CreateTraceEvent(eventTracerArgs);
+                   EventTracer.CreateTraceEvent(eventTracerArgs);
                 }
-                else
+            else
+            {
+                EventTracerArgs eventTracerArgs = new EventTracerArgs()
                 {
-                    EventTracerArgs eventTracerArgs = new EventTracerArgs()
-                    {
-                        EntityId = entityPM.Id,
-                        Tenant = entityPM.Tenant,
-                        UserId = loggedContact.Id,
-                        ObjectTableName = "TaxReport",
-                        IsAddedManually = false,
-                        EventTypeCode = "APRV",
-                        Notes = "",
-                    };
-                    EventTracer.CreateTraceEvent(eventTracerArgs);
-                }
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    UserId = loggedContact.Id,
+                    ObjectTableName = "TaxReport",
+                    IsAddedManually = false,
+                    EventTypeCode = "APRV",
+                    Notes = "",
+                };
+                EventTracer.CreateTraceEvent(eventTracerArgs);
+            }
                 CreateTraceEventWhenTransmittedReportReturnToDraft(entityPM,loggedContact);
             }
 

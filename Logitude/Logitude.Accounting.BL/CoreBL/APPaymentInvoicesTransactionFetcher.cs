@@ -15,7 +15,8 @@ namespace Logitude.Accounting.BL.CoreBL
         string paymentId;
         string glaccountId;
         bool _excludeCancelledReconciliations = false;
-        LedgerTransaction paymentTransaction;
+        private LedgerTransaction paymentTransaction;
+        public LedgerTransactionPM paymentTransactionPM;
         List<LedgerTransactionPM> transactions;
 
         public APPaymentInvoicesTransactionFetcher(string appaymentId, string glaccountId, int tenant, bool? excludeCancelledReconciliations = null)
@@ -26,6 +27,12 @@ namespace Logitude.Accounting.BL.CoreBL
 
             if(paymentId != null)
                 paymentTransaction = GetPaymentTransaction();
+
+            if (paymentTransaction != null)
+            {
+                LedgerTransactionQueryService transactionsQuery = new LedgerTransactionQueryService(tenant);
+                paymentTransactionPM = transactionsQuery.GetEntityPM(paymentTransaction);
+            }
 
             transactions = new List<LedgerTransactionPM>();
             _excludeCancelledReconciliations = excludeCancelledReconciliations != null && excludeCancelledReconciliations == true;
@@ -104,7 +111,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                     .Where(d => d.ReconciledWithTransactionId == transactionId).ToList();
             }
             else {
-                transactionRecoLines = reconciliationLines.ToList();
+                //transactionRecoLines = reconciliationLines.ToList();
             }
             List<string> reconciliationsId = transactionRecoLines.Select(a => a.ReconciliationId).ToList();
             List<ReconciliationPM> reconciliationsForTransaction = reconciliations.Where(d => reconciliationsId.Contains(d.Id)).ToList();

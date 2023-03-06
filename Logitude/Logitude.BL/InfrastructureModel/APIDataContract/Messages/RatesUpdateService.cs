@@ -165,16 +165,32 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.Messages
             entityPM.ForeignCurrencyId = foreignCurrencyId;
             entityPM.LogDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
             entityPM.ValueDate = item.RateDate;
-            entityPM.Rate = item.Rate;
+            entityPM.Rate = CalculateRateAccordingUnit(item);
+            entityPM.Unit = item.Unit;
             ratesTableService.Create(entityPM);
         }
         private void UpdateRate(RateUpdate item, string rateId)
         {
             RatesTablePM entityPM = this.ratesTableQuery.GetSinglePM(rateId, tenant);
-            entityPM.Rate = item.Rate;
+            
+            entityPM.Rate = CalculateRateAccordingUnit(item);
+            entityPM.Unit = item.Unit;
             entityPM.ValueDate = item.RateDate;
             entityPM.LogDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
             ratesTableService.Update(entityPM);
+        }
+
+        private double CalculateRateAccordingUnit(RateUpdate item)
+        {
+            if(item.Unit != null)
+            {
+                if(item.Unit > 0)
+                {
+                    return (double) (item.Rate/item.Unit);
+                }
+            }
+            return (double)item.Rate;
+
         }
         private void GetRates()
         {

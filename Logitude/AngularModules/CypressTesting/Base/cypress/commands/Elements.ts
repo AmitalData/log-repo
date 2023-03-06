@@ -26,7 +26,7 @@ declare global {
             ClickingAfterHovering(LogLovSelector: string, HiddenElementSelector: string): Chainable<Element>
             SelectCheckBox(Selector: string): Chainable<Element>
             SelectDropDownListItem(Selector: string, contain: string): Chainable<Element>
-            SelectDropDownListItem2(Selector: string, contain: string): Chainable<Element>
+            SelectDropDownListItemUsingSearch(Selector: string, contain: string): Chainable<Element>
             SelectDropDownListItemNumber(Selector: string, number: number): Chainable<Element>
             SelectComboDropDownListItem(Selector: string, contain: string, index: number): Chainable<Element>
             SelectDefinedComboDropDownListItem(Selector: string, contain: string, index: number): Chainable<Element>
@@ -48,7 +48,7 @@ Cypress.Commands.add("SelectDefinedComboDropDownListItem", (Selector: string, co
     cy.get(Selector).find(BaseSelectors.ComboBoxItem).contains(contain).click()
 })
 
-Cypress.Commands.add("SelectDropDownListItem2", (Selector: string, contain: string) => {
+Cypress.Commands.add("SelectDropDownListItemUsingSearch", (Selector: string, contain: string) => {
     cy.get(Selector).clear({ force: true }).type(contain)
     cy.get(BaseSelectors.DropDownList).find(BaseSelectors.DropDownListItem).contains(contain).click()
 })

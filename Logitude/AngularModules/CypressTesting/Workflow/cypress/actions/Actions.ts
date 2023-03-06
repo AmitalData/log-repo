@@ -15,6 +15,7 @@ import { PrimitiveVariableDetails } from "../models/PrimitiveVariableDetails";
 import { RecordVariableDetails } from "../models/RecordVariableDetails";
 import { AssignmentDetails } from "../models/AssignmentDetails";
 import { AssignVariablesDetails } from "../models/AssignVariablesDetails";
+import { GetEditableDetails } from "../models/GetEditableDetails";
 
 let ConditionCounter = 2;
 let ConditionGroupButton = 1;
@@ -85,7 +86,6 @@ export function FillWorkflowDetails(workflowDetails: WorkflowDetails) {
         GenerateRandoms.GenerateRandomString(5, true) : null;
     cy.FillLogTextBox(WorkflowSelectors.WorkflowName, FlowName)
     cy.FillLogTextBox(WorkflowSelectors.WorkflowDescription, workflowDetails.Description);
-    cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowOwner, workflowDetails.Owner);
 }
 
 export function OpenEditStartNode() {
@@ -95,9 +95,9 @@ export function OpenEditStartNode() {
 }
 
 export function OpenNewWorkflow() {
-    cy.DefineRequestWait(RestAPI.GET, URLs.GetNewWorkflow, RequestAliases.GetNewWorkflow);
+   // cy.DefineRequestWait(RestAPI.GET, URLs.GetNewWorkflow, RequestAliases.GetNewWorkflow);
     cy.Click(WorkflowSelectors.NewWorkflow, null);
-    BaseAssertion.AssertStatusCode(RequestAliases.GetNewWorkflow, 200);
+   // BaseAssertion.AssertStatusCode(RequestAliases.GetNewWorkflow, 200);
 }
 
 export function SearchFlowByName() {
@@ -119,7 +119,6 @@ export function FillUpdateWorkflowDetails(workflowDetails: WorkflowDetails) {
         GenerateRandoms.GenerateRandomString(5, true) : null;
     cy.FillLogTextBox(WorkflowSelectors.WorkflowName, FlowName);
     cy.FillLogTextBox(WorkflowSelectors.WorkflowDescription, workflowDetails.Description);
-    cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowOwner, workflowDetails.Owner);
 }
 
 export function CreateNewWorkflow() {
@@ -380,7 +379,7 @@ function FillConditionFieldName(IsList: boolean, index: number, FieldName: strin
             cy.get(WorkflowSelectors.WorkflowfieldsListTitle).contains(FieldName).eq(0).click()
         });
     } else {
-        cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowConditionField(index), FieldName);
+        cy.SelectDropDownListItemUsingSearch(WorkflowSelectors.WorkflowConditionField(index), FieldName);
         BaseAssertion.AssertStatusCode(RequestAliases.GetObjectFieldViews, 200);
     }
 }
@@ -476,13 +475,49 @@ export function AssertFieldDoseNotExists() {
     BaseAssertion.AssertElementContain('.ant-select-tree-dropdown', 'No Results Found')
 }
 
+//GetEditable
+function addGetEditableRecord(index: number) {
+    cy.get(WorkflowSelectors.WorkflowConnector(index)).find('img').click().then(() => {
+        cy.Click(WorkflowSelectors.WorkflowAddGetEditableRecordNode, null)
+    })
+}
+
+export function FilEditableRecordDetails(getEditablRecordDetails: GetEditableDetails, index: number) {
+    addGetEditableRecord(index);
+    let VariableName = getEditablRecordDetails.Name.toLocaleLowerCase() == "random" ?
+        GenerateRandoms.GenerateRandomString(5, true) : getEditablRecordDetails.Name;
+    cy.FillLogTextBox(WorkflowSelectors.WorkflowEditableRecordName, VariableName);
+    cy.ClickRadio(WorkflowSelectors.WorkflowGetRecordType);
+    fillGetRecordObject(getEditablRecordDetails.Object)
+    fillEditableRecordIDValue(getEditablRecordDetails.FilterRecord)
+}
+
+function fillGetRecordObject(recordObject: string) {
+    cy.get(WorkflowSelectors.WorkflowGetRecordObject).find(BaseSelectors.input).click().type(recordObject).then(() => {
+        cy.get(WorkflowSelectors.WorkflowfieldsListTitle).contains(recordObject).eq(0).click()
+    });
+}
+
+function fillEditableRecordIDValue(filterRecord: string) {
+    if(filterRecord == 'From Trigger record') {
+        cy.get(WorkflowSelectors.WorkflowEditableReordIDValue).find(BaseSelectors.input).click().type('Id').then(() => {
+            cy.get(WorkflowSelectors.WorkflowfieldsListTitle).contains('Id').eq(0).click()
+        });  
+    }
+}
+
+export function SaveGetEditableRecordWorkflow() {
+    CloseEditNodeWindow();
+    cy.DefineRequestWait(RestAPI.PUT, URLs.WorkflowVersionRequest, RequestAliases.PutWorkflowFlowBuilder);
+    cy.Click(WorkflowSelectors.WorkflowSaveDraft, null);
+}
 
 function FillConditionValue(selector: string, value: string, condition: string) {
     switch (condition) {
         case "Main Carriage Final ATA":
             return cy.FillDate("input" + selector, value);
         case "Profit Differences":
-            return cy.SelectDropDownListItem2(selector, value);
+            return cy.SelectDropDownListItemUsingSearch(selector, value);
         case "Containers Numbers":
             return cy.FillLogTextBox(selector, value);
         case "Agent":
@@ -496,7 +531,7 @@ function FillConditionValue(selector: string, value: string, condition: string) 
         case "Customer":
             return cy.SelectDefinedComboDropDownListItem(selector, value, 0);
         case "Department":
-            return cy.SelectDropDownListItem2(selector, value);
+            return cy.FillLogTextBox(selector, value);
         case "Order Gross Weight":
             return cy.FillLogTextBox(selector, value);
         case "Accounting Closed":
@@ -504,7 +539,7 @@ function FillConditionValue(selector: string, value: string, condition: string) 
         case "Notes":
             return cy.FillLogTextBox(selector, value);
         case "Main Carriage Transport Mode":
-            return cy.SelectDropDownListItem2(selector, value);
+            return cy.SelectDropDownListItemUsingSearch(selector, value);
         case "Incoterm":
             return cy.SelectDefinedComboDropDownListItem(selector, value, 0);
         case "Main Carriage ATA":

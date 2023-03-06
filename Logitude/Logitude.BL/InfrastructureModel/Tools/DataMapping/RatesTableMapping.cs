@@ -17,6 +17,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             }
 
             entity.Rate = entityPM.Rate;
+            entity.Unit = entityPM.Unit;
             entity.ValueDate = entityPM.ValueDate.Value.Date;
             entity.UpdatedByUserId = entityPM.UpdatedByUserId;
             entity.UpdatedDate = entityPM.UpdatedDate;

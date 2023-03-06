@@ -8,7 +8,6 @@ Feature: Workflow add decision element
         And a flow with following details
             | Name        | random        |
             | Description | test workflow |
-            | Owner       | SpecflowTest  |
         When create flow
         Then the flow should create successfully
 

@@ -491,13 +491,20 @@ namespace CommunicationWorkerRole
             attachable.AttachableRef = new AttachableRef[1];
             attachable.AttachableRef[0] = new AttachableRef();
             attachable.AttachableRef[0].EntityRef = new ReferenceType();
-            attachable.AttachableRef[0].EntityRef.type = objectNameEnumType.Bill.ToString();
-            attachable.AttachableRef[0].EntityRef.name = objectNameEnumType.Bill.ToString();
+            attachable.AttachableRef[0].EntityRef.type = this.AttachableObjectType(); 
+            attachable.AttachableRef[0].EntityRef.name = this.AttachableObjectType();
             attachable.AttachableRef[0].EntityRef.Value = parmeters.APInvoice.ExternalAccountingEntityId;
 
             return attachable;
         }
+        private string AttachableObjectType()
+        {
+            if (parmeters.APInvoice.AmountInInvoiceCurrency >= 0)
+                return objectNameEnumType.Bill.ToString();
 
+            else
+                return objectNameEnumType.VendorCredit.ToString();
+        }
         private string GetContentType(Document document, DocumentsFiling documentFiling)
         {
 
@@ -584,5 +591,4 @@ namespace CommunicationWorkerRole
         public string CommunicationLogId = null;
         public string APInvoiceObjectTableId = null;
     }
-
 }

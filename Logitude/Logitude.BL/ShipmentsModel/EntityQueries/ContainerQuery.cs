@@ -1232,7 +1232,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     MainCarriageToCountryCode = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryCode : "",
                     OnCarriageETA = container.OnCarriageETA,
                     OnCarriageATA = container.OnCarriageATA,
+                    RequestDate = container.RequestDate,
+                    RecentResponseDate = container.RecentResponseDate,
                 };
+
                 MapCustomFields(containerPM, container);
             }
             return containerPM;
@@ -1510,6 +1513,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     MainCarriageToCountryCode = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryCode : "",
                     OnCarriageETA = container.OnCarriageETA,
                     OnCarriageATA = container.OnCarriageATA,
+                    RequestDate = container.RequestDate,
+                    RecentResponseDate = container.RecentResponseDate,
                 };
 
                 MapCustomFields(containerPM, container);
@@ -1776,7 +1781,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     MainCarriageToCountryName = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryName : "",
                     MainCarriageFromCountryCode = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryCode : "",
                     MainCarriageToCountryCode = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryCode : "",
+                    RequestDate = container.RequestDate,
+                    RecentResponseDate = container.RecentResponseDate,
                 };
+
                 MapCustomFields(containerPM, container);
             }
             return containerPM;
@@ -2054,6 +2062,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     MainCarriageToCountryCode = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryCode : "",
                     OnCarriageETA = container.OnCarriageETA,
                     OnCarriageATA = container.OnCarriageATA,
+                    RequestDate = container.RequestDate,
+                    RecentResponseDate = container.RecentResponseDate,
                 };
             }
 
@@ -2342,6 +2352,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             containerPM.HasTransshipments = container.HasTransshipments;
             containerPM.OnCarriageETA = container.OnCarriageETA;
             containerPM.OnCarriageATA = container.OnCarriageATA;
+            containerPM.RequestDate = container.RequestDate;
+            containerPM.RecentResponseDate = container.RecentResponseDate;
+
             if (container.EntityStatus != null)
             {
                 containerPM.StatusName = container.EntityStatus.Name;

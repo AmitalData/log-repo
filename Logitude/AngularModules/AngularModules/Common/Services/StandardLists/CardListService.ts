@@ -117,7 +117,7 @@ export class CardListService {
 			if (propName == "TreeFilters" && propValue && propValue.length > 0) {
                 urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
             }
-
+			
 			if (propName == "ParentEntity" && propValue) {
                 urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
             }
@@ -186,7 +186,7 @@ export class CardListService {
 			if (propName == "TreeFilters" && propValue && propValue.length > 0) {
                 urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
             }
-
+			
 			if (propName == "ParentEntity" && propValue) {
                 urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
             }

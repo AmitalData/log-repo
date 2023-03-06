@@ -23,6 +23,7 @@ using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using System.Collections.Generic;
 using System;
+using Logitude.Server.Tools.CustomFields;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -108,6 +109,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<CardPM> { entityPM }.Cast<object>().ToList() }).Update();
 
             if (entityPM.Addresses != null)
             {
@@ -154,6 +156,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<CardPM> { entityPM }.Cast<object>().ToList() }).Update();
+
             //UpdateGLaccountCardsDara();
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
 

@@ -8,7 +8,6 @@ Feature: Workflow node
         And a flow with following details
             | Name        | random        |
             | Description | test workflow |
-            | Owner       | SpecflowTest  |
         When create workflow
         Then the flow should create successfully
 
