@@ -403,7 +403,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 return;
 
             UpdateContainer(shipmentPackage);
-        }
+        }       
         private void UpdateContainer(ShipmentPackagePM shipmentPackage)
         {
             var container = CheckIfContainerExists(shipmentPackage);
@@ -412,7 +412,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 return;
             }
             MapContainerPMFields(container, shipmentPackage, false);
-            containerService.Update(container);
+            containerService.Update(container);  
         }
 
         private void MapContainerPMFields(ContainerPM container, ShipmentPackagePM shipmentPackage, bool isNew)
