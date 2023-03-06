@@ -744,10 +744,8 @@
     <Compile Include="Controllers\DashboardModel\Extended\DashboardListExtendedController.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\ListControllers\DashboardGlobalPresetFilterViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountInterestDeactivationBalanceController.cs" />
-    <Compile Include="Controllers\DashboardModel\Generated\ListControllers\UserPinnedDashboardViewsController.Generated.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\ListControllers\DashboardsUserSettingViewsController.Generated.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\PMControllers\DashboardGlobalPresetFilterController.Generated.cs" />
-    <Compile Include="Controllers\DashboardModel\Generated\PMControllers\UserPinnedDashboardController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountInterestActivationBalanceController.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\PMControllers\DashboardsUserSettingController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AddressTypeViewsController.Generated.cs" />
