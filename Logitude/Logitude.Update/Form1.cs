@@ -6767,6 +6767,7 @@ User/Pass",
                             {
                                 int year = myComparativeDate.Value.Year;
                                 int month = myComparativeDate.Value.Month;
+                                month += myPaymentTerm.NumberOfMonths;
                                 int daysInMonth = DateTime.DaysInMonth(year, month);
 
                                 myComparativeDate = new DateTime(year, month, daysInMonth, 0, 0, 0);
