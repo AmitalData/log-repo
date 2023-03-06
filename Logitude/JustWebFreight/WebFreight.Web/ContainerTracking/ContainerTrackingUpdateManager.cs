@@ -827,8 +827,6 @@ namespace WebFreight.Web.ContainerTracking
         }
         public void AddTotangoActivity(int tenant, string activity, string systemEmail)
         {
-            //string activityDescription = activity;
-
             string email = AuthenticationUtil.IsAuthenticatedUserExists() ? AuthenticationUtil.GetAuthenticatedUser() : "system@tenant" + tenant + ".com";
             string moduleName = "(A) Container";
             ActivityLogger.SendTotangoContactActivity(email,moduleName, activity, containerPM.Tenant,false,null);

@@ -59,11 +59,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         public void Create(ContainerPM entityPM)
         {
-            //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            //{
-              
-            //    scope.Complete();
-            //}
             List<FieldChange> FieldChanges = new List<FieldChange>();
 
             this.isNewEntity = true;
@@ -116,14 +111,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         public void AddTotangoActivity(ContainerPM containerPM, string activityDescription)
         {
-            //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            //{
             string email = AuthenticationUtil.IsAuthenticatedUserExists() ? AuthenticationUtil.GetAuthenticatedUser() : "system@tenant" + tenant + ".com";
             string moduleName = "(A) Container";
                 ActivityLogger.SendTotangoContactActivity(email, moduleName, activityDescription, containerPM.Tenant,false,null);
-            //    scope.Complete();
-            //}
-
         }
 
             private GeneralContainerTrackingArgs GetGeneralContainerTrackingArgs(ContainerPM entityPM)
@@ -145,11 +135,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         public void Update(ContainerPM entityPM, ContainersExternal containersExternal = null)
         {
-            //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            //{
-                
-            //    scope.Complete();
-            //}
             List<FieldChange> FieldChanges = new List<FieldChange>();
 
             this.isNewEntity = false;
@@ -214,15 +199,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             MapShipmentConcurrencyFields();
             
             new GeneralContainerTrackingService(GetGeneralContainerTrackingArgs(entityPM)).AutomaticTrackContainer();
-            //using (TransactionScope scope1 = TransactionFactory.GetNewSerializableTransaction())
-            //{
             string activity = "(A) Container Update";
             AddTotangoActivity(entityPM, activity);
-            //    scope1.Complete();
-
-            //}   
-
-
         }
         private AuditLog AddContainerAuditLogChanges(Container entityPoco, List<FieldChange> FieldChanges)
         {

@@ -348,8 +348,6 @@ namespace WebFreight.Web.ContainerTracking
             analyzeQueue.ErrorMessage = null;
             analyzeQueueRepository.Update(analyzeQueue);
             analyzeQueueRepository.SubmitChanges();
-            //string activity = "(A) Received Responses";
-            //AddTotangoActivity(tenant, activity);
         }
         public void AddTotangoActivity(int tenant, string activity)
         {
