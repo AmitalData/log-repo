@@ -6,6 +6,7 @@ import { DeploymentPackagePMService } from '../../../../Infrastructure/Services/
 import { FilterClass } from '../../../../Shipment/Components/NewEntity/NewShipmentComponent';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { LocationDirective } from '../../../../Infrastructure/Utilities/LocationDirective';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
 
@@ -105,6 +106,10 @@ export class AddNewDeploymentPackageComponent extends BaseComponent {
     get IsNextButtonClicked() {
         return this.SelectedDirectionComponent && this.SelectedDirectionComponent.IsNextClicked;
     }
+
+    get HasErrorsWhileImporting() {
+        return this.SelectedDirectionComponent && this.SelectedDirectionComponent.HasErrorsWhileImporting;
+    }
     get DirectionId() { return this.EntityPM.DirectionId; }
     set DirectionId(newValue: string) {
         if (this.EntityPM.DirectionId == newValue) return;
@@ -127,11 +132,20 @@ export class AddNewDeploymentPackageComponent extends BaseComponent {
     CreateDeploymentPackage() {
 
         this.deploymentPackageService.insert(this.EntityPM).subscribe((response: ServiceResponse) => {
-            if (!response.HasError) {
+            if (!response.HasError && response.Result && this.EntityPM.DirectionId == "I") {
+                this.SelectedDirectionComponent.StartCheckDeploymentPackageDeployViaWorkerRoleTimer(response.Result.PackageExecutionLogId);
+            }
+            if (!response.HasError && this.EntityPM.DirectionId == "E") {
                 this.CurrentSession.StopBusyIndicator();
                 this.CurrentSession.CloseCurrentWindow();
                 return;
             }
+            if (response.HasError && response.ErrorsArray?.length > 0 && this.EntityPM.DirectionId == "I") {
+                this.CurrentSession.StopBusyIndicator();
+                this.ShowMessage(response.ErrorsArray[0]);
+                return;
+            }
+            
             if (response.ErrorsArray && response.ErrorsArray.length > 0) {
                 this.SelectedDirectionComponent.ValidationErrorsList.push(response.ErrorsArray[0]);
                 this.CurrentSession.StopBusyIndicator();
@@ -140,7 +154,11 @@ export class AddNewDeploymentPackageComponent extends BaseComponent {
         });
 
     }
+    public ShowMessage(message: string) {
 
+        const messageWindow: MessageWindow = new MessageWindow();
+        messageWindow.Show(message);
+    }
     NextButtonClicked() {
         if (!this.SelectedDirectionComponent) return;
         this.SelectedDirectionComponent.NextButtonClicked();

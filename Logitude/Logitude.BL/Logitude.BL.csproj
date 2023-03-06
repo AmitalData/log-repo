@@ -625,6 +625,7 @@
     <Compile Include="InfrastructureModel\EntityLists\DataCustomObjectList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\DeploymentPackagesVersionList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\DeploymentPackageList.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\DeploymentPackageExecutionLogList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\EntityStatusTypeList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\ImageLibraryList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\QuoteChargesGroupList.cs" />
@@ -636,6 +637,7 @@
     <Compile Include="InfrastructureModel\EntityPMs\CustomFieldsMainObjectPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\DataCustomObjectPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\DeploymentPackagesVersionPM.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\DeploymentPackageExecutionLogPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\EntityStatusTypePM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\ImageLibraryPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\MultiEntityUpdateLogPM.cs" />
@@ -650,6 +652,7 @@
     <Compile Include="InfrastructureModel\EntityQueries\DeploymentPackagesVersionQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\DeploymentPackageQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\DataCustomObjectQuery.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\DeploymentPackageExecutionLogQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\EntityStatusTypeQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ImageLibraryQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\MultiEntityUpdateLogQuery.cs" />
@@ -701,6 +704,7 @@
     <Compile Include="InfrastructureModel\Tools\DataMapping\DeploymentPackagesVersionMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DeploymentPackageMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DataCustomObjectMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\DeploymentPackageExecutionLogMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\ReferenceCustomObjectMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\CustomChildObjectService.cs" />
     <Compile Include="InfrastructureModel\Services\QuoteUpdateService.cs" />
@@ -715,6 +719,7 @@
     <Compile Include="InfrastructureModel\Tools\EntityService\DeploymentPackagesVersionService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\DeploymentPackageService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\DataCustomObjectService.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\DeploymentPackageExecutionLogService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\ImageLibraryService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\MultiEntityUpdateLogService.cs" />
     <Compile Include="InfrastructureModel\Services\ObjectTableDefaultFieldsService.cs" />

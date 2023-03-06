@@ -10,7 +10,7 @@
     <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
 
 </div>
-<div *ngIf="!IsNextClicked" style="padding-left: 20px; padding-right: 10px; padding-bottom: 20px; padding-top:10px">
+<div *ngIf="!IsNextClicked && !HasErrorsWhileImporting" style="padding-left: 20px; padding-right: 10px; padding-bottom: 20px; padding-top:10px">
 
     <table>
 
@@ -172,7 +172,7 @@
 
 </div>
 
-<div *ngIf="IsNextClicked" style="padding-left: 20px; padding-right: 10px; padding-bottom: 20px ">
+<div *ngIf="IsNextClicked && !HasErrorsWhileImporting" style="padding-left: 20px; padding-right: 10px; padding-bottom: 20px ">
     <table>
 
         <tr style="height:40px">
@@ -219,6 +219,53 @@
                                 </log-cell-template>
                             </ng-template>
                         </log-column>
+
+                        <!-- Empty -->
+                        <log-column [header]="' '" [width]="'20'" [Alignment]="'left'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                    <div class="TextTrimming">
+                                        <span></span>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+
+                    </logitude-edit-grid>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+</div>
+
+<div *ngIf="HasErrorsWhileImporting" style="padding-left: 20px; padding-right: 10px; padding-bottom: 20px ">
+    <table>
+
+        <tr style="height:40px">
+            <td>
+                <div>
+                    <label class="Label">The following errors prevent completing the deployment process</label>
+                </div>
+            </td>
+        </tr>
+        <tr style="height: 380px">
+            <td>
+                <div class="MediaFill" style="overflow-x: hidden;">
+                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ExceptionsCollection">
+
+                        <!-- ComponentName -->
+                        <log-column [header]="'Errors List'" [width]="'600'" [Alignment]="'left'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                    <div class="TextTrimming">
+                                        <span>{{item}}</span>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
 
                         <!-- Empty -->
                         <log-column [header]="' '" [width]="'20'" [Alignment]="'left'">

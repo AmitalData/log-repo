@@ -223,6 +223,7 @@
     <Compile Include="InfrastructureModel\EntityPOCOs\DeploymentPackagesVersion.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DeploymentPackage.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DataCustomObject.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\DeploymentPackageExecutionLog.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\QuoteChargesGroup.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TariffCarrierTranslation.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UnassignedEntity.cs" />
@@ -658,6 +659,7 @@
     <Compile Include="InfrastructureModel\Mapping\DeploymentPackagesVersionMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DeploymentPackageMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DataCustomObjectMap.cs" />
+    <Compile Include="InfrastructureModel\Mapping\DeploymentPackageExecutionLogMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWObjectFieldCategoriesMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWObjectFieldMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWCategoriesMap.cs" />
@@ -682,6 +684,7 @@
     <Compile Include="InfrastructureModel\Repositories\DeploymentPackagesVersionRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DeploymentPackageRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DataCustomObjectRepository.cs" />
+    <Compile Include="InfrastructureModel\Repositories\DeploymentPackageExecutionLogRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWObjectFieldCategoriesRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWQueryColumnRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWQueryFilterRepository.cs" />

@@ -37,6 +37,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         private DeploymentPackagePM entityPM;
         private DeploymentPackageRepository entityRepository;
         private Contact loggedContact;
+        private string deploymentPackageExecutionLogId;
 
         public DeploymentPackageService(IWebFreightContext context, int tenant)
         {
@@ -47,11 +48,15 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.GetLoggedContact();
         }
 
-        public void Create(DeploymentPackagePM deploymentPackagePM)
+        public void Create(DeploymentPackagePM deploymentPackagePM, bool fromWeb = true)
         {
 
-            DeploymentPackageValidating.Validate(deploymentPackagePM, entityRepository);
-
+            DeploymentPackageValidating.ValidateCode(deploymentPackagePM.Code, deploymentPackagePM.Tenant, entityRepository);
+            if (deploymentPackagePM.DirectionId == "I" && fromWeb)
+            {
+                BuildImportQueueMessage(deploymentPackagePM);
+                return;
+            }
             this.isNewEntity = true;
             this.entityPM = deploymentPackagePM;
             this.entityPM.Id = IdCounter.GetNumber("DeploymentPackage", tenant).ToString();
@@ -65,8 +70,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             Context.SaveChanges();
             Poco.VersionId = new DeploymentPackageVersionInitializerService(deploymentPackagePM, Context).Create().Id;
             Context.SaveChanges();
-            if (entityPM.DirectionId == "E") return;
-            BuildImportQueueMessage();
         }
 
         public void Update(DeploymentPackagePM deploymentPackagePM)
@@ -101,11 +104,16 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.loggedContact = new ContactRepository(tenant).GetSingleContactByEmail(("system@tenant" + tenant.ToString() + ".com"), tenant,true);
         }
 
-        private void BuildImportQueueMessage()
+        private void BuildImportQueueMessage(DeploymentPackagePM deploymentPackagePM)
         {
+            DeploymentPackageExecutionLogService executionLogService = new DeploymentPackageExecutionLogService(Context, deploymentPackagePM.Tenant);
+            DeploymentPackageExecutionLog deploymentPackageExecutionLog = executionLogService.GetNewInStanceFromDeploymentPackageExecutionLog(deploymentPackagePM);
+
+            deploymentPackagePM.PackageExecutionLogId = deploymentPackageExecutionLog?.Id;
+
             IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("DeploymentPackageQueue", 0);
-            queueservice.Send(new Dictionary<string, string>() { { "DeploymentPackageId", entityPM.Id }, { "Tenant", tenant.ToString() } }, tenant);
+            queueservice.InitializeQueue("DeploymentPackageQueue", deploymentPackageExecutionLog.Tenant);
+            queueservice.Send(new Dictionary<string, string>() { { "DeploymentPackageExecutionLogId", deploymentPackageExecutionLog.Id }, { "Tenant", deploymentPackageExecutionLog.Tenant.ToString() } }, deploymentPackageExecutionLog.Tenant);
         }
     }
 }

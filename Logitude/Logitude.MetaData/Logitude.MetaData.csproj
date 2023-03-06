@@ -293,6 +293,7 @@
     <None Include="DBTables\ShipmentsModel\ShipmentDigitalField.dxml" />
     <None Include="EntityFiles\CommonDataModel\CarrierServiceLine.lxml" />
     <None Include="EntityFiles\CommonDataModel\CustomerGroup.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\DeploymentPackageExecutionLog.lxml" />
     <None Include="EntityFiles\CommonDataModel\HorseGender.lxml" />
     <None Include="EntityFiles\CommonDataModel\Mention.lxml" />
     <None Include="EntityFiles\CommonDataModel\PortGroup.lxml" />

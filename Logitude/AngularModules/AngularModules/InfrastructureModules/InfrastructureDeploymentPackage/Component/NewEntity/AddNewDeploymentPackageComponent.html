@@ -78,7 +78,7 @@
                     <td style="width: 5px;" *ngIf="IsNextButtonClicked && DirectionId == 'I'">
                         <div></div>
                     </td>
-                    <td style="width: 57px;" *ngIf="DirectionId == 'I'">
+                    <td style="width: 57px;" *ngIf="DirectionId == 'I' && !HasErrorsWhileImporting">
                         <button *ngIf="!IsNextButtonClicked" id="{{'NextButton' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="NextButtonClicked()" [disabled]="IsControlButtonsDisabled">{{'General.B.Next' | TextCodeTranslationPipe}}</button>
                         <button *ngIf="IsNextButtonClicked" id="{{'DeployButton' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="DeployButtonClicked()" [disabled]="IsControlButtonsDisabled">Deploy</button>
                     </td>

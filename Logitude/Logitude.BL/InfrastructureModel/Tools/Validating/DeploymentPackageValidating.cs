@@ -15,9 +15,9 @@ namespace Logitude.BL.InfrastructureModel.Tools.Validating
 
         }
 
-        public static void Validate(DeploymentPackagePM entityPM, DeploymentPackageRepository entityRepository)
+        public static void ValidateCode(string code, int tenant, DeploymentPackageRepository entityRepository)
         {
-            if (!string.IsNullOrEmpty(entityPM.Code) && entityRepository.CheckIfDeploymentPackageCodeExist(entityPM.Code, entityPM.Tenant))
+            if (!string.IsNullOrEmpty(code) && entityRepository.CheckIfDeploymentPackageCodeExist(code, tenant))
             {
                 throw new Exception("Another Deployment Package already exist with this Code ");
             }

@@ -47,7 +47,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 { 
 
     
-    public partial class DeploymentPackageViewsController : ApiController
+    public partial class DeploymentPackageExecutionLogViewsController : ApiController
     {
 	  
        
@@ -59,21 +59,20 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("DeploymentPackage", "READ", authToken.Tenant);
 				
 		    	IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
-				DeploymentPackageRepository  deploymentPackageRepository = new DeploymentPackageRepository(MyContext);
-				DeploymentPackageList entityList = null;
-				DeploymentPackage entityPoco = deploymentPackageRepository.GetSingleDeploymentPackage(id , authToken.Tenant);
+				DeploymentPackageExecutionLogRepository  deploymentPackageExecutionLogRepository = new DeploymentPackageExecutionLogRepository(MyContext);
+				DeploymentPackageExecutionLogList entityList = null;
+				DeploymentPackageExecutionLog entityPoco = deploymentPackageExecutionLogRepository.GetSingleDeploymentPackageExecutionLog(id , authToken.Tenant);
                 
                 if (entityPoco != null)
 				{
-									List<DeploymentPackage> singleEntityList = new List<DeploymentPackage>();
+									List<DeploymentPackageExecutionLog> singleEntityList = new List<DeploymentPackageExecutionLog>();
 					singleEntityList.Add(entityPoco);
 
-					DeploymentPackageQuery deploymentPackageQuery = new DeploymentPackageQuery(deploymentPackageRepository);
-					IQueryable<DeploymentPackage> iQueryable = singleEntityList.AsQueryable();
-					IQueryable<DeploymentPackageList> iQueryableEntityList = deploymentPackageQuery.GetIQueryableEntityList(iQueryable);
+					DeploymentPackageExecutionLogQuery deploymentPackageExecutionLogQuery = new DeploymentPackageExecutionLogQuery(deploymentPackageExecutionLogRepository);
+					IQueryable<DeploymentPackageExecutionLog> iQueryable = singleEntityList.AsQueryable();
+					IQueryable<DeploymentPackageExecutionLogList> iQueryableEntityList = deploymentPackageExecutionLogQuery.GetIQueryableEntityList(iQueryable);
 				    entityList = iQueryableEntityList.FirstOrDefault();
 
 			    }
@@ -97,17 +96,16 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("DeploymentPackage", "READ", authToken.Tenant);
 
 
 				IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
-				DeploymentPackageRepository  deploymentPackageRepository = new DeploymentPackageRepository(MyContext);
-				IQueryable<DeploymentPackage> entityPocos = deploymentPackageRepository.GetDeploymentPackages(authToken.Tenant);
+				DeploymentPackageExecutionLogRepository  deploymentPackageExecutionLogRepository = new DeploymentPackageExecutionLogRepository(MyContext);
+				IQueryable<DeploymentPackageExecutionLog> entityPocos = deploymentPackageExecutionLogRepository.GetDeploymentPackageExecutionLogs(authToken.Tenant);
 
-				DeploymentPackageQuery deploymentPackageQuery = new DeploymentPackageQuery(deploymentPackageRepository);
-			    IQueryable<DeploymentPackageList> entityLists = deploymentPackageQuery.GetIQueryableEntityList(entityPocos);
+				DeploymentPackageExecutionLogQuery deploymentPackageExecutionLogQuery = new DeploymentPackageExecutionLogQuery(deploymentPackageExecutionLogRepository);
+			    IQueryable<DeploymentPackageExecutionLogList> entityLists = deploymentPackageExecutionLogQuery.GetIQueryableEntityList(entityPocos);
 				entityLists = entityLists.OrderBy(d => d.CreateDate);
-				List<DeploymentPackageList> listResult = entityLists.ToList();
+				List<DeploymentPackageExecutionLogList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 										
 				return Request.CreateResponse(HttpStatusCode.OK, listResult);
@@ -128,21 +126,19 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 				int tenant = authToken.Tenant;
-				                
-				SecurityUtility.CheckContactFeature("DeploymentPackage", "READ", authToken.Tenant);
-	
+				
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "DeploymentPackage",
+                    ObjectTableName = "DeploymentPackageExecutionLog",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "DeploymentPackages",
+                    QuerySection = "DeploymentPackageExecutionLogs",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
                 };
 
-				List<ObjectField> DeploymentPackageObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("DeploymentPackage",tenant);
+				List<ObjectField> DeploymentPackageExecutionLogObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("DeploymentPackageExecutionLog",tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
@@ -165,7 +161,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                             //}
                         //}
                         //ToDo: Get object field by name and set the remained filter properties
-						ObjectField field = DeploymentPackageObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+						ObjectField field = DeploymentPackageExecutionLogObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                         if (field != null)
                         {
                             string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -192,7 +188,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
                     foreach (QueryFilterItem filter in filters_list)
                     {
-                        ObjectField field = DeploymentPackageObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        ObjectField field = DeploymentPackageExecutionLogObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                         if (field != null)
                         {
 
@@ -220,7 +216,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
                  { 
                      AdditionalTreeFilter = filters.TreeFilters,
-                     ObjectTableName = "DeploymentPackage",
+                     ObjectTableName = "DeploymentPackageExecutionLog",
                      ParentEntityId = filters.ParentEntityId,
                      ParentObjectTableName = filters.ParentObjectTableName, 
                      Tenant = tenant ,
@@ -229,31 +225,31 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
 								
                 IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
-                DeploymentPackageRepository  deploymentPackageRepository = new DeploymentPackageRepository(MyContext);
-                IQueryable<DeploymentPackage> entityPocos = deploymentPackageRepository.GetDeploymentPackages(tenant);
+                DeploymentPackageExecutionLogRepository  deploymentPackageExecutionLogRepository = new DeploymentPackageExecutionLogRepository(MyContext);
+                IQueryable<DeploymentPackageExecutionLog> entityPocos = deploymentPackageExecutionLogRepository.GetDeploymentPackageExecutionLogs(tenant);
 
-                DeploymentPackageQuery deploymentPackageQuery = new DeploymentPackageQuery(deploymentPackageRepository);
+                DeploymentPackageExecutionLogQuery deploymentPackageExecutionLogQuery = new DeploymentPackageExecutionLogQuery(deploymentPackageExecutionLogRepository);
                 
 				QueryOperations nonListQueryOperation = new QueryOperations();
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
 				
-                entityPocos = genericFilter.GetFilteredQuery<DeploymentPackage>(nonListQueryOperation, entityPocos);
+                entityPocos = genericFilter.GetFilteredQuery<DeploymentPackageExecutionLog>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
-                IQueryable<DeploymentPackageList> entityLists = deploymentPackageQuery.GetIQueryableEntityList(entityPocos);
+                IQueryable<DeploymentPackageExecutionLogList> entityLists = deploymentPackageExecutionLogQuery.GetIQueryableEntityList(entityPocos);
 
-                entityLists = genericFilter.GetFilteredQuery<DeploymentPackageList>(listQueryOperation, entityLists);
-                entityLists = new TreeFilterQueryService().Apply<DeploymentPackageList>(entityLists , treeFilterQueryArgs);
+                entityLists = genericFilter.GetFilteredQuery<DeploymentPackageExecutionLogList>(listQueryOperation, entityLists);
+                entityLists = new TreeFilterQueryService().Apply<DeploymentPackageExecutionLogList>(entityLists , treeFilterQueryArgs);
 
 		      
 			  								
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
-                   PropertyInfo propInfo = typeof(DeploymentPackageList).GetProperty(queryOperations.SortByColumnName);
+                   PropertyInfo propInfo = typeof(DeploymentPackageExecutionLogList).GetProperty(queryOperations.SortByColumnName);
                    
 
-                   ObjectField objectField = (from a in DeploymentPackageObjectFields
+                   ObjectField objectField = (from a in DeploymentPackageExecutionLogObjectFields
                                            where a.FieldName == queryOperations.SortByColumnName
                                            select a).FirstOrDefault();
 
@@ -261,7 +257,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                    {
                     if (objectField.IsCustom)
                     {
-                        entityLists = sortClass.GetSorterQuery<DeploymentPackageList, string>(queryOperations, entityLists);
+                        entityLists = sortClass.GetSorterQuery<DeploymentPackageExecutionLogList, string>(queryOperations, entityLists);
                     }
                     else
                     {
@@ -271,36 +267,36 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                         case "text":
 						case "lookup":
                             {
-                                entityLists = sortClass.GetSorterQuery<DeploymentPackageList, string>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<DeploymentPackageExecutionLogList, string>(queryOperations, entityLists);
                                 break;
                             }
 						case "sigdouble":
 						case "double":
                             {
-                                entityLists = sortClass.GetSorterQuery<DeploymentPackageList, double>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<DeploymentPackageExecutionLogList, double>(queryOperations, entityLists);
                                 break;
                             }
 						case "date":
                         case "datetime":
                             {
-                                entityLists = sortClass.GetSorterQuery<DeploymentPackageList, DateTime>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<DeploymentPackageExecutionLogList, DateTime>(queryOperations, entityLists);
                                 break;
                             }
 						case "unsinteger":
                         case "integer":
                             {
-                                entityLists = sortClass.GetSorterQuery<DeploymentPackageList, int>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<DeploymentPackageExecutionLogList, int>(queryOperations, entityLists);
                                 break;
                             }
                         case "boolean":
                             {
-                                entityLists = sortClass.GetSorterQuery<DeploymentPackageList, bool>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<DeploymentPackageExecutionLogList, bool>(queryOperations, entityLists);
                                 break;
                             }
 						case "unsdecimal":
 						case "decimal":
                             {
-                                entityLists = sortClass.GetSorterQuery<DeploymentPackageList, decimal>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<DeploymentPackageExecutionLogList, decimal>(queryOperations, entityLists);
                                 break;
                             }
                         default:
@@ -330,7 +326,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				  entityLists = entityLists.Take(queryOperations.PageSize);
 
 				}
-			   List<DeploymentPackageList> listResult = entityLists.ToList();
+			   List<DeploymentPackageExecutionLogList> listResult = entityLists.ToList();
 
                response.Result = listResult;
 			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);

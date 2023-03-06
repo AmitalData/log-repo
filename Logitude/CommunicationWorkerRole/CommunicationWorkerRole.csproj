@@ -412,7 +412,6 @@
     <Compile Include="Services\ContainerTraking\ContainerTrackingWRService.cs" />
     <Compile Include="Services\ContainerTraking\RequestContainerStatusService.cs" />
     <Compile Include="Services\DelayAutomationFieldValueService.cs" />
-    <Compile Include="Services\DeploymentPackages\DeploymentPackageWRService.cs" />
     <Compile Include="Services\DigitalQueryQueryExportLogExecutionService.cs" />
     <Compile Include="Services\Logbox\APICredentialsAuthenticationService.cs" />
     <Compile Include="Services\Logbox\CustomerTenantAccessUpdaterService.cs" />

@@ -3274,5 +3274,14 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
                     });
         }
+
+        public QueryFilterItem DeserializeQueryFilterItem(string defaultAdditionalFilters)
+        {
+           return JsonSerializer.Deserialize<QueryFilterItem>(defaultAdditionalFilters);
+        }
+        public string SerializeQueryFilterItem(QueryFilterItem defaultAdditionalFilters)
+        {
+            return JsonSerializer.Serialize<QueryFilterItem>(defaultAdditionalFilters);
+        }
     }
 }

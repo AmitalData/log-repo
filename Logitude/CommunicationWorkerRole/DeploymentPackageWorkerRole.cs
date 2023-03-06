@@ -1,6 +1,7 @@
-﻿using CommunicationWorkerRole.Services.DeploymentPackages;
-using Logitude.Server.Tools.QueueService;
+﻿using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,15 +9,20 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using WebFreight.Web.Helpers.WorkerRole.DeploymentPackages;
 
 namespace CommunicationWorkerRole
 {
     public class DeploymentPackageWorkerRole : WorkerEntryPoint
     {
-        IQueueService queueservice;
-        string URI = "";
-        DeploymentPackageWRService deploymentPackageService;
-        string deploymentPackageId;
+
+        private DbQueueService queueService;
+
+        private static DateTime startExecuteDate;
+        int tenant = 0;
+        string deploymentPackageExecutionProgressStatus = "P";
+        string deploymentPackageExecutionFailedStatus = "F";
+
         public DeploymentPackageWorkerRole()
         {
         }
@@ -25,131 +31,89 @@ namespace CommunicationWorkerRole
             ThreadId = Guid.NewGuid().ToString();
             BatchServiceCode = "DeploymentPackageWorkerRole";
             DoneItemsInRange = new Dictionary<DateTime, int>();
+            ConnectClient();
 
-            try
-            {
-                queueservice = new DbQueueService();
-                queueservice.InitializeQueue("DeploymentPackageQueue", 0);
+            new Thread(new ThreadStart(CleanUp)).Start();
+            ExceptionHandler.HandleException(new Exception("Deployment Package Worker role started"), DateTime.Now, 0, null, ThreadedRoleEntryPoint.getWorkerRoleName(), null, System.Environment.MachineName);
 
-            }
-
-            catch (Exception ex)
-            {
-
-                string ip = "";
-                if (HttpContext.Current != null && HttpContext.Current.Request != null)
-                {
-                    ip = HttpContext.Current.Request.UserHostAddress;
-                }
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "DeploymentPackageQueue Role", null, ip);
-
-
-            }
             return base.OnStart();
-
 
         }
 
-        string Token;
+        private void ConnectClient()
+        {
+            try
+            {
+                queueService = new DbQueueService();
+                queueService.InitializeQueue("DeploymentPackageQueue", 0);
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Deployment Package execution worker role start", null, null);
+            }
+        }
+
+        private void CleanUp()
+        {
+            bool isUpdatedRequired = false;
+            DeploymentPackageExecutionLogRepository deploymentPackageExecutionLogRepository = new DeploymentPackageExecutionLogRepository(tenant);
+            var deploymentPackageExecutionLogs = deploymentPackageExecutionLogRepository.GetAllDeploymentPackageExecutionLogs().Where(d => d.ExecutedByServerName == System.Environment.MachineName && d.StatusCode == deploymentPackageExecutionProgressStatus && d.StartDate < DateTime.Now).ToList();
+            foreach (DeploymentPackageExecutionLog deploymentPackageExecutionLog in deploymentPackageExecutionLogs)
+            {
+                MarkDeploymentPackageExecutionLogFailed(deploymentPackageExecutionLog, deploymentPackageExecutionLogRepository);
+                isUpdatedRequired = true;
+            }
+
+            if (!isUpdatedRequired) return;
+            deploymentPackageExecutionLogRepository.SubmitChanges();
+            ExceptionHandler.HandleException(new Exception("Deployment Package Worker cleaned up all stuck queue messages(" + deploymentPackageExecutionLogs.Count() + ") and convert them to Fail"), DateTime.Now, 0, null, ThreadedRoleEntryPoint.getWorkerRoleName(), null, System.Environment.MachineName);
+        }
+
+        private void MarkDeploymentPackageExecutionLogFailed(DeploymentPackageExecutionLog deploymentPackageExecutionLog, DeploymentPackageExecutionLogRepository deploymentPackageExecutionLogRepository)
+        {
+            deploymentPackageExecutionLog.StatusCode = deploymentPackageExecutionFailedStatus;
+            deploymentPackageExecutionLog.ExceptionMessage = "The deployment package failed to deploy.Please try again. Server Machine was down";
+            deploymentPackageExecutionLogRepository.Update(deploymentPackageExecutionLog);
+        }
+
         public override void Run()
         {
-
+            startExecuteDate = DateTime.Now;
+            ExceptionHandler.HandleException(new Exception("Deployment Package Worker role thread start running"), DateTime.Now, 0, null, ThreadedRoleEntryPoint.getWorkerRoleName(), null, System.Environment.MachineName);
             while (IsRunning)
             {
                 if (!General.IsUpdating())
                 {
                     try
                     {
-                        queueservice = new DbQueueService();
-                        queueservice.InitializeQueue("DeploymentPackageQueue", 0);
-                        var response = queueservice.Receive();
-                        LastActivity = DateTime.UtcNow;
-                        int tenant = 0;
-
-                        if (response != null && response.MessageId != null)
-                        {
-                            try
-                            {
-                                deploymentPackageId = response.MessageValues["DeploymentPackageId"].ToString();
-                                int.TryParse(response.MessageValues["Tenant"], out tenant);
-
-
-                                if (string.IsNullOrEmpty(deploymentPackageId))
-                                {
-                                    queueservice.Complete();
-                                    continue;
-                                }
-                                if (!string.IsNullOrEmpty(deploymentPackageId))
-                                {
-                                    deploymentPackageService = new DeploymentPackageWRService(deploymentPackageId);
-                                }
-
-                                LogDoneItemInMemory();
-                            }
-                            catch (Exception ex)
-                            {
-                                #region HandleException
-                                ExceptionHandler.HandleException(ex, DateTime.Now, tenant, "", "WorkerRole", "", null);
-                                if (response.MessageValues.Keys.Contains("Id"))
-                                {
-                                    string errorMessage = ex.Message + Environment.NewLine;
-
-                                    if (ex.InnerException != null)
-                                    {
-                                        errorMessage = errorMessage + " (" + (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) + ")" + Environment.NewLine;
-                                    }
-
-                                    errorMessage = errorMessage + ex.StackTrace + Environment.NewLine;
-                                    var msg = ex.Message + DateTime.Now;
-                                    if (!string.IsNullOrEmpty(deploymentPackageId))
-                                    {
-
-                                        if (response.RetryNumber <= 1)
-                                        {
-                                            queueservice.Delay(new TimeSpan(0, 0, 0, 5));
-                                        }
-
-                                        if (response.RetryNumber > 1 && response.RetryNumber <= 2)
-                                        {
-                                            queueservice.Delay(new TimeSpan(0, 0, 0, 10));
-                                        }
-                                        if (response.RetryNumber >= 3)
-                                        {
-                                            queueservice.CompleteAsFailed();
-                                        }
-
-                                    }
-                                    else
-                                    {
-                                        queueservice.CompleteAsFailed();
-                                    }
-                                }
-                                else
-                                {
-                                    queueservice.CompleteAsFailed();
-                                }
-                                #endregion
-                            }
-                        }
-                        else
-                        {
-                            Thread.Sleep(10000);
-                        }
+                        ExecuteQueue();
                     }
-                    catch (Exception ex)
+                    catch (Exception exception)
                     {
-                        ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Deployment Package Queue worker role start", null, null);
+                        ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Deployment Package execution queue worker role start", null, null);
                         Thread.Sleep(10000);
                     }
-
                 }
-                else
-                {
-                    Thread.Sleep(60000);
-                }
+                else Thread.Sleep(60000);
             }
         }
+        private void ExecuteQueue()
+        {
 
+            queueService = new DbQueueService("DeploymentPackageQueue", 0);
+            var queueResponse = queueService.Receive();
+
+            if (queueResponse != null && queueResponse.MessageId != null)
+            {
+                new DeploymentPackageExecutionService(queueService, queueResponse).ExecuteDeploymentPackageExecutionQueue();
+                queueService.Complete();
+            }
+            else
+            {
+                Thread.Sleep(10000);
+            }
+        }
 
 
     }

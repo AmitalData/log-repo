@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { interval } from 'rxjs';
+import { timeInterval } from 'rxjs/operators';
 import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 import { ImageLibraryService } from '../../../../Common/Services/Others/ImageLibraryService';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
@@ -6,10 +8,13 @@ import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ImageParameter } from '../../../../Infrastructure/DataContracts/ImageParameter';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { DeploymentPackageExecutionLogList } from '../../../../Infrastructure/EntityLists/DeploymentPackageExecutionLogList';
 import { DeploymentPackageDetails } from '../../../../Infrastructure/EntityPMs/DeploymentPackageDetails';
 import { DeploymentPackagePM } from '../../../../Infrastructure/EntityPMs/DeploymentPackagePM';
+import { DeploymentPackageExecutionLogListExtendedService } from '../../../../Infrastructure/Services/ExtendedLists/DeploymentPackageExecutionLogListExtendedService';
 import { DeploymentPackageExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/DeploymentPackageExtendedPMService';
-import { AppTool } from '../../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
+import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDataManager';
 import { Guid } from '../../../../Infrastructure/Utilities/Guid';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -51,6 +56,10 @@ export class NewImportDeploymentPackageComponent extends BaseComponent {
     public DeploymentPackageDetailsCollection = new ObservableCollection([]);
     private deploymentPackageDetailsList: Array<DeploymentPackageDetailsList>;
     public AddNewDeploymentPackageComponent: AddNewDeploymentPackageComponent;
+    private deploymentPackageExecutionLogListExtendedService: DeploymentPackageExecutionLogListExtendedService;
+    public HasErrorsWhileImporting: boolean = false;
+    public ExceptionsCollection = new ObservableCollection([]);
+    private exceptionsList: Array<string> = [];
 
     constructor() {
         super();
@@ -62,7 +71,23 @@ export class NewImportDeploymentPackageComponent extends BaseComponent {
     }
 
     Run() {
+        this.ClearScreenFields();
+        this.SetDefaultFields();
+    }
 
+    private ClearScreenFields() {
+        this.Code = "";
+        this.Name = "";
+        this.Description = "";
+        this.ValidationErrorsList = [];
+    }
+    private SetDefaultFields() {
+        this.EntityPM.Tenant = SessionLocator.Tenant;
+        this.EntityPM.CreatedBy = SessionLocator.LoggedUserId;
+        this.EntityPM.UpdatedBy = SessionLocator.LoggedUserId;
+        this.EntityPM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
+        this.EntityPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
+        this.EntityPM.DirectionId = "I";
     }
     public get Code() { return this.EntityPM.Code }
     public set Code(value: string) {
@@ -101,6 +126,21 @@ export class NewImportDeploymentPackageComponent extends BaseComponent {
 
         this.ValidationErrorsList = errors;
 
+        this.ValidateDeploymentPackageCode();
+    }
+    private ValidateDeploymentPackageCode() {
+        this.CurrentSession.StartBusyIndicator("");
+        this.deploymentPackageExtendedPMService.ValidateDeploymentPackageCode(this.EntityPM.Code).subscribe((response: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            if (response.HasError && response.ErrorsArray.length > 0) {
+                this.ValidationErrorsList.push(response.ErrorsArray[0]);
+                return;
+            }
+            if (this.ValidationErrorsList.length == 0) {
+                this.NextButtonClickedWithoutValidationErrors();
+            }
+            
+        });
     }
 
     public ShowMessage(message: string) {
@@ -285,6 +325,10 @@ export class NewImportDeploymentPackageComponent extends BaseComponent {
     }
 
     NextButtonClicked() {
+        this.ValidateDeploymentPackage();        
+    }
+
+    NextButtonClickedWithoutValidationErrors() {
         if (AppTool.IsNullOrEmpty(this.uploadedDocumentId)) {
             this.ShowMessage("File not uploaded yet!");
             return;
@@ -328,11 +372,92 @@ export class NewImportDeploymentPackageComponent extends BaseComponent {
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this.EntityPM.DocumentId = this.uploadedDocumentId;
-
-                this.AddNewDeploymentPackageComponent.CreateButtonClicked();
+                this.CurrentSession.StartBusyIndicatorSaving();
+                this.AddNewDeploymentPackageComponent.CreateDeploymentPackage();
             }
         });
 
+    }
+
+    initializeStartCheckDeploymentPackageDeployViaWorkerRoleTimer() {
+        return interval(250).pipe(timeInterval());
+    }
+
+
+    private startCheckDeploymentPackageDeployViaWorkerRoleTimersub: any = null;
+    private isStartCheckDeploymentPackageDeployViaWorkerRoleTimer: boolean = false;
+
+    public StartCheckDeploymentPackageDeployViaWorkerRoleTimer(deploymentPackageExecutionLogId: string) {
+
+        if (this.isStartCheckDeploymentPackageDeployViaWorkerRoleTimer) {
+            this.startCheckDeploymentPackageDeployViaWorkerRoleTimersub.unsubscribe();
+        }
+
+        this.isStartCheckDeploymentPackageDeployViaWorkerRoleTimer = true;
+        this.startCheckDeploymentPackageDeployViaWorkerRoleTimersub = this.initializeStartCheckDeploymentPackageDeployViaWorkerRoleTimer().subscribe(respose => {
+
+
+            if (!this.isStartCheckDeploymentPackageDeployViaWorkerRoleTimer) {
+                this.startCheckDeploymentPackageDeployViaWorkerRoleTimersub.unsubscribe();
+                this.isStartCheckDeploymentPackageDeployViaWorkerRoleTimer = false;
+                return;
+            }
+            if (this.isStartCheckDeploymentPackageDeployViaWorkerRoleTimer) {
+                this.GetDeploymentPackageExecutionLogList(deploymentPackageExecutionLogId);
+            }
+        });
+
+    }
+    private GetDeploymentPackageExecutionLogList(deploymentPackageExecutionLogId: string) {
+        if (this.deploymentPackageExecutionLogListExtendedService == null) {
+            this.deploymentPackageExecutionLogListExtendedService = new DeploymentPackageExecutionLogListExtendedService();
+        }
+
+
+        this.deploymentPackageExecutionLogListExtendedService.GetDeploymentPackageExecutionLogList(deploymentPackageExecutionLogId).subscribe((res: any) => {
+            var pmResponse: ServiceResponse = res;
+            var deploymentPackageExecutionLogList: DeploymentPackageExecutionLogList = pmResponse.Result;
+            if (!this.isStartCheckDeploymentPackageDeployViaWorkerRoleTimer) return;
+            if (pmResponse.HasError || !deploymentPackageExecutionLogList || (deploymentPackageExecutionLogList && (deploymentPackageExecutionLogList.StatusCode == "D" || deploymentPackageExecutionLogList.StatusCode == "F" || deploymentPackageExecutionLogList.StatusCode == "T"))) {
+                this.startCheckDeploymentPackageDeployViaWorkerRoleTimersub.unsubscribe();
+                this.isStartCheckDeploymentPackageDeployViaWorkerRoleTimer = false;
+            }
+
+            if ((pmResponse.HasError && pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) || (deploymentPackageExecutionLogList.StatusCode == "F" || deploymentPackageExecutionLogList.StatusCode == "T")) {
+                this.CurrentSession.StopBusyIndicator();
+                this.ShowErrorsComponent(deploymentPackageExecutionLogList.ExceptionMessage);
+                return;
+            }
+
+            if (!deploymentPackageExecutionLogList) {
+                this.CurrentSession.StopBusyIndicator();
+                this.ShowMessage("Deployment Package execution Log not found");
+                return;
+            }
+
+
+
+            if (deploymentPackageExecutionLogList.StatusCode == "D") {
+                CachedDataManager.RefreshTenantTextCodes().subscribe((response: any) => {
+                    this.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.CloseCurrentWindow();
+                });
+            }
+            
+
+        });
+    }
+    ShowErrorsComponent(exceptionMessage: string) {
+        if (AppTool.IsNullOrEmpty(exceptionMessage)) return;
+        this.HasErrorsWhileImporting = true;
+        this.IsNextClicked = false;
+
+        if (exceptionMessage.charAt(exceptionMessage.length - 1) == '-') {
+            exceptionMessage = exceptionMessage.substring(0, exceptionMessage.length - 1);
+        }
+        
+        this.exceptionsList = exceptionMessage.split('-');
+        this.ExceptionsCollection = new ObservableCollection(this.exceptionsList);
     }
 
 }

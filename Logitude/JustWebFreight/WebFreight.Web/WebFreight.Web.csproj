@@ -749,8 +749,10 @@
     <Compile Include="Controllers\DigitalPortal\DigitalCustomizationController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\ContainerSettingsController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\DeploymentPackageExtendedController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\DeploymentPackageExecutionLogExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\AuditLogViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\CustomFieldsMainObjectsViewsController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DeploymentPackageExecutionLogViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DeploymentPackageViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DigitalFieldSecurityViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DigitalPreDefinedComponentViewsController.Generated.cs" />
@@ -762,6 +764,7 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\ContainerSettingController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\CustomFieldsMainObjectsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DeploymentPackageController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DeploymentPackageExecutionLogController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DigitalFieldSecurityController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DigitalPreDefinedComponentController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DigitalProfileController.Generated.cs" />
@@ -3121,6 +3124,14 @@
     <Compile Include="Helpers\VizionPilotCustomerDataGenerator.cs" />
     <Compile Include="Helpers\Warehouse\WarehouseRelaseService.cs" />
     <Compile Include="Helpers\WorkerRole\BIReportExecutionService.cs" />
+    <Compile Include="Helpers\WorkerRole\DeploymentPackages\DeploymentPackageExecutionService.cs" />
+    <Compile Include="Helpers\WorkerRole\DeploymentPackages\Importer\CustomFieldsImporterService.cs" />
+    <Compile Include="Helpers\WorkerRole\DeploymentPackages\Importer\CustomPickListsImporterService.cs" />
+    <Compile Include="Helpers\WorkerRole\DeploymentPackages\Importer\DeploymentPackageImporter.cs" />
+    <Compile Include="Helpers\WorkerRole\DeploymentPackages\Importer\IDeploymentPackageImporterService.cs" />
+    <Compile Include="Helpers\WorkerRole\DeploymentPackages\Validator\DeploymentPackageCustomFieldsValidatingService.cs" />
+    <Compile Include="Helpers\WorkerRole\DeploymentPackages\Validator\DeploymentPackageImporterValidatingService.cs" />
+    <Compile Include="Helpers\WorkerRole\DeploymentPackages\Validator\IDeploymentPackageImporterValidatingService.cs" />
     <Compile Include="Helpers\WorkerRole\DocsOut\ARInvoicePrintDetailsService.cs" />
     <Compile Include="Helpers\WorkerRole\MultiEntityUpdate\MultiEntityUpdateCloner.cs" />
     <Compile Include="Helpers\WorkerRole\MultiEntityUpdate\MultiEntityUpdateExecutionService.cs" />
@@ -3682,6 +3693,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\CustomFieldsMainObjectsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\CustomPickListUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DataCustomObjectUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DeploymentPackageExecutionLogUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DeploymentPackagesVersionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DeploymentPackageUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DescriptionOfGoodsUpdateClass.cs" />

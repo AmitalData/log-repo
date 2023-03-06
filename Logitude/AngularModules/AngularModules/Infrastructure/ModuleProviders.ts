@@ -121,6 +121,11 @@ import { ReferenceCustomObjectListService } from './Services/StandardLists/Refer
 import { DataCustomObjectPMService } from './Services/StandardPMs/DataCustomObjectPMService';
 import { DataCustomObjectListService } from './Services/StandardLists/DataCustomObjectListService';
 import { ReferantTeamListService } from '../Customs/Services/StandardLists/ReferantTeamListService';
+import { DeploymentPackageExecutionLogPM } from './EntityPMs/DeploymentPackageExecutionLogPM';
+import { DeploymentPackageExecutionLogList } from './EntityLists/DeploymentPackageExecutionLogList';
+import { DeploymentPackageExecutionLogPMService } from './Services/StandardPMs/DeploymentPackageExecutionLogPMService';
+import { DeploymentPackageExecutionLogListService } from './Services/StandardLists/DeploymentPackageExecutionLogListService';
+import { DeploymentPackageExecutionLogListExtendedService } from './Services/ExtendedLists/DeploymentPackageExecutionLogListExtendedService';
 
 export class ModuleProviders {
 
@@ -246,6 +251,9 @@ export class ModuleProviders {
             case "DataCustomObjectListService": { myResult = new DataCustomObjectListService(); break; }
             case "ReferenceCustomObjectPMService": { myResult = new ReferenceCustomObjectPMService(); break; }
             case "ReferenceCustomObjectListService": { myResult = new ReferenceCustomObjectListService(); break; }
+            case "DeploymentPackageExecutionLogPMService": { myResult = new DeploymentPackageExecutionLogPMService(); break; }
+            case "DeploymentPackageExecutionLogListService": { myResult = new DeploymentPackageExecutionLogListService(); break; }
+            case "DeploymentPackageExecutionLogListExtendedService": { myResult = new DeploymentPackageExecutionLogListExtendedService(); break; }
         }
 
         return myResult;

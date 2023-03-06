@@ -2199,6 +2199,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityLists\CustomFieldList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\CustomFieldsMainObjectList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DataCustomObjectList.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityLists\DeploymentPackageExecutionLogList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DeploymentPackageList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DeploymentPackagesVersionList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWCategoriesList.ts" />
@@ -2228,6 +2229,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\BIReportFolderPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\BIReportPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\BIReportsTypePM.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityPMs\DeploymentPackageExecutionLogPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\ObjectCustomFieldPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\CustomFieldsMainObjectPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DataCustomObjectPM.ts" />
@@ -2271,6 +2273,7 @@
     <TypeScriptCompile Include="Infrastructure\Pipes\HighlightSearch.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\BatchPrintService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\BIReportFolderExtendedListService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\DeploymentPackageExecutionLogListExtendedService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\DeploymentPackageExtendedPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\CustomPickListPMExtendedService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\EventTypeExtendedPMService.ts" />
@@ -2284,6 +2287,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BIReportsExecutionLogListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\CustomFieldsMainObjectListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DataCustomObjectListService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DeploymentPackageExecutionLogListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DeploymentPackageListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DeploymentPackagesVersionListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\HelpResourceListService.ts" />
@@ -2300,6 +2304,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\CounterDefinitionPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\CustomFieldsMainObjectsPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DataCustomObjectPMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DeploymentPackageExecutionLogPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DeploymentPackagePMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DeploymentPackagesVersionPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWQueryColumnPMService.ts" />
