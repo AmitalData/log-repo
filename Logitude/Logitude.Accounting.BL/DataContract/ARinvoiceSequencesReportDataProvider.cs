@@ -84,16 +84,16 @@ namespace Logitude.Accounting.BL.DataContract
                     {
                         if ((i + 1) == invoicesNumbers.Count - 1)
                         {
-                            sequances.Add(seqFrom + " - " + invoicesNumbers[i + 1]);
+                            sequances.Add(FormatInvocieNumber(seqFrom) + " - " + FormatInvocieNumber(invoicesNumbers[i + 1]));
                         }
                         continue;
                     }
                     else
                     {
-                        sequances.Add(seqFrom + " - " + invoicesNumbers[i]);
+                        sequances.Add(FormatInvocieNumber(seqFrom) + " - " + FormatInvocieNumber(invoicesNumbers[i]));
                         if ((i + 1) == invoicesNumbers.Count - 1)
                         {
-                            sequances.Add(invoicesNumbers[i + 1] + " - " + invoicesNumbers[i + 1]);
+                            sequances.Add(FormatInvocieNumber(invoicesNumbers[i + 1]) + " - " + FormatInvocieNumber(invoicesNumbers[i + 1]));
                         }
                         seqFrom = null;
                     }
@@ -103,6 +103,17 @@ namespace Logitude.Accounting.BL.DataContract
             return sequances;
         }
 
+        private string FormatInvocieNumber(string invoiceNumber) {
+            int count = 0;
+            for (int i = 0; i < invoiceNumber.Length; i++)
+            {
+                if (!Char.IsDigit(invoiceNumber[i]))
+                {
+                    count = i + 1;
+                }
+            }
+            return invoiceNumber.Remove(0, count);
+        }
         public List<string> GetARInvoiceNumber()
         {
             Int64 dummy;
