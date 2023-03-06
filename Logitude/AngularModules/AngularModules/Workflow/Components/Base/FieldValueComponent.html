@@ -49,8 +49,9 @@
 
             <LogTextBox [NoObjectField]="true" [ObjectFieldName]="Name" [IsFreeText]="true" [DataContext]="DataContext"
                 [Text]="CurrentValue" [InputType]="ObjectField.DataTypeCode.toLowerCase()"
-                [DigitsAfterPoint]="ObjectField.DigitsAfterPoint" [NoValidation]="true" [HideColumns]="true"
-                [RowsCount]="0.8" (ValueChanged)="updateValue($event)" [DataCy]="Name" [ForceDisabled]="IsDisabled">
+                [DigitsAfterPoint]="ObjectField.DigitsAfterPoint" [NoValidation]="false" [HideColumns]="true"
+                [RowsCount]="0.8" (ValueChanged)="updateValue($event)" [DataCy]="Name" [DebounceTime]="1"
+                [ForceTextValueChanges]="true" [ForceDisabled]="IsDisabled">
             </LogTextBox>
 
         </div>
@@ -71,7 +72,7 @@
             <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="Name" [DataContext]="DataContext"
                 [SelectedDateValue]="DateTimeCurrentValue" [InputType]="'date'" [IsFreeValue]="true"
                 [NoValidation]="true" [HideColumns]="true" (ValueChanged)="updateValue($event)" [DataCy]="Name"
-                [ForceDisabled]="IsDisabled">
+                [ForceSetValidity]="true" [ForceDisabled]="IsDisabled">
             </LogDatePicker>
 
         </div>
@@ -83,8 +84,9 @@
     <div *ngIf="IsIntegerNumberInput">
 
         <LogTextBox [NoObjectField]="true" [ObjectFieldName]="Name" [IsFreeText]="true" [DataContext]="DataContext"
-            [Text]="CurrentValue" [InputType]="'integer'" [NoValidation]="true" [HideColumns]="true" [RowsCount]="0.8"
-            (ValueChanged)="updateValue($event)" [DataCy]="Name" [ForceDisabled]="IsDisabled">
+            [Text]="CurrentValue" [InputType]="'integer'" [NoValidation]="false" [HideColumns]="true" [RowsCount]="0.8"
+            (ValueChanged)="updateValue($event)" [DataCy]="Name" [DebounceTime]="1" [ForceTextValueChanges]="true"
+            [ForceDisabled]="IsDisabled">
         </LogTextBox>
 
     </div>
@@ -106,8 +108,9 @@
 
         <div *ngIf="DataType === FieldTypes.Decimal || DataType === FieldTypes.Integer">
             <LogTextBox [NoObjectField]="true" [ObjectFieldName]="Name" [IsFreeText]="true" [DataContext]="DataContext"
-                [Text]="CurrentValue" [InputType]="DataType" [NoValidation]="true" [HideColumns]="true"
-                [RowsCount]="0.8" (ValueChanged)="updateValue($event)" [DataCy]="Name" [ForceDisabled]="IsDisabled">
+                [Text]="CurrentValue" [InputType]="DataType" [NoValidation]="false" [HideColumns]="true"
+                [RowsCount]="0.8" (ValueChanged)="updateValue($event)" [DataCy]="Name" [DebounceTime]="1"
+                [ForceTextValueChanges]="true" [ForceDisabled]="IsDisabled">
             </LogTextBox>
         </div>
 
@@ -124,7 +127,7 @@
             <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="Name" [DataContext]="DataContext"
                 [SelectedDateValue]="DateTimeCurrentValue" [InputType]="'date'" [IsFreeValue]="true"
                 [NoValidation]="true" [HideColumns]="true" (ValueChanged)="updateValue($event)" [DataCy]="Name"
-                [ForceDisabled]="IsDisabled">
+                [ForceSetValidity]="true" [ForceDisabled]="IsDisabled">
             </LogDatePicker>
         </div>
 
@@ -143,8 +146,9 @@
     <div *ngIf="IsIntegerNumberInput">
 
         <LogTextBox [NoObjectField]="true" [ObjectFieldName]="Name" [IsFreeText]="true" [DataContext]="DataContext"
-            [Text]="CurrentValue" [InputType]="'integer'" [NoValidation]="true" [HideColumns]="true" [RowsCount]="0.8"
-            (ValueChanged)="updateValue($event)" [DataCy]="Name" [ForceDisabled]="IsDisabled">
+            [Text]="CurrentValue" [InputType]="'integer'" [NoValidation]="false" [HideColumns]="true" [RowsCount]="0.8"
+            (ValueChanged)="updateValue($event)" [DataCy]="Name" [DebounceTime]="1" [ForceTextValueChanges]="true"
+            [ForceDisabled]="IsDisabled">
         </LogTextBox>
 
     </div>
