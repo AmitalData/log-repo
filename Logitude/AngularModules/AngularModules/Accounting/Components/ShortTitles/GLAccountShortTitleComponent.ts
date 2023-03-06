@@ -109,12 +109,31 @@ export class GLAccountShortTitleComponent {
     }
 
     private SetObjectTableNameAndTabCode() {
+        enum AccountType{
+            Card="1",
+            Customer="2",
+            Vendor="3" ,
+            Job="4",
+            File="5"
+        }
 
-        if (this.EntityPM.AccountTypeCode == "3") {
+        if (this.EntityPM.AccountTypeCode == AccountType.Vendor) {
             this.ObjectTableName = "Vendor";
             this.SelectedTabCode = null;
         }
-        else if (this.EntityPM.AccountTypeCode == "2") {
+        else if (this.EntityPM.AccountTypeCode == AccountType.Card) {
+            this.ObjectTableName = "Card";
+            this.SelectedTabCode = "CARC";
+        }
+        else if (this.EntityPM.AccountTypeCode == AccountType.Job) {
+            this.ObjectTableName = "Job";
+            this.SelectedTabCode = "CARC";
+        }
+        else if (this.EntityPM.AccountTypeCode == AccountType.File) {
+            this.ObjectTableName = "File";
+            this.SelectedTabCode = "SHCF";
+        }
+        else if (this.EntityPM.AccountTypeCode == AccountType.Customer) {
             this.ObjectTableName = "Customer";
             this.SelectedTabCode = "CLOV";
         }
