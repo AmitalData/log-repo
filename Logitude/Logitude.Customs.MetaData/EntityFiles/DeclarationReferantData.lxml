@@ -15638,6 +15638,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CustomerId&quot;"
     ListPropertyPath="&quot;CustomerId&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
