@@ -60,8 +60,6 @@ namespace Logitude.Customs.Data.EntityLists
        public string ThirdCargoID  { get; set; }
        [DataMember]
        public string ContainerizationCargoID  { get; set; }
-       [DataMember]
-       public string ExistInCustoms  { get; set; }
    }
 
 }
