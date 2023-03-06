@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APPaymentUpdateClass
    {  		
-		public const string HashString = "bc2e2436aa7074e64fac8900bdeb0c53";
+		public const string HashString = "64165ee06fb1bc9e3947b27e3d91d017";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -7131,9 +7131,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   TextCode APPaymentTextCode_APPAymentONewAPPaymentTitle = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPAyment.O.NewAPPaymentTitle", DefaultText = "New APPayment",LocalDefaultText = @"יצירת תשלום לספקים", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APPaymentTextCode_APPaymentMAlreadyReconciledInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.AlreadyReconciledInvoice", DefaultText = "This payment is already reconciled to the same invoice. To update AP invoice amount line, please cancel reconcile number {0}  before making a new reconcile",LocalDefaultText = @"הוראת התשלום כבר הותאמה עם חשבונית זאת, על מנת להתאים מחדש יש לבטל תחילה את התאמה מספר {0}", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APPaymentTextCode_APPaymentMAlreadyReconciledInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.AlreadyReconciledInvoice", DefaultText = "This payment is already reconciled to the same invoice. To update AP invoice amount line, please cancel reconcile number {0}  before making a new reconcile",LocalDefaultText = @"התשלום כבר מותאם לחשבונית המסומנת . על מנת לבצע התאמה שונה , יש לבטל תחילה את ההתאמה הקיימת שמספרה {0}", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APPaymentTextCode_APPaymentMPaymentDraftCantBeApproved = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.PaymentDraftCantBeApproved", DefaultText = "Payment draft cannot be reconciled until it is approved. Please approve the payment to proceed with the reconciliation",LocalDefaultText = @"!לא ניתן לבצע התאמה לתשלום בסטאטוס טיוטה יש לאשר את התשלום כדי להמשיך , לחלופין ניתן ללהסיר את ההתאמות שסומנו ולשמור את התשלום כטיוטה.", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APPaymentTextCode_APPaymentMPaymentDraftCantBeApproved = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.PaymentDraftCantBeApproved", DefaultText = "Payment draft cannot be reconciled until it is approved. Please approve the payment to proceed with the reconciliation",LocalDefaultText = @"לא ניתן לבצע התאמה לתשלום בסטטוס טיוטה יש לאשר את התשלום כדי להמשיך  , לחלופין ניתן להסיר את ההתאמות שסומנו ולשמור את התשלום כטיוטה", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
