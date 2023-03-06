@@ -3326,60 +3326,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     }
    
    
-    onChange(item,$event) {
-              
-      var result=$event.target.value.split(','); 
 
-      item.ItemDescription = result[1];
-      item.ClassificationCode = result[0];
-     
-      this.ConUNF=true;      
-    }
-    OnfocusItemDescription(){
-      
-       
-
-        if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse||this.declarationPM.IsConnectedToUnifreight) return;
-        if(this.PratMehesUNF.length != 0) { this.ConUNF=false; return; }
-        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-
-        let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
-            .subscribe(
-                (mess: UnifreightMessageM) => {
-                    var IsMatchUnifreightCallbackCommand = (
-                        mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
-                        mess.LogitudeEntityNumber == this.EntityPM.DeclarationId &&
-                        mess.LogitudeViewModel == "SupplierInvoiceGeneralTabComponent.ts-CustomExportPratMehesList");
-                    if (IsMatchUnifreightCallbackCommand) {
-                        sub.unsubscribe();
-                        SessionLocator.SelectedSession.StopBusyIndicator();
-                        let PratMehesList = UnifreightMessageM.GetStringValue(mess, "PratMehesList"); 
-                       
-                            PratMehesList.split(';').forEach(item=> {
-                                const keyValue = item.split('~');
-                                this.PratMehesUNF.push( [keyValue[0],keyValue[1]]) 
-                  
-                            })
-                        
-                         this.ConUNF=false;
-                    }
-                }
-            );
-
-
-        var unifreightMessageM =
-            AmitalGatewayUtil.Instance.
-                DeclarationMessaging.GetMessage(this.declarationPM.CustomFileNo, this.EntityPM.DeclarationId, "SupplierInvoiceGeneralTabComponent.ts-CustomExportPratMehesList", "BFIFILE");
-
-        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
-            "AmitalGatewayUtil.CustomExportPratMehesList",
-            "BFIHMAIN.LogitudeTask",
-            "CustomExportPratMehesList",
-            unifreightMessageM,
-            "????? ???? ????");
-
-
-    }
 
     //#endregion
 }

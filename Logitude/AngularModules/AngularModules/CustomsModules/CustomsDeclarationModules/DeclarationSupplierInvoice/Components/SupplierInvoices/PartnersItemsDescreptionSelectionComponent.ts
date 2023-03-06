@@ -146,7 +146,7 @@ export class PartnersItemsDescreptionSelectionComponent extends BaseComponent {
         
         var unifreightMessageM =
             AmitalGatewayUtil.Instance.
-                DeclarationMessaging.GetMessage(this.customFileNo, this.declarationId, "SupplierInvoiceGeneralTabComponent.ts-CustomExportPratMehesList", "CFIFILEM");
+                DeclarationMessaging.GetMessage(this.customFileNo, this.declarationId, "SupplierInvoiceGeneralTabComponent.ts-CustomExportPratMehesList", "BFIFILE");
         
         AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
             "AmitalGatewayUtil.CustomExportPratMehesList",
