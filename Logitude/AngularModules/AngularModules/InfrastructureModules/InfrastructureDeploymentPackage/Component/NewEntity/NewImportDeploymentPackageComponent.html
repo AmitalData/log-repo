@@ -134,7 +134,8 @@
                 </div>
                 <div *ngIf="IsShowProgressBar" style="display: inline-flex">
                     <div style="height: 20px; width: 500px;border:1px solid gray; border-radius: 3px">
-                        <div class="myBar" [attr.id]="ProgressBarId" style="height:16px;margin:1px;"></div>
+                        <div *ngIf="!UploadedSuccessfully" class="myBar" [attr.id]="ProgressBarId" style="height:16px;margin:1px;"></div>
+                        <div *ngIf="UploadedSuccessfully" style="height: 16px; margin: 1px; width: 99.4%; background: #C2DFED "></div>
                     </div>
                     <div style="width: 30px; padding-left:4px;">
                         <label class="Label">{{ProgressBarPercentText}}</label>
