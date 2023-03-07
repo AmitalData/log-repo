@@ -245,6 +245,14 @@
 
                     </div>
                 </div>
+                <div *ngIf="FieldName == 'ListCounter'" style="position:relative;width:100%; height: 100%;">
+                    <div class="TextTrimming">
+                        <div *ngIf="!IsHeaderScreenTemplate" class="TextTrimming" style="display: inline; position: absolute;right: 0px;">
+                            <span>{{RowIndex+1}}</span>
+                        </div>
+
+                    </div>
+                </div>
                 <div *ngIf="FieldName == 'FollowUpDate'" (click)="ShowAddOrEditExceptionReason()" style="position:relative;width:100%; height: 100%;">
                     <div class="TextTrimming">
                         <div *ngIf="!IsHeaderScreenTemplate" class="TextTrimming" style="display: inline; position: absolute;right: 0px;">

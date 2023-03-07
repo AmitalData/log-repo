@@ -15852,116 +15852,121 @@
       <QueryColumn
         QueryCode="&quot;FilesInProcess&quot;"
         IndexOrder="0"
+        ObjectFieldName="&quot;ListCounter&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;FilesInProcess&quot;"
+        IndexOrder="1"
         ObjectFieldName="&quot;Favorite&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;FilesInProcess&quot;"
-        IndexOrder="1"
+        IndexOrder="2"
         ObjectFieldName="&quot;CollectorUserName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;FilesInProcess&quot;"
-        IndexOrder="2"
+        IndexOrder="3"
         ObjectFieldName="&quot;CustomFileNo&quot;"
         ColumnWidth="92" />
       <QueryColumn
         QueryCode="&quot;FilesInProcess&quot;"
-        IndexOrder="3"
+        IndexOrder="4"
         ObjectFieldName="&quot;CustomerName&quot;"
         ColumnWidth="146" />
       <QueryColumn
         QueryCode="&quot;FilesInProcess&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;OrderNumber&quot;"
         ColumnWidth="87" />
       <QueryColumn
         QueryCode="&quot;FilesInProcess&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;TransportModeId&quot;"
         ColumnWidth="58" />
       <QueryColumn
         QueryCode="&quot;FilesInProcess&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;DeclarationOfficeName&quot;"
         ColumnWidth="157" />
       <QueryColumn
         QueryCode="&quot;FilesInProcess&quot;"
-        IndexOrder="7"
+        IndexOrder="8"
         ObjectFieldName="&quot;VendorName&quot;"
         ColumnWidth="124" />
       <QueryColumn
         QueryCode="&quot;FilesInProcess&quot;"
-        IndexOrder="8"
+        IndexOrder="9"
         ObjectFieldName="&quot;ArrivalDate&quot;"
         ColumnWidth="79" />
       <QueryColumn
         QueryCode="&quot;FilesInProcess&quot;"
-        IndexOrder="9"
+        IndexOrder="10"
         ObjectFieldName="&quot;Weight&quot;"
         ColumnWidth="75" />
       <QueryColumn
         QueryCode="&quot;FilesInProcess&quot;"
-        IndexOrder="10"
+        IndexOrder="11"
         ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
         ColumnWidth="255" />
       <QueryColumn
         QueryCode="&quot;FilesInProcess&quot;"
-        IndexOrder="11"
+        IndexOrder="12"
         ObjectFieldName="&quot;PreClassification&quot;"
         ColumnWidth="58" />
       <QueryColumn
         QueryCode="&quot;FilesInProcess&quot;"
-        IndexOrder="12"
+        IndexOrder="13"
         ObjectFieldName="&quot;ClassificationStatus&quot;"
         ColumnWidth="55" />
       <QueryColumn
         QueryCode="&quot;FilesInProcess&quot;"
-        IndexOrder="13"
+        IndexOrder="14"
         ObjectFieldName="&quot;ControllerStatus&quot;"
         ColumnWidth="44" />
       <QueryColumn
         QueryCode="&quot;FilesInProcess&quot;"
-        IndexOrder="14"
+        IndexOrder="15"
         ObjectFieldName="&quot;CollectionOfMoneyStatus&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;FilesInProcess&quot;"
-        IndexOrder="15"
+        IndexOrder="16"
         ObjectFieldName="&quot;OrderMoney&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;FilesInProcess&quot;"
-        IndexOrder="16"
+        IndexOrder="17"
         ObjectFieldName="&quot;FollowUpDate&quot;"
         ColumnWidth="108" />
       <QueryColumn
         QueryCode="&quot;FilesInProcess&quot;"
-        IndexOrder="17"
+        IndexOrder="18"
         ObjectFieldName="&quot;AvailabilityDate&quot;"
         ColumnWidth="108" />
       <QueryColumn
         QueryCode="&quot;FilesInProcess&quot;"
-        IndexOrder="18"
+        IndexOrder="19"
         ObjectFieldName="&quot;ExceptionReasonsList&quot;"
         ColumnWidth="34" />
       <QueryColumn
         QueryCode="&quot;FilesInProcess&quot;"
-        IndexOrder="19"
+        IndexOrder="20"
         ObjectFieldName="&quot;WithPaper&quot;"
         ColumnWidth="69" />
       <QueryColumn
         QueryCode="&quot;FilesInProcess&quot;"
-        IndexOrder="20"
+        IndexOrder="21"
         ObjectFieldName="&quot;NewFile&quot;"
         ColumnWidth="69" />
       <QueryColumn
         QueryCode="&quot;FilesInProcess&quot;"
-        IndexOrder="21"
+        IndexOrder="22"
         ObjectFieldName="&quot;IsCustomerLogBoxActivated&quot;"
         ColumnWidth="68" />
       <QueryColumn
         QueryCode="&quot;FilesInProcess&quot;"
-        IndexOrder="22"
+        IndexOrder="23"
         ObjectFieldName="&quot;Actions&quot;"
         ColumnWidth="68" />
     </QueryColumns>
@@ -16000,116 +16005,121 @@
       <QueryColumn
         QueryCode="&quot;TrackingCases&quot;"
         IndexOrder="0"
+        ObjectFieldName="&quot;ListCounter&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;TrackingCases&quot;"
+        IndexOrder="1"
         ObjectFieldName="&quot;Favorite&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;TrackingCases&quot;"
-        IndexOrder="1"
+        IndexOrder="2"
         ObjectFieldName="&quot;CollectorUserName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;TrackingCases&quot;"
-        IndexOrder="2"
+        IndexOrder="3"
         ObjectFieldName="&quot;CustomFileNo&quot;"
         ColumnWidth="92" />
       <QueryColumn
         QueryCode="&quot;TrackingCases&quot;"
-        IndexOrder="3"
+        IndexOrder="4"
         ObjectFieldName="&quot;CustomerName&quot;"
         ColumnWidth="146" />
       <QueryColumn
         QueryCode="&quot;TrackingCases&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;OrderNumber&quot;"
         ColumnWidth="87" />
       <QueryColumn
         QueryCode="&quot;TrackingCases&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;TransportModeId&quot;"
         ColumnWidth="58" />
       <QueryColumn
         QueryCode="&quot;TrackingCases&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;DeclarationOfficeName&quot;"
         ColumnWidth="157" />
       <QueryColumn
         QueryCode="&quot;TrackingCases&quot;"
-        IndexOrder="7"
+        IndexOrder="8"
         ObjectFieldName="&quot;VendorName&quot;"
         ColumnWidth="124" />
       <QueryColumn
         QueryCode="&quot;TrackingCases&quot;"
-        IndexOrder="8"
+        IndexOrder="9"
         ObjectFieldName="&quot;ArrivalDate&quot;"
         ColumnWidth="79" />
       <QueryColumn
         QueryCode="&quot;TrackingCases&quot;"
-        IndexOrder="9"
+        IndexOrder="10"
         ObjectFieldName="&quot;Weight&quot;"
         ColumnWidth="75" />
       <QueryColumn
         QueryCode="&quot;TrackingCases&quot;"
-        IndexOrder="10"
+        IndexOrder="11"
         ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
         ColumnWidth="255" />
       <QueryColumn
         QueryCode="&quot;TrackingCases&quot;"
-        IndexOrder="11"
+        IndexOrder="12"
         ObjectFieldName="&quot;PreClassification&quot;"
         ColumnWidth="58" />
       <QueryColumn
         QueryCode="&quot;TrackingCases&quot;"
-        IndexOrder="12"
+        IndexOrder="13"
         ObjectFieldName="&quot;ClassificationStatus&quot;"
         ColumnWidth="55" />
       <QueryColumn
         QueryCode="&quot;TrackingCases&quot;"
-        IndexOrder="13"
+        IndexOrder="14"
         ObjectFieldName="&quot;ControllerStatus&quot;"
         ColumnWidth="44" />
       <QueryColumn
         QueryCode="&quot;TrackingCases&quot;"
-        IndexOrder="14"
+        IndexOrder="15"
         ObjectFieldName="&quot;CollectionOfMoneyStatus&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;TrackingCases&quot;"
-        IndexOrder="15"
+        IndexOrder="16"
         ObjectFieldName="&quot;OrderMoney&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;TrackingCases&quot;"
-        IndexOrder="16"
+        IndexOrder="17"
         ObjectFieldName="&quot;FollowUpDate&quot;"
         ColumnWidth="108" />
       <QueryColumn
         QueryCode="&quot;TrackingCases&quot;"
-        IndexOrder="17"
+        IndexOrder="18"
         ObjectFieldName="&quot;AvailabilityDate&quot;"
         ColumnWidth="108" />
       <QueryColumn
         QueryCode="&quot;TrackingCases&quot;"
-        IndexOrder="18"
+        IndexOrder="19"
         ObjectFieldName="&quot;ExceptionReasonsList&quot;"
         ColumnWidth="34" />
       <QueryColumn
         QueryCode="&quot;TrackingCases&quot;"
-        IndexOrder="19"
+        IndexOrder="20"
         ObjectFieldName="&quot;WithPaper&quot;"
         ColumnWidth="69" />
       <QueryColumn
         QueryCode="&quot;TrackingCases&quot;"
-        IndexOrder="20"
+        IndexOrder="21"
         ObjectFieldName="&quot;NewFile&quot;"
         ColumnWidth="69" />
       <QueryColumn
         QueryCode="&quot;TrackingCases&quot;"
-        IndexOrder="21"
+        IndexOrder="22"
         ObjectFieldName="&quot;IsCustomerLogBoxActivated&quot;"
         ColumnWidth="68" />
       <QueryColumn
         QueryCode="&quot;TrackingCases&quot;"
-        IndexOrder="22"
+        IndexOrder="23"
         ObjectFieldName="&quot;Actions&quot;"
         ColumnWidth="68" />
     </QueryColumns>
@@ -16154,116 +16164,121 @@
       <QueryColumn
         QueryCode="&quot;FilesInOCR&quot;"
         IndexOrder="0"
+        ObjectFieldName="&quot;ListCounter&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;FilesInOCR&quot;"
+        IndexOrder="1"
         ObjectFieldName="&quot;Favorite&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;FilesInOCR&quot;"
-        IndexOrder="1"
+        IndexOrder="2"
         ObjectFieldName="&quot;CollectorUserName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;FilesInOCR&quot;"
-        IndexOrder="2"
+        IndexOrder="3"
         ObjectFieldName="&quot;CustomFileNo&quot;"
         ColumnWidth="92" />
       <QueryColumn
         QueryCode="&quot;FilesInOCR&quot;"
-        IndexOrder="3"
+        IndexOrder="4"
         ObjectFieldName="&quot;CustomerName&quot;"
         ColumnWidth="146" />
       <QueryColumn
         QueryCode="&quot;FilesInOCR&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;OrderNumber&quot;"
         ColumnWidth="87" />
       <QueryColumn
         QueryCode="&quot;FilesInOCR&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;TransportModeId&quot;"
         ColumnWidth="58" />
       <QueryColumn
         QueryCode="&quot;FilesInOCR&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;DeclarationOfficeName&quot;"
         ColumnWidth="157" />
       <QueryColumn
         QueryCode="&quot;FilesInOCR&quot;"
-        IndexOrder="7"
+        IndexOrder="8"
         ObjectFieldName="&quot;VendorName&quot;"
         ColumnWidth="124" />
       <QueryColumn
         QueryCode="&quot;FilesInOCR&quot;"
-        IndexOrder="8"
+        IndexOrder="9"
         ObjectFieldName="&quot;ArrivalDate&quot;"
         ColumnWidth="79" />
       <QueryColumn
         QueryCode="&quot;FilesInOCR&quot;"
-        IndexOrder="9"
+        IndexOrder="10"
         ObjectFieldName="&quot;Weight&quot;"
         ColumnWidth="75" />
       <QueryColumn
         QueryCode="&quot;FilesInOCR&quot;"
-        IndexOrder="10"
+        IndexOrder="11"
         ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
         ColumnWidth="255" />
       <QueryColumn
         QueryCode="&quot;FilesInOCR&quot;"
-        IndexOrder="11"
+        IndexOrder="12"
         ObjectFieldName="&quot;PreClassification&quot;"
         ColumnWidth="58" />
       <QueryColumn
         QueryCode="&quot;FilesInOCR&quot;"
-        IndexOrder="12"
+        IndexOrder="13"
         ObjectFieldName="&quot;ClassificationStatus&quot;"
         ColumnWidth="55" />
       <QueryColumn
         QueryCode="&quot;FilesInOCR&quot;"
-        IndexOrder="13"
+        IndexOrder="14"
         ObjectFieldName="&quot;ControllerStatus&quot;"
         ColumnWidth="44" />
       <QueryColumn
         QueryCode="&quot;FilesInOCR&quot;"
-        IndexOrder="14"
+        IndexOrder="15"
         ObjectFieldName="&quot;CollectionOfMoneyStatus&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;FilesInOCR&quot;"
-        IndexOrder="15"
+        IndexOrder="16"
         ObjectFieldName="&quot;OrderMoney&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;FilesInOCR&quot;"
-        IndexOrder="16"
+        IndexOrder="17"
         ObjectFieldName="&quot;FollowUpDate&quot;"
         ColumnWidth="108" />
       <QueryColumn
         QueryCode="&quot;FilesInOCR&quot;"
-        IndexOrder="17"
+        IndexOrder="18"
         ObjectFieldName="&quot;AvailabilityDate&quot;"
         ColumnWidth="108" />
       <QueryColumn
         QueryCode="&quot;FilesInOCR&quot;"
-        IndexOrder="18"
+        IndexOrder="19"
         ObjectFieldName="&quot;ExceptionReasonsList&quot;"
         ColumnWidth="34" />
       <QueryColumn
         QueryCode="&quot;FilesInOCR&quot;"
-        IndexOrder="19"
+        IndexOrder="20"
         ObjectFieldName="&quot;WithPaper&quot;"
         ColumnWidth="69" />
       <QueryColumn
         QueryCode="&quot;FilesInOCR&quot;"
-        IndexOrder="20"
+        IndexOrder="21"
         ObjectFieldName="&quot;NewFile&quot;"
         ColumnWidth="69" />
       <QueryColumn
         QueryCode="&quot;FilesInOCR&quot;"
-        IndexOrder="21"
+        IndexOrder="22"
         ObjectFieldName="&quot;IsCustomerLogBoxActivated&quot;"
         ColumnWidth="68" />
       <QueryColumn
         QueryCode="&quot;FilesInOCR&quot;"
-        IndexOrder="22"
+        IndexOrder="23"
         ObjectFieldName="&quot;Actions&quot;"
         ColumnWidth="68" />
     </QueryColumns>
@@ -16309,116 +16324,121 @@
       <QueryColumn
         QueryCode="&quot;FilesInSivug&quot;"
         IndexOrder="0"
+        ObjectFieldName="&quot;ListCounter&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;FilesInSivug&quot;"
+        IndexOrder="1"
         ObjectFieldName="&quot;Favorite&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;FilesInSivug&quot;"
-        IndexOrder="1"
+        IndexOrder="2"
         ObjectFieldName="&quot;CollectorUserName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;FilesInSivug&quot;"
-        IndexOrder="2"
+        IndexOrder="3"
         ObjectFieldName="&quot;CustomFileNo&quot;"
         ColumnWidth="92" />
       <QueryColumn
         QueryCode="&quot;FilesInSivug&quot;"
-        IndexOrder="3"
+        IndexOrder="4"
         ObjectFieldName="&quot;CustomerName&quot;"
         ColumnWidth="146" />
       <QueryColumn
         QueryCode="&quot;FilesInSivug&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;OrderNumber&quot;"
         ColumnWidth="87" />
       <QueryColumn
         QueryCode="&quot;FilesInSivug&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;TransportModeId&quot;"
         ColumnWidth="58" />
       <QueryColumn
         QueryCode="&quot;FilesInSivug&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;DeclarationOfficeName&quot;"
         ColumnWidth="157" />
       <QueryColumn
         QueryCode="&quot;FilesInSivug&quot;"
-        IndexOrder="7"
+        IndexOrder="8"
         ObjectFieldName="&quot;VendorName&quot;"
         ColumnWidth="124" />
       <QueryColumn
         QueryCode="&quot;FilesInSivug&quot;"
-        IndexOrder="8"
+        IndexOrder="9"
         ObjectFieldName="&quot;ArrivalDate&quot;"
         ColumnWidth="79" />
       <QueryColumn
         QueryCode="&quot;FilesInSivug&quot;"
-        IndexOrder="9"
+        IndexOrder="10"
         ObjectFieldName="&quot;Weight&quot;"
         ColumnWidth="75" />
       <QueryColumn
         QueryCode="&quot;FilesInSivug&quot;"
-        IndexOrder="10"
+        IndexOrder="11"
         ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
         ColumnWidth="255" />
       <QueryColumn
         QueryCode="&quot;FilesInSivug&quot;"
-        IndexOrder="11"
+        IndexOrder="12"
         ObjectFieldName="&quot;PreClassification&quot;"
         ColumnWidth="58" />
       <QueryColumn
         QueryCode="&quot;FilesInSivug&quot;"
-        IndexOrder="12"
+        IndexOrder="13"
         ObjectFieldName="&quot;ClassificationStatus&quot;"
         ColumnWidth="55" />
       <QueryColumn
         QueryCode="&quot;FilesInSivug&quot;"
-        IndexOrder="13"
+        IndexOrder="14"
         ObjectFieldName="&quot;ControllerStatus&quot;"
         ColumnWidth="44" />
       <QueryColumn
         QueryCode="&quot;FilesInSivug&quot;"
-        IndexOrder="14"
+        IndexOrder="15"
         ObjectFieldName="&quot;CollectionOfMoneyStatus&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;FilesInSivug&quot;"
-        IndexOrder="15"
+        IndexOrder="16"
         ObjectFieldName="&quot;OrderMoney&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;FilesInSivug&quot;"
-        IndexOrder="16"
+        IndexOrder="17"
         ObjectFieldName="&quot;FollowUpDate&quot;"
         ColumnWidth="108" />
       <QueryColumn
         QueryCode="&quot;FilesInSivug&quot;"
-        IndexOrder="17"
+        IndexOrder="18"
         ObjectFieldName="&quot;AvailabilityDate&quot;"
         ColumnWidth="108" />
       <QueryColumn
         QueryCode="&quot;FilesInSivug&quot;"
-        IndexOrder="18"
+        IndexOrder="19"
         ObjectFieldName="&quot;ExceptionReasonsList&quot;"
         ColumnWidth="34" />
       <QueryColumn
         QueryCode="&quot;FilesInSivug&quot;"
-        IndexOrder="19"
+        IndexOrder="20"
         ObjectFieldName="&quot;WithPaper&quot;"
         ColumnWidth="69" />
       <QueryColumn
         QueryCode="&quot;FilesInSivug&quot;"
-        IndexOrder="20"
+        IndexOrder="21"
         ObjectFieldName="&quot;NewFile&quot;"
         ColumnWidth="69" />
       <QueryColumn
         QueryCode="&quot;FilesInSivug&quot;"
-        IndexOrder="21"
+        IndexOrder="22"
         ObjectFieldName="&quot;IsCustomerLogBoxActivated&quot;"
         ColumnWidth="68" />
       <QueryColumn
         QueryCode="&quot;FilesInSivug&quot;"
-        IndexOrder="22"
+        IndexOrder="23"
         ObjectFieldName="&quot;Actions&quot;"
         ColumnWidth="68" />
     </QueryColumns>
@@ -16464,116 +16484,121 @@
       <QueryColumn
         QueryCode="&quot;FilesInReview&quot;"
         IndexOrder="0"
+        ObjectFieldName="&quot;ListCounter&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;FilesInReview&quot;"
+        IndexOrder="1"
         ObjectFieldName="&quot;Favorite&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;FilesInReview&quot;"
-        IndexOrder="1"
+        IndexOrder="2"
         ObjectFieldName="&quot;CollectorUserName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;FilesInReview&quot;"
-        IndexOrder="2"
+        IndexOrder="3"
         ObjectFieldName="&quot;CustomFileNo&quot;"
         ColumnWidth="92" />
       <QueryColumn
         QueryCode="&quot;FilesInReview&quot;"
-        IndexOrder="3"
+        IndexOrder="4"
         ObjectFieldName="&quot;CustomerName&quot;"
         ColumnWidth="146" />
       <QueryColumn
         QueryCode="&quot;FilesInReview&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;OrderNumber&quot;"
         ColumnWidth="87" />
       <QueryColumn
         QueryCode="&quot;FilesInReview&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;TransportModeId&quot;"
         ColumnWidth="58" />
       <QueryColumn
         QueryCode="&quot;FilesInReview&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;DeclarationOfficeName&quot;"
         ColumnWidth="157" />
       <QueryColumn
         QueryCode="&quot;FilesInReview&quot;"
-        IndexOrder="7"
+        IndexOrder="8"
         ObjectFieldName="&quot;VendorName&quot;"
         ColumnWidth="124" />
       <QueryColumn
         QueryCode="&quot;FilesInReview&quot;"
-        IndexOrder="8"
+        IndexOrder="9"
         ObjectFieldName="&quot;ArrivalDate&quot;"
         ColumnWidth="79" />
       <QueryColumn
         QueryCode="&quot;FilesInReview&quot;"
-        IndexOrder="9"
+        IndexOrder="10"
         ObjectFieldName="&quot;Weight&quot;"
         ColumnWidth="75" />
       <QueryColumn
         QueryCode="&quot;FilesInReview&quot;"
-        IndexOrder="10"
+        IndexOrder="11"
         ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
         ColumnWidth="255" />
       <QueryColumn
         QueryCode="&quot;FilesInReview&quot;"
-        IndexOrder="11"
+        IndexOrder="12"
         ObjectFieldName="&quot;PreClassification&quot;"
         ColumnWidth="58" />
       <QueryColumn
         QueryCode="&quot;FilesInReview&quot;"
-        IndexOrder="12"
+        IndexOrder="13"
         ObjectFieldName="&quot;ClassificationStatus&quot;"
         ColumnWidth="55" />
       <QueryColumn
         QueryCode="&quot;FilesInReview&quot;"
-        IndexOrder="13"
+        IndexOrder="14"
         ObjectFieldName="&quot;ControllerStatus&quot;"
         ColumnWidth="44" />
       <QueryColumn
         QueryCode="&quot;FilesInReview&quot;"
-        IndexOrder="14"
+        IndexOrder="15"
         ObjectFieldName="&quot;CollectionOfMoneyStatus&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;FilesInReview&quot;"
-        IndexOrder="15"
+        IndexOrder="16"
         ObjectFieldName="&quot;OrderMoney&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;FilesInReview&quot;"
-        IndexOrder="16"
+        IndexOrder="17"
         ObjectFieldName="&quot;FollowUpDate&quot;"
         ColumnWidth="108" />
       <QueryColumn
         QueryCode="&quot;FilesInReview&quot;"
-        IndexOrder="17"
+        IndexOrder="18"
         ObjectFieldName="&quot;AvailabilityDate&quot;"
         ColumnWidth="108" />
       <QueryColumn
         QueryCode="&quot;FilesInReview&quot;"
-        IndexOrder="18"
+        IndexOrder="19"
         ObjectFieldName="&quot;ExceptionReasonsList&quot;"
         ColumnWidth="34" />
       <QueryColumn
         QueryCode="&quot;FilesInReview&quot;"
-        IndexOrder="19"
+        IndexOrder="20"
         ObjectFieldName="&quot;WithPaper&quot;"
         ColumnWidth="69" />
       <QueryColumn
         QueryCode="&quot;FilesInReview&quot;"
-        IndexOrder="20"
+        IndexOrder="21"
         ObjectFieldName="&quot;NewFile&quot;"
         ColumnWidth="69" />
       <QueryColumn
         QueryCode="&quot;FilesInReview&quot;"
-        IndexOrder="21"
+        IndexOrder="22"
         ObjectFieldName="&quot;IsCustomerLogBoxActivated&quot;"
         ColumnWidth="68" />
       <QueryColumn
         QueryCode="&quot;FilesInReview&quot;"
-        IndexOrder="22"
+        IndexOrder="23"
         ObjectFieldName="&quot;Actions&quot;"
         ColumnWidth="68" />
     </QueryColumns>
@@ -16619,116 +16644,121 @@
       <QueryColumn
         QueryCode="&quot;FilesInCreditControl&quot;"
         IndexOrder="0"
+        ObjectFieldName="&quot;ListCounter&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;FilesInCreditControl&quot;"
+        IndexOrder="1"
         ObjectFieldName="&quot;Favorite&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;FilesInCreditControl&quot;"
-        IndexOrder="1"
+        IndexOrder="2"
         ObjectFieldName="&quot;CollectorUserName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;FilesInCreditControl&quot;"
-        IndexOrder="2"
+        IndexOrder="3"
         ObjectFieldName="&quot;CustomFileNo&quot;"
         ColumnWidth="92" />
       <QueryColumn
         QueryCode="&quot;FilesInCreditControl&quot;"
-        IndexOrder="3"
+        IndexOrder="4"
         ObjectFieldName="&quot;CustomerName&quot;"
         ColumnWidth="146" />
       <QueryColumn
         QueryCode="&quot;FilesInCreditControl&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;OrderNumber&quot;"
         ColumnWidth="87" />
       <QueryColumn
         QueryCode="&quot;FilesInCreditControl&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;TransportModeId&quot;"
         ColumnWidth="58" />
       <QueryColumn
         QueryCode="&quot;FilesInCreditControl&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;DeclarationOfficeName&quot;"
         ColumnWidth="157" />
       <QueryColumn
         QueryCode="&quot;FilesInCreditControl&quot;"
-        IndexOrder="7"
+        IndexOrder="8"
         ObjectFieldName="&quot;VendorName&quot;"
         ColumnWidth="124" />
       <QueryColumn
         QueryCode="&quot;FilesInCreditControl&quot;"
-        IndexOrder="8"
+        IndexOrder="9"
         ObjectFieldName="&quot;ArrivalDate&quot;"
         ColumnWidth="79" />
       <QueryColumn
         QueryCode="&quot;FilesInCreditControl&quot;"
-        IndexOrder="9"
+        IndexOrder="10"
         ObjectFieldName="&quot;Weight&quot;"
         ColumnWidth="75" />
       <QueryColumn
         QueryCode="&quot;FilesInCreditControl&quot;"
-        IndexOrder="10"
+        IndexOrder="11"
         ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
         ColumnWidth="255" />
       <QueryColumn
         QueryCode="&quot;FilesInCreditControl&quot;"
-        IndexOrder="11"
+        IndexOrder="12"
         ObjectFieldName="&quot;PreClassification&quot;"
         ColumnWidth="58" />
       <QueryColumn
         QueryCode="&quot;FilesInCreditControl&quot;"
-        IndexOrder="12"
+        IndexOrder="13"
         ObjectFieldName="&quot;ClassificationStatus&quot;"
         ColumnWidth="55" />
       <QueryColumn
         QueryCode="&quot;FilesInCreditControl&quot;"
-        IndexOrder="13"
+        IndexOrder="14"
         ObjectFieldName="&quot;ControllerStatus&quot;"
         ColumnWidth="44" />
       <QueryColumn
         QueryCode="&quot;FilesInCreditControl&quot;"
-        IndexOrder="14"
+        IndexOrder="15"
         ObjectFieldName="&quot;CollectionOfMoneyStatus&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;FilesInCreditControl&quot;"
-        IndexOrder="15"
+        IndexOrder="16"
         ObjectFieldName="&quot;OrderMoney&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;FilesInCreditControl&quot;"
-        IndexOrder="16"
+        IndexOrder="17"
         ObjectFieldName="&quot;FollowUpDate&quot;"
         ColumnWidth="108" />
       <QueryColumn
         QueryCode="&quot;FilesInCreditControl&quot;"
-        IndexOrder="17"
+        IndexOrder="18"
         ObjectFieldName="&quot;AvailabilityDate&quot;"
         ColumnWidth="108" />
       <QueryColumn
         QueryCode="&quot;FilesInCreditControl&quot;"
-        IndexOrder="18"
+        IndexOrder="19"
         ObjectFieldName="&quot;ExceptionReasonsList&quot;"
         ColumnWidth="34" />
       <QueryColumn
         QueryCode="&quot;FilesInCreditControl&quot;"
-        IndexOrder="19"
+        IndexOrder="20"
         ObjectFieldName="&quot;WithPaper&quot;"
         ColumnWidth="69" />
       <QueryColumn
         QueryCode="&quot;FilesInCreditControl&quot;"
-        IndexOrder="20"
+        IndexOrder="21"
         ObjectFieldName="&quot;NewFile&quot;"
         ColumnWidth="69" />
       <QueryColumn
         QueryCode="&quot;FilesInCreditControl&quot;"
-        IndexOrder="21"
+        IndexOrder="22"
         ObjectFieldName="&quot;IsCustomerLogBoxActivated&quot;"
         ColumnWidth="68" />
       <QueryColumn
         QueryCode="&quot;FilesInCreditControl&quot;"
-        IndexOrder="22"
+        IndexOrder="23"
         ObjectFieldName="&quot;Actions&quot;"
         ColumnWidth="68" />
     </QueryColumns>
@@ -16774,116 +16804,121 @@
       <QueryColumn
         QueryCode="&quot;FilesToPay&quot;"
         IndexOrder="0"
+        ObjectFieldName="&quot;ListCounter&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;FilesToPay&quot;"
+        IndexOrder="1"
         ObjectFieldName="&quot;Favorite&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;FilesToPay&quot;"
-        IndexOrder="1"
+        IndexOrder="2"
         ObjectFieldName="&quot;CollectorUserName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;FilesToPay&quot;"
-        IndexOrder="2"
+        IndexOrder="3"
         ObjectFieldName="&quot;CustomFileNo&quot;"
         ColumnWidth="92" />
       <QueryColumn
         QueryCode="&quot;FilesToPay&quot;"
-        IndexOrder="3"
+        IndexOrder="4"
         ObjectFieldName="&quot;CustomerName&quot;"
         ColumnWidth="146" />
       <QueryColumn
         QueryCode="&quot;FilesToPay&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;OrderNumber&quot;"
         ColumnWidth="87" />
       <QueryColumn
         QueryCode="&quot;FilesToPay&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;TransportModeId&quot;"
         ColumnWidth="58" />
       <QueryColumn
         QueryCode="&quot;FilesToPay&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;DeclarationOfficeName&quot;"
         ColumnWidth="157" />
       <QueryColumn
         QueryCode="&quot;FilesToPay&quot;"
-        IndexOrder="7"
+        IndexOrder="8"
         ObjectFieldName="&quot;VendorName&quot;"
         ColumnWidth="124" />
       <QueryColumn
         QueryCode="&quot;FilesToPay&quot;"
-        IndexOrder="8"
+        IndexOrder="9"
         ObjectFieldName="&quot;ArrivalDate&quot;"
         ColumnWidth="79" />
       <QueryColumn
         QueryCode="&quot;FilesToPay&quot;"
-        IndexOrder="9"
+        IndexOrder="10"
         ObjectFieldName="&quot;Weight&quot;"
         ColumnWidth="75" />
       <QueryColumn
         QueryCode="&quot;FilesToPay&quot;"
-        IndexOrder="10"
+        IndexOrder="11"
         ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
         ColumnWidth="255" />
       <QueryColumn
         QueryCode="&quot;FilesToPay&quot;"
-        IndexOrder="11"
+        IndexOrder="12"
         ObjectFieldName="&quot;PreClassification&quot;"
         ColumnWidth="58" />
       <QueryColumn
         QueryCode="&quot;FilesToPay&quot;"
-        IndexOrder="12"
+        IndexOrder="13"
         ObjectFieldName="&quot;ClassificationStatus&quot;"
         ColumnWidth="55" />
       <QueryColumn
         QueryCode="&quot;FilesToPay&quot;"
-        IndexOrder="13"
+        IndexOrder="14"
         ObjectFieldName="&quot;ControllerStatus&quot;"
         ColumnWidth="44" />
       <QueryColumn
         QueryCode="&quot;FilesToPay&quot;"
-        IndexOrder="14"
+        IndexOrder="15"
         ObjectFieldName="&quot;CollectionOfMoneyStatus&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;FilesToPay&quot;"
-        IndexOrder="15"
+        IndexOrder="16"
         ObjectFieldName="&quot;OrderMoney&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;FilesToPay&quot;"
-        IndexOrder="16"
+        IndexOrder="17"
         ObjectFieldName="&quot;FollowUpDate&quot;"
         ColumnWidth="108" />
       <QueryColumn
         QueryCode="&quot;FilesToPay&quot;"
-        IndexOrder="17"
+        IndexOrder="18"
         ObjectFieldName="&quot;AvailabilityDate&quot;"
         ColumnWidth="108" />
       <QueryColumn
         QueryCode="&quot;FilesToPay&quot;"
-        IndexOrder="18"
+        IndexOrder="19"
         ObjectFieldName="&quot;ExceptionReasonsList&quot;"
         ColumnWidth="34" />
       <QueryColumn
         QueryCode="&quot;FilesToPay&quot;"
-        IndexOrder="19"
+        IndexOrder="20"
         ObjectFieldName="&quot;WithPaper&quot;"
         ColumnWidth="69" />
       <QueryColumn
         QueryCode="&quot;FilesToPay&quot;"
-        IndexOrder="20"
+        IndexOrder="21"
         ObjectFieldName="&quot;NewFile&quot;"
         ColumnWidth="69" />
       <QueryColumn
         QueryCode="&quot;FilesToPay&quot;"
-        IndexOrder="21"
+        IndexOrder="22"
         ObjectFieldName="&quot;IsCustomerLogBoxActivated&quot;"
         ColumnWidth="68" />
       <QueryColumn
         QueryCode="&quot;FilesToPay&quot;"
-        IndexOrder="22"
+        IndexOrder="23"
         ObjectFieldName="&quot;Actions&quot;"
         ColumnWidth="68" />
     </QueryColumns>
@@ -16964,116 +16999,121 @@
       <QueryColumn
         QueryCode="&quot;FilesAvailableFreeOfCharge&quot;"
         IndexOrder="0"
+        ObjectFieldName="&quot;ListCounter&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;FilesAvailableFreeOfCharge&quot;"
+        IndexOrder="1"
         ObjectFieldName="&quot;Favorite&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;FilesAvailableFreeOfCharge&quot;"
-        IndexOrder="1"
+        IndexOrder="2"
         ObjectFieldName="&quot;CollectorUserName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;FilesAvailableFreeOfCharge&quot;"
-        IndexOrder="2"
+        IndexOrder="3"
         ObjectFieldName="&quot;CustomFileNo&quot;"
         ColumnWidth="92" />
       <QueryColumn
         QueryCode="&quot;FilesAvailableFreeOfCharge&quot;"
-        IndexOrder="3"
+        IndexOrder="4"
         ObjectFieldName="&quot;CustomerName&quot;"
         ColumnWidth="146" />
       <QueryColumn
         QueryCode="&quot;FilesAvailableFreeOfCharge&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;OrderNumber&quot;"
         ColumnWidth="87" />
       <QueryColumn
         QueryCode="&quot;FilesAvailableFreeOfCharge&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;TransportModeId&quot;"
         ColumnWidth="58" />
       <QueryColumn
         QueryCode="&quot;FilesAvailableFreeOfCharge&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;DeclarationOfficeName&quot;"
         ColumnWidth="157" />
       <QueryColumn
         QueryCode="&quot;FilesAvailableFreeOfCharge&quot;"
-        IndexOrder="7"
+        IndexOrder="8"
         ObjectFieldName="&quot;VendorName&quot;"
         ColumnWidth="124" />
       <QueryColumn
         QueryCode="&quot;FilesAvailableFreeOfCharge&quot;"
-        IndexOrder="8"
+        IndexOrder="9"
         ObjectFieldName="&quot;ArrivalDate&quot;"
         ColumnWidth="79" />
       <QueryColumn
         QueryCode="&quot;FilesAvailableFreeOfCharge&quot;"
-        IndexOrder="9"
+        IndexOrder="10"
         ObjectFieldName="&quot;Weight&quot;"
         ColumnWidth="75" />
       <QueryColumn
         QueryCode="&quot;FilesAvailableFreeOfCharge&quot;"
-        IndexOrder="10"
+        IndexOrder="11"
         ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
         ColumnWidth="255" />
       <QueryColumn
         QueryCode="&quot;FilesAvailableFreeOfCharge&quot;"
-        IndexOrder="11"
+        IndexOrder="12"
         ObjectFieldName="&quot;PreClassification&quot;"
         ColumnWidth="58" />
       <QueryColumn
         QueryCode="&quot;FilesAvailableFreeOfCharge&quot;"
-        IndexOrder="12"
+        IndexOrder="13"
         ObjectFieldName="&quot;ClassificationStatus&quot;"
         ColumnWidth="55" />
       <QueryColumn
         QueryCode="&quot;FilesAvailableFreeOfCharge&quot;"
-        IndexOrder="13"
+        IndexOrder="14"
         ObjectFieldName="&quot;ControllerStatus&quot;"
         ColumnWidth="44" />
       <QueryColumn
         QueryCode="&quot;FilesAvailableFreeOfCharge&quot;"
-        IndexOrder="14"
+        IndexOrder="15"
         ObjectFieldName="&quot;CollectionOfMoneyStatus&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;FilesAvailableFreeOfCharge&quot;"
-        IndexOrder="15"
+        IndexOrder="16"
         ObjectFieldName="&quot;OrderMoney&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;FilesAvailableFreeOfCharge&quot;"
-        IndexOrder="16"
+        IndexOrder="17"
         ObjectFieldName="&quot;FollowUpDate&quot;"
         ColumnWidth="108" />
       <QueryColumn
         QueryCode="&quot;FilesAvailableFreeOfCharge&quot;"
-        IndexOrder="17"
+        IndexOrder="18"
         ObjectFieldName="&quot;AvailabilityDate&quot;"
         ColumnWidth="108" />
       <QueryColumn
         QueryCode="&quot;FilesAvailableFreeOfCharge&quot;"
-        IndexOrder="18"
+        IndexOrder="19"
         ObjectFieldName="&quot;ExceptionReasonsList&quot;"
         ColumnWidth="34" />
       <QueryColumn
         QueryCode="&quot;FilesAvailableFreeOfCharge&quot;"
-        IndexOrder="19"
+        IndexOrder="20"
         ObjectFieldName="&quot;WithPaper&quot;"
         ColumnWidth="69" />
       <QueryColumn
         QueryCode="&quot;FilesAvailableFreeOfCharge&quot;"
-        IndexOrder="20"
+        IndexOrder="21"
         ObjectFieldName="&quot;NewFile&quot;"
         ColumnWidth="69" />
       <QueryColumn
         QueryCode="&quot;FilesAvailableFreeOfCharge&quot;"
-        IndexOrder="21"
+        IndexOrder="22"
         ObjectFieldName="&quot;IsCustomerLogBoxActivated&quot;"
         ColumnWidth="68" />
       <QueryColumn
         QueryCode="&quot;FilesAvailableFreeOfCharge&quot;"
-        IndexOrder="22"
+        IndexOrder="23"
         ObjectFieldName="&quot;Actions&quot;"
         ColumnWidth="68" />
     </QueryColumns>
@@ -17126,51 +17166,56 @@
       <QueryColumn
         QueryCode="&quot;FilesWithoutRelease&quot;"
         IndexOrder="0"
-        ObjectFieldName="&quot;CustomFileNo&quot;"
+        ObjectFieldName="&quot;ListCounter&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;FilesWithoutRelease&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;CollectorUserName&quot;"
+        ObjectFieldName="&quot;CustomFileNo&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;FilesWithoutRelease&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;DeclarationNumber&quot;"
+        ObjectFieldName="&quot;CollectorUserName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;FilesWithoutRelease&quot;"
         IndexOrder="3"
+        ObjectFieldName="&quot;DeclarationNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;FilesWithoutRelease&quot;"
+        IndexOrder="4"
         ObjectFieldName="&quot;CustomerName&quot;"
         ColumnWidth="150" />
       <QueryColumn
         QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;StorageSiteName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;PaymentDate_Date&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;PaymentDate_Time&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="7"
+        IndexOrder="8"
         ObjectFieldName="&quot;PhysicalCheck&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="8"
+        IndexOrder="9"
         ObjectFieldName="&quot;RequestedCustomsDocId&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;FilesWithoutRelease&quot;"
-        IndexOrder="9"
+        IndexOrder="10"
         ObjectFieldName="&quot;Actions&quot;"
         ColumnWidth="50" />
     </QueryColumns>
@@ -17237,36 +17282,41 @@
       <QueryColumn
         QueryCode="&quot;FilesInAllInclusive&quot;"
         IndexOrder="0"
+        ObjectFieldName="&quot;ListCounter&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;FilesInAllInclusive&quot;"
+        IndexOrder="1"
         ObjectFieldName="&quot;CustomFileNo&quot;"
         ColumnWidth="92" />
       <QueryColumn
         QueryCode="&quot;FilesInAllInclusive&quot;"
-        IndexOrder="1"
+        IndexOrder="2"
         ObjectFieldName="&quot;CollectorUserName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;FilesInAllInclusive&quot;"
-        IndexOrder="2"
+        IndexOrder="3"
         ObjectFieldName="&quot;DeclarationNumber&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;FilesInAllInclusive&quot;"
-        IndexOrder="3"
+        IndexOrder="4"
         ObjectFieldName="&quot;ImporterName&quot;"
         ColumnWidth="87" />
       <QueryColumn
         QueryCode="&quot;FilesInAllInclusive&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;DeclarationOfficeName&quot;"
         ColumnWidth="157" />
       <QueryColumn
         QueryCode="&quot;FilesInAllInclusive&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;PaymentDate&quot;"
         ColumnWidth="124" />
       <QueryColumn
         QueryCode="&quot;FilesInAllInclusive&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;RemoveInclusiveVisibility&quot;"
         ColumnWidth="100" />
     </QueryColumns>
@@ -17312,116 +17362,121 @@
       <QueryColumn
         QueryCode="&quot;FilesRejectedByController&quot;"
         IndexOrder="0"
+        ObjectFieldName="&quot;ListCounter&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByController&quot;"
+        IndexOrder="1"
         ObjectFieldName="&quot;Favorite&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByController&quot;"
-        IndexOrder="1"
+        IndexOrder="2"
         ObjectFieldName="&quot;CollectorUserName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByController&quot;"
-        IndexOrder="2"
+        IndexOrder="3"
         ObjectFieldName="&quot;CustomFileNo&quot;"
         ColumnWidth="92" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByController&quot;"
-        IndexOrder="3"
+        IndexOrder="4"
         ObjectFieldName="&quot;CustomerName&quot;"
         ColumnWidth="146" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByController&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;OrderNumber&quot;"
         ColumnWidth="87" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByController&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;TransportModeId&quot;"
         ColumnWidth="58" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByController&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;DeclarationOfficeName&quot;"
         ColumnWidth="157" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByController&quot;"
-        IndexOrder="7"
+        IndexOrder="8"
         ObjectFieldName="&quot;VendorName&quot;"
         ColumnWidth="124" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByController&quot;"
-        IndexOrder="8"
+        IndexOrder="9"
         ObjectFieldName="&quot;ArrivalDate&quot;"
         ColumnWidth="79" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByController&quot;"
-        IndexOrder="9"
+        IndexOrder="10"
         ObjectFieldName="&quot;Weight&quot;"
         ColumnWidth="75" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByController&quot;"
-        IndexOrder="10"
+        IndexOrder="11"
         ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
         ColumnWidth="255" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByController&quot;"
-        IndexOrder="11"
+        IndexOrder="12"
         ObjectFieldName="&quot;PreClassification&quot;"
         ColumnWidth="58" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByController&quot;"
-        IndexOrder="12"
+        IndexOrder="13"
         ObjectFieldName="&quot;ClassificationStatus&quot;"
         ColumnWidth="55" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByController&quot;"
-        IndexOrder="13"
+        IndexOrder="14"
         ObjectFieldName="&quot;ControllerStatus&quot;"
         ColumnWidth="44" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByController&quot;"
-        IndexOrder="14"
+        IndexOrder="15"
         ObjectFieldName="&quot;CollectionOfMoneyStatus&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByController&quot;"
-        IndexOrder="15"
+        IndexOrder="16"
         ObjectFieldName="&quot;OrderMoney&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByController&quot;"
-        IndexOrder="16"
+        IndexOrder="17"
         ObjectFieldName="&quot;FollowUpDate&quot;"
         ColumnWidth="108" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByController&quot;"
-        IndexOrder="17"
+        IndexOrder="18"
         ObjectFieldName="&quot;AvailabilityDate&quot;"
         ColumnWidth="108" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByController&quot;"
-        IndexOrder="18"
+        IndexOrder="19"
         ObjectFieldName="&quot;ExceptionReasonsList&quot;"
         ColumnWidth="34" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByController&quot;"
-        IndexOrder="19"
+        IndexOrder="20"
         ObjectFieldName="&quot;WithPaper&quot;"
         ColumnWidth="69" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByController&quot;"
-        IndexOrder="20"
+        IndexOrder="21"
         ObjectFieldName="&quot;NewFile&quot;"
         ColumnWidth="69" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByController&quot;"
-        IndexOrder="21"
+        IndexOrder="22"
         ObjectFieldName="&quot;IsCustomerLogBoxActivated&quot;"
         ColumnWidth="68" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByController&quot;"
-        IndexOrder="22"
+        IndexOrder="23"
         ObjectFieldName="&quot;Actions&quot;"
         ColumnWidth="68" />
     </QueryColumns>
@@ -17467,116 +17522,121 @@
       <QueryColumn
         QueryCode="&quot;FilesRejectedByClassification&quot;"
         IndexOrder="0"
+        ObjectFieldName="&quot;ListCounter&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;FilesRejectedByClassification&quot;"
+        IndexOrder="1"
         ObjectFieldName="&quot;Favorite&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByClassification&quot;"
-        IndexOrder="1"
+        IndexOrder="2"
         ObjectFieldName="&quot;CollectorUserName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByClassification&quot;"
-        IndexOrder="2"
+        IndexOrder="3"
         ObjectFieldName="&quot;CustomFileNo&quot;"
         ColumnWidth="92" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByClassification&quot;"
-        IndexOrder="3"
+        IndexOrder="4"
         ObjectFieldName="&quot;CustomerName&quot;"
         ColumnWidth="146" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByClassification&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;OrderNumber&quot;"
         ColumnWidth="87" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByClassification&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;TransportModeId&quot;"
         ColumnWidth="58" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByClassification&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;DeclarationOfficeName&quot;"
         ColumnWidth="157" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByClassification&quot;"
-        IndexOrder="7"
+        IndexOrder="8"
         ObjectFieldName="&quot;VendorName&quot;"
         ColumnWidth="124" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByClassification&quot;"
-        IndexOrder="8"
+        IndexOrder="9"
         ObjectFieldName="&quot;ArrivalDate&quot;"
         ColumnWidth="79" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByClassification&quot;"
-        IndexOrder="9"
+        IndexOrder="10"
         ObjectFieldName="&quot;Weight&quot;"
         ColumnWidth="75" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByClassification&quot;"
-        IndexOrder="10"
+        IndexOrder="11"
         ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
         ColumnWidth="255" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByClassification&quot;"
-        IndexOrder="11"
+        IndexOrder="12"
         ObjectFieldName="&quot;PreClassification&quot;"
         ColumnWidth="58" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByClassification&quot;"
-        IndexOrder="12"
+        IndexOrder="13"
         ObjectFieldName="&quot;ClassificationStatus&quot;"
         ColumnWidth="55" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByClassification&quot;"
-        IndexOrder="13"
+        IndexOrder="14"
         ObjectFieldName="&quot;ControllerStatus&quot;"
         ColumnWidth="44" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByClassification&quot;"
-        IndexOrder="14"
+        IndexOrder="15"
         ObjectFieldName="&quot;CollectionOfMoneyStatus&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByClassification&quot;"
-        IndexOrder="15"
+        IndexOrder="16"
         ObjectFieldName="&quot;OrderMoney&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByClassification&quot;"
-        IndexOrder="16"
+        IndexOrder="17"
         ObjectFieldName="&quot;FollowUpDate&quot;"
         ColumnWidth="108" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByClassification&quot;"
-        IndexOrder="17"
+        IndexOrder="18"
         ObjectFieldName="&quot;AvailabilityDate&quot;"
         ColumnWidth="108" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByClassification&quot;"
-        IndexOrder="18"
+        IndexOrder="19"
         ObjectFieldName="&quot;ExceptionReasonsList&quot;"
         ColumnWidth="34" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByClassification&quot;"
-        IndexOrder="19"
+        IndexOrder="20"
         ObjectFieldName="&quot;WithPaper&quot;"
         ColumnWidth="69" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByClassification&quot;"
-        IndexOrder="20"
+        IndexOrder="21"
         ObjectFieldName="&quot;NewFile&quot;"
         ColumnWidth="69" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByClassification&quot;"
-        IndexOrder="21"
+        IndexOrder="22"
         ObjectFieldName="&quot;IsCustomerLogBoxActivated&quot;"
         ColumnWidth="68" />
       <QueryColumn
         QueryCode="&quot;FilesRejectedByClassification&quot;"
-        IndexOrder="22"
+        IndexOrder="23"
         ObjectFieldName="&quot;Actions&quot;"
         ColumnWidth="68" />
     </QueryColumns>
@@ -17622,116 +17682,121 @@
       <QueryColumn
         QueryCode="&quot;AllCases&quot;"
         IndexOrder="0"
+        ObjectFieldName="&quot;ListCounter&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllCases&quot;"
+        IndexOrder="1"
         ObjectFieldName="&quot;Favorite&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;AllCases&quot;"
-        IndexOrder="1"
+        IndexOrder="2"
         ObjectFieldName="&quot;CollectorUserName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllCases&quot;"
-        IndexOrder="2"
+        IndexOrder="3"
         ObjectFieldName="&quot;CustomFileNo&quot;"
         ColumnWidth="92" />
       <QueryColumn
         QueryCode="&quot;AllCases&quot;"
-        IndexOrder="3"
+        IndexOrder="4"
         ObjectFieldName="&quot;CustomerName&quot;"
         ColumnWidth="146" />
       <QueryColumn
         QueryCode="&quot;AllCases&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;OrderNumber&quot;"
         ColumnWidth="87" />
       <QueryColumn
         QueryCode="&quot;AllCases&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;TransportModeId&quot;"
         ColumnWidth="58" />
       <QueryColumn
         QueryCode="&quot;AllCases&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;DeclarationOfficeName&quot;"
         ColumnWidth="157" />
       <QueryColumn
         QueryCode="&quot;AllCases&quot;"
-        IndexOrder="7"
+        IndexOrder="8"
         ObjectFieldName="&quot;VendorName&quot;"
         ColumnWidth="124" />
       <QueryColumn
         QueryCode="&quot;AllCases&quot;"
-        IndexOrder="8"
+        IndexOrder="9"
         ObjectFieldName="&quot;ArrivalDate&quot;"
         ColumnWidth="79" />
       <QueryColumn
         QueryCode="&quot;AllCases&quot;"
-        IndexOrder="9"
+        IndexOrder="10"
         ObjectFieldName="&quot;Weight&quot;"
         ColumnWidth="75" />
       <QueryColumn
         QueryCode="&quot;AllCases&quot;"
-        IndexOrder="10"
+        IndexOrder="11"
         ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
         ColumnWidth="255" />
       <QueryColumn
         QueryCode="&quot;AllCases&quot;"
-        IndexOrder="11"
+        IndexOrder="12"
         ObjectFieldName="&quot;PreClassification&quot;"
         ColumnWidth="58" />
       <QueryColumn
         QueryCode="&quot;AllCases&quot;"
-        IndexOrder="12"
+        IndexOrder="13"
         ObjectFieldName="&quot;ClassificationStatus&quot;"
         ColumnWidth="55" />
       <QueryColumn
         QueryCode="&quot;AllCases&quot;"
-        IndexOrder="13"
+        IndexOrder="14"
         ObjectFieldName="&quot;ControllerStatus&quot;"
         ColumnWidth="44" />
       <QueryColumn
         QueryCode="&quot;AllCases&quot;"
-        IndexOrder="14"
+        IndexOrder="15"
         ObjectFieldName="&quot;CollectionOfMoneyStatus&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;AllCases&quot;"
-        IndexOrder="15"
+        IndexOrder="16"
         ObjectFieldName="&quot;OrderMoney&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;AllCases&quot;"
-        IndexOrder="16"
+        IndexOrder="17"
         ObjectFieldName="&quot;FollowUpDate&quot;"
         ColumnWidth="108" />
       <QueryColumn
         QueryCode="&quot;AllCases&quot;"
-        IndexOrder="17"
+        IndexOrder="18"
         ObjectFieldName="&quot;AvailabilityDate&quot;"
         ColumnWidth="108" />
       <QueryColumn
         QueryCode="&quot;AllCases&quot;"
-        IndexOrder="18"
+        IndexOrder="19"
         ObjectFieldName="&quot;ExceptionReasonsList&quot;"
         ColumnWidth="34" />
       <QueryColumn
         QueryCode="&quot;AllCases&quot;"
-        IndexOrder="19"
+        IndexOrder="20"
         ObjectFieldName="&quot;WithPaper&quot;"
         ColumnWidth="69" />
       <QueryColumn
         QueryCode="&quot;AllCases&quot;"
-        IndexOrder="20"
+        IndexOrder="21"
         ObjectFieldName="&quot;NewFile&quot;"
         ColumnWidth="69" />
       <QueryColumn
         QueryCode="&quot;AllCases&quot;"
-        IndexOrder="21"
+        IndexOrder="22"
         ObjectFieldName="&quot;IsCustomerLogBoxActivated&quot;"
         ColumnWidth="68" />
       <QueryColumn
         QueryCode="&quot;AllCases&quot;"
-        IndexOrder="22"
+        IndexOrder="23"
         ObjectFieldName="&quot;Actions&quot;"
         ColumnWidth="68" />
     </QueryColumns>
