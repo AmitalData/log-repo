@@ -14,8 +14,6 @@ namespace Logitude.Accounting.Def.EntityQueryServicesExt
         List<JournalPM> GetJournalsWithLinesByAccountingEntityIdAndCode(string accountingEntityId, string accountingEntityCode, int tenant);
         JournalPM GetApprovedJournalByAccountingEntityId(string accountingEntityId, string accountingEntityCode, int tenant);
         JournalPM GetSingleWithLinesByEntityIdAndCode(string entityId, string code, int tenant);
-
-
-
+        JournalPM GetSingleJournalByExternalNoAndExternalSystem(string externalNo, string externalSystem, int tenant);
     }
 }

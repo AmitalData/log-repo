@@ -1,4 +1,5 @@
-﻿using Logitude.BL.CommonDataModel.EntityPMs;
+﻿using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -90,7 +91,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         IInvoiceContext MyContext = InvoiceContext.GetContext(entity.Tenant);
                         ARInvoiceQueryService mappingService = new ARInvoiceQueryService(entity.Tenant);
-                        if (tenant == 1153) entity = mappingService.SetARInvoiceSystemUser(entity);
+                        entity = mappingService.SetARInvoiceSystemUser(entity);
+                        JournalPM journalPM = mappingService.GetARInvoiceExistingJournalPM(entity);
                         ARInvoicePM entityPM = mappingService.ARInvoiceDataMappingAndValidatin(entity, entity.Tenant);
                         mappingService.SetInvoiceLinesEntityId(entityPM, entity.Tenant);
                         mappingService.ValidateAccountingExternalEntityId(entity);
@@ -99,6 +101,12 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         entityPM.IsExternalAPI = true;
                         entityPM.Tenant = entity.Tenant;
                         entityPM.IsGeneralInvoice = true;
+                        if (entity.DoNotCreateJournal.HasValue && entity.DoNotCreateJournal.Value == true && journalPM != null && String.IsNullOrEmpty(journalPM.Id))
+                        {
+                            entityPM.JournalId = journalPM.Id;
+                            entityPM.JournalNumber = journalPM.JournalNumber;
+                            entityPM.ExternalAccountingEntityId = journalPM.Id;
+                        }
                         entityPM = SetARInvoiceStatusBooleans(entity, entityPM );
                    
                         #region Computing Invoice Lines Fields
@@ -297,11 +305,18 @@ namespace WebFreight.Web.ExternalAPIs.V1
                        
                         IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
                         ARInvoiceQueryService mappingService = new ARInvoiceQueryService(tenant);
+                        JournalPM journalPM = mappingService.GetARInvoiceExistingJournalPM(entity);
                         ARInvoicePM entityPM = mappingService.ARInvoiceDataMappingAndValidatin(entity, tenant);
                         mappingService.SetBillToGLAccountId(entityPM);
                         //  mappingService.UpdateCreditInvoice(entityPM, tenant);
                         entityPM.IsExternalAPI = true;
                         entityPM.IsExternalEntity = true;
+                        if (entity.DoNotCreateJournal.HasValue && entity.DoNotCreateJournal.Value == true && journalPM != null && String.IsNullOrEmpty(journalPM.Id))
+                        {
+                            entityPM.JournalId = journalPM.Id;
+                            entityPM.JournalNumber = journalPM.JournalNumber;
+                            entityPM.ExternalAccountingEntityId = journalPM.Id;
+                        }
                         if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
                         {
                             ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(tenant);

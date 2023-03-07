@@ -173,6 +173,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
 
         }
+
         private void MapJournalFields(APPaymentPM entityPM)
         {
             Journal journal = GetJournalOfAPPayment(entityPM);
