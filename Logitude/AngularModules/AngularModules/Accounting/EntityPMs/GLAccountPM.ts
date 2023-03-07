@@ -897,6 +897,10 @@ export class GLAccountPM {
     public get CreditUsed() { return this.creditUsed; }
     public set CreditUsed(newValue: number) { if (this.creditUsed != newValue) { this.creditUsed = newValue; this.MarkAsDirty("CreditUsed"); } }
 
+    private creditLimitDifference: number;
+    public get CreditLimitDifference() { return this.creditLimitDifference; }
+    public set CreditLimitDifference(newValue: number) { if (this.creditLimitDifference != newValue) { this.creditLimitDifference = newValue; this.MarkAsDirty("CreditLimitDifference"); } }
+    
     public OldEntityPM: GLAccountPM;
 		
     public IsDirty: boolean;
