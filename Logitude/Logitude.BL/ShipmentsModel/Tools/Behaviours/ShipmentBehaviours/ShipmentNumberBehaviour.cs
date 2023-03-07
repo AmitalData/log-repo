@@ -80,12 +80,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             if (isTakenCounter)
             {
                 string branchId =!string.IsNullOrEmpty(initializer.EntityPM.BranchId) ? initializer.EntityPM.BranchId : GetCreatedByUserBranchId(initializer.EntityPM.CreatedByUserId , initializer.EntityPM.Tenant);
-                Dictionary<string, string> counterAdditionalParameters = new Dictionary<string, string>() { { "[B]", "" } };
+                Dictionary<string, string> counterAdditionalParameters = new Dictionary<string, string>() { { "[B]", "" },{ "[BranchName]",""} };
                 if (!string.IsNullOrEmpty(branchId))
                 {
                     BranchRepository branchRepository = new BranchRepository(initializer.CommonContext);
                     Branch myBranch = branchRepository.GetSingleBranch(branchId, initializer.EntityPM.Tenant);
-
+                    if(myBranch != null)
+                    {
+                        counterAdditionalParameters["[BranchName]"] = myBranch.EnglishName;
+                    }
                     if (myBranch != null && !string.IsNullOrEmpty(myBranch.CounterCode))
                     {
                         counterAdditionalParameters["[B]"] = myBranch.CounterCode;
