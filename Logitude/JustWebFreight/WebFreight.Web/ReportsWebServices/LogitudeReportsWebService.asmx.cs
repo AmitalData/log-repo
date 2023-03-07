@@ -1767,15 +1767,41 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.AmountDueInLocalCurrency = arInvoice.AmountDueInLocalCurrency;
                 invoicesRecored.BillToVatNumber = arInvoice.VatNumber;
                 invoicesRecored.PaidDate = arInvoice.PaidDate;
+                BranchRepository branchRepository = new BranchRepository(tenant);
+                Branch branch = branchRepository.GetSingleBranch(arInvoice.BranchId, tenant);
+                if (branch != null)
+                {
+                    invoicesRecored.BranchCode = branch.Code;
+                }
+
+                Card billTo = CardRepository.GetSingleCard(arInvoice.BillToId, tenant, false);
 
                 if (string.IsNullOrEmpty(invoicesRecored.BillToVatNumber))
-                {
-                    Card billTo = CardRepository.GetSingleCard(arInvoice.BillToId, tenant, false);
+                {   
                     if(billTo != null)
                     {
                         invoicesRecored.BillToVatNumber = billTo.VatNumber;
                     }
                 }
+                if (billTo != null)
+                {
+                    FillBillToContact(invoicesRecored, billTo);
+                    invoicesRecored.BillToAddress1 = billTo.Address1;
+                    invoicesRecored.BillToAddress2 = billTo.Address2;
+                    invoicesRecored.BillToCity = billTo.CityName;
+                    invoicesRecored.BillToState = billTo.StateName;
+                    invoicesRecored.BillToZipCode = billTo.ZipCode;
+                    invoicesRecored.BillToCountry = billTo.CountryName;
+                    if (billTo.IsCustomer)
+                    {
+                        
+                       FillCustomerField(invoicesRecored, billTo, tenant);   
+                    }
+                    
+                }
+                
+                
+
 
                 if (localCurrency)
                 {
@@ -1853,6 +1879,29 @@ namespace WebFreight.Web.ReportsWebServices
             #endregion
 
             return dataProvider;
+        }
+        private void FillBillToContact(InvoiceDataProvider.InvoicesReport invoicesRecored, Card billTo)
+        {
+            ContactRepository contactRepository = new ContactRepository(billTo.Tenant);
+            Contact contact = contactRepository.GetSingleContact(billTo.PrimaryContactId, billTo.Tenant);
+            if (contact != null)
+            {
+                invoicesRecored.BillToContactName = contact.EnglishName;
+                invoicesRecored.BillToContactEmail = contact.Email;
+            }
+
+        }
+        
+        private void FillCustomerField(InvoiceDataProvider.InvoicesReport invoicesRecored, Card billTo, int tenant)
+        {
+            CustomerRepository customerRepository = new CustomerRepository(tenant);
+            Customer customer = customerRepository.GetSingleCustomer(billTo.Id, tenant);
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+            if (customer != null)
+            {
+                customFieldResolver.SetDataProviderCustomFieldsValues("Customer", tenant, customer, invoicesRecored);
+                //invoicesRecored.CustomerField1 = customer.Field1;
+            }
         }
 
         private List<System.Xml.XmlElement> GetComprobanteComplementos(string sATXML)

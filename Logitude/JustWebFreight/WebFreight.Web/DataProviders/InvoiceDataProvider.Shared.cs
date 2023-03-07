@@ -607,6 +607,16 @@ namespace WebFreight.Web.DataProviders
             public double? NonVatableAmountInvoiceCurrency { get; set; }
             public double? RegionalTaxAmountInvoiceCurrency { get; set; }
             public DateTime? PaidDate { get; set; }
+            public string BillToContactName { get; set; }
+            public string BillToContactEmail { get; set; }
+            public string BillToAddress1 { get; set; }
+            public string BillToAddress2 { get; set; }
+            public string BillToCity { get; set; }
+            public string BillToState { get; set; }
+            public string BillToZipCode { get; set; }
+            public string BillToCountry { get; set; }
+            public string CustomerField1 { get; set; }
+            public string BranchCode { get; set; }
         }
 
         public class InvoiceTotals
