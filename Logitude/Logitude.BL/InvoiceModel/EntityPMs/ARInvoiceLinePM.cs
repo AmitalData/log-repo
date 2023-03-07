@@ -90,6 +90,8 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         public bool IsRegionalTax { get; set; }
         public double? InvoiceCurrencyExchangeRate { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ReportedinTaxReport { get; set; }
 
     }
 }
