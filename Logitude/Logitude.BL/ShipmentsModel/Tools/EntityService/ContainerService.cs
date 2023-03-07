@@ -104,16 +104,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             //AddShipmentUpdateKafkaQueueMessage("CToolContainerCreate");
             MapShipmentConcurrencyFields();
             entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
-            new GeneralContainerTrackingService(GetGeneralContainerTrackingArgs(entityPM)).AutomaticTrackContainer();
             string activity = "(A) Container Create";
             AddTotangoActivity(entityPM, activity);
-
+            new GeneralContainerTrackingService(GetGeneralContainerTrackingArgs(entityPM)).AutomaticTrackContainer();         
         }
         public void AddTotangoActivity(ContainerPM containerPM, string activityDescription)
         {
             string email = AuthenticationUtil.IsAuthenticatedUserExists() ? AuthenticationUtil.GetAuthenticatedUser() : "system@tenant" + tenant + ".com";
             string moduleName = "(A) Container";
-                ActivityLogger.SendTotangoContactActivity(email, moduleName, activityDescription, containerPM.Tenant,false,null);
+            ActivityLogger.SendTotangoContactActivity(email, moduleName, activityDescription, containerPM.Tenant,false,null);
         }
 
             private GeneralContainerTrackingArgs GetGeneralContainerTrackingArgs(ContainerPM entityPM)
@@ -197,10 +196,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             //AddShipmentUpdateKafkaQueueMessage("CToolContainerUpdate");
             MapShipmentConcurrencyFields();
-            
-            new GeneralContainerTrackingService(GetGeneralContainerTrackingArgs(entityPM)).AutomaticTrackContainer();
             string activity = "(A) Container Update";
             AddTotangoActivity(entityPM, activity);
+            new GeneralContainerTrackingService(GetGeneralContainerTrackingArgs(entityPM)).AutomaticTrackContainer();          
         }
         private AuditLog AddContainerAuditLogChanges(Container entityPoco, List<FieldChange> FieldChanges)
         {
