@@ -61,6 +61,7 @@
                                                     <p [attr.data-cy]="'Partners Permissions'" [class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="PartnersPermissionsLinkClick()">Partners Permissions</p>
                                                     <p [attr.data-cy]="'Money Permissions'" *ngIf="SharedTitleType != 'CargoTracking'" [class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="MoneyPermissionsLinkClick()">Money Permissions</p>
                                                     <p [attr.data-cy]="'Customization'" *ngIf="SharedTitleType != 'CargoTracking' && IsCustomerCareUser == true" [class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="CustomizationLinkClick()">Customization</p>
+                                                    <p [attr.data-cy]="'Language'" *ngIf="SharedTitleType != 'CargoTracking' && IsCustomerCareUser == true" [class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="LanguageLinkClick()">Language</p>
                                                 </div>
                                             </div>
 

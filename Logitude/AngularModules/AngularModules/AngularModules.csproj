@@ -426,6 +426,7 @@
     <Content Include="SharedLogistics\Components\DigitalPortal\DigitalCheckBoxComponent.html" />
     <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationChageLabelsComponent.html" />
     <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationMainComponent.html" />
+    <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalLanguageSettingsComponent.html" />
     <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationScreenLayoutComponent.html" />
     <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationShowHideFieldsComponent.html" />
     <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationSubObjectsComponent.html" />
@@ -4979,6 +4980,7 @@
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalCheckBoxComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationChageLabelsComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationMainComponent.ts" />
+    <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalLanguageSettingsComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationScreenLayoutComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationShowHideFieldsComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationSubObjectsComponent.ts" />

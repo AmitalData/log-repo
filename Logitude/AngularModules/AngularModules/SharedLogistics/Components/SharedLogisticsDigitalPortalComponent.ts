@@ -361,6 +361,19 @@ export class SharedLogisticsDigitalPortalComponent implements OnInit {
         logWindow.Show('./SharedLogistics/Components/DigitalPortal/DigitalPortalCustomizationMainComponent');
     }
 
+    LanguageLinkClick() {
+        var windowArgs: any = {};
+        windowArgs.IsDigitalPortal = true;
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Width = 820;
+        logWindow.Height = 520;
+        logWindow.Title = "Language Display Settings";
+        console.log("HELOOOOOO")
+
+        logWindow.Show("./SharedLogistics/Components/DigitalPortal/DigitalPortalLanguageSettingsComponent");
+    }
+
     PartnersPermissionsLinkClick() {
         var windowArgs: any = {};
         var logWindow = new LogitudeWindow();

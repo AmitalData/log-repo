@@ -1,0 +1,121 @@
+<table>
+    <tr>
+        <td>
+            <div></div>
+        </td>
+    </tr>
+    <tr style="height:100%;vertical-align:top">
+        <td>
+            <table>
+                <tr>
+                    <td>
+                        <div class="MediaFill"> 
+                            <div class="TabControl">
+                                <div class="TabControlHead">
+                                    <ul style="margin-left: 2px;">
+                                        <li [class.Selected]="SelectedTabCode == 'ETV'" (click)="SelectedTabChange('ETV')" style="margin-left:2px;">
+                                            <div [attr.data-cy]="'Export Translation'" style="width:150px;text-align:center;font-size:11px;color:black" class="InnerChild">
+                                                <span>Export Translation</span>
+                                            </div>
+                                        </li>
+
+                                        <li [class.Selected]="SelectedTabCode == 'ITV'" (click)="SelectedTabChange('ITV')">
+                                            <div [attr.data-cy]="'Import Translation'" style="width:150px;text-align:center;font-size:11px;color:black" class="InnerChild">
+                                                <span>Import Translation</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="TabControlBody">
+                                    <!--Tab 1: Export Translation -->
+                                    <div class="MediaFillRelative" [hidden]="SelectedTabCode != 'ETV'">
+                                        <div class="MediaFillAbsolute">
+                                            <table>
+                                                <tr style="height:100%">
+                                                    <td>
+                                                        <div style="border:1px solid lightGray;height:100%">
+                                                            <table>
+                                                                <tr style="height:5px;"><td></td></tr>
+                                                                <tr style="height:100%">
+                                                                    <td style="margin-left:5px;margin-right:5px;">
+                                                                        <table>
+                                                                            <tr style="height:100%">
+                                                                                <td style="width:5px;"></td>
+                                                                                <td>
+                                                                                    ETV
+                                                                                </td>
+                                                                                <td style="width:5px;"></td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr style="height:5px;"><td></td></tr>
+                                                            </table>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!--Tab 2: Import Translation -->
+                                    <div class="MediaFillRelative" [hidden]="SelectedTabCode != 'ITV'">
+                                        <div class="MediaFillAbsolute">
+                                            <table>
+                                                <tr style="height:100%">
+                                                    <td>
+                                                        <div style="border:1px solid lightGray;height:100%">
+                                                            <table>
+                                                                <tr style="height:5px;"><td></td></tr>
+                                                                <tr style="height:100%">
+                                                                    <td style="margin-left:5px;margin-right:5px;">
+                                                                        <table>
+                                                                            <tr style="height:100%">
+                                                                                <td style="width:5px;"></td>
+                                                                                <td>
+                                                                                    ITV
+                                                                                </td>
+                                                                                <td style="width:5px;"></td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr style="height:5px;"><td></td></tr>
+                                                            </table>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr *ngIf="FullComponentsVisibility" style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                    <td style="width: 57px;">
+                        <div>
+                            <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                        </div>
+                    </td>
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SaveButtonClicked()">OK</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
