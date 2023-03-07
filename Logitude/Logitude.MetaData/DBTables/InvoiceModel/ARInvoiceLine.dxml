@@ -263,5 +263,5 @@
   <Index
     Columns="AutomaticLastUpdateDate" />
   <Index
-	Columns="Tenant" />
+    Columns="Tenant" />
 </Table>
