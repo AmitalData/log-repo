@@ -399,26 +399,10 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
-                Code = "AEV", 
-                Name = "Automation Event Creation", 
-                SearchFields = "AEV,Automation Event Creation", 
-                Description = "Automation Event Creation", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
                 Code = "OPS", 
                 Name = "Operational Status", 
                 SearchFields = "OPS,Operational Status", 
                 Description = "Operational Status", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
-                Code = "CAU", 
-                Name = "Container Automation", 
-                Description = "Container Automation", 
-                SearchFields = "CAU,Container Automation", 
 			});
 			 
             all.Add(new ToggleDetails()
@@ -491,14 +475,6 @@ namespace Logitude.Infrastructure.BL
                 Name = "Customs Charges Tariffs", 
                 SearchFields = "CCT,Customs Charges Tariffs", 
                 Description = "Customs Charges Tariffs", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
-                Code = "BCF", 
-                Name = "Containers DWH", 
-                SearchFields = "Containers DWH,Allow Tenants to Show Containers Fact on BI Report Screent,BCF", 
-                Description = "Allow Tenants to Show Containers Fact on BI Report Screen", 
 			});
 			 
             all.Add(new ToggleDetails()
@@ -884,12 +860,21 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "DBA,Dashboard Analytics", 
                 Description = "Dashboard Analytics", 
 			});
+            
             all.Add(new ToggleDetails()
             {    
                 Name = "Remove Exception Logic", 
                 Code = "REL", 
                 SearchFields = "REL,Remove Exception Logic", 
                 Description = "Remove Exception Logic", 
+			});
+            
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Remove Shared Logistics", 
+                Code = "RSL", 
+                Description = "Remove Shared Logistics Tab Feature", 
+                SearchFields = "RSLTF,Remove Shared Logistics Tab Feature", 
 			});
 			
             return all;

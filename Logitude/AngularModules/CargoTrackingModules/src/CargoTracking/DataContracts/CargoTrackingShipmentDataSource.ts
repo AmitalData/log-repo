@@ -1,5 +1,6 @@
 import {CollectionViewer, DataSource} from '@angular/cdk/collections';
 import {ChangeDetectorRef} from '@angular/core';
+import { Console } from 'console';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {CargoTrackingSearchService} from 'src/CargoTracking/Services/Others/CargoTrackingSearchService';
 import {ShipmentsListComponent} from '../Components/UserDashboard/ShipmentsPage/ShipmentsList/ShipmentsListComponent';
@@ -87,10 +88,33 @@ export class ShipmentDataSource extends DataSource<any | undefined> {
         }
     }
 
+    GetShipmentsCustomers(tenant: number){
+    
+        this.ShipmentSearchService.GetUserShipmentsCustomers(tenant)
+            .subscribe((Response: any) => {
+                this.parent.InvitedCustomers = Response
+                .map(d => (
+                    {
+                        IsSelected: false,
+                        CardId : d.Id,
+                        Name: d.Name,
+                    }
+                ));
+        
+                this.parent.FillInvitedCustomersDictionary(this.parent.InvitedCustomers);
+                this.ChangeDetector.detectChanges();
+            }, error => {
+                this.parent.ShipmentsLoadingError = error.statusText;
+                console.error(error);
+                this.ChangeDetector.detectChanges();
+
+            });
+    }
+
     private GetShipmentsPage(page: number) {
         this.ShipmentsFilters.PageIndex = page;
         this.ShipmentsFilters.PageSize = this.pageSize;
-        this.ShipmentsFilters.CustomersIds = this.ShipmentsFilters.Customers.map(a => a.CustomerId);
+        this.ShipmentsFilters.CustomersIds = this.ShipmentsFilters.CustomersIds;
 
         this.ShipmentSearchService.GetUserShipments(this.ShipmentsFilters)
             .subscribe((shipmentsResponse: any) => {
@@ -124,11 +148,6 @@ export class ShipmentDataSource extends DataSource<any | undefined> {
             this.ResetCachedShipmentsArray(shipmentsResponse.ShipmentsCount);
         }
 
-        this.cachedCustomers = shipmentsResponse.Customers.map(customer => ({
-            CustomerId: customer.Id,
-            CustomerName: customer.Name
-        } as Customer));
-
         this.SetNoResultToggle();
     }
 
@@ -154,6 +173,6 @@ export class ShipmentDataSource extends DataSource<any | undefined> {
 }
 
 export interface Customer {
-    CustomerId: string;
-    CustomerName: string;
+    Id: string;
+    Name: string;
 }

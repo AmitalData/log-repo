@@ -1314,6 +1314,20 @@ namespace WebFreight.Web.Security
             return isCustomerCare;
         }
 
+        public static bool IsUser(string email, int tenant)
+        {
+
+            IGlobalContext globalObjectContext = GlobalContext.GetContext();
+            GlobalContact contact = globalObjectContext.GlobalContacts.Where(m => m.Email == email && m.GlobalTenant.IsActive == true && m.InActive == false && (m.IsUser == true || m.InternetAccess == true) 
+            && m.GlobalTenant.Id == tenant).FirstOrDefault();
+            
+            if(contact != null)
+                return contact.IsUser;
+
+            return false;
+
+        }
+
         public static void AuthenticateDashboardReadFeatures(string objectTableName, string featureCode, int tenant)
         {
             bool exists = false;

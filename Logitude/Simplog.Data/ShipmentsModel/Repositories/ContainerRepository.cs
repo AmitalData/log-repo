@@ -48,7 +48,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                     .Include("POLLocationPort").Include("OnCarriageLocationPort").Include("Transshipment1LocationPort").Include("Transshipment2LocationPort").Include("Transshipment3LocationPort")
                     .Include("Transshipment4LocationPort").Include("EmptyReturnLocationPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentMainCarriageFromPort")
                     .Include("ShipmentMainCarriageToPort").Include("ShipmentOnCarriageToPort").Include("ShipmentTransshipment1FromPort").Include("ShipmentTransshipment2FromPort")
-                    .Include("ShipmentTransshipment3FromPort")
+                    .Include("ShipmentTransshipment3FromPort").Include("ShipmentDepartment")
                     where container.Id == id && container.Tenant == tenant
                     select container).FirstOrDefault();
         }

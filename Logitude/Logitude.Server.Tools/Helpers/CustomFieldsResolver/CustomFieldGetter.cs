@@ -237,6 +237,8 @@ namespace Logitude.BL.Helpers.CustomFieldsResolver
                     return new object[] { value, tenant };
                 case 3:
                     return (IsStringParameter(parametersInfo[2])) ? new object[] { value, tenant, null } : new object[] { value, tenant, false };
+                case 4:
+                    return new object[] { value, tenant, null,false };
                 default:
                     return new object[] { value, tenant };
             }

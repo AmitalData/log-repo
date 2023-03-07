@@ -1094,6 +1094,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 }
                         }
 
+                        if (ledger.AccountBanalnce == null)
+                            ledger.AccountBanalnce = 0;
+
+                        if (ledger.AccountBalanceInLocalCurrency == null)
+                            ledger.AccountBalanceInLocalCurrency = 0;
+
                         AccountingLedger currencyRecord = new AccountingLedger();
                         currencyRecord.Currency = ledger.Currency;
                         currencyRecord.CreateDate = ledger.CreateDate;

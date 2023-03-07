@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="25">
+  <Sql Version="28">
     <![CDATA[
 	  delete from DigitalTextCodes where Tenant = 0
 	  
@@ -2945,6 +2945,12 @@
 			{
 				"TextCode": "ARInvoice.G.MyReference",
 				"DefaultText": "My reference",
+				"FieldCode": "ARInvoice.MyReference",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ARInvoice.G.DawnloadInvoice",
+				"DefaultText": "Download invoice",
 				"FieldCode": "",
 				"DisplayText": ""
 			},
@@ -5793,6 +5799,12 @@
 			{
 				"TextCode": "ARInvoice.G.MyReference",
 				"DefaultText": "My reference",
+				"FieldCode": "ARInvoice.MyReference",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "ARInvoice.G.DawnloadInvoice",
+				"DefaultText": "Download invoice",
 				"FieldCode": "",
 				"DisplayText": ""
 			},
@@ -7584,6 +7596,12 @@
 				"DefaultText": "To Port Id",
 				"FieldCode": "ShipmentPickUpDelivery.ToPortId",
 				"DisplayText": ""
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.Id",
+				"DefaultText": "Trucker name",
+				"FieldCode": "ShipmentPickUpDelivery.Id",
+				"DisplayText": ""
 			}]');
 			
 			
@@ -7703,136 +7721,11 @@
 				"DefaultText": "To Port Id",
 				"FieldCode": "ShipmentPickUpDelivery.ToPortId",
 				"DisplayText": ""
-			}]');
-			
-			
-			declare @truckerObjectTableId as varchar(15)
-		    set @truckerObjectTableId = (select Id from ObjectTables where [Name] = 'Trucker' and Tenant = 0)
-			EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
-			INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, Labels) 
-			values (@NewEntityId, 0, @truckerObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @customerProfileId,
-			'[{
-				"TextCode": "Trucker.F.EnglishName",
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.Id",
 				"DefaultText": "Trucker name",
-				"FieldCode": "Trucker.EnglishName",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.TruckerNo",
-				"DefaultText": "Trucker no",
-				"FieldCode": "",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.Code",
-				"DefaultText": "Trucker code",
-				"FieldCode": "Trucker.Code",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.Notes",
-				"DefaultText": "Notes",
-				"FieldCode": "Trucker.Notes",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.Addresses",
-				"DefaultText": "Addresses",
-				"FieldCode": "Trucker.Addresses",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.CountryId",
-				"DefaultText": "Country id",
-				"FieldCode": "Trucker.CountryId",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.CountryCode",
-				"DefaultText": "Country code",
-				"FieldCode": "Trucker.CountryCode",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.CountryName",
-				"DefaultText": "Country name",
-				"FieldCode": "Trucker.CountryName",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.StateName",
-				"DefaultText": "State name",
-				"FieldCode": "Trucker.StateName",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.StateName",
-				"DefaultText": "State name",
-				"FieldCode": "Trucker.StateName",
-				"DisplayText": ""
-			}]');
-			
-			EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
-			INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, Labels) 
-			values (@NewEntityId, 0, @truckerObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @agentProfileId,
-			'[{
-				"TextCode": "Trucker.F.EnglishName",
-				"DefaultText": "Trucker name",
-				"FieldCode": "Trucker.EnglishName",
-				"DisplayText": ""
-			},
-      {
-				"TextCode": "Trucker.F.TruckerNo",
-				"DefaultText": "Trucker no",
-				"FieldCode": "",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.Code",
-				"DefaultText": "Trucker code",
-				"FieldCode": "Trucker.Code",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.Notes",
-				"DefaultText": "Notes",
-				"FieldCode": "Trucker.Notes",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.Addresses",
-				"DefaultText": "Addresses",
-				"FieldCode": "Trucker.Addresses",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.CountryId",
-				"DefaultText": "Country id",
-				"FieldCode": "Trucker.CountryId",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.CountryCode",
-				"DefaultText": "Country code",
-				"FieldCode": "Trucker.CountryCode",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.CountryName",
-				"DefaultText": "Country name",
-				"FieldCode": "Trucker.CountryName",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.StateName",
-				"DefaultText": "State name",
-				"FieldCode": "Trucker.StateName",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Trucker.F.StateName",
-				"DefaultText": "State name",
-				"FieldCode": "Trucker.StateName",
+				"FieldCode": "ShipmentPickUpDelivery.Id",
 				"DisplayText": ""
 			}]');
     ]]>       

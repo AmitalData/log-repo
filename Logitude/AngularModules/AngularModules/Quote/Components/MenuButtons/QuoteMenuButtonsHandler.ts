@@ -563,6 +563,10 @@ export class QuoteMenuButtonsHandler {
             if (res == "QuantitiesUpdated") {
                 //this.CheckButtonState(this.allMenuButtons);
             }
+
+            if (res == "ReloadNewQuote") {
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            }
         });
 
         this.EntityPM.PropertyChanged.subscribe(s => {

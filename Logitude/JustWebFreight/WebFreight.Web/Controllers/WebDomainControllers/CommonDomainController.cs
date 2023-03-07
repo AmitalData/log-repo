@@ -219,6 +219,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         Tenant = authToken.Tenant,
                         IsConfirmationByUser = filter.IsConfirmationByUser,
                         FileName = filter.FileName,
+                        ComputingPartnerCode = filter.ComputingPartnerCode,
                     };
 
                     if (string.IsNullOrEmpty(args.DocumentId))
@@ -3252,6 +3253,7 @@ public class PartnersUploadExcelParameter
     public string LoggedUserEmail { get; set; }
     public bool IsConfirmationByUser { get; set; }
     public string FileName { get; set; }
+    public string ComputingPartnerCode { get; set; }
 }
 
 public class ChargifyAWBStock

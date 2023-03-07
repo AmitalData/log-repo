@@ -11,23 +11,23 @@ namespace Logitude.CargoTracking.BL.CoreBL
 {
     public class CargoTrackingUsersShipmentService
     {
-        public CargoTrackingShipmentsResponse GetUserShipmentsResponse( CargoTrackingShipmentSearchInput shipmentSearchInput)
+        public CargoTrackingShipmentsResponse GetUserShipmentsResponse(CargoTrackingShipmentSearchInput shipmentSearchInput)
         {
             return new CargoTrackingShipmentsResponse
             {
                 Shipments = GetUserShipments(shipmentSearchInput),
-                ShipmentsCount = GetAllShipmentsCountForFirstPageOnly(shipmentSearchInput),
-                Customers = GetShipmentsCustomers(shipmentSearchInput)
-        };
+                ShipmentsCount = GetAllShipmentsCountForFirstPageOnly(shipmentSearchInput)
+            };
         }
 
-        public List<Customer> GetShipmentsCustomers(CargoTrackingShipmentSearchInput shipmentSearchInput)
+        public List<Customer> GetShipmentsCustomers(int tenant)
         {
+            CargoTrackingShipmentSearchInput shipmentSearchInput = new CargoTrackingShipmentSearchInput() { Tenant = tenant };
             CargoTrackingShipmentSearchListQueryService shipmentSearchQuery = GetCargoTrackingShipmentSearchQuery(shipmentSearchInput);
-            return shipmentSearchQuery.GetShipmentsCustomers(shipmentSearchInput);
+            return shipmentSearchQuery.GetShipmentsCustomers(tenant);
         }
 
-        public List<CargoTrackingShipmentList> GetUserShipments( CargoTrackingShipmentSearchInput shipmentSearchInput)
+        public List<CargoTrackingShipmentList> GetUserShipments(CargoTrackingShipmentSearchInput shipmentSearchInput)
         {
             CargoTrackingShipmentSearchListQueryService shipmentSearchQuery = GetCargoTrackingShipmentSearchQuery(shipmentSearchInput);
             var shipments = shipmentSearchQuery.GetFilteredShipments(shipmentSearchInput);
@@ -35,7 +35,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
             cargoTrackingShipmentQueryService.SetFutureMilstone(shipments);
             return shipments;
         }
-        public int GetAllShipmentsCountForFirstPageOnly( CargoTrackingShipmentSearchInput shipmentSearchInput)
+        public int GetAllShipmentsCountForFirstPageOnly(CargoTrackingShipmentSearchInput shipmentSearchInput)
         {
             var isNotFirstPage = shipmentSearchInput.PageIndex != 0;
             if (isNotFirstPage)

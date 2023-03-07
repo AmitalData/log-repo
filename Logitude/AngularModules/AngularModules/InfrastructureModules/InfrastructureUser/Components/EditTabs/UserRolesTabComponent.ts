@@ -118,7 +118,7 @@ export class UserRolesTabComponent extends BaseComponent implements OnDestroy {
             this.IsExportButtonVisible = true;
         }
 
-        if (FeatureLocator.HasFeaturePermession("User", "User.Feature.CustomRoles")) {
+        if (FeatureLocator.HasFeaturePermession("User", "User.Feature.CustomRoles") && SessionLocator.Tenant != 0) {
             this.IsNewRoleButtonVisible = true;
         }
     }
@@ -255,7 +255,7 @@ export class UserRolesTabComponent extends BaseComponent implements OnDestroy {
             case "CUCA":
                 {
                     if (SessionLocator.Tenant == 0) {
-                        this.ObsList.push(new UserRolesItemClass(item, this.EntityPM,this));
+                        this.ObsList.push(new UserRolesItemClass(item, this.EntityPM, this));
                     }
 
                     break;
@@ -264,7 +264,19 @@ export class UserRolesTabComponent extends BaseComponent implements OnDestroy {
             case "HRAD":
                 {
                     if (SessionLocator.Tenant == 0 || SessionLocator.Tenant == 1489 || FeatureLocator.IsPackage_DVMT()) {
-                        this.ObsList.push(new UserRolesItemClass(item, this.EntityPM, this));                       
+                        this.ObsList.push(new UserRolesItemClass(item, this.EntityPM, this));
+                    }
+
+                    break;
+                }
+
+            case "BILL":
+                {
+                    if (ObjectsLocator.GlobalSetting &&
+                        (  ObjectsLocator.GlobalSetting.DeploymentStage == "Dev"
+                        || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2"
+                        || ObjectsLocator.GlobalSetting.DeploymentStage == "Simplog")) {
+                        this.ObsList.push(new UserRolesItemClass(item, this.EntityPM, this));
                     }
 
                     break;
@@ -274,12 +286,12 @@ export class UserRolesTabComponent extends BaseComponent implements OnDestroy {
                 {
                     if (item.IsCustomRole) {
                         if (item.Tenant == SessionLocator.Tenant) {
-                            this.ObsList.push(new UserRolesItemClass(item, this.EntityPM,this));
+                            this.ObsList.push(new UserRolesItemClass(item, this.EntityPM, this));
                         }
                     }
 
                     else {
-                        this.ObsList.push(new UserRolesItemClass(item, this.EntityPM,this));
+                        this.ObsList.push(new UserRolesItemClass(item, this.EntityPM, this));
                     }
 
                     break;

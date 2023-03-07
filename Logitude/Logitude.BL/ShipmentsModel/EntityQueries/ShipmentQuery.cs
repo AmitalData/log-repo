@@ -4089,7 +4089,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 #endregion
             }
 
-
+            ShipmentDeliveryQuery shipmentDeliveryQuery = new ShipmentDeliveryQuery(tenant);
+            shipmentPM.ShipmentDeliveries = shipmentDeliveryQuery.GetShipmentDeliveryPMsByTenantAndShipment(shipment.Id, shipment.Tenant, true, false).ToList();
+            MapFinalDeliveryFields(shipmentPM);
+            
 
             shipmentPM.IncludesCustoms = shipment.IncludesCustoms;
             shipmentPM.CustomsClearanceDate = shipment.CustomsClearanceDate;
@@ -4279,6 +4282,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             #endregion
 
             return null;
+        }
+
+        private static void MapFinalDeliveryFields(ShipmentPM shipmentPM)
+        {
+            if (shipmentPM.ShipmentDeliveries.Count == 0) return;
+            const string deliveryTypeCode = "DELV";
+            ShipmentDeliveryPM shipmentFinalDelivery = shipmentPM.ShipmentDeliveries.Where(d => d.PickUpDeliveryTypeCode == deliveryTypeCode).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+            if (shipmentFinalDelivery == null) return;
+            shipmentPM.FinalDeliveryATA = shipmentFinalDelivery.ATA;
+            shipmentPM.FinalDeliveryATD = shipmentFinalDelivery.ATD;
+            shipmentPM.FinalDeliveryETA = shipmentFinalDelivery.ETA;
+            shipmentPM.FinalDeliveryETD = shipmentFinalDelivery.ETD;
         }
 
         private static void MappingOldFieldsBeforeChanging(ShipmentPM shipmentPM, ShipmentPM shipmentPMBeforeNewMapping)
@@ -13520,7 +13535,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                InlandDomesticFromStateId = f.InlandDomesticFromStateId,
                                NumberOfTransshipments = f.NumberOfTransshipments,
                                Transshipments = f.Transshipments,
-                               IsDocumentsNeedApprove = f.IsDocumentsNeedApprove
+                               IsDocumentsNeedApprove = f.IsDocumentsNeedApprove,
+                               DepartmentName = f.DepartmentName,
+                              
 
                            };
             return myResult;
@@ -14553,6 +14570,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     InlandDomesticFromStateId = f.InlandDomesticFromStateId,
                     NumberOfTransshipments = f.NumberOfTransshipments,
                     Transshipments = f.Transshipments,
+                    DepartmentName = f.DepartmentName,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -15796,7 +15814,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          AccountedPayablesInProfitCurrency = shipment.AccountedPayablesInProfitCurrency,
                                                          OpenPayablesInLocalCurrency = shipment.OpenPayablesInLocalCurrency,
                                                          AccountedPayablesInLocalCurrency = shipment.AccountedPayablesInLocalCurrency,
-                                                     });
+                                                        
+
+                                                     }) ;
 
                 myResult = myResult.OrderByDescending(d => d.CreateDateTime);
                 myResult = System.Data.Entity.QueryableExtensions.Skip(myResult, () => 0);

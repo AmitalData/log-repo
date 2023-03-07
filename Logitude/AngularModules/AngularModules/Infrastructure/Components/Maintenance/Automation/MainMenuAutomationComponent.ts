@@ -24,7 +24,6 @@ export class MainMenuAutomationComponent implements OnInit {
     }
 
     ngOnInit() {
-        let containerToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CAU")[0];
 
         if (FeatureLocator.HasFeaturePermession("Shipment", "AUTOMATION")) {
             this.AutomationEntityLists.push(new AutomationItemClass("Masters", "Master", "Master", "Masters & Directs"));
@@ -36,7 +35,7 @@ export class MainMenuAutomationComponent implements OnInit {
         if (FeatureLocator.HasFeaturePermession("ARInvoice", "AUTOMATION")) this.AutomationEntityLists.push(new AutomationItemClass("AR Invoices", "ARInvoice", "AR Invoice", "Receivables Invoices"));
         if (FeatureLocator.HasFeaturePermession("APInvoice", "AUTOMATION")) this.AutomationEntityLists.push(new AutomationItemClass("AP Invoices", "APInvoice", "AP Invoice", "Payables Invoices"));
         if (FeatureLocator.HasFeaturePermession("Quote", "AUTOMATION")) this.AutomationEntityLists.push(new AutomationItemClass("Quotes", "Quote", "Quote"));
-        if (FeatureLocator.HasFeaturePermession("Container", "AUTOMATION") && containerToggle) this.AutomationEntityLists.push(new AutomationItemClass("Containers", "Container", "Container"));
+        if (FeatureLocator.HasFeaturePermession("Container", "AUTOMATION")) this.AutomationEntityLists.push(new AutomationItemClass("Containers", "Container", "Container"));
 
         if (FeatureLocator.HasFeaturePermession("WorkFlow", "AUTOMATION")) this.AutomationEntityLists.push(new AutomationItemClass("Workflows", "WorkFlow", "Workflow"));
         if (FeatureLocator.HasFeaturePermession("WarehouseEntry", "AUTOMATION")) this.AutomationEntityLists.push(new AutomationItemClass("Cross Dock Entry", "WarehouseEntry", "Cross Dock Entry"));

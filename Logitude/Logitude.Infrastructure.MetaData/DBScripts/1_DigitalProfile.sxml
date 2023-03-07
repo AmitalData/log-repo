@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="18">
+  <Sql Version="19">
       <![CDATA[
 	  delete from DigitalFieldSecurities where id != ''	  
   	  delete from DigitalTextCodes where id != ''
@@ -6573,6 +6573,16 @@
 			"HasPermission": true, 
 			"IsList": true, 
 			"IsPm": true
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.Id",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "",
+			"ModifiedOn": "",
+			"HasPermission": true, 
+			"IsList": true, 
+			"IsPm": true
 		}]');
 
 	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
@@ -6768,196 +6778,15 @@
 			"HasPermission": true, 
 			"IsList": true, 
 			"IsPm": true
-		}]');
-
-	  declare @truckerObjectTableId as varchar(15)
-	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
-	  set @truckerObjectTableId = (select Id from ObjectTables where [Name] = 'Trucker' and Tenant = 0)
-	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
-	  values (@newDigitalFieldEntityId, 0, @truckerObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @customerProfileId, 
-	  '[{
-			"FieldCode": "Trucker.EnglishName",
-			"CreatedBy": "system", 
-			"ModifiedBy": "system",
-			"CreatedOn": "", 
-			"ModifiedOn": "",
-			"HasPermission": true, 
-			"IsList": true, 
-			"IsPm": true
 		},
 		{
-			"FieldCode": "Trucker.Code",
-			"CreatedBy": "system",
-			"ModifiedBy": "system",
-			"CreatedOn": "",
-			"ModifiedOn": "",
-			"HasPermission": true,
-			"IsList": true, 
-			"IsPm": true
-		},
-		{
-			"FieldCode": "Trucker.Notes",
-			"CreatedBy": "system",
-			"ModifiedBy": "system",
-			"CreatedOn": "",
-			"ModifiedOn": "",
-			"HasPermission": true,
-			"IsList": true,
-			"IsPm": true
-		},
-		{
-			"FieldCode": "Trucker.Addresses",
-			"CreatedBy": "system", 
-			"ModifiedBy": "system",
-			"CreatedOn": "",
-			"ModifiedOn": "",
-			"HasPermission": true, 
-			"IsList": true, 
-			"IsPm": true
-		},
-		{
-			"FieldCode": "Trucker.CountryId",
-			"CreatedBy": "system", 
-			"ModifiedBy": "system",
-			"CreatedOn": "", 
-			"ModifiedOn": "",
-			"HasPermission": true,
-			"IsList": true, 
-			"IsPm": true
-		},
-		{
-			"FieldCode": "Trucker.CountryCode",
-			"CreatedBy": "system",
-			"ModifiedBy": "system",
-			"CreatedOn": "",
-			"ModifiedOn": "",
-			"HasPermission": true,
-			"IsList": true, 
-			"IsPm": true
-		},
-		{
-			"FieldCode": "Trucker.CountryName",
+			"FieldCode": "ShipmentPickUpDelivery.Id",
 			"CreatedBy": "system",
 			"ModifiedBy": "system",
 			"CreatedOn": "",
 			"ModifiedOn": "",
 			"HasPermission": true, 
 			"IsList": true, 
-			"IsPm": true
-		},
-		{
-			"FieldCode": "Trucker.StateName",
-			"CreatedBy": "system",
-			"ModifiedBy": "system",
-			"CreatedOn": "",
-			"ModifiedOn": "",
-			"HasPermission": true, 
-			"IsList": true, 
-			"IsPm": true
-		},
-		{
-			"FieldCode": "Trucker.StateName",
-			"CreatedBy": "system",
-			"ModifiedBy": "system",
-			"CreatedOn": "",
-			"ModifiedOn": "",
-			"HasPermission": true, 
-			"IsList": true, 
-			"IsPm": true
-		}]');
-
-	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
-	  set @truckerObjectTableId = (select Id from ObjectTables where [Name] = 'Trucker' and Tenant = 0)
-	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
-	  values (@newDigitalFieldEntityId, 0, @truckerObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @agentProfileId, 
-	  '[{
-			"FieldCode": "Trucker.EnglishName",
-			"CreatedBy": "system", 
-			"ModifiedBy": "system",
-			"CreatedOn": "",
-			"ModifiedOn": "",
-			"HasPermission": true,
-			"IsList": true,
-			"IsPm": true
-		},
-		{
-			"FieldCode": "Trucker.Code",
-			"CreatedBy": "system",
-			"ModifiedBy": "system",
-			"CreatedOn": "",
-			"ModifiedOn": "",
-			"HasPermission": true, 
-			"IsList": true,
-			"IsPm": true
-		},
-		{
-			"FieldCode": "Trucker.Notes",
-			"CreatedBy": "system", 
-			"ModifiedBy": "system",
-			"CreatedOn": "",
-			"ModifiedOn": "",
-			"HasPermission": true,
-			"IsList": true,
-			"IsPm": true
-		},
-		{
-			"FieldCode": "Trucker.Addresses",
-			"CreatedBy": "system",
-			"ModifiedBy": "system",
-			"CreatedOn": "",
-			"ModifiedOn": "",
-			"HasPermission": true, 
-			"IsList": true, 
-			"IsPm": true
-		},
-		{
-			"FieldCode": "Trucker.CountryId",
-			"CreatedBy": "system",
-			"ModifiedBy": "system",
-			"CreatedOn": "",
-			"ModifiedOn": "",
-			"HasPermission": true, 
-			"IsList": true,
-			"IsPm": true
-		},
-		{
-			"FieldCode": "Trucker.CountryCode",
-			"CreatedBy": "system",
-			"ModifiedBy": "system",
-			"CreatedOn": "", 
-			"ModifiedOn": "",
-			"HasPermission": true, 
-			"IsList": true, 
-			"IsPm": true
-		},
-		{
-			"FieldCode": "Trucker.CountryName",
-			"CreatedBy": "system",
-			"ModifiedBy": "system",
-			"CreatedOn": "",
-			"ModifiedOn": "",
-			"HasPermission": true,
-			"IsList": true,
-			"IsPm": true
-		},
-		{
-			"FieldCode": "Trucker.StateName",
-			"CreatedBy": "system", 
-			"ModifiedBy": "system",
-			"CreatedOn": "",
-			"ModifiedOn": "",
-			"HasPermission": true, 
-			"IsList": true, 
-			"IsPm": true
-		},
-		{
-			"FieldCode": "Trucker.StateName",
-			"CreatedBy": "system",
-			"ModifiedBy": "system",
-			"ModifiedOn": "",
-			"CreatedOn": "",
-			"HasPermission": true,
-			"IsList": true,
 			"IsPm": true
 		}]');
       ]]>

@@ -1,5 +1,5 @@
 
-import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef}  from '@angular/core';
+import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -18,6 +18,7 @@ import {FullAccountingSettingListService} from '../../Services/StandardLists/Ful
 import {FullAccountingSettingList} from '../../EntityLists/FullAccountingSettingList';
 import {GLAccountPMService} from '../../Services/StandardPMs/GLAccountPMService';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
+import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
 
 @Component({
 
@@ -72,16 +73,9 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
             }
         });
 
-
         this.GLAccountsFilterItems = new ApiQueryFilters();
-        this.GLAccountsFilterItems.addAdditionalFilter("AccountTypeCode", "5,4", null, null, "Exclude", false, false, false, "string", false, true);
-
-        this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, true);
-
-        if (this.AccountingDate == null)
-            this.AccountingDate = new Date();
-
-        //this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, true);
+        this.GLAccountsFilterItems.addAdditionalFilter("AccountTypeCode", "5,4", null, null,
+            "Exclude", false, false, false, "string", false, true);
 
     }
 
@@ -212,24 +206,30 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
             const selectedTransaction = this._SelectedLines.Collection[i];
             if (this.checkClosedMonth(new Date(selectedTransaction.AccountingDate))) {
 
-                errorMessage += 'This line is closed ' +
+                let lineErrorMessage = TextCodeTranslator.Translate('Journal.RE.ReconcilePeriodClosed');
+
+                let lineDetails =
                     new Date(selectedTransaction.AccountingDate).toDateString() + ', ' +
                     new Date(selectedTransaction.DocumentDate).toDateString() + ', ' +
                     new Date(selectedTransaction.DueDate).toDateString() + ', ' +
                     selectedTransaction.Source + ', ' +
                     selectedTransaction.OriginalAmount + ', ' +
                     selectedTransaction.OpenAmount + ', ';
+
+
                 if (selectedTransaction.Reference1 != null) {
-                    errorMessage += selectedTransaction.Reference1;
+                    lineDetails += selectedTransaction.Reference1;
                 }
                 if (selectedTransaction.Reference2 != null) {
-                    errorMessage += selectedTransaction.Reference2;
+                    lineDetails += selectedTransaction.Reference2;
                 }
                 if (selectedTransaction.Reference3 != null) {
-                    errorMessage += selectedTransaction.Reference3;
+                    lineDetails += selectedTransaction.Reference3;
                 }
 
-                errorMessage += '\n';
+                lineErrorMessage = lineErrorMessage.replace('(X)' , lineDetails);
+
+                errorMessage += lineErrorMessage + '\n';
             }
 
         }
@@ -239,6 +239,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
             messageWindow.Width = 600;
             messageWindow.Height = 300;
             messageWindow.IsMessageMultiLine = true;
+            messageWindow.RTL = (ObjectsLocator.GlobalSetting.LayoutDirection === 'rtl');
             messageWindow.Show(errorMessage);
         }
     }
@@ -348,38 +349,25 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         this.TotalCredit = winArgs.TotalCredit;
         this.TotalDebit = winArgs.TotalDebit;
     }
-    FillErrors() {
+    FillErrors(isSplitJournal: boolean) {
         this.ValidationErrorsList = [];
         if (AppTool.IsNullOrEmpty(this.glAccount)) {
-            //this.Year = new Date().getFullYear();
-            this.ValidationErrorsList.push("GLAccount is Required");
+            this.ValidationErrorsList.push('GLAccount is Required');
         }
-        else if (AppTool.IsNullOrEmpty( this.AccountingDate )) {
-
-            this.ValidationErrorsList.push("Accounting Date is Required");
-
+        else if (AppTool.IsNullOrEmpty(this.AccountingDate) && !isSplitJournal) {
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate('Journal.RE.AccountingDateRequired'));
         } else {
             this.ValidationErrorsList = [];
-
         }
     }
-    OkButtonClicked(isSplitJournal: boolean) {
-        this.FillErrors();
-        if (this.ValidationErrorsList.length > 0) {
-            return;
-        }
-        this.CurrentSession.StartBusyIndicatorCreating();
 
-
-        var myReconciliationLines: ReconciliationLinePM[] = [];
-
-
-        for (var i = 0; i < this._SelectedLines.Length; i++) {
-            var selectedTransaction = this._SelectedLines.Collection[i];
-            var newLine: any = {};
-            newLine.ChangeSetOp = "1";
-            newLine.ReconciliationId = "new";
-            newLine.Tenant = SessionLocator.Tenant;;
+    BuildReconciliationLines(myReconciliationLines: ReconciliationLinePM[]): void {
+        for (let i = 0; i < this._SelectedLines.Length; i++) {
+            const selectedTransaction = this._SelectedLines.Collection[i];
+            const newLine: any = {};
+            newLine.ChangeSetOp = '1';
+            newLine.ReconciliationId = 'new';
+            newLine.Tenant = SessionLocator.Tenant;
             newLine.Line = i;
             newLine.CurrencyId = selectedTransaction.OpenAmountCurrencyId;
             newLine.TransactionId = selectedTransaction.Id;
@@ -389,56 +377,94 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
             newLine.Reference2 = selectedTransaction.Reference2;
             newLine.Reference3 = selectedTransaction.Reference3;
             newLine.Notes = selectedTransaction.Notes;
-            //newLine.GroupNumber = selectedTransaction.GroupHash;
-
+            newLine.JournalNumber = selectedTransaction.JournalNumber;
             myReconciliationLines.push(newLine);
         }
+    }
 
-        //var AdjustAccountId: string = "1-19";
-        if(isSplitJournal) {
-            this._ReconciliationExtendedPMService.CreateSplitJournalReconcile(
-                myReconciliationLines,
-                this._GLAccountPMId, this.GLAccount.Id, this.AccountingDate.toUTCString(), this.DueDate ? this.DueDate.toUTCString() : null, this.RefDate? this.RefDate.toUTCString() : null,
-                this.reference1, this.reference2, this.reference3, this.Notes)
-                .subscribe(
-                (res:ServiceResponse) => {
+    OkButtonClicked(isSplitJournal: boolean) {
+        this.FillErrors(isSplitJournal);
+
+        if (this.ValidationErrorsList.length > 0) {
+            return;
+        }
+
+        const reconciliationLines: ReconciliationLinePM[] = [];
+        this.BuildReconciliationLines(reconciliationLines);
+
+        if (isSplitJournal && AppTool.IsNullOrEmpty(this.AccountingDate)) {
+            const confirmMsg = TextCodeTranslator.Translate('Journal.RE.AccountingDateConfrimation');
+            const confirmWindow = new ConfirmWindow();
+            confirmWindow.Width = 400;
+            confirmWindow.Left = '25%';
+            confirmWindow.YesButtonText = TextCodeTranslator.Translate('Customs.General.B.OK');
+            confirmWindow.NoButtonText = TextCodeTranslator.Translate('Customs.General.B.Cancel');
+            confirmWindow.Show(confirmMsg);
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.ReconcileSplit(reconciliationLines);
+                    confirmWindow.Close();
+                }
+            });
+
+        } else {
+            this.Reconcile(reconciliationLines);
+        }
+    }
+
+    ReconcileSplit(myReconciliationLines: ReconciliationLinePM[]) {
+        this.CurrentSession.StartBusyIndicatorCreating();
+
+        this._ReconciliationExtendedPMService.CreateSplitJournalReconcile(
+            myReconciliationLines,
+            this._GLAccountPMId, this.GLAccount.Id,
+            this.AccountingDate ? this.AccountingDate.toUTCString() : null,
+            this.DueDate ? this.DueDate.toUTCString() : null,
+            this.RefDate ? this.RefDate.toUTCString() : null,
+            this.reference1, this.reference2, this.reference3, this.Notes)
+            .subscribe(
+                (res: ServiceResponse) => {
 
                     this.CurrentSession.StopBusyIndicator();
                     if (res.HasError) {
                         this.ValidationErrorsList = res.ErrorsArray;
 
                     } else {
-                        var journalsArray: JournalPM[];
+                        let journalsArray: JournalPM[];
                         journalsArray = res.Result;
                         this._NewJournals = journalsArray;
                     }
 
                 });
+    }
 
-        } else {
-            this._ReconciliationExtendedPMService.CreateJournalReconcile(
+    Reconcile(myReconciliationLines: ReconciliationLinePM[]) {
+        this.CurrentSession.StartBusyIndicatorCreating();
+
+        this._ReconciliationExtendedPMService.CreateJournalReconcile(
             myReconciliationLines,
-            this._GLAccountPMId, this.GLAccount.Id, this.AccountingDate.toUTCString(), this.DueDate ? this.DueDate.toUTCString() : null, this.RefDate? this.RefDate.toUTCString() : null,
+            this._GLAccountPMId, this.GLAccount.Id, this.AccountingDate.toUTCString(),
+            this.DueDate ? this.DueDate.toUTCString() : null, this.RefDate ? this.RefDate.toUTCString() : null,
             this.reference1, this.reference2, this.reference3, this.Notes)
             .subscribe(
-            (res:ServiceResponse) => {
+                (res: ServiceResponse) => {
 
-                this.CurrentSession.StopBusyIndicator();
-                if (res.HasError) {
-                    this.ValidationErrorsList = res.ErrorsArray;
+                    this.CurrentSession.StopBusyIndicator();
 
-                } else {
-                    var journalPM: JournalPM;
-                    journalPM = res.Result;
-                    console.log(journalPM);
-                    this._NewJournalPM = journalPM;
-                }
+                    this.checkSelectedLinesClosedMonth();
 
-            });
-        }
+                    if (res.HasError) {
+                        this.ValidationErrorsList = res.ErrorsArray;
 
-        this.checkSelectedLinesClosedMonth();
+                    } else {
+                        let journalPM: JournalPM;
+                        journalPM = res.Result;
+                        this._NewJournalPM = journalPM;
+                    }
+
+                });
     }
+
     _NewJournalPM: JournalPM;
     _NewJournals: JournalPM[];
     OpenJournal(id: string) {

@@ -249,6 +249,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string DepartmentId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string DepartmentName { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string Notes { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string NotesSharedWithCustomer { get; set; }

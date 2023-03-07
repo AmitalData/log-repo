@@ -718,7 +718,7 @@ namespace WebFreight.Web.ReportsWebServices
                 dataProvider.TruckerNumber = childEntity.CarrierNumber;
                 dataProvider.SpecialInstructions = childEntity.Notes != null ? childEntity.Notes : "";
                 dataProvider.PickupDeliveryNumber = childEntity.PickUpDeliveryNumber;
-
+                             
                 this.MapChildEntityFrom();
                 this.MapChildEntityTo();
                 this.MapChildEntityDates();
@@ -729,7 +729,16 @@ namespace WebFreight.Web.ReportsWebServices
                 this.MapChildEntityDocumentType();
                 this.MapChildEntityPackages();
                 this.MapChildEntityTruckerAddress();
+                this.MapFromPartnerAddress();
             }
+        }
+        private void MapFromPartnerAddress()
+        {  
+            Address address = addressRepository.GetMainAddressByCardId(childEntity.FromPartnerCardId, tenant);
+            if (address != null)
+            {
+                dataProvider.FromPartnerAddressName = address.Name != null ? address.Name : "";
+            }  
         }
         private void MapChildEntityFrom()
         {

@@ -77,9 +77,9 @@ export class ShipmentDomainService extends BaseService  {
         });
     }
 
-    CheckHousesOpenAmounts(masterId) {
+    CheckHousesOpenAmounts(masterId: string) {
 
-        var url = this._apiUrl + '/CheckHousesOpenAmounts?masterId=' + masterId;
+        var url = this._apiUrl + '/GetCheckHousesOpenAmounts?masterId=' + masterId;
 
         return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
