@@ -1900,7 +1900,6 @@ namespace WebFreight.Web.ReportsWebServices
             if (customer != null)
             {
                 customFieldResolver.SetDataProviderCustomFieldsValues("Customer", tenant, customer, invoicesRecored);
-                //invoicesRecored.CustomerField1 = customer.Field1;
             }
         }
 
