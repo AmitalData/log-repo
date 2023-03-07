@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.Def.EntityQueryServicesExt;
+﻿using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.BL.CommonDataModel.APIDataContract;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityPMs;
@@ -205,6 +206,36 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
             return entity;
         }
+
+
+
+        public JournalPM GetARInvoiceExistingJournalPM(ARInvoice entity)
+        {
+            JournalPM journalPM = null;
+            if (String.IsNullOrWhiteSpace(entity.ExistingExternalJournal) && entity.DoNotCreateJournal.HasValue && entity.DoNotCreateJournal.Value == true)
+            {
+                throw new ApplicationException("ExistingExternalJournal is required when DoNotCreateJournal==true");
+            }
+
+            if (!String.IsNullOrWhiteSpace(entity.ExistingExternalJournal) && !(entity.DoNotCreateJournal.HasValue && entity.DoNotCreateJournal.Value == true))
+            {
+                throw new ApplicationException("DoNotCreateJournal required to be true when ExistingExternalJournal is present");
+            }
+
+            if (!String.IsNullOrWhiteSpace(entity.ExistingExternalJournal) && entity.DoNotCreateJournal.HasValue && entity.DoNotCreateJournal.Value == true)
+            {
+                IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
+                journalPM = GetSingleJournalByExternalNoAndExternalSystem(entity.ExistingExternalJournal, "AMITAL", entity.Tenant);
+
+                if (journalPM == null)
+                {
+                    throw new ApplicationException("ExistingExternalJournal " + entity.ExistingExternalJournal + " from AMITAL is not found");
+                }
+            }
+            return journalPM;
+        }
+
+
 
         public ARInvoice ARInvoiceDataMappingAndValidatin(ARInvoicePM MyEntity, int Tenant, string ComputingPartnerName = "")
         {
@@ -474,7 +505,13 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             }
         }
 
+        private JournalPM GetSingleJournalByExternalNoAndExternalSystem(string externalNo, string externalSystem, int tenant)
+        {
+            IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
+            return journalQuery.GetSingleJournalByExternalNoAndExternalSystem(externalNo, externalSystem, tenant);
 
+
+        }
 
 
     }

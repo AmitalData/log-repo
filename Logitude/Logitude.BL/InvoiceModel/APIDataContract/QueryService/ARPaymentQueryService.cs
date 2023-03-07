@@ -23,7 +23,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
         public ARPayment SetARPaymentSystemUser(ARPayment entity)
         {
-            String systemUserId = "";
+            string systemUserId;
             UserPM myCreatedByUserPM = null;
             if (entity.CreatedByUser != null)
             {
@@ -57,6 +57,34 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
             return entity;
         }
+
+
+        public JournalPM GetARPaymentExistingJournalPM(ARPayment entity)
+        {
+            JournalPM journalPM = null;
+            if (String.IsNullOrWhiteSpace(entity.ExistingExternalJournal) && entity.DoNotCreateJournal.HasValue && entity.DoNotCreateJournal.Value == true)
+            {
+                throw new ApplicationException("ExistingExternalJournal is required when DoNotCreateJournal==true");
+            }
+
+            if (!String.IsNullOrWhiteSpace(entity.ExistingExternalJournal) && !(entity.DoNotCreateJournal.HasValue && entity.DoNotCreateJournal.Value == true))
+            {
+                throw new ApplicationException("DoNotCreateJournal required to be true when ExistingExternalJournal is present");
+            }
+
+            if (!String.IsNullOrWhiteSpace(entity.ExistingExternalJournal) && entity.DoNotCreateJournal.HasValue && entity.DoNotCreateJournal.Value == true)
+            {
+                IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
+                journalPM = GetSingleJournalByExternalNoAndExternalSystem(entity.ExistingExternalJournal, "AMITAL", entity.Tenant);
+
+                if (journalPM == null)
+                {
+                    throw new ApplicationException("ExistingExternalJournal " + entity.ExistingExternalJournal + " from AMITAL is not found");
+                }
+            }
+            return journalPM;
+        }
+
 
         public ARPaymentPM SetARPaymentPMFields(ARPaymentPM entity)
         {
@@ -165,6 +193,15 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
                 throw ex;
             }
+        }
+
+
+        private JournalPM GetSingleJournalByExternalNoAndExternalSystem(string externalNo, string externalSystem, int tenant)
+        {
+            IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
+            return journalQuery.GetSingleJournalByExternalNoAndExternalSystem(externalNo, externalSystem, tenant);
+
+
         }
         private string GetBankAccountIdByNumber(string number, int tenant)
         {
