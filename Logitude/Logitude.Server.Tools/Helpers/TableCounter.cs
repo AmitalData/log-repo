@@ -95,11 +95,11 @@ namespace Logitude.Server.Tools.Helpers
         {
             if (string.IsNullOrEmpty(additionalParameters["[BranchName]"]))
             {
-                throw new ApplicationException("Branch Field is required");
+                throw new Exception("Branch Field is required");
             }
             if (string.IsNullOrEmpty(additionalParameters["[B]"]))
             {
-                throw new ApplicationException("The Counter Code of the " + additionalParameters["[BranchName]"] + " Branch is required.");
+                throw new Exception("The Counter Code of the " + additionalParameters["[BranchName]"] + " Branch is required.");
             }
         }
         private static string ExecuteNextTableNumberValueProcedure(int tenant, Counter counter, string prefix, int startNumber, string strConnString, string branchCounterCode)
