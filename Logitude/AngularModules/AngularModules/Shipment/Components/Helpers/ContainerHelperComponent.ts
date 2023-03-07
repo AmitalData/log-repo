@@ -10,6 +10,7 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { GeneralContainerTrackingArgs } from 'Shipment/DataContract/GeneralContainerTrackingArgs';
 import { MessageWindow } from 'Controls/Windows/MessageWindow';
+import { ServiceLocator } from 'Infrastructure/Locators/ServiceLocator';
 
 @Component({
 
@@ -76,6 +77,7 @@ export class ContainerHelperComponent implements OnDestroy {
     }
 
     ContainersRequestStatusClicked() {
+        ServiceLocator.SendTotangoUserActivity("Container", "Container Request Status Clicked");
         this.CurrentSession.StartBusyIndicator("Sending");
         var service = new ShipmentContainersWebService();
         service.GetContainerStatusResult(this.EntityPM.ShipmentId, this.EntityPM.Id, true).subscribe((myResponse: ServiceResponse) => {
@@ -89,12 +91,14 @@ export class ContainerHelperComponent implements OnDestroy {
         });
     }
     ShipmentContainersSimulatorClicked() {
+        ServiceLocator.SendTotangoUserActivity("Container", "Shipment Containers Simulator Clicked");
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = { ShipmentId: this.EntityPM.ShipmentId, IsFromContainer: true, ContainerNumber: this.EntityPM.ContainerNumber, CarrierId: this.EntityPM.MainCarriageCarrierId };
         logWindow.Title = "Shipment Containers Statuses Simulator";
         logWindow.Show('./ShipmentModules/ShipmentOthers/Components/ShipmentContainersStatuses/ContainersStatusesSimulatorComponent');
     }
     GeneralShipmentContainersSimulatorClicked() {
+        ServiceLocator.SendTotangoUserActivity("Container", "General Shipment Containers Simulator Clicked");
         var logWindow = new LogitudeWindow();
         var args: GeneralContainerTrackingArgs = <GeneralContainerTrackingArgs> {
             ContainerId : this.EntityPM.Id,
@@ -111,6 +115,7 @@ export class ContainerHelperComponent implements OnDestroy {
         logWindow.Show('./ShipmentModules/ShipmentOthers/Components/GeneralContainersStatusesSimulator/GeneralContainersStatusesSimulatorComponent');
     }
     TrackContainerClicked() {
+        ServiceLocator.SendTotangoUserActivity("Container", "Track Container Clicked");
         this.CurrentSession.StartBusyIndicator("Sending...");
         var args: GeneralContainerTrackingArgs = <GeneralContainerTrackingArgs> {
             ContainerId : this.EntityPM.Id,
@@ -136,6 +141,7 @@ export class ContainerHelperComponent implements OnDestroy {
 
         });
     }
+    
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);

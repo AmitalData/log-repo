@@ -1,4 +1,5 @@
-﻿using Logitude.BL.CommonDataModel.EntityQueries;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
 using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.CloseTables;
@@ -7,6 +8,7 @@ using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
@@ -21,6 +23,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -124,8 +127,8 @@ namespace WebFreight.Web.ContainerTracking
                     containerUpdatedFields.TrackingSource = trackingSource;
                     this.StartUpdating();
                 }
-
-                this.DoneAnalyzeQueue();
+                
+                this.DoneAnalyzeQueue(containerUpdatedFields.Tenant);
             }
 
             catch (Exception ex)
@@ -181,6 +184,7 @@ namespace WebFreight.Web.ContainerTracking
             string objectTableName = string.IsNullOrEmpty(containerTrackingRequest.ContainerId) ? "Shipment" : "Container";
 
             CommunicationLog comunicationLog = BuildCommunicationLogUpdateStatus(containerTrackingRequest, entityId, objectTableName);
+            
             if (string.IsNullOrEmpty(containerTrackingRequest.ContainerId))
                 return;
 
@@ -271,6 +275,14 @@ namespace WebFreight.Web.ContainerTracking
             var communicationLogRepository = new CommunicationLogRepository(comunicationLog.Tenant);
             communicationLogRepository.Update(comunicationLog);
             communicationLogRepository.SubmitChanges();
+            string activity = "";
+            if (wasAnalyzed)
+            {
+                activity = "(A) Analyzed Responses";
+                AddTotangoActivity(comunicationLog.Tenant, activity);
+            }
+            activity = "(A) Received Responses";
+            AddTotangoActivity(comunicationLog.Tenant, activity);
         }
 
         private string GetContainerNumber(string container_id)
@@ -330,12 +342,21 @@ namespace WebFreight.Web.ContainerTracking
 
         }
 
-        private void DoneAnalyzeQueue()
+        private void DoneAnalyzeQueue(int tenant)
         {
             analyzeQueue.Status = "D";
             analyzeQueue.ErrorMessage = null;
             analyzeQueueRepository.Update(analyzeQueue);
             analyzeQueueRepository.SubmitChanges();
+        }
+        public void AddTotangoActivity(int tenant, string activity)
+        {
+
+            string activityDescription = activity;
+            
+            string email = AuthenticationUtil.IsAuthenticatedUserExists() ? AuthenticationUtil.GetAuthenticatedUser() : "system@tenant" + tenant + ".com";
+            string moduleName = "(A) Container";
+            ActivityLogger.SendTotangoContactActivity(email, moduleName, activityDescription, tenant,false,null);           
         }
 
         private void OnCatchAnalyzingError(Exception ex)
