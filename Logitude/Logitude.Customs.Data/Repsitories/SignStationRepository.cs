@@ -37,6 +37,14 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).ToList();
         }
 
+        public List<SignStation> GetAllAvailable(int inLastAccessedInMin)
+        {
+            DateTime LastAccessedAt = DateTime.Now.AddMinutes(-1 * inLastAccessedInMin);
+            return (from a in context.SignStations
+                    where a.LastAccessedAt > LastAccessedAt
+                    select a).ToList();
+
+        }
 
         //public SignStation GetSingle(string customsagentid, string personid)
         //{

@@ -139,6 +139,20 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return pm;
         }
 
+        public CustomsSettingPM GetTenantByCustomsAgentId(string customsAgentId)
+        {
+            string entityKeyString = "GetTenantByCustomsAgentId," + customsAgentId;
+
+            var pm = CacheManager.GetOrInsertNewObject<CustomsSettingPM>(
+                entityKeyString,
+                () =>
+                {
+                    var settingPoco = this.repository.GetTenantByCustomsAgentId(customsAgentId);
+                    return GetEntityPM(settingPoco);
+                });
+
+            return pm;
+        }
 
         public bool IsHSMSign_IsOn(int tenant)
         {

@@ -178,6 +178,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     return "המסר נבנה בהצלחה וישלח בתהליך רקע";
                 }
                 catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
+                when (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.CourierForceSignException)
+                {    
+                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine(" CourierForceSignException!! " + myCustomsRequestsSheetServiceException.Message);
+                    return myCustomsRequestsSheetServiceException.InnerException.Message;
+                }
+                catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
                 {
                     if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
                     {

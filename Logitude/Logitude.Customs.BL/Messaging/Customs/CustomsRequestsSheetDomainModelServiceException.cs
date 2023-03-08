@@ -25,6 +25,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             AggregateDCAAnalyzerLockIt,
             DcaMessageNotBelongOurEnvironment,
             InterfaceNotActiveOrBelongOurCompanyType,//*** שיפור במנגנון הבקשות - בניית בקשה רק באם הבקשה אקטיבית + מתאימה לסביבה - 2.5
+            CourierForceSignException,
 
 
         }
