@@ -236,11 +236,35 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     }
 
     flowObjectChangedEvent(flowObject: any) {
-        if (flowObject) {
-            if (this.HasChanges) {
-                this.setWorkflowVersion(flowObject)
-            }
+        this.handleCopiedDeclareVariableNodes(flowObject);
+
+        if (flowObject && this.HasChanges) {
+            this.setWorkflowVersion(flowObject);
         }
+    }
+
+    handleCopiedDeclareVariableNodes(flowObject: any) {
+        if (flowObject && flowObject.nodes) {
+            flowObject.nodes.filter((n: any) => this.isNotHandledCopiedDeclareVariableNode(n)).forEach((node: any) => {
+                let nodeName = node.data["name"];
+                node.data["variableName"] = nodeName;
+                node.data["variableCode"] = Formatter.getCodeFromName(nodeName);
+            });
+        }
+    }
+
+    isNotHandledCopiedDeclareVariableNode(node: any) {
+        if (node) {
+            return node.type === "declareVariableNode" &&
+                node.data &&
+                node.data["copiedFrom"] &&
+                node.data["copyNumber"] &&
+                node.data["name"] &&
+                node.data["variableName"] &&
+                node.data["name"].toString().startsWith("Copy " + node.data["copyNumber"].toString() + " of ") &&
+                !node.data["variableName"].toString().startsWith("Copy " + node.data["copyNumber"].toString() + " of ");
+        }
+        return false;
     }
 
     setWorkflowVersion(flowObject: any) {
@@ -501,13 +525,13 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
             if (nodeType === "startNode") {
                 let dataEntity = data["entity"];
-                if (this.WorkflowEntity !== dataEntity) {
-                    let flowObject = this.getCurrentFlowObject();
-                    FlowReader.getNodes(flowObject, "conditionNode").forEach((conditionNode: any) => {
-                        conditionNode.data["conditions"] = [];
-                        conditionNode.data["conditionsOperation"] = null;
-                    });
-                }
+                // if (this.WorkflowEntity !== dataEntity) {
+                //     let flowObject = this.getCurrentFlowObject();
+                //     FlowReader.getNodes(flowObject, "conditionNode").forEach((conditionNode: any) => {
+                //         conditionNode.data["conditions"] = [];
+                //         conditionNode.data["conditionsOperation"] = null;
+                //     });
+                // }
                 this.WorkflowEntity = dataEntity;
             }
 
