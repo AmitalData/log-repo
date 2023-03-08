@@ -369,7 +369,6 @@ export class SharedLogisticsDigitalPortalComponent implements OnInit {
         logWindow.Width = 820;
         logWindow.Height = 520;
         logWindow.Title = "Language Display Settings";
-        console.log("HELOOOOOO")
 
         logWindow.Show("./SharedLogistics/Components/DigitalPortal/DigitalPortalLanguageSettingsComponent");
     }

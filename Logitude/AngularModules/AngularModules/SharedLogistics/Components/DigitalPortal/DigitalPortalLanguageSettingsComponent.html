@@ -4,7 +4,7 @@
             <div></div>
         </td>
     </tr>
-    <tr style="height:100%;vertical-align:top">
+    <tr style="height:90%;vertical-align:top">
         <td>
             <table>
                 <tr>
@@ -12,8 +12,8 @@
                         <div class="MediaFill"> 
                             <div class="TabControl">
                                 <div class="TabControlHead">
-                                    <ul style="margin-left: 2px;">
-                                        <li [class.Selected]="SelectedTabCode == 'ETV'" (click)="SelectedTabChange('ETV')" style="margin-left:2px;">
+                                    <ul>
+                                        <li [class.Selected]="SelectedTabCode == 'ETV'" (click)="SelectedTabChange('ETV')">
                                             <div [attr.data-cy]="'Export Translation'" style="width:150px;text-align:center;font-size:11px;color:black" class="InnerChild">
                                                 <span>Export Translation</span>
                                             </div>
@@ -34,24 +34,16 @@
                                             <table>
                                                 <tr style="height:100%">
                                                     <td>
-                                                        <div style="border:1px solid lightGray;height:100%">
-                                                            <table>
-                                                                <tr style="height:5px;"><td></td></tr>
-                                                                <tr style="height:100%">
-                                                                    <td style="margin-left:5px;margin-right:5px;">
-                                                                        <table>
-                                                                            <tr style="height:100%">
-                                                                                <td style="width:5px;"></td>
-                                                                                <td>
-                                                                                    ETV
-                                                                                </td>
-                                                                                <td style="width:5px;"></td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr style="height:5px;"><td></td></tr>
-                                                            </table>
+                                                        <div style="border:1px solid lightGray;height:100%;padding:40px 0 0 24px">
+                                                            <div style="margin-bottom: 16px;font-size: 14px;font-weight: bold;">Select Language to Export</div>
+                                                            <div>
+                                                                <span>
+                                                                    <ComboBox style="width:250px;float:left;" [WaterMark]="'Select Language'" (SelectedItemChanged)="selectedDisplayLanguage = $event" [ItemsSource]="DigitalDisplayLanguageslList" [SelectedItem]="selectedDisplayLanguage" [Binding]="'name'"></ComboBox>
+                                                                </span>
+                                                                <span>
+                                                                    <button style="margin-left: 16px;width: 70px;display: inline-block;" class="Button" (click)="ExportLanguage()">Export</button>
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -64,24 +56,21 @@
                                             <table>
                                                 <tr style="height:100%">
                                                     <td>
-                                                        <div style="border:1px solid lightGray;height:100%">
-                                                            <table>
-                                                                <tr style="height:5px;"><td></td></tr>
-                                                                <tr style="height:100%">
-                                                                    <td style="margin-left:5px;margin-right:5px;">
-                                                                        <table>
-                                                                            <tr style="height:100%">
-                                                                                <td style="width:5px;"></td>
-                                                                                <td>
-                                                                                    ITV
-                                                                                </td>
-                                                                                <td style="width:5px;"></td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr style="height:5px;"><td></td></tr>
-                                                            </table>
+                                                        <div style="border:1px solid lightGray;height:100%;padding:40px 0 0 24px">
+                                                            <div style="margin-bottom: 16px;font-size: 14px;font-weight: bold;">Select Language to Import</div>
+                                                            <div>
+                                                                <span>
+                                                                    <ComboBox style="width:250px;float:left;" [WaterMark]="'Select Language'" (SelectedItemChanged)="selectedDisplayLanguage = $event" [ItemsSource]="DigitalDisplayLanguageslList" [SelectedItem]="selectedDisplayLanguage" [Binding]="'name'"></ComboBox>
+                                                                </span>
+                                                                <span>
+                                                                    <button [disabled]="!IsUploadButtonEnabled" style="margin-left: 16px;width: 70px;display: inline-block;" class="Button" (click)="OpenUpLoadFileToImportLanguage()">Import</button>
+                                                                    <!-- <button [disabled]="!UploadButtonIsEnabled"  style="width:55px;" class="Button" (click)="OpenUpLoadFile()">Upload</button> -->
+                                                                    <input [accept]="ExcelFileTypes" [attr.id]="UploadFileId" type="file" [(ngModel)]="FileData" (change)="UploadFile($event)" style="display:none;width:65px" class="upload" />
+                                                                </span>
+                                                            </div>
+                                                            <div *ngIf="UploadedTranslationFileMSG !== ''" [style.color]="IsFileImportedSuccessfully ? '#009161' : '#e53030'" style="font-size: 12px; text-align: left;margin-top: 18px;">
+                                                                {{UploadedTranslationFileMSG}}
+                                                            </div>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -105,14 +94,8 @@
                     </td>
                     <td style="width: 57px;">
                         <div>
-                            <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                            <button class="Button" (click)="CloseButtonClicked()">Close</button>
                         </div>
-                    </td>
-                    <td style="width: 5px;">
-                        <div></div>
-                    </td>
-                    <td style="width: 57px;">
-                        <button class="RedButton" (click)="SaveButtonClicked()">OK</button>
                     </td>
                 </tr>
             </table>

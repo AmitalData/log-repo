@@ -42,7 +42,6 @@ export const ControlsComponents =
         SharedLogisticsEventPermissiosComponent,
         CargoTrackingMilestonesPermissiosComponent,
         SharedLogisticsDocumentPermissiosComponent,
-        DigitalPortalLanguageSettingsComponent,
         SharedLogisticsMoneyPermissiosComponent,
         SharedLogisticsPartnersPermissiosComponent,
         SharedLogisticsDigitalPortalComponent,
