@@ -1,0 +1,37 @@
+﻿<Script DBType="Main" Module="Workflow">
+  <Sql Version="1">
+    <![CDATA[
+    
+    declare @NewId as varchar(15);
+    declare @UserId as varchar(15);
+    declare @CurrentDate as datetime;
+    
+    set @UserId = (select top 1 [Id] from [Users] where [Tenant] = 0);
+    set @CurrentDate = GETDATE();
+    
+    if not exists (select * from [TaskPriorities] where [Code] = 'H' and Tenant = 0)
+    begin
+    execute [usp_GetNextTableIdValue] @NewId OUTPUT, 'TaskPriority';
+    insert into [TaskPriorities] ([Id], [Tenant], [Code], [Name], [DisplayOrder], [CreateDate], [CreatedByUserId], [UpdateDate], [UpdatedByUserId], [SearchFields])
+    values (@NewId, 0, 'H', 'High', 1, @CurrentDate, @UserId, @CurrentDate, @UserId, 'H,High');
+    end;
+    
+    
+    if not exists (select * from [TaskPriorities] where [Code] = 'L' and Tenant = 0)
+    begin
+    execute [usp_GetNextTableIdValue] @NewId OUTPUT, 'TaskPriority';
+    insert into [TaskPriorities] ([Id], [Tenant], [Code], [Name], [DisplayOrder], [CreateDate], [CreatedByUserId], [UpdateDate], [UpdatedByUserId], [SearchFields])
+    values (@NewId, 0, 'L', 'Low', 2, @CurrentDate, @UserId, @CurrentDate, @UserId, 'L,Low');
+    end;
+    
+    
+    if not exists (select * from [TaskPriorities] where [Code] = 'M' and Tenant = 0)
+    begin
+    execute [usp_GetNextTableIdValue] @NewId OUTPUT, 'TaskPriority';
+    insert into [TaskPriorities] ([Id], [Tenant], [Code], [Name], [DisplayOrder], [CreateDate], [CreatedByUserId], [UpdateDate], [UpdatedByUserId], [SearchFields])
+    values (@NewId, 0, 'M', 'Medium', 3, @CurrentDate, @UserId, @CurrentDate, @UserId, 'M,Medium');
+    end;
+        
+    ]]>
+  </Sql>
+</Script>
