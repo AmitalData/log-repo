@@ -43,7 +43,7 @@
                     <div class="DashboardInnerTab">
                         <p (click)="TabSelectionChanged(item)" class="dl-tab-text TextTrimming">{{item.Name}}</p>
                         <div class="dl-tab-bts-container">
-                            <div class="dl-tab-btn-div" *ngIf="!item.IsPinned" (click)="PinDashboardTabClicked(item)" data-toggle="tooltip" data-placement="top" title="Pin tab">
+                            <div class="dl-tab-btn-div" *ngIf="!item.IsPinned && CanPinn" (click)="PinDashboardTabClicked(item)" data-toggle="tooltip" data-placement="top" title="Pin tab">
                                 <svg class="dl-pin-image" width="10" height="10" viewBox="0 0 9 11" fill="none">
                                     <path class="dl-tab-btn" d="M8.35714 0V1.1H7.71429V4.4L9 6.05V7.15H5.14286V11H3.85714V7.15H0V6.05L1.28571 4.4V1.1H0.642857V0H8.35714ZM2.57143 1.1V4.7333L1.54543 6.05H7.45457L6.42857 4.7333V1.1H2.57143Z" fill="#737578"/>
                                 </svg>
