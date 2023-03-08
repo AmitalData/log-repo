@@ -132,6 +132,10 @@ export class VendorCurrencyTabComponent extends BaseComponent {
                     errors.push(TextCodeTranslator.Translate('Customs.VendorCurrency.O.DoubleCurrency'));
                     
                 }
+                if(AppTool.IsNullOrEmpty(item.Currency)){
+                    errors.push(TextCodeTranslator.Translate('Customs.VendorCurrency.O.CurrencyRequired'));
+                    
+                }
             });
       
         if (errors.length > 0) {
