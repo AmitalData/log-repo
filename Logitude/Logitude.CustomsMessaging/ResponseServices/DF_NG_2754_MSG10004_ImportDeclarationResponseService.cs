@@ -1018,7 +1018,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                             }
 
-                            if (((_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP" && _MyDeclarationPM.TotalTax > 0) || pendingRequiresPayment) && _MyDeclarationPM.DeclarationStatusTypeCode == "13")
+                            if ((_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP" && (_MyDeclarationPM.TotalTax > 0 || pendingRequiresPayment))
+                                && _MyDeclarationPM.DeclarationStatusTypeCode == "13")
                             {
                                 if (declarationPendingPM_900 == null)
                                 {
