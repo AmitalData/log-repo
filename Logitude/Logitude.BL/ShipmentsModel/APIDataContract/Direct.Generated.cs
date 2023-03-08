@@ -319,6 +319,10 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public string InlandDomesticFromPhone { get; set; }
     
     public string InlandDomesticFromFax { get; set; }
+    
+    public PrepaidCollect FreightPrepaidCollect { get; set; }
+    
+    public PrepaidCollect OtherPrepaidCollect { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 
