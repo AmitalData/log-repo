@@ -77,7 +77,7 @@ export class AddressCurrencyTabComponent extends EditTabComponent {
     });
 
     }
-    get IsDirty() { return this.isDirty|| this.AddressCurrencyListPM.find(x=>x.IsDirty)?true:false; }
+    get IsDirty() { return this.isDirty|| this.AddressCurrencyListPM?.find(x=>x.IsDirty)?true:false; }
 
     getRows() {
        
