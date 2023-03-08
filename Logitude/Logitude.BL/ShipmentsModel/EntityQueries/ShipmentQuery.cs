@@ -13544,6 +13544,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                Transshipments = f.Transshipments,
                                IsDocumentsNeedApprove = f.IsDocumentsNeedApprove,
                                DepartmentName = f.DepartmentName,
+                               ContainersNumbers = f.ContainersNumbers,
                               
 
                            };
@@ -14578,6 +14579,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     NumberOfTransshipments = f.NumberOfTransshipments,
                     Transshipments = f.Transshipments,
                     DepartmentName = f.DepartmentName,
+                    ContainersNumbers = f.ContainersNumbers,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
