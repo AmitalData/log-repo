@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class VendorCurrencyUpdateClass
    {  		
-		public const string HashString = "d3b1d836cb2037350cd45584dcb04d53";
+		public const string HashString = "adbeff5be71c1aef1c37a5e635e61ada";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "מטבעות ספק",
 			      				    DefaultText =  "Vendor Currency",
-			      				    Code =  "a6b9",
+			      				    Code =  "d476",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -488,6 +488,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode VendorCurrencyTextCode_CustomsVendorCurrencyOUpdateCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.VendorCurrency.O.UpdateCurrency", DefaultText = "successfully updated currency",LocalDefaultText = @"סוגי מטבעות עודכנו בהצלחה", ObjectTableId = VendorCurrencyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode VendorCurrencyTextCode_CustomsVendorCurrencyODoubleCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.VendorCurrency.O.DoubleCurrency", DefaultText = "Dual currency type",LocalDefaultText = @"סוג מטבע כפול", ObjectTableId = VendorCurrencyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode VendorCurrencyTextCode_CustomsVendorCurrencyOCurrencyRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.VendorCurrency.O.CurrencyRequired", DefaultText = "Currency required",LocalDefaultText = @"סוג מטבע חובה", ObjectTableId = VendorCurrencyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
