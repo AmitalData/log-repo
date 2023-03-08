@@ -100,6 +100,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? OnCarriageGateOut { get; set; }
         public double? Volume { get; set; }
         public double? GrossWeight { get; set; }
+        public string ShipmentStatusId { get; set; }
 
     }
 }

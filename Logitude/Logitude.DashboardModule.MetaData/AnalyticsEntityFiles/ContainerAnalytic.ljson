@@ -1,5 +1,5 @@
 {
-  "HashString": "6ac2a090064b4a448ad6beef19598623",
+  "HashString": "643099f9bc7b4395b3cc9466d94b14f0",
   "Name": "Container Statistics",
   "TableName": "ContainerAnalytics",
   "ObjectTableName": "Container",
@@ -859,6 +859,19 @@
       "FieldCode": "Leg5Voyage",
       "DisplayName": "Leg5 Voyage",
       "DisplayNamePlural": "Leg5 Voyage"
+    },
+    {
+      "HashString": "be248908701546dc832336318bf01529",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "CanSecondaryGroup": true,
+      "FieldCode": "ShipmentStatusId",
+      "DisplayName": "Shipment Status",
+      "DisplayNamePlural": "Shipment Status",
+      "JoinedTableName": "EntityStatus",
+      "JoinedTableDBName": "EntityStatus",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "Name"
     }
   ]
 }
