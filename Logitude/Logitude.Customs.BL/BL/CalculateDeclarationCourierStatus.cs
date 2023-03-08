@@ -605,12 +605,20 @@ namespace Logitude.Customs.BL.BL
                         declarationPendingPM_906.Status = "A";
                         declarationPendingPM_906.ChangeSetOp = ChangeSetOperation.Insert;
                         myDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_906);
+                        if (myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.None)
+                        {
+                            myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        }
                     }
 
                     else if (declarationPendingPM_906.Status != "A")
                     {
                         declarationPendingPM_906.ChangeSetOp = ChangeSetOperation.Update;
                         declarationPendingPM_906.Status = "A";
+                        if (myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.None)
+                        {
+                            myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        }
                     }
                 }
 
