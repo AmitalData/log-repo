@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class AgentUpdateClass
    {  		
-		public const string HashString = "d9ad78f7e2e66d6910654cc9b225c284";
+		public const string HashString = "b6fab1b7b36e9ca8aef9a40abdb03da2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5501,6 +5501,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "EORInumber",
 					  						ListPropertyPath =  "EORInumber",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -5518,6 +5519,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EORInumber",
 					  						DefaultText =  "EORI Number",
+					  						HelpTextCode =  "EORInumber",
+					  						HelpTextDefaultText =  "Economic Operators Registration and Identification Number is a unique identification number used by customs authorities in the EU and U.K.",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
