@@ -1,18 +1,23 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityLists;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.TreeFilterQuery;
+using Marvin.JsonPatch;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Net;
 using System.Net.Http;
+using System.Transactions;
 using System.Web;
 using System.Web.Http;
 using System.Web.Script.Serialization;
@@ -53,7 +58,6 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Extended.FlowEntities
                     ObjectTableName = apiQueryTreeFilters.CustomEntityName,
                     Tenant = tenant,
                 };
-                customEntityQuery = new TreeFilterQueryService().Apply<DataCustomObjectList>(customEntityQuery, treeFilterQueryArgs);
 
                 customEntityQuery = new TreeFilterQueryService().Apply(customEntityQuery, treeFilterQueryArgs);
                 customEntityQuery = customEntityQuery.OrderBy(string.IsNullOrEmpty(apiQueryTreeFilters.OrderBy) ? "Id" : apiQueryTreeFilters.OrderBy);
@@ -71,6 +75,44 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Extended.FlowEntities
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, WorkflowApiExceptionBuilder.BuildException(ex, tenant));
+            }
+        }
+
+        public HttpResponseMessage Patch(string id, JsonPatchDocument<DataCustomObjectPM> dataCustomObjectPMJsonPatch)
+        {
+            int tenant = 0;
+
+            try
+            {
+                using (TransactionScope transactionScope = TransactionFactory.GetTransaction())
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    tenant = authToken.Tenant;
+
+                    DataCustomObjectQuery dataCustomObjectQuery = new DataCustomObjectQuery(authToken.Tenant);
+                    DataCustomObjectPM dataCustomObjectPM = dataCustomObjectQuery.GetSinglePM(id, authToken.Tenant);
+
+                    if (dataCustomObjectPM == null) { throw new Exception("Cannot find the custom entity"); }
+
+                    dataCustomObjectPMJsonPatch.ApplyTo(dataCustomObjectPM);
+
+                    IWebFreightContext MyContext = WebFreightContext.GetContext(dataCustomObjectPM.Tenant);
+                    DataCustomObjectService service = new DataCustomObjectService(MyContext, dataCustomObjectPM.Tenant);
+
+                    service.Update(dataCustomObjectPM);
+
+                    DataCustomObjectQuery updatedDataCustomObjectQuery = new DataCustomObjectQuery(authToken.Tenant);
+                    DataCustomObjectPM updatedDataCustomObjectPM = updatedDataCustomObjectQuery.GetSinglePM(id, authToken.Tenant);
+
+                    transactionScope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, updatedDataCustomObjectPM);
+                }
+            }
+            catch (Exception exception)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, WorkflowApiExceptionBuilder.BuildException(exception, tenant));
             }
         }
     }
