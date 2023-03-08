@@ -61,7 +61,7 @@ export class VendorCurrencyTabComponent extends BaseComponent {
         this.VendorCurrencyList = new ObservableCollection([]);
 
     }
-    get IsDirty() { return this.isDirty|| this.vendorCurrencyListPM.find(x=>x.IsDirty)?true:false; }
+    get IsDirty() { return this.isDirty|| this.vendorCurrencyListPM?.find(x=>x.IsDirty)?true:false; }
    
     SetTabArgs(args: any, valdationErrorList: any[] = []) {
         this.EntityPM = args.EntityPM;
