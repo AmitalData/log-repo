@@ -50,6 +50,16 @@ export class ReconciliationExtendedPMService {
 
     }
 
+    getCommunicationLog(id: string) {
+        return this.httpClient.get(this._apiUrl + '/GetCommunicationLog?id=' + id, ServiceHelper.GetHttpHeaders()).pipe(
+            map(res => {
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = res;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+    }
+
     UpdateDraftReconciliationTransactions(transactions: LedgerTransactionPM[]) {
         return this.httpClient .put(this._apiUrl + '/PutDraftReconciliationTransactions/', JSON.stringify(transactions), ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
