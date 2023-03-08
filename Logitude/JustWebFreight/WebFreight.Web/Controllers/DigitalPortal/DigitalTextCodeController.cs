@@ -50,39 +50,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     }
 
                     tenantDigitalProfiles = digitalProfileQuery.GetDigitalProfileQuery(tenant);
-                    //var textCodeQuery = new DigitalTextCodeQueryService(tenant);
-                    //var textCodes = textCodeQuery.GetDigitalTextCodesTenant0();
-                    //foreach (var item in textCodes)
-                    //{
-                    //    if (item.ObjectTableName.Equals("general", StringComparison.InvariantCultureIgnoreCase))
-                    //    {
-                    //        textCodeQuery.UpdateDigitalTextCodes(new DigitalTextCodeList
-                    //        {
-                    //            Tenant = tenant,
-                    //            Labels = item.Labels,
-                    //            ObjectTableId = item.ObjectTableId,
-                    //            ProfileId = tenantDigitalProfiles.Where(a => a.Code == item.ProfileCode).Select(a => a.Id).FirstOrDefault(),
-                    //            CreateDate = todayDate,
-                    //            UpdateDate = todayDate
-                    //        });
-                    //    }
-                    //    else
-                    //    {
-                    //        textCodeQuery.UpdateDigitalTextCodes(new DigitalTextCodeList
-                    //        {
-                    //            Tenant = tenant,
-                    //            Labels = item.Labels,
-                    //            ObjectTableId = item.ObjectTableId,
-                    //            ProfileId = tenantDigitalProfiles.Where(a => a.Code == item.ProfileCode 
-                    //                                                         && !a.Code.Equals("CM"))
-                    //                                             .Select(a => a.Id)
-                    //                                             .FirstOrDefault(),
-                    //            CreateDate = todayDate,
-                    //            UpdateDate = todayDate
-                    //        });
-                    //    }
-                    //}
-
                     var filedsQuery = new DigitalFieldSecurityQueryService(tenant);
                     var fields = filedsQuery.GetDigitalFieldSecurityQueryTenant0();
                     foreach (var item in fields)
