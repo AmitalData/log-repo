@@ -229,6 +229,10 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public Card OnForwardingCarrier { get; set; }
     
     public Vessel OnForwardingVessel { get; set; }
+    
+    public PrepaidCollect OtherPrepaidCollect { get; set; }
+    
+    public PrepaidCollect FreightPrepaidCollect { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

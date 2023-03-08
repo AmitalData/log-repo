@@ -610,5 +610,10 @@ namespace WebFreight.Web.DataProviders
         public string AccountManager { get; set; }
         public string NotesSharedWithCustomer { get; set; }
         public string AccountManagerMobileNumber { get; set; }
+        public string MainCarriageCarrierPrimaryContactName { get; set; }
+        public string MainCarriageCarrierPrimaryContactEmail { get; set; }
+        public string MainCarriageCarrierPrimaryContactPhone { get; set; }
+        public string MainCarriageCarrierPrimaryContactFax { get; set; }
+        public string CreatedByUserMobile { get; set; }
     }
 }
