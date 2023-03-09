@@ -855,6 +855,14 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
+                Code = "DBA", 
+                Name = "Dashboard Analytics", 
+                SearchFields = "DBA,Dashboard Analytics", 
+                Description = "Dashboard Analytics", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
                 Name = "Remove Exception Logic", 
                 Code = "REL", 
                 SearchFields = "REL,Remove Exception Logic", 
@@ -863,18 +871,18 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
-                Code = "DBA", 
-                Name = "Dashboard Analytics", 
-                SearchFields = "DBA,Dashboard Analytics", 
-                Description = "Dashboard Analytics", 
-			});
-            
-            all.Add(new ToggleDetails()
-            {    
                 Name = "Remove Shared Logistics", 
                 Code = "RSL", 
                 Description = "Remove Shared Logistics Tab Feature", 
                 SearchFields = "RSL,Remove Shared Logistics Tab Feature", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "WRR", 
+                Name = "Run reconciliation using WorkerRole", 
+                SearchFields = "WRR,Run reconciliation using WorkerRole", 
+                Description = "Run reconciliation using WorkerRole", 
 			});
 			
             return all;
