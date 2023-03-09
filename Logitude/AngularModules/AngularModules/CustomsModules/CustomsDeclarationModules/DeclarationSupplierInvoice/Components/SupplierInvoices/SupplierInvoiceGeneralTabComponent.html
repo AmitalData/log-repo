@@ -1166,7 +1166,7 @@
 
                                 <log-column [header]="'Customs.SupplierInvoiceItem.F.ClassificationCode' | TextCodeTranslationPipe" [binding]="'ClassificationCode'" [width]="'120'" [Editable]="true" [Alignment]="'right'">
                                     <ng-template let-item>
-                                        <log-cell-template (CellClicked)="onCellSelected($event,item);OnfocusItemDescription();" #logcelltemplate [RIndex]="item.rowIndex">
+                                        <log-cell-template (CellClicked)="onCellSelected($event,item);" #logcelltemplate [RIndex]="item.rowIndex">
                                             <div class="TextTrimming" style="text-align:right;width:120px" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.ClassificationCode}}</span>
                                                 <span style="font-size:10px">{{item.QunatityTypeCode}}</span>
