@@ -226,5 +226,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ExportLocalCustomerGroupId { get; set; }
         public bool IsPotential { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string EORInumber { get; set; }
+
     }
 }
