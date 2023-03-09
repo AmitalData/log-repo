@@ -51,6 +51,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="LangaugeCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ObjectTableId"
     ReferencedTable="ObjectTables"
@@ -60,5 +67,10 @@
     ForeignKeyColumn="ProfileId"
     ReferencedTable="DigitalProfiles"
     ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="LangaugeCode"
+    ReferencedTable="DigitalPortalLanguages"
+    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
 </Table>

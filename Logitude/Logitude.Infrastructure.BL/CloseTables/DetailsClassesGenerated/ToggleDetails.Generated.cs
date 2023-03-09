@@ -868,7 +868,7 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "DBA,Dashboard Analytics", 
                 Description = "Dashboard Analytics", 
 			});
-            
+			 
             all.Add(new ToggleDetails()
             {    
                 Name = "Remove Shared Logistics", 

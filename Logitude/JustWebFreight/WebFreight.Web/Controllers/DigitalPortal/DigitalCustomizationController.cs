@@ -33,6 +33,25 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 {
     public class DigitalCustomizationController : ApiController
     {
+        [HttpGet]
+        [Route("DigitalCustomization/GetDigitalPortalLanguages")]
+        public HttpResponseMessage GetDigitalPortalLanguages(string langCode = "")
+        {
+            int tenant = 0;
+            string email = "";
+            try
+            {
+                var screenQueryService = new DigitalPortalLangaugeQueryService();
+                var digitalPortalLanguages = screenQueryService.GetDigitalPortalLanguagesQuery(langCode);
+                return Request.CreateResponse(HttpStatusCode.OK, digitalPortalLanguages);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         [HttpPost]
         [Route("DigitalCustomization/AddCustomField")]
         public HttpResponseMessage AddCustomField(AddCustomFieldRequest addCustomFieldRequest)

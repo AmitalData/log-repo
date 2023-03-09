@@ -69,6 +69,11 @@ export class DigitalTextCodePM {
     public set ProfileCode(newValue: string) { if (this.profileCode != newValue) { this.profileCode = newValue; this.MarkAsDirty("ProfileCode"); } }
        
 	 
+    private langaugeCode: string;
+    public get LangaugeCode() { return this.langaugeCode; }
+    public set LangaugeCode(newValue: string) { if (this.langaugeCode != newValue) { this.langaugeCode = newValue; this.MarkAsDirty("LangaugeCode"); } }
+       
+	 
 
     public OldEntityPM: DigitalTextCodePM;
 		
