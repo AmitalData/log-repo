@@ -146,6 +146,12 @@
       Nullable="false" />
   </Column>
   <Relation
+    ForeignKeyColumn="Id"
+    ReferencedTable="TasksExtended"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
+  <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
     ReferencedColumn="Id"

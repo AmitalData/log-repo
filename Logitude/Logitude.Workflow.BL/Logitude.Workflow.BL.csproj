@@ -66,6 +66,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntityDataMappings\Generated\TaskDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TaskExtendedDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TaskPriorityDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TaskStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TaskTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\TaskDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TaskExtendedDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TaskPriorityDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TaskStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TaskTypeDataMapping.cs" />
+    <Compile Include="EntityPMs\Generated\TaskExtendedPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\TaskPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\TaskPriorityPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\TaskStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\TaskTypePM.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TaskExtendedQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TaskPriorityQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TaskQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TaskStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TaskTypeQueryService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TaskExtendedUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TaskPriorityUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TaskStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TaskTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TaskUpdateService.Generated.cs" />
     <Compile Include="ExternalAPI\APICaller.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ExpressionCategoryDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ExpressionDetails.Generated.cs" />
