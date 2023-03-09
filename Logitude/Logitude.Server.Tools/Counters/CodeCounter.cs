@@ -73,7 +73,7 @@ namespace Logitude.Server.Tools.Counters
             }
             else
             {
-                int retry = 0;
+                int Retry = 0;
                 try
                 {
 
