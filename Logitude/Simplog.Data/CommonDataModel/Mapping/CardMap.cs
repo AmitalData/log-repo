@@ -63,6 +63,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.SATCustomerName).HasMaxLength(200).IsUnicode(true);
             this.Property(t => t.ImportLocalCustomerGroupId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ExportLocalCustomerGroupId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.EORInumber).HasMaxLength(25).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Cards");
@@ -127,6 +128,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.SATCustomerName).HasColumnName("SATCustomerName");
             this.Property(t => t.ImportLocalCustomerGroupId).HasColumnName("ImportLocalCustomerGroupId");
             this.Property(t => t.ExportLocalCustomerGroupId).HasColumnName("ExportLocalCustomerGroupId");
+            this.Property(t => t.EORInumber).HasColumnName("EORInumber");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

@@ -14,6 +14,7 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -30,9 +31,30 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         {
             repository = arInvoiceLineRepository;
         }
+        public Contact GetLogContact(int tenant)
+        {
+            ContactRepository contactRep = new ContactRepository(tenant);
+            string email = "";
+            if (AuthenticationUtil.IsAuthenticatedUserExists())
+            {
+                email = AuthenticationUtil.GetAuthenticatedUser();
+            }
+
+            else
+            {
+                email = "system@tenant" + tenant + ".com";
+            }
+
+            Contact contact = contactRep.GetSingleContactByEmail(email, tenant);
+
+
+            return contact;
+
+        }
 
         public List<ARInvoiceLinePM> GetInvoiceLinePMsByInvoiceId(string invoiceId, int tenant)
         {
+            Contact loggedContact = GetLogContact(tenant);
             List<ARInvoiceLinePM> list = (from a in repository.context.ARInvoiceLines.Include("ARInvoiceLineAction")
                                           where a.Tenant == tenant && a.ARInvoiceId == invoiceId
                                           select new ARInvoiceLinePM()
@@ -41,8 +63,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               ForiegnCurrencyAmount = a.ForiegnCurrencyAmount,
                                               InvoiceCurrencyAmount = a.InvoiceCurrencyAmount,
                                               LocalCurrencyAmount = a.LocalCurrencyAmount,
-                                              ChargesTypeId = a.ChargesTypeId,                                              
-                                              ForiegnCurrencyId = a.ForiegnCurrencyId,                                              
+                                              ChargesTypeId = a.ChargesTypeId,
+                                              ForiegnCurrencyId = a.ForiegnCurrencyId,
                                               Id = a.Id,
                                               EntityId = a.EntityId,
                                               ForiegnExchangeRate = a.ForiegnExchangeRate,
@@ -52,7 +74,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               MeasurementId = a.MeasurementId,
                                               Quantity = a.Quantity,
                                               UnitPrice = a.UnitPrice,
-                                              IsExchangeRateFixed = a.IsExchangeRateFixed,                                              
+                                              IsExchangeRateFixed = a.IsExchangeRateFixed,
                                               ProfitCurrencyAmount = a.ProfitCurrencyAmount,
                                               InvoiceCurrencyCode = a.ARInvoice == null ? "" : (a.ARInvoice.InvoiceCurrency == null ? "" : a.ARInvoice.InvoiceCurrency.Code),
                                               InvoiceLocalCurrencyCode = a.ARInvoice == null ? "" : (a.ARInvoice.LocalCurrency == null ? "" : a.ARInvoice.LocalCurrency.Code),
@@ -66,6 +88,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               ValueDate = a.ValueDate,
                                               GLAccountId = a.GLAccountId,
                                               LineActionCode = a.LineActionCode,
+                                              ReportedinTaxReport = loggedContact.DontShowLocalLabels ?( a.LineActionCode == "1" ? "Y":"N"): (a.LineActionCode == "1" ? "כן" : "לא"),
                                               VatTypeId = a.VatTypeId,
                                               VatPercentage = a.VatPercentage,
                                               IsBackToBack = a.IsBackToBack,
@@ -128,6 +151,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         public ARInvoiceLinePM GetSinglePM(string id, int tenant)
         {
+            Contact loggedContact = GetLogContact(tenant);
             ARInvoiceLinePM myResult = (from a in repository.context.ARInvoiceLines.Include("VatType")
                                         where a.Id == id
                                         select new ARInvoiceLinePM()
@@ -157,6 +181,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                             ValueDate = a.ValueDate,
                                             GLAccountId = a.GLAccountId,
                                             LineActionCode = a.LineActionCode,
+                                            ReportedinTaxReport = loggedContact.DontShowLocalLabels ? (a.LineActionCode == "1" ? "Y" : "N") : (a.LineActionCode == "1" ? "כן" : "לא"),
                                             VatTypeId = a.VatTypeId,
                                             VatPercentage = a.VatPercentage,
                                             VatTypeName = a.VatType == null ? null : a.VatType.EnglishName,
@@ -215,6 +240,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         public List<ARInvoiceLinePM> GetInvoiceLinePMsByInvoiceIds(List<string> invoiceIds, int tenant)
         {
+            Contact loggedContact = GetLogContact(tenant);
             List<ARInvoiceLinePM> list = new List<ARInvoiceLinePM>();
             const int sqlLimit = 5000;
 
@@ -256,6 +282,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                   ValueDate = a.ValueDate,
                                                   GLAccountId = a.GLAccountId,
                                                   LineActionCode = a.LineActionCode,
+                                                  ReportedinTaxReport = loggedContact.DontShowLocalLabels ? (a.LineActionCode == "1" ? "Y" : "N") : (a.LineActionCode == "1" ? "כן" : "לא"),
                                                   VatTypeId = a.VatTypeId,
                                                   VatPercentage = a.VatPercentage,
                                                   IsBackToBack = a.IsBackToBack,

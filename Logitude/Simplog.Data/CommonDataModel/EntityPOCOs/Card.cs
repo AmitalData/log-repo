@@ -155,5 +155,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public virtual CustomerGroup ImportLocalCustomerGroup { get; set; }
         [ForeignKey("ExportLocalCustomerGroupId")]
         public virtual CustomerGroup ExportLocalCustomerGroup { get; set; }
+        public string EORInumber { get; set; }
     }
 }

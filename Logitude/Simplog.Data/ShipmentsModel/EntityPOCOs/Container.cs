@@ -400,5 +400,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? OnCarriageATA { get; set; }
         public DateTime? RequestDate { get; set; }
         public DateTime? RecentResponseDate { get; set; }
+        public string ShipmentDepartmentId { get; set; }
+        [ForeignKey("ShipmentDepartmentId")]
+        public virtual Department ShipmentDepartment { get; set; }
     }
 }

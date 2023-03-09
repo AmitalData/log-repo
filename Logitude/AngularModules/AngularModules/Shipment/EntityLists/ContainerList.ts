@@ -309,5 +309,7 @@ export class ContainerList {
 		OnCarriageATA: Date;
 		RequestDate: Date;
 		RecentResponseDate: Date;
+		ShipmentDepartmentId: string;
+		ShipmentDepartmentName: string;
 	
 }

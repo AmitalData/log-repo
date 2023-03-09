@@ -206,24 +206,30 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
             const selectedTransaction = this._SelectedLines.Collection[i];
             if (this.checkClosedMonth(new Date(selectedTransaction.AccountingDate))) {
 
-                errorMessage += 'This line is closed ' +
+                let lineErrorMessage = TextCodeTranslator.Translate('Journal.RE.ReconcilePeriodClosed');
+
+                let lineDetails =
                     new Date(selectedTransaction.AccountingDate).toDateString() + ', ' +
                     new Date(selectedTransaction.DocumentDate).toDateString() + ', ' +
                     new Date(selectedTransaction.DueDate).toDateString() + ', ' +
                     selectedTransaction.Source + ', ' +
                     selectedTransaction.OriginalAmount + ', ' +
                     selectedTransaction.OpenAmount + ', ';
+
+
                 if (selectedTransaction.Reference1 != null) {
-                    errorMessage += selectedTransaction.Reference1;
+                    lineDetails += selectedTransaction.Reference1;
                 }
                 if (selectedTransaction.Reference2 != null) {
-                    errorMessage += selectedTransaction.Reference2;
+                    lineDetails += selectedTransaction.Reference2;
                 }
                 if (selectedTransaction.Reference3 != null) {
-                    errorMessage += selectedTransaction.Reference3;
+                    lineDetails += selectedTransaction.Reference3;
                 }
 
-                errorMessage += '\n';
+                lineErrorMessage = lineErrorMessage.replace('(X)' , lineDetails);
+
+                errorMessage += lineErrorMessage + '\n';
             }
 
         }
@@ -233,6 +239,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
             messageWindow.Width = 600;
             messageWindow.Height = 300;
             messageWindow.IsMessageMultiLine = true;
+            messageWindow.RTL = (ObjectsLocator.GlobalSetting.LayoutDirection === 'rtl');
             messageWindow.Show(errorMessage);
         }
     }
@@ -403,7 +410,6 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         } else {
             this.Reconcile(reconciliationLines);
         }
-        this.checkSelectedLinesClosedMonth();
     }
 
     ReconcileSplit(myReconciliationLines: ReconciliationLinePM[]) {
@@ -444,6 +450,9 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
                 (res: ServiceResponse) => {
 
                     this.CurrentSession.StopBusyIndicator();
+
+                    this.checkSelectedLinesClosedMonth();
+
                     if (res.HasError) {
                         this.ValidationErrorsList = res.ErrorsArray;
 
@@ -455,13 +464,6 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
 
                 });
     }
-
-
-
-    //
-    //     this.checkSelectedLinesClosedMonth();
-    // }
-
 
     _NewJournalPM: JournalPM;
     _NewJournals: JournalPM[];

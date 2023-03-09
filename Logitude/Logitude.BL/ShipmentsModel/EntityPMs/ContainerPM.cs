@@ -487,5 +487,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? RequestDate { get; set; }
         public DateTime? RecentResponseDate { get; set; }
         public bool IsUpdatedFromRequest { get; set; }
+        public string ShipmentDepartmentId { get; set; }
+        public string ShipmentDepartmentName { get; set; }
+
     }
 }

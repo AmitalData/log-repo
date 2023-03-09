@@ -232,7 +232,7 @@ export class ARInvoiceLinePM {
     public get LineActionCode() { return this.lineActionCode; }
     public set LineActionCode(newValue: string) { if (this.lineActionCode != newValue) { this.lineActionCode = newValue; this.MarkAsDirty("LineActionCode"); } }
        
-	 
+     
     private isCustomsCharge: boolean;
     public get IsCustomsCharge() { return this.isCustomsCharge; }
     public set IsCustomsCharge(newValue: boolean) { if (this.isCustomsCharge != newValue) { this.isCustomsCharge = newValue; this.MarkAsDirty("IsCustomsCharge"); } }
@@ -257,6 +257,10 @@ export class ARInvoiceLinePM {
     public get InvoiceCurrencyExchangeRate() { return this.invoiceCurrencyExchangeRate; }
     public set InvoiceCurrencyExchangeRate(newValue: number) { if (this.invoiceCurrencyExchangeRate != newValue) { this.invoiceCurrencyExchangeRate = newValue; this.MarkAsDirty("InvoiceCurrencyExchangeRate"); } }
        
+    private reportedinTaxReport: string;
+    public get ReportedinTaxReport() { return this.reportedinTaxReport; }
+    public set ReportedinTaxReport(newValue: string) { if (this.reportedinTaxReport != newValue) { this.reportedinTaxReport = newValue; this.MarkAsDirty("ReportedinTaxReport"); } }
+      
 	 
 
     public OldEntityPM: ARInvoiceLinePM;
@@ -293,4 +297,4 @@ export class ARInvoiceLinePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

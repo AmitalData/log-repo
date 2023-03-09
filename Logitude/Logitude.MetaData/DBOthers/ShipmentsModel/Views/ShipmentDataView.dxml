@@ -299,6 +299,7 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
 						 ShipmentComputedFields.ImporterDepositionRequestDetails as ImporterDepositionRequestDetails,
 						 ShipmentComputedFields.NumberOfHouses as NumberOfHouses, 
 						 ShipmentComputedFields.ContainersNumbersandTypesArray as ContainersNumbersandTypesArray, 
+						 ShipmentComputedFields.ContainersNumbers as ContainersNumbers,
              ShipmentComputedFields.PackagesQuantityAndType as PackagesQuantityAndType, 
              ShipmentComputedFields.Transshipments as Transshipments,
 						 ShipmentAdditionalCloudDatas.DeclarationXmlData as DeclarationXmlData, 
