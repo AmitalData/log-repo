@@ -38,7 +38,6 @@ export class VehicleGeneralComponent extends BaseComponent {
     public SubCountryCodeEnabled: boolean = false;
     IsDelete: boolean = false;
     public CurrentEditComponentId: string;
-    
     ResponseData: INF_MSG_GenericResponseData;
     _VehicleExtendedPMService: VehicleExtendedPMService = new VehicleExtendedPMService();
 
@@ -65,6 +64,7 @@ export class VehicleGeneralComponent extends BaseComponent {
     }
 
     private Listen() {
+        
         if (this.CurrentSession.CurrentEditComponent != null) {
 
             this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
@@ -97,9 +97,10 @@ export class VehicleGeneralComponent extends BaseComponent {
 
     //public SetTabArgs(args: any, ValidationErrorsList: any[]) {
     public SetTabArgs(args: any) {
+        
         this.EntityPM = args.EntityPM;
         this.IsNewEntity = args.IsNewEntity;
-
+      
         console.log("EntityPM", this.EntityPM);
 
 
@@ -240,8 +241,9 @@ export class VehicleGeneralComponent extends BaseComponent {
     get VehicleWindowNumber(){ return this.EntityPM != null ?this.EntityPM.VehicleWindowNumber : null; }
     set VehicleWindowNumber(value: string){this.EntityPM.VehicleWindowNumber = value; }
 
-    get VehicleTypeCode(){ return this.EntityPM != null ?this.EntityPM.VehicleTypeCode : null; }
-    set VehicleTypeCode(value: string){this.EntityPM.VehicleTypeCode = value;  }
+    get VehicleTypeCode(){   return this.EntityPM != null ?this.EntityPM.VehicleTypeCode : null; }
+    set VehicleTypeCode(value: string){
+        this.EntityPM.VehicleTypeCode = value;  }
 
     get ImporterPassportNumber() { return this.EntityPM != null ? this.EntityPM.ImporterPassportNumber : null; }
     set ImporterPassportNumber(value: string)

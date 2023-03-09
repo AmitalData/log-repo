@@ -16,6 +16,7 @@
             </td>
         </tr>
 
+        
         <tr>
             <td colspan="2">
                 <table style="table-layout: fixed;" *ngIf="EntityPM">
@@ -111,7 +112,8 @@
                                     [DataContext]="DataContext"
                                     [LookUpTableName]="'Customs.PassportType'"
                                     [SelectedValue]="ImporterPassportTypeCode"
-                                    [HideColumns]="true">
+                                    [HideColumns]="true"
+                                    [SelectedValue]="ImporterPassportTypeCode">
                             </LogLov>
                         </td>
 
@@ -164,7 +166,8 @@
                                     [ObjectTableName]="'Customs.Vehicle'"
                                     [DataContext]="DataContext"
                                     [LookUpTableName]="'Customs.VehiclePoolType'"
-                                    [HideColumns]="true">
+                                    [HideColumns]="true"
+                                    [SelectedValue]="VehiclePoolTypeCode">
                             </LogLov>
                         </td>
 
@@ -179,7 +182,8 @@
                                     [ObjectTableName]="'Customs.Vehicle'"
                                     [DataContext]="DataContext"
                                     [LookUpTableName]="'Customs.VehicleManufacturer'"
-                                    [HideColumns]="true">
+                                    [HideColumns]="true"
+                                    [SelectedValue]="VehicleManufacturerCode">
                             </LogLov>
                         </td>
 
@@ -201,7 +205,8 @@
                             <LogTextBox [ObjectFieldName]="'ModelCode'"
                                         [InputType]="'unsinteger'"
                                         [ObjectTableName]="'Customs.Vehicle'"
-                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                        [DataContext]="DataContext" [HideColumns]="true"
+                                        [Text]="ModelCode"></LogTextBox>
 
                         </td>
 
@@ -215,7 +220,8 @@
                             <LogTextBox [ObjectFieldName]="'ModelDescription'"
                                         [InputType]="'ntext'"
                                         [ObjectTableName]="'Customs.Vehicle'"
-                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                        [DataContext]="DataContext" [HideColumns]="true"
+                                        [Text]="ModelDescription"></LogTextBox>
                         </td>
 
                         <td><div></div></td>
@@ -236,7 +242,8 @@
                                     [ObjectTableName]="'Customs.Vehicle'"
                                     [DataContext]="DataContext"
                                     [LookUpTableName]="'Customs.FuelType'"
-                                    [HideColumns]="true">
+                                    [HideColumns]="true"
+                                    [SelectedValue]="FuelTypeCode">
                             </LogLov>
 
                         </td>
@@ -251,7 +258,8 @@
                             <LogTextBox [ObjectFieldName]="'EngineCapacity'"
                                         [InputType]="'unsinteger'"
                                         [ObjectTableName]="'Customs.Vehicle'"
-                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                        [DataContext]="DataContext" [HideColumns]="true"
+                                        [Text]="EngineCapacity"></LogTextBox>
                         </td>
 
                         <td><div></div></td>
@@ -272,7 +280,7 @@
                             <LogTextBox [ObjectFieldName]="'TotalVehicleWeight'"
                                         [InputType]="'unsinteger'"
                                         [ObjectTableName]="'Customs.Vehicle'"
-                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                        [DataContext]="DataContext" [HideColumns]="true" [Text]="TotalVehicleWeight"></LogTextBox>
 
                         </td>
 
@@ -288,7 +296,8 @@
                                     [ObjectTableName]="'Customs.Vehicle'"
                                     [DataContext]="DataContext"
                                     [LookUpTableName]="'Customs.CustomsCountry'"
-                                    [HideColumns]="true">
+                                    [HideColumns]="true"
+                                    [SelectedValue]="ManufactureCountryCode">
                             </LogLov>
                         </td>
 
@@ -311,7 +320,7 @@
                             <LogTextBox [ObjectFieldName]="'NumberOfWheels'"
                                         [InputType]="'unsinteger'"
                                         [ObjectTableName]="'Customs.Vehicle'"
-                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                        [DataContext]="DataContext" [HideColumns]="true" [Text]="NumberOfWheels"></LogTextBox>
 
                         </td>
 
@@ -326,7 +335,8 @@
                             <LogDatePicker [ObjectFieldName]="'VehicleManufactureDate'"
                                            [ObjectTableName]="ObjectTableName"
                                            [InputType]="'date'" [DataContext]="DataContext"
-                                           [HideColumns]="true"></LogDatePicker>
+                                           [HideColumns]="true"
+                                           [SelectedDateValue]="VehicleManufactureDate"></LogDatePicker>
 
                         </td>
 
@@ -345,7 +355,8 @@
                                     [ObjectTableName]="'Customs.Vehicle'"
                                     [DataContext]="DataContext"
                                     [LookUpTableName]="'Customs.VehicleType'"
-                                    [HideColumns]="true">
+                                    [HideColumns]="true"
+                                    [SelectedValue]="VehicleTypeCode">
                             </LogLov>
 
                         </td>
@@ -362,7 +373,8 @@
                                         [ObjectTableName]="'Customs.Vehicle'"
                                         [DataContext]="DataContext"
                                         [Placeholder]="'הזן באנגלית בלבד'"
-                                        [HideColumns]="true"></LogTextBox>
+                                        [HideColumns]="true"
+                                        [Text]="CommercialNickname"></LogTextBox>
 
                         </td>
 
