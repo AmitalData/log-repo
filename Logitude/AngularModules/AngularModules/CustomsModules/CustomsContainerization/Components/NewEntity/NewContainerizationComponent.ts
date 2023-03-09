@@ -547,7 +547,7 @@ export class NewContainerizationComponent extends BaseComponent {
                             this.containerizationExtendedListService.CreateContainerizations(this.entityPM).subscribe((response: ServiceResponse) => {
 
 
-                                if (response.Result.list[0].Id == "0") {
+                                if (response.Result.list[0].Id == "1") {
                                     SessionLocator.SelectedSession.StopBusyIndicator();
                                     myConfirmWindow.Show(`ההמכלה עם מזהי המטען: `+this.entityPM.ExistInCustoms+` קיימת במכס וכל עוד לא בוטלה לא ניתן יהיה להשתמש במונה ההמכלה הספציפי`);
                                     myConfirmWindow.IsYesEnabled = false;
