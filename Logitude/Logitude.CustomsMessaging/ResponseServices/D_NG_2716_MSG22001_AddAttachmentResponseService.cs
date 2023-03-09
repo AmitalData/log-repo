@@ -72,6 +72,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 var connectedDeclarationPM = declarationQueryService.GetSingle(requestParams.DeclaretionId, false, false);
                 if (connectedDeclarationPM != null && connectedDeclarationPM.IsCourierDeclaration)
                 {
+                    lockit = true;
                     key = ProcessLockTableUtil.Instance.GetKey4UpdateDeclarationCourier_DocumentStatusCode(connectedDeclarationPM.Id, requestParams.Tenant);
                 }
 
