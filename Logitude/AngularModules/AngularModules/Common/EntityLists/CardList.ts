@@ -120,5 +120,6 @@ export class CardList {
 		BillToId: string;
 		AccountingPartnerCreditLimit: number;
 		SATCustomerName: string;
+		EORInumber: string;
 	
 }
