@@ -5623,6 +5623,22 @@
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
+    TabName="&quot;Request Sheet&quot;"
+    TabLocalName="&quot;גיליון בקשה&quot;"
+    ObjectTableName="&quot;Customs.Vehicle&quot;"
+    Code="&quot;VHRS&quot;"
+    ControlPath="&quot; &quot;"
+    TextCode="&quot;Customs.Vehicle.TH.RequestSheet&quot;"
+    IsPackagable="true"
+    IndexOrder="0"
+    HtmlComponentURL="&quot;./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent&quot;"
+    HtmlComponentName="&quot;RequestSheetTabComponent&quot;"
+    FeatureCode="&quot;REQUESTSHEET&quot;"
+    FeatureTextCodeCode="&quot;Customs.Vehicle.Features.RequetSheet&quot;"
+    FeatureDefaultText="&quot;Request Sheet&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
     TabName="&quot;More Details&quot;"
     TabLocalName="&quot;נוספים&quot;"
     ObjectTableName="&quot;Customs.Vehicle&quot;"
@@ -5711,22 +5727,6 @@
     FeatureDefaultText="&quot;Communications&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
-  <Tab
-    TabName="&quot;Request Sheet&quot;"
-    TabLocalName="&quot;גיליון בקשה&quot;"
-    ObjectTableName="&quot;Customs.Vehicle&quot;"
-    Code="&quot;VHRS&quot;"
-    ControlPath="&quot; &quot;"
-    TextCode="&quot;Customs.Vehicle.TH.RequestSheet&quot;"
-    IsPackagable="true"
-    IndexOrder="0"
-    HtmlComponentURL="&quot;./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent&quot;"
-    HtmlComponentName="&quot;RequestSheetTabComponent&quot;"
-    FeatureCode="&quot;REQUESTSHEET&quot;"
-    FeatureTextCodeCode="&quot;Customs.Vehicle.Features.RequetSheet&quot;"
-    FeatureDefaultText="&quot;Request Sheet&quot;"
-    IsSpellChecked="false"
-    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -5798,6 +5798,12 @@
       Code="&quot;Customs.Vehicle.O.Search&quot;"
       DefaultText="&quot;Search&quot;"
       LocalDefaultText="&quot;חיפוש לפי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Vehicle.O.OkCopyRichbit&quot;"
+      DefaultText="&quot;Please confirm copying Richbit number&quot;"
+      LocalDefaultText="&quot;נא אשר העתקת רכבית מספר&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
