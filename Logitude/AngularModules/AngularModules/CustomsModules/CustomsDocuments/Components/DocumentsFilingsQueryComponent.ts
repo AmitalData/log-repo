@@ -30,7 +30,8 @@ export class DocumentsFilingsQueryComponent extends BaseComponent {
     DataContext = this;
   IsDisplayOnly: boolean = false;
     public AllowPointerEvents: any = 'all';
-
+   searchOrExportFile:string='שדות חיפוש:';
+   SearchText:string;
    @ViewChildren(MultiSelectLOVComponent)
     public myViewChildrenMultiSelectLOVComponent: QueryList<MultiSelectLOVComponent> = null;
 
@@ -159,8 +160,8 @@ export class DocumentsFilingsQueryComponent extends BaseComponent {
     SetWindowArgs(windowArgs) {
         
         this.declarationPM = windowArgs;
-
-        if (this.declarationPM != null && this.declarationPM.Direction == 'E' && !AppTool.IsNullOrEmpty(this.declarationPM.ImporterCode)) {
+       
+        if (this.declarationPM != null && this.declarationPM.Direction == 'E' && (!AppTool.IsNullOrEmpty(this.declarationPM.ImporterCode) && !windowArgs.IsClose)) {
 
             this.cardExtendedPMService.GetAllCardsByVatNumber(this.declarationPM.ImporterCode).subscribe(data => {
                 this.CustomersList = data.Result;
@@ -176,13 +177,17 @@ export class DocumentsFilingsQueryComponent extends BaseComponent {
 
 
         }
-
         else {
 
             this.isLoad = true;
-}
+        }
 
         this.entityListService = new EntityListService();
+
+        if(this.declarationPM != null && this.declarationPM.Direction == 'E' && windowArgs.IsClose) {
+            this.SearchText = this.declarationPM?.ExportFile;
+        }
+        this.searchOrExportFile=this.declarationPM?.Direction == 'E'?'חיפוש /תיק יצוא:':this.searchOrExportFile;
     }
 
     OkButtonClicked() {
@@ -239,8 +244,8 @@ export class DocumentsFilingsQueryComponent extends BaseComponent {
         if (this.SearchFieldsFilter) {
             filters.AdditionalFilters.push(this.SearchFieldsFilter);
         }
-      
-      if (this.CustomersList) {
+
+       if (this.CustomersList) {
 
           var CustomersListString = "";
 

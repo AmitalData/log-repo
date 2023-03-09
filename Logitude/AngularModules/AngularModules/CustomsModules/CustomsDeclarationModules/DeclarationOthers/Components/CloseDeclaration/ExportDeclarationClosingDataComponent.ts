@@ -1,4 +1,4 @@
-﻿import { OnInit, Component, ChangeDetectorRef } from '@angular/core';
+import { OnInit, Component, ChangeDetectorRef } from '@angular/core';
 import { ExportDeclarationClosingDataPM } from '../../../../../Customs/EntityPMs/ExportDeclarationClosingDataPM';
 import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -361,6 +361,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         windowArgs.EntityParentPM = "ExportDeclarationClosingData";
         //    windowArgs.SkipCtor = this.SkipCtor;
         windowArgs.IsFromStandAloneScreen = true;
+        windowArgs.IsClose = true;
         var windowTitle = "Customs.Declaration.TH.Documents";
 
         var logWindow = new LogitudeWindow();

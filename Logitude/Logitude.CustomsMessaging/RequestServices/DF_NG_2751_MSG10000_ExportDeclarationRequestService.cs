@@ -801,18 +801,18 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             declarationAgentList.Add(declarationAgent);
 
-            if (declarationPM.Consignments != null && declarationPM.Consignments[0].CargoTypeCode == "17")
-            {
-                var declarationAgentSecond = new DeclarationAgent()
-                {
-                    ID = SetIDTypeValue<AgentIdentificationIDType>(declarationPM.Consignments[0].SecondCargoID),
-                    RoleCode = new AgentRoleCodeType()
-                    {
-                        Value = "11" //hard coded
-                    }
-                };
-                declarationAgentList.Add(declarationAgentSecond);
-            }
+            //if (declarationPM.Consignments != null && declarationPM.Consignments[0].CargoTypeCode == "17")
+            //{
+            //    var declarationAgentSecond = new DeclarationAgent()
+            //    {
+            //        ID = SetIDTypeValue<AgentIdentificationIDType>(declarationPM.Consignments[0].SecondCargoID),
+            //        RoleCode = new AgentRoleCodeType()
+            //        {
+            //            Value = "11" //hard coded
+            //        }
+            //    };
+            //    declarationAgentList.Add(declarationAgentSecond);
+            //}
 
             return declarationAgentList.ToArray();
         }
