@@ -117,17 +117,16 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
         {
             try
             {
-                if (true)// toggle feature
+                if (FeatureToggleHelper.HasFeatureToggle("WRR", entityPm.Tenant))// toggle feature
                 {
                     string communicationLogId = WriteEntityPMOnCommunicationLog(entityPm);
                     // StorageDataArgs storageDataArgs = new StorageDataArgs() { FileName = fileName, FolderName = "Others", Tenant = entityPm.Tenant };
                     IQueueService queueservice = new DbQueueService();
-                    queueservice.InitializeQueue("ReconciliationWorkerRole", 0);
+                    queueservice.InitializeQueue("ReconciliationWorkerRole", entityPm.Tenant);
                     queueservice.Send(new Dictionary<string, string>() { { "tenant", entityPm.Tenant.ToString() }, { "communicationLogId", communicationLogId } }, 1, null, null);
                     RecoCallback recoCallBack = new RecoCallback();
                     recoCallBack.communicationLogId = communicationLogId;
                     return Request.CreateResponse(HttpStatusCode.OK, recoCallBack);
-                    // return Request.CreateResponse(HttpStatusCode.OK, recoCallback);
                 }
                 else
                 {

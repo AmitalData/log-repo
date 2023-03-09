@@ -34,14 +34,14 @@ namespace CommunicationWorkerRole
                     }
                     else
                     {
-                        Thread.Sleep(6000);
+                        Thread.Sleep(2000);
                     }
                 }
             }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "ReconciliationWorkerRole  worker role start", null, null);
-                Thread.Sleep(10000);
+                Thread.Sleep(2000);
             }
         }
 
@@ -75,7 +75,7 @@ namespace CommunicationWorkerRole
             int tenant = 0;
             if (response == null || response.MessageId == null)
             {
-                Thread.Sleep(10000);
+                Thread.Sleep(2000);
                 return;
             }
             string communicationLogId = response.MessageValues["communicationLogId"].ToString();
