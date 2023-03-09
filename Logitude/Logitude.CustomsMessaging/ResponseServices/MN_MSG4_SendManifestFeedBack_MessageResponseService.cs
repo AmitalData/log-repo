@@ -39,6 +39,7 @@ using Logitude.Customs.BL.BL;
 using Logitude.Customs.BL.Messaging.Customs;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Server.Tools.Utils;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -97,10 +98,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this.MyResponseData.HasException = true;
                 return;
             }
+            bool lockit = false;
+            string key = "";
+            if (_MyDeclarationPM.IsCourierDeclaration)
+            {
+                lockit = true;
+                key = ProcessLockTableUtil.Instance.GetKey4UpdateDeclarationCourier_DocumentStatusCode(_MyDeclarationPM.Id, requestParams.Tenant);
+            }
+            using (var processLockTableDisposable = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, lockit, key, "CRS:2715/UDLT"))
 
-
-            //Checking foe Exceptions
-            if (customResponse.ResponseContentHeader.Exception != null || _ResponseHeaderExeption != null)
+            { 
+                //Checking foe Exceptions
+                if (customResponse.ResponseContentHeader.Exception != null || _ResponseHeaderExeption != null)
             {
                 if (customResponse.ResponseContentHeader.Exception != null)
                 {
@@ -368,6 +377,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
     
             MyResponseData.ApplicationID = requestParams.ImportManifest;
             MyResponseData.Succeeded = true;
+
+
+            }
         }
 
         private void OnSucceededSendDeclarationDelay1Min(MANIFESTRequestRequestParams requestParams)
