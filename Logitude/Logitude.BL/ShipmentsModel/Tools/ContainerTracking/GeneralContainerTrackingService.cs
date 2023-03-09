@@ -45,14 +45,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
         private readonly int tenant;
         private readonly ContainerSettingRepository containerSettingRepository;
 
-        public GeneralContainerTrackingService(GeneralContainerTrackingArgs simulatorArgs)
+        public GeneralContainerTrackingService(GeneralContainerTrackingArgs containerTrackingArgs)
         {
-            if(!string.IsNullOrEmpty(simulatorArgs?.ContainerStatusSourceCode) && simulatorArgs.ContainerStatusSourceCode.Equals("VZN", StringComparison.InvariantCultureIgnoreCase))
+            if(!string.IsNullOrEmpty(containerTrackingArgs?.ContainerStatusSourceCode) && containerTrackingArgs.ContainerStatusSourceCode.Equals("VZN", StringComparison.InvariantCultureIgnoreCase))
             {
-                simulatorArgs.ContainerStatusSourceCode = "2";
+                containerTrackingArgs.ContainerStatusSourceCode = "2";
             }
-            this.generalContainerTrackingArgs = simulatorArgs;
-            this.tenant = simulatorArgs.Tenant;
+            this.generalContainerTrackingArgs = containerTrackingArgs;
+            this.tenant = containerTrackingArgs.Tenant;
             CommonContext = CommonDataContext.GetContext(tenant);
             containerSettingRepository = new ContainerSettingRepository(tenant);
         }
@@ -142,7 +142,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
                 case "R": return containerSettings.IsDrop;
                 default: return false;
             }
-
         }
 
         private void SetCarriarCode()
@@ -242,9 +241,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
             };
         }
 
-        private byte[] ConvertObjectToByteArray(object simulatorArgs)
+        private byte[] ConvertObjectToByteArray(object containerTrackingArgs)
         {
-            var objectText = JsonConvert.SerializeObject(simulatorArgs);
+            var objectText = JsonConvert.SerializeObject(containerTrackingArgs);
             var jsonByteArray = Encoding.UTF8.GetBytes(objectText);
             return jsonByteArray;
         }

@@ -128,7 +128,7 @@ export class ContainerHelperComponent implements OnDestroy {
             ContainerStatusSourceCode:'VZN'
         }
         var myService = new ShipmentContainersWebService();
-        myService.GeneralContainerSimulator(args).subscribe((myResponse: ServiceResponse) => {
+        myService.TrackContainer(args).subscribe((myResponse: ServiceResponse) => {
 
             this.CurrentSession.StopBusyIndicator();
             var messageWindow = new MessageWindow();
