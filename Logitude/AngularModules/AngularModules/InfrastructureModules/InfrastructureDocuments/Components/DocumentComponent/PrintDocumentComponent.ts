@@ -111,6 +111,9 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
     UpdateDocumentsAutomatically()
     {
+        this.CurrentDocumentOut = this.DataContext.CurrentDocument;
+        this.LoadCopiesControl();
+
         this._documentOutPMService.getSingleDocumentOutPM(this.DataContext.CurrentDocument.Id,
             this.DataContext.CurrentDocument.Tenant).subscribe((res: any) => {
         const pmResponse: ServiceResponse = res;
@@ -982,7 +985,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
         });
         if (anySelected) {
-
+            
             this.lastCount = this.AddedDocumentTypeCopyViewModels.length;
 
             var numberOfCopy = this.AddedDocumentTypeCopyViewModels.filter(d => d.IsSelected).length;
@@ -1219,6 +1222,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                     this.documentsExecutionLogListExtendedService = new DocumentsExecutionLogListExtendedService();
                 }
 
+                this.CurrentSession.StartBusyIndicator("Loading ...");
 
                 this.documentsExecutionLogListExtendedService.GetDocumentsExecutionLogList(documentExecutionLogId).subscribe((res: any) => {
                     var pmResponse: ServiceResponse = res;
@@ -1238,6 +1242,8 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                                     this.ShowMessage(documentsExecutionLogList.ExceptionMessage);
                                 }
                                 else if (documentsExecutionLogList.StatusCode == "D") {
+                                    this.StopBusyIndicator();
+
                                     documentTypeCopyLists.forEach((copy) => {
                                         copy.Status = "Success";
                                         copy.Exists = true;

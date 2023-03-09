@@ -838,5 +838,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public int? NumberOfTransshipments { get; set; }
         public string Transshipments { get; set; }
         public string TruckerId { get; set; }
+        public string ContainersNumbers { get; set; }
     }
 }

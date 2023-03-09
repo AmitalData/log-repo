@@ -229,10 +229,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         throw new ApplicationException("House shipment already connected to a Master, in order to connect to another please disconnect it first");
                     }
                 }
-                if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
-                {
-                    ShipmentValidating.ValidateBranch(entityPM);
-                }
 
                 this.isNewEntity = true;
                 this.calculateProfit = false;
@@ -508,10 +504,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     {
 
                         #region
-                    if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
-                    {
-                        ShipmentValidating.ValidateBranch(entityPM);
-                    }
 
                     string myOldCustomerId = "";
                         string oldEntityStatusId = entityPoco.StatusId;

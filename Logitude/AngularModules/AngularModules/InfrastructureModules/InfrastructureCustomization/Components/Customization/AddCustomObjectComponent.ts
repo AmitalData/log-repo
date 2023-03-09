@@ -179,7 +179,7 @@ export class AddCustomObjectComponent extends BaseComponent {
         this.objectTablePM.Description = this.Description;
         this.objectTablePM.ObjectTableTypeCode = this.objectTableTypeCode;
         this.objectTablePM.SupportSubEntity = this.IsSubObject ? false : true;
-
+        this.objectTablePM.AvailableInDocumentTypes = this.IsSubObject ? false : true;
        
     }
     CreateObjectTable() {

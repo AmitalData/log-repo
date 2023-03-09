@@ -173,6 +173,12 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public Card Notify2 { get; set; }
     
     public string Notify2Reference { get; set; }
+    
+    public int? NumberOfPackages { get; set; }
+    
+    public PrepaidCollect FreightPrepaidCollect { get; set; }
+    
+    public PrepaidCollect OtherPrepaidCollect { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

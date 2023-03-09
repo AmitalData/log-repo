@@ -148,6 +148,13 @@ export class AgentGeneralTabComponent extends BaseComponent implements OnInit, O
         }
     }
 
+    get EORInumber() { return this.EntityPM.EORInumber; }
+    set EORInumber(newValue: string) {
+        if (this.EntityPM.EORInumber != newValue) {
+            this.EntityPM.EORInumber = newValue;
+        }
+    }
+
     get RegulatedAgentCode() { return this.EntityPM.RegulatedAgentCode; }
     set RegulatedAgentCode(newValue: string) {
         if (this.EntityPM.RegulatedAgentCode != newValue) {

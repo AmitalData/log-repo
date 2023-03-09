@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Dashboard" Env="Logitude,local,test">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
       BEGIN
           IF EXISTS (SELECT *  FROM sys.indexes  WHERE NAME='IX_ContainerAnalytics_ColumnStore' AND object_id = OBJECT_ID('[ContainerAnalytics]'))
@@ -27,7 +27,7 @@
             GateIn,GateOut,EmptyReturnLocationPortId,EstimatedEmptyReturn,ActualEmptyReturn,LastFreeDayDate,
             FreeDays,ShipmentNumber,ContainersCount,HandlerId,CustomerId,OPClosed,ShipmentTypeId,
             ShipmentCreateDate,IsClosed,StatusId,IsCancelled,ShipmentDeliveryTruckerId,HasException,
-            PreCarriageGateIn,OnCarriageGateOut,Volume,GrossWeight
+            PreCarriageGateIn,OnCarriageGateOut,Volume,GrossWeight,ShipmentStatusId
           );
       END
 

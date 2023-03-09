@@ -126,6 +126,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  CreatedByPartner = card.CreatedByPartner,
                                                  BillToId = card.BillToId,
                                                  SATCustomerName = card.SATCustomerName,
+                                                 EORInumber = card.EORInumber,
                                              });
 
 
@@ -266,6 +267,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
                                       ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
                                       CustomerSizeId = a.Customer != null ? (a.Customer.CustomerSize != null ? a.Customer.CustomerSize.Id : null) : null,
+                                      EORInumber = a.EORInumber,
                                   }).FirstOrDefault();
 
 
@@ -378,6 +380,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   SATCustomerName = a.SATCustomerName,
                                   ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
                                   ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
+                                  EORInumber = a.EORInumber,
                               }).FirstOrDefault();
 
                     if (entity != null)
@@ -627,6 +630,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               CreatedByPartner = a.CreatedByPartner,
                                               BillToId = a.BillToId,
                                               SATCustomerName = a.SATCustomerName,
+                                              EORInumber = a.EORInumber,
                                           });
             return cards;
         }
@@ -698,6 +702,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               CreatedByPartner = a.CreatedByPartner,
                                               BillToId = a.BillToId,
                                               SATCustomerName = a.SATCustomerName,
+                                              EORInumber = a.EORInumber,
                                           });
             return cards;
         }
@@ -800,6 +805,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           SATCustomerName = a.SATCustomerName,
                                           ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
                                           ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
+                                          EORInumber = a.EORInumber,
                                       }).FirstOrDefault();
 
                             if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
@@ -891,6 +897,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       SATCustomerName = a.SATCustomerName,
                                       ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
                                       ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
+                                      EORInumber = a.EORInumber,
                                   }).FirstOrDefault();
                     }
                 }
@@ -972,6 +979,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   SATCustomerName = a.SATCustomerName,
                                   ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
                                   ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
+                                  EORInumber = a.EORInumber,
                               }).FirstOrDefault();
                 }
 
@@ -1045,6 +1053,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     StorageFreeDays = entityPOCO.StorageFreeDays,
                     BillToId = entityPOCO.BillToId,
                     SATCustomerName = entityPOCO.SATCustomerName,
+                    EORInumber = entityPOCO.EORInumber,
                 };
 
                 if (entityPOCO.Customer != null)
@@ -1356,6 +1365,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 Field48 = customFieldsMainObject != null ? customFieldsMainObject.Field48 : null,
                                                 Field49 = customFieldsMainObject != null ? customFieldsMainObject.Field49 : null,
                                                 Field50 = customFieldsMainObject != null ? customFieldsMainObject.Field50 : null,
+                                                EORInumber = card.EORInumber,
+
                                             };
 
             if (myResult.Count() > 0)
@@ -1438,6 +1449,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               CreatedByPartner = a.CreatedByPartner,
                                               BillToId = a.BillToId,
                                               SATCustomerName = a.SATCustomerName,
+                                              EORInumber = a.EORInumber,
                                           });
             return cards;
         }
@@ -1631,6 +1643,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     IsInternationalPartner = oldTenantCard.IsInternationalPartner,
                     IsAutonomy = oldTenantCard.IsAutonomy,
                     SATCustomerName = oldTenantCard.SATCustomerName,
+                    EORInumber = oldTenantCard.EORInumber,
                 };
 
                 #region PaymentTerm
@@ -2395,6 +2408,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        CreatedByPartner = a.CreatedByPartner,
                                        BillToId = a.BillToId,
                                        SATCustomerName = a.SATCustomerName,
+                                       EORInumber = a.EORInumber,
                                    }).ToList();
             return card.FirstOrDefault();
         }

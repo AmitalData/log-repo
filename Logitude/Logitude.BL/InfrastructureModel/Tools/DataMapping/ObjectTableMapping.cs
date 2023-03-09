@@ -71,6 +71,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectTable.ApplyGenericCustomFields = objectTablePM.ApplyGenericCustomFields;
             objectTable.FullNameTextCodeId = objectTablePM.FullNameTextCodeId;
             objectTable.FullNameTextCodeCode = objectTablePM.FullNameTextCodeCode;
+            objectTable.AvailableInDocumentTypes = objectTablePM.AvailableInDocumentTypes;
         }
     }
 }
