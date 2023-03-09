@@ -657,6 +657,8 @@ namespace WebFreight.Web.Helpers
                             foreach (QueryColumnPM _ in queryColumns)
                             {
                                 sheet.AutofitColumn(i);
+                                if (sheet.GetColumnWidth(i) > 30)
+                                    sheet.SetColumnWidth(i,30);
                                 i++;
                             }
                         }
