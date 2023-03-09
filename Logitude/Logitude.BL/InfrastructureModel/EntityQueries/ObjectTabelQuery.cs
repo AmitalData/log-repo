@@ -113,6 +113,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          FullNameTextCodeId = a.FullNameTextCodeId,
                                          FullNameTextCodeCode = a.FullNameTextCodeCode,
                                          FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
+                                         AvailableInDocumentTypes = a.AvailableInDocumentTypes,
                                      }).ToList();
             }
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -193,6 +194,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                     FullNameTextCodeId = a.FullNameTextCodeId,
                                     FullNameTextCodeCode = a.FullNameTextCodeCode,
                                     FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
+                                    AvailableInDocumentTypes = a.AvailableInDocumentTypes,
                                 }).ToList();
             }
 
@@ -281,7 +283,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                            FullNameTextCodeId = a.FullNameTextCodeId,
                                            FullNameTextCodeCode = a.FullNameTextCodeCode,
                                            FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
-
+                                           AvailableInDocumentTypes = a.AvailableInDocumentTypes,
                                        }).ToList();
             }
             if (tenant != 0)
@@ -364,6 +366,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             FullNameTextCodeId = a.FullNameTextCodeId,
                                             FullNameTextCodeCode = a.FullNameTextCodeCode,
                                             FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
+                                            AvailableInDocumentTypes = a.AvailableInDocumentTypes,
                                         }).ToList();
                 }
             }
@@ -461,6 +464,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        FullNameTextCodeId = a.FullNameTextCodeId,
                                                        FullNameTextCodeCode = a.FullNameTextCodeCode,
                                                        FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
+                                                       AvailableInDocumentTypes = a.AvailableInDocumentTypes,
                                                    }).ToList();
                             scope.Complete();
                         }
@@ -549,6 +553,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    FullNameTextCodeId = a.FullNameTextCodeId,
                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
                                                    FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
+                                                   AvailableInDocumentTypes = a.AvailableInDocumentTypes,
                                                }).ToList();
                         scope.Complete();
                     }
@@ -636,6 +641,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    FullNameTextCodeId = a.FullNameTextCodeId,
                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
                                                    FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
+                                                   AvailableInDocumentTypes = a.AvailableInDocumentTypes,
                                                }).ToList();
 
                         scope.Complete();
@@ -728,6 +734,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             FullNameTextCodeId = a.FullNameTextCodeId,
                                             FullNameTextCodeCode = a.FullNameTextCodeCode,
                                             FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
+                                            AvailableInDocumentTypes = a.AvailableInDocumentTypes,
                                         }).ToList();
 
 
@@ -889,6 +896,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      FullNameTextCodeId = a.FullNameTextCodeId,
                                                      FullNameTextCodeCode = a.FullNameTextCodeCode,
                                                      FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
+                                                     AvailableInDocumentTypes = a.AvailableInDocumentTypes,
                                                  };
             return result;
         }  
@@ -957,6 +965,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    FullNameTextCodeId = a.FullNameTextCodeId,
                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
                                                    FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
+                                                   AvailableInDocumentTypes = a.AvailableInDocumentTypes,
                                                }).FirstOrDefault();
 
 

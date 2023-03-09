@@ -13,6 +13,7 @@
   AvailableInCustomization="true"
   SupportSubEntity="false"
   ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="true"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"

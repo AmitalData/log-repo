@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CustomerUpdateClass
    {  		
-		public const string HashString = "a07d17ae78a8bd5849821d1e9b1f11e4";
+		public const string HashString = "c8c3e262a1ddd5713ecd1ab0376da82b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -103,6 +103,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    AvailableInCustomization =  true,
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
+			      				    AvailableInDocumentTypes =  true,
 			      				    HasHelper =  true,
 			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  false,
@@ -13043,7 +13044,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreditLimitAmount",
 					  						DefaultText =  "Credit Amount",
-					  						FullLocalDefaultText =  "מסגרת אשראי",
+					  						FullLocalDefaultText =  "מסגרת םשרםי",
 					  						ListFieldLable =  "CreditLimitAmountListLable",
 					  						ListLableDefaultText =  "Credit Amount",
 					  						IsForeignKey =  false,
@@ -14776,10 +14777,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InsuredcreditLimit",
 					  						DefaultText =  "Insured Credit Limit",
-					  						FullLocalDefaultText =  "מסגרת אשראי מבוטחת",
+					  						FullLocalDefaultText =  "מסגרת םשרםי מבוטחת",
 					  						ListFieldLable =  "InsuredcreditLimitListLable",
 					  						ListLableDefaultText =  "Insured Credit Limit",
-					  						ListLocalDefaultText =  "מסגרת אשראי מבוטחת",
+					  						ListLocalDefaultText =  "מסגרת םשרםי מבוטחת",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
