@@ -279,7 +279,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
         }
 
         [Invoke]
-        public CurrencyList CopyCurrencyToTenant(string currencyId, int tenant, double currecyRate,DateTime ratedate)
+        public CurrencyList CopyCurrencyToTenant(string currencyId, int tenant, double currecyRate,DateTime ratedate,int? unit = 1)
         {
             
             SecurityUtility.CheckContactFeature("Currency", "NEW", tenant);
@@ -333,7 +333,8 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                         BaseCurrencyId = tenantPoco.CurrencyId,
                         ForeignCurrencyId = tenantCurrency.Id,
                         LogDateTime = TenantServerConfigration.GetCurrentDateTime(tenant),
-                        Rate = currecyRate,
+                        Rate = CalculateRateAccordingUnit(currecyRate,unit),
+                        Unit = unit,
                         Tenant = tenant,
                         ValueDate = ratedate.Date,//TenantServerConfigration.GetCurrentDateTime(tenant),
 
@@ -353,6 +354,20 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
         }
 
         [Invoke]
+
+        private double CalculateRateAccordingUnit(Double currecyRate, int? unit)
+        {
+            if (unit != null)
+            {
+                if (unit > 0)
+                {
+                    return (double)(currecyRate / unit);
+                }
+            }
+            return (double)currecyRate;
+
+        }
+
         public Currency CreateCurrency(Currency currency)
         {
             SecurityUtility.CheckContactFeature("Currency", "NEW", currency.Tenant);
