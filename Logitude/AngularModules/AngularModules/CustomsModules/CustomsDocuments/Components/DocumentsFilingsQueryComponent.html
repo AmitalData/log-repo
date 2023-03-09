@@ -75,7 +75,7 @@
                                     </td>
 
                                     <td ></td>
-                                    <td style="width: 100px; text-align: center !important;" *ngIf="declarationPM.Direction=='E'">
+                                    <td style="width: 100px; text-align: right !important;" *ngIf="declarationPM.Direction=='E'">
                                         <div style="color: #555555;">
                                             לקוח:
                                         </div>
@@ -141,13 +141,13 @@
 
                                     <!-- search text box -->
                                     <td style="width:100px; text-align:center !important;">
-                                        <div style="color: #555555; text-align: left;">
-                                            שדות חיפוש:
+                                        <div style="color: #555555; text-align: right;">
+                                            {{searchOrExportFile}}
                                         </div>
                                     </td>
                                     <td style="width:130px;">
 
-                                        <SearchTextBox [PlaceHolder]="'שם יישות/תאור'" [ObjectTableName]="'DocumentsFiling'" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
+                                        <SearchTextBox [PlaceHolder]="'שם יישות/תאור'" [ObjectTableName]="'DocumentsFiling'" [SearchText]="SearchText"(SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
                                     </td>
 
                                 </tr>

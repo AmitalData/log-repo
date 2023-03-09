@@ -98,6 +98,7 @@ export class CustomsDocumentsComponent
 
     public customs: string = "עמילות";
     public forwarding: string = "שילוח";
+    IsClose: boolean = false;
     //************************************//
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
@@ -108,7 +109,7 @@ export class CustomsDocumentsComponent
         if (entityArgs.IsFromStandAloneScreen)
             this.DontClear = true;
         if (entityArgs.EntityPM && !entityArgs.SkipCtor) {
-            this.Start(entityArgs.EntityPM, entityArgs.ObjectTableName, entityArgs.EntityParentPM, entityArgs.IsFromStandAloneScreen ,null);
+            this.Start(entityArgs.EntityPM, entityArgs.ObjectTableName, entityArgs.EntityParentPM, entityArgs.IsFromStandAloneScreen ,null,this.IsClose);
         }
 
         this.bulkUploadDocumentsPermission = FeatureLocator.HasFeaturePermession("Customs.Declaration", "BULKUPLOADDOCUMENTS");
@@ -121,7 +122,7 @@ export class CustomsDocumentsComponent
         this.CustomsDocumentsTicketViewModels.forEach((item) => { item.DataContext = null; })
         this.CustomsDocumentsTicketViewModels = null;
     }
-    Start(entityPM: any, objectTableName: string, _ParentEntityCode_args: string, IsFromStandAloneScreen: boolean, closingData: any) {
+    Start(entityPM: any, objectTableName: string, _ParentEntityCode_args: string, IsFromStandAloneScreen: boolean, closingData: any,IsClose:boolean=false) {
         if (_ParentEntityCode_args != null) {
             this.ParentEntityCode_args = _ParentEntityCode_args;
         }
@@ -134,6 +135,7 @@ export class CustomsDocumentsComponent
             this.forwarding = "תיק יצוא";
 
             this.DocumentFilterSelectedValue = "all";
+            this.IsClose = IsClose;
         }
         this.ObjectTableName = objectTableName;
         if (!AppTool.IsNullOrEmpty(this.ParentEntityCode_args)) {
@@ -745,7 +747,7 @@ export class CustomsDocumentsComponent
 
     SetWindowArgs(windowArgs) {
         this.IsWindowMode = true;
-        this.Start(windowArgs.EntityPM, windowArgs.ObjectTableName, windowArgs.EntityParentPM, windowArgs.IsFromStandAloneScreen, windowArgs.ClosingData);
+        this.Start(windowArgs.EntityPM, windowArgs.ObjectTableName, windowArgs.EntityParentPM, windowArgs.IsFromStandAloneScreen, windowArgs.ClosingData,windowArgs.IsClose);
     }
 
     CloseButtonClicked() {
