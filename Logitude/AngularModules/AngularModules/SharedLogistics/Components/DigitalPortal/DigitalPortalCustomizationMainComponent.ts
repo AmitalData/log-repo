@@ -10,10 +10,11 @@ import { ViewContainerRef } from '@angular/core';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
 import { DigitalTextService } from '../../../Infrastructure/Services/WebServices/DigitalTextService'
+import { DigitalLanguageSettingsService } from 'Infrastructure/Services/WebServices/DigitalLanguageSettingsService';
 
 @Component({
-
     templateUrl: './DigitalPortalCustomizationMainComponent.html',
+    providers: [DigitalLanguageSettingsService]
 })
 
 export class DigitalPortalCustomizationMainComponent implements OnInit {
@@ -38,8 +39,9 @@ export class DigitalPortalCustomizationMainComponent implements OnInit {
     DigitalProfileFilterFullList: { id: number, name: string, code: string }[] = [];
     ObjectTablesFilterList: { id: number, name: string }[] = [];
     DigitalProfileFilterList: { id: number, name: string, code: string }[] = [];
+    DigitalDisplayLanguageslList: { id: number, name: string, code: string, displayText: string }[] = [];
 
-    constructor() {
+    constructor(public _digitalLanguageSettingsService: DigitalLanguageSettingsService) {
         this.Initialize();
         this.RunComponent();
         this.LayoutDirection = ObjectsLocator.GlobalSetting.LayoutDirection == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
@@ -56,6 +58,7 @@ export class DigitalPortalCustomizationMainComponent implements OnInit {
 
     ngOnInit() {
         this.FillDigitalProfiles();
+        this.FillDisplayLanguages();
     }
     private FillDigitalProfiles() {
         this.digitalTextService.GetDigitalProfileName(SessionLocator.Tenant).subscribe((myResult) => {
@@ -343,6 +346,61 @@ export class DigitalPortalCustomizationMainComponent implements OnInit {
         }
 
     }
+
+    private selectedDisplayLanguage: any;
+    get SelectedDisplayLanguage() { return this.selectedDisplayLanguage; }
+    set SelectedDisplayLanguage(value) {
+        if (this.selectedDisplayLanguage != value) {
+            this.selectedDisplayLanguage = value;
+        }
+    }
+
+    private FillDisplayLanguages() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.DigitalDisplayLanguageslList = [
+            {
+                id: 1, name: "English", code: 'EN', displayText: "English",
+            },
+            {
+                id: 2, name: "Espanol", code: 'ES', displayText: "Espanol",
+            }
+        ];
+
+        this.selectedDisplayLanguage = this.DigitalDisplayLanguageslList[0];
+        this.CurrentSession.StopBusyIndicator();
+
+        this._digitalLanguageSettingsService.GetDigitalLanguages().subscribe((myResult) => {
+            if (!myResult.HasError) {
+                this.DigitalDisplayLanguageslList = [];
+                var languagesResult = myResult && myResult.Result ? myResult.Result : [];
+
+                languagesResult.forEach(item => {
+                    this.DigitalDisplayLanguageslList.push(
+                        {
+                            "id": item.Id,
+                            "name": item.Name,
+                            "code": item.Code,
+                            "displayText": item.DisplayText
+                        }
+                    );
+                });
+
+
+                this.selectedDisplayLanguage = this.DigitalDisplayLanguageslList[0];
+            }
+
+            this.CurrentSession.StopBusyIndicator();
+        });
+    }
+
+    OnDisplayLanguageChange(event){
+        this.selectedDisplayLanguage = event;
+        this.CurrentSession.StartBusyIndicatorLoading();
+        setTimeout(() => {
+            this.CurrentSession.StopBusyIndicator();
+        }, 2000);
+    }
+    
 }
 
 export class CustomizationMainMenuItem {

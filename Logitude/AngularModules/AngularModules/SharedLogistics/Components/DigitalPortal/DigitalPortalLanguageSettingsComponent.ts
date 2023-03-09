@@ -6,10 +6,12 @@ import { DocumentPermissiosViewModel } from '../ViewModel/DocumentPermissiosView
 import { LocationDirective } from 'Infrastructure/Utilities/LocationDirective';
 import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 import { Guid } from 'Infrastructure/Utilities/Guid';
+import { DigitalLanguageSettingsService } from '../../../Infrastructure/Services/WebServices/DigitalLanguageSettingsService'
 
 @Component({
     templateUrl: './DigitalPortalLanguageSettingsComponent.html',
     inputs: ['OnCloseWindowEvent'],
+    providers: [DigitalLanguageSettingsService]
 })
 
 export class DigitalPortalLanguageSettingsComponent implements OnInit {
@@ -37,7 +39,7 @@ export class DigitalPortalLanguageSettingsComponent implements OnInit {
     IsUploadButtonEnabled: boolean;
     IsFileImportedSuccessfully: boolean;
     UploadedTranslationFileMSG: string = '';
-    constructor() {
+    constructor(public _digitalLanguageSettingsService: DigitalLanguageSettingsService) {
         this.UploadFileId = Guid.NewRandomString();
     }
 
@@ -48,7 +50,6 @@ export class DigitalPortalLanguageSettingsComponent implements OnInit {
         });
         this.IsUploadButtonEnabled = true;
         this.IsFileImportedSuccessfully = true;
-        this.CurrentSession.StartBusyIndicatorLoading();
         this.FillDisplayLanguages();
         this.Run();
         
@@ -58,20 +59,16 @@ export class DigitalPortalLanguageSettingsComponent implements OnInit {
         this.SelectedTabCode = "ETV";
     }
 
-    SelectedTabChange(selectedTabCode) {
-        this.SelectedTabCode = selectedTabCode;
-        this.selectedDisplayLanguage = this.DigitalDisplayLanguageslList[0];
-        // if (!this.IsCloud) this.LoadEventCreationResultComponent();
-    }
-
     private selectedDisplayLanguage: any;
-    get SelectedProfileItem() { return this.selectedDisplayLanguage; }
-    set SelectedProfileItem(value) {
+    get SelectedDisplayLanguage() { return this.selectedDisplayLanguage; }
+    set SelectedDisplayLanguage(value) {
         if (this.selectedDisplayLanguage != value) {
             this.selectedDisplayLanguage = value;
         }
     }
+
     private FillDisplayLanguages() {
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.DigitalDisplayLanguageslList = [
             {
                 id: 1, name: "English", code: 'EN', displayText: "English",
@@ -84,20 +81,34 @@ export class DigitalPortalLanguageSettingsComponent implements OnInit {
         this.selectedDisplayLanguage = this.DigitalDisplayLanguageslList[0];
         this.CurrentSession.StopBusyIndicator();
 
-        // this.digitalTextService.GetDigitalProfileName(SessionLocator.Tenant).subscribe((myResult) => {
-        //     if (!myResult.HasError) {
-        //         this.DigitalDisplayLanguageslList = [];
-        //         var profiles = myResult.Result;
+        this._digitalLanguageSettingsService.GetDigitalLanguages().subscribe((myResult) => {
+            if (!myResult.HasError) {
+                this.DigitalDisplayLanguageslList = [];
+                var languagesResult = myResult && myResult.Result ? myResult.Result : [];
 
-        //         profiles.forEach(item => {
-        //             this.DigitalDisplayLanguageslList.push({ "id": item.Id, "name": item.Name, "code": item.Code, 'displayText': item.DisplayText });
-        //         });
+                languagesResult.forEach(item => {
+                    this.DigitalDisplayLanguageslList.push(
+                        {
+                            "id": item.Id,
+                            "name": item.Name,
+                            "code": item.Code,
+                            "displayText": item.DisplayText
+                        }
+                    );
+                });
 
 
-        //         this.selectedDisplayLanguage = this.DigitalDisplayLanguageslList[0];
-        //         this.CurrentSession.StopBusyIndicator();
-        //     }
-        // });
+                this.selectedDisplayLanguage = this.DigitalDisplayLanguageslList[0];
+            }
+
+            this.CurrentSession.StopBusyIndicator();
+        });
+    }
+
+    SelectedTabChange(selectedTabCode) {
+        this.SelectedTabCode = selectedTabCode;
+        this.selectedDisplayLanguage = this.DigitalDisplayLanguageslList[0];
+        // if (!this.IsCloud) this.LoadEventCreationResultComponent();
     }
 
     SetWindowArgs(args: any) {
@@ -140,7 +151,7 @@ export class DigitalPortalLanguageSettingsComponent implements OnInit {
         if(!file || !allowedFileTypes.includes(file.type.toLowerCase())){
             this.IsUploadButtonEnabled = true;
             this.IsFileImportedSuccessfully = false;
-            this.UploadedTranslationFileMSG = 'Somethin went wrong, your file not imported.'
+            this.UploadedTranslationFileMSG = 'Excel files allowed only!'
             return;
         }
 
@@ -152,7 +163,7 @@ export class DigitalPortalLanguageSettingsComponent implements OnInit {
             fileInfo.Base64 = await this.convertFileToBase64(file);
         }
 
-        console.log('fileInfo >>', fileInfo)
+        
         setTimeout(() => {
             this.CurrentSession.StopBusyIndicator();
             this.IsUploadButtonEnabled = true;
