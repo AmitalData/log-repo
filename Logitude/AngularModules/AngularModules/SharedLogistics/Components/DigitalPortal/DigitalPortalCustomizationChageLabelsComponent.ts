@@ -43,8 +43,8 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
         this.CurrentSession.StartBusyIndicatorLoading();
         this.LabelsItemsSource = new ObservableCollection([]);
         var labelsList = [];
-        
-        this.digitalTextService.GetTextCodesByFilters(null, this.ObjectTableId, this.ProfileCode).subscribe((myResult) => {
+        var _selectedDisplayLangCode = this.customizationEditComponent && this.customizationEditComponent.SelectedMenu ? this.customizationEditComponent.SelectedMenu.LangCode : 'EN'
+        this.digitalTextService.GetTextCodesByFilters(null, this.ObjectTableId, this.ProfileCode, _selectedDisplayLangCode).subscribe((myResult) => {
             if (!myResult.HasError) {
                 var data = myResult.Result;
                 this.loadedResults = data;

@@ -11,14 +11,14 @@ export class DigitalLanguageSettingsService {
     private _http: HttpClient;
     constructor() {
         this._http = ServiceHelper.HttpClient
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DigitalLanguageSettings';
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DigitalCustomization';
     }
 
-    public GetDigitalLanguages(objectTableId: string = '', screenCode: string = '', profileCode: string = '') {
+    public GetDigitalLanguages(langCode: string = '') {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetDigitalPortalScreens?objectTableId=' + objectTableId + "&screenCode=" + screenCode + "&profileCode=" + profileCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetDigitalPortalLanguages?langCode=' + langCode , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();

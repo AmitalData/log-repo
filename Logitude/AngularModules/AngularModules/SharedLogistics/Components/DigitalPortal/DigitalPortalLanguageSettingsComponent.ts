@@ -31,7 +31,7 @@ export class DigitalPortalLanguageSettingsComponent implements OnInit {
     HasAgentDocumentsPermission: boolean = false;
     IsCloud: boolean = false;
     IsDigitalPortal: boolean = false;
-    DigitalDisplayLanguageslList: { id: number, name: string, code: string, displayText: string }[] = [];
+    DigitalDisplayLanguageslList: { name: string, code: string, displayText: string }[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     UploadFileId: string;
     FileData: number;
@@ -45,18 +45,14 @@ export class DigitalPortalLanguageSettingsComponent implements OnInit {
 
     ngOnInit() {
         this.IsCloud = ObjectsLocator.GlobalSetting.WorkEnvironment == "cloud";
-        this.OnCloseWindowEvent.subscribe(($event: any) => {
-            this.SaveButtonClicked();
-        });
         this.IsUploadButtonEnabled = true;
         this.IsFileImportedSuccessfully = true;
-        this.FillDisplayLanguages();
         this.Run();
-        
     }
 
     Run() {
         this.SelectedTabCode = "ETV";
+        this.FillDisplayLanguages();
     }
 
     private selectedDisplayLanguage: any;
@@ -69,18 +65,6 @@ export class DigitalPortalLanguageSettingsComponent implements OnInit {
 
     private FillDisplayLanguages() {
         this.CurrentSession.StartBusyIndicatorLoading();
-        this.DigitalDisplayLanguageslList = [
-            {
-                id: 1, name: "English", code: 'EN', displayText: "English",
-            },
-            {
-                id: 2, name: "Espanol", code: 'ES', displayText: "Espanol",
-            }
-        ];
-
-        this.selectedDisplayLanguage = this.DigitalDisplayLanguageslList[0];
-        this.CurrentSession.StopBusyIndicator();
-
         this._digitalLanguageSettingsService.GetDigitalLanguages().subscribe((myResult) => {
             if (!myResult.HasError) {
                 this.DigitalDisplayLanguageslList = [];
@@ -89,7 +73,6 @@ export class DigitalPortalLanguageSettingsComponent implements OnInit {
                 languagesResult.forEach(item => {
                     this.DigitalDisplayLanguageslList.push(
                         {
-                            "id": item.Id,
                             "name": item.Name,
                             "code": item.Code,
                             "displayText": item.DisplayText
@@ -108,7 +91,6 @@ export class DigitalPortalLanguageSettingsComponent implements OnInit {
     SelectedTabChange(selectedTabCode) {
         this.SelectedTabCode = selectedTabCode;
         this.selectedDisplayLanguage = this.DigitalDisplayLanguageslList[0];
-        // if (!this.IsCloud) this.LoadEventCreationResultComponent();
     }
 
     SetWindowArgs(args: any) {
@@ -173,33 +155,10 @@ export class DigitalPortalLanguageSettingsComponent implements OnInit {
         }, 5000);
 
     }
+
     CloseButtonClicked() {
         this.CurrentSession.StopBusyIndicator();
         this.CurrentSession.CloseCurrentWindow();
     }
-
-    SaveButtonClicked() {
-        // this.CurrentSession.StartBusyIndicatorSaving();
-    }
-
-    // SharedDocumentsPermissionsComponentLoaded: boolean;
-    // LoadEventCreationResultComponent() {
-    //     if (!this.AllLocations) return;
-
-    //     let myGeneratedComponentLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == 'AGV')[0];
-    //     if (myGeneratedComponentLocation == null) {
-    //         return;
-    //     }
-    //     if (this.SharedDocumentsPermissionsComponentLoaded) return;
-    //     this.SharedDocumentsPermissionsComponentLoaded = true;
-    //     SessionLocator.DynamicLoader.Load('./InfrastructureModules/InfrastructureDocuments/Components/SharedDocument/SharedDocumentsPermissionsComponent', myGeneratedComponentLocation.viewContainerRef)
-    //         .then(cmpRef => {
-    //             this.SharedDocumentPage = cmpRef.instance;
-    //             this.SharedDocumentPage.FullComponentsVisibility = false;
-    //             this.SharedDocumentPage.FromAgentView = true;
-    //         });
-
-    // }
-
 }
 

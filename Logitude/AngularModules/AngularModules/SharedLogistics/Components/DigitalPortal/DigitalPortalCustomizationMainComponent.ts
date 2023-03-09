@@ -39,7 +39,7 @@ export class DigitalPortalCustomizationMainComponent implements OnInit {
     DigitalProfileFilterFullList: { id: number, name: string, code: string }[] = [];
     ObjectTablesFilterList: { id: number, name: string }[] = [];
     DigitalProfileFilterList: { id: number, name: string, code: string }[] = [];
-    DigitalDisplayLanguageslList: { id: number, name: string, code: string, displayText: string }[] = [];
+    DigitalDisplayLanguageslList: DisplayLanguageItem[] = [];
 
     constructor(public _digitalLanguageSettingsService: DigitalLanguageSettingsService) {
         this.Initialize();
@@ -193,6 +193,7 @@ export class DigitalPortalCustomizationMainComponent implements OnInit {
 
     public set SelectedMenu(value: any) {
         this.selectedMenu = value;
+        this.selectedMenu.LangCode = this.selectedDisplayLanguage ? this.selectedDisplayLanguage.code : 'EN';
         this.ChangeScreen();
     }
 
@@ -289,6 +290,7 @@ export class DigitalPortalCustomizationMainComponent implements OnInit {
         if (this.selectedObjectTableItem != value) {
             this.selectedObjectTableItem = value;
             this.SelectedMenu.Page.ObjectTableId = value.id;
+            this.SelectedMenu.LangCode = this.selectedDisplayLanguage ? this.selectedDisplayLanguage.code : 'EN';
             this.SelectedMenu.Page.BuildItemsSource();
         }
     }
@@ -315,6 +317,7 @@ export class DigitalPortalCustomizationMainComponent implements OnInit {
             this.selectedProfileItem = value;
             this.SelectedMenu.Page.ProfileId = value.id;
             this.SelectedMenu.Page.ProfileCode = value.code;
+            this.SelectedMenu.LangCode = this.selectedDisplayLanguage ? this.selectedDisplayLanguage.code : 'EN';
 
             if (this.SelectedMenu.Code == "ScreenLayout") {
                 this.SelectedMenu.Page.GetDefaultScreens();
@@ -347,28 +350,20 @@ export class DigitalPortalCustomizationMainComponent implements OnInit {
 
     }
 
-    private selectedDisplayLanguage: any;
+    private selectedDisplayLanguage: DisplayLanguageItem;
     get SelectedDisplayLanguage() { return this.selectedDisplayLanguage; }
     set SelectedDisplayLanguage(value) {
         if (this.selectedDisplayLanguage != value) {
             this.selectedDisplayLanguage = value;
+            this.SelectedMenu.LangCode = value ? value.code : 'EN';
+
+            if (this.SelectedMenu.Code != "ScreenLayout") {
+                this.SelectedMenu.Page.BuildItemsSource();
+            }
         }
     }
 
     private FillDisplayLanguages() {
-        this.CurrentSession.StartBusyIndicatorLoading();
-        this.DigitalDisplayLanguageslList = [
-            {
-                id: 1, name: "English", code: 'EN', displayText: "English",
-            },
-            {
-                id: 2, name: "Espanol", code: 'ES', displayText: "Espanol",
-            }
-        ];
-
-        this.selectedDisplayLanguage = this.DigitalDisplayLanguageslList[0];
-        this.CurrentSession.StopBusyIndicator();
-
         this._digitalLanguageSettingsService.GetDigitalLanguages().subscribe((myResult) => {
             if (!myResult.HasError) {
                 this.DigitalDisplayLanguageslList = [];
@@ -377,7 +372,6 @@ export class DigitalPortalCustomizationMainComponent implements OnInit {
                 languagesResult.forEach(item => {
                     this.DigitalDisplayLanguageslList.push(
                         {
-                            "id": item.Id,
                             "name": item.Name,
                             "code": item.Code,
                             "displayText": item.DisplayText
@@ -388,17 +382,15 @@ export class DigitalPortalCustomizationMainComponent implements OnInit {
 
                 this.selectedDisplayLanguage = this.DigitalDisplayLanguageslList[0];
             }
-
-            this.CurrentSession.StopBusyIndicator();
         });
     }
 
     OnDisplayLanguageChange(event){
         this.selectedDisplayLanguage = event;
-        this.CurrentSession.StartBusyIndicatorLoading();
-        setTimeout(() => {
-            this.CurrentSession.StopBusyIndicator();
-        }, 2000);
+        // this.CurrentSession.StartBusyIndicatorLoading();
+        // setTimeout(() => {
+        //     this.CurrentSession.StopBusyIndicator();
+        // }, 2000);
     }
     
 }
@@ -412,6 +404,17 @@ export class CustomizationMainMenuItem {
     public Page: any = null;
     public screenArgs: any = {};
     public IsVisible: boolean;
+    public LangCode: string;
+
+    constructor() {
+
+    }
+}
+
+export class DisplayLanguageItem {
+    public name: string;
+    public code: string;
+    public displayText: string;
 
     constructor() {
 

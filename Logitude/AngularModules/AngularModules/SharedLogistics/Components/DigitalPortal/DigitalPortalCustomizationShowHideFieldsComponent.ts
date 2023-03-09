@@ -53,6 +53,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
             this.ProfileCode = args.ProfileCode;
             this.ProfileId = args.ProfileId;
             this.ParentObjectTableId = args.ParentObjectTableId;
+            this.customizationEditComponent = args.customizationEditComponent;
             this.BuildItemsSource();
         }
     }
@@ -81,7 +82,8 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
     BuildFields() {
         this.IsDataReady = false; 
         this.CurrentSession.StartBusyIndicatorLoading();
-        this.digitalTextService.GetTextCodesByFilters(null, this.ObjectTableId, this.ProfileCode).subscribe((myResult) => {
+        var _selectedDisplayLangCode = this.customizationEditComponent && this.customizationEditComponent.SelectedMenu ? this.customizationEditComponent.SelectedMenu.LangCode : 'EN'
+        this.digitalTextService.GetTextCodesByFilters(null, this.ObjectTableId, this.ProfileCode, _selectedDisplayLangCode).subscribe((myResult) => {
             if (!myResult.HasError) {
                 this.loadedFieldsResults = myResult.Result.filter(a => !AppTool.IsNullOrEmpty(a['FieldCode']));
                 this.BuildFieldsPremissions();
