@@ -258,7 +258,7 @@ export class CopyRichbitComponent extends BaseComponent {
             }
 
         });
-        confirm.Show(TextCodeTranslator.Translate("Customs.Vehicle.O.OkCopyRichbit") + " " + this.SelectedRow.RichbitFileNumber + " ?");
+        confirm.Show(TextCodeTranslator.Translate("Customs.Vehicle.O.OkCopyRichbit") + " " + this.SelectedRow.RichbitFileNumber);
     }
 
 
