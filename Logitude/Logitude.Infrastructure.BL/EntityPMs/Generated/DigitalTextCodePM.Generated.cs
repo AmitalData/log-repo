@@ -227,6 +227,29 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
+	  private string langaugeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LangaugeCode  
+	   {
+	    
+	     get
+		{
+		   return langaugeCode;
+		 }
+		 set
+		 {
+		   if(langaugeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LangaugeCode",OldValue=langaugeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   langaugeCode=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

@@ -39,6 +39,11 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public string ProfileId { get; set; }
 	      
         public virtual DigitalProfile DigitalProfile { get; set; }
+        [ForeignKey("DigitalPortalLanguage")]
+        [Column("LangaugeCode")]
+	    public string LangaugeCode { get; set; }
+	      
+        public virtual DigitalPortalLanguage DigitalPortalLanguage { get; set; }
     }
 }
 	 
