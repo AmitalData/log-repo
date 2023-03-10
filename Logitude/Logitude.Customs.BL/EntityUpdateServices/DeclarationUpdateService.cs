@@ -1123,13 +1123,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             bool fromcache = true; // why i need the Name ?? 
             _AfterCommitUpdate = true;
-            if (entityPM.CustomerCode != null)
+            if (entityPM.CustomerId != null)
             {
                 CardRepository rep = new CardRepository(entityPM.Tenant);
-                Card customerCard = rep.GetSingleCardByCode(entityPM.CustomerCode, entityPM.Tenant, fromcache);//i leave not from cache-due 4 update 
+                Card customerCard = rep.GetSingleCardByIdAndTenant(entityPM.CustomerId, entityPM.Tenant, fromcache);//i leave not from cache-due 4 update 
                 if (customerCard != null)
                 {
                     entityPM.CustomerName = customerCard.LocalName != null ? customerCard.LocalName : customerCard.EnglishName;
+                    entityPM.CustomerCode = customerCard.Code;
                 }
             }
 
