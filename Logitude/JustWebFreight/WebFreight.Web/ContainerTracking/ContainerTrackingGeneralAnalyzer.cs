@@ -82,9 +82,7 @@ namespace WebFreight.Web.ContainerTracking
                 throw ex;
             }
 
-
             this.AnalyzeData();
-
         }
         private void AnalyzeMessageBody()
         {
@@ -223,17 +221,18 @@ namespace WebFreight.Web.ContainerTracking
         }
         private bool IsUpdateShipmentAllowed(ShipmentPM shipment)
         {
-            if (shipment.IsOperationalClosed)            
+            if (shipment.IsOperationalClosed)
                 return false;
+
             if (!containerTrackingHelper.IsSameLocation(shipment.MainCarriageFromPortId, containerUpdatedFields.POLLocation))
                 return false;
+
             if (!containerTrackingHelper.IsSameLocation(shipment.MainCarriageFinalDestinationPortId, containerUpdatedFields.PODLocation))
                 return false;
-                return true;
-        }
-        
 
- 
+            return true;
+        }   
+
         private bool IsValidToAnalyze(ShipmentPM shipment, ContainerPM container, ContainerTrackingRequest containerTrackingRequest)
         {
             return (
@@ -308,18 +307,14 @@ namespace WebFreight.Web.ContainerTracking
 
             containerUpdatedFields.ContainersExternal.ContainersExternalData_New.Id = container.Id;
             containerUpdatedFields.ContainersExternal.ContainersExternalData_New.Tenant = container.Tenant;
-
-
         }
 
         private ContainerPM GetContainerPM(ContainerTrackingRequest containerTrackingRequest)
         {
-
             var containerRepository = new ContainerRepository(containerUpdatedFields.ShipmentContext);
             var containerQuery = new ContainerQuery(containerRepository);
             var containerPM = containerQuery.GetSinglePM(containerTrackingRequest.ContainerId, containerTrackingRequest.Tenant);
             return containerPM;
-
         }
         private ShipmentPM GetShipmentPM(ContainerTrackingRequest containerTrackingRequest)
         {
@@ -327,7 +322,6 @@ namespace WebFreight.Web.ContainerTracking
             var shipmentQuery = new ShipmentQuery(shipmentRepository);
             var shipmentPM = shipmentQuery.GetSinglePM(containerTrackingRequest.ShipmentId, containerTrackingRequest.Tenant);
             return shipmentPM;
-
         }
 
         private void DoneAnalyzeQueue()
@@ -458,7 +452,6 @@ namespace WebFreight.Web.ContainerTracking
                 Extension = document.Extension,
                 Tenant = document.Tenant,
                 FileSize = byteData.Length,
-
             };
         }
 
