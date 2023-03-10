@@ -41,6 +41,7 @@ export class TaskList {
 	Fields: string;
 	ToDoConditions: string;
 	DoneConditions: string;
+	Description: string;
 	
 }
  

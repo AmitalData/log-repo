@@ -1,7 +1,8 @@
-using Logitude.Server.Tools; 
+using Logitude.Server.Tools;
 using Logitude.Workflow.Data.EntityPOCOs;
 using Logitude.Workflow.BL.EntityPMs;
-using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Server.Infrastructure;
+using Logitude.Workflow.BL.FieldsMapping;
 
 namespace Logitude.Workflow.BL.EntityDataMappings
 {
@@ -9,8 +10,20 @@ namespace Logitude.Workflow.BL.EntityDataMappings
    {
         public void CustomPMToPOCO(TaskStatusPM entityPM, TaskStatus entityPOCO)
         {
-            CustomMappedPOCOProperties.Add(POCOPropertyNames.Id);
-            entityPOCO.Id = entityPM.Id;
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            {
+                CustomMappedPOCOProperties.Add(POCOPropertyNames.Id);
+                entityPOCO.Id = entityPM.Id;
+            }
+
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
+            {
+                CustomMappedPOCOProperties.Add(POCOPropertyNames.CreateDate);
+                CustomMappedPOCOProperties.Add(POCOPropertyNames.CreatedByUserId);
+
+                entityPM.CreateDate = entityPOCO.CreateDate;
+                entityPM.CreatedByUserId = entityPOCO.CreatedByUserId;
+            }
 
             CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
             BuildSearchFields(entityPM, entityPOCO);
@@ -21,40 +34,16 @@ namespace Logitude.Workflow.BL.EntityDataMappings
             CustomMappedPMProperties.Add(PMPropertyNames.CreatedByUserName);
             CustomMappedPMProperties.Add(PMPropertyNames.UpdatedByUserName);
 
-            entityPM.CreatedByUserName = GetUserName(entityPOCO.CreatedByUserId, entityPOCO.Tenant);
-            entityPM.UpdatedByUserName = GetUserName(entityPOCO.UpdatedByUserId, entityPOCO.Tenant);
-        }
-
-        private string GetUserName(string userId, int tenant)
-        {
-            if (!string.IsNullOrEmpty(userId))
-            {
-                var userRepository = new UserRepository(tenant);
-                var user = userRepository.GetSingleUser(userId, tenant, false);
-                return user?.Contact?.EnglishName;
-            }
-            return null;
+            entityPM.CreatedByUserName = EntityFieldsMapping.GetUserName(entityPOCO.CreatedByUserId, entityPOCO.Tenant);
+            entityPM.UpdatedByUserName = EntityFieldsMapping.GetUserName(entityPOCO.UpdatedByUserId, entityPOCO.Tenant);
         }
 
         private void BuildSearchFields(TaskStatusPM entityPM, TaskStatus entityPOCO)
         {
-            string searchFields = "";
-
-            searchFields = AppendToSearchFields(searchFields, entityPM.Code);
-            searchFields = AppendToSearchFields(searchFields, entityPM.Name);
-
+            string[] values = new string[] { entityPM.Code, entityPM.Name };
+            string searchFields = EntityFieldsMapping.GetSearchFields(values);
             entityPM.SearchFields = searchFields;
             entityPOCO.SearchFields = searchFields;
-        }
-
-        private string AppendToSearchFields(string searchFields, string searchField)
-        {
-            if (string.IsNullOrEmpty(searchFields))
-            {
-                return searchField;
-            }
-
-            return searchFields + (string.IsNullOrEmpty(searchField) ? "" : ",") + searchField;
         }
     }
 }

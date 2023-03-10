@@ -80,6 +80,8 @@ namespace Logitude.Workflow.Data.EntityLists
        public string ToDoConditions  { get; set; }
        [DataMember]
        public string DoneConditions  { get; set; }
+       [DataMember]
+       public string Description  { get; set; }
    }
 
 }

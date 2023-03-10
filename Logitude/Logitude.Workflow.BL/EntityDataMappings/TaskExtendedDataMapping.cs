@@ -1,22 +1,11 @@
-
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
 using Logitude.Server.Tools; 
 using Logitude.Workflow.Data.EntityPOCOs;
 using Logitude.Workflow.BL.EntityPMs; 
-using Logitude.Workflow.Data;
 
 namespace Logitude.Workflow.BL.EntityDataMappings
 {
-   
    public partial class TaskExtendedDataMapping: IMapping<TaskExtendedPM, TaskExtended>
    {
-
         public void CustomPMToPOCO(TaskExtendedPM entityPM, TaskExtended entityPOCO)
         {
             //throw new NotImplementedException();
@@ -27,7 +16,4 @@ namespace Logitude.Workflow.BL.EntityDataMappings
             //throw new NotImplementedException();
         }
    }
-
-
 }
-   

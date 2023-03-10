@@ -78,7 +78,7 @@ namespace Logitude.Workflow.Data.EntityListQueryServices
 
 											  TaskTypeName = a.TaskType != null ? a.TaskType.Name : null,
 
-											  EntityObjectTableName = a.EntityObjectTable != null ? (a.EntityObjectTable.FullNameTextCode != null ? a.EntityObjectTable.FullNameTextCode.DefaultText : null) : null,
+											  EntityObjectTableName = a.EntityObjectTable != null ? (a.EntityObjectTable.FullNameTextCode != null ? a.EntityObjectTable.FullNameTextCode.DefaultText : a.EntityObjectTable.Name) : null,
 
 											  ClosedByUserName = a.ClosedByUser != null ? (a.ClosedByUser.Contact != null ? a.ClosedByUser.Contact.EnglishName : null) : null,
 
@@ -89,6 +89,8 @@ namespace Logitude.Workflow.Data.EntityListQueryServices
 											  ToDoConditions = a.TaskExtended != null ? a.TaskExtended.ToDoConditions : null,
 
 											  DoneConditions = a.TaskExtended != null ? a.TaskExtended.DoneConditions : null,
+
+											  Description = a.TaskExtended != null ? a.TaskExtended.Description : null,
 											  
 											});
             return query;
