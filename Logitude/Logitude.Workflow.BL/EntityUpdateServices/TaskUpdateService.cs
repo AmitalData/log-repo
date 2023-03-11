@@ -17,7 +17,7 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
         {
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
-                SetTaskStatus(entityPM, true);
+                SetTaskStatusFields(entityPM, true);
                 CreateTaskExtended(entityPM);
             }
         }
@@ -26,12 +26,12 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
         {
             if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
-                SetTaskStatus(entityPM, false);
+                SetTaskStatusFields(entityPM, false);
                 UpdateTaskExtended(entityPM);
             }
         }
-
-        private void SetTaskStatus(TaskPM entityPM, bool isNew)
+        
+        private void SetTaskStatusFields(TaskPM entityPM, bool isNew)
         {
             TaskStatusRepository taskStatusRepository = new TaskStatusRepository(entityPM.Tenant);
             TaskStatus taskStatus = null;
@@ -48,6 +48,8 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
             entityPM.StatusId = taskStatus?.Id;
             entityPM.IsClosed = taskStatus != null && taskStatus.Closed;
             entityPM.IsCancelled = taskStatus != null && taskStatus.Code == CancelledStatusCode;
+            entityPM.ClosedByUserId = taskStatus != null && taskStatus.Closed ? entityPM.ClosedByUserId : null;
+            entityPM.ClosedDate = taskStatus != null && taskStatus.Closed ? entityPM.ClosedDate : null;
         }
 
         private void CreateTaskExtended(TaskPM entityPM)
