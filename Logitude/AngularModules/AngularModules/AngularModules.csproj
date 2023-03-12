@@ -2089,7 +2089,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\NewEntity\AddNewDeploymentPackageComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\NewEntity\NewExportDeploymentPackageComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\NewEntity\NewImportDeploymentPackageComponent.ts" />
-    <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\ExternalService\DeploymentPackagePermissionService.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\ExternalService\MetadataService.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\ModuleIInfrastructureDeploymentPackage.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocumentDefultAttachmentsComponent.ts" />

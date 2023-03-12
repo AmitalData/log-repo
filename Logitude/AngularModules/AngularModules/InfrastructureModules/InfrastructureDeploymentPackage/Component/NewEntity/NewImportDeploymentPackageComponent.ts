@@ -18,6 +18,7 @@ import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDa
 import { Guid } from '../../../../Infrastructure/Utilities/Guid';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { MetadataService } from '../../ExternalService/MetadataService';
 import { AddNewDeploymentPackageComponent } from './AddNewDeploymentPackageComponent';
 declare var attachmentUploader, ResultAsArray: any;
 
@@ -60,7 +61,9 @@ export class NewImportDeploymentPackageComponent extends BaseComponent {
     public HasErrorsWhileImporting: boolean = false;
     public ExceptionsCollection = new ObservableCollection([]);
     private exceptionsList: Array<string> = [];
-
+    private deploymentValidationMessage: string = "";
+    public IsValidZipFile: boolean = false;
+    private metadataService: MetadataService = new MetadataService();
     constructor() {
         super();
         this.UploadFileId = Guid.NewRandomString();
@@ -130,7 +133,7 @@ export class NewImportDeploymentPackageComponent extends BaseComponent {
         this.ValidateDeploymentPackageCode();
     }
     private ValidateDeploymentPackageCode() {
-        this.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("Validating ...");
         this.deploymentPackageExtendedPMService.ValidateDeploymentPackageCode(this.EntityPM.Code).subscribe((response: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
             if (response.HasError && response.ErrorsArray.length > 0) {
@@ -147,7 +150,7 @@ export class NewImportDeploymentPackageComponent extends BaseComponent {
     public ShowMessage(message: string) {
 
         const messageWindow: MessageWindow = new MessageWindow();
-        messageWindow.Show(message);
+        messageWindow.Show(message);       
     }
 
     public BrowseButtonClicked() {
@@ -330,20 +333,68 @@ export class NewImportDeploymentPackageComponent extends BaseComponent {
     }
 
     NextButtonClickedWithoutValidationErrors() {
+        if (this.IsValidZipFile) {
+            this.CurrentSession.StopBusyIndicator();
+            this.IsNextClicked = true;
+            return;
+        }
         if (AppTool.IsNullOrEmpty(this.uploadedDocumentId)) {
             this.ShowMessage("File not uploaded yet!");
             return;
         }
-        this.IsNextClicked = true;
-        if (this.DeploymentPackageDetailsCollection.Length > 0) return;
-        this.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicator("Validating ...");
         this.deploymentPackageExtendedPMService.GetDeploymentPackageDetailsListByDocumentId(this.uploadedDocumentId).subscribe((response: ServiceResponse) => {
-            if (response.HasError) return;
+            if(response.HasError) return;           
             if (!response.Result) return;
-            this.deploymentPackageDetailsList = response.Result;
-            this.DeploymentPackageDetailsCollection = new ObservableCollection(this.deploymentPackageDetailsList);
             this.CurrentSession.StopBusyIndicator();
+            this.HandleGetDeploymentPackageDetailsListResult(response.Result);         
         });
+    }
+    HandleGetDeploymentPackageDetailsListResult(result: any) {
+        if (!result) return;
+        if (!result.IsValidZipFile) {
+            this.HandleZipFileException();
+            return;
+        }
+        this.IsNextClicked = true;
+        this.IsValidZipFile = true;
+        if (!AppTool.IsNullOrEmpty(result.ValidationMessage)) {
+            this.HandleValidationMessage(result.ValidationMessage);
+        }
+        if (result.DeploymentPackageDetailsList) {
+            this.HandleDeploymentPackageDetailsList(result.DeploymentPackageDetailsList);
+        }
+    }
+
+
+    HandleZipFileException() {
+        this.CurrentSession.StopBusyIndicator();
+        this.IsValidZipFile = false;
+        let msgWindow = new MessageWindow();
+        msgWindow.Show("Invalid Zip file, please export the package from the source company and import it again");
+        msgWindow.WindowClosed.subscribe((event: any) => {
+            if (event != "event") return;
+            this.HandleReUploadingZipFile();
+        });
+
+    }
+    private HandleReUploadingZipFile() {
+        this.DeleteUploadedDocument(true);
+        this.IsUploadVisibile = true;
+        this.IsShowProgressBar = false;
+        this.FileName = "";
+        this.FileSize = "";
+        this.uploadedDocumentId = "";
+        this.UploadedSuccessfully = false;
+    }
+
+    HandleValidationMessage(validationMessage: string) {
+        this.deploymentValidationMessage = validationMessage;
+    }
+    HandleDeploymentPackageDetailsList(deploymentPackageDetailsList: Array<DeploymentPackageDetailsList>){
+        this.deploymentPackageDetailsList = deploymentPackageDetailsList;
+        this.DeploymentPackageDetailsCollection = new ObservableCollection(this.deploymentPackageDetailsList);
+        this.CurrentSession.StopBusyIndicator();
     }
 
     public CancelButtonClicked() {
@@ -354,7 +405,7 @@ export class NewImportDeploymentPackageComponent extends BaseComponent {
         this.DeleteUploadedDocument();
     }
 
-    private DeleteUploadedDocument() {
+    private DeleteUploadedDocument(isDeleteToReUpload:boolean = false) {
         this.CurrentSession.StartBusyIndicator("");
         this.deploymentPackageExtendedPMService.DeleteImportedDocumentById(this.uploadedDocumentId).subscribe((response: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
@@ -362,6 +413,7 @@ export class NewImportDeploymentPackageComponent extends BaseComponent {
                 this.ShowMessage(response.ErrorsArray[0]);
                 return;
             }
+            if (isDeleteToReUpload) return;
             this.CurrentSession.CloseCurrentWindow();
         });
     }
@@ -372,26 +424,16 @@ export class NewImportDeploymentPackageComponent extends BaseComponent {
         confirmWindow.Show("Once you deploy this package, the new changes are permanent. All components that are shown in the list will be added to the listed objects");
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
+                if (!AppTool.IsNullOrEmpty(this.deploymentValidationMessage)) {
+                    this.ShowErrorsComponent();
+                    return;
+                }
                 this.EntityPM.DocumentId = this.uploadedDocumentId;
-                this.CurrentSession.StartBusyIndicator("Validating ...");
-                this.StartValidateImportedDeploymentPackage(this.EntityPM.DocumentId);
+                this.CurrentSession.StartBusyIndicator("Installing New Changes ...");
+                this.AddNewDeploymentPackageComponent.CreateDeploymentPackage();
             }
         });
 
-    }
-    StartValidateImportedDeploymentPackage(documentId: string) {
-        this.deploymentPackageExtendedPMService.ValidateImportedDeploymentPackageByDocumentId(documentId).subscribe((response: ServiceResponse) => {
-            this.CurrentSession.StopBusyIndicator();
-            if (response.HasError && response.ErrorsArray && response.ErrorsArray.length > 0) {
-                this.CurrentSession.StopBusyIndicator();
-                this.ShowErrorsComponent(response.ErrorsArray[0]);
-            }
-            if (!response.HasError) {
-                this.CurrentSession.StartBusyIndicator("Deploying started ...");
-                this.AddNewDeploymentPackageComponent.CreateDeploymentPackage();
-                return;
-            }
-        });
     }
 
     initializeStartCheckDeploymentPackageDeployViaWorkerRoleTimer() {
@@ -440,7 +482,8 @@ export class NewImportDeploymentPackageComponent extends BaseComponent {
 
             if ((pmResponse.HasError && pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) || (deploymentPackageExecutionLogList.StatusCode == "F" || deploymentPackageExecutionLogList.StatusCode == "T")) {
                 this.CurrentSession.StopBusyIndicator();
-                this.ShowErrorsComponent(deploymentPackageExecutionLogList.ExceptionMessage);
+                this.deploymentValidationMessage = deploymentPackageExecutionLogList.ExceptionMessage;
+                this.ShowErrorsComponent();
                 return;
             }
 
@@ -453,27 +496,20 @@ export class NewImportDeploymentPackageComponent extends BaseComponent {
 
 
             if (deploymentPackageExecutionLogList.StatusCode == "D") {
-                CachedDataManager.RefreshTenantTextCodes().subscribe((response: any) => {
-                    this.CurrentSession.StopBusyIndicator();
-                    this.CurrentSession.CloseCurrentWindow();
-                    this.ShowMessage("In Order to apply the changes, please logout and login again");
-
-                });
+                this.metadataService.Refresh();
             }
             
 
         });
     }
-    ShowErrorsComponent(exceptionMessage: string) {
-        if (AppTool.IsNullOrEmpty(exceptionMessage)) return;
+    ShowErrorsComponent() {
+        if (AppTool.IsNullOrEmpty(this.deploymentValidationMessage)) return;
         this.HasErrorsWhileImporting = true;
         this.IsNextClicked = false;
 
-        if (exceptionMessage.charAt(exceptionMessage.length - 1) == '-') {
-            exceptionMessage = exceptionMessage.substring(0, exceptionMessage.length - 1);
-        }
+        this.deploymentValidationMessage = this.deploymentValidationMessage.substring(0, this.deploymentValidationMessage.lastIndexOf('-'));
         
-        this.exceptionsList = exceptionMessage.split('-');
+        this.exceptionsList = this.deploymentValidationMessage.split('-');
         this.ExceptionsCollection = new ObservableCollection(this.exceptionsList);
     }
 

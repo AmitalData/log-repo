@@ -1,10 +1,10 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.Services.DeploymentPackage.ImportingValidator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebFreight.Web.Helpers.WorkerRole.DeploymentPackages.Validator;
 
 namespace WebFreight.Web.Helpers.WorkerRole.Importer
 {
@@ -22,6 +22,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.Importer
         public void Run()
         {
             DeploymentPackageImporterContext deploymentPackageImporterContext = BuildContext();
+            new DeploymentPackageImporterValidatingService(deploymentPackageDetails, tenant).ValidateImportedPackage();
             List<IDeploymentPackageImporterService> expressions = BuildImportersServices();
             foreach (IDeploymentPackageImporterService expression in expressions)
             {
