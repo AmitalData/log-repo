@@ -1,13 +1,13 @@
 ﻿<Script DBType="Main" Module="Accounting">
   <Sql Version="5">
     <![CDATA[
-insert into CopyFromTenant0(Id,Tenant,TableName)values('9999-1',0,'Chart Of Accounts')
-insert into CopyFromTenant0(Id,Tenant,TableName)values('9999-2',0,'GLAccounts')
-insert into CopyFromTenant0(Id,Tenant,TableName)values('9999-3',0,'Automatic Reconcile Methods')
-insert into CopyFromTenant0(Id,Tenant,TableName)values('9999-4',0,'VatTypes')
-insert into CopyFromTenant0(Id,Tenant,TableName)values('9999-5',0,'Computing Partners')
-insert into CopyFromTenant0(Id,Tenant,TableName)values('9999-6',0,'Tenants')
-insert into CopyFromTenant0(Id,Tenant,TableName)values('9999-7',0,'Tasks Scheduler')
+insert into CopyFromTenant0(Id,Tenant,TableName)values('9999-10',0,'Chart Of Accounts')
+insert into CopyFromTenant0(Id,Tenant,TableName)values('9999-20',0,'GLAccounts')
+insert into CopyFromTenant0(Id,Tenant,TableName)values('9999-30',0,'Automatic Reconcile Methods')
+insert into CopyFromTenant0(Id,Tenant,TableName)values('9999-40',0,'VatTypes')
+insert into CopyFromTenant0(Id,Tenant,TableName)values('9999-50',0,'Computing Partners')
+insert into CopyFromTenant0(Id,Tenant,TableName)values('9999-60',0,'Tenants')
+insert into CopyFromTenant0(Id,Tenant,TableName)values('9999-70',0,'Tasks Scheduler')
 	
      ]]>
   </Sql>
