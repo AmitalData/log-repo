@@ -63,6 +63,7 @@ import { DeclarationExtendedListService } from '../../../../../Customs/Services/
 import { Observable } from 'rxjs';
 import { SupplierInvoiceExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
 import { CustomsRequiredFieldExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
+import { formatDate } from '@angular/common';
 @Component({
 
     templateUrl: './DeclarationPaymentExportComponent.html',
@@ -807,7 +808,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
             this.SendButtonEnabled = true;
         }
 
-        if (entityPM.IsSubmitDeclaration==true) {
+        if (entityPM.IsSubmitDeclaration == true) {
             this.IsDisplayOnly = true;
             this.OkButtonEnabled = false;
             this.SendButtonEnabled = false;
@@ -865,7 +866,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
     public ShowStorageStatusMessage: boolean;
 
     DisplayOnlyCheck() {
-     
+
         var declarationDisplayOnly: boolean = false;
         this.DrawMe = true;
         this.ShowStorageStatusMessage = false;
@@ -893,7 +894,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
         }
         else if (this.DeclarationPM.StorageStatusCode && !this.ErrorMessage) {
             this.ShowStorageStatusMessage = true;
-            this.ErrorMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
+            this.ErrorMessage = "בקשת םחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
             this.IsDisplayOnly = false;
 
 
@@ -929,30 +930,30 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
             }
 
             else if (declarationDisplayOnly2) {
-                
-                // if(displayOnlyCheckResult.DisplayOnlyMessage=="אילוץ אושר")
+
+                // if(displayOnlyCheckResult.DisplayOnlyMessage=="םילוץ םושר")
                 // {
                 //     this.IsDisplayOnly = false;
                 //     this.ErrorMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
-    
+
                 //     this.IsDisplayOnly = false;
                 //     this.OkButtonEnabled = true;
                 //     this.SendButtonEnabled = true;
                 // }
-               
+
                 // else{
-                    this.IsDisplayOnly = true;
-                    this.ErrorMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
-    
-                    this.IsDisplayOnly = true;
-                    this.OkButtonEnabled = false;
-                    this.SendButtonEnabled = false;
+                this.IsDisplayOnly = true;
+                this.ErrorMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
+
+                this.IsDisplayOnly = true;
+                this.OkButtonEnabled = false;
+                this.SendButtonEnabled = false;
                 // }
-               
+
             }
             else if (this.DeclarationPM.StorageStatusCode && !this.ErrorMessage) {
                 this.ShowStorageStatusMessage = true;
-                this.ErrorMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
+                this.ErrorMessage = "בקשת םחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
                 this.IsDisplayOnly = false;
             }
 
@@ -986,7 +987,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
 
     SetScreenFieldsEditability() {
         var enabled = !this.IsDisplayOnly;
-        this.UIProperties.SetEnabled("PaymentDate", this.ObjectTableName, enabled);
+        this.UIProperties.SetEnabled("PaymentDate", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("ProcessADescription", this.ObjectTableName, enabled);
         this.UIProperties.SetEnabled("IsProcessA", this.ObjectTableName, enabled);
         this.UIProperties.SetEnabled("SignatoryIdentification", this.ObjectTableName, enabled);
@@ -1020,7 +1021,34 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
     PaymentDateTimeOnBlur(event) {
         //this.IsPaymentDateValid();
     }
-    
+    IsPaymentDateValid() {
+
+        if (this.PaymentDate) {
+
+            //var newDate = new Date();
+            var newDate = DateTool.GetCurrentDateTimeAsUtc();
+            var currentDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(), 0, 0, 0); // last of today
+
+            if (this.PaymentDate < currentDate) {
+                this.UIProperties.SetValidity("PaymentDate", "Customs.DeclarationPayment", false, "לם ניתן להזין תםריך בעבר");
+                return false;
+            } else {
+                this.UIProperties.SetValidity("PaymentDate", "Customs.DeclarationPayment", true, "");
+                return true;
+            }
+
+        }
+        else // no date entered
+        {
+            this.UIProperties.SetValidity("PaymentDate", "Customs.DeclarationPayment", true, "");
+            return true;
+        }
+    }
+    StopMyBusyIndicator() {
+
+        this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+
+    }
 
     OkButtonClicked() {
         if(this.DeclarationPM.IsSubmitDeclaration !=true)
@@ -1044,14 +1072,14 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
                                         if (!AppTool.IsNullOrEmpty(timeCompany)) {
 
                                             if (this.CheckIdDateBetween2Times(timeCompany, this.PaymentDate)) {
-                                                this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
+                                                this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
                                                 isBlockTime = true;
                                             }
                                         }
                                         if (!AppTool.IsNullOrEmpty(timeCustomer)) {
 
                                             if (this.CheckIdDateBetween2Times(timeCustomer, this.PaymentDate)) {
-                                                this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
+                                                this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
                                                 isBlockTime = true;
                                             }
                                         }
@@ -1073,7 +1101,6 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
         
 
     }
-
 
 
     CheckIdDateBetween2Times(times: any, date1: Date) {
@@ -1182,8 +1209,8 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
     customSendOptions: CustomSendOptionsArgs;
     Option: string;
     // Before send
-    SendButtonClicked(event) {
 
+    SendButtonClicked(event) {
         if(this.DeclarationPM.IsSubmitDeclaration !=true)
         {
             this.PaymentDate = DateTool.GetCurrentDateTimeAsUtc();
@@ -1257,14 +1284,14 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
                              if (!AppTool.IsNullOrEmpty(timeCompany)) {
  
                                  if (this.CheckIdDateBetween2Times(timeCompany, this.PaymentDate)) {
-                                     this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
+                                     this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
                                      isBlockTime = true;
                                  }
                              }
                              if (!AppTool.IsNullOrEmpty(timeCustomer)) {
  
                                  if (this.CheckIdDateBetween2Times(timeCustomer, this.PaymentDate)) {
-                                     this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
+                                     this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
                                      isBlockTime = true;
                                  }
                              }
@@ -1464,7 +1491,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
                 this.OnlySendPayment(params);
             }
             else {
-         this.CheckCustomFileCreditThenSendPayment(params);
+                this.CheckCustomFileCreditThenSendPayment(params);
             }
             return;
         }
@@ -1473,7 +1500,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
     CheckCustomFileCreditThenSendPayment(params: CustomFileCreditRequestParams) {
         var myCustomMessageProgressHelper = new CustomMessageProgressHelper(this.CurrentSession);
         myCustomMessageProgressHelper.BasicResponse = true;
-       // myCustomMessageProgressHelper.StartProgress(params.PBId, 5, true);
+        // myCustomMessageProgressHelper.StartProgress(params.PBId, 5, true);
 
         //this.declarationMessagesService.PostCheckCustomFileCreditOnly(params)
         //    .subscribe((myServiceResponse: ServiceResponse) => {
@@ -1518,7 +1545,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
         //            }
 
 
-               
+
 
         //        }
         //    });
@@ -1578,6 +1605,8 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
         }
 
     }
+
+
 
     private Send2755(params: CustomFileCreditRequestParams) {
         let myShowProgressBarParams = new ShowProgressBarParams();
@@ -1705,7 +1734,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
                 confirmWindow.Show(mess);
                 confirmWindow.WindowClosed.subscribe((event: any) => {
 
-                    if (mess.toLowerCase().includes("succeeded") || mess.toLowerCase().includes("בהצלחה") || mess.toLowerCase().includes("נפתחה רשומה בתיקים לאישור") || this._IsCloseScreen == true) // Mirit 20/07/15 Task-14344 - add successfully (Hebrew) // Mirit 24/11/15 Task 18440- add IsCloseScreen
+                    if (mess.toLowerCase().includes("succeeded") || mess.toLowerCase().includes("בהצלחה") || mess.toLowerCase().includes("נפתחה רשומה בתיקים לםישור") || this._IsCloseScreen == true) // Mirit 20/07/15 Task-14344 - add successfully (Hebrew) // Mirit 24/11/15 Task 18440- add IsCloseScreen
                     {
                         this.RefreshDeclaration();
                         if (SessionLocator.SelectedSession.CurrentWindow != null) {
