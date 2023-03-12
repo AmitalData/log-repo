@@ -53,17 +53,26 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
             if (!signQueueHSMService.IsHSMSign_IsOn(requestParams.Tenant))
             {
                 string personId = SignQueue.Instance.GetUserPersonID(requestParams.LoggingUserId, requestParams.Tenant);
-                if (isPersonalSign && string.IsNullOrWhiteSpace(personId))
+
+                string availableSignServer = null;
+                if (isPersonalSign)
+                {
+                    availableSignServer = SignQueue.Instance.GetAvailableSignServer(requestParams.Tenant, SignQueueByType.SignQueueByPersonId, personId);
+
+                }
+
+
+                if (isPersonalSign && string.IsNullOrWhiteSpace(personId) && string.IsNullOrWhiteSpace(availableSignServer))
                 {
                     throw new CourierForceSignException("No Person ID is set for the user");
                 }
                 var dBSignStationCheckService = new DBSignStationCheckService();
                 var signStation = dBSignStationCheckService.GetValidSignStation(requestParams.Tenant, personId, isPersonalSign);
-                if (signStation == null)
+                if (signStation == null && string.IsNullOrWhiteSpace(availableSignServer))
                 {
                     throw new CourierForceSignException("No suitable signature position found");
                 }
-                LogMessagingUtil.Instance.AppendLine($"ApplyForceSign:memory:{signStation.PersonId}");
+                LogMessagingUtil.Instance.AppendLine($"ApplyForceSign:memory:{signStation?.PersonId}");
                 if (isMulti_CheckOnly)
                 {
                     return;
