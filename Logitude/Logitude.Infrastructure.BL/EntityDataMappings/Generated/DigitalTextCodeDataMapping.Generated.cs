@@ -29,7 +29,7 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         ObjectTableId, 
 	         Labels, 
 	         ProfileId, 
-	         LangaugeCode,
+	         LanguageCode,
 	      }
 
 
@@ -45,7 +45,7 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         ObjectTableName, 
 	         ProfileId, 
 	         ProfileCode, 
-	         LangaugeCode,
+	         LanguageCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -84,9 +84,9 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 				entityPOCO.ProfileId = entityPM.ProfileId;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LangaugeCode))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LanguageCode))
             {
-				entityPOCO.LangaugeCode = entityPM.LangaugeCode;
+				entityPOCO.LanguageCode = entityPM.LanguageCode;
 			}
 			}
 
@@ -128,9 +128,9 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 					entityPM.ProfileId = entityPOCO.ProfileId;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LangaugeCode))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LanguageCode))
             {
-					entityPM.LangaugeCode = entityPOCO.LangaugeCode;
+					entityPM.LanguageCode = entityPOCO.LanguageCode;
             }
 
 		}
@@ -169,9 +169,9 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
                 oldEntityPM.ProfileId = entityPM.ProfileId;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LangaugeCode))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LanguageCode))
             {
-                oldEntityPM.LangaugeCode = entityPM.LangaugeCode;
+                oldEntityPM.LanguageCode = entityPM.LanguageCode;
             }
 			
 		}

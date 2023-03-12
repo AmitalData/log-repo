@@ -23,7 +23,7 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                                                                 Tenant = x.Tenant,
                                                                 Labels = x.Labels,
                                                                 ProfileId = x.ProfileId,
-                                                                LangaugeCode = x.LangaugeCode,
+                                                                LanguageCode = x.LanguageCode,
                                                                 CreateDate = x.CreateDate,
                                                                 UpdateDate = x.UpdateDate
                                                             })
@@ -45,7 +45,7 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                                                                ProfileId = x.ProfileId,
                                                                CreateDate = x.CreateDate,
                                                                UpdateDate = x.UpdateDate,
-                                                               ProfileCode = x.DigitalProfile.Name
+                                                               ProfileCode = x.DigitalProfile.Code
                                                            })
                                                            .ToList();
 

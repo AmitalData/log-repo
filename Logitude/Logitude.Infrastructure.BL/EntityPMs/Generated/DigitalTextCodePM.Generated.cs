@@ -227,25 +227,25 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
-	  private string langaugeCode ;
+	  private string languageCode ;
 	  	  
        
 	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string LangaugeCode  
+       public string LanguageCode  
 	   {
 	    
 	     get
 		{
-		   return langaugeCode;
+		   return languageCode;
 		 }
 		 set
 		 {
-		   if(langaugeCode != value)
+		   if(languageCode != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LangaugeCode",OldValue=langaugeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LanguageCode",OldValue=languageCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   langaugeCode=value;
+		   languageCode=value;
 		   }
 			
 		 }

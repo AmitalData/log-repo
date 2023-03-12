@@ -140,56 +140,64 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 digitalFieldSecurityQuery.UpdateDigitalFieldSecurity(customDigitalFieldSecurity);
 
                 var textCodeQuery = new DigitalTextCodeQueryService(tenant);
-                var customTextCodes = textCodeQuery.GetDigitalTextCodesQuery(tenant,
-                                                                             addCustomFieldRequest.ObjectTableId,
-                                                                             addCustomFieldRequest.ProfileCode,
-                                                                             addCustomFieldRequest.LanguageCode);
 
-                if (customTextCodes == null)
+                var tenant0Objects = textCodeQuery.GetDigitalTextCodesTenant0()
+                                                  .Where(a => a.ObjectTableId == addCustomFieldRequest.ObjectTableId)
+                                                  .ToList();
+
+                foreach (var item in tenant0Objects)
                 {
-                    var defaultTextCodes = textCodeQuery.GetDigitalTextCodesQuery(0,
-                                                                                  addCustomFieldRequest.ObjectTableId,
-                                                                                  addCustomFieldRequest.ProfileCode,
-                                                                                  addCustomFieldRequest.LanguageCode);
+                    var customTextCodes = textCodeQuery.GetDigitalTextCodesQuery(tenant,
+                                                                                 item.ObjectTableId,
+                                                                                 item.ProfileCode,
+                                                                                 item.LanguageCode);
 
-                    var customCodesMappedObject = JsonConvert.DeserializeObject<List<DigitalTextCodeUpdateObject>>(defaultTextCodes.Labels);
-
-                    customCodesMappedObject.Add(new DigitalTextCodeUpdateObject
+                    if (customTextCodes == null)
                     {
-                        DisplayText = addCustomFieldRequest.DisplayText,
-                        DefaultText = addCustomFieldRequest.DefaultText, 
-                        TextCode = addCustomFieldRequest.TextCode,
-                        FieldCode = addCustomFieldRequest.FieldCode
-                    });
+                        var defaultTextCodes = textCodeQuery.GetDigitalTextCodesQuery(0,
+                                                                                      addCustomFieldRequest.ObjectTableId,
+                                                                                      addCustomFieldRequest.ProfileCode,
+                                                                                      addCustomFieldRequest.LanguageCode);
 
-                    customTextCodes = new DigitalTextCodeList
+                        var customCodesMappedObject = JsonConvert.DeserializeObject<List<DigitalTextCodeUpdateObject>>(defaultTextCodes.Labels);
+
+                        customCodesMappedObject.Add(new DigitalTextCodeUpdateObject
+                        {
+                            DisplayText = addCustomFieldRequest.DisplayText,
+                            DefaultText = addCustomFieldRequest.DefaultText,
+                            TextCode = addCustomFieldRequest.TextCode,
+                            FieldCode = addCustomFieldRequest.FieldCode
+                        });
+
+                        customTextCodes = new DigitalTextCodeList
+                        {
+                            ObjectTableId = addCustomFieldRequest.ObjectTableId,
+                            Tenant = tenant,
+                            ProfileId = addCustomFieldRequest.ProfileId,
+                            Labels = JsonConvert.SerializeObject(customCodesMappedObject),
+                            LanguageCode = defaultTextCodes.LanguageCode,
+                            CreateDate = todayDate,
+                            UpdateDate = todayDate
+                        };
+                    }
+                    else
                     {
-                        ObjectTableId = addCustomFieldRequest.ObjectTableId,
-                        Tenant = tenant,
-                        ProfileId = addCustomFieldRequest.ProfileId,
-                        Labels = JsonConvert.SerializeObject(customCodesMappedObject),
-                        CreateDate = todayDate,
-                        UpdateDate = todayDate
-                    };
+                        var customCodesMappedObject = JsonConvert.DeserializeObject<List<DigitalTextCodeUpdateObject>>(customTextCodes.Labels);
 
+                        customCodesMappedObject.Add(new DigitalTextCodeUpdateObject
+                        {
+                            DisplayText = addCustomFieldRequest.DisplayText,
+                            DefaultText = addCustomFieldRequest.DefaultText,
+                            TextCode = addCustomFieldRequest.TextCode,
+                            FieldCode = addCustomFieldRequest.FieldCode
+                        });
+
+                        customTextCodes.Labels = JsonConvert.SerializeObject(customCodesMappedObject);
+                        customTextCodes.UpdateDate = todayDate;
+                    }
+
+                    textCodeQuery.UpdateDigitalTextCodes(customTextCodes);
                 }
-                else
-                {
-                    var customCodesMappedObject = JsonConvert.DeserializeObject<List<DigitalTextCodeUpdateObject>>(customTextCodes.Labels);
-
-                    customCodesMappedObject.Add(new DigitalTextCodeUpdateObject
-                    {
-                        DisplayText = addCustomFieldRequest.DisplayText,
-                        DefaultText = addCustomFieldRequest.DefaultText,
-                        TextCode = addCustomFieldRequest.TextCode,
-                        FieldCode = addCustomFieldRequest.FieldCode
-                    });
-
-                    customTextCodes.Labels = JsonConvert.SerializeObject(customCodesMappedObject);
-                    customTextCodes.UpdateDate = todayDate;
-                }
-
-                textCodeQuery.UpdateDigitalTextCodes(customTextCodes);
 
                 return Request.CreateResponse(HttpStatusCode.OK);
             }

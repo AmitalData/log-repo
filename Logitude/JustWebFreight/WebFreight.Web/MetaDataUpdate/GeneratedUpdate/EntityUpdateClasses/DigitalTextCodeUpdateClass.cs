@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DigitalTextCodeUpdateClass
    {  		
-		public const string HashString = "1328f3905cf9f641a760521bd2a764f0";
+		public const string HashString = "40c1931fb39a43db71708441ef6340ca";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -102,6 +102,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    AvailableInCustomization =  false,
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
+			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -128,7 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "DigitalTextCode",
-			      				    Code =  "936e",
+			      				    Code =  "70b9",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "TextCodes",
@@ -700,7 +701,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "LangaugeCode",
+					 						FieldName =  "LanguageCode",
 					  						ObjectTableName =  "DigitalTextCode",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "DigitalPortalLanguage",
@@ -720,8 +721,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "LangaugeCode",
-					  						ListPropertyPath =  "LangaugeCode",
+					  						PMPropertyPath =  "LanguageCode",
+					  						ListPropertyPath =  "LanguageCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -737,7 +739,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "LangaugeCode",
+					  						FullFieldLable =  "LanguageCode",
 					  						DefaultText =  "Digital Portal Language",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "DigitalPortalLanguage",
