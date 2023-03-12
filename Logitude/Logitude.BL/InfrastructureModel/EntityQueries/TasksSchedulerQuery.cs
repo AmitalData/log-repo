@@ -539,7 +539,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 DateTime date = DateTime.UtcNow;
                 TimeSpan ts02 = new TimeSpan(02, 00, 0);
                 TimeSpan ts00 = new TimeSpan(00, 00, 0);
-
+               
                 TasksSchedulerPM tasksScheduler = new TasksSchedulerPM()
                 {
                     Tenant = tenatToCopy,
@@ -547,7 +547,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     UpdateDateTime = DateTime.UtcNow,
                     Name = item.Name,
                     Description = item.Description,
-                    NextRunTime = date.AddDays(1) + ts02,
+                    NextRunTime = date.AddDays(1).Date + ts02,
                     InActive = item.InActive,
                     TriggerType = item.TriggerType,
                     Satarday = item.Satarday,
@@ -557,14 +557,14 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     Wednesday = item.Wednesday,
                     Thursday = item.Thursday,
                     Friday = item.Friday,
-                    StartDateTime = date.AddDays(1) + ts02,
+                    StartDateTime = date.AddDays(1) .Date+ ts02,
                     RepeatInMinutes = item.RepeatInMinutes,
                     IsLastRunError = item.IsLastRunError,
                     MonthlyDay = item.MonthlyDay,
                     SchedulerDetailsXML = item.SchedulerDetailsXML,
                     Type = item.Type,
-                    NextRunTimeUTC = date.AddDays(1) + ts00,
-                    StartDateTimeUTC = date.AddDays(1) + ts00,
+                    NextRunTimeUTC = date.AddDays(1).Date + ts00,
+                    StartDateTimeUTC = date.AddDays(1) .Date+ ts00,
                     Version = item.Version,
                     Status = item.Status,
                     Retries = item.Retries,
