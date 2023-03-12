@@ -33,7 +33,7 @@ namespace Logitude.Infrastructure.Data.EntityLists
        [DataMember]
        public string ProfileCode  { get; set; }
        [DataMember]
-       public string LangaugeCode  { get; set; }
+       public string LanguageCode  { get; set; }
    }
 
 }

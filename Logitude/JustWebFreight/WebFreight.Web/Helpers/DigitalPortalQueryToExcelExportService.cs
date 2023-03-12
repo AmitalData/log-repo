@@ -547,14 +547,14 @@ namespace WebFreight.Web.Helpers
                 sheet1.Range[$"A{index}:V{index}"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
                 sheet1.Range[$"A{index}:V{index}"].VerticalAlignment = ExcelVAlign.VAlignCenter;
 
-                var englishTextCode = item.Value.FirstOrDefault(a => a.LangaugeCode == "EN");
+                var englishTextCode = item.Value.FirstOrDefault(a => a.LanguageCode == "EN");
                 var englishLables = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(englishTextCode.Labels);
 
                 var foreignLables = new List<DigitalTextCodeObject>();
 
                 if (foreignTextObjects.ContainsKey(item.Key))
                 {
-                    var foreignTextCode = foreignTextObjects[item.Key].FirstOrDefault(a => a.LangaugeCode == languageCode);
+                    var foreignTextCode = foreignTextObjects[item.Key].FirstOrDefault(a => a.LanguageCode == languageCode);
 
                     if (foreignTextCode == null)
                     {
@@ -641,10 +641,10 @@ namespace WebFreight.Web.Helpers
                 case "DigitalLabelTranslations":
                     var service = new DigitalTextCodeQueryService(0);
                     var tenant0Objects = service.GetDigitalTextCodesTenant0();
-                    var englishObjects = tenant0Objects.Where(a => a.LangaugeCode == "EN")
+                    var englishObjects = tenant0Objects.Where(a => a.LanguageCode == "EN")
                                                        .GroupBy(a => a.ObjectTableId)
                                                        .ToDictionary(a => a.Key, x => x.ToList());
-                    var foreignObjects = tenant0Objects.Where(a => a.LangaugeCode == args.QueryFilters.LangaugeCode)
+                    var foreignObjects = tenant0Objects.Where(a => a.LanguageCode == args.QueryFilters.LangaugeCode)
                                                        .GroupBy(a => a.ObjectTableId)
                                                        .ToDictionary(a => a.Key, x => x.ToList());
                     data = DigitalTextCodeExportDataToExcel(englishObjects, foreignObjects, args.QueryFilters.LangaugeCode);

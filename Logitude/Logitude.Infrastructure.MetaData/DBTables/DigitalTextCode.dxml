@@ -52,7 +52,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="LangaugeCode"
+    Name="LanguageCode"
+    OldNames="LangaugeCode"
     Type="varchar"
     Size="3">
     <Constraints
@@ -69,7 +70,7 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="LangaugeCode"
+    ForeignKeyColumn="LanguageCode"
     ReferencedTable="DigitalPortalLanguages"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />

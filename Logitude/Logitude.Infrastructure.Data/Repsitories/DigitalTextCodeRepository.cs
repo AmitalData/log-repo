@@ -19,7 +19,7 @@ namespace Logitude.Infrastructure.Data.Repsitories
                           .Where(a => a.Tenant == tenant
                                       && a.ObjectTableId.Equals(objectTableId)
                                       && a.DigitalProfile.Code.Equals(profileCode)
-                                      && a.LangaugeCode.Equals(langCode, StringComparison.InvariantCultureIgnoreCase));
+                                      && a.LanguageCode.Equals(langCode, StringComparison.InvariantCultureIgnoreCase));
         }
         
         public IQueryable<DigitalTextCode> GetDigitalTextCodesTenant0()
