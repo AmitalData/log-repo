@@ -629,7 +629,7 @@ namespace WebFreight.Web.Helpers
                     var textCodeObjects = helper.GetDigitalTextCodeObjects(tenant, 
                                                                            args.QueryFilters.ObjectTableId,
                                                                            args.QueryFilters.ProfileCode,
-                                                                           true, args.QueryFilters.LangaugeCode)
+                                                                           true, args.QueryFilters.LanguageCode)
                                                 .ToDictionary(x => x.TextCode, y => y.DefaultText);
                     data = DigitalPortalShipmentExportToExcel(shipmentsDynamicData, showMultiUnitsOfMeasurements, textCodeObjects);
                     break;
@@ -644,10 +644,10 @@ namespace WebFreight.Web.Helpers
                     var englishObjects = tenant0Objects.Where(a => a.LanguageCode == "EN")
                                                        .GroupBy(a => a.ObjectTableId)
                                                        .ToDictionary(a => a.Key, x => x.ToList());
-                    var foreignObjects = tenant0Objects.Where(a => a.LanguageCode == args.QueryFilters.LangaugeCode)
+                    var foreignObjects = tenant0Objects.Where(a => a.LanguageCode == args.QueryFilters.LanguageCode)
                                                        .GroupBy(a => a.ObjectTableId)
                                                        .ToDictionary(a => a.Key, x => x.ToList());
-                    data = DigitalTextCodeExportDataToExcel(englishObjects, foreignObjects, args.QueryFilters.LangaugeCode);
+                    data = DigitalTextCodeExportDataToExcel(englishObjects, foreignObjects, args.QueryFilters.LanguageCode);
                     break;
                 default:
                     break;
