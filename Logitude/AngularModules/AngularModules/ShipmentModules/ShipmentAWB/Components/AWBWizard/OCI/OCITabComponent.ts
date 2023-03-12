@@ -35,7 +35,7 @@ export class OCITabComponent extends BaseComponent {
     }
 
     RefreshTab() {
-
+        this.BuildData();
     }
 
     private Listen() {
@@ -91,7 +91,7 @@ export class OCITabComponent extends BaseComponent {
             }
         }
 
-        list.sort((a, b) => { return (a === b) ? 0 : a ? -1 : 1 }).forEach((item) => {
+        list.sort((a, b) => { return (a === b) ? 0 : a ? 1 : -1 }).forEach((item) => {
             this.ItemsSource.push(new AWBWizardOCIItem(item, false, this));
         })
     }
