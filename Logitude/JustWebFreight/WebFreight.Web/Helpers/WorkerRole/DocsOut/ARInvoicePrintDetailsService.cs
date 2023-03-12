@@ -35,6 +35,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
             aRInvoicePM.PrintByUserId = aRInvoicePM.IssuedByUserId;
             aRInvoicePM.PrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             aRInvoicePM.IsPrinted = GetIsPrintedValue(aRInvoicePM);
+            aRInvoicePM.IsUpdatedByPrint = true;
             aRInvoiceService.Update(aRInvoicePM, true);
         }
 
