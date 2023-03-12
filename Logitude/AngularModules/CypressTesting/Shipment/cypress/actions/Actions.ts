@@ -415,7 +415,8 @@ export function ValidatePackageDetails(tabSelector: string, partialSplitDetails:
 }
 
 export function ValidateShipmentNumber(OldShipmentNumber: string) {
-    //BaseAssertion.AssertStatusCode(RequestAliases.GetAll, 200)
+    cy.get(ShipmentSelectors.ComponentBusyIndicator).should(BaseSelectors.NotExist);
+    cy.wait(1000)
     cy.get(ShipmentSelectors.ShipmentNumberInTitle + BaseSelectors.LastElement).invoke('text').then((text) => {
         assert.notEqual(OldShipmentNumber + ":", text.trim())
     });
