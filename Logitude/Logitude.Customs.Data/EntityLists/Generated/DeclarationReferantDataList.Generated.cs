@@ -426,6 +426,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string DeclarationIdToDisplay  { get; set; }
        [DataMember]
        public string CustomerId  { get; set; }
+       [DataMember]
+       public bool IsCloseOrOpenFromUser  { get; set; }
    }
 
 }

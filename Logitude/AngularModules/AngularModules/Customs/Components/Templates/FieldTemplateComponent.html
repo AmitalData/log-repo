@@ -505,7 +505,9 @@
                                     <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowDelivery();">
                                         <span>הובלה יבשתית</span>
                                     </li>
-
+                                    <li *ngIf="closingOpening != null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ClosingOpeningFileNo()">
+                                        <span>{{closingOpening}}</span>
+                                    </li>
                                 </ul>
                             </div>
                         </courier-filter-button>
