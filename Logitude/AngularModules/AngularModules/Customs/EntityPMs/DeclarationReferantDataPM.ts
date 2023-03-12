@@ -259,6 +259,11 @@ export class DeclarationReferantDataPM {
     public set DeclarationIdToDisplay(newValue: string) { if (this.declarationIdToDisplay != newValue) { this.declarationIdToDisplay = newValue; this.MarkAsDirty("DeclarationIdToDisplay"); } }
        
 	 
+    private isCloseOrOpenFromUser: boolean;
+    public get IsCloseOrOpenFromUser() { return this.isCloseOrOpenFromUser; }
+    public set IsCloseOrOpenFromUser(newValue: boolean) { if (this.isCloseOrOpenFromUser != newValue) { this.isCloseOrOpenFromUser = newValue; this.MarkAsDirty("IsCloseOrOpenFromUser"); } }
+       
+	 
 
     public OldEntityPM: DeclarationReferantDataPM;
 		

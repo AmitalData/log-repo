@@ -114,7 +114,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Mawb, 
 	         Hawb, 
 	         ImporterApproval, 
-	         DeclarationIdToDisplay,
+	         DeclarationIdToDisplay, 
+	         IsCloseOrOpenFromUser,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
    {  		
-		public const string HashString = "aaff97c9bc74576a1788e4e75af8ee73";
+		public const string HashString = "8407d70b8befb59c6c67a815804002b0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -13100,6 +13100,66 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IsCloseOrOpenFromUser",
+					  						ObjectTableName =  "Customs.DeclarationReferantData",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IsCloseOrOpenFromUser",
+					  						ListPropertyPath =  "IsCloseOrOpenFromUser",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.DeclarationReferantData",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IsCloseOrOpenFromUser",
+					  						DefaultText =  "Is Close Or Open From User",
+					  						ListFieldLable =  "IsCloseOrOpenFromUserListLable",
+					  						ListLableDefaultText =  "Is Close Or Open From User",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -14025,6 +14085,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataNewButton = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.NewButton", DefaultText = "New Button",LocalDefaultText = @"פתיחת תיק חדש", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataRemoveInclusiveMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.RemoveInclusiveMessage", DefaultText = "Please confirm the deletion from the query all inclusive",LocalDefaultText = @"נא אשר מחיקת התיק משאילתא תיקים בכוללת", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOOpenCustomFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.OpenCustomFile", DefaultText = "Open Custom File",LocalDefaultText = @"פתיחת תיק", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOCloseCustomFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.CloseCustomFile", DefaultText = "Close Custom File",LocalDefaultText = @"סגירת תיק", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOConfirmCloseFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.ConfirmCloseFile", DefaultText = "Confirm Close File",LocalDefaultText = @"אשר סגירת תיק", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOConfirmOpenFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.ConfirmOpenFile", DefaultText = "Confirm Open File",LocalDefaultText = @"אשר פתיחת תיק", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

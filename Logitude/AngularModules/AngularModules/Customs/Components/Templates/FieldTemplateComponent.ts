@@ -42,6 +42,7 @@ export class FieldTemplateComponent {
     public SpotlightDataTemplate: string = null;
     public IsSpotLightTemplate: boolean = false;
     public IsHeaderScreenTemplate: boolean = false;
+    public closingOpening: string = null;
     courierMasterService: CourierMasterService = new CourierMasterService();
     customsAutonomyKeywordExtendedPMService: CustomsAutonomyKeywordExtendedPMService = new CustomsAutonomyKeywordExtendedPMService();
 
@@ -89,6 +90,12 @@ export class FieldTemplateComponent {
 
         if (this.IsSpotLightTemplate) {
             this.RunComponent();
+        } 
+        if(this.Entity['IsClosedForFollowUp']== false){
+            this.closingOpening = 'סגירת תיק'
+        } 
+        if(this.Entity['IsClosedForFollowUp']== true){
+            this.closingOpening = 'פתיחת תיק'
         }
     }
 
@@ -684,6 +691,35 @@ export class FieldTemplateComponent {
         }
 
 
+    }
+
+    ClosingOpeningFileNo(){
+        var confirm = new ConfirmWindow(); 
+        confirm.Width = 350;
+        if(this.Entity['IsClosedForFollowUp']== false)
+            confirm.Show("אשר סגירת תיק");
+        else
+            confirm.Show("אשר פתיחת תיק");
+        confirm.WindowClosed.subscribe(() => {
+            if (confirm.Yes) {
+                SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+
+              
+                this._declarationReferantDataPMService.get(this.Entity?.DeclarationId).subscribe((getResponse: any) => {
+                    if (getResponse?.Result) {
+                        const declarationReferantDataPM=getResponse.Result;
+                        declarationReferantDataPM.IsClosedForFollowUp = declarationReferantDataPM.IsClosedForFollowUp == "0" ? "1" : "0";
+                        this._declarationReferantDataPMService.update(declarationReferantDataPM).subscribe((UpdateResponse: any) => {
+                            SessionLocator.SelectedSession.StopBusyIndicator();
+                        });
+                        
+                    }
+                });
+            }
+            confirm.Close();
+       
+        });
+                      
     }
 
     ShowDeclaration(event) {

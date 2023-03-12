@@ -214,6 +214,7 @@ export class DeclarationReferantDataList {
 	FieldR20: string;
 	DeclarationIdToDisplay: string;
 	CustomerId: string;
+	IsCloseOrOpenFromUser: boolean;
 	
 }
  
