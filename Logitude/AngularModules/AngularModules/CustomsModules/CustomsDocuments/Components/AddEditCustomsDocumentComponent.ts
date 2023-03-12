@@ -609,6 +609,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             var messageWindow = new MessageWindow();
             messageWindow.Width = 400;
             messageWindow.Height = 200;
+            messageWindow.RTL=true;
             messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
             messageWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.MustCustomDocumentType"));
             messageWindow.WindowClosed.subscribe((event: any) => {
