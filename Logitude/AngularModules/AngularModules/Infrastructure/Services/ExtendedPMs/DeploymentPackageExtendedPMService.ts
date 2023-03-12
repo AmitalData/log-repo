@@ -67,6 +67,19 @@ export class DeploymentPackageExtendedPMService {
                     catchError(ServiceHelper.HandleServiceError));
         });
     }
+    ValidateImportedDeploymentPackageByDocumentId(documentId: string) {
+        return defer(() => {
+            return this.httpClient.get(this.apiUrl + '/ValidateImportedDeploymentPackageByDocumentId?' + 'documentId=' + documentId, ServiceHelper.GetHttpHeaders())
+                .pipe(
+                    map((response: HttpResponse<any>) => {
+                        let serviceResponse: ServiceResponse = new ServiceResponse();
+                        serviceResponse.Result = response;
+
+                        return serviceResponse;
+                    }),
+                    catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 
     public clone(jsonPM: any) {
         var entityPM: any;

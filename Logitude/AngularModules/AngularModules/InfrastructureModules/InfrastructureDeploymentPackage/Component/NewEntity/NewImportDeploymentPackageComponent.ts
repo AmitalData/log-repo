@@ -373,11 +373,25 @@ export class NewImportDeploymentPackageComponent extends BaseComponent {
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this.EntityPM.DocumentId = this.uploadedDocumentId;
-                this.CurrentSession.StartBusyIndicatorSaving();
-                this.AddNewDeploymentPackageComponent.CreateDeploymentPackage();
+                this.CurrentSession.StartBusyIndicator("Validating ...");
+                this.StartValidateImportedDeploymentPackage(this.EntityPM.DocumentId);
             }
         });
 
+    }
+    StartValidateImportedDeploymentPackage(documentId: string) {
+        this.deploymentPackageExtendedPMService.ValidateImportedDeploymentPackageByDocumentId(documentId).subscribe((response: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            if (response.HasError && response.ErrorsArray && response.ErrorsArray.length > 0) {
+                this.CurrentSession.StopBusyIndicator();
+                this.ShowErrorsComponent(response.ErrorsArray[0]);
+            }
+            if (!response.HasError) {
+                this.CurrentSession.StartBusyIndicator("Deploying started ...");
+                this.AddNewDeploymentPackageComponent.CreateDeploymentPackage();
+                return;
+            }
+        });
     }
 
     initializeStartCheckDeploymentPackageDeployViaWorkerRoleTimer() {

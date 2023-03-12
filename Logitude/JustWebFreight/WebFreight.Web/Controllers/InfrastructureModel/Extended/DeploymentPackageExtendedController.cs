@@ -31,6 +31,8 @@ using System.Web.Http;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Helpers.WorkerRole.DeploymentPackages.Validator;
+using WebFreight.Web.Helpers.WorkerRole.Importer;
 using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
@@ -102,6 +104,34 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
                 DeploymentPackageRepository entityRepository = new DeploymentPackageRepository(MyContext);
                 DeploymentPackageValidating.ValidateCode(code, authToken.Tenant, entityRepository);
+
+                return Request.CreateResponse(HttpStatusCode.OK, "Done");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        [HttpGet]
+        public HttpResponseMessage ValidateImportedDeploymentPackageByDocumentId(string documentId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
+                DeploymentPackageDetails deploymentPackageDetails = new DeploymentPackageExtractDetailsService().ExtractDeploymentPackageDetailsByDocumentId(documentId, authToken.Tenant);
+
+                DeploymentPackageImporterContext deploymentPackageImporterContext = new DeploymentPackageImporterContext()
+                {
+                    Tenant = authToken.Tenant,
+                    DeploymentPackageDetails = deploymentPackageDetails
+                };
+
+                new DeploymentPackageImporterValidatingService(deploymentPackageImporterContext).ValidateImportedPackage();
 
                 return Request.CreateResponse(HttpStatusCode.OK, "Done");
             }

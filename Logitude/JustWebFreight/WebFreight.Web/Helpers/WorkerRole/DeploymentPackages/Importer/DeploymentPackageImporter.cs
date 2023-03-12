@@ -22,7 +22,6 @@ namespace WebFreight.Web.Helpers.WorkerRole.Importer
         public void Run()
         {
             DeploymentPackageImporterContext deploymentPackageImporterContext = BuildContext();
-            new DeploymentPackageImporterValidatingService(deploymentPackageImporterContext).ValidateImportedPackage();
             List<IDeploymentPackageImporterService> expressions = BuildImportersServices();
             foreach (IDeploymentPackageImporterService expression in expressions)
             {
