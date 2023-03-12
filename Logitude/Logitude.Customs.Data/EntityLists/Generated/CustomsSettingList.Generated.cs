@@ -66,6 +66,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string HSMCompanyId  { get; set; }
        [DataMember]
        public string HSMToken  { get; set; }
+       [DataMember]
+       public bool StandAlone  { get; set; }
    }
 
 }

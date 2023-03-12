@@ -59,6 +59,9 @@ namespace Logitude.Customs.BL.TraceEvents
                     return;
                 }
 
+                if (mySetting.StandAlone) // Dont Raise UniFreight Status- only event
+                    return;
+
                 if (!mySetting.IsConnectedToUniFreight && mySetting.UnfConnectionString == null)
                 {
                     if (!UseHybrid_When_NotIsConnectedToUniFreight)
