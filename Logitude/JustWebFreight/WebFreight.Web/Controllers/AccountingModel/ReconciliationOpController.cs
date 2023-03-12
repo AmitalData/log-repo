@@ -507,7 +507,7 @@ tenant);
         }
 
         [HttpGet]
-        public HttpResponseMessage GetFirst5000LedgerForReconciliation(string gLAccountId, [FromUri] ApiQueryFilters filters)
+        public HttpResponseMessage GetFirst500LedgerForReconciliation(string gLAccountId, [FromUri] ApiQueryFilters filters)
         {
             try
             {
@@ -528,7 +528,42 @@ tenant);
                     response.Count = count;
                 }
 
-                response.Result = openTransactions.Take(5000);
+                response.Result = openTransactions.Take(500);
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        [HttpGet]
+        public HttpResponseMessage GetFirstXLedgerForReconciliationByParam(string gLAccountId, [FromUri] ApiQueryFilters filters)
+        {
+            try
+            {
+                int tenant = GetAuthinticatedTenant();
+                QueryOperations queryOperations = GetQueryOperationsFromFilter(filters, tenant);
+
+                LedgerTransactionListQueryService transactionQuery = new LedgerTransactionListQueryService(AccountingContext.GetContext(tenant));
+
+                GenericCallBack callback = transactionQuery.GetReconciliationFilterCallBack(queryOperations, gLAccountId, tenant, true);
+
+
+                List<LedgerTransactionList> openTransactions = transactionQuery.GetOpenReconciliationFilterList(queryOperations, callback, gLAccountId, tenant);
+
+                ServiceResponse response = new ServiceResponse();
+                if (filters.GetCount)
+                {
+                    int count = callback.TotalRecord;
+                    response.Count = count;
+                }
+                int firstX = 500;  // preparation fo a possible future parameter 
+                //response.Result = openTransactions.Take(5000);
+                response.Result = openTransactions.Take(firstX);
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
                 return reponseMessage;
@@ -611,8 +646,9 @@ tenant);
 
                         string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
                         object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
-
-                        queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
+                        bool displayInList = field.DisplayInList;
+                        if (displayInList && !filter.DisplayInList) displayInList = false;
+                        queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, displayInList);
                     }
                     else
                     {

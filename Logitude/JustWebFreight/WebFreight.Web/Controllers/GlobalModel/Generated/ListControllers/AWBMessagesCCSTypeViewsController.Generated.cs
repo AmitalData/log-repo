@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
 				AWBMessagesCCSTypeRepository  aWBMessagesCCSTypeRepository = new AWBMessagesCCSTypeRepository(MyContext);
 				AWBMessagesCCSTypeList entityList = null;
 				AWBMessagesCCSType entityPoco = aWBMessagesCCSTypeRepository.GetSingleAWBMessagesCCSType(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<AWBMessagesCCSType> singleEntityList = new List<AWBMessagesCCSType>();
 					singleEntityList.Add(entityPoco);

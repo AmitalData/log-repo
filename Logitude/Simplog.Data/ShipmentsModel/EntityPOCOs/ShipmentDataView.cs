@@ -67,6 +67,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string AccountManagerUserName { get; set; }
         public string CreatedByUserId { get; set; }
         public string DepartmentId { get; set; }
+        public string DepartmentName { get; set; }
         public string Notes { get; set; }
         public string DescriptionOfGoods { get; set; }
 
@@ -837,5 +838,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public int? NumberOfTransshipments { get; set; }
         public string Transshipments { get; set; }
         public string TruckerId { get; set; }
+        public string ContainersNumbers { get; set; }
     }
 }

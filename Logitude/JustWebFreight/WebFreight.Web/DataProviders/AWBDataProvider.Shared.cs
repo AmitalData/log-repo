@@ -310,6 +310,7 @@ namespace WebFreight.Web.DataProviders
         public string PreCarriageToName { get; set; }
 
         public string WarehouseLegTerminalName { get; set; }
+        public string TenantAddress_WithCountry { get; set; }
     }
 
     public class CommodityLine

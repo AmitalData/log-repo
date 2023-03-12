@@ -123,6 +123,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  CreatedByPartner = card.CreatedByPartner,
                                                  BillToId = card.BillToId,
                                                  SATCustomerName = card.SATCustomerName,
+                                                 EORInumber = card.EORInumber,
                                              });
 
 
@@ -255,6 +256,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       RankId = a.Customer != null ? (a.Customer.Rank != null ? a.Customer.Rank.Id : null) : null,
                                       IndustryId = a.Customer != null ? (a.Customer.Industry != null ? a.Customer.Industry.Id : null) : null,
                                       LeadSourceId = a.Customer != null ? (a.Customer.LeadSource != null ? a.Customer.LeadSource.Id : null) : null,
+                                      Field1 = a.Customer != null ? a.Customer.Field1: null ,
+                                      Field2 = a.Customer != null ? a.Customer.Field2 : null,
+                                      Field3 = a.Customer != null ? a.Customer.Field3 : null,
+                                      Field4 = a.Customer != null ? a.Customer.Field4 : null,
+                                      Field5 = a.Customer != null ? a.Customer.Field5 : null,
+                                      Field6 = a.Customer != null ? a.Customer.Field6 : null,
+                                      Field7 = a.Customer != null ? a.Customer.Field7 : null,
+                                      Field8 = a.Customer != null ? a.Customer.Field8 : null,
+                                      Field9 = a.Customer != null ? a.Customer.Field9 : null,
+                                      Field10 = a.Customer != null ? a.Customer.Field10 : null,
                                       LeadDescription = a.Customer != null ? a.Customer.LeadDescription : null,
                                       StartWorkingDate = a.Customer != null ? a.Customer.StartWorkingDate: null,
                                       BillToId = a.BillToId,
@@ -263,6 +274,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
                                       ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
                                       CustomerSizeId = a.Customer != null ? (a.Customer.CustomerSize != null ? a.Customer.CustomerSize.Id : null) : null,
+                                      EORInumber = a.EORInumber,
                                   }).FirstOrDefault();
 
 
@@ -366,6 +378,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   RankId = a.Customer != null ? (a.Customer.Rank != null ? a.Customer.Rank.Id : null) : null,
                                   IndustryId = a.Customer != null ? (a.Customer.Industry != null ? a.Customer.Industry.Id : null) : null,
                                   LeadSourceId = a.Customer != null ? (a.Customer.LeadSource != null ? a.Customer.LeadSource.Id : null) : null,
+                                  Field1 = a.Customer != null ? a.Customer.Field1 : null,
+                                  Field2 = a.Customer != null ? a.Customer.Field2 : null,
+                                  Field3 = a.Customer != null ? a.Customer.Field3 : null,
+                                  Field4 = a.Customer != null ? a.Customer.Field4 : null,
+                                  Field5 = a.Customer != null ? a.Customer.Field5 : null,
+                                  Field6 = a.Customer != null ? a.Customer.Field6 : null,
+                                  Field7 = a.Customer != null ? a.Customer.Field7 : null,
+                                  Field8 = a.Customer != null ? a.Customer.Field8 : null,
+                                  Field9 = a.Customer != null ? a.Customer.Field9 : null,
+                                  Field10 = a.Customer != null ? a.Customer.Field10 : null,
                                   CustomerSizeId = a.Customer != null ? (a.Customer.CustomerSize != null ? a.Customer.CustomerSize.Id : null) : null,
                                   LeadDescription = a.Customer != null ? a.Customer.LeadDescription : null,
                                   StartWorkingDate = a.Customer != null ? a.Customer.StartWorkingDate : null,
@@ -374,6 +396,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   SATCustomerName = a.SATCustomerName,
                                   ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
                                   ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
+                                  EORInumber = a.EORInumber,
                               }).FirstOrDefault();
 
                     if (entity != null)
@@ -620,6 +643,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               CreatedByPartner = a.CreatedByPartner,
                                               BillToId = a.BillToId,
                                               SATCustomerName = a.SATCustomerName,
+                                              EORInumber = a.EORInumber,
                                           });
             return cards;
         }
@@ -691,6 +715,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               CreatedByPartner = a.CreatedByPartner,
                                               BillToId = a.BillToId,
                                               SATCustomerName = a.SATCustomerName,
+                                              EORInumber = a.EORInumber,
                                           });
             return cards;
         }
@@ -793,6 +818,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           SATCustomerName = a.SATCustomerName,
                                           ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
                                           ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
+                                          EORInumber = a.EORInumber,
                                       }).FirstOrDefault();
 
                             if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
@@ -884,6 +910,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       SATCustomerName = a.SATCustomerName,
                                       ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
                                       ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
+                                      EORInumber = a.EORInumber,
                                   }).FirstOrDefault();
                     }
                 }
@@ -965,6 +992,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   SATCustomerName = a.SATCustomerName,
                                   ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
                                   ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
+                                  EORInumber = a.EORInumber,
                               }).FirstOrDefault();
                 }
 
@@ -1038,6 +1066,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     StorageFreeDays = entityPOCO.StorageFreeDays,
                     BillToId = entityPOCO.BillToId,
                     SATCustomerName = entityPOCO.SATCustomerName,
+                    EORInumber = entityPOCO.EORInumber,
                 };
 
                 if (entityPOCO.Customer != null)
@@ -1295,6 +1324,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 RecordDate = card.UpdateDate != null ? card.UpdateDate : card.CreateDate,
                                                 BillToId = card.BillToId,
                                                 SATCustomerName = card.SATCustomerName,
+                                                EORInumber = card.EORInumber,
                                             };
 
             if (myResult.Count() > 0)
@@ -1377,6 +1407,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               CreatedByPartner = a.CreatedByPartner,
                                               BillToId = a.BillToId,
                                               SATCustomerName = a.SATCustomerName,
+                                              EORInumber = a.EORInumber,
                                           });
             return cards;
         }
@@ -1570,6 +1601,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     IsInternationalPartner = oldTenantCard.IsInternationalPartner,
                     IsAutonomy = oldTenantCard.IsAutonomy,
                     SATCustomerName = oldTenantCard.SATCustomerName,
+                    EORInumber = oldTenantCard.EORInumber,
                 };
 
                 #region PaymentTerm
@@ -2334,6 +2366,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        CreatedByPartner = a.CreatedByPartner,
                                        BillToId = a.BillToId,
                                        SATCustomerName = a.SATCustomerName,
+                                       EORInumber = a.EORInumber,
                                    }).ToList();
             return card.FirstOrDefault();
         }

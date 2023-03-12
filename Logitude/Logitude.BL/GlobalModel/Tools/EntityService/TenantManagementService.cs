@@ -131,6 +131,10 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             {
                 DeleteImageFromCargoTrackingImages(entityPoco.BackgroundId);
             }
+            if (this.entityPM.MobileBackgroundId != this.entityPoco.MobileBackgroundId)
+            {
+                DeleteImageFromCargoTrackingImages(entityPoco.MobileBackgroundId);
+            }
             if (this.entityPM.ComapnylogoId != this.entityPoco.ComapnylogoId)
             {
                 DeleteImageFromCargoTrackingImages(entityPoco.ComapnylogoId);

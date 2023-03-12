@@ -86,7 +86,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 
                 return Request.CreateResponse(HttpStatusCode.OK, limitWarningMsg);
             }
-
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
@@ -281,7 +280,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage CheckHousesOpenAmounts(string masterId)
+        public HttpResponseMessage GetCheckHousesOpenAmounts(string masterId)
         {
             try
             {

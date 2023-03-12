@@ -33,7 +33,7 @@ export class CargoTrackingShipmentExtendedService
     {
         return this._http.get(this._apiUrl + '/GetCargoShipmentPMBySecurityKey?'
             + 'securityKey=' + securityKey
-            + '&tenant=' + tenant).pipe(
+            + '&tenant=' + tenant, this.authHeaders).pipe(
                 map((response: ServiceResponse) =>
                 {
                     var serviceResponse: ServiceResponse = new ServiceResponse();

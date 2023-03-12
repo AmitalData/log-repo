@@ -211,7 +211,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
 
         protected override void UpdateCalculatedFields(OpportunityPM entityPM, EntityPM entityParentPM, Opportunity entityPOCO)
         {
-            new OpportunityAnalyticTableService(MainContext.GetActiveDbContext()).AddUpdate(entityPOCO);
+            new OpportunityAnalyticTableService(MainContext.GetActiveDbContext()).AddUpdate(entityPOCO, entityPM.Tenant);
         }
 
         protected override void Trace(OpportunityPM entityPM, Opportunity entityPOCO, string changesXml)

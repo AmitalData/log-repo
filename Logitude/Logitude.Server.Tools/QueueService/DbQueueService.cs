@@ -26,6 +26,7 @@ namespace Logitude.Server.Tools.QueueService
         protected string QueueCode { get; set; }
         protected string CurrentMessageId { get; set; }
         private const int messageBodyLength = 2000;
+        [ThreadStatic] public static int? MessageID = null;
         public DbQueueService()
         {
 
@@ -58,7 +59,7 @@ namespace Logitude.Server.Tools.QueueService
                 queueDefRep.SubmitChanges();
             }
 
-            
+
         }
 
         private static QueueDefinition GetQueueDefFromCache(string queueCode, QueueDefinitionRepository queueDefRep)
@@ -92,7 +93,7 @@ namespace Logitude.Server.Tools.QueueService
                 string messageBody = DictionaryJsonConverter.FromDictionaryToJson(messageValues);
                 string strConnString = TenantServerConfigration.GetDbConnection(this.Tenant);
                 string bodyHashCode = MD5HashUtil.GenerateHashForString(messageBody);
-                
+
                 QueueResponse response = new QueueResponse();
                 DataTable tblQueue = new DataTable();//
                 int delaySeconds = 0;
@@ -188,7 +189,7 @@ namespace Logitude.Server.Tools.QueueService
                         cmd.Parameters.Add(hashCodePar);
                         cmd.Parameters.Add(watingStatusPar);
                         cmd.Parameters.Add(queueMessageIdPar);
-                       
+
 
 
                         //cmd.Parameters.Add(NextRunDateTime);
@@ -205,6 +206,7 @@ namespace Logitude.Server.Tools.QueueService
                                 if (!String.IsNullOrWhiteSpace(sQueueMessageId))
                                 {
                                     queueMessageId = sQueueMessageId.ChangeValue<int>();
+                                  
                                 }
                             }
 
@@ -236,7 +238,7 @@ namespace Logitude.Server.Tools.QueueService
                         SqlParameter hashCodePar = new SqlParameter("@HashCode", SqlDbType.NVarChar, 1000);
                         SqlParameter watingStatusPar = new SqlParameter("@WatingStatus", SqlDbType.Int);
                         SqlParameter messageIdPar = new SqlParameter("@MessageId", SqlDbType.BigInt);
-                        
+
 
                         queueCodePar.Direction = ParameterDirection.Input;
                         msgBodyPar.Direction = ParameterDirection.Input;
@@ -280,7 +282,7 @@ namespace Logitude.Server.Tools.QueueService
                             string sQueueMessageId = v_QueueMessageId.ToString();
                             if (!String.IsNullOrWhiteSpace(sQueueMessageId))
                             {
-                                queueMessageId = sQueueMessageId.ChangeValue<int>();
+                                queueMessageId = sQueueMessageId.ChangeValue<int>();                               
                                 AddQueueDetailsToRequestHeaders(messageBody, sQueueMessageId);
                             }
                         }
@@ -297,7 +299,7 @@ namespace Logitude.Server.Tools.QueueService
         }
 
         private static void AddQueueDetailsToRequestHeaders(string messageBody, string sQueueMessageId)
-        { 
+        {
             if (HttpContext.Current != null && HttpContext.Current.Request != null)
             {
                 if (HttpContext.Current.Response.Headers["SentQueueMessages"] == null)
@@ -404,7 +406,7 @@ namespace Logitude.Server.Tools.QueueService
                                         RunDebuggerBreak();
                                     }
 
-                                    
+
                                 }
 
                             }
@@ -456,6 +458,14 @@ namespace Logitude.Server.Tools.QueueService
 
                                 if (long.TryParse(cmd.Parameters["@MessageId"].Value.ToString(), out messageId))
                                 {
+                                    try
+                                    {
+                                        MessageID = (int)messageId;
+                                    }
+                                    catch
+                                    {
+
+                                    }
                                     this.CurrentMessageId = response.MessageId = messageId.ToString();
                                     response.RetryNumber = (int)cmd.Parameters["@RetryNumber"].Value;
                                     string messageBody = cmd.Parameters["@MessageBody"].Value as string;
@@ -468,7 +478,7 @@ namespace Logitude.Server.Tools.QueueService
                                     RunDebuggerBreak();
                                 }
 
-                                
+
                             }
 
                         }
@@ -578,7 +588,7 @@ namespace Logitude.Server.Tools.QueueService
                                         RunDebuggerBreak();
                                     }
 
-                                    
+
                                 }
 
                             }
@@ -631,6 +641,14 @@ namespace Logitude.Server.Tools.QueueService
                                 if (long.TryParse(cmd.Parameters["@MessageId"].Value.ToString(), out messageId))
                                 {
                                     this.CurrentMessageId = response.MessageId = messageId.ToString();
+                                    try
+                                    {
+                                        MessageID = (int)messageId;
+                                    }
+                                    catch
+                                    {
+
+                                    }
                                     response.RetryNumber = (int)cmd.Parameters["@RetryNumber"].Value;
                                     string messageBody = cmd.Parameters["@MessageBody"].Value as string;
                                     if (!string.IsNullOrEmpty(messageBody))
@@ -643,7 +661,7 @@ namespace Logitude.Server.Tools.QueueService
                                 }
                             }
 
-                            
+
 
                         }
                     }

@@ -466,8 +466,11 @@ namespace WebFreight.Web.WebPages
                     if (isFromDigital)
                     {
                         var query = new DocumentsFilingQuery(tenant);
-                        var cc = query.GetDocumentsFilingByDocumentId(document.Id, tenant);
-                        documentType = cc.DocumentTypeName;
+                        var documentsFilingPM = query.GetDocumentsFilingByDocumentId(document.Id, tenant);
+                        if (documentsFilingPM != null)
+                        {
+                            documentType = documentsFilingPM.DocumentTypeName;
+                        }
                     }
 
                     if (!string.IsNullOrEmpty(documentExtension))
@@ -513,7 +516,9 @@ namespace WebFreight.Web.WebPages
                             if (isFromDigital)
                             {
                                 var digitalFileName = !string.IsNullOrEmpty(document.CalculatedFileName) ? document.CalculatedFileName : document.FileName;
-                                documentName = $"{documentType} - {digitalFileName}.{documentExtension}";
+
+                                documentType =  !string.IsNullOrWhiteSpace("documentType") ? (documentType + "-") : "";
+                                documentName = $"{documentType}{digitalFileName}.{documentExtension}";
                             }
 
                             // _DatainByte = sender as byte[];

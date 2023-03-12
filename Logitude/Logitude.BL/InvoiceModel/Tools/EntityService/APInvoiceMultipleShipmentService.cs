@@ -149,7 +149,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.CreateAPInvoiceMessage();
             entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
-            new APInvoiceAnalyticTableService(objectContext.GetActiveDbContext()).AddUpdate(invoice);
+            new APInvoiceAnalyticTableService(objectContext.GetActiveDbContext()).AddUpdate(invoice, tenant);
 
         }
 
@@ -239,7 +239,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.GetForeignFields();
             this.RunStoredProcedures();
 
-            new APInvoiceAnalyticTableService(objectContext.GetActiveDbContext()).AddUpdate(invoice);
+            new APInvoiceAnalyticTableService(objectContext.GetActiveDbContext()).AddUpdate(invoice, tenant);
         }
 
         #region Initialize

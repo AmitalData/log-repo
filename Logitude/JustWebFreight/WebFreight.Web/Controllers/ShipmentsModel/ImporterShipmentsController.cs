@@ -37,6 +37,7 @@ using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.GlobalModel.EntityPMs;
 using System.Transactions;
 using Simplog.Data.Helpers;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.Controllers.ShipmentsModel
 {
@@ -1262,7 +1263,12 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             }
             return null;
         }
-
+        private static bool IsRemoveExceptionLogicEnabled(int tenant)
+        {
+            if (FeatureToggleHelper.HasFeatureToggle("REL", tenant))
+                return true;
+            return false;
+        }
         private static void HandleRemoveExceptionDetails(ShipmentAM entityAM, ShipmentPM entityPM)
         {
             EntityStatus shipmentStatus = EntityStatusRepository.GetSingleEntityStatus(entityPM.StatusId, entityPM.Tenant, true);
@@ -1270,11 +1276,11 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             {
                 RemoveExceptionDetails(entityPM, "Customs Clearance");
             }
-            else if (entityPM.DirectionId == "E" && entityAM.HasException && shipmentStatus != null && shipmentStatus.Code == "ARR")
+            else if (entityPM.DirectionId == "E" && entityAM.HasException && shipmentStatus != null && shipmentStatus.Code == "ARR" && IsRemoveExceptionLogicEnabled(entityAM.ImporterTenant))
             {
                 RemoveExceptionDetails(entityPM, "Shipment Already arrived");
             }
-            else if (entityPM.DirectionId == "E" && entityAM.HasException && shipmentStatus != null)
+            else if (entityPM.DirectionId == "E" && entityAM.HasException && shipmentStatus != null && IsRemoveExceptionLogicEnabled(entityAM.ImporterTenant))
             {
                 HandleRemoveExceptionDetailsByEntityStatusWeight(entityPM, shipmentStatus);
             }

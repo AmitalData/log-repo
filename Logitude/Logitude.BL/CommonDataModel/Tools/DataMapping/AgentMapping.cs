@@ -59,7 +59,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.SATCustomerName = entityPM.SATReceptorName;
             entityCard.ExportLocalCustomerGroupId = entityPM.ExportLocalCustomerGroupId;
             entityCard.ImportLocalCustomerGroupId = entityPM.ImportLocalCustomerGroupId;
-
+            entityCard.EORInumber = entityPM.EORInumber;
+            
             entityPOCO.CASSCode = entityPM.CASSCode;
             entityPOCO.IATACode = entityPM.IATACode;
             entityPOCO.RegulatedAgentCode = entityPM.RegulatedAgentCode;

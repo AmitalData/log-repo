@@ -2947,6 +2947,7 @@
     <Compile Include="Helpers\BatchPrint\BatchPrintService.cs" />
     <Compile Include="Helpers\BatchPrint\PrintingResult.cs" />
     <Compile Include="Helpers\BatchPrint\ShipmentBatchPrinter.cs" />
+    <Compile Include="Helpers\BIReport\BIReportTotalsService.cs" />
     <Compile Include="Helpers\BrandingHelper.cs" />
     <Compile Include="Helpers\BIReport\BIReportXMLDataService.cs" />
     <Compile Include="Helpers\CallBack\CallBackService.cs" />
@@ -3796,6 +3797,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBChargesCodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBCustomsInformationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBInformationUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ContainerDiscrepancyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ContainerFollowUpUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ContainersExternalDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ContainerStatusSourceUpdateClass.cs" />

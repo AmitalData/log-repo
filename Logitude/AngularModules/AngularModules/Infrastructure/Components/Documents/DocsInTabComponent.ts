@@ -85,7 +85,6 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     IsLoadDocumentTypeListsComplete: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     IsApprovePendingDocumentsEnabled:boolean = false;
-    public Customer: CustomerList;
     public IsDigitalPortalInvitedCustomer: boolean = false;
     public IsDocumentsNeedApprove: boolean = false;
     public CustomerListService: CustomerListService;
@@ -291,11 +290,13 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     }
 
     CheckCustomerInvitationStatus() {
+        if (this.ObjectTableName != "Shipment") return;
+        if (!this.EntityPM) return;
         this.CustomerListService = new CustomerListService();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.CustomerListService.getSingle(this.EntityPM.CustomerId).subscribe((response: any) => {
-            this.CurrentSession.StartBusyIndicatorLoading();
-            this.Customer = response.Result;
-            if (this.Customer.SharedLogisticsInvitationStatusName != "Not Invited")
+            let customer = response.Result;
+            if (customer && customer.SharedLogisticsInvitationStatusName != "Not Invited")
                 this.IsDigitalPortalInvitedCustomer = true;
             this.CurrentSession.StopBusyIndicator();
         });

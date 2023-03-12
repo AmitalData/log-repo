@@ -99,6 +99,16 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public DateTime? StartWorkingDate { get; set; }
         public string LeadSourceId { get; set; }
         public string CustomerSizeId { get; set; }
+        public string Field1 { get; set; }
+        public string Field2{ get; set; }
+        public string Field3 { get; set; }
+        public string Field4 { get; set; }
+        public string Field5 { get; set; }
+        public string Field6 { get; set; }
+        public string Field7 { get; set; }
+        public string Field8 { get; set; }
+        public string Field9{ get; set; }
+        public string Field10 { get; set; }
 
         [Include]
         [Association("CardCustomAgent", "Id", "Id", IsForeignKey = true)]
@@ -226,5 +236,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ExportLocalCustomerGroupId { get; set; }
         public bool IsPotential { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string EORInumber { get; set; }
+
     }
 }

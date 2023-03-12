@@ -189,6 +189,50 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public Card Notify2 { get; set; }
     
     public string Notify2Reference { get; set; }
+    
+    public TransportMode PreForwardingTransportMode { get; set; }
+    
+    public Port PreForwardingFromPort { get; set; }
+    
+    public Port PreForwardingToPort { get; set; }
+    
+    public DateTime? PreForwardingATD { get; set; }
+    
+    public DateTime? PreForwardingATA { get; set; }
+    
+    public DateTime? PreForwardingETD { get; set; }
+    
+    public DateTime? PreForwardingETA { get; set; }
+    
+    public string PreForwardingCarrierNumber { get; set; }
+    
+    public Card PreForwardingCarrier { get; set; }
+    
+    public Vessel PreForwardingVessel { get; set; }
+    
+    public TransportMode OnForwardingTransportMode { get; set; }
+    
+    public Port OnForwardingFromPort { get; set; }
+    
+    public Port OnForwardingToPort { get; set; }
+    
+    public DateTime? OnForwardingATD { get; set; }
+    
+    public DateTime? OnForwardingATA { get; set; }
+    
+    public DateTime? OnForwardingETD { get; set; }
+    
+    public DateTime? OnForwardingETA { get; set; }
+    
+    public string OnForwardingCarrierNumber { get; set; }
+    
+    public Card OnForwardingCarrier { get; set; }
+    
+    public Vessel OnForwardingVessel { get; set; }
+    
+    public PrepaidCollect OtherPrepaidCollect { get; set; }
+    
+    public PrepaidCollect FreightPrepaidCollect { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

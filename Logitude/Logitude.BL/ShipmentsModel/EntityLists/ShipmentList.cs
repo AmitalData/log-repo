@@ -205,6 +205,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? LastUpdateDate { get; set; }
       
         public string DepartmentId { get; set; }
+        public string DepartmentName { get; set; }
         public string BranchId { get; set; }
 
         public string LongMaster { get; set; }
@@ -693,6 +694,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string NotesSharedWithCustomer { get; set; }
         public double? Volume { get; set; }
         public bool IsDocumentsNeedApprove { get; set; }
+        public string ContainersNumbers { get; set; }
 
     }
 }

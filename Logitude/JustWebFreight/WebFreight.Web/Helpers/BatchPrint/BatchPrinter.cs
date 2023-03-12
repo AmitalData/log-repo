@@ -317,7 +317,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
             try
             {
                 if (template != null) template.DocumentOutId = documentOut?.Id;
-                StiReport report = exportDocumentHelper.GetReportDocument(template, item.EntityId, item.ObjectTableId, item.EntityId,
+                StiReport report = exportDocumentHelper.GetReportDocument(template, item.EntityId, item.ObjectTableId, item.ChildEntityId,
                 item.ObjectTableId, documentTypeCopy, template.TemplateBody, _batchPrinterArgs.Tenant, new long(), new long(), new long(), new long(), printedBy.Id);
                 var stream = new MemoryStream();
                 report.ExportDocument(StiExportFormat.Pdf, stream);
@@ -402,7 +402,9 @@ namespace WebFreight.Web.Helpers.BatchPrint
                 DocumentTypeCopyId = _batchPrinterArgs.CopyId,
                 DocumentTypeId = _batchPrinterArgs.DocumentTypeId,
                 DocumentTemplateId = _batchPrinterArgs.TemplateId,
+                ChildEntityId = item.ChildEntityId,
             };
+
             return documentsFilingRepository.GetDocumentOutCopy(args);
         }
 

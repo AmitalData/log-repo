@@ -423,6 +423,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         }
                         else
                         {
+                            if (!string.IsNullOrWhiteSpace(item.DisplayText))
+                            {
+                                item.DefaultText = item.DisplayText;
+                            }
+
                             defaultCodesObject.Add(item);
                         }
                     }

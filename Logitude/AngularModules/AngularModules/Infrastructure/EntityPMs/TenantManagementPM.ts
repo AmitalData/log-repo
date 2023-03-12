@@ -724,6 +724,11 @@ export class TenantManagementPM {
     public set BackgroundId(newValue: string) { if (this.backgroundId != newValue) { this.backgroundId = newValue; this.MarkAsDirty("BackgroundId"); } }
        
 	 
+    private mobileBackgroundId: string;
+    public get MobileBackgroundId() { return this.mobileBackgroundId; }
+    public set MobileBackgroundId(newValue: string) { if (this.mobileBackgroundId != newValue) { this.mobileBackgroundId = newValue; this.MarkAsDirty("MobileBackgroundId"); } }
+       
+	 
     private comapnylogoId: string;
     public get ComapnylogoId() { return this.comapnylogoId; }
     public set ComapnylogoId(newValue: string) { if (this.comapnylogoId != newValue) { this.comapnylogoId = newValue; this.MarkAsDirty("ComapnylogoId"); } }
@@ -968,6 +973,36 @@ export class TenantManagementPM {
     private isContainerTrackingPrepaid: boolean;
     public get IsContainerTrackingPrepaid() { return this.isContainerTrackingPrepaid; }
     public set IsContainerTrackingPrepaid(newValue: boolean) { if (this.isContainerTrackingPrepaid != newValue) { this.isContainerTrackingPrepaid = newValue; this.MarkAsDirty("IsContainerTrackingPrepaid"); } }
+       
+	 
+    private digitalPortalLastDate: Date;
+    public get DigitalPortalLastDate() { return this.digitalPortalLastDate; }
+    public set DigitalPortalLastDate(newValue: Date) { if (this.digitalPortalLastDate != newValue) { this.digitalPortalLastDate = newValue; this.MarkAsDirty("DigitalPortalLastDate"); } }
+       
+	 
+    private digitalPortalTotalLastWeek: number;
+    public get DigitalPortalTotalLastWeek() { return this.digitalPortalTotalLastWeek; }
+    public set DigitalPortalTotalLastWeek(newValue: number) { if (this.digitalPortalTotalLastWeek != newValue) { this.digitalPortalTotalLastWeek = newValue; this.MarkAsDirty("DigitalPortalTotalLastWeek"); } }
+       
+	 
+    private digitalPortalTotalLastMonth: number;
+    public get DigitalPortalTotalLastMonth() { return this.digitalPortalTotalLastMonth; }
+    public set DigitalPortalTotalLastMonth(newValue: number) { if (this.digitalPortalTotalLastMonth != newValue) { this.digitalPortalTotalLastMonth = newValue; this.MarkAsDirty("DigitalPortalTotalLastMonth"); } }
+       
+	 
+    private digitalPortalMobileLastDate: Date;
+    public get DigitalPortalMobileLastDate() { return this.digitalPortalMobileLastDate; }
+    public set DigitalPortalMobileLastDate(newValue: Date) { if (this.digitalPortalMobileLastDate != newValue) { this.digitalPortalMobileLastDate = newValue; this.MarkAsDirty("DigitalPortalMobileLastDate"); } }
+       
+	 
+    private digitalPortalMobTotalLastWeek: number;
+    public get DigitalPortalMobTotalLastWeek() { return this.digitalPortalMobTotalLastWeek; }
+    public set DigitalPortalMobTotalLastWeek(newValue: number) { if (this.digitalPortalMobTotalLastWeek != newValue) { this.digitalPortalMobTotalLastWeek = newValue; this.MarkAsDirty("DigitalPortalMobTotalLastWeek"); } }
+       
+	 
+    private digitalPortalMobTotalLastMonth: number;
+    public get DigitalPortalMobTotalLastMonth() { return this.digitalPortalMobTotalLastMonth; }
+    public set DigitalPortalMobTotalLastMonth(newValue: number) { if (this.digitalPortalMobTotalLastMonth != newValue) { this.digitalPortalMobTotalLastMonth = newValue; this.MarkAsDirty("DigitalPortalMobTotalLastMonth"); } }
        
 	 
 

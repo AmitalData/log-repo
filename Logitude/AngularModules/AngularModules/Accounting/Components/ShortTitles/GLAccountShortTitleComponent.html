@@ -17,7 +17,7 @@
                     </div>
                  </td>
                  <td style="width:20px;">
-                    <div  *ngIf="(EntityPM.AccountTypeCode=='3' || EntityPM.AccountTypeCode=='2') && IsConnectedToOneCard  " style="padding-left: 5px; font-size: 18px; color: #333333;font-family: Arial;">
+                    <div  *ngIf="IsConnectedToOneCard" style="padding-left: 5px; font-size: 18px; color: #333333;font-family: Arial;">
                         <a href="#" style="font-size:12px" (click)="OpenCardScreen(null)">{{'Accounting.General.O.MoreData'| TextCodeTranslationPipe}}</a>
                     </div>
                  </td>

@@ -1,4 +1,5 @@
-﻿using Logitude.BL.DataContracts;
+﻿using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.DataContracts;
 using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.CloseTables;
 using Logitude.BL.ShipmentsModel.EntityPMs;
@@ -42,6 +43,8 @@ namespace WebFreight.Web.ContainerTracking
         private string trackingSource;
         private ContainerUpdatedFields containerUpdatedFields;
         private ContainerTrackingHelper containerTrackingHelper;
+        private PortQuery portQuery;
+        private PortRepository portRepository;
         public ContainerTrackingGeneralAnalyzer(string trackingSource, AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
         {
             if (analyzeQueue != null)
@@ -51,6 +54,8 @@ namespace WebFreight.Web.ContainerTracking
                 this.analyzeQueueRepository = analyzeQueueRepository;
                 this.trackingSource = trackingSource;
             }
+            this.portRepository = new PortRepository(tenant_Zero);
+            this.portQuery = new PortQuery(portRepository);
         }
 
         public void Run()
@@ -77,9 +82,7 @@ namespace WebFreight.Web.ContainerTracking
                 throw ex;
             }
 
-
             this.AnalyzeData();
-
         }
         private void AnalyzeMessageBody()
         {
@@ -150,6 +153,7 @@ namespace WebFreight.Web.ContainerTracking
 
             if (trackingSource == ContainerStatusSourceValues.OceanInsights)
             {
+                manager.Initialize(containerUpdatedFields.Tenant);
                 manager.Update(true, true);
             }
 
@@ -185,9 +189,11 @@ namespace WebFreight.Web.ContainerTracking
 
                 ContainerPM container = GetContainerPM(containerTrackingRequest);
                 ShipmentPM shipment = GetShipmentPM(containerTrackingRequest);
+                manager.allTrasshipmentLegs = new List<dynamic>();
 
                 if (IsValidToAnalyze(shipment, container, containerTrackingRequest))
                 {
+                    manager.Initialize(containerTrackingRequest.Tenant);
                     manager.SetContainer(container);
                     manager.SetShipment(shipment);
                     MapContainersExternalData(container);
@@ -215,17 +221,18 @@ namespace WebFreight.Web.ContainerTracking
         }
         private bool IsUpdateShipmentAllowed(ShipmentPM shipment)
         {
-            if (shipment.IsOperationalClosed)            
+            if (shipment.IsOperationalClosed)
                 return false;
-            
-            if (!containerTrackingHelper.IsSameLocation(shipment.MainCarriageFromPortId, containerUpdatedFields.POLLocation))            
+
+            if (!containerTrackingHelper.IsSameLocation(shipment.MainCarriageFromPortId, containerUpdatedFields.POLLocation))
                 return false;
-            
-            if (!containerTrackingHelper.IsSameLocation(shipment.MainCarriageFinalDestinationPortId, containerUpdatedFields.PODLocation))            
-                return false;            
-            
+
+            if (!containerTrackingHelper.IsSameLocation(shipment.MainCarriageFinalDestinationPortId, containerUpdatedFields.PODLocation))
+                return false;
+
             return true;
-        }
+        }   
+
         private bool IsValidToAnalyze(ShipmentPM shipment, ContainerPM container, ContainerTrackingRequest containerTrackingRequest)
         {
             return (
@@ -300,18 +307,14 @@ namespace WebFreight.Web.ContainerTracking
 
             containerUpdatedFields.ContainersExternal.ContainersExternalData_New.Id = container.Id;
             containerUpdatedFields.ContainersExternal.ContainersExternalData_New.Tenant = container.Tenant;
-
-
         }
 
         private ContainerPM GetContainerPM(ContainerTrackingRequest containerTrackingRequest)
         {
-
             var containerRepository = new ContainerRepository(containerUpdatedFields.ShipmentContext);
             var containerQuery = new ContainerQuery(containerRepository);
             var containerPM = containerQuery.GetSinglePM(containerTrackingRequest.ContainerId, containerTrackingRequest.Tenant);
             return containerPM;
-
         }
         private ShipmentPM GetShipmentPM(ContainerTrackingRequest containerTrackingRequest)
         {
@@ -319,7 +322,6 @@ namespace WebFreight.Web.ContainerTracking
             var shipmentQuery = new ShipmentQuery(shipmentRepository);
             var shipmentPM = shipmentQuery.GetSinglePM(containerTrackingRequest.ShipmentId, containerTrackingRequest.Tenant);
             return shipmentPM;
-
         }
 
         private void DoneAnalyzeQueue()
@@ -450,7 +452,6 @@ namespace WebFreight.Web.ContainerTracking
                 Extension = document.Extension,
                 Tenant = document.Tenant,
                 FileSize = byteData.Length,
-
             };
         }
 
@@ -644,6 +645,13 @@ namespace WebFreight.Web.ContainerTracking
         public MilestoneData VesselDeparted;
         public MilestoneData DischargedTransshipment;
         public string OnCarriageLocation;
+
+        public string POLLegVessel;
+        public string POLLegVoyage;
+
+        public string PODLegVessel;
+        public string PODLegVoyage;
+
         public string VisionPreCarriage { get; set; }
         public string VisionOnCarriage { get; set; }
     }

@@ -473,6 +473,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="EORInumber"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="InvoiceCurrencyId"
     ReferencedTable="Currencies"

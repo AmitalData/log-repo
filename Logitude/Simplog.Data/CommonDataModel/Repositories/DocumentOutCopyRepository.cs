@@ -40,6 +40,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 .Where(e => e.DocumentTypeCopyId == args.DocumentTypeCopyId
                     && e.DocumentTypeCopy.DocumentTypeId == args.DocumentTypeId
                     && e.DocumentOut.DocumentsFiling.EntityId == args.EntityId
+                    && e.DocumentOut.DocumentsFiling.ChildEntityId == args.ChildEntityId
                     && e.DocumentOut.DocumentsFiling.ObjectTableId == args.ObjectTableId
                     && e.Tenant == args.Tenant
                     && e.DocumentOut.DocumentTemplateId == args.DocumentTemplateId)

@@ -139,6 +139,13 @@ namespace Logitude.BL.CommonDataModel
                 Name = "Accounting Partner", 
                 SearchFields = "AC,Accounting Partner", 
 			});
+			 
+            all.Add(new PartnerTypeDetails()
+            {    
+                Id = "SC", 
+                Name = "Shipper-Consignee", 
+                SearchFields = "SC,Shipper-Consignee", 
+			});
 			
             return all;
        }

@@ -504,7 +504,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         this._isAllSelected = v;
 
         if (v) {
-            this.GetFirst5000LedgerForReconciliation();
+            //this.GetFirst5000LedgerForReconciliation();
+            this.GetFirstXLedgerForReconciliationByParam();
         } else {
             this.ReloadScreen();
             this.SelectedLines.Clear();
@@ -788,6 +789,11 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
         //#region filters
         var filterAgrs = new ApiQueryFilters;
+
+        if (this.dateFilter) {
+            filterAgrs.AdditionalFilters.push(this.dateFilter);
+        }
+
         if (this.currencyFilter) {
             filterAgrs.AdditionalFilters.push(this.currencyFilter);
         }
@@ -833,7 +839,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                         var line = new LineModel(result[i], this,-1);
                         array.push(line);
                         //this.MarkIsChecked.emit({ MyRecord: result[i], AllRecords: result });
-                        this.FireCheckBoxChecked.emit({ rowData: line.LedgerTransactionPM, IsChecked: true, RowIndex: -1, ById: true });
+                        // this.FireCheckBoxChecked.emit({ rowData: line.LedgerTransactionPM, IsChecked: true, RowIndex: -1, ById: true });
                     }
                     this.SelectedLines.InsertCollection(array);
                     //this.SelectedLines.Length = this.SelectedLines.length;
@@ -1260,7 +1266,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             this.CalculateTotals();
 
             // update select all checkbox
-            if (this.SelectedLines.Length >= this.DataSource.rowCount || this.SelectedLines.Length >= 5000)
+            if (this.SelectedLines.Length >= this.DataSource.rowCount || this.SelectedLines.Length >= 500)
                 this._isAllSelected = true;
         }
     }
@@ -1338,12 +1344,33 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     }
     //#endregion
 
-    GetFirst5000LedgerForReconciliation()
-    {
+    GetFirst500LedgerForReconciliation() {
         this.ValidationErrorsList = [];
         var filters = this.GetAPIFilters();
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.PrepareTransactions")); //"Preparing Transactions..."
-        this._LedgerTransactionExtendedListService.GetFirst5000LedgerForReconciliation(this.GLAccountPM.Id, filters).subscribe((myResult: ServiceResponse) => {
+        this._LedgerTransactionExtendedListService.GetFirst500LedgerForReconciliation(this.GLAccountPM.Id, filters).subscribe((myResult: ServiceResponse) => {
+            var mm: ServiceResponse = myResult;
+            var first100Transactions = mm.Result;
+            if (!mm.HasError) {
+                if (!AppTool.IsNullOrEmpty(first100Transactions)) {
+                    this.SelectLines(first100Transactions);
+                    this.CalculateTotals();
+                }
+            }
+            else {
+                this.ValidationErrorsList = mm.ErrorsArray;
+                this.CurrentSession.StopBusyIndicator();
+            }
+            this.CurrentSession.StopBusyIndicator();
+        });
+    }
+
+
+    GetFirstXLedgerForReconciliationByParam() {
+        this.ValidationErrorsList = [];
+        var filters = this.GetAPIFilters();
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.PrepareTransactions")); //"Preparing Transactions..."
+        this._LedgerTransactionExtendedListService.GetFirstXLedgerForReconciliationByParam(this.GLAccountPM.Id, filters).subscribe((myResult: ServiceResponse) => {
             var mm: ServiceResponse = myResult;
             var first100Transactions = mm.Result;
             if (!mm.HasError) {
@@ -1387,7 +1414,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         if (this.foreignAmountFilter) {
             filters.AdditionalFilters.push(this.foreignAmountFilter);
         }
-        filters.PageSize = 5000;
+        filters.PageSize = 500;
         filters.PageIndex = 1; // decremented 1 in the service
         filters.GetAll = true;
         filters.GetCount = true;
@@ -1478,7 +1505,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
                 this.CurrentSession.StopBusyIndicator();
 
-
+                this.ReloadScreen();
+                //this.SelectedLines.Clear();
+                this.CalculateTotals();
 
             }
 

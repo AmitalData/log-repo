@@ -233,7 +233,16 @@ using Simplog.Data.CommonDataModel;
 			       
 					   				   }
 				   
-				   temp.IsPotential = MyEntityPM.IsPotential;					
+				   temp.IsPotential = MyEntityPM.IsPotential; 
+
+			  
+				   if(MyEntityPM.PrimaryContactId != null)
+				   {
+					   ContactQueryService ContactService15 = new ContactQueryService(Tenant);
+					   					   temp.PrimaryContact = ContactService15.GetContactById(MyEntityPM.PrimaryContactId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				   					
 				   return temp;
 			}
             catch (Exception ex)
@@ -349,11 +358,11 @@ using Simplog.Data.CommonDataModel;
 
 					if(MyEntity.Contacts != null && MyEntity.Contacts.Count > 0)
 					{
-						ContactQueryService ContactService15 = new ContactQueryService(Tenant);
+						ContactQueryService ContactService16 = new ContactQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								
-							temp.Contacts = ContactService15.ContactCustomDataMappingAndValidatin(MyEntity,MyEntity.Contacts,Tenant,ComputingPartnerName,IsUpdate);
+							temp.Contacts = ContactService16.ContactCustomDataMappingAndValidatin(MyEntity,MyEntity.Contacts,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -665,6 +674,27 @@ using Simplog.Data.CommonDataModel;
 
 										}  
 
+					
+					ContactQueryService PrimaryContactContactService = new ContactQueryService(Tenant);
+					if(MyEntity.PrimaryContact != null)
+					{
+						var myPrimaryContactPM = PrimaryContactContactService.ContactDataMappingAndValidatin(MyEntity.PrimaryContact,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myPrimaryContactPM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								
+								temp.PrimaryContactId = myPrimaryContactPM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
 										   
 					return temp;
 		    }

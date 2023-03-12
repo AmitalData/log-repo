@@ -28,6 +28,8 @@ export class ARInvoiceValidator {
 
         Validator.TryValidateObject(this.EntityPM, "ARInvoice", this.Errors);
 
+        this.ValidateSATStatus();
+        
         if (this.EntityPM.IsInvoiceNumberManuallySet && AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber)) {
             this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.YouShouldSetInvoiceNumber"));
         }
@@ -87,6 +89,15 @@ export class ARInvoiceValidator {
 
         return this.Errors;
     }
+    private ValidateSATStatus() {
+        if (!SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "INU")[0]) return;
+
+        let sATTransferingStatusCode = "TG";
+        if (this.EntityPM.SATTransferStatusCode == sATTransferingStatusCode) {
+            this.Errors.push("You are not allowed to update the invoice while its status is Transferring to SAT");
+        }
+    }
+
     private ValidateNormalInvoice() {
         if (this.EntityPM.InvoiceLines.length == 0) {
             this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.YouShouldHaveOneLineAtLeast"));

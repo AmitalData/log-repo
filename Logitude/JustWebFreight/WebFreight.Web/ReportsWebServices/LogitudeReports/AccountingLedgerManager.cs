@@ -295,6 +295,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             #region AR/ Invoice
             foreach (ARInvoice openARinvoice in iQueryable_ARInvoice_Open)
             {
+                string creditedByARInvoiceTypeCode = null;
+
+                if (!string.IsNullOrEmpty(openARinvoice.CreditedByARInvoiceId))
+                {
+                    ARInvoice creditedByInvoice = iQueryable_ARInvoice_All.Where(d => d.Id == openARinvoice.CreditedByARInvoiceId).FirstOrDefault();
+                    if (creditedByInvoice != null)
+                    {
+                        creditedByARInvoiceTypeCode = creditedByInvoice.ARInvoiceTypeCode;
+                    }
+                }
+
                 AccountingLedger accountingLedgerRecord = new AccountingLedger();
                 accountingLedgerRecord.Currency = systemCurrencies.Where(d => d.Id == openARinvoice.InvoiceCurrencyId).FirstOrDefault().Code;
                 accountingLedgerRecord.Notes = openARinvoice.InternalNotes;
@@ -349,8 +360,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 }
                 else
                 {
-                    accountingLedgerRecord.Credits = (double)Math.Abs((decimal)openARinvoice.AmountInInvoiceCurrency);
-                    accountingLedgerRecord.CreditInLocalCurrency = (double)Math.Abs((decimal)openARinvoice.AmountInLocalCurrency);
+                    if (openARinvoice.StatusCode == "AC" && (creditedByARInvoiceTypeCode == "CD" || creditedByARInvoiceTypeCode == "CC"))
+                    {
+                        accountingLedgerRecord.Debit = openARinvoice.AmountInInvoiceCurrency;
+                        accountingLedgerRecord.DebitInLocalCurrency = openARinvoice.AmountInLocalCurrency;
+                    }
+
+                    else
+                    {
+                        accountingLedgerRecord.Credits = (double)Math.Abs((decimal)openARinvoice.AmountInInvoiceCurrency);
+                        accountingLedgerRecord.CreditInLocalCurrency = (double)Math.Abs((decimal)openARinvoice.AmountInLocalCurrency);
+                    }
                 }
 
                 OpeningAccounts.Add(accountingLedgerRecord);
@@ -1073,6 +1093,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     break;
                                 }
                         }
+
+                        if (ledger.AccountBanalnce == null)
+                            ledger.AccountBanalnce = 0;
+
+                        if (ledger.AccountBalanceInLocalCurrency == null)
+                            ledger.AccountBalanceInLocalCurrency = 0;
 
                         AccountingLedger currencyRecord = new AccountingLedger();
                         currencyRecord.Currency = ledger.Currency;

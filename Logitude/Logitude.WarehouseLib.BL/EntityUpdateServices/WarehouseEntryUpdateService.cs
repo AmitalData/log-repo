@@ -36,6 +36,7 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
                 entityPM.EntryNumber = TableCounter.GetNumber(entityPM.Tenant, "WAEC", null, null).ToString();
                 this.BuildActivityLog("N", entityPM);
 
+                SetPartnerContactField(entityPM);
                 new MainEntityChangeService(new EntityChangeArgs()
                 {
                     EntityPM = entityPM,
@@ -47,7 +48,7 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
                     EntityReference = entityPM.EntryNumber
                 }).AddEntityChange();
             }
-            
+
         }
 
         private void UpdateShipment(WarehouseEntryPM entityPM)
@@ -157,6 +158,7 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
 
             if (!entityPM.IsUpdateByAutomation)
             {
+                SetPartnerContactField(entityPM);
                 new MainEntityChangeService(new EntityChangeArgs()
                 {
                     EntityPM = entityPM,
@@ -169,6 +171,21 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
                     EntityReference = entityPM.EntryNumber
                 }).AddEntityChange();
             }
+        }
+
+        public void SetPartnerContactField(WarehouseEntryPM entityPM)
+        {
+            entityPM.ShipperPrimaryContactId = GetPrimaryContactId(entityPM.ShipperId, entityPM.Tenant);
+            entityPM.CustomerPrimaryContactId = GetPrimaryContactId(entityPM.CustomerId, entityPM.Tenant);
+            entityPM.ConsigneePrimaryContactId = GetPrimaryContactId(entityPM.ConsigneeId, entityPM.Tenant);
+        }
+
+        private string GetPrimaryContactId(string cardId, int tenant)
+        {
+            CardQuery cardQuery = new CardQuery(tenant);
+            CardPM cardPM = cardQuery.GetSinglePM(cardId, tenant);
+            if (cardPM == null) return null;
+            return cardPM.PrimaryContactId;
         }
 
         private void AddTraceEvents(WarehouseEntryPM entityPM, WarehouseEntry entityPOCO)

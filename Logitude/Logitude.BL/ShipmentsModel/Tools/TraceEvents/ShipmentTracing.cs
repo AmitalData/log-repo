@@ -1156,7 +1156,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             var newEntityStatusWeight = newEntityStatus.StatusLocalWeight != null ? newEntityStatus.StatusLocalWeight : newEntityStatus.StatusWeight;
             var oldEntityStatusWeight = oldEntityStatus.StatusLocalWeight != null ? oldEntityStatus.StatusLocalWeight : oldEntityStatus.StatusWeight;
 
-            if (oldEntityStatusWeight >= newEntityStatusWeight)
+            if (oldEntityStatusWeight > newEntityStatusWeight)
                 return false;
 
             return true;

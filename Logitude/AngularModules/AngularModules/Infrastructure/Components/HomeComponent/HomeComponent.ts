@@ -27,6 +27,7 @@ import { interval } from 'rxjs';
 import { timeInterval } from 'rxjs/operators';
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { GlobalDomainService } from '../../../Common/Services/GlobalDomainService';
+import { CustomizationPermissionService } from '../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
 
 @Component({
     templateUrl: './HomeComponent.html',
@@ -196,7 +197,7 @@ export class HomeComponent implements OnDestroy{
             this.IsCustomizationVisible = true;
         }
 
-        else if (FeatureLocator.HasFeaturePermession("General", "General.Features.Customization")) {
+        else if (CustomizationPermissionService.HasFeaturePermession("General", "General.Features.Customization")) {
             this.IsCustomizationVisible = true;
         }
 
@@ -249,17 +250,7 @@ export class HomeComponent implements OnDestroy{
         if (SessionLocator.Tenant == 261) {
             return true;
         }
-        if (FeatureLocator.HasFeaturePermession("General", "General.Features.CustomizationSettings") && this.UserHasCustomizationSettingAccess()) {
-            return true;
-        }
-        if (FeatureLocator.HasFeaturePermession("General", "General.Features.CustomizationSettings") && SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CUS")[0]) {
-            return true;
-        }
-        return false;
-    }
-
-    UserHasCustomizationSettingAccess(): boolean {
-        if (SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting.DeploymentStage == "Dev" || SessionLocator.LoggedUserPM.IsDistributor) {
+        if (CustomizationPermissionService.HasFeaturePermession("General", "General.Features.CustomizationSettings") && CustomizationPermissionService.HasToggleFeaturePermession("CUS")) {
             return true;
         }
         return false;
@@ -1877,6 +1868,8 @@ export class HomeComponent implements OnDestroy{
     }
 
     ViewReleaseNotes() {
+        ServiceLocator.SendTotangoUserActivity("Release Pop-up", "View Release Notes");
+
         var url = ServiceHelper.GetLogitudeURL() + 'WebPages/HowToDownloadPage.aspx';
         var params: any[] = [{ name: "Token", value: SessionInfo.DocumentDownloadToken }, { name: "Code", value: ObjectsLocator.GlobalSetting.ReleaseNotesURL }]
         ServiceHelper.OpenWindowWithParams(url, params);

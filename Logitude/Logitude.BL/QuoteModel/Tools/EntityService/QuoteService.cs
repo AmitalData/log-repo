@@ -197,7 +197,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             ActivityLogger.AddAcitivityLog(entityPM.Id, objecttable.Id, entityPM.Tenant, "N", initializer.LoggedContactId);
             entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
 
-            new QuoteAnalyticTableService(initializer.Context.GetActiveDbContext()).AddUpdate(entityPoco);
+            new QuoteAnalyticTableService(initializer.Context.GetActiveDbContext()).AddUpdate(entityPoco, tenant);
         }
 
         private void SaveChildEntitiesCustomFields()
@@ -296,7 +296,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
                 TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Quote");
                 ActivityLogger.AddAcitivityLog(entityPM.Id, objecttable.Id, entityPM.Tenant, "U", initializer.LoggedContactId);
-                new QuoteAnalyticTableService(initializer.Context.GetActiveDbContext()).AddUpdate(entityPoco);
+                new QuoteAnalyticTableService(initializer.Context.GetActiveDbContext()).AddUpdate(entityPoco, tenant);
             }
 
             else

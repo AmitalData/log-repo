@@ -1120,6 +1120,7 @@ namespace WebFreight.Web.ReportsWebServices
                     fromDate = (DateTime)filterItem_FromDate.FieldValue;
                 }
             }
+
             if (filterItem_ToDate != null)
             {
                 if (filterItem_ToDate.FieldValue != null)
@@ -1128,23 +1129,34 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
-            if (fromDate == null)
+            if (fromDate != null)
             {
-                fromDate = todayDate.AddDays(-90);
+                dataProvider.FromPeriod = fromDate.Value;
+
+                if (dateType == "CreateDate")
+                {
+                    iQueryable = iQueryable.Where(d => d.CreateDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                }
+
+                else
+                {
+                    iQueryable = iQueryable.Where(d => d.InvoiceDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                }
             }
 
-            dataProvider.FromPeriod = fromDate.Value;
-            dataProvider.ToPeriod = toDate.Value;
+            if (toDate != null)
+            {
+                dataProvider.ToPeriod = toDate.Value;
 
-            if (dateType == "CreateDate")
-            {
-                iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate)
-                && System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
-            }
-            else
-            {
-                iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate)
-                && System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+                if (dateType == "CreateDate")
+                {
+                    iQueryable = iQueryable.Where(d => d.CreateDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+                }
+
+                else
+                {
+                    iQueryable = iQueryable.Where(d => d.InvoiceDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+                }
             }
 
             string partnerId = null;

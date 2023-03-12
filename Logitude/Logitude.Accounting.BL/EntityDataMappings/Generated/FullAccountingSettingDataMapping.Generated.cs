@@ -58,7 +58,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         IsSecurityLevelActivated, 
 	         VATreportEveryTwoMonths, 
 	         CreateRevaluationJournal, 
-	         TaxInstitutionGLAccountId,
+	         TaxInstitutionGLAccountId, 
+	         HSM, 
+	         HSMtoken, 
+	         HSMaddress,
 	      }
 
 
@@ -118,7 +121,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         IsSecurityLevelActivated, 
 	         VATreportEveryTwoMonths, 
 	         CreateRevaluationJournal, 
-	         TaxInstitutionGLAccountId,
+	         TaxInstitutionGLAccountId, 
+	         HSM, 
+	         HSMtoken, 
+	         HSMaddress,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -305,6 +311,21 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TaxInstitutionGLAccountId))
             {
 				entityPOCO.TaxInstitutionGLAccountId = entityPM.TaxInstitutionGLAccountId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSM))
+            {
+				entityPOCO.HSM = entityPM.HSM;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMtoken))
+            {
+				entityPOCO.HSMtoken = entityPM.HSMtoken;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMaddress))
+            {
+				entityPOCO.HSMaddress = entityPM.HSMaddress;
 			}
 			}
 
@@ -496,6 +517,21 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.TaxInstitutionGLAccountId = entityPOCO.TaxInstitutionGLAccountId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.HSM))
+            {
+					entityPM.HSM = entityPOCO.HSM;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.HSMtoken))
+            {
+					entityPM.HSMtoken = entityPOCO.HSMtoken;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.HSMaddress))
+            {
+					entityPM.HSMaddress = entityPOCO.HSMaddress;
+            }
+
 		}
 
 		public void PMToOldPM(FullAccountingSettingPM entityPM, FullAccountingSettingPM oldEntityPM)
@@ -680,6 +716,21 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TaxInstitutionGLAccountId))
             {
                 oldEntityPM.TaxInstitutionGLAccountId = entityPM.TaxInstitutionGLAccountId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSM))
+            {
+                oldEntityPM.HSM = entityPM.HSM;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMtoken))
+            {
+                oldEntityPM.HSMtoken = entityPM.HSMtoken;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMaddress))
+            {
+                oldEntityPM.HSMaddress = entityPM.HSMaddress;
             }
 			
 		}

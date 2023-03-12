@@ -173,5 +173,12 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public string DeclarationMessage { get; set; }
         public bool ActivatePrivateSite { get; set; }
         public bool IsContainerTrackingPrepaid { get; set; }
+
+        public DateTime? DigitalPortalLastDate { get; set; }
+        public int? DigitalPortalTotalLastWeek { get; set; }
+        public int? DigitalPortalTotalLastMonth { get; set; }
+        public DateTime? DigitalPortalMobileLastDate { get; set; }
+        public int? DigitalPortalMobTotalLastWeek { get; set; }
+        public int? DigitalPortalMobTotalLastMonth{ get; set; }
     }
 }

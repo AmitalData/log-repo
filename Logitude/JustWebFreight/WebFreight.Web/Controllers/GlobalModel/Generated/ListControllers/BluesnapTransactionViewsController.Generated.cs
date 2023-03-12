@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
 				BluesnapTransactionRepository  bluesnapTransactionRepository = new BluesnapTransactionRepository(MyContext);
 				BluesnapTransactionList entityList = null;
 				BluesnapTransaction entityPoco = bluesnapTransactionRepository.GetSingleBluesnapTransaction(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<BluesnapTransaction> singleEntityList = new List<BluesnapTransaction>();
 					singleEntityList.Add(entityPoco);

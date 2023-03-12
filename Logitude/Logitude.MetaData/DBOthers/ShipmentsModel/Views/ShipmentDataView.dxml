@@ -4,8 +4,6 @@
 CREATE VIEW [dbo].[ShipmentDataView]
 
 AS
-  
-
  
 SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumber,dbo.Shipments.DeclarationNumber,dbo.Shipments.IncludesCustoms,dbo.Shipments.CustomsClearanceDate,dbo.Shipments.DeclarationDate, dbo.Shipments.ShipperReference1, dbo.Shipments.ARInvoiceIssued, dbo.Shipments.CreditNoteIssued,dbo.Shipments.ValueOfGoods,
                          dbo.ShipmentMasterDatas.Tenant AS ShipmentMasterDataTenant, dbo.ShipmentMasterDatas.Id AS ShipmentMasterDataId, dbo.shipments.SLAC,
@@ -277,6 +275,7 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
                          dbo.Shipments.NoFreightFile, ToPortCountries.EnglishName AS ToPortCountryName, FromPortCountries.EnglishName AS FromPortCountryName, 
                          dbo.Shipments.LastStatusLogDate As LastStatusLogDate,
 						 AccountManagerUserContacts.EnglishName as AccountManagerUserName,
+						 Department.EnglishName as DepartmentName,
 						 SalesmanUserContact.EnglishName as SalesmanUserName,
              OperationalEntityStatus.Name as OperationalStatusName,
 						 CreatedByUserContact.EnglishName as CreatedByUserName,
@@ -300,6 +299,7 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
 						 ShipmentComputedFields.ImporterDepositionRequestDetails as ImporterDepositionRequestDetails,
 						 ShipmentComputedFields.NumberOfHouses as NumberOfHouses, 
 						 ShipmentComputedFields.ContainersNumbersandTypesArray as ContainersNumbersandTypesArray, 
+						 ShipmentComputedFields.ContainersNumbers as ContainersNumbers,
              ShipmentComputedFields.PackagesQuantityAndType as PackagesQuantityAndType, 
              ShipmentComputedFields.Transshipments as Transshipments,
 						 ShipmentAdditionalCloudDatas.DeclarationXmlData as DeclarationXmlData, 
@@ -424,6 +424,7 @@ FROM            dbo.Shipments LEFT OUTER JOIN
                          dbo.SpecialServicesTypes ON dbo.Shipments.SpecialServicesTypeId = dbo.SpecialServicesTypes.Id LEFT OUTER JOIN
                          dbo.Vessels ON dbo.ShipmentMasterDatas.MainCarriageVesselId = dbo.Vessels.Id LEFT OUTER JOIN
 						 dbo.Contacts AS AccountManagerUserContacts ON dbo.Shipments.AccountManagerUserId = AccountManagerUserContacts.Id LEFT OUTER JOIN
+						 dbo.Departments AS Department ON dbo.Shipments.DepartmentId = Department.Id LEFT OUTER JOIN
 						 dbo.Contacts AS SalesmanUserContact ON dbo.Shipments.SalesmanUserId = SalesmanUserContact.Id LEFT OUTER JOIN
              dbo.EntityStatus AS OperationalEntityStatus ON dbo.Shipments.OperationalStatusId = OperationalEntityStatus.Id LEFT OUTER JOIN
 						 dbo.HybridPartners AS HybridPartner ON dbo.Shipments.ForwarderPartnerId = HybridPartner.Id LEFT OUTER JOIN
@@ -450,6 +451,8 @@ FROM            dbo.Shipments LEFT OUTER JOIN
 						
 						 dbo.States AS InlandDomesticToState ON InlandDomesticToState.Id = ShipmentMasterDatas.InlandDomesticToStateId LEFT OUTER JOIN
 						 dbo.States AS InlandDomesticFromState ON InlandDomesticFromState.Id = ShipmentMasterDatas.InlandDomesticFromStateId
+						 
+   
 						 
     ]]>
   </SqlScript>

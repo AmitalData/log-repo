@@ -315,5 +315,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? OnCarriageATA { get; set; }
         public DateTime? RequestDate { get; set; }
         public DateTime? RecentResponseDate { get; set; }
+        public string ShipmentDepartmentId { get; set; }
+        public string ShipmentDepartmentName { get; set; }
     }
 }
