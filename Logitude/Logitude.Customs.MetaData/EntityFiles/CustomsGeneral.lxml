@@ -38,7 +38,8 @@
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CustomsGeneral&quot;"
 
-  Code="&quot;5510&quot;"
+
+  Code="&quot;604a&quot;"
   Name="&quot;CustomsGeneral&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -5576,6 +5577,12 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
 
+    <TextCode
+      Code="&quot;Customs.CreditGoldQuery.O.CustomFileNo&quot;"
+      DefaultText="&quot;Custom File No&quot;"
+      LocalDefaultText="&quot;תיק עמילות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
