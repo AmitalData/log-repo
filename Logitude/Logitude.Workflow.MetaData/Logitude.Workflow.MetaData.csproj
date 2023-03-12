@@ -59,6 +59,8 @@
       <LastGenOutput>ContextGenerator.cs</LastGenOutput>
     </None>
     <None Include="DBScripts\0_PrepareWorkflows.sxml" />
+    <None Include="DBScripts\AddDefaultTaskPriorities.sxml" />
+    <None Include="DBScripts\AddDefaultTaskStatuses.sxml" />
     <None Include="DBScripts\DeleteExpressions.sxml" />
     <None Include="DBScripts\FillSearchFieldsForWorkflowVersionsAndInstances.sxml" />
     <None Include="DBScripts\FillWorkflowIdForInstances.sxml" />
@@ -71,6 +73,11 @@
     <None Include="DBTables\ExpressionCategory.dxml" />
     <None Include="DBTables\Operator.dxml" />
     <None Include="DBTables\OperatorCategory.dxml" />
+    <None Include="DBTables\Task.dxml" />
+    <None Include="DBTables\TaskExtended.dxml" />
+    <None Include="DBTables\TaskPriority.dxml" />
+    <None Include="DBTables\TaskStatus.dxml" />
+    <None Include="DBTables\TaskType.dxml" />
     <None Include="DBTables\WorkFlow.dxml" />
     <None Include="DBTables\WorkFlowInstance.dxml" />
     <None Include="DBTables\WorkFlowInstanceActivity.dxml" />
@@ -84,6 +91,11 @@
     <None Include="EntityFiles\ExpressionCategory.lxml" />
     <None Include="EntityFiles\Operator.lxml" />
     <None Include="EntityFiles\OperatorCategory.lxml" />
+    <None Include="EntityFiles\Task.lxml" />
+    <None Include="EntityFiles\TaskExtended.lxml" />
+    <None Include="EntityFiles\TaskPriority.lxml" />
+    <None Include="EntityFiles\TaskStatus.lxml" />
+    <None Include="EntityFiles\TaskType.lxml" />
     <None Include="EntityFiles\WorkFlow.lxml" />
     <None Include="EntityFiles\WorkFlowInstance.lxml" />
     <None Include="EntityFiles\WorkFlowInstanceActivity.lxml" />

@@ -793,6 +793,7 @@
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowOpportunityController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowPackageTypeController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowPortController.cs" />
+    <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowTaskController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentPayableController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentReceivableController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentStoragePricingController.cs" />
@@ -1362,6 +1363,10 @@
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\ExpressionViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\OperatorCategoryViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\OperatorViewsController.Generated.cs" />
+    <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\TaskPriorityViewsController.Generated.cs" />
+    <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\TaskStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\TaskTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\TaskViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\WorkFlowInstanceActivityStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\WorkFlowInstanceActivityViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\WorkFlowInstanceStatusViewsController.Generated.cs" />
@@ -1371,6 +1376,10 @@
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\WorkFlowVersionStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\WorkFlowVersionViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\WorkFlowViewsController.Generated.cs" />
+    <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\TaskController.Generated.cs" />
+    <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\TaskPriorityController.Generated.cs" />
+    <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\TaskStatusController.Generated.cs" />
+    <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\TaskTypeController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\WorkFlowController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\WorkFlowInstanceActivityController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\WorkFlowInstanceController.Generated.cs" />
@@ -3626,6 +3635,11 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffVersionAllInChargeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffVersionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffVersionUploadedExcelUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TaskExtendedUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TaskPriorityUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TaskStatusUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TaskTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TaskUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TaxDeductionReportStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TaxDeductionReportUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TaxReportLineStatusUpdateClass.cs" />

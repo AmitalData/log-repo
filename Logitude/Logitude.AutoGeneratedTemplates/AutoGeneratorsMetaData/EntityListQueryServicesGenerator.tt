@@ -197,7 +197,14 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+<#+ 
+if(tableName != "Task" && tableName != "TaskStatus")
+{
+#>
 using System.Threading.Tasks;
+<#+
+}
+#>
 using System.Xml.Serialization;
 
 using <#= pocosspacestring #>
@@ -411,7 +418,14 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+<#+ 
+if(tableName != "Task" && tableName != "TaskStatus")
+{
+#>
 using System.Threading.Tasks;
+<#+
+}
+#>
 using System.Xml.Serialization;
 
 using <#= pocosspacestring #>
