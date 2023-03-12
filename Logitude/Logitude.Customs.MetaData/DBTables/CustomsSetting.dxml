@@ -192,6 +192,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="StandAlone"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="DefaultNotificationAssignee"
     ReferencedTable="Users"

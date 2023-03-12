@@ -733,6 +733,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool standAlone ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool StandAlone  
+	   {
+	    
+	     get
+		{
+		   return standAlone;
+		 }
+		 set
+		 {
+		   if(standAlone != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StandAlone",OldValue=standAlone,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   standAlone=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

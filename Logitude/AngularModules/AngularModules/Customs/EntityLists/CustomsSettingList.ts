@@ -34,6 +34,7 @@ export class CustomsSettingList {
 	CompanyType: string;
 	HSMCompanyId: string;
 	HSMToken: string;
+	StandAlone: boolean;
 	
 }
  

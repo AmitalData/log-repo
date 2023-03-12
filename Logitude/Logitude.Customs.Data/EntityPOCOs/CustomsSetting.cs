@@ -81,6 +81,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string HSMCompanyId { get; set; }
         [Column("HSMToken")]
 	    public string HSMToken { get; set; }
+        [Column("StandAlone")]
+	    public bool StandAlone { get; set; }
     }
 }
 	 

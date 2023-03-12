@@ -179,6 +179,11 @@ export class CustomsSettingPM {
     public set HSMToken(newValue: string) { if (this.hSMToken != newValue) { this.hSMToken = newValue; this.MarkAsDirty("HSMToken"); } }
        
 	 
+    private standAlone: boolean;
+    public get StandAlone() { return this.standAlone; }
+    public set StandAlone(newValue: boolean) { if (this.standAlone != newValue) { this.standAlone = newValue; this.MarkAsDirty("StandAlone"); } }
+       
+	 
 
     public OldEntityPM: CustomsSettingPM;
 		
