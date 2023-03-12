@@ -793,6 +793,7 @@
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowOpportunityController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowPackageTypeController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowPortController.cs" />
+    <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowTaskController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentPayableController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentReceivableController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentStoragePricingController.cs" />

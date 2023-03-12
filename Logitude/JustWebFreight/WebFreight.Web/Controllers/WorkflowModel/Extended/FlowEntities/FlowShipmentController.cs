@@ -43,7 +43,7 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Extended.FlowEntities
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
                 ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(id, tenant);
 
-                return Request.CreateResponse(HttpStatusCode.OK, shipmentPM); ;
+                return Request.CreateResponse(HttpStatusCode.OK, shipmentPM);
             }
             catch (Exception ex)
             {

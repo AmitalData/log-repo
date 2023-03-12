@@ -17,7 +17,7 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
         {
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
-                SetTaskStatusFields(entityPM, true);
+                SetTaskFieldsThatRelatedToStatus(entityPM, true);
                 CreateTaskExtended(entityPM);
             }
         }
@@ -26,19 +26,19 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
         {
             if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
-                SetTaskStatusFields(entityPM, false);
+                SetTaskFieldsThatRelatedToStatus(entityPM, false);
                 UpdateTaskExtended(entityPM);
             }
         }
-        
-        private void SetTaskStatusFields(TaskPM entityPM, bool isNew)
+
+        private void SetTaskFieldsThatRelatedToStatus(TaskPM entityPM, bool isNew)
         {
             TaskStatusRepository taskStatusRepository = new TaskStatusRepository(entityPM.Tenant);
             TaskStatus taskStatus = null;
 
             if (isNew)
             {
-                taskStatus = taskStatusRepository.GetAll(entityPM.Tenant).OrderBy(s => s.CreateDate).Where(s => s.Code == PendingStatusCode).FirstOrDefault();
+                taskStatus = taskStatusRepository.GetAll(entityPM.Tenant).Where(s => s.Code == PendingStatusCode).FirstOrDefault();
             }
             else
             {
