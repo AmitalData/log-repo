@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "cf3f8e247513aeb4144bdc589ae8046b";
+		public const string HashString = "8c31a132b949c8b4b488478684041d9b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "084f",
+			      				    Code =  "9b19",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2145,8 +2145,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOCannotDetachDocumentWithCustomsDocId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CannotDetachDocumentWithCustomsDocId", DefaultText = "Cannot detach a document with CustomsDocId - declaration for display only",LocalDefaultText = @"לא ניתן לנתק מסמך עם סימוכין - הצהרה לתצוגה בלבד", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsCreditGoldQueryOCustomFileNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CreditGoldQuery.O.CustomFileNo", DefaultText = "Custom File No",LocalDefaultText = @"תיק עמילות", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode CustomsGeneralTextCode_CustomsDeclarationPaymentOPaymentDateDifferentFromCurrentDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationPayment.O.PaymentDateDifferentFromCurrentDate", DefaultText = "payment date different from current date",LocalDefaultText = @"שים לב התאריך שונה מתאריך נוכחי, ההגשה תטופל בתאריך שצוין, האם להמשיך? ", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
