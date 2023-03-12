@@ -1,0 +1,134 @@
+<style>
+    .table-row {
+        height: 1px;
+    }
+
+    .first-split-table-row {
+        height: 20px;
+    }
+
+    .table-row-cell {
+        padding-bottom: 10px;
+    }
+
+    .split-block {
+        border-bottom: 1px solid #6E6E6E;
+    }
+
+    .table-row-cell-block {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .name-input-container {
+        width: 320px;
+    }
+
+    .label {
+        font-weight: bold;
+    }
+
+    .table-row-cell-label {
+        padding-bottom: 6px;
+    }
+
+    .set-values-container {
+        overflow: auto;
+        height: 400px;
+    }
+</style>
+
+<table>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr class="first-split-table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Name'" [ObjectFieldName]="'Name'" [DataContext]="DataContext">
+                </LogLabel>
+            </div>
+            <div class="table-row-cell-block name-input-container">
+                <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext" [Text]="Name"
+                    [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'Name'"
+                    (ValueChanged)="updateName($event)" [DataCy]="'create-task-name'">
+                </LogTextBox>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell-label">
+            <div class="table-row-cell-block">
+                <div class="label">Select the Record the Task is Related to</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Related To'" [ObjectFieldName]="'Record'"
+                    [DataContext]="DataContext"></LogLabel>
+            </div>
+            <div class="table-row-cell-block">
+                <TreeSelect [Items]="EditableRecordsTreeItems" [Width]="'300px'" [Value]="Record" [ShowExpand]="false"
+                    [IsReturnedTreeSelectItem]="true" [ShowItem]="'Shipment' | ShowTreeItemPipe : 'entity'"
+                    (ValueChanged)="updateRecord($event)">
+                </TreeSelect>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr *ngIf="TaskEntityId" class="table-row">
+        <td class="table-row-cell-label">
+            <div class="table-row-cell-block">
+                <div class="label">Set Task Fields</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="TaskEntityId" class="table-row">
+        <td class="table-row-cell">
+            <div class="set-values-container">
+
+                <SetValues *ngIf="SetValues && SetValues.length > 0" [(SetValues)]="SetValues" [IsEntityField]="true"
+                    [EntityId]="TaskEntityId" (IsValidSetValuesChange)="updateIsValidSetValues($event)"
+                    [FlowObject]="FlowObject" [CurrentNodeId]="CurrentNodeId">
+                </SetValues>
+
+            </div>
+
+        </td>
+    </tr>
+
+
+    <tr>
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+</table>

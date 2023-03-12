@@ -24,16 +24,19 @@ export class EditableRecordsTreeList {
     }
 
     private initializeTriggeringRecordItem() {
-        let triggeringrecordItem = new TreeSelectItem("triggeringrecord", "Triggering record", true, true, false, false, []);
+        let triggeringRecordEntity = FlowReader.getStartNodeEntity(this.FlowObject);
+        let data = { entity: triggeringRecordEntity };
+        let triggeringrecordItem = new TreeSelectItem("triggeringrecord", "Triggering record", true, true, false, false, [], data);
         this.Items.push(triggeringrecordItem);
     }
 
     private initializeRecordsItems() {
         this.getEditableGetRecordNodes().forEach((getRecordNode: any) => {
+            let entity = getRecordNode.data["entity"];
             let treeSelectItemTitle = getRecordNode.data["label"] || null;
             let treeSelectItemName = getRecordNode.data["name"];
             let treeSelectItemKey = Formatter.getCodeFromName(treeSelectItemName);
-            let data = { nodeId: getRecordNode.id };
+            let data = { entity: entity, nodeId: getRecordNode.id };
             let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemTitle || treeSelectItemName, true, true, false, false, [], data);
             this.Items.push(treeSelectItem);
         });
