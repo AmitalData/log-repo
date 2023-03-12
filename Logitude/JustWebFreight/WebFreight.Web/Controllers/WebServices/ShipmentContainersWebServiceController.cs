@@ -67,7 +67,7 @@ namespace WebFreight.Web.Controllers.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage PostGeneralContainerStatus(GeneralContainerTrackingArgs simulatorArgs)
+        public HttpResponseMessage PostGeneralContainerStatus(GeneralContainerTrackingArgs containerTrackingArgs)
         {
             try
             {
@@ -75,11 +75,10 @@ namespace WebFreight.Web.Controllers.WebServices
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(tenant);
-                ShipmentContainerSimulator shipmentContainerSimulator = new ShipmentContainerSimulator();
-                GeneralContainerTrackingService containerTrackingService = new GeneralContainerTrackingService(simulatorArgs);
+                GeneralContainerTrackingService containerTrackingService = new GeneralContainerTrackingService(containerTrackingArgs);
                 containerTrackingService.TrackContainer();
 
-                return Request.CreateResponse(HttpStatusCode.OK, simulatorArgs);
+                return Request.CreateResponse(HttpStatusCode.OK, containerTrackingArgs);
             }
 
             catch (Exception ex)
