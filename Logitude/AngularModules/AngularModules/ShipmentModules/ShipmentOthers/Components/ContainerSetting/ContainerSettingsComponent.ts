@@ -10,6 +10,7 @@ import { ContainerSettingPM } from 'Infrastructure/EntityPMs/ContainerSettingPM'
 import { ContainerSettingExtendedService } from 'Infrastructure/Services/ExtendedPMs/ContainerSettingExtendedService';
 import { ShippingLineExtendedPMService } from 'Common/Services/ExtendedPMs/ShippingLineExtendedPMService';
 import { ShippingLinePM } from 'Common/EntityPMs/ShippingLinePM';
+import { ServiceLocator } from 'Infrastructure/Locators/ServiceLocator';
 
 @Component({
     templateUrl: './ContainerSettingsComponent.html',
@@ -224,6 +225,10 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
                 }
             }
         });
+    }
+    AutomaticRequestsTabClicked(){
+        this.SelectedTabCode = 'R';
+        ServiceLocator.SendTotangoUserActivity("Container Settings", "Automatic Request Tab View");
     }
 
     private selectedShipmentATADateItem: CodeNameClass;

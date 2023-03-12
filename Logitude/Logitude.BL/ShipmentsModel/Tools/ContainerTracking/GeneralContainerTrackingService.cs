@@ -8,6 +8,7 @@ using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
@@ -331,6 +332,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
                     Communications.UpdateCommunicationLogStatus(commLog.Id, tenant, null, commLog.CommunicationStatusTypeCode, $"Before adding message to queue {commLog.QueueName} " + DateTime.Now.ToString(), null);
                     SendCommunicationLogMessageToQueue(commLog.QueueName, commLog.Id, tenant);
                     Communications.UpdateCommunicationLogStatus(commLog.Id, tenant, null, commLog.CommunicationStatusTypeCode, $"after adding message to queue  {commLog.QueueName} " + DateTime.Now.ToString(), null);
+                    string activity = "(A) Container Automatic Request Sent";
+                    AddTotangoActivity(tenant, activity);
                 }
                 catch (Exception ex)
                 {
@@ -345,6 +348,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
 
                 }
             }
+        }
+        private void AddTotangoActivity(int tenant, string activityDescription)
+        {
+            string email = AuthenticationUtil.IsAuthenticatedUserExists() ? AuthenticationUtil.GetAuthenticatedUser() : "system@tenant" + tenant + ".com";
+            string moduleName = "(A) Container";
+            ActivityLogger.SendTotangoContactActivity(email, moduleName, activityDescription, tenant, false, null);
         }
         private void SendCommunicationLogMessageToQueue(string queueName, string communicationLogId, int tenant)
         {

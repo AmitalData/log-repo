@@ -70,12 +70,17 @@ namespace Logitude.Server.Tools.Helpers
 
                             string ipstring = LogitudeSettings.CustomerCareIP;//System.Configuration.ConfigurationManager.AppSettings.Get("CustomerCareIP");
                             string[] authenticatedIPs = ipstring.Split(',');
-                            string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
-                            if (string.IsNullOrEmpty(currentIP))
+                            string currentIP = null;
+                            if (HttpContext.Current != null && HttpContext.Current.Request != null)
                             {
-                                currentIP = HttpContext.Current.Request.UserHostAddress;
+                                currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+                                if (string.IsNullOrEmpty(currentIP))
+                                {
+                                    currentIP = HttpContext.Current.Request.UserHostAddress;
+                                }
                             }
-                            if (!authenticatedIPs.Contains(currentIP))
+                            
+                            if (currentIP == null || !authenticatedIPs.Contains(currentIP))
                             {
                                 wc.DownloadString(new Uri(sRequest));
                             }
@@ -116,100 +121,106 @@ namespace Logitude.Server.Tools.Helpers
             Contact contact = contactRepository.GetSingleContact(contactId, tenant);
             SqlTransaction transaction = null;
             string strConnString = GetLogsDBConnection().ConnectionString;
-            using (SqlConnection cn = new SqlConnection(strConnString))
+            using (var scope = TransactionFactory.GetNewReadCommittedTransaction())
             {
-                try
+                using (SqlConnection cn = new SqlConnection(strConnString))
                 {
-                    string query = "INSERT INTO ContactActivityLogs " +
-                    "(Id, ContactId, Module, Activity, LogDateTime, GMTLogDateTime,Tenant,IsSharedLogisticsContact,CardId,PartnerTypeId,Via) " +
-                    "VALUES (@Id, @ContactId, @Module, @Activity, @LogDateTime, @GMTLogDateTime, @Tenant, @IsSharedLogisticsContact, @CardId, @PartnerTypeId, @Via) ";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.Add("@Id", SqlDbType.VarChar, 50).Value = Guid.NewGuid().ToString();
-                    if (contactId != null)
+                    try
                     {
-                        cmd.Parameters.Add("@ContactId", SqlDbType.VarChar, 50).Value = contactId;
-                    }
-                    else
-                    {
-                        cmd.Parameters.Add("@ContactId", SqlDbType.VarChar, 50).Value = DBNull.Value;
-                    }
-                    cmd.Parameters.Add("@Module", SqlDbType.VarChar, 50).Value = module;
-                    cmd.Parameters.Add("@Activity", SqlDbType.VarChar, 50).Value = activity;
-                    cmd.Parameters.Add("@LogDateTime", SqlDbType.DateTime).Value = TenantServerConfigration.GetCurrentDateTime(tenant);
-                    cmd.Parameters.Add("@GMTLogDateTime", SqlDbType.DateTime).Value = DateTime.Now;
-                    cmd.Parameters.Add("@Tenant", SqlDbType.Int).Value = tenant;
-                    cmd.Parameters.Add("@IsSharedLogisticsContact", SqlDbType.Bit).Value = isSharedLogisticsContact;
-                    if (cardId != null)
-                    {
-                        cmd.Parameters.Add("@CardId", SqlDbType.VarChar, 50).Value = cardId;
-                    }
-                    else
-                    {
-                        cmd.Parameters.Add("@CardId", SqlDbType.VarChar, 50).Value = DBNull.Value;
-                    }
-                    if (partnerTypeId != null)
-                    {
-                        cmd.Parameters.Add("@PartnerTypeId", SqlDbType.VarChar, 50).Value = partnerTypeId;
-                    }
-                    else
-                    {
-                        cmd.Parameters.Add("@PartnerTypeId", SqlDbType.VarChar, 50).Value = DBNull.Value;
-                    }
-                    if (via != null)
-                    {
-                        cmd.Parameters.Add("@Via", SqlDbType.VarChar, 50).Value = via;
-                    }
-                    else
-                    {
-                        cmd.Parameters.Add("@Via", SqlDbType.VarChar, 50).Value = DBNull.Value;
-                    }
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandTimeout = 5;
-                    cn.Open();
-                    transaction = cn.BeginTransaction(System.Data.IsolationLevel.Snapshot);
-                    cmd.Transaction = transaction;
-                    var output = cmd.ExecuteNonQuery();
-                    transaction.Commit();
-                    cn.Close();
-                }
-                #region commited
-                //ContactActivityLogRepository contactActivityLogRepository = new ContactActivityLogRepository();
-                //ContactActivityLog log = new ContactActivityLog()
-                //{
-                //    Id = Guid.NewGuid().ToString(),
-                //    ContactId = contactId,
-                //    Module = module,
-                //    Activity = activity,
-                //    LogDateTime = TenantServerConfigration.GetCurrentDateTime(tenant),
-                //    GMTLogDateTime = DateTime.Now,
-                //    Tenant = tenant,
-                //    IsSharedLogisticsContact = isSharedLogisticsContact,
-                //    CardId = cardId,
-                //    PartnerTypeId = partnerTypeId,
-                //};
-
-                //contactActivityLogRepository.Add(log);
-                //contactActivityLogRepository.SubmitChanges();
-                #endregion
-                catch (Exception ex)
-                {
-                    if (transaction != null)
-                    {
-                        transaction.Rollback();
-                    }
-                    string ip = "";
-                    if (HttpContext.Current != null && HttpContext.Current.Request != null)
-                    {
-                        string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
-                        if (string.IsNullOrEmpty(currentIP))
+                        string query = "INSERT INTO ContactActivityLogs " +
+                        "(Id, ContactId, Module, Activity, LogDateTime, GMTLogDateTime,Tenant,IsSharedLogisticsContact,CardId,PartnerTypeId,Via) " +
+                        "VALUES (@Id, @ContactId, @Module, @Activity, @LogDateTime, @GMTLogDateTime, @Tenant, @IsSharedLogisticsContact, @CardId, @PartnerTypeId, @Via) ";
+                        SqlCommand cmd = new SqlCommand(query, cn);
+                        cmd.Parameters.Add("@Id", SqlDbType.VarChar, 50).Value = Guid.NewGuid().ToString();
+                        if (contactId != null)
                         {
-                            currentIP = HttpContext.Current.Request.UserHostAddress;
+                            cmd.Parameters.Add("@ContactId", SqlDbType.VarChar, 50).Value = contactId;
                         }
-                        ip = currentIP;
+                        else
+                        {
+                            cmd.Parameters.Add("@ContactId", SqlDbType.VarChar, 50).Value = DBNull.Value;
+                        }
+                        cmd.Parameters.Add("@Module", SqlDbType.VarChar, 50).Value = module;
+                        cmd.Parameters.Add("@Activity", SqlDbType.VarChar, 50).Value = activity;
+                        cmd.Parameters.Add("@LogDateTime", SqlDbType.DateTime).Value = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        cmd.Parameters.Add("@GMTLogDateTime", SqlDbType.DateTime).Value = DateTime.Now;
+                        cmd.Parameters.Add("@Tenant", SqlDbType.Int).Value = tenant;
+                        cmd.Parameters.Add("@IsSharedLogisticsContact", SqlDbType.Bit).Value = isSharedLogisticsContact;
+                        if (cardId != null)
+                        {
+                            cmd.Parameters.Add("@CardId", SqlDbType.VarChar, 50).Value = cardId;
+                        }
+                        else
+                        {
+                            cmd.Parameters.Add("@CardId", SqlDbType.VarChar, 50).Value = DBNull.Value;
+                        }
+                        if (partnerTypeId != null)
+                        {
+                            cmd.Parameters.Add("@PartnerTypeId", SqlDbType.VarChar, 50).Value = partnerTypeId;
+                        }
+                        else
+                        {
+                            cmd.Parameters.Add("@PartnerTypeId", SqlDbType.VarChar, 50).Value = DBNull.Value;
+                        }
+                        if (via != null)
+                        {
+                            cmd.Parameters.Add("@Via", SqlDbType.VarChar, 50).Value = via;
+                        }
+                        else
+                        {
+                            cmd.Parameters.Add("@Via", SqlDbType.VarChar, 50).Value = DBNull.Value;
+                        }
+                        cmd.CommandType = CommandType.Text;
+                        cmd.CommandTimeout = 5;
+                        //transaction = cn.BeginTransaction(System.Data.IsolationLevel.Snapshot);
+                        cn.Open();
+                        //cmd.Transaction = transaction;
+                        var output = cmd.ExecuteNonQuery();
+                        //transaction.Commit();
+                        cn.Close();
                     }
-                    ExceptionHandler.HandleException(ex, DateTime.Now, 0, contact != null ? contact.Email : "", contact != null ? contact.Email : "", "SendUserActivity", ip);
+                    #region commited
+                    //ContactActivityLogRepository contactActivityLogRepository = new ContactActivityLogRepository();
+                    //ContactActivityLog log = new ContactActivityLog()
+                    //{
+                    //    Id = Guid.NewGuid().ToString(),
+                    //    ContactId = contactId,
+                    //    Module = module,
+                    //    Activity = activity,
+                    //    LogDateTime = TenantServerConfigration.GetCurrentDateTime(tenant),
+                    //    GMTLogDateTime = DateTime.Now,
+                    //    Tenant = tenant,
+                    //    IsSharedLogisticsContact = isSharedLogisticsContact,
+                    //    CardId = cardId,
+                    //    PartnerTypeId = partnerTypeId,
+                    //};
+
+                    //contactActivityLogRepository.Add(log);
+                    //contactActivityLogRepository.SubmitChanges();
+                    #endregion
+                    catch (Exception ex)
+                    {
+                        if (transaction != null)
+                        {
+                            transaction.Rollback();
+                        }
+                        string ip = "";
+                        if (HttpContext.Current != null && HttpContext.Current.Request != null)
+                        {
+                            string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+                            if (string.IsNullOrEmpty(currentIP))
+                            {
+                                currentIP = HttpContext.Current.Request.UserHostAddress;
+                            }
+                            ip = currentIP;
+                        }
+                        ExceptionHandler.HandleException(ex, DateTime.Now, 0, contact != null ? contact.Email : "", contact != null ? contact.Email : "", "SendUserActivity", ip);
+                    }
                 }
+                scope.Complete();
             }
+
+
         }
     }
 }

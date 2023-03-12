@@ -843,8 +843,16 @@ namespace WebFreight.Web.ContainerTracking
             {
                 string systemEmail = "system@tenant" + tenant + ".com";
                 ShipmentService service = new ShipmentService(containerUpdatedFields.ShipmentContext, shipmentPM, systemEmail);
+                string activity = "(A) Update Shipment from Container";
+                AddTotangoActivity(tenant, activity, systemEmail);
                 service.Update(true);
             }
+        }
+        public void AddTotangoActivity(int tenant, string activity, string systemEmail)
+        {
+            string email = AuthenticationUtil.IsAuthenticatedUserExists() ? AuthenticationUtil.GetAuthenticatedUser() : "system@tenant" + tenant + ".com";
+            string moduleName = "(A) Container";
+            ActivityLogger.SendTotangoContactActivity(email,moduleName, activity, containerPM.Tenant,false,null);
         }
 
         private string GetPortId(string portCode)

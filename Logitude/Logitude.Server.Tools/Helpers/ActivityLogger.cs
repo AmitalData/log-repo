@@ -108,7 +108,7 @@ namespace Logitude.Server.Tools.Helpers
                 string orgDisplayName = currentTenant.Company + (CountryName != null ? ("-" + CountryName.Trim()) : "");
                 string organizationId = tenant.ToString();
 
-                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
                     SettingRepository mySettingRepository = new SettingRepository();
                     var isDemoTenant = mySettingRepository.IsDemoTenant(tenant.ToString());
