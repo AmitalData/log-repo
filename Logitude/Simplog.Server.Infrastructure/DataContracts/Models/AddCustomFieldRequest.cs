@@ -12,6 +12,7 @@
         public string TextCode { get; set; }
         public string CreatedBy { get; set; }
         public string ModifiedBy { get; set; }
+        public string LanguageCode { get; set; }
         public bool IsList { get; set; }
         public bool IsPm { get; set; }
     }

@@ -142,13 +142,15 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var textCodeQuery = new DigitalTextCodeQueryService(tenant);
                 var customTextCodes = textCodeQuery.GetDigitalTextCodesQuery(tenant,
                                                                              addCustomFieldRequest.ObjectTableId,
-                                                                             addCustomFieldRequest.ProfileCode);
+                                                                             addCustomFieldRequest.ProfileCode,
+                                                                             addCustomFieldRequest.LanguageCode);
 
                 if (customTextCodes == null)
                 {
                     var defaultTextCodes = textCodeQuery.GetDigitalTextCodesQuery(0,
                                                                                   addCustomFieldRequest.ObjectTableId,
-                                                                                  addCustomFieldRequest.ProfileCode);
+                                                                                  addCustomFieldRequest.ProfileCode,
+                                                                                  addCustomFieldRequest.LanguageCode);
 
                     var customCodesMappedObject = JsonConvert.DeserializeObject<List<DigitalTextCodeUpdateObject>>(defaultTextCodes.Labels);
 
