@@ -25,7 +25,7 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                                                                 ProfileId = x.ProfileId,
                                                                 LanguageCode = x.LanguageCode,
                                                                 CreateDate = x.CreateDate,
-                                                                UpdateDate = x.UpdateDate
+                                                                UpdateDate = x.UpdateDate,
                                                             })
                                                             .FirstOrDefault();
             return defaultTextCode;
@@ -45,7 +45,8 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                                                                ProfileId = x.ProfileId,
                                                                CreateDate = x.CreateDate,
                                                                UpdateDate = x.UpdateDate,
-                                                               ProfileCode = x.DigitalProfile.Code
+                                                               ProfileCode = x.DigitalProfile.Code,
+                                                               LanguageCode = x.LanguageCode
                                                            })
                                                            .ToList();
 
