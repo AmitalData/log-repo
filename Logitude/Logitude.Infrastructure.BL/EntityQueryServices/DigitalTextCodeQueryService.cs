@@ -12,10 +12,10 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
 {
     public partial class DigitalTextCodeQueryService
     {
-        public DigitalTextCodeList GetDigitalTextCodesQuery(int tenant, string objectTableId, string profileCode = "")
+        public DigitalTextCodeList GetDigitalTextCodesQuery(int tenant, string objectTableId, string profileCode, string langCode)
         {
             DigitalTextCodeRepository digitalTextCodeRepository = new DigitalTextCodeRepository(tenant);
-            var defaultTextCode = digitalTextCodeRepository.GetDigitalTextCodes(tenant, objectTableId, profileCode)
+            var defaultTextCode = digitalTextCodeRepository.GetDigitalTextCodes(tenant, objectTableId, profileCode, langCode)
                                                             .Select(x => new DigitalTextCodeList
                                                             {
                                                                 Id = x.Id,
@@ -23,6 +23,7 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                                                                 Tenant = x.Tenant,
                                                                 Labels = x.Labels,
                                                                 ProfileId = x.ProfileId,
+                                                                LanguageCode = x.LanguageCode,
                                                                 CreateDate = x.CreateDate,
                                                                 UpdateDate = x.UpdateDate
                                                             })

@@ -90,6 +90,8 @@ namespace Logitude.Infrastructure.Data
 	
             modelBuilder.Configurations.Add(new DigitalFieldSecurityMap());
 	
+            modelBuilder.Configurations.Add(new DigitalPortalLanguageMap());
+	
             modelBuilder.Configurations.Add(new DigitalPortalScreenMap());
 	
             modelBuilder.Configurations.Add(new DigitalPreDefinedComponentMap());
@@ -460,6 +462,12 @@ namespace Logitude.Infrastructure.Data
 	 }
 	
 	 public IDbSet<DigitalFieldSecurity> DigitalFieldSecurities 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DigitalPortalLanguage> DigitalPortalLanguages 
 	 {
 	      get; set;
 	 

@@ -855,18 +855,18 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
-                Code = "DBA", 
-                Name = "Dashboard Analytics", 
-                SearchFields = "DBA,Dashboard Analytics", 
-                Description = "Dashboard Analytics", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
                 Name = "Remove Exception Logic", 
                 Code = "REL", 
                 SearchFields = "REL,Remove Exception Logic", 
                 Description = "Remove Exception Logic", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "DBA", 
+                Name = "Dashboard Analytics", 
+                SearchFields = "DBA,Dashboard Analytics", 
+                Description = "Dashboard Analytics", 
 			});
 			 
             all.Add(new ToggleDetails()

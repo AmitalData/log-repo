@@ -6,18 +6,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class DigitalTextCodeList {
+export class DigitalPortalLanguageList {
    
-	Id: string;
-	Tenant: number;
-	CreateDate: Date;
-	UpdateDate: Date;
-	ObjectTableId: string;
-	Labels: string;
-	ObjectTableName: string;
-	ProfileId: string;
-	ProfileCode: string;
-	LanguageCode: string;
+	Code: string;
+	Name: string;
+	SearchFields: string;
+	DisplayText: string;
 	
 }
  
