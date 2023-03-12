@@ -623,8 +623,11 @@
                     <!-- subtitle -->
                     <tr style="height: 28px;">
                         <td class="subTitle">{{'Customs.Declaration.O.ConsignmentDetails' | TextCodeTranslationPipe}} <div *ngIf="EntityPM.ExcludeConsignment" style="margin-right: 95px; margin-top: 25px; position: absolute;" class="DisbleBox">{{ 'Customs.Declaration.O.Consignmentwillnotsent' | TextCodeTranslationPipe}}</div></td>
+                        <td *ngIf="EntityPM.Direction == 'E' && IsMoreConsignment1" style="width: 57px; top:10px; left:10px; ">
+                            <button class="Button" [disabled]="IsDisplayOnly" (click)="ComprehensiveUpdate()">{{'Customs.Consignment.O.ComprehensiveUpdate' | TextCodeTranslationPipe}}</button>
+                        </td>
                     </tr>
-
+                   
                     <!-- Tabs Control -->
                     <tr>
                         <td colspan="2" style="vertical-align: top; height: 100%;">

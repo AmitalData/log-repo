@@ -750,6 +750,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
         this.UIProperties.SetRequired("IsExporterConfirmation", this.ObjectTableName, false);
     }
 
+    public get IsMoreConsignment1() { return this.EntityPM.Consignments.filter(x=>x.ConsignmentType=="E").length>1; }
 
 
     public CalculatedClient: any;
@@ -1673,7 +1674,21 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
             this.exportStorageConnectToDeclaration = await new DeclarationWebService().getExportStorageConnectToDeclaration(this.EntityPM.Id);
         }
     }
-
+    ComprehensiveUpdate(){
+        var args: any = {
+            EntityPM: this.EntityPM
+        };
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 800;
+        logWindow.Height = 220;
+        logWindow.Title = TextCodeTranslator.Translate("Customs.Consignment.O.ComprehensiveUpdateCon");
+        logWindow.WindowArgs = args;
+        logWindow.ShowCloseButton = true;
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ConsigmentTabContent/ComprehensiveUpdateConsignment');
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+        });
+    }
 }
 
 

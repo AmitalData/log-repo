@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ConsignmentUpdateClass
    {  		
-		public const string HashString = "84ca7e61aa813a49b3a98622c0588dc6";
+		public const string HashString = "848c1d210fbb9cde6ccee426564fa4a8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "משגור",
 			      				    DefaultText =  "Consignment",
-			      				    Code =  "41e0",
+			      				    Code =  "1624",
 			      				    Name =  "Customs.Consignment Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2680,7 +2680,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable ConsignmentObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.Consignment" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOComprehensiveUpdateCon = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.ComprehensiveUpdateCon", DefaultText = "Comprehensive Update Consignment",LocalDefaultText = @"עדכון גורף של שדות זהים במשגורי יצוא", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOComprehensiveUpdate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.ComprehensiveUpdate", DefaultText = "Comprehensive Update",LocalDefaultText = @"עדכון גורף", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 
