@@ -38,7 +38,7 @@
   ParentTableName="Declaration"
   LocalDefaultText="&quot;משגור&quot;"
   DefaultText="&quot;Consignment&quot;"
-  Code="&quot;41e0&quot;"
+  Code="&quot;1624&quot;"
   Name="&quot;Customs.Consignment Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -3175,6 +3175,19 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;Customs.Consignment.O.ComprehensiveUpdateCon&quot;"
+      DefaultText="&quot;Comprehensive Update Consignment&quot;"
+      LocalDefaultText="&quot;עדכון גורף של שדות זהים במשגורי יצוא&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Consignment.O.ComprehensiveUpdate&quot;"
+      DefaultText="&quot;Comprehensive Update&quot;"
+      LocalDefaultText="&quot;עדכון גורף&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
