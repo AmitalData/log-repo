@@ -20,7 +20,7 @@
 				
  		declare @languageCode as varchar(3)
 		set @languageCode = (select Code from DigitalPortalLanguages where [Code] = 'EN')
-		Update DigitalTextCodes Set LangaugeCode = @languageCode where Id != '';
+		Update DigitalTextCodes Set LanguageCode = @languageCode where Id != '';
 		]]>
   </Sql>
 </Script>
