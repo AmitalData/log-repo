@@ -154,12 +154,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                     if (customTextCodes == null)
                     {
-                        var defaultTextCodes = textCodeQuery.GetDigitalTextCodesQuery(0,
-                                                                                      addCustomFieldRequest.ObjectTableId,
-                                                                                      addCustomFieldRequest.ProfileCode,
-                                                                                      addCustomFieldRequest.LanguageCode);
-
-                        var customCodesMappedObject = JsonConvert.DeserializeObject<List<DigitalTextCodeUpdateObject>>(defaultTextCodes.Labels);
+                        var customCodesMappedObject = new List<DigitalTextCodeUpdateObject>();
 
                         customCodesMappedObject.Add(new DigitalTextCodeUpdateObject
                         {
@@ -175,7 +170,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                             Tenant = tenant,
                             ProfileId = addCustomFieldRequest.ProfileId,
                             Labels = JsonConvert.SerializeObject(customCodesMappedObject),
-                            LanguageCode = defaultTextCodes.LanguageCode,
+                            LanguageCode = item.LanguageCode,
                             CreateDate = todayDate,
                             UpdateDate = todayDate
                         };
