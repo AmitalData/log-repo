@@ -1389,7 +1389,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         {
             IAccountingContext context = MainContext as AccountingContext;
             GLAccountUpdateService service = new GLAccountUpdateService(context, new Dictionary<string, IContext>(), tenatToCopy);
-            ChartOfAccountRepository ChartOfAccountRepository= new ChartOfAccountRepository(context);
+            GLAccountMoreDataUpdateService glAccountMoreDataUpdateService = new GLAccountMoreDataUpdateService(context, new Dictionary<string, IContext>(), tenatToCopy);
+
+
+            ChartOfAccountRepository ChartOfAccountRepository = new ChartOfAccountRepository(context);
             List<ChartOfAccount> chartOfAccount = ChartOfAccountRepository.GetAll(tenatToCopy).Where(t => t.Inactive == false).ToList();
             List<GLAccount> pocosIsControlAccount = repository.GetAll(tenant).Where(t => t.Inactive == false && t.IsControlAccount==true).ToList();
             List<GLAccount> pocosNotIsControlAccount = repository.GetAll(tenant).Where(t => t.Inactive == false && t.IsControlAccount == false).ToList();
@@ -1535,6 +1538,35 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 service.Update(glAccountPM, true);
 
             }
+
+            GLAccountMoreDataRepository glAccountMoreDataRepository = new GLAccountMoreDataRepository(context);
+            List<GLAccountMoreData> GLAccountMoreData0 = glAccountMoreDataRepository.GetAll(tenant).ToList();
+            List<GLAccount> GLAccountTenant0 = repository.GetAll(tenant).Where(t => t.Inactive == false && t.IsControlAccount == false).ToList();
+            List<GLAccount> GLAccount= repository.GetAll(tenatToCopy).Where(t => t.Inactive == false && t.IsControlAccount == false).ToList();
+            foreach (var item in GLAccountMoreData0)
+            {
+                var interNumber=GLAccountTenant0.Find(c => c.Id == item.AccountId).InternalNumber;
+                var AccountId=GLAccount.Find(c => c.InternalNumber == interNumber).Id;
+                GLAccountMoreDataPM glAccountMoreDataPM = new GLAccountMoreDataPM()
+                {
+                    AccountId= AccountId,
+                    Tenant=tenatToCopy,
+                    BalanceInLocalCurrency=item.BalanceInLocalCurrency,
+                    LocalBalanceInDue=item.LocalBalanceInDue,
+                    NextDueDate=item.NextDueDate,
+                    TotalOpenChequesInLocalCur=item.TotalOpenChequesInLocalCur,
+                    TotFutureOpenChequesInLocalCur=item.TotFutureOpenChequesInLocalCur,
+                    BalanceInForeignCurrency=item.BalanceInForeignCurrency,
+                    ForeignBalanceInDue=item.ForeignBalanceInDue
+                };
+                glAccountMoreDataPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                glAccountMoreDataUpdateService.Update(glAccountMoreDataPM, true);
+                context.SaveChanges();
+
+
+            }
+
+
 
             context.SaveChanges();
 
