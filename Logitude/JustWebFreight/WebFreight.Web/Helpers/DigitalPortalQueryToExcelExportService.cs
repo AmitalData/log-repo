@@ -1,16 +1,22 @@
-﻿using Logitude.BL.InvoiceModel.EntityLists;
+﻿using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Helpers;
+using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.Tools.DataMapping;
+using Logitude.Infrastructure.BL.EntityQueryServices;
+using Logitude.Infrastructure.Data.EntityLists;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
-using Simplog.Data.CommonDataModel.Repositories;
+using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
-
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts.Models;
 using Syncfusion.XlsIO;
 using System;
 using System.Collections.Generic;
@@ -18,23 +24,12 @@ using System.Data;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Text.RegularExpressions;
 using System.Web;
 using WebFreight.Web.Controllers.DigitalPortal.Models;
 using WebFreight.Web.Security;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.ShipmentsModel.Tools.DataMapping;
-using Logitude.BL.Helpers;
-using System.Linq.Dynamic.Core;
-using Newtonsoft.Json.Linq;
-using System.Linq;
-using Logitude.BL.ShipmentsModel.EntityLists;
-using Microsoft.VisualStudio.Services.Common;
-using System.Dynamic;
-using Simplog.Server.Infrastructure.DataContracts.Models;
-using Logitude.Infrastructure.Data.EntityLists;
-using Newtonsoft.Json;
-using Logitude.Infrastructure.BL.EntityQueryServices;
 
 namespace WebFreight.Web.Helpers
 {
@@ -132,6 +127,10 @@ namespace WebFreight.Web.Helpers
             else if (ObjectTableName.Equals("DigitalInvoice", StringComparison.InvariantCultureIgnoreCase))
             {
                 mappedFile = $"DigitalPortal_{tenantData.Company}_InvoiceList";
+            }
+            else
+            {
+                mappedFile = ObjectTableName;
             }
 
             string fileName = GetOutpuFileName(mappedFile);
@@ -502,19 +501,19 @@ namespace WebFreight.Web.Helpers
 
             sheet1.Range["A1:E1"].Merge();
             sheet1.Range["A2:D2"].Merge();
-
             sheet1.Range["E1:V1"].Merge();
             sheet1.Range["E2:V2"].Merge();
-            sheet1.Range["E1"].CellStyle.Font.Bold = true;
-            sheet1.Range["E1"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
-            sheet1.Range["E1"].VerticalAlignment = ExcelVAlign.VAlignTop;
-            sheet1.Range["E1"].Text = "Digital Portal Translation";
-            sheet1.Range["E1"].CellStyle.Font.Size = 14;
+            sheet1.Range["C1"].CellStyle.Font.Bold = true;
+            sheet1.Range["C1"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
+            sheet1.Range["C1"].VerticalAlignment = ExcelVAlign.VAlignTop;
+            sheet1.Range["C1"].Text = "Digital Portal Translation";
+            sheet1.Range["C1"].CellStyle.Font.Size = 14;
+            sheet1.Range["C1"].CellStyle.Font.Size = 14;
 
-            sheet1.Range["E2"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
-            sheet1.Range["E2"].VerticalAlignment = ExcelVAlign.VAlignCenter;
-            sheet1.Range["E2"].Text = $"Created Date: {DateTime.UtcNow:dd MMM yyyy}";
-            sheet1.Range["E2"].CellStyle.Font.Size = 12;
+            sheet1.Range["C2"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
+            sheet1.Range["C2"].VerticalAlignment = ExcelVAlign.VAlignCenter;
+            sheet1.Range["C2"].Text = $"Created Date: {DateTime.UtcNow:dd MMM yyyy}";
+            sheet1.Range["C2"].CellStyle.Font.Size = 12;
 
             sheet1.Range["A3:E3"].CellStyle.Color = Color.LightGray;
             sheet1.Range["A3:E3"].RowHeight = 25;
@@ -530,6 +529,7 @@ namespace WebFreight.Web.Helpers
 
             sheet1.Range["A3:E3"].AutofitRows();
             sheet1.Range["A3:E3"].AutofitColumns();
+            sheet1.Range["A3:E3"].WrapText = true;
 
             table.Columns.Add("Field Code");
             table.Columns.Add("English Default Text");
@@ -538,44 +538,46 @@ namespace WebFreight.Web.Helpers
             table.Columns.Add("Entity");
 
             var index = 4;
-            foreach (var item in englishTextobjects)
+            foreach (var profilesLables in englishTextobjects)
             {
-                sheet1.Range[$"A{index}:V{index}"].CellStyle.Font.Size = 10;
-                sheet1.Range[$"A{index}:V{index}"].ColumnWidth = 40;
-                sheet1.Range[$"A{index}:V{index}"].WrapText = true;
-                sheet1.Range[$"A{index}:V{index}"].AutofitRows();
-                sheet1.Range[$"A{index}:V{index}"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
-                sheet1.Range[$"A{index}:V{index}"].VerticalAlignment = ExcelVAlign.VAlignCenter;
-
-                var englishTextCode = item.Value.FirstOrDefault(a => a.LanguageCode == "EN");
-                var englishLables = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(englishTextCode.Labels);
-
-                var foreignLables = new List<DigitalTextCodeObject>();
-
-                if (foreignTextObjects.ContainsKey(item.Key))
+                foreach (var item in profilesLables.Value)
                 {
-                    var foreignTextCode = foreignTextObjects[item.Key].FirstOrDefault(a => a.LanguageCode == languageCode);
+                    sheet1.Range[$"A{index}:E{index}"].CellStyle.Font.Size = 10;
+                    sheet1.Range[$"A{index}:E{index}"].ColumnWidth = 40;
+                    sheet1.Range[$"A{index}:E{index}"].WrapText = true;
+                    sheet1.Range[$"A{index}:E{index}"].AutofitRows();
+                    sheet1.Range[$"A{index}:E{index}"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
+                    sheet1.Range[$"A{index}:E{index}"].VerticalAlignment = ExcelVAlign.VAlignCenter;
 
-                    if (foreignTextCode == null)
+                    var englishLables = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(item.Labels);
+
+                    var foreignLables = new List<DigitalTextCodeObject>();
+
+                    if (foreignTextObjects.ContainsKey(profilesLables.Key))
                     {
-                        foreignLables = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(foreignTextCode.Labels);
+                        var foreignTextCode = foreignTextObjects[profilesLables.Key].FirstOrDefault(a => a.LanguageCode == languageCode);
+
+                        if (foreignTextCode == null)
+                        {
+                            foreignLables = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(foreignTextCode.Labels);
+                        }
                     }
-                }
 
-                foreach (var code in englishLables)
-                {
-                    var foreignLanguageTextCode = foreignLables.Any()
-                                                  ? foreignLables.FirstOrDefault(a => a.TextCode.Equals(code.TextCode))?.DefaultText 
-                                                  : "";
+                    foreach (var code in englishLables)
+                    {
+                        var foreignLanguageTextCode = foreignLables.Any()
+                                                      ? foreignLables.FirstOrDefault(a => a.TextCode.Equals(code.TextCode))?.DefaultText
+                                                      : "";
 
-                    DataRow row = table.NewRow();
-                    row[0] = code.TextCode;
-                    row[1] = code.DefaultText;
-                    row[2] = foreignLanguageTextCode;
-                    row[4] = englishTextCode.ProfileCode;
-                    row[4] = englishTextCode.ObjectTableName;
-                    table.Rows.Add(row);
-                    index++;
+                        DataRow row = table.NewRow();
+                        row[0] = code.TextCode;
+                        row[1] = code.DefaultText;
+                        row[2] = foreignLanguageTextCode;
+                        row[3] = item.ProfileCode;
+                        row[4] = item.ObjectTableName;
+                        table.Rows.Add(row);
+                        index++;
+                    }
                 }
             }
 
