@@ -545,7 +545,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
                 this.MilestonesStatus = milestones;
                 this.FillMilestoneDictionary(milestones);
             });
-            this.MilestonesStatus=this.MilestonesStatus.sort((a, b) => a["Name"].toUpperCase() > b["Name"].toUpperCase() ? 1 : a["Name"].toUpperCase() === b["Name"].toUpperCase() ? 0 : -1); 
     }
 
     FillMilestoneDictionary(milestones: any[]) {
