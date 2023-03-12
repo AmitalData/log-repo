@@ -392,7 +392,10 @@ export class ObjectTablePM {
     public get FullNameTextCodeDefaultText() { return this.fullNameTextCodeDefaultText; }
     public set FullNameTextCodeDefaultText(newValue: string) { if (this.fullNameTextCodeDefaultText != newValue) { this.fullNameTextCodeDefaultText = newValue; this.MarkAsDirty("FullNameTextCodeDefaultText"); } }
        
-	 
+    private availableInDocumentTypes: boolean;
+    public get AvailableInDocumentTypes() { return this.availableInDocumentTypes }
+    public set AvailableInDocumentTypes(newValue: boolean) { if (this.availableInDocumentTypes != newValue) { this.availableInDocumentTypes = newValue; this.MarkAsDirty("AvailableInDocumentTypes"); }}
+
 
     public OldEntityPM: ObjectTablePM;
 		

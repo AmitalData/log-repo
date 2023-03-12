@@ -127,7 +127,7 @@
         </td>
     </tr>
 
-    <tr class="table-row">
+    <tr class="table-row"  *ngIf="!IsNew">
         <td>
             <div class="AdvancedSettings" (click)="showAdvancedSettings()">
                 {{AdvancedSettingsTitle}}
@@ -135,7 +135,7 @@
         </td>
     </tr>
 
-    <tr class="Additional-row" *ngIf="ShowAdvancedSettings">
+    <tr class="Additional-row" *ngIf="ShowAdvancedSettings && !IsNew">
         <td>
             <div>
                 <table>
@@ -172,10 +172,9 @@
                         </td>
                     </tr>
 
-                    <ng-container *ngFor="let RetryDelay of RetriesDelayArray; let i = index;">
-                        <tr *ngIf="i % 2 == 0">
-                            <td *ngFor="let currentIndex of [i, i + 1]"
-                                [ngClass]="{'padding-left-10': currentIndex % 2 != 0}">
+                    <ng-container *ngFor="let RetryDelay of RetriesDelayArray; let currentIndex = index;">
+                        <tr>
+                            <td>
                                 <div *ngIf="currentIndex < RetriesDelayArray.length">
                                     <table>
                                         <tr class="FormFieldRow">

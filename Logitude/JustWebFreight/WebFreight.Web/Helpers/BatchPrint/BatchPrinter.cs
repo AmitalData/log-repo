@@ -402,7 +402,9 @@ namespace WebFreight.Web.Helpers.BatchPrint
                 DocumentTypeCopyId = _batchPrinterArgs.CopyId,
                 DocumentTypeId = _batchPrinterArgs.DocumentTypeId,
                 DocumentTemplateId = _batchPrinterArgs.TemplateId,
+                ChildEntityId = item.ChildEntityId,
             };
+
             return documentsFilingRepository.GetDocumentOutCopy(args);
         }
 

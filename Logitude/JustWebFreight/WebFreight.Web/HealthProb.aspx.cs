@@ -48,6 +48,15 @@ namespace WebFreight.Web
                     CallWarmingScenario();
                 }
 
+                if (DateTime.Now < LogitudeAppSettings.StartDateTime.AddSeconds(90))
+                {
+                    Response.Clear();
+                    Response.ContentType = "text/xml";
+                    Response.Write("<status>Fail</status>");
+                    Response.StatusCode = 404;
+                    Response.End();
+                }
+
             }
             catch (Exception ex)
             {

@@ -166,6 +166,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 objectTable.AvailableInCustomization = objectTablesDetails.AvailableInCustomization;
                 objectTable.SupportSubEntity = objectTablesDetails.SupportSubEntity;
                 objectTable.ApplyGenericCustomFields = objectTablesDetails.ApplyGenericCustomFields;
+                objectTable.AvailableInDocumentTypes = objectTablesDetails.AvailableInDocumentTypes;
 
                 return objectTable;
                 #endregion
@@ -324,6 +325,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectTable.AvailableInCustomization = objectTablesDetails.AvailableInCustomization;
                 updatedObjectTable.SupportSubEntity = objectTablesDetails.SupportSubEntity;
                 updatedObjectTable.ApplyGenericCustomFields = objectTablesDetails.ApplyGenericCustomFields;
+                updatedObjectTable.AvailableInDocumentTypes = objectTablesDetails.AvailableInDocumentTypes;
+
                 objectTableRepository.Update(updatedObjectTable);
                 return updatedObjectTable;
                 #endregion
