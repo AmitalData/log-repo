@@ -653,11 +653,11 @@ namespace WebFreight.Web.Helpers
                         if (FeatureToggleHelper.HasFeatureToggle("CXE", tenant))
                         {
                             int i = 1;
-
+                            
                             foreach (QueryColumnPM _ in queryColumns)
                             {
                                 sheet.AutofitColumn(i);
-                                if (sheet.GetColumnWidth(i) > 30)
+                                if (_.ObjectFieldName == "CustomerReference" && sheet.GetColumnWidth(i) > 30)
                                     sheet.SetColumnWidth(i,30);
                                 i++;
                             }
