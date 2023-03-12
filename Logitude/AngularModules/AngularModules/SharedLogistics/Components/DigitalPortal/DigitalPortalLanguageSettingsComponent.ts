@@ -39,6 +39,8 @@ export class DigitalPortalLanguageSettingsComponent implements OnInit {
     IsUploadButtonEnabled: boolean;
     IsFileImportedSuccessfully: boolean;
     UploadedTranslationFileMSG: string = '';
+    ExportedExcelFileName: string = '';
+    ExportedExcelLogId: string = '';
     constructor(public _digitalLanguageSettingsService: DigitalLanguageSettingsService) {
         this.UploadFileId = Guid.NewRandomString();
     }
@@ -98,8 +100,48 @@ export class DigitalPortalLanguageSettingsComponent implements OnInit {
         this.IsDigitalPortal = args.IsDigitalPortal;
     }
 
-    ExportLanguage() {
+    GetDigitalExportExecutionLogStatus(){   
+        let payload = {
+          logId: this.ExportedExcelLogId,
+        };
+    
+        this._digitalLanguageSettingsService.getDigitalExportExecutionLogStatus(payload)
+          .then((res: any) => {
+            if (res && res.StatusCode === "D") {
+              setIsFileReady(true);
+              setProgressValue(100);
+              setIsLoading(false);
+            }
+            else {
+              setTimeout(() => {
+                getDigitalExportExecutionLogStatus();
+              }, 3000);
+            }
+    
+          })
+          .catch((err: any) => {
+            console.error('Error while exporting Excel sheet: ', err)
+          })
+      }
 
+    ExportLanguage() {
+        this.CurrentSession.StartBusyIndicator("Exporting...")
+        var payload : any = {
+            ObjectTableName: "DigitalLabelTranslations",
+            LanguageCode: this.selectedDisplayLanguage.Code
+        };
+
+        this._digitalLanguageSettingsService.GetDigitalToExcelData(payload).subscribe((myResult: any) => {
+            if (myResult) {
+                this.ExportedExcelFileName = myResult.FileName;
+                this.ExportedExcelLogId = myResult.ExecutionLogId;
+                setTimeout(() => {
+                    this.GetDigitalExportExecutionLogStatus()
+                }, 4000);
+            }
+
+            this.CurrentSession.StopBusyIndicator();
+        });
     }
 
     OpenUpLoadFileToImportLanguage(){

@@ -11,20 +11,31 @@ export class DigitalLanguageSettingsService {
     private _http: HttpClient;
     constructor() {
         this._http = ServiceHelper.HttpClient
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DigitalCustomization';
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/';
     }
 
     public GetDigitalLanguages(langCode: string = '') {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetDigitalPortalLanguages?LangaugeCode=' + langCode , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + 'DigitalCustomization/GetDigitalPortalLanguages?LanguageCode=' + langCode , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
             }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    GetDigitalToExcelData(payload: any) {
+        return defer(() => {
+            return this._http.post(this._apiUrl + "DigitalPortalReport/GetDigitalToExcelData", JSON.stringify(payload), ServiceHelper.GetHttpHeaders())
+                .pipe(
+                    map((response: any) => {
+                    }),
+                    catchError(ServiceHelper.HandleServiceError));
+
         });
     }
 
