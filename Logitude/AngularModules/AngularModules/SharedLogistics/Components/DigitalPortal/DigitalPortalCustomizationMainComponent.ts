@@ -356,7 +356,6 @@ export class DigitalPortalCustomizationMainComponent implements OnInit {
         if (this.selectedDisplayLanguage != value) {
             this.selectedDisplayLanguage = value;
             this.SelectedMenu.LangCode = value ? value.code : 'EN';
-
             if (this.SelectedMenu.Code != "ScreenLayout") {
                 this.SelectedMenu.Page.BuildItemsSource();
             }
@@ -383,14 +382,6 @@ export class DigitalPortalCustomizationMainComponent implements OnInit {
                 this.selectedDisplayLanguage = this.DigitalDisplayLanguageslList[0];
             }
         });
-    }
-
-    OnDisplayLanguageChange(event){
-        this.selectedDisplayLanguage = event;
-        // this.CurrentSession.StartBusyIndicatorLoading();
-        // setTimeout(() => {
-        //     this.CurrentSession.StopBusyIndicator();
-        // }, 2000);
     }
     
 }

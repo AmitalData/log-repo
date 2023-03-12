@@ -135,6 +135,7 @@ export class DigitalTextCodeUpdateModel {
     public ProfileId: string;
     public ProfileCode: string;
     public Lables: DigitalTextCodeObject[];
+    public LangCode: string;
 }
 
 export class DigitalTextCodeObject {
@@ -151,6 +152,7 @@ export class DigitalFeildSecurityObjectModel {
     public ProfileCode: string;
     public ParentObjectTableId: string;
     public DefaultSettings: DigitalFeildSecurityUpdateModel[];
+    public LangCode: string;
 }
 
 export class DigitalFeildSecurityUpdateModel {

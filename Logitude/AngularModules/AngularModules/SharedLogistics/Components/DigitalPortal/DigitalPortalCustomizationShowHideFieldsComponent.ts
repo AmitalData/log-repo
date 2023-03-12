@@ -216,6 +216,8 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
             this.ModifiedFields.ObjectTableId = this.ObjectTableId;
             this.ModifiedFields.ProfileId = this.ProfileId;
             this.ModifiedFields.ProfileCode = this.ProfileCode;
+            var _selectedDisplayLangCode = this.customizationEditComponent && this.customizationEditComponent.SelectedMenu ? this.customizationEditComponent.SelectedMenu.LangCode : 'EN'
+            this.ModifiedLables.LangCode = _selectedDisplayLangCode;
             this.digitalTextService.UpdateDigitalTextCodes(this.ModifiedFields).subscribe((myResult) => {
                 if (this.customizationEditComponent != null) this.customizationEditComponent.IsDirty = false;
                 this.IsDirty = false;
