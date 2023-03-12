@@ -82,7 +82,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
     BuildFields() {
         this.IsDataReady = false; 
         this.CurrentSession.StartBusyIndicatorLoading();
-        var _selectedDisplayLangCode = this.customizationEditComponent && this.customizationEditComponent.SelectedMenu ? this.customizationEditComponent.SelectedMenu.LangCode : 'EN'
+        var _selectedDisplayLangCode = this.customizationEditComponent && this.customizationEditComponent.SelectedMenu ? this.customizationEditComponent.SelectedMenu.LanguageCode : 'EN'
         this.digitalTextService.GetTextCodesByFilters(null, this.ObjectTableId, this.ProfileCode, _selectedDisplayLangCode).subscribe((myResult) => {
             if (!myResult.HasError) {
                 this.loadedFieldsResults = myResult.Result.filter(a => !AppTool.IsNullOrEmpty(a['FieldCode']));
@@ -216,8 +216,8 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
             this.ModifiedFields.ObjectTableId = this.ObjectTableId;
             this.ModifiedFields.ProfileId = this.ProfileId;
             this.ModifiedFields.ProfileCode = this.ProfileCode;
-            var _selectedDisplayLangCode = this.customizationEditComponent && this.customizationEditComponent.SelectedMenu ? this.customizationEditComponent.SelectedMenu.LangCode : 'EN'
-            this.ModifiedLables.LangCode = _selectedDisplayLangCode;
+            var _selectedDisplayLangCode = this.customizationEditComponent && this.customizationEditComponent.SelectedMenu ? this.customizationEditComponent.SelectedMenu.LanguageCode : 'EN'
+            this.ModifiedFields.LangaugeCode = _selectedDisplayLangCode;
             this.digitalTextService.UpdateDigitalTextCodes(this.ModifiedFields).subscribe((myResult) => {
                 if (this.customizationEditComponent != null) this.customizationEditComponent.IsDirty = false;
                 this.IsDirty = false;
@@ -279,9 +279,9 @@ export class ProfileFieldsItem extends BaseComponent {
         this.hasPermission = item.HasPermission;
         this.fieldCode = item.FieldCode;
         var selelectField = father.loadedFieldsResults.filter(a => a['FieldCode'] == this.fieldCode)[0];
-        this.textCode = selelectField['TextCode'];
-        this.defaultText = selelectField['DefaultText'];
-        this.displayText = selelectField['DisplayText'];
+        this.textCode = selelectField && !AppTool.IsNullOrUndefined(selelectField['TextCode']) ? selelectField['TextCode'] : "";
+        this.defaultText = selelectField && !AppTool.IsNullOrUndefined(selelectField['DefaultText']) ? selelectField['DefaultText'] : "";
+        this.displayText = selelectField && !AppTool.IsNullOrUndefined(selelectField['DisplayText']) ? selelectField['DisplayText'] : "";
         this.createdBy = item.CreatedBy;
         this.modifiedBy = item.ModifiedBy;
         this.modifiedOn = item.ModifiedOn;

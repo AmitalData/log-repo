@@ -93,7 +93,7 @@ export class DigitalTextService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetTextCodesByFilters?cardId=' + cardId + "&objectTableId=" + objectTableId + "&profileCode=" + profileCode + "&langCode=" + langCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetTextCodesByFilters?cardId=' + cardId + "&objectTableId=" + objectTableId + "&profileCode=" + profileCode + "&LangaugeCode=" + langCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -135,7 +135,7 @@ export class DigitalTextCodeUpdateModel {
     public ProfileId: string;
     public ProfileCode: string;
     public Lables: DigitalTextCodeObject[];
-    public LangCode: string;
+    public LangaugeCode: string;
 }
 
 export class DigitalTextCodeObject {
@@ -152,7 +152,6 @@ export class DigitalFeildSecurityObjectModel {
     public ProfileCode: string;
     public ParentObjectTableId: string;
     public DefaultSettings: DigitalFeildSecurityUpdateModel[];
-    public LangCode: string;
 }
 
 export class DigitalFeildSecurityUpdateModel {

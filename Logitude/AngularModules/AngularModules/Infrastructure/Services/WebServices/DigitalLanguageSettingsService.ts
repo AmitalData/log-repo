@@ -18,7 +18,7 @@ export class DigitalLanguageSettingsService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetDigitalPortalLanguages?langCode=' + langCode , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetDigitalPortalLanguages?LangaugeCode=' + langCode , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();

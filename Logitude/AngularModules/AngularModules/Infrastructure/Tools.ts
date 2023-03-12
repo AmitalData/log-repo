@@ -80,6 +80,10 @@ export class AppTool {
     }
 
     public static TenantPM: any;
+    public static IsNullOrUndefined(myFieldValue: any) {
+        return myFieldValue == null || myFieldValue == undefined;
+    }
+    
     public static IsNullOrEmpty(myFieldValue: any) {
         var myResult: boolean = false;
 

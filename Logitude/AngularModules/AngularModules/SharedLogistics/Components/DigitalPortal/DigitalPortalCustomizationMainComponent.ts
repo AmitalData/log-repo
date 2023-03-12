@@ -193,7 +193,7 @@ export class DigitalPortalCustomizationMainComponent implements OnInit {
 
     public set SelectedMenu(value: any) {
         this.selectedMenu = value;
-        this.selectedMenu.LangCode = this.selectedDisplayLanguage ? this.selectedDisplayLanguage.code : 'EN';
+        this.selectedMenu.LanguageCode = this.selectedDisplayLanguage ? this.selectedDisplayLanguage.code : 'EN';
         this.ChangeScreen();
     }
 
@@ -290,7 +290,7 @@ export class DigitalPortalCustomizationMainComponent implements OnInit {
         if (this.selectedObjectTableItem != value) {
             this.selectedObjectTableItem = value;
             this.SelectedMenu.Page.ObjectTableId = value.id;
-            this.SelectedMenu.LangCode = this.selectedDisplayLanguage ? this.selectedDisplayLanguage.code : 'EN';
+            this.SelectedMenu.LanguageCode = this.selectedDisplayLanguage ? this.selectedDisplayLanguage.code : 'EN';
             this.SelectedMenu.Page.BuildItemsSource();
         }
     }
@@ -317,7 +317,7 @@ export class DigitalPortalCustomizationMainComponent implements OnInit {
             this.selectedProfileItem = value;
             this.SelectedMenu.Page.ProfileId = value.id;
             this.SelectedMenu.Page.ProfileCode = value.code;
-            this.SelectedMenu.LangCode = this.selectedDisplayLanguage ? this.selectedDisplayLanguage.code : 'EN';
+            this.SelectedMenu.LanguageCode = this.selectedDisplayLanguage ? this.selectedDisplayLanguage.code : 'EN';
 
             if (this.SelectedMenu.Code == "ScreenLayout") {
                 this.SelectedMenu.Page.GetDefaultScreens();
@@ -355,7 +355,7 @@ export class DigitalPortalCustomizationMainComponent implements OnInit {
     set SelectedDisplayLanguage(value) {
         if (this.selectedDisplayLanguage != value) {
             this.selectedDisplayLanguage = value;
-            this.SelectedMenu.LangCode = value ? value.code : 'EN';
+            this.SelectedMenu.LanguageCode = value ? value.code : 'EN';
             if (this.SelectedMenu.Code != "ScreenLayout") {
                 this.SelectedMenu.Page.BuildItemsSource();
             }
@@ -395,7 +395,7 @@ export class CustomizationMainMenuItem {
     public Page: any = null;
     public screenArgs: any = {};
     public IsVisible: boolean;
-    public LangCode: string;
+    public LanguageCode: string;
 
     constructor() {
 

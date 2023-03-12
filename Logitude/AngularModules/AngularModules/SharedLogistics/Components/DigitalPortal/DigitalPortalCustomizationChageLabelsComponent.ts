@@ -43,7 +43,7 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
         this.CurrentSession.StartBusyIndicatorLoading();
         this.LabelsItemsSource = new ObservableCollection([]);
         var labelsList = [];
-        var _selectedDisplayLangCode = this.customizationEditComponent && this.customizationEditComponent.SelectedMenu ? this.customizationEditComponent.SelectedMenu.LangCode : 'EN'
+        var _selectedDisplayLangCode = this.customizationEditComponent && this.customizationEditComponent.SelectedMenu ? this.customizationEditComponent.SelectedMenu.LanguageCode : 'EN'
         this.digitalTextService.GetTextCodesByFilters(null, this.ObjectTableId, this.ProfileCode, _selectedDisplayLangCode).subscribe((myResult) => {
             if (!myResult.HasError) {
                 var data = myResult.Result;
@@ -109,8 +109,8 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
             this.ModifiedLables.ObjectTableId = this.ObjectTableId;
             this.ModifiedLables.ProfileId = this.ProfileId;
             this.ModifiedLables.ProfileCode = this.ProfileCode;
-            var _selectedDisplayLangCode = this.customizationEditComponent && this.customizationEditComponent.SelectedMenu ? this.customizationEditComponent.SelectedMenu.LangCode : 'EN'
-            this.ModifiedLables.LangCode = _selectedDisplayLangCode;
+            var _selectedDisplayLangCode = this.customizationEditComponent && this.customizationEditComponent.SelectedMenu ? this.customizationEditComponent.SelectedMenu.LanguageCode : 'EN'
+            this.ModifiedLables.LangaugeCode = _selectedDisplayLangCode;
             this.digitalTextService.UpdateDigitalTextCodes(this.ModifiedLables).subscribe((myResult) => {
                 this.customizationEditComponent.IsDirty = false;
                 this.ModifiedLables = new DigitalTextCodeUpdateModel();
