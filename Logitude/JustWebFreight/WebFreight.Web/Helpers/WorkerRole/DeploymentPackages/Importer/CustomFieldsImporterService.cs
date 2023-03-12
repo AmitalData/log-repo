@@ -55,14 +55,19 @@ namespace WebFreight.Web.Helpers.WorkerRole.Importer
         }
         private void BuildObjectFieldsList()
         {
-            ObjectFieldPM objectFieldPM = null;
             foreach (CustomFields customfield in importerContext.DeploymentPackageDetails.CustomFields)
             {
-                objectFieldPM = GetInstanceOfObjectFieldPM(customfield);
-                objectFields.Add(objectFieldPM);
-                customfield.Code = objectFieldPM.FieldCode;
+                BuildObjectField(customfield);
             }
         }
+
+        private void BuildObjectField(CustomFields customfield)
+        {
+            ObjectFieldPM objectFieldPM = GetInstanceOfObjectFieldPM(customfield);
+            objectFields.Add(objectFieldPM);
+            customfield.Code = objectFieldPM.FieldCode;
+        }
+
         private void CreateObjectFieldsAndSubmitChanges()
         {
             foreach (ObjectFieldPM objectField in objectFields)
@@ -79,19 +84,21 @@ namespace WebFreight.Web.Helpers.WorkerRole.Importer
             }
             catch (Exception exception)
             {
-                if (exception.Message == "An Object Field with the same code already exists")
-                {
-                    HandleDuplicatedObjectFieldsCodes(objectField);
-                }
+                HandleCreatingCustomObjectFieldException(objectField, exception);
             }
         }
+
+        private void HandleCreatingCustomObjectFieldException(ObjectFieldPM objectField, Exception exception)
+        {
+            if (exception.Message != "An Object Field with the same code already exists") return;
+            HandleDuplicatedObjectFieldsCodes(objectField);
+        }
+
         private void HandleDuplicatedObjectFieldsCodes(ObjectFieldPM objectField)
         {
             objectField.Code = objectField.Code + "Copy" + objectFieldRepository.GetCustomObjectFieldCountByCodeAndCopies(objectField.Code, objectField.ObjectTableId, objectField.Tenant);
             objectFieldService.Create(objectField);
         }
-
-
 
         private QueryFilterItem GetDefaultAdditionalTreeFilters(string defaultAdditionalFilters, string lookUpTableName)
         {

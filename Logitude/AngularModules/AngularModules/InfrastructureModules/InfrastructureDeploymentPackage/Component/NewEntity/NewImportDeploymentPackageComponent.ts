@@ -42,7 +42,7 @@ export class NewImportDeploymentPackageComponent extends BaseComponent {
     public IsUploadInProgress: boolean;
     public IsShowProgressBar: boolean;
     public IsUploadVisibile: boolean = true;
-    public ProgressBarId: string = Guid.newGuid();
+    public ProgressBarId: string;
     public ProgressBarPercentText: string;
     public IsNextClicked: boolean = false;
     private deploymentPackageExtendedPMService: DeploymentPackageExtendedPMService = new DeploymentPackageExtendedPMService();
@@ -80,6 +80,7 @@ export class NewImportDeploymentPackageComponent extends BaseComponent {
         this.Name = "";
         this.Description = "";
         this.ValidationErrorsList = [];
+        this.ProgressBarId = Guid.newGuid();
     }
     private SetDefaultFields() {
         this.EntityPM.Tenant = SessionLocator.Tenant;
@@ -310,7 +311,7 @@ export class NewImportDeploymentPackageComponent extends BaseComponent {
         this.SetProgressBarPercentText(progressBarValue);        
     }
 
-    SetProgressBarPercentText(progressBarValue: any) {
+    public SetProgressBarPercentText(progressBarValue: any) {
         var elem = document.getElementById(this.ProgressBarId);
         if (!elem) return;
 

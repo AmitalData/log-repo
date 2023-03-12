@@ -1008,6 +1008,7 @@ namespace MeatadataGeneratorTool.Helpers
                 objectTable.AvailableInCustomization = GetAttributeBoolValue(entity.Attributes["AvailableInCustomization"]);
                 objectTable.SupportSubEntity = GetAttributeBoolValue(entity.Attributes["SupportSubEntity"]);
                 objectTable.ApplyGenericCustomFields = GetAttributeBoolValue(entity.Attributes["ApplyGenericCustomFields"]);
+                objectTable.AvailableInDocumentTypes = GetAttributeBoolValue(entity.Attributes["AvailableInDocumentTypes"]);
                 objectTable.HasCustomValidator = GetAttributeBoolValue(entity.Attributes["HasCustomValidator"]);
                 objectTable.HasHelper = GetAttributeBoolValue(entity.Attributes["HasHelper"]);
                 objectTable.HasShortTitle = GetAttributeBoolValue(entity.Attributes["HasShortTitle"]);

@@ -574,6 +574,24 @@ using Simplog.Data.ShipmentsModel;
 					   					   temp.OnForwardingVessel = VesselService41.GetVesselById(MyEntityPM.OnForwardingVesselId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
+				    
+
+			  
+				   if(MyEntityPM.OtherPrepaidCollectId != null)
+				   {
+					   PrepaidCollectQueryService PrepaidCollectService42 = new PrepaidCollectQueryService(Tenant);
+					   					   temp.OtherPrepaidCollect = PrepaidCollectService42.GetPrepaidCollectById(MyEntityPM.OtherPrepaidCollectId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.FreightPrepaidCollectId != null)
+				   {
+					   PrepaidCollectQueryService PrepaidCollectService43 = new PrepaidCollectQueryService(Tenant);
+					   					   temp.FreightPrepaidCollect = PrepaidCollectService43.GetPrepaidCollectById(MyEntityPM.FreightPrepaidCollectId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
 				   					
 				   return temp;
 			}
@@ -891,11 +909,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.AirPackages != null && MyEntity.AirPackages.Count > 0)
 					{
-						AirPackageQueryService AirPackageService42 = new AirPackageQueryService(Tenant);
+						AirPackageQueryService AirPackageService44 = new AirPackageQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								
-							temp.ShipmentPackages = AirPackageService42.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName,IsUpdate);
+							temp.ShipmentPackages = AirPackageService44.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -907,11 +925,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.OceanOrInlandPackages != null && MyEntity.OceanOrInlandPackages.Count > 0)
 					{
-						OceanOrInlandPackageQueryService OceanOrInlandPackageService42 = new OceanOrInlandPackageQueryService(Tenant);
+						OceanOrInlandPackageQueryService OceanOrInlandPackageService44 = new OceanOrInlandPackageQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								
-							temp.ShipmentPackages = OceanOrInlandPackageService42.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName,IsUpdate);
+							temp.ShipmentPackages = OceanOrInlandPackageService44.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -923,11 +941,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Containers != null && MyEntity.Containers.Count > 0)
 					{
-						ContainerQueryService ContainerService42 = new ContainerQueryService(Tenant);
+						ContainerQueryService ContainerService44 = new ContainerQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								
-							temp.ShipmentPackages = ContainerService42.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName,IsUpdate);
+							temp.ShipmentPackages = ContainerService44.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -1113,9 +1131,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.PickUps != null && MyEntity.PickUps.Count > 0)
 					{
-						PickUpQueryService PickUpService42 = new PickUpQueryService(Tenant);
+						PickUpQueryService PickUpService44 = new PickUpQueryService(Tenant);
 						 								
-							temp.ShipmentPickUps = PickUpService42.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName,IsUpdate);
+							temp.ShipmentPickUps = PickUpService44.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -1126,9 +1144,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Deliveries != null && MyEntity.Deliveries.Count > 0)
 					{
-						DeliveryQueryService DeliveryService42 = new DeliveryQueryService(Tenant);
+						DeliveryQueryService DeliveryService44 = new DeliveryQueryService(Tenant);
 						 								
-							temp.ShipmentDeliveries = DeliveryService42.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName,IsUpdate);
+							temp.ShipmentDeliveries = DeliveryService44.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -1170,11 +1188,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Receivables != null && MyEntity.Receivables.Count > 0)
 					{
-						ReceivableQueryService ReceivableService42 = new ReceivableQueryService(Tenant);
+						ReceivableQueryService ReceivableService44 = new ReceivableQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								
-							temp.ShipmentReceivables = ReceivableService42.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName,IsUpdate);
+							temp.ShipmentReceivables = ReceivableService44.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -1186,11 +1204,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Payables != null && MyEntity.Payables.Count > 0)
 					{
-						PayableQueryService PayableService42 = new PayableQueryService(Tenant);
+						PayableQueryService PayableService44 = new PayableQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								
-							temp.ShipmentPayables = PayableService42.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName,IsUpdate);
+							temp.ShipmentPayables = PayableService44.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -1566,11 +1584,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.EventList != null && MyEntity.EventList.Count > 0)
 					{
-						EventQueryService EventService42 = new EventQueryService(Tenant);
+						EventQueryService EventService44 = new EventQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								
-							temp.EventList = EventService42.EventCustomDataMappingAndValidatin(MyEntity,MyEntity.EventList,Tenant,ComputingPartnerName,IsUpdate);
+							temp.EventList = EventService44.EventCustomDataMappingAndValidatin(MyEntity,MyEntity.EventList,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -1582,11 +1600,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.AddManualEvents != null && MyEntity.AddManualEvents.Count > 0)
 					{
-						EventQueryService EventService42 = new EventQueryService(Tenant);
+						EventQueryService EventService44 = new EventQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								
-							temp.AddManualEvents = EventService42.EventCustomDataMappingAndValidatin(MyEntity,MyEntity.AddManualEvents,Tenant,ComputingPartnerName,IsUpdate);
+							temp.AddManualEvents = EventService44.EventCustomDataMappingAndValidatin(MyEntity,MyEntity.AddManualEvents,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -1944,6 +1962,48 @@ using Simplog.Data.ShipmentsModel;
 							if(!IsUpdate)
 							{								
 								temp.OnForwardingVesselId = myOnForwardingVesselPM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
+					
+					PrepaidCollectQueryService OtherPrepaidCollectPrepaidCollectService = new PrepaidCollectQueryService(Tenant);
+					if(MyEntity.OtherPrepaidCollect != null)
+					{
+						var myOtherPrepaidCollectPM = OtherPrepaidCollectPrepaidCollectService.PrepaidCollectDataMappingAndValidatin(MyEntity.OtherPrepaidCollect,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myOtherPrepaidCollectPM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								
+								temp.OtherPrepaidCollectId = myOtherPrepaidCollectPM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
+					
+					PrepaidCollectQueryService FreightPrepaidCollectPrepaidCollectService = new PrepaidCollectQueryService(Tenant);
+					if(MyEntity.FreightPrepaidCollect != null)
+					{
+						var myFreightPrepaidCollectPM = FreightPrepaidCollectPrepaidCollectService.PrepaidCollectDataMappingAndValidatin(MyEntity.FreightPrepaidCollect,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myFreightPrepaidCollectPM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								
+								temp.FreightPrepaidCollectId = myFreightPrepaidCollectPM.Id;
 						  
 							}  
 

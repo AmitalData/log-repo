@@ -246,12 +246,15 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
         private static Dictionary<string, string> GetCounterAdditionalParameters(ARInvoicePM entityPM, ICommonDataContext CommonContext)
         {
-            Dictionary<string, string> counterAdditionalParameters = new Dictionary<string, string>() { { "[B]", "" } };
+            Dictionary<string, string> counterAdditionalParameters = new Dictionary<string, string>() { { "[B]", "" }, { "[BranchName]", "" } };
             if (!string.IsNullOrEmpty(entityPM.BranchId))
             {
                 BranchRepository branchRepository = new BranchRepository(CommonContext);
                 Branch myBranch = branchRepository.GetSingleBranch(entityPM.BranchId, entityPM.Tenant);
-
+                if (myBranch != null)
+                {
+                    counterAdditionalParameters["[BranchName]"] = myBranch.EnglishName;
+                }
                 if (myBranch != null && !string.IsNullOrEmpty(myBranch.CounterCode))
                 {
                     counterAdditionalParameters["[B]"] = myBranch.CounterCode;

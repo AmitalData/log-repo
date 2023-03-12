@@ -162,6 +162,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\JustWebFreight\WebFreight.Web\bin\Logitude.Accounting.BL.dll</HintPath>
     </Reference>
+    <Reference Include="Logitude.Accounting.Def, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="Logitude.BL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Logitude.BL\bin\Debug\Logitude.BL.dll</HintPath>
@@ -377,6 +378,7 @@
       <Link>OldEntityDetailsGenerator.cs</Link>
     </Compile>
     <Compile Include="Accounting\AccountingConversionJournalApproveWR.cs" />
+    <Compile Include="Accounting\ReconciliationWorkerRole.cs" />
     <Compile Include="Accounting\AccountingJournalApproveWR.cs" />
     <Compile Include="Accounting\ARPaymentChequeRedemptionWorkerRole.cs" />
     <Compile Include="Accounting\RevaluationWorkerRole.cs" />

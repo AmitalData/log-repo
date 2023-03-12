@@ -403,7 +403,7 @@ export class ProfileFieldsItem extends BaseComponent {
         var newLabel = new DigitalTextCodeObject();
         newLabel.TextCode = this.textCode;
         newLabel.FieldCode = this.fieldCode;
-        newLabel.DefaultText = newValue;
+        newLabel.DefaultText = this.defaultText;
         newLabel.DisplayText = this.displayText;
         this.ModifiedBy = SessionLocator.LoggedUserPM.EnglishName;
         this.ModifiedOn = DateTool.GetCurrentDateTimeAsUtc();

@@ -58,42 +58,47 @@ namespace WebFreight.Web.Helpers.WorkerRole.DeploymentPackages
 
         public void ExecuteDeploymentPackageExecutionQueue()
         {
+            if (queueService == null || queueResponse == null) return;
             try
             {
-                if (queueService != null && queueResponse != null)
-                {
-                    deploymentPackageExecutionLog = GetDocumentsExecutionLog();
-                    if (deploymentPackageExecutionLog != null && deploymentPackageExecutionLog.RetryNumber < 2 && (deploymentPackageExecutionLog.StatusCode == "W" || deploymentPackageExecutionLog.StatusCode == "P"))
-                    {
-                        UpdateDeploymentPackageExecutionLog(new DeploymentPackageExecutionLogArgs() { StartDate = startDate, StatusCode = "P" });
-                        ImportDeploymentPackage();
-
-                    }
-                    else
-                    {
-                        ExceptionHandler.HandleException(new Exception("Deploying the Imported Deployment Package failed after 3 retries or it reaches the time out.Please try again.If the issue is persistent then please kindly contact our Customer Support"), DateTime.Now, 0, null, "WorkerRole Monitor", null, System.Environment.MachineName);
-                        UpdateDeploymentPackageExecutionLog(new DeploymentPackageExecutionLogArgs() { Exception = new Exception("Deploying the Imported Deployment Package failed after 3 retries or it reaches the time out.Please try again.If the issue is persistent then please kindly contact our Customer Support"), DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
-                        queueService.Complete();
-                    }
-                }
+                StartExecuteDeploymentPackageExecutionQueue();                
             }
             catch (Exception exception)
             {
-                ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Deployment Package execution queue worker role start", null, null);
-                ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Deployment Package WorkerRole Monitor|" + "Catch ExecuteDeploymentPackageExecutionQueue", null, System.Environment.MachineName);
-                try
-                {
-                    UpdateDeploymentPackageExecutionLog(new DeploymentPackageExecutionLogArgs() { Exception = exception, DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
-                }
-                catch (Exception ex)
-                {
-
-                    ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Deployment Package WorkerRole Monitor|" + "Catch ExecuteDocumentsExecutionQueue", " inside catch exception while running UpdateDeploymentPackageExecutionQueue", System.Environment.MachineName);
-                }
-
-                Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));
+                HandleExecutingDeploymentPackageExecutionQueueException(exception);
             }
 
+        }
+
+        private void StartExecuteDeploymentPackageExecutionQueue()
+        {
+            deploymentPackageExecutionLog = GetDocumentsExecutionLog();
+            if (deploymentPackageExecutionLog != null && deploymentPackageExecutionLog.RetryNumber < 2 && (deploymentPackageExecutionLog.StatusCode == "W" || deploymentPackageExecutionLog.StatusCode == "P"))
+            {
+                UpdateDeploymentPackageExecutionLog(new DeploymentPackageExecutionLogArgs() { StartDate = startDate, StatusCode = "P" });
+                ImportDeploymentPackage();
+                return;
+            }
+            ExceptionHandler.HandleException(new Exception("Deploying the Imported Deployment Package failed after 3 retries or it reaches the time out.Please try again.If the issue is persistent then please kindly contact our Customer Support"), DateTime.Now, 0, null, "WorkerRole Monitor", null, System.Environment.MachineName);
+            UpdateDeploymentPackageExecutionLog(new DeploymentPackageExecutionLogArgs() { Exception = new Exception("Deploying the Imported Deployment Package failed after 3 retries or it reaches the time out.Please try again.If the issue is persistent then please kindly contact our Customer Support"), DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
+            queueService.Complete();
+        }
+
+        private void HandleExecutingDeploymentPackageExecutionQueueException(Exception exception)
+        {
+            ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Deployment Package execution queue worker role start", null, null);
+            ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Deployment Package WorkerRole Monitor|" + "Catch ExecuteDeploymentPackageExecutionQueue", null, System.Environment.MachineName);
+            try
+            {
+                UpdateDeploymentPackageExecutionLog(new DeploymentPackageExecutionLogArgs() { Exception = exception, DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
+            }
+            catch (Exception ex)
+            {
+
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Deployment Package WorkerRole Monitor|" + "Catch ExecuteDocumentsExecutionQueue", " inside catch exception while running UpdateDeploymentPackageExecutionQueue", System.Environment.MachineName);
+            }
+
+            Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));
         }
 
         private DeploymentPackageExecutionLog GetDocumentsExecutionLog()
@@ -127,18 +132,15 @@ namespace WebFreight.Web.Helpers.WorkerRole.DeploymentPackages
         private string GetFullExceptionMessageFromException(Exception exception)
         {
             var exceptionMessage = string.Empty;
-
-            if (exception != null)
+            if (exception == null) return exceptionMessage;
+            exceptionMessage = exception.Message;
+            if (exception.InnerException != null)
             {
-                exceptionMessage = exception.Message;
-                if (exception.InnerException != null)
-                {
-                    exceptionMessage = exceptionMessage + Environment.NewLine + exception.InnerException;
-                }
-                if (exception.StackTrace != null)
-                {
-                    exceptionMessage = exceptionMessage + Environment.NewLine + "Stack trace: " + exception.StackTrace;
-                }
+                exceptionMessage = exceptionMessage + Environment.NewLine + exception.InnerException;
+            }
+            if (exception.StackTrace != null)
+            {
+                exceptionMessage = exceptionMessage + Environment.NewLine + "Stack trace: " + exception.StackTrace;
             }
             return exceptionMessage;
         }
@@ -154,16 +156,21 @@ namespace WebFreight.Web.Helpers.WorkerRole.DeploymentPackages
             }
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
-                webFreightContext = WebFreightContext.GetContext(deploymentPackagePM.Tenant);
-                deploymentPackageService = new DeploymentPackageService(webFreightContext, deploymentPackagePM.Tenant);
-                deploymentPackageService.Create(deploymentPackagePM, false);
-                DeploymentPackageDetails deploymentPackageDetails = new DeploymentPackageExtractDetailsService().ExtractDeploymentPackageDetailsByDocumentId(deploymentPackagePM.DocumentId, deploymentPackagePM.Tenant);
-                new DeploymentPackageImporter(deploymentPackageDetails, deploymentPackagePM.Tenant).Run();
+                StartImportingDeploymentPackage(deploymentPackagePM);
                 scope.Complete();
             }
 
             UpdateDeploymentPackageExecutionLog(new DeploymentPackageExecutionLogArgs() { StatusCode = "D", DoneDate = DateTime.Now });
             queueService.Complete();
+        }
+
+        private void StartImportingDeploymentPackage(DeploymentPackagePM deploymentPackagePM)
+        {
+            webFreightContext = WebFreightContext.GetContext(deploymentPackagePM.Tenant);
+            deploymentPackageService = new DeploymentPackageService(webFreightContext, deploymentPackagePM.Tenant);
+            deploymentPackageService.Create(deploymentPackagePM, false);
+            DeploymentPackageDetails deploymentPackageDetails = new DeploymentPackageExtractDetailsService().ExtractDeploymentPackageDetailsByDocumentId(deploymentPackagePM.DocumentId, deploymentPackagePM.Tenant);
+            new DeploymentPackageImporter(deploymentPackageDetails, deploymentPackagePM.Tenant).Run();
         }
     }
 

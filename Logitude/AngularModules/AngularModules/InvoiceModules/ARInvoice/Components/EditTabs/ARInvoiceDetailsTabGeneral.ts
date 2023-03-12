@@ -1601,6 +1601,12 @@ export class ARInvoiceLineItem extends BaseComponent {
             this.EntityPM.LineActionCode = newValue;
         }
     }
+    get ReportedinTaxReport() { return this.EntityPM.ReportedinTaxReport; }
+    set ReportedinTaxReport(newValue: string) {
+        if (this.EntityPM.ReportedinTaxReport != newValue) {
+            this.EntityPM.ReportedinTaxReport = newValue;
+        }
+    }
     get LocalDescription() { return this.EntityPM.LocalDescription; }
     set LocalDescription(newValue: string) {
         if (this.EntityPM.LocalDescription != newValue) {

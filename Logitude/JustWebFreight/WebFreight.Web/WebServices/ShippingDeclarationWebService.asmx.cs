@@ -222,6 +222,7 @@ namespace WebFreight.Web.WebServices
                     {
                         myDataProvider.CreatedByUserName = myCreatedByContact.EnglishName;
                         myDataProvider.CreatedByUserEmail = myCreatedByContact.Email;
+                        myDataProvider.CreatedByUserMobile = myCreatedByContact.Mobile;
                     }
                 }
 
@@ -1148,6 +1149,15 @@ namespace WebFreight.Web.WebServices
                                 myDataProvider.ShippingAgentLocalCustomsCode = shippingAgent.LocalCustomsCode;
                             }
                         }
+                        Contact contact = contactRepository.GetSingleContact(mainCarriageCarrier.PrimaryContactId, tenant);
+                        if (contact != null)
+                        {
+                            myDataProvider.MainCarriageCarrierPrimaryContactName = contact.EnglishName;
+                            myDataProvider.MainCarriageCarrierPrimaryContactEmail = contact.Email;
+                            myDataProvider.MainCarriageCarrierPrimaryContactPhone = contact.BusinessPhone;
+                            myDataProvider.MainCarriageCarrierPrimaryContactFax = contact.Fax;
+                        }
+
                     }
 
                     Address mainCarriageCarrierAddress = addressRepository.GetMainAddressByCardId(shipment.MainCarriageCarrierId, tenant);
@@ -1175,6 +1185,8 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.Messers = shipment.BookingConfirmationNumber != null ? myDataProvider.Messers + Environment.NewLine + "Booking: " + shipment.BookingConfirmationNumber : myDataProvider.Messers;
                 myDataProvider.Messers = shipment.ShipmentNumber != null ? myDataProvider.Messers + Environment.NewLine + "Shipment No. " + shipment.ShipmentNumber : myDataProvider.Messers;
                 myDataProvider.BookingNumber = shipment.BookingConfirmationNumber != null ? shipment.BookingConfirmationNumber : "";
+
+                
                 #endregion
 
                 #region User

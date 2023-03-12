@@ -42,6 +42,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         {
             if (isNewEntity)
             {
+                ValidateShipmentNumber(entityPM);
                 ValidateProductTypePermission(entityPM, myCommonContext);
             }
 
@@ -97,6 +98,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
             }
         }
+
+        private static void ValidateShipmentNumber(ShipmentPM entityPM)
+        {
+            ShipmentRepository shipmentRepository = new ShipmentRepository(entityPM.Tenant);
+            bool isShipmentNumberExist = shipmentRepository.CheckShipmentExistsByNumber(entityPM.ShipmentNumber, entityPM.Tenant);
+            if (!isShipmentNumberExist) return;
+            throw new ApplicationException("This shipment number is already exists");
+        }
+
         public static string GetCustomerCreditLimitDetails(string customerId, string quoteId, bool isBuildFromQuote, int tenant)
         {
             var limitWarningMsg = "";
@@ -1484,23 +1494,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
             }
         }
-        public static void ValidateBranch(ShipmentPM entityPM)
-        {
-            if (entityPM.IsHybrid) return;
-            if (!FeatureToggleHelper.HasFeatureToggle("BCC", entityPM.Tenant)) return;
-            if (string.IsNullOrEmpty(entityPM.BranchId)) return;
-            BranchRepository branchRepository = new BranchRepository(entityPM.Tenant);
-            Branch branch = branchRepository.GetSingleBranch(entityPM.BranchId, entityPM.Tenant);
 
-            if (branch == null || branch.Tenant != entityPM.Tenant)
-            {
-                throw new ApplicationException("Branch Field is required");
-            }
-            if (string.IsNullOrEmpty(branch.CounterCode))
-            {
-                throw new ApplicationException("The Counter Code of the " + branch.EnglishName + " Branch is required.");
-            }
-        }
         private static bool HasPayablesAmounts(ShipmentPM entityPM)
         {
             bool hasAnyPayableAmount = false;

@@ -129,71 +129,73 @@ export class ContainerComponent implements OnInit {
         if (myQueryCode != null) {
             var queryCode = myQueryCode;
             var objectTableName = "Container";
+            var queryName = "";
             switch (myQueryCode) {
                 case "All Containers": {
-                    ServiceLocator.SendTotangoUserActivity("Container", "All Containers");
+                    queryName =  "All Containers";
                     break;
                 }
                 case "Containers": {
-                    ServiceLocator.SendTotangoUserActivity("Container", "Containers");
+                    queryName = "Containers";
                     break;
                 }
                 case "Cancelled Containers": {
-                    ServiceLocator.SendTotangoUserActivity("Container", "Cancelled Containers");
+                    queryName = "Cancelled Containers";
                     break;
                 }
                 case "Closed Containers": {
-                    ServiceLocator.SendTotangoUserActivity("Container", "Closed Containers");
+                    queryName = "Closed Containers";
                     break;
                 }
 
                 case "PendingPOLDeparture": {
-                    ServiceLocator.SendTotangoUserActivity("Container", "PendingPOLDeparture");
+                    queryName = "Pending POL Departure";
                     break;
                 }
 
                 case "InTransitNew": {
-                    ServiceLocator.SendTotangoUserActivity("Container", "InTransitNew");
+                    queryName = "In Transit";
                     break;
                 }
 
                 case "InTransitTransshipments": {
-                    ServiceLocator.SendTotangoUserActivity("Container", "InTransitTransshipments");
+                    queryName = "In Transit Transshipments";
                     break;
                 }
 
                 case "PendingGateOut": {
-                    ServiceLocator.SendTotangoUserActivity("Container", "PendingGateOut");
+                    queryName = "Pending Gate Out";
                     break;
                 }
 
                 case "PendingEmptyReturn": {
-                    ServiceLocator.SendTotangoUserActivity("Container", "PendingEmptyReturn");
+                    queryName = "Gated Out not Empty Return";
                     break;
                 }
 
                 case "Exceptions": {
-                    ServiceLocator.SendTotangoUserActivity("Container", "Exceptions");
+                    queryName = "Exceptions";
                     break;
                 }
                 case "PendingArrival": {
-                    ServiceLocator.SendTotangoUserActivity("Container", "PendingArrival");
+                    queryName = "Pending Arrival";
                     break;
                 }
                 case "PendingDischarge": {
-                    ServiceLocator.SendTotangoUserActivity("Container", "PendingDischarge");
+                    queryName = "Pending Discharge";
                     break;
                 }
                 case "PendingDelivery": {
-                    ServiceLocator.SendTotangoUserActivity("Container", "PendingDelivery");
+                    queryName = "Pending Delivery";
                     break;
                 }
                 case "PreviousTrackedContainers": {
-                    ServiceLocator.SendTotangoUserActivity("Container", "PreviousTrackedContainers");
+                    queryName = "Previous Tracked Containers";
                     break;
                 }
+               
             }
-
+            ServiceLocator.SendTotangoUserActivity("Container Views", queryName);
             var listArgs = new ListComponentArgs();
             listArgs.QueryCode = myQueryCode;
             listArgs.ObjectTableName = objectTableName;

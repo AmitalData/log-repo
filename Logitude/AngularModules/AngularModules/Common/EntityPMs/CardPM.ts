@@ -299,8 +299,8 @@ export class CardPM extends ObjectCustomFieldPM {
     private customerSizeId: string;
     public get CustomerSizeId() { return this.customerSizeId; }
     public set CustomerSizeId(newValue: string) { if (this.customerSizeId != newValue) { this.customerSizeId = newValue; this.MarkAsDirty("CustomerSizeId"); } }
-       
-	 
+
+
     private customAgent: any;
     public get CustomAgent() { return this.customAgent; }
     public set CustomAgent(newValue: any) { if (this.customAgent != newValue) { this.customAgent = newValue; this.MarkAsDirty("CustomAgent"); } }
@@ -561,9 +561,15 @@ export class CardPM extends ObjectCustomFieldPM {
     public set ExportLocalCustomerGroupId(newValue: string) { if (this.exportLocalCustomerGroupId != newValue) { this.exportLocalCustomerGroupId = newValue; this.MarkAsDirty("ExportLocalCustomerGroupId"); } }
        
 	 
+
     private isPotential: boolean;
     public get IsPotential() { return this.isPotential; }
     public set IsPotential(newValue: boolean) { if (this.isPotential != newValue) { this.isPotential = newValue; this.MarkAsDirty("IsPotential"); } }
+       
+	 
+    private eORInumber: string;
+    public get EORInumber() { return this.eORInumber; }
+    public set EORInumber(newValue: string) { if (this.eORInumber != newValue) { this.eORInumber = newValue; this.MarkAsDirty("EORInumber"); } }
        
 	 
 
@@ -593,4 +599,4 @@ export class CardPM extends ObjectCustomFieldPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
