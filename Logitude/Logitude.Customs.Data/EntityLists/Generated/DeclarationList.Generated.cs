@@ -335,8 +335,6 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public DateTime? LoadingDateTime  { get; set; }
        [DataMember]
-       public string ShipCode  { get; set; }
-       [DataMember]
        public bool IsExporterConfirmation  { get; set; }
        [DataMember]
        public string ShipName  { get; set; }
@@ -390,6 +388,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string ExportDeclarationOfficeCode  { get; set; }
        [DataMember]
        public string PhysicalCheck  { get; set; }
+       [DataMember]
+       public string ShipCodeName  { get; set; }
        [DataMember]
        public string CargoTypeName  { get; set; }
        [DataMember]

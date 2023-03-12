@@ -1021,7 +1021,36 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
     PaymentDateTimeOnBlur(event) {
         //this.IsPaymentDateValid();
     }
-    
+
+    IsPaymentDateValid() {
+
+        if (this.PaymentDate) {
+
+            //var newDate = new Date();
+            var newDate = DateTool.GetCurrentDateTimeAsUtc();
+            var currentDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(), 0, 0, 0); // last of today
+
+            if (this.PaymentDate < currentDate) {
+                this.UIProperties.SetValidity("PaymentDate", "Customs.DeclarationPayment", false, "לם ניתן להזין תםריך בעבר");
+                return false;
+            } else {
+                this.UIProperties.SetValidity("PaymentDate", "Customs.DeclarationPayment", true, "");
+                return true;
+            }
+
+        }
+        else // no date entered
+        {
+            this.UIProperties.SetValidity("PaymentDate", "Customs.DeclarationPayment", true, "");
+            return true;
+        }
+    }
+    StopMyBusyIndicator() {
+
+        this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+
+    }
+
 
     OkButtonClicked() {
         if(this.DeclarationPM.IsSubmitDeclaration !=true)
@@ -1191,7 +1220,6 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
     // Before send
 
     SendButtonClicked(event) {
-
         if(this.DeclarationPM.IsSubmitDeclaration !=true)
         {
             this.PaymentDate = DateTool.GetCurrentDateTimeAsUtc();

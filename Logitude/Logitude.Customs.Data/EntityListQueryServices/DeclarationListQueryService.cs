@@ -549,7 +549,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      DestinationCountryName = a.CustomsCountry != null ? a.CustomsCountry.EnglishName : "",
 
                                                      LoadingDateTime = a.LoadingDateTime,
-                                                     ShipCode = a.CustomsShip.LocalName,
                                                      ShipName = a.CustomsShip != null ? a.CustomsShip.EnglishName : "",
                                                      IsExporterConfirmation = a.IsExporterConfirmation,
                                                      CreateDateForExport = a.CreateDateTime,
