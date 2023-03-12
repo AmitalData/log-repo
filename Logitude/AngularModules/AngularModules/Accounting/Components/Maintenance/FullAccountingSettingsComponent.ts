@@ -880,7 +880,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         this.TabsSource.push({ Name: "ControlAccounts", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.O.ControlGLAccounts") });
         this.TabsSource.push({ Name: "Logo", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.General.O.Cheques") });
         this.TabsSource.push({ Name: "Signed", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.General.O.Signeds") });
-        if(this.AccountingActivated)
+        if(this.AccountingActivated){
             this.AddAgingDefinitionTab();
             this.disabledCopyFromTenant0 = false
         }
