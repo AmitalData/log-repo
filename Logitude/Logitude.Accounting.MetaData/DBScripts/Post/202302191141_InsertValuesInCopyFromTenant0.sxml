@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Accounting">
-  <Sql Version="1">
+  <Sql Version="5">
     <![CDATA[
 insert into CopyFromTenant0(Id,Tenant,TableName)values('9999-1',0,'Chart Of Accounts')
 insert into CopyFromTenant0(Id,Tenant,TableName)values('9999-2',0,'GLAccounts')
