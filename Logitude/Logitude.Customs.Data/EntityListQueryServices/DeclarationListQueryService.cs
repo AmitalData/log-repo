@@ -366,6 +366,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                  into originalDeclarations
                                                  from myJoinOriginalDeclaration in originalDeclarations.DefaultIfEmpty()
 
+                                                 join recDisplayDeclarations in context.Declarations.Where(x => x.AmendmentDontDisplayInList != true && !string.IsNullOrEmpty(x.AmendmentOriginalDeclartation))
+                                                .Select(x => new {  x.DeclarationNumber ,x.AmendmentOriginalDeclartation})
+                                                on a.AmendmentOriginalDeclartation equals recDisplayDeclarations.AmendmentOriginalDeclartation
+                                                into displayDeclarations
+                                                 from myJoinDisplayDeclarations in displayDeclarations.DefaultIfEmpty()
 
                                                  join AmendmentRequestStatus in context.AmendmentRequestStatuses
                                                  .Select(x => new { x.Code, x.LocalName })
@@ -373,13 +378,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                             into qStatusAmendJoin
                                                  from myJoinAmendmentRequest in qStatusAmendJoin.DefaultIfEmpty()
 
-                                                     /*
+													 /*
                                                      join pr in qCourierPendingReasonLocalName
                                                      on a.Id equals pr.DeclarationID into leftjoinCourierPendingReasonLocalName
                                                      from mypr in leftjoinCourierPendingReasonLocalName.DefaultIfEmpty()
                                                      */
 
-                                                 select new DeclarationList()
+												 select new DeclarationList()
                                                  {
                                                      Id = a.Id,
                                                      // AgentId = a.AgentId,
@@ -391,7 +396,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      CustomFileNo = a.CustomFileNo,
                                                      DealValue = a.DealValue,
                                                      //  DeclarationDocumentId = a.DeclarationDocumentId,
-                                                     DeclarationNumber = a.DeclarationNumber,
+                                                     DeclarationNumber = !string.IsNullOrEmpty(a.DeclarationNumber) ? a.DeclarationNumber : (!string.IsNullOrEmpty(myJoinOriginalDeclaration.DeclarationNumber) ? myJoinOriginalDeclaration.DeclarationNumber : myJoinDisplayDeclarations.DeclarationNumber),
 
                                                      EntitleImporterCountryName = a.EntitleImporterCountry.LocalName,
                                                      //  EntitleImporterId = a.EntitleImporterId,
