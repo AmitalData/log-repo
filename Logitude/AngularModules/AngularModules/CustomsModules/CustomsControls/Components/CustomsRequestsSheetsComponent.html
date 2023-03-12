@@ -550,7 +550,7 @@
                     </thead>
                     <tbody [style.display]="IsTherecustomsRequestsSheetSummary ? 'block' : 'none'" #statisticsTableTbody>
                         <tr style="display: table; width: 100%; table-layout: fixed; height: 20px; border-bottom:1px solid #A7A9AC;" *ngFor="let item of customsRequestsSheetSummary">
-                            <td class="Statistics" [tooltip]="item.InterfaceTypeName" position="right" [show]="item.InterfaceTypeName.length * 6 > statisticsTableTbody.clientWidth - 60">{{item.InterfaceTypeName}}</td>
+                            <td class="Statistics" [tooltip]="item.InterfaceTypeName" position="right" [show]="item.InterfaceTypeName && item.InterfaceTypeName.length * 6 > statisticsTableTbody.clientWidth - 60">{{item.InterfaceTypeName}}</td>
                             <td class="Statistics">{{item.count}}</td>
                         </tr>
                     </tbody>
