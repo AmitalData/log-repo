@@ -1,11 +1,9 @@
 ﻿<Script DBType="Main" Module="Common"   AOT="true" TargetTableName="TermsofUses">
 
-  <Sql Version="2">
+    <Sql Version="2">
     <![CDATA[
-      IF  SERVERPROPERTY ('edition') like '%Enterprise%Edition%'
-      BEGIN
-        update TermsofUses set [VersionNumber] = [Id] where  $LastCounterWhere$
-      END
+    	if cast(SERVERPROPERTY ('Edition') as varchar(50)) not like '%Standard Edition%'
+           update TermsofUses set [VersionNumber] = [Id] where  $LastCounterWhere$
     ]]>
   </Sql>
   <Oracle Version="1"></Oracle>
