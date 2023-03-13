@@ -63,11 +63,12 @@ export class RatesTablePM {
     private rate: number;
     public get Rate() { return this.rate; }
     public set Rate(newValue: number) { if (this.rate != newValue) { this.rate = newValue; this.MarkAsDirty("Rate"); } }
-    
+       
+	 
     private unit: number;
     public get Unit() { return this.unit; }
-    public set Unit(newValue: number) { this.unit = newValue; }
-
+    public set Unit(newValue: number) { if (this.unit != newValue) { this.unit = newValue; this.MarkAsDirty("Unit"); } }
+       
 	 
     private valueDate: Date;
     public get ValueDate() { return this.valueDate; }
@@ -116,4 +117,4 @@ export class RatesTablePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
