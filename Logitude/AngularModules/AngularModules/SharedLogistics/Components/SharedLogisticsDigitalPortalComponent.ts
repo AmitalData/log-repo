@@ -82,8 +82,13 @@ export class SharedLogisticsDigitalPortalComponent implements OnInit {
     public ValidationWarningsMessage: string = null;
     public IsValidationWarningsVisible: boolean = false;
     public IsCustomerCareUser = false;
+    IsTenantZero: boolean = false;
 
     constructor(public _sharedLogisticsService: SharedLogisticsService) {
+        if (SessionLocator.TenantPM.Id == 0) {
+            this.IsTenantZero = true;
+        }
+
         this.InitalizeServices();
     }
 
