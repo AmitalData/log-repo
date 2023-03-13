@@ -3867,7 +3867,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             var currRequestParams = new CustomsItemDetailsQueryRequestParams();///Force new GUID On Each Send !!
             currRequestParams.ValidToDate =new Date();
             currRequestParams.Classification = this.ClassificationCode;
-            currRequestParams.CustomsBookType = this.Parent.declarationPM?.ProcedureCurrentName.indexOf("אוטונומיה")!=-1?3:this.Parent.declarationPM.Direction=='E'?2:1;
+            currRequestParams.CustomsBookType = this.Parent.declarationPM.Direction=='I'?1:2;
     
             currRequestParams.LoggingEnabled = true;
             currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
