@@ -91,11 +91,11 @@ export class FieldTemplateComponent {
         if (this.IsSpotLightTemplate) {
             this.RunComponent();
         } 
-        if(this.Entity['IsClosedForFollowUp']== false){
-            this.closingOpening = 'סגירת תיק'
+        if(this.Entity['IsClosedForFollowUp']== "0"){
+            this.closingOpening = TextCodeTranslator.Translate("Customs.DeclarationReferantData.O.CloseCustomFile")
         } 
-        if(this.Entity['IsClosedForFollowUp']== true){
-            this.closingOpening = 'פתיחת תיק'
+        if(this.Entity['IsClosedForFollowUp'] == "1"){
+            this.closingOpening = TextCodeTranslator.Translate("Customs.DeclarationReferantData.O.OpenCustomFile")
         }
     }
 
@@ -696,10 +696,10 @@ export class FieldTemplateComponent {
     ClosingOpeningFileNo(){
         var confirm = new ConfirmWindow(); 
         confirm.Width = 350;
-        if(this.Entity['IsClosedForFollowUp']== false)
-            confirm.Show("אשר סגירת תיק");
+        if(this.Entity['IsClosedForFollowUp']== "0")
+            confirm.Show(TextCodeTranslator.Translate("Customs.DeclarationReferantData.O.ConfirmCloseFile"));
         else
-            confirm.Show("אשר פתיחת תיק");
+            confirm.Show(TextCodeTranslator.Translate("Customs.DeclarationReferantData.O.ConfirmOpenFile"));
         confirm.WindowClosed.subscribe(() => {
             if (confirm.Yes) {
                 SessionLocator.SelectedSession.StartBusyIndicatorLoading();
@@ -707,12 +707,19 @@ export class FieldTemplateComponent {
               
                 this._declarationReferantDataPMService.get(this.Entity?.DeclarationId).subscribe((getResponse: any) => {
                     if (getResponse?.Result) {
+
                         const declarationReferantDataPM=getResponse.Result;
                         declarationReferantDataPM.IsClosedForFollowUp = declarationReferantDataPM.IsClosedForFollowUp == "0" ? "1" : "0";
+                        declarationReferantDataPM.IsCloseOrOpenFromUser = true;
                         this._declarationReferantDataPMService.update(declarationReferantDataPM).subscribe((UpdateResponse: any) => {
+                            
+                            SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
                             SessionLocator.SelectedSession.StopBusyIndicator();
                         });
                         
+                    }
+                    else{
+                        SessionLocator.SelectedSession.StopBusyIndicator();
                     }
                 });
             }
