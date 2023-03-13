@@ -1176,11 +1176,6 @@ export class DeclarationPM {
     public set IsExporterConfirmation(newValue: boolean) { if (this.isExporterConfirmation != newValue) { this.isExporterConfirmation = newValue; this.MarkAsDirty("IsExporterConfirmation"); } }
        
 	 
-    private shipName: string;
-    public get ShipName() { return this.shipName; }
-    public set ShipName(newValue: string) { if (this.shipName != newValue) { this.shipName = newValue; this.MarkAsDirty("ShipName"); } }
-       
-	 
     private destinationCountryName: string;
     public get DestinationCountryName() { return this.destinationCountryName; }
     public set DestinationCountryName(newValue: string) { if (this.destinationCountryName != newValue) { this.destinationCountryName = newValue; this.MarkAsDirty("DestinationCountryName"); } }

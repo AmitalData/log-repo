@@ -169,7 +169,6 @@ export class DeclarationList {
 	CourierPendingReasonName: string;
 	LoadingDateTime: Date;
 	IsExporterConfirmation: boolean;
-	ShipName: string;
 	DestinationCountryName: string;
 	Direction: string;
 	AgentRoleCode: string;
