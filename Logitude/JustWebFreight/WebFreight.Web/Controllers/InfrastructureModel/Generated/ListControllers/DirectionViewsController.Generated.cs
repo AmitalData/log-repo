@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				DirectionRepository  directionRepository = new DirectionRepository(MyContext);
 				DirectionList entityList = null;
 				Direction entityPoco = directionRepository.GetSingleDirection(id );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Direction> singleEntityList = new List<Direction>();
 					singleEntityList.Add(entityPoco);

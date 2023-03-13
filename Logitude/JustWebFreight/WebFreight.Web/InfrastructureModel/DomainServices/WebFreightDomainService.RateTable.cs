@@ -188,7 +188,7 @@ namespace WebFreight.Web.InfrastructureModel.DomainServices
             return count;
         }
 
-        public List<LastRate> GetCurrenciesExchangeRateByValueDate(int tenant, string baseCurrencyId, DateTime? date)
+        public List<LastRate> GetCurrenciesExchangeRateByValueDate(int tenant, string baseCurrencyId, DateTime? date,bool calculateRateAccordingNumberUnit = false)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
 
@@ -213,7 +213,7 @@ namespace WebFreight.Web.InfrastructureModel.DomainServices
 
             foreach (Currency currency in foreignCurrencies)
             {
-                LastRate lastRate = ratesTableQuery.GetLastRecordByValueDate(tenant, currency.Id, baseCurrencyId, date);
+                LastRate lastRate = ratesTableQuery.GetLastRecordByValueDate(tenant, currency.Id, baseCurrencyId, date, calculateRateAccordingNumberUnit);
                 if (lastRate != null)
                 {
                     lastRate.BaseCurrencyId = baseCurrencyId;

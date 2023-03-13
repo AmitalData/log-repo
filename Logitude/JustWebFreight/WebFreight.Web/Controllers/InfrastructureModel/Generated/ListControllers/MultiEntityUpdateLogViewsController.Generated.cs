@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				MultiEntityUpdateLogRepository  multiEntityUpdateLogRepository = new MultiEntityUpdateLogRepository(MyContext);
 				MultiEntityUpdateLogList entityList = null;
 				MultiEntityUpdateLog entityPoco = multiEntityUpdateLogRepository.GetSingleMultiEntityUpdateLog(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<MultiEntityUpdateLog> singleEntityList = new List<MultiEntityUpdateLog>();
 					singleEntityList.Add(entityPoco);

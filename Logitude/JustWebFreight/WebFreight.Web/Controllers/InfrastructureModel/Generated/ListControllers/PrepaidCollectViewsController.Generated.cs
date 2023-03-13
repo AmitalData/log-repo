@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				PrepaidCollectRepository  prepaidCollectRepository = new PrepaidCollectRepository(MyContext);
 				PrepaidCollectList entityList = null;
 				PrepaidCollect entityPoco = prepaidCollectRepository.GetSinglePrepaidCollect(id );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<PrepaidCollect> singleEntityList = new List<PrepaidCollect>();
 					singleEntityList.Add(entityPoco);

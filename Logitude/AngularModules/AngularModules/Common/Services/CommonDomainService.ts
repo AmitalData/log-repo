@@ -166,11 +166,11 @@ export class CommonDomainService {
             }),catchError(ServiceHelper.HandleServiceError));
         });
     }
-    CopyCurrencyToTenant(CurrencyId: string, CurrencyRate: number, RateDate: string) {
+    CopyCurrencyToTenant(CurrencyId: string, CurrencyRate: number, RateDate: string,Unit:number = 1) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetCopyCurrencyToTenant?CurrencyId=' + CurrencyId + '&CurrencyRate=' + CurrencyRate + '&RateDate=' + RateDate;
+        var url = this._apiUrl + '/GetCopyCurrencyToTenant?CurrencyId=' + CurrencyId + '&CurrencyRate=' + CurrencyRate + '&RateDate=' + RateDate + '&Unit=' + Unit;
 
         return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {                

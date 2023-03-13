@@ -489,6 +489,7 @@ namespace LogitudeDataLoading
                                             IndexColor = a.IndexColor,
                                             CompanyName = a.CompanyName,
                                             CreateDate = a.CreateDate,
+                                            DigitalPortalLanguage = a.DigitalPortalLanguage
                                         }).ToList();
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())

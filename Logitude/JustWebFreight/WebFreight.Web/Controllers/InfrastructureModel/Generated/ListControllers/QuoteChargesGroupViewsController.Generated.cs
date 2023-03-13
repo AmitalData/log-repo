@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				QuoteChargesGroupRepository  quoteChargesGroupRepository = new QuoteChargesGroupRepository(MyContext);
 				QuoteChargesGroupList entityList = null;
 				QuoteChargesGroup entityPoco = quoteChargesGroupRepository.GetSingleQuoteChargesGroup(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<QuoteChargesGroup> singleEntityList = new List<QuoteChargesGroup>();
 					singleEntityList.Add(entityPoco);
