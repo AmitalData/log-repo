@@ -51,6 +51,8 @@ using WebFreight.Web.Helpers.SignUp;
 using Logitude.BL.DataContracts;
 using Logitude.Server.Tools.QueueService;
 using WebFreight.Web.Helpers.SignUp.Logbox;
+using Logitude.Workflow.Data.Repositories;
+using Logitude.Workflow.Data.EntityPOCOs;
 
 namespace WebFreight.Web.InfrastructureModel
 {
@@ -129,6 +131,10 @@ namespace WebFreight.Web.InfrastructureModel
         static TicketStageRepository ticketStageRepository;
         static TicketSeverityRepository ticketSeverityRepository;
         static TicketClassificationRepository ticketClassificationRepository;
+
+        //Task
+        static TaskPriorityRepository taskPriorityRepository;
+        static TaskStatusRepository taskStatusRepository;
 
         //SLA 
         static BusinessHourRepository businessHourRepository;
@@ -285,6 +291,10 @@ namespace WebFreight.Web.InfrastructureModel
             ticketSeverityRepository = new TicketSeverityRepository(theTenant);
             ticketClassificationRepository = new TicketClassificationRepository(theTenant);
 
+            //Task
+            taskPriorityRepository = new TaskPriorityRepository(theTenant);
+            taskStatusRepository = new TaskStatusRepository(theTenant);
+
             // SLA 
             businessHourRepository = new BusinessHourRepository(theTenant);
             slaHeaderRepository = new SLAHeaderRepository(theTenant);
@@ -379,6 +389,10 @@ namespace WebFreight.Web.InfrastructureModel
                 List<TicketStage> tenantZeroTicketStages = null;
                 List<TicketSeverity> tenantZeroTicketSeverities = null;
 
+                //Task
+                List<TaskPriority> tenantZeroTaskPriorities = null;
+                List<TaskStatus> tenantZeroTaskStatuses = null;
+
                 // SLA
                 List<BusinessHour> tenantZeroBusinessHours = null;
                 List<SLAHeader> tenantZeroSLAHeaders = null;
@@ -429,6 +443,10 @@ namespace WebFreight.Web.InfrastructureModel
                     tenantZeroTicketTypes = ticketTypeRepository.GetAll(0).ToList();
                     tenantZeroTicketStages = ticketStageRepository.GetAll(0).ToList();
                     tenantZeroTicketSeverities = ticketSeverityRepository.GetAll(0).ToList();
+
+                    //Task
+                    tenantZeroTaskPriorities = taskPriorityRepository.GetAll(0).ToList();
+                    tenantZeroTaskStatuses = taskStatusRepository.GetAll(0).ToList();
 
                     //SLA 
                     tenantZeroBusinessHours = businessHourRepository.GetBusinessHours(0).ToList();
@@ -550,6 +568,10 @@ namespace WebFreight.Web.InfrastructureModel
                 AddTenantLoginPolicy(tenant);
 
                 AddAutomationFromTenantZero(tenant , tenantZeroDocumentTypes);
+
+                //Task
+                AddTaskPriorities(tenant, taskPriorityRepository, tenantZeroTaskPriorities);
+                AddTaskStatuses(tenant, taskStatusRepository, tenantZeroTaskStatuses);
 
                 new TruckerSignUpService(signUpInfo, tenant).CopyFromTenantZero();
                 #endregion
@@ -2792,6 +2814,58 @@ namespace WebFreight.Web.InfrastructureModel
                 TypeRepository.Add(newType);
             }
             TypeRepository.SubmitChanges();
+        }
+
+        public static void AddTaskPriorities(int tenant, TaskPriorityRepository taskPriorityRepository, List<TaskPriority> tenantZeroTaskPriorities)
+        {
+            User systemUser = GetTenantSystemUser(tenant);
+            DateTime currentDatetime = DateTime.Now;
+
+            List<TaskPriority> taskPriorities = tenantZeroTaskPriorities.Where(t => t.Tenant == 0).ToList();
+            foreach (TaskPriority taskPriority in taskPriorities)
+            {
+                TaskPriority newTaskPriority = new TaskPriority()
+                {
+                    Id = IdCounter.GetNumber("TaskPriority", tenant),
+                    Tenant = tenant,
+                    Name = taskPriority.Name,
+                    Code = taskPriority.Code,
+                    SearchFields = taskPriority.SearchFields,
+                    DisplayOrder = taskPriority.DisplayOrder,
+                    CreateDate = currentDatetime,
+                    UpdateDate = currentDatetime,
+                    CreatedByUserId = systemUser?.Id,
+                    UpdatedByUserId = systemUser?.Id
+                };
+                taskPriorityRepository.Add(newTaskPriority);
+            }
+            taskPriorityRepository.SubmitChanges();
+        }
+
+        public static void AddTaskStatuses(int tenant, TaskStatusRepository taskStatusRepository, List<TaskStatus> tenantZeroTaskStatuses)
+        {
+            User systemUser = GetTenantSystemUser(tenant);
+            DateTime currentDatetime = DateTime.Now;
+
+            List<TaskStatus> taskStatuses = tenantZeroTaskStatuses.Where(t => t.Tenant == 0).ToList();
+            foreach (TaskStatus taskStatus in taskStatuses)
+            {
+                TaskStatus newTaskStatus = new TaskStatus()
+                {
+                    Id = IdCounter.GetNumber("TaskStatus", tenant),
+                    Tenant = tenant,
+                    Name = taskStatus.Name,
+                    Code = taskStatus.Code,
+                    SearchFields = taskStatus.SearchFields,
+                    Closed = taskStatus.Closed,
+                    CreateDate = currentDatetime,
+                    UpdateDate = currentDatetime,
+                    CreatedByUserId = systemUser?.Id,
+                    UpdatedByUserId = systemUser?.Id
+                };
+                taskStatusRepository.Add(newTaskStatus);
+            }
+            taskStatusRepository.SubmitChanges();
         }
 
         public static void AddTicketStages(int theTenant, TicketStageRepository TypeRepository, List<TicketStage> tenantZeroTypes)
