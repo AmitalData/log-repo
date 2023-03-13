@@ -36,6 +36,13 @@ namespace WebFreight.Web.WcfApi
 
 
 #if !tzuri_req
+
+
+        public Response LGTQuery(string queryId, Dictionary<string, string> queryParams, int tenant)
+        {
+            Response res = new Response();
+            return (res);
+        }
         public string GetTaskFromQueue(int tenant, int priority)
         {
             Envelope envelope = new Envelope();

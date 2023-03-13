@@ -19,6 +19,9 @@ namespace WebFreight.Web.WcfApi
         [OperationContract]
         Response MarkTaskAsDone(string communicationLogId, int tenant, int priority);
 
+        [OperationContract]
+        Response LGTQuery(string queryId, Dictionary<string, string> queryParams, int tenant);
+
 #if tzuri_req
 
         [OperationContract]
