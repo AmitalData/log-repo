@@ -1027,7 +1027,7 @@ export class AWBWizardComponent implements AfterViewInit{
             });
         }
     }
-    private RefreshTab(tabCode: string) {
+    public RefreshTab(tabCode: string) {
         switch (tabCode) {
 
             case "OVE": {

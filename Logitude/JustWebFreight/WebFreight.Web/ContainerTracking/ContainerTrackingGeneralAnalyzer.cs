@@ -203,7 +203,7 @@ namespace WebFreight.Web.ContainerTracking
 
             ContainerPM container = GetContainerPM(containerId, containerTrackingRequest.Tenant);
             ShipmentPM shipment = GetShipmentPM(containerTrackingRequest.ShipmentId, containerTrackingRequest.Tenant);
-            manager.allTrasshipmentLegs = new List<dynamic>();
+             manager.allShipmentTrasshipmentLegs = new List<dynamic>();
 
             if (IsValidToAnalyze(shipment, container, containerTrackingRequest))
             {

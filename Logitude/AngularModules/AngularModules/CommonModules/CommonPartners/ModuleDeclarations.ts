@@ -44,6 +44,7 @@ import { StorageDefaultsComponents } from './Components/EditTabs/Warehouse/Stora
 import { ShippingAgentGeneralTabComponent } from './Components/EditTabs/ShippingAgent/ShippingAgentGeneralTabComponent';
 import { ServiceLinesTabComponent } from './Components/EditTabs/ServiceLinesTabComponent';
 import { AddEditServiceLineComponent } from './Components/AddEdit/AddEditServiceLineComponent';
+import { PartnerARInvoiceDocumentTypeTemplateComponent } from './Components/Templates/PartnerARInvoiceDocumentTypeTemplateComponent';
 
 export const Components =
     [
@@ -93,6 +94,7 @@ export const Components =
         ShippingAgentGeneralTabComponent,
         ServiceLinesTabComponent,
         AddEditServiceLineComponent,
+        PartnerARInvoiceDocumentTypeTemplateComponent,
     ];
 
 export class ModuleDeclarations {
@@ -147,6 +149,7 @@ export class ModuleDeclarations {
             case "ShippingAgentGeneralTabComponent": { myResult = ShippingAgentGeneralTabComponent; break; }
             case "ServiceLinesTabComponent": { myResult = ServiceLinesTabComponent; break; }
             case "AddEditServiceLineComponent": { myResult = AddEditServiceLineComponent; break; }
+            case "PartnerARInvoiceDocumentTypeTemplateComponent": { myResult = PartnerARInvoiceDocumentTypeTemplateComponent; break; }
         }
 
         return myResult;

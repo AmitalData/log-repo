@@ -18,6 +18,7 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Microsoft.Practices.Unity;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools;
+using Logitude.BL.CommonDataModel.ExternalService;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -130,10 +131,19 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    Tenant = a.Tenant,
                                    EnglishName = a.Card.EnglishName,
                                    PrimaryContactId = a.Card.PrimaryContactId,
+                                   SingleInvoiceTemplateId = a.Card.SingleInvoiceTemplateId,
+                                   CustomsInvoiceTemplateId = a.Card.CustomsInvoiceTemplateId,
+                                   ConsolidationInvoiceTemplateId = a.Card.ConsolidationInvoiceTemplateId,
+                                   ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
                                },
                                BillToId = a.Card.BillToId,
                            }).FirstOrDefault();
 
+            if (airline != null)
+            {
+            PartnerARinvoiceDocumentTypeService partnerARinvoiceDocumentTypeService = new PartnerARinvoiceDocumentTypeService(airline.Tenant);
+            airline.Card = partnerARinvoiceDocumentTypeService.Set(airline.Card);
+            }
 
             if (airline != null)
             {
@@ -237,11 +247,20 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    Tenant = a.Tenant,
                                    EnglishName = a.Card.EnglishName,
                                    PrimaryContactId = a.Card.PrimaryContactId,
+                                   SingleInvoiceTemplateId = a.Card.SingleInvoiceTemplateId,
+                                   CustomsInvoiceTemplateId = a.Card.CustomsInvoiceTemplateId,
+                                   ConsolidationInvoiceTemplateId = a.Card.ConsolidationInvoiceTemplateId,
+                                   ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
                                },
                                BillToId = a.Card.BillToId,
                            }).FirstOrDefault();
 
 
+            if (airline != null)
+            {
+                PartnerARinvoiceDocumentTypeService partnerARinvoiceDocumentTypeService = new PartnerARinvoiceDocumentTypeService(airline.Tenant);
+                airline.Card = partnerARinvoiceDocumentTypeService.Set(airline.Card);
+            }
             if (airline != null)
             {
                 AirlinePM securedPm = new AirlinePM();
@@ -346,10 +365,19 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    EnglishName = a.Card.EnglishName,
                                    PrimaryContactId = a.Card.PrimaryContactId,
                                    GLAccountDisplayNumber = a.Card.GLAccountDisplayNumber,
+                                   SingleInvoiceTemplateId = a.Card.SingleInvoiceTemplateId,
+                                   CustomsInvoiceTemplateId = a.Card.CustomsInvoiceTemplateId,
+                                   ConsolidationInvoiceTemplateId = a.Card.ConsolidationInvoiceTemplateId,
+                                   ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
                                },
                                BillToId = a.Card.BillToId,
                            }).FirstOrDefault();
 
+            if (airline != null)
+            {
+                PartnerARinvoiceDocumentTypeService partnerARinvoiceDocumentTypeService = new PartnerARinvoiceDocumentTypeService(airline.Tenant);
+                airline.Card = partnerARinvoiceDocumentTypeService.Set(airline.Card);
+            }
             CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
             CardExternalCodeByCurrencyQuery cardExternalCodeByCurrencyQuery = new CardExternalCodeByCurrencyQuery(cardExternalCodeByCurrencyRepository);
             airline.CardExternalCodeByCurrencies = cardExternalCodeByCurrencyQuery.GetCardExternalCodeByCurrencyPMsForCustomer(airline.Id, airline.Tenant);
