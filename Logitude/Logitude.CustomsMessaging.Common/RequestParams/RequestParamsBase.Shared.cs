@@ -96,6 +96,7 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
 
         public string ParentId { get; set; }
 
+        public bool ForceCompanySign { get; set; }
 
     }
 
