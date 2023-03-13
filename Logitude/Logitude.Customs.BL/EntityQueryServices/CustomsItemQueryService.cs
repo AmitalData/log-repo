@@ -78,7 +78,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return QuantityTypeCode;
         }
 
-        public string GetQuantityTypeByClassificationWithMultiCustomItems(string classificationCode, int tenant, bool isExport)
+        public string GetQuantityTypeByClassificationWithMultiCustomItems(string classificationCode, int tenant, bool isExport, bool getFromCache=true)
         {
             if (string.IsNullOrWhiteSpace(classificationCode)) return null;
             if (classificationCode.Length > 10)
@@ -102,7 +102,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             foreach(var customsItem in customsItems)
             {
-                propertiesDetailsHistory = propertiesDetailsHistoryQueryService.GetPropertiesDetailsHistoryByCustomsItemId(customsItem.ID);
+                propertiesDetailsHistory = propertiesDetailsHistoryQueryService.GetPropertiesDetailsHistoryByCustomsItemId(customsItem.ID, getFromCache);
                 if(propertiesDetailsHistory != null && propertiesDetailsHistory.StartDate < DateTime.Now && propertiesDetailsHistory.EndDate > DateTime.Now)
                 {
                     break;
