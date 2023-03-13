@@ -2,8 +2,8 @@
 
     <Sql Version="2">
     <![CDATA[
-    	if cast(SERVERPROPERTY ('Edition') as varchar(50)) not like '%Standard Edition%'
-           update TermsofUses set [VersionNumber] = [Id] where  $LastCounterWhere$
+      update TermsofUses set [VersionNumber] = [Id] where  $LastCounterWhere$
+
     ]]>
   </Sql>
   <Oracle Version="1"></Oracle>
