@@ -44,6 +44,9 @@
                                                                     <button style="margin-left: 16px;width: 70px;display: inline-block;" class="Button" (click)="ExportLanguage()">Export</button>
                                                                 </span>
                                                             </div>
+                                                            <div *ngIf="ExportErrorMsg !== null" style="color:#e53030; font-size: 12px; text-align: left;margin-top: 18px;">
+                                                                {{ExportErrorMsg}}
+                                                            </div>
                                                         </div>
                                                     </td>
                                                 </tr>

@@ -7,6 +7,8 @@ import { LocationDirective } from 'Infrastructure/Utilities/LocationDirective';
 import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 import { Guid } from 'Infrastructure/Utilities/Guid';
 import { DigitalLanguageSettingsService } from '../../../Infrastructure/Services/WebServices/DigitalLanguageSettingsService'
+import { ServiceHelper } from 'Infrastructure/Utilities/ServiceHelper';
+import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 
 @Component({
     templateUrl: './DigitalPortalLanguageSettingsComponent.html',
@@ -40,6 +42,7 @@ export class DigitalPortalLanguageSettingsComponent implements OnInit {
     IsFileImportedSuccessfully: boolean;
     UploadedTranslationFileMSG: string = '';
     ExportedExcelFileName: string = '';
+    ExportErrorMsg: string | null = null;
     ExportedExcelLogId: string = '';
     constructor(public _digitalLanguageSettingsService: DigitalLanguageSettingsService) {
         this.UploadFileId = Guid.NewRandomString();
@@ -101,35 +104,43 @@ export class DigitalPortalLanguageSettingsComponent implements OnInit {
     }
 
     GetDigitalExportExecutionLogStatus(){   
-        let payload = {
-          logId: this.ExportedExcelLogId,
-        };
-    
-        this._digitalLanguageSettingsService.getDigitalExportExecutionLogStatus(payload)
-          .then((res: any) => {
-            if (res && res.StatusCode === "D") {
-              setIsFileReady(true);
-              setProgressValue(100);
-              setIsLoading(false);
+        this._digitalLanguageSettingsService.getDigitalExportExecutionLogStatus(this.ExportedExcelLogId).subscribe((myResult: any) => {
+            if (myResult) {
+                if (myResult.StatusCode === "D") {
+                    this.CurrentSession.StopBusyIndicator();
+                    var _documentDownloadToken : any = SessionInfo.DocumentDownloadToken
+                    var _link = ServiceHelper.GetLogitudeURL() + "/WebPages/DawnLoadExcelPage.aspx?Type=SaveToMicrosoftExcel2007&fileName=" + this.ExportedExcelFileName + "&tempId=" + _documentDownloadToken + "&requestArea=SharedLogistic" 
+                    window.open(_link);
+                  }
+                  else {
+                    setTimeout(() => {
+                      this.GetDigitalExportExecutionLogStatus();
+                    }, 2000);
+                  }
             }
-            else {
-              setTimeout(() => {
-                getDigitalExportExecutionLogStatus();
-              }, 3000);
-            }
-    
-          })
-          .catch((err: any) => {
-            console.error('Error while exporting Excel sheet: ', err)
-          })
+        });
       }
 
     ExportLanguage() {
         this.CurrentSession.StartBusyIndicator("Exporting...")
-        var payload : any = {
+        var payload : ExportExcelParams = {
             ObjectTableName: "DigitalLabelTranslations",
-            LanguageCode: this.selectedDisplayLanguage.Code
+            LanguageCode: this.selectedDisplayLanguage && this.selectedDisplayLanguage.Code ? this.selectedDisplayLanguage.Code : 'EN',
+            CardId: null,
+            Tenant: 0,
+            PageIndex:0,
+            PageSize:0,
+            SortBy:"",
+            SortDirection:"",
+            GetCount:true,
+            GetAll:false,
+            DontApplyVirtualization:false,
+            CardType:"",
+            ObjectTableId:"",
+            ProfileCode:"",
+            AdditionalFilters:[],
         };
+
 
         this._digitalLanguageSettingsService.GetDigitalToExcelData(payload).subscribe((myResult: any) => {
             if (myResult) {
@@ -137,10 +148,11 @@ export class DigitalPortalLanguageSettingsComponent implements OnInit {
                 this.ExportedExcelLogId = myResult.ExecutionLogId;
                 setTimeout(() => {
                     this.GetDigitalExportExecutionLogStatus()
-                }, 4000);
+                }, 2000);
+            }else{
+                this.CurrentSession.StopBusyIndicator();
+                this.ExportErrorMsg = 'Something went wrong, Exporting file failed!';
             }
-
-            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -203,4 +215,28 @@ export class DigitalPortalLanguageSettingsComponent implements OnInit {
         this.CurrentSession.CloseCurrentWindow();
     }
 }
+
+
+export class ExportExcelParams {
+    ObjectTableName: string;
+    LanguageCode: string;
+    CardId: string | null;
+    Tenant: number;
+    PageIndex: number;
+    PageSize: number;
+    SortBy: string;
+    SortDirection: string;
+    GetCount: boolean;
+    GetAll: boolean;
+    DontApplyVirtualization: boolean;
+    CardType: string;
+    ObjectTableId: string;
+    ProfileCode: string;
+    AdditionalFilters: [];
+
+    constructor() {
+
+    }
+}
+
 
