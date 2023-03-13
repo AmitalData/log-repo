@@ -1045,6 +1045,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
             return true;
         }
     }
+    
     StopMyBusyIndicator() {
 
         this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
@@ -1105,11 +1106,6 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
 
     }
 
-  StopMyBusyIndicator() {
-
-        this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
-
-    }
 
 
     CheckIdDateBetween2Times(times: any, date1: Date) {
