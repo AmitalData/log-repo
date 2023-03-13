@@ -43,6 +43,12 @@ namespace Logitude.Customs.BL.TraceEvents
             {
                 return;
             }
+
+            var mySetting = EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(tenant);
+
+            if (mySetting.StandAlone)
+                return;
+
             string unifreightUserId = GetUnifreightUserId(tenant, UserId);
             try
             {
