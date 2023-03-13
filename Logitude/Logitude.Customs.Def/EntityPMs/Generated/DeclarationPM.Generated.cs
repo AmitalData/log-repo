@@ -5745,29 +5745,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private bool isAramex ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsAramex  
-	   {
-	    
-	     get
-		{
-		   return isAramex;
-		 }
-		 set
-		 {
-		   if(isAramex != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAramex",OldValue=isAramex,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   isAramex=value;
-		   }
-			
-		 }
-	   }
    }
    
 }
