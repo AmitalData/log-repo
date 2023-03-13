@@ -38,7 +38,7 @@
                                                             <div style="margin-bottom: 16px;font-size: 14px;font-weight: bold;">Select Language to Export</div>
                                                             <div>
                                                                 <span>
-                                                                    <ComboBox style="width:250px;float:left;" [WaterMark]="'Select Language'" (SelectedItemChanged)="selectedDisplayLanguage = $event" [ItemsSource]="DigitalDisplayLanguageslList" [SelectedItem]="selectedDisplayLanguage" [Binding]="'name'"></ComboBox>
+                                                                    <ComboBox style="width:250px;float:left;" [WaterMark]="'Select Language'" (SelectedItemChanged)="SelectedDisplayLanguage = $event" [ItemsSource]="DigitalDisplayLanguageslList" [SelectedItem]="SelectedDisplayLanguage" [Binding]="'name'"></ComboBox>
                                                                 </span>
                                                                 <span>
                                                                     <button style="margin-left: 16px;width: 70px;display: inline-block;" class="Button" (click)="ExportLanguage()">Export</button>
@@ -63,7 +63,7 @@
                                                             <div style="margin-bottom: 16px;font-size: 14px;font-weight: bold;">Select Language to Import</div>
                                                             <div>
                                                                 <span>
-                                                                    <ComboBox style="width:250px;float:left;" [WaterMark]="'Select Language'" (SelectedItemChanged)="selectedDisplayLanguage = $event" [ItemsSource]="DigitalDisplayLanguageslList" [SelectedItem]="selectedDisplayLanguage" [Binding]="'name'"></ComboBox>
+                                                                    <ComboBox style="width:250px;float:left;" [WaterMark]="'Select Language'" (SelectedItemChanged)="SelectedDisplayLanguage = $event" [ItemsSource]="DigitalDisplayLanguageslList" [SelectedItem]="SelectedDisplayLanguage" [Binding]="'name'"></ComboBox>
                                                                 </span>
                                                                 <span>
                                                                     <button [disabled]="!IsUploadButtonEnabled" style="margin-left: 16px;width: 70px;display: inline-block;" class="Button" (click)="OpenUpLoadFileToImportLanguage()">Import</button>
