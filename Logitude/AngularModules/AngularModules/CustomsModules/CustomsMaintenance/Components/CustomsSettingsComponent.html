@@ -207,8 +207,35 @@
                         <td class="tbl1LastCol"><div></div></td>
 
                     </tr>
+                    
+                    <!-- StandAlone  -->
+                    <tr class="FormFieldRow">
+                        <td class="tbl1Label">
+                            <LogLabel [ObjectFieldName]="'StandAlone'"
+                                      [ObjectTableName]="ObjectTableName"
+                                      [DataContext]="DataContext">
 
-                    <tr></tr>
+                            </LogLabel>
+                        </td>
+                        <td class="tbl1Col0"></td>
+
+                        <td colspan="2" style="padding-right: 15px;text-align:left">
+
+
+                            <LogCheckBox [NoObjectField]="true"
+                                         [ObjectFieldName]="'StandAlone'"
+                                         [ObjectTableName]="ObjectTableName"
+                                         [DataContext]="DataContext"
+                                         [Checked]="StandAlone"></LogCheckBox>
+
+                        </td>
+
+
+
+                        <td class="tbl1LastCol"><div></div></td>
+
+                    </tr>
+
 
                 </table>
             </td>
