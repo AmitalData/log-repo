@@ -158,6 +158,9 @@ export class CustomsSettingsComponent
     get AutoUnitMeasurement() { return this.entityPM != null ? this.entityPM.AutoUnitMeasurement : false; }
     set AutoUnitMeasurement(value: boolean) { this.entityPM.AutoUnitMeasurement = value; }
 
+    get StandAlone() { return this.entityPM != null ? this.entityPM.StandAlone : false; }
+    set StandAlone(value: boolean) { this.entityPM.StandAlone = value; }
+
     get PaymentOrderAccCard() { return this.entityPM != null ? this.entityPM.PaymentOrderAccCard : null; }
     set PaymentOrderAccCard(value: string) { this.entityPM.PaymentOrderAccCard = value; }
 

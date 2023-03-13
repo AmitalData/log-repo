@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsSettingUpdateClass
    {  		
-		public const string HashString = "9912f620093c88f06445d6709f058360";
+		public const string HashString = "68fe8c5325d75c33e5270212c4acd6ae";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1938,6 +1938,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "StandAlone",
 					  						ListPropertyPath =  "StandAlone",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1956,10 +1957,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StandAlone",
 					  						DefaultText =  "Stand Alone",
-					  						FullLocalDefaultText =  "Stand Alone",
+					  						FullLocalDefaultText =  "לוג'טיוד בלבד",
 					  						ListFieldLable =  "StandAloneListLable",
 					  						ListLableDefaultText =  "Stand Alone",
-					  						ListLocalDefaultText =  "Stand Alone",
+					  						ListLocalDefaultText =  "לוג'טיוד בלבד",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
