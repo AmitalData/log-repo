@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.BL.InfrastructureModel.CustomFilters
 {
@@ -35,6 +36,10 @@ namespace Logitude.BL.InfrastructureModel.CustomFilters
                     {
                         queryableData = FilterDataByTenant(queryableData);
                     }
+                    else if (item.FieldName == "AvailableInDocumentTypes")
+                    {
+                        queryableData = FilterDataByAvailableInDocumentTypes(queryableData);
+                    }
                 }
             }
 
@@ -47,6 +52,12 @@ namespace Logitude.BL.InfrastructureModel.CustomFilters
                                                       (objectTable.Tenant == Tenant || objectTable.Tenant == 0) &&
                                                       !objectTable.IsCustom);
                                                       
+        }
+
+        private IQueryable<ObjectTable> FilterDataByAvailableInDocumentTypes(IQueryable<ObjectTable> queryableData)
+        {
+            return queryableData.Where(objectTable => objectTable.AvailableInDocumentTypes == true && 
+                                                     (objectTable.Tenant == Tenant || objectTable.Tenant == 0));
         }
 
     }

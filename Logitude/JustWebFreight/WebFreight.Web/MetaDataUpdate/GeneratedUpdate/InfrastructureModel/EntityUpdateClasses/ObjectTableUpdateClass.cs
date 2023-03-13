@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class ObjectTableUpdateClass
    {  		
-		public const string HashString = "4fe8f6286c1fdf250e0129aa695ed6751";
+		public const string HashString = "19eb4d080a37c07b6b2ce578d7841d0c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -102,6 +102,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    AvailableInCustomization =  false,
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
+			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -122,6 +123,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  true,
 			      				    EnableEditFromLOV =  false,
+			      				    SortingByObjectField =  "FullNameTextCodeDefaultText",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
@@ -131,7 +133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Object Table",
-			      				    Code =  "16f9",
+			      				    Code =  "22e3",
 			      				    Name =  "ObjectTable",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
@@ -5334,7 +5336,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName = "AvailableInDocumentTypes",
+					 						FieldName =  "AvailableInDocumentTypes",
 					  						ObjectTableName =  "ObjectTable",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -5353,8 +5355,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath = "AvailableInDocumentTypes",
-					  						ListPropertyPath = "AvailableInDocumentTypes",
+					  						PMPropertyPath =  "AvailableInDocumentTypes",
+					  						ListPropertyPath =  "AvailableInDocumentTypes",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -5371,12 +5374,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable = "AvailableInDocumentTypes",
-					  						DefaultText = "AvailableInDocumentTypes",
-					  						FullLocalDefaultText = "AvailableInDocumentTypes",
-					  						ListFieldLable = "AvailableInDocumentTypes",
-					  						ListLableDefaultText = "AvailableInDocumentTypes",
-					  						ListLocalDefaultText = "AvailableInDocumentTypes",
+					  						FullFieldLable =  "AvailableInDocumentTypes",
+					  						DefaultText =  "AvailableInDocumentTypes",
+					  						FullLocalDefaultText =  "AvailableInDocumentTypes",
+					  						ListFieldLable =  "AvailableInDocumentTypesListLable",
+					  						ListLableDefaultText =  "AvailableInDocumentTypes",
+					  						ListLocalDefaultText =  "AvailableInDocumentTypes",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  true,
