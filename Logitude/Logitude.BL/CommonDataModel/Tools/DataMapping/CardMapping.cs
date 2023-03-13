@@ -70,6 +70,10 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.SATCustomerName = entityPM.SATCustomerName;
             entityPOCO.ExportLocalCustomerGroupId = entityPM.ExportLocalCustomerGroupId;
             entityPOCO.ImportLocalCustomerGroupId = entityPM.ImportLocalCustomerGroupId;
+            entityPOCO.SingleInvoiceTemplateId = entityPM.SingleInvoiceTemplateId;
+            entityPOCO.CustomsInvoiceTemplateId = entityPM.CustomsInvoiceTemplateId;
+            entityPOCO.ConsolidationInvoiceTemplateId = entityPM.ConsolidationInvoiceTemplateId;
+            entityPOCO.ManifestInvoiceTemplateId = entityPM.ManifestInvoiceTemplateId;
             BuildSearchFields(entityPM, entityPOCO);
         }
 

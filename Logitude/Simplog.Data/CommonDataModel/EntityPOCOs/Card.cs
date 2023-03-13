@@ -155,5 +155,13 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public virtual CustomerGroup ImportLocalCustomerGroup { get; set; }
         [ForeignKey("ExportLocalCustomerGroupId")]
         public virtual CustomerGroup ExportLocalCustomerGroup { get; set; }
+        public string SingleInvoiceTemplateId { get; set; }
+        public virtual DocumentTypeTemplate SingleInvoiceTemplate { get; set; }
+        public string CustomsInvoiceTemplateId { get; set; }
+        public virtual DocumentTypeTemplate CustomsInvoiceTemplate { get; set; }
+        public string ConsolidationInvoiceTemplateId { get; set; }
+        public virtual DocumentTypeTemplate ConsolidationInvoiceTemplate { get; set; }
+        public string ManifestInvoiceTemplateId { get; set; }
+        public virtual DocumentTypeTemplate ManifestInvoiceTemplate { get; set; }
     }
 }

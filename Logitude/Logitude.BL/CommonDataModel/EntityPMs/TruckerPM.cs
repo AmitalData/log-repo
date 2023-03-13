@@ -187,6 +187,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [Include]
         [Association("TruckerCarrier", "Id", "Id")]
+        [DataMember]
         public virtual CardPM Card { get; set; }
 
         private List<AddressPM> addresses;
