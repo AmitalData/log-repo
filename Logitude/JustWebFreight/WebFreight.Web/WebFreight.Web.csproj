@@ -3153,9 +3153,6 @@
     <Compile Include="Helpers\WorkerRole\DeploymentPackages\Importer\CustomPickListsImporterService.cs" />
     <Compile Include="Helpers\WorkerRole\DeploymentPackages\Importer\DeploymentPackageImporter.cs" />
     <Compile Include="Helpers\WorkerRole\DeploymentPackages\Importer\IDeploymentPackageImporterService.cs" />
-    <Compile Include="Helpers\WorkerRole\DeploymentPackages\Validator\DeploymentPackageCustomFieldsValidatingService.cs" />
-    <Compile Include="Helpers\WorkerRole\DeploymentPackages\Validator\DeploymentPackageImporterValidatingService.cs" />
-    <Compile Include="Helpers\WorkerRole\DeploymentPackages\Validator\IDeploymentPackageImporterValidatingService.cs" />
     <Compile Include="Helpers\WorkerRole\DocsOut\ARInvoicePrintDetailsService.cs" />
     <Compile Include="Helpers\WorkerRole\MultiEntityUpdate\MultiEntityUpdateCloner.cs" />
     <Compile Include="Helpers\WorkerRole\MultiEntityUpdate\MultiEntityUpdateExecutionService.cs" />

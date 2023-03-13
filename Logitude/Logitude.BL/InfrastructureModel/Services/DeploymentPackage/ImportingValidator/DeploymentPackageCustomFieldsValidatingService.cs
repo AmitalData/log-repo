@@ -5,9 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using WebFreight.Web.Helpers.WorkerRole.Importer;
 
-namespace WebFreight.Web.Helpers.WorkerRole.DeploymentPackages.Validator
+namespace Logitude.BL.InfrastructureModel.Services.DeploymentPackage.ImportingValidator
 {
     public class DeploymentPackageCustomFieldsValidatingService : IDeploymentPackageImporterValidatingService
     {
@@ -22,10 +21,10 @@ namespace WebFreight.Web.Helpers.WorkerRole.DeploymentPackages.Validator
             objectFieldRepository = new ObjectFieldRepository(tenant);
         }
 
-        public string Validate(DeploymentPackageImporterContext context)
+        public string Validate(DeploymentPackageDetails deploymentPackageDetails, int tenant)
         {
-            deploymentPackageDetails = context.DeploymentPackageDetails;
-            tenant = context.Tenant;
+            this.deploymentPackageDetails = deploymentPackageDetails;
+            this.tenant = tenant;
             int customFieldsCountToAdd = 0;
             deploymentPackageDetails.CustomFields.GroupBy(customField => customField.ObjectTableName).ToList().ForEach(objectTableGroup => {
                 customFieldsCountToAdd = deploymentPackageDetails.CustomFields.Where(o => o.ObjectTableName == objectTableGroup.Key).Count();

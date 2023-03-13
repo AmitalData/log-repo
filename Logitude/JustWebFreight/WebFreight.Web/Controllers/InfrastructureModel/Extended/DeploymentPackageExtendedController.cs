@@ -31,6 +31,7 @@ using System.Web.Http;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Helpers.WorkerRole.Importer;
 using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
@@ -64,9 +65,9 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                List<DeploymentPackageDetailsList> deploymentPackageDetails = new DeploymentPackageDetailsListService(authToken.Tenant).GetDeploymentPackageDetailsListByDocumentId(documentId);
+                DeploymentPackageDetailsListArgs deploymentPackageDetailsListArgs = new DeploymentPackageDetailsListService(authToken.Tenant).GetDeploymentPackageDetailsListByDocumentId(documentId);
                 
-                return Request.CreateResponse(HttpStatusCode.OK, deploymentPackageDetails);
+                return Request.CreateResponse(HttpStatusCode.OK, deploymentPackageDetailsListArgs);
             }
             catch (Exception ex)
             {
@@ -110,6 +111,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+
 
     }
 }
