@@ -34,6 +34,7 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.Messages
         private string foreignCurrencyId;
         private RatesTable rateList;
         private ICommonDataContext objectContext;
+        private bool isFullAccounting;
         public RatesUpdateService(RatesUpdate ratesUpdate, int tenant)
         {
             this.ratesUpdate = ratesUpdate;
@@ -42,6 +43,7 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.Messages
             this.ratesTableService = new RatesTableService(iWebFreightContext, tenant);
             this.currencyQuery = new CurrencyQuery(tenant);
             this.objectContext = CommonDataContext.GetContext(tenant);
+            isFullAccounting = IsFullAccountingActivated(tenant);
         }
         public void CleanXMLText()
         {
@@ -167,7 +169,7 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.Messages
             entityPM.LogDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
             entityPM.ValueDate = item.RateDate;
 
-            if (IsFullAccountingActivated(entityPM.Tenant)) {
+            if (isFullAccounting) {
                 entityPM.Rate = CalculateRateAccordingUnit(item);
                 entityPM.Unit = item.Unit;
             } else {
@@ -180,7 +182,7 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.Messages
         {
             RatesTablePM entityPM = this.ratesTableQuery.GetSinglePM(rateId, tenant);
 
-            if (IsFullAccountingActivated(entityPM.Tenant))
+            if (isFullAccounting)
             {
                 entityPM.Rate = CalculateRateAccordingUnit(item);
                 entityPM.Unit = item.Unit;

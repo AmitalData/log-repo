@@ -10,7 +10,7 @@ import {RatesTablePM} from '../../../Infrastructure/EntityPMs/RatesTablePM';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
-import { th } from 'date-fns/locale';
+
 
 @Component({
     selector: 'RatesMainTabComponent',

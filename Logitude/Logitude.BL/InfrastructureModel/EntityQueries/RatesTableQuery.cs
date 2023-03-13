@@ -15,6 +15,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
     public class RatesTableQuery
     {
         RatesTableRepository repository;
+        private bool isFullAccounting;
         public RatesTableQuery()
         {
             repository = new RatesTableRepository(); 
@@ -22,6 +23,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public RatesTableQuery(int tenant)
         {
             repository = new RatesTableRepository(tenant);
+            isFullAccounting = IsFullAccountingActivated(tenant);
         }
         public RatesTableQuery(RatesTableRepository ratesTableRepository)
         {
@@ -168,7 +170,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         private double CalculatesRateAccordingNumberUnit(RatesTable ratesTable,bool calculateRateAccordingNumberUnit)
         {
-            if (IsFullAccountingActivated(ratesTable.Tenant))
+            if (isFullAccounting)
             {
                 if (calculateRateAccordingNumberUnit)
                 {
