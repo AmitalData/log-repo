@@ -925,7 +925,12 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                         if(ledgerTransaction) {
 
                             item.RecoNumber = ledgerTransaction.RecoNumber;
-                            
+                            if(ledgerTransaction.RecoNumber != null && ledgerTransaction.RecoNumber.length > 0) {
+                                var items = this.paymentLedgerTransactions.filter(value => ledgerTransaction.RecoNumber.split(',').includes(value));
+                                if(items.length > 0) {
+                                    item.CheckBoxEnabled = false;
+                                }
+                            }
                         }
                     });
 				}
@@ -935,6 +940,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 			console.error("No GLAccount for this payment ", this.EntityPM);
 		}
 	}
+
+
 
     OpenReco(recoNumber)
 	{
