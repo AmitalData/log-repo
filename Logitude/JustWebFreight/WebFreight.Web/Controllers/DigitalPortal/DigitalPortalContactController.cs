@@ -14,6 +14,7 @@ using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.SystemLogs;
+using WebFreight.Web.Controllers.DigitalPortal.Helpers;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -38,6 +39,56 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 ContactPM contactPM = contactQuery.GetSinglePM(id, authToken.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, contactPM);
+            }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.Unauthorized, ApiExceptionBuilder.BuildException(ex));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        [HttpPut]
+        [Route("DigitalPortalContact/UpdateDigitalPortalLanguage")]
+        public HttpResponseMessage UpdateDigitalPortalLanguage(UpdateLanguageRequest data)
+        {
+            int tenant = 0;
+            string email = "";
+
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                    tenant = authToken.Tenant;
+                    email = authToken.Email;
+
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    ContactQuery contactQuery = new ContactQuery(authToken.Tenant);
+                    ContactPM entityPM = contactQuery.GetSinglePM(data.Id, authToken.Tenant);
+
+                    entityPM.DigitalPortalLanguage = data.DigitalPortalLanguage;
+                    string entityName = "Contact" + entityPM.Id + entityPM.Tenant;
+                    string entityPmName = "ContactPM" + entityPM.Id + entityPM.Tenant;
+                    if (CacheManager.CacheWrapper.Get(entityName) != null)
+                    {
+                        CacheManager.CacheWrapper.Invalidate(entityName);
+                    }
+
+                    if (CacheManager.CacheWrapper.Get(entityPmName) != null)
+                    {
+                        CacheManager.CacheWrapper.Invalidate(entityPmName);
+                    }
+
+                    ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
+                    var service = new ContactService(MyContext, entityPM.Tenant);
+                    service.Update(entityPM);
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                }
             }
             catch (AutenticationException ex)
             {
