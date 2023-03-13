@@ -126,6 +126,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     select a).OrderByDescending(d => d.CreateDate).FirstOrDefault();
 
         }
+        public CommunicationLog GetCommunicationLogByEntityIdAndSubject(string entityId, string subject, int tenant)
+        {
+            return (from a in context.CommunicationLogs
+                    where a.EntityId == entityId  && a.Tenant == tenant && a.Subject == subject
+                    select a).OrderByDescending(d => d.CreateDate).FirstOrDefault();
+
+        }
 
         public List<CommunicationLog> GetShareManifestCommunicationLogByEntityIdAndQueueNameAndSubject(string entityId, string queueName, string subject , string subject2)
         {
