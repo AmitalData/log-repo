@@ -376,7 +376,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LoadingDateTime, 
 	         ShipCode, 
 	         IsExporterConfirmation, 
-	         ShipName, 
 	         DestinationCountryName, 
 	         Direction, 
 	         AgentRoleCode, 
