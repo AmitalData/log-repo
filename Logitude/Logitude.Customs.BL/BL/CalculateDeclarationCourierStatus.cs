@@ -142,9 +142,7 @@ namespace Logitude.Customs.BL.BL
                 CalcSpecialActionStatus(myDeclarationCourierStatusPM);
                 CalcFastIndividualProcess(myDeclarationCourierStatusPM);
                 CalcDeclarationPendings902(myDeclarationCourierStatusPM);
-                if(declarationPM.ChangeSetOp== ChangeSetOperation.Insert) {
-                   CalcDeclarationPendings905(myDeclarationCourierStatusPM);
-                }
+              
 
 
                 var updateDeclarationPending903InvalidPhoneNumberService = new UpdateDeclarationPending903InvalidPhoneNumberService(declarationPM);
@@ -591,47 +589,7 @@ namespace Logitude.Customs.BL.BL
 
 
 
-        public void CalcDeclarationPendings905(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
-        {
-            if (declarationPM == null || myDeclarationCourierStatusPM == null) return;
-
-            DeclarationPendingPM declarationPendingPM_905 = null;
-            if (myDeclarationCourierStatusPM.DeclarationPendings != null && myDeclarationCourierStatusPM.DeclarationPendings.Count() > 0)
-            {
-                declarationPendingPM_905 = myDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.CourierPendingReasonCode == "905").FirstOrDefault();
-            }
-
-
-
-            if (declarationPM.CasualImporterCountry != "IL" && declarationPM.IsAramex)
-            {
-              
-               
-             
-                    if (declarationPendingPM_905 == null)
-                    {
-
-                    declarationPendingPM_905 = new DeclarationPendingPM();
-                    declarationPendingPM_905.CourierPendingReasonCode = "905";
-                    declarationPendingPM_905.Status = "A";
-                    declarationPendingPM_905.ChangeSetOp = ChangeSetOperation.Insert;
-                        myDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_905);
-                    }
-
-                    else if (declarationPendingPM_905.Status != "A")
-                    {
-                    declarationPendingPM_905.ChangeSetOp = ChangeSetOperation.Update;
-                    declarationPendingPM_905.Status = "A";
-                    }
-               
-            }
-            else if (declarationPendingPM_905 != null)
-            {
-                declarationPendingPM_905.ChangeSetOp = ChangeSetOperation.Update;
-                declarationPendingPM_905.Status = "S";
-                //LogMessagingUtil.Instance.AppendLine("Courier Pending Reason Code 900 Set as Solved");
-            }
-        }
+       
     }
 
 
