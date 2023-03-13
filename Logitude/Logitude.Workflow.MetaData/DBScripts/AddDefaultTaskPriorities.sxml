@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Workflow">
-  <Sql Version="3">
+  <Sql Version="4">
     <![CDATA[
     
 declare @Tenant integer;
@@ -17,7 +17,7 @@ fetch next from TenantsCursor into @Tenant;
 while @@FETCH_STATUS = 0
   begin
 
-	set @UserId = (select [Id] from [Contacts] where [Tenant] = @Tenant and [Email] = ('system@tenant' + cast(@Tenant as varchar(100)) + '.com'));
+	set @UserId = (select top 1 [Id] from [Contacts] where [Tenant] = @Tenant and [Email] = ('system@tenant' + cast(@Tenant as varchar(100)) + '.com'));
 	set @CurrentDate = GETDATE();
 
 	if not exists (select * from [TaskPriorities] where [Code] = 'H' and Tenant = @Tenant)
