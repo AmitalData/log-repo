@@ -59,6 +59,10 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.SATCustomerName = entityPM.SATReceptorName;
             entityCard.ExportLocalCustomerGroupId = entityPM.ExportLocalCustomerGroupId;
             entityCard.ImportLocalCustomerGroupId = entityPM.ImportLocalCustomerGroupId;
+            entityCard.SingleInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.SingleInvoiceTemplateId : null;
+            entityCard.CustomsInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.CustomsInvoiceTemplateId : null;
+            entityCard.ConsolidationInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.ConsolidationInvoiceTemplateId : null;
+            entityCard.ManifestInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.ManifestInvoiceTemplateId : null;
 
             entityPOCO.Field1 = entityPM.Field1 != null ? entityPM.Field1.Value : null;
             entityPOCO.Field2 = entityPM.Field2 != null ? entityPM.Field2.Value : null;
