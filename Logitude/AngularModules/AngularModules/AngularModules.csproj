@@ -323,6 +323,7 @@
     <Content Include="DashboardModule\Components\Workspace\Layout\CustomDashboardComponent.html" />
     <Content Include="DashboardModule\Components\Workspace\Layout\DashboardTabComponent.html" />
     <Content Include="Images\Arrow-down-s.png" />
+    <Content Include="Images\Icons\downloaduparrow.png" />
     <Content Include="Images\Buttons\minus.over.png" />
     <Content Include="Images\Buttons\minus.png" />
     <Content Include="Images\Charts\BarChart.png" />
