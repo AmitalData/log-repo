@@ -8,7 +8,6 @@ using System.Data.Common;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
 using System.Data.Entity.Validation;
 using System.Data.Entity.ModelConfiguration.Conventions;
@@ -75,6 +74,16 @@ namespace Logitude.Workflow.Data
             modelBuilder.Configurations.Add(new OperatorMap());
 	
             modelBuilder.Configurations.Add(new OperatorCategoryMap());
+	
+            modelBuilder.Configurations.Add(new TaskMap());
+	
+            modelBuilder.Configurations.Add(new TaskExtendedMap());
+	
+            modelBuilder.Configurations.Add(new TaskPriorityMap());
+	
+            modelBuilder.Configurations.Add(new TaskStatusMap());
+	
+            modelBuilder.Configurations.Add(new TaskTypeMap());
 	
             modelBuilder.Configurations.Add(new WorkFlowMap());
 	
@@ -396,6 +405,36 @@ namespace Logitude.Workflow.Data
 	 }
 	
 	 public IDbSet<OperatorCategory> OperatorCategories 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<Task> Tasks 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<TaskExtended> TasksExtended 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<TaskPriority> TaskPriorities 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<TaskStatus> TaskStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<TaskType> TaskTypes 
 	 {
 	      get; set;
 	 

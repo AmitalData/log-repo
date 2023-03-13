@@ -23,6 +23,8 @@ namespace WebFreight.Web.Helpers.AutomationModel
         private string companyName = string.Empty;
         private string computingPartnerName = string.Empty;
         private string interfaceName = string.Empty;
+        private string entityReference = string.Empty;
+
         public WebHookAutomationService(WebHookAutomationServiceArgs webHookAutomationServiceArgs)
         {
             tenant = webHookAutomationServiceArgs.Tenant;
@@ -35,6 +37,7 @@ namespace WebFreight.Web.Helpers.AutomationModel
             companyName = GetCompanyName();
             computingPartnerName = GetComputingPartnerName(webHookAutomationServiceArgs.ComputingPartnerId);
             interfaceName = webHookAutomationServiceArgs.InterfaceName;
+            entityReference = webHookAutomationServiceArgs.EntityReference;
         }
 
         private Contact GetLoggedContact()
@@ -98,6 +101,7 @@ namespace WebFreight.Web.Helpers.AutomationModel
                 CreateDateUTC = System.DateTime.UtcNow,
                 LogSettings = this.GetWebHookCommunicationLogSettingAsJosnString(),
                 QueueName = "WebHookCommunicationLogQueue",
+                EntityReference = entityReference
             };
         }
 
@@ -162,6 +166,7 @@ namespace WebFreight.Web.Helpers.AutomationModel
         public string ComputingPartnerId { get; set; }
         public string DocumentFileName { get; set; }
         public string InterfaceName { get; set; }
+        public string EntityReference { get; set; }
     }
 
     public class WebHookCommunicationLogSettings

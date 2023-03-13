@@ -5,18 +5,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using WebFreight.Web.Helpers.WorkerRole.Importer;
 
-namespace WebFreight.Web.Helpers.WorkerRole.DeploymentPackages.Validator
+namespace Logitude.BL.InfrastructureModel.Services.DeploymentPackage.ImportingValidator
 {
     public class DeploymentPackageImporterValidatingService
     {
-        private DeploymentPackageImporterContext deploymentPackageImporterContext;
+        private DeploymentPackageDetails deploymentPackageDetails;
+        private int tenant;
         private string exceptionMessege = "";
 
-        public DeploymentPackageImporterValidatingService(DeploymentPackageImporterContext deploymentPackageImporterContext)
+        public DeploymentPackageImporterValidatingService(DeploymentPackageDetails deploymentPackageDetails, int tenant)
         {
-            this.deploymentPackageImporterContext = deploymentPackageImporterContext;
+            this.deploymentPackageDetails = deploymentPackageDetails;
+            this.tenant = tenant;
         }
 
         public void ValidateImportedPackage()
@@ -24,7 +25,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.DeploymentPackages.Validator
             List<IDeploymentPackageImporterValidatingService> validators = BuildValidationServices();
             foreach (IDeploymentPackageImporterValidatingService validator in validators)
             {
-                exceptionMessege += validator.Validate(deploymentPackageImporterContext);
+                exceptionMessege += validator.Validate(deploymentPackageDetails, tenant);
             }
             if (string.IsNullOrEmpty(exceptionMessege)) return;
             throw new Exception(exceptionMessege);

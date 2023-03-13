@@ -119,11 +119,25 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
             {
                 if (FeatureToggleHelper.HasFeatureToggle("WRR", entityPm.Tenant))// toggle feature
                 {
+                    //LedgerTransactionRepository repoLedgerTransaction = new LedgerTransactionRepository(entityPm.Tenant);
+                    //var transactionsIds = entityPm.ReconciliationLines.Select(x => x.TransactionId).ToList();
+                    //if (transactionsIds.Count > 0) {
+
+                    //    var AreTranscationsInProgress = repoLedgerTransaction.CheckTransactionsInReconcileProgress(transactionsIds, entityPm.Tenant);
+                    //    if (AreTranscationsInProgress) {
+                    //        throw new Exception("Ledger Transaction was found InReconcileProgress");
+                    //    }
+                    //}
+                    var anotherReconciliationInProgress = CheckIfAnotherReconciliationInProgress(entityPm);
+                    if (anotherReconciliationInProgress) {
+                        throw new Exception("There is already another reconciliation in progress");
+                    }
+                    
                     string communicationLogId = WriteEntityPMOnCommunicationLog(entityPm);
                     // StorageDataArgs storageDataArgs = new StorageDataArgs() { FileName = fileName, FolderName = "Others", Tenant = entityPm.Tenant };
                     IQueueService queueservice = new DbQueueService();
                     queueservice.InitializeQueue("ReconciliationWorkerRole", entityPm.Tenant);
-                    queueservice.Send(new Dictionary<string, string>() { { "tenant", entityPm.Tenant.ToString() }, { "communicationLogId", communicationLogId } }, 1, null, null);
+                    queueservice.Send(new Dictionary<string, string>() { { "tenant", entityPm.Tenant.ToString() }, { "communicationLogId", communicationLogId } }, entityPm.Tenant, null, null);
                     RecoCallback recoCallBack = new RecoCallback();
                     recoCallBack.communicationLogId = communicationLogId;
                     return Request.CreateResponse(HttpStatusCode.OK, recoCallBack);
@@ -155,12 +169,24 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
 
         }
 
+        private bool CheckIfAnotherReconciliationInProgress(ReconciliationPM entityPm)
+        {
+            ICommonDataContext context = CommonDataContext.GetContext(entityPm.Tenant);
+            CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(context);
+            CommunicationLog commLog = communicationLogRep.GetCommunicationLogByEntityIdAndSubject(entityPm.AccountId, "Create internal Reconciliation", entityPm.Tenant);
+            if (commLog != null && commLog.CommunicationStatusTypeCode == "W") {
+                return true;
+            }
+            return false;
+        }
+
         private string WriteEntityPMOnCommunicationLog(ReconciliationPM reconciliationPM)
         {
             string jsonString = JsonConvert.SerializeObject(reconciliationPM);
             byte[] xmlFile = Encoding.UTF8.GetBytes(jsonString);
             return Communications.AddCommunicationLog(new CommunicationsParams()
             {
+                LoggingEntityId = reconciliationPM.AccountId,
                 Tenant = reconciliationPM.Tenant,
                 CommunicationLogTypeCode = "Q",
                 Priority = 1,
@@ -168,7 +194,7 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
                 Status = "W",
                 Subject = "Create internal Reconciliation",
                 FolderName = "Other",
-                ByteData = xmlFile,
+                ByteData = xmlFile
             });
         }
 
