@@ -275,29 +275,13 @@ namespace WebFreight.Web.ContainerTracking
         }
         private void SetShipmentTransshipmentLegDates()
         {
+            FillLegsMilestoneData();
+            FillShipmentDates();
+        }
+        private void FillLegsMilestoneData()
+        {
             FillShipmentVesselDepartedMilestoneFields();
             FillShipmentVesselArrivedMilestoneFields();
-
-            allShipmentTrasshipmentLegs.ForEach(leg =>
-            {
-                dynamic transshipmentLeg = GetShipmentLegDates(leg);
-
-                if (transshipmentLeg == null) return;
-
-                string portId = leg.PortId;
-                var updatedFields = leg.MilestoneData;
-                string dateType = "ETD";
-                if (leg.Direction == "To") dateType = "ETA";
-
-                if (transshipmentLeg.Index != 0)
-                    containerTrackingHelper.AddTranshipmentDiscrepancyContainer(transshipmentLeg.Index, leg.Direction, containerPM, shipmentPM, portId, updatedFields, dateType);
-
-                if (!containerTrackingHelper.IsSameLocationUsingId((string)GetPropValue(shipmentPM, transshipmentLeg.PortField), portId)) return;
-
-                this.FillFieldsNewValues(transshipmentLeg.EstimatedDateField, updatedFields.EstimatedDate, shipmentPM);
-                var transshipmentATDInShipment = GetPropValue(shipmentPM, transshipmentLeg.ActualDateField);
-                if (transshipmentATDInShipment == null) this.FillFieldsNewValues(transshipmentLeg.ActualDateField, updatedFields.ActualDate, shipmentPM);
-            });
         }
         private void FillShipmentVesselDepartedMilestoneFields()
         {
@@ -321,6 +305,29 @@ namespace WebFreight.Web.ContainerTracking
                 allShipmentTrasshipmentLegs.Add(leg);
             }
         }
+        private void FillShipmentDates()
+        {
+            allShipmentTrasshipmentLegs.ForEach(leg =>
+            {
+                dynamic transshipmentLeg = GetShipmentLegDates(leg);
+
+                if (transshipmentLeg == null) return;
+
+                string portId = leg.PortId;
+                var updatedFields = leg.MilestoneData;
+                string dateType = "ETD";
+                if (leg.Direction == "To") dateType = "ETA";
+
+                if (transshipmentLeg.Index != 0)
+                    containerTrackingHelper.AddTranshipmentDiscrepancyContainer(transshipmentLeg.Index, leg.Direction, containerPM, shipmentPM, portId, updatedFields, dateType);
+
+                if (!containerTrackingHelper.IsSameLocationUsingId((string)GetPropValue(shipmentPM, transshipmentLeg.PortField), portId)) return;
+
+                this.FillFieldsNewValues(transshipmentLeg.EstimatedDateField, updatedFields.EstimatedDate, shipmentPM);
+                var transshipmentATDInShipment = GetPropValue(shipmentPM, transshipmentLeg.ActualDateField);
+                if (transshipmentATDInShipment == null) this.FillFieldsNewValues(transshipmentLeg.ActualDateField, updatedFields.ActualDate, shipmentPM);
+            });
+        }
         private string GetPortLegDirection(string key)
         {
             if (key == "VesselDeparted" || key == "LoadedTransshipment")
@@ -333,7 +340,6 @@ namespace WebFreight.Web.ContainerTracking
             }
             return null;
         }
-
         private dynamic GetShipmentLegDates(dynamic leg)
         {
             if (leg.Direction == "From")
