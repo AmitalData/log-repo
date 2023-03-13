@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				SchedulerProcedureRepository  schedulerProcedureRepository = new SchedulerProcedureRepository(MyContext);
 				SchedulerProcedureList entityList = null;
 				SchedulerProcedure entityPoco = schedulerProcedureRepository.GetSingleSchedulerProcedure(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<SchedulerProcedure> singleEntityList = new List<SchedulerProcedure>();
 					singleEntityList.Add(entityPoco);

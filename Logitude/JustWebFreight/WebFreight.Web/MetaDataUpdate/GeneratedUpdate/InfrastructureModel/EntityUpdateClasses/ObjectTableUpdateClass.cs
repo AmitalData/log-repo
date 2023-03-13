@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class ObjectTableUpdateClass
    {  		
-		public const string HashString = "4fe8f6286c1fdf250e0129aa695ed6751";
+		public const string HashString = "6e14052e8745058624666214c34b2bb9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5334,7 +5334,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName = "AvailableInDocumentTypes",
+					 						FieldName =  "AvailableInDocumentTypes",
 					  						ObjectTableName =  "ObjectTable",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -5353,8 +5353,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath = "AvailableInDocumentTypes",
-					  						ListPropertyPath = "AvailableInDocumentTypes",
+					  						PMPropertyPath =  "AvailableInDocumentTypes",
+					  						ListPropertyPath =  "AvailableInDocumentTypes",
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -5371,12 +5371,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable = "AvailableInDocumentTypes",
-					  						DefaultText = "AvailableInDocumentTypes",
-					  						FullLocalDefaultText = "AvailableInDocumentTypes",
-					  						ListFieldLable = "AvailableInDocumentTypes",
-					  						ListLableDefaultText = "AvailableInDocumentTypes",
-					  						ListLocalDefaultText = "AvailableInDocumentTypes",
+					  						FullFieldLable =  "AvailableInDocumentTypes",
+					  						DefaultText =  "AvailableInDocumentTypes",
+					  						FullLocalDefaultText =  "AvailableInDocumentTypes",
+					  						ListFieldLable =  "AvailableInDocumentTypes",
+					  						ListLableDefaultText =  "AvailableInDocumentTypes",
+					  						ListLocalDefaultText =  "AvailableInDocumentTypes",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  true,

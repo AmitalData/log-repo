@@ -1097,6 +1097,7 @@ namespace Logitude.Update
                                     Signature = oldContact.Signature,
                                     SignatureHtml = oldContact.SignatureHtml,
                                     UserType = oldContact.UserType,
+                                    DigitalPortalLanguage = oldContact.DigitalPortalLanguage
                                 };
 
                                 CardContact cardContact = new CardContact()

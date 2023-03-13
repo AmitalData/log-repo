@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				InboundEmailRepository  inboundEmailRepository = new InboundEmailRepository(MyContext);
 				InboundEmailList entityList = null;
 				InboundEmail entityPoco = inboundEmailRepository.GetSingleInboundEmail(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<InboundEmail> singleEntityList = new List<InboundEmail>();
 					singleEntityList.Add(entityPoco);

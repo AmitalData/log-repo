@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				TabModificationRepository  tabModificationRepository = new TabModificationRepository(MyContext);
 				TabModificationList entityList = null;
 				TabModification entityPoco = tabModificationRepository.GetSingleTabModification(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<TabModification> singleEntityList = new List<TabModification>();
 					singleEntityList.Add(entityPoco);
