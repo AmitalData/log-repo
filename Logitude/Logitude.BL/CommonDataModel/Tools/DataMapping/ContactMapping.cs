@@ -50,6 +50,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.ContactDoneMethodCode = entityPM.ContactDoneMethodCode;
             entityPOCO.Position = entityPM.Position;
             entityPOCO.UpdateDate = entityPM.UpdateDate;
+            entityPOCO.DigitalPortalLanguage = entityPM.DigitalPortalLanguage;
 
             if (LogitudeSettings.DeploymentStage == "Simplog")
             {

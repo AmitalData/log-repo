@@ -6,19 +6,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-import { CustomFieldList } from "./CustomFieldList";
-
-export class DataCustomObjectList extends CustomFieldList{
+export class DataCustomObjectList {
    		Id: string;
-        Tenant: number;
-        ObjectTableId: string;
+		Tenant: number;
+		ObjectTableId: string;
 		CreatedBy: string;
 		UpdatedBy: string;
 		CreateDate: Date;
 		UpdateDate: Date;
 		IsCancelled: boolean;
 		StatusId: string;
-        SearchFields: string;
-        CreatedByUserName: string;
-        UpdatedByUserName: string;
+		SearchFields: string;
+		CreatedByUserName: string;
+		UpdatedByUserName: string;
+	
 }

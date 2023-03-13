@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				DeploymentPackagesVersionRepository  deploymentPackagesVersionRepository = new DeploymentPackagesVersionRepository(MyContext);
 				DeploymentPackagesVersionList entityList = null;
 				DeploymentPackagesVersion entityPoco = deploymentPackagesVersionRepository.GetSingleDeploymentPackagesVersion(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<DeploymentPackagesVersion> singleEntityList = new List<DeploymentPackagesVersion>();
 					singleEntityList.Add(entityPoco);

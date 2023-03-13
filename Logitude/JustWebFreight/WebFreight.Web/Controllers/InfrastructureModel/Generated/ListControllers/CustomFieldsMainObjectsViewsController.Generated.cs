@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				CustomFieldsMainObjectRepository  customFieldsMainObjectRepository = new CustomFieldsMainObjectRepository(MyContext);
 				CustomFieldsMainObjectList entityList = null;
 				CustomFieldsMainObject entityPoco = customFieldsMainObjectRepository.GetSingleCustomFieldsMainObject(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<CustomFieldsMainObject> singleEntityList = new List<CustomFieldsMainObject>();
 					singleEntityList.Add(entityPoco);
