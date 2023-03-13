@@ -44,6 +44,7 @@ export class DigitalPortalLanguageSettingsComponent implements OnInit {
     ExportedExcelFileName: string = '';
     ExportErrorMsg: string | null = null;
     ExportedExcelLogId: string = '';
+    IsFileReadyToExport: boolean = false;
     constructor(public _digitalLanguageSettingsService: DigitalLanguageSettingsService) {
         this.UploadFileId = Guid.NewRandomString();
     }
@@ -104,15 +105,22 @@ export class DigitalPortalLanguageSettingsComponent implements OnInit {
     }
 
     GetDigitalExportExecutionLogStatus(){   
+        if(this.IsFileReadyToExport){
+            return;
+        }
+
         this._digitalLanguageSettingsService.getDigitalExportExecutionLogStatus(this.ExportedExcelLogId).subscribe((myResult: any) => {
             if (myResult) {
-                if (myResult.StatusCode === "D") {
+                if (myResult.Result && myResult.Result.StatusCode === "D") {
                     this.CurrentSession.StopBusyIndicator();
+                    this.IsFileReadyToExport = true;
                     var _documentDownloadToken : any = SessionInfo.DocumentDownloadToken
                     var _link = ServiceHelper.GetLogitudeURL() + "/WebPages/DawnLoadExcelPage.aspx?Type=SaveToMicrosoftExcel2007&fileName=" + this.ExportedExcelFileName + "&tempId=" + _documentDownloadToken + "&requestArea=SharedLogistic" 
                     window.open(_link);
-                  }
-                  else {
+                  }else if (myResult.Result && myResult.Result.StatusCode === "F") {
+                    this.CurrentSession.StopBusyIndicator();
+                    this.ExportErrorMsg = 'Something went wrong, Exporting file failed!';
+                  } else {
                     setTimeout(() => {
                       this.GetDigitalExportExecutionLogStatus();
                     }, 2000);
@@ -122,6 +130,7 @@ export class DigitalPortalLanguageSettingsComponent implements OnInit {
       }
 
     ExportLanguage() {
+        this.IsFileReadyToExport= false;
         this.CurrentSession.StartBusyIndicator("Exporting...")
         var payload : ExportExcelParams = {
             ObjectTableName: "DigitalLabelTranslations",
