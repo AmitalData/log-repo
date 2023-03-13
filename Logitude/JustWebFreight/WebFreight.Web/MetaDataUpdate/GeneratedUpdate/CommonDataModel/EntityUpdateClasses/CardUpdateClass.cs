@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CardUpdateClass
    {  		
-		public const string HashString = "06ac7a0f948b1697ecf8667e420089f3";
+		public const string HashString = "69931fea2a85dbca1f39c66b5040c6f4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -9062,6 +9062,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SingleInvoiceTemplateId",
 					  						ListPropertyPath =  "SingleInvoiceTemplateId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -9079,9 +9080,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SingleInvoiceTemplateId",
-					  						DefaultText =  "Single Invoice",
+					  						DefaultText =  "Shipment Invoice",
 					  						ListFieldLable =  "SingleInvoiceTemplateIdListLable",
-					  						ListLableDefaultText =  "Single Invoice",
+					  						ListLableDefaultText =  "Shipment Invoice",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "DocumentTypeTemplate",
 					  						NavigationPropertyName =  "DocumentTemplate",
@@ -9126,6 +9127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CustomsInvoiceTemplateId",
 					  						ListPropertyPath =  "CustomsInvoiceTemplateId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -9190,6 +9192,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ConsolidationInvoiceTemplateId",
 					  						ListPropertyPath =  "ConsolidationInvoiceTemplateId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -9254,6 +9257,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ManifestInvoiceTemplateId",
 					  						ListPropertyPath =  "ManifestInvoiceTemplateId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
