@@ -747,10 +747,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     closingDetails.LoadingDateTime = declaration.DMExtensions.DeclarationClosingDetails.DepartureDateTime.Value;
                 }
-                closingDetails.FinalManifestNumber = GetValueIDType(declaration.DMExtensions.DeclarationClosingDetails.FinalTransportContractDocument.FirstCargoID);
-                closingDetails.FinalCargoTypeCode = GetValueCodeType(declaration.DMExtensions.DeclarationClosingDetails.FinalTransportContractDocument.TypeCode);
-                closingDetails.FinalSecondCargoId = GetValueIDType(declaration.DMExtensions.DeclarationClosingDetails.FinalTransportContractDocument.SecondCargoID);
-                closingDetails.FinalThirdCargoId = GetValueIDType(declaration.DMExtensions.DeclarationClosingDetails.FinalTransportContractDocument.ThirdCargoID);
+				if (declaration.DMExtensions.DeclarationClosingDetails.FinalTransportContractDocument!=null)
+                { 
+                   closingDetails.FinalManifestNumber = GetValueIDType(declaration.DMExtensions.DeclarationClosingDetails.FinalTransportContractDocument.FirstCargoID);
+                   closingDetails.FinalCargoTypeCode = GetValueCodeType(declaration.DMExtensions.DeclarationClosingDetails.FinalTransportContractDocument.TypeCode);
+                   closingDetails.FinalSecondCargoId = GetValueIDType(declaration.DMExtensions.DeclarationClosingDetails.FinalTransportContractDocument.SecondCargoID);
+                   closingDetails.FinalThirdCargoId = GetValueIDType(declaration.DMExtensions.DeclarationClosingDetails.FinalTransportContractDocument.ThirdCargoID);
+                }
                 closingDetails.ChangeSetOp = ChangeSetOperation.Insert;
                 return closingDetails;
             }
