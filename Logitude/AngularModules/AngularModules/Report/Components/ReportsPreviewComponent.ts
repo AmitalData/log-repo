@@ -61,6 +61,9 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
     IsHaveRunReportViewWorkerRoleToggleFeature: boolean = true;
     TemplateType: string;
+    DefaultMessageTemplateId: string
+    ResultType: string;
+
     constructor(public _reportService: ReportService, private cd: ChangeDetectorRef) {
         var idIndex = this.CurrentSession.GetNewId("ReportsPreviewComponent");
         this.ComponentId = "ReportsPreview_" + idIndex;
@@ -128,6 +131,22 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
     SetReportTemplateType(templateType: string) {
         this.TemplateType = templateType;
+    }
+
+    GetMessageTemplateId() {
+        const messageTemplateId: string = this.StimulsoftArg.DefaultMessageTemplateId;
+        return messageTemplateId;
+    }
+    SetMessageTemplateId(messageTemplateId: string) {
+        if (AppTool.IsNullOrEmpty(messageTemplateId)) return;
+        this.DefaultMessageTemplateId = messageTemplateId;
+    }
+    GetResultType() {
+        return this.StimulsoftArg.ResultType;
+    }
+    SetResultType(resultType: string) {
+        if (AppTool.IsNullOrEmpty(resultType)) return;
+        this.ResultType = resultType;
     }
 
 
@@ -239,6 +258,11 @@ export class ReportsPreviewComponent implements AfterViewInit {
                 if (this.ReportsTemplateLists && this.ReportsTemplateLists.filter(d => d.Id == this.Report.DefaultTemplateId)[0]) {
                     this.StimulsoftArg.TemplateDescription = this.ReportsTemplateLists.filter(d => d.Id == this.Report.DefaultTemplateId)[0].Description;
                 }
+
+                if (this.DefaultMessageTemplateId) {
+                    this.Report.DefaultMessageTemplateId = this.DefaultMessageTemplateId;
+                }
+                this.StimulsoftArg.DefaultMessageTemplateId = this.Report.DefaultMessageTemplateId;
 
                 this.ComputeSize(Component.clientWidth, Component.clientHeight);
 

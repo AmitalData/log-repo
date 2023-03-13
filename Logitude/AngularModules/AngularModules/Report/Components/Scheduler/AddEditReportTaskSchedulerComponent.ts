@@ -441,6 +441,10 @@ export class AddEditReportTaskSchedulerComponent {
         return this.EntityPM.SchedulerDetailsData.ReportDetails
             .ReportTemplateId;
     }
+    GetMessageTemplateId() {
+        return this.EntityPM.SchedulerDetailsData.ReportDetails
+            .DefaultMessageTemplateId;
+    }
 
     private myCloner: Cloner;
     private Clone() {

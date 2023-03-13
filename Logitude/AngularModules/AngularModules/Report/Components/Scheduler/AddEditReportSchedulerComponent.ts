@@ -248,11 +248,16 @@ export class AddEditReportSchedulerComponent implements OnInit {
     }
 
     SetReportDetails() {
-        var reportTemplateId = this.PageChild_RETASK.GetReportTemplateId();
-        var reportFilterItems = this.PageChild_RETASK.GetReportFilterItems();
+        let reportTemplateId = this.PageChild_RETASK.GetReportTemplateId();
+        let reportFilterItems = this.PageChild_RETASK.GetReportFilterItems();
+        let emailTemplateId = this.PageChild_RETASK.GetMessageTemplateId();
+
         this.PageChild_PRREP.SetReportFilterItems(reportFilterItems);
         this.PageChild_PRREP.SetReportTemplate(reportTemplateId);
         this.PageChild_PRREP.SetReportTemplateType(this.TemplateType);
+        this.PageChild_PRREP.SetReportTemplate(emailTemplateId);
+        this.PageChild_PRREP.SetResultType(this.DataContext.EntityPM.ResultType);
+
         this.PageChild_PRREP.ReportsPreview(this.ReportGroupList, this.ReportList, this.ReportTemplates);
       //  this.RunBuildStimulsoftTimer();
     }
