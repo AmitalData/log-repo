@@ -13,6 +13,7 @@ using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.BL.CommonDataModel.ExternalService;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -89,9 +90,18 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    EnglishName = a.Card.EnglishName,
                                    PrimaryContactId = a.Card.PrimaryContactId,
                                    GLAccountDisplayNumber = a.Card.GLAccountDisplayNumber,
+                                   SingleInvoiceTemplateId = a.Card.SingleInvoiceTemplateId,
+                                   CustomsInvoiceTemplateId = a.Card.CustomsInvoiceTemplateId,
+                                   ConsolidationInvoiceTemplateId = a.Card.ConsolidationInvoiceTemplateId,
+                                   ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
                                },
                            }).FirstOrDefault();
-            
+
+            if(trucker != null)
+            {
+                PartnerARinvoiceDocumentTypeService partnerARinvoiceDocumentTypeService = new PartnerARinvoiceDocumentTypeService(trucker.Tenant);
+                trucker.Card = partnerARinvoiceDocumentTypeService.Set(trucker.Card);
+            }
             CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
             CardExternalCodeByCurrencyQuery cardExternalCodeByCurrencyQuery = new CardExternalCodeByCurrencyQuery(cardExternalCodeByCurrencyRepository);
             trucker.CardExternalCodeByCurrencies = cardExternalCodeByCurrencyQuery.GetCardExternalCodeByCurrencyPMsForCustomer(trucker.Id, trucker.Tenant);
@@ -373,6 +383,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         Tenant = a.Tenant,
                                         EnglishName = a.Card.EnglishName,
                                         PrimaryContactId = a.Card.PrimaryContactId,
+                                        SingleInvoiceTemplateId = a.Card.SingleInvoiceTemplateId,
+                                        CustomsInvoiceTemplateId = a.Card.CustomsInvoiceTemplateId,
+                                        ConsolidationInvoiceTemplateId = a.Card.ConsolidationInvoiceTemplateId,
+                                        ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
                                     },
                                 }).FirstOrDefault();
 
@@ -382,6 +396,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             {
                 Trucker entityPoco = (from s in repository.context.Truckers where s.Id == securedPm.Id select s).FirstOrDefault();
                 MapCustomFields(securedPm, entityPoco);
+            }
+
+            if(trucker != null)
+            {
+                PartnerARinvoiceDocumentTypeService partnerARinvoiceDocumentTypeService = new PartnerARinvoiceDocumentTypeService(trucker.Tenant);
+                trucker.Card = partnerARinvoiceDocumentTypeService.Set(trucker.Card);
             }
             return trucker;
         }

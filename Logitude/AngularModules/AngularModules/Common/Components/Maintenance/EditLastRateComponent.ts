@@ -30,9 +30,11 @@ export class EditLastRateComponent extends BaseComponent {
     public CurrentRate: number;
     public CurrentValueDate: Date;
     private CurrentSession = SessionLocator.SelectedSession;
+    IsAccountingActivated: boolean = false;
     constructor() {
         super();
         this.TenantPM = SessionLocator.TenantPM;
+        this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
     }
 
     CreateRatesTablePM() {
@@ -40,7 +42,10 @@ export class EditLastRateComponent extends BaseComponent {
         this.RatesTable.Tenant = this.TenantPM.Id;
         this.RatesTable.BaseCurrencyId = this.TenantPM.CurrencyId;
         this.RatesTable.ForeignCurrencyId = this.EntityPM.ForeignCurrencyId;
-        this.RatesTable.Unit = this.EntityPM.Unit;
+        if(this.IsAccountingActivated){
+            this.RatesTable.Unit = this.EntityPM.Unit;
+        }
+        
         this.RatesTable.LogDateTime = DateTool.GetCurrentDateAsUtc();      
     }
 
@@ -54,6 +59,8 @@ export class EditLastRateComponent extends BaseComponent {
         this.CreateRatesTablePM();
     }
 
+    get Unit() { return this.RatesTable.Unit; }
+    
     get Rate() { return this.RatesTable.Rate; }
     set Rate(value: number) {
         if (this.RatesTable.Rate != value) {

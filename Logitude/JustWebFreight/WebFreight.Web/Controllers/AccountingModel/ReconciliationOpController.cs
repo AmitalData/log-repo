@@ -117,7 +117,7 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
         {
             try
             {
-                if (FeatureToggleHelper.HasFeatureToggle("WRR", entityPm.Tenant))// toggle feature
+                if (FeatureToggleHelper.HasFeatureToggle("WRR", entityPm.Tenant) && entityPm.ReconciliationLines != null && entityPm.ReconciliationLines.Count() >= 500)// toggle feature
                 {
                     //LedgerTransactionRepository repoLedgerTransaction = new LedgerTransactionRepository(entityPm.Tenant);
                     //var transactionsIds = entityPm.ReconciliationLines.Select(x => x.TransactionId).ToList();
