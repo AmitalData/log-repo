@@ -860,7 +860,7 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "DBA,Dashboard Analytics", 
                 Description = "Dashboard Analytics", 
 			});
-            
+			 
             all.Add(new ToggleDetails()
             {    
                 Name = "Remove Exception Logic", 
@@ -868,13 +868,21 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "REL,Remove Exception Logic", 
                 Description = "Remove Exception Logic", 
 			});
-            
+			 
             all.Add(new ToggleDetails()
             {    
                 Name = "Remove Shared Logistics", 
                 Code = "RSL", 
                 Description = "Remove Shared Logistics Tab Feature", 
                 SearchFields = "RSLTF,Remove Shared Logistics Tab Feature", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "UDD", 
+                Name = "Upload File using Drag and Drop", 
+                SearchFields = "UDD,Upload File using Drag and Drop", 
+                Description = "Upload File using Drag and Drop", 
 			});
 			
             return all;
