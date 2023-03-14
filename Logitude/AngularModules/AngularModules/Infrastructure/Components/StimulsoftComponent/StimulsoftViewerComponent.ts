@@ -78,6 +78,7 @@ export class StimulsoftViewerComponent implements OnInit {
     IsSchedulerReport: boolean = false;
     IsShowShiftToolbar: boolean = false;
     ShowReportsTemlatesLists: boolean = false;
+    ShowMessageTemlatesLists: boolean = false;
     PreviewStimualDivId: string;
     ViewerContentDivId: string;
 
@@ -85,7 +86,10 @@ export class StimulsoftViewerComponent implements OnInit {
     TemplateTypeName: string = "PDF Template";
 
     SelectedReportsTemplateList: ReportsTemplateList;
+    SelectedMessageTemplateList: ReportsTemplateList;
     ReportsTemplatesLists: ReportsTemplateList[] = [];
+    MessageTemplatesLists: ReportsTemplateList[] = [];
+
     public documentTypeTemplatePMService: DocumentTypeTemplatePMService;
     public reportService: ReportService;
     reportsTemplateListExtendedService: ReportsTemplateListExtendedService;
@@ -141,12 +145,17 @@ export class StimulsoftViewerComponent implements OnInit {
 
         this.StimulsoftArgData.StimulsoftViewerComponent = this;
         this.ReportsTemplatesLists = this.StimulsoftArgData.ReportsTemplateLists;
+        this.MessageTemplatesLists = this.StimulsoftArgData.MessageTemplateLists;
         this.reportsTemplateListExtendedService = new ReportsTemplateListExtendedService();
         if (this.ReportsTemplatesLists) {
             this.SelectedReportsTemplateList = this.ReportsTemplatesLists.filter(d => d.Id == this.StimulsoftArgData.DefaultTemplateId)[0];
         }
+        if (this.MessageTemplatesLists) {
+            this.SelectedMessageTemplateList = this.MessageTemplatesLists.filter(d => d.Id == this.StimulsoftArgData.DefaultMessageTemplateId)[0];
+        }
 
         this.ShowReportsTemlatesLists = this.StimulsoftArgData.ShowReportsTemlatesLists;
+        this.ShowMessageTemlatesLists = this.StimulsoftArgData.ResultType == "Email";
         if ((this.StimulsoftArgData.ReportsPreviewComponent && this.StimulsoftArgData.ReportsPreviewComponent.FilterConrolHeight) || this.StimulsoftArgData.TypePage != "Report") {
 
             if (this.StimulsoftArgData.ScreenHeight && this.StimulsoftArgData.ScreenWidth) {
@@ -641,6 +650,10 @@ export class StimulsoftViewerComponent implements OnInit {
                 this.StimulsoftArgData.DefaultTemplateId = "";
             }
         }
+    }
+    MessageTemplatesChange(item) {
+        if (!this.StimulsoftArgData) return;
+        this.StimulsoftArgData.DefaultMessageTemplateId = item ? item.Id : "";
     }
 
 
@@ -1335,4 +1348,10 @@ ResetEditableField(field: EditableFieldPosition){
 
     }
 
+    EditMessageTemplate(selectedMessageTemplate) {
+
+    }
+    AddMessageTemplate() {
+
+    }
 }

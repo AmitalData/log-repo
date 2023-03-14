@@ -48,6 +48,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
     widthwindow: number;
     PartnersObslist: EntityPartner[];
     ReportsTemplateLists: ReportsTemplateList[];
+    MessageTemplateLists: ReportsTemplateList[];
     ReportFilterConmponent: any;
     FilterConrolHeight: number = null;
     @ViewChild('FiltersLocation', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
@@ -77,7 +78,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
     ReportsPreview(GroupList: ReportGroupList, ReportList: ReportList, reportTemplateLists: ReportsTemplateList[]) {
         this.Report = ReportList;
         this.ReportGroup = GroupList;
-        this.ReportsTemplateLists = reportTemplateLists;
+        this.ReportsTemplateLists = reportTemplateLists.filter(temp => temp.TemplateType == "R");
+        this.MessageTemplateLists = reportTemplateLists.filter(temp => temp.TemplateType == "M");
         this.Title = SessionLocator.LoggedUserPM.DontShowLocal ? ReportList.Name : ReportList.LocalName;
         this.FilterControlName = ReportList.FilterControlName;
         this.ReportsRunUsingWR = true;
@@ -259,11 +261,12 @@ export class ReportsPreviewComponent implements AfterViewInit {
                     this.StimulsoftArg.TemplateDescription = this.ReportsTemplateLists.filter(d => d.Id == this.Report.DefaultTemplateId)[0].Description;
                 }
 
+                this.StimulsoftArg.MessageTemplateLists = this.MessageTemplateLists;
                 if (this.DefaultMessageTemplateId) {
                     this.Report.DefaultMessageTemplateId = this.DefaultMessageTemplateId;
                 }
                 this.StimulsoftArg.DefaultMessageTemplateId = this.Report.DefaultMessageTemplateId;
-
+                this.StimulsoftArg.ResultType = this.ResultType;
                 this.ComputeSize(Component.clientWidth, Component.clientHeight);
 
                 window.onresize = (e) => {

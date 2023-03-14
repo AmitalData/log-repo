@@ -45,6 +45,7 @@ export class StimulsoftArg {
     ReportFilterConmponent: any;
     TemplateDescription: string;
     IsReset: boolean;
+    MessageTemplateLists: ReportsTemplateList[] = [];
     DefaultMessageTemplateId: string;
     ResultType: string;
     constructor() {
