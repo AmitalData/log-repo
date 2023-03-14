@@ -285,7 +285,7 @@ export class QuoteUtilities {
             newPackage.Height = item.Height;
             newPackage.Length = item.Length;
             newPackage.Width = item.Width;
-
+            newPackage.VolumetricWeight = item.VolumetricWeight;
             entityPM.AddQuotePackagePM(newPackage);
         });
     }

@@ -279,12 +279,14 @@ namespace WebFreight.Web.ContainerTracking
             var communicationLogRepository = new CommunicationLogRepository(comunicationLog.Tenant);
             communicationLogRepository.Update(comunicationLog);
             communicationLogRepository.SubmitChanges();
+
             string activity = "";
             if (wasAnalyzed)
             {
                 activity = "(A) Analyzed Responses";
                 AddTotangoActivity(comunicationLog.Tenant, activity);
             }
+
             activity = "(A) Received Responses";
             AddTotangoActivity(comunicationLog.Tenant, activity);
         }
