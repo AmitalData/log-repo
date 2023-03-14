@@ -1,4 +1,4 @@
-export class TaskEntityField {
+export class TaskField {
     public field: string;
     public fieldCode: string;
     public isRequired: boolean;

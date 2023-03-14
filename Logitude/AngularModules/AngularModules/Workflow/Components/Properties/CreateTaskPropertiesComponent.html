@@ -201,7 +201,7 @@
         </td>
     </tr>
 
-    <tr *ngIf="TaskEntityId" class="table-row">
+    <tr *ngIf="TaskObjectTableId" class="table-row">
         <td class="table-row-cell-label">
             <div class="table-row-cell-block">
                 <div class="label">Set Task Fields</div>
@@ -209,27 +209,24 @@
         </td>
     </tr>
 
-    <tr *ngIf="TaskEntityId" class="table-row">
+    <tr *ngIf="TaskObjectTableId" class="table-row">
         <td class="table-row-cell">
             <div class="set-values-container">
-
                 <SetValues *ngIf="SetValues && SetValues.length > 0" [(SetValues)]="SetValues" [IsEntityField]="true"
-                    [EntityId]="TaskEntityId" (IsValidSetValuesChange)="updateIsValidSetValues($event)"
+                    [EntityId]="TaskObjectTableId" (IsValidSetValuesChange)="updateIsValidSetValues($event)"
                     [FlowObject]="FlowObject" [CurrentNodeId]="CurrentNodeId">
                 </SetValues>
-
             </div>
-
         </td>
     </tr>
 
-    <tr *ngIf="TaskEntityId" class="table-row">
+    <tr *ngIf="TaskObjectTableId" class="table-row">
         <td class="table-row-cell">
             <div class="split-block"></div>
         </td>
     </tr>
 
-    <tr *ngIf="Entity && EntityFields" class="table-row">
+    <tr *ngIf="Entity && TaskFields" class="table-row">
         <td class="table-row-cell-label">
             <div class="table-row-cell-block">
                 <div class="label">Select {{Entity | EntityLabelPipe}} Fields</div>
@@ -237,11 +234,11 @@
         </td>
     </tr>
 
-    <tr *ngIf="Entity && EntityFields" class="table-row">
+    <tr *ngIf="Entity && TaskFields" class="table-row">
         <td class="table-row-cell">
             <div class="entity-fields-container">
                 <table>
-                    <tr class="table-row" *ngIf="EntityFields.length > 0">
+                    <tr class="table-row" *ngIf="TaskFields.length > 0">
                         <td></td>
                         <td>Field</td>
                         <td>Required</td>
@@ -250,23 +247,23 @@
                         </td>
                     </tr>
                     <tr class="table-row entity-field-row"
-                        *ngFor="let EntityField of EntityFields; let entityFieldIndex = index;">
+                        *ngFor="let TaskField of TaskFields; let taskFieldIndex = index;">
                         <td class="delete-entity-field-button-cell">
                             <img class="delete-entity-field-button" src="./Images/Trash-can.png"
-                                (click)="deleteEntityField(entityFieldIndex)"
-                                [attr.data-cy]="'DeleteEntityFieldButton_' + entityFieldIndex" />
+                                (click)="deleteTaskField(taskFieldIndex)"
+                                [attr.data-cy]="'DeleteTaskFieldButton_' + taskFieldIndex" />
                         </td>
                         <td class="entity-field-cell">
-                            <TreeSelect [Items]="ObjectFieldsTreeItems" [Width]="'300px'"
-                                [Value]="EntityField.fieldCode" [IsReturnedTreeSelectItem]="true" [ShowExpand]="false"
-                                (ValueChanged)="updateEntityField($event, entityFieldIndex)"
-                                [DataCy]="'EntityField_' + entityFieldIndex">
+                            <TreeSelect [Items]="ObjectFieldsTreeItems" [Width]="'300px'" [Value]="TaskField.fieldCode"
+                                [IsReturnedTreeSelectItem]="true" [ShowExpand]="false"
+                                (ValueChanged)="updateTaskField($event, taskFieldIndex)"
+                                [DataCy]="'TaskField_' + taskFieldIndex">
                             </TreeSelect>
                         </td>
                         <td class="entity-field-required-cell">
-                            <CheckBox [IsChecked]="EntityField.isRequired"
-                                (Checked)="updateEntityFieldRequired($event, entityFieldIndex)"
-                                [DataCy]="'EntityFieldIsRequired_' + entityFieldIndex"></CheckBox>
+                            <CheckBox [IsChecked]="TaskField.isRequired"
+                                (Checked)="updateTaskFieldRequired($event, taskFieldIndex)"
+                                [DataCy]="'TaskFieldIsRequired_' + taskFieldIndex"></CheckBox>
                         </td>
                         <td>
                             <div></div>
@@ -274,8 +271,8 @@
                     </tr>
                     <tr class="table-row">
                         <td class="add-entity-field-button-cell" colspan="4">
-                            <span class="link-button" [ngClass]="{'disabled': !IsValidEntityFields}"
-                                (click)="addEntityField()" [attr.data-cy]="'AddEntityFieldButton'">
+                            <span class="link-button" [ngClass]="{'disabled': !IsValidTaskFields}"
+                                (click)="addTaskField()" [attr.data-cy]="'AddTaskFieldButton'">
                                 <span class="plus-sign">+</span><span>Add Field</span>
                             </span>
                         </td>
@@ -291,7 +288,7 @@
         </td>
     </tr>
 
-    <tr *ngIf="Entity && EntityFields" class="table-row">
+    <tr *ngIf="Entity && TaskFields" class="table-row">
         <td class="table-row-cell">
             <div class="split-block"></div>
         </td>

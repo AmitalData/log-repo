@@ -11,7 +11,7 @@ import { FieldTypes } from "Workflow/Constants/FieldTypes";
 import { SetValueOperators } from "Workflow/Constants/SetValueOperators";
 import { Condition } from "Workflow/Models/Condition";
 import { SetValue } from "Workflow/Models/SetValue";
-import { TaskEntityField } from "Workflow/Models/TaskEntityField";
+import { TaskField } from "Workflow/Models/TaskField";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 import { EditableRecordsTreeList } from "Workflow/TreeLists/EditableRecordsTreeList";
 import { ObjectFieldsTreeList } from "Workflow/TreeLists/ObjectFieldsTreeList";
@@ -28,25 +28,25 @@ export class CreateTaskPropertiesComponent extends BaseComponent implements OnIn
     public DataContext: any = this;
     public Data: any;
     public IsNew: boolean;
-    public TaskEntityId: string;
+    public TaskObjectTableId: string;
     public Name: string = null;
     public Record: string;
     public Entity: string;
     public IsRecordEntityChanged: boolean = false;
     public TaskTypeId: string;
     public SetValues: SetValue[];
-    public EntityFields: TaskEntityField[];
+    public TaskFields: TaskField[];
     public FlowObject: any;
     public CurrentNodeId: string;
     public ValidationErrorsList: string[];
     public IsValidSetValues: boolean = true;
-    public IsValidEntityFields: boolean = true;
+    public IsValidTaskFields: boolean = true;
     public EditableRecordsTreeItems: TreeSelectItem[];
     public ObjectFieldsTreeItems: TreeSelectItem[];
     public TaskTypeQueryFilters: ApiQueryFilters;
     public CurrentSession = SessionLocator.SelectedSession;
 
-    public InitialSetValueTaskFields: string[] = [
+    public InitialSetValueFields: string[] = [
         "Subject",
         "OwnerId",
         "DueDate",
@@ -82,14 +82,14 @@ export class CreateTaskPropertiesComponent extends BaseComponent implements OnIn
 
     initialize() {
         this.IsNew = Object.keys(this.Data).length === 0;
-        this.TaskEntityId = ObjectTables.getIdByName("Task");
+        this.TaskObjectTableId = ObjectTables.getIdByName("Task");
 
         this.Name = this.Data["label"] || this.Data["name"] || null;
         this.Record = this.Data["record"] || null;
         this.Entity = this.Data["entity"] || null;
         this.TaskTypeId = this.Data["taskTypeId"] || null;
         this.SetValues = this.Data["setValues"] || [];
-        this.EntityFields = this.Data["fields"] || [];
+        this.TaskFields = this.Data["fields"] || [];
 
         this.handleRecordEntityChanged();
         this.setTaskTypeQueryFilters();
@@ -120,23 +120,23 @@ export class CreateTaskPropertiesComponent extends BaseComponent implements OnIn
 
     initializeSetValues() {
         if (this.SetValues.length === 0) {
-            this.getInitialSetValueTaskObjectFields().forEach(objectField => {
+            this.getInitialSetValueObjectFields().forEach(objectField => {
                 this.addSetValue(objectField);
             });
             this.IsValidSetValues = false;
         }
     }
 
-    getInitialSetValueTaskObjectFields() {
-        return ObjectFields.getByObjectTableId(this.TaskEntityId)
-            .filter(o => this.InitialSetValueTaskFields.includes(o.FieldName))
+    getInitialSetValueObjectFields() {
+        return ObjectFields.getByObjectTableId(this.TaskObjectTableId)
+            .filter(o => this.InitialSetValueFields.includes(o.FieldName))
             .sort((a, b) => this.getTaskObjectFieldOrder(a.FieldName) - this.getTaskObjectFieldOrder(b.FieldName));
     }
 
     getTaskObjectFieldOrder(fieldName: string) {
-        let taskObjectFieldOrder = this.InitialSetValueTaskFields.length + 1;
+        let taskObjectFieldOrder = this.InitialSetValueFields.length + 1;
         if (fieldName) {
-            let taskObjectFieldIndex = this.InitialSetValueTaskFields.indexOf(fieldName);
+            let taskObjectFieldIndex = this.InitialSetValueFields.indexOf(fieldName);
             return taskObjectFieldIndex === -1 ? taskObjectFieldOrder : taskObjectFieldIndex;
         }
         return taskObjectFieldOrder;
@@ -156,25 +156,25 @@ export class CreateTaskPropertiesComponent extends BaseComponent implements OnIn
         }
     }
 
-    addEntityField() {
-        if (this.IsValidEntityFields) {
-            let entityField = new TaskEntityField();
-            this.EntityFields.push(entityField);
-            this.IsValidEntityFields = false;
+    addTaskField() {
+        if (this.IsValidTaskFields) {
+            let taskField = new TaskField();
+            this.TaskFields.push(taskField);
+            this.IsValidTaskFields = false;
         }
     }
 
-    deleteEntityField(entityFieldIndex: number) {
-        let entityField = this.EntityFields[entityFieldIndex];
-        if (entityField) {
-            this.EntityFields.splice(entityFieldIndex, 1);
-            this.validateEntityFields();
+    deleteTaskField(taskFieldIndex: number) {
+        let taskField = this.TaskFields[taskFieldIndex];
+        if (taskField) {
+            this.TaskFields.splice(taskFieldIndex, 1);
+            this.validateTaskFields();
         }
     }
 
-    resetEntityFields() {
-        this.EntityFields = [];
-        this.IsValidEntityFields = true;
+    resetTaskFields() {
+        this.TaskFields = [];
+        this.IsValidTaskFields = true;
     }
 
     updateIsValidSetValues(isValidSetValues: boolean) {
@@ -209,7 +209,7 @@ export class CreateTaskPropertiesComponent extends BaseComponent implements OnIn
         if (isEntityChanged) {
             this.updateTaskTypeId(null);
             this.setTaskTypeQueryFilters();
-            this.resetEntityFields();
+            this.resetTaskFields();
             this.initializeObjectFieldsTreeItems();
             this.IsRecordEntityChanged = !this.IsRecordEntityChanged;
         }
@@ -222,23 +222,23 @@ export class CreateTaskPropertiesComponent extends BaseComponent implements OnIn
         this.Data["taskTypeId"] = taskTypeId || null;
     }
 
-    updateEntityField(objectFieldItem: TreeSelectItem, entityFieldIndex: number) {
+    updateTaskField(objectFieldItem: TreeSelectItem, taskFieldIndex: number) {
         let objectField = objectFieldItem ? (objectFieldItem.data["objectField"] || null) : null;
-        this.EntityFields[entityFieldIndex].fieldCode = objectField ? objectField.FieldCode : null;
-        this.EntityFields[entityFieldIndex].field = objectField ? objectField.FieldName : null;
-        this.validateEntityFields();
+        this.TaskFields[taskFieldIndex].fieldCode = objectField ? objectField.FieldCode : null;
+        this.TaskFields[taskFieldIndex].field = objectField ? objectField.FieldName : null;
+        this.validateTaskFields();
     }
 
-    validateEntityFields() {
-        if (this.EntityFields) {
-            this.IsValidEntityFields = this.EntityFields.filter(e => !e.fieldCode).length === 0;
+    validateTaskFields() {
+        if (this.TaskFields) {
+            this.IsValidTaskFields = this.TaskFields.filter(t => !t.fieldCode).length === 0;
         } else {
-            this.IsValidEntityFields = true;
+            this.IsValidTaskFields = true;
         }
     }
 
-    updateEntityFieldRequired(isRequired: boolean, entityFieldIndex: number) {
-        this.EntityFields[entityFieldIndex].isRequired = isRequired;
+    updateTaskFieldRequired(isRequired: boolean, taskFieldIndex: number) {
+        this.TaskFields[taskFieldIndex].isRequired = isRequired;
     }
 
     setUIProperties() {
@@ -254,7 +254,7 @@ export class CreateTaskPropertiesComponent extends BaseComponent implements OnIn
         this.ValidationErrorsList = [];
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
         let isValidName = !this.IsNew || !FlowReader.isNodeCodeExists(this.FlowObject, this.Name);
-        let isValidSave = notValidUIProperties.length === 0 && this.IsValidSetValues && this.IsValidEntityFields && isValidName;
+        let isValidSave = notValidUIProperties.length === 0 && this.IsValidSetValues && this.IsValidTaskFields && isValidName;
 
         if (isValidSave) {
             this.completeSave();
@@ -265,7 +265,7 @@ export class CreateTaskPropertiesComponent extends BaseComponent implements OnIn
 
     completeSave() {
         this.setSetValuesData();
-        this.setEntityFieldsData();
+        this.setTaskFieldsData();
         this.setDoneConditionsFromFields();
         console.log(this.Data);
         this.CurrentSession.CurrentWindow.Close(this.Data);
@@ -280,7 +280,7 @@ export class CreateTaskPropertiesComponent extends BaseComponent implements OnIn
         if (!this.IsValidSetValues) {
             this.ValidationErrorsList.push("Invalid Set Values");
         }
-        if (!this.IsValidEntityFields) {
+        if (!this.IsValidTaskFields) {
             this.ValidationErrorsList.push("Invalid Fields");
         }
     }
@@ -289,28 +289,28 @@ export class CreateTaskPropertiesComponent extends BaseComponent implements OnIn
         this.Data["setValues"] = this.SetValues;
     }
 
-    setEntityFieldsData() {
-        this.Data["fields"] = this.EntityFields && this.EntityFields.length > 0 ? this.EntityFields : null;
+    setTaskFieldsData() {
+        this.Data["fields"] = this.TaskFields && this.TaskFields.length > 0 ? this.TaskFields : null;
     }
 
     setDoneConditionsFromFields() {
-        let doneConditions = this.getConditionsFromEntityFields(this.EntityFields);
+        let doneConditions = this.getConditionsFromTaskFields(this.TaskFields);
         this.Data["doneConditions"] = doneConditions && doneConditions.length > 0 ? doneConditions : null;
         this.Data["doneConditionsOperation"] = doneConditions && doneConditions.length > 0 ? ConditionOperations.And : null;
     }
 
-    getConditionsFromEntityFields(entityFields: TaskEntityField[]) {
-        if (entityFields && entityFields.length > 0) {
-            return entityFields.filter(entityField => entityField.isRequired)
-                .map(entityField => { return this.getConditionFromEntityField(entityField); })
+    getConditionsFromTaskFields(taskFields: TaskField[]) {
+        if (taskFields && taskFields.length > 0) {
+            return taskFields.filter(taskField => taskField.isRequired)
+                .map(taskField => { return this.getConditionFromTaskField(taskField); })
                 .filter(doneCondition => doneCondition !== null);
         }
         return [];
     }
 
-    getConditionFromEntityField(entityField: TaskEntityField) {
-        let objectField = ObjectFields.getByCode(entityField?.fieldCode);
-        if (entityField && entityField.isRequired && objectField) {
+    getConditionFromTaskField(taskField: TaskField) {
+        let objectField = ObjectFields.getByCode(taskField?.fieldCode);
+        if (taskField && taskField.isRequired && objectField) {
             let doneCondition = new Condition();
             doneCondition.fieldCode = objectField.FieldCode;
             doneCondition.field = objectField.FieldName;
