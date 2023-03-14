@@ -12,6 +12,7 @@ using System.Xml.Serialization;
 
 using Logitude.Workflow.Data.EntityPOCOs;
 using Logitude.Workflow.Data.EntityLists;
+using Logitude.Workflow.Data.CustomFilters;
 
 namespace Logitude.Workflow.Data.EntityListQueryServices
 { 
@@ -98,7 +99,7 @@ namespace Logitude.Workflow.Data.EntityListQueryServices
 
 		private IQueryable<Task> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<Task> iQueryable, int tenant)
         {
-			return iQueryable;
+			return TaskCustomFilter.GetFilteredQuery(queryOperations, iQueryable, tenant);
 		}
 				private IQueryable<Task> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<Task> iQueryable, int tenant)
         {

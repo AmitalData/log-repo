@@ -12,6 +12,7 @@
   AvailableInCustomization="false"
   SupportSubEntity="false"
   ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -326,6 +327,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Task&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -336,6 +338,8 @@
     DisplayLongName="false"
     FullFieldLable="&quot;CreatedByUserId&quot;"
     DefaultText="&quot;Created By&quot;"
+    ListFieldLable="&quot;CreatedByUserIdListLable&quot;"
+    ListLableDefaultText="&quot;Created By&quot;"
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="&quot;User&quot;"
@@ -474,6 +478,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Task&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -484,6 +489,8 @@
     DisplayLongName="false"
     FullFieldLable="&quot;UpdatedByUserId&quot;"
     DefaultText="&quot;Updated By&quot;"
+    ListFieldLable="&quot;UpdatedByUserIdListLable&quot;"
+    ListLableDefaultText="&quot;Updated By&quot;"
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="&quot;User&quot;"
@@ -769,6 +776,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Task&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -779,6 +787,8 @@
     DisplayLongName="false"
     FullFieldLable="&quot;OwnerId&quot;"
     DefaultText="&quot;Owner&quot;"
+    ListFieldLable="&quot;OwnerIdListLable&quot;"
+    ListLableDefaultText="&quot;Owner&quot;"
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="&quot;User&quot;"
@@ -843,6 +853,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Task&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -853,6 +864,8 @@
     DisplayLongName="false"
     FullFieldLable="&quot;PriorityId&quot;"
     DefaultText="&quot;Priority&quot;"
+    ListFieldLable="&quot;PriorityIdListLable&quot;"
+    ListLableDefaultText="&quot;Priority&quot;"
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="&quot;TaskPriority&quot;"
@@ -917,6 +930,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Task&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -927,6 +941,8 @@
     DisplayLongName="false"
     FullFieldLable="&quot;StatusId&quot;"
     DefaultText="&quot;Status&quot;"
+    ListFieldLable="&quot;StatusIdListLable&quot;"
+    ListLableDefaultText="&quot;Status&quot;"
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="&quot;TaskStatus&quot;"
@@ -1061,6 +1077,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Task&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -1071,6 +1088,8 @@
     DisplayLongName="false"
     FullFieldLable="&quot;TaskTypeId&quot;"
     DefaultText="&quot;Task Type&quot;"
+    ListFieldLable="&quot;TaskTypeIdListLable&quot;"
+    ListLableDefaultText="&quot;Task Type&quot;"
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="&quot;TaskType&quot;"
@@ -1209,6 +1228,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Task&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -1219,6 +1239,8 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ClosedByUserId&quot;"
     DefaultText="&quot;Closed By&quot;"
+    ListFieldLable="&quot;ClosedByUserIdListLable&quot;"
+    ListLableDefaultText="&quot;Closed By&quot;"
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="&quot;User&quot;"
@@ -1505,6 +1527,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Task&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -1515,6 +1538,8 @@
     DisplayLongName="false"
     FullFieldLable="&quot;CheckWithId&quot;"
     DefaultText="&quot;Check With&quot;"
+    ListFieldLable="&quot;CheckWithIdListLable&quot;"
+    ListLableDefaultText="&quot;Check With&quot;"
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="&quot;Card&quot;"
@@ -2552,12 +2577,180 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;7698ec29-cc84-442e-b742-8d72f2552a95&quot;"
+    FieldName="&quot;MyOpenTasks&quot;"
+    OldNames="MyOpenTasks"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;Task&quot;"
+    FieldsDataType="&quot;Boolean&quot;"
+    MinLength="0"
+    MaxLength="0"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="false"
+    IsCustomFilter="true"
+    IsListFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;MyOpenTasks&quot;"
+    ListPropertyPath="&quot;MyOpenTasks&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;MyOpenTasks&quot;"
+    DefaultText="&quot;My Open Tasks&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="false"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <Query
+    Code="&quot;My Open Tasks&quot;"
+    TextCode="&quot;My Open Tasks&quot;"
+    LocalTextCode="&quot;My Open Tasks&quot;"
+    QueryGroupCode="&quot;a540&quot;"
+    IndexOrder="0"
+    ObjectTableName="&quot;Task&quot;"
+    QuerySection="&quot;Task&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="true"
+    DefaultSortName="&quot;CreateDate&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;My Open Tasks&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;Subject&quot;"
+        ColumnWidth="250" />
+      <QueryColumn
+        QueryCode="&quot;My Open Tasks&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;StatusName&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;My Open Tasks&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;PriorityName&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;My Open Tasks&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;DueDate&quot;"
+        ColumnWidth="150" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;My Open Tasks&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;MyOpenTasks&quot;"
+        IsPredefined="true"
+        IndexOrder="0"
+        CustomPredefined="false" />
+    </QueryFilters>
+  </Query>
+  <Query
+    Code="&quot;All Open Tasks&quot;"
+    TextCode="&quot;All Open Tasks&quot;"
+    LocalTextCode="&quot;All Open Tasks&quot;"
+    QueryGroupCode="&quot;a540&quot;"
+    IndexOrder="1"
+    ObjectTableName="&quot;Task&quot;"
+    QuerySection="&quot;Task&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="true"
+    DefaultSortName="&quot;CreateDate&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;All Open Tasks&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;Subject&quot;"
+        ColumnWidth="250" />
+      <QueryColumn
+        QueryCode="&quot;All Open Tasks&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;StatusName&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;All Open Tasks&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;PriorityName&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;All Open Tasks&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;DueDate&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;All Open Tasks&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;OwnerName&quot;"
+        ColumnWidth="150" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;All Open Tasks&quot;"
+        PredefinedValue="&quot;false&quot;"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0"
+        CustomPredefined="false" />
+    </QueryFilters>
+  </Query>
   <Query
     Code="&quot;All Tasks&quot;"
     TextCode="&quot;All Tasks&quot;"
     LocalTextCode="&quot;All Tasks&quot;"
     QueryGroupCode="&quot;a540&quot;"
-    IndexOrder="0"
+    IndexOrder="2"
     ObjectTableName="&quot;Task&quot;"
     QuerySection="&quot;Task&quot;"
     SystemLevel="true"
@@ -2571,27 +2764,27 @@
         QueryCode="&quot;All Tasks&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;Subject&quot;"
-        ColumnWidth="200" />
+        ColumnWidth="250" />
       <QueryColumn
         QueryCode="&quot;All Tasks&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;StatusName&quot;"
-        ColumnWidth="200" />
+        ColumnWidth="150" />
       <QueryColumn
         QueryCode="&quot;All Tasks&quot;"
         IndexOrder="2"
         ObjectFieldName="&quot;PriorityName&quot;"
-        ColumnWidth="200" />
+        ColumnWidth="150" />
       <QueryColumn
         QueryCode="&quot;All Tasks&quot;"
         IndexOrder="3"
         ObjectFieldName="&quot;DueDate&quot;"
-        ColumnWidth="200" />
+        ColumnWidth="150" />
       <QueryColumn
         QueryCode="&quot;All Tasks&quot;"
         IndexOrder="4"
         ObjectFieldName="&quot;OwnerName&quot;"
-        ColumnWidth="200" />
+        ColumnWidth="150" />
     </QueryColumns>
     <QueryFilters />
   </Query>
