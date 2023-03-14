@@ -134,7 +134,7 @@ export class DigitalPortalLanguageSettingsComponent implements OnInit {
         this.CurrentSession.StartBusyIndicator("Exporting...")
         var payload : ExportExcelParams = {
             ObjectTableName: "DigitalLabelTranslations",
-            LanguageCode: this.selectedDisplayLanguage && this.selectedDisplayLanguage.Code ? this.selectedDisplayLanguage.Code : 'EN',
+            LanguageCode: this.selectedDisplayLanguage && this.selectedDisplayLanguage.code ? this.selectedDisplayLanguage.code : 'EN',
             CardId: null,
             Tenant: 0,
             PageIndex:0,
