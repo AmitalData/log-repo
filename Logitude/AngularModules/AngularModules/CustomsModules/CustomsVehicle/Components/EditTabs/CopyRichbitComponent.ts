@@ -10,6 +10,10 @@ import { DeclarationPM } from '../../../../Customs/EntityPMs/DeclarationPM';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { VehiclePM } from 'Customs/EntityPMs/VehiclePM';
+import { VehicleListService } from 'Customs/Services/StandardLists/VehicleListService';
+import { VehiclePMService } from 'Customs/Services/StandardPMs/VehiclePMService';
+import { VehicleOwnerPM } from 'Customs/EntityPMs/VehicleOwnerPM';
+import { VehicleSafetyAccessoryPM } from 'Customs/EntityPMs/VehicleSafetyAccessoryPM';
 
 
 @Component({
@@ -29,8 +33,10 @@ export class CopyRichbitComponent extends BaseComponent {
     @Output() Entity: EventEmitter<any> = new EventEmitter();
     @Output() FillValidationErrorList: EventEmitter<any> = new EventEmitter();
     declarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
+    vehiclePMService: VehiclePMService = new VehiclePMService()
     ENntityPM: VehiclePM;
     private CurrentSession = SessionLocator.SelectedSession;
+    public VehicleChassisNumberText = TextCodeTranslator.Translate('Customs.Vehicle.F.VehicleChassisNumber') + ":";
     constructor() {
 
         super();
@@ -43,11 +49,12 @@ export class CopyRichbitComponent extends BaseComponent {
 
     }
     public SetTabArgs(args: any, valdationErrorList: any[] = null) {
-        
+
         this.EntityPM = args.EntityPM;
         this.ImporterIdentityId = this.EntityPM.ImporterIdentityId;
         this.RichbitFileNumber = this.EntityPM.RichbitFileNumber;
         this.VehicleChassisNumber = this.EntityPM.VehicleChassisNumber;
+        this.VehicleChassisNumber2 = this.EntityPM.VehicleChassisNumber;
 
         // this.cdr.detectChanges();
 
@@ -97,6 +104,15 @@ export class CopyRichbitComponent extends BaseComponent {
         }
     }
 
+    private vehicleChassisNumber2: string;
+    get VehicleChassisNumber2() { return this.vehicleChassisNumber2; }
+    set VehicleChassisNumber2(value: string) {
+        if (this.vehicleChassisNumber2 != value) {
+            this.vehicleChassisNumber2 = value; this.VehicleChassisNumber = value;
+            this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
+        }
+    }
+
     private richbitFileNumber: string;
     get RichbitFileNumber() { return this.richbitFileNumber; }
     set RichbitFileNumber(value: string) {
@@ -111,7 +127,7 @@ export class CopyRichbitComponent extends BaseComponent {
     private importerIdentityId: string;
     get ImporterIdentityId() { return this.importerIdentityId; }
     set ImporterIdentityId(value: string) {
-        
+
         if (this.importerIdentityId != value) {
 
             this.importerIdentityId = value;
@@ -176,10 +192,10 @@ export class CopyRichbitComponent extends BaseComponent {
     BuildColumns() {
         this.columns = [];
         this.columns.push({
-            FieldName: 'ImporterIdentityId',
+            FieldName: 'ImporterName',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate('Customs.Vehicle.F.ImporterIdentityId'),
-            Styles: { width: '120px' },
+            Display: TextCodeTranslator.Translate('Customs.Vehicle.F.ImporterName'),
+            Styles: { width: '150px' },
             HtmlListComponentName: 'DeclarationQueryListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/DeclarationQueryListTemplate',
             IsCustomTemplate: true
@@ -240,13 +256,14 @@ export class CopyRichbitComponent extends BaseComponent {
 
     }
 
-    
 
-   
+
+
 
     public SelectedRow: any = null;
 
     OnRowSelected(item) {
+        
         this.SelectedRow = item.rowData;
         let confirm = new ConfirmWindow();
         confirm.WindowClosed.subscribe((event: any) => {
@@ -258,61 +275,104 @@ export class CopyRichbitComponent extends BaseComponent {
             }
 
         });
-        confirm.Show(TextCodeTranslator.Translate("Customs.Vehicle.O.OkCopyRichbit") + " " + this.SelectedRow.RichbitFileNumber);
+        var message = this.SelectedRow.RichbitFileNumber == null ? this.SelectedRow.VehicleChassisNumber : this.SelectedRow.RichbitFileNumber;
+        confirm.Show(TextCodeTranslator.Translate("Customs.Vehicle.O.OkCopyRichbit") + " " + message);
     }
 
 
-    CopyRichbitDetails(selectedRow:any){
+    CopyRichbitDetails(selectedRow: any) {
+
         this.CurrentSession.StartBusyIndicatorSaving();
+        this.vehiclePMService.get(selectedRow.Id).subscribe(r => {
             
-        this.EntityPM.VehiclePoolTypeCode=selectedRow?.VehiclePoolTypeCode
-        this.EntityPM.VehiclePriceListTypeCode=selectedRow?.VehiclePriceListTypeCode
-        this.EntityPM.VehicleManufacturerCode=selectedRow?.VehicleManufacturerCode
-        this.EntityPM.ModelCode=selectedRow?.ModelCode
-        this.EntityPM.IsABS=selectedRow?.IsABS;
-        this.EntityPM.AirBagsNumber=selectedRow?.AirBagsNumber;
-        this.EntityPM.ConverterTypeCode=selectedRow?.ConverterTypeCode;
-        this.EntityPM.IsArmoredVehicle=selectedRow?.IsArmoredVehicle;
-        this.EntityPM.IsLoweringVehicleForInvalid=selectedRow?.IsLoweringVehicleForInvalid;
-        this.EntityPM.GreenIndex=selectedRow?.GreenIndex;
-        this.EntityPM.GreenIndexGroup=selectedRow?.GreenIndexGroup;
-        this.EntityPM.IsStabilityControl=selectedRow?.IsStabilityControl;
-        this.EntityPM.IsraelEnterDate=selectedRow?.IsraelEnterDate;
-        this.EntityPM.EngineCapacity=selectedRow?.EngineCapacity;
-        this.EntityPM.VehiclePowerKW=selectedRow?.VehiclePowerKW;
-        this.EntityPM.VehicleTecnologyTypeCode=selectedRow?.VehicleTecnologyTypeCode;
-        this.EntityPM.FuelTypeCode=selectedRow?.FuelTypeCode;
-        this.EntityPM.ManufactureCountryCode=selectedRow?.ManufactureCountryCode;
-        this.EntityPM.MedalNumber=selectedRow?.MedalNumber;
-        this.EntityPM.CommercialNickname=selectedRow?.CommercialNickname;
-        this.EntityPM.ModelDescription=selectedRow?.ModelDescription;
-        this.EntityPM.NumberOfSeats=selectedRow?.NumberOfSeats;
-        this.EntityPM.TotalVehicleWeight=selectedRow?.TotalVehicleWeight;
-        this.EntityPM.SelfVehicleWeight=selectedRow?.SelfVehicleWeight;
-        this.EntityPM.NumberOfWheels=selectedRow?.NumberOfWheels;
-        this.EntityPM.VehicleManufactureDate=selectedRow?.VehicleManufactureDate;
-        this.EntityPM.VehicleTypeCode=selectedRow?.VehicleTypeCode;
-        this.EntityPM.TransmissionDateWithoutTax=selectedRow?.TransmissionDateWithoutTax;
-        this.EntityPM.ImporterIdentityId=selectedRow?.ImporterIdentityId;
-        this.EntityPM.DateOnRoadAbroad=selectedRow?.DateOnRoadAbroad;
-        this.EntityPM.VehicleSafetyAccessoryPoints=selectedRow?.VehicleSafetyAccessoryPoints;
-        this.EntityPM.StatusCode=selectedRow?.StatusCode;
-        this.EntityPM.ConcurrencyGUID=selectedRow?.ConcurrencyGUID;
-        this.EntityPM.IsThreeWheeledForReduction=selectedRow?.IsThreeWheeledForReduction;
-        this.EntityPM.TaxiMedalOwner=selectedRow?.TaxiMedalOwner;
-        this.EntityPM.ImporterPassportTypeCode=selectedRow?.ImporterPassportTypeCode;
-        this.EntityPM.IsCBS=selectedRow?.IsCBS;
-        this.EntityPM.IsSlipperClutch=selectedRow?.IsSlipperClutch;
-        this.EntityPM.IsSteeringDamper=selectedRow?.IsSteeringDamper;
-        this.EntityPM.IsTCS=selectedRow?.IsTCS;
-        this.EntityPM.IsTPS=selectedRow?.IsTPS;
-        this.EntityPM.VehicleCategory=selectedRow?.VehicleCategory;
-        this.EntityPM.VehicleMaxPowerKW=selectedRow?.VehicleMaxPowerKW;
-      
-        this.CurrentSession.StopBusyIndicator();
+            if (r.Result) {
+                 var row = r.Result;
+                this.EntityPM.VehiclePoolTypeCode = row?.VehiclePoolTypeCode
+                this.EntityPM.VehiclePriceListTypeCode = row?.VehiclePriceListTypeCode
+                this.EntityPM.VehicleManufacturerCode = row?.VehicleManufacturerCode
+                this.EntityPM.ModelCode = row?.ModelCode
+                this.EntityPM.IsABS = row?.IsABS;
+                this.EntityPM.AirBagsNumber = row?.AirBagsNumber;
+                this.EntityPM.ConverterTypeCode = row?.ConverterTypeCode;
+                this.EntityPM.IsArmoredVehicle = row?.IsArmoredVehicle;
+                this.EntityPM.IsLoweringVehicleForInvalid = row?.IsLoweringVehicleForInvalid;
+                this.EntityPM.GreenIndex = row?.GreenIndex;
+                this.EntityPM.GreenIndexGroup = row?.GreenIndexGroup;
+                this.EntityPM.IsStabilityControl = row?.IsStabilityControl;
+                this.EntityPM.IsraelEnterDate = row?.IsraelEnterDate;
+                this.EntityPM.EngineCapacity = row?.EngineCapacity;
+                this.EntityPM.VehiclePowerKW = row?.VehiclePowerKW;
+                this.EntityPM.VehicleTecnologyTypeCode = row?.VehicleTecnologyTypeCode;
+                this.EntityPM.FuelTypeCode = row?.FuelTypeCode;
+                this.EntityPM.ManufactureCountryCode = row?.ManufactureCountryCode;
+                this.EntityPM.MedalNumber = row?.MedalNumber;
+                this.EntityPM.CommercialNickname = row?.CommercialNickname;
+                this.EntityPM.ModelDescription = row?.ModelDescription;
+                this.EntityPM.NumberOfSeats = row?.NumberOfSeats;
+                this.EntityPM.TotalVehicleWeight = row?.TotalVehicleWeight;
+                this.EntityPM.SelfVehicleWeight = row?.SelfVehicleWeight;
+                this.EntityPM.NumberOfWheels = row?.NumberOfWheels;
+                this.EntityPM.VehicleManufactureDate = row?.VehicleManufactureDate;
+                this.EntityPM.VehicleTypeCode = row?.VehicleTypeCode;
+                this.EntityPM.TransmissionDateWithoutTax = row?.TransmissionDateWithoutTax;
+                this.EntityPM.ImporterIdentityId = row?.ImporterIdentityId;
+                this.EntityPM.DateOnRoadAbroad = row?.DateOnRoadAbroad;
+                this.EntityPM.VehicleSafetyAccessoryPoints = row?.VehicleSafetyAccessoryPoints;
+                this.EntityPM.StatusCode = row?.StatusCode;
+                this.EntityPM.ConcurrencyGUID = row?.ConcurrencyGUID;
+                this.EntityPM.IsThreeWheeledForReduction = row?.IsThreeWheeledForReduction;
+                this.EntityPM.TaxiMedalOwner = row?.TaxiMedalOwner;
+                this.EntityPM.ImporterPassportTypeCode = row?.ImporterPassportTypeCode;
+                this.EntityPM.IsCBS = row?.IsCBS;
+                this.EntityPM.IsSlipperClutch = row?.IsSlipperClutch;
+                this.EntityPM.IsSteeringDamper = row?.IsSteeringDamper;
+                this.EntityPM.IsTCS = row?.IsTCS;
+                this.EntityPM.IsTPS = row?.IsTPS;
+                this.EntityPM.VehicleCategory = row?.VehicleCategory;
+                this.EntityPM.VehicleMaxPowerKW = row?.VehicleMaxPowerKW;
+                var index=0;
+                row.VehicleOwners.forEach(element => {
+                    var vehicleOwner = new VehicleOwnerPM(this.EntityPM);
+                    vehicleOwner.VehicleId = this.EntityPM.Id;
+                    vehicleOwner.Tenant = element?.Tenant,
+                    vehicleOwner.ClientId = element.ClientId,
+                    vehicleOwner.LastNameOrCorporationName = element?.LastNameOrCorporationName,
+                    vehicleOwner.FirstName = element?.FirstName,
+                    vehicleOwner.IsMain = element?.IsMain,
+                    vehicleOwner.PassportNumber = element.PassportNumber,
+                    vehicleOwner.PassCountryCode = element.PassCountryCode,
+                    vehicleOwner.PassCountryName = element.PassCountryName,
+                    vehicleOwner.ImporterPassportTypeCode = element.ImporterPassportTypeCode
+                    vehicleOwner.ImporterPassportTypeName = element.ImporterPassportTypeName
+                    this.EntityPM.VehicleOwners[index]=vehicleOwner;index++;
+                });
+                row.VehicleSafetyAccessories.forEach(element => {
+                    index=0;
+                    var VehicleSafetyAccessory = new VehicleSafetyAccessoryPM(this.EntityPM);
+                    VehicleSafetyAccessory.VehicleId = this.EntityPM.Id;
+                    VehicleSafetyAccessory.Tenant = element?.Tenant,
+                    VehicleSafetyAccessory.LineNumber = element.LineNumber,
+                    VehicleSafetyAccessory.VehicleSafetyAccessoryCode = element?.VehicleSafetyAccessoryCode,
+                    VehicleSafetyAccessory.VehicleSafetyAccessoryName = element?.VehicleSafetyAccessoryName,
+                    VehicleSafetyAccessory.VehicleSafAccessoryInstlTypCod = element?.VehicleSafAccessoryInstlTypCod,
+                    VehicleSafetyAccessory.VehicleSafAccessoryInstlTypName = element?.VehicleSafAccessoryInstlTypName
+
+                   
+                    this.EntityPM.VehicleSafetyAccessories[index]=VehicleSafetyAccessory;index++;
+                });
 
 
-//StatusCode,ConcurrencyGUID,TaxiMedalOwner
+
+            }
+
+            this.CurrentSession.StopBusyIndicator();
+
+        });
+
+
+
+
+        //StatusCode,ConcurrencyGUID,TaxiMedalOwner
 
     }
 }

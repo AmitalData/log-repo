@@ -286,7 +286,7 @@
                                            [ObjectTableName]="ObjectTableName"
                                            [InputType]="'date'" [DataContext]="DataContext"
                                            [HideColumns]="true"
-                                           [SelectedDateValue]="DateOnRoadAbroad"></LogDatePicker>
+                                           [SelectedDateValue]="DateOnRoadAbroad" [RefreshMe]="refresh"></LogDatePicker>
 
                         </td>
 
@@ -301,6 +301,7 @@
                         <td style="width: 150px;padding-right:5px;">
                             <LogLabel [ObjectFieldName]="'IsraelEnterDate'" [ObjectTableName]="'Customs.Vehicle'"
                                       [DataContext]="DataContext"></LogLabel>
+                                   
                         </td>
                         <td style="width: 200px;">
 
@@ -308,7 +309,7 @@
                                            [ObjectTableName]="ObjectTableName"
                                            [InputType]="'date'" [DataContext]="DataContext"
                                            [HideColumns]="true"
-                                           [SelectedDateValue]="IsraelEnterDate"></LogDatePicker>
+                                           [SelectedDateValue]="IsraelEnterDate" [RefreshMe]="refresh"></LogDatePicker>
 
 
                         </td>
@@ -325,7 +326,7 @@
                                            [ObjectTableName]="ObjectTableName"
                                            [InputType]="'date'" [DataContext]="DataContext"
                                            [HideColumns]="true"
-                                           [SelectedDateValue]="TransmissionDateWithoutTax"></LogDatePicker>
+                                           [SelectedDateValue]="TransmissionDateWithoutTax" [RefreshMe]="refresh"></LogDatePicker>
 
                         </td>
 
