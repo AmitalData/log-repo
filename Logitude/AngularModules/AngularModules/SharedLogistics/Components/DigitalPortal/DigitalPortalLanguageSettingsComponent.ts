@@ -194,7 +194,7 @@ export class DigitalPortalLanguageSettingsComponent implements OnInit {
         if(!file || !allowedFileTypes.includes(file.type.toLowerCase())){
             this.IsUploadButtonEnabled = true;
             this.IsFileImportedSuccessfully = false;
-            this.UploadedTranslationFileMSG = 'only Excel files allowed!'
+            this.UploadedTranslationFileMSG = 'Only excel files allowed!'
             return;
         }
 
