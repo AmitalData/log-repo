@@ -507,7 +507,9 @@ export class NewImportDeploymentPackageComponent extends BaseComponent {
         this.HasErrorsWhileImporting = true;
         this.IsNextClicked = false;
 
-        this.deploymentValidationMessage = this.deploymentValidationMessage.substring(0, this.deploymentValidationMessage.lastIndexOf('-'));
+        if (this.deploymentValidationMessage.lastIndexOf('-') > 0) {
+            this.deploymentValidationMessage = this.deploymentValidationMessage.substring(0, this.deploymentValidationMessage.lastIndexOf('-'));
+        }
         
         this.exceptionsList = this.deploymentValidationMessage.split('-');
         this.ExceptionsCollection = new ObservableCollection(this.exceptionsList);
