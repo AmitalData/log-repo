@@ -161,12 +161,20 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 if (entityPM.IsExternalReconcile)
                 {
                     Int32.TryParse(bankAccount.TotalOpenExternalTransactions, out totalOpenExternalTransactions);
-                    bankAccount.TotalOpenExternalTransactions = totalOpenExternalTransactions--.ToString();
+                    if(totalOpenExternalTransactions > 0)
+                    {
+                        totalOpenExternalTransactions--;
+                    }
+                    bankAccount.TotalOpenExternalTransactions = totalOpenExternalTransactions.ToString();
                 }
                 else
                 {
                     Int32.TryParse(bankAccount.TotalOpenExternalTransactions, out totalOpenExternalTransactions);
-                    bankAccount.TotalOpenExternalTransactions = totalOpenExternalTransactions++.ToString();
+                    if (totalOpenExternalTransactions > 0)
+                    {
+                        totalOpenExternalTransactions++;
+                    }
+                    bankAccount.TotalOpenExternalTransactions = totalOpenExternalTransactions.ToString();
                 }
                 bankAccount.ChangeSetOp = ChangeSetOperation.Update;
                 service.Update(bankAccount, true);
