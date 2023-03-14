@@ -262,16 +262,6 @@ namespace Logitude.Customs.BL.CloseTables
             },
             new InterfaceDetails() // fake
             {
-                Code = InterfaceName_ECSWSTHR_REQUEST,
-                Name = "ש.מ.ב לסוויספורט",
-                TypeCode = TypeCode_Out,
-                Partner = PartnerCode_ILSWS,
-                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-                Subject="ש.מ.ב  לסוויספורט",
-                ResponseCode = InterfaceName_ECSWSTHR_RESPONE,
-            },
-              new InterfaceDetails() // real
-            {
                 Code = InterfaceName_ECSWSTHR_RESPONE,
                 Name = "ש.מ.ב  מסוויספורט",
                 TypeCode = TypeCode_In,
@@ -280,6 +270,18 @@ namespace Logitude.Customs.BL.CloseTables
                 AnalyzeQueueService= AnalyzeQueueServiceEnum.SwissPortQHAWBService,
                 Subject="ש.מ.ב  מסוויספורט",
                 ServerInternalDef= true,
+
+            },
+              new InterfaceDetails() // real
+            {
+                Code = InterfaceName_ECSWSTHR_IN,
+                Name = "ש.מ.ב מסוויספורט",
+                TypeCode = TypeCode_In,
+                Partner = PartnerCode_ILSWS,
+                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
+                AnalyzeQueueService= AnalyzeQueueServiceEnum.SwissPortQHAWBService,
+                Subject="ש.מ.ב מסוויספורט",
+
             },
              new InterfaceDetails()
             {
