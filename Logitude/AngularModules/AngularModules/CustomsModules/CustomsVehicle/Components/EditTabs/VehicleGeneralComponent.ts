@@ -1,7 +1,7 @@
 declare var window: any;
 import { Component, AfterViewInit, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
-import { EntityArgs } from  '../../../../Infrastructure/DataContracts/EntityArgs';
-import { LogTab } from      '../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
+import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
+import { LogTab } from '../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
 import { AppTool, ArrayTool } from '../../../../Infrastructure/Tools';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -21,10 +21,10 @@ import { INF_MSG_GenericResponseData } from '../../../../Customs/DataContract/Re
 
 import { CustomMessageProgressComponent } from '../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 //import { VehicleMessagesService } from '../../../Services/WebServices/VehicleMessagesService';
-import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    
+
     templateUrl: './VehicleGeneralComponent.html',
 })
 
@@ -36,6 +36,8 @@ export class VehicleGeneralComponent extends BaseComponent {
     public IsNewEntity: boolean = false;
     public ValidationErrorsList: any[];
     public SubCountryCodeEnabled: boolean = false;
+    public isLoad = true;
+    public refresh = false;
     IsDelete: boolean = false;
     public CurrentEditComponentId: string;
     ResponseData: INF_MSG_GenericResponseData;
@@ -45,8 +47,9 @@ export class VehicleGeneralComponent extends BaseComponent {
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
         super();
         
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Vehicle").subscribe((response:any) => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Vehicle").subscribe((response: any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
+                
                 this.EntityPM = this.entityArgs.EntityPM;
                 this.ObjectTableName = this.entityArgs.ObjectTableName;
                 this.Listen();
@@ -94,13 +97,20 @@ export class VehicleGeneralComponent extends BaseComponent {
             );
         }
     }
-
+    public RefreshScreen(args: any) {
+       
+        this.refresh=true
+      
+        
+        
+    }
     //public SetTabArgs(args: any, ValidationErrorsList: any[]) {
     public SetTabArgs(args: any) {
         
+        
         this.EntityPM = args.EntityPM;
         this.IsNewEntity = args.IsNewEntity;
-      
+       
         console.log("EntityPM", this.EntityPM);
 
 
@@ -116,7 +126,7 @@ export class VehicleGeneralComponent extends BaseComponent {
     }
 
     SetFieldsEditability() {
-        
+
         this.SetImporterIdentityIdFieldsEditability();
 
         this.SetImporterPassportNumberFieldsEditability();
@@ -124,8 +134,8 @@ export class VehicleGeneralComponent extends BaseComponent {
     }
 
     SetImporterIdentityIdFieldsEditability() {
-        
-        if (!AppTool.IsNullOrEmpty(this.ImporterIdentityId)){
+
+        if (!AppTool.IsNullOrEmpty(this.ImporterIdentityId)) {
 
             this.ImporterPassportNumber = null;
             this.ImporterPassCountryCode = null;
@@ -135,11 +145,11 @@ export class VehicleGeneralComponent extends BaseComponent {
             this.UIProperties.SetEnabled("ImporterPassCountryCode", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("ImporterPassportTypeCode", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("PassportName", this.ObjectTableName, false);
-            
+
             this.UIProperties.SetEnabled("ImporterIdentityId", this.ObjectTableName, true);
-            
+
         }
-        else{
+        else {
             this.UIProperties.SetEnabled("ImporterPassportNumber", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("ImporterPassCountryCode", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("ImporterPassportTypeCode", this.ObjectTableName, true);
@@ -148,7 +158,7 @@ export class VehicleGeneralComponent extends BaseComponent {
     }
 
     SetImporterPassportNumberFieldsEditability() {
-        if (!AppTool.IsNullOrEmpty(this.ImporterPassportNumber)){
+        if (!AppTool.IsNullOrEmpty(this.ImporterPassportNumber)) {
             this.EntityPM.ImporterIdentityId = null;
             this.ImporterIdentityId = null;
             this.UIProperties.SetEnabled("ImporterIdentityId", this.ObjectTableName, false);
@@ -157,16 +167,16 @@ export class VehicleGeneralComponent extends BaseComponent {
             this.UIProperties.SetEnabled("ImporterPassCountryCode", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("ImporterPassportTypeCode", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("PassportName", this.ObjectTableName, true);
-            
+
         }
-        else{
+        else {
             this.UIProperties.SetEnabled("ImporterIdentityId", this.ObjectTableName, true);
         }
 
     }
 
 
-                                    
+
     //#endregion
 
 
@@ -175,7 +185,7 @@ export class VehicleGeneralComponent extends BaseComponent {
     private checkForChassisNumberOp_Completed(exists: boolean) {
 
         if (exists) {
-            this.UIProperties.SetValidity("InternalCode", "Customs.CustomBank",  false, TextCodeTranslator.Translate("Customs.CustomBank.O.InternalCodekAlreadyExist"));
+            this.UIProperties.SetValidity("InternalCode", "Customs.CustomBank", false, TextCodeTranslator.Translate("Customs.CustomBank.O.InternalCodekAlreadyExist"));
             this.InvalidChassisNumber = true;
         }
         else {
@@ -187,67 +197,67 @@ export class VehicleGeneralComponent extends BaseComponent {
 
 
 
-    public  SendButtonsVisibility: boolean = false;
-    
+    public SendButtonsVisibility: boolean = false;
 
-    public get VehicleChassisNumber(): string { return this.EntityPM != null ?this.EntityPM.VehicleChassisNumber : null; }
+
+    public get VehicleChassisNumber(): string { return this.EntityPM != null ? this.EntityPM.VehicleChassisNumber : null; }
     public set VehicleChassisNumber(value: string) {
         if (this.EntityPM.VehicleChassisNumber != value) {
             this.EntityPM.VehicleChassisNumber = value;
 
         }
     }
-     
 
-    get InvalidChassisNumber(){ return this.EntityPM != null ?this.EntityPM.InvalidChassisNumber : false; }
-    set InvalidChassisNumber(value) { this.EntityPM.InvalidChassisNumber = value; }      
 
-    get VehiclePoolTypeCode() { return this.EntityPM != null ?this.EntityPM.VehiclePoolTypeCode : null; }
-    set VehiclePoolTypeCode(value: string){this.EntityPM.VehiclePoolTypeCode = value; }
-        
-    get ModelCode(){ return this.EntityPM != null ?this.EntityPM.ModelCode : null; }
-    set ModelCode(value:string){this.EntityPM.ModelCode = value;  }
-        
-    get ModelDescription() :string { return this.EntityPM != null ?this.EntityPM.ModelDescription : null; }
-    set ModelDescription(value:string){this.EntityPM.ModelDescription = value; }
-        
+    get InvalidChassisNumber() { return this.EntityPM != null ? this.EntityPM.InvalidChassisNumber : false; }
+    set InvalidChassisNumber(value) { this.EntityPM.InvalidChassisNumber = value; }
+
+    get VehiclePoolTypeCode() { return this.EntityPM != null ? this.EntityPM.VehiclePoolTypeCode : null; }
+    set VehiclePoolTypeCode(value: string) { this.EntityPM.VehiclePoolTypeCode = value; }
+
+    get ModelCode() { return this.EntityPM != null ? this.EntityPM.ModelCode : null; }
+    set ModelCode(value: string) { this.EntityPM.ModelCode = value; }
+
+    get ModelDescription(): string { return this.EntityPM != null ? this.EntityPM.ModelDescription : null; }
+    set ModelDescription(value: string) { this.EntityPM.ModelDescription = value; }
+
     get NumberOfWheels() { return this.EntityPM != null ? this.EntityPM.NumberOfWheels : null; }
-    set NumberOfWheels(value: number) { this.EntityPM.NumberOfWheels = value;  }
-        
-    get RichbitFileNumber (){ return this.EntityPM != null ?this.EntityPM.RichbitFileNumber : null; }
-    set RichbitFileNumber(value: string){this.EntityPM.RichbitFileNumber = value;  }
+    set NumberOfWheels(value: number) { this.EntityPM.NumberOfWheels = value; }
 
-    get EngineCapacity(){ return this.EntityPM != null ?this.EntityPM.EngineCapacity : null; }
-    set EngineCapacity(value:number){this.EntityPM.EngineCapacity = value;  }
-    
-    get CommercialNickname(){ return this.EntityPM != null ?this.EntityPM.CommercialNickname : null; }
-    set CommercialNickname(value: string){this.EntityPM.CommercialNickname = value;  }
+    get RichbitFileNumber() { return this.EntityPM != null ? this.EntityPM.RichbitFileNumber : null; }
+    set RichbitFileNumber(value: string) { this.EntityPM.RichbitFileNumber = value; }
 
-    get VehicleManufacturerCode(){ return this.EntityPM != null ?this.EntityPM.VehicleManufacturerCode : null; }
-    set VehicleManufacturerCode(value: string){this.EntityPM.VehicleManufacturerCode = value; }
+    get EngineCapacity() { return this.EntityPM != null ? this.EntityPM.EngineCapacity : null; }
+    set EngineCapacity(value: number) { this.EntityPM.EngineCapacity = value; }
+
+    get CommercialNickname() { return this.EntityPM != null ? this.EntityPM.CommercialNickname : null; }
+    set CommercialNickname(value: string) { this.EntityPM.CommercialNickname = value; }
+
+    get VehicleManufacturerCode() { return this.EntityPM != null ? this.EntityPM.VehicleManufacturerCode : null; }
+    set VehicleManufacturerCode(value: string) { this.EntityPM.VehicleManufacturerCode = value; }
 
     get VehicleManufactureDate() { return this.EntityPM != null ? this.EntityPM.VehicleManufactureDate : null; }
     set VehicleManufactureDate(value: Date) { this.EntityPM.VehicleManufactureDate = value; }
-    
-    get FuelTypeCode(){ return this.EntityPM != null ?this.EntityPM.FuelTypeCode : null; }
-    set FuelTypeCode(value: string){this.EntityPM.FuelTypeCode = value; }
- 
-    get ManufactureCountryCode(){ return this.EntityPM != null ?this.EntityPM.ManufactureCountryCode : null; }
-    set ManufactureCountryCode(value: string){this.EntityPM.ManufactureCountryCode = value; }
-     
-    get TotalVehicleWeight(){ return this.EntityPM != null ? this.EntityPM.TotalVehicleWeight : null; }
-    set TotalVehicleWeight(value: number){this.EntityPM.TotalVehicleWeight = value; }
 
-    get VehicleWindowNumber(){ return this.EntityPM != null ?this.EntityPM.VehicleWindowNumber : null; }
-    set VehicleWindowNumber(value: string){this.EntityPM.VehicleWindowNumber = value; }
+    get FuelTypeCode() { return this.EntityPM != null ? this.EntityPM.FuelTypeCode : null; }
+    set FuelTypeCode(value: string) { this.EntityPM.FuelTypeCode = value; }
 
-    get VehicleTypeCode(){   return this.EntityPM != null ?this.EntityPM.VehicleTypeCode : null; }
-    set VehicleTypeCode(value: string){
-        this.EntityPM.VehicleTypeCode = value;  }
+    get ManufactureCountryCode() { return this.EntityPM != null ? this.EntityPM.ManufactureCountryCode : null; }
+    set ManufactureCountryCode(value: string) { this.EntityPM.ManufactureCountryCode = value; }
+
+    get TotalVehicleWeight() { return this.EntityPM != null ? this.EntityPM.TotalVehicleWeight : null; }
+    set TotalVehicleWeight(value: number) { this.EntityPM.TotalVehicleWeight = value; }
+
+    get VehicleWindowNumber() { return this.EntityPM != null ? this.EntityPM.VehicleWindowNumber : null; }
+    set VehicleWindowNumber(value: string) { this.EntityPM.VehicleWindowNumber = value; }
+
+    get VehicleTypeCode() { return this.EntityPM != null ? this.EntityPM.VehicleTypeCode : null; }
+    set VehicleTypeCode(value: string) {
+        this.EntityPM.VehicleTypeCode = value;
+    }
 
     get ImporterPassportNumber() { return this.EntityPM != null ? this.EntityPM.ImporterPassportNumber : null; }
-    set ImporterPassportNumber(value: string)
-    {
+    set ImporterPassportNumber(value: string) {
         this.EntityPM.ImporterPassportNumber = value;
         this.SetImporterPassportNumberFieldsEditability();
     }
@@ -257,26 +267,24 @@ export class VehicleGeneralComponent extends BaseComponent {
 
     get ImporterPassportTypeCode() { return this.EntityPM != null ? this.EntityPM.ImporterPassportTypeCode : null; }
     set ImporterPassportTypeCode(value: string) { this.EntityPM.ImporterPassportTypeCode = value; }
-        
-    get ImporterIdentityId()
-    {
+
+    get ImporterIdentityId() {
         if (this.EntityPM == null) return null;
         return this.EntityPM.ImporterIdentityId;
     }
-    set ImporterIdentityId(value:string)
-    {
+    set ImporterIdentityId(value: string) {
         this.EntityPM.ImporterIdentityId = value;
-        this.SetImporterIdentityIdFieldsEditability(); 
+        this.SetImporterIdentityIdFieldsEditability();
     }
 
     get PassportName() { return this.EntityPM != null ? this.EntityPM.PassportName : null; }
     set PassportName(value: string) { this.EntityPM.PassportName = value; }
 
 
-//#endregion
+    //#endregion
 
     line = 0;
-   
+
     //#region Send + Delete
     SendButtonClicked() {
         var errors = [];
@@ -304,7 +312,7 @@ export class VehicleGeneralComponent extends BaseComponent {
 
     }
 
-    
+
     OnSendCompleted() {
         if (this.IsDelete) {
             this.ApplyDeleteVehicle();
@@ -324,7 +332,7 @@ export class VehicleGeneralComponent extends BaseComponent {
     OnVehicleChassisNumberLostFocus(vehicleChassisNumberTextBox: any) {
 
         if (!AppTool.IsNullOrEmpty(this.VehicleChassisNumber)) {
-            this._VehicleExtendedPMService.CheckIfVehicleExistByChassisNumber(this.VehicleChassisNumber).subscribe((response:any) => {
+            this._VehicleExtendedPMService.CheckIfVehicleExistByChassisNumber(this.VehicleChassisNumber).subscribe((response: any) => {
                 if (response != null) {
                     if (!AppTool.IsNullOrEmpty(response.Result)) {
                         if (this.EntityPM.Id != response.Result) {
@@ -344,7 +352,7 @@ export class VehicleGeneralComponent extends BaseComponent {
     }
 
 
-    OnCheckIfVehicleExistWindowClosed(arg: any, vehicleChassisNumberTextBox : any) {
+    OnCheckIfVehicleExistWindowClosed(arg: any, vehicleChassisNumberTextBox: any) {
         if (!AppTool.IsNullOrEmpty(vehicleChassisNumberTextBox)) {
             SessionLocator.SustainFocusOnCell = true;
             console.log(vehicleChassisNumberTextBox.InputId);

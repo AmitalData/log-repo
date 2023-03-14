@@ -113,6 +113,8 @@ export class VehicleEditComponent extends BaseComponent {
 
 
                     case "General": {
+             
+                       
                         if (this.GENERAL == null) {
                             SessionLocator.DynamicLoader.Load(
                                 './CustomsModules/CustomsVehicle/Components/EditTabs/VehicleGeneralComponent',
@@ -124,6 +126,9 @@ export class VehicleEditComponent extends BaseComponent {
                                         this.ValidationErrorsList = response;
                                     });
                                 });
+                        }
+                        else{
+                            this.GENERAL.RefreshScreen({ EntityPM: this.EntityPM, IsNewEntity: this.IsNewEntity })
                         }
                      break;
                     }
@@ -139,6 +144,9 @@ export class VehicleEditComponent extends BaseComponent {
                                         this.ValidationErrorsList = response;
                                     });
                                 });
+                        }
+                        else{
+                            this.MORE.RefreshScreen({ EntityPM: this.EntityPM, IsNewEntity: this.IsNewEntity })
                         }
                         break;
                     }

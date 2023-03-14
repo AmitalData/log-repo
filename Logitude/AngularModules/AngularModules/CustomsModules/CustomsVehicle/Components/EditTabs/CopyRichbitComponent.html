@@ -56,16 +56,14 @@
                                                 </td>
                                                 <td style="width: 60px;"><div></div></td>
                                                 <!-- VehicleChassisNumber -->
-                                                <td style="width: 100px;padding-right:1px;">
-                                                    <LogLabel [ObjectFieldName]="'VehicleChassisNumber'"
-                                                        [ObjectTableName]="'Customs.Vehicle'"
-                                                        [DataContext]="DataContext"></LogLabel>
+                                                <td style="width: 100px;padding-right:1px; color:#6E7172">
+                                                   <span >{{VehicleChassisNumberText}}</span>
                                                 </td>
                                                 <td style="width: 150px;">
-                                                    <LogTextBox [ObjectFieldName]="'VehicleChassisNumber'"
+                                                    <LogTextBox [ObjectFieldName]="'VehicleChassisNumber2'"
                                                         [ObjectTableName]="'Customs.Vehicle'"
                                                         [DataContext]="DataContext" [HideColumns]="true"
-                                                        [Text]="VehicleChassisNumber"></LogTextBox>
+                                                        [Text]="VehicleChassisNumber2"></LogTextBox>
                                                 </td>
 
 
