@@ -2269,6 +2269,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         args.ForceShowLocalAndEnglishColumns = this.ForceShowLocalAndEnglishColumns;
         args.EntityPM = this.DataContext;
         args.ObjectFieldCode = this.ObjectFieldCode;
+        args.SearchFieldName = this.LookUpTableName == "DocumentTypeTemplate"?"Description" : null;
         var tablename = TextCodeTranslator.TranslateTablePlural(this.GetObjectTableName(this.LookUpTableName));
 
         if (tablename == "Cards") {
