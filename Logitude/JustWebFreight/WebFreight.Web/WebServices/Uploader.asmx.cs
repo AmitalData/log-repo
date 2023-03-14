@@ -397,7 +397,7 @@ namespace WebFreight.Web.WebServices
                 fileNameAndExtension = fileName + "." + extension;
                 //if (sentBytes < fileSize)
                 //{
-                MemoryStream memorystream = new MemoryStream(buffer);
+                //MemoryStream memorystream = new MemoryStream(buffer);
                 //tempcloudBlockBlob.PutBlock(blockIdsList[bufferNumber], memorystream, null);
                 BlobFileInfo fileInfo = new BlobFileInfo()
                 {
@@ -1599,11 +1599,14 @@ new XElement("Error", ee.ToString()
 
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
 
-            response.Content = new StreamContent(new MemoryStream(data));
-            response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-            response.Content.Headers.ContentDisposition.FileName = fileName;
-            return response;
+            using (MemoryStream dataMemoryStream = new MemoryStream(data))
+            {
+                response.Content = new StreamContent(dataMemoryStream);
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+                response.Content.Headers.ContentDisposition.FileName = fileName;
+                return response;
+            }
 
 
         }
