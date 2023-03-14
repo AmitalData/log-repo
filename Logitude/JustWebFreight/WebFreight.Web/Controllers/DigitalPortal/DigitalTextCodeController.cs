@@ -22,6 +22,25 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     public class DigitalTextCodeController : ApiController
     {
         [HttpGet]
+        [Route("DigitalTextCode/ExportDigtialTextCode")]
+        public HttpResponseMessage ExportDigtialTextCode(string langCode = "")
+        {
+            int tenant = 0;
+            string email = "";
+            try
+            {
+                var screenQueryService = new DigitalPortalLangaugeQueryService();
+                var digitalPortalLanguages = screenQueryService.GetDigitalPortalLanguagesQuery(langCode);
+                return Request.CreateResponse(HttpStatusCode.OK, digitalPortalLanguages);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        [HttpGet]
         [Route("DigitalTextCode/GetDigitalProfileName")]
         public HttpResponseMessage GetDigitalProfileName(int tenant = 0)
         {
@@ -200,7 +219,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("DigitalTextCode/GetTextCodesByFilters")]
-        public HttpResponseMessage GetTextCodesByFilters(string cardId, string objectTableId, string profileCode)
+        public HttpResponseMessage GetTextCodesByFilters(string cardId, string objectTableId, string profileCode, string languageCode)
         {
             int tenant = 0;
             string email = "";
@@ -210,7 +229,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 tenant = authToken.Tenant;
                 email = authToken.Email;
                 var helper = new DigitalFieldSecuritesHelper();
-                var response = helper.GetDigitalTextCodeObjects(tenant, objectTableId, profileCode, false);
+                var response = helper.GetDigitalTextCodeObjects(tenant, objectTableId, profileCode, false, languageCode);
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
             catch (AutenticationException ex)
@@ -226,12 +245,12 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("DigitalTextCode/GetTranslationCodes")]
-        public HttpResponseMessage GetTranslationCodes(int tenant, string objectTableId, string profileCode)
+        public HttpResponseMessage GetTranslationCodes(int tenant, string objectTableId, string profileCode, string languageCode)
         {
             try
             {
                 var helper = new DigitalFieldSecuritesHelper();
-                var response = helper.GetDigitalTextCodeObjects(tenant, objectTableId, profileCode, true);
+                var response = helper.GetDigitalTextCodeObjects(tenant, objectTableId, profileCode, true, languageCode);
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
             catch (AutenticationException ex)
@@ -253,7 +272,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             string email = "";
             try
             {
-                DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
                 var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
                 tenant = authToken.Tenant;
                 email = authToken.Email;
@@ -261,8 +279,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, digitalTextCodeUpdateModel.CardId);
                 var textCodeQuery = new DigitalTextCodeQueryService(tenant);
-                var customTextCodes = textCodeQuery.GetDigitalTextCodesQuery(digitalTextCodeUpdateModel.Tenant, digitalTextCodeUpdateModel.ObjectTableId, digitalTextCodeUpdateModel.ProfileCode);
-
+                var customTextCodes = textCodeQuery.GetDigitalTextCodesQuery(digitalTextCodeUpdateModel.Tenant,
+                                                                             digitalTextCodeUpdateModel.ObjectTableId,
+                                                                             digitalTextCodeUpdateModel.ProfileCode,
+                                                                             digitalTextCodeUpdateModel.LangaugeCode);
+                DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
                 if (customTextCodes != null)
                 {
                     var customCodesMappedObject = JsonConvert.DeserializeObject<List<DigitalTextCodeUpdateObject>>(customTextCodes.Labels);

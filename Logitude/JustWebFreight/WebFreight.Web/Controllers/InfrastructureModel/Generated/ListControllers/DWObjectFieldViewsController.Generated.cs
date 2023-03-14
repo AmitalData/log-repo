@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				DWObjectFieldRepository  dWObjectFieldRepository = new DWObjectFieldRepository(MyContext);
 				DWObjectFieldList entityList = null;
 				DWObjectField entityPoco = dWObjectFieldRepository.GetSingleDWObjectField(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<DWObjectField> singleEntityList = new List<DWObjectField>();
 					singleEntityList.Add(entityPoco);

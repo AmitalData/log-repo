@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				DWObjectTableRepository  dWObjectTableRepository = new DWObjectTableRepository(MyContext);
 				DWObjectTableList entityList = null;
 				DWObjectTable entityPoco = dWObjectTableRepository.GetSingleDWObjectTable(code , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<DWObjectTable> singleEntityList = new List<DWObjectTable>();
 					singleEntityList.Add(entityPoco);

@@ -195,6 +195,7 @@
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\Warehouse\WarehouseDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\Maintenance\UploadPartnersComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\NewEntity\NewAccountingPartnerComponent.html" />
+    <Content Include="CommonModules\CommonPartners\Components\Templates\PartnerARInvoiceDocumentTypeTemplateComponent.html" />
     <Content Include="Common\Components\AccountingTab\AccountingTab_Branch.html" />
     <Content Include="Common\Components\AccountingTab\AccountingTab_ChargesType.html" />
     <Content Include="Common\Components\AccountingTab\AccountingTab_Currency.html" />
@@ -322,6 +323,7 @@
     <Content Include="DashboardModule\Components\Workspace\Layout\CustomDashboardComponent.html" />
     <Content Include="DashboardModule\Components\Workspace\Layout\DashboardTabComponent.html" />
     <Content Include="Images\Arrow-down-s.png" />
+    <Content Include="Images\Icons\downloaduparrow.png" />
     <Content Include="Images\Buttons\minus.over.png" />
     <Content Include="Images\Buttons\minus.png" />
     <Content Include="Images\Charts\BarChart.png" />
@@ -426,6 +428,7 @@
     <Content Include="SharedLogistics\Components\DigitalPortal\DigitalCheckBoxComponent.html" />
     <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationChageLabelsComponent.html" />
     <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationMainComponent.html" />
+    <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalLanguageSettingsComponent.html" />
     <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationScreenLayoutComponent.html" />
     <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationShowHideFieldsComponent.html" />
     <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationSubObjectsComponent.html" />
@@ -433,6 +436,7 @@
     <Content Include="SharedLogistics\Components\SharedLogisticsDigitalPortalComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityPackageComponent.html" />
+    <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\TestMultiHarmonizeComponent.html" />
     <Content Include="ShipmentModules\ShipmentContainers\Components\EditTabs\Audit\ContainerAuditTabComponent.html" />
     <Content Include="ShipmentModules\ShipmentContainers\Components\EditTabs\GeneralTabComponent.html" />
     <Content Include="ShipmentModules\ShipmentContainers\Components\EditTabs\RoutingsTabComponent.html" />
@@ -536,6 +540,7 @@
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ServiceLinesTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ShippingAgent\ShippingAgentGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ShippingLine\ShippinglineGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonPartners\Components\Templates\PartnerARInvoiceDocumentTypeTemplateComponent.ts" />
     <TypeScriptCompile Include="Common\Components\TariffsTab\TariffsTabComponent.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
@@ -2089,7 +2094,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\NewEntity\AddNewDeploymentPackageComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\NewEntity\NewExportDeploymentPackageComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\NewEntity\NewImportDeploymentPackageComponent.ts" />
-    <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\ExternalService\DeploymentPackagePermissionService.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\ExternalService\MetadataService.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\ModuleIInfrastructureDeploymentPackage.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocumentDefultAttachmentsComponent.ts" />
@@ -4979,6 +4984,7 @@
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalCheckBoxComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationChageLabelsComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationMainComponent.ts" />
+    <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalLanguageSettingsComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationScreenLayoutComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationShowHideFieldsComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationSubObjectsComponent.ts" />
@@ -5001,6 +5007,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\ModuleShipmentAMANAC.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityPackageComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\TestMultiHarmonizeComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentContainers\Components\EditTabs\Audit\ContainerAuditTabComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentContainers\Components\EditTabs\GeneralTabComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentContainers\Components\EditTabs\RoutingsTabComponent.ts" />

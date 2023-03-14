@@ -470,6 +470,7 @@
     <Compile Include="CommonDataModel\EntityQueries\RegimenFiscalQuery.cs" />
     <Compile Include="CommonDataModel\ExternalService\CommunicationLogExtendedService.cs" />
     <Compile Include="CommonDataModel\ExternalService\CopyDocumentTypeTemplateService.cs" />
+    <Compile Include="CommonDataModel\ExternalService\PartnerARinvoiceDocumentTypeService.cs" />
     <Compile Include="CommonDataModel\ExternalService\SystemReportsTemplatesService.cs" />
     <Compile Include="CommonDataModel\ExternalService\CustomerDataSearchService.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CustomsShipperCustomFilter.cs" />
@@ -700,6 +701,9 @@
     <Compile Include="InfrastructureModel\Services\DeploymentPackage\Dependiencies\DeploymentPackageDependienciesService.cs" />
     <Compile Include="InfrastructureModel\Services\DeploymentPackage\Dependiencies\ObjectFields\DeploymentPackageObjectFieldDependienciesService.cs" />
     <Compile Include="InfrastructureModel\Services\DeploymentPackage\Dependiencies\IDeploymentPackageDependiency.cs" />
+    <Compile Include="InfrastructureModel\Services\DeploymentPackage\ImportingValidator\DeploymentPackageCustomFieldsValidatingService.cs" />
+    <Compile Include="InfrastructureModel\Services\DeploymentPackage\ImportingValidator\DeploymentPackageImporterValidatingService.cs" />
+    <Compile Include="InfrastructureModel\Services\DeploymentPackage\ImportingValidator\IDeploymentPackageImporterValidatingService.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\CustomChildObjectMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\CustomFieldsMainObjectMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DeploymentPackagesVersionMapping.cs" />

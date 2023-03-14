@@ -3,6 +3,7 @@ import { ObservableCollection } from '../../../Infrastructure/Utilities/Observab
 import { DigitalTextService } from '../../../Infrastructure/Services/WebServices/DigitalTextService'
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { DigitalPortalCustomizationMainComponent } from './DigitalPortalCustomizationMainComponent';
 
 @Component({
     templateUrl: './DigitalPortalCustomizationSubObjectsComponent.html',
@@ -13,9 +14,9 @@ export class DigitalPortalCustomizationSubObjectsComponent {
     public ProfileId: string;
     public ObjectTableId: string;
     public ItemsSource: ObservableCollection;
+    public customizationEditComponent: DigitalPortalCustomizationMainComponent;
     private digitalTextService: DigitalTextService;
     private CurrentSession = SessionLocator.SelectedSession;
-
     constructor() {
         this.ItemsSource = new ObservableCollection([]);
         this.digitalTextService = new DigitalTextService();
@@ -43,6 +44,7 @@ export class DigitalPortalCustomizationSubObjectsComponent {
         windowArgs.ProfileId = this.ProfileId;
         windowArgs.ProfileCode = this.ProfileCode;
         windowArgs.ParentObjectTableId = this.ObjectTableId;
+        windowArgs.customizationEditComponent = this.customizationEditComponent ? this.customizationEditComponent : null;
         var logWindow = new LogitudeWindow();
         logWindow.Title = (subObjectsItem.objectTableName + "Manager").replace(/([a-z])([A-Z])/g, '$1 $2');
         logWindow.IsFullScreen = true;

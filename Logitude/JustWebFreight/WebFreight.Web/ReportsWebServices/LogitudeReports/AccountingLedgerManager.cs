@@ -324,30 +324,23 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     }
                 }
 
-                if (openARinvoice.ARInvoiceTypeCode == "CD")
-                {
-                    accountingLedgerRecord.ReferenceType = "Credit Note";
-                }
+                if (openARinvoice.ARInvoiceTypeCode == "CD")                
+                    accountingLedgerRecord.ReferenceType = "Credit Note";                
 
-                else if (openARinvoice.ARInvoiceTypeCode == "CC")
-                {
-                    accountingLedgerRecord.ReferenceType = "Customs Credit";
-                }
+                else if (openARinvoice.ARInvoiceTypeCode == "CC")                
+                    accountingLedgerRecord.ReferenceType = "Customs Credit";                
 
-                else if (openARinvoice.ARInvoiceTypeCode == "CI")
-                {
-                    accountingLedgerRecord.ReferenceType = "Customs Invoice";
-                }
+                else if (openARinvoice.ARInvoiceTypeCode == "CI")                
+                    accountingLedgerRecord.ReferenceType = "Customs Invoice";                
 
-                else
-                {
-                    accountingLedgerRecord.ReferenceType = "A\\R Invoice";
-                }
+                else                
+                    accountingLedgerRecord.ReferenceType = "A\\R Invoice";                
 
                 if (openARinvoice.ARInvoiceTypeCode == "IN" || openARinvoice.ARInvoiceTypeCode == "MN" || openARinvoice.ARInvoiceTypeCode == "CI")
                 {
                     if (openARinvoice.StatusCode == "AC")
                     {
+                        accountingLedgerRecord.IsAutoCredit = true;
                         accountingLedgerRecord.Credits = (double)Math.Abs((decimal)openARinvoice.AmountInInvoiceCurrency);
                         accountingLedgerRecord.CreditInLocalCurrency = (double)Math.Abs((decimal)openARinvoice.AmountInLocalCurrency);
                     }
@@ -362,6 +355,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 {
                     if (openARinvoice.StatusCode == "AC" && (creditedByARInvoiceTypeCode == "CD" || creditedByARInvoiceTypeCode == "CC"))
                     {
+                        accountingLedgerRecord.IsAutoCredit = true;
                         accountingLedgerRecord.Debit = openARinvoice.AmountInInvoiceCurrency;
                         accountingLedgerRecord.DebitInLocalCurrency = openARinvoice.AmountInLocalCurrency;
                     }
@@ -555,9 +549,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     {
                         switch (ledger.ReferenceType)
                         {
-                            case "A\\P Payment":
-                            case "A\\R Invoice":
-                            case "A\\P Credit Note":
+                            case "A\\P Payment":                            
+                            case "A\\P Credit Note":                            
                                 {
                                     Openbalance = Openbalance + ledger.Debit;
                                     Openbalance_local = Openbalance_local + ledger.DebitInLocalCurrency;
@@ -568,7 +561,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
 
                             case "A\\R Payment":
-                            case "Credit Note":
                             case "A\\P Invoice":
                             case "External Payment":
                                 {
@@ -576,6 +568,49 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     Openbalance_local = Openbalance_local - ledger.CreditInLocalCurrency;
                                     ledger.AccountBanalnce = Openbalance;
                                     ledger.AccountBalanceInLocalCurrency = Openbalance_local;
+                                    break;
+                                }
+
+                            case "A\\R Invoice":
+                            case "Customs Invoice":
+                                {
+                                    if (ledger.IsAutoCredit)
+                                    {
+                                        Openbalance = Openbalance - ledger.Credits;
+                                        Openbalance_local = Openbalance_local - ledger.CreditInLocalCurrency;
+                                        ledger.AccountBanalnce = Openbalance;
+                                        ledger.AccountBalanceInLocalCurrency = Openbalance_local;
+                                    }
+
+                                    else
+                                    {
+                                        Openbalance = Openbalance + ledger.Debit;
+                                        Openbalance_local = Openbalance_local + ledger.DebitInLocalCurrency;
+                                        ledger.AccountBanalnce = Openbalance;
+                                        ledger.AccountBalanceInLocalCurrency = Openbalance_local;
+                                    }
+
+                                    break;
+                                }
+
+                            case "Credit Note":
+                            case "Customs Credit":
+                                {
+                                    if (ledger.IsAutoCredit)
+                                    {
+                                        Openbalance = Openbalance + ledger.Debit;
+                                        Openbalance_local = Openbalance_local + ledger.DebitInLocalCurrency;
+                                        ledger.AccountBanalnce = Openbalance;
+                                        ledger.AccountBalanceInLocalCurrency = Openbalance_local;
+                                    }
+
+                                    else
+                                    {
+                                        Openbalance = Openbalance - ledger.Credits;
+                                        Openbalance_local = Openbalance_local - ledger.CreditInLocalCurrency;
+                                        ledger.AccountBanalnce = Openbalance;
+                                        ledger.AccountBalanceInLocalCurrency = Openbalance_local;
+                                    }
                                     break;
                                 }
                         }

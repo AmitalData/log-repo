@@ -25,7 +25,6 @@ export class ShipmentsComponent {
     @Output() ReloadUserQueries = new EventEmitter();
     public IsCloudDeployment: boolean = false;
     private myShipmentDomainService: ShipmentDomainService;
-    public TestToggleIsVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsApproveUploadedDocumentsEnabled: boolean = false;
     constructor() {
@@ -36,11 +35,6 @@ export class ShipmentsComponent {
                     this.IsCloudDeployment = true;
                 }
             }
-        }
-
-        var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TST")[0];
-        if (FeatureToggle) {
-            this.TestToggleIsVisible = true;
         }
     }
 

@@ -14,8 +14,8 @@ export class CCSWebService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CCSWebService';
     }
 
-    Send(myShipmentId: string, myRecipient: string, isSendingCargonaut: boolean, isSendingDEXX: boolean) {
-        var url = this._apiUrl + '/GetMessageResult?myShipmentId=' + myShipmentId + '&myRecipient=' + myRecipient + '&isSendingCargonaut=' + isSendingCargonaut + '&isSendingDEXX=' + isSendingDEXX;
+    Send(myShipmentId: string, myRecipient: string, isSendingCargonaut: boolean, isSendingDEXX: boolean, isMultiHS: boolean) {
+        var url = this._apiUrl + '/GetMessageResult?myShipmentId=' + myShipmentId + '&myRecipient=' + myRecipient + '&isSendingCargonaut=' + isSendingCargonaut + '&isSendingDEXX=' + isSendingDEXX + '&isMultiHS=' + isMultiHS;
 
         return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {

@@ -748,6 +748,7 @@
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\PortGroupController.Generated.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalActivityController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalCustomizationController.cs" />
+    <Compile Include="Controllers\DigitalPortal\Helpers\UpdateLanguageRequest.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\ContainerSettingsController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\DeploymentPackageExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\RatesTablesController.cs" />
@@ -757,6 +758,7 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DeploymentPackageExecutionLogViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DeploymentPackageViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DigitalFieldSecurityViewsController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DigitalPortalLanguageViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DigitalPreDefinedComponentViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DigitalProfileViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\ScreenViewsController.Generated.cs" />
@@ -3152,9 +3154,6 @@
     <Compile Include="Helpers\WorkerRole\DeploymentPackages\Importer\CustomPickListsImporterService.cs" />
     <Compile Include="Helpers\WorkerRole\DeploymentPackages\Importer\DeploymentPackageImporter.cs" />
     <Compile Include="Helpers\WorkerRole\DeploymentPackages\Importer\IDeploymentPackageImporterService.cs" />
-    <Compile Include="Helpers\WorkerRole\DeploymentPackages\Validator\DeploymentPackageCustomFieldsValidatingService.cs" />
-    <Compile Include="Helpers\WorkerRole\DeploymentPackages\Validator\DeploymentPackageImporterValidatingService.cs" />
-    <Compile Include="Helpers\WorkerRole\DeploymentPackages\Validator\IDeploymentPackageImporterValidatingService.cs" />
     <Compile Include="Helpers\WorkerRole\DocsOut\ARInvoicePrintDetailsService.cs" />
     <Compile Include="Helpers\WorkerRole\MultiEntityUpdate\MultiEntityUpdateCloner.cs" />
     <Compile Include="Helpers\WorkerRole\MultiEntityUpdate\MultiEntityUpdateExecutionService.cs" />
@@ -3527,6 +3526,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DeficitDecisionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DeficitUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DigitalFieldSecurityUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DigitalPortalLanguageUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DigitalPortalScreenUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DigitalPreDefinedComponentUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DigitalProfileUpdateClass.cs" />

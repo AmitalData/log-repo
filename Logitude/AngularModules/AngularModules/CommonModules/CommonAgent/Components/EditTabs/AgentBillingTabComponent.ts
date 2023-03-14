@@ -22,6 +22,7 @@ export class AgentBillingTabComponent extends BaseComponent implements OnInit, O
     public Profact4Enabled: boolean = false;
 
     @ViewChild('BillingChild', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('ARInvoiceDocumentTypeTemplateArea', { read: ViewContainerRef, static: false }) documentTemplateViewContainerRef: ViewContainerRef;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -41,7 +42,7 @@ export class AgentBillingTabComponent extends BaseComponent implements OnInit, O
 
     ngOnInit() {
         this.SetUIProperties();
-        this.RunComponent();
+        this.LoadGeneratedComponents();
     }
 
     private SaveCompletedEvent: any = null;
@@ -67,20 +68,17 @@ export class AgentBillingTabComponent extends BaseComponent implements OnInit, O
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
 
-    RunComponent() {
-        if (this.viewContainerRef) {
-            this.LoadChildComponent();
-            this.Listen();
+    LoadGeneratedComponents() {
+        if (!this.viewContainerRef) {
+            this.RunComponentTimer("Child");
+            return;
         }
-
-        else {
-            this.RunComponentTimer();
-        }
+        this.LoadChildComponent(this.viewContainerRef);
     }
 
     private Retries: number = 0;
     private timerToken: any;
-    private RunComponentTimer() {
+    private RunComponentTimer(componentName: String) {
         this.Retries++;
 
         if (this.timerToken) {
@@ -88,14 +86,31 @@ export class AgentBillingTabComponent extends BaseComponent implements OnInit, O
         }
 
         if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+            this.timerToken = componentName == "ARInvoiceDocumentTypeTemplateComponent" ? setTimeout(() => this.LoadARInvoiceDocumentTypeTemplateComponent(), 1) : setTimeout(() => this.LoadGeneratedComponents(), 1);
         }
     }
-    private LoadChildComponent() {
+    private LoadChildComponent(viewContainerRef) {
         SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, "Agent.BillingTabScreen");
+                if (viewContainerRef == this.viewContainerRef) this.LoadARInvoiceDocumentTypeTemplateComponent();
             });
+    }
+
+    IsARInvoiceDocumentTypeTemplateAreaLoaded: boolean = false;
+    public LoadARInvoiceDocumentTypeTemplateComponent() {
+        if (this.IsARInvoiceDocumentTypeTemplateAreaLoaded) return;
+        this.Retries = 0;
+        if (!this.documentTemplateViewContainerRef) {
+            this.RunComponentTimer("ARInvoiceDocumentTypeTemplateComponent");
+            return;
+        }
+
+        SessionLocator.DynamicLoader.Load('./CommonModules/CommonPartners/Components/Templates/PartnerARInvoiceDocumentTypeTemplateComponent', this.documentTemplateViewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.Run(this.EntityPM);
+            });
+        this.IsARInvoiceDocumentTypeTemplateAreaLoaded = true;
     }
 
     SetUIProperties() {

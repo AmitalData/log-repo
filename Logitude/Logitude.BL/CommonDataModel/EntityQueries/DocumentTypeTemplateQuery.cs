@@ -230,7 +230,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                               InternalRemarks = entity.InternalRemarks,
                                                               Language = entity.Language,
                                                               OriginalTemplateId = entity.OriginalTemplateId,
-                                                              OriginalTemplateName = entity.OriginalTemplate.Description,
+                                                              OriginalTemplateName = entity.OriginalTemplate != null ? entity.OriginalTemplate.Description : null,
                                                               TemplateFooterHeight = entity.TemplateFooterHeight,
                                                               TemplateHeaderHeight = entity.TemplateHeaderHeight,
                                                               TemplateTechnologyCode = entity.TemplateTechnologyCode,
@@ -421,6 +421,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
             DocumentTypePM documentTypePM  = documentTypeQuery.GetSinglePMByCode(documentTypeCode, tenant);
+            if (documentTypePM == null) return null;
             List<DocumentTypeTemplateList> documentTypeTemplates = (from a in repository.context.DocumentTypeTemplates
                                                                   where a.DocumentTypeId == documentTypePM.Id && a.Tenant == tenant && a.InActive == false && a.TemplateType =="P"
                                                                   select new DocumentTypeTemplateList()
@@ -489,8 +490,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               EntityId = a.EntityId,
                                               DocumentTypeCode = a.DocumentType != null ? a.DocumentType.Code : "",
                                               DocumentTypeName = a.DocumentType != null ? a.DocumentType.Name : "",
-                                              
-                                              
+
+
 
                      }).FirstOrDefault();
         }
@@ -1062,7 +1063,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                       Description = a.Description,
                                                                       DocumentTypeId = a.DocumentTypeId,
                                                                       Id = a.Id,
-                                                                     OriginalTemplateId = a.OriginalTemplateId
+                                                                      OriginalTemplateId = a.OriginalTemplateId
                                                                   }).ToList();
             return documentTypeTemplates;
 

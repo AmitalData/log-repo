@@ -1,0 +1,26 @@
+﻿<Script DBType="Main" Module="Infrastructure">
+	<Sql Version="4">
+      <![CDATA[
+	  
+		  BEGIN
+		   IF NOT EXISTS (select * from DigitalPortalLanguages where [Code] = 'EN')
+		   BEGIN
+			   INSERT INTO DigitalPortalLanguages (Code, Name, SearchFields, DisplayText) 
+			   values ('EN', 'English', 'EN,English,English', 'English')
+		   END
+		END
+
+		BEGIN
+		   IF NOT EXISTS (select * from DigitalPortalLanguages where [Code] = 'ES')
+		   BEGIN
+			   INSERT INTO DigitalPortalLanguages (Code, Name, SearchFields, DisplayText) 
+			   values ('ES', 'Spanish', 'ES,Spanish,Espanol', 'Espanol')
+		   END
+		END
+				
+ 		declare @languageCode as varchar(3)
+		set @languageCode = (select Code from DigitalPortalLanguages where [Code] = 'EN')
+		Update DigitalTextCodes Set LanguageCode = @languageCode where Id != '';
+		]]>
+  </Sql>
+</Script>

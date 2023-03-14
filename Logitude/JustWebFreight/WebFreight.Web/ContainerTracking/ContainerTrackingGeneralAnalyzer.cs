@@ -203,7 +203,7 @@ namespace WebFreight.Web.ContainerTracking
 
             ContainerPM container = GetContainerPM(containerId, containerTrackingRequest.Tenant);
             ShipmentPM shipment = GetShipmentPM(containerTrackingRequest.ShipmentId, containerTrackingRequest.Tenant);
-            manager.allTrasshipmentLegs = new List<dynamic>();
+             manager.allShipmentTrasshipmentLegs = new List<dynamic>();
 
             if (IsValidToAnalyze(shipment, container, containerTrackingRequest))
             {
@@ -279,12 +279,14 @@ namespace WebFreight.Web.ContainerTracking
             var communicationLogRepository = new CommunicationLogRepository(comunicationLog.Tenant);
             communicationLogRepository.Update(comunicationLog);
             communicationLogRepository.SubmitChanges();
+
             string activity = "";
             if (wasAnalyzed)
             {
                 activity = "(A) Analyzed Responses";
                 AddTotangoActivity(comunicationLog.Tenant, activity);
             }
+
             activity = "(A) Received Responses";
             AddTotangoActivity(comunicationLog.Tenant, activity);
         }

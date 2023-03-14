@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				BusinessHourRepository  businessHourRepository = new BusinessHourRepository(MyContext);
 				BusinessHourList entityList = null;
 				BusinessHour entityPoco = businessHourRepository.GetSingleBusinessHour(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<BusinessHour> singleEntityList = new List<BusinessHour>();
 					singleEntityList.Add(entityPoco);

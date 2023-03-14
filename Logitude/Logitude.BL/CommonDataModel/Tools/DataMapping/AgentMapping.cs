@@ -61,6 +61,11 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.ImportLocalCustomerGroupId = entityPM.ImportLocalCustomerGroupId;
             entityCard.EORInumber = entityPM.EORInumber;
             
+            entityCard.SingleInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.SingleInvoiceTemplateId : null;
+            entityCard.CustomsInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.CustomsInvoiceTemplateId : null;
+            entityCard.ConsolidationInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.ConsolidationInvoiceTemplateId : null;
+            entityCard.ManifestInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.ManifestInvoiceTemplateId : null;
+
             entityPOCO.CASSCode = entityPM.CASSCode;
             entityPOCO.IATACode = entityPM.IATACode;
             entityPOCO.RegulatedAgentCode = entityPM.RegulatedAgentCode;

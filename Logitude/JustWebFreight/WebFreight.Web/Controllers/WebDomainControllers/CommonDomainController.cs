@@ -412,7 +412,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetCopyCurrencyToTenant(string CurrencyId, double CurrencyRate, DateTime RateDate)
+        public HttpResponseMessage GetCopyCurrencyToTenant(string CurrencyId, double CurrencyRate, DateTime RateDate,int Unit = 1)
         {
             try
             {
@@ -427,7 +427,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     SecurityUtility.CheckContactFeature("Currency", "READ", tenant);
 
                     CommonDataDomainService commonDomain = new CommonDataDomainService();
-                    CurrencyList myResult = commonDomain.CopyCurrencyToTenant(CurrencyId, tenant, CurrencyRate, RateDate);
+                    CurrencyList myResult = commonDomain.CopyCurrencyToTenant(CurrencyId, tenant, CurrencyRate, RateDate,Unit);
                     //CurrencyList myResult = new CurrencyList();
 
                     scope.Complete();

@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				EventTypeRepository  eventTypeRepository = new EventTypeRepository(MyContext);
 				EventTypeList entityList = null;
 				EventType entityPoco = eventTypeRepository.GetSingleEventType(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<EventType> singleEntityList = new List<EventType>();
 					singleEntityList.Add(entityPoco);

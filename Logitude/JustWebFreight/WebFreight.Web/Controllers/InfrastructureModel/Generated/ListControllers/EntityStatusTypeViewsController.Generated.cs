@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				EntityStatusTypeRepository  entityStatusTypeRepository = new EntityStatusTypeRepository(MyContext);
 				EntityStatusTypeList entityList = null;
 				EntityStatusType entityPoco = entityStatusTypeRepository.GetSingleEntityStatusType(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<EntityStatusType> singleEntityList = new List<EntityStatusType>();
 					singleEntityList.Add(entityPoco);
