@@ -11,7 +11,7 @@ namespace Logitude.BL.Helpers
 {
     public class DigitalFieldSecuritesHelper
     {
-        public List<DigitalTextCodeObject> GetDigitalTextCodeObjects(int tenant, string objectTableId, string profileCode, bool isTranslation, string langaugeCode)
+        public List<DigitalTextCodeObject> GetDigitalTextCodeObjects(int tenant, string objectTableId, string profileCode, bool isTranslation, string LanguageCode)
         {
             DigitalTextCodeRepository digitalTextCodeRepository = new DigitalTextCodeRepository(tenant);
 
@@ -20,7 +20,7 @@ namespace Logitude.BL.Helpers
                 profileCode = "CS";
             }
 
-            var defaultTextCode = digitalTextCodeRepository.GetDigitalTextCodes(0, objectTableId, profileCode, langaugeCode).FirstOrDefault();
+            var defaultTextCode = digitalTextCodeRepository.GetDigitalTextCodes(0, objectTableId, profileCode, LanguageCode).FirstOrDefault();
 
             if (defaultTextCode == null)
             {
@@ -33,7 +33,7 @@ namespace Logitude.BL.Helpers
 
             if (tenant != 0)
             {
-                var customTextCodes = digitalTextCodeRepository.GetDigitalTextCodes(tenant, objectTableId, profileCode, langaugeCode).FirstOrDefault();
+                var customTextCodes = digitalTextCodeRepository.GetDigitalTextCodes(tenant, objectTableId, profileCode, LanguageCode).FirstOrDefault();
 
                 if (customTextCodes != null)
                 {

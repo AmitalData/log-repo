@@ -282,7 +282,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var customTextCodes = textCodeQuery.GetDigitalTextCodesQuery(digitalTextCodeUpdateModel.Tenant,
                                                                              digitalTextCodeUpdateModel.ObjectTableId,
                                                                              digitalTextCodeUpdateModel.ProfileCode,
-                                                                             digitalTextCodeUpdateModel.LangaugeCode);
+                                                                             digitalTextCodeUpdateModel.LanguageCode);
                 DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
                 if (customTextCodes != null)
                 {
@@ -320,6 +320,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         Tenant = digitalTextCodeUpdateModel.Tenant,
                         ProfileId = digitalTextCodeUpdateModel.ProfileId,
                         Labels = JsonConvert.SerializeObject(digitalTextCodeUpdateModel.Lables),
+                        LanguageCode = digitalTextCodeUpdateModel.LanguageCode,
                         CreateDate = todayDate,
                         UpdateDate = todayDate
                     };

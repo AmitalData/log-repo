@@ -79,7 +79,8 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                     Labels = digitalTextCodeList.Labels,
                     ProfileId = digitalTextCodeList.ProfileId,
                     CreateDate = digitalTextCodeList.CreateDate,
-                    UpdateDate = digitalTextCodeList.UpdateDate
+                    UpdateDate = digitalTextCodeList.UpdateDate,
+                    LanguageCode = digitalTextCodeList.LanguageCode
                 };
 
                 entityPm.ChangeSetOp = ChangeSetOperation.Insert;
@@ -97,7 +98,8 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                     Labels = digitalTextCodeList.Labels,
                     ProfileId = digitalTextCodeList.ProfileId,
                     CreateDate = digitalTextCodeList.CreateDate,
-                    UpdateDate = digitalTextCodeList.UpdateDate
+                    UpdateDate = digitalTextCodeList.UpdateDate,
+                    LanguageCode = digitalTextCodeList.LanguageCode
                 };
 
                 var contextData = InfrastructureContext.GetContext(entityPm.Tenant);
