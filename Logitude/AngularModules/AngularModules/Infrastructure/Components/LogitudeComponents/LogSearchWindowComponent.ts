@@ -102,6 +102,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     DontApplyVirtualization: boolean = false;
     ConstantPageSize: number = 100;
     UsingLogGridV2: boolean = false;
+    SearchFieldName: string = null;
     LanguageFilterValue: string;
     @Input() ForceShowLanguageFilter: boolean = false;
     @Input() ForceShowLocalAndEnglishColumns: boolean = false;
@@ -167,7 +168,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         this.IsEditDisabled = args.IsEditDisabled;
         this.SourceEntityPM = args.EntityPM;
         this.ObjectFieldCode = args.ObjectFieldCode;
-
+        this.SearchFieldName = args.SearchFieldName;
         
         if (this.IsUseCardSearchMechanism()) {
             this.DontApplyVirtualization = true;
@@ -399,8 +400,8 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         filters.Tenant = this.TenantPM.Id;
 
 
-        if (filters.AdditionalFilters.filter(a => a.FieldName == "SearchFields").length > 0 || filters.AdditionalFilters.filter(a => a.FieldName == "CardSearchField").length > 0) {
-            filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "SearchFields");
+        if (filters.AdditionalFilters.filter(a => a.FieldName == this.GetSearchFieldName()).length > 0 || filters.AdditionalFilters.filter(a => a.FieldName == "CardSearchField").length > 0) {
+            filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != this.GetSearchFieldName());
             filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "CardSearchField");
 
         }
@@ -416,7 +417,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         if (searchfields) {//&& !this.UseCompactSearch
             if (this.IsUseCardSearchMechanism()) {
               filters.addAdditionalFilter("CardSearchField", searchfields, null, null, "Contains", false, false, false, null);
-            } else filters.addAdditionalFilter("SearchFields", searchfields, null, null, "Contains", false, true, false, "String");
+            } else filters.addAdditionalFilter(this.GetSearchFieldName(), searchfields, null, null, "Contains", false, true, false, "String");
 
         }
 
@@ -548,11 +549,11 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         filters.SortBy = sortingCol;
         filters.SortDirection = sortingDir;
         filters.Tenant = 0;
-        if (filters.AdditionalFilters.filter(a => a.FieldName == "SearchFields").length > 0) {
-            filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "SearchFields");
+        if (filters.AdditionalFilters.filter(a => a.FieldName == this.GetSearchFieldName()).length > 0) {
+            filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != this.GetSearchFieldName());
         }
         if (searchfields) {//&& !this.UseCompactSearch
-            filters.addAdditionalFilter("SearchFields", searchfields, null, null, "Contains", false, true, false, "String");
+            filters.addAdditionalFilter(this.GetSearchFieldName(), searchfields, null, null, "Contains", false, true, false, "String");
         }
         var parentName = this.GetObjectTableName(this.ObjectTableName);
         var parenttable = window.ObjectTables.filter(d => d.Name === parentName)[0];
@@ -964,6 +965,12 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         this.columnsReadyEvent.emit({Columns: this.columns1});
 
     }
+
+    GetSearchFieldName() {
+        if (this.SearchFieldName)
+            return this.SearchFieldName;
+        return "SearchFields";
+    }
 }
 
 export class CustomEntityArgs {
@@ -998,7 +1005,7 @@ export class CustomEntityArgs {
     public ForceShowLocalAndEnglishColumns: boolean;
     public EntityPM: any = null;
     public ObjectFieldCode: string = null;
-
+    public SearchFieldName: string = null;
 }
 export class AddEntityArgs {
     public EntityPM: any;
