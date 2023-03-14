@@ -24,7 +24,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 containerTrackingRequest.Tenant = containerTrackingRequestPM.Tenant;
                 containerTrackingRequest.CreateDate = DateTime.Now;
             }
-            BuildSearchField(containerTrackingRequestPM, containerTrackingRequest);
+
             containerTrackingRequest.ContainerNumber = containerTrackingRequestPM.ContainerNumber;
             containerTrackingRequest.Master = containerTrackingRequestPM.Master;
             containerTrackingRequest.Provider = containerTrackingRequestPM.Provider;
@@ -35,8 +35,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             containerTrackingRequest.Status = containerTrackingRequestPM.Status;
             containerTrackingRequest.IsSimulate = containerTrackingRequestPM.IsSimulate;
             containerTrackingRequest.ContainerId = containerTrackingRequestPM.ContainerId;
-            
-
+            BuildSearchField(containerTrackingRequestPM, containerTrackingRequest);
         }
 
         public static void BuildSearchField(ContainerTrackingRequestPM containerTrackingRequestPM, ContainerTrackingRequest containerTrackingRequest)

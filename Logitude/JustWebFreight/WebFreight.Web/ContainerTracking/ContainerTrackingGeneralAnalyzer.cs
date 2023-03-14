@@ -1,4 +1,5 @@
-﻿using Logitude.BL.CommonDataModel.EntityQueries;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
 using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.CloseTables;
@@ -7,6 +8,7 @@ using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
@@ -21,6 +23,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -82,9 +85,7 @@ namespace WebFreight.Web.ContainerTracking
                 throw ex;
             }
 
-
             this.AnalyzeData();
-
         }
         private void AnalyzeMessageBody()
         {
@@ -124,8 +125,8 @@ namespace WebFreight.Web.ContainerTracking
                     containerUpdatedFields.TrackingSource = trackingSource;
                     this.StartUpdating();
                 }
-
-                this.DoneAnalyzeQueue();
+                
+                this.DoneAnalyzeQueue(containerUpdatedFields.Tenant);
             }
 
             catch (Exception ex)
@@ -172,43 +173,49 @@ namespace WebFreight.Web.ContainerTracking
         private void HandelUpdateManager(ContainerTrackingUpdateManager manager, ContainerTrackingRequest containerTrackingRequest)
         {
             string containerNumber = this.GetContainerNumber(visionContainerStatus.payload.container_id);
-            Container myRequestContainer = this.GetContainer(containerTrackingRequest, containerNumber);
-
-            if (string.IsNullOrEmpty(containerTrackingRequest.ContainerId))
-                FillContainerField(containerTrackingRequest, myRequestContainer);
+            Container myRequestContainer = this.GetContainer(containerTrackingRequest.Tenant, containerTrackingRequest.ShipmentId, containerNumber);
 
             string entityId = myRequestContainer == null ? containerTrackingRequest.ShipmentId : myRequestContainer.Id;
-            string objectTableName = string.IsNullOrEmpty(containerTrackingRequest.ContainerId) ? "Shipment" : "Container";
+            string objectTableName = myRequestContainer == null ? "Shipment" : "Container";
 
             CommunicationLog comunicationLog = BuildCommunicationLogUpdateStatus(containerTrackingRequest, entityId, objectTableName);
-            if (string.IsNullOrEmpty(containerTrackingRequest.ContainerId))
+
+            if (myRequestContainer == null)
+            {
+                SetComunicationLogDone(comunicationLog, false);
                 return;
+            }
 
             try
             {
-                containerTrackingHelper = new ContainerTrackingHelper(containerTrackingRequest.Tenant);
-                var analyz = false;
-
-                ContainerPM container = GetContainerPM(containerTrackingRequest);
-                ShipmentPM shipment = GetShipmentPM(containerTrackingRequest);
-                manager.allTrasshipmentLegs = new List<dynamic>();
-
-                if (IsValidToAnalyze(shipment, container, containerTrackingRequest))
-                {
-                    manager.Initialize(containerTrackingRequest.Tenant);
-                    manager.SetContainer(container);
-                    manager.SetShipment(shipment);
-                    MapContainersExternalData(container);
-                    manager.Update(IsUpdateContainerAllowed(container), IsUpdateShipmentAllowed(shipment));
-                    analyz = IsUpdateContainerAllowed(container);
-                }
-
-                SetComunicationLogDone(comunicationLog, analyz);
+                string containerId = myRequestContainer.Id;
+                this.Update(containerId, manager, containerTrackingRequest, comunicationLog);                
             }
             catch (Exception ex)
             {
                 this.HandleExceptionOnUpdate(comunicationLog, ex);
             }
+        }
+        private void Update(string containerId, ContainerTrackingUpdateManager manager, ContainerTrackingRequest containerTrackingRequest, CommunicationLog comunicationLog)
+        {
+            containerTrackingHelper = new ContainerTrackingHelper(containerTrackingRequest.Tenant);
+            var analyz = false;
+
+            ContainerPM container = GetContainerPM(containerId, containerTrackingRequest.Tenant);
+            ShipmentPM shipment = GetShipmentPM(containerTrackingRequest.ShipmentId, containerTrackingRequest.Tenant);
+            manager.allTrasshipmentLegs = new List<dynamic>();
+
+            if (IsValidToAnalyze(shipment, container, containerTrackingRequest))
+            {
+                manager.Initialize(containerTrackingRequest.Tenant);
+                manager.SetContainer(container);
+                manager.SetShipment(shipment);
+                MapContainersExternalData(container);
+                manager.Update(IsUpdateContainerAllowed(container), IsUpdateShipmentAllowed(shipment));
+                analyz = IsUpdateContainerAllowed(container);
+            }
+
+            SetComunicationLogDone(comunicationLog, analyz);
         }
 
         private bool IsUpdateContainerAllowed(ContainerPM container)
@@ -223,17 +230,18 @@ namespace WebFreight.Web.ContainerTracking
         }
         private bool IsUpdateShipmentAllowed(ShipmentPM shipment)
         {
-            if (shipment.IsOperationalClosed)            
+            if (shipment.IsOperationalClosed)
                 return false;
+
             if (!containerTrackingHelper.IsSameLocation(shipment.MainCarriageFromPortId, containerUpdatedFields.POLLocation))
                 return false;
+
             if (!containerTrackingHelper.IsSameLocation(shipment.MainCarriageFinalDestinationPortId, containerUpdatedFields.PODLocation))
                 return false;
-                return true;
-        }
-        
 
- 
+            return true;
+        }   
+
         private bool IsValidToAnalyze(ShipmentPM shipment, ContainerPM container, ContainerTrackingRequest containerTrackingRequest)
         {
             return (
@@ -271,6 +279,14 @@ namespace WebFreight.Web.ContainerTracking
             var communicationLogRepository = new CommunicationLogRepository(comunicationLog.Tenant);
             communicationLogRepository.Update(comunicationLog);
             communicationLogRepository.SubmitChanges();
+            string activity = "";
+            if (wasAnalyzed)
+            {
+                activity = "(A) Analyzed Responses";
+                AddTotangoActivity(comunicationLog.Tenant, activity);
+            }
+            activity = "(A) Received Responses";
+            AddTotangoActivity(comunicationLog.Tenant, activity);
         }
 
         private string GetContainerNumber(string container_id)
@@ -296,46 +312,50 @@ namespace WebFreight.Web.ContainerTracking
                 containerUpdatedFields.ContainersExternal = null;
                 return;
             }
-            var containersExternalDataRepository = new ContainersExternalDataRepository(containerUpdatedFields.ShipmentContext);
 
+            var containersExternalDataRepository = new ContainersExternalDataRepository(containerUpdatedFields.ShipmentContext);
             var containersExternalData_DB = containersExternalDataRepository.GetSingleContainersExternalData(container.Id, container.Tenant);
             if (containersExternalData_DB == null)
             {
                 containersExternalData_DB = new ContainersExternalData() { Id = container.Id, Tenant = container.Tenant };
                 containerUpdatedFields.ContainersExternal.IsNew = true;
             }
-            containerUpdatedFields.ContainersExternal.ContainersExternalData_DB = containersExternalData_DB;
 
+            containerUpdatedFields.ContainersExternal.ContainersExternalData_DB = containersExternalData_DB;
             containerUpdatedFields.ContainersExternal.ContainersExternalData_New.Id = container.Id;
             containerUpdatedFields.ContainersExternal.ContainersExternalData_New.Tenant = container.Tenant;
-
-
         }
 
-        private ContainerPM GetContainerPM(ContainerTrackingRequest containerTrackingRequest)
+        private ContainerPM GetContainerPM(string containerId, int tenant)
         {
-
             var containerRepository = new ContainerRepository(containerUpdatedFields.ShipmentContext);
             var containerQuery = new ContainerQuery(containerRepository);
-            var containerPM = containerQuery.GetSinglePM(containerTrackingRequest.ContainerId, containerTrackingRequest.Tenant);
+            var containerPM = containerQuery.GetSinglePM(containerId, tenant);
             return containerPM;
-
         }
-        private ShipmentPM GetShipmentPM(ContainerTrackingRequest containerTrackingRequest)
+        private ShipmentPM GetShipmentPM(string shipmentId, int tenant)
         {
             var shipmentRepository = new ShipmentRepository(containerUpdatedFields.ShipmentContext);
             var shipmentQuery = new ShipmentQuery(shipmentRepository);
-            var shipmentPM = shipmentQuery.GetSinglePM(containerTrackingRequest.ShipmentId, containerTrackingRequest.Tenant);
+            var shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);
             return shipmentPM;
-
         }
 
-        private void DoneAnalyzeQueue()
+        private void DoneAnalyzeQueue(int tenant)
         {
             analyzeQueue.Status = "D";
             analyzeQueue.ErrorMessage = null;
             analyzeQueueRepository.Update(analyzeQueue);
             analyzeQueueRepository.SubmitChanges();
+        }
+        public void AddTotangoActivity(int tenant, string activity)
+        {
+
+            string activityDescription = activity;
+            
+            string email = AuthenticationUtil.IsAuthenticatedUserExists() ? AuthenticationUtil.GetAuthenticatedUser() : "system@tenant" + tenant + ".com";
+            string moduleName = "(A) Container";
+            ActivityLogger.SendTotangoContactActivity(email, moduleName, activityDescription, tenant,false,null);           
         }
 
         private void OnCatchAnalyzingError(Exception ex)
@@ -425,16 +445,10 @@ namespace WebFreight.Web.ContainerTracking
             };
         }
 
-        private Container GetContainer(ContainerTrackingRequest containerTrackingRequest, string containerNumber)
+        private Container GetContainer(int tenant, string shipmentId, string containerNumber)
         {
-            var shipmentContext = ShipmentsContext.GetContext(containerTrackingRequest.Tenant);
-            return shipmentContext.Containers.Where(r => r.ShipmentId == containerTrackingRequest.ShipmentId && r.ContainerNumber == containerNumber).FirstOrDefault();
-        }
-        private void FillContainerField(ContainerTrackingRequest containerTrackingRequest, Container container)
-        {
-            if (container == null) return;
-            containerTrackingRequest.ContainerNumber = container.ContainerNumber;
-            containerTrackingRequest.ContainerId = container.Id;
+            var shipmentContext = ShipmentsContext.GetContext(tenant);
+            return shipmentContext.Containers.Where(r => r.ShipmentId == shipmentId && r.ContainerNumber == containerNumber).FirstOrDefault();
         }
 
         private Document AddDocument(int tenant, byte[] byteArray)
@@ -458,7 +472,6 @@ namespace WebFreight.Web.ContainerTracking
                 Extension = document.Extension,
                 Tenant = document.Tenant,
                 FileSize = byteData.Length,
-
             };
         }
 
