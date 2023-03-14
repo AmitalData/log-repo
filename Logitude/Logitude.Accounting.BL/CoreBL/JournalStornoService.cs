@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using Logitude.Accounting.Def.EntityUpdateServicesExt;
+using Logitude.Accounting.BL.CoreBL.ExternalReconcile.CancelDeposit;
 
 [assembly: InternalsVisibleTo("Your.Test.Assembly.Name")]
 
@@ -24,19 +25,20 @@ namespace Logitude.Accounting.BL.CoreBL
         private StornoOverrideM _StornoOverrideM;
         private IJournalUpdateService _journalUpdateService;
         private IJournalStornoPrepareJReconcileService _JournalStornoPrepareJReconcileService;
+        private IJournalStornoPrepareExternalReconcileService _JournalStornoPrepareExternalReconcileService;
 
         public void Init(
             JournalPM journalPM, StornoOverrideM stornoOverrideM, 
             IJournalUpdateService journalUpdateService,
-            IJournalStornoPrepareJReconcileService journalStornoPrepareJReconcileService
-            )
+            IJournalStornoPrepareJReconcileService journalStornoPrepareJReconcileService,
+            IJournalStornoPrepareExternalReconcileService journalStornoPrepareExternalReconcileService)
         {
             // TODO: Complete member initialization
             this._JournalPM = journalPM;
             _StornoOverrideM = stornoOverrideM;
             _journalUpdateService = journalUpdateService;
             _JournalStornoPrepareJReconcileService = journalStornoPrepareJReconcileService;
-
+            _JournalStornoPrepareExternalReconcileService = journalStornoPrepareExternalReconcileService;
 
         }
 
@@ -97,6 +99,11 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 Storno.JournalReconciles.AddRange(_JournalStornoPrepareJReconcileService.JournalReconciles2Insert);
             }
+            if (_JournalStornoPrepareExternalReconcileService.CreateJournalExternalReconcileFromStorno(Storno))
+            {
+                Storno.JournalExternalReconciles.Add(_JournalStornoPrepareExternalReconcileService.JournalExternalReconcilePM);
+            }
+
 
             _journalUpdateService.Update(Storno, true);
             return Storno;
