@@ -20,6 +20,7 @@ declare global {
             ClickRadio(selector: string): Chainable<Element>
             ValidateElementColor(selector: string, expectedcolor: string): Chainable<Element>
             SelectQuickSearchFirstElement(quickSearchDetails: QuickSearchDetails): Chainable<Element>
+            SelectQuickSearchElement(quickSearchDetails: QuickSearchDetails): Chainable<Element>
             BackButton(contains: string): Chainable<Element>
             getAttached(selector: any): Chainable<Element>
 
@@ -210,6 +211,17 @@ Cypress.Commands.add("SelectQuickSearchFirstElement", (quickSearchDetails: Quick
             cy.get(quickSearchDetails.Selector).focus().clear().type(quickSearchDetails.Value).then(() => {
                 BaseAssertion.AssertStatusCode(quickSearchDetails.RequestAliase, 200);
                 cy.get(BaseSelectors.FirstElementInList).eq(0).click({ force: true });
+            })
+        })
+})
+
+Cypress.Commands.add("SelectQuickSearchElement", (quickSearchDetails: QuickSearchDetails,value: string) => {
+    cy.DefineRequestWait(RestAPI.GET, quickSearchDetails.WaitURL, quickSearchDetails.RequestAliase);
+    cy.get(quickSearchDetails.Selector).parents(quickSearchDetails.Parent).eq(0).find(quickSearchDetails.ParentClass)
+        .within(() => {
+            cy.get(quickSearchDetails.Selector).focus().clear().type(quickSearchDetails.Value).then(() => {
+                BaseAssertion.AssertStatusCode(quickSearchDetails.RequestAliase, 200);
+                cy.contains(quickSearchDetails.Value).click({ force: true });
             })
         })
 })
