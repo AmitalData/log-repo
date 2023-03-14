@@ -283,7 +283,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
              
             iQuery = FilterInvoicesStatuses(iQuery);
             var cardBillToId = GetCardBillToId(cardId, tenant);
-            var list = iQuery.Where(a => a.BillToId.Equals(cardId, StringComparison.InvariantCultureIgnoreCase)
+            var list = iQuery.Where(a => cardId.Contains(a.BillToId)
                                          || cardBillToId.Contains(a.BillToId));
 
             return list;
