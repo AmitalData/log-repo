@@ -1058,7 +1058,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                         if (invoice.IsMultipleEntities) {
                             invoiceProvider.AmountInLocalCurrency = invoice.InvoiceMultipleShipments.Where(p => p.ShipmentId == shipment.Id).Sum(s => s.SubTotalInLocalCurrency) == null ? 0 : invoice.InvoiceMultipleShipments.Where(p => p.ShipmentId == shipment.Id).Sum(s => s.SubTotalInLocalCurrency.Value);
-                            invoiceProvider.AmountInProfitCurrency = invoice.InvoiceMultipleShipments.Where(p => p.ShipmentId == shipment.Id).Sum(s => s.SubTotalInInvoiceCurrency) == null ? 0 : invoice.InvoiceMultipleShipments.Where(p => p.ShipmentId == shipment.Id).Sum(s => s.SubTotalInInvoiceCurrency.Value);
+                            invoiceProvider.AmountInProfitCurrency = invoice.InvoiceMultipleShipments.Where(p => p.ShipmentId == shipment.Id).Sum(s => s.SubTotalInInvoiceCurrency) == null ? 0 : invoice.InvoiceMultipleShipments.Where(p => p.ShipmentId == shipment.Id).Sum(s => s.SubTotalInInvoiceCurrency.Value);                            
                          }
 
                         else

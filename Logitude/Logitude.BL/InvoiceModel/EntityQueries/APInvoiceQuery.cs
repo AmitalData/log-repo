@@ -285,8 +285,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                 ChargeableWeight = item.ChargeableWeight,
                                 TotalReceivables = item.AccountedReceivablesInProfitCurrency,
                                 Profit = item.ProfitInProfitCurrency,
-
-
+                                GrossWeightInKG = item.GrossWeightInKG,
+                                VolumeinCBM = item.VolumeInCBM,                       
                             };
 
                             APInvoiceEntityPM myEntity = entityPM.InvoiceEntities.Where(d => d.EntityId == item.Id).FirstOrDefault();
@@ -317,6 +317,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                 entityShipment.SubTotalInInvoiceCurrency = 0;
                                 entityShipment.TotalAmount = 0;
                                 entityShipment.TotalVATAmount = 0;
+                                entityShipment.TotalAmountinLocalCurrency = 0;
                             }
 
                             else
