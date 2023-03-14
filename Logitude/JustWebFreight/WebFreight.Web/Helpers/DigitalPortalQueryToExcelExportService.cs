@@ -570,7 +570,7 @@ namespace WebFreight.Web.Helpers
 
                         DataRow row = table.NewRow();
                         row[0] = code.TextCode;
-                        row[1] = code.TextCode;
+                        row[1] = code.FieldCode;
                         row[2] = code.DefaultText;
                         row[3] = foreignLanguageTextCode;
                         row[4] = item.ProfileCode;
