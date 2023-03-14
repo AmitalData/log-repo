@@ -47,11 +47,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
 
     
-    public partial class DeclarationStatusesController : ApiController
+    public partial class StatusCodesController : ApiController
     {
 	  
        
-        public HttpResponseMessage GetSingle(string declarationid, int linenumber)
+        public HttpResponseMessage GetSingle(string id)
         {
 		  try
             {
@@ -61,13 +61,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
-                DeclarationStatusQueryService declarationStatusQuery = new DeclarationStatusQueryService(MyContext);
-				declarationStatusQuery.InitializeSettings();
-                DeclarationStatusPM declarationStatusPM = declarationStatusQuery.GetSingle(declarationid, linenumber,true,false);
+                StatusCodeQueryService statusCodeQuery = new StatusCodeQueryService(MyContext);
+				statusCodeQuery.InitializeSettings();
+                StatusCodePM statusCodePM = statusCodeQuery.GetSingle(id,true,false);
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
             
-                return Request.CreateResponse(HttpStatusCode.OK, declarationStatusPM);
+                return Request.CreateResponse(HttpStatusCode.OK, statusCodePM);
 			 }
             catch (Exception ex)
             {
@@ -79,7 +79,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
          
 		
 		
-	   public HttpResponseMessage Post(DeclarationStatusPM entityPM)
+	   public HttpResponseMessage Post(StatusCodePM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -93,12 +93,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                     
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
-                        DeclarationStatusUpdateService service = new DeclarationStatusUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        StatusCodeUpdateService service = new StatusCodeUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
                         service.Update(entityPM, true);
 
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("DeclarationStatus", 0, true);
+                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("StatusCode", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
                         //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
@@ -125,7 +125,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         }
 
 
-        public HttpResponseMessage Put(DeclarationStatusPM entityPM)
+        public HttpResponseMessage Put(StatusCodePM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -139,12 +139,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
-                        DeclarationStatusUpdateService service = new DeclarationStatusUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        StatusCodeUpdateService service = new StatusCodeUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 						service.InitializeEntityPM(entityPM);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                         service.Update(entityPM, true);
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("DeclarationStatus", 0, true);
+                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("StatusCode", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
                         //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);

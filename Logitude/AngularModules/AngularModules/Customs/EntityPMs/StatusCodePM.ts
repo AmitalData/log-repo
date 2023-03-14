@@ -14,7 +14,7 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
-export class DeclarationStatusPM {
+export class StatusCodePM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
@@ -24,6 +24,11 @@ export class DeclarationStatusPM {
       }
  	 
     
+    private id: string;
+    public get Id() { return this.id; }
+    public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
+       
+	 
     private tenant: number;
     public get Tenant() { return this.tenant; }
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
@@ -34,43 +39,23 @@ export class DeclarationStatusPM {
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
-    private declarationId: string;
-    public get DeclarationId() { return this.declarationId; }
-    public set DeclarationId(newValue: string) { if (this.declarationId != newValue) { this.declarationId = newValue; this.MarkAsDirty("DeclarationId"); } }
+    private status_Code: string;
+    public get Status_Code() { return this.status_Code; }
+    public set Status_Code(newValue: string) { if (this.status_Code != newValue) { this.status_Code = newValue; this.MarkAsDirty("Status_Code"); } }
        
 	 
-    private lineNumber: number;
-    public get LineNumber() { return this.lineNumber; }
-    public set LineNumber(newValue: number) { if (this.lineNumber != newValue) { this.lineNumber = newValue; this.MarkAsDirty("LineNumber"); } }
+    private statusNameHeb: string;
+    public get StatusNameHeb() { return this.statusNameHeb; }
+    public set StatusNameHeb(newValue: string) { if (this.statusNameHeb != newValue) { this.statusNameHeb = newValue; this.MarkAsDirty("StatusNameHeb"); } }
        
 	 
-    private statusID: string;
-    public get StatusID() { return this.statusID; }
-    public set StatusID(newValue: string) { if (this.statusID != newValue) { this.statusID = newValue; this.MarkAsDirty("StatusID"); } }
-       
-	 
-    private statusDate: Date;
-    public get StatusDate() { return this.statusDate; }
-    public set StatusDate(newValue: Date) { if (this.statusDate != newValue) { this.statusDate = newValue; this.MarkAsDirty("StatusDate"); } }
-       
-	 
-    private statusUser: string;
-    public get StatusUser() { return this.statusUser; }
-    public set StatusUser(newValue: string) { if (this.statusUser != newValue) { this.statusUser = newValue; this.MarkAsDirty("StatusUser"); } }
-       
-	 
-    private statusRemarks: string;
-    public get StatusRemarks() { return this.statusRemarks; }
-    public set StatusRemarks(newValue: string) { if (this.statusRemarks != newValue) { this.statusRemarks = newValue; this.MarkAsDirty("StatusRemarks"); } }
-       
-	 
-    private unfSequenceNumeric: number;
-    public get UnfSequenceNumeric() { return this.unfSequenceNumeric; }
-    public set UnfSequenceNumeric(newValue: number) { if (this.unfSequenceNumeric != newValue) { this.unfSequenceNumeric = newValue; this.MarkAsDirty("UnfSequenceNumeric"); } }
+    private statusNameEng: string;
+    public get StatusNameEng() { return this.statusNameEng; }
+    public set StatusNameEng(newValue: string) { if (this.statusNameEng != newValue) { this.statusNameEng = newValue; this.MarkAsDirty("StatusNameEng"); } }
        
 	 
 
-    public OldEntityPM: DeclarationStatusPM;
+    public OldEntityPM: StatusCodePM;
 		
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
@@ -81,13 +66,13 @@ export class DeclarationStatusPM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.DeclarationStatus");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.StatusCode");
            
         }
        }
     }
 
-    private MyClone: DeclarationStatusPM;
+    private MyClone: StatusCodePM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);

@@ -10,13 +10,9 @@ using Simplog.Server.Infrastructure;
   
 namespace Logitude.Customs.Data.EntityKeys
 {
-   public partial class DeclarationStatusKeys : EntityKeyFields
+   public partial class StatusCodeKeys : EntityKeyFields
    {
-   	  public string DeclarationId  { get; set; }
-	  
-				 
-	    			   
-	  public int LineNumber  { get; set; }
+   	  public string Id  { get; set; }
 	  
 				 
 	    			   
@@ -24,13 +20,13 @@ namespace Logitude.Customs.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-                 return DeclarationId+'_'+LineNumber ;
+                 return Id ;
                  
       }
 
       public override string GetEntityPMName()
       {
-          return "DeclarationStatusPM";
+          return "StatusCodePM";
       }
 	 
    }

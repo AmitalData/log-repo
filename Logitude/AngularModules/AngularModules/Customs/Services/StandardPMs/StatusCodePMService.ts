@@ -19,30 +19,30 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 
-import {DeclarationStatusPM} from '../../EntityPMs/DeclarationStatusPM';
+import {StatusCodePM} from '../../EntityPMs/StatusCodePM';
 
 
 @Injectable()
 
-export class DeclarationStatusPMService {
+export class StatusCodePMService {
  private _http: HttpClient;
  private _apiUrl: string;
  constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/declarationstatuses';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/statuscodes';      
     }
 
-	get(declarationid: string, linenumber: number) {       
+	get(id: string) {       
 
 		var callTime = new Date();		
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle?' + 'declarationid=' + declarationid+'&'+'linenumber=' + linenumber, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
 				.pipe(
 					map((response: HttpResponse<any>) => {
 						var pm = response.body;
 				
-						var entity: DeclarationStatusPM;
+						var entity: StatusCodePM;
 						if (pm) {
 							entity = this.MapJsonToEntityPM(pm);
 						}
@@ -51,7 +51,7 @@ export class DeclarationStatusPMService {
 						serviceResponse.Result = entity;
               
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DeclarationStatus", "GetSinglePM", 'declarationid=' + declarationid+'&'+'linenumber=' + linenumber);
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "StatusCode", "GetSinglePM", 'id=' + id);
 				 
 						return serviceResponse;
 
@@ -61,7 +61,7 @@ export class DeclarationStatusPMService {
 		});                    
 	}
 
-	insert(entityPM: DeclarationStatusPM) {
+	insert(entityPM: StatusCodePM) {
  
 		var callTime = new Date();  
 		
@@ -69,12 +69,12 @@ export class DeclarationStatusPMService {
 
 			var serviceResponse: ServiceResponse = new ServiceResponse();
 			var validator: ClassLevelValidator = new ClassLevelValidator();                
-			var errorsArray = validator.Validate("Customs.DeclarationStatus", entityPM);
+			var errorsArray = validator.Validate("Customs.StatusCode", entityPM);
 
 
 			if (errorsArray.length == 0) {
 
-				var mappedEntity: DeclarationStatusPM = this.MapJsonToEntityPM(entityPM, false);
+				var mappedEntity: StatusCodePM = this.MapJsonToEntityPM(entityPM, false);
 				
 				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
@@ -82,12 +82,12 @@ export class DeclarationStatusPMService {
 
 							var pm = response.body;
 							if (pm) {
-								var mappedResult: DeclarationStatusPM = this.MapJsonToEntityPM(pm, true, entityPM);
+								var mappedResult: StatusCodePM = this.MapJsonToEntityPM(pm, true, entityPM);
 								serviceResponse.Result = mappedResult;
 							}						
 
 							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DeclarationStatus", "SaveChanges", "");                    
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "StatusCode", "SaveChanges", "");                    
 												                             
 							return serviceResponse;
 						}),
@@ -103,7 +103,7 @@ export class DeclarationStatusPMService {
 		});
 	}
 
-	update(entityPM: DeclarationStatusPM) {
+	update(entityPM: StatusCodePM) {
 
 		var callTime = new Date();     
 		
@@ -111,12 +111,12 @@ export class DeclarationStatusPMService {
 
 			var serviceResponse: ServiceResponse = new ServiceResponse();
 			var validator: ClassLevelValidator = new ClassLevelValidator();               
-			var errorsArray = validator.Validate("Customs.DeclarationStatus", entityPM);
+			var errorsArray = validator.Validate("Customs.StatusCode", entityPM);
 
 
 			if (errorsArray.length == 0) {
 
-				var mappedEntity: DeclarationStatusPM = this.MapJsonToEntityPM(entityPM, false);
+				var mappedEntity: StatusCodePM = this.MapJsonToEntityPM(entityPM, false);
 				
 				return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
@@ -124,12 +124,12 @@ export class DeclarationStatusPMService {
                  
 							var pm = response.body;
 							if (pm) {
-								var mappedResult: DeclarationStatusPM = this.MapJsonToEntityPM(pm, true, entityPM);
+								var mappedResult: StatusCodePM = this.MapJsonToEntityPM(pm, true, entityPM);
 								serviceResponse.Result = mappedResult;
 							}
 							 
 							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DeclarationStatus", "SaveChanges", "");                    
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "StatusCode", "SaveChanges", "");                    
 					                           
 							return serviceResponse;
 						}),
@@ -147,12 +147,12 @@ export class DeclarationStatusPMService {
 
    
 
-	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: DeclarationStatusPM = null) {
+	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: StatusCodePM = null) {
 
          
         if (!entityPM) {
             
-            entityPM = new DeclarationStatusPM();
+            entityPM = new StatusCodePM();
 			entityPM.DisableMarkAsDirty = true;
         }
 
@@ -219,8 +219,8 @@ export class DeclarationStatusPMService {
     }
 
 	  public GetNewEntityPM() {		 
-		    var entityPM: DeclarationStatusPM;
-			entityPM = new DeclarationStatusPM();
+		    var entityPM: StatusCodePM;
+			entityPM = new StatusCodePM();
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }

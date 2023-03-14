@@ -6,17 +6,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class DeclarationStatusList {
+export class StatusCodeList {
    
+	Id: string;
 	Tenant: number;
 	SearchFields: string;
-	DeclarationId: string;
-	LineNumber: number;
-	StatusID: string;
-	StatusDate: Date;
-	StatusUser: string;
-	StatusRemarks: string;
-	UnfSequenceNumeric: number;
+	Status_Code: string;
+	StatusNameHeb: string;
+	StatusNameEng: string;
 	
 }
  

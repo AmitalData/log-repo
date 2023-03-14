@@ -48,9 +48,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new DeclarationStatusDataMapping();
         }
 		 
-		public  DeclarationStatusPM GetSingle(string declarationid,bool getComposition, bool getFromCache)
+		public  DeclarationStatusPM GetSingle(string declarationid, int linenumber,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new DeclarationStatusKeys(){ DeclarationId = declarationid };
+             EntityKeys = new DeclarationStatusKeys(){ DeclarationId = declarationid, LineNumber = linenumber };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(DeclarationStatus entityPOCO)
         {
-            DeclarationStatusKeys entityKeys = new DeclarationStatusKeys() { DeclarationId = entityPOCO.DeclarationId,  };
+            DeclarationStatusKeys entityKeys = new DeclarationStatusKeys() { DeclarationId = entityPOCO.DeclarationId, LineNumber = entityPOCO.LineNumber,  };
             return entityKeys;
         }
      

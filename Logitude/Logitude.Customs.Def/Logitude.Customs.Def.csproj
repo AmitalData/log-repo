@@ -135,6 +135,7 @@
     <Compile Include="EntityPMs\Generated\SchedulerParamPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SecurityClearenceTypeCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SignStationPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\StatusCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\StorageStatusTablePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ServersNamePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\StatusFieldTypePM.Generated.cs" />

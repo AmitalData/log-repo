@@ -20,60 +20,20 @@ namespace Logitude.Customs.Data.EntityLists
        [Key]
        [DataMember]
        public string DeclarationId  { get; set; }
+
+       [Key]
        [DataMember]
-       public bool FieldC1  { get; set; }
+       public int LineNumber  { get; set; }
        [DataMember]
-       public bool FieldC2  { get; set; }
+       public string StatusID  { get; set; }
        [DataMember]
-       public bool FieldC3  { get; set; }
+       public DateTime StatusDate  { get; set; }
        [DataMember]
-       public bool FieldC4  { get; set; }
+       public string StatusUser  { get; set; }
        [DataMember]
-       public bool FieldC5  { get; set; }
+       public string StatusRemarks  { get; set; }
        [DataMember]
-       public bool FieldC6  { get; set; }
-       [DataMember]
-       public bool FieldC7  { get; set; }
-       [DataMember]
-       public bool FieldC8  { get; set; }
-       [DataMember]
-       public bool FieldC9  { get; set; }
-       [DataMember]
-       public bool FieldC10  { get; set; }
-       [DataMember]
-       public bool FieldC11  { get; set; }
-       [DataMember]
-       public bool FieldC12  { get; set; }
-       [DataMember]
-       public bool FieldC13  { get; set; }
-       [DataMember]
-       public DateTime? FieldD1  { get; set; }
-       [DataMember]
-       public DateTime? FieldD2  { get; set; }
-       [DataMember]
-       public DateTime? FieldD3  { get; set; }
-       [DataMember]
-       public DateTime? FieldD4  { get; set; }
-       [DataMember]
-       public DateTime? FieldD5  { get; set; }
-       [DataMember]
-       public string FieldR1  { get; set; }
-       [DataMember]
-       public string FieldR2  { get; set; }
-       [DataMember]
-       public string FieldR3  { get; set; }
-       [DataMember]
-       public string FieldR4  { get; set; }
-       [DataMember]
-       public string FieldR5  { get; set; }
-       [DataMember]
-       public DateTime? SVC  { get; set; }
-       [DataMember]
-       public DateTime? INA  { get; set; }
-       [DataMember]
-       public DateTime? RSG  { get; set; }
-       [DataMember]
-       public DateTime? RSH  { get; set; }
+       public int UnfSequenceNumeric  { get; set; }
    }
 
 }

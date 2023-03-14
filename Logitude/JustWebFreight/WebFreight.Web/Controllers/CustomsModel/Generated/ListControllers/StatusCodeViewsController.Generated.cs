@@ -47,11 +47,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
 
     
-    public partial class DeclarationStatusViewsController : ApiController
+    public partial class StatusCodeViewsController : ApiController
     {
 	  
        
-        public HttpResponseMessage GetSingle(string declarationid, int linenumber)
+        public HttpResponseMessage GetSingle(string id)
         {
 		  try
             {
@@ -60,11 +60,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
-                DeclarationStatusListQueryService declarationStatusQuery = new DeclarationStatusListQueryService(MyContext);
-                DeclarationStatusList declarationStatusList = declarationStatusQuery.GetSingle(declarationid, linenumber);
+                StatusCodeListQueryService statusCodeQuery = new StatusCodeListQueryService(MyContext);
+                StatusCodeList statusCodeList = statusCodeQuery.GetSingle(id);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
-                return Request.CreateResponse(HttpStatusCode.OK,  declarationStatusList);
+                return Request.CreateResponse(HttpStatusCode.OK,  statusCodeList);
             }
             catch (Exception ex)
             {
@@ -82,8 +82,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
-                DeclarationStatusListQueryService declarationStatusQuery = new DeclarationStatusListQueryService(MyContext);
-                List<DeclarationStatusList> result = declarationStatusQuery.GetList(authToken.Tenant);
+                StatusCodeListQueryService statusCodeQuery = new StatusCodeListQueryService(MyContext);
+                List<StatusCodeList> result = statusCodeQuery.GetList(authToken.Tenant);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -108,17 +108,17 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "Customs.DeclarationStatus",
+                    ObjectTableName = "Customs.StatusCode",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "Customs.DeclarationStatuss",
+                    QuerySection = "Customs.StatusCodes",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
                 };
 
 				
-				List<ObjectField> DeclarationStatusObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.DeclarationStatus",tenant);
+				List<ObjectField> StatusCodeObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.StatusCode",tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
@@ -141,7 +141,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             //}
 						//}
                         //ToDo: Get object field by name and set the remained filter properties
-						ObjectField field = DeclarationStatusObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+						ObjectField field = StatusCodeObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                        if (field != null)
                         {
                             string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -169,7 +169,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                     foreach (QueryFilterItem filter in filters_list)
                     {
-                        ObjectField field = DeclarationStatusObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        ObjectField field = StatusCodeObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                         if (field != null)
                         {
 
@@ -192,14 +192,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 }
 
                 ICustomContext MyContext = CustomContext.GetContext(tenant);
-				DeclarationStatusListQueryService declarationStatusQuery = new DeclarationStatusListQueryService(MyContext);
+				StatusCodeListQueryService statusCodeQuery = new StatusCodeListQueryService(MyContext);
 
-                List<DeclarationStatusList> entityLists = declarationStatusQuery.GetList(queryOperations, tenant);
+                List<StatusCodeList> entityLists = statusCodeQuery.GetList(queryOperations, tenant);
 				
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = declarationStatusQuery.GetListCount(queryOperations, tenant);
+                    int count = statusCodeQuery.GetListCount(queryOperations, tenant);
                     response.Count = count;
                 }
 

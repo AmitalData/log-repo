@@ -22,46 +22,48 @@ using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 { 
-   public partial class DeclarationStatusUpdateService:EntityUpdateService<DeclarationStatus,DeclarationStatusPM,EntityPM>
+   public partial class StatusCodeUpdateService:EntityUpdateService<StatusCode,StatusCodePM,EntityPM>
    {
    
-        DeclarationStatusRepository entityRepository;
-        public DeclarationStatusUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+        StatusCodeRepository entityRepository;
+        public StatusCodeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
             : base(mainContext,additionalContexts, tenant)
         {
             ICustomContext  context = mainContext as CustomContext;
             context = context ??mainContext as ICustomContext ; //Up line is A BUG -and i need it 4 Fakes
-            Mapping = new DeclarationStatusDataMapping();
-            Repository = new DeclarationStatusRepository(context);
+            Mapping = new StatusCodeDataMapping();
+            Repository = new StatusCodeRepository(context);
         }
 
        
         private ICustomContext currentContext;
-        public DeclarationStatusUpdateService(int tenant)
+        public StatusCodeUpdateService(int tenant)
         {
             currentContext = CustomContext.GetContext(tenant);
         }
 
-        public DeclarationStatusUpdateService(ICustomContext context)
+        public StatusCodeUpdateService(ICustomContext context)
         {
             currentContext = context;
         }
 
 		
-		protected override EntityKeyFields GetKeys(DeclarationStatusPM entityPM)
+		protected override EntityKeyFields GetKeys(StatusCodePM entityPM)
         {
-            DeclarationStatusKeys entityKeys = new DeclarationStatusKeys() { DeclarationId = entityPM.DeclarationId, LineNumber = entityPM.LineNumber };
+            StatusCodeKeys entityKeys = new StatusCodeKeys() { Id = entityPM.Id };
             return entityKeys;
         }
 
 		
-		protected override void FillDefaultValuesOnCreate(DeclarationStatusPM entityPM)
+		protected override void FillDefaultValuesOnCreate(StatusCodePM entityPM)
         {     
   
 		
+		    entityPM.Id = IdCounter.GetNumber("StatusCode", entityPM.Tenant); 
+					
 	    }
         
-		protected override void FillDefaultValuesOnUpdate(DeclarationStatusPM entityPM)
+		protected override void FillDefaultValuesOnUpdate(StatusCodePM entityPM)
         {       
            
         }

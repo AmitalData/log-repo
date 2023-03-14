@@ -17,23 +17,31 @@ using Logitude.Customs.Data.EntityLists;
 namespace Logitude.Customs.Data.EntityListQueryServices
 { 
 
-    public partial class DeclarationStatusListQueryService
+    public partial class StatusCodeListQueryService
     {
-	    private IQueryable<DeclarationStatusList> GetIqueryableList(IQueryable<DeclarationStatus> iQueryable)
+	    private IQueryable<StatusCodeList> GetIqueryableList(IQueryable<StatusCode> iQueryable)
         {
-		IQueryable<DeclarationStatusList> query = (from a in iQueryable
-                                            select new DeclarationStatusList()
+		IQueryable<StatusCodeList> query = (from a in iQueryable
+                                            select new StatusCodeList()
 											{
                      
+					                          Id = a.Id,
+					
 					                          Tenant = a.Tenant,
 					
 					                          SearchFields = a.SearchFields,
+					
+					                          Status_Code = a.Status_Code,
+					
+					                          StatusNameHeb = a.StatusNameHeb,
+					
+					                          StatusNameEng = a.StatusNameEng,
 					
 		                    	            });
             return query;
 		}
 
-		private IQueryable<DeclarationStatus> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<DeclarationStatus> iQueryable, int tenant)
+		private IQueryable<StatusCode> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<StatusCode> iQueryable, int tenant)
         {
 			return iQueryable;
 		}
