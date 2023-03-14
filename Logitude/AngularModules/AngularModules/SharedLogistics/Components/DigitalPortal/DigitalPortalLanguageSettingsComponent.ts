@@ -188,35 +188,44 @@ export class DigitalPortalLanguageSettingsComponent implements OnInit {
     };
 
    async UploadFile(event: any) {
-        
         var file: any = event && event.currentTarget && event.currentTarget.files ? event.currentTarget.files[0] : null;
-
         var allowedFileTypes = ['.csv', ' .xls', ' .xlsx', ' text/csv', ' application/csv', 'text/comma-separated-values', ' application/csv', ' application/excel', 'application/vnd.msexcel', ' text/anytext', ' application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']
         
         if(!file || !allowedFileTypes.includes(file.type.toLowerCase())){
             this.IsUploadButtonEnabled = true;
             this.IsFileImportedSuccessfully = false;
-            this.UploadedTranslationFileMSG = 'Excel files allowed only!'
+            this.UploadedTranslationFileMSG = 'only Excel files allowed!'
             return;
         }
 
         this.CurrentSession.StartBusyIndicator('Uploading...');
         
-        var fileInfo : any = {}
-        if (file && file.size > 0) {
-            fileInfo.Name = file.name;
-            fileInfo.Base64 = await this.convertFileToBase64(file);
+        var fileInfo : ImportExcelParams = {
+            Tenant: 0,
+            FileData: null,
+            LanguageCode: this.selectedDisplayLanguage && this.selectedDisplayLanguage.code ? this.selectedDisplayLanguage.code : 'EN',
         }
 
-        
-        setTimeout(() => {
+        if (file && file.size > 0) {
+            fileInfo.FileData = await this.convertFileToBase64(file);
+            this.ImportTextCodesExcelFile(fileInfo, event)
+        }
+    }
+
+    ImportTextCodesExcelFile(fileInfo: ImportExcelParams, event: any) {
+        this._digitalLanguageSettingsService.UploadDigitalTextCode(fileInfo).subscribe((myResult) => {
             this.CurrentSession.StopBusyIndicator();
             this.IsUploadButtonEnabled = true;
-            this.IsFileImportedSuccessfully = true;
-            this.UploadedTranslationFileMSG = 'File Imported Successfully.'
             event.target.value = '';
-        }, 5000);
-
+            if (myResult) {
+                this.IsFileImportedSuccessfully = true;
+                this.UploadedTranslationFileMSG = 'File Imported Successfully.'
+            }
+            else {
+                this.IsFileImportedSuccessfully = false;
+                this.UploadedTranslationFileMSG = 'Something went wrong, Importing file failed!.'
+            }
+        });
     }
 
     CloseButtonClicked() {
@@ -248,4 +257,13 @@ export class ExportExcelParams {
     }
 }
 
+export class ImportExcelParams {
+    Tenant: number;
+    FileData: any;
+    LanguageCode: string
+
+    constructor() {
+
+    }
+}
 
