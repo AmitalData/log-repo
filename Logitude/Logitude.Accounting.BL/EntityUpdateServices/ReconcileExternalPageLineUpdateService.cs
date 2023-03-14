@@ -61,12 +61,20 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     if (entityPM.IsReconciled)
                     {
                         Int32.TryParse(bankAccount.TotalOpenExternalTransactions, out totalOpenPagesLines);
-                        bankAccount.TotalOpenPagesLines = totalOpenPagesLines--.ToString();
+                        if (totalOpenPagesLines > 0)
+                        {
+                            totalOpenPagesLines--;
+                        }
+                        bankAccount.TotalOpenPagesLines = totalOpenPagesLines.ToString();
                     }
                     else
                     {
                         Int32.TryParse(bankAccount.TotalOpenExternalTransactions, out totalOpenPagesLines);
-                        bankAccount.TotalOpenPagesLines = totalOpenPagesLines++.ToString();
+                        if (totalOpenPagesLines > 0)
+                        {
+                            totalOpenPagesLines++;
+                        }
+                        bankAccount.TotalOpenPagesLines = totalOpenPagesLines.ToString();
                     }
                     bankAccount.ChangeSetOp = ChangeSetOperation.Update;
                     service.Update(bankAccount, true);
