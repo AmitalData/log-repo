@@ -35,14 +35,14 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     {
         [HttpGet]
         [Route("DigitalCustomization/GetDigitalPortalLanguages")]
-        public HttpResponseMessage GetDigitalPortalLanguages(string langaugeCode = "")
+        public HttpResponseMessage GetDigitalPortalLanguages(string LanguageCode = "")
         {
             int tenant = 0;
             string email = "";
             try
             {
                 var screenQueryService = new DigitalPortalLangaugeQueryService();
-                var digitalPortalLanguages = screenQueryService.GetDigitalPortalLanguagesQuery(langaugeCode);
+                var digitalPortalLanguages = screenQueryService.GetDigitalPortalLanguagesQuery(LanguageCode);
                 return Request.CreateResponse(HttpStatusCode.OK, digitalPortalLanguages);
             }
             catch (Exception ex)
