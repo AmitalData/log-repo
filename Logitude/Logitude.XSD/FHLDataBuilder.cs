@@ -287,7 +287,11 @@ namespace Logitude.XSD
 
             if (!string.IsNullOrEmpty(Context.MainHarmonize))
             {
-                summaryDetailsItem.HarmonisedTariffScheduleInformation = new string[3] { Context.MainHarmonize, "5555555", "7845100" };
+                if (isMultiHS)
+                    summaryDetailsItem.HarmonisedTariffScheduleInformation = new string[3] { Context.MainHarmonize, "5555555", "7845100" };
+
+                else
+                    summaryDetailsItem.HarmonisedTariffScheduleInformation = new string[1] { Context.MainHarmonize };
             }
 
             summaryDetailsList.Add(summaryDetailsItem);
