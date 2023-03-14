@@ -1022,8 +1022,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                             }
 
-                            if (((_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP" && _MyDeclarationPM.TotalTax > 0) || pendingRequiresPayment) && _MyDeclarationPM.DeclarationStatusTypeCode == "13" && ( !string.IsNullOrEmpty(defValue) &&  _MyDeclarationPM.CustomerCode == defValue))
-                            {
+ 
+
+
+                            if ((_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP" && (_MyDeclarationPM.TotalTax > 0 || pendingRequiresPayment))
+                                && _MyDeclarationPM.DeclarationStatusTypeCode == "13")
+                             {
                                 if (declarationPendingPM_900 == null)
                                 {
                                     declarationPendingPM_900 = new DeclarationPendingPM();
@@ -2616,6 +2620,25 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 // TODO: BL Stop Execute or Cuntinue - Ask IHAB
                 throw;
             }
+        }
+
+
+        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
+        {
+            AmitalContext amitalContext = AmitalContext.GetContext(tenant);
+            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
+
+            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
+            {
+                return ("");
+            }
+
+            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
+            if (myGDFDATAPM == null)
+            {
+                return ("");
+            }
+            return (myGDFDATAPM.DEFDATA);
         }
 
 
