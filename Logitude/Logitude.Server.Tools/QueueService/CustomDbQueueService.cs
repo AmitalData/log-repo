@@ -180,7 +180,7 @@ namespace Logitude.Server.Tools.QueueService
         }
 
 
-        public static void SendCommunicationLogMessageToQueue(string queueName, string communicationLogId, int tenant, bool UseRabbitMQ)
+        public static void SendCommunicationLogMessageToQueue(string queueName, string communicationLogId, int tenant, bool UseRabbitMQ, int? tenantPriority = null)
         {
             try
             {
@@ -190,7 +190,7 @@ namespace Logitude.Server.Tools.QueueService
                     UseRabbitMQ,
                     "CommunicationLog".ToLower(),
                     communicationLogId
-
+                    ,tenantPriority 
                     );
                 //IQueueService queueservice = new DbQueueService();
                 //queueservice.InitializeQueue(queueName, 0);
@@ -224,7 +224,7 @@ namespace Logitude.Server.Tools.QueueService
         public static void SendCommunicationLogMessageToQueue(string queueName, Dictionary<string, string> messageValues, int tenant,
             bool UseRabbitMQ,
             string entityCode, string entityId
-            )
+, int? tenantPriority)
         {
             try
             {
@@ -240,7 +240,9 @@ namespace Logitude.Server.Tools.QueueService
                     new QueueSendModel() { 
                         UseRabbitMQ = UseRabbitMQ ,
                         EntityCode= entityCode,
-                        EntityId = entityId,    
+                        EntityId = entityId,   
+                         
+                        TenantPriority = tenantPriority?? 89,
 
 
                     });
