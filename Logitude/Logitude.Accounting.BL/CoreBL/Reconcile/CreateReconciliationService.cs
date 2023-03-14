@@ -2,6 +2,7 @@
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.Resolvers;
@@ -99,9 +100,9 @@ namespace Logitude.Accounting.BL.CoreBL
                     recoCallBack = SplitAndSubmitReconciliationByGroupNumber(reconciliationPM);
                 }
 
-
-
-
+                var accountingContext = AccountingContext.GetContext(reconciliationPM.Tenant);
+                var repoLedger = new LedgerTransactionRepository(accountingContext as IAccountingContext);
+                repoLedger.ResetDraftOpenReconciliation(reconciliationPM.AccountId, reconciliationPM.Tenant);
 
                 return recoCallBack;
             }
