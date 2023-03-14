@@ -2670,7 +2670,7 @@ export class TransactionLineModel extends BaseComponent
 
 	OnAmountToReconciledblclick(logCellTemplate: any, classificationTextBox: any){
 		
-	if(this.IsAccountingActivated) {
+	if(this.IsAccountingActivated && this.parent.EntityPM.StatusCode != "VD") {
 		var totalOpenAmount = this.parent.PaymenyAmount - this.parent.paymentReconciledAmountTotal -this.parent.amount2reconcileTotal;
 		
 		if(this.AmountToReconcile > 0) {
