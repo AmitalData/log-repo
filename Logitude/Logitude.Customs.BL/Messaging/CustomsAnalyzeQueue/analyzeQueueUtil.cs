@@ -98,12 +98,14 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
                 analyzeQueueReposiory.Add(analyzeQueue);
                 analyzeQueueReposiory.SubmitChanges();
-                EnqueueAnalyzeQueue2MessageQueue(analyzeQueue.Id, defInterfaceDetail.Code, defInterfaceDetail.Partner, tenant);
+                EnqueueAnalyzeQueue2MessageQueue(analyzeQueue.Id, defInterfaceDetail.Code, defInterfaceDetail.Partner, tenant,
+                    defInterfaceDetail?.Priority == PriorityEnum.High ? 20 : 89
+                    );
                 scope.Complete();
             }
             return analyzeQueue;
         }
-        private void EnqueueAnalyzeQueue2MessageQueue(string analyzeQueueID, string InterfaceCode, string InterfacePartner, int tenant)
+        private void EnqueueAnalyzeQueue2MessageQueue(string analyzeQueueID, string InterfaceCode, string InterfacePartner, int tenant, int? tenantPriority = null)
         {
             try
             {
@@ -122,6 +124,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                     tenant, UseRabbitMQ,
                     "AnalyzeQueue".ToLower(),
                     analyzeQueueID
+                    , tenantPriority
                     );
                 return;
 

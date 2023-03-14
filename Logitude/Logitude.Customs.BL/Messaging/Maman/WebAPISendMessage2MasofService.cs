@@ -32,7 +32,7 @@ namespace Logitude.Customs.BL.Messaging/*.Maman*/
         //private string _communicationSubject = "שידור מסר  פעולות מיוחדות לממן";
 
 
-        public void BuildCommunicationLog(byte[] bytearray, int tenant, string declarationId, string InterfaceName, string PartnerCode)///using  by SendWEBAPIMessage2MamanWRWR
+        public void BuildCommunicationLog(byte[] bytearray, int tenant, string declarationId, string InterfaceName, string PartnerCode, int? tenantPriority = null)///using  by SendWEBAPIMessage2MamanWRWR
         {
             ObjectTableRepository repo = new ObjectTableRepository(tenant);
             var objectTableId = repo.GetObjectTableIdByName("Customs.Declaration"/*"Customs.CourierMaster"*/);
@@ -165,7 +165,7 @@ namespace Logitude.Customs.BL.Messaging/*.Maman*/
                 var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() ?? new CustomsEnvironmentSettingPM();
                 bool UseRabbitMQ = customsEnvironmentSettingPM.UseRabbitMQ;//currInterfaceTenantDefinition.UseRabbitMQ;
 
-                CustomDbQueueService.SendCommunicationLogMessageToQueue(commLog.QueueName, commLog.Id, tenant, UseRabbitMQ);
+                CustomDbQueueService.SendCommunicationLogMessageToQueue(commLog.QueueName, commLog.Id, tenant, UseRabbitMQ, tenantPriority);
                 scop.Complete();
             }
 

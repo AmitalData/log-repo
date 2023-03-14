@@ -107,6 +107,7 @@ namespace Logitude.Customs.BL.CloseTables
                 ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
                 WEBAPICredentialType = CourierWEBAPICredentialType.Bearer,
                 ResponseCode =InterfaceName_ECMMNSPCL_Response,
+                Priority =  PriorityEnum.High
             }
             ,
             new InterfaceDetails()
@@ -119,7 +120,8 @@ namespace Logitude.Customs.BL.CloseTables
 
                 AnalyzeQueueService= AnalyzeQueueServiceEnum.MamanQSPCLService,
                 Subject="פעולות מיוחדות מממן",
-                ServerInternalDef= true
+                ServerInternalDef= true,
+                 Priority = PriorityEnum.High
 
             }
             ,
@@ -463,9 +465,15 @@ namespace Logitude.Customs.BL.CloseTables
         public string Subject { get; internal set; }
         public bool ServerInternalDef { get; set; }
         public string ResponseCode { get; set; }
+
+        public PriorityEnum Priority { get; set; }
     }
 
-
+    public enum PriorityEnum
+    {
+        Regular,
+        High
+    }
     public class WebApiDefinitionDTO
     {
         public string WEBAPIURL { get; set; }

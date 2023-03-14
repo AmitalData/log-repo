@@ -69,8 +69,11 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 //var myWebAPICourierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanResponseService();
                 //myWebAPICourierGWMessageECTHRDataMamanService.BuildCommunicationLog(bytearray, tenant, declarationId);
 
+                var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
+                var interfaceDetails = customsPartnerFtpDetails.GetAllInterfaceDetails().FirstOrDefault(r => r.Code == CustomsPartnerFtpDetails.InterfaceName_ECMMNSPCL_REQUEST);
+                int priority = interfaceDetails.Priority == PriorityEnum.High ? 20 : 89;
                 var webAPISendMessage2MamanService = new WebAPISendMessage2MasofService();
-                webAPISendMessage2MamanService.BuildCommunicationLog(bytearray, tenant, declarationId, CustomsPartnerFtpDetails.InterfaceName_ECMMNSPCL_REQUEST, CustomsPartnerFtpDetails.PartnerCode_Mamam);
+                webAPISendMessage2MamanService.BuildCommunicationLog(bytearray, tenant, declarationId, CustomsPartnerFtpDetails.InterfaceName_ECMMNSPCL_REQUEST, CustomsPartnerFtpDetails.PartnerCode_Mamam, priority);
 
                 scop.Complete();
                 //output  ftp://192.168.10.88/FTP_MAMAN/  
