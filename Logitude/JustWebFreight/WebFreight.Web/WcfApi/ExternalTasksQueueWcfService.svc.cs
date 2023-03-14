@@ -41,6 +41,10 @@ namespace WebFreight.Web.WcfApi
         public Response LGTQuery(string queryId, Dictionary<string, string> queryParams, int tenant)
         {
             Response res = new Response();
+
+            res.HasError = false;
+            res.Result = "big data";
+
             return (res);
         }
         public string GetTaskFromQueue(int tenant, int priority)
