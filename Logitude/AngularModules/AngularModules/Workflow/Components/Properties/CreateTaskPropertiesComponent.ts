@@ -267,21 +267,21 @@ export class CreateTaskPropertiesComponent extends BaseComponent implements OnIn
         this.setSetValuesData();
         this.setEntityFieldsData();
         this.setDoneConditionsFromFields();
-        //console.log(this.Data);
+        console.log(this.Data);
         this.CurrentSession.CurrentWindow.Close(this.Data);
     }
 
     handleSaveValidationErrors(notValidUIProperties: UIProperty[], isValidName: boolean) {
         let validationErrors = notValidUIProperties.map(t => { return t.ValidationError; });
         this.ValidationErrorsList = validationErrors;
+        if (!isValidName) {
+            this.ValidationErrorsList.push("The Name Should be Unique.");
+        }
         if (!this.IsValidSetValues) {
             this.ValidationErrorsList.push("Invalid Set Values");
         }
         if (!this.IsValidEntityFields) {
             this.ValidationErrorsList.push("Invalid Fields");
-        }
-        if (!isValidName) {
-            this.ValidationErrorsList.push("The Name Should be Unique.");
         }
     }
 
