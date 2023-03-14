@@ -2,7 +2,7 @@
 <Script DBType="Main" Module="Customs">
   <Sql Version="1">
 	  <![CDATA[
-	 update internationalsites set countrytypecode= substring(code,0,2)
+	 update Customs.internationalsites set countrytypecode= substring(code,0,2)
  ]]>
 
   </Sql>
