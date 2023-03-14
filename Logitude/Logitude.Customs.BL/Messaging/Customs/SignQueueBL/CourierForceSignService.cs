@@ -64,12 +64,20 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
 
                 if (isPersonalSign && string.IsNullOrWhiteSpace(personId) && string.IsNullOrWhiteSpace(availableSignServer))
                 {
+                    if (Environment.CommandLine.ToLower().Contains("AmitalCustomsWindowsService.exe".ToLower()))
+                    {
+                        return;
+                    }   
                     throw new CourierForceSignException("No Person ID is set for the user");
                 }
                 var dBSignStationCheckService = new DBSignStationCheckService();
                 var signStation = dBSignStationCheckService.GetValidSignStation(requestParams.Tenant, personId, isPersonalSign);
                 if (signStation == null && string.IsNullOrWhiteSpace(availableSignServer))
                 {
+                    if (Environment.CommandLine.ToLower().Contains("AmitalCustomsWindowsService.exe".ToLower()))
+                    {
+                        return;
+                    }
                     throw new CourierForceSignException("No suitable signature position found");
                 }
                 LogMessagingUtil.Instance.AppendLine($"ApplyForceSign:memory:{signStation?.PersonId}");
