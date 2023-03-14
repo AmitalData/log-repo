@@ -65,13 +65,15 @@ namespace WebFreight.Web.ReportsWebServices
             InvoiceDataProvider invoicedataprovider = GetInvoiceDataProvider(invoiceId, documentTypeCopyId, tenant);
 
             XmlSerializer serializer = new XmlSerializer(typeof(InvoiceDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, invoicedataprovider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
+            using (MemoryStream memstream = new MemoryStream())
+            {
+                serializer.Serialize(memstream, invoicedataprovider);
+                memstream.Seek(0, SeekOrigin.Begin);
+                var reader = new StreamReader(memstream);
+                string content = reader.ReadToEnd();
+                byte[] bytearray = memstream.ToArray();
+                return bytearray;
+            }
         }
 
         public InvoiceDataProvider GetInvoiceDataProvider(string invoiceId, string documentTypeCopyId, int tenant)

@@ -10,7 +10,7 @@ using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using System.ServiceModel.DomainServices.Hosting;
 
-namespace WebFreight.Web.WorkFlow.DomainServices
+namespace WebFreight.Web.WorkflowModel.DomainServices
 {
     [EnableClientAccess()]
     public partial class WorkFlowDomainService : LogitudeDomainService

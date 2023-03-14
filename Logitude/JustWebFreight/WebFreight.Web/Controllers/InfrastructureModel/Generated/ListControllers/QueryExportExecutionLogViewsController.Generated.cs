@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				QueryExportExecutionLogRepository  queryExportExecutionLogRepository = new QueryExportExecutionLogRepository(MyContext);
 				QueryExportExecutionLogList entityList = null;
 				QueryExportExecutionLog entityPoco = queryExportExecutionLogRepository.GetSingleQueryExportExecutionLog(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<QueryExportExecutionLog> singleEntityList = new List<QueryExportExecutionLog>();
 					singleEntityList.Add(entityPoco);

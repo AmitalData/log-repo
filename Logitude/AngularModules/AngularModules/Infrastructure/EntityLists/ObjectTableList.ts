@@ -69,5 +69,6 @@ export class ObjectTableList {
 		FullNameTextCodeId: string;
 		FullNameTextCodeCode: string;
 		FullNameTextCodeDefaultText: string;
-        AvailableInDocumentTypes: boolean;
+		AvailableInDocumentTypes: boolean;
+	
 }

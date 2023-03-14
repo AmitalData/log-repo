@@ -29,7 +29,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class DocumentTypeQuery
     {
         DocumentTypeRepository repository;
-
+        private bool isFullAccounting;
         public DocumentTypeQuery()
         {
             repository = new DocumentTypeRepository();
@@ -38,6 +38,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public DocumentTypeQuery(int tenant)
         {
             repository = new DocumentTypeRepository(tenant);
+            isFullAccounting = IsFullAccountingActivated(tenant);
         }
 
         public DocumentTypeQuery(DocumentTypeRepository repository)
@@ -612,7 +613,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             OnPrintPopulateDateFieldName = a.OnPrintPopulateDateFieldName,
                                             OnSendPopulateDateFieldName = a.OnSendPopulateDateFieldName,
                                             OnUploadPopulateDateFieldName = a.OnUploadPopulateDateFieldName,
-
+                                            DocumentTypeDefaultReportTemplateId = a.DocumentTypeDefaultReportTemplateId,
 
                                         }).ToList();
             return d;
@@ -1314,66 +1315,138 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public List<DocumentTypePM> GetDocumentTypePMsByObjectTableAndTenant(string objectTableid, int tenant)
         {
-            List<DocumentTypePM> d = (from a in repository.context.DocumentTypes.Include("DocumentTypeCategory")
-                                      where a.Tenant == tenant && a.ObjectTableId == objectTableid && (a.IsDocIn || a.IsDocOut)
-                                      select new DocumentTypePM()
-                                      {
-                                          Id = a.Id,
-                                          Tenant = a.Tenant,
-                                          Name = a.Name,
-                                          Code = a.Code,
-                                          Notes = a.Notes,
-                                          IsAir = a.IsAir,
-                                          IsOcean = a.IsOcean,
-                                          IsInland = a.IsInland,
-                                          IsDocIn = a.IsDocIn,
-                                          IsDocOut = a.IsDocOut,
-                                          ObjectTableId = a.ObjectTableId,
-                                          Subject = a.Subject,
-                                          DocumentTypeDefaultReportTemplateId = a.DocumentTypeDefaultReportTemplateId,
-                                          DocumentTypeDefaultHTMLTemplateId = a.DocumentTypeDefaultHTMLTemplateId,
-                                          TemplateFormatCode = a.TemplateFormatCode,
-                                          DocumentTypeDefaultEditorTool = a.DocumentTypeDefaultEditorTool,
-                                          InActive = a.InActive,
-                                          IsMaster = a.IsMaster,
-                                          IsDirect = a.IsDirect,
-                                          IsHouse = a.IsHouse,
-                                          SearchFields = a.SearchFields,
-                                          CustomControl = a.CustomControl,
-                                          CustomerRoleId = a.CustomerRoleId,
-                                          AgentRoleId = a.AgentRoleId,
-                                          IsCustomerView = a.IsCustomerView,
-                                          IsCustomerUploadPermission = a.IsCustomerUploadPermission,
-                                          IsAgentView = a.IsAgentView,
-                                          IsReadOnly = a.IsReadOnly,
-                                          LimitedPrintCopyId = a.LimitedPrintCopyId,
-                                          IsDocumentOneTimePrintLimited = a.IsDocumentOneTimePrintLimited,
-                                          IsCopiedAtSignup = a.IsCopiedAtSignup,
-                                          IsEnabledForCustomers = a.IsEnabledForCustomers,
-                                          CountryCode = a.CountryCode,
-                                          DocumentTypeCategoryCode = a.DocumentTypeCategoryCode,
-                                          DocumentTypeCategoryName = a.DocumentTypeCategory != null ? a.DocumentTypeCategory.Name : null,
-                                          OrderBy = a.OrderBy,
-                                          FileName = a.FileName,
-                                          IsAgentSharedInDirect = a.IsAgentSharedInDirect,
-                                          IsAgentSharedInHouse = a.IsAgentSharedInHouse,
-                                          IsAgentSharedInMaster = a.IsAgentSharedInMaster,
-                                          SharedDocumentTypeCopyId = a.SharedDocumentTypeCopyId,
-                                          IsAirDigitalSignRequired = a.IsAirDigitalSignRequired,
-                                          IsOceanDigitalSignRequired = a.IsOceanDigitalSignRequired,
-                                          IsInlandDigitalSignRequired = a.IsInlandDigitalSignRequired,
-                                          IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
-                                          PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
-                                          AddedManually = a.AddedManually,
-                                          OnPrintPopulateDateFieldName = a.OnPrintPopulateDateFieldName,
-                                          OnSendPopulateDateFieldName = a.OnSendPopulateDateFieldName,
-                                          OnUploadPopulateDateFieldName = a.OnUploadPopulateDateFieldName,
 
-                                      }).ToList();
-            return d;
+            if (isFullAccounting)
+            {
+                List<DocumentTypePM> d = (from a in repository.context.DocumentTypes.Include("DocumentTypeCategory")
+                                          where !a.InActive & a.Tenant == tenant && a.ObjectTableId == objectTableid && (a.IsDocIn || a.IsDocOut)
+                                          select new DocumentTypePM()
+                                          {
+                                              Id = a.Id,
+                                              Tenant = a.Tenant,
+                                              Name = a.Name,
+                                              Code = a.Code,
+                                              Notes = a.Notes,
+                                              IsAir = a.IsAir,
+                                              IsOcean = a.IsOcean,
+                                              IsInland = a.IsInland,
+                                              IsDocIn = a.IsDocIn,
+                                              IsDocOut = a.IsDocOut,
+                                              ObjectTableId = a.ObjectTableId,
+                                              Subject = a.Subject,
+                                              DocumentTypeDefaultReportTemplateId = a.DocumentTypeDefaultReportTemplateId,
+                                              DocumentTypeDefaultHTMLTemplateId = a.DocumentTypeDefaultHTMLTemplateId,
+                                              TemplateFormatCode = a.TemplateFormatCode,
+                                              DocumentTypeDefaultEditorTool = a.DocumentTypeDefaultEditorTool,
+                                              InActive = a.InActive,
+                                              IsMaster = a.IsMaster,
+                                              IsDirect = a.IsDirect,
+                                              IsHouse = a.IsHouse,
+                                              SearchFields = a.SearchFields,
+                                              CustomControl = a.CustomControl,
+                                              CustomerRoleId = a.CustomerRoleId,
+                                              AgentRoleId = a.AgentRoleId,
+                                              IsCustomerView = a.IsCustomerView,
+                                              IsCustomerUploadPermission = a.IsCustomerUploadPermission,
+                                              IsAgentView = a.IsAgentView,
+                                              IsReadOnly = a.IsReadOnly,
+                                              LimitedPrintCopyId = a.LimitedPrintCopyId,
+                                              IsDocumentOneTimePrintLimited = a.IsDocumentOneTimePrintLimited,
+                                              IsCopiedAtSignup = a.IsCopiedAtSignup,
+                                              IsEnabledForCustomers = a.IsEnabledForCustomers,
+                                              CountryCode = a.CountryCode,
+                                              DocumentTypeCategoryCode = a.DocumentTypeCategoryCode,
+                                              DocumentTypeCategoryName = a.DocumentTypeCategory != null ? a.DocumentTypeCategory.Name : null,
+                                              OrderBy = a.OrderBy,
+                                              FileName = a.FileName,
+                                              IsAgentSharedInDirect = a.IsAgentSharedInDirect,
+                                              IsAgentSharedInHouse = a.IsAgentSharedInHouse,
+                                              IsAgentSharedInMaster = a.IsAgentSharedInMaster,
+                                              SharedDocumentTypeCopyId = a.SharedDocumentTypeCopyId,
+                                              IsAirDigitalSignRequired = a.IsAirDigitalSignRequired,
+                                              IsOceanDigitalSignRequired = a.IsOceanDigitalSignRequired,
+                                              IsInlandDigitalSignRequired = a.IsInlandDigitalSignRequired,
+                                              IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
+                                              PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
+                                              AddedManually = a.AddedManually,
+                                              OnPrintPopulateDateFieldName = a.OnPrintPopulateDateFieldName,
+                                              OnSendPopulateDateFieldName = a.OnSendPopulateDateFieldName,
+                                              OnUploadPopulateDateFieldName = a.OnUploadPopulateDateFieldName,
+
+                                          }).ToList();
+
+                return d;
+            } else
+            {
+                List<DocumentTypePM> d = (from a in repository.context.DocumentTypes.Include("DocumentTypeCategory")
+                                          where a.Tenant == tenant && a.ObjectTableId == objectTableid && (a.IsDocIn || a.IsDocOut)
+                                          select new DocumentTypePM()
+                                          {
+                                              Id = a.Id,
+                                              Tenant = a.Tenant,
+                                              Name = a.Name,
+                                              Code = a.Code,
+                                              Notes = a.Notes,
+                                              IsAir = a.IsAir,
+                                              IsOcean = a.IsOcean,
+                                              IsInland = a.IsInland,
+                                              IsDocIn = a.IsDocIn,
+                                              IsDocOut = a.IsDocOut,
+                                              ObjectTableId = a.ObjectTableId,
+                                              Subject = a.Subject,
+                                              DocumentTypeDefaultReportTemplateId = a.DocumentTypeDefaultReportTemplateId,
+                                              DocumentTypeDefaultHTMLTemplateId = a.DocumentTypeDefaultHTMLTemplateId,
+                                              TemplateFormatCode = a.TemplateFormatCode,
+                                              DocumentTypeDefaultEditorTool = a.DocumentTypeDefaultEditorTool,
+                                              InActive = a.InActive,
+                                              IsMaster = a.IsMaster,
+                                              IsDirect = a.IsDirect,
+                                              IsHouse = a.IsHouse,
+                                              SearchFields = a.SearchFields,
+                                              CustomControl = a.CustomControl,
+                                              CustomerRoleId = a.CustomerRoleId,
+                                              AgentRoleId = a.AgentRoleId,
+                                              IsCustomerView = a.IsCustomerView,
+                                              IsCustomerUploadPermission = a.IsCustomerUploadPermission,
+                                              IsAgentView = a.IsAgentView,
+                                              IsReadOnly = a.IsReadOnly,
+                                              LimitedPrintCopyId = a.LimitedPrintCopyId,
+                                              IsDocumentOneTimePrintLimited = a.IsDocumentOneTimePrintLimited,
+                                              IsCopiedAtSignup = a.IsCopiedAtSignup,
+                                              IsEnabledForCustomers = a.IsEnabledForCustomers,
+                                              CountryCode = a.CountryCode,
+                                              DocumentTypeCategoryCode = a.DocumentTypeCategoryCode,
+                                              DocumentTypeCategoryName = a.DocumentTypeCategory != null ? a.DocumentTypeCategory.Name : null,
+                                              OrderBy = a.OrderBy,
+                                              FileName = a.FileName,
+                                              IsAgentSharedInDirect = a.IsAgentSharedInDirect,
+                                              IsAgentSharedInHouse = a.IsAgentSharedInHouse,
+                                              IsAgentSharedInMaster = a.IsAgentSharedInMaster,
+                                              SharedDocumentTypeCopyId = a.SharedDocumentTypeCopyId,
+                                              IsAirDigitalSignRequired = a.IsAirDigitalSignRequired,
+                                              IsOceanDigitalSignRequired = a.IsOceanDigitalSignRequired,
+                                              IsInlandDigitalSignRequired = a.IsInlandDigitalSignRequired,
+                                              IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
+                                              PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
+                                              AddedManually = a.AddedManually,
+                                              OnPrintPopulateDateFieldName = a.OnPrintPopulateDateFieldName,
+                                              OnSendPopulateDateFieldName = a.OnSendPopulateDateFieldName,
+                                              OnUploadPopulateDateFieldName = a.OnUploadPopulateDateFieldName,
+
+                                          }).ToList();
+
+                return d;
+            }
+            
         }
 
-
+        private bool IsFullAccountingActivated(int tenant)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+            bool isFullAccountingActivated = tenantPOCO.AccountingActivated;
+            return isFullAccountingActivated;
+        }
 
 
         public List<DocumentTypePM> GetFollowUpDocumentTypeByEntityId(string entityId, string objectTableName, int tenant)

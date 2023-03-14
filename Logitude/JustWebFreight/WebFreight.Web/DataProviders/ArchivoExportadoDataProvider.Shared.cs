@@ -170,5 +170,6 @@ namespace WebFreight.Web.DataProviders
         public double? AccountedReceivablesInInvoiceCurrency { get; set; }
         public double? AccountedPayablesInInvoiceCurrency { get; set; }
         public string InvoiceStatusName { get; set; }
+        public string MasterShipmentNumber { get; set; }
     }
 }

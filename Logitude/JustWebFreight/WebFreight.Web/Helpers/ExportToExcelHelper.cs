@@ -318,7 +318,7 @@ namespace WebFreight.Web.Helpers
 
                 if (stop == false)
                 {
-                    MethodsInfo = getMethodsInfo("WebFreight.Web.WorkFlow.DomainServices.WorkFlowDomainService", query);
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.WorkflowModel.DomainServices.WorkFlowDomainService", query);
                     if (MethodsInfo != null)
                     {
                         getListMethodInfo = MethodsInfo.ListMethodInfo;
@@ -330,7 +330,7 @@ namespace WebFreight.Web.Helpers
 
                 if (stop == false)
                 {
-                    MethodsInfo = getMethodsInfo("WebFreight.Web.WorkFlow.DomainServices.WorkFlowInstanceDomainService", query);
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.WorkflowModel.DomainServices.WorkFlowInstanceDomainService", query);
                     if (MethodsInfo != null)
                     {
                         getListMethodInfo = MethodsInfo.ListMethodInfo;
@@ -342,7 +342,19 @@ namespace WebFreight.Web.Helpers
 
                 if (stop == false)
                 {
-                    MethodsInfo = getMethodsInfo("WebFreight.Web.WorkFlow.DomainServices.WorkFlowVersionDomainService", query);
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.WorkflowModel.DomainServices.WorkFlowVersionDomainService", query);
+                    if (MethodsInfo != null)
+                    {
+                        getListMethodInfo = MethodsInfo.ListMethodInfo;
+                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                        context = MethodsInfo.context;
+                        stop = true;
+                    }
+                }
+
+                if (stop == false)
+                {
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.WorkflowModel.DomainServices.TaskDomainService", query);
                     if (MethodsInfo != null)
                     {
                         getListMethodInfo = MethodsInfo.ListMethodInfo;

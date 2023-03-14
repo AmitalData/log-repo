@@ -499,10 +499,8 @@ namespace WebFreight.Web.Helpers
             sheet1.Name = "Label translation";
             var table = new DataTable();
 
-            sheet1.Range["A1:E1"].Merge();
-            sheet1.Range["A2:D2"].Merge();
-            sheet1.Range["E1:V1"].Merge();
-            sheet1.Range["E2:V2"].Merge();
+            sheet1.Range["A1:F1"].Merge();
+            sheet1.Range["A2:F2"].Merge();
             sheet1.Range["C1"].CellStyle.Font.Bold = true;
             sheet1.Range["C1"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
             sheet1.Range["C1"].VerticalAlignment = ExcelVAlign.VAlignTop;
@@ -515,22 +513,23 @@ namespace WebFreight.Web.Helpers
             sheet1.Range["C2"].Text = $"Created Date: {DateTime.UtcNow:dd MMM yyyy}";
             sheet1.Range["C2"].CellStyle.Font.Size = 12;
 
-            sheet1.Range["A3:E3"].CellStyle.Color = Color.LightGray;
-            sheet1.Range["A3:E3"].RowHeight = 25;
+            sheet1.Range["A3:F3"].CellStyle.Color = Color.LightGray;
+            sheet1.Range["A3:F3"].RowHeight = 25;
+                             
+            sheet1.Range["A3:F3"].CellStyle.Font.Bold = true;
+            sheet1.Range["A3:F3"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
+            sheet1.Range["A3:F3"].VerticalAlignment = ExcelVAlign.VAlignCenter;
+            sheet1.Range["A3:F3"].CellStyle.Font.Size = 11;
+            sheet1.Range["A3:F3"].Borders[ExcelBordersIndex.EdgeLeft].LineStyle = ExcelLineStyle.Thin;
+            sheet1.Range["A3:F3"].Borders[ExcelBordersIndex.EdgeRight].LineStyle = ExcelLineStyle.Thin;
+            sheet1.Range["A3:F3"].Borders[ExcelBordersIndex.EdgeTop].LineStyle = ExcelLineStyle.Thin;
+            sheet1.Range["A3:F3"].Borders[ExcelBordersIndex.EdgeBottom].LineStyle = ExcelLineStyle.Thin;
+                             
+            sheet1.Range["A3:F3"].AutofitRows();
+            sheet1.Range["A3:F3"].AutofitColumns();
+            sheet1.Range["A3:F3"].WrapText = true;
 
-            sheet1.Range["A3:E3"].CellStyle.Font.Bold = true;
-            sheet1.Range["A3:E3"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
-            sheet1.Range["A3:E3"].VerticalAlignment = ExcelVAlign.VAlignCenter;
-            sheet1.Range["A3:E3"].CellStyle.Font.Size = 11;
-            sheet1.Range["A3:E3"].Borders[ExcelBordersIndex.EdgeLeft].LineStyle = ExcelLineStyle.Thin;
-            sheet1.Range["A3:E3"].Borders[ExcelBordersIndex.EdgeRight].LineStyle = ExcelLineStyle.Thin;
-            sheet1.Range["A3:E3"].Borders[ExcelBordersIndex.EdgeTop].LineStyle = ExcelLineStyle.Thin;
-            sheet1.Range["A3:E3"].Borders[ExcelBordersIndex.EdgeBottom].LineStyle = ExcelLineStyle.Thin;
-
-            sheet1.Range["A3:E3"].AutofitRows();
-            sheet1.Range["A3:E3"].AutofitColumns();
-            sheet1.Range["A3:E3"].WrapText = true;
-
+            table.Columns.Add("Text Code");
             table.Columns.Add("Field Code");
             table.Columns.Add("English Default Text");
             table.Columns.Add("Spanish Default Text");
@@ -542,12 +541,12 @@ namespace WebFreight.Web.Helpers
             {
                 foreach (var item in profilesLables.Value)
                 {
-                    sheet1.Range[$"A{index}:E{index}"].CellStyle.Font.Size = 10;
-                    sheet1.Range[$"A{index}:E{index}"].ColumnWidth = 40;
-                    sheet1.Range[$"A{index}:E{index}"].WrapText = true;
-                    sheet1.Range[$"A{index}:E{index}"].AutofitRows();
-                    sheet1.Range[$"A{index}:E{index}"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
-                    sheet1.Range[$"A{index}:E{index}"].VerticalAlignment = ExcelVAlign.VAlignCenter;
+                    sheet1.Range[$"A{index}:F{index}"].CellStyle.Font.Size = 10;
+                    sheet1.Range[$"A{index}:F{index}"].ColumnWidth = 40;
+                    sheet1.Range[$"A{index}:F{index}"].WrapText = true;
+                    sheet1.Range[$"A{index}:F{index}"].AutofitRows();
+                    sheet1.Range[$"A{index}:F{index}"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
+                    sheet1.Range[$"A{index}:F{index}"].VerticalAlignment = ExcelVAlign.VAlignCenter;
 
                     var englishLables = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(item.Labels);
 
@@ -571,10 +570,11 @@ namespace WebFreight.Web.Helpers
 
                         DataRow row = table.NewRow();
                         row[0] = code.TextCode;
-                        row[1] = code.DefaultText;
-                        row[2] = foreignLanguageTextCode;
-                        row[3] = item.ProfileCode;
-                        row[4] = item.ObjectTableName;
+                        row[1] = code.FieldCode;
+                        row[2] = code.DefaultText;
+                        row[3] = foreignLanguageTextCode;
+                        row[4] = item.ProfileCode;
+                        row[5] = item.ObjectTableName;
                         table.Rows.Add(row);
                         index++;
                     }
@@ -584,7 +584,7 @@ namespace WebFreight.Web.Helpers
             sheet1.Range["A4"].FreezePanes();
             sheet1.ImportDataTable(table, true, 3, 1);
             workbook.Version = ExcelVersion.Excel2007;
-            MemoryStream memory = new MemoryStream();
+            var memory = new MemoryStream();
             workbook.SaveAs(memory);
             workbook.Close();
             excelEngine.Dispose();

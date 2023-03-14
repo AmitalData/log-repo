@@ -66,8 +66,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				IATACodeRepository  iATACodeRepository = new IATACodeRepository(MyContext);
 				IATACodeList entityList = null;
 				IATACode entityPoco = iATACodeRepository.GetSingleIATACode(id );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<IATACode> singleEntityList = new List<IATACode>();
 					singleEntityList.Add(entityPoco);

@@ -70,6 +70,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         }
 
         public string Position { get; set; }
+        public string DigitalPortalLanguage { get; set; }
         public bool BirthdayReminder { get; set; }
         public bool AnniversaryReminder { get; set; }
 

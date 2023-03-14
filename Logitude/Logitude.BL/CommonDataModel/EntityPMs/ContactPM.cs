@@ -280,5 +280,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public string TimeZone { get; set; }
+
+        [DataMember]
+        public string DigitalPortalLanguage { get; set; }
     }
 }

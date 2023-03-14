@@ -748,6 +748,7 @@
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\PortGroupController.Generated.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalActivityController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalCustomizationController.cs" />
+    <Compile Include="Controllers\DigitalPortal\Helpers\UpdateLanguageRequest.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\ContainerSettingsController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\DeploymentPackageExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\RatesTablesController.cs" />
@@ -7752,6 +7753,7 @@
       <DependentUpon>XapFilesStorageService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="WorkflowModel\DomainServices\TaskDomainService.cs" />
     <Compile Include="WorkflowModel\DomainServices\WorkFlowVersionDomainService.cs" />
     <Compile Include="WorkflowModel\DomainServices\WorkFlowInstanceDomainService.cs" />
     <Compile Include="WorkflowModel\DomainServices\WorkFlowDomainService.cs" />

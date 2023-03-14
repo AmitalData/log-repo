@@ -239,12 +239,22 @@ namespace WebFreight.Web.ContainerTracking
         }
         private void MapVizionTransshipments()
         {
+            this.FillFirstContainerLegVesselVoyage();
             this.FillContainerTransshipmentLeg(containerUpdatedFields.LoadedTransshipment);
             this.FillContainerTransshipmentLeg(containerUpdatedFields.VesselDeparted);
             this.FillContainerTransshipmentLeg(containerUpdatedFields.VesselArrived);
             this.FillContainerTransshipmentLeg(containerUpdatedFields.DischargedTransshipment);
+            this.FillLastContainerLegVesselVoyage();
             this.SetShipmentTransshipmentLegDates();
+            this.SetShipmentVesselVoyageLegs();
         }
+
+        private void FillFirstContainerLegVesselVoyage()
+        {
+            Vessel polLegVessel = this.GetVessel(containerUpdatedFields.POLLegVessel);
+            this.FillContqainerVesselVoyage(polLegVessel?.EnglishName, containerUpdatedFields.POLLegVoyage, 1);
+        }
+
         private void FillContainerTransshipmentLeg(MilestoneData transshipmentObject)
         {
             foreach (MilestoneDataUpdatedFields updatedFields in transshipmentObject.MilestoneFields)
@@ -257,9 +267,22 @@ namespace WebFreight.Web.ContainerTracking
 
                 this.FillFieldsNewValues("Transshipment" + transshipmentLegIndex + "LocationPortId", portId, containerPM);
                 this.FillFieldsNewValues("Transshipment" + transshipmentLegIndex + "Location", updatedFields.Location, containerPM);
+                this.FillContqainerVesselVoyage(updatedFields.Vessel, updatedFields.Voyage, transshipmentLegIndex);
                 this.SetTransshipmentLegDates(transshipmentLegIndex, updatedFields, transshipmentObject.Key);
             }
         }
+
+        private void FillContqainerVesselVoyage(string vesselName, string voyage, int? transshipmentLegIndex)
+        {
+            this.FillFieldsNewValues("Leg" + transshipmentLegIndex + "Vessel", vesselName, containerPM);
+            this.FillFieldsNewValues("Leg" + transshipmentLegIndex + "Voyage", voyage, containerPM);
+
+            Vessel vessel = this.GetVessel(vesselName);
+            if (vessel == null) return;
+           
+            this.FillFieldsNewValues("Leg" + transshipmentLegIndex + "VesselId", vessel?.Id, containerPM);
+        }
+
         private int? GetCorrespondingShipmentLegIndex(string portId)
         {
             if (containerPM.ShipmentTransshipment1FromId == portId)
@@ -273,6 +296,37 @@ namespace WebFreight.Web.ContainerTracking
 
             return null;
         }
+        private void FillLastContainerLegVesselVoyage()
+        {
+            var lastContainerLegIndex = GetLastContainerLegIndex();
+            if (lastContainerLegIndex == 1 )
+            {
+                Vessel podLegVessel = this.GetVessel(containerUpdatedFields.PODLegVessel);
+                this.FillContqainerVesselVoyage(podLegVessel?.EnglishName, containerUpdatedFields.PODLegVoyage, lastContainerLegIndex);
+            }
+            else if (lastContainerLegIndex != null && lastContainerLegIndex != 4)
+            {
+                Vessel podLegVessel = this.GetVessel(containerUpdatedFields.PODLegVessel);
+                this.FillContqainerVesselVoyage(podLegVessel?.EnglishName, containerUpdatedFields.PODLegVoyage, lastContainerLegIndex + 1);
+            }
+        }
+        private int? GetLastContainerLegIndex()
+        {
+            if (!string.IsNullOrEmpty((string)GetPropValue(containerPM, "Leg4VesselId")))
+                return 4;
+
+            if (!string.IsNullOrEmpty((string)GetPropValue(containerPM, "Leg3VesselId")))
+                return 3;
+
+            if (!string.IsNullOrEmpty((string)GetPropValue(containerPM, "Leg2VesselId")))
+                return 2;
+
+            if (!string.IsNullOrEmpty((string)GetPropValue(containerPM, "Leg1VesselId")))
+                return 1;
+
+            return null;
+        }
+
         private void SetShipmentTransshipmentLegDates()
         {
             FillLegsMilestoneData();
@@ -282,6 +336,8 @@ namespace WebFreight.Web.ContainerTracking
         {
             FillShipmentVesselDepartedMilestoneFields();
             FillShipmentVesselArrivedMilestoneFields();
+            FillShipmentLoadedTransshipmentMilestoneFields();
+            FillShipmentDischargedTransshipmentMilestoneFields();
         }
         private void FillShipmentVesselDepartedMilestoneFields()
         {
@@ -290,7 +346,7 @@ namespace WebFreight.Web.ContainerTracking
                 if (string.IsNullOrEmpty(updatedFields.Location)) continue;
                 string portId = this.GetPortId(updatedFields.Location);
 
-                var leg = new { PortId = portId, MilestoneData = updatedFields, Direction = GetPortLegDirection(containerUpdatedFields.VesselDeparted.Key) };
+                var leg = new { PortId = portId, MilestoneData = updatedFields, Direction = GetPortLegDirection(containerUpdatedFields.VesselDeparted.Key), Key = containerUpdatedFields.VesselDeparted.Key};
                 allShipmentTrasshipmentLegs.Add(leg);
             }
         }
@@ -301,13 +357,35 @@ namespace WebFreight.Web.ContainerTracking
                 if (string.IsNullOrEmpty(updatedFields.Location)) continue;
                 string portId = this.GetPortId(updatedFields.Location);
 
-                var leg = new { PortId = portId, MilestoneData = updatedFields, Direction = GetPortLegDirection(containerUpdatedFields.VesselArrived.Key) };
+                var leg = new { PortId = portId, MilestoneData = updatedFields, Direction = GetPortLegDirection(containerUpdatedFields.VesselArrived.Key), Key = containerUpdatedFields.VesselArrived.Key };
+                allShipmentTrasshipmentLegs.Add(leg);
+            }
+        }
+        private void FillShipmentLoadedTransshipmentMilestoneFields()
+        {
+            foreach (MilestoneDataUpdatedFields updatedFields in containerUpdatedFields.LoadedTransshipment.MilestoneFields)
+            {
+                if (string.IsNullOrEmpty(updatedFields.Location)) continue;
+                string portId = this.GetPortId(updatedFields.Location);
+
+                var leg = new { PortId = portId, MilestoneData = updatedFields, Direction = GetPortLegDirection(containerUpdatedFields.LoadedTransshipment.Key), Key = containerUpdatedFields.LoadedTransshipment.Key };
+                allShipmentTrasshipmentLegs.Add(leg);
+            }
+        }
+        private void FillShipmentDischargedTransshipmentMilestoneFields()
+        {
+            foreach (MilestoneDataUpdatedFields updatedFields in containerUpdatedFields.DischargedTransshipment.MilestoneFields)
+            {
+                if (string.IsNullOrEmpty(updatedFields.Location)) continue;
+                string portId = this.GetPortId(updatedFields.Location);
+
+                var leg = new { PortId = portId, MilestoneData = updatedFields, Direction = GetPortLegDirection(containerUpdatedFields.DischargedTransshipment.Key), Key = containerUpdatedFields.DischargedTransshipment.Key };
                 allShipmentTrasshipmentLegs.Add(leg);
             }
         }
         private void FillShipmentDates()
         {
-            allShipmentTrasshipmentLegs.ForEach(leg =>
+            allShipmentTrasshipmentLegs.Where(a=>a.Key != "LoadedTransshipment" && a.Key != "DischargedTransshipment").ToList().ForEach(leg =>
             {
                 dynamic transshipmentLeg = GetShipmentLegDates(leg);
 
@@ -382,139 +460,83 @@ namespace WebFreight.Web.ContainerTracking
 
             return null;
         }
-
-        private void MapContainerVesselVoyageVizionTransshipments(ContainerUpdatedFields containerUpdatedFields)
+        private void SetShipmentVesselVoyageLegs()
         {
-            var leg1 = allShipmentTrasshipmentLegs.Where(a=>a.Index == 1).FirstOrDefault();
-            var leg2 = allShipmentTrasshipmentLegs.Where(a => a.Index == 2).FirstOrDefault();
-            var leg3 = allShipmentTrasshipmentLegs.Where(a => a.Index == 3).FirstOrDefault();
-            var index1 = 1;
-            var index2= 2;
-            var index3 = 3;
-            var index4 = 4;
-            Vessel polLegVessel = this.GetVessel(containerUpdatedFields.POLLegVessel);
-            Vessel podLegVessel = this.GetVessel(containerUpdatedFields.PODLegVessel);
-            dynamic polLeg = null;
-            if (!string.IsNullOrEmpty(containerUpdatedFields.POLLegVessel) && !string.IsNullOrEmpty(containerUpdatedFields.POLLegVoyage))
+            int? index = null;
+            for (int i = 0; i < 4; i++)
             {
-                polLeg = new { Vessel = containerUpdatedFields.POLLegVessel, VesselId = polLegVessel?.Id, Voyage = containerUpdatedFields.POLLegVoyage };
-            }
-            dynamic podLeg = null;
-            
-            if (!string.IsNullOrEmpty(containerUpdatedFields.PODLegVessel) &&!string.IsNullOrEmpty(containerUpdatedFields.PODLegVoyage))
-            {
-                podLeg = new { Vessel = containerUpdatedFields.PODLegVessel, VesselId = podLegVessel?.Id, Voyage = containerUpdatedFields.PODLegVoyage };
-            }
+                if (i != 0) index = i;
 
-            if (leg1 == null && leg2 == null && leg3 == null && polLeg == null && podLeg == null) return;
+                var fieldName = "Transshipment";
+                if (index == null) fieldName = "MainCarriage";
 
-            if (leg3 != null)
-            {
-                UpdateVesselVoyageVizionTransshipments(polLeg != null ? polLeg : leg1, index1, containerPM);
-                UpdateVesselVoyageVizionTransshipments(leg1 != null ? leg1 : polLeg, index2, containerPM);
-                UpdateVesselVoyageVizionTransshipments(leg2 != null ? leg2 : leg3, index3, containerPM);
-                UpdateVesselVoyageVizionTransshipments(leg3 != null ? leg3 : podLeg, index4, containerPM);
+                if (!IsTheSameFromToLocations(fieldName, index)) return;
+
+                string legVesselId = (string)GetPropValue(containerPM, "Leg" + (i + 1) + "VesselId");
+                string legVesselName = (string)GetPropValue(containerPM, "Leg" + (i + 1) + "Vessel");
+
+                if (!string.IsNullOrEmpty(legVesselId)) FillShipmentVessel(legVesselName, legVesselId, index);
+                string legVoyage = (string)GetPropValue(containerPM, "Leg" + (i + 1) + "Voyage");
+
+                if (!string.IsNullOrEmpty(legVoyage)) FillShipmentVoyage(legVoyage, index);
             }
-            else if (leg2 != null)
+        }
+        private bool IsTheSameFromToLocations(string fieldName, int? index)
+        {
+            string shipmentFromPortIdField = (string)GetPropValue(shipmentPM, fieldName + index + "FromPortId");
+            string shipmentToPortIdField = (string)GetPropValue(shipmentPM, fieldName + index + "ToPortId");
+            var istheSameFromLocation = false;
+            var istheSameToLocation = false;
+
+            if (allShipmentTrasshipmentLegs.Count() == 0)
             {
-                UpdateVesselVoyageVizionTransshipments(polLeg != null ? polLeg : leg1, index1, containerPM);
-                UpdateVesselVoyageVizionTransshipments(leg1 != null ? leg1 : polLeg, index2, containerPM);
-                UpdateVesselVoyageVizionTransshipments(podLeg != null ? podLeg : leg2, index3, containerPM);
-            }
-            else if (leg1 != null)
-            {
-                UpdateVesselVoyageVizionTransshipments(polLeg != null ? polLeg : leg1, index1, containerPM);
-                UpdateVesselVoyageVizionTransshipments(podLeg != null ? podLeg : leg1, index2, containerPM);
+                istheSameFromLocation = containerTrackingHelper.IsSameLocation(shipmentFromPortIdField, containerUpdatedFields.POLLocation);
+                istheSameToLocation = containerTrackingHelper.IsSameLocation(shipmentToPortIdField, containerUpdatedFields.PODLocation);
             }
             else
             {
-                UpdateVesselVoyageVizionTransshipments(podLeg != null ? podLeg : polLeg, index1, containerPM);
+                istheSameFromLocation = containerTrackingHelper.IsSameLocation(shipmentFromPortIdField, containerUpdatedFields.POLLocation);
+                istheSameToLocation = allShipmentTrasshipmentLegs.Where(a => a.Key == "VesselArrived" || a.Key == "DischargedTransshipment" && a.PortId == shipmentToPortIdField).Any();
+
+                if (index != null)
+                {
+                    istheSameFromLocation = allShipmentTrasshipmentLegs.Where(a => a.Key == "VesselDeparted" || a.Key == "LoadedTransshipment" && a.PortId == shipmentFromPortIdField).Any();
+                    istheSameToLocation = allShipmentTrasshipmentLegs.Where(a => a.Key == "VesselArrived" || a.Key == "DischargedTransshipment" && a.PortId == shipmentToPortIdField).Any();
+                }
             }
+
+            if (istheSameFromLocation && istheSameToLocation) return true;
+
+            return false;
         }
-
-        private void  UpdateVesselVoyageVizionTransshipments(dynamic leg, int index, object entity)
-        {
-            this.FillFieldsNewValues("Leg" + index + "Vessel", leg.Vessel, entity);
-            this.FillFieldsNewValues("Leg" + index + "VesselId", leg.VesselId, entity);
-            this.FillFieldsNewValues("Leg" + index + "Voyage", leg.Voyage, entity);
-        }
-
-        private void MapShipmentVesselVoyageVizionTransshipments(ContainerUpdatedFields containerUpdatedFields)
-        {
-            var leg1 = allShipmentTrasshipmentLegs.Where(a => a.Index == 1).FirstOrDefault();
-            var leg2 = allShipmentTrasshipmentLegs.Where(a => a.Index == 2).FirstOrDefault();
-            var leg3 = allShipmentTrasshipmentLegs.Where(a => a.Index == 3).FirstOrDefault();
-            var index1 = 1;
-            var index2 = 2;
-            var index3 = 3;
-            Vessel polLegVessel = this.GetVessel(containerUpdatedFields.POLLegVessel);
-            Vessel podLegVessel = this.GetVessel(containerUpdatedFields.PODLegVessel);
-
-            dynamic podLeg = null;
-            dynamic polLeg = null;
-            if (!string.IsNullOrEmpty(containerUpdatedFields.POLLegVessel) && !string.IsNullOrEmpty(containerUpdatedFields.POLLegVoyage))
-            {
-                polLeg = new { Vessel = containerUpdatedFields.POLLegVessel, VesselId = polLegVessel?.Id, Voyage = containerUpdatedFields.POLLegVoyage };
-            }
-
-            if (!string.IsNullOrEmpty(containerUpdatedFields.PODLegVessel) && !string.IsNullOrEmpty(containerUpdatedFields.PODLegVoyage))
-            {
-                podLeg = new { Vessel = containerUpdatedFields.PODLegVessel, VesselId = podLegVessel?.Id, Voyage = containerUpdatedFields.PODLegVoyage };
-            }
-
-            if (leg1 == null && leg2 == null && leg3 == null && polLeg == null && podLeg == null) return;
-
-            if (leg3 != null)
-            {
-                UpdateShipmentVesselVoyage(polLeg != null ? polLeg : leg1, null, shipmentPM);
-                UpdateShipmentVesselVoyage(leg1 != null ? leg1 : polLeg, index1, shipmentPM);
-                UpdateShipmentVesselVoyage(leg3 != null ? leg3 : leg2, index2, shipmentPM);
-                UpdateShipmentVesselVoyage(podLeg != null ? podLeg : leg3, index3, shipmentPM);
-            }
-            else if (leg2 != null)
-            {
-                UpdateShipmentVesselVoyage(polLeg != null ? polLeg : leg1, null, shipmentPM);
-                UpdateShipmentVesselVoyage(leg1 != null ? leg1 : polLeg, index1, shipmentPM);
-                UpdateShipmentVesselVoyage(podLeg != null ? podLeg : leg2, index2, shipmentPM);
-            }
-            else if (leg1 != null)
-            {
-                UpdateShipmentVesselVoyage(polLeg != null ? polLeg : leg1, null, shipmentPM);
-                UpdateShipmentVesselVoyage(podLeg != null ? podLeg : leg1, index1, shipmentPM);
-            }
-            else
-            {
-                UpdateShipmentVesselVoyage(podLeg != null ? podLeg : polLeg, null, shipmentPM);
-            }
-        }
-
-        private void UpdateShipmentVesselVoyage(dynamic leg, int? index, object entity)
+        private void FillShipmentVessel(string vessel, string vesselId, int? index)
         {
             var fieldName = "Transshipment";
-            if (index == null)
-            {
-                fieldName = "MainCarriage";
-            }
+            if (index == null) fieldName = "MainCarriage";
+            
+            if (string.IsNullOrEmpty((string)GetPropValue(shipmentPM, fieldName + index + "VesselName")))
+                this.FillFieldsNewValues(fieldName + index + "VesselName", vessel, shipmentPM);
 
-            if (string.IsNullOrEmpty((string)GetPropValue(entity, fieldName + index + "VesselName")))
-                this.FillFieldsNewValues(fieldName + index + "VesselName", leg.Vessel, entity);
+            if (string.IsNullOrEmpty((string)GetPropValue(shipmentPM, fieldName + index + "VesselId")))
+                this.FillFieldsNewValues(fieldName + index + "VesselId", vesselId, shipmentPM);
+        }
+        private void FillShipmentVoyage(string voyage, int? index)
+        {
+            var fieldName = "Transshipment";
+            if (index == null) fieldName = "MainCarriage";
 
-            if (string.IsNullOrEmpty((string)GetPropValue(entity, fieldName + index + "VesselId")))
-                this.FillFieldsNewValues(fieldName + index + "VesselId", leg.VesselId, entity);
-
-            if (string.IsNullOrEmpty((string)GetPropValue(entity, fieldName + index + "CarrierNumber")))
-                this.FillFieldsNewValues(fieldName + index + "CarrierNumber", leg.Voyage, entity);
+            if (string.IsNullOrEmpty((string)GetPropValue(shipmentPM, fieldName + index + "CarrierNumber")))
+                this.FillFieldsNewValues(fieldName + index + "CarrierNumber", voyage, shipmentPM);
 
             if (fieldName == "Transshipment")
             {
-                if (string.IsNullOrEmpty((string)GetPropValue(entity, fieldName + index + "CarrierId")))
+                if (string.IsNullOrEmpty((string)GetPropValue(shipmentPM, fieldName + index + "CarrierId")))
                 {
-                    var mainCarriageCarrierId = (string)GetPropValue(entity, "MainCarriageCarrierId");
-                    this.FillFieldsNewValues(fieldName + index + "CarrierId", mainCarriageCarrierId, entity);
+                    var mainCarriageCarrierId = (string)GetPropValue(shipmentPM, "MainCarriageCarrierId");
+                    this.FillFieldsNewValues(fieldName + index + "CarrierId", mainCarriageCarrierId, shipmentPM);
                 }
             }
         }
-
         private void MapOITransshipments()
         {
             containerPM.Transshipment1Location = containerUpdatedFields.Transshipment1Location;
@@ -573,7 +595,6 @@ namespace WebFreight.Web.ContainerTracking
             containerPM.Leg4VesselId = containerUpdatedFields.Leg4VesselId;
             containerPM.Leg4Voyage = containerUpdatedFields.Leg4Voyage;
         }
-
         private void SetTransshipmentLegDates(int? transshipmentLegIndex, MilestoneDataUpdatedFields updatedFields, string key)
         {
             if (key == "LoadedTransshipment")

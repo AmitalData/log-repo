@@ -2406,6 +2406,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                         this.isEditControlOpened = false;
                         this.RowClicked.emit($event);
                     }
+                    else if (myObjectTableName == "Task") {
+                        
+                    }
                     else if (this.ObjectTableName == "Customs.DeclarationReferantData") {
                         var customFile = "";
                         if ($event != null) customFile = $event.rowData.CustomFileNo;

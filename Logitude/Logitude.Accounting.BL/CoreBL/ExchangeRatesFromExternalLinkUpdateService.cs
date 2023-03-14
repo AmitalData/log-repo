@@ -11,7 +11,7 @@ namespace Logitude.Accounting.BL.CoreBL
     {
         private readonly int _tenant;
         private const string XmlLinkedNode = "https://boi.org.il/PublicApi/GetExchangeRates?asXML=true";
-
+        
         public ExchangeRatesFromExternalLinkUpdateService(int tenant)
         {
             _tenant = tenant;
