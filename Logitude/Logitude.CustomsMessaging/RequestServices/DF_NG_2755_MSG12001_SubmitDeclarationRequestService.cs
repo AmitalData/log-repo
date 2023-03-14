@@ -196,9 +196,9 @@ namespace Logitude.CustomsMessaging.RequestServices
             
             CustomsSettingQueryService customsSettingQuery = new CustomsSettingQueryService(this.dbContext);
             CustomsSettingPM CustomsSetting = customsSettingQuery.GetSingleByTenant(requestParams.Tenant);
-            declarationPaymentPM.SignatoryIdentification =
-                //myDeclarationPM.SignerPersonalId;
-                CustomsSetting.CustomsAgentId;//לשים ח.פ של חברה 
+            declarationPaymentPM.SignatoryIdentification = !string.IsNullOrEmpty(myDeclarationPM.SignerPersonalId)? myDeclarationPM.SignerPersonalId: CustomsSetting.CustomsAgentId; 
+              
+               
 
             
             //if (declarationPaymentPM.DeclarationPaymentMethods == null || declarationPaymentPM.DeclarationPaymentMethods.Count() < 1)
