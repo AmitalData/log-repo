@@ -1,15 +1,13 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Script DBType="Main" Module="Customs" >
-  <Sql Version="1">
-  </Sql>
-
-  <Oracle Version="4">
+<View DBType="Main" Name="DeclarationCourierStatusesView" Schema="dbo" Module="Customs">
+  <SqlScript>
     <![CDATA[
-begin
-  
- if Object_ID('DeclarationCourierStatusesView') IS NULL then
- 
-CREATE VIEW DeclarationCourierStatusesView
+   
+    ]]>
+  </SqlScript>
+  <OracleScript>
+	  
+	  <![CDATA[
+CREATE VIEW OR REPLACE DeclarationCourierStatusesView
     AS
    select 
 COURIERMASTERS.ID as CourierMasterId ,
@@ -57,13 +55,11 @@ FROM DeclarationCourierStatuses
 inner  JOIN CourierDeclarations  ON CourierDeclarations.DeclarationId = DeclarationCourierStatuses.DeclarationId
 inner join COURIERMASTERS on CourierDeclarations.CourierMasterId =COURIERMASTERS.ID 
 where  COURIERMASTERS.isopen =1
-group by COURIERMASTERS.ID 
+group by COURIERMASTERS.ID;
 
 commit;
-  end if;
-end;
+ 
 
-
-    ]]>
-  </Oracle>
-</Script>
+]]>
+  </OracleScript>
+</View>
