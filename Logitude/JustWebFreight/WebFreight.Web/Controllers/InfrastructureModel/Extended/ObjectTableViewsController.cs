@@ -184,6 +184,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
                 ObjectTableRepository objectTableRepository = new ObjectTableRepository(MyContext);
                 IQueryable<ObjectTable> entityPocos = objectTableRepository.GetObjects();
+                entityPocos = entityPocos.Where(entity => entity.Tenant == 0 || entity.Tenant == tenant);
 
                 ObjectTableQuery objectTableQuery = new ObjectTableQuery(objectTableRepository);
 
