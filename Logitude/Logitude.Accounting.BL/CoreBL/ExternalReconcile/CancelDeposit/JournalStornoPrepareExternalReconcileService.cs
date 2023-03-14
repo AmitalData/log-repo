@@ -126,6 +126,12 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile.CancelDeposit
                 throw new ApplicationException("ledgerTransactionDebitBank FROM orginalJornalLedgerTransactions NOT FOUND ");
                 return false;// did not stream to Accounting !!
             }
+            if (ledgerTransactionDebitBank.IsExternalReconcile)
+            {
+                throw new ApplicationException("the old ledgerTransaction that DebitBank  is already ExternalReconcile");
+                return false;
+
+            }
             if (ledgerTransactionDebitBank.InProgressExternalReconcile)
             {
                 throw new ApplicationException("the old ledgerTransaction that DebitBank  is InProgressExternalReconcile");
