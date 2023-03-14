@@ -51,6 +51,7 @@ namespace WebFreight.Web.DataProviders
         public DateTime? DueDate { get; set; }
         public string ReferenceNumber { get; set; }
         public string ReferenceType { get; set; }
+        public bool IsAutoCredit { get; set; }
         public double? Debit { get; set; }
         public double? Credits { get; set; }
         public double? AccountBanalnce { get; set; }

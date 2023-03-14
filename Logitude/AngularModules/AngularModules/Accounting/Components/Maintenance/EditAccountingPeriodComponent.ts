@@ -226,7 +226,7 @@ export class EditAccountingPeriodComponent extends BaseComponent {
                     this.ValidationErrorsList = [];
                     this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.O.MonthNotEndedCantClosed"));  //"The month is not ended, can’t be closed");
                 } else {
-                    this.ClosedMonth = (this.EntityPM.PeriodTypeCode == "2" ? this.accountingPeriod.ClosedMonth : 1);
+                    this.ClosedMonth = 1;
                 }
             }
         }
@@ -248,18 +248,18 @@ export class EditAccountingPeriodComponent extends BaseComponent {
 
         if(this.ClosedMonth){
 
-            if (this.EntityPM.PeriodTypeCode == "2" || this.EntityPM.PeriodTypeCode == "3") { //2-invoice 3-Interest Invoice
-                if (this.ClosedMonth == this.accountingPeriod.ClosedMonth) {
-                    this.ValidationErrorsList = [];
-                    if (this.EntityPM.PeriodTypeCode == "2")
-                        this.ValidationErrorsList.push(TextCodeTranslator.Translate("AccountingPeriod.O.CantCancelInvoiceClosedMonth"));
-                    else
-                        this.ValidationErrorsList.push(TextCodeTranslator.Translate("AccountingPeriod.O.CantCancelInterestInvoiceClosedMonth"));
-                    //this.ValidationErrorsList.push("Cannot open an invoice's closed month which is less than accounting period's closed month.");
-                    // this.ValidationErrorsList.push(TextCodeTranslator.Translate("AccountingPeriod.O.CantCancelOpenMonth"));
-                    return;
-                }
-            }
+             if (this.EntityPM.PeriodTypeCode == "2" || this.EntityPM.PeriodTypeCode == "3") { //2-invoice 3-Interest Invoice
+                 if (this.ClosedMonth == this.accountingPeriod.ClosedMonth) {
+                     this.ValidationErrorsList = [];
+                     if (this.EntityPM.PeriodTypeCode == "2")
+                         this.ValidationErrorsList.push(TextCodeTranslator.Translate("AccountingPeriod.O.CantCancelInvoiceClosedMonth"));
+                     else
+                         this.ValidationErrorsList.push(TextCodeTranslator.Translate("AccountingPeriod.O.CantCancelInterestInvoiceClosedMonth"));
+                     //this.ValidationErrorsList.push("Cannot open an invoice's closed month which is less than accounting period's closed month.");
+                     // this.ValidationErrorsList.push(TextCodeTranslator.Translate("AccountingPeriod.O.CantCancelOpenMonth"));
+                     return;
+                 }
+             }
 
 
             if(this.ClosedMonth == 1)

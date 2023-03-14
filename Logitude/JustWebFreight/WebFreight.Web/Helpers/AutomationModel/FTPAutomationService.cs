@@ -34,6 +34,8 @@ namespace WebFreight.Web.Helpers.AutomationModel
         private string companyName = string.Empty;
         private string computingPartnerName = string.Empty;
         private string interfaceName = string.Empty;
+        private string entityReference = string.Empty;
+
         public FTPAutomationService(FTPAutomationServiceArgs ftpAutomationServiceArgs)
         {
             tenant = ftpAutomationServiceArgs.Tenant;
@@ -47,6 +49,7 @@ namespace WebFreight.Web.Helpers.AutomationModel
             companyName = GetCompanyName();
             computingPartnerName = GetComputingPartnerName(ftpAutomationServiceArgs.ComputingPartnerId);
             interfaceName = ftpAutomationServiceArgs.InterfaceName;
+            entityReference = ftpAutomationServiceArgs.EntityReference;
         }
 
 
@@ -89,6 +92,7 @@ namespace WebFreight.Web.Helpers.AutomationModel
                 CreateDateUTC = System.DateTime.UtcNow,
                 LogSettings = this.GetCommunicationLogSettingAsJosnString(),
                 QueueName = "FTPCommunicationLogQueue",
+                EntityReference = entityReference
             };
         }
 
@@ -164,6 +168,7 @@ namespace WebFreight.Web.Helpers.AutomationModel
         public string AdditionalFolderDetails { get; set; }
         public string DocumentFileName { get; set; }
         public string InterfaceName { get; set; }
+        public string EntityReference { get; set; }
     }
 
     public class CommunicationLogSettings
