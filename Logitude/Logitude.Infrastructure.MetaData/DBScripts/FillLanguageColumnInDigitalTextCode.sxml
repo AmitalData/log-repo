@@ -1,7 +1,6 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-	<Sql Version="4">
+	<Sql Version="5">
       <![CDATA[
-	  
 		  BEGIN
 		   IF NOT EXISTS (select * from DigitalPortalLanguages where [Code] = 'EN')
 		   BEGIN

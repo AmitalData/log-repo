@@ -501,17 +501,17 @@ namespace WebFreight.Web.Helpers
 
             sheet1.Range["A1:F1"].Merge();
             sheet1.Range["A2:F2"].Merge();
-            sheet1.Range["C1"].CellStyle.Font.Bold = true;
-            sheet1.Range["C1"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
-            sheet1.Range["C1"].VerticalAlignment = ExcelVAlign.VAlignTop;
-            sheet1.Range["C1"].Text = "Digital Portal Translation";
-            sheet1.Range["C1"].CellStyle.Font.Size = 14;
-            sheet1.Range["C1"].CellStyle.Font.Size = 14;
+            sheet1.Range["A1"].CellStyle.Font.Bold = true;
+            sheet1.Range["A1"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
+            sheet1.Range["A1"].VerticalAlignment = ExcelVAlign.VAlignTop;
+            sheet1.Range["A1"].Text = "Digital Portal Translation";
+            sheet1.Range["A1"].CellStyle.Font.Size = 14;
+            sheet1.Range["A1"].CellStyle.Font.Size = 14;
 
-            sheet1.Range["C2"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
-            sheet1.Range["C2"].VerticalAlignment = ExcelVAlign.VAlignCenter;
-            sheet1.Range["C2"].Text = $"Created Date: {DateTime.UtcNow:dd MMM yyyy}";
-            sheet1.Range["C2"].CellStyle.Font.Size = 12;
+            sheet1.Range["A2"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
+            sheet1.Range["A2"].VerticalAlignment = ExcelVAlign.VAlignCenter;
+            sheet1.Range["A2"].Text = $"Created Date: {DateTime.UtcNow:dd MMM yyyy}";
+            sheet1.Range["A2"].CellStyle.Font.Size = 12;
 
             sheet1.Range["A3:F3"].CellStyle.Color = Color.LightGray;
             sheet1.Range["A3:F3"].RowHeight = 25;
@@ -556,7 +556,7 @@ namespace WebFreight.Web.Helpers
                     {
                         var foreignTextCode = foreignTextObjects[profilesLables.Key].FirstOrDefault(a => a.LanguageCode == languageCode);
 
-                        if (foreignTextCode == null)
+                        if (foreignTextCode != null)
                         {
                             foreignLables = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(foreignTextCode.Labels);
                         }
@@ -564,13 +564,18 @@ namespace WebFreight.Web.Helpers
 
                     foreach (var code in englishLables)
                     {
+                        if (string.IsNullOrWhiteSpace(code.TextCode))
+                        {
+                            continue;
+                        }
+
                         var foreignLanguageTextCode = foreignLables.Any()
-                                                      ? foreignLables.FirstOrDefault(a => a.TextCode.Equals(code.TextCode))?.DefaultText
+                                                      ? foreignLables.FirstOrDefault(a => a.TextCode.Equals(code.TextCode, StringComparison.InvariantCultureIgnoreCase))?.DefaultText
                                                       : "";
 
                         DataRow row = table.NewRow();
                         row[0] = code.TextCode;
-                        row[1] = code.FieldCode;
+                        row[1] = !string.IsNullOrWhiteSpace(code.FieldCode) ? code.FieldCode : "";
                         row[2] = code.DefaultText;
                         row[3] = foreignLanguageTextCode;
                         row[4] = item.ProfileCode;

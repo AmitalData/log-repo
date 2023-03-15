@@ -1,7 +1,7 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="31">
+  <Sql Version="32">
     <![CDATA[
-	  delete from DigitalTextCodes where Tenant = 0
+	  delete from DigitalTextCodes where Tenant == 0
 	  
       declare @NewEntityId as varchar(15)
 	  declare @generalObjectTableId as varchar(15)
@@ -339,7 +339,8 @@
 	  '[{
 			"TextCode": "Dashboard.G.ShipmentsToArriveWithinOneMonth",
 			"DefaultText": "Excepted shipments to arrive within one month",
-			"FieldCode": ""
+			"FieldCode": "",
+			"DisplayText": ""
 		},
 		{
 			"TextCode": "General.G.NoDataDefaultMSG",
@@ -2131,7 +2132,6 @@
 			"DisplayText": ""
 		},
 		{
-			"TextCode": "Shipment.G.Shippingline",
 			"TextCode": "Shipment.G.Shippingline",
 			"DefaultText": "Shipping line",
 			"FieldCode" : "",
