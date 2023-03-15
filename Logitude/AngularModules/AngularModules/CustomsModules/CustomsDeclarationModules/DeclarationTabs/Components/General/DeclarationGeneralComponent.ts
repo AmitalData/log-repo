@@ -751,6 +751,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
     }
 
     public get IsMoreConsignment1() { return this.EntityPM.Consignments.filter(x=>x.ConsignmentType=="E").length>1; }
+    public get IsOceanExport() { return this.EntityPM.TransportModeId == 'O' && this.EntityPM.Direction == 'E' ; }
 
 
     public CalculatedClient: any;
