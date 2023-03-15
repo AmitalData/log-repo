@@ -1,7 +1,7 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="32">
+  <Sql Version="33">
     <![CDATA[
-	  delete from DigitalTextCodes where Tenant == 0
+	  delete from DigitalTextCodes where Tenant = 0
 	  
       declare @NewEntityId as varchar(15)
 	  declare @generalObjectTableId as varchar(15)
