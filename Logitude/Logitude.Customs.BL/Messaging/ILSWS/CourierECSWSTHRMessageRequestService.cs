@@ -90,7 +90,7 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
             return "המסר לסוויספורט נבנה בהצלחה וישלח בתהליך רקע ";
         }
 
-        public string GetMessageUpdateHawbStatus(string declarationId, int tenant, DeclarationPM declarationPM, CourierMasterPM courierMasterPM, string mawb = "")
+        public string GetMessageUpdateHawbStatus(string declarationId, int tenant, DeclarationPM declarationPM, CourierMasterPM courierMasterPM,  DeclarationCourierStatusPM declarationCourierStatusPM = null)
         {
             var context = CustomContext.GetContext(tenant);
             var myDeclarationQueryService = new DeclarationQueryService(context);
@@ -110,20 +110,24 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
             var myCourierMasterPM = courierMasterPM ?? myCourierMasterQueryService.GetByDeclarationId(declarationId, tenant);
             if (myCourierMasterPM == null)
             {
-                myCourierMasterPM = myCourierMasterQueryService.GetCourierMasterByMawb(tenant, mawb);
+                if(declarationCourierStatusPM?.MAWB == null)
+                {
+                    return null;
+                }
+                myCourierMasterPM = myCourierMasterQueryService.GetCourierMasterByMawb(tenant, declarationCourierStatusPM.MAWB);
                 if (myCourierMasterPM == null)
                 {
                     return null;
                 }
             }
 
-            CourierSWSHAWBRequest myCourierSWSHAWBRequest = CreateCourierSWSHawbMessage(myDeclarationPM, myCourierMasterPM);
+            CourierSWSHAWBRequest myCourierSWSHAWBRequest = CreateCourierSWSHawbMessage(myDeclarationPM, myCourierMasterPM, declarationCourierStatusPM);
             string messageToSWS = "";
             messageToSWS = ProxyUtil.JsonConvertSerialize(myCourierSWSHAWBRequest);
             return messageToSWS;
         }
 
-        private CourierSWSHAWBRequest CreateCourierSWSHawbMessage(DeclarationPM myDeclarationPM, CourierMasterPM myCourierMasterPM)
+        private CourierSWSHAWBRequest CreateCourierSWSHawbMessage(DeclarationPM myDeclarationPM, CourierMasterPM myCourierMasterPM, DeclarationCourierStatusPM declarationCourierStatusPM = null)
         {
             var ConsignmentPackageQualifierCode2 = myDeclarationPM.Consignments.SelectMany(r => r.ConsignmentPackages)
                 .Where(r1 => r1.PackageMeasureQualifierCode == "2")
@@ -149,9 +153,13 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
 
             string crateNumber = "";
             var context = CustomContext.GetContext(myDeclarationPM.Tenant);
-            DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(myDeclarationPM.Id, true, false);
-            if (currentDeclarationCourierStatusPM != null && !String.IsNullOrWhiteSpace(currentDeclarationCourierStatusPM.CrateNumber)) crateNumber = currentDeclarationCourierStatusPM.CrateNumber;
+            if(declarationCourierStatusPM == null)
+            {
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+                declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(myDeclarationPM.Id, true, false);
+            }
+            
+            if (declarationCourierStatusPM != null && !String.IsNullOrWhiteSpace(declarationCourierStatusPM.CrateNumber)) crateNumber = declarationCourierStatusPM.CrateNumber;
             if (string.IsNullOrWhiteSpace(crateNumber))
             {
                 crateNumber = myDeclarationPM?.MyEcomInsert?.MyDeclarationCourierStatusPM?.CrateNumber;
@@ -172,12 +180,12 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
             string SwissportSuspendedCode = "";
             var courierPendingReasonRepository = new CourierPendingReasonRepository(myDeclarationPM.Tenant);
             var courierPendingListWithSwissportSuspendedCode = courierPendingReasonRepository.GetPendingReasonsWithSwissportSuspendedCode(myDeclarationPM.Tenant);
-            if (!string.IsNullOrEmpty(currentDeclarationCourierStatusPM.CourierPendingReasonList))
+            if (!string.IsNullOrEmpty(declarationCourierStatusPM.CourierPendingReasonList))
             {
-                var pendingCounted = courierPendingListWithSwissportSuspendedCode.Where(x => currentDeclarationCourierStatusPM.CourierPendingReasonList.Contains(x.Code)).Count();
+                var pendingCounted = courierPendingListWithSwissportSuspendedCode.Where(x => declarationCourierStatusPM.CourierPendingReasonList.Contains(x.Code)).Count();
                 if (pendingCounted == 1)
                 {
-                    SwissportSuspendedCode = courierPendingListWithSwissportSuspendedCode.Where(x => currentDeclarationCourierStatusPM.CourierPendingReasonList.Contains(x.Code)).FirstOrDefault().SwissportSuspendedCode;
+                    SwissportSuspendedCode = courierPendingListWithSwissportSuspendedCode.Where(x => declarationCourierStatusPM.CourierPendingReasonList.Contains(x.Code)).FirstOrDefault().SwissportSuspendedCode;
                 }
                 if (pendingCounted > 1)
                 {
@@ -209,7 +217,7 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
                 Description = Description,
                 ImporterName = myDeclarationPM.ImporterName ?? "",
                 ImporterAddress = myDeclarationPM.ImporterAddress ?? "",
-                DistributionLine = string.IsNullOrEmpty(currentDeclarationCourierStatusPM.DistributionArea) ? "כללי" : currentDeclarationCourierStatusPM.DistributionArea,
+                DistributionLine = string.IsNullOrEmpty(declarationCourierStatusPM.DistributionArea) ? "כללי" : declarationCourierStatusPM.DistributionArea,
 
 
 
@@ -228,10 +236,10 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
             };
 
 
-            if (!string.IsNullOrWhiteSpace(currentDeclarationCourierStatusPM.TruckerId))
+            if (!string.IsNullOrWhiteSpace(declarationCourierStatusPM.TruckerId))
             {
                 CardRepository cardRep = new CardRepository(myDeclarationPM.Tenant);
-                Card card = cardRep.GetSingleCardCache(currentDeclarationCourierStatusPM.TruckerId, myDeclarationPM.Tenant);
+                Card card = cardRep.GetSingleCardCache(declarationCourierStatusPM.TruckerId, myDeclarationPM.Tenant);
                 if (card != null)
                 {
                     courierHawbMamanModel.DistributionCompanyVat = card.VatNumber;
