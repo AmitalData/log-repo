@@ -11,6 +11,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -39,6 +40,55 @@ namespace WebFreight.Web.WcfApi
 
 
         public Response LGTQuery(string queryId, Dictionary<string, string> queryParams, int tenant)
+        {
+            var response = new Response();
+            try
+            {
+                //SecurityUtility.AuthenticationOnTenant(tenant);
+                //SecurityUtility.CheckContactFeature("Quote", "UPDATE", tenant);//UPDATE//READ
+                //var context = Simplog.Data.ShipmentsModel.ShipmentsContext.GetContext(tenant);
+
+                tenant = 6;
+                string id = "1-110456";
+                var shipmentsContext = new Simplog.Data.ShipmentsModel.ShipmentsContext();
+                using (SqlConnection connection = new SqlConnection())
+                {
+                    connection.ConnectionString = shipmentsContext.Database.Connection.ConnectionString;
+                    connection.Open();
+                    string sqlQuery = "SELECT IMPORTERID,ID from Customs.DECLARATIONS where (ID = @LOGITUDE_FILE ) AND TENANT = @Tenant";
+                    using (var cmd = new SqlCommand(sqlQuery, connection))
+                    {
+                        cmd.Parameters.Add(new SqlParameter("@LOGITUDE_FILE", id));
+                        cmd.Parameters.Add(new SqlParameter("@Tenant", tenant));
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Console.WriteLine(reader.ToString());
+                            }
+                        }
+                    }
+                }
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.IsAuthenticationError = ex.GetType() == typeof(AutenticationException);
+                response.HasError = true;
+                response.ErrorMessage = ex.Message;
+                response.InnerErrorMessage = (ex.InnerException != null ? (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) : null);
+
+                if (!string.IsNullOrEmpty(ex.StackTrace))
+                {
+                    response.ErrorMessage += Environment.NewLine + ex.StackTrace;
+                }
+                return response;
+            }
+
+        }
+
+
+        public Response LGTQueryOld(string queryId, Dictionary<string, string> queryParams, int tenant)
         {
             Response res = new Response();
 
