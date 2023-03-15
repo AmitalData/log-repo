@@ -92,13 +92,13 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
 
             this.SetUIProperty();
-            if (this.DecPM.IsExportClosed && (!this.DecPM.AmendmentDontDisplayInList || (this.DecPM.AmendmentDontDisplayInList &&  !AppTool.IsNullOrEmpty(this.DecPM.AmendmentStatus)))) {
+            if (this.DecPM.IsExportClosed && (!this.DecPM.AmendmentDontDisplayInList || (this.DecPM.AmendmentDontDisplayInList && !AppTool.IsNullOrEmpty(this.DecPM.AmendmentStatus)))) {
                 this.IsReadOnly = true
                 this.setInputsReadOnly();
             }
             else {
                 if (['6', '7', '8', '10', '11'].includes(this.DecPM.ExportCloseAmendmentStatus)) {
-                    this.IsReadOnly = true 
+                    this.IsReadOnly = true
                     this.setInputsReadOnly();
                 }
             }
@@ -142,9 +142,9 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
                 if (this.DecPM.Direction === 'E' && this.DecPM.TransportModeId === 'O') {
 
-                    if(!this.FinalShipCode)
+                    if (!this.FinalShipCode)
                         this.FinalShipCode = this.DecPM.Consignments.find(x => x.ConsignmentType == "E")?.ShipCode;
-                   
+
                     if (this.FinalCargoTypeCode == null) {
 
                         this.FinalManifestNumber = this.FinalManifestNumber == null ? '' : this.FinalManifestNumber;
@@ -329,7 +329,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     }
 
     set FinalManifestNumber(value: string) {
-        
+
         if (this.EntityPM.FinalManifestNumber != value) {
             this.EntityPM.FinalManifestNumber = value;
             this.EntityPM.IsDirty = true;
@@ -401,10 +401,10 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 else {
 
 
-                    if (AppTool.IsNullOrEmpty(this.EntityPM.LoadingDateTime)) {
+
 
                     if (AppTool.IsNullOrEmpty(this.EntityPM.LoadingDateTime)) {
-                        var msg =  " שדה תאריך טעינה שדה חובה";
+                        var msg = " שדה תאריך טעינה שדה חובה";
                         this.ValidationErrors.push(msg);
                         this.FillValidationErrors("Errors");
                     }
@@ -469,31 +469,34 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
                                         }
 
-                            
 
-                               
-                                    if (SupplierInvoiceNumberList.length > 0) {
-                                        this.ShowWarnningMessage(SupplierInvoiceNumberList);
-                                        SupplierInvoiceNumberList = "";
-                                    }
-                                    else {
-                                        this.Send("ok")
-                                    }
-                                })
+
+
+                                        if (SupplierInvoiceNumberList.length > 0) {
+                                            this.ShowWarnningMessage(SupplierInvoiceNumberList);
+                                            SupplierInvoiceNumberList = "";
+                                        }
+                                        else {
+                                            this.Send("ok")
+                                        }
+                                    })
+                                });
+
+
                             }
                         }
-  });
-  }
-                                    else {
-                                        this.Send("ok")
-                                    }
-                  
-                        }
+                    })
+                }
                 else {
                     this.Send("ok")
                 }
 
-            
+            }
+            else {
+                this.Send("ok")
+            }
+
+
 
         });
 
@@ -609,7 +612,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
     }
     OnAddEditWindowClosed(event) {
-       
+
         this.ValidationErrors = [];
 
     }
