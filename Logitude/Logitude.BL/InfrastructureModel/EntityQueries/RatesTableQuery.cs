@@ -23,11 +23,17 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public RatesTableQuery(int tenant)
         {
             repository = new RatesTableRepository(tenant);
-            isFullAccounting = IsFullAccountingActivated(tenant);
+            
         }
         public RatesTableQuery(RatesTableRepository ratesTableRepository)
         {
             repository = ratesTableRepository;
+        }
+
+        public RatesTableQuery(RatesTableRepository ratesTableRepository,int tenant)
+        {
+            repository = ratesTableRepository;
+            isFullAccounting = IsFullAccountingActivated(tenant);
         }
 
         public RatesTablePM GetSinglePM(string id, int tenent)
