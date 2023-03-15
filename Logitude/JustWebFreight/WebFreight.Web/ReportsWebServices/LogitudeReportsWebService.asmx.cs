@@ -6009,7 +6009,7 @@ namespace WebFreight.Web.ReportsWebServices
                     Salesman = service.Customer.SalesmanUser != null ? service.Customer.SalesmanUser.Contact.EnglishName : null,
                     ServiceName = service.AdditionalService.Name,
                     Potential_InUse = service.Potential ? "Potential" : "In Use",
-                    NumberOfShipments = Convert.ToInt32(service.Customer.Field1),
+                    NumberOfShipments = tenant == 341 ? Convert.ToInt32(service.Customer.Field1) : 0,
                     NumberOfShipmentsLabel = tenant == 341 ? "Number of Users" : "Number of Shipments",
                     CustomerStatus = service.Customer.CustomerStatus != null ? service.Customer.CustomerStatus.Name : null,
                 });
