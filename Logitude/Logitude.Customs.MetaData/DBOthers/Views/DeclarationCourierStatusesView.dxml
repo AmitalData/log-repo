@@ -7,7 +7,7 @@
   <OracleScript>
 	  
 	  <![CDATA[
-CREATE VIEW OR REPLACE DeclarationCourierStatusesView
+CREATE OR REPLACE VIEW DeclarationCourierStatusesView
     AS
    select 
 COURIERMASTERS.ID as CourierMasterId ,
@@ -57,7 +57,7 @@ inner join COURIERMASTERS on CourierDeclarations.CourierMasterId =COURIERMASTERS
 where  COURIERMASTERS.isopen =1
 group by COURIERMASTERS.ID;
 
-commit;
+
  
 
 ]]>
