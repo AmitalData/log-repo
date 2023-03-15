@@ -238,9 +238,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         private void CreateTraceEvent(string id, int Tenant, string objectTableName, string eventTypeCode)
         {
             ContactPM loggedContact = new ContactQuery(Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), Tenant);
-            //ContactRepository contactRep = new ContactRepository(Tenant);
-            //string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(Tenant);
-            //Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, Tenant);
 
             EventTracer.CreateTraceEvent(new EventTracerArgs()
             {
