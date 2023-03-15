@@ -331,21 +331,7 @@ export class CopyRichbitComponent extends BaseComponent {
                 this.EntityPM.VehicleCategory = row?.VehicleCategory;
                 this.EntityPM.VehicleMaxPowerKW = row?.VehicleMaxPowerKW;
                 var index=0;
-                row.VehicleOwners.forEach(element => {
-                    var vehicleOwner = new VehicleOwnerPM(this.EntityPM);
-                    vehicleOwner.VehicleId = this.EntityPM.Id;
-                    vehicleOwner.Tenant = element?.Tenant,
-                    vehicleOwner.ClientId = element.ClientId,
-                    vehicleOwner.LastNameOrCorporationName = element?.LastNameOrCorporationName,
-                    vehicleOwner.FirstName = element?.FirstName,
-                    vehicleOwner.IsMain = element?.IsMain,
-                    vehicleOwner.PassportNumber = element.PassportNumber,
-                    vehicleOwner.PassCountryCode = element.PassCountryCode,
-                    vehicleOwner.PassCountryName = element.PassCountryName,
-                    vehicleOwner.ImporterPassportTypeCode = element.ImporterPassportTypeCode
-                    vehicleOwner.ImporterPassportTypeName = element.ImporterPassportTypeName
-                    this.EntityPM.VehicleOwners[index]=vehicleOwner;index++;
-                });
+                
                 row.VehicleSafetyAccessories.forEach(element => {
                     index=0;
                     var VehicleSafetyAccessory = new VehicleSafetyAccessoryPM(this.EntityPM);
