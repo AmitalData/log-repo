@@ -1998,6 +1998,8 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         }
     
     } 
+    
+ 
     SetSplitComponentState() {
         if (this.IsSplitBtnVisible == false) {
             return;

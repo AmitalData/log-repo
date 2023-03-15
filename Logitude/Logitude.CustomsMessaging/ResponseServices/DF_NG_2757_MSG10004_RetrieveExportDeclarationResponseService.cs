@@ -44,6 +44,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
           
 
             }
+
             var declarationqueryService = new DeclarationQueryService(requestParams.Tenant);
 
             if (string.IsNullOrEmpty(requestParams.DeclarationId)|| (!string.IsNullOrEmpty(requestParams.DeclarationId) && requestParams.IsUpdateDB)) { //declaration not exits in db
@@ -51,6 +52,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 var decId = declarationqueryService.GetIdByDeclarationNumber(requestParams.DeclarationNumber, requestParams.Tenant);
                 if (customResponse.Response != null && customResponse.Response.Declaration != null && (string.IsNullOrEmpty(decId)|| requestParams.IsUpdateDB)) 
                    CreateDeclarationFromResponse(customResponse.Response.Declaration, requestParams.Tenant,  customResponse, requestParams.IsUpdateDB, requestParams.DeclarationId);                                  
+
               
             }
             if (!string.IsNullOrEmpty(requestParams.DeclarationId)){
@@ -63,6 +65,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                 }
             }
+
             if (customResponse.ResponseContentHeader != null &&
                 customResponse.Response == null &&
                 customResponse.AddAGlobalScannedAttachmentToEntityResponse == null &&
@@ -107,6 +110,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         this.MyRequestSheetParam.CustomFileNo = !string.IsNullOrEmpty(requestParams?.CustomsFile)? requestParams.CustomsFile:
                             Strings.Right(GetValueIDType(customResponse.Response.Declaration.DMExtensions?.ExternalDeclarationID), 10).TrimStart('0');
 
+
                         xml = XmlGenericUtil<Declaration>.SerializeObject(customResponse.Response.Declaration);
                         _MyDefaultResponseData.ResponseStatusXML = xml;
                         if (requestParams.IsAngularClient)
@@ -132,7 +136,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //Yuval Chalup 13.05.2015 TASK-11915 --->
         }
 
-          
         public override DeclarationRestoreResponseData GetResponse(DF_NG_2757_MSG10004_ExportDeclarationResponse customResponse, DeclarationRestoreRequestParams requestParams)
         {
             if (_DF_NG_2754_MSG10004_ExportDeclarationResponseService == null || _DF_NG_2754_MSG10004_ExportDeclarationResponseService.MyResponseData == null)
@@ -408,7 +411,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationPM.TotalTax = Math.Round(declaration.DMExtensions.CustomsValueComponent.TaxAssessedAmount.Value, 2);
                     // declarationPM.TaxationDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
                     declarationPM.IsConvertedDeclaration = true;
+
                     declarationPM.TaxationDateTime = Convert.ToDateTime(declaration.DMExtensions?.ReferenceDateTime);
+
 
                
                     decimal DealValueWithoutFactor = 0;
@@ -1236,6 +1241,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
           
                             supplierInvoiceItemPM.SupplierInvoiceItemVehicles = GetSupplierInvoiceItemVehicles(governmentAgencyGoodsItem, declaration, declarationId, tenant);
                       
+                    }
+                    if (supplierInvoiceItemPM.WholeSaleItemPrice.HasValue || supplierInvoiceItemPM.AdditionalQuantity.HasValue || supplierInvoiceItemPM.StatisticQuantity.HasValue)
+                    {
+                        supplierInvoiceItemPM.ItemAdditionalStatus = true;
                     }
                     if (supplierInvoiceItemPM.WholeSaleItemPrice.HasValue || supplierInvoiceItemPM.AdditionalQuantity.HasValue || supplierInvoiceItemPM.StatisticQuantity.HasValue)
                     {

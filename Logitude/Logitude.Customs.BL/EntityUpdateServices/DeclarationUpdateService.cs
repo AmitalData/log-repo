@@ -1285,6 +1285,25 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     entityPM.FacilityTypeName = null;
                 }
             }
+ 
+            if (entityPM.ImporterId != null)
+             {
+                ClientQueryService clientQueryService = new ClientQueryService(entityPM.Tenant);
+                ClientPM client = clientQueryService.GetSingle(entityPM.ImporterId, false, true);
+                if (client != null)
+                {
+
+                    entityPM.CalculatedImporterName = client.FullName;
+                    FacilitationTypeQueryService FacilitationTypeQueryService = new FacilitationTypeQueryService(entityPM.Tenant);
+                    FacilitationTypePM FacilitationType = FacilitationTypeQueryService.GetSingle(client.FacilitationTypeCode, false, true);
+                    entityPM.FacilityTypeName = FacilitationType != null ? FacilitationType.LocalName : null;
+                }
+
+                else
+                {
+                    entityPM.FacilityTypeName = null;
+                }
+            }
             else if (entityPM.ImporterCode != null)
             {
                 LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step11");
@@ -1335,10 +1354,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 bool dirty = false;
 
-                if (entityPM.Direction != "E")
-                {
+ 
+                if ((entityPM.IsAmendment != true) || entityPM.Direction != "E"/*|| entityPM.ChangeSetOp != ChangeSetOperation.Update*/)
+                 {
                     int index = 0;
                     foreach (Consignment item in consignments)
+
 
                     {
 
@@ -1385,11 +1406,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 item.SequenceNumeric = e_index;
                             }
                             consignmentRepository.Update(item);
+
                             ConsignmentPM itemPM = (from a in entityPM.Consignments
+
                                                     where a.DeclarationId == item.DeclarationId && a.ConsignmentNumber == item.ConsignmentNumber
+
                                                     select a).FirstOrDefault();
+
                             itemPM.SequenceNumeric = item.SequenceNumeric;
+
                         }
+
                     }
                 }
                  

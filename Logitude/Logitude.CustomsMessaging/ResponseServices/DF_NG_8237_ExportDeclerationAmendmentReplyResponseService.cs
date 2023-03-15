@@ -38,8 +38,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
     {
         DeclarationPM _MyDeclarationPM;
         DeclarationPM _MyDeclarationPMOrg;
-        private bool isExportClose = false;
-        private bool isExportCloseFromMehes = false;
+
+        private bool isExportClose=false;
+        private bool isExportCloseFromMehes= false;
         private bool HasErors = false;
 
         private DeclarationPrintResponseData _SendDeclarationPrintResponse;
@@ -86,10 +87,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     isExportClose = true;
 
                 string functionalReferenceID = "";
-                if (customResponse.Response.FunctionalReferenceID != null)
-                    functionalReferenceID = customResponse.Response.FunctionalReferenceID.Value;
-                else
-                    functionalReferenceID = "";
+
+            if (customResponse.Response.FunctionalReferenceID != null)
+                functionalReferenceID = customResponse.Response.FunctionalReferenceID.Value;
+            else
+                functionalReferenceID = "";
             string agentFileReferenceID = "";
             if (customResponse.Response?.Declaration?.DMExtensions?.AgentFileReferenceID != null)
                 agentFileReferenceID = customResponse.Response.Declaration.DMExtensions.AgentFileReferenceID.Value.ToString();
@@ -108,6 +110,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (!isExportClose)
                 {
                 var declaration = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, agentFileReferenceID, requestParams.Tenant);
+
                     _MyDeclarationPM = declaration;
                     if (declaration != null)
                     {
@@ -140,15 +143,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 _MyDeclarationPM = dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, id, out error, false);
                             }
                             fromMehes = true;
-                            //isExportCloseFromMehes = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, requestParams.Tenant,true) != null;
+
                         }
                     }
                 }
                 else
                 {
                 
+
+                
+
                 var declaration = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, agentFileReferenceID,requestParams.Tenant, true);
-                    _MyDeclarationPM = declaration;
+
+                _MyDeclarationPM = declaration;
                     if (_MyDeclarationPM == null && customResponse.Response.Declaration != null)
                     {
                         _MyDeclarationPM = myDeclarationQueryService.GetSingleDeclarationByNumber(customResponse.Response.Declaration.ID.Value, requestParams.Tenant);
@@ -209,8 +216,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 EventContextTagModel myUpdateEventContextTagModel = null;
 
-                if ((isExportCloseFromMehes || isExportClose) && customResponse.Response.Amendment != null && customResponse.Response.Amendment.Length > 0)
-                {
+ 
+            string key = ProcessLockTableUtil.Instance.GetKey4Declaration(_MyDeclarationPM.Id, requestParams.Tenant);
+
+            if ((isExportCloseFromMehes || isExportClose) && customResponse.Response.Amendment != null && customResponse.Response.Amendment.Length > 0)
+            {
+                var customResponseResponseXml = XmlGenericUtil<Response>.SerializeObject(customResponse.Response);
+                var importDeclarationServiceReferenceResponse = XmlGenericUtil<Response>.DeSerializeObject(customResponseResponseXml);
+                List<error> systemMessagesList = new List<error>();
+                this._MyDeclarationPM.ClosingXml = myDeclarationCorrectionsPointerService.AnalyzeCorrectionsPointerExport(this._MyDeclarationPM.ClosingXml, importDeclarationServiceReferenceResponse, systemMessagesList, requestParams.Tenant, customResponse.ReferencesListMsg);
+
+            }
+
+            using (var disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "8237ResponseService.Update"))
+                 {
                     var customResponseResponseXml = XmlGenericUtil<Response>.SerializeObject(customResponse.Response);
                     var importDeclarationServiceReferenceResponse = XmlGenericUtil<Response>.DeSerializeObject(customResponseResponseXml);
                     List<error> systemMessagesList = new List<error>();
@@ -341,7 +360,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     EventRemarks = "Declaration Amendment Approved",
                                                     FUStatusRemarks = "- תיקון הצהרה אושר" + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
                                                 };
-
+ 
                                                 if (isExportCloseFromMehes)
                                                 {
                                                     if (customResponse.Response != null && customResponse.Response.Status != null && customResponse.Response.Status[0].NameCode.Value == "36")
@@ -365,7 +384,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     _MyDeclarationPM.IsClose = true;
                                                     SendDeclarationPrint(requestParams);
                                                 }
-
+ 
                                                 MyResponseData.IsExportCloseApprove = true;
                                             }
                                             break;
@@ -453,7 +472,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     EventRemarks = "Declaration Amendment Partial Approval",
                                                     FUStatusRemarks = "תיקון הצהרה אושר חלקית - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + "מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
                                                 };
-                                                if (isExportCloseFromMehes) MyResponseData.IsExportCloseApprove = true;
+
+                                                if(isExportCloseFromMehes) MyResponseData.IsExportCloseApprove = true;
                                             }
                                             else
                                             {
@@ -535,6 +555,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 this._MyDeclarationPM.AmendmentErrorXml = this._MyDeclarationPM.ExportClosedErrorXML;
                             }
                         }
+
+                        }
                         else
                         {
                             this._MyDeclarationPM.ExportClosedErrorXML = null;
@@ -606,7 +628,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             FUStatusRemarks = "בוצע תיקון הצהרה" + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber),
                         };
                     }
-
+                  
                     if (!isExportClose)
                     {
                         List<string> currentXmlVersionId = myDeclarationCorrectionsPointerService.GetVersionIdFromCorrectionXML(this._MyDeclarationPM.CorrectionsXml);
@@ -634,7 +656,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                         this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                         myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
-
+                        
+                       
 
 
                         if (customResponse.CollateralRequests != null)
@@ -672,8 +695,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                     myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
                 }
-                if (customResponse.Response.Declaration != null &&
-                    (((_MyDeclarationPM.AmendmentStatus == "1" || _MyDeclarationPM.AmendmentStatus == "2") && !isExportClose)
+
+                if (customResponse.Response.Declaration != null  && 
+                    (((_MyDeclarationPM.AmendmentStatus == "1" || _MyDeclarationPM.AmendmentStatus == "2") && !isExportClose) 
                     || MyResponseData.IsExportCloseApprove))
                 {
                     DF_NG_2757_MSG10004_ExportDeclarationResponseService dF_NG_2757_MSG10004_ExportDeclarationResponseService = new DF_NG_2757_MSG10004_ExportDeclarationResponseService();
@@ -755,13 +779,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     RaiseEvent(this._MyDeclarationPM, null, status_id: "CLS");
                 }
             }
+
             this.MyResponseData.ApplicationID = requestParams.AppicationId;
                 
             }
             this.MyResponseData.ApplicationID = requestParams.AppicationId;
                 this.MyResponseData.Succeeded = true;
                 this.MyResponseData.HasException = false;
-                if (requestParams.IsExportClose || isExportCloseFromMehes)
+
+            if (requestParams.IsExportClose || isExportCloseFromMehes) 
                 {
                     if (HasErors)
                         this.MyResponseData.UserMessage = "מענה לסגירת הצהרה " + this._MyDeclarationPM.DeclarationNumber + " נקלט עם שגיאות!!!";
@@ -775,12 +801,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     else
                         this.MyResponseData.UserMessage = "מענה לתיקון הצהרה " + this._MyDeclarationPM.DeclarationNumber + " נקלט בהצלחה";
                 }
-
+           
                 this.MyRequestSheetParam = new RequestSheetParam();
                 this.MyRequestSheetParam.CustomFileNo = this._MyDeclarationPM.CustomFileNo;
                 this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                 this.MyRequestSheetParam.EntityId1 = this._MyDeclarationPM.Id;
-                if (requestParams.IsExportClose || isExportCloseFromMehes)
+
+            if (requestParams.IsExportClose || isExportCloseFromMehes)
                     this.MyRequestSheetParam.RequestDescription = "מענה לסגירת הצהרה " + this._MyDeclarationPM.DeclarationNumber;
                 else
                     this.MyRequestSheetParam.RequestDescription = "מענה לתיקון הצהרה  " + this._MyDeclarationPM.DeclarationNumber;

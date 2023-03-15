@@ -5895,7 +5895,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string exportCloseAmendStatusName ;
+ 	  private string exportCloseAmendStatusName ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
@@ -5941,6 +5941,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+ 
    }
    
 }

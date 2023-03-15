@@ -1,4 +1,4 @@
-import { OnInit, Component, ChangeDetectorRef } from '@angular/core';
+﻿import { OnInit, Component, ChangeDetectorRef } from '@angular/core';
 import { ExportDeclarationClosingDataPM } from '../../../../../Customs/EntityPMs/ExportDeclarationClosingDataPM';
 import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -144,6 +144,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
                     if(!this.FinalShipCode)
                         this.FinalShipCode = this.DecPM.Consignments.find(x => x.ConsignmentType == "E")?.ShipCode;
+                   
                     if (this.FinalCargoTypeCode == null) {
 
                         this.FinalManifestNumber = this.FinalManifestNumber == null ? '' : this.FinalManifestNumber;
@@ -401,6 +402,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
 
                     if (AppTool.IsNullOrEmpty(this.EntityPM.LoadingDateTime)) {
+
+                    if (AppTool.IsNullOrEmpty(this.EntityPM.LoadingDateTime)) {
                         var msg =  " שדה תאריך טעינה שדה חובה";
                         this.ValidationErrors.push(msg);
                         this.FillValidationErrors("Errors");
@@ -466,7 +469,9 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
                                         }
 
-                                    });
+                            
+
+                               
                                     if (SupplierInvoiceNumberList.length > 0) {
                                         this.ShowWarnningMessage(SupplierInvoiceNumberList);
                                         SupplierInvoiceNumberList = "";
@@ -477,17 +482,18 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                                 })
                             }
                         }
-
-                    });
-                }
+  });
+  }
+                                    else {
+                                        this.Send("ok")
+                                    }
+                  
+                        }
                 else {
                     this.Send("ok")
                 }
 
-            }
-            else {
-                this.Send("ok")
-            }
+            
 
         });
 
@@ -514,7 +520,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         //searchParams.TestCase = event.TestCase;
         let myShowProgressBarParams: ShowProgressBarParams = null;
 
-        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession, searchParams.PBId, "שליחת מסר סגירה", false, myShowProgressBarParams)
+        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession, searchParams.PBId, "×©×œ×™×—×ª ×ž×¡×¨ ×¡×’×™×¨×”", false, myShowProgressBarParams)
             .then((res) => {
 
 
@@ -603,7 +609,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
     }
     OnAddEditWindowClosed(event) {
-        ;
+       
         this.ValidationErrors = [];
 
     }
@@ -643,7 +649,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     OkButtonClicked() {
         if (this.ValidationErrors.length > 0)
             this.FillValidationErrors("Errors");
-        this.CurrentSession.CurrentEditComponent.StartBusyIndicator("שמירה");
+        this.CurrentSession.CurrentEditComponent.StartBusyIndicator("×©×ž×™×¨×”");
 
         if (this.IsNew) {
             this.exportDeclarationClosingDataPMService.insert(this.EntityPM).subscribe((response: ServiceResponse) => {
@@ -712,6 +718,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                         let FlightDate = UnifreightMessageM.GetStringValue(mess, "FlightDate");
                         if (Mawb != null && this.EntityPM != null) {
                             this.MainAWB = Mawb;
+
                             if (AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber) && this.IsNew && this.DecPM.Direction == 'E' && (this.DecPM.TransportModeId == 'A' || this.DecPM.TransportModeId == 'O')) {
                                 this.EntityPM.IsDirty = true;
                                 this.EntityPM ? this.EntityPM.FinalManifestNumber = this.EntityPM.MAIN_AWB : null;
@@ -727,7 +734,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                         if (!AppTool.IsNullOrEmpty(FlightDate)) {
                             this.FlightDate = new Date(Number(FlightDate.substring(0, 4)), Number(FlightDate.substring(4, 6)) - 1, Number(FlightDate.substring(6, 8)), 2, 2, 2);;
                             if (this.IsNew) {
-                                this.LoadingDateTime = new Date(Number(FlightDate.substring(0, 4)), Number(FlightDate.substring(4, 6)) - 1, Number(FlightDate.substring(6, 8)), 2, 2, 2);
+                                this.LoadingDateTime = this.FlightDate;
                             }
                         }
                         SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();

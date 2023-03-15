@@ -851,7 +851,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             }
                         }
                     }
-
                     if (consignment?.DMExtensions?.RegisteredFacility != null &&
                         consignment.DMExtensions.RegisteredFacility.Length > 0 &&
                         consignment.DMExtensions.RegisteredFacility[0].DMExtensions?.PackagesMeasure != null
@@ -1312,6 +1311,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                        
 
                         /*if (!isFromImporter && AdditionalPriceTypeCodes.Contains(AdditionalPriceTypeCode))
+
                         {
                             //supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Update;
                         }

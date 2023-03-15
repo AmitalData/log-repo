@@ -15310,6 +15310,80 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <field
+    Id="&quot;919da53a-b58e-4925-9bc8-2abe5ab0f25b&quot;"
+    FieldName="&quot;ShipName&quot;"
+    OldNames="ShipName"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;Customs.Declaration&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="300"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="300"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;ShipName&quot;"
+    ListPropertyPath="&quot;ShipName&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Customs.Declaration&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;ShipName&quot;"
+    DefaultText="&quot;Ship&quot;"
+    ListFieldLable="&quot;ShipNameListLable&quot;"
+    ListLableDefaultText="&quot;Ship&quot;"
+    ListLocalDefaultText="&quot;ספינה&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <field
     Id="&quot;422b616b-06b1-41e4-801e-c4c965dc7f32&quot;"
     FieldName="&quot;DestinationCountryName&quot;"
     OldNames="DestinationCountryName"
@@ -19771,7 +19845,7 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <field
-    Id="&quot;9e77ea75-43a4-4c80-b877-43021c65342e&quot;"
+     Id="&quot;9e77ea75-43a4-4c80-b877-43021c65342e&quot;"
     FieldName="&quot;DeclarationFollowUp&quot;"
     OldNames="DeclarationFollowUp"
     IsNew="true"
@@ -20443,7 +20517,7 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <field
-    Id="&quot;f48e52f3-846c-4e36-9064-11f4815f2f2a&quot;"
+     Id="&quot;f48e52f3-846c-4e36-9064-11f4815f2f2a&quot;"
     FieldName="&quot;CasualImporterCountry&quot;"
     OldNames="CasualImporterCountry"
     IsNew="true"
@@ -20745,6 +20819,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+
   <Query
     Code="&quot;OpenCourierMaster&quot;"
     TextCode="&quot;Courier Master Open&quot;"
@@ -24100,6 +24175,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+
   <Records />
   <MenuButtons
     MenuButtonGroupType="&quot;Customs.DeclarationEdit&quot;"
@@ -26581,6 +26657,7 @@
       LocalDefaultText="&quot;יש לבחור סוג מסמך&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -26844,7 +26921,7 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-    <Feature
+<Feature
       Code="&quot;AUTOMATION&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.AUTOMATION&quot;"

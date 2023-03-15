@@ -1497,6 +1497,7 @@ export class DeclarationPM {
     private isAramex: boolean;
     public get IsAramex() { return this.isAramex; }
     public set IsAramex(newValue: boolean) { if (this.isAramex != newValue) { this.isAramex = newValue; this.MarkAsDirty("IsAramex"); } }
+
        
 	 
 
@@ -1527,4 +1528,4 @@ export class DeclarationPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
