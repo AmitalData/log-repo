@@ -24,7 +24,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
         private IQueryable<DeclarationReferantDataList> GetIqueryableList(IQueryable<DeclarationReferantData> iQueryable)
         {
-            
+
 
 
             IQueryable<DeclarationReferantDataList> query = (from a in iQueryable.Include("CustomsVendor")
@@ -274,6 +274,7 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                  FieldR19 = s.FieldR19,
                                                                  FieldR20 = s.FieldR20,
                                                                  CustomerId=d.CustomerId,
+                                                                 ListCounter= 0,
 
                                                              });
             return query;

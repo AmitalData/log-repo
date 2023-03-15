@@ -18,7 +18,9 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
 
             var listIn = new List<string>() {
                 "2750",//"2715","2755", "1170"  ,"2340",
-                "UCB1170","UCB2715","UCB2755", "UCB2750" };
+                "UCB1170"
+                //,"UCB2715"
+                ,"UCB2755", "UCB2750" };
 
             var signInterfaces = GetSignInterfaces(requestParams);
 
@@ -64,12 +66,22 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
 
                 if (isPersonalSign && string.IsNullOrWhiteSpace(personId) && string.IsNullOrWhiteSpace(availableSignServer))
                 {
+                    if (Environment.CommandLine.ToLower().Contains("AmitalCustomsWindowsService.exe".ToLower()))
+                    {
+                        requestParams.ForcePersonalSign = isPersonalSign;//DEFAULT HSM
+                        return;
+                    }   
                     throw new CourierForceSignException("No Person ID is set for the user");
                 }
                 var dBSignStationCheckService = new DBSignStationCheckService();
                 var signStation = dBSignStationCheckService.GetValidSignStation(requestParams.Tenant, personId, isPersonalSign);
                 if (signStation == null && string.IsNullOrWhiteSpace(availableSignServer))
                 {
+                    if (Environment.CommandLine.ToLower().Contains("AmitalCustomsWindowsService.exe".ToLower()))
+                    {
+                        requestParams.ForcePersonalSign = isPersonalSign;//DEFAULT HSM
+                        return;
+                    }
                     throw new CourierForceSignException("No suitable signature position found");
                 }
                 LogMessagingUtil.Instance.AppendLine($"ApplyForceSign:memory:{signStation?.PersonId}");

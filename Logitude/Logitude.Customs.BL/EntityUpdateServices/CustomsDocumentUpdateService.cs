@@ -845,8 +845,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     LogitudeSettings.HandleLogMe("start send2:" + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
 
-                    var courierForceSignService = new CourierForceSignService();
-                    courierForceSignService.ApplyForceSign(ref requestParams);
+                    //var courierForceSignService = new CourierForceSignService();
+                    //courierForceSignService.ApplyForceSign(ref requestParams);
                     SBQMessageService.CreateSheetSBQMessage<Logitude.CustomsMessaging.Common.RequestParams.D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam>(requestParams
                         , false, requestParams.FutureSendDateTime
                         );
