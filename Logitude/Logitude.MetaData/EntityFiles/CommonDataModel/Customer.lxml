@@ -19545,6 +19545,19 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
+    <EventType
+      Code="&quot;CSCS&quot;"
+      ObjectTableName="&quot;Customer&quot;"
+      EnglishName="&quot;GLAccount is connected&quot;"
+      LocalName="&quot;GLAccount is connected&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons
