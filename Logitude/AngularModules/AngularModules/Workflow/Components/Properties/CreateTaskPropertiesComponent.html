@@ -154,7 +154,7 @@
                                 <TreeSelect [Items]="EditableRecordsTreeItems" [Width]="'300px'" [Value]="Record"
                                     [ShowExpand]="false" [IsReturnedTreeSelectItem]="true"
                                     [ShowItem]="'Shipment' | ShowTreeItemPipe : 'entity'"
-                                    (ValueChanged)="updateRecord($event)" [DataCy]="task-related-to">
+                                    (ValueChanged)="updateRecord($event)" [DataCy]="'task-related-to'">
                                 </TreeSelect>
                             </div>
                         </td>
