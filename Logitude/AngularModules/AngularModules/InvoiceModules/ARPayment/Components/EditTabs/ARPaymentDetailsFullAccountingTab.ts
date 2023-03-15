@@ -2668,9 +2668,13 @@ export class TransactionLineModel extends BaseComponent
 
 	}
 
-	OnAmountToReconciledblclick(logCellTemplate: any, classificationTextBox: any){
-		
-	if(this.IsAccountingActivated && this.parent.EntityPM.StatusCode != "VD") {
+	AutomaticallyFillAmountToReconciledblclick(logCellTemplate: any, classificationTextBox: any){
+	
+	
+	const inputAmountToReconciled = document.getElementById(classificationTextBox.InputId);
+	inputAmountToReconciled.blur();
+     
+	if(this.IsAccountingActivated && (classificationTextBox.IsDisabled == false)) {
 		var totalOpenAmount = this.parent.PaymenyAmount - this.parent.paymentReconciledAmountTotal -this.parent.amount2reconcileTotal;
 		
 		if(this.AmountToReconcile > 0) {
@@ -2684,7 +2688,7 @@ export class TransactionLineModel extends BaseComponent
 		} else {
 			this.AmountToReconcile = 0;
 		}
-	  
+		
 	}
 		
 		
