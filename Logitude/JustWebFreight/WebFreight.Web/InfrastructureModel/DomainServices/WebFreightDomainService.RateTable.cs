@@ -206,7 +206,7 @@ namespace WebFreight.Web.InfrastructureModel.DomainServices
             }
 
             ratesTablesRepository = new RatesTableRepository(objectContext);
-            ratesTableQuery = new RatesTableQuery(ratesTablesRepository);
+            ratesTableQuery = new RatesTableQuery(ratesTablesRepository,tenant);
             CurrencyRepository currencyRepository = new CurrencyRepository(tenant);
             Currency baseCurrency = currencyRepository.GetCurrencies(tenant).Where(r => r.Id == baseCurrencyId).FirstOrDefault();
             List<Currency> foreignCurrencies = currencyRepository.GetCurrencies(tenant).Where(c => c.Id != baseCurrencyId).ToList();

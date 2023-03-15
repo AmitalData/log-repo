@@ -80,14 +80,14 @@ namespace WebFreight.Web.WebServices
 
         [WebMethod]
 
-        public string UploadFile(string generatedfilename, byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, string externalDocumentId, int tenant, string fileLocation, string filename, bool forceCreateDocument)
+        public string UploadFile(string generatedfilename, byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, string externalDocumentId, int tenant, string fileLocation, string filename, bool forceCreateDocument, string documentId)
         {
 
             try
             {
                 string signerslist = "";
                 bool isSigned = false;
-                documentIdAndExtension = UploadFileData(generatedfilename, buffer, fileSize, sentBytes, blockIdsList, bufferNumber, externalDocumentId, tenant, fileLocation, filename, ref isSigned, ref signerslist, forceCreateDocument);
+                documentIdAndExtension = UploadFileData(generatedfilename, buffer, fileSize, sentBytes, blockIdsList, bufferNumber, externalDocumentId, tenant, fileLocation, filename, ref isSigned, ref signerslist, forceCreateDocument, documentId);
             }
             catch (Exception e)
             {
@@ -221,7 +221,7 @@ namespace WebFreight.Web.WebServices
         {
             try
             {
-                documentIdAndExtension = UploadFileData(generatedfilename, buffer, fileSize, sentBytes, blockIdsList, bufferNumber, externalDocumentId, tenant, fileLocation, filename, ref isDigitallySigned, ref signersList, false);
+                documentIdAndExtension = UploadFileData(generatedfilename, buffer, fileSize, sentBytes, blockIdsList, bufferNumber, externalDocumentId, tenant, fileLocation, filename, ref isDigitallySigned, ref signersList, false, null);
 
                 if (!string.IsNullOrEmpty(documentIdAndExtension))
                 {
@@ -1201,7 +1201,7 @@ namespace WebFreight.Web.WebServices
 
         private string UploadFileData(string generatedfilename, byte[] buffer, long fileSize, long sentBytes,
             string[] blockIdsList, int bufferNumber, string externalDocumentId, int tenant,
-            string fileLocation, string filename, ref bool isDigitallySigned, ref string signersList, bool forceCreateDocument)
+            string fileLocation, string filename, ref bool isDigitallySigned, ref string signersList, bool forceCreateDocument, string documentId)
         {
             if (string.IsNullOrEmpty(fileLocation))
             {
@@ -1247,10 +1247,12 @@ namespace WebFreight.Web.WebServices
                     FileName = fileName.Substring(0, fileName.LastIndexOf('.')),
                     FileExtension = fileparams[fileparams.Length - 1],
                     FileData = buffer,
-                    FileFolder = filelocation
+                    FileFolder = filelocation,
+                    DocumentId = documentId
                 });
 
                 fileNameAndExtension = finalFileName + "."+ fileparams[fileparams.Length - 1];
+                documentIdAndExtension = fileNameAndExtension;
             }
             BlobFileInfo fileInfo = new BlobFileInfo()
             {

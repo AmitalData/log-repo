@@ -23,7 +23,7 @@
     Type="nvarchar"
     Size="-1">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="ToDoConditions"

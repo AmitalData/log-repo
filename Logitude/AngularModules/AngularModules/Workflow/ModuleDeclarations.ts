@@ -8,6 +8,10 @@ import { CreateRecordPropertiesComponent } from './Components/Properties/CreateR
 import { UpdateRecordPropertiesComponent } from './Components/Properties/UpdateRecordPropertiesComponent';
 import { GetRecordPropertiesComponent } from './Components/Properties/GetRecordPropertiesComponent';
 import { SendEmailPropertiesComponent } from './Components/Properties/SendEmailPropertiesComponent';
+import { CollectionFilterPropertiesComponent } from './Components/Properties/CollectionFilterPropertiesComponent';
+import { AppendItemPropertiesComponent } from './Components/Properties/AppendItemPropertiesComponent';
+import { DeleteItemPropertiesComponent } from './Components/Properties/DeleteItemPropertiesComponent';
+import { CreateTaskPropertiesComponent } from './Components/Properties/CreateTaskPropertiesComponent';
 import { FieldTemplateComponent } from "./Components/Templates/FieldTemplateComponent";
 import { CreateWorkflowComponent } from "./Components/CreateEditWorkflow/CreateWorkflowComponent";
 import { EditWorkflowComponent } from "./Components/CreateEditWorkflow/EditWorkflowComponent";
@@ -33,9 +37,9 @@ import { ShowEntitiesTreeItemPipe } from "./Pipes/ShowEntitiesTreeItemPipe";
 import { ShowExpressionTreeItemPipe } from "./Pipes/ShowExpressionTreeItemPipe";
 import { EntityLabelPipe } from "./Pipes/EntityLabelPipe";
 import { ConditionDisabledPipe } from "./Pipes/ConditionDisabledPipe";
+import { SetValueDisabledPipe } from "./Pipes/SetValueDisabledPipe";
 import { ExpressionComponent } from "./Components/Base/ExpressionComponent";
 import { ExpressionBuilderComponent } from "./Components/Base/ExpressionBuilderComponent";
-import { CollectionFilterPropertiesComponent } from './Components/Properties/CollectionFilterPropertiesComponent';
 import { ShowEditableVariablesTreeItemPipe } from "./Pipes/ShowEditableVariablesTreeItemPipe";
 import { IsCollectionTypePipe } from "./Pipes/IsCollectionTypePipe";
 import { SetValuesOperatorsItemsPipe } from "./Pipes/SetValuesOperatorsItemsPipe";
@@ -47,8 +51,6 @@ import { CreateWorkflowVersionComponent } from './Components/WorkflowVersion/Cre
 import { WorkFlowShortTitleComponent } from './Components/ShortTitles/WorkFlowShortTitleComponent';
 import { IsObjectTypePipe } from "./Pipes/IsObjectTypePipe";
 import { ObjectVariableComponent } from "./Components/Base/ObjectVariableComponent";
-import { AppendItemPropertiesComponent } from './Components/Properties/AppendItemPropertiesComponent';
-import { DeleteItemPropertiesComponent } from './Components/Properties/DeleteItemPropertiesComponent';
 import { WorkFlowHelperComponent } from "./Components/Helpers/WorkFlowHelperComponent";
 import { EditWorkflowVersionComponent } from "./Components/WorkflowVersion/EditWorkflowVersionComponent";
 
@@ -66,6 +68,7 @@ export const Components = [
     CollectionFilterPropertiesComponent,
     AppendItemPropertiesComponent,
     DeleteItemPropertiesComponent,
+    CreateTaskPropertiesComponent,
     FieldTemplateComponent,
     CreateWorkflowComponent,
     EditWorkflowComponent,
@@ -102,6 +105,7 @@ export const Pipes = [
     ShowFlowVariablesTypeTreeItemPipe,
     EntityLabelPipe,
     ConditionDisabledPipe,
+    SetValueDisabledPipe,
     ShowEditableVariablesTreeItemPipe,
     IsObjectTypePipe,
     IsCollectionTypePipe,
@@ -128,6 +132,7 @@ export class ModuleDeclarations {
             case "CollectionFilterPropertiesComponent": { result = CollectionFilterPropertiesComponent; break; }
             case "AppendItemPropertiesComponent": { result = AppendItemPropertiesComponent; break; }
             case "DeleteItemPropertiesComponent": { result = DeleteItemPropertiesComponent; break; }
+            case "CreateTaskPropertiesComponent": { result = CreateTaskPropertiesComponent; break; }
             case "FieldTemplateComponent": { result = FieldTemplateComponent; break; }
             case "CreateWorkflowComponent": { result = CreateWorkflowComponent; break; }
             case "EditWorkflowComponent": { result = EditWorkflowComponent; break; }

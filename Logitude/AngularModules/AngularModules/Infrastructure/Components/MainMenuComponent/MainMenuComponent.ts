@@ -631,23 +631,6 @@ export class MainMenuComponent {
                         break;
                     }
                         
-                    case "General.MH.Tasks": {
-                        ServiceLocator.SendTotangoUserActivity("Tasks", "Main View");
-                        this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe((response:any) => {
-                            SessionLocator.DynamicLoader.Load('./InfrastructureModules/InfrastructureBusinessProcess/Components/Workspaces/TasksWorkspaceComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
-                                .then(cmpRef => {
-                                    this.CurrentSession.DestroyMenuReferences();
-                                    this.CurrentSession.DestroyListComponentReferences();
-                                    this.CurrentSession.AddMenuReference(cmpRef);
-                                    this.ChangeSessionHeader(this.SelectedMenu);
-                                    this.isChangingSelected = false;
-                                    //this.pointerEvents = 'all';
-                                });
-                            //myComponentPath = "./InfrastructureModules/InfrastructureBusinessProcess/Components/Workspaces/TasksWorkspaceComponent";
-                        });
-                        break;
-                    }
-
                     case "General.MH.Depositions": {
                         ServiceLocator.SendTotangoUserActivity("Customs Shipper", "List View");
                         MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Deposition Query" });

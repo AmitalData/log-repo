@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaskUpdateClass
    {  		
-		public const string HashString = "c21c418127867679c4c2a29feaa5d129";
+		public const string HashString = "be0182c577564e719a429d550785ee99";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -102,6 +102,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    AvailableInCustomization =  false,
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
+			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -372,6 +373,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Task",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -382,6 +384,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUserId",
 					  						DefaultText =  "Created By",
+					  						ListFieldLable =  "CreatedByUserIdListLable",
+					  						ListLableDefaultText =  "Created By",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "User",
 					  						NavigationPropertyName =  "CreatedByUser",
@@ -498,6 +502,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Task",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -508,6 +513,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdatedByUserId",
 					  						DefaultText =  "Updated By",
+					  						ListFieldLable =  "UpdatedByUserIdListLable",
+					  						ListLableDefaultText =  "Updated By",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "User",
 					  						NavigationPropertyName =  "UpdatedByUser",
@@ -749,6 +756,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Task",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -759,6 +767,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OwnerId",
 					  						DefaultText =  "Owner",
+					  						ListFieldLable =  "OwnerIdListLable",
+					  						ListLableDefaultText =  "Owner",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "User",
 					  						NavigationPropertyName =  "Owner",
@@ -812,6 +822,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Task",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -822,6 +833,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PriorityId",
 					  						DefaultText =  "Priority",
+					  						ListFieldLable =  "PriorityIdListLable",
+					  						ListLableDefaultText =  "Priority",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "TaskPriority",
 					  						NavigationPropertyName =  "Priority",
@@ -875,6 +888,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Task",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -885,6 +899,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StatusId",
 					  						DefaultText =  "Status",
+					  						ListFieldLable =  "StatusIdListLable",
+					  						ListLableDefaultText =  "Status",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "TaskStatus",
 					  						NavigationPropertyName =  "Status",
@@ -997,6 +1013,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Task",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -1007,6 +1024,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TaskTypeId",
 					  						DefaultText =  "Task Type",
+					  						ListFieldLable =  "TaskTypeIdListLable",
+					  						ListLableDefaultText =  "Task Type",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "TaskType",
 					  						NavigationPropertyName =  "TaskType",
@@ -1123,6 +1142,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Task",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -1133,6 +1153,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ClosedByUserId",
 					  						DefaultText =  "Closed By",
+					  						ListFieldLable =  "ClosedByUserIdListLable",
+					  						ListLableDefaultText =  "Closed By",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "User",
 					  						NavigationPropertyName =  "ClosedByUser",
@@ -1375,6 +1397,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Task",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -1385,6 +1408,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CheckWithId",
 					  						DefaultText =  "Check With",
+					  						ListFieldLable =  "CheckWithIdListLable",
+					  						ListLableDefaultText =  "Check With",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Card",
 					  						NavigationPropertyName =  "CheckWith",
@@ -2033,7 +2058,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -2260,6 +2285,65 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "MyOpenTasks",
+					  						ObjectTableName =  "Task",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  true,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "MyOpenTasks",
+					  						ListPropertyPath =  "MyOpenTasks",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "MyOpenTasks",
+					  						DefaultText =  "My Open Tasks",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -2285,24 +2369,64 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode TaskTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Task.Q.AllTasks", DefaultText = @"All Tasks",LocalDefaultText = "All Tasks", ObjectTableId = TaskObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature TaskFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Task.Q.AllTasks", ObjectTableId = TaskObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaskFeatures.AllTasks", NameTextCodeDefaultText = "All Tasks", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TaskObjectTable, addedFeatures, addedTextCodes);
+			   TextCode TaskTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Task.Q.MyOpenTasks", DefaultText = @"My Open Tasks",LocalDefaultText = "My Open Tasks", ObjectTableId = TaskObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TaskFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Task.Q.MyOpenTasks", ObjectTableId = TaskObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaskFeatures.MyOpenTasks", NameTextCodeDefaultText = "My Open Tasks", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TaskObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode TaskTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Task.Q.AllOpenTasks", DefaultText = @"All Open Tasks",LocalDefaultText = "All Open Tasks", ObjectTableId = TaskObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TaskFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Task.Q.AllOpenTasks", ObjectTableId = TaskObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaskFeatures.AllOpenTasks", NameTextCodeDefaultText = "All Open Tasks", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TaskObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode TaskTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Task.Q.AllTasks", DefaultText = @"All Tasks",LocalDefaultText = "All Tasks", ObjectTableId = TaskObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TaskFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Task.Q.AllTasks", ObjectTableId = TaskObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaskFeatures.AllTasks", NameTextCodeDefaultText = "All Tasks", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TaskObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllTasksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TaskTextCode_0.Id, NameTextCodeCode = TaskTextCode_0.Code, ObjectTableName = "Task", Code = "All Tasks",  QueryGroupCode = "a540", IndexOrder = 0, Tenant = 0, ObjectTableId = TaskObjectTable.Id, QuerySection = "Task", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TaskFeature_0.Id,FeatureUniqeCode= TaskFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query MyOpenTasksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TaskTextCode_0.Id, NameTextCodeCode = TaskTextCode_0.Code, ObjectTableName = "Task", Code = "My Open Tasks",  QueryGroupCode = "a540", IndexOrder = 0, Tenant = 0, ObjectTableId = TaskObjectTable.Id, QuerySection = "Task", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TaskFeature_0.Id,FeatureUniqeCode= TaskFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AllTasksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTasksQuery.Id,QueryCode = AllTasksQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Task.Subject" , ColumnWidth = 200 }, addedQueryColumns);
+			 QueryColumn MyOpenTasksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyOpenTasksQuery.Id,QueryCode = MyOpenTasksQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Task.Subject" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn AllTasksQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTasksQuery.Id,QueryCode = AllTasksQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Task.StatusName" , ColumnWidth = 200 }, addedQueryColumns);
+			 QueryColumn MyOpenTasksQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyOpenTasksQuery.Id,QueryCode = MyOpenTasksQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Task.StatusName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllTasksQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTasksQuery.Id,QueryCode = AllTasksQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Task.PriorityName" , ColumnWidth = 200 }, addedQueryColumns);
+			 QueryColumn MyOpenTasksQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyOpenTasksQuery.Id,QueryCode = MyOpenTasksQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Task.PriorityName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllTasksQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTasksQuery.Id,QueryCode = AllTasksQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Task.DueDate" , ColumnWidth = 200 }, addedQueryColumns);
+			 QueryColumn MyOpenTasksQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyOpenTasksQuery.Id,QueryCode = MyOpenTasksQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Task.DueDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllTasksQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTasksQuery.Id,QueryCode = AllTasksQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Task.OwnerName" , ColumnWidth = 200 }, addedQueryColumns);
+             AdvancedQueryFilter MyOpenTasksQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Task.MyOpenTasks", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = MyOpenTasksQuery.Id,QueryCode = MyOpenTasksQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+  
+	      
+
+			  Query AllOpenTasksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TaskTextCode_1.Id, NameTextCodeCode = TaskTextCode_1.Code, ObjectTableName = "Task", Code = "All Open Tasks",  QueryGroupCode = "a540", IndexOrder = 1, Tenant = 0, ObjectTableId = TaskObjectTable.Id, QuerySection = "Task", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TaskFeature_1.Id,FeatureUniqeCode= TaskFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn AllOpenTasksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTasksQuery.Id,QueryCode = AllOpenTasksQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Task.Subject" , ColumnWidth = 250 }, addedQueryColumns);
+
+			 QueryColumn AllOpenTasksQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTasksQuery.Id,QueryCode = AllOpenTasksQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Task.StatusName" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn AllOpenTasksQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTasksQuery.Id,QueryCode = AllOpenTasksQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Task.PriorityName" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn AllOpenTasksQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTasksQuery.Id,QueryCode = AllOpenTasksQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Task.DueDate" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn AllOpenTasksQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTasksQuery.Id,QueryCode = AllOpenTasksQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Task.OwnerName" , ColumnWidth = 150 }, addedQueryColumns);
+
+             AdvancedQueryFilter AllOpenTasksQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Task.IsClosed", PredefinedValue = "false",PredefinedValue2 = null, CustomPredefined = false, QueryId = AllOpenTasksQuery.Id,QueryCode = AllOpenTasksQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+  
+	      
+
+			  Query AllTasksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TaskTextCode_2.Id, NameTextCodeCode = TaskTextCode_2.Code, ObjectTableName = "Task", Code = "All Tasks",  QueryGroupCode = "a540", IndexOrder = 2, Tenant = 0, ObjectTableId = TaskObjectTable.Id, QuerySection = "Task", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TaskFeature_2.Id,FeatureUniqeCode= TaskFeature_2.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn AllTasksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTasksQuery.Id,QueryCode = AllTasksQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Task.Subject" , ColumnWidth = 250 }, addedQueryColumns);
+
+			 QueryColumn AllTasksQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTasksQuery.Id,QueryCode = AllTasksQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Task.StatusName" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn AllTasksQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTasksQuery.Id,QueryCode = AllTasksQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Task.PriorityName" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn AllTasksQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTasksQuery.Id,QueryCode = AllTasksQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Task.DueDate" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn AllTasksQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTasksQuery.Id,QueryCode = AllTasksQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Task.OwnerName" , ColumnWidth = 150 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
