@@ -40,6 +40,9 @@ namespace Logitude.Accounting.BL.CoreBL
             _includeIdCounter = includeIdCounter;
             this._JournalValidatorContext = journalValidatorContext;
             LedgerTransactions = new List<LedgerTransactionPM>();
+            if (_JournalPM.StatusCode == "4") {
+                _JournalPM.StatusCode = "2";
+            }
             //_PRIVATEOLD_GLAccountTotalByMonths = new List<GLAccountTotalByMonthPM>();
 
         }
