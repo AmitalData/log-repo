@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaskExtendedUpdateClass
    {  		
-		public const string HashString = "e133793cd3c86b0d22c8399f9523da20";
+		public const string HashString = "8882f73e23843b153df89bba2b0a33db";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -102,6 +102,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    AvailableInCustomization =  false,
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
+			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -128,7 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Task Extended",
-			      				    Code =  "72b3",
+			      				    Code =  "e2df",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Workflow",
@@ -283,7 +284,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
