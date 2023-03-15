@@ -31,7 +31,7 @@ export class CustomsItemDetailsQueryComponent
     implements AfterViewInit, IRequestsSheetMassagingComponent {
     public DataContext: CustomsItemDetailsQueryComponent = this;
     public ObjectTableName: string = "Customs.Declaration";//TODO
-
+    public ClassificationValidation: string[] = []
     _IIGGeneralMessagesService: IIGGeneralMessagesService = new IIGGeneralMessagesService();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
@@ -65,7 +65,7 @@ export class CustomsItemDetailsQueryComponent
 
         }
 
-        
+
     }
 
 
@@ -155,7 +155,7 @@ export class CustomsItemDetailsQueryComponent
             this.RequestParams.GoodsDescription = value;
         }
     }
-    get IsDiscountCode() { return   this.RequestParams.IsDiscountCode; }
+    get IsDiscountCode() { return this.RequestParams.IsDiscountCode; }
     set IsDiscountCode(value: boolean) {
         if (this.RequestParams.IsDiscountCode != value) {
             this.RequestParams.IsDiscountCode = value;
@@ -168,7 +168,9 @@ export class CustomsItemDetailsQueryComponent
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
         this.ValidationErrorsList = errors;
-
+        this.ClassificationValidation.forEach(element => {
+            this.ValidationErrorsList.push(element);
+        });
         if (AppTool.IsNullOrEmpty(this.ValidToDate)) {
             var msg = "תאריך שליפה שדה חובה";
             this.ValidationErrorsList.push(msg);
@@ -187,8 +189,11 @@ export class CustomsItemDetailsQueryComponent
     OnCustomSendOptionsButtonClick(customSendOptionsArgs: CustomSendOptionsArgs) {
 
         //alert(customSendOptionsArgs.Option);
+        this.OnClassificationLostFocus(null, null, true)
+
         this.FillErrors();
-        if (this.ValidationErrorsList.length > 0) {
+         
+        if (this.ValidationErrorsList.length > 0 ) {
             return;
         }
 
@@ -207,7 +212,7 @@ export class CustomsItemDetailsQueryComponent
         CustomMessageProgressComponent
             .ShowProgressBar(this.CurrentSession, currRequestParams.PBId, "שאילתא לנתוני פרט מכס", true)
             .then((res) => {
-                
+
 
                 this.ResponseData = res;
                 this.FullClassification = this.ResponseData?.CustomsItemList[0]?.fullClassification
@@ -220,7 +225,7 @@ export class CustomsItemDetailsQueryComponent
                 this.OnMassageDisplayMethod();
             }
             ).catch((err) => {
-                
+
                 this.ValidationErrorsList.push(err);
             });
 
@@ -244,7 +249,7 @@ export class CustomsItemDetailsQueryComponent
     valid: boolean = true;
     checkDigit: number = 0;
     digit: string = null;
-    async OnClassificationLostFocus(logCellTemplate: any, classificationTextBox: any) {
+    async OnClassificationLostFocus(logCellTemplate: any, classificationTextBox: any, isSend:boolean=false) {
 
         debugger;
 
@@ -257,14 +262,16 @@ export class CustomsItemDetailsQueryComponent
         if (AppTool.IsNullOrEmpty(newValue)) {
             this.UIProperties.SetValidity("Classification", "Customs.Classification", true, "");
         }
-        else if (newValue.toString().length > 10) {
+        else if (newValue.toString().length > 11) {
             this.valid = false;
             this.UIProperties.SetValidity("Classification", "Customs.Classification", false, TextCodeTranslator.Translate("Customs.Declaration.O.CodeLong"));
+            this.ClassificationValidation.push(TextCodeTranslator.Translate("Customs.Declaration.O.CodeLong"));
 
         }
         else if (newValue.toString().length < 8) {
             this.valid = false;
             this.UIProperties.SetValidity("Classification", "Customs.Classification", false, TextCodeTranslator.Translate("Customs.Declaration.O.CodeShort"));
+            this.ClassificationValidation.push(TextCodeTranslator.Translate("Customs.Declaration.O.CodeShort"));
 
         }
         else if (newValue.toString().length == 8) {
@@ -283,6 +290,7 @@ export class CustomsItemDetailsQueryComponent
             if (this.digit != this.checkDigit.toString()) {
                 this.valid = false;
                 this.UIProperties.SetValidity("Classification", "Customs.Classification", false, TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + this.checkDigit.toString());
+                this.ClassificationValidation.push(TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + this.checkDigit.toString());
 
             }
             else {
@@ -302,7 +310,7 @@ export class CustomsItemDetailsQueryComponent
             if (this.digit != this.checkDigit.toString()) {
                 this.valid = false;
                 this.UIProperties.SetValidity("Classification", "Customs.Classification", false, TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + this.checkDigit.toString());
-
+                this.ClassificationValidation.push(TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + this.checkDigit.toString());
             }
             else {
                 this.valid = true;
@@ -319,10 +327,12 @@ export class CustomsItemDetailsQueryComponent
 
 
         if (this.valid) {
-
+              this.ClassificationValidation=[]
         }
         else {
+            
             SessionLocator.SustainFocusOnCell = true;
+            if(!isSend)
             this.CurrentSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: classificationTextBox.InputId });
 
         }
