@@ -1119,7 +1119,6 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
                 var newQuantity = 1;
                 var expectedAmount;
-                var unitPrice;
                 if (packageId != null) {
                     this.CreateNewPayableFromTariffCharge_FCL(packageId, shipmentPayable);
                     var containerPrice = 0;
@@ -1130,34 +1129,36 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                             newQuantity = container.Quantity;
                         }
                     }
-                    unitPrice = containerPrice;
+                    expectedAmount = containerPrice;
                 }
                 else {
-                    unitPrice = newRecord.ActualPrice;
+                    expectedAmount = newRecord.ActualPrice;
                     newQuantity = this.GetQuantity(newRecord.UnitOfMesurmentCode)
                 }
 
-                if (!AppTool.IsNullOrZero(unitPrice)) {
+                if (!AppTool.IsNullOrZero(expectedAmount)) {
                     shipmentPayable.TariffId = newRecord.TariffId;
                     shipmentPayable.TariffNumber = newRecord.TariffNumber;
                     shipmentPayable.TariffVersion = newRecord.VersionId != null ? newRecord.VersionId.toString() : newRecord.VersionId;
                 }
 
-                var rate = this.Generator.GetCurrencyRate(newRecord.CurrencyId);
                 if (newQuantity != null) {
-
                     shipmentPayable.Quantity = AppTool.Round(newQuantity, 3);
-                    shipmentPayable.UnitPrice = unitPrice;
                     if (newRecord.UnitOfMesurmentCode == "PRVL" || newRecord.UnitOfMesurmentCode == "PRFR") {
-                        var price = unitPrice / 100;
-                        expectedAmount = AppTool.Round(price * newQuantity, 3);
+                        var price = expectedAmount * 100;
+                        shipmentPayable.UnitPrice = AppTool.Round(price / shipmentPayable.Quantity, 3);
                     }
-
+                    else if (newRecord.UnitOfMesurmentCode == "QTY") {
+                        var unitPrice = expectedAmount;
+                        shipmentPayable.UnitPrice = AppTool.Round(unitPrice, 3);
+                        expectedAmount = unitPrice * shipmentPayable.Quantity;
+                    }
                     else {
-                        expectedAmount = unitPrice != null ? AppTool.Round(unitPrice * newQuantity, 3) : null;
+                        shipmentPayable.UnitPrice = expectedAmount != null ? AppTool.Round(expectedAmount / newQuantity, 3) : null;
                     }
                 }
 
+                var rate = this.Generator.GetCurrencyRate(newRecord.CurrencyId);
                 var expectedAmountLocal = expectedAmount * rate;
                 var profitCurrencyExchangeRate = this.Generator.GetCurrencyRate(this.FatherComponent.EntityPM.ProfitCurrencyId);
                 var expectedAmountProfit = expectedAmountLocal / profitCurrencyExchangeRate;
@@ -1188,6 +1189,16 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
                 this.TariffList_Shipment.push(shipmentPayable);
             }
+        });
+
+        this.OnAmountChanged();
+    }
+
+    OnAmountChanged() {
+        this.TariffList_Shipment.filter(f => f.ChargesGroupCode != "FRT" && f.MeasurementCode == "PRFR").forEach(item => {
+            var newQuantity = this.GetQuantity(item.MeasurementCode);
+            var price = item.ExpectedAmount * 100;
+            item.UnitPrice = AppTool.Round(price / newQuantity, 3);
         });
     }
 
@@ -1408,9 +1419,13 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 if (chargeItem.CostMeasurementCode == "PRVL" || chargeItem.CostMeasurementCode == "PRFR") {
                     chargeItem.CostUnitPrice = (costAmount / costQuantity) * 100;
                 }
+                else if (chargeItem.CostMeasurementCode == "QTY") {
+                    var unitPrice = costAmount;
+                    chargeItem.CostUnitPrice = AppTool.Round(unitPrice, 3);
+                    costAmount = unitPrice * costQuantity;
+                }
                 else {
                     chargeItem.CostUnitPrice = (costAmount / costQuantity);
-
                 }
                 chargeItem.SaleUnitPrice = chargeItem.CostUnitPrice;
             }
@@ -1453,6 +1468,11 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             if (costQuantity != null && costQuantity != 0) {
                 if (chargeItem.CostMeasurementCode == "PRVL" || chargeItem.CostMeasurementCode == "PRFR") {
                     chargeItem.CostUnitPrice = (costAmount / costQuantity) * 100;
+                }
+                else if (chargeItem.CostMeasurementCode == "QTY") {
+                    var unitPrice = costAmount;
+                    chargeItem.CostUnitPrice = AppTool.Round(unitPrice, 3);
+                    costAmount = unitPrice * costQuantity;
                 }
                 else {
                     chargeItem.CostUnitPrice = (costAmount / costQuantity);
