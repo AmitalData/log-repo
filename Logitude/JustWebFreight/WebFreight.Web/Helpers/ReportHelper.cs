@@ -7,6 +7,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.ExternalService;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
@@ -813,8 +814,22 @@ namespace WebFreight.Web.Helpers
                 if (template == null) throw new Exception("Report Template is missing");
                 else
                 {
-                    ReportStimulDataProviderDetails reportStimulDataProviderDetails = GetReportStimulDataProviderDetails(reportDataProvider, reportFliter);
-                    report = GetStimulReportByTemplateAndProviderDetails(reportStimulDataProviderDetails, template);
+                    if (FeatureToggleHelper.HasFeatureToggle("DMS", reportFliter.tenant))
+                    {
+                        using (BufferedStream memorystream = new BufferedStream(new MemoryStream(reportDataProvider)))
+                        {
+                            ReportStimulDataProviderDetails reportStimulDataProviderDetails = GetReportStimulDataProviderDetails(memorystream, reportFliter);
+                            report = GetStimulReportByTemplateAndProviderDetails(reportStimulDataProviderDetails, template);
+                        }
+                    }
+                    else
+                    {
+                        using (MemoryStream memorystream = new MemoryStream(reportDataProvider))
+                        {
+                            ReportStimulDataProviderDetails reportStimulDataProviderDetails = GetReportStimulDataProviderDetails(memorystream, reportFliter);
+                            report = GetStimulReportByTemplateAndProviderDetails(reportStimulDataProviderDetails, template);
+                        }
+                    }
                 }
             }
             return report;
@@ -1306,11 +1321,9 @@ namespace WebFreight.Web.Helpers
             return dataProvider;
         }
 
-        public ReportStimulDataProviderDetails GetReportStimulDataProviderDetails(byte[] dataProvider, ReportFliter reportFliter)
+        public ReportStimulDataProviderDetails GetReportStimulDataProviderDetails(Stream memorystream, ReportFliter reportFliter)
         {
             ReportStimulDataProviderDetails stimulReportDataProviderDetails = new ReportStimulDataProviderDetails();
-            using (MemoryStream memorystream = new MemoryStream(dataProvider))
-            {
                 stimulReportDataProviderDetails.Tenant = reportFliter.tenant; switch (reportFliter.ReportCode)
                 {
                     case "RALS":
@@ -2024,7 +2037,6 @@ namespace WebFreight.Web.Helpers
                             stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "Spot Rate Quote Report", Name = "SpotRateQuoteReportDataProvider", BusinessObjectValue = reportDataProvider };
                             break;
                         }
-                }
             }
             return stimulReportDataProviderDetails;
         }
