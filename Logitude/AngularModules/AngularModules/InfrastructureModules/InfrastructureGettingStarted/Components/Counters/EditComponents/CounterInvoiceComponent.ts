@@ -134,7 +134,8 @@ export class CounterInvoiceComponent extends BaseComponent {
     }
     private activateConsolidationCreditNoteCounter: boolean = false;
     public get ActivateConsolidationCreditNoteCounter() {
-        this.activateConsolidationCreditNoteCounter = !this.ItemsSource.filter(i => i.EntityPM.Parameter1 == "COD")[0].EntityPM.InActive;
+        this.activateConsolidationCreditNoteCounter = this.ItemsSource.filter(i => i.EntityPM.Parameter1 == "COD").length > 0 &&
+            !this.ItemsSource.filter(i => i.EntityPM.Parameter1 == "COD")[0].EntityPM.InActive;
         return this.activateConsolidationCreditNoteCounter;
     }
     public set ActivateConsolidationCreditNoteCounter(value: boolean) {
