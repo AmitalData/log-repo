@@ -119,7 +119,13 @@ export class ReportsTemplatePM {
     public get Subject() { return this.subject; }
     public set Subject(newValue: string) { if (this.subject != newValue) { this.subject = newValue; this.MarkAsDirty("Subject"); } }
        
-	 
+    private objectTableId: string;
+    public get ObjectTableId() { return this.objectTableId; }
+    public set ObjectTableId(newValue: string) { if (this.objectTableId != newValue) { this.objectTableId = newValue; this.MarkAsDirty("ObjectTableId"); } }
+
+    private entityId: string;
+    public get EntityId() { return this.entityId; }
+    public set EntityId(newValue: string) { if (this.entityId != newValue) { this.entityId = newValue; this.MarkAsDirty("EntityId"); } }
 
     public OldEntityPM: ReportsTemplatePM;
 		
