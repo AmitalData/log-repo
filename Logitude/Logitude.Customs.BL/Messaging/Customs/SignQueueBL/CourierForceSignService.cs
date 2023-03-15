@@ -66,6 +66,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                 {
                     if (Environment.CommandLine.ToLower().Contains("AmitalCustomsWindowsService.exe".ToLower()))
                     {
+                        requestParams.ForcePersonalSign = isPersonalSign;//DEFAULT HSM
                         return;
                     }   
                     throw new CourierForceSignException("No Person ID is set for the user");
@@ -76,6 +77,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                 {
                     if (Environment.CommandLine.ToLower().Contains("AmitalCustomsWindowsService.exe".ToLower()))
                     {
+                        requestParams.ForcePersonalSign = isPersonalSign;//DEFAULT HSM
                         return;
                     }
                     throw new CourierForceSignException("No suitable signature position found");
