@@ -18,7 +18,9 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
 
             var listIn = new List<string>() {
                 "2750",//"2715","2755", "1170"  ,"2340",
-                "UCB1170","UCB2715","UCB2755", "UCB2750" };
+                "UCB1170"
+                //,"UCB2715"
+                ,"UCB2755", "UCB2750" };
 
             var signInterfaces = GetSignInterfaces(requestParams);
 
