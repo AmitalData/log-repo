@@ -108,7 +108,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
             this.LoadBIReport(myResponse?.Result?.ReportDetails);
         }
         else if (!this.IsBIReport) {
-            this.LoadReportAndMessageTemplates();
+            this.LoadReportAndMessageTemplates(myResponse?.Result?.ReportDetails?.ReportTemplateType);
         }
         else {
             this.RunComponent();
@@ -117,8 +117,8 @@ export class AddEditReportSchedulerComponent implements OnInit {
     }
 
     ReportTemplates: any = [];
-    LoadReportAndMessageTemplates() {
-        //this.TemplateType = AppTool.IsNullOrEmpty(templateType) ? "R" : templateType
+    LoadReportAndMessageTemplates(templateType) {
+        this.TemplateType = templateType == "R" ? "" : templateType;
         this.reportsTemplateListExtendedService.getReportsTemplateListsByReportId(this.ReportList.Id).subscribe((myResponse: ServiceResponse) => {
             if (myResponse.HasError) return;
             this.ReportTemplates = myResponse.Result;
