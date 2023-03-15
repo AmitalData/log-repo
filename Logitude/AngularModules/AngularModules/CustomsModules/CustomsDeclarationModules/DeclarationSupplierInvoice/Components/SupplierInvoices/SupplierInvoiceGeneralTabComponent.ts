@@ -3459,7 +3459,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
 
 
 
-        this.GetQuantityType(false);
+        this.GetQuantityType(false ,true);
         this.QuantityTypeCodeLoaded =
             //this.CurrentSession.SubscriptionAdd(
             this.CurrentSession.QuantityTypeCodeLoadedEvent.subscribe((res) => {
@@ -3826,6 +3826,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     
     Send8314(){
 
+            if(AppTool.IsNullOrEmpty(this.ClassificationCode))return
             var currRequestParams = new CustomsItemDetailsQueryRequestParams();///Force new GUID On Each Send !!
             currRequestParams.ValidToDate =new Date();
             currRequestParams.Classification = this.ClassificationCode;

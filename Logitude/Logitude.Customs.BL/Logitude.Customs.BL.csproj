@@ -1651,6 +1651,8 @@
     <Compile Include="EntityUpdateServices\CountryCurrencyUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealIdentifierUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\CustomsItemDetailsHistoryUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\PropertiesDetailsHistoryUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientsTapagUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConfirmationTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\CountryCurrencyUpdateService.Generated.cs" />
