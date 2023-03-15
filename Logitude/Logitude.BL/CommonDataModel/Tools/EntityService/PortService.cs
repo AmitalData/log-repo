@@ -84,7 +84,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 PortMapping.MapEntity(theEntityPm, Poco, isNewEntity);
                 entityRepository.Add(Poco);
                 entityRepository.SubmitChanges();
-                AddPortKafkaQueueMessage();
+                AddQueueMessages();
             }
 
             else
@@ -152,7 +152,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             PortMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
-            AddPortKafkaQueueMessage();
+            AddQueueMessages();
             
             if (updateTimeZone)
             {
@@ -160,6 +160,28 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
+        private void AddQueueMessages()
+        {
+            AddPortKafkaQueueMessage();
+            AddImporterPortQueueMessage();
+        }
+        private void AddImporterPortQueueMessage()
+        {
+            if (tenant != 0) return;
+            if (!IsCloudEnvironment()) return;
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("ImporterPortsQueue", 0);
+            var queueMessage = new Dictionary<string, string>() {
+                { "PortId", entityPM.Id },
+                { "Tenant", tenant.ToString()}
+            };
+            queueservice.Send(queueMessage, tenant);
+        }
+        private bool IsCloudEnvironment()
+        {
+            string workEnvironment = Simplog.Server.Infrastructure.LogitudeSettings.WorkEnvironment;
+            return workEnvironment == "cloud";
+        }
         private void AddPortKafkaQueueMessage()
         {
             if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))

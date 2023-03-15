@@ -139,6 +139,7 @@
     <None Include="DBScripts\GlobalModel\2023010151536_AddWorkflowsEnginWR.sxml" />
     <None Include="DBScripts\GlobalModel\2022090261326_AddDigitalPortalExportWR.sxml" />
     <None Include="DBScripts\GlobalModel\202209271124_AddQboBaseUrl.sxml" />
+    <None Include="DBScripts\GlobalModel\202303141233_AddImporterPortsWorkerRole.sxml" />
     <None Include="DBScripts\GlobalModel\AddInProgressStatusToAnalyzeQueue.sxml" />
     <None Include="DBScripts\GlobalModel\202302271155_AddDeploymnetPackageWR.sxml" />
     <None Include="DBScripts\GlobalModel\AddReconciliationWorkerRole.sxml" />

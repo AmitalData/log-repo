@@ -183,7 +183,25 @@ namespace CommunicationWorkerRole
                                         QueueMessageMoreDetailsId = Log.QueueMessageMoreDetailsId
                                     };
                                 }
+
+                                if (IsNewLog)
+                                {
+                                   // LogPM.CustomerId = CustomerId;
+                                    LogPM.QueueMessage = DictionaryJsonConverter.FromDictionaryToJson((Dictionary<string, string>)response.MessageValues);
+                                    LogPM.QueueType = "Port";
+                                    apiLogsService.Create(LogPM);
+                                }
+
                                 #endregion
+
+                                //GetPort
+                                LogPM.Refrence = Port.code;
+                                APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "I", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(port), null, null, "");
+
+                                else
+                                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "F", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(port), null, null, "");
+
+
                                 try
                                 {
                                     apiLogsService = new APILogsService(webFreightContext, tenant);
