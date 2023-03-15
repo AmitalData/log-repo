@@ -4,7 +4,7 @@ import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { defer } from 'rxjs';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
-import { ExportExcelParams } from 'SharedLogistics/Components/DigitalPortal/DigitalPortalLanguageSettingsComponent';
+import { ExportExcelParams, ImportExcelParams } from 'SharedLogistics/Components/DigitalPortal/DigitalPortalLanguageSettingsComponent';
 
 @Injectable()
 export class DigitalLanguageSettingsService {
@@ -54,5 +54,15 @@ export class DigitalLanguageSettingsService {
         });
     }
 
+    UploadDigitalTextCode(payload : ImportExcelParams) {
+        return defer(() => {
+            return this._http.post(this._apiUrl + "DigitalPortalReport/UploadDigitalTextCode", JSON.stringify(payload), ServiceHelper.GetHttpHeaders())
+            .pipe(
+                map((response) => {       
+                    return response;
+                }),catchError(ServiceHelper.HandleServiceError));
+
+        });
+    }
 }
 
