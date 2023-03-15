@@ -107,12 +107,19 @@ namespace Logitude.Customs.BL.Messaging.Maman
             //}
             //CourierDeclarations
             //myCourierMasterQueryService.GetNotConnectedDeclaratins
-
             var myCourierMasterPM = courierMasterPM ?? myCourierMasterQueryService.GetByDeclarationId(declarationId, tenant);
             if (myCourierMasterPM == null)
             {
+                if (declarationCourierStatusPM?.MAWB == null)
+                {
+                    throw new Exception(message: $"MAWB Is null");
+                }
+                myCourierMasterPM = myCourierMasterQueryService.GetCourierMasterByMawb(tenant, declarationCourierStatusPM.MAWB);
+                if (myCourierMasterPM == null)
+                {
+                    throw new Exception(message: $"CourierMaster Is null  .GetByDeclarationId({declarationId}, tenant)");
+                }
                 //throw new Exception("Declaration is null:" + _CustomFileCreditModel.AppicationId);
-                throw new Exception($"CourierMaster Is null  .GetByDeclarationId({declarationId}, tenant)");
             }
 
             GWMessageECTHRData myGWMessageECTHRData = CreateCourierHawbMamanMessage(myDeclarationPM, myCourierMasterPM, declarationCourierStatusPM);
