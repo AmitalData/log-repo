@@ -86,6 +86,7 @@
     <Compile Include="EntityQueryServices\Generated\TaskQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TaskStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TaskTypeQueryService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\TaskTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TaskUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\TaskExtendedUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TaskPriorityUpdateService.Generated.cs" />
