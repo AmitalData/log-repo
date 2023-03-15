@@ -7,6 +7,7 @@ using Microsoft.ServiceBus.Messaging;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -61,7 +62,10 @@ namespace WebFreight.Web.WcfApi
                 {
                     queueWaitTime = new TimeSpan(0, 0, 20);
                 }
-
+                if (LogitudeSettings.IsCostomsDeploy)
+                {
+                    queueWaitTime = TimeSpan.FromMinutes(5);
+                }
                 string queueName = "externaltasksqueue" + tenant + priority;
                 DbQueueService queueservice = new DbQueueService(queueName, tenant);//QueueServiceManager.GetQueueService(queueName, 0);
                 queueResponse = queueservice.Receive(queueWaitTime);
