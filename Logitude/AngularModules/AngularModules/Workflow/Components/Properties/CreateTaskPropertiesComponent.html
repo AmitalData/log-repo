@@ -1,4 +1,9 @@
 <style>
+    .create-task-properties-container {
+        overflow-y: auto;
+        height: calc(100% - 10px);
+    }
+
     .table-row {
         height: 1px;
     }
@@ -32,11 +37,6 @@
         padding-bottom: 6px;
     }
 
-    .set-values-container {
-        overflow: auto;
-        height: 200px;
-    }
-
     .task-types-list-container {
         width: 300px;
     }
@@ -44,11 +44,6 @@
     .related-to-cell,
     .task-type-cell {
         width: 350px;
-    }
-
-    .entity-fields-container {
-        overflow: auto;
-        height: 200px;
     }
 
     .delete-entity-field-button {
@@ -101,204 +96,202 @@
     }
 </style>
 
-<table>
+<div class="create-task-properties-container">
+    <table>
 
-    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
-        <td>
-            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
-        </td>
-    </tr>
+        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
+            <td>
+                <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+            </td>
+        </tr>
 
-    <tr class="first-split-table-row">
-        <td class="table-row-cell">
-            <div class="split-block"></div>
-        </td>
-    </tr>
+        <tr class="first-split-table-row">
+            <td class="table-row-cell">
+                <div class="split-block"></div>
+            </td>
+        </tr>
 
-    <tr class="table-row">
-        <td class="table-row-cell">
-            <div>
-                <LogLabel [NoObjectField]="true" [Text]="'Name'" [ObjectFieldName]="'Name'" [DataContext]="DataContext">
-                </LogLabel>
-            </div>
-            <div class="table-row-cell-block name-input-container">
-                <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext" [Text]="Name"
-                    [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'Name'"
-                    (ValueChanged)="updateName($event)" [DataCy]="'create-task-name'">
-                </LogTextBox>
-            </div>
-        </td>
-    </tr>
+        <tr class="table-row">
+            <td class="table-row-cell">
+                <div>
+                    <LogLabel [NoObjectField]="true" [Text]="'Name'" [ObjectFieldName]="'Name'"
+                        [DataContext]="DataContext">
+                    </LogLabel>
+                </div>
+                <div class="table-row-cell-block name-input-container">
+                    <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext" [Text]="Name"
+                        [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'Name'"
+                        (ValueChanged)="updateName($event)" [DataCy]="'create-task-name'">
+                    </LogTextBox>
+                </div>
+            </td>
+        </tr>
 
-    <tr class="table-row">
-        <td class="table-row-cell">
-            <div class="split-block"></div>
-        </td>
-    </tr>
+        <tr class="table-row">
+            <td class="table-row-cell">
+                <div class="split-block"></div>
+            </td>
+        </tr>
 
-    <tr class="table-row">
-        <td class="table-row-cell-label">
-            <div class="table-row-cell-block">
-                <div class="label">Select the Record the Task is Related to</div>
-            </div>
-        </td>
-    </tr>
+        <tr class="table-row">
+            <td class="table-row-cell-label">
+                <div class="table-row-cell-block">
+                    <div class="label">Select the Record the Task is Related to</div>
+                </div>
+            </td>
+        </tr>
 
-    <tr class="table-row">
-        <td class="table-row-cell">
-            <table>
-                <tr>
-                    <td class="related-to-cell">
-                        <div>
-                            <LogLabel [NoObjectField]="true" [Text]="'Related To'" [ObjectFieldName]="'Record'"
-                                [DataContext]="DataContext"></LogLabel>
-                        </div>
-                        <div class="table-row-cell-block">
-                            <TreeSelect [Items]="EditableRecordsTreeItems" [Width]="'300px'" [Value]="Record"
-                                [ShowExpand]="false" [IsReturnedTreeSelectItem]="true"
-                                [ShowItem]="'Shipment' | ShowTreeItemPipe : 'entity'"
-                                (ValueChanged)="updateRecord($event)" [DataCy]="task-related-to">
-                            </TreeSelect>
-                        </div>
-                    </td>
-
-                    <td *ngIf="Entity" class="task-type-cell">
-                        <div>
+        <tr class="table-row">
+            <td class="table-row-cell">
+                <table>
+                    <tr>
+                        <td class="related-to-cell">
                             <div>
-                                <LogLabel [NoObjectField]="true" [Text]="'Task Type'" [ObjectFieldName]="'TaskTypeId'"
+                                <LogLabel [NoObjectField]="true" [Text]="'Related To'" [ObjectFieldName]="'Record'"
                                     [DataContext]="DataContext"></LogLabel>
                             </div>
-                            <div class="table-row-cell-block task-types-list-container">
-                                <LogLov *ngIf="IsRecordEntityChanged" [NoObjectField]="true"
-                                    [ObjectFieldName]="TaskTypeId" [DataContext]="DataContext"
-                                    [QueryFilterItems]="TaskTypeQueryFilters" [LookUpTableName]="'TaskType'"
-                                    [NoValidation]="true" [IsFreeText]="true" [SelectedValue]="TaskTypeId"
-                                    [HideColumns]="true" [HideLastColumn]="true" [DisplayMemberPath]="'Name'"
-                                    (SelectedItemChanged)="updateTaskTypeId($event?.Id)" [DataCy]="'task-type'">
-                                </LogLov>
-                                <LogLov *ngIf="!IsRecordEntityChanged" [NoObjectField]="true"
-                                    [ObjectFieldName]="TaskTypeId" [DataContext]="DataContext"
-                                    [QueryFilterItems]="TaskTypeQueryFilters" [LookUpTableName]="'TaskType'"
-                                    [NoValidation]="true" [IsFreeText]="true" [SelectedValue]="TaskTypeId"
-                                    [HideColumns]="true" [HideLastColumn]="true" [DisplayMemberPath]="'Name'"
-                                    (SelectedItemChanged)="updateTaskTypeId($event?.Id)" [DataCy]="'task-type'">
-                                </LogLov>
+                            <div class="table-row-cell-block">
+                                <TreeSelect [Items]="EditableRecordsTreeItems" [Width]="'300px'" [Value]="Record"
+                                    [ShowExpand]="false" [IsReturnedTreeSelectItem]="true"
+                                    [ShowItem]="'Shipment' | ShowTreeItemPipe : 'entity'"
+                                    (ValueChanged)="updateRecord($event)" [DataCy]="task-related-to">
+                                </TreeSelect>
                             </div>
-                        </div>
-                    </td>
-
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-
-    <tr class="table-row">
-        <td class="table-row-cell">
-            <div class="split-block"></div>
-        </td>
-    </tr>
-
-    <tr *ngIf="TaskObjectTableId" class="table-row">
-        <td class="table-row-cell-label">
-            <div class="table-row-cell-block">
-                <div class="label">Set Task Fields</div>
-            </div>
-        </td>
-    </tr>
-
-    <tr *ngIf="TaskObjectTableId" class="table-row">
-        <td class="table-row-cell">
-            <div class="set-values-container">
-                <SetValues *ngIf="SetValues && SetValues.length > 0" [(SetValues)]="SetValues" [IsEntityField]="true"
-                    [EntityId]="TaskObjectTableId" (IsValidSetValuesChange)="updateIsValidSetValues($event)"
-                    [FlowObject]="FlowObject" [CurrentNodeId]="CurrentNodeId">
-                </SetValues>
-            </div>
-        </td>
-    </tr>
-
-    <tr *ngIf="TaskObjectTableId" class="table-row">
-        <td class="table-row-cell">
-            <div class="split-block"></div>
-        </td>
-    </tr>
-
-    <tr *ngIf="Entity && TaskFields" class="table-row">
-        <td class="table-row-cell-label">
-            <div class="table-row-cell-block">
-                <div class="label">Select {{Entity | EntityLabelPipe}} Fields</div>
-            </div>
-        </td>
-    </tr>
-
-    <tr *ngIf="Entity && TaskFields" class="table-row">
-        <td class="table-row-cell">
-            <div class="entity-fields-container">
-                <table>
-                    <tr class="table-row" *ngIf="TaskFields.length > 0">
-                        <td></td>
-                        <td>Field</td>
-                        <td>Required</td>
-                        <td>
-                            <div></div>
                         </td>
-                    </tr>
-                    <tr class="table-row entity-field-row"
-                        *ngFor="let TaskField of TaskFields; let taskFieldIndex = index;">
-                        <td class="delete-entity-field-button-cell">
-                            <img class="delete-entity-field-button" src="./Images/Trash-can.png"
-                                (click)="deleteTaskField(taskFieldIndex)"
-                                [attr.data-cy]="'DeleteTaskFieldButton_' + taskFieldIndex" />
+
+                        <td *ngIf="Entity" class="task-type-cell">
+                            <div>
+                                <div>
+                                    <LogLabel [NoObjectField]="true" [Text]="'Task Type'"
+                                        [ObjectFieldName]="'TaskTypeId'" [DataContext]="DataContext"></LogLabel>
+                                </div>
+                                <div class="table-row-cell-block task-types-list-container">
+                                    <LogLov *ngIf="IsRecordEntityChanged" [NoObjectField]="true"
+                                        [ObjectFieldName]="TaskTypeId" [DataContext]="DataContext"
+                                        [QueryFilterItems]="TaskTypeQueryFilters" [LookUpTableName]="'TaskType'"
+                                        [NoValidation]="true" [IsFreeText]="true" [SelectedValue]="TaskTypeId"
+                                        [HideColumns]="true" [HideLastColumn]="true" [DisplayMemberPath]="'Name'"
+                                        (SelectedItemChanged)="updateTaskTypeId($event?.Id)" [DataCy]="'task-type'">
+                                    </LogLov>
+                                    <LogLov *ngIf="!IsRecordEntityChanged" [NoObjectField]="true"
+                                        [ObjectFieldName]="TaskTypeId" [DataContext]="DataContext"
+                                        [QueryFilterItems]="TaskTypeQueryFilters" [LookUpTableName]="'TaskType'"
+                                        [NoValidation]="true" [IsFreeText]="true" [SelectedValue]="TaskTypeId"
+                                        [HideColumns]="true" [HideLastColumn]="true" [DisplayMemberPath]="'Name'"
+                                        (SelectedItemChanged)="updateTaskTypeId($event?.Id)" [DataCy]="'task-type'">
+                                    </LogLov>
+                                </div>
+                            </div>
                         </td>
-                        <td class="entity-field-cell">
-                            <TreeSelect [Items]="ObjectFieldsTreeItems" [Width]="'300px'" [Value]="TaskField.fieldCode"
-                                [IsReturnedTreeSelectItem]="true" [ShowExpand]="false"
-                                (ValueChanged)="updateTaskField($event, taskFieldIndex)"
-                                [DataCy]="'TaskField_' + taskFieldIndex">
-                            </TreeSelect>
-                        </td>
-                        <td class="entity-field-required-cell">
-                            <CheckBox [IsChecked]="TaskField.isRequired"
-                                (Checked)="updateTaskFieldRequired($event, taskFieldIndex)"
-                                [DataCy]="'TaskFieldIsRequired_' + taskFieldIndex"></CheckBox>
-                        </td>
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
-                    <tr class="table-row">
-                        <td class="add-entity-field-button-cell" colspan="4">
-                            <span class="link-button" [ngClass]="{'disabled': !IsValidTaskFields}"
-                                (click)="addTaskField()" [attr.data-cy]="'AddTaskFieldButton'">
-                                <span class="plus-sign">+</span><span>Add Field</span>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
+
                         <td>
                             <div></div>
                         </td>
                     </tr>
                 </table>
-            </div>
+            </td>
+        </tr>
 
-        </td>
-    </tr>
+        <tr class="table-row">
+            <td class="table-row-cell">
+                <div class="split-block"></div>
+            </td>
+        </tr>
 
-    <tr *ngIf="Entity && TaskFields" class="table-row">
-        <td class="table-row-cell">
-            <div class="split-block"></div>
-        </td>
-    </tr>
+        <tr *ngIf="TaskObjectTableId" class="table-row">
+            <td class="table-row-cell-label">
+                <div class="table-row-cell-block">
+                    <div class="label">Set Task Fields</div>
+                </div>
+            </td>
+        </tr>
+
+        <tr *ngIf="TaskObjectTableId" class="table-row">
+            <td class="table-row-cell">
+                <div class="set-values-container">
+                    <SetValues *ngIf="SetValues && SetValues.length > 0" [(SetValues)]="SetValues"
+                        [IsEntityField]="true" [EntityId]="TaskObjectTableId"
+                        (IsValidSetValuesChange)="updateIsValidSetValues($event)" [FlowObject]="FlowObject"
+                        [CurrentNodeId]="CurrentNodeId">
+                    </SetValues>
+                </div>
+            </td>
+        </tr>
+
+        <tr *ngIf="TaskObjectTableId" class="table-row">
+            <td class="table-row-cell">
+                <div class="split-block"></div>
+            </td>
+        </tr>
+
+        <tr *ngIf="Entity && TaskFields" class="table-row">
+            <td class="table-row-cell-label">
+                <div class="table-row-cell-block">
+                    <div class="label">Select {{Entity | EntityLabelPipe}} Fields</div>
+                </div>
+            </td>
+        </tr>
+
+        <tr *ngIf="Entity && TaskFields" class="table-row">
+            <td class="table-row-cell">
+                <div class="entity-fields-container">
+                    <table>
+                        <tr class="table-row" *ngIf="TaskFields.length > 0">
+                            <td></td>
+                            <td>Field</td>
+                            <td>Required</td>
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+                        <tr class="table-row entity-field-row"
+                            *ngFor="let TaskField of TaskFields; let taskFieldIndex = index;">
+                            <td class="delete-entity-field-button-cell">
+                                <img class="delete-entity-field-button" src="./Images/Trash-can.png"
+                                    (click)="deleteTaskField(taskFieldIndex)"
+                                    [attr.data-cy]="'DeleteTaskFieldButton_' + taskFieldIndex" />
+                            </td>
+                            <td class="entity-field-cell">
+                                <TreeSelect [Items]="ObjectFieldsTreeItems" [Width]="'300px'"
+                                    [Value]="TaskField.fieldCode" [IsReturnedTreeSelectItem]="true" [ShowExpand]="false"
+                                    (ValueChanged)="updateTaskField($event, taskFieldIndex)"
+                                    [DataCy]="'TaskField_' + taskFieldIndex">
+                                </TreeSelect>
+                            </td>
+                            <td class="entity-field-required-cell">
+                                <CheckBox [IsChecked]="TaskField.isRequired"
+                                    (Checked)="updateTaskFieldRequired($event, taskFieldIndex)"
+                                    [DataCy]="'TaskFieldIsRequired_' + taskFieldIndex"></CheckBox>
+                            </td>
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="add-entity-field-button-cell" colspan="4">
+                                <span class="link-button" [ngClass]="{'disabled': !IsValidTaskFields}"
+                                    (click)="addTaskField()" [attr.data-cy]="'AddTaskFieldButton'">
+                                    <span class="plus-sign">+</span><span>Add Field</span>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </td>
+        </tr>
 
 
-    <tr>
-        <td>
-            <div></div>
-        </td>
-    </tr>
+        <tr>
+            <td>
+                <div></div>
+            </td>
+        </tr>
 
-</table>
+    </table>
+</div>

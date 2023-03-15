@@ -267,7 +267,7 @@ export class CreateTaskPropertiesComponent extends BaseComponent implements OnIn
         this.setSetValuesData();
         this.setTaskFieldsData();
         this.setDoneConditionsFromFields();
-        console.log(this.Data);
+        //console.log(this.Data);
         this.CurrentSession.CurrentWindow.Close(this.Data);
     }
 
@@ -294,16 +294,25 @@ export class CreateTaskPropertiesComponent extends BaseComponent implements OnIn
     }
 
     setDoneConditionsFromFields() {
-        let doneConditions = this.getConditionsFromTaskFields(this.TaskFields);
-        this.Data["doneConditions"] = doneConditions && doneConditions.length > 0 ? doneConditions : null;
-        this.Data["doneConditionsOperation"] = doneConditions && doneConditions.length > 0 ? ConditionOperations.And : null;
+        let conditions = this.getConditionsFromTaskFields();
+
+        let doneConditions = null;
+
+        if (conditions && conditions.length > 0) {
+            doneConditions = {
+                Operation: ConditionOperations.And,
+                Conditions: conditions
+            };
+        }
+
+        this.Data["doneConditions"] = doneConditions;
     }
 
-    getConditionsFromTaskFields(taskFields: TaskField[]) {
-        if (taskFields && taskFields.length > 0) {
-            return taskFields.filter(taskField => taskField.isRequired)
+    getConditionsFromTaskFields() {
+        if (this.TaskFields && this.TaskFields.length > 0) {
+            return this.TaskFields.filter(taskField => taskField.isRequired)
                 .map(taskField => { return this.getConditionFromTaskField(taskField); })
-                .filter(doneCondition => doneCondition !== null);
+                .filter(condition => condition !== null);
         }
         return [];
     }
@@ -311,15 +320,15 @@ export class CreateTaskPropertiesComponent extends BaseComponent implements OnIn
     getConditionFromTaskField(taskField: TaskField) {
         let objectField = ObjectFields.getByCode(taskField?.fieldCode);
         if (taskField && taskField.isRequired && objectField) {
-            let doneCondition = new Condition();
-            doneCondition.fieldCode = objectField.FieldCode;
-            doneCondition.field = objectField.FieldName;
-            doneCondition.type = objectField.DataTypeCode;
-            doneCondition.lookupType = objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null;
-            doneCondition.picklistType = objectField.DataTypeCode === FieldTypes.PickList ? objectField.CustomPickListCode : null;
-            doneCondition.operator = ConditionOperators.IsEmpty;
-            doneCondition.value = "False";
-            return doneCondition;
+            let condition = new Condition();
+            condition.fieldCode = objectField.FieldCode;
+            condition.field = objectField.FieldName;
+            condition.type = objectField.DataTypeCode;
+            condition.lookupType = objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null;
+            condition.picklistType = objectField.DataTypeCode === FieldTypes.PickList ? objectField.CustomPickListCode : null;
+            condition.operator = ConditionOperators.IsEmpty;
+            condition.value = "False";
+            return condition;
         }
         return null;
     }
