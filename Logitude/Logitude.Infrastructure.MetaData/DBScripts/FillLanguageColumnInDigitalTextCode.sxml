@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-	<Sql Version="5">
+	<Sql Version="6">
       <![CDATA[
 		  BEGIN
 		   IF NOT EXISTS (select * from DigitalPortalLanguages where [Code] = 'EN')
@@ -8,7 +8,6 @@
 			   values ('EN', 'English', 'EN,English,English', 'English')
 		   END
 		END
-
 		BEGIN
 		   IF NOT EXISTS (select * from DigitalPortalLanguages where [Code] = 'ES')
 		   BEGIN
