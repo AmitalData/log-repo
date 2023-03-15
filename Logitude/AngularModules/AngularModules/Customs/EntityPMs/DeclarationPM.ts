@@ -1176,6 +1176,11 @@ export class DeclarationPM {
     public set IsExporterConfirmation(newValue: boolean) { if (this.isExporterConfirmation != newValue) { this.isExporterConfirmation = newValue; this.MarkAsDirty("IsExporterConfirmation"); } }
        
 	 
+    private shipName: string;
+    public get ShipName() { return this.shipName; }
+    public set ShipName(newValue: string) { if (this.shipName != newValue) { this.shipName = newValue; this.MarkAsDirty("ShipName"); } }
+       
+	 
     private destinationCountryName: string;
     public get DestinationCountryName() { return this.destinationCountryName; }
     public set DestinationCountryName(newValue: string) { if (this.destinationCountryName != newValue) { this.destinationCountryName = newValue; this.MarkAsDirty("DestinationCountryName"); } }
@@ -1497,7 +1502,6 @@ export class DeclarationPM {
     private isAramex: boolean;
     public get IsAramex() { return this.isAramex; }
     public set IsAramex(newValue: boolean) { if (this.isAramex != newValue) { this.isAramex = newValue; this.MarkAsDirty("IsAramex"); } }
-
        
 	 
 
@@ -1528,4 +1532,4 @@ export class DeclarationPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

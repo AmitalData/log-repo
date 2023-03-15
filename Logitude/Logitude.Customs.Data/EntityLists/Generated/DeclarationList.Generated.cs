@@ -337,6 +337,8 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public bool IsExporterConfirmation  { get; set; }
        [DataMember]
+       public string ShipName  { get; set; }
+       [DataMember]
        public string DestinationCountryName  { get; set; }
        [DataMember]
        public string Direction  { get; set; }

@@ -377,6 +377,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LoadingDateTime, 
 	         ShipCode, 
 	         IsExporterConfirmation, 
+	         ShipName, 
 	         DestinationCountryName, 
 	         Direction, 
 	         AgentRoleCode, 
@@ -428,7 +429,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CasualImporterCountry, 
 	         ExportCloseAmendStatusName, 
 	         IsAramex,
-	         ExportCloseAmendStatusName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1185,26 +1185,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportLoadingPortCode))
             {
 				entityPOCO.ExportLoadingPortCode = entityPM.ExportLoadingPortCode;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReleaseStatusTypeCode))
-            {
-				entityPOCO.ReleaseStatusTypeCode = entityPM.ReleaseStatusTypeCode;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClosingXml))
-            {
-				entityPOCO.ClosingXml = entityPM.ClosingXml;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportCloseAmendRequestNumber))
-            {
-				entityPOCO.ExportCloseAmendRequestNumber = entityPM.ExportCloseAmendRequestNumber;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportCloseAmendmentStatus))
-            {
-				entityPOCO.ExportCloseAmendmentStatus = entityPM.ExportCloseAmendmentStatus;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReleaseStatusTypeCode))
