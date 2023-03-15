@@ -236,5 +236,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public bool isSplitted = false;
         public int splittedRecoCount = 0;
+        public string communicationLogId;
     }
 }
