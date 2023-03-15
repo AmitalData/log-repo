@@ -151,7 +151,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                                                                  item.ObjectTableId,
                                                                                  item.ProfileCode,
                                                                                  item.LanguageCode);
-
                     if (customTextCodes == null)
                     {
                         var customCodesMappedObject = new List<DigitalTextCodeUpdateObject>();
