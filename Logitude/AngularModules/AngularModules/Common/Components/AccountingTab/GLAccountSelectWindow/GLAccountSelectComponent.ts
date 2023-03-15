@@ -192,7 +192,6 @@ export class GLAccountSelectComponent extends BaseComponent implements OnInit
     lastSelectedGLAccount: string;
     private connectCard(glaccountId: any, skipConnectedCardsValidation: boolean = false)
     {
-        debugger;
         this.CurrentSession.StartBusyIndicatorSaving();
         this.ValidationErrorsList = [];
         this.lastSelectedGLAccount = glaccountId;
