@@ -301,6 +301,8 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
     OnAllBtnClicked() {
 
         this.IsSelected = true;
+        this.exportStorageExtendedListService.disconnectedExportStorage="";
+
         this.exportStorageExtendedListService.connectedSelectAll = true;
         this.exportStorageExtendedListService.SelectedExportStorage = true;
         this.exportStorageExtendedListService.ConnectedExportStorage = this.exportStorageExtendedListService.AllExportStorage;
@@ -316,7 +318,6 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
     }
 
     OnNoneBtnClicked() {
-        
         this.IsSelected = false;
         this.exportStorageExtendedListService.connectedSelectAll = false;
         this.entityPM.DeclarationCustomFileNo = "";
