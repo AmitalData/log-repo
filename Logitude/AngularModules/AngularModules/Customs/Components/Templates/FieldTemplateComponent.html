@@ -665,7 +665,7 @@
             </div>
             <div *ngIf="FieldName == 'DocumentStatusCode'" style="position:relative;width:100%; height: 100%;">
                 <div style="position: absolute;top: 0;bottom: 0px; left: 0px; right: 0px;">
-                     <img  *ngIf="Entity[FieldName]=='X'||Entity[FieldName]=='M'"   class="CenterCenter" style="width:15px;height:15px;margin-top:6px" title={{Entity['HawbQuantityNoDocuments']}} src="./Images/Icons/RedX.png" />
+                     <img  *ngIf="Entity[FieldName]=='X'||Entity[FieldName]=='M'"   class="CenterCenter" style="width:15px;height:15px;margin-top:6px"  src="./Images/Icons/RedX.png" title={{Entity.HawbQuantityNoDocuments}}/>
                      <img  *ngIf="Entity[FieldName]=='V'"  class="CenterCenter" style="width:15px;height:15px;margin-top:6px" src="./Images/Icons/GreenV.png" />
                      <img  *ngIf="Entity[FieldName]=='I'" class="CenterCenter" style="width:15px;height:15px;margin-top:6px" src="./Images/Icons/InProgress.png" /> 
                 </div>
@@ -681,7 +681,7 @@
             </div>
             <div *ngIf="FieldName == 'CourierDeclarationStatusCode'" style="position:relative;width:100%; height: 100%;">
                 <div style="position: absolute;top: 0;bottom: 0px; left: 0px; right: 0px;">
-                    <img *ngIf="Entity[FieldName]=='X'||Entity[FieldName]=='M'" class="CenterCenter" style="width:15px;height:15px;margin-top:6px" title={{Entity['HawbQuantityNoTransDeclaration']}} src="./Images/Icons/RedX.png" />
+                    <img *ngIf="Entity[FieldName]=='X'||Entity[FieldName]=='M'" class="CenterCenter" style="width:15px;height:15px;margin-top:6px"  src="./Images/Icons/RedX.png" title={{Entity.HawbQuantityNoTransDeclaration}}/>
                     <img *ngIf="Entity[FieldName]=='R'" class="CenterCenter" style="width:15px;height:15px;margin-top:6px" src="./Images/Icons/OrangeV.png" />
                     <img *ngIf="Entity[FieldName]=='I'" class="CenterCenter" style="width:15px;height:15px;margin-top:6px" src="./Images/Icons/InProgress.png" />
                     <img *ngIf="Entity[FieldName]=='V'"  class="CenterCenter" style="width:15px;height:15px;margin-top:6px" src="./Images/Icons/GreenV.png" />
@@ -690,7 +690,7 @@
             </div>
             <div *ngIf="FieldName == 'CourierManifestStatusCode'" style="position:relative;width:100%; height: 100%;">
                 <div style="position: absolute;top: 0;bottom: 0px; left: 0px; right: 0px;">
-                    <img *ngIf="Entity[FieldName]=='X'||Entity[FieldName]=='M'" class="CenterCenter" style="width:15px;height:15px;margin-top:6px"  title={{Entity['HawbQuantityNoTransManifest']}} src="./Images/Icons/RedX.png" />
+                    <img *ngIf="Entity[FieldName]=='X'||Entity[FieldName]=='M'" class="CenterCenter" style="width:15px;height:15px;margin-top:6px"   src="./Images/Icons/RedX.png" title={{Entity.HawbQuantityNoTransManifest}}/>
                     <img *ngIf="Entity[FieldName]=='R'"class="CenterCenter" style="width:15px;height:15px;margin-top:6px" src="./Images/Icons/OrangeV.png" />
                     <img *ngIf="Entity[FieldName]=='I'"class="CenterCenter" style="width:15px;height:15px;margin-top:6px" src="./Images/Icons/InProgress.png" />
                     <img *ngIf="Entity[FieldName]=='V'" class="CenterCenter" style="width:15px;height:15px;margin-top:6px" src="./Images/Icons/GreenV.png" />
@@ -700,7 +700,7 @@
             <div *ngIf="FieldName == 'IsCourierMissingClassification'" style="position:relative;width:100%; height: 100%;">
                 <div style="position: absolute;top: 0;bottom: 0px; left: 0px; right: 0px;">
 
-                    <img *ngIf="Entity[FieldName]=='M'" class="CenterCenter" style="width:15px;height:15;margin-top:6px" title={{Entity['HawbQuantityNoClassification']}} src="./Images/Icons/RedX.png" />
+                    <img *ngIf="Entity[FieldName]=='M'" class="CenterCenter" style="width:15px;height:15;margin-top:6px"  src="./Images/Icons/RedX.png" title={{Entity.HawbQuantityNoClassification}}/>
                     <img *ngIf="Entity[FieldName]=='F'" class="CenterCenter" style="width:15px;height:15px;margin-top:6px" src="./Images/Icons/GreenV.png" />
                 </div>
             </div>
