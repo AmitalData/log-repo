@@ -24,6 +24,7 @@ export class ReportsTemplateList {
 		From: string;
 		ReplyTo: string;
 		CC: string;
-		Subject: string;
-	
+        Subject: string;
+        ObjectTableId: string;
+        EntityId: string;
 }

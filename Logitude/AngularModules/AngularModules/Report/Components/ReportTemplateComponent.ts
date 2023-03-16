@@ -21,6 +21,7 @@ import { EntityResourceService } from '../../Infrastructure/Services/EntityResou
 import { ReportsTemplatePMService } from '../../Common/Services/StandardPMs/ReportsTemplatePMService';
 import { DownloadManager } from 'Infrastructure/Utilities/DownloadManager';
 import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
+import { AppTool } from '../../Infrastructure/Tools';
 
 @Component({
 
@@ -145,7 +146,7 @@ export class ReportTemplateComponent implements OnInit {
             this.ReportsTemplatePMLists.push(reportsTemplate);
             return;
         }
-        if (reportsTemplate.TemplateType == "M") {
+        if (reportsTemplate.TemplateType == "M" && AppTool.IsNullOrEmpty(reportsTemplate.EntityId)) {
             this.MessageReportsTemplatePMLists.push(reportsTemplate);
             return;
         } if (reportsTemplate.TemplateType == "E") {
