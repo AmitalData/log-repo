@@ -1130,6 +1130,11 @@ export class AppTool {
                 break;
             }
 
+            case "General.MH.Tasks": {
+                myResult = "Table";
+                break;
+            }
+
             default: {
                 myResult = "Person";
                 break;

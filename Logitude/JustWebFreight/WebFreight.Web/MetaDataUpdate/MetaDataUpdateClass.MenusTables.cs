@@ -156,6 +156,10 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature portGroupsFeature = tenantFeatures.Where(d => d.Code == "PORTGROUPS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature containerFeature = tenantFeatures.Where(d => d.Code == "CONTAINERS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
 
+            Feature taskTypesFeature = tenantFeatures.Where(d => d.Code == "TASKTYPES" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            Feature taskPrioritiesFeature = tenantFeatures.Where(d => d.Code == "TASKPRIORITIES" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            Feature taskStatusesFeature = tenantFeatures.Where(d => d.Code == "TASKSTATUSES" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+
             #endregion
 
             #region Main Menus
@@ -311,6 +315,13 @@ namespace WebFreight.Web.MetaDataUpdate
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "DEPA", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 1, CategoryTypeCode = "CUS", TextCode = "General.MC.Customization.DeploymentPackage", Icon = "DocumentTypes.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "DeploymentPackage").FirstOrDefault().Id, FeatureId = deploymentPackageFeature.Id, FeatureUniqeCode = deploymentPackageFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             #endregion
 
+            #region Tasks
+
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "TKTT", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 0, CategoryTypeCode = "TSK", TextCode = "General.MC.Tasks.TaskTypes", Icon = "Industries.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "TaskType").FirstOrDefault().Id, FeatureId = taskTypesFeature.Id, FeatureUniqeCode = taskTypesFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "TKSS", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 1, CategoryTypeCode = "TSK", TextCode = "General.MC.Tasks.TaskStatuses", Icon = "Industries.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "TaskStatus").FirstOrDefault().Id, FeatureId = taskStatusesFeature.Id, FeatureUniqeCode = taskStatusesFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "TKTP", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 2, CategoryTypeCode = "TSK", TextCode = "General.MC.Tasks.TaskPriorities", Icon = "Industries.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "TaskPriority").FirstOrDefault().Id, FeatureId = taskPrioritiesFeature.Id, FeatureUniqeCode = taskPrioritiesFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
+
+            #endregion
 
             if (!LogitudeSettings.IsCostomsDeploy)// TODO MOHAMMAD
             {
