@@ -406,6 +406,7 @@
     <Compile Include="ContainerUpdateWR.cs" />
     <Compile Include="DeploymentPackageWorkerRole.cs" />
     <Compile Include="DigitalPortalQueryExportExecutionLogWR.cs" />
+    <Compile Include="DocumentExecutionV2WorkerRole.cs" />
     <Compile Include="EntityMapping\ShipmentOrderPmToAmMapping.cs" />
     <Compile Include="CargoTrackingImporterApprovalReceivedWR.cs" />
     <Compile Include="ImporterShipmentOrderDocumentsWorkerRole.cs" />
