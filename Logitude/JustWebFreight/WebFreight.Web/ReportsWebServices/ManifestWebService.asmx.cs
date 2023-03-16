@@ -164,7 +164,7 @@ namespace WebFreight.Web.ReportsWebServices
                 manifestDataProvider.MainCarriageleg3ETA_DateTime = master.Transshipment2ETA;
                 manifestDataProvider.MainCarriageLeg3ATD_DateTime = master.Transshipment2ATD;
                 manifestDataProvider.MainCarriageLeg3ATA_DateTime = master.Transshipment2ATA;
-                manifestDataProvider.MAWBMainCarriageLeg2 = master.Transshipment2AdditionalMAWBOBLBL;
+                manifestDataProvider.MAWBMainCarriageLeg3 = master.Transshipment2AdditionalMAWBOBLBL;
 
                 manifestDataProvider.MainCarriageLeg4Carrier = master.Transshipment3CarrierName;
                 manifestDataProvider.MainCarriageLeg4CarrierNumber = master.Transshipment3CarrierNumber;
@@ -172,7 +172,7 @@ namespace WebFreight.Web.ReportsWebServices
                 manifestDataProvider.MainCarriageleg4ETA_DateTime = master.Transshipment3ETA;
                 manifestDataProvider.MainCarriageLeg4ATD_DateTime = master.Transshipment3ATD;
                 manifestDataProvider.MainCarriageLeg4ATA_DateTime = master.Transshipment3ATA;
-                manifestDataProvider.MAWBMainCarriageLeg2 = master.Transshipment3AdditionalMAWBOBLBL;
+                manifestDataProvider.MAWBMainCarriageLeg4 = master.Transshipment3AdditionalMAWBOBLBL;
 
 
                 if (master.BranchId != null)
