@@ -9,42 +9,23 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
 {
     public partial class TaskTypeUpdateService
     {
-        public string contactId = "";
-        public string eventTypeCode = "";
         protected override void Trace(TaskTypePM entityPM, TaskType entityPOCO, string changesXml)
-        {
-            GetLoggedContact(entityPM.Tenant);
-            GetEventTypeCode(entityPM);
-
-            if (!string.IsNullOrEmpty(contactId) && !string.IsNullOrEmpty(eventTypeCode))
-            {
-                CreateTraceEvent(entityPM, changesXml);
-            }
-        }
-
-        private void GetLoggedContact(int tenant)
-        {
-            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
-            ContactRepository contactRepository = new ContactRepository(commonDataContext);
-            Contact contact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.GetAuthenticatedUser(), tenant);
-            contactId = contact?.Id;
-        }
-
-        private void GetEventTypeCode(TaskTypePM entityPM)
         {
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
-                eventTypeCode = "CREV";
+                CreateTraceEvent(entityPM, "CREV", changesXml);
             }
 
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {
-                eventTypeCode = "UPEV";
+                CreateTraceEvent(entityPM, "UPEV", changesXml);
             }
         }
 
-        private void CreateTraceEvent(TaskTypePM entityPM, string changesXml)
+        private void CreateTraceEvent(TaskTypePM entityPM, string eventTypeCode, string changesXml)
         {
+            string contactId = GetLoggedContact(entityPM.Tenant)?.Id;
+
             EventTracer.CreateTraceEvent(new EventTracerArgs()
             {
                 Tenant = entityPM.Tenant,
@@ -54,6 +35,14 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
                 ObjectTableName = "TaskType",
                 Notes = changesXml
             });
+        }
+
+        private Contact GetLoggedContact(int tenant)
+        {
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+            ContactRepository contactRepository = new ContactRepository(commonDataContext);
+            Contact contact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.GetAuthenticatedUser(), tenant);
+            return contact;
         }
     }
 }
