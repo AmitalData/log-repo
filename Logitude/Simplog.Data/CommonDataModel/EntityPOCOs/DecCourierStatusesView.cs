@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Simplog.Data.CommonDataModel.EntityPOCOs
 {
-    public class CourierDeclarationStatusesView
+    public class DecCourierStatusesView
     {
         [Key]
         public string CourierMasterId { get; set; }

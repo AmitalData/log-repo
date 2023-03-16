@@ -1,4 +1,4 @@
-﻿CREATE VIEW DeclarationCourierStatusesView
+﻿CREATE VIEW DecCourierStatusesView
 AS
 select 
 COURIERMASTERS.ID as CourierMasterId ,

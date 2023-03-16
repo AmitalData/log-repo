@@ -1,4 +1,4 @@
-<View DBType="Main" Name="DeclarationCourierStatusesView" Schema="dbo" Module="Customs">
+<View DBType="Main" Name="DecCourierStatusesViews" Schema="dbo" Module="Customs">
   <SqlScript>
     <![CDATA[
    
@@ -7,11 +7,11 @@
   <OracleScript>
 	  
 	  <![CDATA[
-CREATE OR REPLACE VIEW DeclarationCourierStatusesView
+CREATE OR REPLACE VIEW DecCourierStatusesViews
     AS
    select 
 COURIERMASTERS.ID as CourierMasterId ,
-
+COURIERMASTERS.Tenant as Tenant,
 COUNT ( case when DeclarationCourierStatuses.CourierManifestStatusCode ='M'  or DeclarationCourierStatuses.CourierManifestStatusCode = 'X' then 1 end   ) as QuantityNoDocuments,
 COUNT ( case when DeclarationCourierStatuses.IsCourierMissingClassification ='1'   then 1 end   ) as QuantityNoClassification,
 COUNT (case when DECLARATIONCOURIERSTATUSES.CourierManifestStatusCode ='M'  or DeclarationCourierStatuses.CourierManifestStatusCode = 'X' then 1 end   )   as QuantityNoManifest,
@@ -55,9 +55,7 @@ FROM DeclarationCourierStatuses
 inner  JOIN CourierDeclarations  ON CourierDeclarations.DeclarationId = DeclarationCourierStatuses.DeclarationId
 inner join COURIERMASTERS on CourierDeclarations.CourierMasterId =COURIERMASTERS.ID 
 where  COURIERMASTERS.isopen =1
-group by COURIERMASTERS.ID;
-
-
+group by COURIERMASTERS.ID ,COURIERMASTERS.Tenant;
  
 
 ]]>
