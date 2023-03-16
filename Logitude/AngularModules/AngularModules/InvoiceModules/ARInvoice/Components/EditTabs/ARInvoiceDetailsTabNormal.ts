@@ -427,7 +427,43 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
         this.UIProperties.SetEnabled("DueDate", this.ObjectTableName, AllowManuallyDueDate);
     }
-
+    private GetDocumentTypeTemplates() {
+        if (!this.IsHaveARInvoicePrintToogleFeature()) return;
+        if (!this.PartnerId) return;
+        this.CurrentSession.StartBusyIndicatorLoading();
+        let documentTypeCode: string = this.GetDocumentTypeCode();
+        this.BuildDocumentTypeTemplateDependedOnPartnerDefaultTemplate(documentTypeCode);
+    }
+    IsHaveARInvoicePrintToogleFeature() {
+        return SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "ARP")[0];
+    }
+    private GetDocumentTypeCode() {
+        if (this.EntityPM.IsConsolidationInvoice) return "999C";
+        if (this.EntityPM.IsGeneralInvoice) return "999G";
+        if (this.EntityPM.ARInvoiceTypeCode == "MN") return "999M";
+        if (this.EntityPM.ARInvoiceTypeCode == "CI" || this.EntityPM.ARInvoiceTypeCode == "CC") return "999CI";
+        return "999S";
+    }
+    BuildDocumentTypeTemplateDependedOnPartnerDefaultTemplate(documentTypeCode: string): any {
+        let selectedDocumentTypeTemplateId: string = null;
+        this.myCardListService.getSingle(this.PartnerId).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse.HasError) return;
+            let cardList: CardList = myResponse.Result;
+            selectedDocumentTypeTemplateId = this.GetPartnerDocumentTypeTemplatetDefault(cardList, documentTypeCode);
+            if (selectedDocumentTypeTemplateId) {
+                this.EntityPM.DocumentTemplateId = selectedDocumentTypeTemplateId;    
+            }
+            this.CurrentSession.StopBusyIndicator();
+            //this.LoadDocumentTypeTemplate(documentTypeCode, selectedDocumentTypeTemplateId);
+        });
+    }
+    GetPartnerDocumentTypeTemplatetDefault(cardList: CardList, documentTypeCode: string) {
+        if (!cardList) return null;
+        if (documentTypeCode == "999S") return cardList.SingleInvoiceTemplateId;
+        if (documentTypeCode == "999C") return cardList.ConsolidationInvoiceTemplateId;
+        if (documentTypeCode == "999CI") return cardList.CustomsInvoiceTemplateId;
+        if (documentTypeCode == "999M") return cardList.ManifestInvoiceTemplateId;
+    }
     get PartnerId() { return this.EntityPM.PartnerId; }
     set PartnerId(newValue: string) {
         if (this.EntityPM.PartnerId != newValue) {
@@ -440,6 +476,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                     if (!myResponse.HasError) {
                         var list: CardList = myResponse.Result;
                         if (list != null) {
+                            this.GetDocumentTypeTemplates();
                             this.BillToId = list.BillToId;
                             if (AppTool.IsNullOrEmpty(this.BillToId)) {
                                 this.BillToId = newValue;
