@@ -1515,25 +1515,117 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private int? hawbQuantityNoTransPayment ;
+	  private string documentStatusCode ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int? HawbQuantityNoTransPayment  
+       public string DocumentStatusCode  
 	   {
 	    
 	     get
 		{
-		   return hawbQuantityNoTransPayment;
+		   return documentStatusCode;
 		 }
 		 set
 		 {
-		   if(hawbQuantityNoTransPayment != value)
+		   if(documentStatusCode != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HawbQuantityNoTransPayment",OldValue=hawbQuantityNoTransPayment,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentStatusCode",OldValue=documentStatusCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   hawbQuantityNoTransPayment=value;
+		   documentStatusCode=value;
+		   }
+			
+		 }
+	   }
+	  private string courierPaymentStatusCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CourierPaymentStatusCode  
+	   {
+	    
+	     get
+		{
+		   return courierPaymentStatusCode;
+		 }
+		 set
+		 {
+		   if(courierPaymentStatusCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CourierPaymentStatusCode",OldValue=courierPaymentStatusCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   courierPaymentStatusCode=value;
+		   }
+			
+		 }
+	   }
+	  private string courierDeclarationStatusCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CourierDeclarationStatusCode  
+	   {
+	    
+	     get
+		{
+		   return courierDeclarationStatusCode;
+		 }
+		 set
+		 {
+		   if(courierDeclarationStatusCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CourierDeclarationStatusCode",OldValue=courierDeclarationStatusCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   courierDeclarationStatusCode=value;
+		   }
+			
+		 }
+	   }
+	  private string courierManifestStatusCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CourierManifestStatusCode  
+	   {
+	    
+	     get
+		{
+		   return courierManifestStatusCode;
+		 }
+		 set
+		 {
+		   if(courierManifestStatusCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CourierManifestStatusCode",OldValue=courierManifestStatusCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   courierManifestStatusCode=value;
+		   }
+			
+		 }
+	   }
+	  private string isCourierMissingClassification ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string IsCourierMissingClassification  
+	   {
+	    
+	     get
+		{
+		   return isCourierMissingClassification;
+		 }
+		 set
+		 {
+		   if(isCourierMissingClassification != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCourierMissingClassification",OldValue=isCourierMissingClassification,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   isCourierMissingClassification=value;
 		   }
 			
 		 }

@@ -129,7 +129,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         HawbQuantityNoClassification, 
 	         HawbQuantityNoTransManifest, 
 	         HawbQuantityNoTransDeclaration, 
-	         HawbQuantityNoTransPayment,
+	         DocumentStatusCode, 
+	         CourierPaymentStatusCode, 
+	         CourierDeclarationStatusCode, 
+	         CourierManifestStatusCode, 
+	         IsCourierMissingClassification,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

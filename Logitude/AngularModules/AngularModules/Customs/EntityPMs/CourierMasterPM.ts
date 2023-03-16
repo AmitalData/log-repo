@@ -349,9 +349,29 @@ export class CourierMasterPM {
     public set HawbQuantityNoTransDeclaration(newValue: number) { if (this.hawbQuantityNoTransDeclaration != newValue) { this.hawbQuantityNoTransDeclaration = newValue; this.MarkAsDirty("HawbQuantityNoTransDeclaration"); } }
        
 	 
-    private hawbQuantityNoTransPayment: number;
-    public get HawbQuantityNoTransPayment() { return this.hawbQuantityNoTransPayment; }
-    public set HawbQuantityNoTransPayment(newValue: number) { if (this.hawbQuantityNoTransPayment != newValue) { this.hawbQuantityNoTransPayment = newValue; this.MarkAsDirty("HawbQuantityNoTransPayment"); } }
+    private documentStatusCode: string;
+    public get DocumentStatusCode() { return this.documentStatusCode; }
+    public set DocumentStatusCode(newValue: string) { if (this.documentStatusCode != newValue) { this.documentStatusCode = newValue; this.MarkAsDirty("DocumentStatusCode"); } }
+       
+	 
+    private courierPaymentStatusCode: string;
+    public get CourierPaymentStatusCode() { return this.courierPaymentStatusCode; }
+    public set CourierPaymentStatusCode(newValue: string) { if (this.courierPaymentStatusCode != newValue) { this.courierPaymentStatusCode = newValue; this.MarkAsDirty("CourierPaymentStatusCode"); } }
+       
+	 
+    private courierDeclarationStatusCode: string;
+    public get CourierDeclarationStatusCode() { return this.courierDeclarationStatusCode; }
+    public set CourierDeclarationStatusCode(newValue: string) { if (this.courierDeclarationStatusCode != newValue) { this.courierDeclarationStatusCode = newValue; this.MarkAsDirty("CourierDeclarationStatusCode"); } }
+       
+	 
+    private courierManifestStatusCode: string;
+    public get CourierManifestStatusCode() { return this.courierManifestStatusCode; }
+    public set CourierManifestStatusCode(newValue: string) { if (this.courierManifestStatusCode != newValue) { this.courierManifestStatusCode = newValue; this.MarkAsDirty("CourierManifestStatusCode"); } }
+       
+	 
+    private isCourierMissingClassification: string;
+    public get IsCourierMissingClassification() { return this.isCourierMissingClassification; }
+    public set IsCourierMissingClassification(newValue: string) { if (this.isCourierMissingClassification != newValue) { this.isCourierMissingClassification = newValue; this.MarkAsDirty("IsCourierMissingClassification"); } }
        
 	 
 
