@@ -59,8 +59,7 @@ export class FieldTemplateComponent implements AfterViewInit {
                                       {estimatedDate: 'ShipmentDeliveryETD', actaulDate: 'ShipmentDeliveryATD'},
                                       {estimatedDate: 'PreCarriageETD', actaulDate: 'PreCarriageATD'},
                                       {estimatedDate: 'OnCarriageETA', actaulDate: 'OnCarriageATA'},
-                                      {estimatedDate: 'OnCarriageETD', actaulDate: 'OnCarriageATD'},
-                                        ]; 
+                                    ]; 
     public Run(args: any) {
         this.Entity = args['Entity'];
         this.FieldName = args['FieldName'];
