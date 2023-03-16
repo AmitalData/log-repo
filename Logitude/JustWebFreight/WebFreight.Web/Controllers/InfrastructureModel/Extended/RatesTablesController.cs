@@ -19,7 +19,7 @@ using Logitude.BL.InfrastructureModel.Tools.EntityService;
 namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 {
    
-    public partial class RatesTablesController : ApiController
+    public class RatesTablesCustomController : ApiController
     {
         public HttpResponseMessage UpdateRate(RatesTablePM entityPM)
         {
