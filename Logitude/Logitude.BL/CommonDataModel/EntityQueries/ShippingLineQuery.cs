@@ -103,6 +103,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         CustomsInvoiceTemplateId = a.Card.CustomsInvoiceTemplateId,
                                         ConsolidationInvoiceTemplateId = a.Card.ConsolidationInvoiceTemplateId,
                                         ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
+                                        PartnerTypeId = a.Card.PartnerTypeId,
+                                        Code = a.Card.Code,
                                     },
                                     BillToId = a.Card.BillToId,
                                 }).FirstOrDefault();
@@ -205,6 +207,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         CustomsInvoiceTemplateId = a.Card.CustomsInvoiceTemplateId,
                                         ConsolidationInvoiceTemplateId = a.Card.ConsolidationInvoiceTemplateId,
                                         ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
+                                        PartnerTypeId = a.Card.PartnerTypeId,
+                                        Code = a.Card.Code,
                                     },
                                     BillToId = a.Card.BillToId,
                                 }).FirstOrDefault();
@@ -295,6 +299,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         CustomsInvoiceTemplateId = a.Card.CustomsInvoiceTemplateId,
                                         ConsolidationInvoiceTemplateId = a.Card.ConsolidationInvoiceTemplateId,
                                         ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
+                                        PartnerTypeId = a.Card.PartnerTypeId,
+                                        Code = a.Card.Code,
                                     },
                                     BillToId = a.Card.BillToId,
                                 }).FirstOrDefault();
