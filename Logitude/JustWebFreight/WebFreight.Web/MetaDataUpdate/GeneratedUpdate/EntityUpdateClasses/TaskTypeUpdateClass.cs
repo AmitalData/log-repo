@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaskTypeUpdateClass
    {  		
-		public const string HashString = "51854cc5fafed8944b8ee808bd5c5d93";
+		public const string HashString = "877f55fd6a32b7a309c1249f6978cd2e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -95,8 +95,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "TaskType",
 			      				    IsNew =  true,
 			      				    DBTableName =  "TaskTypes",
-			      				    ObjectTableSingular =  "TaskType",
-			      				    ObjectTablePlural =  "TaskTypes",
+			      				    ObjectTableSingular =  "Task Type",
+			      				    ObjectTablePlural =  "Task Types",
+			      				    DescriptionDefaultText =  "Define task types",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  false,
@@ -753,6 +754,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "TaskType",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -763,6 +765,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EntityObjectTableId",
 					  						DefaultText =  "Entity",
+					  						ListFieldLable =  "EntityObjectTableIdListLable",
+					  						ListLableDefaultText =  "Entity",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "ObjectTable",
 					  						NavigationPropertyName =  "EntityObjectTable",

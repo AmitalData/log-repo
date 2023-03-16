@@ -7,11 +7,11 @@ using Simplog.Data.CommonDataModel.Repositories;
 
 namespace Logitude.Workflow.BL.EntityUpdateServices
 {
-    public partial class TaskTypeUpdateService
+    public partial class TaskStatusUpdateService
     {
         public string contactId = "";
         public string eventTypeCode = "";
-        protected override void Trace(TaskTypePM entityPM, TaskType entityPOCO, string changesXml)
+        protected override void Trace(TaskStatusPM entityPM, TaskStatus entityPOCO, string changesXml)
         {
             GetLoggedContact(entityPM.Tenant);
             GetEventTypeCode(entityPM);
@@ -30,7 +30,7 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
             contactId = contact?.Id;
         }
 
-        private void GetEventTypeCode(TaskTypePM entityPM)
+        private void GetEventTypeCode(TaskStatusPM entityPM)
         {
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
@@ -43,7 +43,7 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
             }
         }
 
-        private void CreateTraceEvent(TaskTypePM entityPM, string changesXml)
+        private void CreateTraceEvent(TaskStatusPM entityPM, string changesXml)
         {
             EventTracer.CreateTraceEvent(new EventTracerArgs()
             {
@@ -51,7 +51,7 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
                 EventTypeCode = eventTypeCode,
                 UserId = contactId,
                 EntityId = entityPM.Id,
-                ObjectTableName = "TaskType",
+                ObjectTableName = "TaskStatus",
                 Notes = changesXml
             });
         }
