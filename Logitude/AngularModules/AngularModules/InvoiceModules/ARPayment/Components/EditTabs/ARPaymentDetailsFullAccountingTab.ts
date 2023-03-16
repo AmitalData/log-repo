@@ -2677,14 +2677,18 @@ export class TransactionLineModel extends BaseComponent
 	if(this.IsAccountingActivated && (classificationTextBox.IsDisabled == false)) {
 		var totalOpenAmount = this.parent.PaymenyAmount - this.parent.paymentReconciledAmountTotal -this.parent.amount2reconcileTotal;
 		
-		if(this.AmountToReconcile > 0) {
-			totalOpenAmount = totalOpenAmount + this.AmountToReconcile;
-			this.AmountToReconcile = 0;
-		} 
-		if(totalOpenAmount >= this.OpenAmount) {
-			this.AmountToReconcile = this.OpenAmount;
-		} else if(totalOpenAmount <= this.OpenAmount && totalOpenAmount > 0){
-			this.AmountToReconcile = totalOpenAmount;
+	 	if(this.OpenAmount > 0){
+			if(this.AmountToReconcile > 0) {
+				totalOpenAmount = totalOpenAmount + this.AmountToReconcile;
+				this.AmountToReconcile = 0;
+			} 
+			if(totalOpenAmount >= this.OpenAmount) {
+				this.AmountToReconcile = this.OpenAmount;
+			} else if(totalOpenAmount <= this.OpenAmount && totalOpenAmount > 0){
+				this.AmountToReconcile = totalOpenAmount;
+			} else {
+				this.AmountToReconcile = 0;
+			}
 		} else {
 			this.AmountToReconcile = 0;
 		}
