@@ -1131,7 +1131,7 @@ export class AppTool {
             }
 
             case "General.MH.Tasks": {
-                myResult = "Occasion";
+                myResult = "Table";
                 break;
             }
 
