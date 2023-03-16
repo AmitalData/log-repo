@@ -454,7 +454,6 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                 this.EntityPM.DocumentTemplateId = selectedDocumentTypeTemplateId;    
             }
             this.CurrentSession.StopBusyIndicator();
-            //this.LoadDocumentTypeTemplate(documentTypeCode, selectedDocumentTypeTemplateId);
         });
     }
     GetPartnerDocumentTypeTemplatetDefault(cardList: CardList, documentTypeCode: string) {
