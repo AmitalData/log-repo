@@ -69,6 +69,29 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
 
         }
+
+        public HttpResponseMessage GetSupplierInvoiceModificationsForDeclaration(string declarationid)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+                SupplierInvoiceModificationQueryService supplierInvoiceModQueryService = new SupplierInvoiceModificationQueryService(MyContext);
+                var res = supplierInvoiceModQueryService.GetSupplierInvoiceModificationsForDeclaration(declarationid);
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                return Request.CreateResponse(HttpStatusCode.OK, res);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
     }
 }
 
