@@ -92,6 +92,13 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public double? InvoiceCurrencyExchangeRate { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ReportedinTaxReport { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string GLAccountLocalName { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string GLAccountDisplayNumber { get; set; }
+
+
 
     }
 }
