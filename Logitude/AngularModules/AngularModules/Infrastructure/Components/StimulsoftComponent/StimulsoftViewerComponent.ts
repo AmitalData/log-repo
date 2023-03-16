@@ -89,7 +89,7 @@ export class StimulsoftViewerComponent implements OnInit {
     SelectedMessageTemplateList: ReportsTemplateList;
     ReportsTemplatesLists: ReportsTemplateList[] = [];
     MessageTemplatesLists: ReportsTemplateList[] = [];
-
+    EntityPM: any;
     public documentTypeTemplatePMService: DocumentTypeTemplatePMService;
     public reportService: ReportService;
     reportsTemplateListExtendedService: ReportsTemplateListExtendedService;
@@ -144,8 +144,10 @@ export class StimulsoftViewerComponent implements OnInit {
     ngOnInit() {
 
         this.StimulsoftArgData.StimulsoftViewerComponent = this;
+        this.EntityPM = this.StimulsoftArgData.ReportsPreviewComponent.Report;
         this.ReportsTemplatesLists = this.StimulsoftArgData.ReportsTemplateLists;
         this.MessageTemplatesLists = this.StimulsoftArgData.MessageTemplateLists;
+        this.MessageTemplatesLists = this.StimulsoftArgData.MessageTemplateLists.filter(messageTemplate => messageTemplate.EntityId == this.StimulsoftArgData.EntityId || AppTool.IsNullOrEmpty(messageTemplate.EntityId));
         this.reportsTemplateListExtendedService = new ReportsTemplateListExtendedService();
         if (this.ReportsTemplatesLists) {
             this.SelectedReportsTemplateList = this.ReportsTemplatesLists.filter(d => d.Id == this.StimulsoftArgData.DefaultTemplateId)[0];
@@ -155,7 +157,7 @@ export class StimulsoftViewerComponent implements OnInit {
         }
 
         this.ShowReportsTemlatesLists = this.StimulsoftArgData.ShowReportsTemlatesLists;
-        this.ShowMessageTemlatesLists = this.StimulsoftArgData.ResultType == "Email";
+        this.ShowMessageTemlatesLists = this.StimulsoftArgData.IsSchedulerReport && this.StimulsoftArgData.ResultType == "Email";
         if ((this.StimulsoftArgData.ReportsPreviewComponent && this.StimulsoftArgData.ReportsPreviewComponent.FilterConrolHeight) || this.StimulsoftArgData.TypePage != "Report") {
 
             if (this.StimulsoftArgData.ScreenHeight && this.StimulsoftArgData.ScreenWidth) {
@@ -1350,8 +1352,8 @@ ResetEditableField(field: EditableFieldPosition){
 
     EditMessageTemplate(selectedMessageTemplate) {
 
-    }
+        }
     AddMessageTemplate() {
-
+        
     }
 }

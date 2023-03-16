@@ -48,6 +48,7 @@ export class StimulsoftArg {
     MessageTemplateLists: ReportsTemplateList[] = [];
     DefaultMessageTemplateId: string;
     ResultType: string;
+    ObjectTableId: string;
     constructor() {
 
     }

@@ -118,9 +118,9 @@ export class AddEditReportSchedulerComponent implements OnInit {
 
     ReportTemplates: any = [];
     LoadReportAndMessageTemplates(templateType) {
-        this.TemplateType = templateType == "R" ? "" : templateType;
         this.reportsTemplateListExtendedService.getReportsTemplateListsByReportId(this.ReportList.Id).subscribe((myResponse: ServiceResponse) => {
             if (myResponse.HasError) return;
+            this.TemplateType = "";
             this.ReportTemplates = myResponse.Result;
             this.RunComponent();
             this.CurrentSession.StopBusyIndicator();
@@ -256,6 +256,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
         this.PageChild_PRREP.SetReportTemplateType(this.TemplateType);
         this.PageChild_PRREP.SetMessageTemplateId(messageTemplateId);
         this.PageChild_PRREP.SetResultType(this.DataContext.EntityPM.ResultType);
+        this.PageChild_PRREP.SetReportEntityId(this.DataContext.EntityPM.Id);
 
         this.PageChild_PRREP.ReportsPreview(this.ReportGroupList, this.ReportList, this.ReportTemplates);
       //  this.RunBuildStimulsoftTimer();

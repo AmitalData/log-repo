@@ -64,7 +64,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
     TemplateType: string;
     DefaultMessageTemplateId: string
     ResultType: string;
-
+    ReportEntityId: string;
+    ObjectTableId: string;
     constructor(public _reportService: ReportService, private cd: ChangeDetectorRef) {
         var idIndex = this.CurrentSession.GetNewId("ReportsPreviewComponent");
         this.ComponentId = "ReportsPreview_" + idIndex;
@@ -83,6 +84,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         this.Title = SessionLocator.LoggedUserPM.DontShowLocal ? ReportList.Name : ReportList.LocalName;
         this.FilterControlName = ReportList.FilterControlName;
         this.ReportsRunUsingWR = true;
+        this.ObjectTableId = window.ObjectTables.filter(table => table.Name == "Report")[0]?.Id;
         this.RunComponent();
     }
 
@@ -150,7 +152,10 @@ export class ReportsPreviewComponent implements AfterViewInit {
         if (AppTool.IsNullOrEmpty(resultType)) return;
         this.ResultType = resultType;
     }
-
+    SetReportEntityId(reportEntityId: string) {
+        if (AppTool.IsNullOrEmpty(reportEntityId)) return;
+        this.ReportEntityId = reportEntityId;
+    }
 
     private Retries: number = 0;
     private timerToken: any;
@@ -267,6 +272,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
                 }
                 this.StimulsoftArg.DefaultMessageTemplateId = this.Report.DefaultMessageTemplateId;
                 this.StimulsoftArg.ResultType = this.ResultType;
+                this.StimulsoftArg.EntityId = this.ReportEntityId;
+                this.StimulsoftArg.ObjectTableId = this.ObjectTableId;
                 this.ComputeSize(Component.clientWidth, Component.clientHeight);
 
                 window.onresize = (e) => {
