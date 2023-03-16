@@ -38,8 +38,7 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.Accounting.Data.Repositories;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.CommonDataModel.EntityPMs;
+
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
