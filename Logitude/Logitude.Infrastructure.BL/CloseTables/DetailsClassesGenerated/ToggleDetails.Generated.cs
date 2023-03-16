@@ -892,6 +892,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "UDD,Upload File using Drag and Drop", 
                 Description = "Upload File using Drag and Drop", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "DE2", 
+                Name = "Document Execution WR Version 2", 
+                SearchFields = "DE2,Document Execution WR Version 2", 
+                Description = "Document Execution WR Version 2", 
+			});
 			
             return all;
        }
