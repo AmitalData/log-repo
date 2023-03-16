@@ -225,8 +225,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     SkipConnectedCardsValidation = skipConnectedCardsValidation
                 };
                 query.ConnectCardToGLAccount(args);
-                CreateTraceEvent(args.AccountId, args.Tenant, "GLAccount", "DSCS");
-                CreateTraceEvent(args.CardId, args.Tenant, "Customer", "CSCS");
 
                 return Request.CreateResponse(HttpStatusCode.OK, "ok");
             }
@@ -235,21 +233,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                  return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        private void CreateTraceEvent(string id, int Tenant, string objectTableName, string eventTypeCode)
-        {
-            ContactPM loggedContact = new ContactQuery(Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), Tenant);
-
-            EventTracer.CreateTraceEvent(new EventTracerArgs()
-            {
-                EntityId = id,
-                Tenant = Tenant,
-                UserId = loggedContact.Id,//contact.Id,
-                ObjectTableName = objectTableName,
-                IsAddedManually = false,
-                EventTypeCode = eventTypeCode,
-                Notes = "ameerah",
-            });
-        }
+        
         public HttpResponseMessage GetConnectedCardsForGLAccount(string accountId)
         {
             try
