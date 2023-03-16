@@ -923,7 +923,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                     this.ItemsSource.Collection.forEach(item => {
                         var ledgerTransaction = this.invoicesLedgerTransactions.filter(x=>x.Reference1 == item.InvoiceNumber)[0];
                         if(ledgerTransaction) {
-
+                            item.CheckBoxEnabled = true;
                             item.RecoNumber = ledgerTransaction.RecoNumber;
                             if(ledgerTransaction.RecoNumber != null && ledgerTransaction.RecoNumber.length > 0) {
                                 var items = this.paymentLedgerTransactions.filter(value => ledgerTransaction.RecoNumber.split(',').includes(value));
