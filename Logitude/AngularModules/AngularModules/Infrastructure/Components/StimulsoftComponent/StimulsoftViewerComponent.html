@@ -304,7 +304,7 @@
 
                 <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && ShowMessageTemlatesLists" style="width:7px"><div style="width:7px"></div></td>
 
-                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && ShowMessageTemlatesLists" style="width:190px"><ComboBox id="{{'MessageTemplatesComboBox' | IdGeneratorAsyncPipe | async}}" style="width:190px;height:22px;display:inline" (SelectedItemChanged)="MessageTemplatesChange($event,true)" [ItemsSource]="MessageTemplatesLists" [SelectedItem]="SelectedMessageTemplateList" [Binding]="'Description'"></ComboBox></td>
+                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && ShowMessageTemlatesLists" style="width:190px"><ComboBox id="{{'MessageTemplatesComboBox' | IdGeneratorAsyncPipe | async}}" style="width:190px;height:22px;display:inline" (SelectedItemChanged)="MessageTemplatesChange($event)" [ItemsSource]="MessageTemplatesLists" [SelectedItem]="SelectedMessageTemplateList" [Binding]="'Description'"></ComboBox></td>
 
                 <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && ShowMessageTemlatesLists" class="CellStretched" style="width:30px; min-width:30px; max-width:30px; position: relative;vertical-align:central">
                     <div class="EditButton" (click)="EditMessageTemplate(SelectedMessageTemplateList)" style="display:inline;width:18px;">
