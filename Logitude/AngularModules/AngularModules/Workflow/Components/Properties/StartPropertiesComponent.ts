@@ -117,6 +117,8 @@ export class StartPropertiesComponent extends BaseComponent {
     updateEntity(entity: string) {
         let isEntityChanged = this.Data["entity"] !== entity;
         this.Data["entity"] = entity;
+        this.Data["entityLabel"] = ObjectTables.getDisplayNameByName(entity);
+        this.Data["isCustomEntity"] = ObjectTables.getIsCustomByName(entity);
         this.Entity = entity;
         this.EntityId = ObjectTables.getIdByName(entity);
 
