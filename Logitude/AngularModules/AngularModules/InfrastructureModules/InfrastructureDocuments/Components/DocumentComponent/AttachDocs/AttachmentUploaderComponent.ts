@@ -19,6 +19,8 @@ declare var attachmentUploader, ResultAsArray: any;
 import {AppTool, DateTool} from '../../../../../Infrastructure/Tools';
 import {ServiceLocator} from '../../../../../Infrastructure/Locators/ServiceLocator';
 import { Console } from 'console';
+import { CommonDomainService } from '../../../../../Common/Services/CommonDomainService';
+import { DownloadManager } from '../../../../../Infrastructure/Utilities/DownloadManager';
 
 @Component({
     
@@ -52,6 +54,7 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
     UploadButtonIsEnabled: boolean = true;
     IsUploadDone: boolean = false;
     UploadFileId: string;
+    DragDropUploadFileId: string;
     IsCloseButtonVisibile: boolean = false;
     IsCancelVisibile: boolean = true;
     public documentsFilingPMService: DocumentsFilingPMService;
@@ -62,19 +65,26 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
     Tenant: number;
     RequsetPageName: string;
     ProgressBarId: string = Guid.newGuid();
+    DragDropProgressBarId: string = Guid.newGuid();
     EntityNumber: string;
     ExternalEntityReference: string;
     ExternalEntityName: string;
+    public IFrameURI: string = "";
+    public IsPDF = false;
+    public HasUploadDragDropFeature = false;
+    private imageLibraryService: ImageLibraryService;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor( public _imageLibraryService: ImageLibraryService, fb: FormBuilder, public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService) {
         super();
         this.myForm = fb.group({});
         this.UploadFileId = Guid.NewRandomString();
+        this.DragDropUploadFileId = Guid.NewRandomString();
         if (this.documentsFilingPMService == null) {
             this.documentsFilingPMService = new DocumentsFilingPMService();
         }
-
+        this.imageLibraryService = new ImageLibraryService();
+        this.HasUploadDragDropFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "UDD")[0] ? true : false;
     }
 
     ngOnInit() {
@@ -218,14 +228,27 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
     }
 
 
-    OpenUpLoadFile() {
-        document.getElementById(this.UploadFileId).click();
+    onDragOver(event: any): void {
+        event.preventDefault();
     }
 
-    UploadFile(event: any) {
+    onDrop(event: any): void {
+        if (this.UploadedSuccessfully) return;
+        event.preventDefault();
+        const files: File[] = event.dataTransfer.files;
+        if (files[0]) this.UploadFile(event, files[0]);
+    }
 
+    OpenUpLoadFile() {
+        document.getElementById(this.GetUploadElementId()).click();
+    }
 
-        var file: any = attachmentUploader(this.UploadFileId);
+    private GetUploadElementId() {
+        return this.HasUploadDragDropFeature ? this.DragDropUploadFileId : this.UploadFileId;
+    }
+
+    UploadFile(event: any, uploadedFile = null) {
+        var file: any = uploadedFile ? uploadedFile : attachmentUploader(this.GetUploadElementId());
         //document.querySelector('#UploadFile').files[0];
         if (file && file.size>0) {
 
@@ -239,7 +262,8 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
             else {
                 this.FileExtension = fileInfo[1];
             }
-            
+
+            this.IsPDF = this.FileExtension.toLowerCase() == "pdf";
 
             this._documentsFilingExtendedPMService.GetFileSizeAndUnit(file.size).subscribe((res:any) => {
 
@@ -400,6 +424,7 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
                                                 this.IsUploadDone = true;
                                                 this.IsUploadInProgress = false;
                                                 this.UploadedSuccessfully = true;
+                                                this.PreviewUploadedFile();
                                                 if ((this.RequsetPageName == "DocIn" || this.RequsetPageName == "SharedDocument") && this.TiggerViewModel) {
                                                     if (this.RequsetPageName == "DocIn") this.TiggerViewModel.OnUploadComplete();
                                                     else if (this.RequsetPageName == "SharedDocument") this.TiggerViewModel.OnUploadComplete(this.Entity);
@@ -453,6 +478,25 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
 
     }
 
+    private PreviewUploadedFile() {
+        if (!this.HasUploadDragDropFeature || !this.IsPDF) return;
+        let commonDomainService: CommonDomainService = new CommonDomainService();
+        commonDomainService.GetFilingAttachPdfReport(this.CurrentDocument.DocumentId).subscribe((response: ServiceResponse) => {
+            if (response.HasError) return;
+            var buffer = EntityResourceService.base64ToBufferConvertor(response.Result);
+            var blob = new Blob([buffer], { type: 'application/pdf' });
+            var objectURL = URL.createObjectURL(blob);
+            this.IFrameURI = objectURL;
+        });
+    }
+
+    DownloadDocumentFile() {
+        this.imageLibraryService.DownloadFile(this.CurrentDocument.DocumentId, this.CurrentDocument.FileExtension, this.CurrentDocument.Folder, SessionLocator.Tenant).subscribe((res: any) => {
+            let documentName = this.CurrentDocument.DocumentId + "*";
+            documentName += (this.FileName && this.FileExtension) ? this.FileName.replace("." + this.FileExtension, "") : "UploadedFile";
+            DownloadManager.DownloadPage(documentName);
+        });
+    }
 
     ProgressBarPercentText: string;
     IncreaseProgressBar(filter: ImageParameter) {
@@ -461,8 +505,8 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
             var pre = 100 / filter.BlocksNumber;
             var ProgressBarValue = (filter.BufferNumber + 1) * pre;
 
-
-            var elem = document.getElementById(this.ProgressBarId);
+            let progressBarElementId = this.HasUploadDragDropFeature ? this.DragDropProgressBarId : this.ProgressBarId;
+            var elem = document.getElementById(progressBarElementId);
             if (elem) {
 
                 if (ProgressBarValue == 100) {
