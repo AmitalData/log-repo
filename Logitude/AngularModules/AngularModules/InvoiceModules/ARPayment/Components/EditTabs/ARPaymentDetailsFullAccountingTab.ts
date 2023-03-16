@@ -2689,7 +2689,7 @@ export class TransactionLineModel extends BaseComponent
 			} else {
 				this.AmountToReconcile = 0;
 			}
-		} else {
+		} else if(this.OpenAmount < 0){
 			this.AmountToReconcile = 0;
 		}
 		
