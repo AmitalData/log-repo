@@ -166,7 +166,6 @@ export class DigitalPortalLanguageSettingsComponent implements OnInit {
     }
 
     OpenUpLoadFileToImportLanguage(){
-        this.IsUploadButtonEnabled = false;
         this.IsFileImportedSuccessfully = false;
         this.UploadedTranslationFileMSG = ''
         document.getElementById(this.UploadFileId).click();
@@ -207,23 +206,25 @@ export class DigitalPortalLanguageSettingsComponent implements OnInit {
         }
 
         if (file && file.size > 0) {
-            fileInfo.FileData = await this.convertFileToBase64(file);
+            var fileAs64Base = await this.convertFileToBase64(file);
+            fileInfo.FileData = fileAs64Base && typeof fileAs64Base === 'string' ? fileAs64Base.split('base64,')[1] : ''
             this.ImportTextCodesExcelFile(fileInfo, event)
         }
     }
 
     ImportTextCodesExcelFile(fileInfo: ImportExcelParams, event: any) {
-        this._digitalLanguageSettingsService.UploadDigitalTextCode(fileInfo).subscribe((myResult) => {
+        this._digitalLanguageSettingsService.UploadDigitalTextCode(fileInfo).subscribe((myResult: any) => {
             this.CurrentSession.StopBusyIndicator();
             this.IsUploadButtonEnabled = true;
             event.target.value = '';
-            if (myResult) {
-                this.IsFileImportedSuccessfully = true;
-                this.UploadedTranslationFileMSG = 'File Imported Successfully.'
+            if (myResult && myResult.HasError) {
+                this.IsFileImportedSuccessfully = false;
+                var errorMSG = myResult && myResult.ErrorsArray ? myResult.ErrorsArray[0] : '';
+                this.UploadedTranslationFileMSG = 'Importing file failed!. ' + errorMSG + '.';
             }
             else {
-                this.IsFileImportedSuccessfully = false;
-                this.UploadedTranslationFileMSG = 'Something went wrong, Importing file failed!.'
+                this.IsFileImportedSuccessfully = true;
+                this.UploadedTranslationFileMSG = 'File Imported Successfully.'
             }
         });
     }
