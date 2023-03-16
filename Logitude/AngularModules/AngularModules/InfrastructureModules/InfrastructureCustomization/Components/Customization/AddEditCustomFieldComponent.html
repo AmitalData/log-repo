@@ -10,7 +10,7 @@
             <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
         </td>
     </tr>
-    <tr [ngStyle]="{'height': ShownAdditionalFilters && LookUpTableId ? '35%' : '50%'}">
+    <tr [ngStyle]="{'height': ShownAdditionalFilters && LookUpTableId ? '35%' : '100%'}">
         <td>
             <table>
                 <tr style="height: 10px;">
@@ -322,7 +322,7 @@
             </table>
         </td>
     </tr>
-    <tr style="height:35%" *ngIf="ShownAdditionalFilters && LookUpTableName">
+    <tr style="height:65%" *ngIf="ShownAdditionalFilters && LookUpTableName">
         <td>
             <table>
                 <tr style="height: 10px;">
@@ -356,53 +356,7 @@
             </table>
         </td>
     </tr>
-    <tr style="height:30%">
-        <td>
-            <table style="width:300px">
-                <tr class="TabTitleRow">
-                    <td>Partner Types:</td>
-                </tr>
-                <tr>
-                    <td style="padding-left:15px">
-                        <table>
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <CheckBox [Text]="'Customer'"></CheckBox>
-                                </td>
-                                <td>
-                                    <CheckBox [Text]="'Shipping Line'"></CheckBox>
-                                </td>
-                            </tr>
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <CheckBox [Text]="'Vendor'"></CheckBox>
-                                </td>
-                                <td>
-                                    <CheckBox [Text]="'Shipping Agent'"></CheckBox>
-                                </td>
-                            </tr>
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <CheckBox [Text]="'Agent'"></CheckBox>
-                                </td>
-                                <td>
-                                    <CheckBox [Text]="'Warehouse'"></CheckBox>
-                                </td>
-                            </tr>
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <CheckBox [Text]="'Customs Agent'"></CheckBox>
-                                </td>
-                                <td>
-                                    <CheckBox [Text]="'Trucker'"></CheckBox>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
+    
     <tr><td colspan="5"></td></tr>
 
     <tr style="height:1px;">
