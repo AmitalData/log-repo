@@ -12,21 +12,20 @@ namespace WebFreight.Web.Services
     {
         public byte[] Convert(Object dataprovider, Type type, int tenant)
         {
-            //if(FeatureToggleHelper.HasFeatureToggle("DMS", tenant))
-            //{
-            return SerializeDataWithUsingMemoryStream(dataprovider, type);
-            //}
-            //return SerializeData(new MemoryStream(),dataprovider, type);
+            if (FeatureToggleHelper.HasFeatureToggle("DMS", tenant))
+            {
+                return SerializeDataWithUsingMemoryStream(dataprovider, type);
+            }
+            return SerializeData(new MemoryStream(), dataprovider, type);
         }
 
         private byte[] SerializeDataWithUsingMemoryStream(object dataprovider, Type type)
         {
             using (MemoryStream memoryStream = new MemoryStream())
             {
-                byte[] bytearray = SerializeDataWithUsingStreamReader(memoryStream, dataprovider, type);
-                memoryStream.Dispose();
-                memoryStream.Close();
-                return bytearray;
+                XmlSerializer serializer = new XmlSerializer(type);
+                serializer.Serialize(memoryStream, dataprovider);
+                return memoryStream.ToArray();
             }
         }
 
