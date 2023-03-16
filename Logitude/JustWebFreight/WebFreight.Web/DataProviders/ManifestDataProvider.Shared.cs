@@ -84,7 +84,6 @@ namespace WebFreight.Web.DataProviders
 
         public string MainCarriageLeg2Carrier { get; set; }
         public string MainCarriageLeg2CarrierNumber { get; set; }
-        public string MainCarriageLeg2Address { get; set; }
         public string MAWBMainCarriageLeg2 { get; set; }
         public DateTime? MainCarriageLeg2ETD_DateTime { get; set; }
         public DateTime? MainCarriageleg2ETA_DateTime { get; set; }
@@ -93,7 +92,6 @@ namespace WebFreight.Web.DataProviders
 
         public string MainCarriageLeg3Carrier { get; set; }
         public string MainCarriageLeg3CarrierNumber { get; set; }
-        public string MainCarriageCarrierLeg3Address { get; set; }
         public string MAWBMainCarriageLeg3 { get; set; }
         public DateTime? MainCarriageLeg3ETD_DateTime { get; set; }
         public DateTime? MainCarriageleg3ETA_DateTime { get; set; }
@@ -102,7 +100,6 @@ namespace WebFreight.Web.DataProviders
 
         public string MainCarriageLeg4Carrier { get; set; }
         public string MainCarriageLeg4CarrierNumber { get; set; }
-        public string MainCarriageCarrierLeg4Address { get; set; }
         public string MAWBMainCarriageLeg4 { get; set; }
         public DateTime? MainCarriageLeg4ETD_DateTime { get; set; }
         public DateTime? MainCarriageleg4ETA_DateTime { get; set; }
