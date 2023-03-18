@@ -277,6 +277,29 @@ export function FillARInvoiceDetails(aRInvoiceDetails: ARInvoiceDetails) {
         cy.wait('@' + RequestAliases.GetVatTypePercentage)
     }
 }
+export function FillARInvoiceDetailsSAT(aRInvoiceDetails: ARInvoiceDetails) {
+    if (aRInvoiceDetails.Partner) {
+        cy.FillLogLov(AccountingSelectors.ARInvoicePartner, aRInvoiceDetails.Partner, false)
+    }
+    cy.SelectDropDownListItem(AccountingSelectors.LogLovARInvoiceInvoiceCurrency, aRInvoiceDetails.InvoiceCurrency)
+    cy.FillDate(AccountingSelectors.ARInvoiceInvoiceDate, aRInvoiceDetails.InvoiceDate)
+    cy.FillLogLov(AccountingSelectors.ARInvoiceAddress, aRInvoiceDetails.Address, true)
+    cy.FillLogLov(AccountingSelectors.ARInvoicePaymentTerm, aRInvoiceDetails.PaymentTerms, true)
+    cy.FillDate(AccountingSelectors.ARInvoiceDueDate, aRInvoiceDetails.DueDate)
+    cy.FillLogTextBox(AccountingSelectors.ARInvoiceVatNumber, aRInvoiceDetails.VATNo)
+    cy.FillLogLov(AccountingSelectors.ARInvoiceBranch, aRInvoiceDetails.Branch, true)
+    if (aRInvoiceDetails.Partner) {
+        cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK)
+        cy.Click(BaseSelectors.CheckBoxLine, null)
+    }
+    else {
+        cy.Click(AccountingSelectors.OkCreateARInvoiceButton, null);
+        cy.FillLogLov(AccountingSelectors.ARInvoiceVatType, aRInvoiceDetails.VATType, true)
+        cy.DefineRequestWait(RestAPI.GET, AccountingURLs.VatTypePercentageCall, RequestAliases.GetVatTypePercentage)
+        cy.Click(AccountingSelectors.VatTypeApplyToAll, null)
+        cy.wait('@' + RequestAliases.GetVatTypePercentage)
+    }
+}
 
 export function CreateARInvoice(Constituent?: boolean) {
     cy.DefineRequestWait(RestAPI.POST, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesRequest)
@@ -297,7 +320,7 @@ export function SATARApproveInvoice(invoiceNumber: number) {
     cy.FillLogTextBox(AccountingSelectors.ARInvoiceInvoice,`${invoiceNumber}`)
     cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesRequest)
     cy.Click(AccountingSelectors.ARInvoiceApproveButton, null)
-    cy.Click(AccountingSelectors.SATexchangerate, null)
+   // cy.Click(AccountingSelectors.SATexchangerate, null)
 }
 
 export function PostARApproveInvoice() {
@@ -638,9 +661,9 @@ export function AssertAutoCreditByInvoiceNumber(invoiceNumber: string) {
 
 export function changeSATInterfaceSettings(AccountingsSystem: string) {
     NavigatesToAccountingSettings()
-    cy.Click(BaseSelectors.buttonspan, AccountingSelectors.ContainSATInterfaceSettings, true)
+   cy.Click(BaseSelectors.buttonspan, AccountingSelectors.ContainSATInterfaceSettings, true)
     console.log('index')
-    cy.SelectComboDropDownListItem(AccountingSelectors.SATInterfaceValue, AccountingsSystem,0)
+    cy.SelectDropDownListItem(AccountingSelectors.SATInterfaceValue, AccountingsSystem)
     
 }
 export const SearchInvoice = (invoiceNumber) => {

@@ -124,6 +124,8 @@ export class AccountingSelectors extends RegexSelectors {
     public static readonly ARInvoiceInvoiceNumber = '#ARInvoice_InvoiceNumber';
     public static readonly ARInvoiceEventsTab = '#ARInvoiceTHEvents';
     public static readonly ARInvoiceDetails = '#ARInvoiceTHDetails';
+    public static readonly ARInvoiceAddress = '#ARInvoice_BillToAddressId';
+    
 
     //#region contain 
 
@@ -183,10 +185,11 @@ export class AccountingSelectors extends RegexSelectors {
       //#region SATInterfaceSettings
       public static readonly SATInterfaceSettingsLogLov = "#SATInterfaceSetting_SATInterfaceCode"
       public static readonly LogLovSATInterfaceSettingsLogLov = "#LogLov_SATInterfaceSetting_SATInterfaceCode"
-      public static readonly SATInterfaceValue='[data-cy="SAT Interface Value"]'
+      public static readonly SATInterfaceValue="#LogLov_SATInterfaceSetting_SATInterfaceCode"
       public static readonly SATexchangerate = "#ConfirmWindow_Yes_0";
       public static readonly ARInvoiceInvoice= "#ARInvoice_InvoiceNumber";
-      public static readonly ManuallySet= "#ComboBox_0_3";
+      public static readonly ManuallySet= ".ComboBox";
+     // public static readonly ManuallySet='[data-cy="undefinedManually Set"]'
       public static readonly InvoiceCheckBox= ".LogitudeCheckBox";
       public static readonly ARPaymentTHEvents= "#ARPaymentTHEvents";
       
