@@ -146,17 +146,61 @@ namespace WebFreight.Web.ContainerTracking
             MapMilestoneDateField(VizionMilestoneDescriptionCodes.POLLoaded, ref containerUpdatedFields.EstimatedPOLLoaded, true);
             MapMilestoneDateField(VizionMilestoneDescriptionCodes.POLLoaded, ref containerUpdatedFields.ActualPOLLoaded);
 
+            MapPOLLegVesselVoyageForPOLLoadedMilestone();
+            
             MapMilestoneDateField(VizionMilestoneDescriptionCodes.POLVslDeparture, ref containerUpdatedFields.MainCarriageETD, true);
             MapMilestoneDateField(VizionMilestoneDescriptionCodes.POLVslDeparture, ref containerUpdatedFields.MainCarriageATD);
         }
+
+        private void MapPOLLegVesselVoyageForPOLLoadedMilestone(){
+            if (!IsMilestoneSentWithinResponse(VizionMilestoneDescriptionCodes.POLLoaded))
+                return;
+
+            var myMilestones = MilestonesDictinoary[VizionMilestoneDescriptionCodes.POLLoaded].Where(d => d.location.unlocode == containerUpdatedFields.POLLocation);
+            var plannedMilistone = myMilestones.FirstOrDefault(e => e.planned);
+            if (plannedMilistone != null)
+            {
+                containerUpdatedFields.POLLegVessel = containerUpdatedFields.POLLegVessel == null ? plannedMilistone.vessel : containerUpdatedFields.POLLegVessel;
+                containerUpdatedFields.POLLegVoyage = containerUpdatedFields.POLLegVoyage == null ? plannedMilistone.voyage : containerUpdatedFields.POLLegVoyage;
+            }
+
+            var milistone = myMilestones.FirstOrDefault(e => !e.planned);
+            if (milistone != null)
+            {
+                containerUpdatedFields.POLLegVessel = containerUpdatedFields.POLLegVessel == null ? milistone.vessel : containerUpdatedFields.POLLegVessel;
+                containerUpdatedFields.POLLegVoyage = containerUpdatedFields.POLLegVoyage == null ? milistone.voyage : containerUpdatedFields.POLLegVoyage;
+            }
+        }
+
         private void MapPOD()
         {
             MapMilestoneDateField(VizionMilestoneDescriptionCodes.VesselArrivedAtDestinationPort, ref containerUpdatedFields.MainCarriageETA, true);
             MapMilestoneDateField(VizionMilestoneDescriptionCodes.VesselArrivedAtDestinationPort, ref containerUpdatedFields.MainCarriageATA);
-
+            MapPODLegVesselVoyageForPOLLoadedMilestone();
             MapMilestoneDateField(VizionMilestoneDescriptionCodes.DischargedFromVesselAtDestinationPort, ref containerUpdatedFields.EstimatedPODDischarge, true);
             MapMilestoneDateField(VizionMilestoneDescriptionCodes.DischargedFromVesselAtDestinationPort, ref containerUpdatedFields.ActualPODDischarge);
-        }        
+        }
+        private void MapPODLegVesselVoyageForPOLLoadedMilestone()
+        {
+            if (!IsMilestoneSentWithinResponse(VizionMilestoneDescriptionCodes.DischargedFromVesselAtDestinationPort))
+                return;
+
+            var myMilestones = MilestonesDictinoary[VizionMilestoneDescriptionCodes.DischargedFromVesselAtDestinationPort].Where(d => d.location.unlocode == containerUpdatedFields.PODLocation);
+            var plannedMilistone = myMilestones.FirstOrDefault(e => e.planned);
+            if (plannedMilistone != null)
+            {
+                containerUpdatedFields.PODLegVessel = containerUpdatedFields.PODLegVessel == null ? plannedMilistone.vessel : containerUpdatedFields.PODLegVessel;
+                containerUpdatedFields.PODLegVoyage = containerUpdatedFields.PODLegVoyage == null ? plannedMilistone.voyage : containerUpdatedFields.PODLegVoyage;
+            }
+
+            var milistone = myMilestones.FirstOrDefault(e => !e.planned);
+            if (milistone != null)
+            {
+                containerUpdatedFields.PODLegVessel = containerUpdatedFields.PODLegVessel == null ? plannedMilistone.vessel : containerUpdatedFields.PODLegVessel;
+                containerUpdatedFields.PODLegVoyage = containerUpdatedFields.PODLegVoyage == null ? plannedMilistone.voyage : containerUpdatedFields.PODLegVoyage;
+            }
+        }
+
         private void MapGate()
         {
             var containersExternal = new ContainersExternal();
