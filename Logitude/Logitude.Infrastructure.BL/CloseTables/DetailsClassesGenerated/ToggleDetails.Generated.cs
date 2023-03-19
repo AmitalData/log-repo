@@ -884,6 +884,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "WRR,Run reconciliation using WorkerRole", 
                 Description = "Run reconciliation using WorkerRole", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "UDD", 
+                Name = "Upload File using Drag and Drop", 
+                SearchFields = "UDD,Upload File using Drag and Drop", 
+                Description = "Upload File using Drag and Drop", 
+			});
 			
             return all;
        }

@@ -73,7 +73,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 throw new ApplicationException("Container Tracking Setting not exist");
             switch(provider.SourceCode )
             {
-                case ContainerStatusSourceValues.Vizion:
+                case "VZN":
                     return GetVizionSupportedCarrier(provider);
                 default:
                     throw new ApplicationException("Container Tracking Source not implement");
@@ -104,7 +104,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 throw new ApplicationException("Container Tracking Setting not exist");
             switch (provider.SourceCode)
             {
-                case ContainerStatusSourceValues.Vizion:
+                case "VZN":
                     return GetVizionActiveRequests(provider);
                 default:
                     throw new ApplicationException("Container Tracking Source not implement");

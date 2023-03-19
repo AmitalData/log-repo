@@ -114,6 +114,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.PrimaryContactName).HasColumnName("PrimaryContactName");
             this.Property(t => t.PrimaryContactEmail).HasColumnName("PrimaryContactEmail");
             this.Property(t => t.PrimaryContactPhone).HasColumnName("PrimaryContactPhone");
+            this.Property(t => t.IsEmailForSendingSingArinvoice).HasColumnName("IsEmailForSendingSingArinvoice");
             this.Property(t => t.ActivationDate).HasColumnName("ActivationDate");
             this.Property(t => t.InactiveDate).HasColumnName("InactiveDate");
             this.Property(t => t.ActivationRequestDate).HasColumnName("ActivationRequestDate");
