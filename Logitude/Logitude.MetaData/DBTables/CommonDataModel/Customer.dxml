@@ -433,6 +433,13 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="EORInumber"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="InsuredcreditLimit"
     OldNames="InsruedcreditLimit"
     Type="float">
