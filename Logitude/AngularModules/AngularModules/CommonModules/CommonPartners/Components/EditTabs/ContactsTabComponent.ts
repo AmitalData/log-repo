@@ -254,6 +254,8 @@ export class ContactItemClass {
     
     
     public IsPrimary: boolean = false;
+    public IsEmailForSending : boolean = false;
+
     CheckPrimary() {
 
         var isPrimary = false;
@@ -277,6 +279,30 @@ export class ContactItemClass {
         this.fatherComponent.ItemsSource.forEach(item => {
             item.CheckPrimary();
         });
+    }
+
+    SetEmailForSendingSingArinvoices() {
+        // this.fatherComponent.EntityPM['IsEmailForSendingSingArinvoice'] = true;
+        
+        // this.fatherComponent.ItemsSource.forEach(item => {
+        //     item.CheckPrimary();
+        // });
+    }
+
+    CheckEmailForSending() {
+
+        // var isEmailForSending = false;
+        // var myCardPrimaryContactId = null;
+        // if (this.fatherComponent && this.fatherComponent.EntityPM) {
+        //     myCardPrimaryContactId = this.fatherComponent.EntityPM['PrimaryContactId'];
+        //     if (!AppTool.IsNullOrEmpty(myCardPrimaryContactId)) {
+        //         if (myCardPrimaryContactId == this.Id) {
+        //             isEmailForSending = true;
+        //         }
+        //     }
+        // }
+     
+        //this.IsEmailForSending = isEmailForSending;
     }
 }
 
