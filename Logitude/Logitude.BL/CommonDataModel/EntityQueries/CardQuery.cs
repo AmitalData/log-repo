@@ -283,7 +283,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         if (entity != null)
                         {
                             entity.Addresses = addressQuery.GetAddressesByCardId(id, tenant);
-                            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<CardPM> { entity }.Cast<object>().ToList() }).Set();
+                            //new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<CardPM> { entity }.Cast<object>().ToList() }).Set();
 
                             string name = "CardPM" + entity.Id + tenant;
 
@@ -399,7 +399,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     if (entity != null)
                     {
                         entity.Addresses = addressQuery.GetAddressesByCardId(id, tenant);
-                        new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<CardPM> { entity }.Cast<object>().ToList() }).Set();
+                        //new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<CardPM> { entity }.Cast<object>().ToList() }).Set();
                     }
                 }
                 PartnerARinvoiceDocumentTypeService partnerARinvoiceDocumentTypeService = new PartnerARinvoiceDocumentTypeService(entity.Tenant);
@@ -421,7 +421,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             EnglishName = a.EnglishName,
 
                                         }).ToList();
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "List", Entities = cardLists.Cast<object>().ToList() }).Set();
+            //new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "List", Entities = cardLists.Cast<object>().ToList() }).Set();
             return cardLists;
         }
 
@@ -438,7 +438,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         PartnerTypeId = a.PartnerTypeId
 
                                     }).ToList();
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = cardPMs.Cast<object>().ToList() }).Set();
+            //new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = cardPMs.Cast<object>().ToList() }).Set();
             return cardPMs;
         }
         public CardPM GetSinglePMByCode(string code, int tenant)
