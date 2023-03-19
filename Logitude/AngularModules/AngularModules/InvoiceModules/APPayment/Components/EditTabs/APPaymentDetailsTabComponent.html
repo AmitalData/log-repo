@@ -103,10 +103,30 @@
     .slide-out {
         right: 0;
     }
-
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 8px;
+        background: #faf5c0;
+        padding: 4px 15px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+        width: fit-content;
+    }
 </style>
 
 <table>
+    <tr *ngIf="IsDisplayOnly" style="height:22px">
+        <td>
+            <div style="width:100%;text-align:center;margin:0 auto;">
+                <div class="DisbleBox">
+                    {{ 'ARPayment.O.PaymentInProcess-cantModified' | TextCodeTranslationPipe }}.
+                    <a (click)="checkLedgerCreated()" id="refresh"> {{ 'ARPayment.O.Refresh' | TextCodeTranslationPipe }}</a>
+                </div>
+            </div>
+        </td>
+    </tr>
     <tr>
         <td>
             <div class="TableHolder">
@@ -677,7 +697,7 @@
                                                     <img *ngIf="item.NotMatchedVisibility" class="CenterCenter" title="Not Matched" src="./Images/Info.png" />
                                                     <CheckBox *ngIf="!item.ConnectFeature && !item.NotMatchedVisibility" [IsChecked]="item.IsConnected" (Checked)="item.IsConnected = $event" title="You have no permission to connect invoices" [IsEnabled]="false"></CheckBox>
 
-                                                    <CheckBox *ngIf="item.CheckBoxVisibility" [IsChecked]="item.IsConnected" (Checked)="item.IsConnected = $event" title="{{item.NoPermision}}" [IsEnabled]="item.CheckBoxEnabled"></CheckBox>
+                                                    <CheckBox *ngIf="item.CheckBoxVisibility" [IsChecked]="item.IsConnected" (Checked)="item.IsConnected = $event" title="{{item.NoPermision}}" [IsEnabled]="item.CheckBoxEnabled && !IsDisplayOnly"></CheckBox>
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>
@@ -746,7 +766,8 @@
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
                                                 <div style="width: 100%;">
-                                                    <LogTextBox [InputType]="'sigdouble'" [DigitsAfterPoint]="2" [ObjectTableName]="item.ObjectTableName" [ObjectFieldName]="'AmountPaid'" [Text]="item.AmountPaid" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
+                                                    <LogTextBox [InputType]="'sigdouble'" [DigitsAfterPoint]="2" [ObjectTableName]="item.ObjectTableName" 
+                                                     [ObjectFieldName]="'AmountPaid'" [Text]="item.AmountPaid" [DataContext]="item.DataContext" [HideColumns]="true" [ForceDisable]="IsDisplayOnly || (!item.CheckBoxEnabled)"></LogTextBox>
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>

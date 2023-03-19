@@ -201,6 +201,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [Include]
         [Association("AgentCardPM", "Id", "Id")]
+        [DataMember]
         public virtual CardPM Card { get; set; }
 
         private List<AddressPM> addresses;
@@ -361,5 +362,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ExportLocalCustomerGroupId { get; set; }
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string EORInumber { get; set; }
     }
 }

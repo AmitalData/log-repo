@@ -63,6 +63,11 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.SATCustomerName).HasMaxLength(200).IsUnicode(true);
             this.Property(t => t.ImportLocalCustomerGroupId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ExportLocalCustomerGroupId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.EORInumber).HasMaxLength(25).IsUnicode(false);
+            this.Property(t => t.SingleInvoiceTemplateId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.CustomsInvoiceTemplateId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ConsolidationInvoiceTemplateId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ManifestInvoiceTemplateId).HasMaxLength(15).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Cards");
@@ -127,6 +132,11 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.SATCustomerName).HasColumnName("SATCustomerName");
             this.Property(t => t.ImportLocalCustomerGroupId).HasColumnName("ImportLocalCustomerGroupId");
             this.Property(t => t.ExportLocalCustomerGroupId).HasColumnName("ExportLocalCustomerGroupId");
+            this.Property(t => t.EORInumber).HasColumnName("EORInumber");
+            this.Property(t => t.SingleInvoiceTemplateId).HasColumnName("SingleInvoiceTemplateId");
+            this.Property(t => t.CustomsInvoiceTemplateId).HasColumnName("CustomsInvoiceTemplateId");
+            this.Property(t => t.ConsolidationInvoiceTemplateId).HasColumnName("ConsolidationInvoiceTemplateId");
+            this.Property(t => t.ManifestInvoiceTemplateId).HasColumnName("ManifestInvoiceTemplateId");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -156,6 +166,10 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.HasOptional(t => t.UsoCFDI).WithMany().HasForeignKey(d => d.UsoCFDICode);
             this.HasOptional(t => t.ImportLocalCustomerGroup).WithMany().HasForeignKey(d => d.ImportLocalCustomerGroupId);
             this.HasOptional(t => t.ExportLocalCustomerGroup).WithMany().HasForeignKey(d => d.ExportLocalCustomerGroupId);
+            this.HasOptional(t => t.SingleInvoiceTemplate).WithMany().HasForeignKey(d => d.SingleInvoiceTemplateId);
+            this.HasOptional(t => t.CustomsInvoiceTemplate).WithMany().HasForeignKey(d => d.CustomsInvoiceTemplateId);
+            this.HasOptional(t => t.ConsolidationInvoiceTemplate).WithMany().HasForeignKey(d => d.ConsolidationInvoiceTemplateId);
+            this.HasOptional(t => t.ManifestInvoiceTemplate).WithMany().HasForeignKey(d => d.ManifestInvoiceTemplateId);
         }
     }
 }

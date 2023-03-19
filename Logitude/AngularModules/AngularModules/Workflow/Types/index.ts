@@ -18,6 +18,8 @@ export type NodeType =
 
 export type ConditionDisabled = null | "d,f,o" | "d,o,v";
 
+export type SetValueDisabled = null | "d,f";
+
 export type FlowVariablesTreeListProperties = {
     ShowRecordsVariables?: boolean,
     ShowDeclaredVariables?: boolean,

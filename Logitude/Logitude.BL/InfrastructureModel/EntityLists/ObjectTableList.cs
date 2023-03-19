@@ -68,5 +68,6 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string FullNameTextCodeId { get; set; }
         public string FullNameTextCodeCode { get; set; }
         public string FullNameTextCodeDefaultText { get; set; }
+        public bool AvailableInDocumentTypes { get; set; }
     }
 }

@@ -39,13 +39,14 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.Accounting.Data.Repositories;
 
+
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
 
 
     public partial class GLAccountsController : ApiController
     {
-
+      
 
         public HttpResponseMessage GetSingleByDispalyNumberAndTenant(string displayNumber, int tenant)
         {
@@ -231,7 +232,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                  return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
+        
         public HttpResponseMessage GetConnectedCardsForGLAccount(string accountId)
         {
             try

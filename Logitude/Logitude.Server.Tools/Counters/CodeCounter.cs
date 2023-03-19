@@ -10,6 +10,7 @@ using System;
 using Simplog.Server.Infrastructure.Helpers;
 using Devart.Data.Oracle;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 
 namespace Logitude.Server.Tools.Counters
 {
@@ -72,8 +73,10 @@ namespace Logitude.Server.Tools.Counters
             }
             else
             {
+                int Retry = 0;
                 try
                 {
+
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction(TimeSpan.FromSeconds(3)))
                     {
 
@@ -111,9 +114,17 @@ namespace Logitude.Server.Tools.Counters
                     }
                 }
                 catch (Exception ex)
-                { 
-                    throw ex;
-                } 
+                {
+                    if (Retry == 0)
+                    {
+                        Retry++;
+                        return GetNumber(tableName, tenant);
+                    }
+                    else
+                    {
+                        throw ex;
+                    }
+                }
             }
 
 
@@ -195,7 +206,7 @@ namespace Logitude.Server.Tools.Counters
                     number = (int)cmd.Parameters["@pLastNumber"].Value;
 
                 }
-                return number; 
+                return number;
             }
         }
         public static int GetNumber(string tableName, int tenant, string connectionString)

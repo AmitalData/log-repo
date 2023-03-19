@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				ChargesGroupRepository  chargesGroupRepository = new ChargesGroupRepository(MyContext);
 				ChargesGroupList entityList = null;
 				ChargesGroup entityPoco = chargesGroupRepository.GetSingleChargesGroup(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<ChargesGroup> singleEntityList = new List<ChargesGroup>();
 					singleEntityList.Add(entityPoco);

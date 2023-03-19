@@ -115,8 +115,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             }
             else
             {
-                entity = context.ObjectTables.Where(d => d.Id == id && (d.Tenant == tenant || d.Tenant == 0)).FirstOrDefault();
- 
+                entity = context.ObjectTables.Include("FullNameTextCode").Where(d => d.Id == id && (d.Tenant == tenant || d.Tenant == 0)).FirstOrDefault();
+
             }
             return entity; 
         }

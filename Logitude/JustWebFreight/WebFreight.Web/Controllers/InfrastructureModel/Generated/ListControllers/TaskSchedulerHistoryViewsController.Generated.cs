@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				TaskSchedulerHistoryRepository  taskSchedulerHistoryRepository = new TaskSchedulerHistoryRepository(MyContext);
 				TaskSchedulerHistoryList entityList = null;
 				TaskSchedulerHistory entityPoco = taskSchedulerHistoryRepository.GetSingleTaskSchedulerHistory(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<TaskSchedulerHistory> singleEntityList = new List<TaskSchedulerHistory>();
 					singleEntityList.Add(entityPoco);

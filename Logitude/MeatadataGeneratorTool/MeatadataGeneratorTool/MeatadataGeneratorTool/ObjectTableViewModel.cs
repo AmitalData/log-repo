@@ -1772,6 +1772,13 @@ namespace MeatadataGeneratorTool
             set { applyGenericCustomFields = value; FirePropertyChanged("ApplyGenericCustomFields"); }
         }
 
+        bool availableInDocumentTypes;
+        public bool AvailableInDocumentTypes
+        {
+            get { return availableInDocumentTypes; }
+            set { availableInDocumentTypes = value; FirePropertyChanged("AvailableInDocumentTypes"); }
+        }
+
         bool hasShortTitle;
 
         public bool HasShortTitle

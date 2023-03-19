@@ -611,11 +611,11 @@ export class DocsInDataViewModel extends BaseComponent{
         windowArgs.RequsetPageName = "DocIn";
         windowArgs.CurrentDocument = this.CurrentDocument;
         windowArgs.TiggerViewModel = this;
-
+        let hasUploadDragDropFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "UDD")[0] ? true : false;
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = 450;
-        logitudeWindow.Height = 300;
-        logitudeWindow.Title = "File Uploading";
+        logitudeWindow.Width = hasUploadDragDropFeature ? 900 : 450;
+        logitudeWindow.Height = hasUploadDragDropFeature ? 600 : 300;
+        logitudeWindow.Title = hasUploadDragDropFeature && this.CurrentDocument ? this.CurrentDocument.DocumentTypeName + " File Uploading" : "File Uploading";
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/AttachDocs/AttachmentUploaderComponent");
         logitudeWindow.WindowClosed.subscribe(($event: any) => {

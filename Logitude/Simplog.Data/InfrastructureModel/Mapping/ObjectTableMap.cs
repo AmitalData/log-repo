@@ -126,6 +126,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.ApplyGenericCustomFields).HasColumnName("ApplyGenericCustomFields");
             this.Property(t => t.FullNameTextCodeId).HasColumnName("FullNameTextCodeId");
             this.Property(t => t.FullNameTextCodeCode).HasColumnName("FullNameTextCodeCode");
+            this.Property(t => t.AvailableInDocumentTypes).HasColumnName("AvailableInDocumentTypes");
 
             // Relationships
             this.HasOptional(t => t.DescriptionTextCode).WithMany().HasForeignKey(d => d.DescriptionTextCodeId);

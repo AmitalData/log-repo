@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				ImageLibraryRepository  imageLibraryRepository = new ImageLibraryRepository(MyContext);
 				ImageLibraryList entityList = null;
 				ImageLibrary entityPoco = imageLibraryRepository.GetSingleImageLibrary(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<ImageLibrary> singleEntityList = new List<ImageLibrary>();
 					singleEntityList.Add(entityPoco);

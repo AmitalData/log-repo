@@ -3412,16 +3412,26 @@ public class ExcelPackage
     public bool IsRefrigerated { get; set; }
     public bool HasErrors { get; set; }
 }
+
 public class ExcelPackageFilter
 {
     public int Tenant { get; set; }
     public string FileData{ get; set; }
     public string ShipmentId{ get; set; }
 }
+
+public class ExcelPackageTextCodeFilter
+{
+    public int Tenant { get; set; }
+    public string FileData { get; set; }
+    public string LanguageCode { get; set; }
+}
+
 public class ExcelPackageType
 {
     public string Code { get; set; }
 }
+
 public class ShipmentConnectedEntity
 {
     public string EntityId { get; set; }

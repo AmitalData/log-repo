@@ -801,6 +801,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         public void CreateReconciliationForAPPayment(APPaymentPM paymentPM)
         {
+            if (!_InvoicesLedgerTransactionsToReconcile.Any()) {
+                return;
+            }
             IAccountingContext ctx = AccountingContext.GetContext(paymentPM.Tenant);
             ReconciliationPM _reco = new ReconciliationPM();
             _reco.ChangeSetOp = ChangeSetOperation.Insert;

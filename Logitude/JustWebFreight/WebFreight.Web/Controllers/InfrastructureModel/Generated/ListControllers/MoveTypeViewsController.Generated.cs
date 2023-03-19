@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				MoveTypeRepository  moveTypeRepository = new MoveTypeRepository(MyContext);
 				MoveTypeList entityList = null;
 				MoveType entityPoco = moveTypeRepository.GetSingleMoveType(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<MoveType> singleEntityList = new List<MoveType>();
 					singleEntityList.Add(entityPoco);

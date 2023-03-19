@@ -53,6 +53,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
             this.ProfileCode = args.ProfileCode;
             this.ProfileId = args.ProfileId;
             this.ParentObjectTableId = args.ParentObjectTableId;
+            this.customizationEditComponent = args.customizationEditComponent;
             this.BuildItemsSource();
         }
     }
@@ -81,7 +82,8 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
     BuildFields() {
         this.IsDataReady = false; 
         this.CurrentSession.StartBusyIndicatorLoading();
-        this.digitalTextService.GetTextCodesByFilters(null, this.ObjectTableId, this.ProfileCode).subscribe((myResult) => {
+        var _selectedDisplayLangCode = this.customizationEditComponent && this.customizationEditComponent.SelectedMenu ? this.customizationEditComponent.SelectedMenu.LanguageCode : 'EN'
+        this.digitalTextService.GetTextCodesByFilters(null, this.ObjectTableId, this.ProfileCode, _selectedDisplayLangCode).subscribe((myResult) => {
             if (!myResult.HasError) {
                 this.loadedFieldsResults = myResult.Result.filter(a => !AppTool.IsNullOrEmpty(a['FieldCode']));
                 this.BuildFieldsPremissions();
@@ -214,6 +216,8 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
             this.ModifiedFields.ObjectTableId = this.ObjectTableId;
             this.ModifiedFields.ProfileId = this.ProfileId;
             this.ModifiedFields.ProfileCode = this.ProfileCode;
+            var _selectedDisplayLangCode = this.customizationEditComponent && this.customizationEditComponent.SelectedMenu ? this.customizationEditComponent.SelectedMenu.LanguageCode : 'EN'
+            this.ModifiedFields.LanguageCode = _selectedDisplayLangCode;
             this.digitalTextService.UpdateDigitalTextCodes(this.ModifiedFields).subscribe((myResult) => {
                 if (this.customizationEditComponent != null) this.customizationEditComponent.IsDirty = false;
                 this.IsDirty = false;
@@ -275,9 +279,9 @@ export class ProfileFieldsItem extends BaseComponent {
         this.hasPermission = item.HasPermission;
         this.fieldCode = item.FieldCode;
         var selelectField = father.loadedFieldsResults.filter(a => a['FieldCode'] == this.fieldCode)[0];
-        this.textCode = selelectField['TextCode'];
-        this.defaultText = selelectField['DefaultText'];
-        this.displayText = selelectField['DisplayText'];
+        this.textCode = selelectField && !AppTool.IsNullOrUndefined(selelectField['TextCode']) ? selelectField['TextCode'] : "";
+        this.defaultText = selelectField && !AppTool.IsNullOrUndefined(selelectField['DefaultText']) ? selelectField['DefaultText'] : "";
+        this.displayText = selelectField && !AppTool.IsNullOrUndefined(selelectField['DisplayText']) ? selelectField['DisplayText'] : "";
         this.createdBy = item.CreatedBy;
         this.modifiedBy = item.ModifiedBy;
         this.modifiedOn = item.ModifiedOn;
@@ -403,7 +407,7 @@ export class ProfileFieldsItem extends BaseComponent {
         var newLabel = new DigitalTextCodeObject();
         newLabel.TextCode = this.textCode;
         newLabel.FieldCode = this.fieldCode;
-        newLabel.DefaultText = newValue;
+        newLabel.DefaultText = this.defaultText;
         newLabel.DisplayText = this.displayText;
         this.ModifiedBy = SessionLocator.LoggedUserPM.EnglishName;
         this.ModifiedOn = DateTool.GetCurrentDateTimeAsUtc();

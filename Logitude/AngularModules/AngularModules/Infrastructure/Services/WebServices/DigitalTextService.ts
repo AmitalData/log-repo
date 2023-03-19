@@ -89,11 +89,11 @@ export class DigitalTextService {
         });
     }
 
-    public GetTextCodesByFilters(cardId: string, objectTableId: string, profileCode: string) {
+    public GetTextCodesByFilters(cardId: string, objectTableId: string, profileCode: string, langCode: string = '') {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetTextCodesByFilters?cardId=' + cardId + "&objectTableId=" + objectTableId + "&profileCode=" + profileCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetTextCodesByFilters?cardId=' + cardId + "&objectTableId=" + objectTableId + "&profileCode=" + profileCode + "&languageCode=" + langCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -135,6 +135,7 @@ export class DigitalTextCodeUpdateModel {
     public ProfileId: string;
     public ProfileCode: string;
     public Lables: DigitalTextCodeObject[];
+    public LanguageCode: string;
 }
 
 export class DigitalTextCodeObject {

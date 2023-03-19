@@ -645,6 +645,7 @@ namespace CommunicationWorkerRole
                 ComputingPartnerId = automationSendInterface.ComputingPartnerId,
                 AdditionalFolderDetails = "/fromlogitude",
                 InterfaceName = automationSendInterface.InterfaceName,
+                EntityReference = entityReference,
             };
             var ftpAutomationService = new FTPAutomationService(fTPAutomationServiceArgs);
             ftpAutomationService.Run();
@@ -661,6 +662,7 @@ namespace CommunicationWorkerRole
                 ObjectTableId = entityChange.ObjectTableId,
                 ComputingPartnerId = automationSendInterface.ComputingPartnerId,
                 InterfaceName = automationSendInterface.InterfaceName,
+                EntityReference = entityReference,
             };
             WebHookAutomationService webHookAutomationService = new WebHookAutomationService(webHookAutomationServiceArgs);
             webHookAutomationService.Run();
@@ -676,6 +678,7 @@ namespace CommunicationWorkerRole
                 EntityId = entityId,
                 ObjectTableId = automationDocumentResult.ObjectTableId,
                 DocumentFileName = documentFileName,
+                EntityReference = entityReference,
             };
             var ftpAutomationService = new FTPAutomationService(fTPAutomationServiceArgs);
             ftpAutomationService.Run();

@@ -17,6 +17,7 @@ export class DigitalTextCodeList {
 	ObjectTableName: string;
 	ProfileId: string;
 	ProfileCode: string;
+	LanguageCode: string;
 	
 }
  

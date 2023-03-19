@@ -39,7 +39,7 @@ export class CustomFields {
         this.DataTypeName = objectField.DataTypeName;
         this.ObjectTableName = objectField.ObjectTableName;
         this.LookUpTableName = objectField.ObjectTable_LookUpTableName;
-        this.HelpText = objectField.HelpTextCodeDefaultText;
+        this.HelpText = objectField.HelpTextCodeDefaultText != null ? objectField.HelpTextCodeDefaultText : objectField.HelpTextCodeCode;
         this.CustomPickListCode = objectField.CustomPickListCode;
 
         this.NumberOfDigits = objectField.NumberOfDigits;

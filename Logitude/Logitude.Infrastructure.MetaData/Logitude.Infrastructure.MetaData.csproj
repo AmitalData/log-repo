@@ -108,6 +108,7 @@
     <None Include="DBScripts\4_DigitalPreDefinedComponents.sxml" />
     <None Include="DBScripts\1_DigitalProfile.sxml" />
     <None Include="DBScripts\2_DigitalTextCodes.sxml" />
+    <None Include="DBScripts\FillLanguageColumnInDigitalTextCode.sxml" />
     <None Include="DBTables\BatchTaskExecution.dxml" />
     <None Include="DBTables\BatchTaskExecutionStatus.dxml" />
     <None Include="DBTables\BIFoldersPermission.dxml" />
@@ -144,6 +145,7 @@
     <None Include="EntityFiles\BusinessRole.lxml" />
     <None Include="EntityFiles\ContainerSetting.lxml" />
     <None Include="EntityFiles\DigitalFieldSecurity.lxml" />
+    <None Include="EntityFiles\DigitalPortalLanguage.lxml" />
     <None Include="EntityFiles\DigitalPortalScreen.lxml" />
     <None Include="EntityFiles\DigitalPreDefinedComponent.lxml" />
     <None Include="EntityFiles\DigitalProfile.lxml" />

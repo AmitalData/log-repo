@@ -32,6 +32,7 @@ using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.CustomFields;
 using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.CommonDataModel.ExternalService;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -126,6 +127,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  CreatedByPartner = card.CreatedByPartner,
                                                  BillToId = card.BillToId,
                                                  SATCustomerName = card.SATCustomerName,
+                                                 EORInumber = card.EORInumber,
+                                                 SingleInvoiceTemplateId = card.SingleInvoiceTemplateId,
+                                                 CustomsInvoiceTemplateId = card.CustomsInvoiceTemplateId,
+                                                 ConsolidationInvoiceTemplateId = card.ConsolidationInvoiceTemplateId,
+                                                 ManifestInvoiceTemplateId = card.ManifestInvoiceTemplateId,
                                              });
 
 
@@ -266,13 +272,18 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
                                       ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
                                       CustomerSizeId = a.Customer != null ? (a.Customer.CustomerSize != null ? a.Customer.CustomerSize.Id : null) : null,
+                                      EORInumber = a.EORInumber,
+                                      SingleInvoiceTemplateId = a.SingleInvoiceTemplateId,
+                                      CustomsInvoiceTemplateId = a.CustomsInvoiceTemplateId,
+                                      ConsolidationInvoiceTemplateId = a.ConsolidationInvoiceTemplateId,
+                                      ManifestInvoiceTemplateId = a.ManifestInvoiceTemplateId,
                                   }).FirstOrDefault();
 
 
                         if (entity != null)
                         {
                             entity.Addresses = addressQuery.GetAddressesByCardId(id, tenant);
-                            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<CardPM> { entity }.Cast<object>().ToList() }).Set();
+                            //new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<CardPM> { entity }.Cast<object>().ToList() }).Set();
 
                             string name = "CardPM" + entity.Id + tenant;
 
@@ -378,15 +389,21 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   SATCustomerName = a.SATCustomerName,
                                   ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
                                   ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
+                                  EORInumber = a.EORInumber,
+                                  SingleInvoiceTemplateId = a.SingleInvoiceTemplateId,
+                                  CustomsInvoiceTemplateId = a.CustomsInvoiceTemplateId,
+                                  ConsolidationInvoiceTemplateId = a.ConsolidationInvoiceTemplateId,
+                                  ManifestInvoiceTemplateId = a.ManifestInvoiceTemplateId,
                               }).FirstOrDefault();
 
                     if (entity != null)
                     {
                         entity.Addresses = addressQuery.GetAddressesByCardId(id, tenant);
-                        new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<CardPM> { entity }.Cast<object>().ToList() }).Set();
+                        //new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<CardPM> { entity }.Cast<object>().ToList() }).Set();
                     }
                 }
-
+                PartnerARinvoiceDocumentTypeService partnerARinvoiceDocumentTypeService = new PartnerARinvoiceDocumentTypeService(entity.Tenant);
+                entity = partnerARinvoiceDocumentTypeService.Set(entity);
                 return entity;
             }
 
@@ -404,7 +421,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             EnglishName = a.EnglishName,
 
                                         }).ToList();
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "List", Entities = cardLists.Cast<object>().ToList() }).Set();
+            //new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "List", Entities = cardLists.Cast<object>().ToList() }).Set();
             return cardLists;
         }
 
@@ -421,7 +438,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         PartnerTypeId = a.PartnerTypeId
 
                                     }).ToList();
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = cardPMs.Cast<object>().ToList() }).Set();
+            //new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = cardPMs.Cast<object>().ToList() }).Set();
             return cardPMs;
         }
         public CardPM GetSinglePMByCode(string code, int tenant)
@@ -627,6 +644,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               CreatedByPartner = a.CreatedByPartner,
                                               BillToId = a.BillToId,
                                               SATCustomerName = a.SATCustomerName,
+                                              EORInumber = a.EORInumber,
+                                              SingleInvoiceTemplateId = a.SingleInvoiceTemplateId,
+                                              CustomsInvoiceTemplateId = a.CustomsInvoiceTemplateId,
+                                              ConsolidationInvoiceTemplateId = a.ConsolidationInvoiceTemplateId,
+                                              ManifestInvoiceTemplateId = a.ManifestInvoiceTemplateId,
                                           });
             return cards;
         }
@@ -698,6 +720,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               CreatedByPartner = a.CreatedByPartner,
                                               BillToId = a.BillToId,
                                               SATCustomerName = a.SATCustomerName,
+                                              EORInumber = a.EORInumber,
+                                              SingleInvoiceTemplateId = a.SingleInvoiceTemplateId,
+                                              CustomsInvoiceTemplateId = a.CustomsInvoiceTemplateId,
+                                              ConsolidationInvoiceTemplateId = a.ConsolidationInvoiceTemplateId,
+                                              ManifestInvoiceTemplateId = a.ManifestInvoiceTemplateId,
                                           });
             return cards;
         }
@@ -800,6 +827,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           SATCustomerName = a.SATCustomerName,
                                           ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
                                           ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
+                                          EORInumber = a.EORInumber,
+                                          SingleInvoiceTemplateId = a.SingleInvoiceTemplateId,
+                                          CustomsInvoiceTemplateId = a.CustomsInvoiceTemplateId,
+                                          ConsolidationInvoiceTemplateId = a.ConsolidationInvoiceTemplateId,
+                                          ManifestInvoiceTemplateId = a.ManifestInvoiceTemplateId,
                                       }).FirstOrDefault();
 
                             if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
@@ -891,6 +923,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       SATCustomerName = a.SATCustomerName,
                                       ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
                                       ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
+                                      EORInumber = a.EORInumber,
+                                      SingleInvoiceTemplateId = a.SingleInvoiceTemplateId,
+                                      CustomsInvoiceTemplateId = a.CustomsInvoiceTemplateId,
+                                      ConsolidationInvoiceTemplateId = a.ConsolidationInvoiceTemplateId,
+                                      ManifestInvoiceTemplateId = a.ManifestInvoiceTemplateId,
                                   }).FirstOrDefault();
                     }
                 }
@@ -972,9 +1009,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   SATCustomerName = a.SATCustomerName,
                                   ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
                                   ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
+                                  EORInumber = a.EORInumber,
+                                  SingleInvoiceTemplateId = a.SingleInvoiceTemplateId,
+                                  CustomsInvoiceTemplateId = a.CustomsInvoiceTemplateId,
+                                  ConsolidationInvoiceTemplateId = a.ConsolidationInvoiceTemplateId,
+                                  ManifestInvoiceTemplateId = a.ManifestInvoiceTemplateId,
                               }).FirstOrDefault();
                 }
 
+                PartnerARinvoiceDocumentTypeService partnerARinvoiceDocumentTypeService = new PartnerARinvoiceDocumentTypeService(entity.Tenant);
+                entity = partnerARinvoiceDocumentTypeService.Set(entity);
                 return entity;
             }
 
@@ -1045,6 +1089,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     StorageFreeDays = entityPOCO.StorageFreeDays,
                     BillToId = entityPOCO.BillToId,
                     SATCustomerName = entityPOCO.SATCustomerName,
+                    EORInumber = entityPOCO.EORInumber,
+                    SingleInvoiceTemplateId = entityPOCO.SingleInvoiceTemplateId,
+                    CustomsInvoiceTemplateId = entityPOCO.CustomsInvoiceTemplateId,
+                    ConsolidationInvoiceTemplateId = entityPOCO.ConsolidationInvoiceTemplateId,
+                    ManifestInvoiceTemplateId = entityPOCO.ManifestInvoiceTemplateId,
                 };
 
                 if (entityPOCO.Customer != null)
@@ -1356,6 +1405,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 Field48 = customFieldsMainObject != null ? customFieldsMainObject.Field48 : null,
                                                 Field49 = customFieldsMainObject != null ? customFieldsMainObject.Field49 : null,
                                                 Field50 = customFieldsMainObject != null ? customFieldsMainObject.Field50 : null,
+                                                EORInumber = card.EORInumber,
+                                                SingleInvoiceTemplateId = card.SingleInvoiceTemplateId,
+                                                CustomsInvoiceTemplateId = card.CustomsInvoiceTemplateId,
+                                                ConsolidationInvoiceTemplateId = card.ConsolidationInvoiceTemplateId,
+                                                ManifestInvoiceTemplateId = card.ManifestInvoiceTemplateId,
+
                                             };
 
             if (myResult.Count() > 0)
@@ -1438,6 +1493,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               CreatedByPartner = a.CreatedByPartner,
                                               BillToId = a.BillToId,
                                               SATCustomerName = a.SATCustomerName,
+                                              EORInumber = a.EORInumber,
+                                              SingleInvoiceTemplateId = a.SingleInvoiceTemplateId,
+                                              CustomsInvoiceTemplateId = a.CustomsInvoiceTemplateId,
+                                              ConsolidationInvoiceTemplateId = a.ConsolidationInvoiceTemplateId,
+                                              ManifestInvoiceTemplateId = a.ManifestInvoiceTemplateId,
                                           });
             return cards;
         }
@@ -1631,6 +1691,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     IsInternationalPartner = oldTenantCard.IsInternationalPartner,
                     IsAutonomy = oldTenantCard.IsAutonomy,
                     SATCustomerName = oldTenantCard.SATCustomerName,
+                    EORInumber = oldTenantCard.EORInumber,
                 };
 
                 #region PaymentTerm
@@ -2395,6 +2456,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        CreatedByPartner = a.CreatedByPartner,
                                        BillToId = a.BillToId,
                                        SATCustomerName = a.SATCustomerName,
+                                       EORInumber = a.EORInumber,
                                    }).ToList();
             return card.FirstOrDefault();
         }

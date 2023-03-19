@@ -21,5 +21,6 @@ export class DeploymentPackageList {
 		SearchFields: string;
 		CreatedByUserName: string;
 		UpdatedByUserName: string;
-        VersionId: string;
+		VersionId: string;
+	
 }

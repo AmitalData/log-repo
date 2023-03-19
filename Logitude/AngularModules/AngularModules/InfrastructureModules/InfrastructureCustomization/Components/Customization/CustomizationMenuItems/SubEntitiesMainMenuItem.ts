@@ -17,15 +17,17 @@ export class SubEntitiesMainMenuItem extends CustomizationMainMenuItem {
 
     }
     BuildScreenArgs(args: any): any {
+        let objectTable = window.ObjectTables.filter(d => d.Id === args.ObjectTableId)[0];
         return {
             ObjectTableId: args.ObjectTableId,
+            ObjectTableName: objectTable.Name,
             IsObjectTableFilterEnabled: args.IsObjectTableFilterEnabled
         }
     }
     CheckFeaturePermission(args: any): boolean {
         let IsShowSubEntities = CustomizationPermissionService.HasFeaturePermession("General", "SubEntitiesCustomization");
         let IsReferenceCustomObject = this.CheckReferenceCustomObjectType(args.ObjectTableId);
-        return (!args.IsObjectTableFilterEnabled || IsShowSubEntities) && !args.IsCustomFieldsMenue && !args.IsSubEntity && !IsReferenceCustomObject;
+        return (!args.IsObjectTableFilterEnabled || IsShowSubEntities) && !args.IsCustomFieldsMenue && !args.IsSubEntity && !IsReferenceCustomObject && this.screenArgs.ObjectTableName != "Card";
     }
     CheckReferenceCustomObjectType(objectTableId: string) {
         if (AppTool.IsNullOrEmpty(objectTableId)) return false;

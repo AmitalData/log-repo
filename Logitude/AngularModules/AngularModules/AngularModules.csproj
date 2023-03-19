@@ -195,6 +195,7 @@
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\Warehouse\WarehouseDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\Maintenance\UploadPartnersComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\NewEntity\NewAccountingPartnerComponent.html" />
+    <Content Include="CommonModules\CommonPartners\Components\Templates\PartnerARInvoiceDocumentTypeTemplateComponent.html" />
     <Content Include="Common\Components\AccountingTab\AccountingTab_Branch.html" />
     <Content Include="Common\Components\AccountingTab\AccountingTab_ChargesType.html" />
     <Content Include="Common\Components\AccountingTab\AccountingTab_Currency.html" />
@@ -322,6 +323,7 @@
     <Content Include="DashboardModule\Components\Workspace\Layout\CustomDashboardComponent.html" />
     <Content Include="DashboardModule\Components\Workspace\Layout\DashboardTabComponent.html" />
     <Content Include="Images\Arrow-down-s.png" />
+    <Content Include="Images\Icons\downloaduparrow.png" />
     <Content Include="Images\Buttons\minus.over.png" />
     <Content Include="Images\Buttons\minus.png" />
     <Content Include="Images\Charts\BarChart.png" />
@@ -426,6 +428,7 @@
     <Content Include="SharedLogistics\Components\DigitalPortal\DigitalCheckBoxComponent.html" />
     <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationChageLabelsComponent.html" />
     <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationMainComponent.html" />
+    <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalLanguageSettingsComponent.html" />
     <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationScreenLayoutComponent.html" />
     <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationShowHideFieldsComponent.html" />
     <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationSubObjectsComponent.html" />
@@ -433,6 +436,7 @@
     <Content Include="SharedLogistics\Components\SharedLogisticsDigitalPortalComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityPackageComponent.html" />
+    <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\TestMultiHarmonizeComponent.html" />
     <Content Include="ShipmentModules\ShipmentContainers\Components\EditTabs\Audit\ContainerAuditTabComponent.html" />
     <Content Include="ShipmentModules\ShipmentContainers\Components\EditTabs\GeneralTabComponent.html" />
     <Content Include="ShipmentModules\ShipmentContainers\Components\EditTabs\RoutingsTabComponent.html" />
@@ -482,6 +486,7 @@
     <Content Include="Workflow\Components\Properties\AppendItemPropertiesComponent.html" />
     <Content Include="Workflow\Components\Properties\CollectionFilterPropertiesComponent.html" />
     <Content Include="Workflow\Components\Properties\CreateRecordPropertiesComponent.html" />
+    <Content Include="Workflow\Components\Properties\CreateTaskPropertiesComponent.html" />
     <Content Include="Workflow\Components\Properties\DeclareVariablePropertiesComponent.html" />
     <Content Include="Workflow\Components\Properties\DeleteItemPropertiesComponent.html" />
     <Content Include="Workflow\Components\Properties\GetRecordPropertiesComponent.html" />
@@ -536,6 +541,7 @@
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ServiceLinesTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ShippingAgent\ShippingAgentGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ShippingLine\ShippinglineGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonPartners\Components\Templates\PartnerARInvoiceDocumentTypeTemplateComponent.ts" />
     <TypeScriptCompile Include="Common\Components\TariffsTab\TariffsTabComponent.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
@@ -2089,7 +2095,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\NewEntity\AddNewDeploymentPackageComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\NewEntity\NewExportDeploymentPackageComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\NewEntity\NewImportDeploymentPackageComponent.ts" />
-    <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\ExternalService\DeploymentPackagePermissionService.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\ExternalService\MetadataService.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\ModuleIInfrastructureDeploymentPackage.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocumentDefultAttachmentsComponent.ts" />
@@ -4979,6 +4985,7 @@
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalCheckBoxComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationChageLabelsComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationMainComponent.ts" />
+    <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalLanguageSettingsComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationScreenLayoutComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationShowHideFieldsComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationSubObjectsComponent.ts" />
@@ -5001,6 +5008,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\ModuleShipmentAMANAC.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityPackageComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\TestMultiHarmonizeComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentContainers\Components\EditTabs\Audit\ContainerAuditTabComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentContainers\Components\EditTabs\GeneralTabComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentContainers\Components\EditTabs\RoutingsTabComponent.ts" />
@@ -8262,6 +8270,7 @@
     <TypeScriptCompile Include="Workflow\Components\Properties\AppendItemPropertiesComponent.ts" />
     <TypeScriptCompile Include="Workflow\Components\Properties\CollectionFilterPropertiesComponent.ts" />
     <TypeScriptCompile Include="Workflow\Components\Properties\CreateRecordPropertiesComponent.ts" />
+    <TypeScriptCompile Include="Workflow\Components\Properties\CreateTaskPropertiesComponent.ts" />
     <TypeScriptCompile Include="Workflow\Components\Properties\DeclareVariablePropertiesComponent.ts" />
     <TypeScriptCompile Include="Workflow\Components\Properties\DeleteItemPropertiesComponent.ts" />
     <TypeScriptCompile Include="Workflow\Components\Properties\GetRecordPropertiesComponent.ts" />
@@ -8293,6 +8302,11 @@
     <TypeScriptCompile Include="Workflow\EntityLists\ExpressionList.ts" />
     <TypeScriptCompile Include="Workflow\EntityLists\OperatorCategoryList.ts" />
     <TypeScriptCompile Include="Workflow\EntityLists\OperatorList.ts" />
+    <TypeScriptCompile Include="Workflow\EntityLists\TaskExtendedList.ts" />
+    <TypeScriptCompile Include="Workflow\EntityLists\TaskList.ts" />
+    <TypeScriptCompile Include="Workflow\EntityLists\TaskPriorityList.ts" />
+    <TypeScriptCompile Include="Workflow\EntityLists\TaskStatusList.ts" />
+    <TypeScriptCompile Include="Workflow\EntityLists\TaskTypeList.ts" />
     <TypeScriptCompile Include="Workflow\EntityLists\WorkFlowInstanceActivityList.ts" />
     <TypeScriptCompile Include="Workflow\EntityLists\WorkFlowInstanceActivityStatusList.ts" />
     <TypeScriptCompile Include="Workflow\EntityLists\WorkFlowInstanceList.ts" />
@@ -8306,6 +8320,11 @@
     <TypeScriptCompile Include="Workflow\EntityPMs\ExpressionPM.ts" />
     <TypeScriptCompile Include="Workflow\EntityPMs\OperatorCategoryPM.ts" />
     <TypeScriptCompile Include="Workflow\EntityPMs\OperatorPM.ts" />
+    <TypeScriptCompile Include="Workflow\EntityPMs\TaskExtendedPM.ts" />
+    <TypeScriptCompile Include="Workflow\EntityPMs\TaskPM.ts" />
+    <TypeScriptCompile Include="Workflow\EntityPMs\TaskPriorityPM.ts" />
+    <TypeScriptCompile Include="Workflow\EntityPMs\TaskStatusPM.ts" />
+    <TypeScriptCompile Include="Workflow\EntityPMs\TaskTypePM.ts" />
     <TypeScriptCompile Include="Workflow\EntityPMs\WorkFlowInstanceActivityPM.ts" />
     <TypeScriptCompile Include="Workflow\EntityPMs\WorkFlowInstanceActivityStatusPM.ts" />
     <TypeScriptCompile Include="Workflow\EntityPMs\WorkFlowInstancePM.ts" />
@@ -8326,6 +8345,7 @@
     <TypeScriptCompile Include="Workflow\Models\ListItem.ts" />
     <TypeScriptCompile Include="Workflow\Models\ReturnedField.ts" />
     <TypeScriptCompile Include="Workflow\Models\SetValue.ts" />
+    <TypeScriptCompile Include="Workflow\Models\TaskField.ts" />
     <TypeScriptCompile Include="Workflow\Models\TreeSelectItem.ts" />
     <TypeScriptCompile Include="Workflow\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="Workflow\ModuleProviders.ts" />
@@ -8342,6 +8362,7 @@
     <TypeScriptCompile Include="Workflow\Pipes\IsObjectTypePipe.ts" />
     <TypeScriptCompile Include="Workflow\Pipes\ListItemPipe.ts" />
     <TypeScriptCompile Include="Workflow\Pipes\ObjectFieldPipe.ts" />
+    <TypeScriptCompile Include="Workflow\Pipes\SetValueDisabledPipe.ts" />
     <TypeScriptCompile Include="Workflow\Pipes\SetValuesOperatorsItemsPipe.ts" />
     <TypeScriptCompile Include="Workflow\Pipes\ShowEditableVariablesTreeItemPipe.ts" />
     <TypeScriptCompile Include="Workflow\Pipes\ShowEntitiesTreeItemPipe.ts" />
@@ -8355,6 +8376,10 @@
     <TypeScriptCompile Include="Workflow\Services\StandardLists\ExpressionListService.ts" />
     <TypeScriptCompile Include="Workflow\Services\StandardLists\OperatorCategoryListService.ts" />
     <TypeScriptCompile Include="Workflow\Services\StandardLists\OperatorListService.ts" />
+    <TypeScriptCompile Include="Workflow\Services\StandardLists\TaskListService.ts" />
+    <TypeScriptCompile Include="Workflow\Services\StandardLists\TaskPriorityListService.ts" />
+    <TypeScriptCompile Include="Workflow\Services\StandardLists\TaskStatusListService.ts" />
+    <TypeScriptCompile Include="Workflow\Services\StandardLists\TaskTypeListService.ts" />
     <TypeScriptCompile Include="Workflow\Services\StandardLists\WorkFlowInstanceActivityListService.ts" />
     <TypeScriptCompile Include="Workflow\Services\StandardLists\WorkFlowInstanceActivityStatusListService.ts" />
     <TypeScriptCompile Include="Workflow\Services\StandardLists\WorkFlowInstanceListService.ts" />
@@ -8364,6 +8389,10 @@
     <TypeScriptCompile Include="Workflow\Services\StandardLists\WorkFlowStatusListService.ts" />
     <TypeScriptCompile Include="Workflow\Services\StandardLists\WorkFlowVersionListService.ts" />
     <TypeScriptCompile Include="Workflow\Services\StandardLists\WorkFlowVersionStatusListService.ts" />
+    <TypeScriptCompile Include="Workflow\Services\StandardPMs\TaskPMService.ts" />
+    <TypeScriptCompile Include="Workflow\Services\StandardPMs\TaskPriorityPMService.ts" />
+    <TypeScriptCompile Include="Workflow\Services\StandardPMs\TaskStatusPMService.ts" />
+    <TypeScriptCompile Include="Workflow\Services\StandardPMs\TaskTypePMService.ts" />
     <TypeScriptCompile Include="Workflow\Services\StandardPMs\WorkFlowInstanceActivityPMService.ts" />
     <TypeScriptCompile Include="Workflow\Services\StandardPMs\WorkFlowInstancePMService.ts" />
     <TypeScriptCompile Include="Workflow\Services\StandardPMs\WorkFlowInstanceVariablePMService.ts" />

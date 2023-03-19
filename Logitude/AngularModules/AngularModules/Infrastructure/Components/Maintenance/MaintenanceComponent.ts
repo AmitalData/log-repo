@@ -137,6 +137,12 @@ export class MaintenanceComponent {
         if (this.IsCustomObjectsAdded()) {
             this.PagesMenu.push(new Menu("CSO", TextCodeTranslator.Translate("General.MC.CustomObjects.CustomObjects")));
         }
+
+        if (FeatureLocator.HasFeaturePermession("General", "TASKTYPES") ||
+            FeatureLocator.HasFeaturePermession("General", "TASKPRIORITIES") ||
+            FeatureLocator.HasFeaturePermession("General", "TASKSTATUSES")) {
+            this.PagesMenu.push(new Menu("TSK", TextCodeTranslator.Translate("General.MC.Tasks.Tasks")));
+        }
     }
     
     // Maintenance Menu

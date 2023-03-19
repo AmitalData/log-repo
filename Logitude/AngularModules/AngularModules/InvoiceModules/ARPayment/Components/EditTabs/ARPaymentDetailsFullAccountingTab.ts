@@ -2502,7 +2502,7 @@ export class TransactionLineModel extends BaseComponent
 	public isRTL: boolean = false;
 	isLineValid: boolean = true;
 	public InvoiceCurrency: string;
-
+	IsAccountingActivated: boolean = false;
 	constructor(
 		private ledgerTransaction: LedgerTransactionPM,
 		private parent: ARPaymentDetailsFullAccountingTab
@@ -2513,7 +2513,7 @@ export class TransactionLineModel extends BaseComponent
 		this.EntityPM = this.parent.EntityPM;
 		this.LedgerTransactionPM = ledgerTransaction;
 		this.InvoiceCurrency = this.LedgerTransactionPM.CurrencyCode;
-
+		this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
 		this.CalculateFields();
 
         this.UIProperties.SetEnabled("AmountToReconcile", "LedgerTransaction", this.Status != TextStore.Closed && !this.parent.IsGridReadOnly );
@@ -2666,6 +2666,36 @@ export class TransactionLineModel extends BaseComponent
 		if (this.IsChecked)
 			this.validateLine();
 
+	}
+
+	AutomaticallyFillAmountToReconciledblclick(logCellTemplate: any, classificationTextBox: any){
+	
+	
+	const inputAmountToReconciled = document.getElementById(classificationTextBox.InputId);
+	inputAmountToReconciled.blur();
+     
+	if(this.IsAccountingActivated && (classificationTextBox.IsDisabled == false)) {
+		var totalOpenAmount = this.parent.PaymenyAmount - this.parent.paymentReconciledAmountTotal -this.parent.amount2reconcileTotal;
+		
+	 	if(this.OpenAmount > 0){
+			if(this.AmountToReconcile > 0) {
+				totalOpenAmount = totalOpenAmount + this.AmountToReconcile;
+				this.AmountToReconcile = 0;
+			} 
+			if(totalOpenAmount >= this.OpenAmount) {
+				this.AmountToReconcile = this.OpenAmount;
+			} else if(totalOpenAmount <= this.OpenAmount && totalOpenAmount > 0){
+				this.AmountToReconcile = totalOpenAmount;
+			} else {
+				this.AmountToReconcile = 0;
+			}
+		} else if(this.OpenAmount < 0){
+			this.AmountToReconcile = 0;
+		}
+		
+	}
+		
+		
 	}
 
 	get OpenAmount() { return this.LedgerTransactionPM.OpenAmount; }

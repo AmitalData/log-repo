@@ -134,12 +134,16 @@
     <None Include="DBScripts\CommonModel\202212070128_AddSaleTextCodesQuotationTemplate.sxml" />
     <None Include="DBScripts\CommonModel\202217101053_UpdateLastLoginUserIP.sxml" />
     <None Include="DBScripts\CommonModel\202302220800UpdateBillingRoleDescription.sxml" />
+    <None Include="DBScripts\CommonModel\202308031135_FillEORInumberCardFromCustomer.sxml" />
     <None Include="DBScripts\CommonModel\FillCodeForCustomerSizes.sxml" />
+    <None Include="DBScripts\CommonModel\FillContactsLanguageCode.sxml" />
     <None Include="DBScripts\GlobalModel\2023010151536_AddWorkflowsEnginWR.sxml" />
     <None Include="DBScripts\GlobalModel\2022090261326_AddDigitalPortalExportWR.sxml" />
     <None Include="DBScripts\GlobalModel\202209271124_AddQboBaseUrl.sxml" />
+    <None Include="DBScripts\GlobalModel\202315031845_AddDocumentsExecutionV2WorkerRole.sxml" />
     <None Include="DBScripts\GlobalModel\AddInProgressStatusToAnalyzeQueue.sxml" />
     <None Include="DBScripts\GlobalModel\202302271155_AddDeploymnetPackageWR.sxml" />
+    <None Include="DBScripts\GlobalModel\AddReconciliationWorkerRole.sxml" />
     <None Include="DBScripts\GlobalModel\AddWorkflowEngineWorkerBatchService.sxml" />
     <None Include="DBScripts\InfrastructureModel\202302051135_UpdateObjectTableFullNameTextCode.sxml" />
     <None Include="DBScripts\InfrastructureModel\202301161230_InsertCustomObjectTableQueryGroup.sxml" />
@@ -153,6 +157,7 @@
     <None Include="DBScripts\InfrastructureModel\202221080915_UpdateDigitalPortalEntityStatuses.sxml" />
     <None Include="DBScripts\GlobalModel\AddOpportunityStageChangingBatchService.sxml" />
     <None Include="DBScripts\InfrastructureModel\202209260235_UpdateEntityStatusDelivery.sxml" />
+    <None Include="DBScripts\InfrastructureModel\202303081102_UpdateAvailableInDocumentTypesForCustomObjects.sxml" />
     <None Include="DBScripts\InfrastructureModel\AddIdFieldToScreenSectionTable.sxml" />
     <None Include="DBScripts\InfrastructureModel\UpdateScreenSectionTable.sxml" />
     <None Include="DBScripts\InvoiceModel\202201160900_UpdateAutomaticLastUpdateDateOnARInvoiceTransferStatus.sxml" />
@@ -276,6 +281,7 @@
     <None Include="DBScripts\ShipmentModel\202202241410_FillLastDeilverypFullAddress.sxml" />
     <None Include="DBScripts\ShipmentModel\202202241400_FillFirstPickUpFullAddress.sxml" />
     <None Include="DBScripts\ShipmentModel\202302151452_AddHouseMasterNumberToShipmentsSearchFields.sxml.ignore" />
+    <None Include="DBScripts\ShipmentModel\202303120234_AddTrailerNumberFieldToShipmentSearchFields.sxml" />
     <None Include="DBScripts\ShipmentModel\FillContainersDataFromPackages.sxml" />
     <None Include="DBTables\CommonDataModel\DigitalContactLastSetting.dxml" />
     <None Include="DBTables\CommonDataModel\HorseGender.dxml" />

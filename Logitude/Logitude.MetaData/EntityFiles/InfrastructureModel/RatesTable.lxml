@@ -1123,7 +1123,7 @@
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
-    HasPMField="false"
+    HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
@@ -1293,6 +1293,11 @@
       Code="&quot;RatesTable.O.UpdateCurrencyRate&quot;"
       DefaultText="&quot;Update Currency Rate&quot;"
       LocalDefaultText="&quot;עדכן שער חליפין למטבע&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;RatesTable.O.Unit&quot;"
+      DefaultText="&quot;Unit&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

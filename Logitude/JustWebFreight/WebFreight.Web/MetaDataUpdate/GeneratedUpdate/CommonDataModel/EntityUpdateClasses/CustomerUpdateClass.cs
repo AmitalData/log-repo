@@ -85,7 +85,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CustomerUpdateClass
    {  		
-		public const string HashString = "2c22f5e0489b3cdc59dda43225f144c3";
+
+		public const string HashString = "c94889ab3ef6f5aa31f3a1fc17283725";
+
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -103,6 +105,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    AvailableInCustomization =  true,
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
+			      				    AvailableInDocumentTypes =  true,
 			      				    HasHelper =  true,
 			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  false,
@@ -13043,7 +13046,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreditLimitAmount",
 					  						DefaultText =  "Credit Amount",
-					  						FullLocalDefaultText =  "מסגרת אשראי",
+					  						FullLocalDefaultText =  "מסגרת םשרםי",
 					  						ListFieldLable =  "CreditLimitAmountListLable",
 					  						ListLableDefaultText =  "Credit Amount",
 					  						IsForeignKey =  false,
@@ -14650,6 +14653,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EORInumber",
 					  						DefaultText =  "EORI Number",
+					  						HelpTextCode =  "EORInumber",
+					  						HelpTextDefaultText =  "Economic Operators Registration and Identification Number is a unique identification number used by customs authorities in the EU and U.K.",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -14774,10 +14779,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InsuredcreditLimit",
 					  						DefaultText =  "Insured Credit Limit",
-					  						FullLocalDefaultText =  "מסגרת אשראי מבוטחת",
+					  						FullLocalDefaultText =  "מסגרת םשרםי מבוטחת",
 					  						ListFieldLable =  "InsuredcreditLimitListLable",
 					  						ListLableDefaultText =  "Insured Credit Limit",
-					  						ListLocalDefaultText =  "מסגרת אשראי מבוטחת",
+					  						ListLocalDefaultText =  "מסגרת םשרםי מבוטחת",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -16340,6 +16345,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
                 LocalName =  "Product Items Updated",
                 IsManualEntry =  false,
                 ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = CustomerObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "CSCS",
+                EnglishName =  "GLAccount is connected",
+                LocalName =  "GLAccount is connected",
+                IsManualEntry =  false,
+                ShortView =  false,
                 IsAgentView =  false,
                 IsCustomerView =  false,
                 IsSharedLogisticsEnabled =  false,

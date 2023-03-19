@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				TransportModeRepository  transportModeRepository = new TransportModeRepository(MyContext);
 				TransportModeList entityList = null;
 				TransportMode entityPoco = transportModeRepository.GetSingleTransportMode(id );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<TransportMode> singleEntityList = new List<TransportMode>();
 					singleEntityList.Add(entityPoco);

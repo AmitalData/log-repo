@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				DWCategoriesRepository  dWCategoriesRepository = new DWCategoriesRepository(MyContext);
 				DWCategoriesList entityList = null;
 				DWCategories entityPoco = dWCategoriesRepository.GetSingleDWCategories(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<DWCategories> singleEntityList = new List<DWCategories>();
 					singleEntityList.Add(entityPoco);

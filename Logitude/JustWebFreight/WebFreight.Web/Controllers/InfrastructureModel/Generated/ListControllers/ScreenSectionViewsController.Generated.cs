@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				ScreenSectionRepository  screenSectionRepository = new ScreenSectionRepository(MyContext);
 				ScreenSectionList entityList = null;
 				ScreenSection entityPoco = screenSectionRepository.GetSingleScreenSection(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<ScreenSection> singleEntityList = new List<ScreenSection>();
 					singleEntityList.Add(entityPoco);

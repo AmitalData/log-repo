@@ -29,6 +29,7 @@ using Logitude.BL.CommonDataModel.CustomFilters;
 using System.Reflection;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Microsoft.Practices.Unity;
+using Logitude.BL.CommonDataModel.ExternalService;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -186,7 +187,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   CreatedByPartner = a.Card.CreatedByPartner,
                                   StorageFreeDays = a.Card.StorageFreeDays,
                                   GLAccountNumber = a.Card.GLAccountDisplayNumber,
-                                  EORInumber = a.EORInumber,
+                                  EORInumber = a.Card.EORInumber,
                                   IsAutonomy = a.Card.IsAutonomy,
                                   SATCustomerName = a.Card.SATCustomerName,
                                   Card = new CardPM()
@@ -203,6 +204,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       AccountingVATSplit = a.Card.AccountingVATSplit,
                                       GLAccountId = a.Card.GLAccountId,
                                       GLAccountDisplayNumber = a.Card.GLAccountDisplayNumber,
+                                      SingleInvoiceTemplateId = a.Card.SingleInvoiceTemplateId,
+                                      CustomsInvoiceTemplateId = a.Card.CustomsInvoiceTemplateId,
+                                      ConsolidationInvoiceTemplateId = a.Card.ConsolidationInvoiceTemplateId,
+                                      ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
                                   },
 
                               }).FirstOrDefault();
@@ -354,7 +359,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               CreatedByPartner = a.Card.CreatedByPartner,
                               StorageFreeDays = a.Card.StorageFreeDays,
                               GLAccountNumber = a.Card.GLAccountDisplayNumber,
-                              EORInumber = a.EORInumber,
+                              EORInumber = a.Card.EORInumber,
                               IsAutonomy = a.Card.IsAutonomy,
                               SATCustomerName = a.Card.SATCustomerName,
                               Card = new CardPM
@@ -368,6 +373,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   AccountingVATSplit = a.Card.AccountingVATSplit,
                                   GLAccountId = a.Card.GLAccountId,
                                   GLAccountDisplayNumber = a.Card.GLAccountDisplayNumber,
+                                  SingleInvoiceTemplateId = a.Card.SingleInvoiceTemplateId,
+                                  CustomsInvoiceTemplateId = a.Card.CustomsInvoiceTemplateId,
+                                  ConsolidationInvoiceTemplateId = a.Card.ConsolidationInvoiceTemplateId,
+                                  ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
                               },
 
                           }).FirstOrDefault();
@@ -380,6 +389,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (entity != null)
             {
+                PartnerARinvoiceDocumentTypeService partnerARinvoiceDocumentTypeService = new PartnerARinvoiceDocumentTypeService(entity.Tenant);
+                entity.Card = partnerARinvoiceDocumentTypeService.Set(entity.Card);
                 CustomerProductRepository customerProductRepository = new CustomerProductRepository(repository.context);
                 CustomerCompetitorRepository customerCompetitorRepository = new CustomerCompetitorRepository(repository.context);
                 CustomerAdditionalServiceRepository customerAdditionalServiceRepository = new CustomerAdditionalServiceRepository(repository.context);
@@ -2200,7 +2211,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    UsoCFDICode = a.Card.UsoCFDICode,
                                                    RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                                    CreatedByPartner = a.Card.CreatedByPartner,
-                                                   EORInumber = a.EORInumber,
+                                                   EORInumber = a.Card.EORInumber,
                                                    IsAutonomy = a.Card.IsAutonomy,
                                                    InsuredcreditLimit = a.InsuredcreditLimit,
                                                    SATCustomerName = a.Card.SATCustomerName,
@@ -2337,7 +2348,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             UsoCFDICode = a.Card.UsoCFDICode,
                             RegimenFiscalCode = a.Card.RegimenFiscalCode,
                             CreatedByPartner = a.Card.CreatedByPartner,
-                            EORInumber = a.EORInumber,
+                            EORInumber = a.Card.EORInumber,
                             IsAutonomy = a.Card.IsAutonomy,
                             InsuredcreditLimit = a.InsuredcreditLimit,
                             SATCustomerName = a.Card.SATCustomerName,
@@ -4412,6 +4423,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                          PayablesAccountingCard = a.Card.PayablesAccountingCard,
                                          AccountingVATSplit = a.Card.AccountingVATSplit,
+                                         SingleInvoiceTemplateId = a.Card.SingleInvoiceTemplateId,
+                                         CustomsInvoiceTemplateId = a.Card.CustomsInvoiceTemplateId,
+                                         ConsolidationInvoiceTemplateId = a.Card.ConsolidationInvoiceTemplateId,
+                                         ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
                                      },
 
                                  }).FirstOrDefault();
@@ -4423,6 +4438,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (entity != null)
             {
+                PartnerARinvoiceDocumentTypeService partnerARinvoiceDocumentTypeService = new PartnerARinvoiceDocumentTypeService(entity.Tenant);
+                entity.Card = partnerARinvoiceDocumentTypeService.Set(entity.Card);
                 CustomerProductRepository customerProductRepository = new CustomerProductRepository(repository.context);
                 CustomerCompetitorRepository customerCompetitorRepository = new CustomerCompetitorRepository(repository.context);
                 CustomerAdditionalServiceRepository customerAdditionalServiceRepository = new CustomerAdditionalServiceRepository(repository.context);

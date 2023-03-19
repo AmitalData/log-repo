@@ -84,27 +84,6 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
         }
         if (this.SetValues.length === 0) {
             let setValue = new SetValue();
-
-            // let isChildEntity = this.Entity ? (this.Entity.indexOf(".") !== -1) : false;
-            // if (isChildEntity) {
-            //     let entities = this.Entity.split(".");
-            //     let parentEntity = entities[0];
-            //     let childEntity = entities[1];
-            //     let childField = Entities.getChildField(parentEntity, childEntity);
-            //     let fieldCode = childEntity + "." + childField;
-            //     let objectField = ObjectFields.getByCode(fieldCode);
-            //     let parentEntityObjectTable = ObjectTables.getByName(parentEntity);
-
-            //     setValue.field = childField;
-            //     setValue.fieldCode = fieldCode;
-            //     setValue.type = objectField ? objectField.DataTypeCode : null;
-            //     setValue.lookupType = objectField && objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null;
-            //     setValue.picklistType = objectField && objectField.DataTypeCode === FieldTypes.PickList ? objectField.CustomPickListCode : null;
-            //     setValue.value = "triggeringrecord_" + parentEntity + "." + (parentEntityObjectTable ? parentEntityObjectTable.KeyPropertyPath : "Id");
-            //     setValue.operator = SetValueOperators.EqualsField;
-            //     setValue.isDisabled = true;
-            // }
-
             this.SetValues.push(setValue);
             this.IsValidSetValues = false;
         }

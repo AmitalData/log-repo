@@ -123,10 +123,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             #region Report Filters
 
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDateTime" && d.Operator == "GreaterThanOrEqual").FirstOrDefault();
             QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDateTime" && d.Operator == "LessThanOrEqual").FirstOrDefault();
             QueryFilterItem filterItem_Direction = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Direction").FirstOrDefault();
@@ -287,10 +284,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             #region Report Filters
 
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDateTime" && d.Operator == "GreaterThanOrEqual").FirstOrDefault();
             QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDateTime" && d.Operator == "LessThanOrEqual").FirstOrDefault();
             QueryFilterItem filterItem_Direction = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Direction").FirstOrDefault();
@@ -445,10 +439,7 @@ namespace WebFreight.Web.ReportsWebServices
             IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant);
 
             #region Report Filters
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
             QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
             QueryFilterItem filterItem_DirectionId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DirectionId").FirstOrDefault();
@@ -900,9 +891,7 @@ namespace WebFreight.Web.ReportsWebServices
             ARPaymentRepository aRPaymentRepository = new ARPaymentRepository(tenant);
             ARPaymentQuery arPaymentQuery = new ARPaymentQuery(aRPaymentRepository);
             ARInvoiceQuery arInvoiceQuery = new ARInvoiceQuery(aRInvoiceRepository);
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
@@ -1068,9 +1057,7 @@ namespace WebFreight.Web.ReportsWebServices
             InvoicesByPartnerDataProvider dataProvider = new InvoicesByPartnerDataProvider();
             ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(tenant);
             ARInvoiceQuery arInvoiceQuery = new ARInvoiceQuery(aRInvoiceRepository);
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
             ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
@@ -1286,10 +1273,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             #region Report Filters
 
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             QueryFilterItem filterItem_OpenDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "OpenDate" && d.Operator == "GreaterThanOrEqual").FirstOrDefault();
             QueryFilterItem filterItem_ExpirationDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ExpirationDate" && d.Operator == "LessThanOrEqual").FirstOrDefault();
             QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
@@ -1489,18 +1473,15 @@ namespace WebFreight.Web.ReportsWebServices
             CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             ARInvoiceLineRepository aRInvoiceLineRepository = new ARInvoiceLineRepository(tenant);
             ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(tenant);
-
+            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
             IQueryable<ARInvoiceList> iQueryable = arInvoiceQuery.GetInvoiceListByTenant(tenant);
             List<VatType> tenantVatTypes = vatTypeRepository.GetVatTypes(tenant).ToList();
             IQueryable<ARInvoiceLine> tenantARInvoiceLines = aRInvoiceLineRepository.GetInvoiceLinesByTenant(tenant);
 
             List<Shipment> shipments = this.GetShipmentsByARInvoicesMainEntityId(iQueryable, tenant);
-           
-            #region Report Filters
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
 
+            #region Report Filters
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             QueryFilterItem filterItem_InvoiceDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "InvoiceDate").FirstOrDefault();
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
             QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
@@ -1642,7 +1623,7 @@ namespace WebFreight.Web.ReportsWebServices
                 List<ARInvoiceLine> myInvoiceLines = tenantARInvoiceLines.Where(l => (l.ARInvoiceId == arInvoice.Id)).ToList();
                 customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, arInvoice, invoicesRecored);
 
-                Shipment shipment = shipments.Where(d => d.Id == arInvoice.MainEntityId).FirstOrDefault();
+                Shipment shipment = shipments.Where(d => d.Id == arInvoice.MainEntityId).FirstOrDefault();                
                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipment, invoicesRecored);
 
                 //ARInvoicePM invoicePM = invoiceQuery.GetSinglePM(currentInvoice.Id, currentInvoice.Tenant);
@@ -1746,6 +1727,12 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
 
+                if(shipment != null)
+                {
+                    ShipmentMasterData shipmentMasterData = shipmentRepository.GetSingleShipmentMasterData(shipment.MasterShipmentDataId, tenant);
+                    invoicesRecored.ShipmentMainCarriageETA = shipmentMasterData?.MainCarriageETA;
+                }
+
                 invoicesRecored.InvoiceType = arInvoice.ARInvoiceTypeName;
                 invoicesRecored.InvoiceDate = arInvoice.InvoiceDate.Value;
                 invoicesRecored.InvoiceNumber = arInvoice.InvoiceNumber;
@@ -1767,16 +1754,38 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.AmountDueInLocalCurrency = arInvoice.AmountDueInLocalCurrency;
                 invoicesRecored.BillToVatNumber = arInvoice.VatNumber;
                 invoicesRecored.PaidDate = arInvoice.PaidDate;
+                BranchRepository branchRepository = new BranchRepository(tenant);
+                Branch branch = branchRepository.GetSingleBranch(arInvoice.BranchId, tenant);
+                if (branch != null)
+                {
+                    invoicesRecored.BranchCode = branch.Code;
+                }
+
+                Card billTo = CardRepository.GetSingleCard(arInvoice.BillToId, tenant, false);
 
                 if (string.IsNullOrEmpty(invoicesRecored.BillToVatNumber))
-                {
-                    Card billTo = CardRepository.GetSingleCard(arInvoice.BillToId, tenant, false);
+                {   
                     if(billTo != null)
                     {
                         invoicesRecored.BillToVatNumber = billTo.VatNumber;
                     }
                 }
-
+                if (billTo != null)
+                {
+                    FillBillToContact(invoicesRecored, billTo);
+                    invoicesRecored.BillToAddress1 = billTo.Address1;
+                    invoicesRecored.BillToAddress2 = billTo.Address2;
+                    invoicesRecored.BillToCity = billTo.CityName;
+                    invoicesRecored.BillToState = billTo.StateName;
+                    invoicesRecored.BillToZipCode = billTo.ZipCode;
+                    invoicesRecored.BillToCountry = billTo.CountryName;
+                    if (billTo.IsCustomer)
+                    {
+                        
+                       FillCustomerField(invoicesRecored, billTo, tenant);   
+                    }                    
+                }             
+                
                 if (localCurrency)
                 {
                     totalVat = totalVat + myTotalVats.Sum(d => d.LocalVATAmount);
@@ -1854,6 +1863,28 @@ namespace WebFreight.Web.ReportsWebServices
 
             return dataProvider;
         }
+        private void FillBillToContact(InvoiceDataProvider.InvoicesReport invoicesRecored, Card billTo)
+        {
+            ContactRepository contactRepository = new ContactRepository(billTo.Tenant);
+            Contact contact = contactRepository.GetSingleContact(billTo.PrimaryContactId, billTo.Tenant);
+            if (contact != null)
+            {
+                invoicesRecored.BillToContactName = contact.EnglishName;
+                invoicesRecored.BillToContactEmail = contact.Email;
+            }
+
+        }
+        
+        private void FillCustomerField(InvoiceDataProvider.InvoicesReport invoicesRecored, Card billTo, int tenant)
+        {
+            CustomerRepository customerRepository = new CustomerRepository(tenant);
+            Customer customer = customerRepository.GetSingleCustomer(billTo.Id, tenant);
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+            if (customer != null)
+            {
+                customFieldResolver.SetDataProviderCustomFieldsValues("Customer", tenant, customer, invoicesRecored);
+            }
+        }
 
         private List<System.Xml.XmlElement> GetComprobanteComplementos(string sATXML)
         {
@@ -1911,10 +1942,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             #region Report Filters
 
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             QueryFilterItem filterItem_tODate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
             QueryFilterItem filterItem_BranchId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BranchId").FirstOrDefault();
@@ -2190,10 +2218,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             #region Report Filters
 
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             QueryFilterItem filterItem_InvoiceType = queryOperations.QueryFilterItems.Where(d => d.FieldName == "InvoiceType").FirstOrDefault();
             QueryFilterItem filterItem_CurrencyType = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CurrencyType").FirstOrDefault();
 
@@ -2610,9 +2635,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
 
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             GenericFilter filter = new GenericFilter();
             ShipmentCustomFilter customfilters = new ShipmentCustomFilter(tenant);
             IQueryable<ShipmentDataView> iQueryable = shipmentRepository.GetMasterViewsByTenant(tenant);
@@ -3224,6 +3247,7 @@ namespace WebFreight.Web.ReportsWebServices
             AddressQuery addressQuery = new AddressQuery(tenant);
             VatTypeRepository vatTypeRepository = new VatTypeRepository(tenant);
             APInvoiceLineRepository apInvoiceLineRepository = new APInvoiceLineRepository(tenant);
+            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
 
             IQueryable<APInvoiceList> iQueryable = aPInvoiceQuery.GetInvoiceListByTenant(tenant);
             List<VatType> tenantVatTypes = vatTypeRepository.GetVatTypes(tenant).ToList();
@@ -3232,10 +3256,7 @@ namespace WebFreight.Web.ReportsWebServices
             List<Shipment> shipments = this.GetShipmentsByAPInvoicesMainEntityId(iQueryable, tenant);
 
             #region Report Filters
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             QueryFilterItem filterItem_InvoiceDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "InvoiceDate").FirstOrDefault();
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
             QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
@@ -3378,6 +3399,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 Shipment shipment = shipments.Where(d => d.Id == apInvoice.MainEntityId).FirstOrDefault();
                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipment, invoicesRecored);
+                
 
                 foreach (APInvoiceTotalVAT vat in myTotalVats)
                 {
@@ -3533,6 +3555,12 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.ExpenseCharges = expenseCharges == null ? 0 : expenseCharges;
                 invoicesRecored.ExpenseChargesInLocalCurrency = expenseChargesInLocalCurrency == null ? 0 : expenseChargesInLocalCurrency;
 
+                if (shipment != null)
+                {
+                    ShipmentMasterData shipmentMasterData = shipmentRepository.GetSingleShipmentMasterData(shipment.MasterShipmentDataId, tenant);
+                    invoicesRecored.ShipmentMainCarriageETA = shipmentMasterData?.MainCarriageETA;
+                }
+
                 dataProvider.InvoicesReportList.Add(invoicesRecored);
             }
 
@@ -3560,6 +3588,8 @@ namespace WebFreight.Web.ReportsWebServices
             dataProvider.TotalSub = subTotals;
             dataProvider.TotalsGrands = totalVat + subTotals;
             dataProvider.Name = @"Invoices";
+
+           
             #endregion
 
             return dataProvider;
@@ -3617,10 +3647,7 @@ namespace WebFreight.Web.ReportsWebServices
             IQueryable<Shipment> shipments = shipmentRepository.GetShipmentsForCrossDock(shipmentsIds, tenant);
 
             #region Report Filters
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             QueryFilterItem customerItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId" && d.Operator == "Equals").FirstOrDefault();
             QueryFilterItem partnerItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "PartnerId" && d.Operator == "Equals").FirstOrDefault();
 
@@ -4158,10 +4185,7 @@ namespace WebFreight.Web.ReportsWebServices
 
         private OpportunityStageChangingDataProvider LoadOpportunityStageChangingDataProvider(byte[] xmlFilters, int tenant)
         {
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             QueryFilterItem filterItem_IsByStageDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsByStageDate").FirstOrDefault();
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
             QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
@@ -4365,10 +4389,7 @@ namespace WebFreight.Web.ReportsWebServices
 
         private OpportunityMonthlyConversionDataProvider LoadOpportunityMonthlyConversionDataProvider(byte[] xmlFilters, int tenant)
         {
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             QueryFilterItem filterItem_IsByCreateDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsByCreateDate").FirstOrDefault();
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
             QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
@@ -5142,10 +5163,7 @@ namespace WebFreight.Web.ReportsWebServices
 
         private ExpectedIncomeDataProvider LoadExpectedIncomeDataProvider(byte[] xmlFilters, int tenant)
         {
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             CustomerRepository customerRepository = new CustomerRepository(tenant);
             ExpectedIncomeDataProvider dataProvider = new ExpectedIncomeDataProvider();
             dataProvider.RecordList = new List<CRMCustomer>();
@@ -5517,10 +5535,7 @@ namespace WebFreight.Web.ReportsWebServices
             List<ShipmentDeliveryPM> deliveries = query.GetShipmentDeliveryByTenant(tenant);
             deliveries = deliveries.Where(d => d.IsCancelled == false).ToList();
 
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
             QueryFilterItem filterItem_AgentId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "AgentId").FirstOrDefault();
             QueryFilterItem filterItem_DirectionId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DirectionId").FirstOrDefault();
@@ -5638,10 +5653,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             #region Report Filters
 
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
             QueryFilterItem filterItem_DirectionId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DirectionId").FirstOrDefault();
             QueryFilterItem filterItem_Voyage = queryOperations.QueryFilterItems.Where(d => d.FieldName == "VoyageNumber").FirstOrDefault();
@@ -5859,10 +5871,7 @@ namespace WebFreight.Web.ReportsWebServices
             CustomerAdditionalServiceRepository serviceRep = new CustomerAdditionalServiceRepository(tenant);
             IQueryable<CustomerAdditionalService> allServices = serviceRep.GetAdditionalServicesByTenant(tenant).Include("Customer").Include("Customer.Card").Include("Customer.SalesmanUser").Include("Customer.Card.PrimaryContact").Include("Customer.SalesmanUser.Contact").Include("AdditionalService").Include("Customer.CustomerStatus");
 
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             #region Report Filters
 
             QueryFilterItem filterItem_BusinessUnitId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BusinessUnitId").FirstOrDefault();
@@ -6000,7 +6009,7 @@ namespace WebFreight.Web.ReportsWebServices
                     Salesman = service.Customer.SalesmanUser != null ? service.Customer.SalesmanUser.Contact.EnglishName : null,
                     ServiceName = service.AdditionalService.Name,
                     Potential_InUse = service.Potential ? "Potential" : "In Use",
-                    NumberOfShipments = Convert.ToInt32(service.Customer.Field1),
+                    NumberOfShipments = tenant == 341 ? Convert.ToInt32(service.Customer.Field1) : 0,
                     NumberOfShipmentsLabel = tenant == 341 ? "Number of Users" : "Number of Shipments",
                     CustomerStatus = service.Customer.CustomerStatus != null ? service.Customer.CustomerStatus.Name : null,
                 });
@@ -6026,10 +6035,7 @@ namespace WebFreight.Web.ReportsWebServices
             CustomerPotentialActualDataProvider myResult = new CustomerPotentialActualDataProvider();
             myResult.Customers = new List<CustomersData>();
 
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             #region Report Filters
             QueryFilterItem filterItem_TimeRange = queryOperations.QueryFilterItems.Where(d => d.FieldName == "TimeRange").FirstOrDefault();
             QueryFilterItem filterItem_DataTypeCode = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DataTypeCode").FirstOrDefault();
@@ -6633,10 +6639,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             #region Report Filters
 
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             QueryFilterItem filterItem_IsByCreateDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsByCreateDate").FirstOrDefault();
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
             QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
@@ -6943,10 +6946,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             #region Report Filters
 
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
             QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
             QueryFilterItem filterItem_FromPortId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "MainCarriageFromPortId").FirstOrDefault();
@@ -7128,10 +7128,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             #region Report Filters
 
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
             QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
             QueryFilterItem filterItem_FromPortId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "MainCarriageFromPortId").FirstOrDefault();
@@ -7299,10 +7296,7 @@ namespace WebFreight.Web.ReportsWebServices
             IQueryable<ShipmentDataView> iQueryable = shipmentRepository.GetShipmentViewsByTenant(tenant);
             Contact loggedContact = contactRepository.GetSingleContactByEmail(GetAuthenticatedUser(tenant), tenant);
 
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             #region Report Filters
 
             QueryFilterItem filterItem_FlightDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FlightDate").FirstOrDefault();
@@ -7601,10 +7595,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             #region Report Filters
 
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
             QueryFilterItem filterItem_DateType = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DateType").FirstOrDefault();
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
@@ -8338,10 +8329,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             #region Report Filters
 
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
             QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
             QueryFilterItem filterItem_ParticipantId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ParticipantId").FirstOrDefault();
@@ -8485,10 +8473,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             #region Report Filters
 
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
             QueryFilterItem filterItem_PartnerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "PartnerId").FirstOrDefault();
             QueryFilterItem filterItem_IsByInvoiceDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsByInvoiceDate").FirstOrDefault();
@@ -8917,10 +8902,7 @@ namespace WebFreight.Web.ReportsWebServices
             IQueryable<OceanInsightsRequest> iQueryable = OceanInsightsRepository.GetOceanInsightsRequests().Where(a => a.FromPushPage == false);
             //Contact loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
 
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             #region Report Filters
 
             QueryFilterItem filterItem_Tenant = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Tenant").FirstOrDefault();
@@ -9083,10 +9065,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             #region Report Filters
 
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
             QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
             QueryFilterItem filterItem_AirlineId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "AirlineId").FirstOrDefault();
@@ -9381,10 +9360,7 @@ namespace WebFreight.Web.ReportsWebServices
             int DaysInWarehouseValue =0;
             string DaysInWarehouseOperatorFilterValue = string.Empty;
 
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             //CustomerId
             QueryFilterItem queryFilterItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
             if (queryFilterItem != null && queryFilterItem.FieldValue != null) customerId = queryFilterItem.FieldValue.ToString();
@@ -9478,10 +9454,7 @@ namespace WebFreight.Web.ReportsWebServices
             CardRepository cardRep = new CardRepository(tenant);
             ContactRepository contactRep = new ContactRepository(tenant);
 
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             QueryFilterItem filterItem_ProjectId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ProjectId").FirstOrDefault();
             QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
             QueryFilterItem filterItem_OwnerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "OwnerId").FirstOrDefault();
@@ -9948,10 +9921,7 @@ namespace WebFreight.Web.ReportsWebServices
             IQueryable<TMEmployeeTime> iQueryable = employeeTimeRepository.GetTasksWithoutProject(tenant);
             ContactRepository contactRepository = new ContactRepository(tenant);
 
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             QueryFilterItem filterItem_EmployeeUserId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "EmployeeUserId").FirstOrDefault();
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
             QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
@@ -10115,10 +10085,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             #region Report Filters
 
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
 
             string customerId = null;
@@ -10349,10 +10316,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             #region Report Filters
 
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             QueryFilterItem filterItem_ParentTenantId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ParentTenantId").FirstOrDefault();
 
             string parentTenantId = null;
@@ -10455,10 +10419,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             #region Report Filters
 
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             QueryFilterItem filterItem_tODate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDate").FirstOrDefault();
             QueryFilterItem filterItem_level = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Level").FirstOrDefault();
             QueryFilterItem filterItem_card = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CardFilter").FirstOrDefault();
@@ -10889,10 +10850,7 @@ namespace WebFreight.Web.ReportsWebServices
             List<ChartOfAccountsTypePM> chartOfAccountTypes = GetChartOfAccountTypes(tenant);
             #region Report Filters
 
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             QueryFilterItem filterItem_fromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
             QueryFilterItem filterItem_level = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Level").FirstOrDefault();
             QueryFilterItem filterItem_toDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
@@ -12031,10 +11989,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             #region Report Filters
 
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+            QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             QueryFilterItem filterItem_tODate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
 
@@ -12582,6 +12537,15 @@ namespace WebFreight.Web.ReportsWebServices
             #endregion
 
             return totalData;
+        }
+
+        private static QueryOperations GetQueryOperationsFromXmlFilters(byte[] xmlFilters)
+        {
+            using (MemoryStream memorystream = new MemoryStream(xmlFilters))
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+                return (QueryOperations)serializer.Deserialize(memorystream);
+            }
         }
 
 

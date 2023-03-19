@@ -57,6 +57,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                              From = a.From,
                                                              Subject = a.Subject,
                                                              ReplyTo = a.ReplyTo,
+                                                             ObjectTableId = a.ObjectTableId,
+                                                             EntityId = a.EntityId
                                    
                                                          };
 
@@ -88,6 +90,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 From = a.From,
                                                 Subject = a.Subject,
                                                 ReplyTo = a.ReplyTo,
+                                                ObjectTableId = a.ObjectTableId,
+                                                EntityId = a.EntityId
                                             }).FirstOrDefault();
 
 
@@ -126,6 +130,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                            From = a.From,
                                                                            Subject = a.Subject,
                                                                            ReplyTo = a.ReplyTo,
+                                                                           ObjectTableId = a.ObjectTableId,
+                                                                           EntityId = a.EntityId
                                                                        };
             return ReportsTemplatePMs;
         }
@@ -152,6 +158,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                                From = a.From,
                                                                                Subject = a.Subject,
                                                                                ReplyTo = a.ReplyTo,
+                                                                               ObjectTableId = a.ObjectTableId,
+                                                                               EntityId = a.EntityId
                                                                            };
             return ReportsTemplateLists;
         }
@@ -179,6 +187,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                        From = a.From,
                                                                        Subject = a.Subject,
                                                                        ReplyTo = a.ReplyTo,
+                                                                       ObjectTableId = a.ObjectTableId,
+                                                                       EntityId = a.EntityId
 
                                                                    };
             if (!string.IsNullOrEmpty(templateType))
@@ -210,6 +220,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                       From = a.From,
                                                                       Subject = a.Subject,
                                                                       ReplyTo = a.ReplyTo,
+                                                                      ObjectTableId = a.ObjectTableId,
+                                                                      EntityId = a.EntityId
                                                                   };
 
             if (!string.IsNullOrEmpty(templateType))

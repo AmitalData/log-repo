@@ -10,10 +10,11 @@ import { ViewContainerRef } from '@angular/core';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
 import { DigitalTextService } from '../../../Infrastructure/Services/WebServices/DigitalTextService'
+import { DigitalLanguageSettingsService } from 'Infrastructure/Services/WebServices/DigitalLanguageSettingsService';
 
 @Component({
-
     templateUrl: './DigitalPortalCustomizationMainComponent.html',
+    providers: [DigitalLanguageSettingsService]
 })
 
 export class DigitalPortalCustomizationMainComponent implements OnInit {
@@ -38,8 +39,9 @@ export class DigitalPortalCustomizationMainComponent implements OnInit {
     DigitalProfileFilterFullList: { id: number, name: string, code: string }[] = [];
     ObjectTablesFilterList: { id: number, name: string }[] = [];
     DigitalProfileFilterList: { id: number, name: string, code: string }[] = [];
+    DigitalDisplayLanguageslList: DisplayLanguageItem[] = [];
 
-    constructor() {
+    constructor(public _digitalLanguageSettingsService: DigitalLanguageSettingsService) {
         this.Initialize();
         this.RunComponent();
         this.LayoutDirection = ObjectsLocator.GlobalSetting.LayoutDirection == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
@@ -56,6 +58,7 @@ export class DigitalPortalCustomizationMainComponent implements OnInit {
 
     ngOnInit() {
         this.FillDigitalProfiles();
+        this.FillDisplayLanguages();
     }
     private FillDigitalProfiles() {
         this.digitalTextService.GetDigitalProfileName(SessionLocator.Tenant).subscribe((myResult) => {
@@ -190,6 +193,7 @@ export class DigitalPortalCustomizationMainComponent implements OnInit {
 
     public set SelectedMenu(value: any) {
         this.selectedMenu = value;
+        this.selectedMenu.LanguageCode = this.selectedDisplayLanguage ? this.selectedDisplayLanguage.code : 'EN';
         this.ChangeScreen();
     }
 
@@ -286,6 +290,7 @@ export class DigitalPortalCustomizationMainComponent implements OnInit {
         if (this.selectedObjectTableItem != value) {
             this.selectedObjectTableItem = value;
             this.SelectedMenu.Page.ObjectTableId = value.id;
+            this.SelectedMenu.LanguageCode = this.selectedDisplayLanguage ? this.selectedDisplayLanguage.code : 'EN';
             this.SelectedMenu.Page.BuildItemsSource();
         }
     }
@@ -312,6 +317,7 @@ export class DigitalPortalCustomizationMainComponent implements OnInit {
             this.selectedProfileItem = value;
             this.SelectedMenu.Page.ProfileId = value.id;
             this.SelectedMenu.Page.ProfileCode = value.code;
+            this.SelectedMenu.LanguageCode = this.selectedDisplayLanguage ? this.selectedDisplayLanguage.code : 'EN';
 
             if (this.SelectedMenu.Code == "ScreenLayout") {
                 this.SelectedMenu.Page.GetDefaultScreens();
@@ -343,6 +349,41 @@ export class DigitalPortalCustomizationMainComponent implements OnInit {
         }
 
     }
+
+    private selectedDisplayLanguage: DisplayLanguageItem;
+    get SelectedDisplayLanguage() { return this.selectedDisplayLanguage; }
+    set SelectedDisplayLanguage(value) {
+        if (this.selectedDisplayLanguage != value) {
+            this.selectedDisplayLanguage = value;
+            this.SelectedMenu.LanguageCode = value ? value.code : 'EN';
+            if (this.SelectedMenu.Code != "ScreenLayout") {
+                this.SelectedMenu.Page.BuildItemsSource();
+            }
+        }
+    }
+
+    private FillDisplayLanguages() {
+        this._digitalLanguageSettingsService.GetDigitalLanguages().subscribe((myResult) => {
+            if (!myResult.HasError) {
+                this.DigitalDisplayLanguageslList = [];
+                var languagesResult = myResult && myResult.Result ? myResult.Result : [];
+
+                languagesResult.forEach(item => {
+                    this.DigitalDisplayLanguageslList.push(
+                        {
+                            "name": item.Name,
+                            "code": item.Code,
+                            "displayText": item.DisplayText
+                        }
+                    );
+                });
+
+
+                this.selectedDisplayLanguage = this.DigitalDisplayLanguageslList[0];
+            }
+        });
+    }
+    
 }
 
 export class CustomizationMainMenuItem {
@@ -354,6 +395,17 @@ export class CustomizationMainMenuItem {
     public Page: any = null;
     public screenArgs: any = {};
     public IsVisible: boolean;
+    public LanguageCode: string;
+
+    constructor() {
+
+    }
+}
+
+export class DisplayLanguageItem {
+    public name: string;
+    public code: string;
+    public displayText: string;
 
     constructor() {
 

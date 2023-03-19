@@ -29,6 +29,7 @@ namespace Logitude.Infrastructure.Data
 		 IDbSet<BusinessRole> BusinessRoles { get; }
 		 IDbSet<ContainerSetting> ContainerSettings { get; }
 		 IDbSet<DigitalFieldSecurity> DigitalFieldSecurities { get; }
+		 IDbSet<DigitalPortalLanguage> DigitalPortalLanguages { get; }
 		 IDbSet<DigitalPortalScreen> DigitalPortalScreens { get; }
 		 IDbSet<DigitalPreDefinedComponent> DigitalPreDefinedComponents { get; }
 		 IDbSet<DigitalProfile> DigitalProfiles { get; }

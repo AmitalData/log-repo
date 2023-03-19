@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				RuleUpdateHistoryRepository  ruleUpdateHistoryRepository = new RuleUpdateHistoryRepository(MyContext);
 				RuleUpdateHistoryList entityList = null;
 				RuleUpdateHistory entityPoco = ruleUpdateHistoryRepository.GetSingleRuleUpdateHistory(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<RuleUpdateHistory> singleEntityList = new List<RuleUpdateHistory>();
 					singleEntityList.Add(entityPoco);

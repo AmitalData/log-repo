@@ -129,6 +129,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 {
                     myResult.ContactName = myContact.EnglishName;
                     myResult.ContactId = myContact.Id;
+                    myResult.DigitalPortalLanguage = myContact.DigitalPortalLanguage;
                     var imageDetailId = myContact.ImageDetailId;
 
                     myResult.ImageFileData = GetContactImage(imageDetailId, tenant);

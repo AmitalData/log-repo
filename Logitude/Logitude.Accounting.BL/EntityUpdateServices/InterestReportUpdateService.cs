@@ -369,6 +369,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             newInvoiceLine.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount * -1;
             newInvoiceLine.IsExpense = item.IsExpense;
             newInvoiceLine.GLAccountId = item.GLAccountId;
+            newInvoiceLine.GLAccountLocalName = item.GLAccountLocalName;
+            newInvoiceLine.GLAccountDisplayNumber = item.GLAccountDisplayNumber;
             newInvoiceLine.LineActionCode = "1";
             autoCreditInvoice.InvoiceLines.Add(newInvoiceLine);
             index++;

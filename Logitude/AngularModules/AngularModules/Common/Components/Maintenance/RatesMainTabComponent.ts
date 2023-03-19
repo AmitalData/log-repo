@@ -11,6 +11,7 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 
+
 @Component({
     selector: 'RatesMainTabComponent',
     
@@ -25,9 +26,11 @@ export class RatesMainTabComponent extends BaseComponent {
     public TenantPM: TenantPM;
     public DataContext: RatesMainTabComponent = this;
     private CurrentSession = SessionLocator.SelectedSession;
+    IsAccountingActivated: boolean = false;
     constructor() {
         super();
         this.TenantPM = SessionLocator.TenantPM;
+        this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         this.BuildData();
     }
 
@@ -97,7 +100,7 @@ export class RatesMainTabComponent extends BaseComponent {
                 //loadingDate = Date.SpecifyKind(loadingDate, Date.UTC);
             }
 
-            myService.GetCurrenciesExchangeRateByValueDate(this.TenantPM.CurrencyId, loadingDate).subscribe((resp:any) => {
+            myService.GetCurrenciesExchangeRateByValueDate(this.TenantPM.CurrencyId, loadingDate,true).subscribe((resp:any) => {
                 var result: ServiceResponse = resp;
                 if (!result.HasError) {
                     result.Result.forEach(item => {
@@ -120,11 +123,12 @@ export class RatesItem extends BaseComponent implements OnInit {
     public EntityPM: RatesTablePM;
     public ObjectTableName = "RatesTable";
     public DataContext: RatesItem = this;
-
+    IsAccountingActivated: boolean = false;
     constructor(entityPM: LastRate) {
         super();
         this.LastRate = entityPM;
         this.TenantPM = SessionLocator.TenantPM;
+        this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         this.CreateRatesTablePM();
     }
 
@@ -161,6 +165,8 @@ export class RatesItem extends BaseComponent implements OnInit {
             }
         }
     }
+
+    
 
     get Rate() {
         return this.EntityPM.Rate;
@@ -209,8 +215,22 @@ export class RatesItem extends BaseComponent implements OnInit {
     get CurrentRate() {
         return this.LastRate.Rate;
     }
+
     set CurrentRate(value: number) {
         this.LastRate.Rate = value;
+    }
+
+    get Unit() {
+        
+        if(this.IsAccountingActivated){
+            if(this.LastRate.Unit == null || this.LastRate.Unit <= 0){
+                return 1;
+            }
+            return this.LastRate.Unit;
+        } else {
+            return 1;
+        }
+       
     }
 
     get ViewHistoryIsEnabled() {

@@ -45,6 +45,9 @@ using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.BL.CoreBL.Reconcile;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.Server.Tools.StorageService;
+using Logitude.Server.Tools.QueueService;
+using Newtonsoft.Json;
+using Simplog.Data.CommonDataModel;
 
 namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsController.cs
 {
@@ -85,26 +88,78 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
 
 
 
+        public HttpResponseMessage GetCommunicationLog(string id)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                int tenant = authToken.Tenant;
+
+                ICommonDataContext context = CommonDataContext.GetContext(tenant);
+                CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(context);
+                CommunicationLog commLog = communicationLogRep.GetSingleCommunicationLog(id, tenant);
+
+
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, commLog);
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         //[Route("{obj:ReconciliationPM}/InsertReconciliation")]
         public HttpResponseMessage PostInsertReconciliation(ReconciliationPM entityPm)
         {
             try
             {
-                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                if (FeatureToggleHelper.HasFeatureToggle("WRR", entityPm.Tenant) && entityPm.ReconciliationLines != null && entityPm.ReconciliationLines.Count() >= 500)// toggle feature
                 {
+                    //LedgerTransactionRepository repoLedgerTransaction = new LedgerTransactionRepository(entityPm.Tenant);
+                    //var transactionsIds = entityPm.ReconciliationLines.Select(x => x.TransactionId).ToList();
+                    //if (transactionsIds.Count > 0) {
 
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    SecurityUtility.AuthenticationOnEntityTenant("ReconciliationPM", entityPm.Tenant, authToken.Tenant);
-                    SecurityUtility.CheckContactFeature("Reconciliation", "NEW", authToken.Tenant);
+                    //    var AreTranscationsInProgress = repoLedgerTransaction.CheckTransactionsInReconcileProgress(transactionsIds, entityPm.Tenant);
+                    //    if (AreTranscationsInProgress) {
+                    //        throw new Exception("Ledger Transaction was found InReconcileProgress");
+                    //    }
+                    //}
+                    var anotherReconciliationInProgress = CheckIfAnotherReconciliationInProgress(entityPm);
+                    if (anotherReconciliationInProgress) {
+                        throw new Exception("There is already another reconciliation in progress");
+                    }
+                    
+                    string communicationLogId = WriteEntityPMOnCommunicationLog(entityPm);
+                    // StorageDataArgs storageDataArgs = new StorageDataArgs() { FileName = fileName, FolderName = "Others", Tenant = entityPm.Tenant };
+                    IQueueService queueservice = new DbQueueService();
+                    queueservice.InitializeQueue("ReconciliationWorkerRole", entityPm.Tenant);
+                    queueservice.Send(new Dictionary<string, string>() { { "tenant", entityPm.Tenant.ToString() }, { "communicationLogId", communicationLogId } }, entityPm.Tenant, null, null);
+                    RecoCallback recoCallBack = new RecoCallback();
+                    recoCallBack.communicationLogId = communicationLogId;
+                    return Request.CreateResponse(HttpStatusCode.OK, recoCallBack);
+                }
+                else
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
 
-                    CreateReconciliationService recoService = new CreateReconciliationService();
-                    entityPm.Tenant = authToken.Tenant;
-                    RecoCallback recoCallback = recoService.CreateReconciliation(entityPm);
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("ReconciliationPM", entityPm.Tenant, authToken.Tenant);
+                        SecurityUtility.CheckContactFeature("Reconciliation", "NEW", authToken.Tenant);
 
-                    scope.Complete();
-                    return Request.CreateResponse(HttpStatusCode.OK, recoCallback);
+                        CreateReconciliationService recoService = new CreateReconciliationService();
+                        entityPm.Tenant = authToken.Tenant;
+                        RecoCallback recoCallback = recoService.CreateReconciliation(entityPm);
+
+                        scope.Complete();
+                        return Request.CreateResponse(HttpStatusCode.OK, recoCallback);
+                    }
                 }
             }
             catch (Exception ex)
@@ -112,6 +167,35 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
+        }
+
+        private bool CheckIfAnotherReconciliationInProgress(ReconciliationPM entityPm)
+        {
+            ICommonDataContext context = CommonDataContext.GetContext(entityPm.Tenant);
+            CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(context);
+            CommunicationLog commLog = communicationLogRep.GetCommunicationLogByEntityIdAndSubject(entityPm.AccountId, "Create internal Reconciliation", entityPm.Tenant);
+            if (commLog != null && commLog.CommunicationStatusTypeCode == "W") {
+                return true;
+            }
+            return false;
+        }
+
+        private string WriteEntityPMOnCommunicationLog(ReconciliationPM reconciliationPM)
+        {
+            string jsonString = JsonConvert.SerializeObject(reconciliationPM);
+            byte[] xmlFile = Encoding.UTF8.GetBytes(jsonString);
+            return Communications.AddCommunicationLog(new CommunicationsParams()
+            {
+                LoggingEntityId = reconciliationPM.AccountId,
+                Tenant = reconciliationPM.Tenant,
+                CommunicationLogTypeCode = "Q",
+                Priority = 1,
+                InOut = "O",
+                Status = "W",
+                Subject = "Create internal Reconciliation",
+                FolderName = "Other",
+                ByteData = xmlFile
+            });
         }
 
 

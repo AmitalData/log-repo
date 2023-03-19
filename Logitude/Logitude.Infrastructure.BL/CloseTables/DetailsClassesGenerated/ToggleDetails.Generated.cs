@@ -868,13 +868,37 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "DBA,Dashboard Analytics", 
                 Description = "Dashboard Analytics", 
 			});
-            
+			 
             all.Add(new ToggleDetails()
             {    
                 Name = "Remove Shared Logistics", 
                 Code = "RSL", 
                 Description = "Remove Shared Logistics Tab Feature", 
                 SearchFields = "RSL,Remove Shared Logistics Tab Feature", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "WRR", 
+                Name = "Run reconciliation using WorkerRole", 
+                SearchFields = "WRR,Run reconciliation using WorkerRole", 
+                Description = "Run reconciliation using WorkerRole", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "UDD", 
+                Name = "Upload File using Drag and Drop", 
+                SearchFields = "UDD,Upload File using Drag and Drop", 
+                Description = "Upload File using Drag and Drop", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "DE2", 
+                Name = "Document Execution WR Version 2", 
+                SearchFields = "DE2,Document Execution WR Version 2", 
+                Description = "Document Execution WR Version 2", 
 			});
 			
             return all;

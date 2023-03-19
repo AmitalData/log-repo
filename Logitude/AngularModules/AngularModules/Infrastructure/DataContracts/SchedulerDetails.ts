@@ -40,6 +40,7 @@ export class ReportSchedulerDetails {
     public DWQueryFilterData: any;
     public DocumentTypeTemplateId: string;
     public DocumentTypeTemplateIds: Array<string> = [];
+    public MessageTemplateId: string;
 }
 
 export class ReportSchedulerRecepients {
