@@ -767,7 +767,8 @@
                                             <log-cell-template #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
                                                 <div style="width: 100%;">
                                                     <LogTextBox [InputType]="'sigdouble'" [DigitsAfterPoint]="2" [ObjectTableName]="item.ObjectTableName" 
-                                                     [ObjectFieldName]="'AmountPaid'" [Text]="item.AmountPaid" [DataContext]="item.DataContext" [HideColumns]="true" [ForceDisable]="IsDisplayOnly || (!item.CheckBoxEnabled)"></LogTextBox>
+                                                     [ObjectFieldName]="'AmountPaid'" [Text]="item.AmountPaid" [DataContext]="item.DataContext" [HideColumns]="true" 
+                                                     [ForceDisable]="IsDisplayOnly || (!item.CheckBoxEnabled)"></LogTextBox>
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>
