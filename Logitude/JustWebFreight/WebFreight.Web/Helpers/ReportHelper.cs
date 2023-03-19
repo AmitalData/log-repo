@@ -268,7 +268,7 @@ namespace WebFreight.Web.Helpers
 
 
 
-        public string AddReportTemplate(string reportId, string description, string userId, string documentId, int tenant, ReportsTemplateRepository reportsTemplateRepository, ReportsTemplatesVersionRepository reportsTemplatesVersionRepository, List<ReportsTemplate> reportsTemplates, bool isSystem, string templateType)
+        public string AddReportTemplate(string reportId, string description, string userId, string documentId, int tenant, ReportsTemplateRepository reportsTemplateRepository, ReportsTemplatesVersionRepository reportsTemplatesVersionRepository, List<ReportsTemplate> reportsTemplates, bool isSystem, string templateType, string entityId = null, string objectTableId = null, string subject = null)
         {
 
             #region ReportsTemplate
@@ -287,7 +287,9 @@ namespace WebFreight.Web.Helpers
                 InActive = false,
                 CurrentVersion = 1,
                 TemplateType = templateType,
-
+                EntityId = entityId,
+                ObjectTableId = objectTableId,
+                Subject = subject
             };
             reportsTemplateRepository.Add(reportsTemplate);
 
