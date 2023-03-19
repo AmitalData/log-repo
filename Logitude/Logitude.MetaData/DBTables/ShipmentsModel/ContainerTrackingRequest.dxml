@@ -101,6 +101,6 @@
       Nullable="true" />
   </Column>
   <UniqueConstraint
-  Columns="Id,Tenant,ContainerId,ShipmentId,Status"/>
+  Columns="Tenant,ContainerId,ShipmentId,Status"/>
   
 </Table>
