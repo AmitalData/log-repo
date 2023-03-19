@@ -4056,8 +4056,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.IRSNumber = customer.IRSNumber;
                 myDataProvider.CustomerName = customer.EnglishName;
                 myDataProvider.ClientNumber = customer.Code;
-                if(customer.Customer != null)
-                    myDataProvider.CustomerEORI = !string.IsNullOrEmpty(customer.Customer.EORInumber) ? customer.Customer.EORInumber : "";
+                myDataProvider.CustomerEORI = !string.IsNullOrEmpty(customer.EORInumber) ? customer.EORInumber : "";
             }
             
 

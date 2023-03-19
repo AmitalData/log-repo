@@ -85,7 +85,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CustomerUpdateClass
    {  		
-		public const string HashString = "878205579896323758e6a754786023f8";
+
+		public const string HashString = "c94889ab3ef6f5aa31f3a1fc17283725";
+
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -13044,7 +13046,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreditLimitAmount",
 					  						DefaultText =  "Credit Amount",
-					  						FullLocalDefaultText =  "מסגרת אשראי",
+					  						FullLocalDefaultText =  "מסגרת םשרםי",
 					  						ListFieldLable =  "CreditLimitAmountListLable",
 					  						ListLableDefaultText =  "Credit Amount",
 					  						IsForeignKey =  false,
@@ -14777,10 +14779,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InsuredcreditLimit",
 					  						DefaultText =  "Insured Credit Limit",
-					  						FullLocalDefaultText =  "מסגרת אשראי מבוטחת",
+					  						FullLocalDefaultText =  "מסגרת םשרםי מבוטחת",
 					  						ListFieldLable =  "InsuredcreditLimitListLable",
 					  						ListLableDefaultText =  "Insured Credit Limit",
-					  						ListLocalDefaultText =  "מסגרת אשראי מבוטחת",
+					  						ListLocalDefaultText =  "מסגרת םשרםי מבוטחת",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
