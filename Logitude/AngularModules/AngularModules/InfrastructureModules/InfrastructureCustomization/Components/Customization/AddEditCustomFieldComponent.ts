@@ -90,7 +90,11 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         });
         this.UIProperties.SetRequired("Code", "ObjectField", true);
     }
-
+    IsCardObjectTable() {
+        if (this.ObjectTableName == "Card")
+            return true;
+        return false;
+    }
 
     ShowAdditionalFiltersSettingsClicked() {
         this.ShownAdditionalFiltersSettings = !this.ShownAdditionalFiltersSettings;
