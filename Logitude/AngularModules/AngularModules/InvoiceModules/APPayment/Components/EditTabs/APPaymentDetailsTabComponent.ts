@@ -924,13 +924,11 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                         var ledgerTransaction = this.invoicesLedgerTransactions.filter(x=>x.Reference1 == item.InvoiceNumber)[0];
                         if(ledgerTransaction) {
                             item.CheckBoxEnabled = true;
-                            item.ForceDisable = false;
                             item.RecoNumber = ledgerTransaction.RecoNumber;
                             if(ledgerTransaction.RecoNumber != null && ledgerTransaction.RecoNumber.length > 0) {
                                 var items = this.paymentLedgerTransactions.filter(value => ledgerTransaction.RecoNumber.split(',').includes(value));
                                 if(items.length > 0) {
                                     item.CheckBoxEnabled = false;
-                                    item.ForceDisable = true;
                                 }
                             }
                         }
