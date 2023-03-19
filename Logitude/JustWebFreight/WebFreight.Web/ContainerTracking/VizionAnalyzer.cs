@@ -196,8 +196,8 @@ namespace WebFreight.Web.ContainerTracking
             var milistone = myMilestones.FirstOrDefault(e => !e.planned);
             if (milistone != null)
             {
-                containerUpdatedFields.PODLegVessel = containerUpdatedFields.PODLegVessel == null ? plannedMilistone.vessel : containerUpdatedFields.PODLegVessel;
-                containerUpdatedFields.PODLegVoyage = containerUpdatedFields.PODLegVoyage == null ? plannedMilistone.voyage : containerUpdatedFields.PODLegVoyage;
+                containerUpdatedFields.PODLegVessel = containerUpdatedFields.PODLegVessel == null ? milistone.vessel : containerUpdatedFields.PODLegVessel;
+                containerUpdatedFields.PODLegVoyage = containerUpdatedFields.PODLegVoyage == null ? milistone.voyage : containerUpdatedFields.PODLegVoyage;
             }
         }
 
