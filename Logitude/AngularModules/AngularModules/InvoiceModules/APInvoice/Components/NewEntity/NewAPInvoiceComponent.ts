@@ -139,6 +139,8 @@ export class NewAPInvoiceComponent extends BaseComponent {
     }
 
     public AllVatTypes: VatTypeList[] = [];
+    public AllCurrencies: CurrencyList[] = [];
+    public AllPaymentTerms: PaymentTermList[] = [];
     private myCardListService: CardListService;
     private myPaymentTermListService: PaymentTermListService;
     private myCurrencyListService: CurrencyListService;
@@ -158,6 +160,18 @@ export class NewAPInvoiceComponent extends BaseComponent {
         this.myVatTypeListService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.AllVatTypes = myResponse.Result;
+            }
+        });
+
+        this.myCurrencyListService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.AllCurrencies = myResponse.Result;
+            }
+        });
+
+        this.myPaymentTermListService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.AllPaymentTerms = myResponse.Result;
             }
         });
     }
@@ -360,8 +374,8 @@ export class NewAPInvoiceComponent extends BaseComponent {
                 this.VATNumber = null;
                 this.VendorName = null;
                 this.EntityPM.VendorPartnerTypeId = null;
-                this.InvoiceCurrencyId = SessionLocator.AccountingCurrencyId;
-                this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
+                this.SetInvoiceCurrencyFromTenant();
+                this.SetPaymentTermFromTenant();
                 this.VatTypeId = null;
             }
 
@@ -377,22 +391,49 @@ export class NewAPInvoiceComponent extends BaseComponent {
                             this.EntityPM.VendorPartnerTypeId = list.PartnerTypeId;
                             this.VatTypeId = list.VatTypeId;
 
-                            if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
-                                this.InvoiceCurrencyId = list.InvoiceCurrencyId;
-                            }
-
-                            if (!AppTool.IsNullOrEmpty(list.PaymentTermId)) {
-                                this.PaymentTermId = list.PaymentTermId;
-                            }
-
-                            else {
-                                this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
-                            }
+                            this.SetInvoiceCurrencyFromPartner(list.InvoiceCurrencyId);
+                            this.SetPaymentTermFromPartner(list.PaymentTermId);
                         }
                     }
                 });
             }
         }
+    }
+
+    private SetInvoiceCurrencyFromPartner(currencyId: string) {
+        if (!AppTool.IsNullOrEmpty(currencyId)) {
+            var currency: CurrencyList = this.AllCurrencies.filter(f => f.Id == currencyId)[0];
+            if (currency != null && !currency.InActive)
+                this.InvoiceCurrencyId = currencyId;
+            else
+                this.SetInvoiceCurrencyFromTenant();
+        }
+        else {
+            this.SetInvoiceCurrencyFromTenant();
+        }
+    }
+    private SetPaymentTermFromPartner(paymentTermId: string) {
+        if (!AppTool.IsNullOrEmpty(paymentTermId)) {
+            var paymentTerm: PaymentTermList = this.AllPaymentTerms.filter(f => f.Id == paymentTermId)[0];
+            if (paymentTerm != null && !paymentTerm.InActive)
+                this.PaymentTermId = paymentTermId;
+            else
+                this.SetPaymentTermFromTenant();
+        }
+        else {
+            this.SetPaymentTermFromTenant();
+        }
+    }
+
+    private SetInvoiceCurrencyFromTenant() {
+        var currency: CurrencyList = this.AllCurrencies.filter(f => f.Id == SessionLocator.TenantPM.CurrencyId)[0];
+        if (currency != null && !currency.InActive)
+            this.InvoiceCurrencyId = SessionLocator.TenantPM.CurrencyId;
+    }
+    private SetPaymentTermFromTenant() {
+        var paymentTerm: PaymentTermList = this.AllPaymentTerms.filter(f => f.Id == SessionLocator.TenantPM.PaymentTermId)[0];
+        if (paymentTerm != null && !paymentTerm.InActive)
+            this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
     }
 
     get VendorName() { return this.EntityPM.VendorName; }
