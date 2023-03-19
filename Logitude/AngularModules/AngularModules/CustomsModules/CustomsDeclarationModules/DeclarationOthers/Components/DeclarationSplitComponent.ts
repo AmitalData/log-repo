@@ -421,6 +421,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
 
     TrackBarStep: number = 0.2;
     ImgScaleValue: string = "scale(1)";
+    ImgHeight: string = "";
 
     ZoomInButton() {
         if (this.TrackBarValue >= 3) return;
@@ -442,6 +443,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
         //var scaleValue = this.trackBarValue / 100 + 1;
         var scaleValue = this.trackBarValue;
         this.ImgScaleValue = "scale(" + scaleValue + ")";
+        this.ImgHeight = (scaleValue * 100).toString() +"%";
     }
     //#endregion
 
