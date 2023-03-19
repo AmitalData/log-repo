@@ -754,7 +754,18 @@ namespace WebFreight.Web.ContainerTracking
                 {
                     PODShipmentUpdateIndicator = "On Carriage";
                 }
-
+                else if (shipmentPM.Transshipment3ToPortId == portId)
+                {
+                    PODShipmentUpdateIndicator = "Transshipment3ATA";
+                }
+                else if (shipmentPM.Transshipment2ToPortId == portId)
+                {
+                    PODShipmentUpdateIndicator = "Transshipment2ATA";
+                }
+                else if (shipmentPM.Transshipment1ToPortId == portId)
+                {
+                    PODShipmentUpdateIndicator = "Transshipment1ATA";
+                }
                 else if (shipmentPM.MainCarriageToPortId == portId)
                 {
                     PODShipmentUpdateIndicator = "Main Carriage";
@@ -828,19 +839,20 @@ namespace WebFreight.Web.ContainerTracking
                 }
             }
 
-            else if (PODShipmentUpdateIndicator == "Main Carriage")
+            else
             {
-                if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.Vizion)
+                var fielName = PODShipmentUpdateIndicator == "Main Carriage" ? "MainCarriageETA" : PODShipmentUpdateIndicator;
+                    if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.Vizion)
                     shipmentPM.IsUpdatedVizionMainCarriageDates = true;
 
                 if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.OceanInsights)
                     shipmentPM.IsUpdatedOceanInsightsMainCarriageDates = true;
 
                 containerTrackingHelper.AddContainerDiscrepancy("POD MainCarriage", containerPM, shipmentPM);
-                this.FillFieldsShipmentNewValues("MainCarriageETA", containerPM.EstimatedPODVesselArrival, shipmentPM);
+                this.FillFieldsShipmentNewValues(fielName, containerPM.EstimatedPODVesselArrival, shipmentPM);
                 if (shipmentPM.MainCarriageATA == null)
                 {
-                    this.FillMainCarriageATA();
+                    this.FillMainCarriageATA(fielName);
                    
                 }
             }
@@ -854,14 +866,14 @@ namespace WebFreight.Web.ContainerTracking
 
             this.FillFieldsShipmentNewValues("OnCarriageATA", myDate, shipmentPM);
         }
-        private void FillMainCarriageATA()
+        private void FillMainCarriageATA(string fielName)
         {
             DateTime? myDate = containerPM.ActualPODVesselArrival;
 
             if (myTenant != null && myTenant.ShipmentATADateIndicator == "Container")
                 myDate = containerPM.ActualPODDischarge;
 
-            this.FillFieldsShipmentNewValues("MainCarriageATA", myDate, shipmentPM);
+            this.FillFieldsShipmentNewValues(fielName, myDate, shipmentPM);
         }
         private void SaveShipment()
         {
