@@ -627,6 +627,9 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
 
     public get AnswerForCollateralStatusName() { return this.EntityPM ? this.EntityPM.AnswerForCollateralStatusName : null; }
 
+    public get Errors() { return this.EntityPM ? this.EntityPM.Errors : null; }
+
+
     public get AllocatedAmount() { return this.EntityPM ? this.EntityPM.AllocatedAmount : null; }
     public set AllocatedAmount(newValue: number) {
         this.EntityPM.AllocatedAmount = newValue;
@@ -861,7 +864,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
 
         this._declarationExtendedListService.PostSendCollateral8212(requestParams).subscribe((res:any) => {
             SessionLocator.SelectedSession.StopBusyIndicator();
-            if (res.HasError == true) {
+            if (res.HasError == true) {                
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);
             }
