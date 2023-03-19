@@ -100,7 +100,7 @@ export class ShipmentDataSource extends DataSource<any | undefined> {
                         Name: d.Name,
                     }
                 ));
-                this.parent.InvitedCustomers=this.parent.InvitedCustomers.sort((a, b) => a["Name"].toUpperCase() > b["Name"].toUpperCase() ? 1 : a["Name"].toUpperCase() === b["Name"].toUpperCase() ? 0 : -1); 
+                this.parent.InvitedCustomers=this.parent.InvitedCustomers.sort((a, b) => a["Name"].replace(/[^\w\s]/g, "~").replace(/ /g, "").toUpperCase() > b["Name"].replace(/[^\w\s]/g, "~").replace(/ /g, "").toUpperCase() ? 1 : a["Name"].replace(/[^\w\s]/g, "~").replace(/ /g, "").toUpperCase() === b["Name"].replace(/[^\w\s]/g, "~").replace(/ /g, "").toUpperCase() ? 0 : -1);   
                 this.parent.FillInvitedCustomersDictionary(this.parent.InvitedCustomers);
                 this.ChangeDetector.detectChanges();
             }, error => {

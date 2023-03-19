@@ -141,7 +141,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
                     ...d
                 }
             ));
-            this.InvitedCustomers=this.InvitedCustomers.sort((a, b) => a["Name"].toUpperCase() > b["Name"].toUpperCase() ? 1 : a["Name"].toUpperCase() === b["Name"].toUpperCase() ? 0 : -1); 
+            this.InvitedCustomers=this.InvitedCustomers.sort((a, b) => a["Name"].replace(/[^\w\s]/g, "~").replace(/ /g, "").toUpperCase() > b["Name"].replace(/[^\w\s]/g, "~").replace(/ /g, "").toUpperCase() ? 1 : a["Name"].replace(/[^\w\s]/g, "~").replace(/ /g, "").toUpperCase() === b["Name"].replace(/[^\w\s]/g, "~").replace(/ /g, "").toUpperCase() ? 0 : -1); 
        this.FillInvitedCustomersDictionary(this.InvitedCustomers);
     }
 
