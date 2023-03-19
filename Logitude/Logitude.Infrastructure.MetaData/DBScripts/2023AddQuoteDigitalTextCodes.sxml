@@ -1,0 +1,195 @@
+﻿<Script  DBType="Main" Module="Infrastructure">
+  <Sql Version="16">
+    <![CDATA[
+	  declare @objectTableId as varchar(15)
+	  set @objectTableId = (select Id from ObjectTables where [Name] = 'Quote' and Tenant = 0)
+	  
+	  declare @newEntityId as varchar(15)
+	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
+	  
+	  declare @customerProfileId as varchar(15)
+	  set @customerProfileId = (select Id from DigitalProfiles where [Name] = 'Customer' and Tenant = 0 )
+	  
+	  declare @agentProfileId as varchar(15)
+	  set @agentProfileId = (select Id from DigitalProfiles where [Name] = 'Agent' and Tenant = 0 )
+	  
+	  declare @commonProfileId as varchar(15)
+	  set @commonProfileId = (select Id from DigitalProfiles where [Name] = 'Common' and Tenant = 0 )
+	  	  
+	  delete from DigitalTextCodes where Tenant = 0 and ObjectTableId = @objectTableId
+	  
+	  declare @labels nvarchar(MAX) = 
+	  '[
+		    {
+				"TextCode": "Quote.G.Quotes",
+				"DefaultText": "Quotes",
+				"FieldCode": "",
+				"DisplayText": ""
+			},
+		    {
+				"TextCode": "Quote.G.All",
+				"DefaultText": "All",
+				"FieldCode": "",
+				"DisplayText": ""
+			},
+		    {
+				"TextCode": "Quote.G.Accepted",
+				"DefaultText": "Accepted",
+				"FieldCode": "",
+				"DisplayText": ""
+			},
+		    {
+				"TextCode": "Quote.G.Rejected",
+				"DefaultText": "Rejected",
+				"FieldCode": "",
+				"DisplayText": ""
+			},
+		    {
+				"TextCode": "Quote.G.Expired",
+				"DefaultText": "Expired",
+				"FieldCode": "",
+				"DisplayText": ""
+			},	
+			{
+				"TextCode": "Quote.G.WaitingForApproval",
+				"DefaultText": "Waiting for approval",
+				"FieldCode": "",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.G.CreateDate",
+				"DefaultText": "Create date",
+				"FieldCode": "",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.G.Created",
+				"DefaultText": "Created",
+				"FieldCode": "Quote.OpenDate",
+				"DisplayText": ""
+			},	
+			{
+				"TextCode": "Quote.G.ExpirationDate",
+				"DefaultText": "Expiration date",
+				"FieldCode": "Quote.ExpirationDate",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.G.TransitTime",
+				"DefaultText": "Transit time",
+				"FieldCode": "Quote.TransitTime",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.G.Price",
+				"DefaultText": "Price",
+				"FieldCode": "",
+				"DisplayText": ""
+			},		
+			{
+				"TextCode": "Quote.G.QuoteNumber",
+				"DefaultText": "Quote number",
+				"FieldCode": "",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.F.QuoteNumber",
+				"DefaultText": "Quote No.",
+				"FieldCode": "Quote.QuoteNumber",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.G.TransportMode",
+				"DefaultText": "Transport mode",
+				"FieldCode": "Quote.TransportModeId",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.G.TransportModeName",
+				"DefaultText": "Transport mode name",
+				"FieldCode": "Quote.TransportModeName",
+				"DisplayText": ""
+			},		
+			{
+				"TextCode": "Quote.G.Customer",
+				"DefaultText": "Customer",
+				"FieldCode": "Quote.CustomerName",
+				"DisplayText": ""
+		    },
+			{
+				"TextCode": "Quote.G.ShipmentNumber",
+				"DefaultText": "Shipment number",
+				"FieldCode": "Quote.ShipmentNumber",
+				"DisplayText": ""
+		    },		
+			{
+				"TextCode": "Quote.G.LastStageDate",
+				"DefaultText": "Status updated",
+				"FieldCode": "Quote.LastStageDate",
+				"DisplayText": ""
+		    },
+			{
+				"TextCode": "Quote.G.StatusName",
+				"DefaultText": "Quote status",
+				"FieldCode": "",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.G.OriginCountry",
+				"DefaultText": "Origin country",
+				"FieldCode": "",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.G.DestinationCountry",
+				"DefaultText": "Destination country",
+				"FieldCode": "",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.G.ExpireDate",
+				"DefaultText": "Expire date",
+				"FieldCode": "",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.G.OriginCountryNoResultMsg",
+				"DefaultText": "No origin country found!",
+				"FieldCode": "",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.G.DestinationCountryNoResultMsg",
+				"DefaultText": "No destination country found!",
+				"FieldCode": "",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.G.Destination",
+				"DefaultText": "Destination",
+				"FieldCode": "",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.G.DownloadQuote",
+				"DefaultText": "Download quote",
+				"FieldCode": "",
+				"DisplayText": ""
+			},
+		]';
+	  
+	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate,  ProfileId, Labels) 
+	  values (@NewEntityId, 0, @objectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @customerProfileId, @labels);
+	  
+	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
+	  
+	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate,  ProfileId, Labels) 
+	  values (@NewEntityId, 0, @objectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @agentProfileId, @labels);
+	  
+	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
+	  
+	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate,  ProfileId, Labels) 
+	  values (@NewEntityId, 0, @objectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @commonProfileId, @labels);
+    ]]>       
+  </Sql>
+</Script>

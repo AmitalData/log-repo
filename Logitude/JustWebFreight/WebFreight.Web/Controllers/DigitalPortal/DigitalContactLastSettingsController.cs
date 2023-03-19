@@ -105,7 +105,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             {
                 return GetARInvoiceInitialFiltersList();
             }
-
+            else if (entity.Equals("Quote", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return GetQuoteInitialFiltersList();
+            }
             return null;
         }
 
@@ -199,6 +202,54 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             {
                 FilterCode = "AmountDue",
                 FilterName = "Open Amount",
+                IsChecked = true
+            });
+
+            return result;
+        }
+
+        private List<DigitalContactLastSetting> GetQuoteInitialFiltersList()
+        {
+            var result = new List<DigitalContactLastSetting>();
+            result.Add(new DigitalContactLastSetting
+            {
+                FilterCode = "TransportModeFilter",
+                FilterName = "Transport Mode",
+                IsChecked = true
+            });
+
+            result.Add(new DigitalContactLastSetting
+            {
+                FilterCode = "StatusFilter",
+                FilterName = "Status",
+                IsChecked = true
+            });
+
+            result.Add(new DigitalContactLastSetting
+            {
+                FilterCode = "From",
+                FilterName = "Origin country",
+                IsChecked = true
+            });
+
+            result.Add(new DigitalContactLastSetting
+            {
+                FilterCode = "To",
+                FilterName = "Destination country",
+                IsChecked = true
+            });
+
+            result.Add(new DigitalContactLastSetting
+            {
+                FilterCode = "Create Date",
+                FilterName = "Create date",
+                IsChecked = true
+            });
+
+            result.Add(new DigitalContactLastSetting
+            {
+                FilterCode = "ExpireDate",
+                FilterName = "Expire date",
                 IsChecked = true
             });
 

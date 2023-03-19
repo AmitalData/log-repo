@@ -37,9 +37,29 @@ namespace Logitude.BL.QuoteModel
             {
                 if (item.IsCustom)
                 {
-                    if (item.FieldName == "DigitalPortalSearchFields")
+                    if (item.FieldName == "From")
                     {
-                        queryableData = DigitalPortalCustomFilter.ApplyDigitalPortalSearchFilter(item, queryableData);
+                        queryableData = DigitalPortalCustomFilter.ApplyFromToFilter(item, queryableData);
+                    }
+
+                    if (item.FieldName == "To")
+                    {
+                        queryableData = DigitalPortalCustomFilter.ApplyFromToFilter(item, queryableData, true);
+                    }
+
+                    if (item.FieldName == "DigitalPortalQuotesSearchFields")
+                    {
+                        queryableData = DigitalPortalCustomFilter.ApplySearchFilter(item, queryableData);
+                    }
+
+                    if (item.FieldName == "TransportModeFilter")
+                    {
+                        queryableData = DigitalPortalCustomFilter.ApplyTransportModeFilter(item, queryableData, tenant);
+                    }
+
+                    if (item.FieldName == "StatusFilter")
+                    {
+                        queryableData = DigitalPortalCustomFilter.ApplyStatusFilter(item, queryableData);
                     }
 
                     if (item.FieldName == "IsCancelled")
