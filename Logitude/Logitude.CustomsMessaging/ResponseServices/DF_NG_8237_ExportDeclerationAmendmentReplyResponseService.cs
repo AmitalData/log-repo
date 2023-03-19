@@ -957,7 +957,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public bool SendDeclarationPrint(GenericRequestParams requestParams)
         {
             LogMessagingUtil.Instance.AppendLine("SendDeclarationPrint");
-            string decNum = this._MyDeclarationPMOrg != null ? this._MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber;
+            string decNum = this._MyDeclarationPMOrg != null && !string.IsNullOrEmpty(this._MyDeclarationPMOrg.DeclarationNumber) ? this._MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber;
             var decNumList = new List<string>();
             decNumList.Add(decNum);
 
