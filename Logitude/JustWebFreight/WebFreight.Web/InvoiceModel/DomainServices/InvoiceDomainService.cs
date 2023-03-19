@@ -170,7 +170,7 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
                 }
             }
 
-            if (SecurityUtility.CheckTableContactFeature("APPayment", "READ", tenant) && isFullAccounting == false)
+            if (SecurityUtility.CheckTableContactFeature("APPayment", "READ", tenant) )
             {
                 aPPaymentRepository = new APPaymentRepository(tenant);
 

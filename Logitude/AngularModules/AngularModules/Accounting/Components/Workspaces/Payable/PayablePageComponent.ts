@@ -298,6 +298,7 @@ export class PayablePageComponent {
         myService.GetAccountPayablesSummary().subscribe((myResult:any) => {
             if (myResult != null) {
                 this.APInvoicesDraftsCount = myResult.APInvoicesDraftsCount > 1000 ? "1000+" : myResult.APInvoicesDraftsCount.toString();
+                this.APPaymentsDraftsCount = myResult.APPaymentsDraftsCount;
             }
         });
     }
