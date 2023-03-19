@@ -38,6 +38,7 @@ using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Def.EntityPMs;
 using System.Transactions;
 using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.Data.EntityPOCOs;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -140,6 +141,28 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        public HttpResponseMessage GetConnectToFileNoNotToDeclaration(string exportFileNo)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                ExportStorageQueryService exportStorageQueryService = new ExportStorageQueryService(tenant);
+                List<ExportStorage> exportStorages = exportStorageQueryService.GetConnectToFileNoNotToDeclaration(exportFileNo, tenant);
+                    if(exportStorages!= null && exportStorages.Count > 0)
+                        return Request.CreateResponse(HttpStatusCode.OK, true);
+
+                return Request.CreateResponse(HttpStatusCode.OK, false);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
         }
     }
 }
