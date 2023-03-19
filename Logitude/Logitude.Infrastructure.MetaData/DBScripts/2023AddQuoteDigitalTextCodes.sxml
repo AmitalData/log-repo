@@ -1,5 +1,5 @@
 ﻿<Script  DBType="Main" Module="Infrastructure">
-  <Sql Version="16">
+  <Sql Version="18">
     <![CDATA[
 	  declare @objectTableId as varchar(15)
 	  set @objectTableId = (select Id from ObjectTables where [Name] = 'Quote' and Tenant = 0)
@@ -178,18 +178,19 @@
 			},
 		]';
 	  
-	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate,  ProfileId, Labels) 
-	  values (@NewEntityId, 0, @objectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @customerProfileId, @labels);
+	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate,  ProfileId, Labels, LanguageCode) 
+	  values (@NewEntityId, 0, @objectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @customerProfileId, @labels, 'EN');
 	  
 	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
 	  
-	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate,  ProfileId, Labels) 
-	  values (@NewEntityId, 0, @objectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @agentProfileId, @labels);
+	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate,  ProfileId, Labels, LanguageCode)
+	  values (@NewEntityId, 0, @objectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @agentProfileId, @labels, 'EN');
 	  
 	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
 	  
-	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate,  ProfileId, Labels) 
-	  values (@NewEntityId, 0, @objectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @commonProfileId, @labels);
+	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate,  ProfileId, Labels, LanguageCode) 
+	  values (@NewEntityId, 0, @objectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @commonProfileId, @labels, 'EN');
+	  
     ]]>       
   </Sql>
 </Script>
