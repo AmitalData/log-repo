@@ -1,4 +1,5 @@
-﻿using Simplog.Data.InfrastructureModel.Repositories;
+﻿using System.Web;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -7,6 +8,18 @@ namespace Logitude.Workflow.BL.FieldsMapping
 {
     public static partial class EntityFieldsMapping
     {
+        public static string GetLoggedUserId(int tenant)
+        {
+            string email = "system@tenant" + tenant + ".com";
+            if (HttpContext.Current != null)
+            {
+                email = HttpContext.Current.User.Identity.Name;
+            }
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
+            return loggedContact?.Id;
+        }
+
         public static string GetEntityObjectTableName(string entityObjectTableId, int tenant)
         {
             if (!string.IsNullOrEmpty(entityObjectTableId))

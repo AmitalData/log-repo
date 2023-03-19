@@ -50,7 +50,6 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     public EntitiesTreeItems: TreeSelectItem[];
     public ObjectFieldsTreeItems: TreeSelectItem[];
 
-    public ExcludeCustomEntities: boolean = false;
     public EnableAddConditions: boolean;
     public ShowConditionsOperation: boolean;
     public RecordsTypeChanged: boolean = false;
@@ -219,12 +218,10 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         if (recordsType === GetRecordTypes.ReadOnly) {
             this.EnableAddConditions = true;
             this.ShowConditionsOperation = true;
-            this.ExcludeCustomEntities = false;
         }
         else if (recordsType === GetRecordTypes.Editable) {
             this.EnableAddConditions = false;
             this.ShowConditionsOperation = false;
-            this.ExcludeCustomEntities = true;
         }
     }
 

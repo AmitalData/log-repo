@@ -9,7 +9,7 @@
 
     <ng-template #default let-item>
         <div [attr.title]="(item?.origin?.data ? item.origin.data['tooltip'] : null) || item.title"
-            style="padding:0 4px;">
+            [attr.data-cy]="(DataCy ? (DataCy + '_') : null) + item.key">
             {{ item.title }}
         </div>
     </ng-template>
