@@ -450,13 +450,13 @@ namespace WebFreight.Web.ContainerTracking
                 return new { Index = 0, PortField = "MainCarriageToPortId", EstimatedDateField = "MainCarriageETA", ActualDateField = "MainCarriageATA" };
 
             if (shipmentPM.Transshipment1ToPortId == leg.PortId)
-                return new { Index = 1, PortField = "Transshipment1FromPortId", EstimatedDateField = "Transshipment1ETA", ActualDateField = "Transshipment1ATA" };
+                return new { Index = 1, PortField = "Transshipment1ToPortId", EstimatedDateField = "Transshipment1ETA", ActualDateField = "Transshipment1ATA" };
 
             if (shipmentPM.Transshipment2ToPortId == leg.PortId)
-                return new { Index = 2, PortField = "Transshipment2FromPortId", EstimatedDateField = "Transshipment2ETA", ActualDateField = "Transshipment2ATA" };
+                return new { Index = 2, PortField = "Transshipment2ToPortId", EstimatedDateField = "Transshipment2ETA", ActualDateField = "Transshipment2ATA" };
 
             if (shipmentPM.Transshipment3ToPortId == leg.PortId)
-                return new { Index = 3, PortField = "Transshipment3FromPortId", EstimatedDateField = "Transshipment3ETA", ActualDateField = "Transshipment3ATA" };
+                return new { Index = 3, PortField = "Transshipment3ToPortId", EstimatedDateField = "Transshipment3ETA", ActualDateField = "Transshipment3ATA" };
 
             return null;
         }
