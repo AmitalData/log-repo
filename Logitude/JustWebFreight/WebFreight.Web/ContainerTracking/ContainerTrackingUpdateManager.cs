@@ -842,7 +842,7 @@ namespace WebFreight.Web.ContainerTracking
             else
             {
                 var fielName = PODShipmentUpdateIndicator == "Main Carriage" ? "MainCarriageETA" : PODShipmentUpdateIndicator;
-                    if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.Vizion)
+                if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.Vizion)
                     shipmentPM.IsUpdatedVizionMainCarriageDates = true;
 
                 if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.OceanInsights)
@@ -850,11 +850,7 @@ namespace WebFreight.Web.ContainerTracking
 
                 containerTrackingHelper.AddContainerDiscrepancy("POD MainCarriage", containerPM, shipmentPM);
                 this.FillFieldsShipmentNewValues(fielName, containerPM.EstimatedPODVesselArrival, shipmentPM);
-                if (shipmentPM.MainCarriageATA == null)
-                {
-                    this.FillMainCarriageATA(fielName);
-                   
-                }
+                this.FillMainCarriageATA(fielName);
             }
         }
         private void FillOnCarriageATA()
