@@ -1242,8 +1242,7 @@ export class CustomsDocumentTicketViewModel {
         }
     }
 
-    ViewDocumentsQuery() {
-
+    ViewDocumentsQuery(IsClose:boolean=false) {
 
         var windowArgs: any = this.EntityPM;
 
@@ -1257,13 +1256,14 @@ export class CustomsDocumentTicketViewModel {
         logWindow.Title = windowTitle;
         logWindow.ShowCloseButton = false;
         logWindow.WindowArgs = windowArgs;
+        logWindow.WindowArgs.IsClose = IsClose;
         logWindow.WindowClosed.subscribe(($event: any) => this.OnAddEditWindowClosed($event));
         logWindow.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
         logWindow.Show('./CustomsModules/CustomsDocuments/Components/DocumentsFilingsQueryComponent');
     }
 
     OnAddEditWindowClosed(event) {
-       debugger
+       
         if (event != 'cancel' && this.isDisplayOnly && !this.customsDocumentsTicketPM.RequestedCustomsDocId) {
             var messageWindow = new MessageWindow();
             messageWindow.Width = 400;
