@@ -19,7 +19,9 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public double? Rate { get; set; }
 
-                
+        public int? Unit { get; set; }
+
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? ValueDate { get; set; }
         public string UpdatedByUserId { get; set; }
