@@ -684,14 +684,67 @@ namespace CommunicationWorkerRole.Services
         private void SendHtmlDocument(string documentId, ReportSchedulerRecepients recepients, TasksSchedulerPM reportTask)
         {
             HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
-            System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
-            Byte[] htmlData = enc.GetBytes("");
+            SchedulerDetails schedulerDetails = GetSchedulerDetails(reportTask);
+            byte[] emailBody = GetEmailBody(schedulerDetails.ReportDetails.MessageTemplateId, reportTask.Tenant);
             string reportTableId = GetReportTableId(reportTask.Tenant);
-            htmlEditorHelper.SendHtmlDocument(htmlData, null, null, reportTask.Tenant, recepients.To, reportTask.Name, recepients.Cc, recepients.Bcc, reportTask.CreatedBy, reportTask.EntityId, reportTableId, documentId + ",", "", "", "");
+            htmlEditorHelper.SendHtmlDocument(emailBody, null, null, reportTask.Tenant, recepients.To, reportTask.Name, recepients.Cc, recepients.Bcc, reportTask.CreatedBy, reportTask.EntityId, reportTableId, documentId + ",", "", "", "");
             this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
             this.trackerCounter += 1;
         }
+        public byte[] GetEmailBody(string messageTemplateId, int tenant)
+        {
+            UTF8Encoding utf8Encoding = new UTF8Encoding();
+            if (string.IsNullOrEmpty(messageTemplateId) || string.IsNullOrWhiteSpace(messageTemplateId))
+            {
+                return utf8Encoding.GetBytes("");
+            }
+            string htmlTemplate = GetHtmlTemplate(messageTemplateId, tenant);
+            return utf8Encoding.GetBytes(htmlTemplate);
+        }
+        private string GetHtmlTemplate(string messageTemplateId, int tenant)
+        {
+            if (string.IsNullOrEmpty(messageTemplateId)) return "";
 
+            ReportsTemplatesVersionRepository reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(tenant);
+            string documentId = reportsTemplatesVersionRepository.GetReportDocumentIdByReportTemplateId(messageTemplateId, tenant);
+            string htmlstring = "";
+
+            if (string.IsNullOrEmpty(documentId)) return htmlstring;
+
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            BlobFileInfo fileInfo = new BlobFileInfo()
+            {
+                FileName = documentId,
+                FolderName = "reports",
+                Extension = "html",
+                Tenant = tenant,
+
+            };
+
+            var fileData = storageservice.Read(fileInfo);
+            string html = string.Empty;
+            if (fileData != null)
+            {
+                html = System.Text.Encoding.UTF8.GetString(fileData);
+            }
+
+            string userId = GetLoggedUser(tenant)?.Id;
+            HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
+            string subject = null;
+            string from = null;
+            string replyTo = null;
+            string cc = null;
+
+            htmlstring = htmlEditorHelper.ResolveSystemDataHtml(html, userId, ref subject, ref from, ref replyTo, ref cc, tenant);
+            return htmlstring;
+        }
+        private User GetLoggedUser(int tenant)
+        {
+            string email = AuthenticationUtil.GetLoggedUserEmail(tenant);
+            UserRepository userRepository = new UserRepository(tenant);
+            var loggedUser = userRepository.GetSingleUserByEmail(email, tenant, false);
+            return loggedUser;
+        }
         private string GetReportTableId(int tenant)
         {
             ObjectTableQuery objectTableQuery = new ObjectTableQuery(tenant);
