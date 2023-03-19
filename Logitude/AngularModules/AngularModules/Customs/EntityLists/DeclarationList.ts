@@ -168,9 +168,7 @@ export class DeclarationList {
 	AmendmentNumber: number;
 	CourierPendingReasonName: string;
 	LoadingDateTime: Date;
-	ShipCode: string;
 	IsExporterConfirmation: boolean;
-	ShipName: string;
 	DestinationCountryName: string;
 	Direction: string;
 	AgentRoleCode: string;
@@ -196,6 +194,7 @@ export class DeclarationList {
 	FinalLoadingSite: string;
 	ExportDeclarationOfficeCode: string;
 	PhysicalCheck: string;
+	ShipCodeName: string;
 	CargoTypeName: string;
 	SecondCargoID: string;
 	ThirdCargoID: string;
