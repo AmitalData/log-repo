@@ -10,6 +10,5 @@ export interface ARInvoiceDetails {
     VATType: string,
     Partner:string
     InvoiceNumber:string
-    Address:string
 
 }

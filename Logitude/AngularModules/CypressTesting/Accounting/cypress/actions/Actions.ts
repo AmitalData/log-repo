@@ -283,7 +283,7 @@ export function FillARInvoiceDetailsSAT(aRInvoiceDetails: ARInvoiceDetails) {
     }
     cy.SelectDropDownListItem(AccountingSelectors.LogLovARInvoiceInvoiceCurrency, aRInvoiceDetails.InvoiceCurrency)
     cy.FillDate(AccountingSelectors.ARInvoiceInvoiceDate, aRInvoiceDetails.InvoiceDate)
-    cy.FillLogLov(AccountingSelectors.ARInvoiceAddress, aRInvoiceDetails.Address, true)
+   // cy.FillLogLov(AccountingSelectors.ARInvoiceAddress, aRInvoiceDetails.Address, true)
     cy.FillLogLov(AccountingSelectors.ARInvoicePaymentTerm, aRInvoiceDetails.PaymentTerms, true)
     cy.FillDate(AccountingSelectors.ARInvoiceDueDate, aRInvoiceDetails.DueDate)
     cy.FillLogTextBox(AccountingSelectors.ARInvoiceVatNumber, aRInvoiceDetails.VATNo)
