@@ -54,7 +54,9 @@ export class NewARInvoiceComponent extends BaseComponent {
     public documentTypeTemplates: DocumentTypeTemplateList[] = [];
     public selectedDocumentTypeTemplate: DocumentTypeTemplateList;
     public IsLoadDocumentTemplateReady = false;
+    public IsDocumentTypeTemplateChange = false;
 
+    
     constructor(private entityResourceService: EntityResourceService) {
         super();
 
@@ -152,12 +154,11 @@ export class NewARInvoiceComponent extends BaseComponent {
     }
 
     BuildDocumentTypeTemplateDependedOnPartnerDefaultTemplate(documentTypeCode: string): any {
-        let selectedDocumentTypeTemplateId: string = null;
         if (!this.PartnerId) this.LoadDocumentTypeTemplate(documentTypeCode);
         this.myCardListService.getSingle(this.PartnerId).subscribe((myResponse: ServiceResponse) => {
             if (myResponse.HasError) return;
             let cardList: CardList = myResponse.Result;
-            selectedDocumentTypeTemplateId = this.GetPartnerDocumentTypeTemplatetDefault(cardList, documentTypeCode);
+            let selectedDocumentTypeTemplateId = this.GetPartnerDocumentTypeTemplatetDefault(cardList, documentTypeCode);
             this.LoadDocumentTypeTemplate(documentTypeCode, selectedDocumentTypeTemplateId);
         });
     }
@@ -191,6 +192,7 @@ export class NewARInvoiceComponent extends BaseComponent {
         if (!selectedDocumentTypeTemplate) return;
         this.OnDocumentTypeTemplateSelectedChanged(selectedDocumentTypeTemplate);
         this.IsLoadDocumentTemplateReady = true;
+        this.IsDocumentTypeTemplateChange = !this.IsDocumentTypeTemplateChange;
         this.CurrentSession.CurrentWindow.StopBusyIndicator();
     }
 
@@ -558,10 +560,12 @@ export class NewARInvoiceComponent extends BaseComponent {
                         var list: CardList = myResponse.Result;
                         if (list != null) {
                             this.BillToId = list.BillToId;
-                            this.GetDocumentTypeTemplates();
+                         
                             if (AppTool.IsNullOrEmpty(this.BillToId)) {
                                 this.BillToId = newValue;
                             }
+
+                            this.GetDocumentTypeTemplates();
                         }
                     }
                 });
