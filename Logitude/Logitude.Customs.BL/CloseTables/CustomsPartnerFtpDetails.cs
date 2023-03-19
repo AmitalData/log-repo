@@ -309,7 +309,7 @@ namespace Logitude.Customs.BL.CloseTables
               new InterfaceDetails()
             {
                 Code = InterfaceName_ECILSWSHAWB,
-                Name = "ש.מ.ב  מסוויספורט מרובה",
+                Name = "ש.מ.ב  מסוויספורט מרוכז",
                 TypeCode = TypeCode_In,
                 Partner = PartnerCode_ILSWS,
                 ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
@@ -319,7 +319,7 @@ namespace Logitude.Customs.BL.CloseTables
             new InterfaceDetails()
             {
                 Code = InterfaceName_ECILSWSHAWB_Splited,
-                Name = "ש.מ.ב  מסוויספורט מרובה",
+                Name = "ש.מ.ב  מסוויספורט מרוכז",
                 TypeCode = TypeCode_In,
                 Partner = PartnerCode_ILSWS,
                 ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
