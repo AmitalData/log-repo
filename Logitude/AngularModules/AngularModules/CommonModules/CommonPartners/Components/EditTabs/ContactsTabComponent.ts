@@ -227,6 +227,7 @@ export class ContactItemClass {
         this.EntityPM = item;
         this.IsNewEntity = isNewEntity; 
         this.CheckPrimary();
+        this.CheckEmailForSending()
       
     }
     GetIsHasExternalId() {
@@ -282,14 +283,16 @@ export class ContactItemClass {
     }
 
     SetEmailForSendingSingArinvoices() {
+        // debugger
         // this.fatherComponent.EntityPM['IsEmailForSendingSingArinvoice'] = true;
         
         // this.fatherComponent.ItemsSource.forEach(item => {
-        //     item.CheckPrimary();
+        //     item.CheckEmailForSending();
         // });
     }
 
     CheckEmailForSending() {
+        // debugger
 
         // var isEmailForSending = false;
         // var myCardPrimaryContactId = null;
@@ -302,7 +305,7 @@ export class ContactItemClass {
         //     }
         // }
      
-        //this.IsEmailForSending = isEmailForSending;
+        // this.IsEmailForSending = isEmailForSending;
     }
 }
 

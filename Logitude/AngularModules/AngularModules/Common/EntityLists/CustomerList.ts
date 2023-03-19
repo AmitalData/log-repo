@@ -155,5 +155,6 @@ export class CustomerList {
 		ATTN: string;
 		LastLoginDateViaPC: Date;
 		LastLoginDateViaMobile: Date;
+		IsEmailForSendingSingArinvoice: boolean;
 	
-}
+}

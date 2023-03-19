@@ -1318,6 +1318,11 @@ export class CustomerPM {
     public set IsPrivateLabelCustomer(newValue: boolean) { if (this.isPrivateLabelCustomer != newValue) { this.isPrivateLabelCustomer = newValue; this.MarkAsDirty("IsPrivateLabelCustomer"); } }
        
 	 
+    private isEmailForSendingSingArinvoice: boolean;
+    public get IsEmailForSendingSingArinvoice() { return this.isEmailForSendingSingArinvoice; }
+    public set IsEmailForSendingSingArinvoice(newValue: boolean) { if (this.isEmailForSendingSingArinvoice != newValue) { this.isEmailForSendingSingArinvoice = newValue; this.MarkAsDirty("IsEmailForSendingSingArinvoice"); } }
+       
+
     private isCreditLimitEnabled: boolean;
     public get IsCreditLimitEnabled() { return this.isCreditLimitEnabled; }
     public set IsCreditLimitEnabled(newValue: boolean) { if (this.isCreditLimitEnabled != newValue) { this.isCreditLimitEnabled = newValue; this.MarkAsDirty("IsCreditLimitEnabled"); } }
@@ -1496,4 +1501,4 @@ export class CustomerPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
