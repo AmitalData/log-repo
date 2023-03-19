@@ -83,6 +83,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="DBScripts\2023AddQuoteDigitalScreens.sxml" />
+    <None Include="DBScripts\2023AddQuoteDigitalTextCodes.sxml" />
+    <None Include="DBScripts\2023AddQuoteDigitalFieldSecurities.sxml" />
     <None Include="DBScripts\202301051306_FillParentObjectTbaleIdInDigitalPortalScreen.sxml" />
     <None Include="DBScripts\202301290901_FillContainersSettings.sxml" />
     <None Include="DBScripts\202008161345_RemoveCHWFeatureToggle.sxml" />

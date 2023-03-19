@@ -223,5 +223,7 @@ export class QuoteList {
 		ValidByTypeName: string;
 		ConnectedToOpportunity: boolean;
 		QuoteClosingReasonNotes: string;
+		DigitalPortalSearchFields: string;
+		StageCode: string;
 	
 }

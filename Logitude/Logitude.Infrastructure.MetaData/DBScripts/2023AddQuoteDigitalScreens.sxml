@@ -1,0 +1,98 @@
+﻿<Script  DBType="Main" Module="Infrastructure">
+  <Sql Version="2">
+    <![CDATA[
+	  declare @objectTableId as varchar(15)
+	  set @objectTableId = (select Id from ObjectTables where [Name] = 'Quote' and Tenant = 0)
+	  
+	  declare @newEntityId as varchar(15)
+	  
+	  declare @customerProfileId as varchar(15)
+	  set @customerProfileId = (select Id from DigitalProfiles where [Name] = 'Customer' and Tenant = 0 )
+	  
+	  declare @agentProfileId as varchar(15)
+	  set @agentProfileId = (select Id from DigitalProfiles where [Name] = 'Agent' and Tenant = 0 )
+	  	  
+	  delete from DigitalPortalScreens where Tenant = 0 and ObjectTableId = @objectTableId
+	  
+	  declare @content nvarchar(MAX) = 
+	  	  '
+			<LogTable>
+				<LogRow> </LogRow>
+			</LogTable>
+			<style>
+				@media screen and (min-width: 992px) {
+					.log-label {
+						/* Edit here to change labels styles for this card */
+					}
+					.log-field {
+						/* Edit here to change fields styles for this card */
+					}
+					.log-icon {
+						/* Edit here to change icons styles for this card */
+					}
+					.log-field-container {
+						/* Edit here to change fields containers styles for this card */
+					}
+					.log-column {
+						/* Edit here to change columns styles for this card */
+					}
+					.log-row {
+						/* Edit here to change rows styles for this card */
+					}
+					.log-table {
+						/* Edit here to change tables styles for this card */
+					}
+					.log-separator {
+						/* Edit here to change vertical separator styles for this card */
+					}
+				}
+			</style>  
+	  ';
+		
+	 -----------------------------------------------------------------------------------------------------------------------------------------------------------
+	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalPortalScreen'
+	  INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
+	  values (@newEntityId, 0, @objectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Quote list card item - Desktop', 'QLCID', 1, @customerProfileId, @content, @content);  
+	  
+	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalPortalScreen'
+	  INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
+	  values (@newEntityId, 0, @objectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Quote list card item - Desktop', 'QLCID', 1, @customerProfileId, @content, @content);  
+	  
+	                                                ----------------------------------------------------
+	
+	 
+	  
+	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalPortalScreen'  
+	  INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
+	  values (@newEntityId, 0, @objectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Quote list card item - Mobile', 'QLCIM', 1, @customerProfileId, @content, @content);  
+	  	  
+	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalPortalScreen'
+	  INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
+	  values (@newEntityId, 0, @objectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Quote list card item - Mobile', 'QLCIM', 1, @agentProfileId, @content, @content);  
+	  
+	  -----------------------------------------------------------------------------------------------------------------------------------------------------------
+	  	  
+	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalPortalScreen'  
+	  INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
+	  values (@newEntityId, 0, @objectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single invoice card item - Desktop', 'SQGID', 1, @customerProfileId, @content, @content);  
+	  	  
+	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalPortalScreen'
+	  INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
+	  values (@newEntityId, 0, @objectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single invoice card item - Desktop', 'SQGID', 1, @agentProfileId, @content, @content);  
+	  
+	  	                                                ----------------------------------------------------
+	  
+	  
+	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalPortalScreen'  
+	  INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
+	  values (@newEntityId, 0, @objectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single invoice card item - Mobile', 'SQGIM', 1, @customerProfileId, @content, @content);  
+	  	  
+	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalPortalScreen'
+	  INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
+	  values (@newEntityId, 0, @objectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single invoice card item - Mobile', 'SQGIM', 1, @agentProfileId, @content, @content);  
+	  
+	  	  -----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    ]]>       
+  </Sql>
+</Script>
