@@ -19,7 +19,6 @@ namespace CommunicationWorkerRole
         public ImporterPortsWorkerRole()
         {
             startDate = DateTime.Now;
-            importerPortService = new();
         }
         public override void Run()
         {
@@ -73,6 +72,7 @@ namespace CommunicationWorkerRole
         {
             int tenant = int.Parse(response.MessageValues["Tenant"].ToString());
             string portId = response.MessageValues["PortId"].ToString();
+            importerPortService = new(response);
             importerPortService.Run(portId , tenant);
         }
     }

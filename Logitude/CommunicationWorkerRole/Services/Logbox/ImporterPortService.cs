@@ -1,4 +1,5 @@
-﻿using Logitude.BL.CommonDataModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityAMs;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
@@ -6,12 +7,15 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
+using Logitude.SystemLogs;
+using Newtonsoft.Json;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,6 +30,7 @@ namespace CommunicationWorkerRole.Services.Logbox
         private string correlationId;
         APILogsService apiLogsService;
         QueueResponse Response;
+        private bool IsNewLog = false;
 
         public ImporterPortService(QueueResponse queueResponse)
         {
@@ -42,6 +47,7 @@ namespace CommunicationWorkerRole.Services.Logbox
             //APILOG
             LogPM = GetLogPM();
 
+            apiLogsService = new APILogsService(webFreightContext, tenant);
             PortQuery portQuery = new PortQuery(tenant);
             PortPM portPM = portQuery.GetSinglePM(portId, tenant);
 
@@ -51,35 +57,155 @@ namespace CommunicationWorkerRole.Services.Logbox
             //else
             //    APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "F", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(port), null, null, "");
 
-            //string documentsFilingObjectTableId = GetDocumentsFilingObjectTableId();
-            //LogPM.ObjectTableId = documentsFilingObjectTableId;
-            //LogPM.Tenant = tenant;
-            //LogPM.Subject = "Start Building Queues For Documents Batch ImporterShipmentDocuments Controller";
-            //if (isNewLog)
-            //{
-            //    CreateAPILog(LogPM);
-            //}
-
-            //PortQuery portQuery = new PortQuery(tenant);
-            //PortPM portPM = portQuery.GetSinglePM(portId, tenant);
             if (portPM == null) return;
-            //Reference
+            var GetURI = URI + "ImporterPorts/GetIfPortExists?tenant=" + tenant + "&portCode=" + portPM.Code + "&countryCode=" + portPM.CountryCode;
+            bool IsPortExist = false;
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add("Token", token);
+                using (var apiresponse = client.GetAsync(GetURI))
+                {
+                    apiresponse.Wait();
+                    if (apiresponse.Result.IsSuccessStatusCode)
+                    {
+                        var IsPortExistJsonString = apiresponse.Result.Content.ReadAsStringAsync().Result;
+                        var tempResult = JsonConvert.DeserializeObject(IsPortExistJsonString);
+                        if (tempResult != null)
+                        {
+                            IsPortExist = (bool)tempResult;
+                        }
+                    }
+                }
+            }
+            using (var client = new HttpClient())
+            {
+                string ImporterPortsURI = URI + "ImporterPorts";
+                client.DefaultRequestHeaders.Add("Token", token);
+                client.DefaultRequestHeaders.Add("CorrelationId", correlationId);
+                if (IsPortExist)
+                {
+                    PortAM portAM = new PortAM()
+                    {
+                        Id = portPM.Id,
+                        Code = portPM.Code,
+                        CountryCode = portPM.CountryCode,
+                        StateCode = portPM.StateCode,
+                        PortTimeZoneCode = portPM.PortTimeZoneCode,
+                        EnglishName = portPM.EnglishName,
+                        LocalName = portPM.LocalName,
+                    };
+                    LogPM.Subject = "Send updates Of Ports To Importer By ImporterPorts Controller";
+                    if (IsNewLog)
+                    {
+                        LogPM.QueueMessage = DictionaryJsonConverter.FromDictionaryToJson((Dictionary<string, string>)Response.MessageValues);
+                        LogPM.QueueType = "Port";
+                        apiLogsService.Create(LogPM);
+                    }
+                    var msg = "Start Sending Updates Of Port To Importer" + DateTime.Now;
+                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "I", Response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(portAM), null, null, "");
 
-            
-            // we need to get logbox api (portCode,CountryCode)   -> true/false
-            //isPortExist
+                    var serializedObject = JsonConvert.SerializeObject(portAM);
+                    var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
+                    var result = client.PutAsync(ImporterPortsURI, content);
+                    result.Wait();
+                    if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        try
+                        {
+                            var responseData = result.Result.Content.ReadAsStringAsync().Result;
+                            var Donemsg = "Updates Of Port Sent To Importer Successfully " + DateTime.Now;
+                            APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", Response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, responseData, null, "");
+                        }
+                        catch (Exception ex)
+                        {
+                            ExceptionHandler.HandleException(ex, DateTime.Now, tenant, "", "Import worker role, Updates Of Port", "", null);
+                            string errorMessage = ex.Message + Environment.NewLine;
 
-            //    new PortAM();
-            // if false -> create of ports -> create api (details)
-            // else update
+                            if (ex.InnerException != null)
+                            {
+                                errorMessage = errorMessage + " (" + (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) + ")" + Environment.NewLine;
+                            }
+                            errorMessage = errorMessage + ex.StackTrace + Environment.NewLine;
+                            throw new Exception(ex.Message, new Exception(errorMessage));
+                        }
+                    }
+                    else
+                    {
+                        APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
+                        if (EXC != null)
+                        {
+                            var Failmsg = EXC.ErrorType + " Fail To Send Shipment Updates To Importer Tenant " + DateTime.Now;
+                            APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "F", Response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(EXC), null, "");
+                            throw new Exception(EXC.ErrorType, new Exception(EXC.ErrorMessage));
+                        }
+                    }
+                }
+                else
+                {
+                    PortAM portAM = new PortAM()
+                    {
+                        Id = portPM.Id,
+                        Code = portPM.Code,
+                        CountryCode = portPM.CountryCode,
+                        StateCode = portPM.StateCode,
+                        PortTimeZoneCode = portPM.PortTimeZoneCode,
+                        EnglishName = portPM.EnglishName,
+                        LocalName = portPM.LocalName,
+                    };
+                    LogPM.Subject = "Send Port To Importers By ImporterPorts Controller";
+                    if (IsNewLog)
+                    {
+                        LogPM.QueueMessage = DictionaryJsonConverter.FromDictionaryToJson((Dictionary<string, string>)Response.MessageValues);
+                        LogPM.QueueType = "Port";
+                        apiLogsService.Create(LogPM);
+                    }
+                    var msg = "Start Sending Port To Importers " + DateTime.Now;
+                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, LogPM.Status, Response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(portAM), null, null, "");
+                    var serializedObject = JsonConvert.SerializeObject(portAM);
+                    var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
+                    var result = client.PostAsync(ImporterPortsURI, content);
+                    result.Wait();
 
-            // pass portAM to create 
+                    if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        var temp = result.Result.Content.ReadAsStringAsync().Result;
+                        try
+                        {
+                            var Donemsg = "Port Sent To Importer Successfully " + DateTime.Now;
+                            APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", Response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, temp, null, "");
+                        }
+                        catch (Exception ex)
+                        {
+                            ExceptionHandler.HandleException(ex, DateTime.Now, tenant, "", "Import worker role, Update CustomerShipmentNumber ", "", null);
+                            string errorMessage = ex.Message + Environment.NewLine;
+
+                            if (ex.InnerException != null)
+                            {
+                                errorMessage = errorMessage + " (" + (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) + ")" + Environment.NewLine;
+                            }
+
+                            errorMessage = errorMessage + ex.StackTrace + Environment.NewLine;
+                            throw new Exception(ex.Message, new Exception(errorMessage));
+                        }
+                    }
+                    else
+                    {
+                        APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
+                        var Failmsg = EXC.ErrorType + " Faild To Send Updates To Importer Tenant " + DateTime.Now;
+                        APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "F", Response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(EXC), null, "");
+                        if (EXC != null)
+                        {
+                            throw new Exception(EXC.ErrorType, new Exception(EXC.ErrorMessage));
+                        }
+                    }
+                }
+            }
         }
         private APILogsPM GetLogPM()
         {
             APILogsRepository aPILogsRepository = new APILogsRepository(webFreightContext);
             APILogs Log = aPILogsRepository.GetSingleAPILogsByCorrelationId(correlationId, tenant);
-            bool IsNewLog = false;
+            IsNewLog = false;
             APILogsPM LogPM;
             if (Log == null)
             {
