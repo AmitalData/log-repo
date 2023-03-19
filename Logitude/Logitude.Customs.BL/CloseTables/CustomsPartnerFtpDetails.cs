@@ -315,7 +315,7 @@ namespace Logitude.Customs.BL.CloseTables
                 TypeCode = TypeCode_In,
                 Partner = PartnerCode_ILSWS,
                 ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-                AnalyzeQueueService= AnalyzeQueueServiceEnum.ILSWSMultiQHAWBService,
+                AnalyzeQueueService= AnalyzeQueueServiceEnum.ILSWSMultiQHAWBSpliterService,
                 Subject="CourierHawbFeedBack ILSWS Raw"
             },
             new InterfaceDetails()
@@ -325,8 +325,7 @@ namespace Logitude.Customs.BL.CloseTables
                 TypeCode = TypeCode_In,
                 Partner = PartnerCode_ILSWS,
                 ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-
-                AnalyzeQueueService= AnalyzeQueueServiceEnum.ILSWSMultiQHAWBSpliterService,
+                AnalyzeQueueService= AnalyzeQueueServiceEnum.ILSWSMultiQHAWBService,
                 Subject="CourierHawbFeedBack ILSWS",
                 ServerInternalDef= true
             },
