@@ -595,11 +595,30 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     }
 
     SendButtonClicked() {
-        this.OkMethod(true);
+       
+       
+            this.OkMethod(true);
+        
     }
 
     OkMethod(isSendToQueue: boolean) {
         var errors = [];
+
+        if (AppTool.IsNullOrEmpty(this.DocumentTypeCode) && this.EntityPM.Direction == 'E') {
+            this.CurrentSession.StopBusyIndicator();
+            var messageWindow = new MessageWindow();
+            messageWindow.Width = 400;
+            messageWindow.Height = 200;
+            messageWindow.RTL=true;
+            messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+            messageWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.MustCustomDocumentType"));
+            messageWindow.WindowClosed.subscribe((event: any) => {
+
+                messageWindow.Close();
+
+            });
+            return;
+        }
         if (this.CustomsDocument) {
             Validator.TryValidateObject(this.CustomsDocument, "Customs.CustomsDocument", errors);
             if (errors.length > 0) {
@@ -1251,7 +1270,7 @@ export class MetaDataViewModel extends BaseComponent {
             else {
                 this.MetaDataType.ValuesTable = null;
             }
-        } 
+        }
 
 
         switch (MetaDataType.Format.toLocaleLowerCase()) {
