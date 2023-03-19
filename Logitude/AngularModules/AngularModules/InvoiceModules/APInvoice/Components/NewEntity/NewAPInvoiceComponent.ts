@@ -856,19 +856,39 @@ export class NewAPInvoiceComponent extends BaseComponent {
         this.CurrentSession.CloseCurrentWindowEmit("Ok");
     }
 
-    SetInvoiceLineVatType(list: ChargesTypeList, payable: ShipmentPayablePM, invoiceLine: APInvoiceLinePM) {
+    SetInvoiceLineVatType(chargesType: ChargesTypeList, payable: ShipmentPayablePM, invoiceLine: APInvoiceLinePM) {
+        var vatTypeId: string = null;
+        var inactiveVatTypeId: boolean = false;
 
         if (!AppTool.IsNullOrEmpty(this.VatTypeId)) {
-            invoiceLine.VatTypeId = this.VatTypeId;
+            var vendor_VAT: VatTypeList = this.AllVatTypes.filter(f => f.Id == this.VatTypeId)[0];
+            if (vendor_VAT != null && !vendor_VAT.InActive)
+                vatTypeId = this.VatTypeId;
+            else
+                inactiveVatTypeId = true;
         }
 
-        else if (payable.IsFromQuote && !AppTool.IsNullOrEmpty(payable.VatTypeId)) {
-            invoiceLine.VatTypeId = payable.VatTypeId;
+        if ((AppTool.IsNullOrEmpty(vatTypeId) || inactiveVatTypeId) && payable.IsFromQuote && !AppTool.IsNullOrEmpty(payable.VatTypeId)) {
+            var payable_VAT: VatTypeList = this.AllVatTypes.filter(f => f.Id == payable.VatTypeId)[0];
+            if (payable_VAT != null && !payable_VAT.InActive) {
+                vatTypeId = payable.VatTypeId;
+                inactiveVatTypeId = false
+            }
+            else
+                inactiveVatTypeId = true;
         }
 
-        else if (list) {
-            invoiceLine.VatTypeId = list.VatTypeId;
+        if ((AppTool.IsNullOrEmpty(vatTypeId) || inactiveVatTypeId) && chargesType != null) {
+            var chargesType_VAT: VatTypeList = this.AllVatTypes.filter(f => f.Id == chargesType.VatTypeId)[0];
+            if (chargesType_VAT != null && !chargesType_VAT.InActive) {
+                vatTypeId = chargesType.VatTypeId;
+                inactiveVatTypeId = false
+            }
+            else
+                inactiveVatTypeId = true;
         }
+
+        invoiceLine.VatTypeId = vatTypeId;
 
         if (!AppTool.IsNullOrEmpty(invoiceLine.VatTypeId)) {
             var list_VAT: VatTypeList = this.AllVatTypes.filter(f => f.Id == invoiceLine.VatTypeId)[0];
