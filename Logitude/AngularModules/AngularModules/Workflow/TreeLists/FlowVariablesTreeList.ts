@@ -42,21 +42,21 @@ export class FlowVariablesTreeList {
     private initialize(flowObject: any, currentNodeId: string, flowVariablesTreeListProperties: FlowVariablesTreeListProperties) {
         this.FlowObject = flowObject;
         this.CurrentNodeId = currentNodeId;
-        this.FlowVariablesTreeListProperties = flowVariablesTreeListProperties || this.getDefaultFlowVariablesTreeListProperties();
+        this.FlowVariablesTreeListProperties = this.handleFlowVariablesTreeListProperties(flowVariablesTreeListProperties);
     }
 
-    private getDefaultFlowVariablesTreeListProperties() {
-        let defaultProperties: FlowVariablesTreeListProperties = {
-            ShowRecordsVariables: false,
-            ShowDeclaredVariables: false,
-            ShowRecordsCollectionVariables: false,
-            ShowDeclaredCollectionVariables: false,
-            ShowGlobalVariables: false,
-            OnlyCurrentLoopItemVariables: false,
-            IsObjectVariableSelectable: false,
-            IsNoChildrenObjectVariables: false
+    private handleFlowVariablesTreeListProperties(flowVariablesTreeListProperties: FlowVariablesTreeListProperties) {
+        let properties: FlowVariablesTreeListProperties = {
+            ShowRecordsVariables: flowVariablesTreeListProperties?.ShowRecordsVariables || false,
+            ShowDeclaredVariables: flowVariablesTreeListProperties?.ShowDeclaredVariables || false,
+            ShowRecordsCollectionVariables: flowVariablesTreeListProperties?.ShowRecordsCollectionVariables || false,
+            ShowDeclaredCollectionVariables: flowVariablesTreeListProperties?.ShowDeclaredCollectionVariables || false,
+            ShowGlobalVariables: flowVariablesTreeListProperties?.ShowGlobalVariables || false,
+            OnlyCurrentLoopItemVariables: flowVariablesTreeListProperties?.OnlyCurrentLoopItemVariables || false,
+            IsObjectVariableSelectable: flowVariablesTreeListProperties?.IsObjectVariableSelectable || false,
+            IsNoChildrenObjectVariables: flowVariablesTreeListProperties?.IsNoChildrenObjectVariables || false
         };
-        return defaultProperties;
+        return properties;
     }
 
     private initializeTreeItems() {
@@ -131,8 +131,8 @@ export class FlowVariablesTreeList {
                 let isReadOnly = getRecordNode.data["recordsType"] === GetRecordTypes.ReadOnly;
                 let treeSelectItemKey = Formatter.getCodeFromName(treeSelectItemName);
                 let treeSelectItemChildren = this.getObjectFieldsItems(treeSelectItemKey, entity, returnedFieldsCodes, getRecordNode.id, isReadOnly);
-                let itemData = { isReadOnlyVariable: isReadOnly, nodeId: getRecordNode.id };
-                let selectable = this.FlowVariablesTreeListProperties.IsNoChildrenObjectVariables;
+                let itemData = { isReadOnlyVariable: isReadOnly, type: (entity || null), nodeId: getRecordNode.id };
+                let selectable = this.FlowVariablesTreeListProperties.IsObjectVariableSelectable || this.FlowVariablesTreeListProperties.IsNoChildrenObjectVariables;
                 let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemTitle || treeSelectItemName, false, selectable, false, false, treeSelectItemChildren, itemData);
                 recordsVariablesItemChildren.push(treeSelectItem);
                 this.ItemsList.push(treeSelectItem);
