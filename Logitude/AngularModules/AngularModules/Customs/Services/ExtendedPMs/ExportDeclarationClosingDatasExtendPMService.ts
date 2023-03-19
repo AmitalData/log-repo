@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
@@ -35,6 +35,26 @@ export class ExportDeclarationClosingDatasExtendPMService {
 
 
             }),catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    GetSupplierInvoiceModificationsForDeclaration(declarationid: string) {
+
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        authHeader.append('Content-Type', 'application/json');
+
+        var serviceResponse: ServiceResponse;
+        serviceResponse = new ServiceResponse();
+
+        var callTime = new Date();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetSupplierInvoiceModificationsForDeclaration?' + 'declarationid=' + declarationid, ServiceHelper.GetHttpHeaders()).pipe(map(res => {
+                serviceResponse.Result = res;
+                return serviceResponse;
+
+
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 

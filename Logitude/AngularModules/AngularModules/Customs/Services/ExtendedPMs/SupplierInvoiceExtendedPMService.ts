@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -33,6 +33,8 @@ import { SupplierInvoicePaymentPM } from '../../EntityPMs/SupplierInvoicePayment
 import { SupplierInvoiceUCRPM } from '../../EntityPMs/SupplierInvoiceUCRPM';
 import { SuppInvoiceItemsAbachStatementPM } from '../../EntityPMs/SuppInvoiceItemsAbachStatementPM';
 import { SupplierInvoiceItemsPricePM } from '../../EntityPMs/SupplierInvoiceItemsPricePM';
+import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
+import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
 
 @Injectable()
 
@@ -263,6 +265,61 @@ export class SupplierInvoiceExtendedPMService {
 
 
     }
+
+    updateSupplierInvoiceModifications(entityPMs: SupplierInvoicePM[]) {
+
+        var callTime = new Date();
+
+        return defer(() => {
+
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+            var validator: ClassLevelValidator = new ClassLevelValidator();
+            var errorsArray = [];
+            entityPMs.forEach(x => {
+                errorsArray = validator.Validate("Customs.SupplierInvoice", x);
+                if (errorsArray.length != 0) {
+                    serviceResponse.HasError = true;
+                    serviceResponse.ErrorsArray = errorsArray;
+                    return of(serviceResponse);
+                }
+            });
+             
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+
+            if (errorsArray.length == 0) {
+
+                //var mappedEntity: SupplierInvoicePM = this.MapJsonToEntityPM(entityPM, false);
+
+                return this._http.put(this._apiUrl + '/PutUpdateSupplierInvoiceModifications/', JSON.stringify(entityPMs), ServiceHelper.GetHttpHeaders())
+                    .pipe(
+                        map((response) => {
+
+                            var pm = response;
+                            if (pm) {
+                                //var mappedResult: SupplierInvoicePM = this.MapJsonToEntityPM(pm, true, entityPM);
+                                serviceResponse.Result = pm;
+                            }
+
+                            //var servertime = response.headers.get('ServerExecutionTime');
+                            //PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "SupplierInvoice", "SaveChanges", "");
+
+                            return serviceResponse;
+                        }),
+
+                        catchError(ServiceHelper.HandleServiceError));
+            }
+
+            else {
+                serviceResponse.HasError = true;
+                serviceResponse.ErrorsArray = errorsArray;
+                return of(serviceResponse);
+            }
+        });
+    }
+
 
 
 
