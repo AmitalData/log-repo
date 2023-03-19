@@ -1085,6 +1085,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
 
+
                     }
 
                     if (governmentAgencyGoodsItem.GovernmentProcedure != null && governmentAgencyGoodsItem.GovernmentProcedure.Count() > 0)
