@@ -117,6 +117,9 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
         
         filters.addAdditionalFilter("Direction", 'E', null, null, "Equals", false, false, false, "string", false);
         filters.addAdditionalFilter("IsConsOfDecEquelsCont", this.EntityPM.Id, null, null, "Contains", true, false, false, "string");
+        filters.addAdditionalFilter("KeyCargo1", this.EntityPM.CargoTypeCode,this.EntityPM.ManifestNumber , null, "Contains", true, false, false, "string");
+        filters.addAdditionalFilter("KeyCargo2", this.EntityPM.SecondCargoID, this.EntityPM.ThirdCargoID,null, "Contains", true, false, false, "string");
+
 
         return this.containerizationExtendedListService.getByFilters(filters)
             .subscribe(r => {
@@ -143,6 +146,9 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
         filters.GetAll = false;
         filters.GetCount = true;
         filters.addAdditionalFilter("Id", this.EntityPM.ConnectedDeclarations, null, null, "InListExact", false, false, false, "string", this.EntityPM.ConnectedDeclarations.length == 0);
+        filters.addAdditionalFilter("KeyCargo1", this.EntityPM.CargoTypeCode,this.EntityPM.ManifestNumber , null, "Contains", true, false, false, "string");
+        filters.addAdditionalFilter("KeyCargo2", this.EntityPM.SecondCargoID, this.EntityPM.ThirdCargoID,null, "Contains", true, false, false, "string");
+
         return this.containerizationExtendedListService.getByFilters(filters)
             .subscribe(r => {
                 r.Result.forEach(element => {
