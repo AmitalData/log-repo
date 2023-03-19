@@ -66,6 +66,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
     ResultType: string;
     ReportEntityId: string;
     ObjectTableId: string;
+    public MessageTemplateIds: string[] = [];
+
     constructor(public _reportService: ReportService, private cd: ChangeDetectorRef) {
         var idIndex = this.CurrentSession.GetNewId("ReportsPreviewComponent");
         this.ComponentId = "ReportsPreview_" + idIndex;
@@ -84,7 +86,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         this.Title = SessionLocator.LoggedUserPM.DontShowLocal ? ReportList.Name : ReportList.LocalName;
         this.FilterControlName = ReportList.FilterControlName;
         this.ReportsRunUsingWR = true;
-        this.ObjectTableId = window.ObjectTables.filter(table => table.Name == "Report")[0]?.Id;
+        this.ObjectTableId = window.ObjectTables.filter(table => table.Name == "TasksScheduler")[0]?.Id;
         this.RunComponent();
     }
 

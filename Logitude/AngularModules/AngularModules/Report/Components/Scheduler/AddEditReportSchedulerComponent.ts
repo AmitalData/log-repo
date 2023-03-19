@@ -411,7 +411,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
             DWQueryId: null,
             DWQueryFilterData: null,
             DocumentTypeTemplateId: this.PageChild_PRREP ? this.GetDocumentTemplateMessageId() : this.OldReportSchedulerDetails.DocumentTypeTemplateId,
-            DocumentTypeTemplateIds: null,
+            DocumentTypeTemplateIds: this.PageChild_PRREP ? this.PageChild_PRREP.MessageTemplateIds : this.OldReportSchedulerDetails.DocumentTypeTemplateIds,
             MessageTemplateId: this.PageChild_PRREP ? this.PageChild_PRREP.GetMessageTemplateId() : this.OldReportSchedulerDetails?.MessageTemplateId,
         };
         this.PageChild_RETASK.SaveButtonClicked(reportSchedulerDetails);

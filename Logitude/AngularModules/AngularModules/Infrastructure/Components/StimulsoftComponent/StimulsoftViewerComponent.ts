@@ -25,7 +25,7 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { ReportsTemplatePM } from '../../../Common/EntityPMs/ReportsTemplatePM';
-import { StimulsoftViewerService } from './Services/StimulsoftViewerService';
+import { SchedulerReportMessageTemplateService } from './Services/SchedulerReportMessageTemplateService';
 
 @Component({
 
@@ -101,14 +101,15 @@ export class StimulsoftViewerComponent implements OnInit {
     FontSizeLists: number[] = [];
     public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService;
     private CurrentSession = SessionLocator.SelectedSession;
-    private stimulsoftViewerService: StimulsoftViewerService;
+    private schedulerReportMessageTemplateService: SchedulerReportMessageTemplateService;
+
     constructor() {
 
 
         this.FillFontSizeLists();
 
-        if (this.stimulsoftViewerService == null) {
-            this.stimulsoftViewerService = new StimulsoftViewerService();
+        if (this.schedulerReportMessageTemplateService == null) {
+            this.schedulerReportMessageTemplateService = new SchedulerReportMessageTemplateService();
         }
 
         if (this.documentTypeTemplatePMService == null) {
@@ -1362,10 +1363,11 @@ ResetEditableField(field: EditableFieldPosition){
         let args = {
             EntityId: (this.StimulsoftArgData?.EntityId) ? this.StimulsoftArgData.EntityId : null,
             ObjectTableId: (this.StimulsoftArgData?.ObjectTableId) ? this.StimulsoftArgData.ObjectTableId : null,
-            DataViewModel: this
+            DataViewModel: this,
+            ParentEntityId: (this.StimulsoftArgData?.ReportsPreviewComponent?.Report?.Id) ? this.StimulsoftArgData.ReportsPreviewComponent.Report.Id : null,
         }
-        this.stimulsoftViewerService.SetArgs(args);
-        this.stimulsoftViewerService.EditMessageTemplate(selectedMessageTemplateList);
+        this.schedulerReportMessageTemplateService.SetArgs(args);
+        this.schedulerReportMessageTemplateService.Edit(selectedMessageTemplateList);
     }
 
     
@@ -1373,15 +1375,16 @@ ResetEditableField(field: EditableFieldPosition){
         let args = {
             EntityId: (this.StimulsoftArgData?.EntityId) ? this.StimulsoftArgData.EntityId : null,
             ObjectTableId: (this.StimulsoftArgData?.ObjectTableId) ? this.StimulsoftArgData.ObjectTableId : null,
-            DataViewModel: this
+            DataViewModel: this,
+            ParentEntityId: (this.StimulsoftArgData?.ReportsPreviewComponent?.Report?.Id) ? this.StimulsoftArgData.ReportsPreviewComponent.Report.Id : null,
         }
-        this.stimulsoftViewerService.SetArgs(args);
-        this.stimulsoftViewerService.AddMessageTemplate();
+        this.schedulerReportMessageTemplateService.SetArgs(args);
+        this.schedulerReportMessageTemplateService.Add();
     }
 
     EditMessageTemplateListFromPM(reportTemplatePM) {
         if (!reportTemplatePM) return;
-        let reportTemplateList = this.stimulsoftViewerService.MapMessageTemplatePMToList(reportTemplatePM);
+        let reportTemplateList = this.schedulerReportMessageTemplateService.MapMessageTemplatePMToList(reportTemplatePM);
         this.MessageTemplatesLists = this.MessageTemplatesLists.filter(temp => temp.Id != reportTemplatePM.Id);
         this.MessageTemplatesLists.push(reportTemplateList);
         this.MessageTemplatesChange(reportTemplateList);
@@ -1390,7 +1393,7 @@ ResetEditableField(field: EditableFieldPosition){
 
     AddNewMessageTemplateListFromPM(reportTemplatePM) {
         if (!reportTemplatePM) return;
-        let reportTemplateList = this.stimulsoftViewerService.MapMessageTemplatePMToList(reportTemplatePM);
+        let reportTemplateList = this.schedulerReportMessageTemplateService.MapMessageTemplatePMToList(reportTemplatePM);
         this.MessageTemplatesLists.push(reportTemplateList);
         this.SelectedMessageTemplateList = this.MessageTemplatesLists.filter(temp => temp.Id == reportTemplateList.Id)[0];
         this.MessageTemplatesChange(reportTemplateList);

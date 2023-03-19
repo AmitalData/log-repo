@@ -23,6 +23,7 @@ import {HtmlEditorService} from '../../../../Common/Services/DocumentServices/Ht
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {ReportsTemplatePMExtendedService} from '../../../../Common/Services/ExtendedPMs/ReportsTemplatePMExtendedService';
+import { ReportsTemplatePMService } from '../../../../Common/Services/StandardPMs/ReportsTemplatePMService';
 declare var insertAtSubject, StringToBase64, querySelection, resultToUnitArray, Base64ToString: any;
 
 @Component({
@@ -168,7 +169,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
 
 
-        this.IsFromScheduler = args.IsFromScheduler;
+        this.IsFromScheduler = args.IsFromScheduler;        
         if (this.TemplateId) this.Run(args);
 
     }
@@ -186,7 +187,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
         this.froalaEditorSetting.PageType = "HtmlDocumentPreview";
 
-        this.froalaEditorSetting.Id = Guid.newGuid();
+        this.froalaEditorSetting.Id = Guid.newGuid();       
         this.SubjectId = Guid.newGuid();
         this.FromId = Guid.newGuid();
         this.ReplyToId = Guid.newGuid();
@@ -269,29 +270,11 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
             }
             else {
 
-                if (this.PageType == "ReportTemplate") {
-
-                    this.template = args.ReportTemplatePM;
-                    if (this.template) {
-                        this.FillProp();
-                        this.SetVisiablity();
-                        if (args.IsNewEntity) {
-                            if (this.template.TemplateData && this.template.TemplateData.length > 0) {
-                                var htmlBody = Base64ToString(this.template.TemplateData);
-
-                                this.froalaEditorSetting.HtmlString = htmlBody;
-                                if (this.froalaEditorSetting.froalaEditorComponent) {
-                                    this.froalaEditorSetting.froalaEditorComponent.SetHtml(htmlBody);
-                                    this.ReloadFroalaEditor();
-                                }
-                            }
-
-                            this.CurrentSession.CurrentWindow.StopBusyIndicator();
-
-                        } else this.LoadReportTemplateDate();               
-
-                    } else this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                  
+                if (this.PageType == "ReportTemplate" && !this.IsFromScheduler) {
+                    this.LoadReportTemplate(args);                 
+                }
+                else if (this.PageType == "ReportTemplate" && this.IsFromScheduler) {
+                    this.LoadReportTemplatePM(args);
                 }
 
                 else  if (this.PageType == "Signature") {
@@ -332,6 +315,37 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
         }
     }
+    private LoadReportTemplate(args: any) {
+        this.template = args.ReportTemplatePM;
+        if (!this.template) {
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+            return;
+        }
+
+        this.FillProp();
+        this.SetVisiablity();
+        if (!args.IsNewEntity) {
+            this.LoadReportTemplateDate();
+            return;
+        }
+
+        if (!this.template.TemplateData || this.template.TemplateData.length == 0) {
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+            return;
+        }
+
+        let htmlBody = Base64ToString(this.template.TemplateData);
+
+        this.froalaEditorSetting.HtmlString = htmlBody;
+        if (this.froalaEditorSetting.froalaEditorComponent) {
+            this.froalaEditorSetting.froalaEditorComponent.SetHtml(htmlBody);
+            this.ReloadFroalaEditor();
+        }
+        this.CurrentSession.CurrentWindow.StopBusyIndicator();
+            
+           
+    }
+
     SetVisiablity() {
         let objectTableName = this.GetObjectTableName();
 
@@ -1226,6 +1240,17 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
         logWindow.Height = 500;
         logWindow.WindowArgs = windowArgs;
         logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocumentDefaultExternalAttachmentsComponent");
+    }
+
+    LoadReportTemplatePM(args: any) {
+        if (!args.TemplateId) return;
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
+        new ReportsTemplatePMService().get(args.TemplateId).subscribe((response: ServiceResponse) => {
+            if (response.HasError || !response.Result) return;
+            args.ReportTemplatePM = response.Result;
+            this.LoadReportTemplate(args);
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+        });
     }
 
 }

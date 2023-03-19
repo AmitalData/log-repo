@@ -126,7 +126,7 @@ import { DeploymentPackageExecutionLogList } from './EntityLists/DeploymentPacka
 import { DeploymentPackageExecutionLogPMService } from './Services/StandardPMs/DeploymentPackageExecutionLogPMService';
 import { DeploymentPackageExecutionLogListService } from './Services/StandardLists/DeploymentPackageExecutionLogListService';
 import { DeploymentPackageExecutionLogListExtendedService } from './Services/ExtendedLists/DeploymentPackageExecutionLogListExtendedService';
-import { StimulsoftViewerService } from './Components/StimulsoftComponent/Services/StimulsoftViewerService';
+import { SchedulerReportMessageTemplateService } from './Components/StimulsoftComponent/Services/SchedulerReportMessageTemplateService';
 
 export class ModuleProviders {
 
@@ -255,7 +255,7 @@ export class ModuleProviders {
             case "DeploymentPackageExecutionLogPMService": { myResult = new DeploymentPackageExecutionLogPMService(); break; }
             case "DeploymentPackageExecutionLogListService": { myResult = new DeploymentPackageExecutionLogListService(); break; }
             case "DeploymentPackageExecutionLogListExtendedService": { myResult = new DeploymentPackageExecutionLogListExtendedService(); break; }
-            case "StimulsoftViewerService": { myResult = new StimulsoftViewerService(); break;}
+            case "SchedulerReportMessageTemplateService": { myResult = new SchedulerReportMessageTemplateService(); break;}
         }
 
         return myResult;

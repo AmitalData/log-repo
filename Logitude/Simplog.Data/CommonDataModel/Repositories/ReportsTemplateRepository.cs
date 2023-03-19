@@ -102,5 +102,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
             throw new System.NotImplementedException();
         }
 
+        public IQueryable<ReportsTemplate> GetMessageTemplatesByMessageTemplateIds(List<string> messageTemplateIds, int tenant)
+        {
+            return from a in context.ReportsTemplates
+                   where a.Tenant == tenant && messageTemplateIds.Contains(a.Id)
+                   select a;
+        }
+
     }
 }
