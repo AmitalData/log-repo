@@ -1318,9 +1318,9 @@ export class CustomerPM {
     public set IsPrivateLabelCustomer(newValue: boolean) { if (this.isPrivateLabelCustomer != newValue) { this.isPrivateLabelCustomer = newValue; this.MarkAsDirty("IsPrivateLabelCustomer"); } }
        
 	 
-    private isEmailForSendingSingArinvoice: boolean;
-    public get IsEmailForSendingSingArinvoice() { return this.isEmailForSendingSingArinvoice; }
-    public set IsEmailForSendingSingArinvoice(newValue: boolean) { if (this.isEmailForSendingSingArinvoice != newValue) { this.isEmailForSendingSingArinvoice = newValue; this.MarkAsDirty("IsEmailForSendingSingArinvoice"); } }
+    private emailForSendingSingArinvoice: boolean;
+    public get EmailForSendingSingArinvoice() { return this.emailForSendingSingArinvoice; }
+    public set EmailForSendingSingArinvoice(newValue: boolean) { if (this.emailForSendingSingArinvoice != newValue) { this.emailForSendingSingArinvoice = newValue; this.MarkAsDirty("EmailForSendingSingArinvoice"); } }
        
 
     private isCreditLimitEnabled: boolean;

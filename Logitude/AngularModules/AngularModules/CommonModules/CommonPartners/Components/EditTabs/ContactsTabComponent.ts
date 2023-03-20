@@ -255,7 +255,7 @@ export class ContactItemClass {
     
     
     public IsPrimary: boolean = false;
-    public IsEmailForSending : boolean = false;
+    public EmailForSending : boolean = false;
 
     CheckPrimary() {
 
@@ -283,27 +283,25 @@ export class ContactItemClass {
     }
 
     SetEmailForSendingSingArinvoices() {
-        // debugger
-        // this.fatherComponent.EntityPM['EmailForSendingSingArinvoice'] = this.Id;
-        // var myCardPrimaryContactId = this.Id;
-        // this.fatherComponent.ItemsSource.forEach(item => {
-        //     item.CheckEmailForSending(myCardPrimaryContactId);
-        // });
+        this.fatherComponent.EntityPM['EmailForSendingSingArinvoice'] = this.Id;
+        var myCardPrimaryContactId = this.Id;
+        this.fatherComponent.ItemsSource.forEach(item => {
+            item.CheckEmailForSending(myCardPrimaryContactId);
+        });
     }
 
     CheckEmailForSending(myCardPrimaryContactId: string=null) {
-        // debugger
 
-        // var isEmailForSending = false; 
-        // if (this.fatherComponent && this.fatherComponent.EntityPM) {
-        //     if (!AppTool.IsNullOrEmpty(myCardPrimaryContactId)) {
-        //         if (myCardPrimaryContactId == this.Id) {
-        //             isEmailForSending = true;
-        //         }
-        //     }
-        // }
+        var emailForSending = false; 
+        if (this.fatherComponent && this.fatherComponent.EntityPM) {
+            if (!AppTool.IsNullOrEmpty(myCardPrimaryContactId)) {
+                if (myCardPrimaryContactId == this.Id) {
+                    emailForSending = true;
+                }
+            }
+        }
      
-        // this.IsEmailForSending = isEmailForSending;
+        this.EmailForSending = emailForSending;
     }
 }
 
