@@ -30,7 +30,7 @@ namespace Logitude.Customs.Data.CustomFilters
 
                 if (item.FieldName == "ExportDecWithoutRelease")
                 {
-                    queryableData = queryableData.Where(d => (d.IsExportClosed == false));
+                    queryableData = queryableData.Where(d => (d.IsExportClosed == false && d.IsClose==false));
 
                 }
 

@@ -508,7 +508,7 @@ export class NewContainerizationComponent extends BaseComponent {
 
                      var ConnectedDeclarations =""  ;
                     res.Result.forEach(a=>ConnectedDeclarations+=(a+","));
-                    this.entityPM.ConnectedDeclarations = ConnectedDeclarations;
+                    this.entityPM.ConnectedDeclarations += ConnectedDeclarations;
                     this.entityPM.OperationMode = "2";
                     this.entityPM.IsChange = true;
                     SessionLocator.SelectedSession.CurrentEditComponent.EntityPM = this.entityPM;
@@ -522,8 +522,7 @@ export class NewContainerizationComponent extends BaseComponent {
 
         }
         else {
-
-
+             
 
                 var windowArgs: any = {};
 
@@ -548,14 +547,13 @@ export class NewContainerizationComponent extends BaseComponent {
                             this.containerizationExtendedListService.CreateContainerizations(this.entityPM).subscribe((response: ServiceResponse) => {
 
 
-
-                                    if (response.Result.list[0].Id == "0") {
+                                if (response.Result.list[0].Id == "0") {
                                         SessionLocator.SelectedSession.StopBusyIndicator();
                                         myConfirmWindow.Show(`מתוך המכלה מבוטלת ניתן לעדכן המכלה אחת בלבד`);
                                         myConfirmWindow.IsYesEnabled = false;
 
-                                    }
-                                    else {
+                                }
+                                else {
                                         let confirmWindow = new ConfirmWindow();
                                         confirmWindow.Title = "המכלות שנוצרו";
                                         confirmWindow.Width = 350;

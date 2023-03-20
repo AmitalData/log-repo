@@ -50,8 +50,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                              CreateDate = a.CreateDate,
                                                              CreatedByRequestID = a.CreatedByRequestID,
                                                              DeclarationOfficeCode = a.DeclarationOfficeCode,
-                                                            
-                                                             DueDate = a.DueDate,
+                                                        ResponseToMessage = a.ResponseToMessage,
+                                                        DueDate = a.DueDate,
                                                              EntityId = a.EntityId,
                                                              IsClosedBCustomOffice = a.IsClosedBCustomOffice,
                                                              IsClosedByAssignee = a.IsClosedByAssignee,
@@ -166,7 +166,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                             CreateDate = a.CreateDate,
                                                             CreatedByRequestID = a.CreatedByRequestID,
                                                             DeclarationOfficeCode = a.DeclarationOfficeCode,
-
+                                                            ResponseToMessage = a.ResponseToMessage,
                                                             DueDate = a.DueDate,
                                                             EntityId = a.EntityId,
                                                             IsClosedBCustomOffice = a.IsClosedBCustomOffice,
@@ -263,7 +263,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                       CreateDate = a.CreateDate,
                                                       CreatedByRequestID = a.CreatedByRequestID,
                                                       DeclarationOfficeCode = a.DeclarationOfficeCode,
-
+                                                      ResponseToMessage = a.ResponseToMessage,
                                                       DueDate = a.DueDate,
                                                       EntityId = a.EntityId,
                                                       IsClosedBCustomOffice = a.IsClosedBCustomOffice,

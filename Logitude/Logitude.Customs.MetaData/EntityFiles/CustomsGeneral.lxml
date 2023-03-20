@@ -5581,6 +5581,7 @@
       Code="&quot;Customs.CreditGoldQuery.O.CustomFileNo&quot;"
       DefaultText="&quot;Custom File No&quot;"
       LocalDefaultText="&quot;תיק עמילות&quot;"
+
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

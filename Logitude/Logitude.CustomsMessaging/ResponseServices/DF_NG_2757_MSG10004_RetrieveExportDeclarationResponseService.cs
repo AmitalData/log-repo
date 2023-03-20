@@ -54,8 +54,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     CreateDeclarationFromResponse(customResponse.Response.Declaration, requestParams.Tenant, customResponse, requestParams.IsUpdateDB, requestParams.DeclarationId);
 
             }
-            if (!string.IsNullOrEmpty(requestParams.DeclarationId))
-            {
+            if (!string.IsNullOrEmpty(requestParams.DeclarationId)){
                 if (customResponse?.Response?.Status[0]?.NameCode?.Value == "36")
                 {
                     var declaration = declarationqueryService.GetSingle(requestParams.DeclarationId, false, false);

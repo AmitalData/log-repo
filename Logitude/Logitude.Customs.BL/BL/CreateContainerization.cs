@@ -27,7 +27,7 @@ namespace Logitude.Customs.BL.BL
             DeclarationRepository declarationRepository = new DeclarationRepository(context);
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(declarationRepository);
 
-            var list = declarationQueryService.GetContainerizationUniqueConsignment(connectedDeclarations);
+            var list = declarationQueryService.GetContainerizationUniqueConsignment(connectedDeclarations);       
             int counter = 0;
 
             var containerizationListKeys = new List<string>();
@@ -100,6 +100,7 @@ namespace Logitude.Customs.BL.BL
                 }
 
             }
+
             if (entityPM.ContainerizationStatus == "3" && (containerizationList.Count() > 1 || list.Any(x => !x.IsNew)))
             {
                 List<ContainerizationDetails> listCD = new List<ContainerizationDetails>();

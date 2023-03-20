@@ -1081,7 +1081,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         supplierInvoiceItemPM.DutyRegimeProtocolCode = GetValueCodeType(governmentAgencyGoodsItem.Commodity.Classification[0].DMExtensions.DutyRegimeProtocolCode);
                         supplierInvoiceItemPM.TradeAgreementCode = GetValueCodeType(governmentAgencyGoodsItem.Commodity.Classification[0].DMExtensions.DutyRegimeCode);
                         supplierInvoiceItemPM.ClassificationTypeCode = GetValueCodeType(governmentAgencyGoodsItem.Commodity.Classification[0].IdentificationTypeCode);
-                        supplierInvoiceItemPM.TaxExemptCode = GetValueCodeType(governmentAgencyGoodsItem.Commodity.Classification[0].DMExtensions.TaxExemptCode);
+                        supplierInvoiceItemPM.TaxExemptCode = GetValueCodeType(governmentAgencyGoodsItem.Commodity.Classification[0].DMExtensions?.TaxExemptCode)?.Replace("/", "");
+
+
 
 
                     }
@@ -1296,9 +1298,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         SupplierInvoiceItemsPricePM supplierInvoiceItemsPrice = new SupplierInvoiceItemsPricePM();
 
 
-                        if (!isFromImporter && AdditionalPriceTypeCodes.Contains(AdditionalPriceTypeCode))
+                        if (isFromImporter)//פתיחת בקשה לתיקון
                         {
-                            supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Update;
+                            supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Insert;
+                        }
+                        else //משוב לתיקון
+                        {
+                            if ((new string[]{"5","11","16" }).Contains(GetValueCodeType(GoodsItemAmount.AmountType)))
+                                supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Insert;
+                            else
+                                continue;
+                        }
+                       
+
+                        /*if (!isFromImporter && AdditionalPriceTypeCodes.Contains(AdditionalPriceTypeCode))
+                        {
+                            //supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Update;
                         }
                         else if (isFromImporter)
                         {
@@ -1307,10 +1322,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         else
                         {
                             continue;
-                        }
+                        }*/
 
                         supplierInvoiceItemsPrice.DeclarationId = declarationId;
-                       
                         supplierInvoiceItemsPrice.AdditionalPrice = GetValueAmountType(GoodsItemAmount.CustomsValueAmount);
                        
                         supplierInvoiceItemsPrice.AdditionalPriceTypeCode = GetValueCodeType(GoodsItemAmount.AmountType);

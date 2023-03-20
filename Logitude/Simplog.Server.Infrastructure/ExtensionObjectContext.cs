@@ -87,6 +87,7 @@ using Simplog.Server.Infrastructure;
         {
             var indexOfWhere = selectSql.LastIndexOf("WHERE ");
             var sqlServer = " WITH(NOWAIT) ";
+            sqlServer = " WITH(UPDLOCK, NOWAIT) ";
 
             newselectSql = selectSql.Insert(indexOfWhere, sqlServer);
         }
