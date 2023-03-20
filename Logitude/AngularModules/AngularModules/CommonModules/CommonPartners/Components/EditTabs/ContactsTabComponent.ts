@@ -227,7 +227,7 @@ export class ContactItemClass {
         this.EntityPM = item;
         this.IsNewEntity = isNewEntity; 
         this.CheckPrimary();
-        this.CheckEmailForSending()
+        this.CheckEmailForSending(this.fatherComponent.EntityPM['EmailForSendingSingArinvoice'])
       
     }
     GetIsHasExternalId() {
@@ -284,18 +284,17 @@ export class ContactItemClass {
 
     SetEmailForSendingSingArinvoices() {
         this.fatherComponent.EntityPM['EmailForSendingSingArinvoice'] = this.Id;
-        var myCardPrimaryContactId = this.Id;
+        var myCardContactId = this.Id;
         this.fatherComponent.ItemsSource.forEach(item => {
-            item.CheckEmailForSending(myCardPrimaryContactId);
+            item.CheckEmailForSending(myCardContactId);
         });
     }
 
-    CheckEmailForSending(myCardPrimaryContactId: string=null) {
-
+    CheckEmailForSending(myCardContactId: string=null) {
         var emailForSending = false; 
         if (this.fatherComponent && this.fatherComponent.EntityPM) {
-            if (!AppTool.IsNullOrEmpty(myCardPrimaryContactId)) {
-                if (myCardPrimaryContactId == this.Id) {
+            if (!AppTool.IsNullOrEmpty(myCardContactId)) {
+                if (myCardContactId == this.Id) {
                     emailForSending = true;
                 }
             }
