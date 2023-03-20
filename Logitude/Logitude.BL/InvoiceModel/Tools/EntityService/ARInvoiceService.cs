@@ -3976,8 +3976,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         journalLine.Reference2 = theEntityPm.MainEntityReference;
                         journalLine.Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber;
                         journalLine.Notes = theEntityPm.PrintNotes;
-                        journalLine.DebitAccountId = this.glAccount == null ? "" : this.glAccount.Id;
-                        journalLine.DebitControlAccountId = this.glAccount == null ? "" : this.glAccount.ControlAccountId;
+                        journalLine.DebitAccountId = glAccount == null ? "" : glAccount.Id;
+                        journalLine.DebitControlAccountId = glAccount == null ? "" : glAccount.ControlAccountId;
                         journalLine.ChangeSetOp = ChangeSetOperation.Insert;
                         journal.JournalLines.Add(journalLine);
                     }
