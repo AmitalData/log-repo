@@ -269,10 +269,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
                 }
 
                 this.StimulsoftArg.MessageTemplateLists = this.MessageTemplateLists;
-                if (this.DefaultMessageTemplateId) {
-                    this.Report.DefaultMessageTemplateId = this.DefaultMessageTemplateId;
-                }
-                this.StimulsoftArg.DefaultMessageTemplateId = this.Report.DefaultMessageTemplateId;
+
+                this.StimulsoftArg.DefaultMessageTemplateId =  this.DefaultMessageTemplateId ? this.DefaultMessageTemplateId : this.Report.DefaultMessageTemplateId;
                 this.StimulsoftArg.ResultType = this.ResultType;
                 this.StimulsoftArg.EntityId = this.ReportEntityId;
                 this.StimulsoftArg.ObjectTableId = this.ObjectTableId;
