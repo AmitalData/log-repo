@@ -4,6 +4,7 @@ using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.SQL;
 using Logitude.SystemLogs;
 using Microsoft.ServiceBus.Messaging;
+using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -38,8 +39,104 @@ namespace WebFreight.Web.WcfApi
 
 #if !tzuri_req
 
-
         public Response LGTQuery(string queryId, Dictionary<string, string> queryParams, int tenant)
+        {
+            var response = new Response();
+            try
+            {
+
+                //SecurityUtility.AuthenticationOnTenant(tenant);
+                //SecurityUtility.CheckContactFeature("Quote", "UPDATE", tenant);//UPDATE//READ
+                //var context = Simplog.Data.ShipmentsModel.ShipmentsContext.GetContext(tenant);
+
+                if (tenant == 0)
+                {
+                    response.HasError = true;
+                    response.ErrorMessage = "Tenant parameter is missing.";
+                    return (response);
+                }
+
+                List <CFILOGIAPI> logi_list = new List<CFILOGIAPI>();
+                logi_list = CFILOGIAPITask.GetLogiOcc();
+                CFILOGIAPI sql_logi = logi_list.Where(x => x.CODE == queryId).FirstOrDefault();
+
+                if(sql_logi==null)
+                {
+                    response.HasError = true;
+                    response.ErrorMessage = $"Query id {queryId} not found.";
+                    return (response);
+                }
+
+                string sqlQuery = sql_logi.EXAMPLE_SQL;
+                if (string.IsNullOrEmpty(sqlQuery))
+                {
+                    response.HasError = true;
+                    response.ErrorMessage = $"Query id {queryId} has no sql.";
+                    return (response);
+                }
+                if (sqlQuery.IndexOf("@Tenant") == -1)
+                {
+                    response.HasError = true;
+                    response.ErrorMessage = $"Query id {queryId} has no @Tenant parameter.";
+                    return (response);
+                }
+
+                //tenant = 6;
+                //string id = "1-110456";
+                var shipmentsContext = new Simplog.Data.ShipmentsModel.ShipmentsContext();
+                using (SqlConnection connection = new SqlConnection())
+                {
+                    connection.ConnectionString = shipmentsContext.Database.Connection.ConnectionString;
+                    connection.Open();
+                    //sqlQuery = "SELECT IMPORTERID,ID from Customs.DECLARATIONS where (ID = @LOGITUDE_FILE ) AND TENANT = @Tenant";
+                    using (var cmd = new SqlCommand(sqlQuery, connection))
+                    {
+                        //cmd.Parameters.Add(new SqlParameter("@LOGITUDE_FILE", id));
+                        foreach (var field in queryParams)
+                        {
+                            cmd.Parameters.Add(new SqlParameter($"@{field.Key}", field.Value));
+                        }
+                        cmd.Parameters.Add(new SqlParameter("@Tenant", tenant));
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            List<List<string>> all_lines = new List<List<string>>();
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    Console.WriteLine(reader.ToString());
+                                    List<string> one_line = new List<string>();
+
+                                    for(int pos=0; reader.FieldCount> pos;pos++)
+                                    {
+                                        one_line.Add(reader[pos].ToString());
+                                    }
+                                    all_lines.Add(one_line);
+                                }
+                            }
+                            response.HasError = false;
+                            response.Result = JsonConvert.SerializeObject(all_lines);
+                        }
+                    }
+                }
+                return (response);
+            }
+            catch (Exception ex)
+            {
+                response.IsAuthenticationError = ex.GetType() == typeof(AutenticationException);
+                response.HasError = true;
+                response.ErrorMessage = ex.Message;
+                response.InnerErrorMessage = (ex.InnerException != null ? (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) : null);
+
+                if (!string.IsNullOrEmpty(ex.StackTrace))
+                {
+                    response.ErrorMessage += Environment.NewLine + ex.StackTrace;
+                }
+                return (response);
+            }
+
+        }
+        public Response LGTQueryExample(string queryId, Dictionary<string, string> queryParams, int tenant)
         {
             var response = new Response();
             try
