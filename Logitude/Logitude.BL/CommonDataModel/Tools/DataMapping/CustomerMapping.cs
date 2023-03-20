@@ -80,7 +80,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.PrimaryContactName = entityPM.PrimaryContactName;
             entityPOCO.PrimaryContactEmail = entityPM.PrimaryContactEmail;
             entityPOCO.PrimaryContactPhone = entityPM.PrimaryContactPhone;
-            entityPOCO.IsEmailForSendingSingArinvoice = entityPM.IsEmailForSendingSingArinvoice;
+            entityPOCO.EmailForSendingSingArinvoice = entityPM.EmailForSendingSingArinvoice;
             entityPOCO.ActivatedByUserId = entityPM.ActivatedByUserId;
             entityPOCO.ActivationRequestedByUserId = entityPM.ActivationRequestedByUserId;
             entityPOCO.SetAsInactiveByUserId = entityPM.SetAsInactiveByUserId;
@@ -352,7 +352,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                 CodeMyCustomer = a.IsCustomer ? a.Card.Code + " (Customer)" : a.Card.Code,
                 PrimaryContactName = a.PrimaryContactName,
                 PrimaryContactEmail = a.PrimaryContactEmail,
-                IsEmailForSendingSingArinvoice = a.IsEmailForSendingSingArinvoice,
+                EmailForSendingSingArinvoice = a.EmailForSendingSingArinvoice,
                 PrimaryContactPhone = a.PrimaryContactPhone,
                 CustomerStatusName = a.CustomerStatus != null ? a.CustomerStatus.Name : null,
                 PrimaryContactId = a.Card.PrimaryContactId,

@@ -284,20 +284,18 @@ export class ContactItemClass {
 
     SetEmailForSendingSingArinvoices() {
         // debugger
-        // this.fatherComponent.EntityPM['IsEmailForSendingSingArinvoice'] = true;
-        
+        // this.fatherComponent.EntityPM['EmailForSendingSingArinvoice'] = this.Id;
+        // var myCardPrimaryContactId = this.Id;
         // this.fatherComponent.ItemsSource.forEach(item => {
-        //     item.CheckEmailForSending();
+        //     item.CheckEmailForSending(myCardPrimaryContactId);
         // });
     }
 
-    CheckEmailForSending() {
+    CheckEmailForSending(myCardPrimaryContactId: string=null) {
         // debugger
 
-        // var isEmailForSending = false;
-        // var myCardPrimaryContactId = null;
+        // var isEmailForSending = false; 
         // if (this.fatherComponent && this.fatherComponent.EntityPM) {
-        //     myCardPrimaryContactId = this.fatherComponent.EntityPM['PrimaryContactId'];
         //     if (!AppTool.IsNullOrEmpty(myCardPrimaryContactId)) {
         //         if (myCardPrimaryContactId == this.Id) {
         //             isEmailForSending = true;

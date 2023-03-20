@@ -468,10 +468,11 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="IsEmailForSendingSingArinvoice"
-    Type="bit">
+    Name="EmailForSendingSingArinvoice"
+    Type="varchar"
+    Size="40">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="Id"
