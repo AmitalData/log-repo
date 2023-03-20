@@ -354,6 +354,9 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
             this.IsShowAreaDataField = false;
             this.IsShowAttachmentLinks = false;
         }
+        if(this.IsFromScheduler){
+            this.HideEntityDataFields = true;
+        }
 
 
         if ((this.RequsetPageName == "BIReport" || this.RequsetPageName == "Scheduler") && this.template && !this.template.EntityId) {
