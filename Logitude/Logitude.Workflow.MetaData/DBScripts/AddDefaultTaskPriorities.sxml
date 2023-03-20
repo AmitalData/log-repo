@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Workflow">
-  <Sql Version="4">
+  <Sql Version="5">
     <![CDATA[
     
 declare @Tenant integer;
@@ -20,7 +20,7 @@ while @@FETCH_STATUS = 0
 	set @UserId = (select top 1 [Id] from [Contacts] where [Tenant] = @Tenant and [Email] = ('system@tenant' + cast(@Tenant as varchar(100)) + '.com'));
 	set @CurrentDate = GETDATE();
 
-	if not exists (select * from [TaskPriorities] where [Code] = 'H' and Tenant = @Tenant)
+	  if not exists (select * from [TaskPriorities] where [Code] = 'H' and [Tenant] = @Tenant)
     begin
     execute [usp_GetNextTableIdValue] @NewId OUTPUT, 'TaskPriority';
     insert into [TaskPriorities] ([Id], [Tenant], [Code], [Name], [DisplayOrder], [CreateDate], [CreatedByUserId], [UpdateDate], [UpdatedByUserId], [SearchFields])
@@ -28,21 +28,21 @@ while @@FETCH_STATUS = 0
     end;
     
     
-    if not exists (select * from [TaskPriorities] where [Code] = 'L' and Tenant = @Tenant)
+    if not exists (select * from [TaskPriorities] where [Code] = 'M' and [Tenant] = @Tenant)
     begin
     execute [usp_GetNextTableIdValue] @NewId OUTPUT, 'TaskPriority';
     insert into [TaskPriorities] ([Id], [Tenant], [Code], [Name], [DisplayOrder], [CreateDate], [CreatedByUserId], [UpdateDate], [UpdatedByUserId], [SearchFields])
-    values (@NewId, @Tenant, 'L', 'Low', 2, @CurrentDate, @UserId, @CurrentDate, @UserId, 'L,Low');
+    values (@NewId, @Tenant, 'M', 'Medium', 2, @CurrentDate, @UserId, @CurrentDate, @UserId, 'M,Medium');
     end;
     
     
-    if not exists (select * from [TaskPriorities] where [Code] = 'M' and Tenant = @Tenant)
+    if not exists (select * from [TaskPriorities] where [Code] = 'L' and [Tenant] = @Tenant)
     begin
     execute [usp_GetNextTableIdValue] @NewId OUTPUT, 'TaskPriority';
     insert into [TaskPriorities] ([Id], [Tenant], [Code], [Name], [DisplayOrder], [CreateDate], [CreatedByUserId], [UpdateDate], [UpdatedByUserId], [SearchFields])
-    values (@NewId, @Tenant, 'M', 'Medium', 3, @CurrentDate, @UserId, @CurrentDate, @UserId, 'M,Medium');
+    values (@NewId, @Tenant, 'L', 'Low', 3, @CurrentDate, @UserId, @CurrentDate, @UserId, 'L,Low');
     end;
-        
+    
 
     fetch next from TenantsCursor into @Tenant;
     end;

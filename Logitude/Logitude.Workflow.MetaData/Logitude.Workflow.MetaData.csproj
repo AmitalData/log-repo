@@ -58,6 +58,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ContextGenerator.cs</LastGenOutput>
     </None>
+    <None Include="DBScripts\UpdateDefaultTaskPriorities.sxml" />
     <None Include="DBScripts\0_PrepareWorkflows.sxml" />
     <None Include="DBScripts\AddDefaultTaskPriorities.sxml" />
     <None Include="DBScripts\AddDefaultTaskStatuses.sxml" />

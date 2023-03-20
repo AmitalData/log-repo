@@ -2229,7 +2229,9 @@ export class APPaymentInvoiceArgs extends BaseComponent {
 
                 else {
                     if (inputEntry == 0 || inputEntry == null) {
-                        this.IsConnected = false;
+                        if(!(this.RecoNumber && this.RecoNumber != null && this.RecoNumber.length > 0)) {
+                            this.IsConnected = false;
+                        }
                     }
 
                     else {

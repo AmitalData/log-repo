@@ -1247,6 +1247,15 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             }
             return null;
         }
+        private bool IsFullAccountingActivated(int tenant)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+            bool isFullAccountingActivated = tenantPOCO.AccountingActivated;
+            return isFullAccountingActivated;
+        }
+
+
         public void ConnectCardToGLAccount(CardGLAccountConnectionArgs args)
         {
             CardPM cardPM = GetCardById(args.CardId, args.Tenant);
@@ -1256,8 +1265,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             cardPM.GLAccountId = args.AccountId;
             cardPM.GLAccountDisplayNumber =  GetDisplayNumberByGLAccountId(args.AccountId, args.Tenant);
-            CreateTraceEvent(args.AccountId, args.AccountId, args.Tenant, "GLAccount", "DSCS");
-            CreateTraceEvent(args.CardId, args.AccountId, args.Tenant, "Customer", "CSCS");
+
+            if (IsFullAccountingActivated(args.Tenant))
+            {
+                CreateTraceEvent(args.AccountId, args.AccountId, args.Tenant, "GLAccount", "DSCS");
+                CreateTraceEvent(args.CardId, args.AccountId, args.Tenant, "Customer", "CSCS");
+            }
+            
             SubmitCard(cardPM);
 
 
