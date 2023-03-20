@@ -76,8 +76,12 @@
                                             <table>
                                                 <tr>
                                                     <td>
-                                                        <ComboBox [ItemsSource]="documentTypeTemplates" [Binding]="'Description'"
+                                                        <ComboBox *ngIf="IsDocumentTypeTemplateChange" [ItemsSource]="documentTypeTemplates" [Binding]="'Description'"
                                                                   [SelectedItem]="selectedDocumentTypeTemplate" (SelectedItemChanged)="OnDocumentTypeTemplateSelectedChanged($event)"></ComboBox>
+
+                                                        <ComboBox *ngIf="!IsDocumentTypeTemplateChange" [ItemsSource]="documentTypeTemplates" [Binding]="'Description'"
+                                                                  [SelectedItem]="selectedDocumentTypeTemplate" (SelectedItemChanged)="OnDocumentTypeTemplateSelectedChanged($event)"></ComboBox>
+
                                                     </td>
                                                     <td style="width: 36px;">
                                                         <div></div>
