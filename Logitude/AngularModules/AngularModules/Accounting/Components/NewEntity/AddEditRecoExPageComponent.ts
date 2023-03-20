@@ -27,7 +27,8 @@ import { reject } from 'q';
 import { MessageWindow } from 'Controls/Windows/MessageWindow';
 import { ImageParameter } from 'Infrastructure/DataContracts/ImageParameter';
 import { Guid } from 'Infrastructure/Utilities/Guid';
-declare var attachmentUploader, ResultAsArray: any;
+import * as moment from 'moment';
+declare var attachmentUploader, ResultAsArray,resultToUnitArray: any;
 @Component({
     selector: 'AddEditRecoExPageComponent',
 
@@ -658,7 +659,8 @@ export class AddEditRecoExPageComponent extends BaseComponent {
                             var pageLine: ReconcileExternalPageLinePM = new ReconcileExternalPageLinePM(this.ReconcileExternalPagePM);
                             pageLine.Tenant = SessionLocator.Tenant;
                             pageLine.ReconcileExternalPageId = this.isNewEntity ? "new" : this.ReconcileExternalPagePM.Id;
-                            pageLine.ReferenceDate = element.ReferenceDate;
+                            var datemomentobject=moment.utc(element.ReferenceDate,"YYYY-DD-MM")
+                            pageLine.ReferenceDate = datemomentobject.toDate();
                             pageLine.DebitAmount = element.DebitAmount;
                             pageLine.CreditAmount = element.CreditAmount;
                             pageLine.Reference = element.Reference;
@@ -669,6 +671,9 @@ export class AddEditRecoExPageComponent extends BaseComponent {
                             var item = new PageLineModel(pageLine, this);
                             this.PageLinesList.Insert(item);
                         });
+                    }
+                    if(this.PageLinesList.Length == 0){
+                        this.UploadButtonIsEnabled=true
                     }
                 });
             }
@@ -681,7 +686,7 @@ export class AddEditRecoExPageComponent extends BaseComponent {
             var reader = new FileReader();
             reader.onload = function (e) {
                 var binary = '';
-                var bytes = new Uint8Array(ResultAsArray(e));
+                var bytes = new Uint8Array(resultToUnitArray(e));
                 var len = bytes.byteLength;
                 for (var i = 0; i < len; i++) {
                     binary += String.fromCharCode(bytes[i]);
@@ -736,6 +741,9 @@ export class AddEditRecoExPageComponent extends BaseComponent {
         }
 
         this.CalculateTotals();
+        if(this.PageLinesList.Length == 0){
+            this.UploadButtonIsEnabled=true
+        }
     }
 
     OnRowEnded($event) {
