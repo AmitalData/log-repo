@@ -409,6 +409,7 @@
     <Compile Include="DocumentExecutionV2WorkerRole.cs" />
     <Compile Include="EntityMapping\ShipmentOrderPmToAmMapping.cs" />
     <Compile Include="CargoTrackingImporterApprovalReceivedWR.cs" />
+    <Compile Include="ImporterPortsWorkerRole.cs" />
     <Compile Include="ImporterShipmentOrderDocumentsWorkerRole.cs" />
     <Compile Include="OpportunityStageChangingWorkerRole.cs" />
     <Compile Include="Services\AutomationDocumentOutBuildService.cs" />
@@ -419,6 +420,7 @@
     <Compile Include="Services\Logbox\APICredentialsAuthenticationService.cs" />
     <Compile Include="Services\Logbox\CustomerTenantAccessUpdaterService.cs" />
     <Compile Include="Services\Logbox\CustomerTenantAccessCreatorService.cs" />
+    <Compile Include="Services\Logbox\ImporterPortService.cs" />
     <Compile Include="Services\SAT\SATBaseService.cs" />
     <Compile Include="Services\SAT\SATData.cs" />
     <Compile Include="Services\SAT\SATUpdateEntityHelper.cs" />
