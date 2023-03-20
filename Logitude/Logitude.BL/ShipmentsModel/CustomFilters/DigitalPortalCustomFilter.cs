@@ -35,43 +35,38 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
             {
                 if (item.IsCustom)
                 {
+                    DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
+                    var createdDateTime = currentDateTime.AddMonths(-data.DPArchiveShipmentCreateFilter.Value);
+                    var arrivalDateTime = currentDateTime.AddMonths(-data.DPArchiveShipmentArrivalFilter.Value);
+                    var departureDateTime = currentDateTime.AddMonths(-data.DPArchiveShipmentDepartFilter.Value);
+
                     if (item.FieldName == "InProgress")
                     {
-                        DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
-                        var lastOneYearDate = currentDateTime.AddDays(-365);
-                        var lastNinetyDaysDate = currentDateTime.AddDays(-90);
-
                         queryableData = queryableData.Where(a => a.IsCustomerArchived == false
-                                                                 && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) >= currentDateTime.AddMonths(-data.DPArchiveShipmentCreateFilter.Value)
-                                                                 && (((a.MainCarriageFinalDestinationATA >= currentDateTime.AddMonths(-data.DPArchiveShipmentArrivalFilter.Value) && a.DirectionId == "I")
+                                                                 && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) >= createdDateTime
+                                                                 && (((a.MainCarriageFinalDestinationATA >= arrivalDateTime && a.DirectionId == "I")
                                                                        || a.MainCarriageFinalDestinationATA == null)
-                                                                      || ((a.MainCarriageATD >= currentDateTime.AddMonths(-data.DPArchiveShipmentDepartFilter.Value) && a.DirectionId == "E")
+                                                                      || ((a.MainCarriageATD >= departureDateTime && a.DirectionId == "E")
                                                                            || a.MainCarriageATD == null )));
                     }                                            
 
                     if (item.FieldName == "InOrigin")
                     {
-                        DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
-                        var lastOneYearDate = currentDateTime.AddDays(-365);
-                        var lastNinetyDaysDate = currentDateTime.AddDays(-90);
                         var allStatuses = GetAllDigitalAllowedStatus(_tenant);
                         var allowedStatusCode = allStatuses.Select(a => a.Code).ToList();
                         var departedCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SDEP")?.StatusWeight;
                         queryableData = queryableData.Where(a => allowedStatusCode.Contains(a.StatusCode)
                                                                  && a.StatusWeight < departedCodeWeight
                                                                  && a.IsCustomerArchived == false
-                                                                 && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) >= currentDateTime.AddMonths(-data.DPArchiveShipmentCreateFilter.Value)
-                                                                 && (((a.MainCarriageFinalDestinationATA >= currentDateTime.AddMonths(-data.DPArchiveShipmentArrivalFilter.Value) && a.DirectionId == "I")
+                                                                 && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) >= createdDateTime
+                                                                 && (((a.MainCarriageFinalDestinationATA >= arrivalDateTime && a.DirectionId == "I")
                                                                        || a.MainCarriageFinalDestinationATA == null)
-                                                                      || ((a.MainCarriageATD >= currentDateTime.AddMonths(-data.DPArchiveShipmentDepartFilter.Value) && a.DirectionId == "E")
+                                                                      || ((a.MainCarriageATD >= departureDateTime && a.DirectionId == "E")
                                                                            || a.MainCarriageATD == null)));
                     }
 
                     if (item.FieldName == "InTransit")
                     {
-                        DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
-                        var lastOneYearDate = currentDateTime.AddDays(-365);
-                        var lastNinetyDaysDate = currentDateTime.AddDays(-90);
                         var allStatuses = GetAllDigitalAllowedStatus(_tenant);
                         var allowedStatusCode = allStatuses.Select(a => a.Code).ToList();
                         var departedCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SDEP")?.StatusWeight;
@@ -81,28 +76,25 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                                                                  && a.StatusWeight >= departedCodeWeight
                                                                  && a.StatusWeight < arrivedAtDestinationCodeWeight
                                                                  && a.IsCustomerArchived == false
-                                                                 && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) >= currentDateTime.AddMonths(-data.DPArchiveShipmentCreateFilter.Value)
-                                                                 && (((a.MainCarriageFinalDestinationATA >= currentDateTime.AddMonths(-data.DPArchiveShipmentArrivalFilter.Value) && a.DirectionId == "I")
+                                                                 && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) >= createdDateTime
+                                                                 && (((a.MainCarriageFinalDestinationATA >= arrivalDateTime && a.DirectionId == "I")
                                                                        || a.MainCarriageFinalDestinationATA == null)
-                                                                      || ((a.MainCarriageATD >= currentDateTime.AddMonths(-data.DPArchiveShipmentDepartFilter.Value) && a.DirectionId == "E")
+                                                                      || ((a.MainCarriageATD >= departureDateTime && a.DirectionId == "E")
                                                                            || a.MainCarriageATD == null)));
                     }
 
                     if (item.FieldName == "AtDestination")
                     {
-                        DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
-                        var lastOneYearDate = currentDateTime.AddDays(-365);
-                        var lastNinetyDaysDate = currentDateTime.AddDays(-90);
                         var allStatuses = GetAllDigitalAllowedStatus(_tenant); 
                         var allowedStatusCode = allStatuses.Select(a => a.Code).ToList();
                         var arrivedAtDestinationCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SARR")?.StatusWeight;
                         queryableData = queryableData.Where(a => allowedStatusCode.Contains(a.StatusCode) 
                                                                  && a.StatusWeight >= arrivedAtDestinationCodeWeight
                                                                  && a.IsCustomerArchived == false
-                                                                 && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) >= currentDateTime.AddMonths(-data.DPArchiveShipmentCreateFilter.Value)
-                                                                 && (((a.MainCarriageFinalDestinationATA >= currentDateTime.AddMonths(-data.DPArchiveShipmentArrivalFilter.Value) && a.DirectionId == "I")
+                                                                 && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) >= createdDateTime
+                                                                 && (((a.MainCarriageFinalDestinationATA >= arrivalDateTime && a.DirectionId == "I")
                                                                        || a.MainCarriageFinalDestinationATA == null)
-                                                                      || ((a.MainCarriageATD >= currentDateTime.AddMonths(-data.DPArchiveShipmentDepartFilter.Value) && a.DirectionId == "E")
+                                                                      || ((a.MainCarriageATD >= departureDateTime && a.DirectionId == "E")
                                                                            || a.MainCarriageATD == null)));
                     }
 

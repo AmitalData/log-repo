@@ -212,7 +212,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     var lastOneYearDate = currentDateTime.AddDays(-365);
                     var lastNinetyDaysDate = currentDateTime.AddDays(-90);
                     shipments.Where(a => (helper.DoesPropertyExistInDynamic(a, "CreateDateTime") 
-                                          && DbFunctions.TruncateTime(a.CreateDateTime) >= currentDateTime.AddMonths(-data.DPArchiveShipmentCreateFilter.Value))
+                                          && a.CreateDateTime >= currentDateTime.AddMonths(-data.DPArchiveShipmentCreateFilter.Value))
                                           && (helper.DoesPropertyExistInDynamic(a, "MainCarriageFinalDestinationATA") 
                                               && ((a.MainCarriageFinalDestinationATA >= currentDateTime.AddMonths(-data.DPArchiveShipmentArrivalFilter.Value) && a.DirectionId == "I")
                                                    || a.MainCarriageFinalDestinationATA == null))
