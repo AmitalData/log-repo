@@ -51,12 +51,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return this.MyResponseData;
         }
         public override void Update(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customResponse, AmendmentRequestParams requestParams)
-        {
+        {  
             var declarationNumber = customResponse?.Response?.Declaration?.ID.Value;
             if (declarationNumber == null)
             {
                 declarationNumber = customResponse?.Response?.FunctionalReferenceID?.Value;
             }
+
             string key = ProcessLockTableUtil.Instance.GetKey4Declaration(declarationNumber, requestParams.Tenant);
             using (var disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "2470ResponseService.Update"))
             {
@@ -572,7 +573,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 if ((!isExportClose && (_MyDeclarationPM.AmendmentStatus == "1" || _MyDeclarationPM.AmendmentStatus == "2")) || MyResponseData.IsExportCloseApprove)
                 {
-                    _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status[0].NameCode.Value;
+                    _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status?[0]?.NameCode?.Value;
                     _MyDeclarationPM.PaymentDate = _MyDeclarationPMOrg.PaymentDate;
                     _MyDeclarationPM.IsSubmitDeclaration = _MyDeclarationPMOrg.IsSubmitDeclaration;
                     _MyDeclarationPM.HatraDate = _MyDeclarationPMOrg.HatraDate;
