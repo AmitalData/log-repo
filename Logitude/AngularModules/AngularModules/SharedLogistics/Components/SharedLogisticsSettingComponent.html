@@ -424,7 +424,7 @@
                                                             </div>   
                                                             <div style="width: 100%; display: flex; justify-content: flex-start; align-items: center; margin-top: 60px;">
                                                                 <span style="margin-right: 16px;display: inline-block; width:190px;">
-                                                                    <div>Shipment Archived more than</div>
+                                                                    <div>Shipment Arrival more than</div>
                                                                     <div>(Import shipment)</div>
                                                                 </span>
                                                                 <span>
@@ -433,7 +433,7 @@
                                                             </div>   
                                                             <div style="width: 100%; display: flex; justify-content: flex-start; align-items: center; margin-top: 60px;">
                                                                 <span style="margin-right: 16px;display: inline-block; width:190px;">
-                                                                    <div>Shipment Departured more than</div>
+                                                                    <div>Shipment Departed more than</div>
                                                                     <div>(Export shipment)</div>
                                                                 </span>
                                                                 <span>
@@ -456,13 +456,13 @@
                                                                     <div></div>
                                                                 </td>
                                                                 <td style="width: 57px;">
-                                                                    <button class="RedButton" (click)="SaveButtonClicked()">Save</button>
-                                                                </td>
-
-                                                                <td style="width: 57px;">
                                                                     <div>
                                                                         <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
                                                                     </div>
+                                                                </td>
+
+                                                                <td style="width: 57px;">
+                                                                    <button class="RedButton" (click)="SaveButtonClicked()">Save</button>
                                                                 </td>
                                                             </tr>
                                                         </table>
@@ -473,22 +473,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr *ngIf="FullComponentsVisibility" style="height: 32px;">
-        <td style="vertical-align: bottom">
-            <table style="height: 22px;">
-                <tr>
-                    <td>
-                        <div></div>
-                    </td>
-                    <td style="width: 57px;">
-                        <div>
-                            <button class="Button" (click)="CloseButtonClicked()">Close</button>
                         </div>
                     </td>
                 </tr>

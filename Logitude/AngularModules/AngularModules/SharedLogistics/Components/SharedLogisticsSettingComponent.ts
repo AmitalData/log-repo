@@ -164,10 +164,6 @@ export class SharedLogisticsSettingComponent implements OnInit {
         {
             return this.TenantPM.DPArchiveShipmentArrivalFilter;
         }
-        else 
-        {
-            return 0
-        };
     }
     
     public set ShipmentArrivalSelectedFilter(value: any) {
@@ -183,10 +179,6 @@ export class SharedLogisticsSettingComponent implements OnInit {
         {
             return this.TenantPM.DPArchiveShipmentDepartFilter;
         }
-        else 
-        {
-            return 0
-        };
     }
     
     public set ShipmentDepartSelectedFilter(value: any) {
@@ -198,20 +190,11 @@ export class SharedLogisticsSettingComponent implements OnInit {
 
     IsShowAreaColseAndCancelButton: boolean;
     IsSharedLogisticsActivatedEnable: boolean;
-    //  IsSharedLogisticsActivated: boolean;
-
-    // IsWebAccessActivated: boolean;
-
-    IsMobileActivatedEnable: boolean;
-    //  IsMobileActivated: boolean;
-    // SharedLogisticsMessageLink: boolean;
-
-    
+    IsMobileActivatedEnable: boolean;    
     SharedLogisticsMessageLinkEnable: boolean;
     SharedLogisticsMasterMessageLinkEnable: boolean = true;
     ShowMultiUnitsOfMeasurementsEnable: boolean = true;
     ShowApproveUploadedDocumentsEnabled: boolean = true;
-
 
     IsSharedLogisticsActivatedCheckboxBoxId: string;
     IsMobileActivatedCheckboxBoxId: string;
@@ -249,19 +232,19 @@ export class SharedLogisticsSettingComponent implements OnInit {
                 code: '12'
             },
             {
-                name: '9 month',
+                name: '9 months',
                 code: '9'
             },
             {
-                name: '6 month',
+                name: '6 months',
                 code: '6'
             },
             {
-                name: '3 month',
+                name: '3 months',
                 code: '3'
             },
             {
-                name: '2 month',
+                name: '2 months',
                 code: '2'
             },
             {
