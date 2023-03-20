@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CustomerUpdateClass
    {  		
-		public const string HashString = "54fa3ebbc8864420e341207c31d5baa7";
+		public const string HashString = "3c90e63673513c1dbda8d628cae6070e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -15297,11 +15297,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "IsEmailForSendingSingArinvoice",
+					 						FieldName =  "EmailForSendingSingArinvoice",
 					  						ObjectTableName =  "Customer",
-					  						FieldsDataType =  "Boolean",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  0,
+					  						MaxLength =  40,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -15316,8 +15316,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "IsEmailForSendingSingArinvoice",
-					  						ListPropertyPath =  "IsEmailForSendingSingArinvoice",
+					  						PMPropertyPath =  "EmailForSendingSingArinvoice",
+					  						ListPropertyPath =  "EmailForSendingSingArinvoice",
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -15334,10 +15334,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "IsEmailForSendingSingArinvoice",
-					  						DefaultText =  "Is Email For Sending",
-					  						ListFieldLable =  "IsEmailForSendingSingArinvoiceListLable",
-					  						ListLableDefaultText =  "Is Email For Sending",
+					  						FullFieldLable =  "EmailForSendingSingArinvoice",
+					  						DefaultText =  "Email For Sending",
+					  						ListFieldLable =  "EmailForSendingSingArinvoiceListLable",
+					  						ListLableDefaultText =  "Email For Sending",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
