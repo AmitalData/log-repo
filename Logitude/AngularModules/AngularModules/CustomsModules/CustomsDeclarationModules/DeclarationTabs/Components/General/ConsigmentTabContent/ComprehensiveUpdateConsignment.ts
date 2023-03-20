@@ -96,7 +96,7 @@ export class ComprehensiveUpdateConsignment extends BaseComponent {
 
     OkButtonClicked() {
 
-       this.DeclarationPM.Consignments.forEach(x=>{
+       this.DeclarationPM.Consignments.filter(y=>y.ConsignmentType == 'E').forEach(x=>{
         x.ExportLoadingPortCode=!AppTool.IsNullOrEmpty(this._ExportLoadingPortCode)?this._ExportLoadingPortCode:x.ExportLoadingPortCode
         x.StorageSiteCode=!AppTool.IsNullOrEmpty(this._StorageSiteCodeExport)?this._StorageSiteCodeExport:x.StorageSiteCodeExport
         x.FinalDestinationPortCode=!AppTool.IsNullOrEmpty(this._FinalDestinationPortCode)?this._FinalDestinationPortCode:x.FinalDestinationPortCode
