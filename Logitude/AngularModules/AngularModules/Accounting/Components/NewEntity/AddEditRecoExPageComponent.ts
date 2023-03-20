@@ -652,21 +652,24 @@ export class AddEditRecoExPageComponent extends BaseComponent {
                 }
                 line++; // last no.
                 this._ReconcileExternalPageExtendedPMService.ImportReconcileExternalPageLineFromCsv(this.filterImageParameter).subscribe((myServiceResponse: ServiceResponse) => {
-                    myServiceResponse?.Result.forEach(element => {
-                        var pageLine: ReconcileExternalPageLinePM = new ReconcileExternalPageLinePM(this.ReconcileExternalPagePM);
-                        pageLine.Tenant = SessionLocator.Tenant;
-                        pageLine.ReconcileExternalPageId = this.isNewEntity ? "new" : this.ReconcileExternalPagePM.Id;
-                        pageLine.ReferenceDate = element.ReferenceDate;
-                        pageLine.DebitAmount = element.DebitAmount;
-                        pageLine.CreditAmount = element.CreditAmount;
-                        pageLine.Reference = element.Reference;
-                        pageLine.Notes = element.Notes;
-                        pageLine.LineNumber =line++;
-                        pageLine.IsReconciled = false;
-                        this.ReconcileExternalPagePM.AddReconcileExternalPageLine(pageLine);
-                        var item = new PageLineModel(pageLine, this);
-                        this.PageLinesList.Insert(item);
-                    });
+                    if (myServiceResponse?.Result != null) {
+                        this.ReconcileExternalPagePM.EntryTypeCode = "2";
+                        myServiceResponse?.Result.forEach(element => {
+                            var pageLine: ReconcileExternalPageLinePM = new ReconcileExternalPageLinePM(this.ReconcileExternalPagePM);
+                            pageLine.Tenant = SessionLocator.Tenant;
+                            pageLine.ReconcileExternalPageId = this.isNewEntity ? "new" : this.ReconcileExternalPagePM.Id;
+                            pageLine.ReferenceDate = element.ReferenceDate;
+                            pageLine.DebitAmount = element.DebitAmount;
+                            pageLine.CreditAmount = element.CreditAmount;
+                            pageLine.Reference = element.Reference;
+                            pageLine.Notes = element.Notes;
+                            pageLine.LineNumber = line++;
+                            pageLine.IsReconciled = false;
+                            this.ReconcileExternalPagePM.AddReconcileExternalPageLine(pageLine);
+                            var item = new PageLineModel(pageLine, this);
+                            this.PageLinesList.Insert(item);
+                        });
+                    }
                 });
             }
         }
