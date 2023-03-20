@@ -3254,6 +3254,7 @@
     <Compile Include="Validators\ValidationClass.Shared.cs" />
     <Compile Include="Workflow\Constants\QueueMessagesTypes.cs" />
     <Compile Include="Workflow\Constants\WorkflowEntities.cs" />
+    <Compile Include="Workflow\TaskDoneQueueMessage.cs" />
     <Compile Include="Workflow\WorkflowEntityQueueMessage.cs" />
   </ItemGroup>
   <ItemGroup>
