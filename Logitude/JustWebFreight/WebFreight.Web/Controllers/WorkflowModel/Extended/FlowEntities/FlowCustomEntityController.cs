@@ -30,6 +30,30 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Extended.FlowEntities
 {
     public class FlowCustomEntityController : ApiController
     {
+        public HttpResponseMessage GetSingle(string id)
+        {
+            int tenant = 0;
+
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                tenant = authToken.Tenant;
+
+                DataCustomObjectQuery dataCustomObjectQuery = new DataCustomObjectQuery(authToken.Tenant);
+                DataCustomObjectPM dataCustomObjectPM = dataCustomObjectQuery.GetSinglePM(id, authToken.Tenant);
+
+                if (dataCustomObjectPM == null) { throw new Exception("Cannot find the custom entity"); }
+
+                return Request.CreateResponse(HttpStatusCode.OK, dataCustomObjectPM);
+            }
+            catch (Exception exception)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, WorkflowApiExceptionBuilder.BuildException(exception, tenant));
+            }
+        }
+
         public HttpResponseMessage PostByFilterTree(ApiQueryTreeFilters apiQueryTreeFilters)
         {
             int tenant = 0;

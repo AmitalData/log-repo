@@ -417,7 +417,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     EntityId = entityPM.Id,
                     AuditLogId = auditLog?.Id,
                     Tenant = entityPM.Tenant,
-                    Type = QueueMessagesTypes.Create
+                    Type = QueueMessagesTypes.Create,
+                    IsCustom = false
                 }.Produce();
 
                 new TaskDoneQueueMessage()
@@ -748,7 +749,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         EntityId = entityPM.Id,
                         AuditLogId = auditLog?.Id,
                         Tenant = entityPM.Tenant,
-                        Type = QueueMessagesTypes.Update
+                        Type = QueueMessagesTypes.Update,
+                        IsCustom = false
                     }.Produce();
 
                     new TaskDoneQueueMessage()
