@@ -36,6 +36,7 @@ using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.Accounting.Data;
 using Logitude.BL.InvoiceModel.Tools.Behaviours;
 using Logitude.Accounting.Def.BLExt;
+using Logitude.Accounting.Data.EntityListQueryServices;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -52,6 +53,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private bool isNewEntity;
         private ContactPM loggedContact;
         private List<APPaymentInvoicePM> changedList;
+        private List<LedgerTransactionPM> _InvoicesLedgerTransactions;
+        private List<LedgerTransactionPM> _InvoicesLedgerTransactionsToReconcile;
+        private LedgerTransactionPM _PaymentTranasction = null;
         private bool SetVoided = false;
         private bool isTransferToDropbox;
         private bool TransferToDropboxActivated;
@@ -59,6 +63,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private bool transferToFTPActivated;
         private bool canTransferToFTP;
         private InvoicePaymentNumbersBehaviour invoicePaymentNumbersBehaviour;
+        private bool isAccountingActivated = false;
+        private GLAccountPM _PaymentGLAccount = null;
         public APPaymentService(IInvoiceContext objectContext, int tenant)
         {
             this.tenant = tenant;
@@ -68,9 +74,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.paymentRepository = new APPaymentRepository(this.objectContext);
             this.invoicePaymentRepository = new APInvoicePaymentRepository(this.objectContext);
             this.changedList = new List<APPaymentInvoicePM>();
+            _InvoicesLedgerTransactions = new List<LedgerTransactionPM>();
+            _InvoicesLedgerTransactionsToReconcile = new List<LedgerTransactionPM>();
             this.loggedContact = new ContactQuery(tenant).GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedUser(), tenant, true);
             invoicePaymentNumbersBehaviour = new InvoicePaymentNumbersBehaviour(tenant);
             this.GetAccountingSystem();
+
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+            isAccountingActivated = tenantPOCO.AccountingActivated;
         }
 
         private bool isTransferEnabled = false;
@@ -410,7 +422,24 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             APPaymentValidator.Validate(entityPM, payment, isNewEntity);
             APPaymentTracing.Trace(theEntityPm, payment, isNewEntity);
-          
+
+            if (isAccountingActivated)
+            {
+                _PaymentGLAccount = GetGLAccountByCard(entityPM);
+                string glaccountId = null;
+                if (entityPM.VendorGLAccountId != null)
+                {
+                    glaccountId = entityPM.VendorGLAccountId;
+                }
+                else if (_PaymentGLAccount != null)
+                {
+                    glaccountId = _PaymentGLAccount.Id;
+                }
+                var tuple = GetInvoicesLedgerTransactions(entityPM.Id, glaccountId, entityPM.Tenant);
+                _PaymentTranasction = tuple.Item1;
+                _InvoicesLedgerTransactions = tuple.Item2;
+            }
+
             foreach (APPaymentInvoicePM item in changedList)
             {
                 switch (item.ChangeSetOp)
@@ -478,6 +507,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             theEntityPm.VoidedByJournalNumber = entityPM.VoidedByJournalNumber;
             paymentRepository.Update(payment);
             paymentRepository.SubmitChanges();
+            if (isAccountingActivated && !setApproved)
+            {
+                if (theEntityPm.StatusCode != "VD" && theEntityPm.StatusCode != "DR")
+                    CreateReconciliationForAPPayment(theEntityPm);
+            }
             this.TraceConnected();
             this.GetForeignFields();
         }
@@ -529,6 +563,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         }
 
         private List<APInvoice> invoicesList;
+
         private APInvoice GetInvoice(string invoiceId, int tenant)
         {
             APInvoice myResult = null;
@@ -697,7 +732,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         #region PaymentInvoice
         private void CreatePaymentInvoice(APPaymentInvoicePM item)
         {
-            this.ValidateIfSameRecordAdded(item);
+            if (isAccountingActivated)
+            {
+                ValidatePaymentReconciliation(item, null, entityPM);
+            }
+            else
+            {
+                this.ValidateIfSameRecordAdded(item);
+            }
 
             item.APPaymentId = entityPM.Id;
             item.ForeignCurrencyId = entityPM.PaymentCurrencyId;
@@ -711,12 +753,144 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private void UpdatePaymentInvoice(APPaymentInvoicePM item)
         {
             APInvoicePayment invoicePayment = invoicePaymentRepository.GetSingleAPInvoicePayment(item.Id, entityPM.Tenant);
-
+            ValidatePaymentReconciliation(item, invoicePayment, entityPM);
+            
             if (invoicePayment != null)
             {
                 APPaymentMapping.MapEntityInvoicePyament(item, invoicePayment, false);
                 invoicePaymentRepository.Update(invoicePayment);
             }
+        }
+
+        private void ValidatePaymentReconciliation(APPaymentInvoicePM item, APInvoicePayment invoicePayment, APPaymentPM entityPM)
+        {
+            
+            if (isAccountingActivated && (invoicePayment == null || item.PaymentAmount != invoicePayment.PaymentAmount))
+            {
+                bool useLocal = true;
+                var user = GetLoggedContact(tenant);
+                if (user != null) useLocal = !(GetLoggedContact(tenant).DontShowLocal);
+                if (entityPM.StatusCode == "DR") {
+                    throw new ApplicationException(TranslateTextsClass.Translate("APPayment.M.PaymentDraftCantBeApproved", tenant, useLocal));
+                }
+                if (_InvoicesLedgerTransactions.Count > 0) {
+                    var invoiceTranasction =  _InvoicesLedgerTransactions.Where(x => x.Reference1 == item.APInvoiceNumber).FirstOrDefault();
+                    string[] invoiceRecons = new string[] { };
+                    string[] paymentRecons = new string[] { };
+                    if (invoiceTranasction != null && !string.IsNullOrWhiteSpace(invoiceTranasction.RecoNumber)
+                        && !string.IsNullOrWhiteSpace(invoiceTranasction.Reference3)) {
+                        invoiceRecons = invoiceTranasction.RecoNumber.Split(',');
+                        paymentRecons = invoiceTranasction.Reference3.Split(',');
+                    }
+                    
+                    if (invoiceRecons.Any(x => paymentRecons.Any(y => y == x)))
+                    {
+                            var intesectedElements = invoiceRecons.Where(x => paymentRecons.Any(y => y == x)).ToList();
+                            var msg = TranslateTextsClass.Translate("APPayment.M.AlreadyReconciledInvoice", tenant, useLocal);
+                            throw new ApplicationException(String.Format(msg, String.Join(",", intesectedElements)));
+                    }
+                    else if (invoiceTranasction != null) {
+                        invoiceTranasction.AmountToReconcile = item.PaymentAmount != null ? Convert.ToDecimal(item.PaymentAmount) : 0;
+                        _InvoicesLedgerTransactionsToReconcile.Add(invoiceTranasction);
+                    }
+                }
+
+                
+            }
+        }
+
+        public void CreateReconciliationForAPPayment(APPaymentPM paymentPM)
+        {
+            if (!_InvoicesLedgerTransactionsToReconcile.Any()) {
+                return;
+            }
+            IAccountingContext ctx = AccountingContext.GetContext(paymentPM.Tenant);
+            ReconciliationPM _reco = new ReconciliationPM();
+            _reco.ChangeSetOp = ChangeSetOperation.Insert;
+            _reco.Number = "get";
+            _reco.Tenant = paymentPM.Tenant;
+            _reco.AccountId = _PaymentGLAccount.Id;
+            _reco.AccountReconcileMethodCode = _PaymentGLAccount.ReconcileMethodCode;
+            _reco.CreateDate = TenantServerConfigration.GetCurrentDateTime(paymentPM.Tenant);
+
+            // get payment line LT
+            LedgerTransactionListQueryService ltListQuery = new LedgerTransactionListQueryService(ctx);
+
+            if (_PaymentTranasction == null) throw new ApplicationException("Cannot find ledger transaction for this payment!");
+            // reco payment line
+            var _recoPYLine = CreatePaymentRecoLine(paymentPM);
+            _recoPYLine.TransactionId = _PaymentTranasction.Id;
+            _reco.ReconciliationLines.Add(_recoPYLine);
+
+            // invoices lines
+            int line = 2;
+            foreach (LedgerTransactionPM invoiceLT in _InvoicesLedgerTransactionsToReconcile)
+            {
+                var _recoInLine = CreateInvoiceRecoLine(paymentPM, invoiceLT, line++);
+                _reco.ReconciliationLines.Add(_recoInLine);
+            }
+
+            //call reco service
+            var recoService = ContainerAccessor.Container.Resolve(typeof(IReconciliationServiceExt), "ReconciliationServiceExt", new ParameterOverride("", 1)) as IReconciliationServiceExt;
+            recoService.CreateReconciliation(_reco);
+        }
+        private ReconciliationLinePM CreatePaymentRecoLine(APPaymentPM paymentPM)
+        {
+            ReconciliationLinePM _paymentLine = new ReconciliationLinePM();
+            _paymentLine.ChangeSetOp = ChangeSetOperation.Insert;
+            _paymentLine.Tenant = paymentPM.Tenant;
+            _paymentLine.Line = 1;
+
+
+            //amount
+            decimal invoiceAmountToReconcileSum = _InvoicesLedgerTransactionsToReconcile.Sum(d => d.AmountToReconcile);
+            _paymentLine.ReconciliationAmount = invoiceAmountToReconcileSum;
+
+            //currency
+            _paymentLine.CurrencyId = paymentPM.PaymentCurrencyId;
+
+            //isPartial
+            _paymentLine.IsPartial = Convert.ToDecimal(paymentPM.OpenAmount) == _paymentLine.ReconciliationAmount;
+
+            //GroupNumber
+            _paymentLine.GroupNumber = 1;
+
+            return _paymentLine;
+        }
+
+        private ReconciliationLinePM CreateInvoiceRecoLine(APPaymentPM paymentPM, LedgerTransactionPM invoiceTransactionPM, int line)
+        {
+               ReconciliationLinePM _invoiceLine = new ReconciliationLinePM();
+            _invoiceLine.ChangeSetOp = ChangeSetOperation.Insert;
+            _invoiceLine.Tenant = paymentPM.Tenant;
+            _invoiceLine.TransactionId = invoiceTransactionPM.Id;
+            _invoiceLine.Line = line;
+
+            //amount
+            _invoiceLine.ReconciliationAmount = invoiceTransactionPM.AmountToReconcile * -1;
+
+            //currency
+            _invoiceLine.CurrencyId = paymentPM.PaymentCurrencyId;
+
+            //isPartial
+            _invoiceLine.IsPartial = invoiceTransactionPM.AmountToReconcile != CalculateInvoiceAmount(invoiceTransactionPM);
+
+            //GroupNumber
+            _invoiceLine.GroupNumber = 1;
+
+            return _invoiceLine;
+        }
+
+        private decimal CalculateInvoiceAmount(LedgerTransactionPM transaction)
+        {
+                if (transaction.LocalAmountCredit == 0)
+                {
+                    return transaction.LocalAmountDebit;
+                }
+                else
+                {
+                    return -1 * transaction.LocalAmountCredit;
+                }
         }
 
         private void DeletePaymentInvoice(APPaymentInvoicePM item)
@@ -1204,6 +1378,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;
             journalUpdate.Update(journal);
+        }
+
+        private static Tuple<LedgerTransactionPM, List<LedgerTransactionPM>> GetInvoicesLedgerTransactions(string appaymentId, string accountId, int tenant)
+        {
+            
+            IAPPaymentInvoicesTransactionFetcherExt aPPaymentInvoicesTransactionFetcher = ContainerAccessor.Container.Resolve(typeof(IAPPaymentInvoicesTransactionFetcherExt), "APPaymentInvoicesTransactionFetcherExt", new ParameterOverride("", 1)) as IAPPaymentInvoicesTransactionFetcherExt;
+            return aPPaymentInvoicesTransactionFetcher.GetInvoicesLedgerTransactions(appaymentId, accountId, tenant);
         }
 
         private void AddCreditJournalLineForTaxGLAccount(APPaymentPM paymentPM, int tenant, Tenant tenantPOCO, JournalPM journal)
