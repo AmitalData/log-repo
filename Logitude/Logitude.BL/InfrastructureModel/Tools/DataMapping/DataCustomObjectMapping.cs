@@ -28,18 +28,25 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 
             FieldChange.Add(entityPOCO.CreateDate, entityPM.CreateDate, nameof(entityPM.CreateDate), fieldChanges);
             entityPOCO.CreateDate = entityPM.CreateDate;
+
             FieldChange.Add(entityPOCO.CreatedBy, entityPM.CreatedBy, nameof(entityPM.CreatedBy), fieldChanges);
             entityPOCO.CreatedBy = entityPM.CreatedBy;
+
             FieldChange.Add(entityPOCO.UpdateDate, entityPM.UpdateDate, nameof(entityPM.UpdateDate), fieldChanges);
             entityPOCO.UpdateDate = entityPM.UpdateDate;
+
             FieldChange.Add(entityPOCO.UpdatedBy, entityPM.UpdatedBy, nameof(entityPM.UpdatedBy), fieldChanges);
             entityPOCO.UpdatedBy = entityPM.UpdatedBy;
+
             FieldChange.Add(entityPOCO.ObjectTableId, entityPM.ObjectTableId, nameof(entityPM.ObjectTableId), fieldChanges);
             entityPOCO.ObjectTableId = entityPM.ObjectTableId;
+
             FieldChange.Add(entityPOCO.IsCancelled, entityPM.IsCancelled, nameof(entityPM.IsCancelled), fieldChanges);
             entityPOCO.IsCancelled = entityPM.IsCancelled;
+
             FieldChange.Add(entityPOCO.StatusId, entityPM.StatusId, nameof(entityPM.StatusId), fieldChanges);
             entityPOCO.StatusId = entityPM.StatusId;
+
             MapCustomFields(entityPM , entityPOCO, fieldChanges);
             BuildSearchFields(entityPM, entityPOCO);
         }
