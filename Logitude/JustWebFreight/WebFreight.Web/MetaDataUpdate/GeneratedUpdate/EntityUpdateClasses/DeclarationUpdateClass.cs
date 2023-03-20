@@ -85,9 +85,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-
-		public const string HashString = "e1908eca9d4f97925b143d41359a5ecb";
- 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+		public const string HashString = "1687b8063b70379c8c319c38caceb721";
+	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -20944,9 +20943,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOExporterIsTooShort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ExporterIsTooShort", DefaultText = "ExporterId is too short",LocalDefaultText = @"מספר יצואן קצר מידי", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-  		   TextCode DeclarationTextCode_CustomsDeclarationOMustCustomDocumentType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MustCustomDocumentType", DefaultText = "Must Custom Document Type",LocalDefaultText = @"יש לבחור סוג מסמך", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-  		   TextCode DeclarationTextCode_CustomsDeclarationOStoragesNotConnectToDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.StoragesNotConnectToDeclaration", DefaultText = "Note that there are storages that were not linked to the declaration, should we continue?",LocalDefaultText = @"שים לב יש אחסנות שלא קושרו להצהרה , האם להמשיך ?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
- 
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOMustCustomDocumentType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MustCustomDocumentType", DefaultText = "Must Custom Document Type",LocalDefaultText = @"יש לבחור סוג מסמך", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOStoragesNotConnectToDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.StoragesNotConnectToDeclaration", DefaultText = "Note that there are storages that were not linked to the declaration, should we continue?",LocalDefaultText = @"שים לב יש אחסנות שלא קושרו להצהרה , האם להמשיך ?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
    
 	    
 }
