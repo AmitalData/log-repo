@@ -40,6 +40,7 @@ export class PayablePageComponent {
 
     //Counts
     public APPaymentsDraftsCount: string;
+    public APPaymentsDraftPermission: boolean;
     public APPaymentsOpenedCount: string;
     public APInvoicesDraftsCount: string;
     public APInvoicesUnpaidCount: string;
@@ -299,6 +300,7 @@ export class PayablePageComponent {
             if (myResult != null) {
                 this.APInvoicesDraftsCount = myResult.APInvoicesDraftsCount > 1000 ? "1000+" : myResult.APInvoicesDraftsCount.toString();
                 this.APPaymentsDraftsCount = myResult.APPaymentsDraftsCount;
+                this.APPaymentsDraftPermission = FeatureLocator.HasFeaturePermession("APPayment", "DRAFTPAYMENTS");
             }
         });
     }
