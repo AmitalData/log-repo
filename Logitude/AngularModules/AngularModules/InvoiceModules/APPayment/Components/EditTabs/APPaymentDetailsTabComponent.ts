@@ -1896,7 +1896,7 @@ export class APPaymentInvoiceArgs extends BaseComponent {
         this.CheckBoxVisibility = false;
         this.NotMatchedVisibility = false;
         this.IsAdvancedButtonVisible = false;
-        this.CheckBoxEnabled = true;
+        //this.CheckBoxEnabled = true;
 
         this.SetUIProperties_CurrencyMatched();
         this.SetUIProperties_AllowedToConnect();
