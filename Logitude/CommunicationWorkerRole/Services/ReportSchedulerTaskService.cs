@@ -38,6 +38,7 @@ using System.Transactions;
 using WebFreight.Web.DataProviders;
 using WebFreight.Web.Helpers;
 using Logitude.Accounting.Data.Repositories;
+using System.Web;
 
 namespace CommunicationWorkerRole.Services
 {
@@ -685,23 +686,23 @@ namespace CommunicationWorkerRole.Services
         {
             HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
             SchedulerDetails schedulerDetails = GetSchedulerDetails(reportTask);
-            EmailDetails emailDetails = GetEmailDetailsByMessageTemplateId(schedulerDetails.ReportDetails.MessageTemplateId, reportTask.Tenant);
+            EmailDetails emailDetails = GetEmailDetailsByMessageTemplateId(schedulerDetails.ReportDetails.MessageTemplateId, reportTask.Tenant, reportTask.CreatedBy);
             string reportTableId = GetReportTableId(reportTask.Tenant);
             string subject = !string.IsNullOrEmpty(emailDetails.Subject) ? emailDetails.Subject : reportTask.Name;
             htmlEditorHelper.SendHtmlDocument(emailDetails.Body, null, null, reportTask.Tenant, recepients.To, subject, recepients.Cc, recepients.Bcc, reportTask.CreatedBy, reportTask.EntityId, reportTableId, documentId + ",", "", "", "");
             this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
             this.trackerCounter += 1;
         }
-        public EmailDetails GetEmailDetailsByMessageTemplateId(string messageTemplateId, int tenant)
+        public EmailDetails GetEmailDetailsByMessageTemplateId(string messageTemplateId, int tenant, string userId)
         {
             if (string.IsNullOrEmpty(messageTemplateId) || string.IsNullOrWhiteSpace(messageTemplateId))
             {
                 return GetInstanceOfEmailDetails();
             }
-            return GetEmailDetails(messageTemplateId, tenant);
+            return GetEmailDetails(messageTemplateId, tenant, userId);
         }
 
-        private EmailDetails GetEmailDetails(string messageTemplateId, int tenant)
+        private EmailDetails GetEmailDetails(string messageTemplateId, int tenant, string userId)
         {
             ReportsTemplatesVersionRepository reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(tenant);
             string documentId = reportsTemplatesVersionRepository.GetReportDocumentIdByReportTemplateId(messageTemplateId, tenant);
@@ -712,7 +713,6 @@ namespace CommunicationWorkerRole.Services
             if (string.IsNullOrEmpty(documentId)) return emailDetails;
             string html = GetHtmlBody(tenant, documentId);
 
-            string userId = GetLoggedUser(tenant)?.Id;
             HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
             string subject = reportsTemplatePM != null ? reportsTemplatePM.Subject : null;
             string from = null;
@@ -756,13 +756,6 @@ namespace CommunicationWorkerRole.Services
                 Body = utf8Encoding.GetBytes(""),
                 Subject = null
             };
-        }
-        private User GetLoggedUser(int tenant)
-        {
-            string email = AuthenticationUtil.GetLoggedUserEmail(tenant);
-            UserRepository userRepository = new UserRepository(tenant);
-            var loggedUser = userRepository.GetSingleUserByEmail(email, tenant, false);
-            return loggedUser;
         }
         private string GetReportTableId(int tenant)
         {
