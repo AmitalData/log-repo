@@ -43,7 +43,7 @@
 
     .related-to-cell,
     .task-type-cell {
-        width: 350px;
+        width: 0px;
     }
 
     .delete-entity-field-button {
@@ -93,6 +93,10 @@
     .entity-field-required-cell {
         width: 80px;
         padding-bottom: 10px;
+    }
+
+    .related-to-container {
+        padding-right: 0px;
     }
 </style>
 
@@ -150,7 +154,7 @@
                                 <LogLabel [NoObjectField]="true" [Text]="'Related To'" [ObjectFieldName]="'Record'"
                                     [DataContext]="DataContext"></LogLabel>
                             </div>
-                            <div class="table-row-cell-block">
+                            <div class="table-row-cell-block related-to-container">
                                 <TreeSelect [Items]="EditableRecordsTreeItems" [Width]="'300px'" [Value]="Record"
                                     [ShowExpand]="false" [IsReturnedTreeSelectItem]="true"
                                     [ShowItem]="'Shipment' | ShowTreeItemPipe : 'entity'"
@@ -159,7 +163,7 @@
                             </div>
                         </td>
 
-                        <td *ngIf="Entity" class="task-type-cell">
+                        <td class="task-type-cell">
                             <div>
                                 <div>
                                     <LogLabel [NoObjectField]="true" [Text]="'Task Type'"

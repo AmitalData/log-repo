@@ -112,9 +112,9 @@ export class CreateTaskPropertiesComponent extends BaseComponent implements OnIn
     }
 
     setTaskTypeQueryFilters() {
-        let apiQueryFilters = new ApiQueryFilters(false);
+        let apiQueryFilters = new ApiQueryFilters();
         let entityObjectTableId = ObjectTables.getIdByName(this.Entity);
-        apiQueryFilters.addAdditionalFilter("EntityObjectTableId", entityObjectTableId, null, null, "Equals", false, false, false, "Text");
+        apiQueryFilters.addAdditionalFilter("EntityObjectTableId", (entityObjectTableId || "null"), null, null, "Equals", false, false, false, "Text");
         this.TaskTypeQueryFilters = apiQueryFilters;
     }
 
