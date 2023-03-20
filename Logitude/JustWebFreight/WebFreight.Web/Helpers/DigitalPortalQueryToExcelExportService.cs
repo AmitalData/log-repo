@@ -549,7 +549,6 @@ namespace WebFreight.Web.Helpers
                     sheet1.Range[$"A{index}:F{index}"].VerticalAlignment = ExcelVAlign.VAlignCenter;
 
                     var englishLables = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(item.Labels);
-
                     var foreignLables = new List<DigitalTextCodeObject>();
 
                     if (foreignTextObjects.ContainsKey(profilesLables.Key))

@@ -59,9 +59,15 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         {
             try
             {
-                //string token = HttpContext.Current.Request.Headers["Token"];
-                //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                if (authToken.Tenant != 0)
+                {
+                    throw new Exception("This operation is allowed only for customer care users");
+                }
+
                 byte[] fileData = Convert.FromBase64String(filter.FileData);
                 System.IO.MemoryStream stream = new System.IO.MemoryStream(fileData);
                 var excelEngine = new ExcelEngine();
