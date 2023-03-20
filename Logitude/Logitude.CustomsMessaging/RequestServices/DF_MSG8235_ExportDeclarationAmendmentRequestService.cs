@@ -742,18 +742,18 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             declarationAgentList.Add(declarationAgent);
 
-            if (declarationPM.Consignments != null&& declarationPM.Consignments.Count() >0 && declarationPM.Consignments[0].CargoTypeCode == "17")
-            {
-                var declarationAgentSecond = new DeclarationAgent()
-                {
-                    ID = SetIDTypeValue<AgentIdentificationIDType>(declarationPM.Consignments[0].SecondCargoID),
-                    RoleCode = new AgentRoleCodeType()
-                    {
-                        Value = "11" //hard coded
-                    }
-                };
-                declarationAgentList.Add(declarationAgentSecond);
-            }
+            //if (declarationPM.Consignments != null&& declarationPM.Consignments.Count() >0 && declarationPM.Consignments[0].CargoTypeCode == "17")
+            //{
+            //    var declarationAgentSecond = new DeclarationAgent()
+            //    {
+            //        ID = SetIDTypeValue<AgentIdentificationIDType>(declarationPM.Consignments[0].SecondCargoID),
+            //        RoleCode = new AgentRoleCodeType()
+            //        {
+            //            Value = "11" //hard coded
+            //        }
+            //    };
+            //    declarationAgentList.Add(declarationAgentSecond);
+            //}
 
             return declarationAgentList.ToArray();
         }
@@ -1085,7 +1085,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             //{
             //var supplierInvoicePM =declarationPM.SupplierInvoices[supplierInvoiceSeq];
             //declarationGoodsShipment.SequenceNumeric = supplierInvoiceSeq + 1;
-
+            bool isFirstSupplierInvoice = true;
             foreach (var supplierInvoicePM in declarationPM.SupplierInvoices
                 ///.Where( rec => rec.SequenceNumeric !=null)
                 .OrderBy(rec => rec.SequenceNumeric).ToList())
@@ -1132,14 +1132,21 @@ namespace Logitude.CustomsMessaging.RequestServices
                 for (int consignmentSeq = 0; consignmentSeq < declarationPM.Consignments.Count(); consignmentSeq++)
                 {
                     string consignmentType = declarationPM.Consignments[consignmentSeq].ConsignmentType;
-                    if (supplierInvoicePM.SequenceNumeric.Value == 1 && !declarationPM.ExcludeConsignment && consignmentType == "I") // I=Import
+                    if (isFirstSupplierInvoice)
                     {
-                        declarationGoodsShipment.ImportConsignment = GetDeclarationImportConsignment(declarationPM.Consignments[consignmentSeq], declarationPM.ProcedureCurrentCode).ToArray();
+                        if (/*supplierInvoicePM.SequenceNumeric.Value == 1 &&*/ !declarationPM.ExcludeConsignment && consignmentType == "I") // I=Import
+                        {
+                            declarationGoodsShipment.ImportConsignment = GetDeclarationImportConsignment(declarationPM.Consignments[consignmentSeq], declarationPM.ProcedureCurrentCode).ToArray();
+                        }
+                        else if (/*supplierInvoicePM.SequenceNumeric.Value == 1 &&*/ !declarationPM.ExcludeConsignment)
+                        {
+                            declarationConsignmentList.AddRange(GetDeclarationExportConsignment(declarationPM.Consignments[consignmentSeq]));
+                        }
                     }
-                    else if (supplierInvoicePM.SequenceNumeric.Value == 1 && !declarationPM.ExcludeConsignment)
-                    {
-                        declarationConsignmentList.AddRange(GetDeclarationExportConsignment(declarationPM.Consignments[consignmentSeq]));
-                    }
+                }
+                if (isFirstSupplierInvoice)
+                {
+                    isFirstSupplierInvoice = false;
                 }
                 declarationGoodsShipment.ExportConsignment = declarationConsignmentList.ToArray();
                 declarationGoodsShipment.AdditionalDocument = GetDeclarationGoodsShipmentAdditionalDocument(supplierInvoicePM);
@@ -1333,10 +1340,12 @@ namespace Logitude.CustomsMessaging.RequestServices
                 ID = SetIDTypeValue<DeclarationGoodsShipmentExportConsignmentUnloadingLocationID>(consignmentPM.ExportUnloadingPortCode), //consignmentPM.UnloadPortCode// new UnloadingLocationIdentificationIDType() { Value = consignmentPM.UnloadPortCode },
                                                                                                                                           // ArrivalDateTime = consignmentPM.UnloadDate.HasValue ? DataTypeConvertorUtil.Convert(consignmentPM.UnloadDate.Value) : null,
             };
-            declarationConsignment.LoadingLocation = new DeclarationGoodsShipmentExportConsignmentLoadingLocation()
-            {
-                ID = SetIDTypeValue<DeclarationGoodsShipmentExportConsignmentLoadingLocationID>(consignmentPM.ExportLoadingPortCode) //consignmentPM.LoadingPortCode new LoadingLocationIdentificationIDType() { Value = consignmentPM.LoadingPortCode }
-            };
+			if (!string.IsNullOrEmpty(consignmentPM.ExportLoadingPortCode)) { 
+              declarationConsignment.LoadingLocation = new DeclarationGoodsShipmentExportConsignmentLoadingLocation()
+              {
+                  ID = SetIDTypeValue<DeclarationGoodsShipmentExportConsignmentLoadingLocationID>(consignmentPM.ExportLoadingPortCode) //consignmentPM.LoadingPortCode new LoadingLocationIdentificationIDType() { Value = consignmentPM.LoadingPortCode }
+              };
+            }
             declarationConsignment.DMExtensions = GetDMExtensionsConsignment(consignmentPM);
 
 
@@ -1356,10 +1365,13 @@ namespace Logitude.CustomsMessaging.RequestServices
                 SequenceNumeric = Convert.ToDecimal(consignmentPM?.SequenceNumeric)
             };
             declarationConsignment.DMExtensions = GetImportConsignmentDMExtensions(consignmentPM, ProcedureCurrentCode);
-            declarationConsignment.LoadingLocation = new DeclarationGoodsShipmentImportConsignmentLoadingLocation
+            if (!string.IsNullOrEmpty(consignmentPM.LoadingPortCode))
             {
-                ID = SetIDTypeValue<DeclarationGoodsShipmentImportConsignmentLoadingLocationID>(consignmentPM.LoadingPortCode)
-            };
+                declarationConsignment.LoadingLocation = new DeclarationGoodsShipmentImportConsignmentLoadingLocation
+                {
+                    ID = SetIDTypeValue<DeclarationGoodsShipmentImportConsignmentLoadingLocationID>(consignmentPM.LoadingPortCode)
+                };
+            }
             declarationConsignment.UnloadingLocation = new DeclarationGoodsShipmentImportConsignmentUnloadingLocation()
             {
                 ID = SetIDTypeValue<DeclarationGoodsShipmentImportConsignmentUnloadingLocationID>(consignmentPM.UnloadPortCode)

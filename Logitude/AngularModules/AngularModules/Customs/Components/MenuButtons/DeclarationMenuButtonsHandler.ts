@@ -422,7 +422,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         }
                     }
                     if (button.EventCode == "ResetDeclarationNumber") {//Eitan H 26/11/17 34387
-                        if (this.IsDisplayOnly) {
+                        if (this.IsDisplayOnly || (this.EntityPM.Direction == "E"&&this.EntityPM.IsSubmitDeclaration)) {
                             button.IsDisabled = true;
                             button.IsHidden = false;
                         }
@@ -555,7 +555,13 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         }
 
                     }
+                    if(button.EventCode == "DeclarationRestore"){
+                        if(this.EntityPM.Direction == "E" && !this.EntityPM.IsSubmitDeclaration) {
+                            button.IsDisabled = true;
+                        }
+                    }
                 }
+             
                 this.IsDisplayOnlyCheckDone = true;
                 return menuButtons;
             }

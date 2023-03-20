@@ -28,9 +28,9 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
 
             var customsSettingQueryService = new CustomsSettingQueryService(seedDefaultTenant);
             var allCustomsSetting = customsSettingQueryService.GetAll();
-            if(allCustomsSetting != null && allCustomsSetting.Count > 0)
+            if (allCustomsSetting != null && allCustomsSetting.Count > 0)
             {
-                Run(allCustomsSetting[0]);
+                Run(allCustomsSetting.FirstOrDefault(x => x.Tenant == 6));
 
             }
             //allCustomsSetting.ForEach(t => RunPerTenant(t));
@@ -40,36 +40,37 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
 
         private void Run(CustomsSettingPM t)
         {
-
-            LogMessagingUtil.Instance.AppendLine($"RunPerTenant({t.Tenant}) send 8347");
-            CD_NG_8347_Web01_CurrencyRateSearchRequestParams requestParams = new CD_NG_8347_Web01_CurrencyRateSearchRequestParams();
-            try
+            if (t != null)
             {
+                LogMessagingUtil.Instance.AppendLine($"RunPerTenant({t.Tenant}) send 8347");
+                CD_NG_8347_Web01_CurrencyRateSearchRequestParams requestParams = new CD_NG_8347_Web01_CurrencyRateSearchRequestParams();
+                try
+                {
 
-                var loggedUserId = AuthenticationUtil.ResolveUserId(t.Tenant);
-                requestParams.LoggingEnabled = true;
-                requestParams.LoggingUserId = loggedUserId;
-                requestParams.Tenant = t.Tenant;
-                requestParams.FromDate = DateTime.Now;
-                requestParams.ToDate = DateTime.Now;
-                requestParams.CurrencyTypeId = null;
-                requestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
-                requestParams.ForcePersonalSign = false;
-                requestParams.UpdateAllTenants = true;
-                // use messageing service
+                    var loggedUserId = AuthenticationUtil.ResolveUserId(t.Tenant);
+                    requestParams.LoggingEnabled = true;
+                    requestParams.LoggingUserId = loggedUserId;
+                    requestParams.Tenant = t.Tenant;
+                    requestParams.FromDate = DateTime.Now;
+                    requestParams.ToDate = DateTime.Now;
+                    requestParams.CurrencyTypeId = null;
+                    requestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
+                    requestParams.ForcePersonalSign = false;
+                    requestParams.UpdateAllTenants = true;
+                    // use messageing service
 
-                var service = new CD_NG_8347_Web01_CurrencyRateSearchParamMessagingService();
-                var responseData = service.Send(requestParams);
-                LogMessagingUtil.Instance.AppendLine($"Tenant:({t.Tenant}) after send 8347");
+                    var service = new CD_NG_8347_Web01_CurrencyRateSearchParamMessagingService();
+                    var responseData = service.Send(requestParams);
+                    LogMessagingUtil.Instance.AppendLine($"Tenant:({t.Tenant}) after send 8347");
 
 
+                }
+
+                catch (Exception ex)
+                {
+                    LogMessagingUtil.Instance.AppendLine("Exception was thrown while sent 8347 " + t.Tenant + Environment.NewLine + ex.Message);
+                }
             }
-
-            catch (Exception ex)
-            {
-                LogMessagingUtil.Instance.AppendLine("Exception was thrown while sent 8347 " + t.Tenant + Environment.NewLine + ex.Message);
-            }
-
         }
 
     }

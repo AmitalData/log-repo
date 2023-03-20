@@ -52,6 +52,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
         public override void Update(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customResponse, AmendmentRequestParams requestParams)
         {
+            var declarationNumber = customResponse?.Response?.Declaration?.ID.Value;
+            if (declarationNumber == null)
+            {
+                declarationNumber = customResponse?.Response?.FunctionalReferenceID?.Value;
+            }
+            string key = ProcessLockTableUtil.Instance.GetKey4Declaration(declarationNumber, requestParams.Tenant);
+            using (var disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "2470ResponseService.Update"))
+            {
             var context = CustomContext.GetContext(requestParams.Tenant);
             var myDeclarationQueryService = new DeclarationQueryService(context);
             var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
@@ -740,26 +748,26 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 var mySend2MasofIfNeededService = new Send2MasofIfNeededService();
                 mySend2MasofIfNeededService.Send2Masof(_MyDeclarationPM, false, _MyDeclarationPM, true);
 
-                SendManifest(_MyDeclarationPM, requestParams);
-            }
-            if (requestParams.IsExportClose && this._MyDeclarationPM?.Direction == "E")
-            {
-                AmitalInsertToQueueService.insertToQueue(this._MyDeclarationPM);
+                    SendManifest(_MyDeclarationPM, requestParams);
+                }
+                if (requestParams.IsExportClose && this._MyDeclarationPM?.Direction == "E")
+                {
+                    AmitalInsertToQueueService.insertToQueue(this._MyDeclarationPM);
                 if (_MyDeclarationPM.DeclarationStatusTypeCode == "36")
                 {
                     RaiseEvent(this._MyDeclarationPM, null, status_id: "CLS");
                 }
             }
             this.MyResponseData.ApplicationID = requestParams.AppicationId;
-            this.MyResponseData.Succeeded = true;
-            this.MyResponseData.HasException = false;
-            if (requestParams.IsExportClose || isExportCloseFromMehes) 
-            {
-                if (HasErors)
-                    this.MyResponseData.UserMessage = "מענה לסגירת הצהרה " + this._MyDeclarationPM.DeclarationNumber + " נקלט עם שגיאות!!!";
-                else
-                    this.MyResponseData.UserMessage = "מענה לסגירת הצהרה " + this._MyDeclarationPM.DeclarationNumber + " נקלט בהצלחה";
-            }
+                this.MyResponseData.Succeeded = true;
+                this.MyResponseData.HasException = false;
+                if (requestParams.IsExportClose || isExportCloseFromMehes)
+                {
+                    if (HasErors)
+                        this.MyResponseData.UserMessage = "מענה לסגירת הצהרה " + this._MyDeclarationPM.DeclarationNumber + " נקלט עם שגיאות!!!";
+                   else
+                        this.MyResponseData.UserMessage = "מענה לסגירת הצהרה " + this._MyDeclarationPM.DeclarationNumber + " נקלט בהצלחה";
+                }
             else
             {
                 if (HasErors)
@@ -948,7 +956,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public bool SendDeclarationPrint(GenericRequestParams requestParams)
         {
             LogMessagingUtil.Instance.AppendLine("SendDeclarationPrint");
-            string decNum = this._MyDeclarationPMOrg != null ? this._MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber;
+            string decNum = this._MyDeclarationPMOrg != null && !string.IsNullOrEmpty(this._MyDeclarationPMOrg.DeclarationNumber) ? this._MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber;
             var decNumList = new List<string>();
             decNumList.Add(decNum);
 

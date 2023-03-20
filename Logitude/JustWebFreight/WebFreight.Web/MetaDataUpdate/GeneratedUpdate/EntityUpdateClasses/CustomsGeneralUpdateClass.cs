@@ -2147,6 +2147,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode CustomsGeneralTextCode_CustomsCreditGoldQueryOCustomFileNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CreditGoldQuery.O.CustomFileNo", DefaultText = "Custom File No",LocalDefaultText = @"תיק עמילות", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode CustomsGeneralTextCode_CustomsDeclarationPaymentOPaymentDateDifferentFromCurrentDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationPayment.O.PaymentDateDifferentFromCurrentDate", DefaultText = "payment date different from current date",LocalDefaultText = @"שים לב התאריך שונה מתאריך נוכחי, ההגשה תטופל בתאריך שצוין, האם להמשיך? ", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
    
 	    
 }

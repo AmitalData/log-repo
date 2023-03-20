@@ -90,6 +90,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
 
             UpdatePendingByKeyWords(entityPM);
+            //BUG String Empty 175687
+            entityPM.CargoTypeCode = !string.IsNullOrEmpty(entityPM.CargoTypeCode) ? entityPM.CargoTypeCode : null;
+            entityPM.ManifestNumber = !string.IsNullOrEmpty(entityPM.ManifestNumber) ? entityPM.ManifestNumber : null;
+            entityPM.SecondCargoID = !string.IsNullOrEmpty(entityPM.SecondCargoID) ? entityPM.SecondCargoID : null;
+            entityPM.ThirdCargoID = !string.IsNullOrEmpty(entityPM.ThirdCargoID) ? entityPM.ThirdCargoID : null;
+
             base.OnUpdating(entityPM, entityPOCO);
         }
 

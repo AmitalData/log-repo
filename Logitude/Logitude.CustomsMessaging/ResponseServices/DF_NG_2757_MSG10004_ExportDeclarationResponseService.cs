@@ -279,17 +279,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
 
-            //לא רלוונטי ליצוא
-            /*if (this._MyDeclarationPM.IsConvertedDeclaration) // Mirit 24/01/16 19918
-            {
-                LogMessagingUtil.Instance.AppendLine("נתוני ההצהרה לא עודכנו מכיוון שמדובר בהצהרה מוסבת");
-                this.MyResponseData.ApplicationID = requestParams.AppicationId;
-                this.MyResponseData.Succeeded = true;
-                this.MyResponseData.UserMessage = "נתוני ההצהרה לא עודכנו מכיוון שמדובר בהצהרה מוסבת";
-                this.MyResponseData.HasException = false;
 
-                return;
-            }*/
+
 
             //<--- Yuval Chalup 28.05.2015 TASK-13252
             if (!string.IsNullOrWhiteSpace(this._MyDeclarationPM.Id))

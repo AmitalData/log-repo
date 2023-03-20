@@ -59,6 +59,20 @@ namespace Logitude.Customs.Data.Repsitories
             return q.Distinct().ToList();
 
         }
+
+        public List<ExportStorage> GetConnectToFileNoNotToDeclaration(string exportFileNo, int tenant)
+        {
+            var q = from a in context.ExportStorages
+                    where
+                    a.Tenant == tenant && 
+                    a.ExportFileNo == exportFileNo
+                    && a.DeclarationId == null &&
+                    a.StorageStatus != "Cancel"
+                    select a;
+
+            return q.ToList();
+
+        }
     }
 
 }

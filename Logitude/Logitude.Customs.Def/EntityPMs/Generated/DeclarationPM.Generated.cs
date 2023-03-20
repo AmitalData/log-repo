@@ -4698,29 +4698,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string shipName ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipName  
-	   {
-	    
-	     get
-		{
-		   return shipName;
-		 }
-		 set
-		 {
-		   if(shipName != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipName",OldValue=shipName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   shipName=value;
-		   }
-			
-		 }
-	   }
 	  private string destinationCountryName ;
 	  	  
        

@@ -142,7 +142,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
                 if (this.DecPM.Direction === 'E' && this.DecPM.TransportModeId === 'O') {
 
-                    this.FinalShipCode = this.FinalShipCode ?? this.DecPM.Consignments.find(x => x.ConsignmentType == "E").ShipCode;
+                    if(!this.FinalShipCode)
+                        this.FinalShipCode = this.DecPM.Consignments.find(x => x.ConsignmentType == "E")?.ShipCode;
                     if (this.FinalCargoTypeCode == null) {
 
                         this.FinalManifestNumber = this.FinalManifestNumber == null ? '' : this.FinalManifestNumber;
@@ -360,6 +361,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         windowArgs.EntityParentPM = "ExportDeclarationClosingData";
         //    windowArgs.SkipCtor = this.SkipCtor;
         windowArgs.IsFromStandAloneScreen = true;
+        windowArgs.IsClose = true;
         var windowTitle = "Customs.Declaration.TH.Documents";
 
         var logWindow = new LogitudeWindow();
@@ -726,7 +728,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                         if (!AppTool.IsNullOrEmpty(FlightDate)) {
                             this.FlightDate = new Date(Number(FlightDate.substring(0, 4)), Number(FlightDate.substring(4, 6)) - 1, Number(FlightDate.substring(6, 8)), 2, 2, 2);;
                             if (this.IsNew) {
-                                this.LoadingDateTime = this.FlightDate;
+                                this.LoadingDateTime = new Date(Number(FlightDate.substring(0, 4)), Number(FlightDate.substring(4, 6)) - 1, Number(FlightDate.substring(6, 8)), 2, 2, 2);
                             }
                         }
                         SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();

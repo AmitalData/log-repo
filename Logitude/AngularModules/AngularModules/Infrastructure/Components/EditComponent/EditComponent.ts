@@ -34,6 +34,9 @@ import { CustomsSettingList } from 'Customs/EntityLists/CustomsSettingList';
 import { CustomsClosedTablePM } from '../../../Customs/EntityPMs/CustomsClosedTablePM';
 import { CustomsSettingExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 
+import { CustomsClosedTablePM } from '../../../Customs/EntityPMs/CustomsClosedTablePM';
+import { CustomsSettingExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
+
 
 @Component({    
     templateUrl: './EditComponent.html',
