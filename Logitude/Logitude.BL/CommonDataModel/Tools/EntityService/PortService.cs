@@ -170,7 +170,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private void AddImporterPortQueueMessage()
         {
             if (tenant != 0) return;
-            if (!IsCloudEnvironment()&& !string.IsNullOrEmpty(LogitudeSettings.WorkEnvironment) && LogitudeSettings.WorkEnvironment.ToLower() != "test2") return;
+            if (!IsCloudEnvironment() && LogitudeSettings.DeploymentStage.ToLower() != "test2") return;
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("ImporterPortsQueue", 0);
             var queueMessage = new Dictionary<string, string>() {
