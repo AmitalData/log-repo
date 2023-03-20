@@ -1,5 +1,5 @@
 ﻿<Script  DBType="Main" Module="Infrastructure">
-  <Sql Version="4">
+  <Sql Version="5">
     <![CDATA[
 	  declare @objectTableId as varchar(15)
 	  set @objectTableId = (select Id from ObjectTables where [Name] = 'Quote' and Tenant = 0)
@@ -220,8 +220,8 @@
                     </LogColumn>
                 </LogRow>
 
-                <LogRow>     
-                    <LogColumn>
+                <LogRow class=''align-items-start''>     
+                    <LogColumn max-width=''65%''>
                         <LogFieldContainer>
                             <LogLabel text-code=''Quote.G.Destination''></LogLabel>
                         </LogFieldContainer>
