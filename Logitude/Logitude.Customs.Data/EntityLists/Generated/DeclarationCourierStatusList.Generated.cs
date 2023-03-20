@@ -198,6 +198,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string CasualImporterTel  { get; set; }
        [DataMember]
        public string NotApprovedPendingList  { get; set; }
+       [DataMember]
+       public string StorageSiteStatusCodeText  { get; set; }
    }
 
 }
