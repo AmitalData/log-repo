@@ -254,7 +254,7 @@
     <tr>
         <td style="height: 100%;">
             <div class="CellContent" *ngIf="IsReady">
-                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [Disabled]="IsReadOnly" [ItemSource]="ModificationsList" (RowEnded)="OnRowEnded($event)">
+                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [Disabled]="IsReadOnly" [ItemSource]="ModificationsList" >
 
                     <!-- TypeCode -->
                     <log-column [header]="'Customs.SupplierInvoiceModification.F.TypeCode' | TextCodeTranslationPipe" [width]="'80'" [Alignment]="'right'" [binding]="'TypeCode'">
