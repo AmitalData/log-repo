@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
    {  		
-		public const string HashString = "f1997efed85f81378e7402bd38ab5a0b";
+		public const string HashString = "cd334300eac635a92b465502efdd2079";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -13203,9 +13203,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ListCounter",
 					  						DefaultText =  "ListCounter",
+					  						FullLocalDefaultText =  "#",
 					  						ListFieldLable =  "ListCounterListLable",
 					  						ListLableDefaultText =  "ListCounter",
-					  						ListLocalDefaultText =  "מספור שורה",
+					  						ListLocalDefaultText =  "#",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
