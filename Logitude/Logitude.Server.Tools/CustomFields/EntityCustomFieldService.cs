@@ -72,7 +72,7 @@ namespace Logitude.Server.Tools.CustomFields
 
         private void SetCustomFieldValue(object entity)
         {
-            CustomFieldsMainObject customFieldsMainObject = GetCustomFieldsMainObject((GetPropertyValue(entity, keyName).ToString()));
+            CustomFieldsMainObject customFieldsMainObject = GetCustomFieldsMainObject((GetPropertyValue(entity, keyName).ToString()), false);
             if (entity == null || customFieldsMainObject == null) return;
             foreach (ObjectField customObjectField in customObjectFields)
             {
@@ -94,10 +94,11 @@ namespace Logitude.Server.Tools.CustomFields
             return customFieldsMainObjects.Where(d => d.EntityId == entityId).Any();
         }
 
-        private CustomFieldsMainObject GetCustomFieldsMainObject(string entityId)
+        private CustomFieldsMainObject GetCustomFieldsMainObject(string entityId , bool isNew = true)
         {
             if (IsEntityExist(entityId)) return customFieldsMainObjects.Where(d => d.EntityId == entityId).FirstOrDefault();
-          
+            if (!isNew) return null;
+
             CustomFieldsMainObject customFieldsMainObject =  new CustomFieldsMainObject()
             {
                 Id = IdCounter.GetNumber("ChildEntitiesCustomField", tenant).ToString(),
