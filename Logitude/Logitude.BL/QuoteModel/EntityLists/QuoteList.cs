@@ -253,6 +253,7 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public string QuoteClosingReasonNotes { get; set; }
         public string DigitalPortalSearchFields { get; set; }
         public string StageCode { get; set; }
+        public bool IsExpired { get; set; }
 
     }
 }
