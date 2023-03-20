@@ -11,6 +11,7 @@ using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
@@ -162,13 +163,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void AddQueueMessages()
         {
+            if (entityPM.IsFromWorkerRole) return;
             AddPortKafkaQueueMessage();
             AddImporterPortQueueMessage();
         }
         private void AddImporterPortQueueMessage()
         {
             if (tenant != 0) return;
-            if (!IsCloudEnvironment()) return;
+            if (!IsCloudEnvironment()&& !string.IsNullOrEmpty(LogitudeSettings.WorkEnvironment) && LogitudeSettings.WorkEnvironment.ToLower() != "test2") return;
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("ImporterPortsQueue", 0);
             var queueMessage = new Dictionary<string, string>() {

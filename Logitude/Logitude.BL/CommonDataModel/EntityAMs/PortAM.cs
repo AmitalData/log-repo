@@ -8,7 +8,6 @@ namespace Logitude.BL.CommonDataModel.EntityAMs
 {
     public class PortAM
     {
-        public string Id { get; set; }
         public int Tenant { get; set; }
 
         private string code;
@@ -20,14 +19,16 @@ namespace Logitude.BL.CommonDataModel.EntityAMs
                 code = value.ToUpper();
             }
         }
-
         public string EnglishName { get; set; }
         public string LocalName { get; set; }
+        public string Notes { get; set; }
+        public bool InActive { get; set; }
+        public bool IsAir { get; set; }
+        public bool IsOcean { get; set; }
+        public bool IsInland { get; set; }
         public string CountryCode { get; set; }
-        // public CountryPM countryPM;
         public string StateCode { get; set; }
-        // public StatePM statePM
-        public string PortTimeZoneCode { get; set; }
-        // public PortTimeZonePM portTimeZonePM
+        public string TimeZoneCode { get; set; }
+        public string PortGroupCode { get; set; }
     }
 }

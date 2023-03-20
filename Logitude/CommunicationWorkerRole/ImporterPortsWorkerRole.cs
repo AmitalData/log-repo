@@ -20,9 +20,15 @@ namespace CommunicationWorkerRole
         {
             startDate = DateTime.Now;
         }
+        public override bool OnStart()
+        {
+            ThreadId = Guid.NewGuid().ToString();
+            BatchServiceCode = "ImporterPortsWorkerRole";
+            DoneItemsInRange = new Dictionary<DateTime, int>();
+            return base.OnStart();
+        }
         public override void Run()
         {
-            //string token = APICredentialsAuthenticationService.Authenticate(URI);
             startDate = DateTime.Now;
             while (IsRunning)
             {
@@ -72,7 +78,7 @@ namespace CommunicationWorkerRole
         {
             int tenant = int.Parse(response.MessageValues["Tenant"].ToString());
             string portId = response.MessageValues["PortId"].ToString();
-            importerPortService = new(response);
+            importerPortService = new ImporterPortService(response);
             importerPortService.Run(portId , tenant);
         }
     }

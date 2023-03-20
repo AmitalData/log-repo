@@ -7,7 +7,7 @@
              ,[ClassName]
              ,[Parameter1]
              ,[Parameter2]
-			 [QueueDefinitionCode])
+			 ,[QueueDefinitionCode])
        VALUES
              ('ImporterPortsWorkerRole'
              ,'ImporterPortsWorkerRole'

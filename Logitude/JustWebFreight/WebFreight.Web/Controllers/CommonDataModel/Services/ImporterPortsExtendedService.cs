@@ -1,8 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityAMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.GlobalModel.EntityPMs;
-using Logitude.BL.GlobalModel.EntityQueries;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.Server.Tools;
@@ -13,9 +12,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
-using System.Transactions;
 
 namespace WebFreight.Web.Controllers.CommonDataModel.Services
 {
@@ -23,103 +20,132 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Services
     {
         private int tenant;
         public string correlationId;
-        ICommonDataContext commoncontext;
-        IWebFreightContext webFreightContext;
+        private ICommonDataContext commoncontext;
+        private IWebFreightContext webFreightContext;
+        private PortService portService;
+        private PortPM importerPort = null;
         public ImporterPortsExtendedService(int tenant , string correlationId)
         {
             this.tenant = tenant;
             this.correlationId = correlationId;
             commoncontext = CommonDataContext.GetContext(tenant);
             webFreightContext = WebFreightContext.GetContext(tenant);
+            portService = new PortService(commoncontext, tenant);
         }
-        public APIException MapEntityAMToEntityPM(PortAM entityAM, PortPM entityPM)
+
+        public APIException GetPortAPIResult(PortAM portAM, bool isNew)
+        {
+            PortQuery portQuery = new PortQuery(portAM.Tenant);
+            if (isNew)
+            {
+                importerPort = new PortPM();
+            }
+            else if (!string.IsNullOrEmpty(portAM.Code) && !string.IsNullOrEmpty(portAM.CountryCode))
+            {
+                importerPort = portQuery.GetSinglePortPMByCodeCountryCode(portAM.Code, portAM.CountryCode, portAM.Tenant);
+            }
+            
+            APIException result = MapAndValidateFieldsIds(portAM);
+            if(result == null)
+                MapEntityAMToEntityPM(portAM);
+            return result;
+        }
+        public void MapEntityAMToEntityPM(PortAM portAM)
+        {
+            importerPort.Tenant = portAM.Tenant;
+            importerPort.EnglishName = portAM.EnglishName;
+            importerPort.LocalName = portAM.LocalName;
+            importerPort.Notes = portAM.Notes;
+            importerPort.InActive = portAM.InActive;
+            importerPort.IsAir = portAM.IsAir;
+            importerPort.IsOcean = portAM.IsOcean;
+            importerPort.IsInland = portAM.IsInland;
+            importerPort.CountryCode = portAM.CountryCode;
+            importerPort.StateCode = portAM.StateCode;
+            importerPort.PortTimeZoneCode = portAM.TimeZoneCode;
+            importerPort.IsFromWorkerRole = true;
+        }
+        public APIException MapAndValidateFieldsIds(PortAM portAM)
         {
             APIException Responce = new APIException();
-            //TenantPM currentTenant = TenantQuery.GetSingleTenantPM(entityAM.Tenant, false);
-            //ICommonDataContext commoncontext = CommonDataContext.GetContext(entityAM.Tenant);
-            //HybridPartnerRepository hybridPartnerRepository = new HybridPartnerRepository(commoncontext);
-            //HybridPartnerQuery HybridPartnerQuerey = new HybridPartnerQuery(hybridPartnerRepository);
-            //HybridPartnerPM Partner = HybridPartnerQuerey.GetSinglePMByPartnerTenant(entityAM.Tenant);
-            //TenantManagmentPrivateLabelsPM privatelabel = null;
-            //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            //{
-            //    TenantManagmentPrivateLabelsQuery query = new TenantManagmentPrivateLabelsQuery(0);
-            //    privatelabel = query.GetSinglePM(currentTenant.PrivateLabelId);
-            //}
-            entityPM.Tenant = entityAM.Tenant;
-            entityPM.StateCode = entityAM.StateCode;
-            entityPM.PortTimeZoneCode = entityAM.PortTimeZoneCode;
-            entityPM.LocalName = entityAM.LocalName;
-            entityPM.EnglishName = entityAM.EnglishName;
-
-            if (entityAM.CountryCode != null)
+            if (portAM.CountryCode != null)
             {
-                var countryId = GetCountryIdFromCountryCode(entityAM.CountryCode, entityAM.Tenant);
+                var countryId = GetCountryIdFromCountryCode(portAM.CountryCode, portAM.Tenant);
                 if (!string.IsNullOrEmpty(countryId))
                 {
-                    entityPM.CountryId = countryId;
+                    importerPort.CountryId = countryId;
                 }
                 else
                 {
-                    Responce.ErrorType = "Validation Error";
-                    Responce.ErrorMessage = "CountryId field doesn't exist in the database, insert this entity before using it.";
-                    return Responce;
+                    return ThrowDataBaseValidationError(Responce, "CountryId");
                 }
             }
             else
             {
-                Responce.ErrorType = "Validation Error";
-                Responce.ErrorMessage = "CountryCode field is required.";
-                return Responce;
+                return ThrowPortAMValidationError(Responce, "CountryCode");
             }
 
-            if (entityAM.StateCode != null)
+            if (portAM.StateCode != null)
             {
-                var stateId = GetStateIdFromStateCode(entityAM.StateCode, entityAM.Tenant);
+                var stateId = GetStateIdFromStateCode(portAM.StateCode, portAM.Tenant);
                 if (!string.IsNullOrEmpty(stateId))
                 {
-                    entityPM.StateId = stateId;
+                    importerPort.StateId = stateId;
                 }
                 else
                 {
-                    Responce.ErrorType = "Validation Error";
-                    Responce.ErrorMessage = "StateId field doesn't exist in the database, insert this entity before using it.";
-                    return Responce;
+                    return ThrowDataBaseValidationError(Responce, "StateId");
                 }
+            }
 
-            }
-            else
+            if (portAM.TimeZoneCode != null)
             {
-                Responce.ErrorType = "Validation Error";
-                Responce.ErrorMessage = "StateCode field is required.";
-                return Responce;
-            }
-            if (entityAM.PortTimeZoneCode != null)
-            {
-                var portTimeZoneCode = GetPortTimeZoneFromPortTimeZoneCode(entityAM.PortTimeZoneCode, entityAM.Tenant);
-                if (!string.IsNullOrEmpty(portTimeZoneCode))
+                var portTimeZone = GetPortTimeZoneFromPortTimeZoneCode(portAM.TimeZoneCode, portAM.Tenant);
+                if (portTimeZone == null)
                 {
-                    entityPM.PortTimeZoneCode = portTimeZoneCode;
-                }
-                else
-                {
-                    Responce.ErrorType = "Validation Error";
-                    Responce.ErrorMessage = "PortTimeZoneCode field doesn't exist in the database, insert this entity before using it.";
-                    return Responce;
+                    return ThrowDataBaseValidationError(Responce, "PortTimeZoneCode");
                 }
             }
-            else
+            if (string.IsNullOrEmpty(portAM.IsAir.ToString()))
             {
-                Responce.ErrorType = "Validation Error";
-                Responce.ErrorMessage = "PortTimeZoneCode field is required.";
-                return Responce;
+                return ThrowPortAMValidationError(Responce, "IsAir");
+            }
+            if (string.IsNullOrEmpty(portAM.IsOcean.ToString()))
+            {
+                return ThrowPortAMValidationError(Responce, "IsOcean");
+            }
+            if (string.IsNullOrEmpty(portAM.IsInland.ToString()))
+            {
+                return ThrowPortAMValidationError(Responce, "IsInland");
             }
             return null;
         }
+
+        private static APIException ThrowPortAMValidationError(APIException Responce, string fieldName)
+        {
+            Responce.ErrorType = "Validation Error";
+            Responce.ErrorMessage = fieldName +" field is required.";
+            return Responce;
+        }
+
+        private static APIException ThrowDataBaseValidationError(APIException Responce, string fieldName)
+        {
+            Responce.ErrorType = "Validation Error";
+            Responce.ErrorMessage = fieldName + " field doesn't exist in the database, insert this entity before using it.";
+            return Responce;
+        }
+
+        public void UpdateImporterPort()
+        {
+            portService.Update(importerPort);
+        }
+        public void CreateImporterPort()
+        {
+            portService.Create(importerPort);
+        }
         public string GetCountryIdFromCountryCode(string countryCode, int tenant)
         {
-            CountryRepository countryRepository = new CountryRepository(commoncontext);
-            Country country = countryRepository.GetSingleCountryByCode(countryCode, tenant);
+            Country country = new CountryRepository(commoncontext).GetSingleCountryByCode(countryCode, tenant);
             if (country != null)
             {
                 return country.Id;
@@ -128,50 +154,33 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Services
         }
         public string GetStateIdFromStateCode(string stateCode, int tenant)
         {
-            StateRepository stateRepository = new StateRepository(commoncontext);
-            State state = stateRepository.GetSingleStateByCode(stateCode, tenant);
+            State state = new StateRepository(commoncontext).GetSingleStateByCode(stateCode, tenant);
             if (state != null)
             {
                 return state.Id;
             }
             return "";
         }
-        public string GetPortTimeZoneFromPortTimeZoneCode(string portTimeZoneCode, int tenant)
+        public PortTimeZone GetPortTimeZoneFromPortTimeZoneCode(string portTimeZoneCode, int tenant)
         {
-            PortTimeZoneRepository portTimeZoneRepository = new PortTimeZoneRepository(commoncontext);
-            PortTimeZone portTimeZone = portTimeZoneRepository.GetSinglePortTimeZone(portTimeZoneCode);
-            if (portTimeZone != null)
-            {
-                return portTimeZone.Code;
-            }
-            return "";
+            PortTimeZone portTimeZone = new PortTimeZoneRepository(commoncontext).GetSinglePortTimeZone(portTimeZoneCode);
+
+            return portTimeZone;
         }
 
         public APILogsPM GetLogPM()
         {
             APILogsRepository aPILogsRepository = new APILogsRepository(webFreightContext);
-            APILogsService apiLogsService = new APILogsService(webFreightContext, tenant);
             APILogs Log = aPILogsRepository.GetSingleAPILogsByCorrelationId(correlationId, tenant);
-            APILogsPM LogPM;
-            bool IsNewLog = false;
-            if (Log == null)
+            if (Log != null)
             {
-                IsNewLog = true;
-                LogPM = CreateNewLog();
+                return MapLogPMFromPoco(Log);
             }
-
-            IsNewLog = false;
-            LogPM = UpdateLog(Log);
-            if (IsNewLog)
-            {
-                //LogPM.QueueMessage = DictionaryJsonConverter.FromDictionaryToJson((Dictionary<string, string>)response.MessageValues);
-                LogPM.QueueType = "Port";
-                apiLogsService.Create(LogPM);
-            }
+            APILogsPM LogPM = GetNewLog();
+            new APILogsService(webFreightContext, tenant).Create(LogPM);
             return LogPM;
         }
-
-        private static APILogsPM UpdateLog(APILogs Log)
+        private static APILogsPM MapLogPMFromPoco(APILogs Log)
         {
             return new APILogsPM()
             {
@@ -189,11 +198,11 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Services
                 Refrence = Log.Refrence,
                 Status = "I",
                 Tenant = Log.Tenant,
-                QueueMessageMoreDetailsId = Log.QueueMessageMoreDetailsId
+                QueueMessageMoreDetailsId = Log.QueueMessageMoreDetailsId,
+                QueueType = "Port",
             };
         }
-
-        private APILogsPM CreateNewLog()
+        private APILogsPM GetNewLog()
         {
             return new APILogsPM()
             {
@@ -207,7 +216,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Services
                 NumberOfRetries = 1,
                 ExpirationDate = DateTime.Now.AddDays(90),
                 Status = "I",
-                QueueMessageMoreDetailsId = correlationId
+                QueueMessageMoreDetailsId = correlationId,
+                QueueType = "Port",
             };
         }
     }
