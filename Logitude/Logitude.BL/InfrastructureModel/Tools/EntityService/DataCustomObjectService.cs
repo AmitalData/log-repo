@@ -16,6 +16,10 @@ using Logitude.BL.InfrastructureModel.Tools.TraceEvents;
 using Logitude.BL.InfrastructureModel.Tools.DataMapping;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.Infrastructure.Data.Models.AuditLog;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.Data.Repsitories;
+using Newtonsoft.Json;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
@@ -34,9 +38,14 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         private DataCustomObjectPM entityPM;
         private DataCustomObjectRepository entityRepository;
         private Contact loggedContact;
+        private List<FieldChange> FieldChanges = new List<FieldChange>();
+        private AuditLogRepository AuditLogRepository;
 
         public DataCustomObjectService(IWebFreightContext context, int tenant)
         {
+            FieldChanges = new List<FieldChange>();
+            AuditLogRepository = new AuditLogRepository(tenant);
+
             this.tenant = tenant;
             this.isChange = false;
             this.Context = context;
@@ -55,7 +64,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.entityPM.CreatedBy = this.loggedContact != null ? this.loggedContact.Id : this.entityPM.CreatedBy;
             this.Poco = new DataCustomObject();
             new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = entityPM, ParentEntityId = entityPM.Id, ParentObjectTableId = entityPM.ObjectTableId, Tenant = tenant }).Update();
-            DataCustomObjectMapping.MapEntity(dataCustomObjectPM, Poco, isNewEntity);
+            DataCustomObjectMapping.MapEntity(dataCustomObjectPM, Poco, isNewEntity, FieldChanges);
+            AddDataCustomObjectAuditLog();
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
         }
@@ -69,7 +79,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.Poco = entityRepository.GetSingleDataCustomObject(dataCustomObjectPM.Id, dataCustomObjectPM.Tenant);
             if (this.Poco == null) return;
             new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = entityPM, ParentEntityId = entityPM.Id, ParentObjectTableId = entityPM.ObjectTableId, Tenant = tenant }).Update();
-            DataCustomObjectMapping.MapEntity(dataCustomObjectPM, Poco, isNewEntity);
+            DataCustomObjectMapping.MapEntity(dataCustomObjectPM, Poco, isNewEntity, FieldChanges);
+            AddDataCustomObjectAuditLog();
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
         }
@@ -90,6 +101,35 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 return;
             }
             this.loggedContact = new ContactRepository(tenant).GetSingleContactByEmail(("system@tenant" + tenant.ToString() + ".com"), tenant,true);
+        }
+
+        private void AddDataCustomObjectAuditLog()
+        {
+            AuditLog auditLog = null;
+            if (entityPM != null && FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant))
+            {
+                auditLog = AddDataCustomObjectAuditLogChanges(Poco);
+                AuditLogRepository.Add(auditLog);
+                AuditLogRepository.SubmitChanges();
+            }
+        }
+
+        private AuditLog AddDataCustomObjectAuditLogChanges(DataCustomObject entityPoco)
+        {
+            ObjectTableRepository objecttableRepository = new ObjectTableRepository(entityPoco.Tenant);
+            ObjectTable objecttable = objecttableRepository.GetObjectTableByName("DataCustomObject", 0, true);
+            AuditLog auditLog = new AuditLog()
+            {
+                Id = IdCounter.GetNumber("AuditLog", entityPoco.Tenant).ToString(),
+                Tenant = entityPoco.Tenant,
+                UpdateDate = entityPoco.UpdateDate,
+                UpdatedByUserId = entityPoco.UpdatedBy,
+                EntityId = entityPoco.Id,
+                ObjectTableId = objecttable.Id,
+                ChangesJson = JsonConvert.SerializeObject(FieldChanges)
+            };
+
+            return auditLog;
         }
     }
 }
