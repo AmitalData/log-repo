@@ -27,6 +27,8 @@ using Logitude.BL.Helpers;
 using Logitude.Infrastructure.BL.EntityQueryServices;
 using Simplog.Data.Helpers;
 using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.BL.GlobalModel.EntityQueries;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -153,6 +155,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var shipmentQuery = new ShipmentQuery(authToken.Tenant);
                 var entityLists = shipmentQuery.GetByFilterWithSortingFilter(newFilters);
 
+                var tenantquery = new TenantManagementQuery(tenant);
+                var data = tenantquery.GetSinglePM(tenant);
+
                 var response = new ServiceResponse();
 
                 if (newFilters.GetCount)
@@ -180,9 +185,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 foreach (var item in objectFieldIds)
                 {
                     var blockedFields = helper.GitDigitalSecuritesFeilds(item.ObjectTableId, newFilters.ProfileCode, tenant, false)
-                                                      .Where(a => !a.HasPermission)
-                                                      .Select(a => a.FieldCode)
-                                                      .ToList();
+                                              .Where(a => !a.HasPermission)
+                                              .Select(a => a.FieldCode)
+                                              .ToList();
 
                     if (blockedFields.Any())
                     {
@@ -200,15 +205,20 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var shipments = entityLists.Select("new { " + fieldsToBeSelected + " }").ToDynamicList();
 
                 var isAllShipmentsQuery = newFilters.AdditionalFilters.Where(a => a.FieldName == "AllShipments").Any();
+
                 if (isAllShipmentsQuery)
                 {
                     DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
                     var lastOneYearDate = currentDateTime.AddDays(-365);
                     var lastNinetyDaysDate = currentDateTime.AddDays(-90);
-                    shipments.Where(a => (helper.DoesPropertyExistInDynamic(a, "CreateDateTime")
-                                            && a.CreateDateTime < lastOneYearDate)
-                                         && (helper.DoesPropertyExistInDynamic(a, "MainCarriageFinalDestinationATA") 
-                                             && a.MainCarriageFinalDestinationATA < lastNinetyDaysDate))
+                    shipments.Where(a => (helper.DoesPropertyExistInDynamic(a, "CreateDateTime") 
+                                          && DbFunctions.TruncateTime(a.CreateDateTime) >= currentDateTime.AddMonths(-data.DPArchiveShipmentCreateFilter.Value))
+                                          && (helper.DoesPropertyExistInDynamic(a, "MainCarriageFinalDestinationATA") 
+                                              && ((a.MainCarriageFinalDestinationATA >= currentDateTime.AddMonths(-data.DPArchiveShipmentArrivalFilter.Value) && a.DirectionId == "I")
+                                                   || a.MainCarriageFinalDestinationATA == null))
+                                               || (helper.DoesPropertyExistInDynamic(a, "MainCarriageFinalDestinationATA") 
+                                                    && ((a.MainCarriageATD >= currentDateTime.AddMonths(-data.DPArchiveShipmentDepartFilter.Value) && a.DirectionId == "E")
+                                                         || a.MainCarriageATD == null)))
                             .ToList()
                             .ForEach(i => i.IsCustomerArchived = true);
                 }
