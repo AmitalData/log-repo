@@ -19,6 +19,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.ShipmentsModel.CustomFilters;
 using Logitude.BL.Helpers;
 using System.Dynamic;
+using Logitude.BL.GlobalModel.EntityPMs;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {

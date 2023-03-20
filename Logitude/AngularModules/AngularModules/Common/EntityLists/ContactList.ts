@@ -34,6 +34,7 @@ export class ContactList {
 		Company: string;
 		IndexColor: number;
 		CompanyName: string;
+		DigitalPortalLanguage: string;
 		CreateDate: Date;
 		LastLoginDate: Date;
 	
