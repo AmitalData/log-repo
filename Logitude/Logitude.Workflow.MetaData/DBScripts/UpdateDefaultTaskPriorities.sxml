@@ -1,0 +1,11 @@
+﻿<Script DBType="Main" Module="Workflow">
+  <Sql Version="1">
+    <![CDATA[
+    
+update [TaskPriorities] set [DisplayOrder] = 2 where [Code] = 'M' and [DisplayOrder] = 3;
+
+update [TaskPriorities] set [DisplayOrder] = 3 where [Code] = 'L' and [DisplayOrder] = 2;
+        
+    ]]>
+  </Sql>
+</Script>
