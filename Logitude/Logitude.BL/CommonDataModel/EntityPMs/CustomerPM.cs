@@ -449,7 +449,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         [DataMember]
-        public bool IsEmailForSendingSingArinvoice { get; set; }
+        public string EmailForSendingSingArinvoice { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         [DataMember]
