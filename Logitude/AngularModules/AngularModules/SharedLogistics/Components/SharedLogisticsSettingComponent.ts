@@ -206,6 +206,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
     SharedLogisticsMultiUnitsOfMeasurementsId: string;
 
     IsShowActivateWebAccessArea: boolean = true;
+    FullComponentsVisibility: boolean = false;
 
     IsShowMobileActivateArea: boolean = true;
     TenantPM: TenantPM;
@@ -262,6 +263,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
             this.Run();
         }
 
+        this.FullComponentsVisibility = true;
         this.OnCloseWindowEvent.subscribe(($event: any) => {
             this.SaveButtonClicked();
 
