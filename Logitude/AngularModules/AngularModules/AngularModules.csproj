@@ -2177,6 +2177,7 @@
     <TypeScriptCompile Include="Infrastructure\Components\QueryColumnsComponents\btnUpdateComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchAddFieldsComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchWindowFieldsComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\StimulsoftComponent\Services\SchedulerReportMessageTemplateService.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Templates\MyTemplate.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomatedBackup.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationArgs.ts" />

@@ -37,6 +37,7 @@ export class NewReportsTemplateComponent implements OnInit {
     ReportTemplateFileId: string = Guid.NewRandomString();
     validator: ClassLevelValidator;
     Area: string;
+    IsFromScheduler: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.reportsTemplatePMService = new ReportsTemplatePMService();
@@ -51,11 +52,16 @@ export class NewReportsTemplateComponent implements OnInit {
     }
     TemplateData: any;
     DataViewModel: any;
+    ReportEntityId: string;
+    ObjectTableId: string;
+
     SetWindowArgs(args: any) {
         this.DataViewModel = args.DataViewModel;
         this.TemplateType = args.TemplateType;
         this.Area = args.Area;
-
+        this.IsFromScheduler = args.IsFromScheduler ? true : false;
+        this.ReportEntityId = args.ReportEntityId;
+        this.ObjectTableId = args.ObjectTableId;
     }
 
     NewReportTypeRadioChange(type: string) {
@@ -148,6 +154,10 @@ export class NewReportsTemplateComponent implements OnInit {
 
             this.ReportsTemplatePM.TemplateType = this.TemplateType;
             this.ReportsTemplatePM.ReportId = this.DataViewModel.EntityPM.Id;
+            if (this.IsFromScheduler) {
+                this.ReportsTemplatePM.EntityId = this.ReportEntityId;
+                this.ReportsTemplatePM.ObjectTableId = this.ObjectTableId;
+            }
             if (this.NewReportTypeRadioChoice == "Blank") {
                 this.ReportsTemplatePM.TemplateData = null;
             }
@@ -201,8 +211,8 @@ export class NewReportsTemplateComponent implements OnInit {
                     var viewModel = null;
                     this.ReportsTemplatePM = result;
                     if (this.DataViewModel) {
-                        if (this.Area != "GeneralSendComponent") this.DataViewModel.IsChange = true;
-                        else {
+                        if (this.Area != "GeneralSendComponent" && !this.IsFromScheduler) this.DataViewModel.IsChange = true;
+                        else if (!this.IsFromScheduler){
                             viewModel = this.DataViewModel.BuildViewModel(this.ReportsTemplatePM);
                         }
 
@@ -217,9 +227,14 @@ export class NewReportsTemplateComponent implements OnInit {
                             this.OpenStimulsoftDesigner();
                             this.CloseButtonClicked();
                             return;
-                        } if (this.TemplateType == "M") {
+                        } if (this.TemplateType == "M" && !this.IsFromScheduler) {
                             this.AddTemplateToMessageList(viewModel);
                             this.Area == "GeneralSendComponent" ? this.DataViewModel.EditTemplate(viewModel, true) : this.DataViewModel.EditMessageReportsTemplate(this.ReportsTemplatePM, true);
+                            this.CloseButtonClicked();
+                            return;
+                        }
+                        if (this.TemplateType == "M" && this.IsFromScheduler) {
+                            this.DataViewModel.AddNewMessageTemplateListFromPM(this.ReportsTemplatePM);
                             this.CloseButtonClicked();
                             return;
                         }

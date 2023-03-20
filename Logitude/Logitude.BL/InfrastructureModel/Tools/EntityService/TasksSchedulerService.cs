@@ -109,6 +109,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             entityRepository.SubmitChanges();
 
             ConnectDocumentTypeTemplateToScheduler();
+            ConnectMessageReportTemplateToScheduler();
 
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("SchedularQueue", 0);
@@ -117,7 +118,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
         private void ConnectDocumentTypeTemplateToScheduler()
         {
-            if (this.entityPM.DocumentTypeTemplateIds == null || this.entityPM.DocumentTypeTemplateIds.Count <= 0) return;
+            if (this.entityPM.DocumentTypeTemplateIds == null || this.entityPM.DocumentTypeTemplateIds.Count <= 0 || entityPM.Type != "Report" || entityPM.ProcedureCode != "BIReportSchedulerTask") return;
             DocumentTypeTemplateRepository documentTypeTemplateRepository = new DocumentTypeTemplateRepository(this.entityPM.Tenant);
             List<DocumentTypeTemplate> documentTypeTemplates = documentTypeTemplateRepository.GetDocumentTypeTemplatesBydocumentTypeTemplateIds(this.entityPM.DocumentTypeTemplateIds, this.entityPM.Tenant).ToList();
             string objectTableId = ObjectTableRepository.GetObjectTableByName("TasksScheduler");
@@ -135,7 +136,26 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             documentTypeTemplate.ObjectTableId = objectTableId;
             documentTypeTemplateRepository.Update(documentTypeTemplate);
         }
+        private void ConnectMessageReportTemplateToScheduler()
+        {
+            if (this.entityPM.DocumentTypeTemplateIds == null || this.entityPM.DocumentTypeTemplateIds.Count <= 0 || entityPM.Type != "Report" || entityPM.ProcedureCode != "ReportSchedulerTask") return;
+            ReportsTemplateRepository reportsTemplateRepository = new ReportsTemplateRepository(this.entityPM.Tenant);
+            List<ReportsTemplate> messageTemplates = reportsTemplateRepository.GetMessageTemplatesByMessageTemplateIds(this.entityPM.DocumentTypeTemplateIds, this.entityPM.Tenant).ToList();
+            string objectTableId = ObjectTableRepository.GetObjectTableByName("TasksScheduler");
+            foreach (ReportsTemplate messageTemplate in messageTemplates)
+            {
+                UpdateMessageReportTemplate(reportsTemplateRepository, objectTableId, messageTemplate);
+            }
 
+            reportsTemplateRepository.SubmitChanges();
+        }
+
+        private void UpdateMessageReportTemplate(ReportsTemplateRepository messageTemplateRepository, string objectTableId, ReportsTemplate messageTemplate)
+        {
+            messageTemplate.EntityId = this.entityPM.Id;
+            messageTemplate.ObjectTableId = objectTableId;
+            messageTemplateRepository.Update(messageTemplate);
+        }
         private void FillNextRunDateFields()
         {
 

@@ -24,6 +24,8 @@ import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { ReportsTemplatePM } from '../../../Common/EntityPMs/ReportsTemplatePM';
+import { SchedulerReportMessageTemplateService } from './Services/SchedulerReportMessageTemplateService';
 
 @Component({
 
@@ -99,12 +101,16 @@ export class StimulsoftViewerComponent implements OnInit {
     FontSizeLists: number[] = [];
     public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService;
     private CurrentSession = SessionLocator.SelectedSession;
+    private schedulerReportMessageTemplateService: SchedulerReportMessageTemplateService;
 
     constructor() {
 
 
         this.FillFontSizeLists();
 
+        if (this.schedulerReportMessageTemplateService == null) {
+            this.schedulerReportMessageTemplateService = new SchedulerReportMessageTemplateService();
+        }
 
         if (this.documentTypeTemplatePMService == null) {
             this.documentTypeTemplatePMService = new DocumentTypeTemplatePMService();
@@ -656,6 +662,7 @@ export class StimulsoftViewerComponent implements OnInit {
     MessageTemplatesChange(item) {
         if (!this.StimulsoftArgData) return;
         this.StimulsoftArgData.DefaultMessageTemplateId = item ? item.Id : "";
+        this.SelectedMessageTemplateList = item;
     }
 
 
@@ -1350,10 +1357,47 @@ ResetEditableField(field: EditableFieldPosition){
 
     }
 
-    EditMessageTemplate(selectedMessageTemplate) {
+    EditMessageTemplate(selectedMessageTemplateList) {
 
+        if (!selectedMessageTemplateList) return;
+        let args = {
+            EntityId: (this.StimulsoftArgData?.EntityId) ? this.StimulsoftArgData.EntityId : null,
+            ObjectTableId: (this.StimulsoftArgData?.ObjectTableId) ? this.StimulsoftArgData.ObjectTableId : null,
+            DataViewModel: this,
+            ParentEntityId: (this.StimulsoftArgData?.ReportsPreviewComponent?.Report?.Id) ? this.StimulsoftArgData.ReportsPreviewComponent.Report.Id : null,
         }
-    AddMessageTemplate() {
-        
+        this.schedulerReportMessageTemplateService.SetArgs(args);
+        this.schedulerReportMessageTemplateService.Edit(selectedMessageTemplateList);
     }
+
+    
+    AddMessageTemplate() {
+        let args = {
+            EntityId: (this.StimulsoftArgData?.EntityId) ? this.StimulsoftArgData.EntityId : null,
+            ObjectTableId: (this.StimulsoftArgData?.ObjectTableId) ? this.StimulsoftArgData.ObjectTableId : null,
+            DataViewModel: this,
+            ParentEntityId: (this.StimulsoftArgData?.ReportsPreviewComponent?.Report?.Id) ? this.StimulsoftArgData.ReportsPreviewComponent.Report.Id : null,
+        }
+        this.schedulerReportMessageTemplateService.SetArgs(args);
+        this.schedulerReportMessageTemplateService.Add();
+    }
+
+    EditMessageTemplateListFromPM(reportTemplatePM) {
+        if (!reportTemplatePM) return;
+        let reportTemplateList = this.schedulerReportMessageTemplateService.MapMessageTemplatePMToList(reportTemplatePM);
+        this.MessageTemplatesLists = this.MessageTemplatesLists.filter(temp => temp.Id != reportTemplatePM.Id);
+        this.MessageTemplatesLists.push(reportTemplateList);
+        this.MessageTemplatesChange(reportTemplateList);
+        this.SelectedMessageTemplateList = this.MessageTemplatesLists.filter(temp => temp.Id == reportTemplateList.Id)[0];
+    }
+
+    AddNewMessageTemplateListFromPM(reportTemplatePM) {
+        if (!reportTemplatePM) return;
+        let reportTemplateList = this.schedulerReportMessageTemplateService.MapMessageTemplatePMToList(reportTemplatePM);
+        this.MessageTemplatesLists.push(reportTemplateList);
+        this.SelectedMessageTemplateList = this.MessageTemplatesLists.filter(temp => temp.Id == reportTemplateList.Id)[0];
+        this.MessageTemplatesChange(reportTemplateList);
+        this.EditMessageTemplate(reportTemplateList);
+    }
+
 }
