@@ -494,6 +494,26 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.LoadData();
         });
     }
+
+   
+    async LoadCurrencyRatesOnTheFly() {
+        var loadingDate = this.RegisterDate;
+        if (loadingDate == null) {
+            loadingDate = DateTool.GetCurrentDateAsUtc();
+        }
+
+        var myService: CurrencyRatesService = new CurrencyRatesService();
+        await new Promise(res =>
+            myService.GetCurrenciesExchangeRateByValueDate(SessionLocator.TenantPM.CurrencyId, loadingDate).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    this.LastRatesList = myResponse.Result;
+                }
+                res();
+               // this.LoadData();
+            })
+        );
+    }
+
     UpdateCurrencyRates() {
         var loadingDate = this.RegisterDate;
         if (loadingDate == null) {
@@ -531,7 +551,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.PaymentCurrencyExchangeRate = myRate;
         this.ExchangeRateDate = myRateDate;
     }
-    GetCurrencyRate(currencyId: string): number {
+
+    async GetCurrencyRate(currencyId: string): Promise<number> {
         var result = null;
 
         if (AppTool.IsNullOrEmpty(currencyId)) {
@@ -544,6 +565,10 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             }
 
             else {
+                if (this.LastRatesList.length == 0) {
+                    await this.LoadCurrencyRatesOnTheFly();
+                }
+
                 if (this.LastRatesList) {
                     var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == currencyId)[0];
                     if (lastRate != null) {
@@ -915,11 +940,16 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         return this.EntityPM.PaymentCurrencyId;
     }
     set PaymentCurrencyId(value: string) {
+        this.setPaymentCurrencyId(value)
+    }
+
+    async setPaymentCurrencyId(value: string) {
+        debugger;
         if (!this.EntityPM.IsCreatedFromInvoiceSide) {
             if (this.EntityPM != null) {
                 if (this.EntityPM.PaymentCurrencyId != value) {
-                    this.EntityPM.PaymentCurrencyId = value;
-                    this.PaymentCurrencyExchangeRate = this.GetCurrencyRate(value);
+                    this.EntityPM.PaymentCurrencyId = value;                    
+                    this.PaymentCurrencyExchangeRate = await this.GetCurrencyRate(value);                    
                     this.ExchangeRateDate = this.GetCurrencyRateDate(value);
 
                     if (AppTool.IsNullOrEmpty(value)) {
@@ -947,8 +977,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
                 }
             }
-        }
-    }
+        }}
 
     get PaymentCurrencyExchangeRate() {
         if (this.EntityPM == null) {
