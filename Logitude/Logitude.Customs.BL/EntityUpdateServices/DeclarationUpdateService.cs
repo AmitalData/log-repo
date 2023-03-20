@@ -210,7 +210,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     if (ifSwiss != null)
                     {
                             var courierECSWSTHRMessageRequestService = new CourierECSWSTHRMessageRequestService();
-                            string drityMessage = courierECSWSTHRMessageRequestService.GetMessageUpdateHawbStatus(entityPM.Id, entityPM.Tenant, null, null, entityPM.MAWB);
+                            string drityMessage = courierECSWSTHRMessageRequestService.GetMessageUpdateHawbStatus(entityPM.Id, entityPM.Tenant, null, null, null);
 
                             if (drityMessage != null)
                             {
