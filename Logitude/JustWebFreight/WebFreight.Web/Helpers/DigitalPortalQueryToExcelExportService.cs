@@ -502,13 +502,13 @@ namespace WebFreight.Web.Helpers
             sheet1.Range["A1:F1"].Merge();
             sheet1.Range["A2:F2"].Merge();
             sheet1.Range["A1"].CellStyle.Font.Bold = true;
-            sheet1.Range["A1"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
-            sheet1.Range["A1"].VerticalAlignment = ExcelVAlign.VAlignTop;
+            sheet1.Range["A1"].HorizontalAlignment = ExcelHAlign.HAlignCenter;
+            sheet1.Range["A1"].VerticalAlignment = ExcelVAlign.VAlignCenter;
             sheet1.Range["A1"].Text = "Digital Portal Translation";
             sheet1.Range["A1"].CellStyle.Font.Size = 14;
             sheet1.Range["A1"].CellStyle.Font.Size = 14;
 
-            sheet1.Range["A2"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
+            sheet1.Range["A2"].HorizontalAlignment = ExcelHAlign.HAlignCenter;
             sheet1.Range["A2"].VerticalAlignment = ExcelVAlign.VAlignCenter;
             sheet1.Range["A2"].Text = $"Created Date: {DateTime.UtcNow:dd MMM yyyy}";
             sheet1.Range["A2"].CellStyle.Font.Size = 12;
