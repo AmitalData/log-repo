@@ -51,6 +51,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
     ShownAdditionalFiltersSettings: boolean;
     ObjectTableName: string;
     private objectFieldPMExtendedService = new ObjectFieldPMExtendedService();
+    public IsPartner: boolean = false;
     constructor() {
         super();
         this.loginService = new LoginService();
@@ -107,6 +108,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         this.LookUpTableId = this.objectField.LookUpTableId;
         this.DataTypeCollection = args.DataTypeCollection;
         this.ObjectTableName = args.ObjectTableName;
+        this.IsPartner = args.IsPartner;
         if (this.IsNew) {
             
         }
