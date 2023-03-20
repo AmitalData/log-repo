@@ -28,7 +28,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
         private void Initializer()
         {
             var context = ShipmentsContext.GetContext(0);
-            Source = context.ContainerTrackingProviders.Where(e => e.SourceCode == ContainerStatusSourceValues.Vizion).FirstOrDefault();
+            Source = context.ContainerTrackingProviders.Where(e => e.SourceCode == "VZN").FirstOrDefault();
         }
 
         public VizionReferenceResponce SendRequest(GeneralContainerTrackingArgs containerStatusSimulatorArgs, Shipment shipment)
