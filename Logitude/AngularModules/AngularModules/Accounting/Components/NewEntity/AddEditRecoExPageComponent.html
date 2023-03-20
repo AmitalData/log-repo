@@ -311,6 +311,10 @@
                                         *ngIf="ReconcileExternalPagePM.StatusCode == '1' || isApprovedButtonClicked"
                                         [Name]="'Add'" (click)="AddButtonClicked()"></IconButton>
                                 </div>
+                                <div *ngIf="ReconcileExternalPagePM.StatusCode == '1' || isApprovedButtonClicked" style="width: 50px; float: left;" >
+                                    <button [disabled]="!UploadButtonIsEnabled" style="width:55px;" class="Button" (click)="OpenUpLoadFile()">Upload</button>
+                                    <input #myInput  accept=".csv,.CSV" [attr.id]="UploadFileId" type="file" [(ngModel)]="FileData" (change)="UploadFile($event)" (click)="UploadFile($event)" style="display:none;width:65px" class="upload" />
+                                </div>
 
                                 <div style="width: 220px; float: right;">
                                     <!--<SearchTextBox [ObjectTableName]="'ReconcileExternalPage'" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>-->

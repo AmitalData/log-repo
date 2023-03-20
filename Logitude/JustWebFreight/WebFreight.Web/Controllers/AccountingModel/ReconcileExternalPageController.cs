@@ -46,6 +46,8 @@ using System.Web.Script.Serialization;
 using Logitude.Accounting.BL.CoreBL.BankAccountPages;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using WebFreight.Web.CustomWebServices.BL.XLSImport;
+using Logitude.Accounting.BL.CoreBL.Reconcile;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
@@ -454,6 +456,30 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
            return reconcileExternalPageQueryService.GetSingle(id, false, false);
 
         }
+        [HttpPut]
+        public HttpResponseMessage ImportReconcileExternalPageLineFromCsv(ImageParameter fileUploadParamerter)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                List<ReconcileExternalPageLinePM> list = new List<ReconcileExternalPageLinePM>();
+                if (fileUploadParamerter != null && !string.IsNullOrEmpty(fileUploadParamerter.Base64String))
+                {
+                    byte[] data = Convert.FromBase64String(fileUploadParamerter.Base64String);
+                    string decodedString = Encoding.UTF8.GetString(data);
+                    ImportReconcileExternalPageLineFromCsv importReconcileExternalPageLineFromCsv = new ImportReconcileExternalPageLineFromCsv();
+                    list = importReconcileExternalPageLineFromCsv.ImportCsvFile(fileUploadParamerter.Key, decodedString);
+                    CacheManager.CacheWrapper.Insert(fileUploadParamerter.Key + "ReconcileExternalPageLineFromCsv", list);
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, list);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
     }
 }
 	 
