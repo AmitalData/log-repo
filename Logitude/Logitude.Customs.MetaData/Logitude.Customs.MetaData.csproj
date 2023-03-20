@@ -120,7 +120,7 @@
     <None Include="DBScripts\Post\20220309_RenameAcceptenceCode.sxml" />
     <None Include="DBScripts\Post\202211101140_UpdateInterfaceTenantDefSendTime.sxml" />
     <None Include="DBScripts\Post\20221207_UpdateCustomBookTypeId.sxml" />
-=    <None Include="DBScripts\Post\20221124_AddAmendmentRequestNumberToLastCounter.sxml" />
+    <None Include="DBScripts\Post\20221124_AddAmendmentRequestNumberToLastCounter.sxml" />
     <None Include="DBScripts\Post\202208151232_AddCOURIERPENDINGREASONS904 .sxml" />
     <None Include="DBScripts\Post\202108011330_AddPhysicalCheckSearchResultTypes.sxml" />
     <None Include="DBScripts\Post\202111101021_SetCargoDescription.sxml" />
