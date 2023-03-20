@@ -431,6 +431,11 @@ export class ContactPM {
     public set TimeZone(newValue: string) { if (this.timeZone != newValue) { this.timeZone = newValue; this.MarkAsDirty("TimeZone"); } }
        
 	 
+    private digitalPortalLanguage: string;
+    public get DigitalPortalLanguage() { return this.digitalPortalLanguage; }
+    public set DigitalPortalLanguage(newValue: string) { if (this.digitalPortalLanguage != newValue) { this.digitalPortalLanguage = newValue; this.MarkAsDirty("DigitalPortalLanguage"); } }
+       
+	 
 
     public OldEntityPM: ContactPM;
 		

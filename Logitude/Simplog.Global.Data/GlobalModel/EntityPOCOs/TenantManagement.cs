@@ -225,6 +225,9 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public int? DigitalPortalTotalLastMonth { get; set; }
         public DateTime? DigitalPortalMobileLastDate { get; set; }
         public int? DigitalPortalMobTotalLastWeek { get; set; }
-        public int? DigitalPortalMobTotalLastMonth { get; set; }
+        public int? DigitalPortalMobTotalLastMonth { get; set; }          
+        public int? DPArchiveShipmentCreateFilter { get; set; }
+        public int? DPArchiveShipmentArrivalFilter { get; set; }
+        public int? DPArchiveShipmentDepartFilter { get; set; }
     }
 }

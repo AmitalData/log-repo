@@ -1057,6 +1057,24 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="DPArchiveShipmentCreateFilter"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DPArchiveShipmentArrivalFilter"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DPArchiveShipmentDepartFilter"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="GlobalTenants"

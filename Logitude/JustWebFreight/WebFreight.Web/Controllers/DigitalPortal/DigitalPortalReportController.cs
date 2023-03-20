@@ -85,7 +85,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     {
                         var customTextCodes = textCodeQuery.GetDigitalTextCodesQuery(0,
                                                                                      objectTables[item.Key],
-                                                                                     tenantDigitalProfiles[internalData.Key],
+                                                                                     internalData.Key,
                                                                                      filter.LanguageCode);
 
                         if (customTextCodes != null)
