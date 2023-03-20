@@ -701,4 +701,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
         this.ShowBusyIndicator = false;
 
     }
+
+    Refresh() {
+        this.StimulsoftArg.StimulsoftViewerComponent.RefreshMessageTemplate(this.ResultType);
+    }
 }

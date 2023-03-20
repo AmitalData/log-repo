@@ -1400,4 +1400,8 @@ ResetEditableField(field: EditableFieldPosition){
         this.EditMessageTemplate(reportTemplateList);
     }
 
+    RefreshMessageTemplate(type: string) {
+        this.ShowMessageTemlatesLists = (type == "Email");
+    }
+
 }

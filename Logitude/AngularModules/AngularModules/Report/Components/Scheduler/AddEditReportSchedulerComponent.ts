@@ -185,6 +185,9 @@ export class AddEditReportSchedulerComponent implements OnInit {
                 case "PRREP": {
                     if (this.PageChild_PRREP == null) {
                         this.OpenPreviewReport(myLocation);
+                    } else if (!this.IsBIReport) {
+                        this.PageChild_PRREP.SetResultType(this.DataContext.EntityPM.ResultType);
+                        this.PageChild_PRREP.Refresh();
                     }
                     break;
                 }
