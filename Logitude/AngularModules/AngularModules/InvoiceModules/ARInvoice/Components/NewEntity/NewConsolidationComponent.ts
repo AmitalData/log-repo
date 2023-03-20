@@ -87,8 +87,9 @@ export class NewConsolidationComponent extends BaseComponent {
             this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
 
             this.SetUIProperties();
-            this.GetDocumentTypeTemplates();
             this.BuildPartnersTypes();
+            this.GetDocumentTypeTemplates();
+
           this.LoadData();
 
             if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
@@ -426,14 +427,13 @@ export class NewConsolidationComponent extends BaseComponent {
                             if (AppTool.IsNullOrEmpty(this.BillToId)) {
                                 this.BillToId = newValue;
                             }
-
-                            this.GetDocumentTypeTemplates();
-
                         }
                     }
                 });
             }
         }
+
+        this.GetDocumentTypeTemplates();
     }
 
     get BillToPartnerTypeId() { return this.EntityPM.BillToPartnerTypeId; }
