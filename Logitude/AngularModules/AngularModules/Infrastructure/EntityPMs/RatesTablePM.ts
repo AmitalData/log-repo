@@ -65,6 +65,11 @@ export class RatesTablePM {
     public set Rate(newValue: number) { if (this.rate != newValue) { this.rate = newValue; this.MarkAsDirty("Rate"); } }
        
 	 
+    private unit: number;
+    public get Unit() { return this.unit; }
+    public set Unit(newValue: number) { if (this.unit != newValue) { this.unit = newValue; this.MarkAsDirty("Unit"); } }
+       
+	 
     private valueDate: Date;
     public get ValueDate() { return this.valueDate; }
     public set ValueDate(newValue: Date) { if (this.valueDate != newValue) { this.valueDate = newValue; this.MarkAsDirty("ValueDate"); } }
