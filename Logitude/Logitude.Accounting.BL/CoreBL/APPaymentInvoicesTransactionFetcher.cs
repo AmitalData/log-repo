@@ -4,44 +4,40 @@ using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
-using Logitude.BL.DataContracts;
-using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.BL.InvoiceModel.CloseTables;
-using Logitude.BL.InvoiceModel.EntityPMs;
-using Logitude.BL.InvoiceModel.EntityQueries;
-using Logitude.BL.InvoiceModel.Tools.EntityService;
-using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InvoiceModel;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
-using Simplog.Data.InvoiceModel.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
-    public class ARPaymentInvoicesTransactionFetcher
+    public class APPaymentInvoicesTransactionFetcher
     {
         int tenant;
         string paymentId;
         string glaccountId;
-
-        LedgerTransaction paymentTransaction;
+        bool _excludeCancelledReconciliations = false;
+        private LedgerTransaction paymentTransaction;
+        public LedgerTransactionPM paymentTransactionPM;
         List<LedgerTransactionPM> transactions;
 
-        public ARPaymentInvoicesTransactionFetcher(string arpaymentId, string glaccountId, int tenant)
+        public APPaymentInvoicesTransactionFetcher(string appaymentId, string glaccountId, int tenant, bool? excludeCancelledReconciliations = null)
         {
             this.tenant = tenant;
-            paymentId = arpaymentId;
+            paymentId = appaymentId;
             this.glaccountId = glaccountId;
 
             if(paymentId != null)
                 paymentTransaction = GetPaymentTransaction();
 
+            if (paymentTransaction != null)
+            {
+                LedgerTransactionQueryService transactionsQuery = new LedgerTransactionQueryService(tenant);
+                paymentTransactionPM = transactionsQuery.GetEntityPM(paymentTransaction);
+            }
+
             transactions = new List<LedgerTransactionPM>();
+            _excludeCancelledReconciliations = excludeCancelledReconciliations != null && excludeCancelledReconciliations == true;
         }
+
 
         public List<LedgerTransactionPM> FetchSorted()
         {
@@ -78,19 +74,23 @@ namespace Logitude.Accounting.BL.CoreBL
             List<ReconciliationLinePM> reconciliationLines = GetReconciliationLinesForTransactions(transactions);
 
             List<ReconciliationPM> reconciliations = GetReconciliationsByReconcileLines(tenant, reconciliationLines);
-
-            foreach (LedgerTransactionPM transaction in transactions)
-            {
-                string recoNumbers = GetReconciliationNumbersForTransaction(reconciliationLines, reconciliations, transaction);
-                transaction.RecoNumber = recoNumbers;
+            if (_excludeCancelledReconciliations) {
+                reconciliations = reconciliations.Where(x => !x.IsCancelled).ToList();
             }
 
+            string APPaymentRecoNumbers = GetReconciliationNumbersForAPPayment(reconciliationLines, reconciliations, paymentTransaction?.Id);
+            foreach (LedgerTransactionPM transaction in transactions)
+            {
+                string recoNumbers = GetReconciliationNumbersForTransaction(reconciliationLines, reconciliations, transaction.Id);
+                transaction.RecoNumber = recoNumbers;
+                transaction.Reference3 = paymentId != null ? APPaymentRecoNumbers : null;
+            }
             return transactions;
         }
-        private string GetReconciliationNumbersForTransaction(List<ReconciliationLinePM> reconciliationLines, List<ReconciliationPM> reconciliations, LedgerTransactionPM transactions)
+        private string GetReconciliationNumbersForTransaction(List<ReconciliationLinePM> reconciliationLines, List<ReconciliationPM> reconciliations, string transactionId)
         {
             List<ReconciliationLinePM> transactionRecoLines = reconciliationLines
-                                .Where(d => d.TransactionId == transactions.Id).ToList();
+                                .Where(d => d.TransactionId == transactionId).ToList();
 
             List<string> reconciliationsId = transactionRecoLines.Select(a => a.ReconciliationId).ToList();
             List<ReconciliationPM> reconciliationsForTransaction = reconciliations.Where(d => reconciliationsId.Contains(d.Id)).ToList();
@@ -101,6 +101,28 @@ namespace Logitude.Accounting.BL.CoreBL
             string numbersString = string.Join(",", reconciliationsNumbersForTransaction);
             return numbersString;
         }
+
+        private string GetReconciliationNumbersForAPPayment(List<ReconciliationLinePM> reconciliationLines, List<ReconciliationPM> reconciliations, string transactionId)
+        {
+            List<ReconciliationLinePM> transactionRecoLines = new List<ReconciliationLinePM>();
+            if (transactionId != null)
+            {
+                transactionRecoLines = reconciliationLines
+                                    .Where(d => d.ReconciledWithTransactionId == transactionId).ToList();
+            }
+            else {
+                //transactionRecoLines = reconciliationLines.ToList();
+            }
+            List<string> reconciliationsId = transactionRecoLines.Select(a => a.ReconciliationId).ToList();
+            List<ReconciliationPM> reconciliationsForTransaction = reconciliations.Where(d => reconciliationsId.Contains(d.Id)).ToList();
+
+            string[] reconciliationsNumbersForTransaction = reconciliationsForTransaction
+                .Where(d => d.IsCancelled == false).Select(d => d.Number).ToArray();
+
+            string numbersString = string.Join(",", reconciliationsNumbersForTransaction);
+            return numbersString;
+        }
+
         private List<ReconciliationPM> GetReconciliationsByReconcileLines(int tenant, List<ReconciliationLinePM> recoLines)
         {
             List<string> recosIds = recoLines.Select(d => d.ReconciliationId).ToList();
@@ -136,7 +158,7 @@ namespace Logitude.Accounting.BL.CoreBL
             reconciledTransactions = GetTransactionsById(recoLinesTransactionsId);
 
             // exclude partially reconcile transactions
-            reconciledTransactions = reconciledTransactions.Where(d => d.IsReconciled == true && d.SourceTypeCode == CloseTables.AccountingEntityValues.ARInvoice).ToList();
+            reconciledTransactions = reconciledTransactions.Where(d => d.SourceTypeCode == CloseTables.AccountingEntityValues.APInvoice).ToList();
 
             FillTransactionsAmountToReconcile(reconciledTransactions);
 
@@ -219,13 +241,13 @@ namespace Logitude.Accounting.BL.CoreBL
         private List<LedgerTransactionPM> GetInvoicesTransactions()
         {
             LedgerTransactionQueryService transactionQueryService = new LedgerTransactionQueryService(tenant);
-            IQueryable<LedgerTransactionPM> invoicesTransactions = transactionQueryService.GetInvoicesTransactions(tenant, AccountingEntities.ARInvoice);
+            IQueryable<LedgerTransactionPM> invoicesTransactions = transactionQueryService.GetInvoicesTransactions(tenant, AccountingEntities.APInvoice);
             invoicesTransactions = invoicesTransactions
                     .Where(d =>
                         d.AccountId == glaccountId
                         && d.Tenant == tenant
                         && d.IsReconciled == false
-                        && d.SourceTypeCode == CloseTables.AccountingEntityValues.ARInvoice)
+                        && d.SourceTypeCode == CloseTables.AccountingEntityValues.APInvoice)
                     .OrderBy(b => b.AccountingDate).ThenByDescending(b => b.JournalId);
 
             var transactionsList = invoicesTransactions.ToList();
@@ -237,14 +259,14 @@ namespace Logitude.Accounting.BL.CoreBL
             JournalPM paymentJournal = GetPaymentJournal(paymentId);
             if(paymentJournal != null)
             {
-                LedgerTransaction paymentCreditTransaction = GetCreditTransactionByJournalId(paymentJournal.Id);
+                LedgerTransaction paymentDebitTransaction = GetDebitTransactionByJournalId(paymentJournal.Id);
 
-                if (paymentCreditTransaction == null)
+                if (paymentDebitTransaction == null)
                 {
                     paymentId = null;
-                    //throw new ApplicationException("[ARPaymentInvoicesTransactionFetcher] Couldn't found payment transaction!");
+                    //throw new ApplicationException("[APPaymentInvoicesTransactionFetcher] Couldn't found payment transaction!");
                 }
-                return paymentCreditTransaction;
+                return paymentDebitTransaction;
 
             }
             else
@@ -255,19 +277,19 @@ namespace Logitude.Accounting.BL.CoreBL
 
         }
 
-        private JournalPM GetPaymentJournal(string arpaymentId)
+        private JournalPM GetPaymentJournal(string appaymentId)
         {
             JournalQueryService journalQueryService = new JournalQueryService(tenant);
-            JournalPM paymentJournal = journalQueryService.GetJournalsByAccountingEntityIdAndCode(arpaymentId, AccountingEntities.ARPayment, tenant).FirstOrDefault();
+            JournalPM paymentJournal = journalQueryService.GetJournalsByAccountingEntityIdAndCode(appaymentId, AccountingEntities.APPayment, tenant).FirstOrDefault();
             return paymentJournal;
         }
 
-        public LedgerTransaction GetCreditTransactionByJournalId(string journalId)
+        public LedgerTransaction GetDebitTransactionByJournalId(string journalId)
         {
             LedgerTransactionRepository transactionRepository = new LedgerTransactionRepository(tenant);
             IQueryable<LedgerTransaction> ledgerTransactionPOCOs = transactionRepository.GetByJournalId(journalId, tenant);
 
-            LedgerTransaction poco = ledgerTransactionPOCOs.Where(d => d.LocalAmountCredit != 0).FirstOrDefault();
+            LedgerTransaction poco = ledgerTransactionPOCOs.Where(d => d.LocalAmountDebit != 0).FirstOrDefault();
             return poco;
         }
 

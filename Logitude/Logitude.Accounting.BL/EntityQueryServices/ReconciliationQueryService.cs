@@ -53,7 +53,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             {
                 Id = reco.Id,
                 Number = reco.Number,
-                AccountId = reco.AccountId
+                AccountId = reco.AccountId,
+                IsCancelled = reco.IsCancelled
 
             }).ToList();
 
