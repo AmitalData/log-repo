@@ -68,6 +68,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                         if (accountPM != null)
                         {
                             temp.GLAccountId = accountPM.Id;
+                            temp.GLAccountLocalName = accountPM.LocalName;
+                            temp.GLAccountDisplayNumber = accountPM.DisplayNumber;
                         }
                         else
                         {

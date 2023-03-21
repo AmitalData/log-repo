@@ -1607,6 +1607,21 @@ export class ARInvoiceLineItem extends BaseComponent {
             this.EntityPM.ReportedinTaxReport = newValue;
         }
     }
+    
+    get GLAccountLocalName() { return this.EntityPM.GLAccountLocalName; }
+    set GLAccountLocalName(newValue: string) {
+        if (this.EntityPM.GLAccountLocalName != newValue) {
+            this.EntityPM.GLAccountLocalName = newValue;
+        }
+    }
+
+    get GLAccountDisplayNumber() { return this.EntityPM.GLAccountDisplayNumber; }
+    set GLAccountDisplayNumber(newValue: string) {
+        if (this.EntityPM.GLAccountDisplayNumber != newValue) {
+            this.EntityPM.GLAccountDisplayNumber = newValue;
+        }
+    }
+
     get LocalDescription() { return this.EntityPM.LocalDescription; }
     set LocalDescription(newValue: string) {
         if (this.EntityPM.LocalDescription != newValue) {
