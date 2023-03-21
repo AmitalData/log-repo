@@ -9,12 +9,12 @@ import {TenantPM} from '../../Common/EntityPMs/TenantPM';
 import {Cloner} from '../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    
     selector: 'SharedLogisticsSetting',
     templateUrl: './SharedLogisticsSettingComponent.html',
     inputs: ['TenantPM', 'OnCloseWindowEvent'],
-    providers: [SharedLogisticsService],
+    providers: [SharedLogisticsService]
 })
+
 export class SharedLogisticsSettingComponent implements OnInit {
     SelectedTabCode: string;
 
@@ -23,12 +23,14 @@ export class SharedLogisticsSettingComponent implements OnInit {
         if (this.TenantPM) {
             return this.TenantPM.IsSharedLogisticsActivated;
         }
-        else return false;
+        else {
+            return false;
+        }
     }
 
     public set IsSharedLogisticsActivated(value: boolean) {
         if (this.TenantPM != null) {
-            if (this.TenantPM.IsSharedLogisticsActivated !=value)
+            if (this.TenantPM.IsSharedLogisticsActivated != value)
             {
                 this.TenantPM.IsSharedLogisticsActivated = value;
                 this.SetPropertiesEnable();
@@ -37,60 +39,63 @@ export class SharedLogisticsSettingComponent implements OnInit {
     }
 
     public get IsWebAccessActivated() {
-
         if (this.TenantPM) {
             return this.TenantPM.IsWebAccessActivated;
         }
-        else return false;
+        else {
+            return false;
+        }
     }
 
     public set IsWebAccessActivated(value: boolean) {
         if (this.TenantPM) {
             this.TenantPM.IsWebAccessActivated = value;
         }
-
     }
 
     public get IsCargoTrackWebAccessActivated() {
-
         if (this.TenantPM) {
             return this.TenantPM.IsCargoTrackWebAccessActivated;
         }
-        else return false;
+        else {
+            return false;
+        }
     }
+
     public set IsCargoTrackWebAccessActivated(value: boolean) {
         if (this.TenantPM) {
             this.TenantPM.IsCargoTrackWebAccessActivated = value;
         }
-
     }
 
     public get IsDigitalPortalAccessActivated() {
-
         if (this.TenantPM) {
             return this.TenantPM.IsDigitalPortalAccessActivated;
         }
-        else return false;
+        else {
+            return false;
+        }
     }
+
     public set IsDigitalPortalAccessActivated(value: boolean) {
         if (this.TenantPM) {
             this.TenantPM.IsDigitalPortalAccessActivated = value;
         }
-
     }
 
     public get IsMobileActivated() {
-
         if (this.TenantPM) {
             return this.TenantPM.IsMobileActivated;
         }
-        else return false;
+        else {
+            return false;
+        }
     }
+
     public set IsMobileActivated(value: boolean) {
         if (this.TenantPM) {
             this.TenantPM.IsMobileActivated = value;
         }
-
     }
 
     ShipmentCreatedFilters: any[];
@@ -107,7 +112,6 @@ export class SharedLogisticsSettingComponent implements OnInit {
         if (this.TenantPM) {
             this.TenantPM.SharedLogisticsMessageLink = value;
         }
-
     }
 
     public get SharedLogisticsMasterMessageLink() {
@@ -122,11 +126,9 @@ export class SharedLogisticsSettingComponent implements OnInit {
         if (this.TenantPM) {
             this.TenantPM.SharedLogisMasterMessageLink = value;
         }
-
     }
 
     public get ShowMultiUnitsOfMeasurements() {
-
         if (this.TenantPM) {
             return this.TenantPM.ShowMultiUnitsOfMeasurements;
         }
@@ -140,15 +142,12 @@ export class SharedLogisticsSettingComponent implements OnInit {
     }
 
     public get ShipmentCreatedSelectedFilter() {
-
-        if (this.TenantPM) 
-        {
+        if (this.TenantPM){
             return this.TenantPM.DPArchiveShipmentCreateFilter;
         }
-        else 
-        {
-            return 0
-        };
+        else{
+            return 12;
+        }
     }
     
     public set ShipmentCreatedSelectedFilter(value: any) {
@@ -158,11 +157,13 @@ export class SharedLogisticsSettingComponent implements OnInit {
         }
     }
     
-    public get ShipmentArrivalSelectedFilter() {
-
+    public get ShipmentArrivalSelectedFilter() 
+    {
         if (this.TenantPM) 
         {
             return this.TenantPM.DPArchiveShipmentArrivalFilter;
+        }else{
+            return 3;
         }
     }
     
@@ -174,16 +175,16 @@ export class SharedLogisticsSettingComponent implements OnInit {
     }
 
     public get ShipmentDepartSelectedFilter() {
-
-        if (this.TenantPM) 
-        {
+        if (this.TenantPM){
             return this.TenantPM.DPArchiveShipmentDepartFilter;
+        }
+        else {
+            return 3;
         }
     }
     
     public set ShipmentDepartSelectedFilter(value: any) {
-        if (this.TenantPM) 
-        {
+        if (this.TenantPM){
             this.TenantPM.DPArchiveShipmentDepartFilter = value;
         }
     }
@@ -259,6 +260,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
 
     ) {
 
+        debugger
         if (this.TenantPM) {
             this.Run();
         }
@@ -266,9 +268,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
         this.FullComponentsVisibility = true;
         this.OnCloseWindowEvent.subscribe(($event: any) => {
             this.SaveButtonClicked();
-
         });
- 
     }
 
 
@@ -315,11 +315,9 @@ export class SharedLogisticsSettingComponent implements OnInit {
         this.SharedLogisticsMessageLinkCheckboxBoxId = Guid.newGuid();
         this.SharedLogisticsMasterMessageLinkCheckboxBoxId = Guid.newGuid();
         this.SharedLogisticsMultiUnitsOfMeasurementsId = Guid.newGuid();
-
         this.ShipmentCreatedSelectedFilter = this.ShipmentCreatedFilters.find(a => a.code == this.TenantPM.DPArchiveShipmentCreateFilter);
         this.ShipmentArrivalSelectedFilter = this.ShipmentCreatedFilters.find(a => a.code == this.TenantPM.DPArchiveShipmentArrivalFilter);
         this.ShipmentDepartSelectedFilter = this.ShipmentCreatedFilters.find(a => a.code == this.TenantPM.DPArchiveShipmentDepartFilter);
-
         this.SetPropertiesEnable();
 
     }
@@ -356,7 +354,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
         if (this.TenantPM.IsDirty) {
             this.RejectChanges();
         }
-
+        
         this.CurrentSession.CloseCurrentWindow();
     }
 
@@ -413,6 +411,9 @@ export class SharedLogisticsSettingComponent implements OnInit {
         this.myCloner.AddField('IsQuotesRequestActivatedInShared');
         this.myCloner.AddField('IsCargoTrackWebAccessActivated');
         this.myCloner.AddField('IsDigitalPortalAccessActivated');
+        this.myCloner.AddField('DPArchiveShipmentCreateFilter');
+        this.myCloner.AddField('DPArchiveShipmentArrivalFilter');
+        this.myCloner.AddField('DPArchiveShipmentDepartFilter');
 
         this.myCloner.AddEntity(this.TenantPM);
     }
@@ -452,16 +453,15 @@ export class SharedLogisticsSettingComponent implements OnInit {
     }
 
     public get IsQuotesRequestActivatedInSharedLogistics() {
-
-     if (!this.TenantPM) return false
+        if (!this.TenantPM) 
+            return false
         return this.TenantPM.IsQuotesRequestActivatedInShared;
-
     }
+
     public set IsQuotesRequestActivatedInSharedLogistics(value: boolean) {
         if (this.TenantPM) {
             this.TenantPM.IsQuotesRequestActivatedInShared = value;
         }
-
     }
 
     OnSharedLogisticsMessageLink() {
@@ -470,4 +470,3 @@ export class SharedLogisticsSettingComponent implements OnInit {
         }
     }
 }
-
