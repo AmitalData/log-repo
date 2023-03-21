@@ -190,7 +190,7 @@
                            [class.AlignRight]="AlignTextToRight"
                            [class.rtlTextBox]="IsRTLNumberText"
                            [id]="InputId" #input ondrop="return false"
-                           (paste)="OnPaste($event)"/>
+                           (paste)="OnPaste($event)" [readonly]="ForceDisable"/>
 
                             <div *ngIf="!IsDisabled && isMouseOver && (ObjectField?.EnableFullscreenTextBox)"
                             [class.collapse-btn]="isExpanded"

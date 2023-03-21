@@ -57,18 +57,18 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public List<EntityLastActivity> GetTopEntityLastActivities(int tenant, string userId, string objectTableId)
         {
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction(TimeSpan.FromSeconds(10)))
             {
                 IQueryable<EntityLastActivity> lastActivitiesQuery = null;
                 if (tenant != 65)
                 {
-                    lastActivitiesQuery = (from a in secondContext.EntityLastActivities.Include("ActivityType").Include("User.Contact")
+                    lastActivitiesQuery = (from a in context.EntityLastActivities.Include("ActivityType").Include("User.Contact")
                                            where a.Tenant == tenant && a.UserId == userId && a.ObjectTableId == objectTableId
                                            select a).OrderByDescending(d => d.ActivityDate);
                 }
                 else
                 {
-                    lastActivitiesQuery = (from a in secondContext.EntityLastActivities.Include("ActivityType").Include("User.Contact")
+                    lastActivitiesQuery = (from a in context.EntityLastActivities.Include("ActivityType").Include("User.Contact")
                                            where a.Tenant == tenant && a.ObjectTableId == objectTableId
                                            select a).OrderByDescending(d => d.ActivityDate);
                 }

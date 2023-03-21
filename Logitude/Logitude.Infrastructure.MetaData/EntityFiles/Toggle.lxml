@@ -9,9 +9,6 @@
   ObjectTablePlural="&quot;Toggles&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
-  AvailableInCustomization="false"
-  SupportSubEntity="false"
-  ApplyGenericCustomFields="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -42,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;62bd&quot;"
+  Code="&quot;ce25&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -60,7 +57,6 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
-  TenantZeroData="false"
   Code1="&quot;3c31&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -92,7 +88,6 @@
     SystemMaxLength="3"
     DisplayInList="false"
     IsCustomFilter="false"
-    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="true"
@@ -165,7 +160,6 @@
     SystemMaxLength="100"
     DisplayInList="false"
     IsCustomFilter="false"
-    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="true"
@@ -238,7 +232,6 @@
     SystemMaxLength="1000"
     DisplayInList="false"
     IsCustomFilter="false"
-    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -311,7 +304,6 @@
     SystemMaxLength="400"
     DisplayInList="true"
     IsCustomFilter="false"
-    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="true"
@@ -935,6 +927,16 @@
       Code="&quot;RSL&quot;"
       Description="&quot;Remove Shared Logistics Tab Feature&quot;"
       SearchFields="&quot;RSL,Remove Shared Logistics Tab Feature&quot;" />
+    <Record
+      Code="&quot;WRR&quot;"
+      Name="&quot;Run reconciliation using WorkerRole&quot;"
+      SearchFields="&quot;WRR,Run reconciliation using WorkerRole&quot;"
+      Description="&quot;Run reconciliation using WorkerRole&quot;" />
+    <Record
+      Code="&quot;UDD&quot;"
+      Name="&quot;Upload File using Drag and Drop&quot;"
+      SearchFields="&quot;UDD,Upload File using Drag and Drop&quot;"
+      Description="&quot;Upload File using Drag and Drop&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

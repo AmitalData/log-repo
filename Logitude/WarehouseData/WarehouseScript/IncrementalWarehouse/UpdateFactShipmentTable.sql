@@ -559,7 +559,7 @@ SELECT dw_Shipments.Id as Id	, ShipperAddress.Id_Number as ShipperAddressId ,Shi
 	inner JOIN DIM_Partners ReleasingAgentPartners ON dw_Shipments.ReleasingAgentId = ReleasingAgentPartners.Id
 	inner JOIN DIM_Vessels Transshipment1Vessel ON dw_ShipmentMasterDatas.Transshipment1VesselId = Transshipment1Vessel.Id
 	inner JOIN DIM_Partners Transshipment1Carrier ON dw_ShipmentMasterDatas.Transshipment1CarrierId = Transshipment1Carrier.Id
-	inner JOIN DIM_TransportModes  OnCarriageTransportModes ON dw_Shipments.OnForwardingTransportModeId = OnCarriageTransportModes.Code
+	inner JOIN DIM_TransportModes  OnCarriageTransportModes ON dw_ShipmentMasterDatas.OnCarriageTransportModeId = OnCarriageTransportModes.Code
 	inner JOIN DIM_Partners ConsigneeNotImporter ON dw_Shipments.ConsigneeNotImporterId = ConsigneeNotImporter.Id
 	inner JOIN DIM_Partners IssuingCarrierAgent ON dw_Shipments.IssuingCarrierAgentId = IssuingCarrierAgent.Id
     inner JOIN DIM_Ports DeliveryToPort  ON dw_ShipmentComputedFields.DeliveryToPortId = DeliveryToPort.Id

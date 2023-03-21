@@ -502,7 +502,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     if (!entityPoco.IsCancelled || !entityPM.IsCancelled)
                     {
+
                         #region
+
                         string myOldCustomerId = "";
                         string oldEntityStatusId = entityPoco.StatusId;
                         if (entityPM.CustomerId != entityPoco.CustomerId)

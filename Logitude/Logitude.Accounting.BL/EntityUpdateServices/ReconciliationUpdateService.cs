@@ -153,6 +153,20 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 }
 
+                if (ledgerTransactions.Any(d => d.SourceTypeCode == CloseTables.AccountingEntityValues.APPayment))
+                {
+                    LedgerTransactionPM paymentTransaction = ledgerTransactions.Find(d => d.SourceTypeCode == CloseTables.AccountingEntityValues.APPayment);
+                    if (paymentTransaction == null) throw new ApplicationException("Cannot find payment transaction on reco lines");
+                    foreach (ReconciliationLinePM recoLine in entityPM.ReconciliationLines)
+                    {
+                        if (recoLine.TransactionId != paymentTransaction.Id)
+                        {
+                            recoLine.ReconciledWithTransactionId = paymentTransaction.Id;
+                        }
+                    }
+
+                }
+
 
                 //foreach (var transactionPM in LedgerTransactions)
                 //{
@@ -487,11 +501,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void AfterUpdating(ReconciliationPM entityPM, EntityPM entityParentPM)
         {
             // Draft reconciliation
-            if (!SuppressResetDraftOpenReconciliation)
-            {
-                var repoLedger = new LedgerTransactionRepository(MainContext as IAccountingContext);
-                repoLedger.ResetDraftOpenReconciliation(entityPM.AccountId, entityPM.Tenant);
-            }
+            //if (!SuppressResetDraftOpenReconciliation)
+            //{
+            //    var repoLedger = new LedgerTransactionRepository(MainContext as IAccountingContext);
+            //    repoLedger.ResetDraftOpenReconciliation(entityPM.AccountId, entityPM.Tenant);
+            //}
 
             // incase insert changeset: the accountCurrencyId is null, so I will fill it 
             if(entityPM.ChangeSetOp == ChangeSetOperation.Insert && entityPM.AccountId != null)

@@ -24,6 +24,7 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract
         [XmlElement("Currency")]
         public Currency Currency { get; set; }
         public double? Rate { get; set; }
+        public int? Unit { get; set; }
         public DateTime? RateDate { get; set; }
 
         public RateUpdate()

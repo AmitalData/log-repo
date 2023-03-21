@@ -1500,12 +1500,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private Dictionary<string, string> GetCounterAdditionalParameter()
         {
-            Dictionary<string, string> counterAdditionalParameters = new Dictionary<string, string>() { { "[B]", "" } };
+            Dictionary<string, string> counterAdditionalParameters = new Dictionary<string, string>() { { "[B]", "" }, { "[BranchName]", "" } };
             if (!string.IsNullOrEmpty(entityPM.BranchId))
             {
                 BranchRepository branchRepository = new BranchRepository(myCommonContext);
                 Branch myBranch = branchRepository.GetSingleBranch(entityPM.BranchId, entityPM.Tenant);
-
+                if (myBranch != null)
+                {
+                    counterAdditionalParameters["[BranchName]"] = myBranch.EnglishName;
+                }
                 if (myBranch != null && !string.IsNullOrEmpty(myBranch.CounterCode))
                 {
                     counterAdditionalParameters["[B]"] = myBranch.CounterCode;
@@ -3976,8 +3979,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         journalLine.Reference2 = theEntityPm.MainEntityReference;
                         journalLine.Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber;
                         journalLine.Notes = theEntityPm.PrintNotes;
-                        journalLine.DebitAccountId = this.glAccount == null ? "" : this.glAccount.Id;
-                        journalLine.DebitControlAccountId = this.glAccount == null ? "" : this.glAccount.ControlAccountId;
+                        journalLine.DebitAccountId = glAccount == null ? "" : glAccount.Id;
+                        journalLine.DebitControlAccountId = glAccount == null ? "" : glAccount.ControlAccountId;
                         journalLine.ChangeSetOp = ChangeSetOperation.Insert;
                         journal.JournalLines.Add(journalLine);
                     }

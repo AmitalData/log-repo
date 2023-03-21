@@ -33,7 +33,8 @@ import { RecoCallback } from '../../DataContracts/RecoCallback';
 import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
 import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
 import { APPaymentPM } from 'Invoice/EntityPMs/APPaymentPM';
-
+import { delay, expand, takeLast } from 'rxjs/operators';
+import { EMPTY } from 'rxjs';
 
 export class LineModel extends BaseComponent {
     public LedgerTransactionPM: LedgerTransactionPM = null;
@@ -245,6 +246,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     public _ReconciliationExtendedPMService: ReconciliationExtendedPMService = new ReconciliationExtendedPMService();
     public fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();
     public entityListService: EntityListService= new EntityListService();
+    public IsComponentDestroyed: boolean = false;
     SessionEvent;
     showInternalReconcileAPPaymentAlert = false;
     createdPaymentNumber;
@@ -259,7 +261,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     ngOnDestroy() {
         AppTool.KillEventEmitter(ReconcileEventManager.CheckBoxChecked);
         ReconcileEventManager.CheckBoxChecked = new EventEmitter();
-
+        this.IsComponentDestroyed = true;
     }
 
     public InitComponent()
@@ -1459,63 +1461,81 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         return newEntity;
     }
     SubmitChanges(entity) {
+        // var sssss:RecoCallback = {reconciliationPM: null, splittedRecoCount: 0,isSplitted: false,communicationLogId: '1-1147'};
+        // this.getReconciliationCommunicationLog(sssss);
+        // return;
         SessionLocator.SelectedSession.StartBusyIndicator("Saving");
 
         this._ReconciliationExtendedPMService.insert(entity).subscribe((myResult: ServiceResponse) => {
-            SessionLocator.SelectedSession.StopBusyIndicator();
             var mm: ServiceResponse = myResult;
             var _callback:RecoCallback = mm.Result;
-            if (!mm.HasError) {
-
-                //var windowArgs: any = {};
-                //windowArgs.ReconciliationPM = entity;
-
-                //var logitudeWindow = new LogitudeWindow();
-                //logitudeWindow.Width = 400;
-                //logitudeWindow.Height = 140;
-                //logitudeWindow.Title = "Reconciled";
-                //logitudeWindow.WindowArgs = windowArgs;
-                //logitudeWindow.Show('./Accounting/Components/Others/ReconciledMessage');
-                //logitudeWindow.WindowClosed.subscribe(($event: any) => {
-                //    // Close Reconcile window
-                //    //this.CurrentSession.CloseCurrentWindow();
-                //    //this.CancelButtonClicked();
-
-                //    // Refresh Data
-                //    this.ReloadScreen();
-
-                //});
-                //logitudeWindow.ComponentLoaded.subscribe(($event: any) => {
-                //    this.timerToken = setTimeout(() => {
-                //        logitudeWindow.Close("ok");
-                //    }, 5000);
-
-                //});
-
-                this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
-                if(_callback){
-                    this.RecoPM = _callback.reconciliationPM;
-                }
-
-                this.recoCallback = _callback;
-                this.ShowSuccessAlert();
-
-                this.SelectedLines.Clear();
-
-
-                this.CurrentSession.StopBusyIndicator();
-
-                this.ReloadScreen();
-                //this.SelectedLines.Clear();
-                this.CalculateTotals();
-
+            
+            if(_callback && _callback.communicationLogId && _callback.communicationLogId!= null ) {
+                SessionLocator.SelectedSession.StopBusyIndicator();
+                this.getReconciliationCommunicationLog(_callback);
             }
-
             else {
-                this.ValidationErrorsList = mm.ErrorsArray;
-                this.CurrentSession.StopBusyIndicator();
-            }
+                
+                if (!mm.HasError) {
+
+                        this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
+                        if(_callback){
+                            this.RecoPM = _callback.reconciliationPM;
+                        }
+                        this.recoCallback = _callback;
+                        this.ShowSuccessAlert();
+                        this.SelectedLines.Clear();
+                        this.CurrentSession.StopBusyIndicator();
+                    }
+
+                    else {
+                        this.ValidationErrorsList = mm.ErrorsArray;
+                        this.CurrentSession.StopBusyIndicator();
+                    }
+                }
+            
         });
+    }
+    getReconciliationCommunicationLog(_callback: RecoCallback) {
+        SessionLocator.SelectedSession.StartBusyIndicator("Reconciliation in progress");
+        this._ReconciliationExtendedPMService
+                .getCommunicationLog(_callback.communicationLogId)
+                .pipe(
+                    delay(3000),
+                    expand((response: any) => {
+                    if ((response.HasError || response.Result.CommunicationStatusTypeCode === 'W') && !this.IsComponentDestroyed) {
+                        return this._ReconciliationExtendedPMService
+                    .getCommunicationLog(_callback.communicationLogId).pipe(delay(3000));
+                    }
+                    return EMPTY;
+                    }),
+                    takeLast(1)
+                )
+                .subscribe((result: ServiceResponse) => {
+                    if (!result.HasError) {
+                        var communicationLogResult = result.Result;
+                        if(communicationLogResult.CommunicationStatusTypeCode === 'D' && communicationLogResult.AdditionalFields && communicationLogResult.AdditionalFields != null) {
+                                _callback = JSON.parse(communicationLogResult.AdditionalFields);
+                                this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
+                            if(_callback){
+                                this.RecoPM = _callback.reconciliationPM;
+                            }
+                            this.recoCallback = _callback;
+                            this.ShowSuccessAlert();
+                            this.SelectedLines.Clear();
+                            this.CurrentSession.StopBusyIndicator();
+                        } else if(communicationLogResult.CommunicationStatusTypeCode === 'F') {
+                            this.ValidationErrorsList = [];
+                            this.ValidationErrorsList.push(communicationLogResult.ExceptionMessage);
+                            this.CurrentSession.StopBusyIndicator();
+                        }
+                    }
+                    else {
+                        this.ValidationErrorsList = result.ErrorsArray;
+                        this.CurrentSession.StopBusyIndicator();
+                    }
+                    
+                })
     }
 
     OpenSource(id: string, sourceTypeCode: string) {

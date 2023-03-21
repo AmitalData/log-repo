@@ -43,7 +43,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private int tenant;
         private ContainerPM containerPm;
         private IShipmentsContext shipmentsContext;
-        private ContainerRepository entityRepository;        
+        private ContainerRepository entityRepository;
+        private bool isUpdatingShipment = false;
+        private ShipmentPM shipmentPM;
         private Container containerPoco { get; set; }
 
         private AuditLogRepository AuditLogRepository;
@@ -161,7 +163,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = containerPoco, EntityPM = entityPM, OldEntityPM = new ContainerPM(), AutomationType = "OnUpdate", ObjectTableName = "Container", Tenant = entityPM.Tenant, EntityId = entityPM.Id, EntityReference = entityPM.ContainerNumber });
                 entityAutomationService.RunAutomation();
             }
-
      
             this.HandleContainersExternalData(entityPM, containersExternal);
 
@@ -171,6 +172,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.GetForeignFields_Status(entityPM, containerPoco);
             entityRepository.Update(containerPoco);
             entityRepository.SubmitChanges();
+
+            this.UpdateShipment();
 
             if (this.containerPm != null && !this.containerPm.FromCTool)
             {
@@ -322,8 +325,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 return;
             }
-            this.containerPm.ShipmentConcurrencyGUID = entityRepository.GetConcurrencyGUIDByShipmentId(this.containerPm.ShipmentId, this.containerPm.Tenant);
-            this.containerPm.ShipmentNewConcurrencyGUID = Guid.NewGuid().ToString();
+            //this.containerPm.ShipmentConcurrencyGUID = entityRepository.GetConcurrencyGUIDByShipmentId(this.containerPm.ShipmentId, this.containerPm.Tenant);
+            //this.containerPm.ShipmentNewConcurrencyGUID = Guid.NewGuid().ToString();
         }
 
         private void HandleEmptyReturnLeg()
@@ -352,7 +355,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 shipmentPM.ShipmentDeliveries.Add(emptyReturn);
             }
 
-            UpdateShipment(shipmentPM);            
+            this.shipmentPM = shipmentPM;
+            this.isUpdatingShipment = true;
+            //UpdateShipment(shipmentPM);            
         }
 
         private ShipmentPM GetShipment()
@@ -517,8 +522,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
             }
         }
-        private void UpdateShipment(ShipmentPM shipmentPM)
+        private void UpdateShipment()
         {
+            if (!isUpdatingShipment) return;
+            if (shipmentPM == null) return;
+
+            isUpdatingShipment = false;
             string systemEmail = "system@tenant" + tenant + ".com";
             ShipmentService service = new ShipmentService(shipmentsContext, shipmentPM, systemEmail);
             service.SetChangeSet(shipmentPM.ShipmentPackages, shipmentPM.ShipmentOrderPackages, shipmentPM.ShipmentPickUps, shipmentPM.ShipmentDeliveries, shipmentPM.ShipmentReceivables, shipmentPM.ShipmentPayables, shipmentPM.FollowUps, shipmentPM.ShipmentAWBPrintOnlies, shipmentPM.ShipmentConsoleShipments, shipmentPM.ShipmentCarrierStatuses, shipmentPM.AWBOCIPMs, shipmentPM.ShipmentCommodities, shipmentPM.ShipmentAssemblies, shipmentPM.ShipmentStoragePricings, shipmentPM.ShipmentProductItems, shipmentPM.ShipmentUnassignedFields);

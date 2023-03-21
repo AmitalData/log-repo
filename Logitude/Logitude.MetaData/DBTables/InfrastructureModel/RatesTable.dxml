@@ -64,6 +64,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Unit"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ForeignCurrencyId"
     ReferencedTable="Currencies"

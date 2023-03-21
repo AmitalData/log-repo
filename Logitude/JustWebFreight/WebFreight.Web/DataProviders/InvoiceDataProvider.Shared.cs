@@ -626,6 +626,7 @@ namespace WebFreight.Web.DataProviders
             public string CustomerField9 { get; set; }
             public string CustomerField10 { get; set; }
             public string BranchCode { get; set; }
+            public DateTime? ShipmentMainCarriageETA  { get; set; }
         }
 
         public class InvoiceTotals
