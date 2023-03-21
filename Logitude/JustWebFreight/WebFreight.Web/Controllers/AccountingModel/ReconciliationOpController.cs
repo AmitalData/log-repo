@@ -790,6 +790,13 @@ tenant);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 int tenant = authToken.Tenant;
                 var accountingContext = AccountingContext.GetContext(authToken.Tenant);
+                var ledgerTransactionQueryService = new LedgerTransactionQueryService(accountingContext as IAccountingContext);
+                var ledgerTransactions = ledgerTransactionQueryService.
+                    GetLedgerTransactionPMsByIdList(ReconciliationLines.Select(x => x.TransactionId).ToList(), tenant);
+                if (ledgerTransactions != null && ledgerTransactions.Any(x => x.InReconcileProgress))
+                {
+                    throw new ApplicationException("Already InReconcileProgress.");
+                }
                 var createJournalReconcileService = new CreateJournalReconcileService();
                 var pm = createJournalReconcileService.Create(accountingContext, authToken.Tenant, ReconciliationLines, TheAccountId
                     , AdjustAccountId, AccountDate, DueDate, RefDate, Ref1, Ref2, Ref3, Remarks);
