@@ -32,8 +32,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel
                 SecurityUtility.AuthenticationOnEntityTenant("Port", Port.Tenant, 0);
                 string CorrelationId = HttpContext.Current.Request.Headers["CorrelationId"];
                 ImporterPortsExtendedService importerPortsExtendedService = new ImporterPortsExtendedService(Port.Tenant, CorrelationId);
-                APILogsPM LogPM = importerPortsExtendedService.GetLogPM();
-                LogPM.Subject = "Update Port To Importer Tenant";
+                APILogsPM LogPM = importerPortsExtendedService.GetLogPM("Update Port To Importer Tenant", Port.Code);
                 APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "I", 1, DateTime.Now, DateTime.UtcNow, "Start updating Port To Importer Tenant " + DateTime.Now, LogitudeXmlSerializer.SerializeObjectToXmlString(Port), null, null, "");
                 try
                 {
@@ -74,8 +73,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel
                 SecurityUtility.AuthenticationOnEntityTenant("Port", Port.Tenant, 0);
                 string CorrelationId = HttpContext.Current.Request.Headers["CorrelationId"];
                 ImporterPortsExtendedService importerPortsExtendedService = new ImporterPortsExtendedService(Port.Tenant, CorrelationId);
-                APILogsPM LogPM = importerPortsExtendedService.GetLogPM();
-                LogPM.Subject = "Inserting Port To Importer Tenant";
+                APILogsPM LogPM = importerPortsExtendedService.GetLogPM("Inserting Port To Importer Tenant", Port.Code);
                 APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "I", 1, DateTime.Now, DateTime.UtcNow, "Start Inserting port To Importer Tenant " + DateTime.Now, LogitudeXmlSerializer.SerializeObjectToXmlString(Port), null, null, "");
                 try
                 {
