@@ -346,8 +346,11 @@
 
                         <li class="seperator"></li>
                         <li (click)="RefreshButtonClicked()"><img src="./Images/Split/doc-viewer-refresh.png" alt="" /></li>
-                        <!--<li (click)="Rotate()"><img src="./Images/Split/doc-viewer-rotate-right.png" alt="" /></li>-->
+                        <li class="seperator"></li>
 
+                        <li *ngIf="!IsNoDocumentSelected &&  this.base64Image!=null" (click)="OpenInWindowButtonClicked()" title="פתח בחלון חדש"><img style="width:28px" src="./Images/Icons/Window.png" alt=""/></li>
+                        <!--<li (click)="Rotate()"><img src="./Images/Split/doc-viewer-rotate-right.png" alt="" /></li>-->
+                        
                     </ul>
                 </td>
 
@@ -376,7 +379,7 @@
                  [style.transform-origin]="'top right'"
                  class="div-grabbable">
 
-                <img *ngIf="!IsNoDocumentSelected &&  this.base64Image!=null " style="width: 100%;" class="grabbable"
+                <img #myImg [style.display]="!IsNoDocumentSelected &&  this.base64Image!=null ? 'block' : 'none' " style="width: 100%;" class="grabbable"
                      (mousemove)="OnMouseMove($event)"
                      (mousedown)="OnMouseDown($event)"
                       (mouseup)="OnMouseUp($event)"
