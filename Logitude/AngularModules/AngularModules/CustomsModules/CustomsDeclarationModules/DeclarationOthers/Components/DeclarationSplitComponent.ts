@@ -18,7 +18,7 @@ import { ObjectTablePM } from '../../../../Infrastructure/EntityPMs/ObjectTableP
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../../../Infrastructure/Utilities/AmitalGatewayUtil';
 //import * as cv from 'opencv4nodejs';
-import * as Tesseract from 'tesseract.js';
+//import * as Tesseract from 'tesseract.js';
 import { DeclarationPM } from '../../../../Customs/EntityPMs/DeclarationPM';
 import { DocumentsFilingPM } from '../../../../Common/EntityPMs/DocumentsFilingPM';
 import { RelatedDocumentViewModel } from '../../../CustomsDocuments/Components/RelatedDocumentViewModel';
@@ -77,9 +77,9 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
     @ViewChild('myImg', { static: true }) myImgVariable: ElementRef;
 
     ngAfterViewInit() {
-        this.myImgVariable.nativeElement.onload = () => {
+        /*this.myImgVariable.nativeElement.onload = () => {
             this.recognizeText();
-        }
+        }*/
         this.startRenderingImage();
        
     }
@@ -827,18 +827,18 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
 
 
     }
-    @HostListener('contextmenu', ['$event'])
+    /*@HostListener('contextmenu', ['$event'])
     onContextMenu(event: MouseEvent) {
         if (this.selectedText) {
             event.preventDefault();
             window.open(`https://www.google.com/search?q=${this.selectedText}`);
         }
-    }
+    }*/
 
     
 
     
-    recognizeText() {
+    /*recognizeText() {
         // Calculate the coordinates of the selected area
         const x = Math.min(this.startX, this.endX);
         const y = Math.min(this.startY, this.endY);
@@ -864,7 +864,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
             })
             .catch(err => console.error(err));
 
-    }
+    }*/
 
     /*drawRectangle(img, rect, color, thickness = 2) {
         img.drawRectangle(
@@ -874,14 +874,14 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
             cv.LINE_8
         );
     }*/
-    @HostListener('mouseup', ['$event'])
+    /*@HostListener('mouseup', ['$event'])
     OnMouseUp(event) {
         if (event) {
             this.endX = event.clientX;
             this.endY = event.clientY;
             this.recognizeText();
         }
-    }
+    }*/
 
     @HostListener('mousedown', ['$event'])
     OnMouseDown(event) {
