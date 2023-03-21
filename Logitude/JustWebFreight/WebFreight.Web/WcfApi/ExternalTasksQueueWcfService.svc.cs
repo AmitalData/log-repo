@@ -20,6 +20,7 @@ using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.Text;
 using System.Threading;
+using System.Transactions;
 using System.Web;
 using System.Xml;
 using System.Xml.Linq;
@@ -67,7 +68,7 @@ namespace WebFreight.Web.WcfApi
                     return (response);
                 }
 
-                string sqlQuery = sql_logi.EXAMPLE_SQL;
+                string sqlQuery = sql_logi.TEMPLATE_SQL;
                 if (string.IsNullOrEmpty(sqlQuery))
                 {
                     response.HasError = true;
@@ -81,9 +82,17 @@ namespace WebFreight.Web.WcfApi
                     return (response);
                 }
 
-                //tenant = 6;
-                //string id = "1-110456";
-                var shipmentsContext = new Simplog.Data.ShipmentsModel.ShipmentsContext();
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    int tenant1 = authToken.Tenant;
+                }
+
+
+                    //tenant = 6;
+                    //string id = "1-110456";
+                    var shipmentsContext = new Simplog.Data.ShipmentsModel.ShipmentsContext();
                 using (SqlConnection connection = new SqlConnection())
                 {
                     connection.ConnectionString = shipmentsContext.Database.Connection.ConnectionString;
