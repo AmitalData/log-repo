@@ -739,9 +739,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
             }
 
             List<string> cards = ids?.Split(',').ToList<string>();
-            var billToIds = (from a in context.Cards
-                                   where cards.Contains(a.Id) && a.Tenant == tenant
-                                   select a.BillToId).ToList();
+            var billToIds = context.Cards
+                                   .Where(a => cards.Contains(a.Id) 
+                                               && a.Tenant == tenant 
+                                               && !string.IsNullOrEmpty(a.BillToId))
+                                   .Select(a => a.BillToId)
+                                   .ToList();
 
             return billToIds;
         }

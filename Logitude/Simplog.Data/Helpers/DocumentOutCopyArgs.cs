@@ -14,5 +14,6 @@ namespace Simplog.Data.Helpers
         public string ObjectTableId { get;  set; }
         public int Tenant { get; set; }
         public string DocumentTemplateId { get; set; }
+        public string ChildEntityId { get; set; }
     }
 }

@@ -15,7 +15,7 @@
                                 <div class="InnerChild">General</div>
                             </li>
 
-                            <li *ngIf="IsContainerTrackingPrepaid" [class.Selected]="SelectedTabCode === 'R'" (click)="SelectedTabCode = 'R'">
+                            <li *ngIf="IsContainerTrackingPrepaid" [class.Selected]="SelectedTabCode === 'R'" (click)="AutomaticRequestsTabClicked()">
                                 <div class="InnerChild">Automatic Requests</div>
                             </li>
                         </ul>

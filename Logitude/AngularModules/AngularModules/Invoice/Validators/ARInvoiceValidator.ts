@@ -93,7 +93,7 @@ export class ARInvoiceValidator {
         if (!SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "INU")[0]) return;
 
         let sATTransferingStatusCode = "TG";
-        if (this.EntityPM.SATTransferStatusCode == sATTransferingStatusCode) {
+        if (this.EntityPM.SATTransferStatusCode == sATTransferingStatusCode && !this.EntityPM.ResendToSAT) {
             this.Errors.push("You are not allowed to update the invoice while its status is Transferring to SAT");
         }
     }

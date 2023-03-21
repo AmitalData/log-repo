@@ -28,14 +28,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
         private void Initializer()
         {
             var context = ShipmentsContext.GetContext(0);
-            Source = context.ContainerTrackingProviders.Where(e => e.SourceCode == ContainerStatusSourceValues.Vizion).FirstOrDefault();
+            Source = context.ContainerTrackingProviders.Where(e => e.SourceCode == "VZN").FirstOrDefault();
         }
 
-        public VizionReferenceResponce SendRequest(GeneralContainerTrackingArgs containerStatusSimulatorArgs, Shipment shipment)
+        public VizionReferenceResponce SendRequest(GeneralContainerTrackingArgs containerTrackingArgs, Shipment shipment)
         {
-            if (containerStatusSimulatorArgs.IsFromContainer)
+            if (containerTrackingArgs.IsFromContainer)
             {
-                return CallCreateReferenceViaCarrierCodeApi(containerStatusSimulatorArgs, shipment);
+                return CallCreateReferenceViaCarrierCodeApi(containerTrackingArgs, shipment);
             }
             else
             {
@@ -65,14 +65,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
             return headers;
         }
 
-        private ReferenceViaCarrierCodeRequest CreateReferenceViaCarrierCodeRequest(GeneralContainerTrackingArgs containerStatusSimulatorArgs, Shipment shipment)
+        private ReferenceViaCarrierCodeRequest CreateReferenceViaCarrierCodeRequest(GeneralContainerTrackingArgs containerTrackingArgs, Shipment shipment)
         {
             return new ReferenceViaCarrierCodeRequest()
             {
                 callback_url = Source.CallbackURL,
-                carrier_code = containerStatusSimulatorArgs.CarrierCode,
+                carrier_code = containerTrackingArgs.CarrierCode,
                 bill_of_lading = shipment?.ShipmentMasterData?.Master,
-                container_id = containerStatusSimulatorArgs.ContainerNumber
+                container_id = containerTrackingArgs.ContainerNumber
             };
         }
         private CreateReferenceViaBillOfLadingRequest CreateCreateReferenceViaBillOfLadingRequest(Shipment shipment)
@@ -85,10 +85,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
             };
         }
 
-        private VizionReferenceResponce CallCreateReferenceViaCarrierCodeApi(GeneralContainerTrackingArgs containerStatusSimulatorArgs, Shipment shipment)
+        private VizionReferenceResponce CallCreateReferenceViaCarrierCodeApi(GeneralContainerTrackingArgs containerTrackingArgs, Shipment shipment)
         {
             var headers = GetHeaders();
-            var referenceViaCarrierCodeRequest = CreateReferenceViaCarrierCodeRequest(containerStatusSimulatorArgs, shipment);
+            var referenceViaCarrierCodeRequest = CreateReferenceViaCarrierCodeRequest(containerTrackingArgs, shipment);
             var result = APICaller.CallApi<VizionReferenceResponce>(Source.ProviderURL+ "/references", referenceViaCarrierCodeRequest, Method.POST, headers);
             return result;
         }

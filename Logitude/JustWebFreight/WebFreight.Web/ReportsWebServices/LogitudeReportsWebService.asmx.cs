@@ -1489,7 +1489,7 @@ namespace WebFreight.Web.ReportsWebServices
             CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             ARInvoiceLineRepository aRInvoiceLineRepository = new ARInvoiceLineRepository(tenant);
             ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(tenant);
-
+            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
             IQueryable<ARInvoiceList> iQueryable = arInvoiceQuery.GetInvoiceListByTenant(tenant);
             List<VatType> tenantVatTypes = vatTypeRepository.GetVatTypes(tenant).ToList();
             IQueryable<ARInvoiceLine> tenantARInvoiceLines = aRInvoiceLineRepository.GetInvoiceLinesByTenant(tenant);
@@ -1642,7 +1642,7 @@ namespace WebFreight.Web.ReportsWebServices
                 List<ARInvoiceLine> myInvoiceLines = tenantARInvoiceLines.Where(l => (l.ARInvoiceId == arInvoice.Id)).ToList();
                 customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, arInvoice, invoicesRecored);
 
-                Shipment shipment = shipments.Where(d => d.Id == arInvoice.MainEntityId).FirstOrDefault();
+                Shipment shipment = shipments.Where(d => d.Id == arInvoice.MainEntityId).FirstOrDefault();                
                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipment, invoicesRecored);
 
                 //ARInvoicePM invoicePM = invoiceQuery.GetSinglePM(currentInvoice.Id, currentInvoice.Tenant);
@@ -1746,6 +1746,12 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
 
+                if(shipment != null)
+                {
+                    ShipmentMasterData shipmentMasterData = shipmentRepository.GetSingleShipmentMasterData(shipment.MasterShipmentDataId, tenant);
+                    invoicesRecored.ShipmentMainCarriageETA = shipmentMasterData?.MainCarriageETA;
+                }
+
                 invoicesRecored.InvoiceType = arInvoice.ARInvoiceTypeName;
                 invoicesRecored.InvoiceDate = arInvoice.InvoiceDate.Value;
                 invoicesRecored.InvoiceNumber = arInvoice.InvoiceNumber;
@@ -1767,16 +1773,38 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.AmountDueInLocalCurrency = arInvoice.AmountDueInLocalCurrency;
                 invoicesRecored.BillToVatNumber = arInvoice.VatNumber;
                 invoicesRecored.PaidDate = arInvoice.PaidDate;
+                BranchRepository branchRepository = new BranchRepository(tenant);
+                Branch branch = branchRepository.GetSingleBranch(arInvoice.BranchId, tenant);
+                if (branch != null)
+                {
+                    invoicesRecored.BranchCode = branch.Code;
+                }
+
+                Card billTo = CardRepository.GetSingleCard(arInvoice.BillToId, tenant, false);
 
                 if (string.IsNullOrEmpty(invoicesRecored.BillToVatNumber))
-                {
-                    Card billTo = CardRepository.GetSingleCard(arInvoice.BillToId, tenant, false);
+                {   
                     if(billTo != null)
                     {
                         invoicesRecored.BillToVatNumber = billTo.VatNumber;
                     }
                 }
-
+                if (billTo != null)
+                {
+                    FillBillToContact(invoicesRecored, billTo);
+                    invoicesRecored.BillToAddress1 = billTo.Address1;
+                    invoicesRecored.BillToAddress2 = billTo.Address2;
+                    invoicesRecored.BillToCity = billTo.CityName;
+                    invoicesRecored.BillToState = billTo.StateName;
+                    invoicesRecored.BillToZipCode = billTo.ZipCode;
+                    invoicesRecored.BillToCountry = billTo.CountryName;
+                    if (billTo.IsCustomer)
+                    {
+                        
+                       FillCustomerField(invoicesRecored, billTo, tenant);   
+                    }                    
+                }             
+                
                 if (localCurrency)
                 {
                     totalVat = totalVat + myTotalVats.Sum(d => d.LocalVATAmount);
@@ -1853,6 +1881,28 @@ namespace WebFreight.Web.ReportsWebServices
             #endregion
 
             return dataProvider;
+        }
+        private void FillBillToContact(InvoiceDataProvider.InvoicesReport invoicesRecored, Card billTo)
+        {
+            ContactRepository contactRepository = new ContactRepository(billTo.Tenant);
+            Contact contact = contactRepository.GetSingleContact(billTo.PrimaryContactId, billTo.Tenant);
+            if (contact != null)
+            {
+                invoicesRecored.BillToContactName = contact.EnglishName;
+                invoicesRecored.BillToContactEmail = contact.Email;
+            }
+
+        }
+        
+        private void FillCustomerField(InvoiceDataProvider.InvoicesReport invoicesRecored, Card billTo, int tenant)
+        {
+            CustomerRepository customerRepository = new CustomerRepository(tenant);
+            Customer customer = customerRepository.GetSingleCustomer(billTo.Id, tenant);
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+            if (customer != null)
+            {
+                customFieldResolver.SetDataProviderCustomFieldsValues("Customer", tenant, customer, invoicesRecored);
+            }
         }
 
         private List<System.Xml.XmlElement> GetComprobanteComplementos(string sATXML)
@@ -3224,6 +3274,7 @@ namespace WebFreight.Web.ReportsWebServices
             AddressQuery addressQuery = new AddressQuery(tenant);
             VatTypeRepository vatTypeRepository = new VatTypeRepository(tenant);
             APInvoiceLineRepository apInvoiceLineRepository = new APInvoiceLineRepository(tenant);
+            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
 
             IQueryable<APInvoiceList> iQueryable = aPInvoiceQuery.GetInvoiceListByTenant(tenant);
             List<VatType> tenantVatTypes = vatTypeRepository.GetVatTypes(tenant).ToList();
@@ -3378,6 +3429,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 Shipment shipment = shipments.Where(d => d.Id == apInvoice.MainEntityId).FirstOrDefault();
                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipment, invoicesRecored);
+                
 
                 foreach (APInvoiceTotalVAT vat in myTotalVats)
                 {
@@ -3533,6 +3585,12 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.ExpenseCharges = expenseCharges == null ? 0 : expenseCharges;
                 invoicesRecored.ExpenseChargesInLocalCurrency = expenseChargesInLocalCurrency == null ? 0 : expenseChargesInLocalCurrency;
 
+                if (shipment != null)
+                {
+                    ShipmentMasterData shipmentMasterData = shipmentRepository.GetSingleShipmentMasterData(shipment.MasterShipmentDataId, tenant);
+                    invoicesRecored.ShipmentMainCarriageETA = shipmentMasterData?.MainCarriageETA;
+                }
+
                 dataProvider.InvoicesReportList.Add(invoicesRecored);
             }
 
@@ -3560,6 +3618,8 @@ namespace WebFreight.Web.ReportsWebServices
             dataProvider.TotalSub = subTotals;
             dataProvider.TotalsGrands = totalVat + subTotals;
             dataProvider.Name = @"Invoices";
+
+           
             #endregion
 
             return dataProvider;
@@ -6000,7 +6060,7 @@ namespace WebFreight.Web.ReportsWebServices
                     Salesman = service.Customer.SalesmanUser != null ? service.Customer.SalesmanUser.Contact.EnglishName : null,
                     ServiceName = service.AdditionalService.Name,
                     Potential_InUse = service.Potential ? "Potential" : "In Use",
-                    NumberOfShipments = Convert.ToInt32(service.Customer.Field1),
+                    NumberOfShipments = tenant == 341 ? Convert.ToInt32(service.Customer.Field1) : 0,
                     NumberOfShipmentsLabel = tenant == 341 ? "Number of Users" : "Number of Shipments",
                     CustomerStatus = service.Customer.CustomerStatus != null ? service.Customer.CustomerStatus.Name : null,
                 });

@@ -42,6 +42,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         {
             if (isNewEntity)
             {
+                ValidateShipmentNumber(entityPM);
                 ValidateProductTypePermission(entityPM, myCommonContext);
             }
 
@@ -97,6 +98,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
             }
         }
+
+        private static void ValidateShipmentNumber(ShipmentPM entityPM)
+        {
+            ShipmentRepository shipmentRepository = new ShipmentRepository(entityPM.Tenant);
+            bool isShipmentNumberExist = shipmentRepository.CheckShipmentExistsByNumber(entityPM.ShipmentNumber, entityPM.Tenant);
+            if (!isShipmentNumberExist) return;
+            throw new ApplicationException("This shipment number is already exists");
+        }
+
         public static string GetCustomerCreditLimitDetails(string customerId, string quoteId, bool isBuildFromQuote, int tenant)
         {
             var limitWarningMsg = "";
@@ -1484,6 +1494,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
             }
         }
+
         private static bool HasPayablesAmounts(ShipmentPM entityPM)
         {
             bool hasAnyPayableAmount = false;

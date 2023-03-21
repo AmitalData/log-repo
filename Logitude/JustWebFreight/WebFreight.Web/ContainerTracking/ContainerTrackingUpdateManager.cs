@@ -34,8 +34,6 @@ namespace WebFreight.Web.ContainerTracking
         private bool isUpdatingShipmentDateFields = false;
         private bool isUpdatingEmptyLeg = false;
         private Tenant myTenant;
-
-        private ContainerDiscrepancyService containerDiscrepancyService;
         public List<dynamic> allTrasshipmentLegs;
         private ContainerTrackingHelper containerTrackingHelper;
 
@@ -250,12 +248,38 @@ namespace WebFreight.Web.ContainerTracking
         }
         private void MapVizionTransshipments()
         {
-            this.SetRelatedTransshipmentLeg(containerUpdatedFields.LoadedTransshipment, "From");
-            this.SetRelatedTransshipmentLeg(containerUpdatedFields.VesselDeparted, "From");
-            this.SetRelatedTransshipmentLeg(containerUpdatedFields.VesselArrived, "To");
-            this.SetRelatedTransshipmentLeg(containerUpdatedFields.DischargedTransshipment, "To");
-            this.MapContainerVesselVoyageVizionTransshipments(containerUpdatedFields);
-            this.MapShipmentVesselVoyageVizionTransshipments(containerUpdatedFields);
+            this.FillContainerTransshipmentLeg(containerUpdatedFields.LoadedTransshipment);
+            this.FillContainerTransshipmentLeg(containerUpdatedFields.VesselDeparted);
+            this.FillContainerTransshipmentLeg(containerUpdatedFields.VesselArrived);
+            this.FillContainerTransshipmentLeg(containerUpdatedFields.DischargedTransshipment);          
+        }
+        private void FillContainerTransshipmentLeg(MilestoneData transshipmentObject)
+        {
+            foreach (MilestoneDataUpdatedFields updatedFields in transshipmentObject.MilestoneFields)
+            {
+                if (string.IsNullOrEmpty(updatedFields.Location)) continue;
+                string portId = this.GetPortId(updatedFields.Location);
+
+                int? transshipmentLegIndex = GetCorrespondingShipmentLegIndex(portId);
+                if (transshipmentLegIndex == null || string.IsNullOrEmpty(portId)) continue;                
+
+                this.FillFieldsNewValues("Transshipment" + transshipmentLegIndex + "LocationPortId", portId, containerPM);
+                this.FillFieldsNewValues("Transshipment" + transshipmentLegIndex + "Location", updatedFields.Location, containerPM);
+                this.SetTransshipmentLegDates(transshipmentLegIndex, updatedFields, transshipmentObject.Key);
+            }
+        }
+        private int? GetCorrespondingShipmentLegIndex(string portId)
+        {
+            if (containerPM.ShipmentTransshipment1FromId == portId)           
+                return 1;            
+
+            else if (containerPM.ShipmentTransshipment2FromId == portId)            
+                return 2;            
+
+            else if (containerPM.ShipmentTransshipment3FromId == portId)            
+                return 3;            
+
+            return null;
         }
 
         private void MapContainerVesselVoyageVizionTransshipments(ContainerUpdatedFields containerUpdatedFields)
@@ -389,7 +413,6 @@ namespace WebFreight.Web.ContainerTracking
                 }
             }
         }
-
 
         private void MapOITransshipments()
         {
@@ -820,8 +843,16 @@ namespace WebFreight.Web.ContainerTracking
             {
                 string systemEmail = "system@tenant" + tenant + ".com";
                 ShipmentService service = new ShipmentService(containerUpdatedFields.ShipmentContext, shipmentPM, systemEmail);
+                string activity = "(A) Update Shipment from Container";
+                AddTotangoActivity(tenant, activity, systemEmail);
                 service.Update(true);
             }
+        }
+        public void AddTotangoActivity(int tenant, string activity, string systemEmail)
+        {
+            string email = AuthenticationUtil.IsAuthenticatedUserExists() ? AuthenticationUtil.GetAuthenticatedUser() : "system@tenant" + tenant + ".com";
+            string moduleName = "(A) Container";
+            ActivityLogger.SendTotangoContactActivity(email,moduleName, activity, containerPM.Tenant,false,null);
         }
 
         private string GetPortId(string portCode)

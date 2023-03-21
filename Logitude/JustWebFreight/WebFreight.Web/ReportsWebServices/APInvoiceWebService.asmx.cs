@@ -233,7 +233,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 #region Shipment
                 if (shipment != null)
-                {
+                {                   
                     if (!string.IsNullOrEmpty(shipment.BranchId))
                     {
                         BranchRepository branchRepository = new BranchRepository(currentTenant);
@@ -1136,6 +1136,9 @@ namespace WebFreight.Web.ReportsWebServices
             singleRecord.Currency = item.Currency;
             singleRecord.PayablesAccounted = item.SubTotalInInvoiceCurrency;
             singleRecord.LongMaster = item.LongMaster;
+            singleRecord.TotalAmountinLocalCurrency = item.SubTotalInLocalCurrency;
+            singleRecord.GrossweightinKG = item.GrossWeightInKG;
+            singleRecord.VolumeinCBM = item.VolumeinCBM;
         }
 
         private void CalculateFreight(APInvoiceMultipleEntity singleRecord, APInvoiceMultipleShipmentPM item, APInvoiceFreights aPInvoiceFreights)

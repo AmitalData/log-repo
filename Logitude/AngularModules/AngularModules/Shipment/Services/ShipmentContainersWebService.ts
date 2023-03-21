@@ -57,7 +57,7 @@ export class ShipmentContainersWebService {
         });
     }
 
-    GeneralContainerSimulator(entity: GeneralContainerTrackingArgs) {
+    TrackContainer(entity: GeneralContainerTrackingArgs) {
         return defer(() => {
             return this._httpClient.post(this._apiUrl+'/PostGeneralContainerStatus', JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                 var myResponse = new ServiceResponse();

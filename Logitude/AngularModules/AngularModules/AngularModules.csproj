@@ -429,6 +429,7 @@
     <Content Include="SharedLogistics\Components\SharedLogisticsDigitalPortalComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityPackageComponent.html" />
+    <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\TestMultiHarmonizeComponent.html" />
     <Content Include="ShipmentModules\ShipmentContainers\Components\EditTabs\Audit\ContainerAuditTabComponent.html" />
     <Content Include="ShipmentModules\ShipmentContainers\Components\EditTabs\GeneralTabComponent.html" />
     <Content Include="ShipmentModules\ShipmentContainers\Components\EditTabs\RoutingsTabComponent.html" />
@@ -4962,6 +4963,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\ModuleShipmentAMANAC.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityPackageComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\TestMultiHarmonizeComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentContainers\Components\EditTabs\Audit\ContainerAuditTabComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentContainers\Components\EditTabs\GeneralTabComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentContainers\Components\EditTabs\RoutingsTabComponent.ts" />

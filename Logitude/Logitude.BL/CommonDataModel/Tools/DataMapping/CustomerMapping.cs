@@ -86,7 +86,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.ActivationDate = entityPM.ActivationDate;
             entityPOCO.ActivationRequestDate = entityPM.ActivationRequestDate;
             entityPOCO.InactiveDate = entityPM.InactiveDate;
-            entityPOCO.EORInumber = entityPM.EORInumber;
+          
             if (!entityPM.IsHybrid || isNewState) //islam: if hybrid and not a new call dont map the field
             {
                 entityPOCO.FirstShipmentDate = entityPM.FirstShipmentDate;
@@ -145,6 +145,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.SATCustomerName = entityPM.SATCustomerName;
             entityCard.ExportLocalCustomerGroupId = entityPM.ExportLocalCustomerGroupId;
             entityCard.ImportLocalCustomerGroupId = entityPM.ImportLocalCustomerGroupId;
+            entityCard.EORInumber = entityPM.EORInumber;
             entityCard.SingleInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.SingleInvoiceTemplateId : null;
             entityCard.CustomsInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.CustomsInvoiceTemplateId : null;
             entityCard.ConsolidationInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.ConsolidationInvoiceTemplateId : null;

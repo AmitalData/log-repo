@@ -1333,6 +1333,13 @@ on record.JournalId equals j.Id
             return ledgerTransactionPOCOs;
         }
 
+        public bool CheckTransactionsInReconcileProgress(List<String> idList, int tenant)
+        {
+            return (from a in context.LedgerTransactions
+                 where idList.Contains(a.Id) && a.InReconcileProgress == true && a.Tenant == tenant
+                 select a).Any();
+        }
+
         public List<LedgerTransaction> GetLedgerTransactionsByAccountIdListAndJournalId(List<String> accountIdList,string journalId, int tenant)
         {
             List<LedgerTransaction> ledgerTransactionPOCOs =

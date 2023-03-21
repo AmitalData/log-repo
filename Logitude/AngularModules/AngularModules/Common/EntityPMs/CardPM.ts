@@ -299,6 +299,56 @@ export class CardPM {
     public set CustomerSizeId(newValue: string) { if (this.customerSizeId != newValue) { this.customerSizeId = newValue; this.MarkAsDirty("CustomerSizeId"); } }
        
 	 
+    private field1: string;
+    public get Field1() { return this.field1; }
+    public set Field1(newValue: string) { if (this.field1 != newValue) { this.field1 = newValue; this.MarkAsDirty("Field1"); } }
+       
+	 
+    private field2: string;
+    public get Field2() { return this.field2; }
+    public set Field2(newValue: string) { if (this.field2 != newValue) { this.field2 = newValue; this.MarkAsDirty("Field2"); } }
+       
+	 
+    private field3: string;
+    public get Field3() { return this.field3; }
+    public set Field3(newValue: string) { if (this.field3 != newValue) { this.field3 = newValue; this.MarkAsDirty("Field3"); } }
+       
+	 
+    private field4: string;
+    public get Field4() { return this.field4; }
+    public set Field4(newValue: string) { if (this.field4 != newValue) { this.field4 = newValue; this.MarkAsDirty("Field4"); } }
+       
+	 
+    private field5: string;
+    public get Field5() { return this.field5; }
+    public set Field5(newValue: string) { if (this.field5 != newValue) { this.field5 = newValue; this.MarkAsDirty("Field5"); } }
+       
+	 
+    private field6: string;
+    public get Field6() { return this.field6; }
+    public set Field6(newValue: string) { if (this.field6 != newValue) { this.field6 = newValue; this.MarkAsDirty("Field6"); } }
+       
+	 
+    private field7: string;
+    public get Field7() { return this.field7; }
+    public set Field7(newValue: string) { if (this.field7 != newValue) { this.field7 = newValue; this.MarkAsDirty("Field7"); } }
+       
+	 
+    private field8: string;
+    public get Field8() { return this.field8; }
+    public set Field8(newValue: string) { if (this.field8 != newValue) { this.field8 = newValue; this.MarkAsDirty("Field8"); } }
+       
+	 
+    private field9: string;
+    public get Field9() { return this.field9; }
+    public set Field9(newValue: string) { if (this.field9 != newValue) { this.field9 = newValue; this.MarkAsDirty("Field9"); } }
+       
+	 
+    private field10: string;
+    public get Field10() { return this.field10; }
+    public set Field10(newValue: string) { if (this.field10 != newValue) { this.field10 = newValue; this.MarkAsDirty("Field10"); } }
+       
+	 
     private customAgent: any;
     public get CustomAgent() { return this.customAgent; }
     public set CustomAgent(newValue: any) { if (this.customAgent != newValue) { this.customAgent = newValue; this.MarkAsDirty("CustomAgent"); } }
@@ -581,6 +631,18 @@ export class CardPM {
        
 	 
 
+	 
+    private isPotential: boolean;
+    public get IsPotential() { return this.isPotential; }
+    public set IsPotential(newValue: boolean) { if (this.isPotential != newValue) { this.isPotential = newValue; this.MarkAsDirty("IsPotential"); } }
+       
+	 
+    private eORInumber: string;
+    public get EORInumber() { return this.eORInumber; }
+    public set EORInumber(newValue: string) { if (this.eORInumber != newValue) { this.eORInumber = newValue; this.MarkAsDirty("EORInumber"); } }
+       
+	 
+
     public OldEntityPM: CardPM;
 		
     public IsDirty: boolean;
@@ -607,4 +669,4 @@ export class CardPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
