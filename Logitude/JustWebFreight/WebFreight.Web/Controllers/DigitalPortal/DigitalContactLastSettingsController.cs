@@ -241,14 +241,14 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             result.Add(new DigitalContactLastSetting
             {
-                FilterCode = "Create Date",
+                FilterCode = "OpenDate",
                 FilterName = "Create date",
                 IsChecked = true
             });
 
             result.Add(new DigitalContactLastSetting
             {
-                FilterCode = "ExpireDate",
+                FilterCode = "ExpirationDate",
                 FilterName = "Expire date",
                 IsChecked = true
             });

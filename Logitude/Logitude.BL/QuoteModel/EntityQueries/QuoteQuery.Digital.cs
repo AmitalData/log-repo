@@ -114,9 +114,9 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             entityPocos = quoteBusinessUnitFilter.RunFilter(entityPocos);
             entityPocos = genericFilter.GetFilteredQuery<Quote>(nonListQueryOperation, entityPocos);
             var quoteStageRepository = new QuoteStageRepository(tenant);
-            //var quotes_Created = quoteStageRepository.GetQuoteStageIdByCode("QTCR", tenant);
+            var quotes_Created = quoteStageRepository.GetQuoteStageIdByCode("QTCR", tenant);
             var quotes_Draft = quoteStageRepository.GetQuoteStageIdByCode("QTDR", tenant);
-            entityPocos = entityPocos.Where(d => d.StageId != quotes_Draft);
+            entityPocos = entityPocos.Where(d => d.StageId != quotes_Draft && d.StageId != quotes_Created);
 
             var skippedEntities = queryOperations.PageIndex;
             var entityLists = quoteQuery.GetIQueryableEntityList(entityPocos);

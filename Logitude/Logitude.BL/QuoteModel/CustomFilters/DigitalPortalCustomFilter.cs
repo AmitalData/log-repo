@@ -189,7 +189,7 @@ namespace Logitude.BL.QuoteModel.CustomFilters
                 switch (value)
                 {
                     case "WaitingForApproval":
-                        //predicate.Add(x => );
+                        predicate.Add(x => x.Stage.Code == "QTST");
                         break;
 
                     case "Accepted":

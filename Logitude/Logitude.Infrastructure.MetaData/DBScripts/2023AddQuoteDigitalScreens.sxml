@@ -1,5 +1,5 @@
 ﻿<Script  DBType="Main" Module="Infrastructure">
-  <Sql Version="2">
+  <Sql Version="5">
     <![CDATA[
 	  declare @objectTableId as varchar(15)
 	  set @objectTableId = (select Id from ObjectTables where [Name] = 'Quote' and Tenant = 0)
@@ -17,7 +17,108 @@
 	  declare @content nvarchar(MAX) = 
 	  	  '
 			<LogTable>
-				<LogRow> </LogRow>
+                <LogRow class=''border-0 padding-0 margin-0''>
+                
+                    <LogColumn class="log-quote-list-item-column" width=''20%''>
+                        <LogRow class=''border-0  padding-0 margin-0''>             
+                            <LogColumn width=''auto''>
+                                <LogIcon log-if=''{Quote.TransportModeId}===[A]'' code=''Air''></LogIcon>
+                                <LogIcon log-if=''{Quote.TransportModeId}===[O]'' code=''Ocean''></LogIcon>
+                                <LogIcon log-if=''{Quote.TransportModeId}===[I]'' code=''Inland''></LogIcon>
+                            </LogColumn>
+                            <LogColumn width=''auto''>
+                                <LogFieldContainer class=''log-shipment-type''>
+                                    <LogField font-size=''12'' disable-copy=''true''
+                                    field-code=''Quote.ShipmentType''>
+                                </LogFieldContainer>
+                            </LogColumn>         
+                            <LogColumn width=''auto''>
+                                <LogFieldContainer>
+                                    <LogField class=''log-font-medium''
+                                    field-code=''Quote.QuoteNumber''>
+                                </LogFieldContainer>
+                            </LogColumn>
+                        </LogRow>
+                        <LogRow class=''border-0 padding-0 margin-0''>
+                            <LogColumn>
+                                <LogFieldContainer>
+                                    <LogLabel field-code=''Quote.OpenDate''></LogLabel>
+                                    <LogField disable-copy=''true'' is-date=''true'' field-code=''Quote.OpenDate''></LogField>
+                                </LogFieldContainer>
+                            </LogColumn>
+                        </LogRow>                   
+                    </LogColumn>  
+
+                    <LogColumn class="log-quote-list-item-column" width=''40%''>
+                        <LogRow class=''border-0  padding-0 margin-0''>     
+                            <LogColumn width=''auto''>        
+                                <LogFieldContainer>
+                                    <LogLabel text-code=''Quote.G.Destination''></LogLabel>
+                                    <LogIcon code=''Quote.FromCountryCode''></LogIcon>
+                                    <LogField disable-copy=''true'' field-code=''Quote.FromPortNameCode''></LogField>
+                                    <LogIcon icon-class=''log-quote-destination-arrow'' code=''ArrowRight''></LogIcon>
+                                    <LogIcon code=''Quote.ToCountryCode''></LogIcon>
+                                    <LogField disable-copy=''true'' field-code=''Quote.ToPortNameCode''></LogField>
+                                </LogFieldContainer>
+                            </LogColumn>
+                        </LogRow>
+                        <LogRow class=''border-0  padding-0 margin-0''>     
+                            <LogColumn>
+                                <LogFieldContainer>
+                                    <LogLabel field-code=''Quote.CustomerName''></LogLabel>
+                                    <LogField tooltip=''true'' field-code=''Quote.CustomerName''></LogField>
+                                </LogFieldContainer>
+                            </LogColumn>
+                        </LogRow>
+                    </LogColumn>
+
+                    <LogColumn class="log-quote-list-item-column" width=''20%''>
+                        <LogRow class=''border-0 padding-0''>
+                            <LogColumn>
+                                <LogFieldContainer>
+                                    <LogLabel field-code=''Quote.TransitTime''></LogLabel>
+                                    <LogField tooltip=''true'' disable-copy=''true'' field-code=''Quote.TransitTime''></LogField>
+                                </LogFieldContainer>
+                            </LogColumn>
+                        </LogRow>
+                        <LogRow class=''border-0 padding-0 margin-0''>
+                            <LogColumn>
+                                <LogFieldContainer>
+                                    <LogLabel field-code=''Quote.ExpirationDate''></LogLabel>
+                                    <LogField log-if=''{Quote.IsExpired} === [true]'' class="log-color-date-overdue" tooltip=''true'' disable-copy=''true'' is-date=''true'' field-code=''Quote.ExpirationDate''></LogField>
+                                    <LogField log-if=''{Quote.IsExpired} !== [true]'' disable-copy=''true'' tooltip=''true'' disable-copy=''true'' is-date=''true'' field-code=''Quote.ExpirationDate''></LogField>
+                                </LogFieldContainer>
+                            </LogColumn>
+                        </LogRow>
+                    </LogColumn>
+
+                    <LogColumn class="log-quote-list-item-column" width=''20%''>
+                        <LogRow class=''border-0 padding-0''>
+                            <LogColumn margin=''0 0.5 0 0''>
+                                <LogFieldContainer>
+                                    <LogQuoteItemDownloadButton></LogQuoteItemDownloadButton>
+                                </LogFieldContainer>
+                            </LogColumn>
+                            <LogColumn>
+                                <LogFieldContainer>
+                                    <LogField log-if=''{Quote.StageCode} != [QTAC] && {Quote.StageCode} != [QTDC] && {Quote.StageCode} != [QTCR]'' class="log-quote-status-accepted" disable-copy=''true'' field-code=''Quote.StageName''></LogField>
+                                    <LogField log-if=''{Quote.StageCode} === [QTAC]'' class="log-quote-status-accepted" disable-copy=''true'' field-code=''Quote.StageName''></LogField>
+                                    <LogField log-if=''{Quote.StageCode} === [QTDC]'' class="log-quote-status-declined" disable-copy=''true'' field-code=''Quote.StageName''></LogField>
+                                    <LogField log-if=''{Quote.StageCode} === [QTCR]'' class="log-quote-status-created" disable-copy=''true'' field-code=''Quote.StageName''></LogField>
+                                </LogFieldContainer>
+                            </LogColumn>
+                        </LogRow>
+                        <LogRow class=''border-0 padding-0 margin-0''>
+                            <LogColumn>
+                                <LogFieldContainer>
+                                    <LogLabel field-code=''Quote.LastStageDate''></LogLabel>
+                                    <LogField disable-copy=''true'' is-date=''true'' field-code=''Quote.LastStageDate''></LogField>
+                                </LogFieldContainer>
+                            </LogColumn>
+                        </LogRow>
+                    </LogColumn>
+                    
+                </LogRow>                                  
 			</LogTable>
 			<style>
 				@media screen and (min-width: 992px) {
@@ -48,6 +149,158 @@
 				}
 			</style>  
 	  ';
+	  
+	  
+	  declare @contentMobile nvarchar(MAX) = 
+	  	  '
+            <LogTable>
+
+                <LogRow class=''border-0 padding-0'' margin=''0 0 0.5 0''>
+                    <LogColumn width=''100%''>
+                        <LogFieldContainer>
+                            <LogField width=''100%'' log-if=''{Quote.StageCode} != [QTAC] && {Quote.StageCode} != [QTDC] && {Quote.StageCode} != [QTCR]'' class="log-quote-status-accepted" disable-copy=''true'' field-code=''Quote.StageName''></LogField>
+                            <LogField width=''100%'' log-if=''{Quote.StageCode} === [QTAC]'' class="log-quote-status-accepted" disable-copy=''true'' field-code=''Quote.StageName''></LogField>
+                            <LogField width=''100%'' log-if=''{Quote.StageCode} === [QTDC]'' class="log-quote-status-declined" disable-copy=''true'' field-code=''Quote.StageName''></LogField>
+                            <LogField width=''100%'' log-if=''{Quote.StageCode} === [QTCR]'' class="log-quote-status-created" disable-copy=''true'' field-code=''Quote.StageName''></LogField>
+                        </LogFieldContainer>
+                    </LogColumn>
+                </LogRow>   
+                
+                <LogRow class=''border-0 padding-0''>
+                    <LogColumn margin=''0 0.25 0 0''>
+                        <LogIcon log-if=''{Quote.TransportModeId}===[A]'' code=''Air''></LogIcon>
+                        <LogIcon log-if=''{Quote.TransportModeId}===[O]'' code=''Ocean''></LogIcon>
+                        <LogIcon log-if=''{Quote.TransportModeId}===[I]'' code=''Inland''></LogIcon>
+                    </LogColumn>
+                    <LogColumn width=''auto''>
+                        <LogFieldContainer class=''log-shipment-type''>
+                            <LogField font-size=''12'' disable-copy=''true''
+                            field-code=''Quote.ShipmentType''>
+                        </LogFieldContainer>
+                    </LogColumn>         
+                    <LogColumn width=''auto''>
+                        <LogFieldContainer>
+                            <LogField class=''log-font-medium''
+                            field-code=''Quote.QuoteNumber''>
+                        </LogFieldContainer>
+                    </LogColumn>
+                    <LogColumn class=''log-quote-download-mobile''>
+                        <LogFieldContainer>
+                            <LogQuoteItemDownloadButton></LogQuoteItemDownloadButton>
+                        </LogFieldContainer>
+                    </LogColumn>
+                </LogRow>    
+
+                <LogRow class=''border-0 padding-0''>
+                    <LogColumn>
+                        <LogFieldContainer>
+                            <LogLabel field-code=''Quote.TransitTime''></LogLabel>
+                            <LogField tooltip=''true'' disable-copy=''true'' field-code=''Quote.TransitTime''></LogField>
+                        </LogFieldContainer>
+                    </LogColumn>
+                </LogRow>
+
+                <LogRow>
+                    <LogColumn>
+                        <LogFieldContainer>
+                            <LogLabel field-code=''Quote.ExpirationDate''></LogLabel>
+                            <LogField log-if=''{Quote.IsExpired} === [true]'' class="log-color-date-overdue" tooltip=''true'' disable-copy=''true'' is-date=''true'' field-code=''Quote.ExpirationDate''></LogField>
+                            <LogField log-if=''{Quote.IsExpired} !== [true]'' disable-copy=''true'' tooltip=''true'' disable-copy=''true'' is-date=''true'' field-code=''Quote.ExpirationDate''></LogField>
+                        </LogFieldContainer>
+                    </LogColumn>
+                </LogRow>
+
+
+                <LogRow class=''border-0 padding-0''>     
+                    <LogColumn>
+                        <LogFieldContainer>
+                            <LogLabel field-code=''Quote.CustomerName''></LogLabel>
+                            <LogField tooltip=''true'' field-code=''Quote.CustomerName''></LogField>
+                        </LogFieldContainer>
+                    </LogColumn>
+                </LogRow>
+
+                <LogRow class=''align-items-start''>     
+                    <LogColumn max-width=''65%''>
+                        <LogFieldContainer>
+                            <LogLabel text-code=''Quote.G.Destination''></LogLabel>
+                        </LogFieldContainer>
+                    </LogColumn>
+                    <LogColumn>
+                        <LogRow class=''border-0 padding-0''>  
+                            <LogColumn>
+                                <LogFieldContainer>
+                                    <LogIcon code=''Quote.FromCountryCode''></LogIcon>
+                                    <LogField disable-copy=''true'' field-code=''Quote.FromPortNameCode''></LogField>
+                                </LogFieldContainer>
+                            </LogColumn>
+                        </LogRow>
+                        <LogRow class=''border-0 padding-0''>  
+                            <LogColumn>
+                                <LogFieldContainer>
+                                    <LogIcon icon-class=''log-quote-destination-arrow-mobile'' code=''ArrowDownIcon''></LogIcon>
+                                </LogFieldContainer>
+                            </LogColumn>
+                        </LogRow>
+                        <LogRow class=''border-0 padding-0''>  
+                            <LogColumn>
+                                <LogFieldContainer>
+                                    <LogIcon code=''Quote.ToCountryCode''></LogIcon>
+                                    <LogField disable-copy=''true'' field-code=''Quote.ToPortNameCode''></LogField>
+                                </LogFieldContainer>
+                            </LogColumn>
+                        </LogRow>
+                    </LogColumn>
+                </LogRow>
+
+                <LogRow class=''border-0 padding-0''>     
+                    <LogColumn>
+                        <LogFieldContainer>
+                            <LogLabel field-code=''Quote.OpenDate''></LogLabel>
+                            <LogField is-date=''true'' tooltip=''true'' field-code=''Quote.OpenDate''></LogField>
+                        </LogFieldContainer>
+                    </LogColumn>
+                </LogRow>
+
+                <LogRow class=''border-0 padding-0''>     
+                    <LogColumn>
+                        <LogFieldContainer>
+                            <LogLabel field-code=''Quote.LastStageDate''></LogLabel>
+                            <LogField is-date=''true'' tooltip=''true'' field-code=''Quote.LastStageDate''></LogField>
+                        </LogFieldContainer>
+                    </LogColumn>
+                </LogRow>
+
+            </LogTable>
+            <style>
+                @media screen and (min-width: 992px) {
+                    .log-label {
+                        /* Edit here to change labels styles for this card */
+                    }
+                    .log-field {
+                        /* Edit here to change fields styles for this card */
+                    }
+                    .log-icon {
+                        /* Edit here to change icons styles for this card */
+                    }
+                    .log-field-container {
+                        /* Edit here to change fields containers styles for this card */
+                    }
+                    .log-column {
+                        /* Edit here to change columns styles for this card */
+                    }
+                    .log-row {
+                        /* Edit here to change rows styles for this card */
+                    }
+                    .log-table {
+                        /* Edit here to change tables styles for this card */
+                    }
+                    .log-separator {
+                        /* Edit here to change vertical separator styles for this card */
+                    }
+                }
+            </style>  
+	  ';
 		
 	 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalPortalScreen'
@@ -56,40 +309,39 @@
 	  
 	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalPortalScreen'
 	  INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
-	  values (@newEntityId, 0, @objectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Quote list card item - Desktop', 'QLCID', 1, @customerProfileId, @content, @content);  
+	  values (@newEntityId, 0, @objectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Quote list card item - Desktop', 'QLCID', 1, @agentProfileId, @content, @content);  
 	  
 	                                                ----------------------------------------------------
 	
-	 
 	  
 	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalPortalScreen'  
 	  INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
-	  values (@newEntityId, 0, @objectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Quote list card item - Mobile', 'QLCIM', 1, @customerProfileId, @content, @content);  
+	  values (@newEntityId, 0, @objectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Quote list card item - Mobile', 'QLCIM', 1, @customerProfileId, @contentMobile, @contentMobile);  
 	  	  
 	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalPortalScreen'
 	  INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
-	  values (@newEntityId, 0, @objectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Quote list card item - Mobile', 'QLCIM', 1, @agentProfileId, @content, @content);  
+	  values (@newEntityId, 0, @objectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Quote list card item - Mobile', 'QLCIM', 1, @agentProfileId, @contentMobile, @contentMobile);  
 	  
 	  -----------------------------------------------------------------------------------------------------------------------------------------------------------
 	  	  
-	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalPortalScreen'  
-	  INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
-	  values (@newEntityId, 0, @objectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single invoice card item - Desktop', 'SQGID', 1, @customerProfileId, @content, @content);  
+	  --EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalPortalScreen'  
+	  --INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
+	  --values (@newEntityId, 0, @objectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single invoice card item - Desktop', 'SQGID', 1, @customerProfileId, @content, @content);  
 	  	  
-	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalPortalScreen'
-	  INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
-	  values (@newEntityId, 0, @objectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single invoice card item - Desktop', 'SQGID', 1, @agentProfileId, @content, @content);  
+	  --EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalPortalScreen'
+	  --INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
+	  --values (@newEntityId, 0, @objectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single quote card item - Desktop', 'SQGID', 1, @agentProfileId, @content, @content);  
 	  
-	  	                                                ----------------------------------------------------
+	 	                                                ----------------------------------------------------
 	  
 	  
-	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalPortalScreen'  
-	  INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
-	  values (@newEntityId, 0, @objectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single invoice card item - Mobile', 'SQGIM', 1, @customerProfileId, @content, @content);  
+	  --EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalPortalScreen'  
+	  --INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
+	  --values (@newEntityId, 0, @objectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single quote card item - Mobile', 'SQGIM', 1, @customerProfileId, @content, @content);  
 	  	  
-	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalPortalScreen'
-	  INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
-	  values (@newEntityId, 0, @objectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single invoice card item - Mobile', 'SQGIM', 1, @agentProfileId, @content, @content);  
+	  --EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalPortalScreen'
+	  --INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, IsList, ProfileId, Content, DraftContent) 
+	  --values (@newEntityId, 0, @objectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single quote card item - Mobile', 'SQGIM', 1, @agentProfileId, @content, @content);
 	  
 	  	  -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
