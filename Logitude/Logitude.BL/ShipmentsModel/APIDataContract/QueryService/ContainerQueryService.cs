@@ -48,7 +48,10 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
         {
             return this.ContainerDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName, IsUpdate);
         }
-
+        public List<ShipmentPackagePM> ContainerCustomDataMappingAndValidatin(Master MyMaster, List<Container> MyEntities, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
+        {
+            return this.ContainerDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName, IsUpdate);
+        }
         public List<ShipmentPackagePM> ContainerCustomDataMappingAndValidatin(Customs MyDirect, List<Container> MyEntities, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
         {
             return this.ContainerDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName, IsUpdate);

@@ -471,7 +471,28 @@ using Simplog.Data.ShipmentsModel;
 					   					   temp.OtherPrepaidCollect = PrepaidCollectService32.GetPrepaidCollectById(MyEntityPM.OtherPrepaidCollectId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
-				   					
+				   
+				if(MyEntityPM.ShipmentPackages != null && MyEntityPM.ShipmentPackages.Count > 0)
+				{
+					 AirPackageQueryService AirPackageService33 = new AirPackageQueryService(Tenant);
+					 temp.AirPackages = AirPackageService33.AirPackageCustomDataMapping(MyEntityPM,MyEntityPM.ShipmentPackages,Tenant,ComputingPartnerName);
+				}
+
+							 
+				if(MyEntityPM.ShipmentPackages != null && MyEntityPM.ShipmentPackages.Count > 0)
+				{
+					 OceanOrInlandPackageQueryService OceanOrInlandPackageService33 = new OceanOrInlandPackageQueryService(Tenant);
+					 temp.OceanOrInlandPackages = OceanOrInlandPackageService33.OceanOrInlandPackageCustomDataMapping(MyEntityPM,MyEntityPM.ShipmentPackages,Tenant,ComputingPartnerName);
+				}
+
+							 
+				if(MyEntityPM.ShipmentPackages != null && MyEntityPM.ShipmentPackages.Count > 0)
+				{
+					 ContainerQueryService ContainerService33 = new ContainerQueryService(Tenant);
+					 temp.Containers = ContainerService33.ContainerCustomDataMapping(MyEntityPM,MyEntityPM.ShipmentPackages,Tenant,ComputingPartnerName);
+				}
+
+							 					
 				   return temp;
 			}
             catch (Exception ex)
@@ -1518,7 +1539,55 @@ using Simplog.Data.ShipmentsModel;
 
 					}
 			
-										   
+					 
+
+					if(MyEntity.AirPackages != null && MyEntity.AirPackages.Count > 0)
+					{
+						AirPackageQueryService AirPackageService33 = new AirPackageQueryService(Tenant);
+						  
+						if(!IsUpdate)
+						{								
+							temp.ShipmentPackages = AirPackageService33.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName,IsUpdate);
+
+					 
+						}  
+
+						
+					}
+
+								  
+
+					if(MyEntity.OceanOrInlandPackages != null && MyEntity.OceanOrInlandPackages.Count > 0)
+					{
+						OceanOrInlandPackageQueryService OceanOrInlandPackageService33 = new OceanOrInlandPackageQueryService(Tenant);
+						  
+						if(!IsUpdate)
+						{								
+							temp.ShipmentPackages = OceanOrInlandPackageService33.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName,IsUpdate);
+
+					 
+						}  
+
+						
+					}
+
+								  
+
+					if(MyEntity.Containers != null && MyEntity.Containers.Count > 0)
+					{
+						ContainerQueryService ContainerService33 = new ContainerQueryService(Tenant);
+						  
+						if(!IsUpdate)
+						{								
+							temp.ShipmentPackages = ContainerService33.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName,IsUpdate);
+
+					 
+						}  
+
+						
+					}
+
+								 					   
 					return temp;
 		    }
             catch (Exception ex)

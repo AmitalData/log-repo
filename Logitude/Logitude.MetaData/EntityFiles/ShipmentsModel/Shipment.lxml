@@ -115504,6 +115504,57 @@
         IsCloseField="false"
         IsCompositKey="false"
         IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;AirPackages&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;ShipmentPackages&quot;"
+        IsKey="false"
+        IsManualMapping="true"
+        IsMulti="true"
+        MultiTableName="&quot;ShipmentPackages&quot;"
+        FieldsDataType="&quot;List&lt;AirPackage&gt;&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="true"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;OceanOrInlandPackages&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;ShipmentPackages&quot;"
+        IsKey="false"
+        IsManualMapping="true"
+        IsMulti="true"
+        MultiTableName="&quot;ShipmentPackages&quot;"
+        FieldsDataType="&quot;List&lt;OceanOrInlandPackage&gt;&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="true"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;Containers&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;ShipmentPackages&quot;"
+        IsKey="false"
+        IsManualMapping="true"
+        IsMulti="true"
+        MultiTableName="&quot;ShipmentPackages&quot;"
+        FieldsDataType="&quot;List&lt;Container&gt;&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="true"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>

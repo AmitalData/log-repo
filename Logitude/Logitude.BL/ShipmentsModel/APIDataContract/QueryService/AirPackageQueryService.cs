@@ -48,6 +48,10 @@ using Simplog.Data.ShipmentsModel;
             return this.AirPackageDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName, IsUpdate);
         }
 
+        public List<ShipmentPackagePM> AirPackageCustomDataMappingAndValidatin(Master MainEntity, List<AirPackage> MyEntities, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
+        {
+            return this.AirPackageDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName, IsUpdate);
+        }
         public List<ShipmentPackagePM> AirPackageCustomDataMappingAndValidatin(Customs MainEntity, List<AirPackage> MyEntities, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
         {
             return this.AirPackageDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName, IsUpdate);
