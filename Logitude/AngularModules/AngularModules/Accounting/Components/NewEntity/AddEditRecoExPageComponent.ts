@@ -675,6 +675,8 @@ export class AddEditRecoExPageComponent extends BaseComponent {
                     if(this.PageLinesList.Length == 0){
                         this.UploadButtonIsEnabled=true
                     }
+                    this.CalculateTotals();
+
                 });
             }
         }
