@@ -533,11 +533,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         {
             if (code.Equals("SDLY", StringComparison.InvariantCultureIgnoreCase))
             {
-                return "Delivered";
-            }
-
-            if (code.Equals("SDL2", StringComparison.InvariantCultureIgnoreCase))
-            {
                 return "Out for Delivery";
             }
 
