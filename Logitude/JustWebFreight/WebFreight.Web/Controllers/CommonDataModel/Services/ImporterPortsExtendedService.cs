@@ -168,7 +168,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Services
             return portTimeZone;
         }
 
-        public APILogsPM GetLogPM()
+        public APILogsPM GetLogPM(string subject, string reference)
         {
             APILogsRepository aPILogsRepository = new APILogsRepository(webFreightContext);
             APILogs Log = aPILogsRepository.GetSingleAPILogsByCorrelationId(correlationId, tenant);
@@ -176,7 +176,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Services
             {
                 return MapLogPMFromPoco(Log);
             }
-            APILogsPM LogPM = GetNewLog();
+            APILogsPM LogPM = GetNewLog(subject, reference);
             new APILogsService(webFreightContext, tenant).Create(LogPM);
             return LogPM;
         }
@@ -200,9 +200,10 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Services
                 Tenant = Log.Tenant,
                 QueueMessageMoreDetailsId = Log.QueueMessageMoreDetailsId,
                 QueueType = "Port",
+                Subject = Log.Subject
             };
         }
-        private APILogsPM GetNewLog()
+        private APILogsPM GetNewLog(string subject, string reference)
         {
             return new APILogsPM()
             {
@@ -218,6 +219,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Services
                 Status = "I",
                 QueueMessageMoreDetailsId = correlationId,
                 QueueType = "Port",
+                Subject = subject,
+                Refrence = reference,
             };
         }
     }

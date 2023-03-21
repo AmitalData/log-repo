@@ -37,8 +37,8 @@ namespace CommunicationWorkerRole.Services.Logbox
         public void Run(string portId, int tenant)
         {
             string token = APICredentialsAuthenticationService.Authenticate(URI);
-            logPM = GetLogPM();
             PortPM portPM = GetPortPM(portId, tenant);
+            logPM = GetLogPM("Send Port To Importer By ImporterPorts Controller", portPM != null ? portPM.Code : portId);
             if (portPM == null || portPM.InActive)
             {
                 APILogsUtility.UpdateAPILogStatus(logPM.Id, tenant, "F", logPM.NumberOfRetries + 1, DateTime.Now, DateTime.UtcNow, "Port with Id: " + portId + " is missing, or it is inactive.", LogitudeXmlSerializer.SerializeObjectToXmlString(portId), null, null, "");
@@ -183,7 +183,7 @@ namespace CommunicationWorkerRole.Services.Logbox
             return portPM;
         }
 
-        private APILogsPM GetLogPM()
+        private APILogsPM GetLogPM(string subject, string reference)
         {
             APILogsRepository aPILogsRepository = new APILogsRepository(webFreightContext);
             APILogs Log = aPILogsRepository.GetSingleAPILogsByCorrelationId(correlationId, tenant);
@@ -191,7 +191,7 @@ namespace CommunicationWorkerRole.Services.Logbox
             {
                 return MapLogPMFromPoco(Log);
             }
-            APILogsPM LogPM = GetNewLog();
+            APILogsPM LogPM = GetNewLog(subject, reference);
             new APILogsService(webFreightContext, tenant).Create(LogPM);
             return LogPM;
         }
@@ -216,10 +216,11 @@ namespace CommunicationWorkerRole.Services.Logbox
                 Tenant = Log.Tenant,
                 QueueMessageMoreDetailsId = Log.QueueMessageMoreDetailsId,
                 QueueType = "Port",
+                Subject = Log.Subject,
             };
         }
 
-        private APILogsPM GetNewLog()
+        private APILogsPM GetNewLog(string subject, string reference)
         {
             return new APILogsPM()
             {
@@ -235,6 +236,8 @@ namespace CommunicationWorkerRole.Services.Logbox
                 Status = "I",
                 QueueMessageMoreDetailsId = correlationId,
                 QueueType = "Port",
+                Subject = subject,
+                Refrence = reference,
             };
         }
     }
