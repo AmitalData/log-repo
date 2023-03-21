@@ -143,8 +143,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
             ));
             let StartwithSpeicalCharCustomers = this.InvitedCustomers.filter(a => this.CheckSpeicalChar(a.Name.replace(/ /g, ""))); 
             let StartwithoutSpeicalCharCustomers = this.InvitedCustomers.filter(a => !this.CheckSpeicalChar(a.Name.replace(/ /g, "")));   
-            StartwithSpeicalCharCustomers=StartwithSpeicalCharCustomers.sort((a, b) => a["Name"].toUpperCase() > b["Name"].toUpperCase() ? 1 : a["Name"].toUpperCase() === b["Name"].toUpperCase() ? 0 : -1);
-            StartwithoutSpeicalCharCustomers=StartwithoutSpeicalCharCustomers.sort((a, b) => a["Name"].toUpperCase() > b["Name"].toUpperCase() ? 1 : a["Name"].toUpperCase() === b["Name"].toUpperCase() ? 0 : -1);  
+            StartwithSpeicalCharCustomers=StartwithSpeicalCharCustomers.sort((a, b) => a["Name"].toUpperCase().replace(/ /g, "") > b["Name"].toUpperCase().replace(/ /g, "") ? 1 : a["Name"].toUpperCase().replace(/ /g, "") === b["Name"].toUpperCase().replace(/ /g, "") ? 0 : -1);
+            StartwithoutSpeicalCharCustomers=StartwithoutSpeicalCharCustomers.sort((a, b) => a["Name"].toUpperCase().replace(/ /g, "") > b["Name"].toUpperCase().replace(/ /g, "") ? 1 : a["Name"].toUpperCase().replace(/ /g, "") === b["Name"].toUpperCase().replace(/ /g, "") ? 0 : -1);  
             this.InvitedCustomers=StartwithSpeicalCharCustomers.concat(StartwithoutSpeicalCharCustomers);
             this.FillInvitedCustomersDictionary(this.InvitedCustomers);
     }
