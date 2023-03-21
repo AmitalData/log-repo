@@ -25,7 +25,7 @@ let invoiceNumber: number;
 
 //#region Update Accounting System
 Given("the user logged in and navigate to SAT Interface settings", () => {
-    cy.Login(true);
+    cy.Login();
     AccountingActions.NavigatesToAccountingSettings()
 });
 
