@@ -12,7 +12,7 @@
     BEGIN
         Insert into 
 		customs.COURIERPENDINGREASONS (CODE,LOCALNAME,SEARCHFIELDS,ENGLISHNAME,INACTIVE,ERRORPLACE,TENANT,UNIFREIGHTSTATUSCODE,ID) 
-		values ('907', 'כמות סחורה' ,'כמות סחורה,Quantity Of Goods,907','Commercial Customer',0,null,1,null,'907');
+		values ('907', 'כמות סחורה' ,'כמות סחורה,Quantity Of Goods,907','Quantity Of Goods',0,null,1,null,'907');
 
 
     END
@@ -31,7 +31,7 @@ begin
  
 Insert into 
 COURIERPENDINGREASONS (CODE,LOCALNAME,SEARCHFIELDS,ENGLISHNAME,INACTIVE,ERRORPLACE,TENANT,UNIFREIGHTSTATUSCODE,ID) 
-values ('907', 'כמות סחורה' ,'כמות סחורה,Quantity Of Goods,907','Commercial Customer',0,null,1,null,'907');
+values ('907', 'כמות סחורה' ,'כמות סחורה,Quantity Of Goods,907','Quantity Of Goods',0,null,1,null,'907');
 
 
 commit;
