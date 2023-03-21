@@ -85,9 +85,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             var id = paymentOrderQueryService.GetIdByPaymentNumber(customResponse.PaymentOrderReply.PaymentDetails.paymentID.ToString(), requestParams.Tenant); // requestParams.PaymentNumber
             if (!String.IsNullOrWhiteSpace(id))
-            {
-                LogPayment("1");
+            {           
                 this._PaymentOrderPM = paymentOrderQueryService.GetSingle(id, true, false); //Retrieval of existing payment data
+                LogPayment("1");
                 if (_PaymentOrderPM.IsClosed)
                 {
                     this.MyRequestSheetParam = new RequestSheetParam();
