@@ -189,13 +189,19 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
             {
 
                 var MyList = new List<JournalLine>();
+                JournalPM journalPM = null;
+
+                JournalQueryService journalQueryService = new JournalQueryService(Tenant);
+
+                if (lines != null && lines.Any())
+                    journalPM = journalQueryService.GetJournalPMById(lines[0].JournalId, Tenant);
+
                 foreach (var item in lines)
                 {
 
                     var temp = new JournalLine();
 
-                    JournalQueryService journalQueryService = new JournalQueryService(Tenant);
-                    JournalPM journalPM = journalQueryService.GetJournalPMById(item.JournalId, Tenant);
+                    //JournalPM journalPM = journalQueryService.GetJournalPMById(item.JournalId, Tenant);
                     if (journalPM != null)
                         temp.JournalNumber = journalPM.JournalNumber;
                     temp.Line = item.Line;
