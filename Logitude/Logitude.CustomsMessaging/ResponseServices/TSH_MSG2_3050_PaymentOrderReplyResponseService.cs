@@ -87,7 +87,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (!String.IsNullOrWhiteSpace(id))
             {           
                 this._PaymentOrderPM = paymentOrderQueryService.GetSingle(id, true, false); //Retrieval of existing payment data
-                LogPayment(msg: "1");
+                LogPayment("1");
                 if (_PaymentOrderPM.IsClosed)
                 {
                     this.MyRequestSheetParam = new RequestSheetParam();
