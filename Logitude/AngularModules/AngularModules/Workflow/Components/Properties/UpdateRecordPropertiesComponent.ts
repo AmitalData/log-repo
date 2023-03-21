@@ -5,6 +5,7 @@ import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { EditableRecordsTreeList } from "Workflow/TreeLists/EditableRecordsTreeList";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 import { FlowReader } from "Workflow/Utilities/FlowReader";
+import { ObjectTables } from "Workflow/Utilities/ObjectTables";
 
 @Component({
     templateUrl: "./UpdateRecordPropertiesComponent.html"
@@ -70,11 +71,15 @@ export class UpdateRecordPropertiesComponent extends BaseComponent {
     }
 
     updateRecord(recordItem: TreeSelectItem) {
+        let entity = recordItem && recordItem.data ? (recordItem.data["entity"] || null) : null;
         let record = recordItem ? recordItem.key : null;
+        let recordUsedFrom = recordItem && recordItem.data ? (recordItem.data["nodeId"] || null) : null;
+
         this.Record = record;
         this.Data["record"] = record;
-
-        this.Data["recordUsedFrom"] = recordItem && recordItem.data && recordItem.data["nodeId"] ? recordItem.data["nodeId"] : null;
+        this.Data["entity"] = entity;
+        this.Data["isCustomEntity"] = ObjectTables.getIsCustomByName(entity);
+        this.Data["recordUsedFrom"] = recordUsedFrom;
 
         this.setUIProperties();
     }
