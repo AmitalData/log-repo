@@ -1,21 +1,17 @@
 ﻿<Script  DBType="Main" Module="Infrastructure">
-  <Sql Version="20">
+  <Sql Version="23">
     <![CDATA[
 	  declare @objectTableId as varchar(15)
 	  set @objectTableId = (select Id from ObjectTables where [Name] = 'Quote' and Tenant = 0)
 	  
 	  declare @newEntityId as varchar(15)
-	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
-	  
+	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'	  
 	  declare @customerProfileId as varchar(15)
 	  set @customerProfileId = (select Id from DigitalProfiles where [Name] = 'Customer' and Tenant = 0 )
 	  
 	  declare @agentProfileId as varchar(15)
 	  set @agentProfileId = (select Id from DigitalProfiles where [Name] = 'Agent' and Tenant = 0 )
-	  
-	  declare @commonProfileId as varchar(15)
-	  set @commonProfileId = (select Id from DigitalProfiles where [Name] = 'Common' and Tenant = 0 )
-	  	  
+	  	  	  
 	  delete from DigitalTextCodes where Tenant = 0 and ObjectTableId = @objectTableId
 	  
 	  declare @labels nvarchar(MAX) = 
@@ -135,6 +131,12 @@
 				"DisplayText": ""
 			},
 			{
+				"TextCode": "Quote.G.Status",
+				"DefaultText": "Status",
+				"FieldCode": "",
+				"DisplayText": ""
+			},
+			{
 				"TextCode": "Quote.G.OriginCountry",
 				"DefaultText": "Origin country",
 				"FieldCode": "",
@@ -200,15 +202,9 @@
 	  values (@NewEntityId, 0, @objectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @customerProfileId, @labels, 'EN');
 	  
 	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
-	  
 	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate,  ProfileId, Labels, LanguageCode)
 	  values (@NewEntityId, 0, @objectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @agentProfileId, @labels, 'EN');
-	  
-	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
-	  
-	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate,  ProfileId, Labels, LanguageCode) 
-	  values (@NewEntityId, 0, @objectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @commonProfileId, @labels, 'EN');
-	  
+	  	  
     ]]>       
   </Sql>
 </Script>
