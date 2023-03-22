@@ -125,8 +125,11 @@ namespace WebFreight.Web.ContainerTracking
                     containerUpdatedFields.TrackingSource = trackingSource;
                     this.StartUpdating();
                 }
-                
-                this.DoneAnalyzeQueue(containerUpdatedFields.Tenant);
+
+                var tenant = this.tenant_Zero;
+                if (containerUpdatedFields != null) tenant = containerUpdatedFields.Tenant;
+
+                this.DoneAnalyzeQueue(tenant);
             }
 
             catch (Exception ex)
