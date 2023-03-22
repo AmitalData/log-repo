@@ -43,12 +43,24 @@ namespace WebFreight.Web
 
                 if (LogitudeAppSettings.IsRecycled)
                 {
-                    LogitudeAppSettings.IsRecycled = false;
-                    EventLog.WriteEntry(source, "the system app bool Recycled, the warming is starting", EventLogEntryType.Warning);
-                    CallWarmingScenario();
+                    try
+                    {
+                        LogitudeAppSettings.IsRecycled = false;
+                        EventLog.WriteEntry(source, "the system app bool Recycled, the warming is starting", EventLogEntryType.Warning);
+                        CallWarmingScenario();
+                        LogitudeAppSettings.WarmingIsFinished = true;
+
+                    }
+                    catch(Exception ex)
+                    {
+                        // add to errorlogs 
+                        LogitudeAppSettings.WarmingIsFinished = true;
+
+                    }
+
                 }
 
-                if (DateTime.Now < LogitudeAppSettings.StartDateTime.AddSeconds(90))
+                if (!LogitudeAppSettings.WarmingIsFinished)
                 {
                     Response.Clear();
                     Response.ContentType = "text/xml";
