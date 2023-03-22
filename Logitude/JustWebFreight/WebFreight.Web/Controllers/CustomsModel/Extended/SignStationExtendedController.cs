@@ -52,7 +52,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 
 
                 var signQueueHSMService = new SignQueueHSMService();
-                if (true || signQueueHSMService.IsHSMSign_IsOn(tenant))
+                if (signQueueHSMService.IsHSMSign_IsOn(tenant))
                 {
                     entityLists = GetSignStationDBHSM(searchfields, tenant);
 
@@ -121,7 +121,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 List<MySignStationList> entityLists = new List<MySignStationList>(); /*= GetAllStation(searchfields, tenant)*/;
 
                 var signQueueHSMService = new SignQueueHSMService();
-                if (true || signQueueHSMService.IsHSMSign_IsOn(tenant))
+                if (signQueueHSMService.IsHSMSign_IsOn(tenant))
 
                 {
                     entityLists = GetSignStationDBHSM(searchfields, tenant);
