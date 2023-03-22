@@ -1,4 +1,5 @@
-﻿using Microsoft.Web.Administration;
+﻿using Logitude.SystemLogs;
+using Microsoft.Web.Administration;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace WebFreight.Web
         string source = "ASP.NET 4.0.30319.0";
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
             string log = "Application";
             //if (!EventLog.SourceExists(source))
             //{
@@ -51,9 +52,10 @@ namespace WebFreight.Web
                         LogitudeAppSettings.WarmingIsFinished = true;
 
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
-                        // add to errorlogs 
+                        ExceptionHandler.HandleException(ex, DateTime.Now, 0, "Web Startup Warming", "Web Startup Warming", "HealthProb : PageLoad Method", null);
+                        EventLog.WriteEntry(source, $"Warming Scenarios exception {ex.Message}", EventLogEntryType.Information);
                         LogitudeAppSettings.WarmingIsFinished = true;
 
                     }
@@ -70,6 +72,7 @@ namespace WebFreight.Web
                 }
 
             }
+
             catch (Exception ex)
             {
                 string errorMessage = ex.Message + Environment.NewLine;
@@ -84,14 +87,14 @@ namespace WebFreight.Web
                 errorMessage = errorMessage + ex.StackTrace + Environment.NewLine;
 
                 EventLog.WriteEntry(source, "HealthProb Check Exception : " + errorMessage, EventLogEntryType.Error);
-               // throw ex;
+                // throw ex;
             }
 
         }
 
         private void CallWarmingScenario()
         {
-            EventLog.WriteEntry(source, "Start Warming Scenarios",EventLogEntryType.Information);
+            EventLog.WriteEntry(source, "Start Warming Scenarios", EventLogEntryType.Information);
             WarmWebService WarmService = new WarmWebService();
             WarmService.StartWarming();
             EventLog.WriteEntry(source, "Warming Scenarios are Finished", EventLogEntryType.Information);
