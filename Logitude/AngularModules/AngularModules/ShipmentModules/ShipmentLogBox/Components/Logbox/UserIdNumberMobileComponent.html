@@ -399,7 +399,17 @@
         <div class="footer-left">
           <img src="./Images/mobile_payment/orian_logo_mobile.png" />
         </div>
-      </div>
+      </div>`
     </div>
+    <div class="modal" *ngIf="showDialogUserAcceptSave">
+        <div [@dialog] class="modal-body">
+          <h1 class="header">שאלה קטנה...</h1>
+          <p>לצורך טיפול מהיר ביותר במשלוחים עתידיים אנא אשר לחברת אוריין לשמור את פרטייך בצורה מאובטחת</p>
+          <div>
+            <button (click)="$userAcceptSave.next(true)">אני מסכים</button>
+            <button (click)="$userAcceptSave.next(false)" class="btn-not-agreed">איני מסכים</button>
+          </div>
+        </div>
+      </div>
   </div>
   

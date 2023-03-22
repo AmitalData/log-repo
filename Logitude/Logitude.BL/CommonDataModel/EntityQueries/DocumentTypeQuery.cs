@@ -612,7 +612,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             OnPrintPopulateDateFieldName = a.OnPrintPopulateDateFieldName,
                                             OnSendPopulateDateFieldName = a.OnSendPopulateDateFieldName,
                                             OnUploadPopulateDateFieldName = a.OnUploadPopulateDateFieldName,
-
+                                            DocumentTypeDefaultReportTemplateId = a.DocumentTypeDefaultReportTemplateId,
 
                                         }).ToList();
             return d;

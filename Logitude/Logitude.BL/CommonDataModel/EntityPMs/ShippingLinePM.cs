@@ -210,6 +210,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [Include]
         [Association("ShippingLineCarrier", "Id", "Id")]
+        [DataMember]
         public virtual CardPM Card { get; set; }
         
         private List<CardExternalCodeByCurrencyPM> cardExternalCodeByCurrencies;
