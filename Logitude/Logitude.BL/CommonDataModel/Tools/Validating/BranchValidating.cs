@@ -13,10 +13,10 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
 
         public static void Validate(BranchPM entityPM, BranchRepository entityRepository)
         {
-            if (string.IsNullOrEmpty(entityPM.CounterCode))
-            {
-                throw new Exception("Counter Code is Required");
-            }
+            //if (string.IsNullOrEmpty(entityPM.CounterCode))
+            //{
+            //    throw new Exception("Counter Code is Required");
+            //}
 
             Branch branch = entityRepository.GetBranchByCounterCode(entityPM.CounterCode, entityPM.Tenant);
 
