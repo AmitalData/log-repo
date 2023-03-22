@@ -480,6 +480,34 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="SingleInvoiceTemplateId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CustomsInvoiceTemplateId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ConsolidationInvoiceTemplateId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ManifestInvoiceTemplateId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="InvoiceCurrencyId"
     ReferencedTable="Currencies"
@@ -568,6 +596,26 @@
   <Relation
     ForeignKeyColumn="ExportLocalCustomerGroupId"
     ReferencedTable="CustomerGroups"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="SingleInvoiceTemplateId"
+    ReferencedTable="DocumentTypeTemplates"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CustomsInvoiceTemplateId"
+    ReferencedTable="DocumentTypeTemplates"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ConsolidationInvoiceTemplateId"
+    ReferencedTable="DocumentTypeTemplates"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ManifestInvoiceTemplateId"
+    ReferencedTable="DocumentTypeTemplates"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index

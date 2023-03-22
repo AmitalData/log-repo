@@ -120,6 +120,10 @@ export class CardList {
 		BillToId: string;
 		AccountingPartnerCreditLimit: number;
 		SATCustomerName: string;
+		SingleInvoiceTemplateId: string;
+		CustomsInvoiceTemplateId: string;
+		ConsolidationInvoiceTemplateId: string;
+		ManifestInvoiceTemplateId: string;
 		EORInumber: string;
 	
 }

@@ -80,7 +80,7 @@ export class SearchTextBox implements OnInit {
             
             else {
                 var ObjectTable = this.GetObjectTableName(this.ObjectTableName);
-                var textCode = ObjectTable + ".F.SearchFields";
+                var textCode = (ObjectTable =="DocumentTypeTemplate" ? "DocumentType" : ObjectTable) + ".F.SearchFields";
                 var waterMark = TextCodeTranslator.Translate(textCode);
                 if (!AppTool.IsNullOrEmpty(waterMark)) {
                     this.PlaceHolder = waterMark;

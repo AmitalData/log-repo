@@ -17,6 +17,7 @@ using Logitude.Accounting.Data;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Transactions;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using Logitude.BL.CommonDataModel.ExternalService;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -92,12 +93,21 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                              PartnerTypeId = a.Card.PartnerTypeId,
                                                              Code = a.Card.Code,
                                                              GLAccountDisplayNumber = a.Card.GLAccountDisplayNumber,
+                                                             SingleInvoiceTemplateId = a.Card.SingleInvoiceTemplateId,
+                                                             CustomsInvoiceTemplateId = a.Card.CustomsInvoiceTemplateId,
+                                                             ConsolidationInvoiceTemplateId = a.Card.ConsolidationInvoiceTemplateId,
+                                                             ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
                                                          },
                                                          BillToId = a.Card.BillToId,
                                                          CreditLimit = a.CreditLimit,
                                                          InsuredCreditlimit = a.InsuredCreditlimit,
                                                      }).FirstOrDefault();
 
+            if(AccountingPartner != null)
+            {
+                PartnerARinvoiceDocumentTypeService partnerARinvoiceDocumentTypeService = new PartnerARinvoiceDocumentTypeService(AccountingPartner.Tenant);
+                AccountingPartner.Card = partnerARinvoiceDocumentTypeService.Set(AccountingPartner.Card);
+            }
             CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
             CardExternalCodeByCurrencyQuery cardExternalCodeByCurrencyQuery = new CardExternalCodeByCurrencyQuery(cardExternalCodeByCurrencyRepository);
             AccountingPartner.CardExternalCodeByCurrencies = cardExternalCodeByCurrencyQuery.GetCardExternalCodeByCurrencyPMsForCustomer(AccountingPartner.Id, AccountingPartner.Tenant);
@@ -172,12 +182,23 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                              Tenant = a.Tenant,
                                                              EnglishName = a.Card.EnglishName,
                                                              PrimaryContactId = a.Card.PrimaryContactId,
+                                                             SingleInvoiceTemplateId = a.Card.SingleInvoiceTemplateId,
+                                                             CustomsInvoiceTemplateId = a.Card.CustomsInvoiceTemplateId,
+                                                             ConsolidationInvoiceTemplateId = a.Card.ConsolidationInvoiceTemplateId,
+                                                             ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
+                                                             PartnerTypeId = a.Card.PartnerTypeId,
+                                                             Code = a.Card.Code,
                                                          },
                                                          BillToId = a.Card.BillToId,
                                                          CreditLimit = a.CreditLimit,
                                                          InsuredCreditlimit = a.InsuredCreditlimit,
                                                      }).FirstOrDefault();
 
+            if (AccountingPartner != null)
+            {
+                PartnerARinvoiceDocumentTypeService partnerARinvoiceDocumentTypeService = new PartnerARinvoiceDocumentTypeService(AccountingPartner.Tenant);
+                AccountingPartner.Card = partnerARinvoiceDocumentTypeService.Set(AccountingPartner.Card);
+            }
             CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
             CardExternalCodeByCurrencyQuery cardExternalCodeByCurrencyQuery = new CardExternalCodeByCurrencyQuery(cardExternalCodeByCurrencyRepository);
             AccountingPartner.CardExternalCodeByCurrencies = cardExternalCodeByCurrencyQuery.GetCardExternalCodeByCurrencyPMsForCustomer(AccountingPartner.Id, AccountingPartner.Tenant);
@@ -251,12 +272,23 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                              Tenant = a.Tenant,
                                                              EnglishName = a.Card.EnglishName,
                                                              PrimaryContactId = a.Card.PrimaryContactId,
+                                                             SingleInvoiceTemplateId = a.Card.SingleInvoiceTemplateId,
+                                                             CustomsInvoiceTemplateId = a.Card.CustomsInvoiceTemplateId,
+                                                             ConsolidationInvoiceTemplateId = a.Card.ConsolidationInvoiceTemplateId,
+                                                             ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
+                                                             PartnerTypeId = a.Card.PartnerTypeId,
+                                                             Code = a.Card.Code,
                                                          },
                                                          BillToId = a.Card.BillToId,
                                                          CreditLimit = a.CreditLimit,
                                                          InsuredCreditlimit = a.InsuredCreditlimit,
                                                      }).FirstOrDefault();
 
+            if (AccountingPartner != null)
+            {
+                PartnerARinvoiceDocumentTypeService partnerARinvoiceDocumentTypeService = new PartnerARinvoiceDocumentTypeService(AccountingPartner.Tenant);
+                AccountingPartner.Card = partnerARinvoiceDocumentTypeService.Set(AccountingPartner.Card);
+            }
             CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
             CardExternalCodeByCurrencyQuery cardExternalCodeByCurrencyQuery = new CardExternalCodeByCurrencyQuery(cardExternalCodeByCurrencyRepository);
             AccountingPartner.CardExternalCodeByCurrencies = cardExternalCodeByCurrencyQuery.GetCardExternalCodeByCurrencyPMsForCustomer(AccountingPartner.Id, AccountingPartner.Tenant);
@@ -325,6 +357,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                          Tenant = a.Tenant,
                                                                          EnglishName = a.Card.EnglishName,
                                                                          PrimaryContactId = a.Card.PrimaryContactId,
+                                                                         PartnerTypeId = a.Card.PartnerTypeId,
+                                                                         Code = a.Card.Code,
                                                                      },
                                                                      BillToId = a.Card.BillToId,
                                                                  };
@@ -380,6 +414,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  Tenant = a.Tenant,
                                  EnglishName = a.Card.EnglishName,
                                  PrimaryContactId = a.Card.PrimaryContactId,
+                                 PartnerTypeId = a.Card.PartnerTypeId,
+                                 Code = a.Card.Code,
                              },
                              BillToId = a.Card.BillToId,
                          }).AsQueryable();
@@ -511,6 +547,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                              PrimaryContactId = a.Card.PrimaryContactId,
                                                              PartnerTypeId = a.Card.PartnerTypeId,
                                                              Code = a.Card.Code,
+                                                             SingleInvoiceTemplateId = a.Card.SingleInvoiceTemplateId,
+                                                             CustomsInvoiceTemplateId = a.Card.CustomsInvoiceTemplateId,
+                                                             ConsolidationInvoiceTemplateId = a.Card.ConsolidationInvoiceTemplateId,
+                                                             ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
                                                          },
                                                          BillToId = a.Card.BillToId,
                                                          CollectorId = a.Card.CollectorId,
@@ -518,6 +558,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                          InsuredCreditlimit = a.InsuredCreditlimit,
                                                      }).FirstOrDefault();
 
+            if (AccountingPartner != null)
+            {
+                PartnerARinvoiceDocumentTypeService partnerARinvoiceDocumentTypeService = new PartnerARinvoiceDocumentTypeService(AccountingPartner.Tenant);
+                AccountingPartner.Card = partnerARinvoiceDocumentTypeService.Set(AccountingPartner.Card);
+            }
             CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
             CardExternalCodeByCurrencyQuery cardExternalCodeByCurrencyQuery = new CardExternalCodeByCurrencyQuery(cardExternalCodeByCurrencyRepository);
             AccountingPartner.CardExternalCodeByCurrencies = cardExternalCodeByCurrencyQuery.GetCardExternalCodeByCurrencyPMsForCustomer(AccountingPartner.Id, AccountingPartner.Tenant);
