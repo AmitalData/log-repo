@@ -46,6 +46,10 @@ using Simplog.Data.ShipmentsModel;
         {
             return this.OceanOrInlandPackageDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName, IsUpdate);
         }
+        public List<ShipmentPackagePM> OceanOrInlandPackageCustomDataMappingAndValidatin(Master myMaster, List<OceanOrInlandPackage> MyEntities, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
+        {
+            return this.OceanOrInlandPackageDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName, IsUpdate);
+        }
 
         public List<ShipmentPackagePM> OceanOrInlandPackageCustomDataMappingAndValidatin(Customs myDirect, List<OceanOrInlandPackage> MyEntities, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
         {

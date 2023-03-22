@@ -119,6 +119,7 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
             this.mainCarriageLegs = masterEntity.MainCarriageLegs;
             this.receivables = masterEntity.Receivables;
             this.payables = masterEntity.Payables;
+            this.oceanOrInlandPackages = masterEntity.OceanOrInlandPackages;
             this.events = masterEntity.AddManualEvents;
         }
         private void ValidateShipmentPackagesDueToShipmentType()
