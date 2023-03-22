@@ -15,6 +15,7 @@ using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Accounting.Data;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -30,6 +31,30 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         public ARInvoiceLineQuery(ARInvoiceLineRepository arInvoiceLineRepository)
         {
             repository = arInvoiceLineRepository;
+        }
+        public List<ARInvoiceLinePM> GetGLAccountLocalNameAndDisplayNumber(List<ARInvoiceLinePM> lines, string invoiceId, int tenant)
+        {
+            IAccountingContext context = AccountingContext.GetContext(tenant);
+            var GLAccountInfo = (from a in lines
+                                 where a.Tenant == tenant && a.ARInvoiceId == invoiceId
+                                 join gLAccount in context.GLAccounts on a.GLAccountId equals gLAccount.Id
+                                 select new ARInvoiceLinePM()
+                                 {
+                                     Id = a.Id,
+                                     GLAccountLocalName = gLAccount != null ? gLAccount.LocalName : "",
+                                     GLAccountDisplayNumber = gLAccount != null ? gLAccount.DisplayNumber : "",
+                                 }
+                                          ).ToList();
+
+            lines = lines.Select(x =>
+            {
+                x.GLAccountLocalName = GLAccountInfo.FirstOrDefault(y => y.Id == x.Id)?.GLAccountLocalName;
+                x.GLAccountDisplayNumber = GLAccountInfo.FirstOrDefault(y => y.Id == x.Id)?.GLAccountDisplayNumber;
+                return x;
+            }
+            ).ToList();
+
+            return lines;
         }
         public Contact GetLogContact(int tenant)
         {
