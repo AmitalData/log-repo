@@ -654,7 +654,7 @@ namespace WebFreight.Web.ContainerTracking
         }
         private void GetShipmentById(LogitudeOceanInsightsRequest oceanInsight)
         {
-            shipmentPM = shipmentQuery.GetSinglePM(oceanInsight?.ShipmentId, logitudeTenant.Value);
+            shipmentPM = shipmentQuery.GetSinglePM(oceanInsight?.ShipmentId, logitudeTenant.Value, null, true);
         }
         private void GetContainerDataByContainerNumber(LogitudeOceanInsightsRequest oceanInsight)
         {
