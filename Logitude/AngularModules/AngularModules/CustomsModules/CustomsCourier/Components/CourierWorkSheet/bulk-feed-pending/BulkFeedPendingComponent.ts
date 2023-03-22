@@ -390,7 +390,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
 
         //this.CurrentQueryFilters = MyFilters;
         var ids: string[] = [];
-        this._entityListService.getByFilters("Customs.DeclarationCourierStatus", filter, null).then((observable: Observable<any>) => {
+        this._entityListService.getExtendedByFilters("Customs.DeclarationCourierStatus", filter, null).then((observable: Observable<any>) => {
             observable.subscribe((response: ServiceResponse) => {
                 console.log(response);
                 response.Result.forEach((item) => {
