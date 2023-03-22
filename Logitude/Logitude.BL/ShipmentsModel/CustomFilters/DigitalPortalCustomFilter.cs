@@ -44,7 +44,9 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     {
                         queryableData = queryableData.Where(a => a.IsCustomerArchived == false
                                                                  && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) >= createdDateTime
-                                                                 && (((a.MainCarriageFinalDestinationATA == null || System.Data.Entity.DbFunctions.TruncateTime(a.MainCarriageFinalDestinationATA) >= arrivalDateTime) && a.DirectionId == "I")
+                                                                 && (((a.MainCarriageFinalDestinationATA == null 
+                                                                       || System.Data.Entity.DbFunctions.TruncateTime(a.MainCarriageFinalDestinationATA) >= arrivalDateTime) 
+                                                                       && a.DirectionId == "I")
                                                                       || ((a.MainCarriageATD == null || System.Data.Entity.DbFunctions.TruncateTime(a.MainCarriageATD) >= departureDateTime) && a.DirectionId == "E")));
                     }                                            
 
