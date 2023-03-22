@@ -172,6 +172,12 @@
 		<Constraints
 		  Nullable="true" />
 	</Column>
+  <Column
+  Name="IsUserIDNumberRequired"
+  Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Shipments"
