@@ -19,7 +19,7 @@ using Logitude.BL.InfrastructureModel.Tools.EntityService;
 namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 {
    
-    public partial class RatesTablesController : ApiController
+    public class RatesTablesCustomController : ApiController
     {
         public HttpResponseMessage UpdateRate(RatesTablePM entityPM)
         {
@@ -36,7 +36,12 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
                         RatesTableService service = new RatesTableService(MyContext, entityPM.Tenant);
-                        entityPM.Rate = CalculateRateAccordingUnits(entityPM);
+                        
+                        if(IsFullAccountingActivated(entityPM.Tenant))
+                        {
+                           entityPM.Rate = CalculateRateAccordingUnits(entityPM);
+                        }
+                       
                         service.Create(entityPM);
 
                         scope.Complete();
@@ -57,6 +62,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
             }
         }
 
+
         private double CalculateRateAccordingUnits(RatesTablePM ratesTable)
         {
             if (ratesTable.Unit != null)
@@ -68,6 +74,14 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
             }
             return (double)ratesTable.Rate;
 
+        }
+
+        private bool IsFullAccountingActivated(int tenant)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+            bool isFullAccountingActivated = tenantPOCO.AccountingActivated;
+            return isFullAccountingActivated;
         }
     }
 }

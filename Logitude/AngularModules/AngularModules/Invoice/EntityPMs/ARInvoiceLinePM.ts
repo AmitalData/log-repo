@@ -260,8 +260,14 @@ export class ARInvoiceLinePM {
     private reportedinTaxReport: string;
     public get ReportedinTaxReport() { return this.reportedinTaxReport; }
     public set ReportedinTaxReport(newValue: string) { if (this.reportedinTaxReport != newValue) { this.reportedinTaxReport = newValue; this.MarkAsDirty("ReportedinTaxReport"); } }
-      
-	 
+
+    private gLAccountLocalName: string;
+    public get GLAccountLocalName() { return this.gLAccountLocalName; }
+    public set GLAccountLocalName(newValue: string) { if (this.gLAccountLocalName != newValue) { this.gLAccountLocalName = newValue; this.MarkAsDirty("GLAccountLocalName"); } }
+
+    private gLAccountDisplayNumber: string;
+    public get GLAccountDisplayNumber() { return this.gLAccountDisplayNumber; }
+    public set GLAccountDisplayNumber(newValue: string) { if (this.gLAccountDisplayNumber != newValue) { this.gLAccountDisplayNumber = newValue; this.MarkAsDirty("GLAccountDisplayNumber"); } }
 
     public OldEntityPM: ARInvoiceLinePM;
 	    

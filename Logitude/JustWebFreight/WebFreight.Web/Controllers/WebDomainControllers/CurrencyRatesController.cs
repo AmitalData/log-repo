@@ -98,7 +98,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetCurrenciesExchangeRateByValueDate(string currencyId, string dateString)
+        public HttpResponseMessage GetCurrenciesExchangeRateByValueDate(string currencyId, string dateString,bool calculateRateAccordingNumberUnit)
         {
             try
             {
@@ -114,7 +114,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
 
                 WebFreightDomainService domain = new WebFreightDomainService();
-                results = domain.GetCurrenciesExchangeRateByValueDate(authToken.Tenant, currencyId, loadingDate);
+                results = domain.GetCurrenciesExchangeRateByValueDate(authToken.Tenant, currencyId, loadingDate, calculateRateAccordingNumberUnit);
                 return Request.CreateResponse(HttpStatusCode.OK, results);
 
             }

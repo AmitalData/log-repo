@@ -23,6 +23,7 @@ namespace Logitude.BL.CommonDataModel.LogitudeGridExportToExcel
         public string SortDirection { get; set; }
         public List<QueryFilterItem> AdditionalFilters { get; set; }
 
+        public bool IsXslxFormat { get; set; }  
 
 
     }

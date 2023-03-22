@@ -31,7 +31,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string CollectorId { get; set; } 
         public string CustomerSizeId { get; set; }
         public DateTime? AutomaticLastUpdateDate { get; set; }
-        public string EORInumber { get; set; }
         public virtual Card Card { get; set; }
 
         [ForeignKey("SalesmanUserId")]
@@ -133,6 +132,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string EmailForSendingSingArinvoice { get; set; }
         public string ImportLocalCustomerGroupId { get; set; }
         public string ExportLocalCustomerGroupId { get; set; }
+        public string EORInumber { get; set; }
 
         //[ForeignKey("ImportLocalCustomerGroupId")]
         //public virtual CustomerGroup ImportLocalCustomerGroup { get; set; }

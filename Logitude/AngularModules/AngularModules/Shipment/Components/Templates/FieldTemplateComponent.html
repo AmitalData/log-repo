@@ -252,7 +252,12 @@
                                     </div>
                                 </div>
 
-
+                                <div *ngFor="let item of containerEstimatedDates">
+                                    <div *ngIf="FieldName == item.estimatedDate">
+                                        <div class="TemplateTrimmingChild" [ngStyle]="{color: Entity[item.estimatedDate] | ContainerDateTimeToColorPipe :Entity[item.actaulDate]}">{{Entity[FieldName] | DateTimePipe:'D'}}</div>
+                                    </div>
+                                </div>
+                               
                             </div>
                         </td>
                     </tr>
