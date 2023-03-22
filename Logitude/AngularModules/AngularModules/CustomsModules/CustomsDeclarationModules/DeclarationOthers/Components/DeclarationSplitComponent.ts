@@ -874,14 +874,14 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
             cv.LINE_8
         );
     }*/
-    /*@HostListener('mouseup', ['$event'])
+    @HostListener('mouseup', ['$event'])
     OnMouseUp(event) {
-        if (event) {
+      /*  if (event) {
             this.endX = event.clientX;
             this.endY = event.clientY;
             this.recognizeText();
-        }
-    }*/
+        }*/
+    }
 
     @HostListener('mousedown', ['$event'])
     OnMouseDown(event) {
