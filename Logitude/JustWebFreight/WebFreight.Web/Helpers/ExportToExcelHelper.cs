@@ -656,9 +656,16 @@ namespace WebFreight.Web.Helpers
                                 i++;
                             }
                         }
-                        workbook.Version = ExcelVersion.Excel2010;
-
-                        workbook.SaveAs(memory);
+                        if (exportToExcelArgs.IsXslxFormat)
+                        {
+                            workbook.Version = ExcelVersion.Excel2010;
+                            workbook.SaveAs(memory);
+                        }
+                        else
+                        {
+                            workbook.SaveAs(memory, ExcelSaveType.SaveAsXLS);
+                        }
+                        
 
                         //No exception will be thrown if there are unsaved workbooks.
                         excelEngine.ThrowNotSavedOnDestroy = false;
