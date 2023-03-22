@@ -180,6 +180,8 @@ namespace WebFreight.Web.ContainerTracking
 
             CommunicationLog comunicationLog = BuildCommunicationLogUpdateStatus(containerTrackingRequest, entityId, objectTableName);
             
+
+  
             if (myRequestContainer == null)
             {
                 SetComunicationLogDone(comunicationLog, false);
@@ -201,9 +203,10 @@ namespace WebFreight.Web.ContainerTracking
             containerTrackingHelper = new ContainerTrackingHelper(containerTrackingRequest.Tenant);
             var analyz = false;
 
+      
             ContainerPM container = GetContainerPM(containerId, containerTrackingRequest.Tenant);
             ShipmentPM shipment = GetShipmentPM(containerTrackingRequest.ShipmentId, containerTrackingRequest.Tenant);
-             manager.allShipmentTrasshipmentLegs = new List<dynamic>();
+            manager.allShipmentTrasshipmentLegs = new List<dynamic>();
 
             if (IsValidToAnalyze(shipment, container, containerTrackingRequest))
             {
@@ -280,6 +283,7 @@ namespace WebFreight.Web.ContainerTracking
             communicationLogRepository.Update(comunicationLog);
             communicationLogRepository.SubmitChanges();
 
+   
             string activity = "";
             if (wasAnalyzed)
             {
