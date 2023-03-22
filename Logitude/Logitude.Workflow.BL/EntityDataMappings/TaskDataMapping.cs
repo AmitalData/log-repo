@@ -1,8 +1,11 @@
+using System.Linq;
 using Logitude.Server.Tools;
 using Logitude.Workflow.Data.EntityPOCOs;
 using Logitude.Workflow.BL.EntityPMs;
-using Simplog.Server.Infrastructure;
 using Logitude.Workflow.BL.FieldsMapping;
+using Logitude.Workflow.Data.Repositories;
+using Simplog.Server.Infrastructure;
+using Simplog.Data.Helpers;
 
 namespace Logitude.Workflow.BL.EntityDataMappings
 {
@@ -21,10 +24,52 @@ namespace Logitude.Workflow.BL.EntityDataMappings
                 entityPM.CreatedByUserId = entityPOCO.CreatedByUserId;
             }
 
+            SetFieldsThatRelatedToStatus(entityPM, entityPOCO);
             ResetPMDummyFields(entityPM);
             BuildSearchFields(entityPM);
         }
         
+        private void SetFieldsThatRelatedToStatus(TaskPM entityPM, Task entityPOCO)
+        {
+            bool isNew = entityPM.ChangeSetOp == ChangeSetOperation.Insert;
+            string pendingStatusCode = "PEN";
+            string cancelledStatusCode = "CAN";
+
+            TaskStatusRepository taskStatusRepository = new TaskStatusRepository(entityPM.Tenant);
+            TaskStatus oldStatus = null;
+            TaskStatus newStatus = null;
+
+            if (isNew)
+            {
+                newStatus = taskStatusRepository.GetAll(entityPM.Tenant).Where(s => s.Code == pendingStatusCode).FirstOrDefault();
+            }
+            else
+            {
+                oldStatus = taskStatusRepository.GetSingle(entityPOCO.StatusId, entityPOCO.Tenant);
+                newStatus = taskStatusRepository.GetSingle(entityPM.StatusId, entityPM.Tenant);
+            }
+
+            string newStatusId = newStatus?.Id;
+            bool isOldStatusClosed = oldStatus != null && oldStatus.Closed;
+            bool isNewStatusClosed = newStatus != null && newStatus.Closed;
+            bool isNewStatusCancelled = newStatus != null && newStatus.Code == cancelledStatusCode;
+
+            entityPM.StatusId = newStatusId;
+            entityPM.IsClosed = isNewStatusClosed;
+            entityPM.IsCancelled = isNewStatusCancelled;
+
+            if (isNewStatusClosed && !isOldStatusClosed)
+            {
+                entityPM.ClosedByUserId = EntityFieldsMapping.GetLoggedUserId(entityPM.Tenant);
+                entityPM.ClosedDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+            }
+            else
+            {
+                entityPM.ClosedByUserId = entityPOCO.ClosedByUserId;
+                entityPM.ClosedDate = entityPOCO.ClosedDate;
+            }
+        }
+
         private void ResetPMDummyFields(TaskPM entityPM)
         {
             entityPM.CreatedByUserName = null;

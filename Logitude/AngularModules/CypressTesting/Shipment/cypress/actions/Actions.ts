@@ -795,6 +795,22 @@ export function FillReceivablesTab(receivableDetails: ReceivableDetails[], HaveA
         cy.Click(ShipmentSelectors.AddReceivableOkButton, null)
     }
 }
+export function FillReceivablesTabSAT(receivableDetails: ReceivableDetails[], HaveAccountingSystem?: boolean) {
+    cy.Click(ShipmentSelectors.ReceivablesTab, null)
+    for (let i = 0; i < receivableDetails.length; i++) {
+        cy.Click(ShipmentSelectors.AddNewReceivableLine, null)
+        cy.FillLogLov(ShipmentSelectors.ReceivableChargesType, receivableDetails[i].ChargesType, true)
+        cy.FillLogLov(ShipmentSelectors.ReceivableMeasurement, receivableDetails[i].UOM, true)
+        cy.get(ShipmentSelectors.ReceivableQuantity).type(receivableDetails[i].Quantity.toString());
+        cy.get(ShipmentSelectors.ReceivableUnitPrice).type(receivableDetails[i].UnitPrice.toString());
+        cy.FillLogLov(ShipmentSelectors.ReceivableCurrency, receivableDetails[i].Currency, true)
+        if (HaveAccountingSystem) {
+            BaseActions.ClearExternalIDFromShipmentLevel(BaseSelectors.ChargesType)
+            BaseActions.ClearExternalIDFromShipmentLevel(BaseSelectors.Currency)
+        }
+        cy.Click(ShipmentSelectors.AddReceivableOkButton, null)
+    }
+}
 
 export function GenerateReceivablesFromPayables() {
     cy.Click(ShipmentSelectors.ReceivablesTab, null)

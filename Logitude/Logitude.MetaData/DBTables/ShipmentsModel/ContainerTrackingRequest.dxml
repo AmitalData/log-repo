@@ -100,4 +100,7 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <UniqueConstraint
+  Columns="Tenant,ContainerId,ShipmentId,Status"/>
+  
 </Table>

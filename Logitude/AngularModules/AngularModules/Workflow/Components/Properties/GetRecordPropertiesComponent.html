@@ -225,12 +225,12 @@
                             <div class="table-row-cell-block">
                                 <TreeSelect *ngIf="RecordsTypeChanged" [Items]="EntitiesTreeItems" [Width]="'300px'"
                                     [Value]="Entity" [ShowExpand]="false"
-                                    [ShowItem]="('Get' + RecordsType + 'Record') | ShowEntitiesTreeItemPipe : ExcludeCustomEntities"
+                                    [ShowItem]="('Get' + RecordsType + 'Record') | ShowEntitiesTreeItemPipe"
                                     (ValueChanged)="updateEntity($event)">
                                 </TreeSelect>
                                 <TreeSelect *ngIf="!RecordsTypeChanged" [Items]="EntitiesTreeItems" [Width]="'300px'"
                                     [Value]="Entity" [ShowExpand]="false"
-                                    [ShowItem]="('Get' + RecordsType + 'Record') | ShowEntitiesTreeItemPipe : ExcludeCustomEntities"
+                                    [ShowItem]="('Get' + RecordsType + 'Record') | ShowEntitiesTreeItemPipe"
                                     (ValueChanged)="updateEntity($event)">
                                 </TreeSelect>
                             </div>

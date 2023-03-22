@@ -176,9 +176,12 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.DigitalPortalMobileLastDate = entityPM.DigitalPortalMobileLastDate;
             entityPOCO.DigitalPortalMobTotalLastWeek = entityPM.DigitalPortalMobTotalLastWeek;
             entityPOCO.DigitalPortalMobTotalLastMonth = entityPM.DigitalPortalMobTotalLastMonth;
+            entityPOCO.DPArchiveShipmentCreateFilter  = entityPM.DPArchiveShipmentCreateFilter;
+            entityPOCO.DPArchiveShipmentArrivalFilter = entityPM.DPArchiveShipmentArrivalFilter;
+            entityPOCO.DPArchiveShipmentDepartFilter =  entityPM.DPArchiveShipmentDepartFilter;
 
 
-        string packageName = null;
+            string packageName = null;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 TenantRepository tenantRepository = new TenantRepository(entityPM.Id);
@@ -195,9 +198,9 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
                     tenant.Company = entityPM.Name;
                     if(LBtenantsetting!= null)
                     {
-    LBtenantsetting.DocumentShareAsDefault = entityPM.DocumentShareAsDefault;
-                    LBtenantsetting.AutoArchiveOnInvoice = entityPM.AutoArchiveOnInvoice;
-                    LBtenantsetting.AutoArchiveOnPODExport = entityPM.AutoArchiveOnPODExport;
+                        LBtenantsetting.DocumentShareAsDefault = entityPM.DocumentShareAsDefault;
+                        LBtenantsetting.AutoArchiveOnInvoice = entityPM.AutoArchiveOnInvoice;
+                        LBtenantsetting.AutoArchiveOnPODExport = entityPM.AutoArchiveOnPODExport;
                     }
                 
                     if (!entityPM.ManagesRegisteredAgent)

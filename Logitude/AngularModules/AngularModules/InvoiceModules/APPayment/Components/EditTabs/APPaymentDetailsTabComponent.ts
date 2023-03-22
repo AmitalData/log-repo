@@ -34,6 +34,8 @@ import { GLAccountList } from '../../../../Accounting/EntityLists/GLAccountList'
 import { LedgerTransactionPM } from 'Accounting/EntityPMs/LedgerTransactionPM';
 import { LedgerTransactionExtendedListService } from './../../../../Accounting/Services/ExtendedLists/LedgerTransactionExtendedListService';
 import { ReconciliationExtendedPMService } from './../../../../Accounting/Services/ExtendedPMs/ReconciliationExtendedPMService';
+import { JournalExtendedPMService } from 'Accounting/Services/ExtendedPMs/JournalExtendedPMService';
+import { JournalPM } from 'Accounting/EntityPMs/JournalPM';
 
 @Component({
     templateUrl: './APPaymentDetailsTabComponent.html',
@@ -64,6 +66,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     DisplayFieldsFromList:string;
     DisplayLocalFieldsFromList:string;
     VendorLovSizeForFullAccounting:number;
+    _JournalExtendedPMService: JournalExtendedPMService = new JournalExtendedPMService();
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
 
@@ -199,6 +202,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.RefreshScreen();
+                    this.checkLedgerCreated();
                 }
 
                 if (this.RequestedCommandCode) {
@@ -228,6 +232,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     ngOnInit() {
         this.LoadPaymentMethods();
         this.LoadCurrencies();
+        this.checkLedgerCreated();
     }
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SessionEvent);
@@ -498,6 +503,26 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.LoadData();
         });
     }
+
+   
+    async LoadCurrencyRatesOnTheFly() {
+        var loadingDate = this.RegisterDate;
+        if (loadingDate == null) {
+            loadingDate = DateTool.GetCurrentDateAsUtc();
+        }
+
+        var myService: CurrencyRatesService = new CurrencyRatesService();
+        await new Promise(res =>
+            myService.GetCurrenciesExchangeRateByValueDate(SessionLocator.TenantPM.CurrencyId, loadingDate).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    this.LastRatesList = myResponse.Result;
+                }
+                res();
+               // this.LoadData();
+            })
+        );
+    }
+
     UpdateCurrencyRates() {
         var loadingDate = this.RegisterDate;
         if (loadingDate == null) {
@@ -535,7 +560,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.PaymentCurrencyExchangeRate = myRate;
         this.ExchangeRateDate = myRateDate;
     }
-    GetCurrencyRate(currencyId: string): number {
+
+    async GetCurrencyRate(currencyId: string): Promise<number> {
         var result = null;
 
         if (AppTool.IsNullOrEmpty(currencyId)) {
@@ -548,6 +574,10 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             }
 
             else {
+                if (this.LastRatesList.length == 0) {
+                    await this.LoadCurrencyRatesOnTheFly();
+                }
+
                 if (this.LastRatesList) {
                     var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == currencyId)[0];
                     if (lastRate != null) {
@@ -918,9 +948,14 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                     this.ItemsSource.Collection.forEach(item => {
                         var ledgerTransaction = this.invoicesLedgerTransactions.filter(x=>x.Reference1 == item.InvoiceNumber)[0];
                         if(ledgerTransaction) {
-
+                            item.CheckBoxEnabled = true;
                             item.RecoNumber = ledgerTransaction.RecoNumber;
-                            
+                            if(ledgerTransaction.RecoNumber != null && ledgerTransaction.RecoNumber.length > 0) {
+                                var items = this.paymentLedgerTransactions.filter(value => ledgerTransaction.RecoNumber.split(',').includes(value));
+                                if(items.length > 0) {
+                                    item.CheckBoxEnabled = false;
+                                }
+                            }
                         }
                     });
 				}
@@ -930,6 +965,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 			console.error("No GLAccount for this payment ", this.EntityPM);
 		}
 	}
+
+
 
     OpenReco(recoNumber)
 	{
@@ -968,6 +1005,43 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
 		}
 	}
+    _IsDisplayOnly = false;
+	public get IsDisplayOnly(): boolean
+	{
+		return this._IsDisplayOnly;
+	}
+	public set IsDisplayOnly(v: boolean)
+	{
+		this._IsDisplayOnly = v;
+	}
+    checkLedgerCreated(firstCall: boolean = false)
+	{
+		if (this.EntityPM.Id && this.IsFullAccounting && (this.EntityPM.StatusCode == 'AD' || this.EntityPM.StatusCode == 'CL')) {
+
+			this.CurrentSession.StartBusyIndicatorLoading();
+			this._JournalExtendedPMService.GetByAccountingEntityId(this.EntityPM.Id, '5').subscribe((myResult: ServiceResponse) => // 3- ARPayment
+			{
+				console.log("_JournalExtendedPMService.GetByAccountingEntityId", myResult);
+				this.CurrentSession.StopBusyIndicator();
+
+				var res: ServiceResponse = myResult;
+				var createdJournal: JournalPM = res.Result;
+
+				if (createdJournal) {
+					if (this.IsDisplayOnly == true && createdJournal.IsLedgerCreated) {
+						this.GetTransactionsForAPPayment();
+					}
+					this.IsDisplayOnly = !createdJournal.IsLedgerCreated;
+				}
+				else {
+					console.log("[Check Ledger] no journal created");
+				}
+			});
+
+		}
+
+	}
+    
 
     private LoadAddressAndGeneralTab() {
         this.PartnersDomainService.GetBillingOrMainAddressListByCardId(this.EntityPM.VendorId).subscribe((resp: any) => {
@@ -1009,11 +1083,16 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         return this.EntityPM.PaymentCurrencyId;
     }
     set PaymentCurrencyId(value: string) {
+        this.setPaymentCurrencyId(value)
+    }
+
+    async setPaymentCurrencyId(value: string) {
+        debugger;
         if (!this.EntityPM.IsCreatedFromInvoiceSide) {
             if (this.EntityPM != null) {
                 if (this.EntityPM.PaymentCurrencyId != value) {
-                    this.EntityPM.PaymentCurrencyId = value;
-                    this.PaymentCurrencyExchangeRate = this.GetCurrencyRate(value);
+                    this.EntityPM.PaymentCurrencyId = value;                    
+                    this.PaymentCurrencyExchangeRate = await this.GetCurrencyRate(value);                    
                     this.ExchangeRateDate = this.GetCurrencyRateDate(value);
 
                     if (AppTool.IsNullOrEmpty(value)) {
@@ -1041,8 +1120,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
                 }
             }
-        }
-    }
+        }}
 
     get PaymentCurrencyExchangeRate() {
         if (this.EntityPM == null) {
@@ -1818,7 +1896,7 @@ export class APPaymentInvoiceArgs extends BaseComponent {
         this.CheckBoxVisibility = false;
         this.NotMatchedVisibility = false;
         this.IsAdvancedButtonVisible = false;
-        this.CheckBoxEnabled = true;
+        //this.CheckBoxEnabled = true;
 
         this.SetUIProperties_CurrencyMatched();
         this.SetUIProperties_AllowedToConnect();
@@ -2151,7 +2229,9 @@ export class APPaymentInvoiceArgs extends BaseComponent {
 
                 else {
                     if (inputEntry == 0 || inputEntry == null) {
-                        this.IsConnected = false;
+                        if(!(this.RecoNumber && this.RecoNumber != null && this.RecoNumber.length > 0)) {
+                            this.IsConnected = false;
+                        }
                     }
 
                     else {

@@ -146,9 +146,33 @@ namespace WebFreight.Web.ReportsWebServices
                 manifestDataProvider.TotalVolumeINCBM = DataProviders.General.ComputeVolumeInSelectedUnit(master.Volume, master.VolumeUnitCode, "CBM");
                 manifestDataProvider.TotalVolumeINCBF = DataProviders.General.ComputeVolumeInSelectedUnit(master.Volume, master.VolumeUnitCode, "CBF");
                 manifestDataProvider.MasterMAWBNumber = master.Master;
+
                 manifestDataProvider.Transshipment3VesselName = master.Transshipment3VesselName;
                 manifestDataProvider.Transshipment3VoyageNumber = master.Transshipment3CarrierNumber;
 
+                manifestDataProvider.MainCarriageLeg2Carrier = master.Transshipment1CarrierName;
+                manifestDataProvider.MainCarriageLeg2CarrierNumber = master.Transshipment1CarrierNumber;
+                manifestDataProvider.MainCarriageLeg2ETD_DateTime = master.Transshipment1ETD;
+                manifestDataProvider.MainCarriageleg2ETA_DateTime = master.Transshipment1ETA;
+                manifestDataProvider.MainCarriageLeg2ATD_DateTime = master.Transshipment1ATD;
+                manifestDataProvider.MainCarriageLeg2ATA_DateTime = master.Transshipment1ATA;
+                manifestDataProvider.MAWBMainCarriageLeg2 = master.Transshipment1AdditionalMAWBOBLBL;
+
+                manifestDataProvider.MainCarriageLeg3Carrier = master.Transshipment2CarrierName;
+                manifestDataProvider.MainCarriageLeg3CarrierNumber = master.Transshipment2CarrierNumber;
+                manifestDataProvider.MainCarriageLeg3ETD_DateTime = master.Transshipment2ETD;
+                manifestDataProvider.MainCarriageleg3ETA_DateTime = master.Transshipment2ETA;
+                manifestDataProvider.MainCarriageLeg3ATD_DateTime = master.Transshipment2ATD;
+                manifestDataProvider.MainCarriageLeg3ATA_DateTime = master.Transshipment2ATA;
+                manifestDataProvider.MAWBMainCarriageLeg3 = master.Transshipment2AdditionalMAWBOBLBL;
+
+                manifestDataProvider.MainCarriageLeg4Carrier = master.Transshipment3CarrierName;
+                manifestDataProvider.MainCarriageLeg4CarrierNumber = master.Transshipment3CarrierNumber;
+                manifestDataProvider.MainCarriageLeg4ETD_DateTime = master.Transshipment3ETD;
+                manifestDataProvider.MainCarriageleg4ETA_DateTime = master.Transshipment3ETA;
+                manifestDataProvider.MainCarriageLeg4ATD_DateTime = master.Transshipment3ATD;
+                manifestDataProvider.MainCarriageLeg4ATA_DateTime = master.Transshipment3ATA;
+                manifestDataProvider.MAWBMainCarriageLeg4 = master.Transshipment3AdditionalMAWBOBLBL;
 
 
                 if (master.BranchId != null)

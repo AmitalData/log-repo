@@ -33,7 +33,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public IQueryable<ReportsTemplate> GetReportsTemplates(int tenant)
         {
-            return (from record in context.ReportsTemplates.Include("Report") where record.Tenant == tenant select record);
+            return (from record in context.ReportsTemplates.Include("Report") where record.Tenant == tenant && string.IsNullOrEmpty(record.EntityId) select record);
         }
 
         public ReportsTemplate GetSingleReportsTemplate(string id, int tenant)
@@ -43,12 +43,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public ReportsTemplate GetSingleReportsTemplateByReprotId(string reportId, int tenant)
         {
-            return (from record in context.ReportsTemplates where record.ReportId == reportId && record.Tenant == tenant select record).FirstOrDefault();
+            return (from record in context.ReportsTemplates where record.ReportId == reportId && record.Tenant == tenant && string.IsNullOrEmpty(record.EntityId) select record).FirstOrDefault();
         }
 
         public List<ReportsTemplate> GetReportsTemplatesWithOutInclude(int tenant)
         {
-            return (from record in context.ReportsTemplates where record.Tenant == tenant  select record).ToList();
+            return (from record in context.ReportsTemplates where record.Tenant == tenant && string.IsNullOrEmpty(record.EntityId) select record).ToList();
         }
 
         public void Add(ReportsTemplate entity)
@@ -100,6 +100,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public ReportsTemplate GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new System.NotImplementedException();
+        }
+
+        public IQueryable<ReportsTemplate> GetMessageTemplatesByMessageTemplateIds(List<string> messageTemplateIds, int tenant)
+        {
+            return from a in context.ReportsTemplates
+                   where a.Tenant == tenant && messageTemplateIds.Contains(a.Id)
+                   select a;
         }
 
     }

@@ -423,6 +423,7 @@
     <Compile Include="CommonDataModel\CustomFilters\CommunicationLogCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\ReportExecutionLogCustomFilter.cs" />
     <Compile Include="CommonDataModel\EntityAMs\CustomerTenantAccessUpdaterAM.cs" />
+    <Compile Include="CommonDataModel\EntityAMs\PortAM.cs" />
     <Compile Include="CommonDataModel\EntityLists\CargoTenantMilestoneDefinitionList.cs" />
     <Compile Include="CommonDataModel\EntityLists\CarrierServiceLineList.cs" />
     <Compile Include="CommonDataModel\EntityLists\CustomerGroupList.cs" />
@@ -3254,6 +3255,7 @@
     <Compile Include="Validators\ValidationClass.Shared.cs" />
     <Compile Include="Workflow\Constants\QueueMessagesTypes.cs" />
     <Compile Include="Workflow\Constants\WorkflowEntities.cs" />
+    <Compile Include="Workflow\TaskDoneQueueMessage.cs" />
     <Compile Include="Workflow\WorkflowEntityQueueMessage.cs" />
   </ItemGroup>
   <ItemGroup>

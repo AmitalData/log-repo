@@ -450,13 +450,13 @@ namespace WebFreight.Web.ContainerTracking
                 return new { Index = 0, PortField = "MainCarriageToPortId", EstimatedDateField = "MainCarriageETA", ActualDateField = "MainCarriageATA" };
 
             if (shipmentPM.Transshipment1ToPortId == leg.PortId)
-                return new { Index = 1, PortField = "Transshipment1FromPortId", EstimatedDateField = "Transshipment1ETA", ActualDateField = "Transshipment1ATA" };
+                return new { Index = 1, PortField = "Transshipment1ToPortId", EstimatedDateField = "Transshipment1ETA", ActualDateField = "Transshipment1ATA" };
 
             if (shipmentPM.Transshipment2ToPortId == leg.PortId)
-                return new { Index = 2, PortField = "Transshipment2FromPortId", EstimatedDateField = "Transshipment2ETA", ActualDateField = "Transshipment2ATA" };
+                return new { Index = 2, PortField = "Transshipment2ToPortId", EstimatedDateField = "Transshipment2ETA", ActualDateField = "Transshipment2ATA" };
 
             if (shipmentPM.Transshipment3ToPortId == leg.PortId)
-                return new { Index = 3, PortField = "Transshipment3FromPortId", EstimatedDateField = "Transshipment3ETA", ActualDateField = "Transshipment3ATA" };
+                return new { Index = 3, PortField = "Transshipment3ToPortId", EstimatedDateField = "Transshipment3ETA", ActualDateField = "Transshipment3ATA" };
 
             return null;
         }
@@ -754,7 +754,18 @@ namespace WebFreight.Web.ContainerTracking
                 {
                     PODShipmentUpdateIndicator = "On Carriage";
                 }
-
+                else if (shipmentPM.Transshipment3ToPortId == portId)
+                {
+                    PODShipmentUpdateIndicator = "Transshipment3";
+                }
+                else if (shipmentPM.Transshipment2ToPortId == portId)
+                {
+                    PODShipmentUpdateIndicator = "Transshipment2";
+                }
+                else if (shipmentPM.Transshipment1ToPortId == portId)
+                {
+                    PODShipmentUpdateIndicator = "Transshipment1";
+                }
                 else if (shipmentPM.MainCarriageToPortId == portId)
                 {
                     PODShipmentUpdateIndicator = "Main Carriage";
@@ -828,8 +839,9 @@ namespace WebFreight.Web.ContainerTracking
                 }
             }
 
-            else if (PODShipmentUpdateIndicator == "Main Carriage")
+            else
             {
+                var eTAfielName = PODShipmentUpdateIndicator == "Main Carriage" ? "MainCarriageETA" : PODShipmentUpdateIndicator + "ETA";
                 if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.Vizion)
                     shipmentPM.IsUpdatedVizionMainCarriageDates = true;
 
@@ -837,12 +849,8 @@ namespace WebFreight.Web.ContainerTracking
                     shipmentPM.IsUpdatedOceanInsightsMainCarriageDates = true;
 
                 containerTrackingHelper.AddContainerDiscrepancy("POD MainCarriage", containerPM, shipmentPM);
-                this.FillFieldsShipmentNewValues("MainCarriageETA", containerPM.EstimatedPODVesselArrival, shipmentPM);
-                if (shipmentPM.MainCarriageATA == null)
-                {
-                    this.FillMainCarriageATA();
-                   
-                }
+                this.FillFieldsShipmentNewValues(eTAfielName, containerPM.EstimatedPODVesselArrival, shipmentPM);
+                this.FillMainCarriageATA();
             }
         }
         private void FillOnCarriageATA()
@@ -856,12 +864,13 @@ namespace WebFreight.Web.ContainerTracking
         }
         private void FillMainCarriageATA()
         {
+            var aTAfielName = PODShipmentUpdateIndicator == "Main Carriage" ? "MainCarriageATA" : PODShipmentUpdateIndicator + "ATA";
             DateTime? myDate = containerPM.ActualPODVesselArrival;
 
             if (myTenant != null && myTenant.ShipmentATADateIndicator == "Container")
                 myDate = containerPM.ActualPODDischarge;
 
-            this.FillFieldsShipmentNewValues("MainCarriageATA", myDate, shipmentPM);
+            this.FillFieldsShipmentNewValues(aTAfielName, myDate, shipmentPM);
         }
         private void SaveShipment()
         {

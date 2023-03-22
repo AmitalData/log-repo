@@ -10,7 +10,7 @@
             <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
         </td>
     </tr>
-    <tr [ngStyle]="{'height': ShownAdditionalFilters && LookUpTableId ? '35%' : '100%'}">
+    <tr [ngStyle]="{'height': ShownAdditionalFilters && LookUpTableId ? '35%' : '65%'}">
         <td>
             <table>
                 <tr style="height: 10px;">
@@ -110,19 +110,19 @@
                                 </td>
                             </tr>
                             <!--<tr style="height: 30px;" *ngIf="ControlField1Visibile">
-        <td style="height: 22px;">
-            <label style="padding-left:10px;color: rgb(110, 113, 114);">
-                Control Field1
-            </label>
-        </td>
-    </tr>
-    <tr style="height: 30px;" *ngIf="ControlField1Visibile">
-        <td style="height: 22px;">
-            <label style="padding-left:10px;color: rgb(110, 113, 114);">
-                Control Field2
-            </label>
-        </td>
-    </tr>-->
+                                <td style="height: 22px;">
+                                    <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                        Control Field1
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr style="height: 30px;" *ngIf="ControlField1Visibile">
+                                <td style="height: 22px;">
+                                    <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                        Control Field2
+                                    </label>
+                                </td>
+                            </tr>-->
                             <tr style="height: 30px;" *ngIf="PickListVisibile">
                                 <td style="height: 22px;">
                                     <label style="padding-left:10px;color: rgb(110, 113, 114);">
@@ -150,21 +150,21 @@
                     <td>
                         <table style="width:364px;">
                             <tr style="height: 30px;">
-                                <td style="height: 22px;">
+                                <td style="height: 22px;" [class.Disabled]="IsPartner">
                                     <LogTextBox [ObjectFieldName]="'FieldLable'" [DataContext]="DataContext"></LogTextBox>
                                 </td>
                             </tr>
 
                             <tr style="height: 30px;">
                                 <td style="height: 22px;">
-                                    <div style="position:absolute;width: 364px;top: 0;bottom: 0;left: 0;right: 0;" [class.Disabled]="IsNew == false">
+                                    <div style="position:absolute;width: 364px;top: 0;bottom: 0;left: 0;right: 0;" [class.Disabled]="IsNew == false || IsPartner">
                                         <LogTextBox [ObjectFieldName]="'Code'" [DataContext]="DataContext" [Text]="Code"></LogTextBox>
                                     </div>
                                 </td>
                             </tr>
                             <tr style="height: 30px;">
                                 <td style="height: 22px;">
-                                    <div style="position:absolute;width: 326px;top: 0;bottom: 0;left: 0;right: 0;" [class.Disabled]="IsNew == false">
+                                    <div style="position:absolute;width: 326px;top: 0;bottom: 0;left: 0;right: 0;" [class.Disabled]="IsNew == false || IsPartner">
                                         <ComboBox [ItemsSource]="DataTypeCollection" (SelectedItemChanged)="DataTypeSelectionMethod($event)" [SelectedItem]="CustomFieldDataType" [Binding]="'Name'"></ComboBox>
                                     </div>
                                 </td>
@@ -175,7 +175,7 @@
                                 <td style="height: 22px;">
                                     <table>
                                         <tr>
-                                            <td style="width:95px;" [class.Disabled]="IsNew==false">
+                                            <td style="width:95px;" [class.Disabled]="IsNew==false || IsPartner">
                                                 <LogTextBox [InputType]="'integer'" [ObjectFieldName]="'NumberOfDigits'" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                             </td>
 
@@ -189,7 +189,7 @@
                                                     Decimal Digits:
                                                 </label>
                                             </td>
-                                            <td style="width:95px" [class.Disabled]="IsNew==false">
+                                            <td style="width:95px" [class.Disabled]="IsNew==false || IsPartner">
                                                 <LogTextBox [InputType]="'integer'" [ObjectFieldName]="'DigitsAfterPoint'" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                             </td>
 
@@ -210,7 +210,7 @@
                                 <td style="height: 22px;">
                                     <table>
                                         <tr>
-                                            <td style="width: 20px;">
+                                            <td style="width: 20px;" [class.Disabled]="IsPartner">
                                                 <CheckBox [IsChecked]="DisplayOnly" (Checked)="DisplayOnly = $event"></CheckBox>
                                             </td>
 
@@ -228,17 +228,17 @@
 
 
                             <tr style="height: 30px;">
-                                <td style="height: 22px;">
+                                <td style="height: 22px;" [class.Disabled]="IsPartner">
                                     <LogTextBox [ObjectFieldName]="'HelpText'" [DataContext]="DataContext"></LogTextBox>
                                     <!--<LogLov [RunToggleMode]="true"
-                    [ObjectFieldName]="'ForwarderPartnerId'"
-                    [DataContext]="DataContext"
-                    [LookUpTableName]="'HybridPartner'">
-            </LogLov>-->
+                                            [ObjectFieldName]="'ForwarderPartnerId'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'HybridPartner'">
+                                    </LogLov>-->
                                 </td>
                             </tr>
                             <tr style="height: 30px;" *ngIf="objectField.DataTypeCode == 'LookUp'">
-                                <td style="height: 22px;" [class.Disabled]="!IsNew">
+                                <td style="height: 22px;" [class.Disabled]="!IsNew || IsPartner">
                                     <div style="position:absolute;width: 326px;top: 0;bottom: 0;left: 0;right: 0;">
                                         <LogLov (SelectedItemChanged)="LookUpTablesSelectionMethod($event)"
                                                 [QueryFilterItems]="LookUpTablesFilterItems"
@@ -257,47 +257,47 @@
                                 </td>
                             </tr>
                             <tr style="height: 30px;" *ngIf="objectField.DataTypeCode == 'Text' || objectField.DataTypeCode == 'nText'">
-                                <td style="height: 22px;">
+                                <td style="height: 22px;" [class.Disabled]="IsPartner">
                                     <LogTextBox [InputType]="'integer'" [ObjectFieldName]="'MinLength'" [DataContext]="DataContext"></LogTextBox>
                                 </td>
                             </tr>
                             <tr style="height: 30px;" *ngIf="objectField.DataTypeCode == 'Text' || objectField.DataTypeCode == 'nText'">
-                                <td style="height: 22px;">
+                                <td style="height: 22px;" [class.Disabled]="IsPartner">
                                     <LogTextBox [InputType]="'integer'" [ObjectFieldName]="'MaxLength'" [DataContext]="DataContext"></LogTextBox>
                                 </td>
                             </tr>
                             <tr style="height: 30px;" *ngIf="objectField.DataTypeCode == 'Text' || objectField.DataTypeCode == 'nText'">
-                                <td style="height: 22px;">
+                                <td style="height: 22px;" [class.Disabled]="IsPartner">
                                     <LogCheckBox (ValueChanged)="onIsMultilineChange($event)" [ObjectFieldName]="'IsMultiline'" [DataContext]="DataContext"></LogCheckBox>
                                 </td>
                             </tr>
                             <!--<tr style="height: 30px;" *ngIf="ControlField1Visibile">
-        <td style="height: 22px;">
-            <div style="position:absolute;width: 326px;top: 0;bottom: 0;left: 0;right: 0;">
-                <ComboBox (SelectedItemChanged)="ContolFieldsList2SelectionMethod($event)" [ItemsSource]="ContolFieldsList1" [SelectedItem]="ControlField1" [Binding]="'FieldName'"></ComboBox>
-            </div>
-        </td>
-    </tr>
-    <tr style="height: 30px;" *ngIf="ControlField2Visibile">
-        <td style="height: 22px;">
-            <div style="position:absolute;width: 326px;top: 0;bottom: 0;left: 0;right: 0;">
-                <ComboBox (SelectedItemChanged)="ContolFieldsList2SelectionMethod($event)" [ItemsSource]="ContolFieldsList2" [SelectedItem]="ControlField2" [Binding]="'FieldName'"></ComboBox>
-            </div>
-        </td>
-    </tr>-->
+                                <td style="height: 22px;">
+                                    <div style="position:absolute;width: 326px;top: 0;bottom: 0;left: 0;right: 0;">
+                                        <ComboBox (SelectedItemChanged)="ContolFieldsList2SelectionMethod($event)" [ItemsSource]="ContolFieldsList1" [SelectedItem]="ControlField1" [Binding]="'FieldName'"></ComboBox>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr style="height: 30px;" *ngIf="ControlField2Visibile">
+                                <td style="height: 22px;">
+                                    <div style="position:absolute;width: 326px;top: 0;bottom: 0;left: 0;right: 0;">
+                                        <ComboBox (SelectedItemChanged)="ContolFieldsList2SelectionMethod($event)" [ItemsSource]="ContolFieldsList2" [SelectedItem]="ControlField2" [Binding]="'FieldName'"></ComboBox>
+                                    </div>
+                                </td>
+                            </tr>-->
                             <tr style="height: 30px;" *ngIf="PickListVisibile">
                                 <td style="height: 22px;">
                                     <table>
                                         <tr>
-                                            <td style="width:200px;">
+                                            <td style="width:200px;" [class.Disabled]="IsPartner">
                                                 <div style="position:absolute;width: 204px;top: 0;bottom: 0;left: 0;right: 0;">
                                                     <ComboBox (SelectedItemChanged)="PickListSelectionMethod($event)" [ItemsSource]="CustomPickListsList" [SelectedItem]="PickListItem"></ComboBox>
                                                 </div>
                                             </td>
-                                            <td style="width:65px;">
+                                            <td style="width:65px;" [class.Disabled]="IsPartner">
                                                 <button class="Button" (click)="EditPickListButtonClicked()" style="width:57px;float: right;margin-left:3px;margin-top:-7px;">Edit</button>
                                             </td>
-                                            <td style="width:65px;">
+                                            <td style="width:65px;" [class.Disabled]="IsPartner">
                                                 <button class="Button" (click)="AddPickListButtonClicked()" style="width:57px;float: right;margin-left:3px;margin-top:-7px;">Add</button>
                                             </td>
                                             <td></td>
@@ -307,7 +307,7 @@
                                 </td>
                             </tr>
                             <tr style="height: 30px;">
-                                <td style="height: 22px;">
+                                <td style="height: 22px;" [class.Disabled]="IsPartner">
                                     <LogCheckBox (ValueChanged)="onIsRequiredChange($event)" [ObjectFieldName]="'IsRequired'" [DataContext]="DataContext"></LogCheckBox>
                                 </td>
                             </tr>
@@ -322,7 +322,7 @@
             </table>
         </td>
     </tr>
-    <tr  style="height:65%" *ngIf="ShownAdditionalFilters && LookUpTableName">
+    <tr style="height:35%" *ngIf="ShownAdditionalFilters && LookUpTableName">
         <td>
             <table>
                 <tr style="height: 10px;">
@@ -342,7 +342,7 @@
                     </td>
                 </tr>
                 <tr *ngIf="ShownAdditionalFiltersSettings">
-                    <td>
+                    <td [class.Disabled]="IsPartner">
                         <ScrollViewer [IsTowSides]="true">
                             <QueryFilterTree style="position:absolute;" [DataSource]="AdditionalFiltersData" [IsRoot]="true" [ParentObjectTableName]="ObjectTableName" [ObjectTableName]="LookUpTableName"></QueryFilterTree>
                         </ScrollViewer>
@@ -356,7 +356,78 @@
             </table>
         </td>
     </tr>
-
+    <tr style="height:30%" *ngIf="IsCardObjectTable() || IsPartner">
+        <td>
+            <table style="width:300px">
+                <tr class="TabTitleRow">
+                    <td>Partner Types:</td>
+                </tr>
+                <tr>
+                    <td style="padding-left:15px">
+                            <table>
+                                <tr class="FormFieldRow">
+                                    <td style="padding-right:10px">
+                                        <CheckBox [Text]="'Customer'" [IsEnabled]="!IsPartner"></CheckBox>
+                                    </td>
+                                    <td style="padding-right:10px">
+                                        <CheckBox [Text]="'Agent'" [IsEnabled]="!IsPartner"></CheckBox>
+                                    </td>
+                                    <td style="padding-right:10px">
+                                        <CheckBox [Text]="'Customs Agent'" [IsEnabled]="!IsPartner"></CheckBox>
+                                    </td>
+                                    <td style="padding-right:10px">
+                                        <CheckBox [Text]="'Coloader'" [IsEnabled]="!IsPartner"></CheckBox>
+                                    </td>
+                                </tr>
+                                <tr class="FormFieldRow">
+                                    <td style="padding-right:10px">
+                                        <CheckBox [Text]="'Vendor'" [IsEnabled]="!IsPartner"></CheckBox>
+                                    </td>
+                                    <td style="padding-right:10px">
+                                        <CheckBox [Text]="'Shipping Line'" [IsEnabled]="!IsPartner"></CheckBox>
+                                    </td>
+                                    <td style="padding-right:10px">
+                                        <CheckBox [Text]="'Shipping Agent'" [IsEnabled]="!IsPartner"></CheckBox>
+                                    </td>
+                                    <td style="padding-right:10px">
+                                        <CheckBox [Text]="'Freelancer'" [IsEnabled]="!IsPartner"></CheckBox>
+                                    </td>
+                                </tr>
+                                <tr class="FormFieldRow">
+                                    <td style="padding-right:10px">
+                                        <CheckBox [Text]="'Customs Shipper'" [IsEnabled]="!IsPartner"></CheckBox>
+                                    </td>
+                                    <td style="padding-right:10px">
+                                        <CheckBox [Text]="'AirLine'" [IsEnabled]="!IsPartner"></CheckBox>
+                                    </td>
+                                    <td style="padding-right:10px">
+                                        <CheckBox [Text]="'Warehouse'" [IsEnabled]="!IsPartner"></CheckBox>
+                                    </td>
+                                    <td style="padding-right:10px">
+                                        <CheckBox [Text]="'Potential Customer'" [IsEnabled]="!IsPartner"></CheckBox>
+                                    </td>
+                                </tr>
+                                <tr class="FormFieldRow">
+                                    <td style="padding-right:10px">
+                                        <CheckBox [Text]="'Trucker'" [IsEnabled]="!IsPartner"></CheckBox>
+                                    </td>
+                                    <td style="padding-right:10px">
+                                        <CheckBox [Text]="'Custom Clearance'" [IsEnabled]="!IsPartner"></CheckBox>
+                                    </td>
+                                    <td style="padding-right:10px">
+                                        <CheckBox [Text]="'Accounting Partner'" [IsEnabled]="false"></CheckBox>
+                                    </td>
+                                    <td style="padding-right:10px">
+                                        <CheckBox [Text]="'Participant'" [IsEnabled]="false"></CheckBox>
+                                    </td>
+                                </tr>
+                               
+                            </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
     <tr><td colspan="5"></td></tr>
 
     <tr style="height:1px;">

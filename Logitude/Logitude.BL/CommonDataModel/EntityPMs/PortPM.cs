@@ -158,5 +158,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public string PortGroupId { get; set; }
+        public bool IsFromWorkerRole { get; set; }
     }
 }

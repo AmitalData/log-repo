@@ -17,6 +17,8 @@ using System.Collections.Generic;
 using System.Net;
 using System.Linq;
 using Logitude.SystemLogs;
+using Logitude.Extensions;
+using Simplog.Data.QuoteModel.Repositories;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -58,39 +60,24 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         }
 
         [HttpPost]
-        [Route("DigitalQuote/GetByFilters")]
+        [Route("DigitalInvoice/GetByFilters")]
         public HttpResponseMessage GetByFilters(GeneralFilters newFilters)
         {
             int tenant = 0;
-            string email = string.Empty;
+            string email = "";
             try
             {
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
 
-                tenant = authToken.Tenant;
-                email = authToken.Email;
                 newFilters.Tenant = authToken.Tenant;
-                var quoteQuery = new QuoteQuery(authToken.Tenant);
-                var entityLists = quoteQuery.GetByFilters(newFilters);
-
-                var response = new ServiceResponse();
-                if (newFilters.GetCount)
-                {
-                    response.Count = entityLists.Count();
-                }
-
-                entityLists = QueryableExtensions.Skip(entityLists, () => newFilters.PageIndex);
-                entityLists = QueryableExtensions.Take(entityLists, () => newFilters.PageSize);
-
-                List<QuoteList> listQuery = entityLists.ToList();
-
-                response.Result = listQuery;
-
-                var reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
-
-                return reponseMessage;
+                var aRInvoiceQuery = new QuoteQuery(authToken.Tenant);
+                var entityLists = aRInvoiceQuery.GetByFilters(newFilters);
+                var res = entityLists.GetPaged(newFilters.PageIndex, newFilters.PageSize);
+                return Request.CreateResponse(HttpStatusCode.OK, res);
             }
             catch (AutenticationException ex)
             {
@@ -102,5 +89,43 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        [HttpGet]
+        [Route("DigitalQuote/[action]")]
+        public HttpResponseMessage GetFromToCountryFilters(string cardId, string cardType, string searchType, string searchText = "")
+        {
+            int tenant = 0;
+            string email = "";
+
+            try
+            {
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
+
+                if (string.IsNullOrWhiteSpace(searchText) || searchText.Length < 3)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, new List<FilterSearchResponse>());
+                }
+
+                bool isFrom = searchType.Equals("From", StringComparison.InvariantCultureIgnoreCase);
+                var quoteRepository = new QuoteRepository(authToken.Tenant);
+                var result = new QuoteQuery(quoteRepository).GetFromToCountryFilters(authToken.Tenant, cardType, cardId, isFrom, searchText);
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+
+            }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.Unauthorized, ApiExceptionBuilder.BuildException(ex));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
     }
 }

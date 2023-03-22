@@ -36,6 +36,7 @@ import {SafePipe} from './Pipes/SafePipe';
 import {LogBoxStatusDatePipe} from './Pipes/LogBoxStatusDatePipe';
 import {TimeToHoursMinutesPipe} from './Pipes/TimeToHoursMinutesPipe';
 import {CustomFieldResolverPipe} from './Pipes/CustomFieldResolverPipe';
+import {ContainerDateTimeToColorPipe} from './Pipes/ContainerDateTimeToColorPipe';
 
 // Controls Components
 import { GeneralSendComponent } from './Components/LogitudeComponents/GeneralSendComponent';
@@ -250,6 +251,7 @@ export const Pipes =
         LogBoxStatusDatePipe,
         TimeToHoursMinutesPipe,
         CustomFieldResolverPipe,
+        ContainerDateTimeToColorPipe,
     ];
 export const ControlsComponents =
     [

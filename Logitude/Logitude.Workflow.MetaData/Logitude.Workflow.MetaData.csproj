@@ -58,6 +58,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ContextGenerator.cs</LastGenOutput>
     </None>
+    <None Include="DBScripts\UpdateDefaultTaskPriorities.sxml" />
     <None Include="DBScripts\0_PrepareWorkflows.sxml" />
     <None Include="DBScripts\AddDefaultTaskPriorities.sxml" />
     <None Include="DBScripts\AddDefaultTaskStatuses.sxml" />
@@ -69,6 +70,7 @@
     <None Include="DBScripts\DeleteDateDifExpression.sxml" />
     <None Include="DBScripts\ReplaceWorkflowsJsonEntityNameKeyWithEntityKey.sxml" />
     <None Include="DBScripts\FillWorkflowsTriggerField.sxml" />
+    <None Include="DBScripts\TaskMaintenanceCategoryType.sxml" />
     <None Include="DBTables\Expression.dxml" />
     <None Include="DBTables\ExpressionCategory.dxml" />
     <None Include="DBTables\Operator.dxml" />

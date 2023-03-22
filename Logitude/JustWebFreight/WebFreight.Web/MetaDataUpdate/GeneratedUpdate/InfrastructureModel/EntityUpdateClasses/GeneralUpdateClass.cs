@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "a42b0eca34fd957b00a968d7403d8255";
+		public const string HashString = "23c3cd825950fa41c872b79263d188fc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -102,6 +102,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    AvailableInCustomization =  false,
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
+			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -127,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "a937",
+			      				    Code =  "1f80",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -701,6 +702,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		   Feature GeneralFeature_CONTAINERS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTAINERS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CONTAINERS", NameTextCodeDefaultText = @"Containers" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
 		   Feature GeneralFeature_PendingApprovalDocuments = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PendingApprovalDocuments", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.PendingApprovalDocuments", NameTextCodeDefaultText = @"Pending Approval Documents" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+
+		   Feature GeneralFeature_TASKTYPES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TASKTYPES", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.TASKTYPES", NameTextCodeDefaultText = @"Task Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+
+		   Feature GeneralFeature_TASKPRIORITIES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TASKPRIORITIES", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.TASKPRIORITIES", NameTextCodeDefaultText = @"Task Priorities" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+
+		   Feature GeneralFeature_TASKSTATUSES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TASKSTATUSES", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.TASKSTATUSES", NameTextCodeDefaultText = @"Task Statuses" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
    
 	    
@@ -2727,6 +2734,74 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_GeneralMHContainers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Containers", DefaultText = "Containers",LocalDefaultText = @"Containers", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingGeneralOSigneds = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Signeds", DefaultText = "Signed Fields",LocalDefaultText = @"חתימה דיגיטלית", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralMCTasksTasks = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Tasks.Tasks", DefaultText = "Tasks",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralMCTasksTaskTypes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Tasks.TaskTypes", DefaultText = "Task Types",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralMCTasksTaskPriorities = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Tasks.TaskPriorities", DefaultText = "Task Priorities",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralMCTasksTaskStatuses = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Tasks.TaskStatuses", DefaultText = "Task Statuses",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+ 		   TextCode GeneralTextCode_GeneralMCACCConsolidatedTaxReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.ConsolidatedTaxReport", DefaultText = "Consolidated Tax Report",LocalDefaultText = @"דיווח מס מרוכז", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ConsolidatedTaxReportQConsolidatedTaxReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.Q.ConsolidatedTaxReport", DefaultText = "Consolidated Tax Report",LocalDefaultText = @"דיווח מס מרוכז", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ConsolidatedTaxReportODeductionFileNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.DeductionFileNumber", DefaultText = "Deduction File Number is undefined.",LocalDefaultText = @"מספר תיק ניכויים אינו מוגדר.", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ConsolidatedTaxReportOFinishingRowType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.FinishingRowType", DefaultText = "Finishing Row Type",LocalDefaultText = @"רשומת סיכום", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ConsolidatedTaxReportOStartingRowType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.StartingRowType", DefaultText = "Starting Row Type",LocalDefaultText = @"רשומת פתיחה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ConsolidatedTaxReportOTaxLineRowType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.TaxLineRowType", DefaultText = "Tax Line Row Type",LocalDefaultText = @"רשומת תנועה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ConsolidatedTaxReportONotValidRowType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.NotValidRowType", DefaultText = "Not a valid Row Type",LocalDefaultText = @"רשומה לא מסוג תקין", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ConsolidatedTaxReportODoesntStartWithRowType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.DoesntStartWithRowType", DefaultText = "does not start with a Line Row Type",LocalDefaultText = @"לא מתחיל בסוג רשומה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ConsolidatedTaxReportONotEncountered = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.NotEncountered", DefaultText = "not encountered",LocalDefaultText = @"לא זוהתה עד כה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ConsolidatedTaxReportODiffersFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.DiffersFrom", DefaultText = "differs from ",LocalDefaultText = @"לא זהה ל", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ConsolidatedTaxReportOIsMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.IsMissing", DefaultText = "is missing",LocalDefaultText = @"חסר", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ConsolidatedTaxReportOIsEmpty = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.IsEmpty", DefaultText = "is empty",LocalDefaultText = @"ריק", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ConsolidatedTaxReportONotFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.NotFound", DefaultText = "not found",LocalDefaultText = @"לא נמצא", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ConsolidatedTaxReportOStatusError = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.StatusError", DefaultText = " - cannot update a report that was transmitted or cancelled",LocalDefaultText = @"לא ניתן לקלוט שורות לדוח ששודר או בוטל", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ConsolidatedTaxReportOAppearsBefore = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.AppearsBefore", DefaultText = "Appears Before",LocalDefaultText = @"מופיעה לפני", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ConsolidatedTaxReportOStartingRowDeductionFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.StartingRowDeductionFile", DefaultText = "Starting Row Deduction File",LocalDefaultText = @"תיק ניכויים ברשומת הפתיחה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ConsolidatedTaxReportOFinishingRowDeductionFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.FinishingRowDeductionFile", DefaultText = "Finishing Row Deduction File",LocalDefaultText = @"תיק ניכויים ברשומת הסיכום", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ConsolidatedTaxReportOOurDeductionFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.OurDeductionFile", DefaultText = "Our Deduction File Number",LocalDefaultText = @"מספר תיק הניכויים שלנו", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ConsolidatedTaxReportOFinishingRowTotals = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.FinishingRowTotals", DefaultText = "Finishing Row totals do not sum up together",LocalDefaultText = @"כמויות לא מתחברות יחד ברשימת הסיכום", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ConsolidatedTaxReportOTaxLineNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.TaxLineNo", DefaultText = "Tax Line #",LocalDefaultText = @"שורת תנועה מס' ", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ConsolidatedTaxReportOTaxReportId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.TaxReportId", DefaultText = "Tax Report Id",LocalDefaultText = "מזהה דו\''ח מס", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ConsolidatedTaxReportOOppositeVatNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.OppositeVatNumber", DefaultText = "Opposite VAT #",LocalDefaultText = @"מספר תיק של צד נגדי", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ConsolidatedTaxReportOLocatedDeductionFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.LocatedDeductionFile", DefaultText = "Located Deduction File",LocalDefaultText = @"תיק ניכויים שאותר", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ConsolidatedTaxReportOLocatedVATNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.LocatedVATNumber", DefaultText = "Located VAT Number",LocalDefaultText = @"מספר עוסק מורשה שאותר", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ConsolidatedTaxReportOReferenceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.ReferenceDate", DefaultText = "Reference Date",LocalDefaultText = @"תאריך אסמכתא", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ConsolidatedTaxReportOReference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.Reference", DefaultText = "Reference #",LocalDefaultText = @"מספר אסמכתא", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ConsolidatedTaxReportOEndDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.EndDate", DefaultText = "End Date",LocalDefaultText = @"תאריך סיום", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ConsolidatedTaxReportOFailedWhilePerforming = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.FailedWhilePerforming", DefaultText = "failed while performing",LocalDefaultText = @"תקלה בביצוע", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ConsolidatedTaxReportONoLinesProcessed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.NoLinesProcessed", DefaultText = "No Lines Processed",LocalDefaultText = @"אין שורות לעיבוד", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

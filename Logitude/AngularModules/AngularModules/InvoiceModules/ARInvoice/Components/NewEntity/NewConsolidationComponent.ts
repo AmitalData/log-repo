@@ -49,6 +49,7 @@ export class NewConsolidationComponent extends BaseComponent {
     public documentTypeTemplates: DocumentTypeTemplateList[] = [];
     public selectedDocumentTypeTemplate: DocumentTypeTemplateList;
     public IsLoadDocumentTemplateReady = false;
+    public IsDocumentTypeTemplateChange = false;
 
     constructor(private entityResourceService: EntityResourceService) {
         super();
@@ -86,8 +87,9 @@ export class NewConsolidationComponent extends BaseComponent {
             this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
 
             this.SetUIProperties();
-            this.GetDocumentTypeTemplates();
             this.BuildPartnersTypes();
+            this.GetDocumentTypeTemplates();
+
           this.LoadData();
 
             if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
@@ -162,12 +164,11 @@ export class NewConsolidationComponent extends BaseComponent {
     }
 
     BuildDocumentTypeTemplateDependedOnPartnerDefaultTemplate(documentTypeCode: string): any {
-        let selectedDocumentTypeTemplateId: string = null;
         if (!this.PartnerId) this.LoadDocumentTypeTemplate(documentTypeCode);
         this.myCardListService.getSingle(this.PartnerId).subscribe((myResponse: ServiceResponse) => {
             if (myResponse.HasError) return;
             let cardList: CardList = myResponse.Result;
-            selectedDocumentTypeTemplateId = this.GetPartnerDocumentTypeTemplatetDefault(cardList, documentTypeCode);
+            let selectedDocumentTypeTemplateId = this.GetPartnerDocumentTypeTemplatetDefault(cardList, documentTypeCode);
             this.LoadDocumentTypeTemplate(documentTypeCode, selectedDocumentTypeTemplateId);
         });
     }
@@ -201,6 +202,8 @@ export class NewConsolidationComponent extends BaseComponent {
         if (!selectedDocumentTypeTemplate) return;
         this.OnDocumentTypeTemplateSelectedChanged(selectedDocumentTypeTemplate);
         this.IsLoadDocumentTemplateReady = true;
+        this.IsDocumentTypeTemplateChange = !this.IsDocumentTypeTemplateChange;
+
         this.CurrentSession.CurrentWindow.StopBusyIndicator();
     }
 
@@ -421,7 +424,6 @@ export class NewConsolidationComponent extends BaseComponent {
                         var list: CardList = myResponse.Result;
                         if (list != null) {
                             this.BillToId = list.BillToId;
-                            this.GetDocumentTypeTemplates();
                             if (AppTool.IsNullOrEmpty(this.BillToId)) {
                                 this.BillToId = newValue;
                             }
@@ -430,6 +432,8 @@ export class NewConsolidationComponent extends BaseComponent {
                 });
             }
         }
+
+        this.GetDocumentTypeTemplates();
     }
 
     get BillToPartnerTypeId() { return this.EntityPM.BillToPartnerTypeId; }

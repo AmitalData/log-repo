@@ -11,6 +11,7 @@ import { ExpressionValue } from "Workflow/Types";
 import { ObjectFieldPipe } from "Workflow/Pipes/ObjectFieldPipe";
 import { IsNoObjectFieldVariablePipe } from "Workflow/Pipes/IsNoObjectFieldVariablePipe";
 import { ObjectFieldsTreeList } from "Workflow/TreeLists/ObjectFieldsTreeList";
+import { SetValueDisabledPipe } from "Workflow/Pipes/SetValueDisabledPipe";
 
 @Component({
     selector: "SetValues",
@@ -200,7 +201,8 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
 
     deleteSetValue(setValueIndex: number) {
         let setValue = this.SetValues[setValueIndex];
-        if (setValue && !setValue.isDisabled) {
+        let isDeleteDisabled = setValue ? (new SetValueDisabledPipe().transform(setValue.disabled, "d")) : false;
+        if (setValue && !isDeleteDisabled) {
             this.SetValues.splice(setValueIndex, 1);
             this.setValuesChanged();
         }

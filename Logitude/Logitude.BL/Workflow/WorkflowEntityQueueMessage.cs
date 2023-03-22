@@ -11,6 +11,7 @@ namespace Logitude.BL.Workfkow
         public string EntityId { get; set; }
         public string AuditLogId { get; set; }
         public string Type { get; set; }
+        public bool IsCustom { get; set; }
 
         private const string QueueName = "WorkflowEntity";
         private const string ObjectTableName = "WorkFlow";
@@ -35,7 +36,8 @@ namespace Logitude.BL.Workfkow
                 { "Entity", Entity },
                 { "EntityId", EntityId },
                 { "AuditLogId", AuditLogId },
-                { "Type", Type }
+                { "Type", Type },
+                { "IsCustom", IsCustom.ToString() }
             };
 
             queueservice.Send(queueMessage, Tenant);

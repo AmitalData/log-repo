@@ -108,7 +108,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
             this.LoadBIReport(myResponse?.Result?.ReportDetails);
         }
         else if (!this.IsBIReport) {
-            this.LoadReportTemplate(myResponse?.Result?.ReportDetails?.ReportTemplateType);
+            this.LoadReportAndMessageTemplates(myResponse?.Result?.ReportDetails?.ReportTemplateType);
         }
         else {
             this.RunComponent();
@@ -117,14 +117,13 @@ export class AddEditReportSchedulerComponent implements OnInit {
     }
 
     ReportTemplates: any = [];
-    LoadReportTemplate(templateType) {
-        this.TemplateType = AppTool.IsNullOrEmpty(templateType) ? "R" : templateType
-        this.reportsTemplateListExtendedService.getReportsTemplateListsByReportId(this.ReportList.Id,this.TemplateType).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.ReportTemplates = myResponse.Result;
-                this.RunComponent();
-                this.CurrentSession.StopBusyIndicator();
-            }
+    LoadReportAndMessageTemplates(templateType) {
+        this.reportsTemplateListExtendedService.getReportsTemplateListsByReportId(this.ReportList.Id).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse.HasError) return;
+            this.TemplateType = "";
+            this.ReportTemplates = myResponse.Result;
+            this.RunComponent();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -186,6 +185,9 @@ export class AddEditReportSchedulerComponent implements OnInit {
                 case "PRREP": {
                     if (this.PageChild_PRREP == null) {
                         this.OpenPreviewReport(myLocation);
+                    } else if (!this.IsBIReport) {
+                        this.PageChild_PRREP.SetResultType(this.DataContext.EntityPM.ResultType);
+                        this.PageChild_PRREP.Refresh();
                     }
                     break;
                 }
@@ -248,11 +250,17 @@ export class AddEditReportSchedulerComponent implements OnInit {
     }
 
     SetReportDetails() {
-        var reportTemplateId = this.PageChild_RETASK.GetReportTemplateId();
-        var reportFilterItems = this.PageChild_RETASK.GetReportFilterItems();
+        let reportTemplateId = this.PageChild_RETASK.GetReportTemplateId();
+        let reportFilterItems = this.PageChild_RETASK.GetReportFilterItems();
+        let messageTemplateId = this.PageChild_RETASK.GetMessageTemplateId();
+
         this.PageChild_PRREP.SetReportFilterItems(reportFilterItems);
         this.PageChild_PRREP.SetReportTemplate(reportTemplateId);
         this.PageChild_PRREP.SetReportTemplateType(this.TemplateType);
+        this.PageChild_PRREP.SetMessageTemplateId(messageTemplateId);
+        this.PageChild_PRREP.SetResultType(this.DataContext.EntityPM.ResultType);
+        this.PageChild_PRREP.SetReportEntityId(this.DataContext.EntityPM.Id);
+
         this.PageChild_PRREP.ReportsPreview(this.ReportGroupList, this.ReportList, this.ReportTemplates);
       //  this.RunBuildStimulsoftTimer();
     }
@@ -406,7 +414,8 @@ export class AddEditReportSchedulerComponent implements OnInit {
             DWQueryId: null,
             DWQueryFilterData: null,
             DocumentTypeTemplateId: this.PageChild_PRREP ? this.GetDocumentTemplateMessageId() : this.OldReportSchedulerDetails.DocumentTypeTemplateId,
-            DocumentTypeTemplateIds: null,
+            DocumentTypeTemplateIds: this.PageChild_PRREP ? this.PageChild_PRREP.MessageTemplateIds : this.OldReportSchedulerDetails.DocumentTypeTemplateIds,
+            MessageTemplateId: this.PageChild_PRREP ? this.PageChild_PRREP.GetMessageTemplateId() : this.OldReportSchedulerDetails?.MessageTemplateId,
         };
         this.PageChild_RETASK.SaveButtonClicked(reportSchedulerDetails);
     }
@@ -453,6 +462,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
             DocumentTypeTemplateId: this.PageChild_PRREP ? this.GetDocumentTemplateMessageId() : this.OldReportSchedulerDetails.DocumentTypeTemplateId,
             DocumentTypeTemplateIds: this.PageChild_PRREP ? this.PageChild_PRREP.DocumentTypeTemplateIds : this.OldReportSchedulerDetails.DocumentTypeTemplateIds,
             DWQueryFilterData: this.PageChild_PRREP ? this.GetNewSelectedFilters() : this.GetOriginalSelectedFilters(),
+            MessageTemplateId: null,
         };
         this.PageChild_RETASK.SaveButtonClicked(reportSchedulerDetails);
     }

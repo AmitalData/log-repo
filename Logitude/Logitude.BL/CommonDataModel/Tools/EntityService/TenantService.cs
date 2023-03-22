@@ -106,7 +106,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     TotalNumberOfUsers = IsEmptyTotalDefaultNumberOfUsers(theEntityPm) ? 1 : theEntityPm.TotalDefaultNumberOfUsers,
                     SearchFields = globalTenant.Id + "," + globalTenant.CompanyName + ",1",
                     AWBMessagesCCSTypeCode = "CHAMP",
-                };
+                    DPArchiveShipmentArrivalFilter = 3,
+                    DPArchiveShipmentDepartFilter = 3,
+                    DPArchiveShipmentCreateFilter = 12
+            };
 
                 Package tenantPackage = packages.Where(d => d.Code == tenantManagement.PackageCode).FirstOrDefault();
                 if (tenantPackage != null)

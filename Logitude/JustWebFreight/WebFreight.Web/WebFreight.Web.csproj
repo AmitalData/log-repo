@@ -738,6 +738,8 @@
     <Compile Include="Controllers\AccountingModel\ChartOfAccountsTypesExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\CardAPiHelper.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\ChargesTypeAPiHelper.cs" />
+    <Compile Include="Controllers\CommonDataModel\ImporterPortsController.cs" />
+    <Compile Include="Controllers\CommonDataModel\Services\ImporterPortsExtendedService.cs" />
     <Compile Include="Controllers\DashboardModel\Extended\DashboardListExtendedController.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\ListControllers\DashboardGlobalPresetFilterViewsController.Generated.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\ListControllers\DashboardsUserSettingViewsController.Generated.cs" />
@@ -7753,6 +7755,9 @@
       <DependentUpon>XapFilesStorageService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="WorkflowModel\DomainServices\TaskStatusDomainService.cs" />
+    <Compile Include="WorkflowModel\DomainServices\TaskPriorityDomainService.cs" />
+    <Compile Include="WorkflowModel\DomainServices\TaskTypeDomainService.cs" />
     <Compile Include="WorkflowModel\DomainServices\TaskDomainService.cs" />
     <Compile Include="WorkflowModel\DomainServices\WorkFlowVersionDomainService.cs" />
     <Compile Include="WorkflowModel\DomainServices\WorkFlowInstanceDomainService.cs" />

@@ -14,15 +14,15 @@ namespace Logitude.Workflow.Data.CustomFilters
     {
         public static IQueryable<Task> GetFilteredQuery(QueryOperations operations, IQueryable<Task> queryableData, int tenant)
         {
-            Contact contact = GetLoggedContact(tenant);
-
             List<QueryFilterItem> customQueryFilters = operations.QueryFilterItems.Where(q => q.IsCustom).ToList();
 
-            foreach (QueryFilterItem item in customQueryFilters)
+            foreach (QueryFilterItem customQueryFilter in customQueryFilters)
             {
-                if (item.FieldName == "MyOpenTasks")
+                if (customQueryFilter.FieldName == "MyOpenTasks")
                 {
-                    queryableData = queryableData.Where(d => d.IsClosed == false && d.OwnerId == contact.Id);
+                    Contact contact = GetLoggedContact(tenant);
+                    string contactId = contact?.Id;
+                    queryableData = queryableData.Where(d => d.IsClosed == false && d.OwnerId == contactId);
                 }
             }
             return queryableData;
@@ -30,9 +30,9 @@ namespace Logitude.Workflow.Data.CustomFilters
 
         private static Contact GetLoggedContact(int tenant)
         {
-            ICommonDataContext myContext = CommonDataContext.GetContext(tenant);
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
             string loggedUserEmail = HttpContext.Current.User.Identity.Name;
-            ContactRepository contactRepository = new ContactRepository(myContext);
+            ContactRepository contactRepository = new ContactRepository(commonDataContext);
             Contact contact = contactRepository.GetSingleContactByEmail(loggedUserEmail, tenant);
             return contact;
         }

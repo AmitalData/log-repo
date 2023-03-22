@@ -169,6 +169,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
                     nodeName: "name",
                     nodeLabel: "label",
                     startNodeEntity: "entity",
+                    startNodeEntityLabel: "entityLabel",
                     startNodeTrigger: "trigger",
                     conditionNodeMetLabel: "metLabel",
                     conditionNodeOtherwiseLabel: "otherwiseLabel"

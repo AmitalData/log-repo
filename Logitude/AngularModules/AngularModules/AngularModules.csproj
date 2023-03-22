@@ -486,6 +486,7 @@
     <Content Include="Workflow\Components\Properties\AppendItemPropertiesComponent.html" />
     <Content Include="Workflow\Components\Properties\CollectionFilterPropertiesComponent.html" />
     <Content Include="Workflow\Components\Properties\CreateRecordPropertiesComponent.html" />
+    <Content Include="Workflow\Components\Properties\CreateTaskPropertiesComponent.html" />
     <Content Include="Workflow\Components\Properties\DeclareVariablePropertiesComponent.html" />
     <Content Include="Workflow\Components\Properties\DeleteItemPropertiesComponent.html" />
     <Content Include="Workflow\Components\Properties\GetRecordPropertiesComponent.html" />
@@ -2176,6 +2177,7 @@
     <TypeScriptCompile Include="Infrastructure\Components\QueryColumnsComponents\btnUpdateComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchAddFieldsComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchWindowFieldsComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\StimulsoftComponent\Services\SchedulerReportMessageTemplateService.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Templates\MyTemplate.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomatedBackup.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationArgs.ts" />
@@ -8269,6 +8271,7 @@
     <TypeScriptCompile Include="Workflow\Components\Properties\AppendItemPropertiesComponent.ts" />
     <TypeScriptCompile Include="Workflow\Components\Properties\CollectionFilterPropertiesComponent.ts" />
     <TypeScriptCompile Include="Workflow\Components\Properties\CreateRecordPropertiesComponent.ts" />
+    <TypeScriptCompile Include="Workflow\Components\Properties\CreateTaskPropertiesComponent.ts" />
     <TypeScriptCompile Include="Workflow\Components\Properties\DeclareVariablePropertiesComponent.ts" />
     <TypeScriptCompile Include="Workflow\Components\Properties\DeleteItemPropertiesComponent.ts" />
     <TypeScriptCompile Include="Workflow\Components\Properties\GetRecordPropertiesComponent.ts" />
@@ -8343,6 +8346,7 @@
     <TypeScriptCompile Include="Workflow\Models\ListItem.ts" />
     <TypeScriptCompile Include="Workflow\Models\ReturnedField.ts" />
     <TypeScriptCompile Include="Workflow\Models\SetValue.ts" />
+    <TypeScriptCompile Include="Workflow\Models\TaskField.ts" />
     <TypeScriptCompile Include="Workflow\Models\TreeSelectItem.ts" />
     <TypeScriptCompile Include="Workflow\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="Workflow\ModuleProviders.ts" />
@@ -8359,6 +8363,7 @@
     <TypeScriptCompile Include="Workflow\Pipes\IsObjectTypePipe.ts" />
     <TypeScriptCompile Include="Workflow\Pipes\ListItemPipe.ts" />
     <TypeScriptCompile Include="Workflow\Pipes\ObjectFieldPipe.ts" />
+    <TypeScriptCompile Include="Workflow\Pipes\SetValueDisabledPipe.ts" />
     <TypeScriptCompile Include="Workflow\Pipes\SetValuesOperatorsItemsPipe.ts" />
     <TypeScriptCompile Include="Workflow\Pipes\ShowEditableVariablesTreeItemPipe.ts" />
     <TypeScriptCompile Include="Workflow\Pipes\ShowEntitiesTreeItemPipe.ts" />

@@ -22,25 +22,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     public class DigitalTextCodeController : ApiController
     {
         [HttpGet]
-        [Route("DigitalTextCode/ExportDigtialTextCode")]
-        public HttpResponseMessage ExportDigtialTextCode(string langCode = "")
-        {
-            int tenant = 0;
-            string email = "";
-            try
-            {
-                var screenQueryService = new DigitalPortalLangaugeQueryService();
-                var digitalPortalLanguages = screenQueryService.GetDigitalPortalLanguagesQuery(langCode);
-                return Request.CreateResponse(HttpStatusCode.OK, digitalPortalLanguages);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        [HttpGet]
         [Route("DigitalTextCode/GetDigitalProfileName")]
         public HttpResponseMessage GetDigitalProfileName(int tenant = 0)
         {
@@ -374,11 +355,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var objectTables = textCodeQuery.GetDigitalTextCodesObjetTables(0);
 
                 var digitalFieldSecurityQuery = new DigitalFieldSecurityQueryService(0);
-                var objectTablesWithNoParent = digitalFieldSecurityQuery.GetDigitalProfilesObjetTables(0)
+                var parentObjectTables = digitalFieldSecurityQuery.GetDigitalProfilesObjetTables(0, null)
                                                                         .Select(a => a.ObjectTableId)
                                                                         .ToList();
 
-                objectTables = objectTables.Where(a => objectTablesWithNoParent.Contains(a.ObjectTableId) 
+                objectTables = objectTables.Where(a => parentObjectTables.Contains(a.ObjectTableId) 
                                                        || a.ObjectTableName.Equals("General", StringComparison.InvariantCultureIgnoreCase))
                                            .ToList();
 
@@ -403,7 +384,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             try
             {
                 var digitalFieldSecurityQuery = new DigitalFieldSecurityQueryService(0);
-                var objectTables = digitalFieldSecurityQuery.GetDigitalSubObjectsProfilesObjetTables(objectTableId, 0);
+                var objectTables = digitalFieldSecurityQuery.GetDigitalProfilesObjetTables(0, objectTableId);
                 return Request.CreateResponse(HttpStatusCode.OK, objectTables);
             }
             catch (AutenticationException ex)

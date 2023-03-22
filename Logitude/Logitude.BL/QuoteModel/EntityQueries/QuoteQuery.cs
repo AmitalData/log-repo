@@ -221,6 +221,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
                                                FromPortName = f.FromPort == null ? "" : f.FromPort.EnglishName,
                                                ToPortName = f.ToPort == null ? "" : f.ToPort.EnglishName,
+                                               FromPortNameCode = f.FromPort == null ? "" : f.FromPort.EnglishName + ", " + f.FromPort.Code,
+                                               ToPortNameCode = f.ToPort == null ? "" : f.ToPort.EnglishName + ", " + f.ToPort.Code,
 
                                                FromPort = (f.TransportModeId == "I" && f.DirectionId == "D") ?
                                                (f.FromPartnerAddress != null ? f.FromPartnerAddress.City : "")
@@ -311,7 +313,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                ShipmentSubTypeId = f.ShipmentSubTypeId,
                                                ShipmentSubTypeName = f.ShipmentSubType == null ? null : f.ShipmentSubType.Name,
                                                RegionalTaxId = f.RegionalTaxId,
-                                               RegionalTaxPercentage=f.RegionalTaxPercentage,
+                                               RegionalTaxPercentage = f.RegionalTaxPercentage,
                                                IsMultiCurrency = f.IsMultiCurrency,
                                                PackagesQuantity = f.PackagesQuantity,
                                                SpecialServicesTypeId = f.SpecialServicesTypeId,
@@ -322,6 +324,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                ValidByTypeCode = f.ValidByTypeCode,
                                                ValidByTypeName = f.ValidByType == null ? null : f.ValidByType.Name,
                                                ConnectedToOpportunity = f.ConnectedToOpportunity,
+                                               StageCode = f.Stage == null ? "" : f.Stage.Code,
+                                               IsExpired = f.ExpirationDate < DateTime.Now && !f.IsCancelled && !f.IsClosed
                                            };
             return result;
         }

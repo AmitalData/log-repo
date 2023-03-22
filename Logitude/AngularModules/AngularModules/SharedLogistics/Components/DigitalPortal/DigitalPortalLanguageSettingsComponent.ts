@@ -166,7 +166,6 @@ export class DigitalPortalLanguageSettingsComponent implements OnInit {
     }
 
     OpenUpLoadFileToImportLanguage(){
-        this.IsUploadButtonEnabled = false;
         this.IsFileImportedSuccessfully = false;
         this.UploadedTranslationFileMSG = ''
         document.getElementById(this.UploadFileId).click();
@@ -188,35 +187,46 @@ export class DigitalPortalLanguageSettingsComponent implements OnInit {
     };
 
    async UploadFile(event: any) {
-        
         var file: any = event && event.currentTarget && event.currentTarget.files ? event.currentTarget.files[0] : null;
-
         var allowedFileTypes = ['.csv', ' .xls', ' .xlsx', ' text/csv', ' application/csv', 'text/comma-separated-values', ' application/csv', ' application/excel', 'application/vnd.msexcel', ' text/anytext', ' application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']
         
         if(!file || !allowedFileTypes.includes(file.type.toLowerCase())){
             this.IsUploadButtonEnabled = true;
             this.IsFileImportedSuccessfully = false;
-            this.UploadedTranslationFileMSG = 'Excel files allowed only!'
+            this.UploadedTranslationFileMSG = 'Only excel files allowed!'
             return;
         }
 
         this.CurrentSession.StartBusyIndicator('Uploading...');
         
-        var fileInfo : any = {}
-        if (file && file.size > 0) {
-            fileInfo.Name = file.name;
-            fileInfo.Base64 = await this.convertFileToBase64(file);
+        var fileInfo : ImportExcelParams = {
+            Tenant: 0,
+            FileData: null,
+            LanguageCode: this.selectedDisplayLanguage && this.selectedDisplayLanguage.code ? this.selectedDisplayLanguage.code : 'EN',
         }
 
-        
-        setTimeout(() => {
+        if (file && file.size > 0) {
+            var fileAs64Base = await this.convertFileToBase64(file);
+            fileInfo.FileData = fileAs64Base && typeof fileAs64Base === 'string' ? fileAs64Base.split('base64,')[1] : ''
+            this.ImportTextCodesExcelFile(fileInfo, event)
+        }
+    }
+
+    ImportTextCodesExcelFile(fileInfo: ImportExcelParams, event: any) {
+        this._digitalLanguageSettingsService.UploadDigitalTextCode(fileInfo).subscribe((myResult: any) => {
             this.CurrentSession.StopBusyIndicator();
             this.IsUploadButtonEnabled = true;
-            this.IsFileImportedSuccessfully = true;
-            this.UploadedTranslationFileMSG = 'File Imported Successfully.'
             event.target.value = '';
-        }, 5000);
-
+            if (myResult && myResult.HasError) {
+                this.IsFileImportedSuccessfully = false;
+                var errorMSG = myResult && myResult.ErrorsArray ? myResult.ErrorsArray[0] : '';
+                this.UploadedTranslationFileMSG = 'Importing file failed!. ' + errorMSG + '.';
+            }
+            else {
+                this.IsFileImportedSuccessfully = true;
+                this.UploadedTranslationFileMSG = 'File Imported Successfully.'
+            }
+        });
     }
 
     CloseButtonClicked() {
@@ -248,4 +258,13 @@ export class ExportExcelParams {
     }
 }
 
+export class ImportExcelParams {
+    Tenant: number;
+    FileData: any;
+    LanguageCode: string
+
+    constructor() {
+
+    }
+}
 

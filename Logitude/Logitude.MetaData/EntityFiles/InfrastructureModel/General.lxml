@@ -12,6 +12,7 @@
   AvailableInCustomization="false"
   SupportSubEntity="false"
   ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -38,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;a937&quot;"
+  Code="&quot;1f80&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5653,6 +5654,200 @@
       LocalDefaultText="&quot;חתימה דיגיטלית&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.Tasks.Tasks&quot;"
+      DefaultText="&quot;Tasks&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.Tasks.TaskTypes&quot;"
+      DefaultText="&quot;Task Types&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.Tasks.TaskPriorities&quot;"
+      DefaultText="&quot;Task Priorities&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.Tasks.TaskStatuses&quot;"
+      DefaultText="&quot;Task Statuses&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.ACC.ConsolidatedTaxReport&quot;"
+      DefaultText="&quot;Consolidated Tax Report&quot;"
+      LocalDefaultText="&quot;דיווח מס מרוכז&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.Q.ConsolidatedTaxReport&quot;"
+      DefaultText="&quot;Consolidated Tax Report&quot;"
+      LocalDefaultText="&quot;דיווח מס מרוכז&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.DeductionFileNumber&quot;"
+      DefaultText="&quot;Deduction File Number is undefined.&quot;"
+      LocalDefaultText="&quot;מספר תיק ניכויים אינו מוגדר.&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.FinishingRowType&quot;"
+      DefaultText="&quot;Finishing Row Type&quot;"
+      LocalDefaultText="&quot;רשומת סיכום&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.StartingRowType&quot;"
+      DefaultText="&quot;Starting Row Type&quot;"
+      LocalDefaultText="&quot;רשומת פתיחה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.TaxLineRowType&quot;"
+      DefaultText="&quot;Tax Line Row Type&quot;"
+      LocalDefaultText="&quot;רשומת תנועה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.NotValidRowType&quot;"
+      DefaultText="&quot;Not a valid Row Type&quot;"
+      LocalDefaultText="&quot;רשומה לא מסוג תקין&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.DoesntStartWithRowType&quot;"
+      DefaultText="&quot;does not start with a Line Row Type&quot;"
+      LocalDefaultText="&quot;לא מתחיל בסוג רשומה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.NotEncountered&quot;"
+      DefaultText="&quot;not encountered&quot;"
+      LocalDefaultText="&quot;לא זוהתה עד כה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.DiffersFrom&quot;"
+      DefaultText="&quot;differs from &quot;"
+      LocalDefaultText="&quot;לא זהה ל&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.IsMissing&quot;"
+      DefaultText="&quot;is missing&quot;"
+      LocalDefaultText="&quot;חסר&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.IsEmpty&quot;"
+      DefaultText="&quot;is empty&quot;"
+      LocalDefaultText="&quot;ריק&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.NotFound&quot;"
+      DefaultText="&quot;not found&quot;"
+      LocalDefaultText="&quot;לא נמצא&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.StatusError&quot;"
+      DefaultText="&quot; - cannot update a report that was transmitted or cancelled&quot;"
+      LocalDefaultText="&quot;לא ניתן לקלוט שורות לדוח ששודר או בוטל&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.AppearsBefore&quot;"
+      DefaultText="&quot;Appears Before&quot;"
+      LocalDefaultText="&quot;מופיעה לפני&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.StartingRowDeductionFile&quot;"
+      DefaultText="&quot;Starting Row Deduction File&quot;"
+      LocalDefaultText="&quot;תיק ניכויים ברשומת הפתיחה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.FinishingRowDeductionFile&quot;"
+      DefaultText="&quot;Finishing Row Deduction File&quot;"
+      LocalDefaultText="&quot;תיק ניכויים ברשומת הסיכום&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.OurDeductionFile&quot;"
+      DefaultText="&quot;Our Deduction File Number&quot;"
+      LocalDefaultText="&quot;מספר תיק הניכויים שלנו&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.FinishingRowTotals&quot;"
+      DefaultText="&quot;Finishing Row totals do not sum up together&quot;"
+      LocalDefaultText="&quot;כמויות לא מתחברות יחד ברשימת הסיכום&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.TaxLineNo&quot;"
+      DefaultText="&quot;Tax Line #&quot;"
+      LocalDefaultText="&quot;שורת תנועה מס' &quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.TaxReportId&quot;"
+      DefaultText="&quot;Tax Report Id&quot;"
+      LocalDefaultText="&quot;מזהה דו\&quot;ח מס&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.OppositeVatNumber&quot;"
+      DefaultText="&quot;Opposite VAT #&quot;"
+      LocalDefaultText="&quot;מספר תיק של צד נגדי&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.LocatedDeductionFile&quot;"
+      DefaultText="&quot;Located Deduction File&quot;"
+      LocalDefaultText="&quot;תיק ניכויים שאותר&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.LocatedVATNumber&quot;"
+      DefaultText="&quot;Located VAT Number&quot;"
+      LocalDefaultText="&quot;מספר עוסק מורשה שאותר&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.ReferenceDate&quot;"
+      DefaultText="&quot;Reference Date&quot;"
+      LocalDefaultText="&quot;תאריך אסמכתא&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.Reference&quot;"
+      DefaultText="&quot;Reference #&quot;"
+      LocalDefaultText="&quot;מספר אסמכתא&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.EndDate&quot;"
+      DefaultText="&quot;End Date&quot;"
+      LocalDefaultText="&quot;תאריך סיום&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.FailedWhilePerforming&quot;"
+      DefaultText="&quot;failed while performing&quot;"
+      LocalDefaultText="&quot;תקלה בביצוע&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.NoLinesProcessed&quot;"
+      DefaultText="&quot;No Lines Processed&quot;"
+      LocalDefaultText="&quot;אין שורות לעיבוד&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -7974,6 +8169,33 @@
       FeatureTypeCode="&quot;OTH&quot;"
       FeatureTextCodeCode="&quot;General.Features.PendingApprovalDocuments&quot;"
       FeatureDefaultText="&quot;Pending Approval Documents&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;TASKTYPES&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.TASKTYPES&quot;"
+      FeatureDefaultText="&quot;Task Types&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;TASKPRIORITIES&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.TASKPRIORITIES&quot;"
+      FeatureDefaultText="&quot;Task Priorities&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;TASKSTATUSES&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.TASKSTATUSES&quot;"
+      FeatureDefaultText="&quot;Task Statuses&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

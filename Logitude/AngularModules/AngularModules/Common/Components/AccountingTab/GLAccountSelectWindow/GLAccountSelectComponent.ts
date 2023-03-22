@@ -23,6 +23,7 @@ export class GLAccountSelectComponent extends BaseComponent implements OnInit
     public CurrentSession = SessionLocator.SelectedSession;
     public ValidationErrorsList: string[] = [];
     public isRTL: boolean = false;
+    public warningMessageShown: boolean = false;
     entityResourceService: EntityResourceService = new EntityResourceService();
     entityListService: EntityListService = new EntityListService();
     gLAccountExtendedPMService: GLAccountExtendedPMService = new GLAccountExtendedPMService();
@@ -218,7 +219,10 @@ export class GLAccountSelectComponent extends BaseComponent implements OnInit
     {
         if (this.chartOfAccountTypeCode == "4" || this.chartOfAccountTypeCode == "3" || this.PartnerId =="AC") // 4- Vendor 3- Customer
         {
-            this.showWarningMessage(errorsString);
+            if(!this.warningMessageShown)
+            {
+                this.showWarningMessage(errorsString);
+            }
         }
         else {
             this.showErrorMessage(errorsString);
@@ -243,6 +247,7 @@ export class GLAccountSelectComponent extends BaseComponent implements OnInit
         warningMsg.YesButtonText = TextCodeTranslator.Translate("General.B.Ok");
         warningMsg.Width = 400;
         warningMsg.Show(errorsString);
+        this.warningMessageShown = true;
         warningMsg.WindowClosed.subscribe((result: any) =>
         {
             if (warningMsg.Yes) {

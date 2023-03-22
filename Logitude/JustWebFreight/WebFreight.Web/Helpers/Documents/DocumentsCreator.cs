@@ -13,6 +13,7 @@ namespace WebFreight.Web.Helpers.Documents
     {
         public static string Create(DocumentsCreatorArgs documentsCreatorArgs)
         {
+            if (!string.IsNullOrEmpty(documentsCreatorArgs.DocumentId)) return documentsCreatorArgs.DocumentId;
             DocumentRepository documentRepository = new DocumentRepository(documentsCreatorArgs.Tenant);
             Document newDocument = GetNewDocument(documentsCreatorArgs);
 
@@ -47,6 +48,6 @@ namespace WebFreight.Web.Helpers.Documents
         public string FileExtension { get; set; }
         public string FileFolder { get; set; }
         public byte[] FileData { get; set; }
-
+        public string DocumentId { get; set; }
     }
 }

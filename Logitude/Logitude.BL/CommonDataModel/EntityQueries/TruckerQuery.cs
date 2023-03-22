@@ -94,6 +94,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    CustomsInvoiceTemplateId = a.Card.CustomsInvoiceTemplateId,
                                    ConsolidationInvoiceTemplateId = a.Card.ConsolidationInvoiceTemplateId,
                                    ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
+                                   PartnerTypeId = a.Card.PartnerTypeId,
+                                   Code = a.Card.Code,
                                },
                            }).FirstOrDefault();
 
@@ -387,6 +389,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         CustomsInvoiceTemplateId = a.Card.CustomsInvoiceTemplateId,
                                         ConsolidationInvoiceTemplateId = a.Card.ConsolidationInvoiceTemplateId,
                                         ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
+                                        PartnerTypeId = a.Card.PartnerTypeId,
+                                        Code = a.Card.Code,
                                     },
                                 }).FirstOrDefault();
 

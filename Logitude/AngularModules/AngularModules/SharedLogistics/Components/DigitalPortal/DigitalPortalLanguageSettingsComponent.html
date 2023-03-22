@@ -67,7 +67,6 @@
                                                                 </span>
                                                                 <span>
                                                                     <button [disabled]="!IsUploadButtonEnabled" style="margin-left: 16px;width: 70px;display: inline-block;" class="Button" (click)="OpenUpLoadFileToImportLanguage()">Import</button>
-                                                                    <!-- <button [disabled]="!UploadButtonIsEnabled"  style="width:55px;" class="Button" (click)="OpenUpLoadFile()">Upload</button> -->
                                                                     <input [accept]="ExcelFileTypes" [attr.id]="UploadFileId" type="file" [(ngModel)]="FileData" (change)="UploadFile($event)" style="display:none;width:65px" class="upload" />
                                                                 </span>
                                                             </div>

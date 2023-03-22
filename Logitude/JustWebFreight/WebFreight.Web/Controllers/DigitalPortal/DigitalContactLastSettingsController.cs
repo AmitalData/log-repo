@@ -56,7 +56,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         }
 
         [HttpPut]
-        [Route("DigitalUploader/PutDigitalContactLastSettings")]
+        [Route("DigitalContactLastSettings/PutDigitalContactLastSettings")]
         public HttpResponseMessage PutDigitalContactLastSettings(DigitalContactLastSettingInfo digitalContactLastSettings)
         {
             int tenant = 0;
@@ -105,102 +105,145 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             {
                 return GetARInvoiceInitialFiltersList();
             }
+            else if (entity.Equals("Quote", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return GetQuoteInitialFiltersList();
+            }
 
-            return null;
+            return new List<DigitalContactLastSetting>();
         }
 
         private List<DigitalContactLastSetting> GetShipmentInitialFiltersList()
         {
-            var result = new List<DigitalContactLastSetting>();
-            result.Add(new DigitalContactLastSetting
+            var result = new List<DigitalContactLastSetting>
             {
-                FilterCode = "TransportModeShipmentTypeFilters",
-                FilterName = "Transport mode",
-                IsChecked = true
-            });
-
-            result.Add(new DigitalContactLastSetting
-            {
-                FilterCode = "StatusId",
-                FilterName = "Shipment status",
-                IsChecked = true
-            });
-
-            result.Add(new DigitalContactLastSetting
-            {
-                FilterCode = "ConsigneeShipperIds",
-                FilterName = "My partner",
-                IsChecked = true
-            });
-
-            result.Add(new DigitalContactLastSetting
-            {
-                FilterCode = "From",
-                FilterName = "From",
-                IsChecked = true
-            });
-
-            result.Add(new DigitalContactLastSetting
-            {
-                FilterCode = "To",
-                FilterName = "Final destination",
-                IsChecked = true
-            });
-
-            result.Add(new DigitalContactLastSetting
-            {
-                FilterCode = "CreateDateTime",
-                FilterName = "Create date",
-                IsChecked = true
-            });
-
-            result.Add(new DigitalContactLastSetting
-            {
-                FilterCode = "MainCarriageETA",
-                FilterName = "ETA date",
-                IsChecked = true
-            });
+                new DigitalContactLastSetting
+                {
+                    FilterCode = "TransportModeShipmentTypeFilters",
+                    FilterName = "Shipment.G.TransportMode",
+                    IsChecked = true
+                },
+                new DigitalContactLastSetting
+                {
+                    FilterCode = "StatusId",
+                    FilterName = "Shipment.G.ShipmentStatus",
+                    IsChecked = true
+                },
+                new DigitalContactLastSetting
+                {
+                    FilterCode = "ConsigneeShipperIds",
+                    FilterName = "Shipment.G.MyPartner",
+                    IsChecked = true
+                },
+                new DigitalContactLastSetting
+                {
+                    FilterCode = "From",
+                    FilterName = "Shipment.F.From",
+                    IsChecked = true
+                },
+                new DigitalContactLastSetting
+                {
+                    FilterCode = "To",
+                    FilterName = "Shipment.G.FinalDestination",
+                    IsChecked = true
+                },
+                new DigitalContactLastSetting
+                {
+                    FilterCode = "CreateDateTime",
+                    FilterName = "Shipment.G.CreateDate",
+                    IsChecked = true
+                },
+                new DigitalContactLastSetting
+                {
+                    FilterCode = "MainCarriageETA",
+                    FilterName = "Shipment.G.ETADate",
+                    IsChecked = true
+                }
+            };
 
             return result;
         }
 
         private List<DigitalContactLastSetting> GetARInvoiceInitialFiltersList()
         {
-            var result = new List<DigitalContactLastSetting>();
-            result.Add(new DigitalContactLastSetting
+            var result = new List<DigitalContactLastSetting>
             {
-                FilterCode = "DigitalPaidStatus",
-                FilterName = "Status",
-                IsChecked = true
-            });
+                new DigitalContactLastSetting
+                {
+                    FilterCode = "DigitalPaidStatus",
+                    FilterName = "ARInvoice.F.StatusName",
+                    IsChecked = true
+                },
+                new DigitalContactLastSetting
+                {
+                    FilterCode = "InvoiceDate",
+                    FilterName = "ARInvoice.G.CreateDate",
+                    IsChecked = true
+                },
+                new DigitalContactLastSetting
+                {
+                    FilterCode = "DueDate",
+                    FilterName = "ARInvoice.G.DueDate",
+                    IsChecked = true
+                },
+                new DigitalContactLastSetting
+                {
+                    FilterCode = "AmountInInvoiceCurrency",
+                    FilterName = "ARInvoice.G.TotalAmount",
+                    IsChecked = true
+                },
+                new DigitalContactLastSetting
+                {
+                    FilterCode = "AmountDue",
+                    FilterName = "ARInvoice.G.OpenAmount",
+                    IsChecked = true
+                }
+            };
 
-            result.Add(new DigitalContactLastSetting
-            {
-                FilterCode = "InvoiceDate",
-                FilterName = "Create date",
-                IsChecked = true
-            });
+            return result;
+        }
 
-            result.Add(new DigitalContactLastSetting
+        private List<DigitalContactLastSetting> GetQuoteInitialFiltersList()
+        {
+            var result = new List<DigitalContactLastSetting>
             {
-                FilterCode = "DueDate",
-                FilterName = "Due date",
-                IsChecked = true
-            });
-
-            result.Add(new DigitalContactLastSetting
-            {
-                FilterCode = "AmountInInvoiceCurrency",
-                FilterName = "Total Amount",
-                IsChecked = true
-            });
-
-            result.Add(new DigitalContactLastSetting
-            {
-                FilterCode = "AmountDue",
-                FilterName = "Open Amount",
-                IsChecked = true
-            });
+                new DigitalContactLastSetting
+                {
+                    FilterCode = "TransportModeFilter",
+                    FilterName = "Quote.G.TransportMode",
+                    IsChecked = true
+                },
+                new DigitalContactLastSetting
+                {
+                    FilterCode = "StatusFilter",
+                    FilterName = "Quote.G.Status",
+                    IsChecked = true
+                },
+                new DigitalContactLastSetting
+                {
+                    FilterCode = "From",
+                    FilterName = "Quote.G.OriginCountry",
+                    IsChecked = true
+                },
+                new DigitalContactLastSetting
+                {
+                    FilterCode = "To",
+                    FilterName = "Quote.G.DestinationCountry",
+                    IsChecked = true
+                },
+                new DigitalContactLastSetting
+                {
+                    FilterCode = "OpenDate",
+                    FilterName = "Quote.G.CreateDate",
+                    IsChecked = true
+                },
+                new DigitalContactLastSetting
+                {
+                    FilterCode = "ExpirationDate",
+                    FilterName = "Quote.G.ExpireDate",
+                    IsChecked = true
+                }
+            };
 
             return result;
         }

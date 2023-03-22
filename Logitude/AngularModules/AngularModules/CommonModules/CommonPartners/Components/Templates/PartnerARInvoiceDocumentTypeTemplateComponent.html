@@ -2,12 +2,21 @@
     <div style="height:45px"> </div>
     <table>
         <tr class="TabTitleRow">
-            <td>Choose Invoice Print Template</td>
+            <td>
+                <table>
+                    <tr>
+                        <td style="width: 1px">Choose Invoice Print Template</td>
+                        <td>
+                            <HelpIcon [IconSize]="14" [HideHeader]="true" [Text]="'Using this section you can override the default template defined for all invoices'"></HelpIcon>
+                        </td>
+                    </tr>
+                </table>
+            </td>
         </tr>
         <tr>
             <td style="width: 380px;">
                 <table>
-                    <tr class="FormFieldRow">
+                    <tr class="FormFieldRow" *ngIf="ShowSingleInvoice">
                         <td style="width: 140px;">
                             <LogLabel [ObjectFieldName]="'SingleInvoiceTemplateId'"
                                       [ObjectTableName]="'Card'"
@@ -29,7 +38,7 @@
                         </td>
                         <td>
                             <div style="float: right;">
-                                <Hyperlink *ngIf="CheckIfDefaultChanged('999S',SingleInvoiceTemplateId)">
+                                <Hyperlink *ngIf="CheckIfDefaultChanged('999S',SingleInvoiceTemplateId)" title="'Value Edited by User'">
                                     <img src="./Images/Buttons/Edit.png" style="width: 12px; height: 12px;" />
                                 </Hyperlink>
                             </div>
@@ -38,7 +47,7 @@
                     </tr>
 
 
-                    <tr class="FormFieldRow">
+                    <tr class="FormFieldRow" *ngIf="ShowCustomsInvoice">
                         <td style="width: 140px;">
                             <LogLabel [ObjectFieldName]="'CustomsInvoiceTemplateId'"
                                       [ObjectTableName]="'Card'"
@@ -60,14 +69,14 @@
                         </td>
                         <td>
                             <div style="float: right;">
-                                <Hyperlink *ngIf="CheckIfDefaultChanged('999CI',CustomsInvoiceTemplateId)">
+                                <Hyperlink *ngIf="CheckIfDefaultChanged('999CI',CustomsInvoiceTemplateId)" title="'Value Edited by User'">
                                     <img src="./Images/Buttons/Edit.png" style="width: 12px; height: 12px;" />
                                 </Hyperlink>
                             </div>
                         </td>
                     </tr>
 
-                    <tr class="FormFieldRow">
+                    <tr class="FormFieldRow" *ngIf="ShowConsolidationInvoice">
                         <td style="width: 140px;">
                             <LogLabel [ObjectFieldName]="'ConsolidationInvoiceTemplateId'"
                                       [ObjectTableName]="'Card'"
@@ -89,14 +98,14 @@
                         </td>
                         <td>
                             <div style="float: right;">
-                                <Hyperlink *ngIf="CheckIfDefaultChanged('999C',ConsolidationInvoiceTemplateId)">
+                                <Hyperlink *ngIf="CheckIfDefaultChanged('999C',ConsolidationInvoiceTemplateId)" title="'Value Edited by User'">
                                     <img src="./Images/Buttons/Edit.png" style="width: 12px; height: 12px;" />
                                 </Hyperlink>
                             </div>
                         </td>
                     </tr>
 
-                    <tr class="FormFieldRow">
+                    <tr class="FormFieldRow" *ngIf="ShowManifestInvoice">
                         <td style="width: 140px;">
                             <LogLabel [ObjectFieldName]="'ManifestInvoiceTemplateId'"
                                       [ObjectTableName]="'Card'"
@@ -118,7 +127,7 @@
                         </td>
                         <td>
                             <div style="float: right;">
-                                <Hyperlink *ngIf="CheckIfDefaultChanged('999M',ManifestInvoiceTemplateId)">
+                                <Hyperlink *ngIf="CheckIfDefaultChanged('999M',ManifestInvoiceTemplateId)" title="'Value Edited by User'">
                                     <img src="./Images/Buttons/Edit.png" style="width: 12px; height: 12px;" />
                                 </Hyperlink>
                             </div>

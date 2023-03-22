@@ -17,6 +17,10 @@ export class PartnerARInvoiceDocumentTypeTemplateComponent extends BaseComponent
     public CustomsInvoiceFilter: ApiQueryFilters;
     public ConsolidationInvoiceFilter: ApiQueryFilters;
     public ManifestInvoiceFilter: ApiQueryFilters;
+    public ShowSingleInvoice: boolean;
+    public ShowCustomsInvoice: boolean;
+    public ShowConsolidationInvoice: boolean;
+    public ShowManifestInvoice: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
     public DataContext = this;
     constructor() {
@@ -26,6 +30,7 @@ export class PartnerARInvoiceDocumentTypeTemplateComponent extends BaseComponent
         this.EntityPM = entityPM;
         this.Initialization();
         this.LoadARInvoiceDocumentTypes();
+        this.ValidateARInvoiceDocumentTypes();
     }
     Initialization() {
         this.documentTypeListService = new DocumentTypeListService();
@@ -68,7 +73,17 @@ export class PartnerARInvoiceDocumentTypeTemplateComponent extends BaseComponent
     GetDocumentTypeIdByCode(documentTypeCode: string) {
         return this.ARInvoiceDocumentTypes.filter(d => d.Code == documentTypeCode)[0]?.Id;
     }
-
+    IsDoumentVailable(documentTypeCode: string) {
+        if (this.GetDocumentTypeIdByCode(documentTypeCode) == undefined || this.GetDocumentTypeIdByCode(documentTypeCode) == null)
+            return false;
+        return true;
+    }
+    ValidateARInvoiceDocumentTypes() {
+        this.ShowSingleInvoice = this.IsDoumentVailable("999S");
+        this.ShowCustomsInvoice = this.IsDoumentVailable("999CI");
+        this.ShowConsolidationInvoice = this.IsDoumentVailable("999C");
+        this.ShowManifestInvoice = this.IsDoumentVailable("999M");
+    }
     InitLOVFilters() {
         this.SingleInvoiceFilter.addAdditionalFilter("DocumentTypeId", this.GetDocumentTypeIdByCode("999S"), null, null, "Equals", false, false, false, "string");
         this.CustomsInvoiceFilter.addAdditionalFilter("DocumentTypeId", this.GetDocumentTypeIdByCode("999CI"), null, null, "Equals", false, false, false, "string");

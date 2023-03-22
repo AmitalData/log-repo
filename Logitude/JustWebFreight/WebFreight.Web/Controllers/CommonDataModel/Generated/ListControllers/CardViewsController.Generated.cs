@@ -47,7 +47,8 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BL.CommonDataModel.CustomFilters;
 		  
 using WebFreight.Web.Controllers.CommonDataModel.ApiHelpers;
-		  
+using Logitude.Server.Tools.CustomFields;
+
 namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 { 
 
@@ -69,10 +70,11 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				CardRepository  cardRepository = new CardRepository(MyContext);
 				CardQuery  cardQuery = new CardQuery(cardRepository);
                 IQueryable<Card> cards = cardRepository.GetCards(authToken.Tenant).Where(a=>a.Id == id);
-                CardList entityList = cardQuery.GetIQueryableEntityList(cards).FirstOrDefault();
-				if (entityList != null)
+                CardList entityList = cardQuery.GetSingleCardList(cards.FirstOrDefault());
+                if (entityList != null)
 				{
-                	CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { EntityId = id, ObjectTableName = "Card", Tenant = authToken.Tenant, Type = "List", Entities = new List<CardList> { entityList }.Cast<object>().ToList() }).Set();
+                    CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 	customFieldResolver.SetCustomFieldsValues("Card",  authToken.Tenant, new List<CardList> { entityList }.Cast<object>().ToList());
  	
 					entityList = CardAPiHelper.ApplyFilters(entityList, authToken.Tenant);

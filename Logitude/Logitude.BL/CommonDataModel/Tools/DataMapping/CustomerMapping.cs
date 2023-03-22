@@ -382,7 +382,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                 IRSNumber = a.Card.IRSNumber,
                 IRSPlace = a.Card.IRSPlace,
                 IsPrivateLabelCustomer = a.IsPrivateLabelCustomer,
-                EORInumber = a.EORInumber,
                 Card = new CardPM()
                 {
                     Id = a.Id,
