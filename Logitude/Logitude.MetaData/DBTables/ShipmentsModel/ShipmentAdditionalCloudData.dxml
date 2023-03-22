@@ -173,7 +173,7 @@
 		  Nullable="true" />
 	</Column>
   <Column
-  Name="IsUserIDNumberRequired"
+  Name="UserAcceptSaveID"
   Type="bit">
     <Constraints
       Nullable="false" />
