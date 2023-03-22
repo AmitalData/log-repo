@@ -106,7 +106,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         this.IsNew = args.IsNew;
         this.objectField = args.objectField;
         this.LookUpTableId = this.objectField.LookUpTableId;
-        this.DataTypeCollection = args.DataTypeCollection;
+        this.DataTypeCollection = args.DataTypeCollection.filter(dataType => dataType.Code != "Time");
         this.ObjectTableName = args.ObjectTableName;
         this.IsPartner = args.IsPartner;
         if (this.IsNew) {
