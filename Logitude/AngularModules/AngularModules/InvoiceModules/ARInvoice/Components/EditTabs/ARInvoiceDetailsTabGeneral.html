@@ -329,8 +329,7 @@
 
                                                 <td style="min-width: 200px;">{{'ARInvoiceLine.CH.DescriptionListLable' | TextCodeTranslationPipe}}</td>
                                                 <td *ngIf="IsAccountingActivated" style="width: 140px; min-width: 140px; max-width: 140px; text-align: center;">{{'ARInvoiceLine.F.ReportedinTaxReport' | TextCodeTranslationPipe}}</td>
-                                                <td *ngIf="IsAccountingActivated" style="width: 200px; min-width: 200px; max-width: 200px; text-align: center;">{{'InterestReport.F.GLAccountLocalName' | TextCodeTranslationPipe}}</td>
-                                                <td *ngIf="IsAccountingActivated" style="width: 140px; min-width: 140px; max-width: 140px; text-align: center;">{{'InterestReport.F.GLAccountDisplayNumber' | TextCodeTranslationPipe}}</td>
+                                                
                                                 <td style="width: 50px; min-width: 50px; max-width: 50px; text-align: center;">{{'ARInvoiceLine.CH.MeasurementIdListLable' | TextCodeTranslationPipe}}</td>
                                                 <td style="width: 35px; min-width: 35px; max-width: 35px; text-align: center;">{{'ARInvoiceLine.CH.PrepaidCollectIdListLable' | TextCodeTranslationPipe}}</td>
                                                 <td style="width: 90px; min-width: 90px; max-width: 90px;text-align: center;">{{'ARInvoiceLine.CH.QuantityListLable' | TextCodeTranslationPipe}}</td>
@@ -372,15 +371,6 @@
                                                                 {{item.ReportedinTaxReport}}
 
                                                             </td>
-                                                            <!-- GLAccountLocalName -->
-                                                            <td *ngIf="IsAccountingActivated" class="GridViewCell" [ngStyle]="{background: item.CellBackground}" style="width: 200px; min-width: 200px; max-width: 200px; text-align: center;">
-                                                                {{item.GLAccountLocalName}}
-                                                            </td>
-                                                            <!-- GLAccountDisplayNumber -->
-                                                            <td *ngIf="IsAccountingActivated" class="GridViewCell" [ngStyle]="{background: item.CellBackground}" style="width: 140px; min-width: 140px; max-width: 140px; text-align: center;">
-                                                                {{item.GLAccountDisplayNumber}}
-                                                            </td>
-
                                                             <!-- MeasurementCode -->
                                                             <td class="GridViewCell" [ngStyle]="{background: item.CellBackground}" style="width: 50px; min-width: 50px; max-width: 50px; text-align:center;">
                                                                 {{item.MeasurementCode}}
@@ -498,7 +488,7 @@
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
-                                 
+
                                     <!-- Reference -->
                                     <log-column [header]="'ARInvoiceLine.CH.Reference' | TextCodeTranslationPipe" [width]="'100'" [Editable]="false" [Alignment]="'center'">
                                         <ng-template let-item>
