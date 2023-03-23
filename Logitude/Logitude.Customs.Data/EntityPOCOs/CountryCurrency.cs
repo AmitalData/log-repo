@@ -14,13 +14,13 @@ using Simplog.Data.InvoiceModel.EntityPOCOs;
 namespace Logitude.Customs.Data.EntityPOCOs
 {
    
-    public class AddressCurrency
+    public class CountryCurrency
     {
 	 string dbms;
 
         [Key]
-        [Column("AddressId")]
-	    public string AddressId { get; set; }
+        [Column("CountryId")]
+	    public string CountryId { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
         [Column("LineNumber")]

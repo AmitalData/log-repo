@@ -10,9 +10,9 @@ using Simplog.Server.Infrastructure;
   
 namespace Logitude.Customs.Data.EntityKeys
 {
-   public partial class AddressCurrencyKeys : EntityKeyFields
+   public partial class CountryCurrencyKeys : EntityKeyFields
    {
-   	  public string AddressId  { get; set; }
+   	  public string CountryId  { get; set; }
 	  
 				 
 	    			   
@@ -24,13 +24,13 @@ namespace Logitude.Customs.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-                 return AddressId+'_'+Currency ;
+                 return CountryId+'_'+Currency ;
                  
       }
 
       public override string GetEntityPMName()
       {
-          return "AddressCurrencyPM";
+          return "CountryCurrencyPM";
       }
 	 
    }

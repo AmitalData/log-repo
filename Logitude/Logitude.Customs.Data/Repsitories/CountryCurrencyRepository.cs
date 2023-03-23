@@ -12,18 +12,18 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.Data.Repsitories
 {
-   public partial class AddressCurrencyRepository:IRepository<AddressCurrency>
+   public partial class CountryCurrencyRepository:IRepository<CountryCurrency>
    {
         
-		public List<AddressCurrency> GetMulti(EntityKeyFields entityKeys)
+		public List<CountryCurrency> GetMulti(EntityKeyFields entityKeys)
         {
             
 			throw new NotImplementedException();
         }
-        public void FastDelete(string addressId, int tenant)
+        public void FastDelete(string countryId, int tenant)
         {
             (context as DbContextBase)
-                   .DeleteWhere<AddressCurrency>(rec => rec.AddressId == addressId && rec.Tenant == tenant);
+                   .DeleteWhere<CountryCurrency>(rec => rec.CountryId == countryId && rec.Tenant == tenant);
         }
 
     }

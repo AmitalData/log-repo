@@ -12,31 +12,31 @@ import {VendorInsertUpdateDeleteMessageRequestParams} from '../../DataContract/R
 import {VendorAddCommunicationDeviceRequestParams} from '../../DataContract/RequestParams/VendorAddCommunicationDeviceRequestParams';
 import {VendorSearchByCustomsAgentRequestParams} from '../../DataContract/RequestParams/VendorSearchByCustomsAgentRequestParams';
 import { List } from 'Infrastructure/DataContracts/Dashboard/List';
-import { AddressCurrencyPM } from 'Customs/EntityPMs/AddressCurrencyPM';
+import { CountryCurrencyPM } from 'Customs/EntityPMs/CountryCurrencyPM';
 
 
 
 @Injectable()
 
-export class AddressCurrencyService {
+export class CountryCurrencyService {
     private _http: HttpClient
     private _apiUrl: string;
     constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/AddressCurrency';
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CountryCurrency';
 
     }
 
-    UpadateListCurrencyByAddress(addressCurrencyPMs: AddressCurrencyPM[]) {
+    UpadateListCurrencyByCountry(countryCurrencyPMs: CountryCurrencyPM[]) {
 
-       var mappedList: AddressCurrencyPM[] = [];
-       for (var k in addressCurrencyPMs) {
-           var field = addressCurrencyPMs[k];
+       var mappedList: CountryCurrencyPM[] = [];
+       for (var k in countryCurrencyPMs) {
+           var field = countryCurrencyPMs[k];
            var mappedEntity: any;
            mappedEntity = this.MapJsonToEntityPM(field, false);
-           mappedList.push(mappedEntity.AddressCurrencyPM);
+           mappedList.push(mappedEntity.CountryCurrencyPM);
        }
-        return this._http.post(this._apiUrl + '/UpadateListCurrencyByAddress/', JSON.stringify(mappedList), ServiceHelper.GetHttpHeaders()).pipe(
+        return this._http.post(this._apiUrl + '/UpadateListCurrencyByCountry/', JSON.stringify(mappedList), ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -50,12 +50,12 @@ export class AddressCurrencyService {
    
 
 
-    MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: AddressCurrencyPM = null) {
+    MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: CountryCurrencyPM = null) {
 
 
         if (!entityPM) {
 
-            entityPM = new AddressCurrencyPM();
+            entityPM = new CountryCurrencyPM();
         }
 
         var jsonPMKeys = Object.keys(jsonPM);

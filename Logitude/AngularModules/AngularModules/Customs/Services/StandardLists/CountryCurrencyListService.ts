@@ -19,30 +19,30 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
-import {AddressCurrencyList} from '../../EntityLists/AddressCurrencyList';
+import {CountryCurrencyList} from '../../EntityLists/CountryCurrencyList';
 
 @Injectable()
 
-export class AddressCurrencyListService {
+export class CountryCurrencyListService {
 	private _http: HttpClient;
     private _apiUrl: string;   
-	public static CachedData: Array<AddressCurrencyList> = [];
+	public static CachedData: Array<CountryCurrencyList> = [];
     constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/addresscurrencyviews';  
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/countrycurrencyviews';  
     }
 
-	getSingle(addressid: string, currency: string) {
+	getSingle(countryid: string, currency: string) {
 	   
 		var callTime = new Date();
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle/?' + 'addressid=' + addressid+'&'+'currency=' + currency, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle/?' + 'countryid=' + countryid+'&'+'currency=' + currency, ServiceHelper.GetHttpFullHeaders())
 				.pipe(			
 					map((response: HttpResponse<any>) => {
 
 						var list = response.body;                   
-						var entity: AddressCurrencyList;
+						var entity: CountryCurrencyList;
 						if (list) {
 							entity = this.MapJsonToEntityList(list);
 						}   
@@ -52,7 +52,7 @@ export class AddressCurrencyListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AddressCurrency", "GetSingleList", 'addressid=' + addressid+'&'+'currency=' + currency); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CountryCurrency", "GetSingleList", 'countryid=' + countryid+'&'+'currency=' + currency); 
 
 						return serviceResponse;
 					}),
@@ -71,10 +71,10 @@ export class AddressCurrencyListService {
 					map((response: HttpResponse<any>) => {
 
 						var allLists = response.body;
-						var _mappedListsArray: Array<AddressCurrencyList> = [];
+						var _mappedListsArray: Array<CountryCurrencyList> = [];
 						if (allLists) {
 							for (var key in allLists) {				
-								var entity: AddressCurrencyList = this.MapJsonToEntityList(allLists[key]);
+								var entity: CountryCurrencyList = this.MapJsonToEntityList(allLists[key]);
 								_mappedListsArray.push(entity);
 							}
 						}
@@ -84,7 +84,7 @@ export class AddressCurrencyListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AddressCurrency", "GetAllLists", ""); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CountryCurrency", "GetAllLists", ""); 
 
 						return serviceResponse;
 					}),
@@ -131,11 +131,11 @@ export class AddressCurrencyListService {
 					map((response: HttpResponse<any>) => {
 
 						var serviceResponse: ServiceResponse = response.body;
-						var _mappedListsArray: Array<AddressCurrencyList> = [];
+						var _mappedListsArray: Array<CountryCurrencyList> = [];
 
 						if (serviceResponse.Result) {
 							for (var key in serviceResponse.Result) {				
-								var entity: AddressCurrencyList = this.MapJsonToEntityList(serviceResponse.Result[key]);
+								var entity: CountryCurrencyList = this.MapJsonToEntityList(serviceResponse.Result[key]);
 								_mappedListsArray.push(entity);
 							}
 						}   
@@ -144,7 +144,7 @@ export class AddressCurrencyListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AddressCurrency", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CountryCurrency", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
 				           
 						return serviceResponse;
 					}),
@@ -156,8 +156,8 @@ export class AddressCurrencyListService {
 	
 	    MapJsonToEntityList(jsonList: any) {
        
-            var entityList: AddressCurrencyList;
-            entityList = new AddressCurrencyList();
+            var entityList: CountryCurrencyList;
+            entityList = new CountryCurrencyList();
             var jsonListKeys = Object.keys(jsonList);
 
             for (var key in jsonListKeys) {

@@ -331,7 +331,6 @@
     <Compile Include="EntityDataMappings\AccumalationStateDataMapping.cs" />
     <Compile Include="EntityDataMappings\ActionCodeDataMapping.cs" />
     <Compile Include="EntityDataMappings\AddressContactStateDataMapping.cs" />
-    <Compile Include="EntityDataMappings\AddressCurrencyDataMapping.cs" />
     <Compile Include="EntityDataMappings\AddressPurposeDataMapping.cs" />
     <Compile Include="EntityDataMappings\AgentTalkBackTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\AmedmentTypeDataMapping.cs" />
@@ -419,6 +418,7 @@
     <Compile Include="EntityDataMappings\ContinuousRequestTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ConverterTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CoolingReportingMethodDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CountryCurrencyDataMapping.cs" />
     <Compile Include="EntityDataMappings\CountryGroupDataMapping.cs" />
     <Compile Include="EntityDataMappings\CourierCustomStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\CourierDeclarationDataMapping.cs" />
@@ -546,7 +546,6 @@
     <Compile Include="EntityDataMappings\Generated\AccumalationStateDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ActionCodeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AddressContactStateDataMapping.Generated.cs" />
-    <Compile Include="EntityDataMappings\Generated\AddressCurrencyDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AddressPurposeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AgentTalkBackTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AmedmentTypeDataMapping.Generated.cs" />
@@ -634,6 +633,7 @@
     <Compile Include="EntityDataMappings\Generated\ContinuousRequestTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ConverterTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CoolingReportingMethodDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CountryCurrencyDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CountryGroupDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CourierCustomStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CourierDeclarationDataMapping.Generated.cs" />
@@ -1125,7 +1125,7 @@
     <Compile Include="EntityQueryServices\CargoIdentifireTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\ConfirmationTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\CurrencyTypeQueryService.cs" />
-    <Compile Include="EntityQueryServices\Generated\AddressCurrencyQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CountryCurrencyQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationFollowUpQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\VendorCurrencyQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\SchedulerParamQueryService.cs" />
@@ -1648,12 +1648,12 @@
     <Compile Include="EntityQueryServices\VehicleQueryService.cs" />
     <Compile Include="EntityQueryServices\VendorCommissionQueryService.cs" />
     <Compile Include="EntityQueryServices\VendorCurrencyQueryService.cs" />
+    <Compile Include="EntityUpdateServices\CountryCurrencyUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealIdentifierUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientsTapagUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConfirmationTypeUpdateService.cs" />
-    <Compile Include="EntityUpdateServices\Generated\AddressCurrencyUpdateService.Generated.cs" />
-    <Compile Include="EntityUpdateServices\AddressCurrencyUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CountryCurrencyUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\VendorCurrencyUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeclarationFollowUpUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\VendorCurrencyUpdateService.Generated.cs" />

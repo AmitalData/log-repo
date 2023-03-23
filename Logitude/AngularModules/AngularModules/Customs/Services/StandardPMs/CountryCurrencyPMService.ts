@@ -19,30 +19,30 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 
-import {AddressCurrencyPM} from '../../EntityPMs/AddressCurrencyPM';
+import {CountryCurrencyPM} from '../../EntityPMs/CountryCurrencyPM';
 
 
 @Injectable()
 
-export class AddressCurrencyPMService {
+export class CountryCurrencyPMService {
  private _http: HttpClient;
  private _apiUrl: string;
  constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/addresscurrencies';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/countrycurrencies';      
     }
 
-	get(addressid: string, currency: string) {       
+	get(countryid: string, currency: string) {       
 
 		var callTime = new Date();		
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle?' + 'addressid=' + addressid+'&'+'currency=' + currency, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle?' + 'countryid=' + countryid+'&'+'currency=' + currency, ServiceHelper.GetHttpFullHeaders())
 				.pipe(
 					map((response: HttpResponse<any>) => {
 						var pm = response.body;
 				
-						var entity: AddressCurrencyPM;
+						var entity: CountryCurrencyPM;
 						if (pm) {
 							entity = this.MapJsonToEntityPM(pm);
 						}
@@ -51,7 +51,7 @@ export class AddressCurrencyPMService {
 						serviceResponse.Result = entity;
               
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AddressCurrency", "GetSinglePM", 'addressid=' + addressid+'&'+'currency=' + currency);
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CountryCurrency", "GetSinglePM", 'countryid=' + countryid+'&'+'currency=' + currency);
 				 
 						return serviceResponse;
 
@@ -61,7 +61,7 @@ export class AddressCurrencyPMService {
 		});                    
 	}
 
-	insert(entityPM: AddressCurrencyPM) {
+	insert(entityPM: CountryCurrencyPM) {
  
 		var callTime = new Date();  
 		
@@ -69,12 +69,12 @@ export class AddressCurrencyPMService {
 
 			var serviceResponse: ServiceResponse = new ServiceResponse();
 			var validator: ClassLevelValidator = new ClassLevelValidator();                
-			var errorsArray = validator.Validate("Customs.AddressCurrency", entityPM);
+			var errorsArray = validator.Validate("Customs.CountryCurrency", entityPM);
 
 
 			if (errorsArray.length == 0) {
 
-				var mappedEntity: AddressCurrencyPM = this.MapJsonToEntityPM(entityPM, false);
+				var mappedEntity: CountryCurrencyPM = this.MapJsonToEntityPM(entityPM, false);
 				
 				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
@@ -82,12 +82,12 @@ export class AddressCurrencyPMService {
 
 							var pm = response.body;
 							if (pm) {
-								var mappedResult: AddressCurrencyPM = this.MapJsonToEntityPM(pm, true, entityPM);
+								var mappedResult: CountryCurrencyPM = this.MapJsonToEntityPM(pm, true, entityPM);
 								serviceResponse.Result = mappedResult;
 							}						
 
 							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AddressCurrency", "SaveChanges", "");                    
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CountryCurrency", "SaveChanges", "");                    
 												                             
 							return serviceResponse;
 						}),
@@ -103,7 +103,7 @@ export class AddressCurrencyPMService {
 		});
 	}
 
-	update(entityPM: AddressCurrencyPM) {
+	update(entityPM: CountryCurrencyPM) {
 
 		var callTime = new Date();     
 		
@@ -111,12 +111,12 @@ export class AddressCurrencyPMService {
 
 			var serviceResponse: ServiceResponse = new ServiceResponse();
 			var validator: ClassLevelValidator = new ClassLevelValidator();               
-			var errorsArray = validator.Validate("Customs.AddressCurrency", entityPM);
+			var errorsArray = validator.Validate("Customs.CountryCurrency", entityPM);
 
 
 			if (errorsArray.length == 0) {
 
-				var mappedEntity: AddressCurrencyPM = this.MapJsonToEntityPM(entityPM, false);
+				var mappedEntity: CountryCurrencyPM = this.MapJsonToEntityPM(entityPM, false);
 				
 				return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
@@ -124,12 +124,12 @@ export class AddressCurrencyPMService {
                  
 							var pm = response.body;
 							if (pm) {
-								var mappedResult: AddressCurrencyPM = this.MapJsonToEntityPM(pm, true, entityPM);
+								var mappedResult: CountryCurrencyPM = this.MapJsonToEntityPM(pm, true, entityPM);
 								serviceResponse.Result = mappedResult;
 							}
 							 
 							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AddressCurrency", "SaveChanges", "");                    
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CountryCurrency", "SaveChanges", "");                    
 					                           
 							return serviceResponse;
 						}),
@@ -147,12 +147,12 @@ export class AddressCurrencyPMService {
 
    
 
-	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: AddressCurrencyPM = null) {
+	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: CountryCurrencyPM = null) {
 
          
         if (!entityPM) {
             
-            entityPM = new AddressCurrencyPM();
+            entityPM = new CountryCurrencyPM();
 			entityPM.DisableMarkAsDirty = true;
         }
 
@@ -219,8 +219,8 @@ export class AddressCurrencyPMService {
     }
 
 	  public GetNewEntityPM() {		 
-		    var entityPM: AddressCurrencyPM;
-			entityPM = new AddressCurrencyPM();
+		    var entityPM: CountryCurrencyPM;
+			entityPM = new CountryCurrencyPM();
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }

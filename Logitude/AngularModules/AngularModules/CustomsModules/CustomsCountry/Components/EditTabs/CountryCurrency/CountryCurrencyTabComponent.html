@@ -24,7 +24,7 @@
                     <!-- Toolbar-->
                     <tr>
                         <td colspan="2">
-                            <div class="subTitle">{{'Customs.AddressCurrency.O.CurrencyType' | TextCodeTranslationPipe}}</div>
+                            <div class="subTitle">{{'Customs.CountryCurrency.O.CurrencyType' | TextCodeTranslationPipe}}</div>
                         </td>
                         <td style="display:flex;justify-content: end;align-items: center;">
                           
@@ -54,13 +54,13 @@
                                                     <td colspan="2" style="height: 100%;">
                                                         <div class="CellContent">
                                                             <logitude-edit-grid GridWidth="100%" GridHeight="100%"
-                                                                [ItemSource]="AddressCurrencyList">
+                                                                [ItemSource]="CountryCurrencyList">
 
 
 
                                                                 <!-- LineNumber -->
                                                                 <log-column
-                                                                    [header]="'Customs.AddressCurrency.F.LineNumber' | TextCodeTranslationPipe"
+                                                                    [header]="'Customs.CountryCurrency.F.LineNumber' | TextCodeTranslationPipe"
                                                                     [width]="'180'" [Alignment]="'right'"
                                                                     [binding]="'LineNumber'">
                                                                     <ng-template let-item>
@@ -76,7 +76,7 @@
                                                                 </log-column>
                                                                 <!-- Currency -->
                                                                 <log-column
-                                                                    [header]="'Customs.AddressCurrency.F.Currency' | TextCodeTranslationPipe"
+                                                                    [header]="'Customs.CountryCurrency.F.Currency' | TextCodeTranslationPipe"
                                                                     [width]="'130'" [Alignment]="'right'"
                                                                     [binding]="'Currency'">
                                                                     <ng-template let-item>
@@ -89,7 +89,7 @@
                                                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                                                 <LogLov
                                                                                     [ObjectFieldName]="'Currency'"
-                                                                                    [ObjectTableName]="'Customs.AddressCurrency'"
+                                                                                    [ObjectTableName]="'Customs.CountryCurrency'"
                                                                                     [DataContext]="item"
                                                                                     [HideColumns]="true"
                                                                                     [LookUpTableName]="'Customs.CurrencyType'"

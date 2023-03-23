@@ -1,9 +1,9 @@
-import { AddressCurrencyTabComponent } from "./Components/EditTabs/AddressCurrency/AddressCurrencyTabComponent";
+import { CountryCurrencyTabComponent } from "./Components/EditTabs/CountryCurrency/CountryCurrencyTabComponent";
 
 
 export const Components =
   [
-    AddressCurrencyTabComponent,
+    CountryCurrencyTabComponent,
     
   ];
 
@@ -13,7 +13,7 @@ export class ModuleDeclarations {
     var myResult: any = null;
 
     switch (name) {
-      case "AddressCurrencyTabComponent": { myResult = AddressCurrencyTabComponent; break; }
+      case "CountryCurrencyTabComponent": { myResult = CountryCurrencyTabComponent; break; }
      
 
     }

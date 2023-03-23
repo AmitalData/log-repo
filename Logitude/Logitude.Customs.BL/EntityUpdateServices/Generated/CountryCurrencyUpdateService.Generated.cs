@@ -22,46 +22,46 @@ using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 { 
-   public partial class AddressCurrencyUpdateService:EntityUpdateService<AddressCurrency,AddressCurrencyPM,EntityPM>
+   public partial class CountryCurrencyUpdateService:EntityUpdateService<CountryCurrency,CountryCurrencyPM,EntityPM>
    {
    
-        AddressCurrencyRepository entityRepository;
-        public AddressCurrencyUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+        CountryCurrencyRepository entityRepository;
+        public CountryCurrencyUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
             : base(mainContext,additionalContexts, tenant)
         {
             ICustomContext  context = mainContext as CustomContext;
             context = context ??mainContext as ICustomContext ; //Up line is A BUG -and i need it 4 Fakes
-            Mapping = new AddressCurrencyDataMapping();
-            Repository = new AddressCurrencyRepository(context);
+            Mapping = new CountryCurrencyDataMapping();
+            Repository = new CountryCurrencyRepository(context);
         }
 
        
         private ICustomContext currentContext;
-        public AddressCurrencyUpdateService(int tenant)
+        public CountryCurrencyUpdateService(int tenant)
         {
             currentContext = CustomContext.GetContext(tenant);
         }
 
-        public AddressCurrencyUpdateService(ICustomContext context)
+        public CountryCurrencyUpdateService(ICustomContext context)
         {
             currentContext = context;
         }
 
 		
-		protected override EntityKeyFields GetKeys(AddressCurrencyPM entityPM)
+		protected override EntityKeyFields GetKeys(CountryCurrencyPM entityPM)
         {
-            AddressCurrencyKeys entityKeys = new AddressCurrencyKeys() { AddressId = entityPM.AddressId, Currency = entityPM.Currency };
+            CountryCurrencyKeys entityKeys = new CountryCurrencyKeys() { CountryId = entityPM.CountryId, Currency = entityPM.Currency };
             return entityKeys;
         }
 
 		
-		protected override void FillDefaultValuesOnCreate(AddressCurrencyPM entityPM)
+		protected override void FillDefaultValuesOnCreate(CountryCurrencyPM entityPM)
         {     
   
 		
 	    }
         
-		protected override void FillDefaultValuesOnUpdate(AddressCurrencyPM entityPM)
+		protected override void FillDefaultValuesOnUpdate(CountryCurrencyPM entityPM)
         {       
            
         }

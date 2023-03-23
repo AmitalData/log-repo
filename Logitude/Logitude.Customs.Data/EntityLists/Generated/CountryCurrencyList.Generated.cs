@@ -10,12 +10,12 @@ using System.Runtime.Serialization;
 namespace Logitude.Customs.Data.EntityLists
 {
    [DataContract]
-   public partial class AddressCurrencyList
+   public partial class CountryCurrencyList
    {
    
        [Key]
        [DataMember]
-       public string AddressId  { get; set; }
+       public string CountryId  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
        [DataMember]

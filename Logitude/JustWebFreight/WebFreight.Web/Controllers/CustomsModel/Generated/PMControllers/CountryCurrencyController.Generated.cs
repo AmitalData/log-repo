@@ -47,11 +47,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
 
     
-    public partial class AddressCurrenciesController : ApiController
+    public partial class CountryCurrenciesController : ApiController
     {
 	  
        
-        public HttpResponseMessage GetSingle(string addressid, string currency)
+        public HttpResponseMessage GetSingle(string countryid, string currency)
         {
 		  try
             {
@@ -61,13 +61,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
-                AddressCurrencyQueryService addressCurrencyQuery = new AddressCurrencyQueryService(MyContext);
-				addressCurrencyQuery.InitializeSettings();
-                AddressCurrencyPM addressCurrencyPM = addressCurrencyQuery.GetSingle(addressid, currency,true,false);
+                CountryCurrencyQueryService countryCurrencyQuery = new CountryCurrencyQueryService(MyContext);
+				countryCurrencyQuery.InitializeSettings();
+                CountryCurrencyPM countryCurrencyPM = countryCurrencyQuery.GetSingle(countryid, currency,true,false);
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
             
-                return Request.CreateResponse(HttpStatusCode.OK, addressCurrencyPM);
+                return Request.CreateResponse(HttpStatusCode.OK, countryCurrencyPM);
 			 }
             catch (Exception ex)
             {
@@ -79,7 +79,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
          
 		
 		
-	   public HttpResponseMessage Post(AddressCurrencyPM entityPM)
+	   public HttpResponseMessage Post(CountryCurrencyPM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -93,12 +93,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                     
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
-                        AddressCurrencyUpdateService service = new AddressCurrencyUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        CountryCurrencyUpdateService service = new CountryCurrencyUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
                         service.Update(entityPM, true);
 
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("AddressCurrency", 0, true);
+                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("CountryCurrency", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
                         //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
@@ -125,7 +125,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         }
 
 
-        public HttpResponseMessage Put(AddressCurrencyPM entityPM)
+        public HttpResponseMessage Put(CountryCurrencyPM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -139,12 +139,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
-                        AddressCurrencyUpdateService service = new AddressCurrencyUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        CountryCurrencyUpdateService service = new CountryCurrencyUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 						service.InitializeEntityPM(entityPM);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                         service.Update(entityPM, true);
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("AddressCurrency", 0, true);
+                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("CountryCurrency", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
                         //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);

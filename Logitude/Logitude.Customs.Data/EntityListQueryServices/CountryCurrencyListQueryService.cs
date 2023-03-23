@@ -17,17 +17,17 @@ using Logitude.Customs.Data.EntityLists;
 namespace Logitude.Customs.Data.EntityListQueryServices
 { 
 
-    public partial class AddressCurrencyListQueryService
+    public partial class CountryCurrencyListQueryService
     {
-	    private IQueryable<AddressCurrencyList> GetIqueryableList(IQueryable<AddressCurrency> iQueryable)
+	    private IQueryable<CountryCurrencyList> GetIqueryableList(IQueryable<CountryCurrency> iQueryable)
         {
-		IQueryable<AddressCurrencyList> query = (from a in iQueryable
-                                            select new AddressCurrencyList()
+		IQueryable<CountryCurrencyList> query = (from a in iQueryable
+                                            select new CountryCurrencyList()
 											{
-
-												Tenant = a.Tenant,
+                     
+					                          Tenant = a.Tenant,
 												LineNumber = a.LineNumber,
-												AddressId = a.AddressId,
+												CountryId = a.CountryId,
 												Currency = a.Currency,
 												CurrencyTypeName = a.CurrencyType.LocalName
 
@@ -35,7 +35,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             return query;
 		}
 
-		private IQueryable<AddressCurrency> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<AddressCurrency> iQueryable, int tenant)
+		private IQueryable<CountryCurrency> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<CountryCurrency> iQueryable, int tenant)
         {
 			return iQueryable;
 		}

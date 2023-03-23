@@ -12,68 +12,68 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.Data.Repsitories
 {
-   public partial class AddressCurrencyRepository:IRepository<AddressCurrency>
+   public partial class CountryCurrencyRepository:IRepository<CountryCurrency>
    {
    
         private ICustomContext currentContext;
-        public AddressCurrencyRepository(int tenant)
+        public CountryCurrencyRepository(int tenant)
         {
             currentContext = CustomContext.GetContext(tenant);
         }
 
-        public AddressCurrencyRepository(ICustomContext context)
+        public CountryCurrencyRepository(ICustomContext context)
         {
             currentContext = context;
         }
 
 		 
 		
-		public  AddressCurrency GetSingle(string addressid, string currency, int tenant)
+		public  CountryCurrency GetSingle(string countryid, string currency, int tenant)
         {
-            return (from a in context.AddressCurrencies
-                    where a.AddressId == addressid && a.Currency == currency && a.Tenant == tenant
+            return (from a in context.CountryCurrencies
+                    where a.CountryId == countryid && a.Currency == currency && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
-        public IQueryable<AddressCurrency> GetAll(int tenant)
+        public IQueryable<CountryCurrency> GetAll(int tenant)
         {
-            return from a in context.AddressCurrencies  
+            return from a in context.CountryCurrencies  
                    where a.Tenant == tenant
                    select a;
         }
 				 
-        public AddressCurrency GetSingle(EntityKeyFields entityKeys)
+        public CountryCurrency GetSingle(EntityKeyFields entityKeys)
         {
-            AddressCurrencyKeys keys = entityKeys as AddressCurrencyKeys;
-            return (from a in context.AddressCurrencies
-                    where a.AddressId == keys.AddressId && a.Currency == keys.Currency
+            CountryCurrencyKeys keys = entityKeys as CountryCurrencyKeys;
+            return (from a in context.CountryCurrencies
+                    where a.CountryId == keys.CountryId && a.Currency == keys.Currency
                     select a).FirstOrDefault();
         }
 		         
         partial void onAdd();//Partial Methods Definition in Generated
-        public void Add(AddressCurrency entity)
+        public void Add(CountryCurrency entity)
         {
             onAdd();
-            context.AddressCurrencies.Add(entity);
+            context.CountryCurrencies.Add(entity);
         }
 
-        public void Remove(AddressCurrency entity)
+        public void Remove(CountryCurrency entity)
         {
-            context.AddressCurrencies.Attach(entity);
-            context.AddressCurrencies.Remove(entity);
+            context.CountryCurrencies.Attach(entity);
+            context.CountryCurrencies.Remove(entity);
         }
 
         partial void onUpdate();//Partial Methods Definition in Generated
-        public void Update(AddressCurrency entity)
+        public void Update(CountryCurrency entity)
         {
             onUpdate();
-            context.AddressCurrencies.Attach(entity);
+            context.CountryCurrencies.Attach(entity);
             context.SetAsModified(entity);
         }
 
-        public List<AddressCurrency> All()
+        public List<CountryCurrency> All()
         {
-            return context.AddressCurrencies.ToList();
+            return context.CountryCurrencies.ToList();
         }
 
         private ICustomContext context
