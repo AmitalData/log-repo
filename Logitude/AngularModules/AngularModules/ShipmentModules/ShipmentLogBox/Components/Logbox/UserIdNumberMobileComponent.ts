@@ -341,6 +341,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
         return await new Promise(res => {
             const subscribtion = this.$userAcceptSave.subscribe((userAcceptSave: boolean) => {
                 subscribtion.unsubscribe();
+                this.showDialogUserAcceptSave = false;
                 res(userAcceptSave);
             })
         })
