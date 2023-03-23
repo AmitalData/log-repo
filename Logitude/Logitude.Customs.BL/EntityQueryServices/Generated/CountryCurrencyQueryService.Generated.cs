@@ -17,48 +17,48 @@ using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.Customs.BL.EntityQueryServices
 { 
-   public partial class AddressCurrencyQueryService: EntityQueryService<AddressCurrency,AddressCurrencyKeys,AddressCurrencyPM,object,AddressCurrencyKeys>
+   public partial class CountryCurrencyQueryService: EntityQueryService<CountryCurrency,CountryCurrencyKeys,CountryCurrencyPM,object,CountryCurrencyKeys>
    {
    
-        AddressCurrencyRepository repository;
+        CountryCurrencyRepository repository;
 		ICustomContext  context;
-        public AddressCurrencyQueryService(int tenant)
+        public CountryCurrencyQueryService(int tenant)
         {
 		    context = CustomContext.GetContext(tenant);
             MainContext = context;
-            repository = new AddressCurrencyRepository(context);
+            repository = new CountryCurrencyRepository(context);
             Repository = repository;
-            mapping = new AddressCurrencyDataMapping();
+            mapping = new CountryCurrencyDataMapping();
         }
 
-        public AddressCurrencyQueryService(AddressCurrencyRepository repository)
+        public CountryCurrencyQueryService(CountryCurrencyRepository repository)
         {
             this.repository = repository;
             Repository = repository;
-            mapping = new AddressCurrencyDataMapping();
+            mapping = new CountryCurrencyDataMapping();
         }
 
-        public AddressCurrencyQueryService(ICustomContext context)
+        public CountryCurrencyQueryService(ICustomContext context)
         {
-            this.repository = new AddressCurrencyRepository(context);
+            this.repository = new CountryCurrencyRepository(context);
             this.context = context;
 
             MainContext = context;
             Repository = repository;
-            mapping = new AddressCurrencyDataMapping();
+            mapping = new CountryCurrencyDataMapping();
         }
 		 
-		public  AddressCurrencyPM GetSingle(string addressid, string currency,bool getComposition, bool getFromCache)
+		public  CountryCurrencyPM GetSingle(string countryid, string currency,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new AddressCurrencyKeys(){ AddressId = addressid, Currency = currency };
+             EntityKeys = new CountryCurrencyKeys(){ CountryId = countryid, Currency = currency };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
 
        
-	    protected override EntityKeyFields GetKeys(AddressCurrency entityPOCO)
+	    protected override EntityKeyFields GetKeys(CountryCurrency entityPOCO)
         {
-            AddressCurrencyKeys entityKeys = new AddressCurrencyKeys() { AddressId = entityPOCO.AddressId, Currency = entityPOCO.Currency,  };
+            CountryCurrencyKeys entityKeys = new CountryCurrencyKeys() { CountryId = entityPOCO.CountryId, Currency = entityPOCO.Currency,  };
             return entityKeys;
         }
      

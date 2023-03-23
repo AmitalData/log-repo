@@ -6,9 +6,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class AddressCurrencyList {
+export class CountryCurrencyList {
    
-	AddressId: string;
+	CountryId: string;
 	Tenant: number;
 	LineNumber: number;
 	Currency: string;

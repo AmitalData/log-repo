@@ -17,20 +17,20 @@ using Logitude.Customs.Data.EntityLists;
 namespace Logitude.Customs.Data.EntityListQueryServices
 { 
 
-    public partial class AddressCurrencyListQueryService
+    public partial class CountryCurrencyListQueryService
     {
          private ICustomContext context;
-        public AddressCurrencyListQueryService(ICustomContext context)
+        public CountryCurrencyListQueryService(ICustomContext context)
         {
             this.context = context;
         }
 
-        public List<AddressCurrencyList> GetList(QueryOperations queryOperations, int tenant)
+        public List<CountryCurrencyList> GetList(QueryOperations queryOperations, int tenant)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<AddressCurrency> iQueryable = (from a in context.AddressCurrencies
+            IQueryable<CountryCurrency> iQueryable = (from a in context.CountryCurrencies
                                               
                    where a.Tenant == tenant select a);
             			iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
@@ -40,20 +40,20 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 
-            iQueryable = filter.GetFilteredQuery<AddressCurrency>(nonListQueryOperation, iQueryable);
+            iQueryable = filter.GetFilteredQuery<CountryCurrency>(nonListQueryOperation, iQueryable);
 
             int skippedPorts = queryOperations.PageIndex;
 
-            IQueryable<AddressCurrencyList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<CountryCurrencyList> query2 = GetIqueryableList(iQueryable);
            
-            query2 = filter.GetFilteredQuery<AddressCurrencyList>(listQueryOperation, query2);
+            query2 = filter.GetFilteredQuery<CountryCurrencyList>(listQueryOperation, query2);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
-                PropertyInfo propInfo = typeof(AddressCurrencyList).GetProperty(queryOperations.SortByColumnName);
-                List<ObjectField> AddressCurrencyObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.AddressCurrency",tenant).ToList();
+                PropertyInfo propInfo = typeof(CountryCurrencyList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> CountryCurrencyObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.CountryCurrency",tenant).ToList();
 
-                ObjectField objectField = (from a in AddressCurrencyObjectFields
+                ObjectField objectField = (from a in CountryCurrencyObjectFields
                                            where a.FieldName == queryOperations.SortByColumnName
                                            select a).FirstOrDefault();
 
@@ -61,7 +61,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 {
 				 if (objectField.IsCustom)
                     {
-                        query2 = sortClass.GetSorterQuery<AddressCurrencyList, string>(queryOperations, query2);
+                        query2 = sortClass.GetSorterQuery<CountryCurrencyList, string>(queryOperations, query2);
                     }
                     else
                     {
@@ -70,36 +70,36 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                          case "ntext":
                         case "text":
                             {
-                                query2 = sortClass.GetSorterQuery<AddressCurrencyList, string>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<CountryCurrencyList, string>(queryOperations, query2);
                                 break;
                             }
 						case "sigdouble":
 						case "double":
                             {
-                                query2 = sortClass.GetSorterQuery<AddressCurrencyList, double>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<CountryCurrencyList, double>(queryOperations, query2);
                                 break;
                             }
 						case "date":
                         case "datetime":
                             {
-                                query2 = sortClass.GetSorterQuery<AddressCurrencyList, DateTime>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<CountryCurrencyList, DateTime>(queryOperations, query2);
                                 break;
                             }
 						case "unsinteger":
                         case "integer":
                             {
-                                query2 = sortClass.GetSorterQuery<AddressCurrencyList, int>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<CountryCurrencyList, int>(queryOperations, query2);
                                 break;
                             }
                         case "boolean":
                             {
-                                query2 = sortClass.GetSorterQuery<AddressCurrencyList, bool>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<CountryCurrencyList, bool>(queryOperations, query2);
                                 break;
                             }
 						case "unsdecimal":
 						case "decimal":
                             {
-                                query2 = sortClass.GetSorterQuery<AddressCurrencyList, decimal>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<CountryCurrencyList, decimal>(queryOperations, query2);
                                 break;
                             }
                         default:
@@ -125,21 +125,21 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     
         }
 
-         public List<AddressCurrencyList> GetList(int tenant)
+         public List<CountryCurrencyList> GetList(int tenant)
          {
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public AddressCurrencyList GetSingle(string addressid, string currency)
+        public CountryCurrencyList GetSingle(string countryid, string currency)
         {
-            IQueryable<AddressCurrency> AddressCurrencyQuery = (from a in context.AddressCurrencies
-                                                       where a.AddressId == addressid && a.Currency == currency
+            IQueryable<CountryCurrency> CountryCurrencyQuery = (from a in context.CountryCurrencies
+                                                       where a.CountryId == countryid && a.Currency == currency
                                                        select a);
 
              
-            IQueryable<AddressCurrencyList> AddressCurrencyListQuery = GetIqueryableList( AddressCurrencyQuery);
-            AddressCurrencyList AddressCurrencyList = AddressCurrencyListQuery.FirstOrDefault();
-            return AddressCurrencyList;
+            IQueryable<CountryCurrencyList> CountryCurrencyListQuery = GetIqueryableList( CountryCurrencyQuery);
+            CountryCurrencyList CountryCurrencyList = CountryCurrencyListQuery.FirstOrDefault();
+            return CountryCurrencyList;
            
         }
 
@@ -148,7 +148,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<AddressCurrency> iQueryable = (from a in context.AddressCurrencies 
+            IQueryable<CountryCurrency> iQueryable = (from a in context.CountryCurrencies 
                    where a.Tenant == tenant select a);
 
 			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
@@ -158,11 +158,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
             
-			iQueryable = filter.GetFilteredQuery<AddressCurrency>(nonListQueryOperation, iQueryable);
+			iQueryable = filter.GetFilteredQuery<CountryCurrency>(nonListQueryOperation, iQueryable);
 
-            IQueryable<AddressCurrencyList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<CountryCurrencyList> query2 = GetIqueryableList(iQueryable);
 
-            query2 = filter.GetFilteredQuery<AddressCurrencyList>(listQueryOperation, query2);
+            query2 = filter.GetFilteredQuery<CountryCurrencyList>(listQueryOperation, query2);
             int count = query2.Count();
             return count;
         }

@@ -21,12 +21,12 @@ using System.Data;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
-    public partial class AddressCurrencyUpdateService : EntityUpdateService<AddressCurrency, AddressCurrencyPM, EntityPM>
+    public partial class CountryCurrencyUpdateService : EntityUpdateService<CountryCurrency, CountryCurrencyPM, EntityPM>
     {
 
-        public void FastDelete(string AddressId, int tenant)
+        public void FastDelete(string CountryId, int tenant)
         {
-            (Repository as Logitude.Customs.Data.Repsitories.AddressCurrencyRepository).FastDelete(AddressId, tenant);
+            (Repository as Logitude.Customs.Data.Repsitories.CountryCurrencyRepository).FastDelete(CountryId, tenant);
         }
     }
 }

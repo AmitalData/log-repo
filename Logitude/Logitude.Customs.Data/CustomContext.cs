@@ -72,8 +72,6 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new AddressContactStateMap());
 	
-            modelBuilder.Configurations.Add(new AddressCurrencyMap());
-	
             modelBuilder.Configurations.Add(new AddressPurposeMap());
 	
             modelBuilder.Configurations.Add(new AgentTalkBackTypeMap());
@@ -247,6 +245,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new ConverterTypeMap());
 	
             modelBuilder.Configurations.Add(new CoolingReportingMethodMap());
+	
+            modelBuilder.Configurations.Add(new CountryCurrencyMap());
 	
             modelBuilder.Configurations.Add(new CountryGroupMap());
 	
@@ -1369,12 +1369,6 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
-	 public IDbSet<AddressCurrency> AddressCurrencies 
-	 {
-	      get; set;
-	 
-	 }
-	
 	 public IDbSet<AddressPurpose> AddressPurposes 
 	 {
 	      get; set;
@@ -1892,6 +1886,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CoolingReportingMethod> CoolingReportingMethods 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CountryCurrency> CountryCurrencies 
 	 {
 	      get; set;
 	 

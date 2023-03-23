@@ -197,7 +197,6 @@
     <None Include="DBTables\AccumalationState.dxml" />
     <None Include="DBTables\ActionCode.dxml" />
     <None Include="DBTables\AddressContactState.dxml" />
-    <None Include="DBTables\AddressCurrency.dxml" />
     <None Include="DBTables\AddressPurpose.dxml" />
     <None Include="DBTables\AgentTalkBackType.dxml" />
     <None Include="DBTables\AmedmentType.dxml" />
@@ -282,6 +281,7 @@
     <None Include="DBTables\ContinuousRequestType.dxml" />
     <None Include="DBTables\ConverterType.dxml" />
     <None Include="DBTables\CoolingReportingMethod.dxml" />
+    <None Include="DBTables\CountryCurrency.dxml" />
     <None Include="DBTables\CountryGroup.dxml" />
     <None Include="DBTables\CourierCustomStatus.dxml" />
     <None Include="DBTables\CourierDeclaration.dxml" />
@@ -573,7 +573,7 @@
     <None Include="DBTables\VendorStatus.dxml" />
     <None Include="DBTables\VendorTransactionType.dxml" />
     <None Include="DBTables\VendorType.dxml" />
-    <None Include="EntityFiles\AddressCurrency.lxml" />
+    <None Include="EntityFiles\CountryCurrency.lxml" />
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
     <None Include="EntityFiles\ClientsTapag.lxml" />
     <None Include="EntityFiles\DeclarationFollowUp.lxml" />

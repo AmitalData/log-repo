@@ -14,14 +14,14 @@ using Logitude.Customs.Data;
 namespace Logitude.Customs.BL.EntityDataMappings
 {
    
-   public partial class AddressCurrencyDataMapping: IMapping<AddressCurrencyPM, AddressCurrency>
+   public partial class CountryCurrencyDataMapping: IMapping<CountryCurrencyPM, CountryCurrency>
    {
 
-        public void CustomPMToPOCO(AddressCurrencyPM entityPM, AddressCurrency entityPOCO)
+        public void CustomPMToPOCO(CountryCurrencyPM entityPM, CountryCurrency entityPOCO)
         {
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AddressId))
+            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CountryId))
             {
-                entityPOCO.AddressId = entityPM.AddressId;
+                entityPOCO.CountryId = entityPM.CountryId;
             }
 
             if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Currency))
@@ -30,7 +30,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             }
         }
 
-        public void CustomPOCOToPM(AddressCurrencyPM entityPM, AddressCurrency entityPOCO)
+        public void CustomPOCOToPM(CountryCurrencyPM entityPM, CountryCurrency entityPOCO)
         {
             //throw new NotImplementedException();
         }

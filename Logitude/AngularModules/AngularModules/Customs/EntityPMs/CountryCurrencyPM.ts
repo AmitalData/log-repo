@@ -14,7 +14,7 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
-export class AddressCurrencyPM {
+export class CountryCurrencyPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
@@ -24,9 +24,9 @@ export class AddressCurrencyPM {
       }
  	 
     
-    private addressId: string;
-    public get AddressId() { return this.addressId; }
-    public set AddressId(newValue: string) { if (this.addressId != newValue) { this.addressId = newValue; this.MarkAsDirty("AddressId"); } }
+    private countryId: string;
+    public get CountryId() { return this.countryId; }
+    public set CountryId(newValue: string) { if (this.countryId != newValue) { this.countryId = newValue; this.MarkAsDirty("CountryId"); } }
        
 	 
     private tenant: number;
@@ -50,7 +50,7 @@ export class AddressCurrencyPM {
        
 	 
 
-    public OldEntityPM: AddressCurrencyPM;
+    public OldEntityPM: CountryCurrencyPM;
 		
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
@@ -61,13 +61,13 @@ export class AddressCurrencyPM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.AddressCurrency");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.CountryCurrency");
            
         }
        }
     }
 
-    private MyClone: AddressCurrencyPM;
+    private MyClone: CountryCurrencyPM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);

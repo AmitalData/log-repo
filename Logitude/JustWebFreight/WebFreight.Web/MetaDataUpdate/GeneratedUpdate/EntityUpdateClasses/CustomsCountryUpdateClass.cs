@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsCountryUpdateClass
    {  		
-		public const string HashString = "387da292d1f71616b22ec9c86dedf5a0";
+		public const string HashString = "6b03453ea4dac7fc6ba9410d2ffeb559";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -760,8 +760,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature CustomsCountryEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsCountry.Tab.Events", ObjectTableId = CustomsCountryObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsCountry.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomsCountryObjectTable);
  
                  
-			   TextCode CustomsCountryAddressCurrencyTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsCountry.TH.AddressCurrency", DefaultText = "Address Currency",LocalDefaultText = "מטבעות ארץ", ObjectTableId = CustomsCountryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomsCountryAddressCurrencyFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsCountry.Tab.AddressCurrency", ObjectTableId = CustomsCountryObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsCountryFeatures.CCAC", NameTextCodeDefaultText = "Address Currency", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomsCountryObjectTable);
+			   TextCode CustomsCountryCountryCurrencyTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsCountry.TH.CountryCurrency", DefaultText = "Country Currency",LocalDefaultText = "מטבעות ארץ", ObjectTableId = CustomsCountryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature CustomsCountryCountryCurrencyFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsCountry.Tab.CountryCurrency", ObjectTableId = CustomsCountryObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsCountryFeatures.CCCC", NameTextCodeDefaultText = "Country Currency", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomsCountryObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -771,7 +771,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EVCC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomsCountryEventsFeature_TH1.Id,FeatureUniqeCode = CustomsCountryEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CustomsCountryObjectTable.Id, TabNameTextCodeId = CustomsCountryEventsTextCode_TH1.Id, TabNameTextCodeCode = CustomsCountryEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CCAC",HtmlComponentName = "",HtmlComponentUrl = "./CustomsModules/CustomsCountry/Components/EditTabs/AddressCurrency/AddressCurrencyTabComponent", FeatureId = CustomsCountryAddressCurrencyFeature_TH2.Id,FeatureUniqeCode = CustomsCountryAddressCurrencyFeature_TH2.FeatureUniqeCode, ControlPath = " ", ObjectTableId = CustomsCountryObjectTable.Id, TabNameTextCodeId = CustomsCountryAddressCurrencyTextCode_TH2.Id, TabNameTextCodeCode = CustomsCountryAddressCurrencyTextCode_TH2.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CCCC",HtmlComponentName = "",HtmlComponentUrl = "./CustomsModules/CustomsCountry/Components/EditTabs/CountryCurrency/CountryCurrencyTabComponent", FeatureId = CustomsCountryCountryCurrencyFeature_TH2.Id,FeatureUniqeCode = CustomsCountryCountryCurrencyFeature_TH2.FeatureUniqeCode, ControlPath = " ", ObjectTableId = CustomsCountryObjectTable.Id, TabNameTextCodeId = CustomsCountryCountryCurrencyTextCode_TH2.Id, TabNameTextCodeCode = CustomsCountryCountryCurrencyTextCode_TH2.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

@@ -1,11 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
-  Name="AddressCurrencies"
+  Name="CountryCurrencies"
+  OldNames="AddressCurrencies"
   Schema="Customs"
   DBType="Main"
   Module="Customs">
   <Column
-    Name="AddressId"
+    Name="CountryId"
+    OldNames="AddressId"
     Type="varchar"
     Size="15">
     <Constraints

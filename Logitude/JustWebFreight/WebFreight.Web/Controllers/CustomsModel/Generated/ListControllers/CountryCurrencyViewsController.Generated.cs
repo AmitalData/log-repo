@@ -47,11 +47,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
 
     
-    public partial class AddressCurrencyViewsController : ApiController
+    public partial class CountryCurrencyViewsController : ApiController
     {
 	  
        
-        public HttpResponseMessage GetSingle(string addressid, string currency)
+        public HttpResponseMessage GetSingle(string countryid, string currency)
         {
 		  try
             {
@@ -60,11 +60,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
-                AddressCurrencyListQueryService addressCurrencyQuery = new AddressCurrencyListQueryService(MyContext);
-                AddressCurrencyList addressCurrencyList = addressCurrencyQuery.GetSingle(addressid, currency);
+                CountryCurrencyListQueryService countryCurrencyQuery = new CountryCurrencyListQueryService(MyContext);
+                CountryCurrencyList countryCurrencyList = countryCurrencyQuery.GetSingle(countryid, currency);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
-                return Request.CreateResponse(HttpStatusCode.OK,  addressCurrencyList);
+                return Request.CreateResponse(HttpStatusCode.OK,  countryCurrencyList);
             }
             catch (Exception ex)
             {
@@ -82,8 +82,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
-                AddressCurrencyListQueryService addressCurrencyQuery = new AddressCurrencyListQueryService(MyContext);
-                List<AddressCurrencyList> result = addressCurrencyQuery.GetList(authToken.Tenant);
+                CountryCurrencyListQueryService countryCurrencyQuery = new CountryCurrencyListQueryService(MyContext);
+                List<CountryCurrencyList> result = countryCurrencyQuery.GetList(authToken.Tenant);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -108,17 +108,17 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "Customs.AddressCurrency",
+                    ObjectTableName = "Customs.CountryCurrency",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "Customs.AddressCurrencys",
+                    QuerySection = "Customs.CountryCurrencys",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
                 };
 
 				
-				List<ObjectField> AddressCurrencyObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.AddressCurrency",tenant);
+				List<ObjectField> CountryCurrencyObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.CountryCurrency",tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
@@ -141,7 +141,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             //}
 						//}
                         //ToDo: Get object field by name and set the remained filter properties
-						ObjectField field = AddressCurrencyObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+						ObjectField field = CountryCurrencyObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                        if (field != null)
                         {
                             string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -169,7 +169,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                     foreach (QueryFilterItem filter in filters_list)
                     {
-                        ObjectField field = AddressCurrencyObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        ObjectField field = CountryCurrencyObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                         if (field != null)
                         {
 
@@ -192,14 +192,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 }
 
                 ICustomContext MyContext = CustomContext.GetContext(tenant);
-				AddressCurrencyListQueryService addressCurrencyQuery = new AddressCurrencyListQueryService(MyContext);
+				CountryCurrencyListQueryService countryCurrencyQuery = new CountryCurrencyListQueryService(MyContext);
 
-                List<AddressCurrencyList> entityLists = addressCurrencyQuery.GetList(queryOperations, tenant);
+                List<CountryCurrencyList> entityLists = countryCurrencyQuery.GetList(queryOperations, tenant);
 				
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = addressCurrencyQuery.GetListCount(queryOperations, tenant);
+                    int count = countryCurrencyQuery.GetListCount(queryOperations, tenant);
                     response.Count = count;
                 }
 

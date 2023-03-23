@@ -22,36 +22,36 @@ import {CustomsHouseTypeExtendedPMService} from '../../../../../Customs/Services
 import {INF_MSG_GenericResponseData} from '../../../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
 import {VendorCommunicationResult} from '../../../../../Customs/DataContract/ResponseData/VendorCommunicationResult';
 import {VendorInsertUpdateDeleteMessageRequestParams, OperationTypes} from '../../../../../Customs/DataContract/RequestParams/VendorInsertUpdateDeleteMessageRequestParams';
-import { CustomMessageProgressComponent, ShowProgressBarParams } from '../../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
+import { CustomMessageProgressComponent, ShowProgressBarParams } from '../../../../CustomsControls/Components/CustomMessageProgressComponent';
 import {VendorMessagesService} from '../../../../../Customs/Services/WebServices/VendorMessagesService';
 import {CustomsVendorPMService} from '../../../../../Customs/Services/StandardPMs/CustomsVendorPMService';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { CustomsCountryPM } from 'Customs/EntityPMs/CustomsCountryPM';
-import { AddressCurrencyPM } from 'Customs/EntityPMs/AddressCurrencyPM';
-import { AddressCurrencyService } from 'Customs/Services/WebServices/AddressCurrencyService';
-import { AddressCurrencyListService } from 'Customs/Services/StandardLists/AddressCurrencyListService';
+import { CountryCurrencyPM } from 'Customs/EntityPMs/CountryCurrencyPM';
+import { CountryCurrencyService } from 'Customs/Services/WebServices/CountryCurrencyService';
+import { CountryCurrencyListService } from 'Customs/Services/StandardLists/CountryCurrencyListService';
 import { EditTabComponent } from 'Infrastructure/Components/EditComponent/EditTabComponent';
 import { UIProperties } from 'Infrastructure/Components/LogitudeComponents/UIProperties';
 
 
 @Component({
     
-    templateUrl: './AddressCurrencyTabComponent.html',
+    templateUrl: './CountryCurrencyTabComponent.html',
 })
 
-export class AddressCurrencyTabComponent extends EditTabComponent {
+export class CountryCurrencyTabComponent extends EditTabComponent {
     @Output() FillValidationErrorList: EventEmitter<any> = new EventEmitter();
     public EntityPM: CustomsCountryPM;
-    public AddressCurrencyListPM: AddressCurrencyPM[];
-    public ObjectTableName: string = "Customs.AddressCurrency";
+    public CountryCurrencyListPM: CountryCurrencyPM[];
+    public ObjectTableName: string = "Customs.CountryCurrency";
     public DataContext: any = this;
     public ValdationErrorList: any[];
     public isEntityChange: boolean = false;
     IsDelete: boolean = false;
-    addressCurrencyListService:AddressCurrencyListService=new AddressCurrencyListService();
-    addressCurrencyService:AddressCurrencyService=new AddressCurrencyService();
-    AddressCurrencyList: ObservableCollection;
+    countryCurrencyListService:CountryCurrencyListService=new CountryCurrencyListService();
+    countryCurrencyService:CountryCurrencyService=new CountryCurrencyService();
+    CountryCurrencyList: ObservableCollection;
     line = 0;
     isLoad=false;
     isDirty:boolean = false;
@@ -64,11 +64,11 @@ export class AddressCurrencyTabComponent extends EditTabComponent {
         
         super(cdr);
         this.UIProperties = new UIProperties;
-        this.AddressCurrencyList = new ObservableCollection([]);
+        this.CountryCurrencyList = new ObservableCollection([]);
         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM
 
         console.log("EntityPM", this.EntityPM);
-        this.entityResourceService.getEntityResourceByTableName("Customs.AddressCurrency").subscribe((response: any) => {
+        this.entityResourceService.getEntityResourceByTableName("Customs.CountryCurrency").subscribe((response: any) => {
          this.entityResourceService.getEntityResourceByTableName("Customs.VendorCurrency").subscribe((response: any) => {     
             this.entityResourceService.getEntityResourceByTableName("Customs.CurrencyType").subscribe((response: any) => {
             this.getRows();
@@ -77,7 +77,7 @@ export class AddressCurrencyTabComponent extends EditTabComponent {
     });
 
     }
-    get IsDirty() { return this.isDirty|| this.AddressCurrencyListPM?.find(x=>x.IsDirty)?true:false; }
+    get IsDirty() { return this.isDirty|| this.CountryCurrencyListPM?.find(x=>x.IsDirty)?true:false; }
 
     getRows() {
        
@@ -89,21 +89,21 @@ export class AddressCurrencyTabComponent extends EditTabComponent {
             filters.GetAll = false;
             filters.GetCount = true;
             
-            filters.addAdditionalFilter("AddressId", this.EntityPM.Code, null, null, "Equals", false, false, false, "string", false);
+            filters.addAdditionalFilter("CountryId", this.EntityPM.Code, null, null, "Equals", false, false, false, "string", false);
             filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "string",false);
             
     
-            return this.addressCurrencyListService.getByFilters(filters)
+            return this.countryCurrencyListService.getByFilters(filters)
                 .subscribe(r => {
-                    this.AddressCurrencyList = new ObservableCollection([]);
-                    this.AddressCurrencyListPM = [];
+                    this.CountryCurrencyList = new ObservableCollection([]);
+                    this.CountryCurrencyListPM = [];
                     if(!r.HasError) {
                        for (let item of r.Result) {
-                           this.AddressCurrencyList.Insert(new AddressCurrencyItemModel(item));
+                           this.CountryCurrencyList.Insert(new CountryCurrencyItemModel(item));
                        }
                        this.getRowNumbers();
                        this.line = r.Result.length;
-                       this.AddressCurrencyListPM = this.AddressCurrencyList.Collection;
+                       this.CountryCurrencyListPM = this.CountryCurrencyList.Collection;
                        this.isLoad=true
                     }
                 });
@@ -112,7 +112,7 @@ export class AddressCurrencyTabComponent extends EditTabComponent {
    
         getRowNumbers() {
             this.line = 0;
-            for (let item of this.AddressCurrencyList.Collection) {
+            for (let item of this.CountryCurrencyList.Collection) {
                 this.line += +1;
                 item.LineNumber = this.line;
             }
@@ -129,8 +129,8 @@ export class AddressCurrencyTabComponent extends EditTabComponent {
        
         this.ValdationErrorList =[];
         var errors = [];
-            this.AddressCurrencyListPM.forEach((item) => {
-                if(this.AddressCurrencyListPM.filter(x=>x.Currency==item.Currency).length>1){
+            this.CountryCurrencyListPM.forEach((item) => {
+                if(this.CountryCurrencyListPM.filter(x=>x.Currency==item.Currency).length>1){
                     errors.push(TextCodeTranslator.Translate('Customs.VendorCurrency.O.DoubleCurrency'));
                     
                 }
@@ -144,13 +144,13 @@ export class AddressCurrencyTabComponent extends EditTabComponent {
             this.ValdationErrorList = errors;
         } else {
          
-           this.addressCurrencyService.UpadateListCurrencyByAddress(this.AddressCurrencyListPM).subscribe(res=>{
+           this.countryCurrencyService.UpadateListCurrencyByCountry(this.CountryCurrencyListPM).subscribe(res=>{
                if(!res.HasError){
                    var message=new ConfirmWindow();
                    message.YesButtonText = TextCodeTranslator.Translate('General.B.Ok');
                    message.ShowNoButton=false;
                    message.Show(TextCodeTranslator.Translate('Customs.VendorCurrency.O.UpdateCurrency'));
-                   this.AddressCurrencyListPM.forEach(x=>x.IsDirty=false); 
+                   this.CountryCurrencyListPM.forEach(x=>x.IsDirty=false); 
                    this.isDirty=false;
                }
            })
@@ -159,18 +159,18 @@ export class AddressCurrencyTabComponent extends EditTabComponent {
  
     
     AddButonClicked() {
-            var newAddressCurrencyPM = new AddressCurrencyPM();
-            newAddressCurrencyPM.Tenant = SessionLocator.Tenant;
-            newAddressCurrencyPM.AddressId = this.EntityPM.Code;
-            newAddressCurrencyPM.LineNumber = ++this.line; // it will be override by EntityUpdateService.OnCreating() in server.
+            var newCountryCurrencyPM = new CountryCurrencyPM();
+            newCountryCurrencyPM.Tenant = SessionLocator.Tenant;
+            newCountryCurrencyPM.CountryId = this.EntityPM.Code;
+            newCountryCurrencyPM.LineNumber = ++this.line; // it will be override by EntityUpdateService.OnCreating() in server.
 
               
-                this.AddressCurrencyList.Insert(new AddressCurrencyItemModel(newAddressCurrencyPM));
+                this.CountryCurrencyList.Insert(new CountryCurrencyItemModel(newCountryCurrencyPM));
                 this.isDirty=true;
 
 
     }
-    RemoveRow(item: AddressCurrencyItemModel) {
+    RemoveRow(item: CountryCurrencyItemModel) {
         if (!AppTool.IsNullOrEmpty(item)) {
 
             var confirmWindow = new ConfirmWindow();
@@ -179,7 +179,7 @@ export class AddressCurrencyTabComponent extends EditTabComponent {
 
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
-                    this.AddressCurrencyList.Remove(item);
+                    this.CountryCurrencyList.Remove(item);
                     this.isDirty=true;
 
                 }
@@ -195,52 +195,52 @@ export class AddressCurrencyTabComponent extends EditTabComponent {
     //#endregion
 }
 
-export class AddressCurrencyItemModel extends BaseComponent {
-    public AddressCurrencyPM: AddressCurrencyPM = null;
-    public ObjectTableName = "Customs.AddressCurrency";
+export class CountryCurrencyItemModel extends BaseComponent {
+    public CountryCurrencyPM: CountryCurrencyPM = null;
+    public ObjectTableName = "Customs.CountryCurrency";
     public DataContext = this;
     public IsDirty = false;
 
-    constructor(private addressCurrencyPM: AddressCurrencyPM) {
+    constructor(private countryCurrencyPM: CountryCurrencyPM) {
         super();
-        this.AddressCurrencyPM = addressCurrencyPM;
+        this.CountryCurrencyPM = countryCurrencyPM;
     }
 
     //#region Properties
 
-    get LineNumber() { return this.AddressCurrencyPM.LineNumber; }
+    get LineNumber() { return this.CountryCurrencyPM.LineNumber; }
     set LineNumber(value: number) {
-        if (this.AddressCurrencyPM.LineNumber != value) {
-            this.AddressCurrencyPM.LineNumber = value;
+        if (this.CountryCurrencyPM.LineNumber != value) {
+            this.CountryCurrencyPM.LineNumber = value;
 
         }
     }
 
-    get VendorId() { return this.AddressCurrencyPM.AddressId; }
+    get VendorId() { return this.CountryCurrencyPM.CountryId; }
     set VendorId(value: string) {
-        if (this.AddressCurrencyPM.AddressId != value) {
-            this.AddressCurrencyPM.AddressId = value;
+        if (this.CountryCurrencyPM.CountryId != value) {
+            this.CountryCurrencyPM.CountryId = value;
 
         }
     }
-    get Tenant() { return this.AddressCurrencyPM.Tenant; }
+    get Tenant() { return this.CountryCurrencyPM.Tenant; }
     set Tenant(value: number) {
-        if (this.AddressCurrencyPM.Tenant != value) {
-            this.AddressCurrencyPM.Tenant = value;
+        if (this.CountryCurrencyPM.Tenant != value) {
+            this.CountryCurrencyPM.Tenant = value;
 
         }
     }
-    get Currency() { return this.AddressCurrencyPM.Currency; }
+    get Currency() { return this.CountryCurrencyPM.Currency; }
     set Currency(value: string) {
-        if (this.AddressCurrencyPM.Currency != value) {
-            this.AddressCurrencyPM.Currency = value;
+        if (this.CountryCurrencyPM.Currency != value) {
+            this.CountryCurrencyPM.Currency = value;
             this.IsDirty = true;
         }
     }
-    get CurrencyTypeName() { return this.AddressCurrencyPM.CurrencyTypeName; }
+    get CurrencyTypeName() { return this.CountryCurrencyPM.CurrencyTypeName; }
     set CurrencyTypeName(value: string) {
-        if (this.AddressCurrencyPM.CurrencyTypeName != value) {
-            this.AddressCurrencyPM.CurrencyTypeName = value;
+        if (this.CountryCurrencyPM.CurrencyTypeName != value) {
+            this.CountryCurrencyPM.CurrencyTypeName = value;
 
         }
     }

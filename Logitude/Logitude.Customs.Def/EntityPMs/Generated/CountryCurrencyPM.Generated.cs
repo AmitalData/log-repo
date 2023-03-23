@@ -16,29 +16,29 @@ namespace Logitude.Customs.Def.EntityPMs
 {
    [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
    [DataContract]
-   public partial class AddressCurrencyPM : EntityPM
+   public partial class CountryCurrencyPM : EntityPM
    {
-   	  private string addressId ;
+   	  private string countryId ;
 	  
        [Key]
 	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string AddressId  
+       public string CountryId  
 	   {
 	    
 	     get
 		{
-		   return addressId;
+		   return countryId;
 		 }
 		 set
 		 {
-		   if(addressId != value)
+		   if(countryId != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AddressId",OldValue=addressId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryId",OldValue=countryId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   addressId=value;
+		   countryId=value;
 		   }
 			
 		 }

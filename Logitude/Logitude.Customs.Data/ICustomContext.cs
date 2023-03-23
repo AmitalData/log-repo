@@ -19,7 +19,6 @@ namespace Logitude.Customs.Data
 		 IDbSet<AccumalationState> AccumalationStates { get; }
 		 IDbSet<ActionCode> ActionCodes { get; }
 		 IDbSet<AddressContactState> AddressContactStates { get; }
-		 IDbSet<AddressCurrency> AddressCurrencies { get; }
 		 IDbSet<AddressPurpose> AddressPurposes { get; }
 		 IDbSet<AgentTalkBackType> AgentTalkBackTypes { get; }
 		 IDbSet<AmedmentType> AmedmentTypes { get; }
@@ -107,6 +106,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<ContinuousRequestType> ContinuousRequestTypes { get; }
 		 IDbSet<ConverterType> ConverterTypes { get; }
 		 IDbSet<CoolingReportingMethod> CoolingReportingMethods { get; }
+		 IDbSet<CountryCurrency> CountryCurrencies { get; }
 		 IDbSet<CountryGroup> CountryGroups { get; }
 		 IDbSet<CourierCustomStatus> CourierCustomStatuses { get; }
 		 IDbSet<CourierDeclaration> CourierDeclarations { get; }

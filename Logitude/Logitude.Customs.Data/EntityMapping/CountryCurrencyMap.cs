@@ -14,16 +14,16 @@ using Logitude.Customs.Data;
 namespace Logitude.Customs.Data.EntityMapping
 {
  
-    public class AddressCurrencyMap : EntityTypeConfiguration<AddressCurrency>
+    public class CountryCurrencyMap : EntityTypeConfiguration<CountryCurrency>
     {
 	    string dbms;
-        public AddressCurrencyMap()
+        public CountryCurrencyMap()
         { 
-			  this.ToTable("AddressCurrencies", "Customs");
+			  this.ToTable("CountryCurrencies", "Customs");
 		
-		    this.HasKey(t => new { t.AddressId, t.Currency });
+		    this.HasKey(t => new { t.CountryId, t.Currency });
 	 
-            this.Property(t => t.AddressId).HasColumnName("AddressId").IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.CountryId).HasColumnName("CountryId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 

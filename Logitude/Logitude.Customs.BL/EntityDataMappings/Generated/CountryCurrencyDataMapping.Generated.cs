@@ -17,12 +17,12 @@ using Logitude.Customs.Data;
 namespace Logitude.Customs.BL.EntityDataMappings
 {
    
-   public partial class AddressCurrencyDataMapping: IMapping<AddressCurrencyPM, AddressCurrency>,IMappingEncodeBase64NVARCHARFields<AddressCurrencyPM>
+   public partial class CountryCurrencyDataMapping: IMapping<CountryCurrencyPM, CountryCurrency>,IMappingEncodeBase64NVARCHARFields<CountryCurrencyPM>
    {
           public enum POCOPropertyNames
           { 
 		     None,  
-	         AddressId, 
+	         CountryId, 
 	         Tenant, 
 	         LineNumber, 
 	         Currency,
@@ -32,7 +32,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	      public enum PMPropertyNames
           { 
 		     None,  
-	         AddressId, 
+	         CountryId, 
 	         Tenant, 
 	         LineNumber, 
 	         Currency, 
@@ -42,7 +42,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
     
-	    public void PMToPOCO(AddressCurrencyPM entityPM, AddressCurrency entityPOCO)
+	    public void PMToPOCO(CountryCurrencyPM entityPM, CountryCurrency entityPOCO)
         {
 			 
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
@@ -56,12 +56,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			}
 			}
 
-		public void POCOToPM(AddressCurrencyPM entityPM, AddressCurrency entityPOCO)
+		public void POCOToPM(CountryCurrencyPM entityPM, CountryCurrency entityPOCO)
         {
 			 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AddressId))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CountryId))
             {
-					entityPM.AddressId = entityPOCO.AddressId;
+					entityPM.CountryId = entityPOCO.CountryId;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
@@ -81,7 +81,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
 		}
 
-		public void PMToOldPM(AddressCurrencyPM entityPM, AddressCurrencyPM oldEntityPM)
+		public void PMToOldPM(CountryCurrencyPM entityPM, CountryCurrencyPM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
@@ -97,7 +97,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			
 		}
 
-	    public void EncodeBase64NVARCHARFields(AddressCurrencyPM entityPM)
+	    public void EncodeBase64NVARCHARFields(CountryCurrencyPM entityPM)
         {
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {

@@ -23,12 +23,12 @@ using Simplog.Server.Infrastructure;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
-    public class AddressCurrencyController : ApiController
+    public class CountryCurrencyController : ApiController
     {
 
        
        
-        public HttpResponseMessage UpadateListCurrencyByAddress(List<AddressCurrencyPM> addressCurrencyPMs)
+        public HttpResponseMessage UpadateListCurrencyByCountry(List<CountryCurrencyPM> countryCurrencyPMs)
         {
             try
             { 
@@ -37,18 +37,18 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 int tenant = authToken.Tenant;
                
                 ICustomContext customContext = CustomContext.GetContext(tenant);
-                AddressCurrencyUpdateService addressCurrencyUpdateService = new AddressCurrencyUpdateService(customContext, new Dictionary<string, IContext>(), tenant);
+                CountryCurrencyUpdateService countryCurrencyUpdateService = new CountryCurrencyUpdateService(customContext, new Dictionary<string, IContext>(), tenant);
 
                
               
-                if (addressCurrencyPMs != null && addressCurrencyPMs.Count > 0) {
-                    addressCurrencyUpdateService.FastDelete(addressCurrencyPMs[0].AddressId, tenant);
+                if (countryCurrencyPMs != null && countryCurrencyPMs.Count > 0) {
+                    countryCurrencyUpdateService.FastDelete(countryCurrencyPMs[0].CountryId, tenant);
                     (customContext as DbContextBase).SaveChanges();
 
-                    foreach (AddressCurrencyPM addressCurrencyPM in addressCurrencyPMs)
+                    foreach (CountryCurrencyPM countryCurrencyPM in countryCurrencyPMs)
 				  {
-                        addressCurrencyPM.ChangeSetOp = ChangeSetOperation.Insert;
-                        addressCurrencyUpdateService.Update(addressCurrencyPM,true);
+                        countryCurrencyPM.ChangeSetOp = ChangeSetOperation.Insert;
+                        countryCurrencyUpdateService.Update(countryCurrencyPM, true);
 
                   }
                 }

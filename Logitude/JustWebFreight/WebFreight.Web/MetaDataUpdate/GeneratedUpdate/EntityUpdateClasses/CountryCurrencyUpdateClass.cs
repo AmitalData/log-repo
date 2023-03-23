@@ -83,20 +83,20 @@ using Amital.QuoteOPM.BL;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
-   public class AddressCurrencyUpdateClass
+   public class CountryCurrencyUpdateClass
    {  		
-		public const string HashString = "003b3ef2aea5376bf536ea4adf940fbd";
+		public const string HashString = "c42ccdf2a066f71f66ff4fb49f3f94b6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "Customs.AddressCurrency",
+	             				    ObjectTableName =  "Customs.CountryCurrency",
 			      				    IsNew =  true,
-			      				    DBTableName =  "Customs.AddressCurrencies",
-			      				    ObjectTableSingular =  "AddressCurrency",
-			      				    ObjectTablePlural =  "AddressCurrencies",
+			      				    DBTableName =  "Customs.CountryCurrencies",
+			      				    ObjectTableSingular =  "CountryCurrency",
+			      				    ObjectTablePlural =  "CountryCurrencies",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -125,8 +125,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "מטבעות ארץ",
-			      				    DefaultText =  "Address Currency",
-			      				    Code =  "c72a",
+			      				    DefaultText =  "Country Currency",
+			      				    Code =  "0488",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -139,7 +139,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
-			      				    HashString =  AddressCurrencyUpdateClass.HashString,
+			      				    HashString =  CountryCurrencyUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -150,8 +150,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "AddressId",
-					  						ObjectTableName =  "Customs.AddressCurrency",
+					 						FieldName =  "CountryId",
+					  						ObjectTableName =  "Customs.CountryCurrency",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  15,
@@ -168,8 +168,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "AddressId",
-					  						ListPropertyPath =  "AddressId",
+					  						PMPropertyPath =  "CountryId",
+					  						ListPropertyPath =  "CountryId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -178,7 +178,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.AddressCurrency",
+					  						ValidForQuerySection1 =  "Customs.CountryCurrency",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -187,10 +187,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "AddressId",
+					  						FullFieldLable =  "CountryId",
 					  						DefaultText =  "Address Id",
-					  						ListFieldLable =  "AddressIdListLable",
-					  						ListLableDefaultText =  "AddressId",
+					  						ListFieldLable =  "CountryIdListLable",
+					  						ListLableDefaultText =  "CountryId",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
@@ -211,7 +211,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LineNumber",
-					  						ObjectTableName =  "Customs.AddressCurrency",
+					  						ObjectTableName =  "Customs.CountryCurrency",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -238,7 +238,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.AddressCurrency",
+					  						ValidForQuerySection1 =  "Customs.CountryCurrency",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -273,7 +273,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Currency",
-					  						ObjectTableName =  "Customs.AddressCurrency",
+					  						ObjectTableName =  "Customs.CountryCurrency",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  3,
@@ -300,7 +300,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.AddressCurrency",
+					  						ValidForQuerySection1 =  "Customs.CountryCurrency",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -335,7 +335,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CurrencyTypeName",
-					  						ObjectTableName =  "Customs.AddressCurrency",
+					  						ObjectTableName =  "Customs.CountryCurrency",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  100,
@@ -362,7 +362,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.AddressCurrency",
+					  						ValidForQuerySection1 =  "Customs.CountryCurrency",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -400,15 +400,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
-		   ObjectTable AddressCurrencyObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.AddressCurrency" && d.Tenant == 0).FirstOrDefault();
-		   //List<ObjectField> AddressCurrencyObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.AddressCurrency").ToList();
+		   ObjectTable CountryCurrencyObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CountryCurrency" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> CountryCurrencyObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CountryCurrency").ToList();
 		       
 	      
 
-	         Screen AddressCurrencyCustomsAddressCurrencyHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AddressCurrency.HeaderScreen", Name = "Customs.AddressCurrencyHeaderScreen", ObjectTableId = AddressCurrencyObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen CountryCurrencyCustomsCountryCurrencyHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CountryCurrency.HeaderScreen", Name = "Customs.CountryCurrencyHeaderScreen", ObjectTableId = CountryCurrencyObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
-		    AddressCurrencyObjectTable.HeaderScreenId = AddressCurrencyCustomsAddressCurrencyHeaderScreenScreen0.Id;
-		    AddressCurrencyObjectTable.HeaderScreenCode = AddressCurrencyCustomsAddressCurrencyHeaderScreenScreen0.Code;
+		    CountryCurrencyObjectTable.HeaderScreenId = CountryCurrencyCustomsCountryCurrencyHeaderScreenScreen0.Id;
+		    CountryCurrencyObjectTable.HeaderScreenCode = CountryCurrencyCustomsCountryCurrencyHeaderScreenScreen0.Code;
 
 	   		  
 
@@ -420,18 +420,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
-		   ObjectTable AddressCurrencyObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.AddressCurrency" && d.Tenant == 0).FirstOrDefault(); 
+		   ObjectTable CountryCurrencyObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CountryCurrency" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature AddressCurrencyFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = AddressCurrencyObjectTable.Id, Tenant = 0, NameTextCodeCode = "AddressCurrency.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AddressCurrencyObjectTable);
-		   Feature AddressCurrencyFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = AddressCurrencyObjectTable.Id, Tenant = 0, NameTextCodeCode = "AddressCurrency.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AddressCurrencyObjectTable);
-		   Feature AddressCurrencyFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = AddressCurrencyObjectTable.Id, Tenant = 0, NameTextCodeCode = "AddressCurrency.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AddressCurrencyObjectTable);
-		   Feature AddressCurrencyFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = AddressCurrencyObjectTable.Id, Tenant = 0, NameTextCodeCode = "AddressCurrency.Features.PackageFeature", NameTextCodeDefaultText = "AddressCurrency Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AddressCurrencyObjectTable);    
+		   Feature CountryCurrencyFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CountryCurrencyObjectTable.Id, Tenant = 0, NameTextCodeCode = "CountryCurrency.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CountryCurrencyObjectTable);
+		   Feature CountryCurrencyFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CountryCurrencyObjectTable.Id, Tenant = 0, NameTextCodeCode = "CountryCurrency.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CountryCurrencyObjectTable);
+		   Feature CountryCurrencyFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CountryCurrencyObjectTable.Id, Tenant = 0, NameTextCodeCode = "CountryCurrency.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CountryCurrencyObjectTable);
+		   Feature CountryCurrencyFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = CountryCurrencyObjectTable.Id, Tenant = 0, NameTextCodeCode = "CountryCurrency.Features.PackageFeature", NameTextCodeDefaultText = "CountryCurrency Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CountryCurrencyObjectTable);    
 	    
 		}
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable AddressCurrencyObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.AddressCurrency" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable CountryCurrencyObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CountryCurrency" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -445,7 +445,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = AddressCurrencyObjectTable.Id,
+                ObjectTableId = CountryCurrencyObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -463,7 +463,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = AddressCurrencyObjectTable.Id,
+                ObjectTableId = CountryCurrencyObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -479,9 +479,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   		   //--------------> Additional TextCodes <--------------\\
 
- 		   ObjectTable AddressCurrencyObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.AddressCurrency" && d.Tenant == 0).FirstOrDefault(); 
+ 		   ObjectTable CountryCurrencyObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CountryCurrency" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode AddressCurrencyTextCode_CustomsAddressCurrencyOCurrencyType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.AddressCurrency.O.CurrencyType", DefaultText = "Currencies Type",LocalDefaultText = @"סוגי מטבעות ארץ", ObjectTableId = AddressCurrencyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CountryCurrencyTextCode_CustomsCountryCurrencyOCurrencyType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CountryCurrency.O.CurrencyType", DefaultText = "Currencies Type",LocalDefaultText = @"סוגי מטבעות ארץ", ObjectTableId = CountryCurrencyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
