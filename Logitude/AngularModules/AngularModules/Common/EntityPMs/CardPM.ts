@@ -560,8 +560,6 @@ export class CardPM extends ObjectCustomFieldPM {
     public get ExportLocalCustomerGroupId() { return this.exportLocalCustomerGroupId; }
     public set ExportLocalCustomerGroupId(newValue: string) { if (this.exportLocalCustomerGroupId != newValue) { this.exportLocalCustomerGroupId = newValue; this.MarkAsDirty("ExportLocalCustomerGroupId"); } }
        
-	        
-	          
 	 
     private isPotential: boolean;
     public get IsPotential() { return this.isPotential; }
@@ -620,4 +618,4 @@ export class CardPM extends ObjectCustomFieldPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
