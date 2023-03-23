@@ -42,6 +42,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         queryableData = queryableData.Where(d => (d.ActualPOLVesselDeparture != null || d.ShipmentMainCarriageATD != null)
                                                              && (d.TransshipmentCount == 0 || d.TransshipmentCount == null)
                                                              && (d.ActualPODVesselArrival == null && d.ShipmentMainCarriageATA == null)
+                                                             && (d.EstimatedTrans1VesselArrival == null && d.ShipmentTransshipment1ATA == null)
                                                              && (d.EstimatedPODVesselArrival != todayDate && d.ShipmentMainCarriageETA != todayDate)
                                                              && d.EntityStatus.StatusWeight < allowedStatusWeight);
                     }
@@ -54,6 +55,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         queryableData = queryableData.Where(d => (d.ActualPOLVesselDeparture != null || d.ShipmentMainCarriageATD != null)
                                                              && (d.TransshipmentCount != null && d.TransshipmentCount > 0)
                                                              && (d.ActualPODVesselArrival == null && d.ShipmentMainCarriageATA == null)
+                                                             && (d.EstimatedTrans1VesselArrival == null && d.ShipmentTransshipment1ATA == null)
                                                              && (d.EstimatedPODVesselArrival != todayDate && d.ShipmentMainCarriageETA != todayDate)
                                                              && d.EntityStatus.StatusWeight < allowedStatusWeight);                     
                     }

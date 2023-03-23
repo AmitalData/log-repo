@@ -46,8 +46,6 @@ namespace WebFreight.Web.ContainerTracking
         private string trackingSource;
         private ContainerUpdatedFields containerUpdatedFields;
         private ContainerTrackingHelper containerTrackingHelper;
-        private PortQuery portQuery;
-        private PortRepository portRepository;
         public ContainerTrackingGeneralAnalyzer(string trackingSource, AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
         {
             if (analyzeQueue != null)
@@ -57,8 +55,6 @@ namespace WebFreight.Web.ContainerTracking
                 this.analyzeQueueRepository = analyzeQueueRepository;
                 this.trackingSource = trackingSource;
             }
-            this.portRepository = new PortRepository(tenant_Zero);
-            this.portQuery = new PortQuery(portRepository);
         }
 
         public void Run()
@@ -137,18 +133,14 @@ namespace WebFreight.Web.ContainerTracking
         }
         private void ConnectAnalyzeQueueToTenantAndEntity()
         {
-            if (!analyzeQueue.ConnectedToTenant)
-            {
-                analyzeQueue.ConnectedToTenant = true;
-                analyzeQueueRepository.Update(analyzeQueue);
-                analyzeQueueRepository.SubmitChanges();
-            }
-            if (!analyzeQueue.ConnectedToEntity)
-            {
+            if (!analyzeQueue.ConnectedToTenant)            
+                analyzeQueue.ConnectedToTenant = true;                
+            
+            if (!analyzeQueue.ConnectedToEntity)            
                 analyzeQueue.ConnectedToEntity = true;
-                analyzeQueueRepository.Update(analyzeQueue);
-                analyzeQueueRepository.SubmitChanges();
-            }
+
+            analyzeQueueRepository.Update(analyzeQueue);
+            analyzeQueueRepository.SubmitChanges();
         }
         private void StartUpdating()
         {
@@ -157,12 +149,12 @@ namespace WebFreight.Web.ContainerTracking
             if (trackingSource == ContainerStatusSourceValues.OceanInsights)
             {
                 manager.Initialize(containerUpdatedFields.Tenant);
-                manager.Update(true, true);
+                manager.Update(true);
             }
 
             else if (trackingSource == ContainerStatusSourceValues.Vizion)
             {
-                var allContainerTrackingRequests = containerUpdatedFields.ShipmentContext.ContainerTrackingRequests.Where(e => (e.RequestId == visionContainerStatus.reference_id || e.RequestId == visionContainerStatus.parent_reference_id) && e.Status == ContainerTrackingRequestStatus.Active).ToList();
+                List<ContainerTrackingRequest> allContainerTrackingRequests = containerUpdatedFields.ShipmentContext.ContainerTrackingRequests.Where(e => (e.RequestId == visionContainerStatus.reference_id || e.RequestId == visionContainerStatus.parent_reference_id) && e.Status == ContainerTrackingRequestStatus.Active).ToList();
                 foreach (var containerTrackingRequest in allContainerTrackingRequests)
                 {
                     HandelUpdateManager(manager, containerTrackingRequest);
@@ -202,16 +194,14 @@ namespace WebFreight.Web.ContainerTracking
             var analyz = false;
 
             ContainerPM container = GetContainerPM(containerId, containerTrackingRequest.Tenant);
-            ShipmentPM shipment = GetShipmentPM(containerTrackingRequest.ShipmentId, containerTrackingRequest.Tenant);
              manager.allShipmentTrasshipmentLegs = new List<dynamic>();
 
-            if (IsValidToAnalyze(shipment, container, containerTrackingRequest))
+            if (IsValidToAnalyze(container))
             {
                 manager.Initialize(containerTrackingRequest.Tenant);
                 manager.SetContainer(container);
-                manager.SetShipment(shipment);
                 MapContainersExternalData(container);
-                manager.Update(IsUpdateContainerAllowed(container), IsUpdateShipmentAllowed(shipment));
+                manager.Update(IsUpdateContainerAllowed(container));
                 analyz = IsUpdateContainerAllowed(container);
             }
 
@@ -242,12 +232,12 @@ namespace WebFreight.Web.ContainerTracking
             return true;
         }   
 
-        private bool IsValidToAnalyze(ShipmentPM shipment, ContainerPM container, ContainerTrackingRequest containerTrackingRequest)
+        private bool IsValidToAnalyze(ContainerPM container)
         {
             return (
                     string.IsNullOrEmpty(visionContainerStatus?.payload?.bill_of_lading) ||
-                    string.IsNullOrEmpty(shipment.Master) ||
-                    visionContainerStatus?.payload?.bill_of_lading == shipment.Master
+                    string.IsNullOrEmpty(container.Master) ||
+                    visionContainerStatus?.payload?.bill_of_lading == container.Master
                     ) &&
                     !container.IsCancelled &&
                     !container.IsClosed;
@@ -335,13 +325,6 @@ namespace WebFreight.Web.ContainerTracking
             var containerPM = containerQuery.GetSinglePM(containerId, tenant);
             return containerPM;
         }
-        private ShipmentPM GetShipmentPM(string shipmentId, int tenant)
-        {
-            var shipmentRepository = new ShipmentRepository(containerUpdatedFields.ShipmentContext);
-            var shipmentQuery = new ShipmentQuery(shipmentRepository);
-            var shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);
-            return shipmentPM;
-        }
 
         private void DoneAnalyzeQueue(int tenant)
         {
@@ -352,7 +335,6 @@ namespace WebFreight.Web.ContainerTracking
         }
         public void AddTotangoActivity(int tenant, string activity)
         {
-
             string activityDescription = activity;
             
             string email = AuthenticationUtil.IsAuthenticatedUserExists() ? AuthenticationUtil.GetAuthenticatedUser() : "system@tenant" + tenant + ".com";

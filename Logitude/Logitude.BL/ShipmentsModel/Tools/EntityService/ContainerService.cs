@@ -45,11 +45,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private ContainerPM containerPm;
         private IShipmentsContext shipmentsContext;
         private ContainerRepository entityRepository;
-        private bool isUpdatingShipment = false;
-        private ShipmentPM shipmentPM;
-        private Container containerPoco { get; set; }
-
+        private Container containerPoco;
         private AuditLogRepository AuditLogRepository;
+        private PortRepository portRepository;
 
         public ContainerService(IShipmentsContext shipmentsContext, int tenant)
         {
@@ -58,6 +56,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.tenant = tenant;
             this.shipmentsContext = shipmentsContext;
             this.entityRepository = new ContainerRepository(shipmentsContext);
+            this.portRepository = new PortRepository(tenant);
         }
 
         public void Create(ContainerPM entityPM)
@@ -119,7 +118,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             ActivityLogger.SendTotangoContactActivity(email, moduleName, activityDescription, containerPM.Tenant,false,null);
         }
 
-            private GeneralContainerTrackingArgs GetGeneralContainerTrackingArgs(ContainerPM entityPM)
+        private GeneralContainerTrackingArgs GetGeneralContainerTrackingArgs(ContainerPM entityPM)
         {
             return new GeneralContainerTrackingArgs
             {
@@ -147,13 +146,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.SetUpdatedByUser();
             this.containerPoco = entityRepository.GetSingleContainer(entityPM.Id, tenant);
             this.MapContainerClosedDate(entityPM, containerPoco);
-
-            if (FeatureToggleHelper.HasFeatureToggle("OIU", tenant) &&!string.IsNullOrEmpty(containerPm.EmptyReturnLocationPortId) && (containerPm.EstimatedEmptyReturn != containerPoco.EstimatedEmptyReturn || containerPm.ActualEmptyReturn != containerPoco.ActualEmptyReturn))
-            {
-                this.HandleEmptyReturnLeg();
-                this.containerPm.ConcurrencyGUID = entityRepository.GetConcurrencyGUIDByContainerId(this.containerPm.Id, tenant);
-            }
-
             this.ComputeTransshipmentCount();
             this.ComputeHasTransShipments();
             ContainerValidating.Validate(this.containerPm, this.containerPoco, isNewEntity);
@@ -332,21 +324,109 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             //this.containerPm.ShipmentNewConcurrencyGUID = Guid.NewGuid().ToString();
         }
 
-        private void HandleEmptyReturnLeg()
+        private void ComputeTransshipmentCount()
         {
-            ShipmentPM shipmentPM = this.GetShipment();
-            if (shipmentPM == null || (shipmentPM.DirectionId != "I" && shipmentPM.DirectionId != "R")) return;
+            if (!string.IsNullOrEmpty(containerPm.Transshipment3LocationPortId))
+            {
+                containerPm.TransshipmentCount = 3;
+            }
 
+            else if (!string.IsNullOrEmpty(containerPm.Transshipment2LocationPortId))
+            {
+                containerPm.TransshipmentCount = 2;
+            }
+
+            else if (!string.IsNullOrEmpty(containerPm.Transshipment1LocationPortId))
+            {
+                containerPm.TransshipmentCount = 1;
+            }
+
+            else
+            {
+                containerPm.TransshipmentCount = null;
+            }
+        }
+        private void ComputeHasTransShipments()
+        {
+            if (containerPm.TransshipmentCount > 0)
+            {
+                containerPm.HasTransshipments = true;
+            }
+
+            else if (!string.IsNullOrEmpty(containerPm.ShipmentTransshipment1FromId))
+            {
+                containerPm.HasTransshipments = true;
+            }
+
+            else
+            {
+                containerPm.HasTransshipments = false;
+            }
+        }
+
+        private void UpdateShipment()
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("OIU", tenant)) return;
+            ShipmentPM shipmentPM = this.GetShipment();
+            if (shipmentPM == null) return;
+
+            bool isUpdatingEmptyReturn = HandleEmptyReturnLeg(shipmentPM);
+            bool isUpdatingShipment = false;
+
+            if (IsUpdateShipmentAllowed(shipmentPM))
+                isUpdatingShipment = ProcessUpdatingShipment(shipmentPM);            
+
+            if (isUpdatingEmptyReturn || isUpdatingShipment)            
+                SaveShipment(shipmentPM);            
+        }
+
+        private bool ProcessUpdatingShipment(ShipmentPM shipmentPM)
+        {
+            bool isUpdatingShipment = false;
+
+            MapPreCarriageDates(shipmentPM);
+            MapOnCarriageDates(shipmentPM);
+
+
+            return isUpdatingShipment;
+        }
+
+        private void MapPreCarriageDates(ShipmentPM shipmentPM)
+        {
+            //containerTrackingHelper.AddContainerDiscrepancy("PreCarriage", containerPm, shipmentPM);
+            //if (!containerTrackingHelper.IsSameLocationUsingId(containerPm.PreCarriageLocationPortId, shipmentPM.PreCarriageFromPortId)) return;
+            shipmentPM.PreCarriageETD = containerPm.PreCarriageETD;
+            shipmentPM.PreCarriageATD = shipmentPM.PreCarriageATD ?? containerPm.PreCarriageATD;
+        }
+        private void MapOnCarriageDates(ShipmentPM shipmentPM)
+        {
+            //containerTrackingHelper.AddContainerDiscrepancy("OnCarriage", containerPm, shipmentPM);
+            //if (!containerTrackingHelper.IsSameLocationUsingId(containerPm.OnCarriageLocationPortId, shipmentPM.OnCarriageToPortId)) return;
+            shipmentPM.OnCarriageETA = containerPm.OnCarriageETA;
+            shipmentPM.OnCarriageATA = shipmentPM.OnCarriageATA ?? containerPm.OnCarriageATA;
+        }
+
+
+
+
+
+        private bool HandleEmptyReturnLeg(ShipmentPM shipmentPM)
+        {
+            if (shipmentPM.DirectionId != "I" && shipmentPM.DirectionId != "R") return false;
+            if (string.IsNullOrEmpty(containerPm.EmptyReturnLocationPortId)) return false;
+            if (containerPm.EstimatedEmptyReturn == containerPoco.EstimatedEmptyReturn && containerPm.ActualEmptyReturn == containerPoco.ActualEmptyReturn) return false;
+           
             ShipmentDeliveryPM emptyReturn = this.GetEmptyReturnLeg(shipmentPM);
             if (emptyReturn != null)
             {
                 UpdateEmptyReturnLeg(emptyReturn);
+                return true;
             }
 
             else
             {
                 ShipmentPackagePM shipmentPackage = shipmentPM.ShipmentPackages.Where(d => d.ContainerEntityId == containerPm.Id).FirstOrDefault();
-                if (shipmentPackage == null) return;
+                if (shipmentPackage == null) return false;
 
                 emptyReturn = CreateEmptyReturnLeg(shipmentPackage, shipmentPM);
                 ShipmentPickUpDeliveryPackagePM deliveryPackage = this.CreateEmptyReturnPackage(shipmentPackage);
@@ -356,11 +436,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     emptyReturn.ShipmentPickUpDeliveryPackages.Add(deliveryPackage);
                 }
                 shipmentPM.ShipmentDeliveries.Add(emptyReturn);
+                return true;
             }
-
-            this.shipmentPM = shipmentPM;
-            this.isUpdatingShipment = true;
-            //UpdateShipment(shipmentPM);            
         }
 
         private ShipmentPM GetShipment()
@@ -392,7 +469,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private ShipmentDeliveryPM CreateEmptyReturnLeg(ShipmentPackagePM shipmentPackage, ShipmentPM shipmentPM)
         {
             ShipmentDeliveryPM emptyReturn = this.CreateEmptyReturnInstance(shipmentPackage.Id);
-            this.ComputeEmptyReturnFromProperties(emptyReturn, shipmentPM);            
+            this.ComputeEmptyReturnFromProperties(emptyReturn, shipmentPM);
 
             PortRepository portRepository = new PortRepository(tenant);
             Port toPort = portRepository.GetSinglePort(containerPm.EmptyReturnLocationPortId, tenant);
@@ -444,7 +521,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private void AddPackageHarmonizes(ShipmentPickUpDeliveryPackagePM deliveryPackage, ShipmentPackagePM shipmentPackage)
         {
-            foreach( ShipmentPackageHarmonizePM harmonizeItem in shipmentPackage.ShipmentPackageHarmonizes)
+            foreach (ShipmentPackageHarmonizePM harmonizeItem in shipmentPackage.ShipmentPackageHarmonizes)
             {
                 PickUpDeliveryPackageHarmonizePM harmonize = new PickUpDeliveryPackageHarmonizePM();
                 harmonize.Harmonize = harmonizeItem.Harmonize;
@@ -455,10 +532,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private void ComputeEmptyReturnFromProperties(ShipmentDeliveryPM emptyReturn, ShipmentPM shipmentPM)
         {
             ShipmentDeliveryPM lastDelivery = shipmentPM.ShipmentDeliveries.Where(d => d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(o => o.PickUpDeliveryNumber).FirstOrDefault();
-            if(lastDelivery != null)
+            if (lastDelivery != null)
             {
                 this.MapLocationFromLastDelivery(lastDelivery, emptyReturn);
-                emptyReturn.PickUpDeliveryFromTypeCode = lastDelivery.PickUpDeliveryToTypeCode;                
+                emptyReturn.PickUpDeliveryFromTypeCode = lastDelivery.PickUpDeliveryToTypeCode;
             }
 
             else if (!string.IsNullOrEmpty(shipmentPM.WarehouseLegWarehouseId))
@@ -492,12 +569,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 emptyReturn.FromPortId = shipmentPM.Transshipment1ToPortId;
             }
 
-            else 
+            else
             {
                 emptyReturn.PickUpDeliveryFromTypeCode = "PORT";
                 emptyReturn.FromPortId = shipmentPM.MainCarriageToPortId;
             }
-        }        
+        }
         private void MapLocationFromLastDelivery(ShipmentDeliveryPM lastDelivery, ShipmentDeliveryPM emptyReturn)
         {
             switch (lastDelivery.PickUpDeliveryToTypeCode)
@@ -525,57 +602,51 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
             }
         }
-        private void UpdateShipment()
+        private void SaveShipment(ShipmentPM shipmentPM)
         {
-            if (!isUpdatingShipment) return;
-            if (shipmentPM == null) return;
-
-            isUpdatingShipment = false;
             string systemEmail = "system@tenant" + tenant + ".com";
             ShipmentService service = new ShipmentService(shipmentsContext, shipmentPM, systemEmail);
             service.SetChangeSet(shipmentPM.ShipmentPackages, shipmentPM.ShipmentOrderPackages, shipmentPM.ShipmentPickUps, shipmentPM.ShipmentDeliveries, shipmentPM.ShipmentReceivables, shipmentPM.ShipmentPayables, shipmentPM.FollowUps, shipmentPM.ShipmentAWBPrintOnlies, shipmentPM.ShipmentConsoleShipments, shipmentPM.ShipmentCarrierStatuses, shipmentPM.AWBOCIPMs, shipmentPM.ShipmentCommodities, shipmentPM.ShipmentAssemblies, shipmentPM.ShipmentStoragePricings, shipmentPM.ShipmentProductItems, shipmentPM.ShipmentUnassignedFields);
             service.Update();
         }
 
-        private void ComputeTransshipmentCount()
+        private bool IsUpdateShipmentAllowed(ShipmentPM shipment)
         {
-            if (!string.IsNullOrEmpty(containerPm.Transshipment3LocationPortId))
-            {
-                containerPm.TransshipmentCount = 3;
-            }
+            if (shipment.IsOperationalClosed)
+                return false;
 
-            else if (!string.IsNullOrEmpty(containerPm.Transshipment2LocationPortId))
-            {
-                containerPm.TransshipmentCount = 2;
-            }
+            if (!IsSameLocation(shipment.MainCarriageFromPortId, containerPm.POLLocationPortId, containerPm.POLLocation))
+                return false;
 
-            else if (!string.IsNullOrEmpty(containerPm.Transshipment1LocationPortId))
-            {
-                containerPm.TransshipmentCount = 1;
-            }
+            if (!IsSameLocation(shipment.MainCarriageFinalDestinationPortId, containerPm.PODLocationPortId, containerPm.PODLocation))
+                return false;
 
-            else
-            {
-                containerPm.TransshipmentCount = null;
-            }
+            return true;
         }
-
-        private void ComputeHasTransShipments()
+        public bool IsSameLocation(string shipmentPortId, string containerPortId, string containerPortCode)
         {
-            if (containerPm.TransshipmentCount > 0)
-            {
-                containerPm.HasTransshipments = true;
-            }
+            if (string.IsNullOrEmpty(containerPortId)) 
+                return false;
 
-            else if (!string.IsNullOrEmpty(containerPm.ShipmentTransshipment1FromId))
-            {
-                containerPm.HasTransshipments = true;
-            }
+            else if (shipmentPortId == containerPortId)
+                return true;
 
-            else
-            {
-                containerPm.HasTransshipments = false;
-            }
+            Port containerPort_zero = GetTenantZeroPortByCode(containerPortCode);
+            Port shipmentPort = GetPortById(shipmentPortId);
+            Port shipmentPort_Zero = GetTenantZeroPortByCode(shipmentPort?.CombinedCode);
+
+            if (containerPort_zero?.PortGroupId != null && shipmentPort_Zero?.PortGroupId != null && containerPort_zero?.PortGroupId == shipmentPort_Zero?.PortGroupId)
+                return true;
+
+            return false;
+        }
+        private Port GetTenantZeroPortByCode(string portCode)
+        {
+            return portRepository.GetOceanPortByCombinedCode(portCode, 0);
+        }
+        private Port GetPortById(string portId)
+        {
+            return portRepository.GetSinglePort(portId, tenant);
         }
     }
 }
