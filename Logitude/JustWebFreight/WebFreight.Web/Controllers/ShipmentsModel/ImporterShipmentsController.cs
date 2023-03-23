@@ -564,7 +564,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 TenantManagmentPrivateLabelsQuery query = new TenantManagmentPrivateLabelsQuery(0);
-                privatelabel = query.GetSinglePM_Cache(currentTenant.PrivateLabelId);
+                privatelabel = query.GetSinglePM(currentTenant.PrivateLabelId);
 
             }
 

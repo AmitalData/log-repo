@@ -35,7 +35,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 TenantManagmentPrivateLabelsQuery tenantManagmentPrivateLabelsQuery = new TenantManagmentPrivateLabelsQuery();
-                TenantManagmentPrivateLabelsPM tenantManagmentPrivateLabelsPM = tenantManagmentPrivateLabelsQuery.GetSinglePM_Cache(id);
+                TenantManagmentPrivateLabelsPM tenantManagmentPrivateLabelsPM = tenantManagmentPrivateLabelsQuery.GetSinglePM(id);
 
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 

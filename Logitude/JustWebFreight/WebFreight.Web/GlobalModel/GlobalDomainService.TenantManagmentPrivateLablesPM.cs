@@ -45,7 +45,7 @@ namespace WebFreight.Web.GlobalModel
         public TenantManagmentPrivateLabelsPM GetSingleTenantManagmentPrivateLabelsPM(string id)
         {
             tenantManagmentPrivateLablesQuery = new TenantManagmentPrivateLabelsQuery(0);
-            return tenantManagmentPrivateLablesQuery.GetSinglePM_Cache(id);
+            return tenantManagmentPrivateLablesQuery.GetSinglePM(id);
         }
 
         public IQueryable<TenantManagmentPrivateLabelsPM> GetTenantManagmentPrivateLablesPMs()
@@ -53,7 +53,7 @@ namespace WebFreight.Web.GlobalModel
             SecurityUtility.AuthenticationOnTenant(0);
             //SecurityUtility.CheckContactFeature("TenantManagement", "READ", tenant);
             tenantManagmentPrivateLablesQuery = new TenantManagmentPrivateLabelsQuery(0);
-            return tenantManagmentPrivateLablesQuery.GetTenantManagmentPrivateLablesPMs_Cache();
+            return tenantManagmentPrivateLablesQuery.GetTenantManagmentPrivateLablesPMs();
         }
 
         public void InsertTenantManagmentPrivateLabel(TenantManagmentPrivateLabelsPM entityPM)
@@ -216,13 +216,13 @@ namespace WebFreight.Web.GlobalModel
             
             SecurityUtility.AuthenticationOnTenant(0);
             tenantManagmentPrivateLablesQuery = new TenantManagmentPrivateLabelsQuery(0);
-            return tenantManagmentPrivateLablesQuery.GetTenantManagmentPrivateLablesLists_Cache();
+            return tenantManagmentPrivateLablesQuery.GetTenantManagmentPrivateLablesLists();
         }
 
         public TenantManagmentPrivateLabelsList GetSingleTenantManagmentPrivateLabelList(string id)
         {
             tenantManagmentPrivateLablesQuery = new TenantManagmentPrivateLabelsQuery(0);
-            return tenantManagmentPrivateLablesQuery.GetSingleList_Cache(id);
+            return tenantManagmentPrivateLablesQuery.GetSingleList(id);
         }
 
         public TenantManagmentPrivateLabelsPM GetTenantManagmentPrivateLabelById(string id, int tenant)
@@ -231,7 +231,7 @@ namespace WebFreight.Web.GlobalModel
             //SecurityUtility.CheckContactFeature("APILogs", "READ", tenant);
 
             TenantManagmentPrivateLabelsQuery Query = new TenantManagmentPrivateLabelsQuery(tenant);
-            TenantManagmentPrivateLabelsPM entityPM = Query.GetSinglePM_Cache(id);
+            TenantManagmentPrivateLabelsPM entityPM = Query.GetSinglePM(id);
             return entityPM;
 
         }
