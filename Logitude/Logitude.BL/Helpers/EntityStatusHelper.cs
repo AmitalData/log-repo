@@ -46,7 +46,7 @@ namespace Logitude.BL.Helpers
             return myHighestStatusId;
         }
 
-        public static string GetHighestStatusId(string oldStatusId, string newStatusId, int tenant, ref string statusName)
+        public static string GetHighestStatusId(string oldStatusId, string newStatusId, int tenant, ref string statusName, ref string statusCode)
         {
             string myHighestStatusId = null;
 
@@ -54,6 +54,7 @@ namespace Logitude.BL.Helpers
             {
                 myHighestStatusId = null;
                 statusName = null;
+                statusCode = null;
             }
 
             else if (string.IsNullOrEmpty(oldStatusId) || string.IsNullOrEmpty(newStatusId))
@@ -67,8 +68,8 @@ namespace Logitude.BL.Helpers
 
                 EntityStatus myStatus = EntityStatusRepository.GetSingleEntityStatus(myHighestStatusId, tenant, true);
                 statusName = myStatus.Name;
+                statusCode = myStatus.Code;
             }
-
             else
             {
                 EntityStatusRepository entityStatusRepository = new EntityStatusRepository(tenant);
@@ -77,11 +78,13 @@ namespace Logitude.BL.Helpers
 
                 myHighestStatusId = oldStatus.Id;
                 statusName = oldStatus.Name;
+                statusCode = oldStatus.Code;
 
                 if (newStatus.StatusWeight > oldStatus.StatusWeight)
                 {
                     myHighestStatusId = newStatus.Id;
                     statusName = newStatus.Name;
+                    statusCode = newStatus.Code;
                 }
             }
 
