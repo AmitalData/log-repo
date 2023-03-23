@@ -1955,6 +1955,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.LocalCustomsSentByUserName = myContact.EnglishName;
                 }
             }
+
             if (shipment.EntityStatus != null)
             {
                 shipmentPM.StatusName = shipment.EntityStatus.Name;
@@ -2013,8 +2014,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     if (!string.IsNullOrEmpty(masterData.StatusId))
                     {
                         string statusName = null;
-                        shipmentPM.StatusId = EntityStatusHelper.GetHighestStatusId(shipment.StatusId, masterData.StatusId, shipment.Tenant, ref statusName);
+                        string statusCode = null;
+                        shipmentPM.StatusId = EntityStatusHelper.GetHighestStatusId(shipment.StatusId, masterData.StatusId, shipment.Tenant, ref statusName, ref statusCode);
                         shipmentPM.StatusName = statusName;
+                        shipmentPM.StatusCode = statusCode;
 
                         if (shipmentPM.StatusId == masterData.StatusId)
                         {
@@ -2027,7 +2030,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     if (!string.IsNullOrEmpty(masterData.OperationalStatusId))
                     {
                         string statusName = null;
-                        shipmentPM.OperationalStatusId = EntityStatusHelper.GetHighestStatusId(shipment.OperationalStatusId, masterData.OperationalStatusId, shipment.Tenant, ref statusName);
+                        string statusCode = null;
+                        shipmentPM.OperationalStatusId = EntityStatusHelper.GetHighestStatusId(shipment.OperationalStatusId, masterData.OperationalStatusId, shipment.Tenant, ref statusName, ref statusCode);
                         shipmentPM.OperationalStatusName = statusName;
                     }
                 }
