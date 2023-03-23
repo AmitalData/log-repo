@@ -25,13 +25,19 @@
                             <table>
                                 <tr style="height: 20px;">
                                     <td>
-                                        <RadioButton [IsEnabled]="!IsCounterUsed" [Name]="'SameDiffRadio'" [IsChecked]="SameForAllTypes == true" (Checked)="SameForAllTypes = true" [Text]="SameRadioButtonLabel"></RadioButton>
+                                        <RadioButton [IsEnabled]="!IsCounterUsed" [Name]="'SameDiffCustomRadio'" [IsChecked]="SameForAllTypes == true && !IsCustomizedCounter" (Checked)="SameForAllTypesChecked()" [Text]="SameRadioButtonLabel"></RadioButton>
                                     </td>
                                 </tr>
 
                                 <tr style="height: 20px;">
                                     <td>
-                                        <RadioButton [IsEnabled]="!IsCounterUsed" [Name]="'SameDiffRadio'" [IsChecked]="SameForAllTypes == false" (Checked)="SameForAllTypes = false" [Text]="DiffRadioButtonLabel"></RadioButton>
+                                        <RadioButton [IsEnabled]="!IsCounterUsed" [Name]="'SameDiffCustomRadio'" [IsChecked]="SameForAllTypes == false && !IsCustomizedCounter" (Checked)="DiffForEachTypesChecked()" [Text]="DiffRadioButtonLabel"></RadioButton>
+                                    </td>
+                                </tr>
+
+                                <tr style="height: 20px;" *ngIf="HasCustomizedCounterFeature">
+                                    <td>
+                                        <RadioButton [IsEnabled]="!IsCounterUsed" [Name]="'SameDiffCustomRadio'" [IsChecked]="SameForAllTypes == false && IsCustomizedCounter" (Checked)="IsCustomizedCounterChecked()" [Text]="CustomizedRadioButtonLabel"></RadioButton>
                                     </td>
                                 </tr>
 
@@ -40,9 +46,9 @@
                                         <CheckBox [IsEnabled]="!IsCounterUsed" [IsChecked]="UniquePerPrefix" (Checked)="UniquePerPrefix = $event" [Text]="'Unique Per Prefix'"></CheckBox>
                                     </td>
                                 </tr>
-                                <tr style="height: 20px;" *ngIf="SameForAllTypes == false">
+                                <tr style="height: 20px;" *ngIf="SameForAllTypes == false && !IsCustomizedCounter">
                                     <td>
-                                        <CheckBox [IsEnabled]="!IsCounterUsed"  [IsChecked]="ActivateConsolidationCreditNoteCounter" (Checked)="ActivateConsolidationCreditNoteCounter = $event" [Text]="'Activate Consolidation Credit Note Counter'"></CheckBox>
+                                        <CheckBox [IsEnabled]="!IsCounterUsed" [IsChecked]="ActivateConsolidationCreditNoteCounter" (Checked)="ActivateConsolidationCreditNoteCounter = $event" [Text]="'Activate Consolidation Credit Note Counter'"></CheckBox>
                                     </td>
                                 </tr>
 
@@ -66,7 +72,7 @@
                             <div class="MediaFill" style="border: 1px solid #D1D1D1; padding: 5px;">
 
                                 <!-- SameForAll -->
-                                <table *ngIf="SameForAllTypes == true">
+                                <table *ngIf="SameForAllTypes == true && !IsCustomizedCounter">
 
                                     <!-- Prefix -->
                                     <tr class="FormFieldRow">
@@ -164,7 +170,7 @@
                                 </table>
 
                                 <!-- Different | List -->
-                                <table *ngIf="SameForAllTypes == false">
+                                <table *ngIf="SameForAllTypes == false && !IsCustomizedCounter">
 
                                     <!-- StartNumber -->
                                     <tr class="FormFieldRow" *ngIf="!UniquePerPrefix">

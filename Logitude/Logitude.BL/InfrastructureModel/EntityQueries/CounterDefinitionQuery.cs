@@ -47,7 +47,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 														  CounterSize = a.CounterSize,
 														  Suffix = a.Suffix,
                                                           InActive = a.InActive,
-                                                          UsePerBranch = a.UsePerBranch
+                                                          UsePerBranch = a.UsePerBranch,
+                                                          IsCustomized = a.IsCustomized,
                                                       }
 
        );
@@ -84,7 +85,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 					   CounterSize = a.CounterSize,
 					   Suffix = a.Suffix,
                        InActive = a.InActive,
-                       UsePerBranch = a.UsePerBranch
+                       UsePerBranch = a.UsePerBranch,
+                       IsCustomized = a.IsCustomized
                    });
 
             return result;
