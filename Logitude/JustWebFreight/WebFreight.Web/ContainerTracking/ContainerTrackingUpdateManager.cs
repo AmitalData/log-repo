@@ -40,7 +40,6 @@ namespace WebFreight.Web.ContainerTracking
         public ContainerTrackingUpdateManager(ContainerUpdatedFields containerUpdatedFields)
         {
 
-            this.allTrasshipmentLegs = new List<dynamic>();
             this.allShipmentTrasshipmentLegs = new List<dynamic>();
             this.containerUpdatedFields = containerUpdatedFields;
             this.containerPM = containerUpdatedFields.ContainerPM;

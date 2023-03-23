@@ -125,9 +125,5 @@ export class CardList {
 		ConsolidationInvoiceTemplateId: string;
 		ManifestInvoiceTemplateId: string;
 		EORInumber: string;
-		SingleInvoiceTemplateId: string;
-		CustomsInvoiceTemplateId: string;
-		ConsolidationInvoiceTemplateId: string;
-		ManifestInvoiceTemplateId: string;
 	
-}
+}
