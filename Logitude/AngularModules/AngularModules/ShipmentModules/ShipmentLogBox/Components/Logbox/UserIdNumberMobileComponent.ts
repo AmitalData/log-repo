@@ -115,7 +115,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
                         this.Tenant = me.Tenant;
                     }
 
-                    this.orianStyle = +this.Tenant === 126 || +this.Tenant === 1153 || isDevMode();
+                    this.orianStyle = +this.Tenant === 126 || +this.Tenant === 1153;
                     if (this.orianStyle)
                         this.getEcommerceSupportEmail()
 
