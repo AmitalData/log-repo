@@ -54,7 +54,9 @@ export class NewARInvoiceComponent extends BaseComponent {
     public documentTypeTemplates: DocumentTypeTemplateList[] = [];
     public selectedDocumentTypeTemplate: DocumentTypeTemplateList;
     public IsLoadDocumentTemplateReady = false;
+    public IsDocumentTypeTemplateChange = false;
 
+    
     constructor(private entityResourceService: EntityResourceService) {
         super();
 
@@ -131,15 +133,7 @@ export class NewARInvoiceComponent extends BaseComponent {
         if (!this.IsHaveARInvoicePrintToogleFeature()) return;
         this.CurrentSession.StartBusyIndicatorLoading();
         let documentTypeCode: string = this.GetDocumentTypeCode();
-        this.documentTypeTemplatePMExtendedService.getDocumentTypeTemplatesByDocumentTypeCode(documentTypeCode, SessionLocator.Tenant).subscribe((res: any) => {
-            var pmResponse: ServiceResponse = res;
-            this.CurrentSession.CurrentWindow.StopBusyIndicator();
-            this.documentTypeTemplates = pmResponse.Result;
-            let selectedDocumentTypeTemplate = this.documentTypeTemplates.filter(d => d.IsDefault == true)[0];
-            if (!selectedDocumentTypeTemplate) selectedDocumentTypeTemplate = this.documentTypeTemplates[0];
-            this.OnDocumentTypeTemplateSelectedChanged(selectedDocumentTypeTemplate);
-            this.IsLoadDocumentTemplateReady = true;
-        });
+        this.BuildDocumentTypeTemplateDependedOnPartnerDefaultTemplate(documentTypeCode);
     }
 
 
@@ -151,7 +145,56 @@ export class NewARInvoiceComponent extends BaseComponent {
         }
     }
 
+    GetPartnerDocumentTypeTemplatetDefault(cardList: CardList , documentTypeCode:string) {
+        if (!cardList) return null;
+        if (documentTypeCode == "999S") return cardList.SingleInvoiceTemplateId;
+        if (documentTypeCode == "999C") return cardList.ConsolidationInvoiceTemplateId;
+        if (documentTypeCode == "999CI") return cardList.CustomsInvoiceTemplateId;
+        if (documentTypeCode == "999M") return cardList.ManifestInvoiceTemplateId;
+    }
 
+    BuildDocumentTypeTemplateDependedOnPartnerDefaultTemplate(documentTypeCode: string): any {
+        if (!this.PartnerId) this.LoadDocumentTypeTemplate(documentTypeCode);
+        this.myCardListService.getSingle(this.PartnerId).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse.HasError) return;
+            let cardList: CardList = myResponse.Result;
+            let selectedDocumentTypeTemplateId = this.GetPartnerDocumentTypeTemplatetDefault(cardList, documentTypeCode);
+            this.LoadDocumentTypeTemplate(documentTypeCode, selectedDocumentTypeTemplateId);
+        });
+    }
+
+    LoadDocumentTypeTemplate(documentTypeCode: string, selectedTemplateId: string = null) {
+        if (this.documentTypeTemplates.length > 0) {
+            this.SetDocumentTypeTemplateDefult(selectedTemplateId);
+            return;
+        }
+        this.documentTypeTemplates = [];
+        this.documentTypeTemplatePMExtendedService.getDocumentTypeTemplatesByDocumentTypeCode(documentTypeCode, SessionLocator.Tenant).subscribe((res: any) => {
+            var pmResponse: ServiceResponse = res;
+            this.documentTypeTemplates = pmResponse.Result;
+            this.SetDocumentTypeTemplateDefult(selectedTemplateId);
+        });
+    }
+
+
+    SetDocumentTypeTemplateDefult(selectedTemplateId) {
+        let selectedDocumentTypeTemplate: any;
+        if (selectedTemplateId) {
+            selectedDocumentTypeTemplate = this.documentTypeTemplates.filter(d => d.Id == selectedTemplateId)[0];
+        }
+        if (!selectedDocumentTypeTemplate) {
+            selectedDocumentTypeTemplate = this.documentTypeTemplates.filter(d => d.IsDefault == true)[0];
+        }
+
+        if (!selectedDocumentTypeTemplate) {
+            selectedDocumentTypeTemplate = this.documentTypeTemplates[0];
+        }
+        if (!selectedDocumentTypeTemplate) return;
+        this.OnDocumentTypeTemplateSelectedChanged(selectedDocumentTypeTemplate);
+        this.IsLoadDocumentTemplateReady = true;
+        this.IsDocumentTypeTemplateChange = !this.IsDocumentTypeTemplateChange;
+        this.CurrentSession.CurrentWindow.StopBusyIndicator();
+    }
 
     private timerToken: any;
     private Retries: number = 0;
@@ -257,8 +300,9 @@ export class NewARInvoiceComponent extends BaseComponent {
             //this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
 
             this.SetUIProperties();
-            this.GetDocumentTypeTemplates();
             this.BuildPartnersTypes();
+            this.GetDocumentTypeTemplates();
+
             this.LoadData();
 
             if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
@@ -517,14 +561,18 @@ export class NewARInvoiceComponent extends BaseComponent {
                         var list: CardList = myResponse.Result;
                         if (list != null) {
                             this.BillToId = list.BillToId;
+                         
                             if (AppTool.IsNullOrEmpty(this.BillToId)) {
                                 this.BillToId = newValue;
                             }
+
                         }
                     }
                 });
             }
         }
+
+        this.GetDocumentTypeTemplates();
     }
 
     private billToIsCustomer: boolean = false;
