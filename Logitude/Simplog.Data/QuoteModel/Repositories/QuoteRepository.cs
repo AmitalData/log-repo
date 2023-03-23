@@ -39,7 +39,7 @@ namespace Simplog.Data.QuoteModel.Repositories
         {
             return (from record in context.Quotes where record.Tenant == tenant && record.IsCancelled == false select record).Count();
         }
-        
+
         public IQueryable<Quote> GetQuotes(int tenant)
         {
             return (from d in context.Quotes.Include("Stage").Include("Rating") where d.Tenant == tenant select d);

@@ -93,11 +93,11 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
             }
         }
 
-        public List<DigitalFieldSecurityList> GetDigitalProfilesObjetTables(int tenant)
+        public List<DigitalFieldSecurityList> GetDigitalProfilesObjetTables(int tenant, string objectTbaleId)
         {
             var objetTables = context.DigitalFieldSecurities
                                      .Include("ObjectTable")
-                                     .Where(a => a.Tenant == tenant && a.ParentObjectTableId == null)
+                                     .Where(a => a.Tenant == tenant && a.ParentObjectTableId == objectTbaleId)
                                      .GroupBy(a => a.ObjectTable)
                                      .Select(a => new DigitalFieldSecurityList
                                      {
@@ -108,16 +108,16 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
             return objetTables;
         }
 
-        public List<DigitalFieldSecurityList> GetDigitalSubObjectsProfilesObjetTables(string objectTbaleId, int tenant)
+        public List<DigitalFieldSecurityList> GetObjectTablesForTenant0()
         {
             var objetTables = context.DigitalFieldSecurities
                                      .Include("ObjectTable")
-                                     .Where(a => a.Tenant == tenant && a.ParentObjectTableId == objectTbaleId)
-                                     .GroupBy(a => a.ObjectTable)
+                                     .Where(a => a.Tenant == 0)
                                      .Select(a => new DigitalFieldSecurityList
                                      {
-                                         ObjectTableId = a.Key.Id,
-                                         ObjectTableName = a.Key.Name,
+                                         ObjectTableId = a.ObjectTableId,
+                                         ObjectTableName = a.ObjectTable.Name,
+                                         ParentObjectTableId = a.ParentObjectTableId
                                      }).ToList();
 
             return objetTables;

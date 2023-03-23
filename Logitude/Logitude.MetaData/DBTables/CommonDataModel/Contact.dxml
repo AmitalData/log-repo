@@ -224,6 +224,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="DigitalPortalLanguage"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ImageDetailId"
     ReferencedTable="ImageDetails"
@@ -237,6 +244,11 @@
   <Relation
     ForeignKeyColumn="ContactDoneMethodCode"
     ReferencedTable="ContactDoneMethods"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DigitalPortalLanguage"
+    ReferencedTable="DigitalPortalLanguages"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Index

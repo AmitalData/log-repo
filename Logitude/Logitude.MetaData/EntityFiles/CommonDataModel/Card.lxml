@@ -12,6 +12,7 @@
   AvailableInCustomization="true"
   SupportSubEntity="false"
   ApplyGenericCustomFields="true"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -9799,7 +9800,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <field
     Id="&quot;401f725a-57e6-4090-9d38-9d8acbf6ecb4&quot;"
     FieldName="&quot;Field1&quot;"

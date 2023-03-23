@@ -200,7 +200,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("DigitalTextCode/GetTextCodesByFilters")]
-        public HttpResponseMessage GetTextCodesByFilters(string cardId, string objectTableId, string profileCode)
+        public HttpResponseMessage GetTextCodesByFilters(string cardId, string objectTableId, string profileCode, string languageCode)
         {
             int tenant = 0;
             string email = "";
@@ -210,7 +210,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 tenant = authToken.Tenant;
                 email = authToken.Email;
                 var helper = new DigitalFieldSecuritesHelper();
-                var response = helper.GetDigitalTextCodeObjects(tenant, objectTableId, profileCode, false);
+                var response = helper.GetDigitalTextCodeObjects(tenant, objectTableId, profileCode, false, languageCode);
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
             catch (AutenticationException ex)
@@ -226,12 +226,12 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("DigitalTextCode/GetTranslationCodes")]
-        public HttpResponseMessage GetTranslationCodes(int tenant, string objectTableId, string profileCode)
+        public HttpResponseMessage GetTranslationCodes(int tenant, string objectTableId, string profileCode, string languageCode)
         {
             try
             {
                 var helper = new DigitalFieldSecuritesHelper();
-                var response = helper.GetDigitalTextCodeObjects(tenant, objectTableId, profileCode, true);
+                var response = helper.GetDigitalTextCodeObjects(tenant, objectTableId, profileCode, true, languageCode);
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
             catch (AutenticationException ex)
@@ -253,7 +253,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             string email = "";
             try
             {
-                DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
                 var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
                 tenant = authToken.Tenant;
                 email = authToken.Email;
@@ -261,8 +260,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, digitalTextCodeUpdateModel.CardId);
                 var textCodeQuery = new DigitalTextCodeQueryService(tenant);
-                var customTextCodes = textCodeQuery.GetDigitalTextCodesQuery(digitalTextCodeUpdateModel.Tenant, digitalTextCodeUpdateModel.ObjectTableId, digitalTextCodeUpdateModel.ProfileCode);
-
+                var customTextCodes = textCodeQuery.GetDigitalTextCodesQuery(digitalTextCodeUpdateModel.Tenant,
+                                                                             digitalTextCodeUpdateModel.ObjectTableId,
+                                                                             digitalTextCodeUpdateModel.ProfileCode,
+                                                                             digitalTextCodeUpdateModel.LanguageCode);
+                DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
                 if (customTextCodes != null)
                 {
                     var customCodesMappedObject = JsonConvert.DeserializeObject<List<DigitalTextCodeUpdateObject>>(customTextCodes.Labels);
@@ -299,6 +301,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         Tenant = digitalTextCodeUpdateModel.Tenant,
                         ProfileId = digitalTextCodeUpdateModel.ProfileId,
                         Labels = JsonConvert.SerializeObject(digitalTextCodeUpdateModel.Lables),
+                        LanguageCode = digitalTextCodeUpdateModel.LanguageCode,
                         CreateDate = todayDate,
                         UpdateDate = todayDate
                     };
@@ -352,11 +355,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var objectTables = textCodeQuery.GetDigitalTextCodesObjetTables(0);
 
                 var digitalFieldSecurityQuery = new DigitalFieldSecurityQueryService(0);
-                var objectTablesWithNoParent = digitalFieldSecurityQuery.GetDigitalProfilesObjetTables(0)
+                var parentObjectTables = digitalFieldSecurityQuery.GetDigitalProfilesObjetTables(0, null)
                                                                         .Select(a => a.ObjectTableId)
                                                                         .ToList();
 
-                objectTables = objectTables.Where(a => objectTablesWithNoParent.Contains(a.ObjectTableId) 
+                objectTables = objectTables.Where(a => parentObjectTables.Contains(a.ObjectTableId) 
                                                        || a.ObjectTableName.Equals("General", StringComparison.InvariantCultureIgnoreCase))
                                            .ToList();
 
@@ -381,7 +384,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             try
             {
                 var digitalFieldSecurityQuery = new DigitalFieldSecurityQueryService(0);
-                var objectTables = digitalFieldSecurityQuery.GetDigitalSubObjectsProfilesObjetTables(objectTableId, 0);
+                var objectTables = digitalFieldSecurityQuery.GetDigitalProfilesObjetTables(0, objectTableId);
                 return Request.CreateResponse(HttpStatusCode.OK, objectTables);
             }
             catch (AutenticationException ex)

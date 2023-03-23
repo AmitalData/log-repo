@@ -80,6 +80,10 @@ export class AppTool {
     }
 
     public static TenantPM: any;
+    public static IsNullOrUndefined(myFieldValue: any) {
+        return myFieldValue == null || myFieldValue == undefined;
+    }
+    
     public static IsNullOrEmpty(myFieldValue: any) {
         var myResult: boolean = false;
 
@@ -1123,6 +1127,11 @@ export class AppTool {
 
             case "General.MH.Containers": {
                 myResult = "Containers";
+                break;
+            }
+
+            case "General.MH.Tasks": {
+                myResult = "Table";
                 break;
             }
 

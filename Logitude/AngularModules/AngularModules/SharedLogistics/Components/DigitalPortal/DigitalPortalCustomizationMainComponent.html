@@ -27,7 +27,9 @@
                                 </td>
 
                                 <td>
-                                    <div></div>
+                                    <div>
+                                        <ComboBox style="width:250px;float: right; margin-right: 12px;" [WaterMark]="'Select Language'" (SelectedItemChanged)="SelectedDisplayLanguage = $event" [ItemsSource]="DigitalDisplayLanguageslList" [SelectedItem]="SelectedDisplayLanguage" [Binding]="'name'"></ComboBox>
+                                    </div>
                                 </td>
                             </tr>
                         </table>

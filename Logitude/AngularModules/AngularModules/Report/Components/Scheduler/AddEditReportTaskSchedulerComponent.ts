@@ -420,6 +420,7 @@ export class AddEditReportTaskSchedulerComponent {
         this.DataContext.SchedulerDetails.ReportDetails.ReportTemplateType = reportSchedulerDetails.ReportTemplateType;
         this.DataContext.SchedulerDetails.ReportDetails.DWQueryFilterData = reportSchedulerDetails.DWQueryFilterData;
         this.DataContext.SchedulerDetails.ReportDetails.DocumentTypeTemplateId = reportSchedulerDetails.DocumentTypeTemplateId;
+        this.DataContext.SchedulerDetails.ReportDetails.MessageTemplateId = reportSchedulerDetails.MessageTemplateId;
         const recepients = reportSchedulerDetails.Recepients;
         this.DataContext.SchedulerDetails.ReportDetails.Recepients.To = recepients.To
             ? recepients.To.toString().split(',').join(';')
@@ -440,6 +441,10 @@ export class AddEditReportTaskSchedulerComponent {
     GetReportTemplateId() {
         return this.EntityPM.SchedulerDetailsData.ReportDetails
             .ReportTemplateId;
+    }
+    GetMessageTemplateId() {
+        return this.EntityPM.SchedulerDetailsData.ReportDetails
+            .MessageTemplateId;
     }
 
     private myCloner: Cloner;

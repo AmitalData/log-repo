@@ -197,6 +197,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     t.TemporalPackageCode = tenantmanagements.Where(d => d.Id == t.Id).FirstOrDefault().TemporalPackageCode;
                     t.TemporalStartDate = tenantmanagements.Where(d => d.Id == t.Id).FirstOrDefault().TemporalStartDate;
                     t.TemporalEndDate = tenantmanagements.Where(d => d.Id == t.Id).FirstOrDefault().TemporalEndDate;
+                    t.TemporalEndDate = tenantmanagements.Where(d => d.Id == t.Id).FirstOrDefault().TemporalEndDate;
+                    t.DPArchiveShipmentCreateFilter = tenantmanagements.Where(d => d.Id == t.Id).FirstOrDefault().DPArchiveShipmentCreateFilter;
+                    t.DPArchiveShipmentDepartFilter = tenantmanagements.Where(d => d.Id == t.Id).FirstOrDefault().DPArchiveShipmentDepartFilter;
+                    t.DPArchiveShipmentArrivalFilter = tenantmanagements.Where(d => d.Id == t.Id).FirstOrDefault().DPArchiveShipmentArrivalFilter;                   
                 }
             }
             return tenants;
@@ -382,8 +386,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         tenant.TemporalPackageCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalPackageCode;
                         tenant.TemporalStartDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalStartDate;
                         tenant.TemporalEndDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalEndDate;
+                        tenant.DPArchiveShipmentCreateFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentCreateFilter;
+                        tenant.DPArchiveShipmentDepartFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentDepartFilter;
+                        tenant.DPArchiveShipmentArrivalFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentArrivalFilter;
                         //tenant.StockTypeCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().StockTypeCode;
-                    } 
+                    }
                     this.GetTenantOtherFields(tenant); 
                     entity = tenant;
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
@@ -559,6 +566,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     tenant.TemporalPackageCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalPackageCode;
                     tenant.TemporalStartDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalStartDate;
                     tenant.TemporalEndDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalEndDate;
+                    tenant.DPArchiveShipmentCreateFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentCreateFilter;
+                    tenant.DPArchiveShipmentDepartFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentDepartFilter;
+                    tenant.DPArchiveShipmentArrivalFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentArrivalFilter;
+
                     //tenant.StockTypeCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().StockTypeCode;
                     scope.Complete();
                 }
@@ -718,6 +729,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         tenant.TemporalPackageCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalPackageCode;
                         tenant.TemporalStartDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalStartDate;
                         tenant.TemporalEndDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalEndDate;
+                        tenant.DPArchiveShipmentCreateFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentCreateFilter;
+                        tenant.DPArchiveShipmentDepartFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentDepartFilter;
+                        tenant.DPArchiveShipmentArrivalFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentArrivalFilter;
+
                         //tenant.StockTypeCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().StockTypeCode;
                     }
 
@@ -875,6 +890,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     tenant.TemporalPackageCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalPackageCode;
                     tenant.TemporalStartDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalStartDate;
                     tenant.TemporalEndDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalEndDate;
+                    tenant.DPArchiveShipmentCreateFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentCreateFilter;
+                    tenant.DPArchiveShipmentDepartFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentDepartFilter;
+                    tenant.DPArchiveShipmentArrivalFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentArrivalFilter;
                     // tenant.StockTypeCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().StockTypeCode;
                 }
 
@@ -1045,6 +1063,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             tenant.TemporalStartDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalStartDate;
                             tenant.TemporalEndDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalEndDate;
                             tenant.PrivateLabelId = globalObjectContext.GlobalTenants.Where(d => d.Id == tenant.Id).FirstOrDefault().PrivateLabelId;
+                            tenant.DPArchiveShipmentCreateFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentCreateFilter;
+                            tenant.DPArchiveShipmentDepartFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentDepartFilter;
+                            tenant.DPArchiveShipmentArrivalFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentArrivalFilter;
                             //tenant.StockTypeCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().StockTypeCode;
                         }
 
@@ -1216,6 +1237,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         tenant.TemporalStartDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalStartDate;
                         tenant.TemporalEndDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalEndDate;
                         tenant.PrivateLabelId = globalObjectContext.GlobalTenants.Where(d => d.Id == tenant.Id).FirstOrDefault().PrivateLabelId;
+                        tenant.DPArchiveShipmentCreateFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentCreateFilter;
+                        tenant.DPArchiveShipmentDepartFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentDepartFilter;
+                        tenant.DPArchiveShipmentArrivalFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentArrivalFilter;
                         //tenant.StockTypeCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().StockTypeCode;
                     }
 
@@ -1376,6 +1400,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         tenant.TemporalStartDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalStartDate;
                         tenant.TemporalEndDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalEndDate;
                         tenant.PrivateLabelId = globalObjectContext.GlobalTenants.Where(d => d.Id == tenant.Id).FirstOrDefault().PrivateLabelId;
+                        tenant.DPArchiveShipmentCreateFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentCreateFilter;
+                        tenant.DPArchiveShipmentDepartFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentDepartFilter;
+                        tenant.DPArchiveShipmentArrivalFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentArrivalFilter;
                         //tenant.StockTypeCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().StockTypeCode;
                     }
 
@@ -1552,6 +1579,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     entityPM.TemporalPackageCode = globalObjectContext.TenantManagements.Where(d => d.Id == entityPM.Id).FirstOrDefault().TemporalPackageCode;
                     entityPM.TemporalStartDate = globalObjectContext.TenantManagements.Where(d => d.Id == entityPM.Id).FirstOrDefault().TemporalStartDate;
                     entityPM.TemporalEndDate = globalObjectContext.TenantManagements.Where(d => d.Id == entityPM.Id).FirstOrDefault().TemporalEndDate;
+                    entityPM.DPArchiveShipmentCreateFilter = globalObjectContext.TenantManagements.Where(d => d.Id == entityPM.Id).FirstOrDefault().DPArchiveShipmentCreateFilter;
+                    entityPM.DPArchiveShipmentDepartFilter = globalObjectContext.TenantManagements.Where(d => d.Id == entityPM.Id).FirstOrDefault().DPArchiveShipmentDepartFilter;
+                    entityPM.DPArchiveShipmentArrivalFilter = globalObjectContext.TenantManagements.Where(d => d.Id == entityPM.Id).FirstOrDefault().DPArchiveShipmentArrivalFilter;
+
                 }
 
                 this.GetTenantOtherFields(entityPM);

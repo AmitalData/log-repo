@@ -2,6 +2,8 @@
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using System.Collections.Generic;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.BL.Validators
 {
@@ -43,10 +45,22 @@ namespace Logitude.BL.Validators
 
             }
 
-       
 
-            //\ /  *  " 
 
+            ObjectTable objectTable = GetObjectTableByName(documentType.ObjectTableName, documentType.Tenant);
+            if(objectTable == null)
+            {
+                return new ValidationResult("Object Table is Required");
+            }
+            if (!string.IsNullOrEmpty(documentType.ObjectTableName) && !objectTable.AvailableInDocumentTypes)
+            {
+                return new ValidationResult(TextCodesTranslator.TranslateText("DocumentType.M.TableNameDoesNotExist", documentType.Tenant));
+            }
+
+            if (objectTable.IsCustom && !documentType.IsDocIn)
+            {
+                return new ValidationResult("Please choose Doc in");
+            }
             if (documentType.IsDocOut)
             {
                 if (documentType.TemplateFormatCode == null)
@@ -63,56 +77,16 @@ namespace Logitude.BL.Validators
                 }
             }
 
-            if(!string.IsNullOrEmpty(documentType.ObjectTableName))
-            {
-                if (documentType.ObjectTableName != "Customs.Declaration" 
-                    && documentType.ObjectTableName != "Shipment" 
-                    && documentType.ObjectTableName != "Quote"
-                    && documentType.ObjectTableName != "Master"
-                    && documentType.ObjectTableName != "Customer" 
-                    && documentType.ObjectTableName != "Opportunity" 
-                    && documentType.ObjectTableName != "ARPayment" 
-                    && documentType.ObjectTableName != "APPayment" 
-                    && documentType.ObjectTableName != "ARInvoice" 
-                    && documentType.ObjectTableName != "APInvoice" 
-                    && documentType.ObjectTableName != "ShipmentPickUpDelivery" 
-                    && documentType.ObjectTableName != "Ticket"
-                    && documentType.ObjectTableName != "SharedLogistics"
-                    && documentType.ObjectTableName != "LogitudeMessagesTransmissionLog"
-                    && documentType.ObjectTableName != "Customs.CheckRepresentativeType"
-                    && documentType.ObjectTableName != "Customs.Claim"
-                    && documentType.ObjectTableName != "Journal"
-                    && documentType.ObjectTableName != "BankDeposit"
-                    && documentType.ObjectTableName != "Agent"
-                    && documentType.ObjectTableName != "WarehouseEntry"
-                    && documentType.ObjectTableName != "PaymentCheque"
-                    && documentType.ObjectTableName != "TaxReport"
-                    && documentType.ObjectTableName != "TaxDeductionReport"
-                    && documentType.ObjectTableName != "WarehouseRelease"
-                    && documentType.ObjectTableName != "Airline"
-                    && documentType.ObjectTableName != "CustomAgent"
-                    && documentType.ObjectTableName != "Participant"
-                    && documentType.ObjectTableName != "ShippingAgent"
-                    && documentType.ObjectTableName != "ShippingLine"
-                    && documentType.ObjectTableName != "Trucker"
-                    && documentType.ObjectTableName != "Vendor"
-                    && documentType.ObjectTableName != "AccountingPartner"
-                    && documentType.ObjectTableName != "Warehouse"
-                    && documentType.ObjectTableName != "OpenFormatReport"
-                    && documentType.ObjectTableName != "Occasion"
-                    && documentType.ObjectTableName != "InterestReport"
-                    && documentType.ObjectTableName != "ShipmentOrder"
-                    && documentType.ObjectTableName != "Container"
-                    && documentType.ObjectTableName != "BIReport"
-                    )
 
-                {
-
-                    return new ValidationResult(TextCodesTranslator.TranslateText("DocumentType.M.TableNameDoesNotExist", documentType.Tenant));
-               }
-             }
 
             return null;
+        }
+
+        private static ObjectTable GetObjectTableByName(string objectTableName, int tenant)
+        {
+            ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
+            ObjectTable objectTable = objectTableRepository.GetObjectTableByName(objectTableName, tenant, true);
+            return objectTable;
         }
     }
 }

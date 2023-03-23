@@ -7,9 +7,11 @@ using Simplog.Data.QuoteModel;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Reflection;
 using WebFreight.Web.Controllers.DigitalPortal.Models;
 
@@ -69,7 +71,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                     object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
                     string valuestring3 = filter.FieldValue3?.ToString();
                     object value3 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring3);
-                    queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+                    queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode, field.IsListFilter);
                 }
                 else
                 {
@@ -79,7 +81,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
             BranchPermitionsFilter.AddUserBranchRestrictionFilters(queryOperations, tenant);
             ProductPermitionsFilter.AddUserProductRestrictionFilters(queryOperations, tenant);
-            
+
             TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
             {
                 AdditionalTreeFilter = filters.TreeFilters,
@@ -97,24 +99,24 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
             var nonListQueryOperation = new QueryOperations
             {
-                QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList()
+                QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList()
             };
 
             var listQueryOperation = new QueryOperations
             {
-                QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList()
+                QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList()
             };
 
             var genericFilter = new Simplog.Server.Infrastructure.Helpers.GenericFilter();
             var customfilters = new QuoteCustomFilter(tenant);
             entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
             var quoteBusinessUnitFilter = new QuoteBusinessUnitFilter(tenant);
-            entityPocos  = quoteBusinessUnitFilter.RunFilter(entityPocos);
+            entityPocos = quoteBusinessUnitFilter.RunFilter(entityPocos);
             entityPocos = genericFilter.GetFilteredQuery<Quote>(nonListQueryOperation, entityPocos);
             var quoteStageRepository = new QuoteStageRepository(tenant);
             var quotes_Created = quoteStageRepository.GetQuoteStageIdByCode("QTCR", tenant);
             var quotes_Draft = quoteStageRepository.GetQuoteStageIdByCode("QTDR", tenant);
-            entityPocos = entityPocos.Where(d => d.StageId != quotes_Created && d.StageId != quotes_Draft);
+            entityPocos = entityPocos.Where(d => d.StageId != quotes_Draft && d.StageId != quotes_Created);
 
             var skippedEntities = queryOperations.PageIndex;
             var entityLists = quoteQuery.GetIQueryableEntityList(entityPocos);
@@ -191,5 +193,30 @@ namespace Logitude.BL.QuoteModel.EntityQueries
         }
 
         #endregion
+
+        public List<FilterSearchResponse> GetFromToCountryFilters(int tenant, string cardType, string cardId, bool isFrom, string searchText)
+        {
+            List<string> cards = cardId?.Split(',').ToList<string>();
+            List<string> cardTypes = cardType?.Split(',').ToList() ?? new List<string>();
+
+            var query = repository.context.Quotes.Include("FromPort").Include("FromPort.Country").Include("ToPort").Include("ToPort.Country");
+
+            query = query.Where(a => a.Tenant == tenant && a.FromPort != null && a.ToPort != null && a.FromPort.Country != null && a.ToPort.Country != null);
+            query = query.Where(a => isFrom ? a.FromPort.Country.EnglishName.Trim().StartsWith(searchText) : a.ToPort.Country.EnglishName.Trim().StartsWith(searchText));
+
+            if (cardTypes.Contains("CS")) query = query.Where(a => cards.Contains(a.CustomerId));
+            else if (cardTypes.Contains("AG")) query = query.Where(a => cards.Contains(a.AgentId));
+
+            return query.Select(a => new FilterSearchResponse
+            {
+                Id = isFrom ? a.FromPort.CountryId : a.ToPort.CountryId,
+                Name = isFrom ? a.FromPort.Country.EnglishName + ", " + a.FromPort.Country.Code : a.ToPort.Country.EnglishName + ", " + a.ToPort.Country.Code,
+            }).GroupBy(p => p.Name)
+              .Select(g => g.FirstOrDefault())
+              .OrderBy(x => x.Name)
+              .Take(10)
+              .ToList();
+        }
+
     }
 }

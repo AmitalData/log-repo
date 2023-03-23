@@ -143,7 +143,12 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
                     ...d
                 }
             ));
-       this.FillInvitedCustomersDictionary(this.InvitedCustomers);
+            let StartwithSpeicalCharCustomers = this.InvitedCustomers.filter(a => this.CheckSpeicalChar(a.Name.replace(/ /g, ""))); 
+            let StartwithoutSpeicalCharCustomers = this.InvitedCustomers.filter(a => !this.CheckSpeicalChar(a.Name.replace(/ /g, "")));   
+            StartwithSpeicalCharCustomers=StartwithSpeicalCharCustomers.sort((a, b) => a["Name"].toUpperCase().replace(/ /g, "") > b["Name"].toUpperCase().replace(/ /g, "") ? 1 : a["Name"].toUpperCase().replace(/ /g, "") === b["Name"].toUpperCase().replace(/ /g, "") ? 0 : -1);
+            StartwithoutSpeicalCharCustomers=StartwithoutSpeicalCharCustomers.sort((a, b) => a["Name"].toUpperCase().replace(/ /g, "") > b["Name"].toUpperCase().replace(/ /g, "") ? 1 : a["Name"].toUpperCase().replace(/ /g, "") === b["Name"].toUpperCase().replace(/ /g, "") ? 0 : -1);  
+            this.InvitedCustomers=StartwithSpeicalCharCustomers.concat(StartwithoutSpeicalCharCustomers);
+            this.FillInvitedCustomersDictionary(this.InvitedCustomers);
     }
 
     FillInvitedCustomersDictionary(InvitedCustomers: any[]) {
@@ -151,8 +156,13 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
             this.InvitedCustomersDictionary[element.CardId] = element;
         });
     }
-
-
+    private CheckSpeicalChar(s : string){  
+        var format = /^[A-Za-z0-9]/;
+        if (format.test(s.charAt(0))) {    
+              return true;    
+               }   
+              return false;
+  }
 
     ngOnInit(): void {
         this.setMaxNumberOfCarachter(window.innerWidth);

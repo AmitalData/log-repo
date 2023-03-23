@@ -855,18 +855,18 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
-                Code = "DBA", 
-                Name = "Dashboard Analytics", 
-                SearchFields = "DBA,Dashboard Analytics", 
-                Description = "Dashboard Analytics", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
                 Name = "Remove Exception Logic", 
                 Code = "REL", 
                 SearchFields = "REL,Remove Exception Logic", 
                 Description = "Remove Exception Logic", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "DBA", 
+                Name = "Dashboard Analytics", 
+                SearchFields = "DBA,Dashboard Analytics", 
+                Description = "Dashboard Analytics", 
 			});
 			 
             all.Add(new ToggleDetails()
@@ -891,6 +891,22 @@ namespace Logitude.Infrastructure.BL
                 Name = "Upload File using Drag and Drop", 
                 SearchFields = "UDD,Upload File using Drag and Drop", 
                 Description = "Upload File using Drag and Drop", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "DE2", 
+                Name = "Document Execution WR Version 2", 
+                SearchFields = "DE2,Document Execution WR Version 2", 
+                Description = "Document Execution WR Version 2", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "ICC", 
+                Name = "AR Invoice Customized Counter", 
+                SearchFields = "ICC,AR Invoice Customized Counter", 
+                Description = "AR Invoice Customized Counter", 
 			});
 			
             return all;

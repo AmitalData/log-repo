@@ -104,8 +104,8 @@
         <div class="set-value-row" [ngStyle]="{'height': isFirstSetValue ? '40px' : '25px'}">
 
             <div class="delete-set-value-container" [ngClass]="{'padding-top-22': setValueIndex === 0}">
-                <img *ngIf="!(SetValues.length == 1) && !setValue.isDisabled" class="delete-set-value-button"
-                    src="./Images/Trash-can.png" (click)="deleteSetValue(setValueIndex)"
+                <img *ngIf="!(SetValues.length == 1) && !(setValue.disabled | SetValueDisabledPipe : 'd')"
+                    class="delete-set-value-button" src="./Images/Trash-can.png" (click)="deleteSetValue(setValueIndex)"
                     [attr.data-cy]="'DeleteSetValueButton_' + setValue.id" />
             </div>
 
@@ -119,7 +119,7 @@
                 <div class="set-value-field-container">
 
                     <TreeSelect *ngIf="IsEntityField" [Items]="ObjectFieldsTreeItems" [Width]="'300px'"
-                        [IsDisabled]="setValue.isDisabled" [Value]="setValue.fieldCode"
+                        [IsDisabled]="setValue.disabled | SetValueDisabledPipe : 'f'" [Value]="setValue.fieldCode"
                         [IsReturnedTreeSelectItem]="true" [ShowExpand]="false"
                         (ValueChanged)="updateSetValueEntityField($event, setValueIndex)"
                         [DataCy]="'SetValueField_' + setValue.id">
@@ -127,7 +127,7 @@
 
                     <TreeSelect *ngIf="!IsEntityField" [Items]="FlowVariablesTreeItems" [Width]="'300px'"
                         [Value]="setValue.field" [ShowItem]="null | ShowEditableVariablesTreeItemPipe"
-                        [IsDisabled]="setValue.isDisabled" [IsReturnedTreeSelectItem]="true"
+                        [IsDisabled]="setValue.disabled | SetValueDisabledPipe : 'f'" [IsReturnedTreeSelectItem]="true"
                         (ValueChanged)="updateSetValueField($event, setValueIndex)"
                         [DataCy]="'SetValueField_' + setValue.id">
                     </TreeSelect>
@@ -144,7 +144,8 @@
                 </div>
                 <div class="set-value-operator-container">
                     <ComboBox [ItemsSource]="setValue.type | SetValuesOperatorsItemsPipe" [Binding]="'Name'"
-                        [SelectedItem]="setValue.operator | ListItemPipe" [IsDisabled]="setValue.isDisabled"
+                        [SelectedItem]="setValue.operator | ListItemPipe"
+                        [IsDisabled]="setValue.disabled | SetValueDisabledPipe : 'o'"
                         (SelectedItemChanged)="updateSetValueOperator($event.Code, setValueIndex)" [ListType]="''"
                         [MaxHeight]="ComboBoxMaxHeight" [CyData]="'SetValueOperator_' + setValue.id">
                     </ComboBox>
@@ -161,14 +162,14 @@
 
                     <TreeSelect *ngIf="setValue.fieldChangedToggle" [Items]="FlowVariablesTreeItems" [Width]="'300px'"
                         [Value]="setValue.value" [ShowItem]="setValue | ShowFlowVariablesTreeItemPipe"
-                        [IsDisabled]="setValue.isDisabled" [IsReturnedTreeSelectItem]="true"
+                        [IsDisabled]="setValue.disabled | SetValueDisabledPipe : 'v'" [IsReturnedTreeSelectItem]="true"
                         (ValueChanged)="updateSetValue(($event ? $event.key : null), setValueIndex, ($event && $event.data ? ($event.data.nodeId || null) : null))"
                         [DataCy]="'SetValueValue_' + setValue.id">
                     </TreeSelect>
 
                     <TreeSelect *ngIf="!setValue.fieldChangedToggle" [Items]="FlowVariablesTreeItems" [Width]="'300px'"
                         [Value]="setValue.value" [ShowItem]="setValue | ShowFlowVariablesTreeItemPipe"
-                        [IsDisabled]="setValue.isDisabled" [IsReturnedTreeSelectItem]="true"
+                        [IsDisabled]="setValue.disabled | SetValueDisabledPipe : 'v'" [IsReturnedTreeSelectItem]="true"
                         (ValueChanged)="updateSetValue(($event ? $event.key : null), setValueIndex, ($event && $event.data ? ($event.data.nodeId || null) : null))"
                         [DataCy]="'SetValueValue_' + setValue.id">
                     </TreeSelect>
@@ -181,7 +182,7 @@
                         [ObjectField]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? null : (setValue.fieldCode | ObjectFieldPipe)"
                         [DataType]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? setValue.type : null"
                         [LookupType]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? setValue.lookupType : null"
-                        [CurrentValue]="setValue.value" [IsDisabled]="setValue.isDisabled"
+                        [CurrentValue]="setValue.value" [IsDisabled]="setValue.disabled | SetValueDisabledPipe : 'v'"
                         (ValueChanged)="updateSetValue($event, setValueIndex)" [Name]="'SetValueValue_' + setValue.id">
                     </FieldValue>
 
@@ -189,7 +190,7 @@
                         [ObjectField]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? null : (setValue.fieldCode | ObjectFieldPipe)"
                         [DataType]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? setValue.type : null"
                         [LookupType]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? setValue.lookupType : null"
-                        [CurrentValue]="setValue.value" [IsDisabled]="setValue.isDisabled"
+                        [CurrentValue]="setValue.value" [IsDisabled]="setValue.disabled | SetValueDisabledPipe : 'v'"
                         (ValueChanged)="updateSetValue($event, setValueIndex)" [Name]="'SetValueValue_' + setValue.id">
                     </FieldValue>
 
@@ -197,8 +198,8 @@
                 <div *ngIf="(setValue.operator == 'Expression')" class="set-value-value-container">
                     <Expression [CurrentValue]="setValue.expressionValue"
                         (ValueChanged)="updateSetValueExpression($event, setValueIndex)" [FlowObject]="FlowObject"
-                        [CurrentNodeId]="CurrentNodeId" [IsDisabled]="setValue.isDisabled" [Width]="'300px'"
-                        [DataCy]="'SetValueValue_' + setValue.id">
+                        [CurrentNodeId]="CurrentNodeId" [IsDisabled]="setValue.disabled | SetValueDisabledPipe : 'v'"
+                        [Width]="'300px'" [DataCy]="'SetValueValue_' + setValue.id">
                     </Expression>
                 </div>
             </div>

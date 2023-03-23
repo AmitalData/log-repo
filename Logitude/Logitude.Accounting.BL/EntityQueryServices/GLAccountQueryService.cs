@@ -31,6 +31,7 @@ using Logitude.Accounting.Data.DataContract;
 using Simplog.Data.Helpers;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using System.Runtime.Remoting.Contexts;
+using Logitude.BL.Security;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -1262,6 +1263,15 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             }
             return null;
         }
+        private bool IsFullAccountingActivated(int tenant)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+            bool isFullAccountingActivated = tenantPOCO.AccountingActivated;
+            return isFullAccountingActivated;
+        }
+
+
         public void ConnectCardToGLAccount(CardGLAccountConnectionArgs args)
         {
             CardPM cardPM = GetCardById(args.CardId, args.Tenant);
@@ -1271,6 +1281,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             cardPM.GLAccountId = args.AccountId;
             cardPM.GLAccountDisplayNumber =  GetDisplayNumberByGLAccountId(args.AccountId, args.Tenant);
+
+            if (IsFullAccountingActivated(args.Tenant))
+            {
+                CreateTraceEvent(args.AccountId, args.AccountId, args.Tenant, "GLAccount", "DSCS");
+                CreateTraceEvent(args.CardId, args.AccountId, args.Tenant, "Customer", "CSCS");
+            }
+            
             SubmitCard(cardPM);
 
 
@@ -1289,6 +1306,27 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             //    SubmitCard(cardPM);
             //}
 
+        }
+
+        private void CreateTraceEvent(string CardId, string AccountId, int Tenant, string objectTableName, string eventTypeCode)
+        {
+            ContactPM loggedContact = new ContactQuery(Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), Tenant);
+
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
+            {
+                EntityId = CardId,
+                Tenant = Tenant,
+                UserId = loggedContact.Id,//contact.Id,
+                ObjectTableName = objectTableName,
+                IsAddedManually = false,
+                EventTypeCode = eventTypeCode,
+                Notes = SetNotesForConnectGLAccountEvent(AccountId),
+            });
+        }
+        private string SetNotesForConnectGLAccountEvent(string id)
+        {
+            GLAccountPM glaccount = this.GetSingle(id, false, false);
+            return string.Concat("Internal number: ", glaccount.InternalNumber, "\nLocal name: ", glaccount.LocalName);
         }
 
         private void CheckConnectCards(string accountId, string cardId, int tenant)

@@ -835,7 +835,8 @@
                                                                 [DataContext]="item" [ObjectTableName]="item.ObjectTableName"
                                                                 [HideColumns]="true" [Text]="item.AmountToReconcile"
                                                                 [ForceDisable]="IsDisplayOnly "
-                                                                (LostFocus)="item.OnAmountToReconcileLostFocus(logcelltemplate,AmountToReconcileTextBox)">
+                                                                (LostFocus)="item.OnAmountToReconcileLostFocus(logcelltemplate,AmountToReconcileTextBox)"
+                                                                (dblclick)="item.AutomaticallyFillAmountToReconciledblclick(logcelltemplate,AmountToReconcileTextBox)">
                                                     </LogTextBox>
                                                 </div>
                                             </log-cell-template>

@@ -5,12 +5,13 @@ using Simplog.Server.Infrastructure;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.BL.CommonDataModel.EntityPMs
 {
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
     [DataContract]
-    public class CustomerPM
+    public class CustomerPM : ObjectCustomFieldPM
     {
         [Key]
         [DataMember]
@@ -232,46 +233,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ImageDetailId { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field1 { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field2 { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field3 { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field4 { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field5 { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field6 { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field7 { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field8 { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field9 { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field10 { get; set; }
 
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]

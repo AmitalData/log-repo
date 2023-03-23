@@ -51,6 +51,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
     ShownAdditionalFiltersSettings: boolean;
     ObjectTableName: string;
     private objectFieldPMExtendedService = new ObjectFieldPMExtendedService();
+    public IsPartner: boolean = false;
     constructor() {
         super();
         this.loginService = new LoginService();
@@ -90,7 +91,11 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         });
         this.UIProperties.SetRequired("Code", "ObjectField", true);
     }
-
+    IsCardObjectTable() {
+        if (this.ObjectTableName == "Card")
+            return true;
+        return false;
+    }
 
     ShowAdditionalFiltersSettingsClicked() {
         this.ShownAdditionalFiltersSettings = !this.ShownAdditionalFiltersSettings;
@@ -101,8 +106,9 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         this.IsNew = args.IsNew;
         this.objectField = args.objectField;
         this.LookUpTableId = this.objectField.LookUpTableId;
-        this.DataTypeCollection = args.DataTypeCollection;
+        this.DataTypeCollection = args.DataTypeCollection.filter(dataType => dataType.Code != "Time");
         this.ObjectTableName = args.ObjectTableName;
+        this.IsPartner = args.IsPartner;
         if (this.IsNew) {
             
         }

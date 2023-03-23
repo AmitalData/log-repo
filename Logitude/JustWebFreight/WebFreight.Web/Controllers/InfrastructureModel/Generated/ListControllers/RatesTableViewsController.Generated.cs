@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				RatesTableRepository  ratesTableRepository = new RatesTableRepository(MyContext);
 				RatesTableList entityList = null;
 				RatesTable entityPoco = ratesTableRepository.GetSingleRatesTable(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<RatesTable> singleEntityList = new List<RatesTable>();
 					singleEntityList.Add(entityPoco);

@@ -466,7 +466,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
             if (!string.IsNullOrEmpty(theEntityPm.HelpTextCodeCode))
             {
-                TextCode helpTextCode = textCodesList.Where(t => t.Code == theEntityPm.ListTextCodeCode).FirstOrDefault();
+                TextCode helpTextCode = textCodesList.Where(t => t.Code == theEntityPm.HelpTextCodeCode).FirstOrDefault();
                 if (helpTextCode == null)
                 {
 

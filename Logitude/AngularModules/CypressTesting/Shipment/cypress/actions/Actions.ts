@@ -172,8 +172,8 @@ export function BacktotheMasterShipment() {
 export function openHouseShipment(Housenumberopen: any) {
     cy.wait(1000)
     cy.Navigate(ShipmentSelectors.ShipmentsTab);
-    cy.wait(1000)
-    cy.get("hyperlink").contains(parseInt(Housenumberopen, 10)).click({ force: true })
+    cy.get(ShipmentSelectors.HouseHyperLink).contains((ShipmentContext.HouseNumber).replace(/^0+/, '')).click({ force: true })
+
 }
 export function OpenShipment(shipmentNumber: string) {
     cy.wait(2000)
@@ -190,7 +190,7 @@ export function OpenShipment(shipmentNumber: string) {
         RequestAliase: RequestAliases.QuickSearchDataLoaded
     } as QuickSearchDetails;
 
-    cy.SelectQuickSearchFirstElement(quickSearchDetails);
+    cy.SelectQuickSearchElement(quickSearchDetails);
 
     BaseAssertion.AssertStatusCode(RequestAliases.WaitLoadShipmentMenuButtons, 200);
 }
@@ -415,7 +415,8 @@ export function ValidatePackageDetails(tabSelector: string, partialSplitDetails:
 }
 
 export function ValidateShipmentNumber(OldShipmentNumber: string) {
-    //BaseAssertion.AssertStatusCode(RequestAliases.GetAll, 200)
+    cy.get(ShipmentSelectors.ComponentBusyIndicator).should(BaseSelectors.NotExist);
+    cy.wait(1000)
     cy.get(ShipmentSelectors.ShipmentNumberInTitle + BaseSelectors.LastElement).invoke('text').then((text) => {
         assert.notEqual(OldShipmentNumber + ":", text.trim())
     });
@@ -791,6 +792,22 @@ export function FillReceivablesTab(receivableDetails: ReceivableDetails[], HaveA
             BaseActions.ClearExternalIDFromShipmentLevel(BaseSelectors.Currency)
         }
         cy.FillLogTextBox(ShipmentSelectors.ShipmentReceivableRate, receivableDetails[i].ExchangeRate.toString());
+        cy.Click(ShipmentSelectors.AddReceivableOkButton, null)
+    }
+}
+export function FillReceivablesTabSAT(receivableDetails: ReceivableDetails[], HaveAccountingSystem?: boolean) {
+    cy.Click(ShipmentSelectors.ReceivablesTab, null)
+    for (let i = 0; i < receivableDetails.length; i++) {
+        cy.Click(ShipmentSelectors.AddNewReceivableLine, null)
+        cy.FillLogLov(ShipmentSelectors.ReceivableChargesType, receivableDetails[i].ChargesType, true)
+        cy.FillLogLov(ShipmentSelectors.ReceivableMeasurement, receivableDetails[i].UOM, true)
+        cy.get(ShipmentSelectors.ReceivableQuantity).type(receivableDetails[i].Quantity.toString());
+        cy.get(ShipmentSelectors.ReceivableUnitPrice).type(receivableDetails[i].UnitPrice.toString());
+        cy.FillLogLov(ShipmentSelectors.ReceivableCurrency, receivableDetails[i].Currency, true)
+        if (HaveAccountingSystem) {
+            BaseActions.ClearExternalIDFromShipmentLevel(BaseSelectors.ChargesType)
+            BaseActions.ClearExternalIDFromShipmentLevel(BaseSelectors.Currency)
+        }
         cy.Click(ShipmentSelectors.AddReceivableOkButton, null)
     }
 }

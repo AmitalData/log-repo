@@ -83,6 +83,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="DBScripts\2023AddQuoteDigitalScreens.sxml" />
+    <None Include="DBScripts\2023AddQuoteDigitalTextCodes.sxml" />
+    <None Include="DBScripts\2023AddQuoteDigitalFieldSecurities.sxml" />
     <None Include="DBScripts\202301051306_FillParentObjectTbaleIdInDigitalPortalScreen.sxml" />
     <None Include="DBScripts\202301290901_FillContainersSettings.sxml" />
     <None Include="DBScripts\202008161345_RemoveCHWFeatureToggle.sxml" />
@@ -141,6 +144,7 @@
     <None Include="EntityFiles\BusinessRole.lxml" />
     <None Include="EntityFiles\ContainerSetting.lxml" />
     <None Include="EntityFiles\DigitalFieldSecurity.lxml" />
+    <None Include="EntityFiles\DigitalPortalLanguage.lxml" />
     <None Include="EntityFiles\DigitalPortalScreen.lxml" />
     <None Include="EntityFiles\DigitalPreDefinedComponent.lxml" />
     <None Include="EntityFiles\DigitalProfile.lxml" />

@@ -896,6 +896,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
         this.ComputeGrossWeigh_Kg_Ton();
         this.ChargeableWeight_Kg();
+        this.ComputeVolume_CBM();
         QuoteTool.OnQuoteQuantitiesChanged(this.EntityPM);
 
         this.SetUIProperties_Totals();
@@ -959,6 +960,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     }
 
     private ComputeVolume_CBM() {
+
         var volume_CBM: number = null;
 
         if (this.Volume != null) {

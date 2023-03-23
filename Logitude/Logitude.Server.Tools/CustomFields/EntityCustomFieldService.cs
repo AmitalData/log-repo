@@ -30,18 +30,42 @@ namespace Logitude.Server.Tools.CustomFields
         {
             objectTableId = new ObjectTableRepository(entityCustomFieldServiceArgs.Tenant).GetObjectTableIdByName(entityCustomFieldServiceArgs.ObjectTableName, entityCustomFieldServiceArgs.Tenant);
             tenant = entityCustomFieldServiceArgs.Tenant;
-            objectTableName = entityCustomFieldServiceArgs.ObjectTableName;
+            objectTableName = GetObjectTableName(entityCustomFieldServiceArgs.ObjectTableName);
             entities = entityCustomFieldServiceArgs.Entities;
             type = entityCustomFieldServiceArgs.Type;
             customFieldsMainObjectRepository = new CustomFieldsMainObjectRepository(tenant);
             customObjectFields = GetCustomObjectFields();
             customFieldsMainObjects = GetCustomFieldsMainObjects(entityCustomFieldServiceArgs.EntityId);
-            if(!string.IsNullOrEmpty(entityCustomFieldServiceArgs.KeyName))
+            if (!string.IsNullOrEmpty(entityCustomFieldServiceArgs.KeyName))
             {
                 keyName = entityCustomFieldServiceArgs.KeyName;
             }
         }
 
+        private static string GetObjectTableName(string objectTableName)
+        {
+            List<string> PartnersObjectTablesNames = GetPartnersObjectTablesNames();
+
+            return PartnersObjectTablesNames.Contains(objectTableName) ? "Card" : objectTableName;
+        }
+
+        private static List<string> GetPartnersObjectTablesNames()
+        {
+            return new List<string>()
+            {
+                "AccountingPartner",
+                "Agent",
+                "Airline",
+                "CustomAgent",
+                "CustomsShipper",
+                "Participant",
+                "ShippingAgent",
+                "ShippingLine",
+                "Trucker",
+                "Vendor",
+                "Warehouse",
+            };
+        }
 
         public void Update()
         {
@@ -72,7 +96,7 @@ namespace Logitude.Server.Tools.CustomFields
 
         private void SetCustomFieldValue(object entity)
         {
-            CustomFieldsMainObject customFieldsMainObject = GetCustomFieldsMainObject((GetPropertyValue(entity, keyName).ToString()));
+            CustomFieldsMainObject customFieldsMainObject = GetCustomFieldsMainObject((GetPropertyValue(entity, keyName).ToString()), false);
             if (entity == null || customFieldsMainObject == null) return;
             foreach (ObjectField customObjectField in customObjectFields)
             {
@@ -94,10 +118,11 @@ namespace Logitude.Server.Tools.CustomFields
             return customFieldsMainObjects.Where(d => d.EntityId == entityId).Any();
         }
 
-        private CustomFieldsMainObject GetCustomFieldsMainObject(string entityId)
+        private CustomFieldsMainObject GetCustomFieldsMainObject(string entityId , bool isNew = true)
         {
             if (IsEntityExist(entityId)) return customFieldsMainObjects.Where(d => d.EntityId == entityId).FirstOrDefault();
-          
+            if (!isNew) return null;
+
             CustomFieldsMainObject customFieldsMainObject =  new CustomFieldsMainObject()
             {
                 Id = IdCounter.GetNumber("ChildEntitiesCustomField", tenant).ToString(),

@@ -101,8 +101,12 @@ var TenantManagementStatisticsTabComponent = /** @class */ (function (_super) {
         this.AgentSharedLogisticsStatisticsLastDate = this.EntityPM.AgentSharedLogisticsStatisticsLastDate;
         this.AgentSharedLogisticsStatisticsLastWeek = this.EntityPM.AgentSharedLogisticsStatisticsLastWeek;
         this.AgentSharedLogisticsStatisticsLastMonth = this.EntityPM.AgentSharedLogisticsStatisticsLastMonth;
+        this.DPArchiveShipmentCreateFilter = this.EntityPM.DPArchiveShipmentCreateFilter;
+        this.DPArchiveShipmentArrivalFilter = this.EntityPM.DPArchiveShipmentArrivalFilter;
+        this.DPArchiveShipmentDepartFilter = this.EntityPM.DPArchiveShipmentDepartFilter;
         this.SetColors();
     };
+    
     TenantManagementStatisticsTabComponent.prototype.SetColors = function () {
         var todayDate = Tools_1.DateTool.GetCurrentDateAsUtc();
         var date7 = Tools_1.DateTool.AddDays(todayDate, -7).valueOf();

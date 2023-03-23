@@ -109,7 +109,55 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
             }
         }
 
-        private void ExportStimulDocumentToPDF()
+        public void ExecuteDocumentsV2ExecutionQueue()
+        {
+            try
+            {
+                documentsExecutionLog = GetDocumentsExecutionLog();
+                if (documentsExecutionLog != null && documentsExecutionLog.RetryNumber < 2 && (documentsExecutionLog.CreateDate > DateTime.Now.AddMinutes(-2) || documentsExecutionLog.StartDate > DateTime.Now.AddMinutes(-2)) && (documentsExecutionLog.StatusCode == "W" || documentsExecutionLog.StatusCode == "P"))
+                {
+                    UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { StartDate = startDate, StatusCode = "P" });
+                    ExportStimulDocumentToPDF(true);
+                    if (!string.IsNullOrEmpty(callBackDetailsXml)) CallBackService.Notifiy(callBackDetailsXml, null);
+                }
+                else
+                {
+                    UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = new Exception("Document build failed after 3 retries or it reaches the time out.Please try again.If the issue is persistent then please kindly contact our Customer Support"), DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
+                    throw new ApplicationException("Document build failed after 3 retries or it reaches the time out.Please try again.If the issue is persistent then please kindly contact our Customer Support");
+                }
+            }
+            catch (AggregateException aggregateException)
+            {
+                Exception lastAggregateException = new Exception("aggregateException exception");
+                foreach (var exception in aggregateException.Flatten().InnerExceptions)
+                {
+                    lastAggregateException = exception;
+                    ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Document Execution V2 WorkerRole Monitor|" + "Aggr Catch ExecuteDocumentsExecutionQueue", null, System.Environment.MachineName);
+                }
+                try
+                {
+                    UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = lastAggregateException, DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
+                }
+                catch (Exception ex)
+                {
+                    ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Document Execution V2 WorkerRole Monitor|" + "Catch ExecuteDocumentsExecutionQueue", " inside Aggr catch exception while running ", System.Environment.MachineName);
+                }
+                throw new ApplicationException(lastAggregateException.Message + "inner message: " + lastAggregateException.InnerException?.Message);
+            }
+            catch (Exception exception)
+            {
+                try
+                {
+                    UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = exception, DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
+                }
+                catch (Exception ex)
+                {
+                    ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Document Execution V2 WorkerRole Monitor|" + "Catch ExecuteDocumentsExecutionQueue", " inside catch exception while running UpdateDocumentsExecutionLog", System.Environment.MachineName);
+                }
+                throw new ApplicationException(exception.Message + "inner message: " + exception.InnerException?.Message);
+            }
+        }
+        private void ExportStimulDocumentToPDF(bool isVersion2 = false)
         {
             ExportDocumentArgs exportDocumentArgs = !string.IsNullOrEmpty(documentsExecutionLog.RequestXML) ? LogitudeXmlSerializer.DeserializeObject<ExportDocumentArgs>(documentsExecutionLog.RequestXML) : null;
             if (exportDocumentArgs != null)
@@ -135,12 +183,12 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                     RunAutomation(exportDocumentArgs, "OnDocumentUpdate", documentTypeCopiesDetails);
                 }
                 UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() {StatusCode = "D", DoneDate = DateTime.Now });
-                queueService.Complete();
+                if(!isVersion2) queueService.Complete();
             }
             else
             {
                 UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = new Exception("RequestXML is null"), DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
-                queueService.Complete();
+                if (!isVersion2) queueService.Complete();
             }
         }
 

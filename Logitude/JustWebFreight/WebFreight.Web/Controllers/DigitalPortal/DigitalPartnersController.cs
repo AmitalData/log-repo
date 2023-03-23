@@ -133,16 +133,18 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 bool isFrom = SearchType.Equals("From", StringComparison.InvariantCultureIgnoreCase);
 
                 List<string> cards = cardId?.Split(',').ToList<string>();
-                List<string> cardTypes = cardType?.Split(',').ToList<string>();
-                var results = shipments.Where(a => a.Tenant == authToken.Tenant
-                                                    && (cardTypes.Contains("CS")
-                                                       ? cards.Contains(a.CustomerId)
-                                                         : cards.Contains(a.AgentId)
-                                                        )
-                                                    && (isFrom
-                                                        ? a.From.Trim().StartsWith(searchText)
-                                                        : a.To.Trim().StartsWith(searchText)))
-                                        .SelectMany(a => new List<FilterSearchResponse>
+                List<string> cardTypes = cardType?.Split(',').ToList() ?? new List<string>();
+
+
+                var query = shipments.Where(a => a.Tenant == authToken.Tenant
+                                                   && (isFrom
+                                                       ? a.From.Trim().StartsWith(searchText)
+                                                       : a.To.Trim().StartsWith(searchText)));
+
+                if (cardTypes.Contains("CS")) query = query.Where(a => cards.Contains(a.CustomerId));
+                else if (cardTypes.Contains("AG")) query = query.Where(a => cards.Contains(a.AgentId));
+
+                var results = query.SelectMany(a => new List<FilterSearchResponse>
                                         {
                                         new FilterSearchResponse
                                         {
@@ -367,7 +369,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 tenant = shipmentIdAndTenant.Item2;
                 email = shipmentIdAndTenant.Item3;
                 var shipmentQuery = new ShipmentQuery(tenant);
-                var partners = shipmentQuery.GetDigitalShipmentPartners(shipmentId,tenant);
+                var partners = shipmentQuery.GetDigitalShipmentPartners(shipmentId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, partners);
             }
             catch (AutenticationException ex)

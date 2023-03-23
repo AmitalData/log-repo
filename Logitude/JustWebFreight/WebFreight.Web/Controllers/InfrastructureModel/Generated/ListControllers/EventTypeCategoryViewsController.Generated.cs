@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				EventTypeCategoryRepository  eventTypeCategoryRepository = new EventTypeCategoryRepository(MyContext);
 				EventTypeCategoryList entityList = null;
 				EventTypeCategory entityPoco = eventTypeCategoryRepository.GetSingleEventTypeCategory(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<EventTypeCategory> singleEntityList = new List<EventTypeCategory>();
 					singleEntityList.Add(entityPoco);

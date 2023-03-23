@@ -20,7 +20,7 @@ export class TasksSchedulerPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -245,10 +245,8 @@ export class TasksSchedulerPM {
     public set SchedulerDetailsData(newValue: any) { if (this.schedulerDetailsData != newValue) { this.schedulerDetailsData = newValue; this.MarkAsDirty("SchedulerDetailsData"); } }
        
 	 
-    private documentTypeTemplateIds: Array<string>;
-    public get DocumentTypeTemplateIds() { return this.documentTypeTemplateIds; }
-    public set DocumentTypeTemplateIds(newValue: Array<string>) { if (this.documentTypeTemplateIds != newValue) { this.documentTypeTemplateIds = newValue; this.MarkAsDirty("DocumentTypeTemplateIds"); } }
 
+    public DocumentTypeTemplateIds: Array<string>= [];
 		 
     public OldEntityPM: TasksSchedulerPM;
 		

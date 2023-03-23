@@ -102,6 +102,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    AvailableInCustomization =  false,
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
+			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -701,6 +702,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		   Feature GeneralFeature_CONTAINERS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTAINERS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CONTAINERS", NameTextCodeDefaultText = @"Containers" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
 		   Feature GeneralFeature_PendingApprovalDocuments = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PendingApprovalDocuments", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.PendingApprovalDocuments", NameTextCodeDefaultText = @"Pending Approval Documents" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+
+		   Feature GeneralFeature_TASKTYPES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TASKTYPES", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.TASKTYPES", NameTextCodeDefaultText = @"Task Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+
+		   Feature GeneralFeature_TASKPRIORITIES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TASKPRIORITIES", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.TASKPRIORITIES", NameTextCodeDefaultText = @"Task Priorities" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+
+		   Feature GeneralFeature_TASKSTATUSES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TASKSTATUSES", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.TASKSTATUSES", NameTextCodeDefaultText = @"Task Statuses" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
    
 	    
@@ -2298,7 +2305,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
             TextCode GeneralTextCode_AccountingGeneralOAtleastoneGLAccountInterestPeriodsrecordisrequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AtleastoneGLAccountInterestPeriodsrecordisrequired", DefaultText = "At least one GLAccount Interest Periods record is required", LocalDefaultText = @"חובה להזין לפחות רשומה אחת של תקופת ריבית", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-           TextCode GeneralTextCode_GeneralOUsedSpace = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.UsedSpace", DefaultText = "Used Space",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_GeneralOUsedSpace = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.UsedSpace", DefaultText = "Used Space",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMHContainersFU = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.ContainersFU", DefaultText = "ContainersFU",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

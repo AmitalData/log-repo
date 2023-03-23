@@ -9,6 +9,7 @@ namespace Simplog.Server.Infrastructure.DataContracts.Models
         public int Tenant { get; set; }
         public string ProfileId { get; set; }
         public string ProfileCode { get; set; }
+        public string LanguageCode { get; set; }
         public List<DigitalTextCodeUpdateObject> Lables { get; set; }
     }
 }

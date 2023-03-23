@@ -429,5 +429,9 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public int? TotalDefaultNumberOfUsers { get; set; }
         public bool IsNewLogboxFromCloud { get; set; }
         public bool ApproveUploadedDocuments { get; set; }
+
+        public int? DPArchiveShipmentCreateFilter { get; set; }
+        public int? DPArchiveShipmentArrivalFilter { get; set; }
+        public int? DPArchiveShipmentDepartFilter { get; set; }
     }
 }

@@ -19,6 +19,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.ShipmentsModel.CustomFilters;
 using Logitude.BL.Helpers;
 using System.Dynamic;
+using Logitude.BL.GlobalModel.EntityPMs;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -203,7 +204,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 Id = shipment.ShipperId,
                 Reference1 = string.IsNullOrEmpty(shipment.ShipperReference1) ? "" : shipment.ShipperReference1,
                 Reference2 = string.IsNullOrEmpty(shipment.ShipperReference2) ? "" : shipment.ShipperReference2,
-                PartnerType = "Shipper",
+                PartnerType = "Shipment.F.ShipperName",
                 CountryCode = "",
                 Email = "",
                 ContactName = ""
@@ -234,7 +235,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 Id = shipment.ConsigneeId,
                 Reference1 = string.IsNullOrEmpty(shipment.ConsigneeReference1) ? "" : shipment.ConsigneeReference1,
                 Reference2 = string.IsNullOrEmpty(shipment.ConsigneeReference2) ? "" : shipment.ConsigneeReference2,
-                PartnerType = "Consignee",
+                PartnerType = "Shipment.F.ConsigneeName",
                 CountryCode = "",
                 Email = "",
                 ContactName = ""
@@ -268,7 +269,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 Id = shipment.AgentId,
                 Reference1 = string.IsNullOrEmpty(shipment.AgentReference1) ? "" : shipment.AgentReference1,
                 Reference2 = string.IsNullOrEmpty(shipment.AgentReference2) ? "" : shipment.AgentReference2,
-                PartnerType = "Agent",
+                PartnerType = "Shipment.F.AgentName",
                 CountryCode = "",
                 Email = "",
                 ContactName = ""
@@ -305,7 +306,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 Id = shipment.ColoaderId,
                 Reference1 = string.IsNullOrEmpty(shipment.ColoaderReference1) ? "" : shipment.ColoaderReference1,
-                PartnerType = "Coloader",
+                PartnerType = "Shipment.F.ColoaderId",
                 CountryCode = "",
                 Email = "",
                 ContactName = ""
@@ -341,7 +342,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 Id = shipment.ConsigneeNotImporterId,
                 Reference1 = string.IsNullOrEmpty(shipment.ConsigneeNotImporterReference) ? "" : shipment.ConsigneeNotImporterReference,
-                PartnerType = "Consignee Not Importer",
+                PartnerType = "Shipment.G.ConsigneeNotImporter",
                 CountryCode = "",
                 Email = "",
                 ContactName = ""
@@ -376,7 +377,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 Id = shipment.FreightForwarderId,
                 Reference1 = string.IsNullOrEmpty(shipment.FreightForwarderReference) ? "" : shipment.FreightForwarderReference,
-                PartnerType = "Freight Forwarder",
+                PartnerType = "Shipment.F.FreightForwarderId",
                 CountryCode = "",
                 Email = "",
                 ContactName = ""
@@ -413,7 +414,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 Id = shipment.Notify1Id,
                 Reference1 = string.IsNullOrEmpty(shipment.Notify1Reference) ? "" : shipment.Notify1Reference,
                 Reference2 = string.IsNullOrEmpty(shipment.Notify1Reference2) ? "" : shipment.Notify1Reference2,
-                PartnerType = "Notify 1",
+                PartnerType = "Shipment.F.Notify1Id",
                 CountryCode = "",
                 Email = "",
                 ContactName = ""
@@ -448,7 +449,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 Id = shipment.Notify2Id,
                 Reference1 = string.IsNullOrEmpty(shipment.Notify2Reference) ? "" : shipment.Notify2Reference,
-                PartnerType = "Notify 2",
+                PartnerType = "Shipment.F.Notify2Id",
                 CountryCode = "",
                 Email = "",
                 ContactName = ""
@@ -485,7 +486,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 Id = shipment.ShipperNotExporterId,
                 Reference1 = string.IsNullOrEmpty(shipment.ShipperNotExporterReference1) ? "" : shipment.ShipperNotExporterReference1,
                 Reference2 = string.IsNullOrEmpty(shipment.ShipperNotExporterReference2) ? "" : shipment.ShipperNotExporterReference2,
-                PartnerType = "Shipper Not Exporter",
+                PartnerType = "Shipment.G.ShipperNotExporter",
                 CountryCode = "",
                 Email = "",
                 ContactName = ""
@@ -521,7 +522,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 Id = shipment.CustomAgentExportId,
                 Reference1 = string.IsNullOrEmpty(shipment.CustomAgentExportReference) ? "" : shipment.CustomAgentExportReference,
-                PartnerType = "Custom Agent Export",
+                PartnerType = "Shipment.G.CustomAgentExport",
                 CountryCode = "",
                 Email = "",
                 ContactName = ""
@@ -557,7 +558,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 Id = shipment.CustomAgentImportId,
                 Reference1 = string.IsNullOrEmpty(shipment.CustomAgentImportReference) ? "" : shipment.CustomAgentImportReference,
-                PartnerType = "Custom Agent Import",
+                PartnerType = "Shipment.G.CustomAgentImport",
                 CountryCode = "",
                 Email = "",
                 ContactName = ""
@@ -593,7 +594,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 Id = shipment.CustomClearancePointId,
                 Reference1 = string.IsNullOrEmpty(shipment.CustomClearancePointReference1) ? "" : shipment.CustomClearancePointReference1,
-                PartnerType = "Custom Clearance Point",
+                PartnerType = "Shipment.F.CustomClearancePointId",
                 CountryCode = "",
                 Email = "",
                 ContactName = ""
@@ -629,7 +630,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 Id = shipment.ConsolidatorId,
                 Reference1 = string.IsNullOrEmpty(shipment.ConsolidatorReference) ? "" : shipment.ConsolidatorReference,
-                PartnerType = "Consolidator",
+                PartnerType = "Shipment.F.ConsolidatorName",
                 CountryCode = "",
                 Email = "",
                 ContactName = ""
@@ -666,7 +667,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 Id = shipment.ReleasingAgentId,
                 Reference1 = string.IsNullOrEmpty(shipment.ReleasingAgentReference1) ? "" : shipment.ReleasingAgentReference1,
                 Reference2 = string.IsNullOrEmpty(shipment.ReleasingAgentReference2) ? "" : shipment.ReleasingAgentReference2,
-                PartnerType = "Releasing Agent",
+                PartnerType = "Shipment.F.ReleasingAgentId",
                 CountryCode = "",
                 Email = "",
                 ContactName = ""
@@ -702,7 +703,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 Id = shipment.IssuingCarrierAgentId,
                 Reference1 = string.IsNullOrEmpty(shipment.IssuingCarrierReference1) ? "" : shipment.IssuingCarrierReference1,
-                PartnerType = "Issuing Carrier Agent",
+                PartnerType = "Shipment.G.IssuingCarrierAgent",
                 CountryCode = "",
                 Email = "",
                 ContactName = ""
@@ -3187,87 +3188,97 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         public List<DigitalTransportModes> GetTransportModesWithSubTypes(int tenant)
         {
-            var digitalTransportModes = new List<DigitalTransportModes>();
             var shipmentSubTypes = GetShipmentTypes(tenant);
 
-            // Air 
-            digitalTransportModes.Add(new DigitalTransportModes()
+            var digitalTransportModes = new List<DigitalTransportModes>
             {
-                Name = "Air",
-                Code = "A",
-                Children = GetSubTypes(shipmentSubTypes, new List<string> { "Air" }, "A")
-            });
+                // Air 
+                new DigitalTransportModes()
+                {
+                    Name = "General.G.AirLabel",
+                    Code = "A",
+                    Children = GetSubTypes(shipmentSubTypes, new List<string> { "General.G.AirLabel" }, "A")
+                },
 
-            // Ocean 
-            digitalTransportModes.Add(new DigitalTransportModes()
-            {
-                Name = "Ocean",
-                Code = "O",
-                Children = GetOceanChildren(shipmentSubTypes),
-            });
+                // Ocean 
+                new DigitalTransportModes()
+                {
+                    Name = "General.G.OceanLabel",
+                    Code = "O",
+                    Children = GetOceanChildren(shipmentSubTypes)
+                },
 
-            // Ocean 
-            digitalTransportModes.Add(new DigitalTransportModes()
-            {
-                Name = "Inland",
-                Code = "I",
-                Children = GetInlandChildren(shipmentSubTypes)
-            });
+                // Ocean 
+                new DigitalTransportModes()
+                {
+                    Name = "General.G.InlandLabel",
+                    Code = "I",
+                    Children = GetInlandChildren(shipmentSubTypes)
+                }
+            };
 
             return digitalTransportModes;
         }
 
         private List<DigitalTransportModesChild> GetOceanChildren(List<ShipmentSubType> shipmentSubTypes)
         {
-            var oceanChildren = new List<DigitalTransportModesChild>();
-            oceanChildren.Add(new DigitalTransportModesChild()
+            var oceanChildren = new List<DigitalTransportModesChild>
             {
-                ParentCode = "O",
-                Name = "FCL",
-                Code = "FCL,FCLD",
-                DisaledOption = true,
-                Children = GetSubTypes(shipmentSubTypes, new List<string> { "FCL","FCLD"}, "O")
-            });
-            oceanChildren.Add(new DigitalTransportModesChild()
-            {
-                ParentCode = "O",
-                Name = "LCL",
-                Code = "LCL,LCLD",
-                DisaledOption = true,
-                Children = GetSubTypes(shipmentSubTypes, new List<string> { "LCL", "LCLD" }, "O")
-            });
+                new DigitalTransportModesChild()
+                {
+                    ParentCode = "O",
+                    Name = "General.G.FCL",
+                    Code = "FCL,FCLD",
+                    DisaledOption = true,
+                    Children = GetSubTypes(shipmentSubTypes, new List<string> { "General.G.FCL", "General.G.FCLD" }, "O")
+                },
+                new DigitalTransportModesChild()
+                {
+                    ParentCode = "O",
+                    Name = "General.G.LCL",
+                    Code = "LCL,LCLD",
+                    DisaledOption = true,
+                    Children = GetSubTypes(shipmentSubTypes, new List<string> { "General.G.LCL", "General.G.LCLD" }, "O")
+                }
+            };
 
             return oceanChildren;
         }
 
         private List<DigitalTransportModesChild> GetInlandChildren(List<ShipmentSubType> shipmentSubTypes)
         {
-            var inlandChildren = new List<DigitalTransportModesChild>();
-            inlandChildren.Add(new DigitalTransportModesChild()
+            var inlandChildren = new List<DigitalTransportModesChild>
             {
-                ParentCode = "I",
-                Name = "FTL",
-                Code = "FTL",
-                DisaledOption = true,
-                Children = GetSubTypes(shipmentSubTypes, new List<string> { "FTL" }, "I")
-            });
-            inlandChildren.Add(new DigitalTransportModesChild()
-            {
-                ParentCode = "I",
-                Name = "LTL",
-                Code = "LTL",
-                DisaledOption = true,
-                Children = GetSubTypes(shipmentSubTypes, new List<string> { "LTL" }, "I")
-            });
-            
+                new DigitalTransportModesChild()
+                {
+                    ParentCode = "I",
+                    Name = "General.G.FTL",
+                    Code = "FTL",
+                    DisaledOption = true,
+                    Children = GetSubTypes(shipmentSubTypes, new List<string> { "General.G.FTL" }, "I")
+                },
+                new DigitalTransportModesChild()
+                {
+                    ParentCode = "I",
+                    Name = "General.G.LTL",
+                    Code = "LTL",
+                    DisaledOption = true,
+                    Children = GetSubTypes(shipmentSubTypes, new List<string> { "General.G.LTL" }, "I")
+                }
+            };
+
             return inlandChildren;
         }
 
         private List<DigitalTransportModesChild> GetSubTypes(List<ShipmentSubType> shipmentSubTypes, List<string> typeCodes, string parentCode)
         {
-            var subTypes = shipmentSubTypes.Where(a => typeCodes.Contains(a.ShipmentTypeCode) || a.ShipmentTypeCode == null).ToList();
+            var subTypes = shipmentSubTypes.Where(a => typeCodes.Contains(a.ShipmentTypeCode) 
+                                                       || a.ShipmentTypeCode == null)
+                                           .ToList();
             if (subTypes == null)
+            {
                 return null;
+            }
 
             var digitalSubTypes = new List<DigitalTransportModesChild>();
             foreach (var item in subTypes)

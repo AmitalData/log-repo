@@ -1410,6 +1410,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 CustomsInvoiceTemplateId = card.CustomsInvoiceTemplateId,
                                                 ConsolidationInvoiceTemplateId = card.ConsolidationInvoiceTemplateId,
                                                 ManifestInvoiceTemplateId = card.ManifestInvoiceTemplateId,
+
                                             };
 
             if (myResult.Count() > 0)

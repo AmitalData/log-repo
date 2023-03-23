@@ -254,8 +254,10 @@ namespace Logitude.Server.Tools.StorageService
 
             if (sentBytes < fileInfo.FileSize)
             {
-                MemoryStream memorystream = new MemoryStream(buffer);
-                tempcloudBlockBlob.PutBlock(blockIdsList[bufferNumber], memorystream, null);
+                using (MemoryStream memorystream = new MemoryStream(buffer))
+                {
+                    tempcloudBlockBlob.PutBlock(blockIdsList[bufferNumber], memorystream, null);
+                }
             }
             else
             {
@@ -263,9 +265,10 @@ namespace Logitude.Server.Tools.StorageService
 
                 //finalcloudBlockBlob.Properties.ContentMD5 = "12121";
 
-                MemoryStream memorystream = new MemoryStream(buffer);
-                tempcloudBlockBlob.PutBlock(blockIdsList[bufferNumber], memorystream, null);
-
+                using (MemoryStream memorystream = new MemoryStream(buffer))
+                {
+                    tempcloudBlockBlob.PutBlock(blockIdsList[bufferNumber], memorystream, null);
+                }
                 int numberOfBlocks = blockIdsList.Length;
                 String[] blockIds = new String[numberOfBlocks];
                 for (int i = 0; i < numberOfBlocks; i++)

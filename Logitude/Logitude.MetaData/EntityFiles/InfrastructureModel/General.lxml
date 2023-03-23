@@ -12,6 +12,7 @@
   AvailableInCustomization="false"
   SupportSubEntity="false"
   ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -8168,6 +8169,33 @@
       FeatureTypeCode="&quot;OTH&quot;"
       FeatureTextCodeCode="&quot;General.Features.PendingApprovalDocuments&quot;"
       FeatureDefaultText="&quot;Pending Approval Documents&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;TASKTYPES&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.TASKTYPES&quot;"
+      FeatureDefaultText="&quot;Task Types&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;TASKPRIORITIES&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.TASKPRIORITIES&quot;"
+      FeatureDefaultText="&quot;Task Priorities&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;TASKSTATUSES&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.TASKSTATUSES&quot;"
+      FeatureDefaultText="&quot;Task Statuses&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

@@ -1644,7 +1644,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              DocumentTemplateId = entity.DocumentTemplateId,
                              TotalAmountNotForTaxReport =
                                  (entity.SubTotalInLocalCurrency ?? 0)
-                                 - (double)(entity.TotalAmountForTaxReport ?? 0)
+                                 - (double)(entity.TotalAmountForTaxReport ?? 0),
+                             IsAutoCredited = (entity.CancelledByARInvoice != null && entity.StatusCode == "AR") ? true : false,
+
                          };
 
             return result;

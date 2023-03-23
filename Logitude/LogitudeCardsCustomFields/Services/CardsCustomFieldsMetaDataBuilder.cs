@@ -82,7 +82,7 @@ namespace LogitudeCardsCustomFields.Services
 
         private int BuildCardMetaDataForSpecificPartner(List<ObjectFieldPM> allCardsTenantCusotomObjectFieldsPMs, int cardFieldIndex, string cardObjectTableName)
         {
-            List<ObjectFieldPM> cardTenantCusotomObjectFieldsPMs = allCardsTenantCusotomObjectFieldsPMs.Where(a => a.ObjectTableName == cardObjectTableName).OrderBy(a => a.FieldName).ToList();
+            List<ObjectFieldPM> cardTenantCusotomObjectFieldsPMs = allCardsTenantCusotomObjectFieldsPMs.Where(a => a.ObjectTableName == cardObjectTableName).OrderBy(a => Int32.Parse(a.FieldName.Replace("Field",""))).ToList();
             for (int oldCardFieldIndex = 0; oldCardFieldIndex < cardTenantCusotomObjectFieldsPMs.Count(); oldCardFieldIndex++)
             {
                 CreateNewCardObjectFieldAndBuildMetaDataScriptsForSpecificPartner(cardFieldIndex, cardObjectTableName, oldCardFieldIndex, cardTenantCusotomObjectFieldsPMs[oldCardFieldIndex]);
@@ -164,7 +164,7 @@ namespace LogitudeCardsCustomFields.Services
                 writer.WriteLine("---------------------------");
                 writer.WriteLine("declare " + generatedFieldCode + " nvarchar(1000)");
                 writer.WriteLine("set " + generatedFieldCode + " = (select FieldCode from objectfields where id = '" + selectedObjectFieldPM.Id + "')");
-                writer.WriteLine("update objectfields set FieldCode = REPLACE(" + generatedFieldCode + ", 'Field" + oldCardFieldNumber + "', 'Field" + cardFieldIndex + "') where id = '" + selectedObjectFieldPM.Id + "'");
+                writer.WriteLine("update objectfields set FieldCode = REPLACE(" + generatedFieldCode + ", 'Field" + oldCardFieldNumber + "', 'Field" + cardFieldIndex + "'),FieldName = 'Field" + cardFieldIndex + "' where id = '" + selectedObjectFieldPM.Id + "'");
                 if (!string.IsNullOrEmpty(selectedObjectFieldPM.FullNameTextCodeId))
                 {
                     writer.WriteLine("-----");

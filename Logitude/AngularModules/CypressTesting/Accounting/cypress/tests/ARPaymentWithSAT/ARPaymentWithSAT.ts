@@ -69,7 +69,7 @@ Given("the user navigates to shipments workspace", () => {
   Given("a Receivable with the following details", (dataTable) => {
     const ReceivableData = Assists.CreateSet<ReceivableDetails>(dataTable);
     ShipmentActions.OpenShipment(shipmentNumber);
-    ShipmentActions.FillReceivablesTab(ReceivableData, false)
+    ShipmentActions.FillReceivablesTabSAT(ReceivableData, false)
   });
   
   When("add Receivable", () => {
@@ -89,7 +89,7 @@ Given("the user navigates to shipments workspace", () => {
     const formatted =  `${yesterday.getDate()}/${yesterday.getMonth()+1}/${yesterday.getFullYear()}`;
     ARInvoiceData.InvoiceDate= formatted;
     cy.Click(AccountingSelectors.CreateARInvoiceButton, null);
-    AccountingActions.FillARInvoiceDetails(ARInvoiceData)
+    AccountingActions.FillARInvoiceDetailsSAT(ARInvoiceData)
   });
   
   When("create invoice", () => {

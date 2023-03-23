@@ -1,0 +1,9 @@
+﻿<Script DBType="Global" Module="Common" AOT="true" TargetTableName="TenantManagements">
+  <Sql Version="2">
+    <![CDATA[
+    Update TenantManagements
+      set  DPArchiveShipmentCreateFilter = 12, DPArchiveShipmentArrivalFilter = 3, DPArchiveShipmentDepartFilter = 3
+      where $LastCounterWhere$
+    ]]>
+  </Sql>
+</Script>

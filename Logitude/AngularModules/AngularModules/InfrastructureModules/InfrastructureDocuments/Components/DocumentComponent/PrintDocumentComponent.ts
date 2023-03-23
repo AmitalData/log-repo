@@ -1030,11 +1030,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
             });
 
             if (this.IsBuildDocumentViaWorkerRole) {
-
-
-                    this.BliudDocumentViewWorkerRole(this.AddedDocumentTypeCopyViewModels.filter(d => d.IsSelected));
-
-
+                this.BliudDocumentViewWorkerRole(this.AddedDocumentTypeCopyViewModels.filter(d => d.IsSelected));
             }
 
 
@@ -1444,7 +1440,6 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
     public UpdateDocument() {
 
-        console.log('UpdateDocument');
         this.CurrentSession.CurrentWindow = this.CurrentSession.Windows.filter(d => d.Title == "Print " + this.DataContext.DocumentTypePM.Name)[0];
 
         ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, this.DocumentTypeload.Name + " Building");

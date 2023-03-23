@@ -1,6 +1,7 @@
 ﻿
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.Services.DeploymentPackage.ImportingValidator;
 using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -18,20 +19,60 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         private DeploymentPackageDetails deploymentPackageDetails;
         private List<DeploymentPackageDetailsList> deploymentPackageDetailsList;
         private int tenant;
+        private DeploymentPackageDetailsListArgs deploymentPackageDetailsListArgs;
         public DeploymentPackageDetailsListService(int tenant)
         {
             this.tenant = tenant;
             deploymentPackageDetailsList = new List<DeploymentPackageDetailsList>();
         }
 
-        public List<DeploymentPackageDetailsList> GetDeploymentPackageDetailsListByDocumentId(string documentId)
+        public DeploymentPackageDetailsListArgs GetDeploymentPackageDetailsListByDocumentId(string documentId)
         {
-            if (string.IsNullOrEmpty(documentId)) return new List<DeploymentPackageDetailsList>();
+            deploymentPackageDetailsListArgs = GetInstanceOfDeploymentPackageDetailsListArgs();
+            if (string.IsNullOrEmpty(documentId)) return deploymentPackageDetailsListArgs;
+
+            try
+            {
+                MapDeploymentPackageDetailsListArgs(documentId);
+                return deploymentPackageDetailsListArgs;
+            }
+            catch (Exception ex)
+            {
+                deploymentPackageDetailsListArgs.IsValidZipFile = false;
+                return deploymentPackageDetailsListArgs;
+            }
+            
+        }
+
+        private void MapDeploymentPackageDetailsListArgs(string documentId)
+        {
             deploymentPackageDetails = new DeploymentPackageExtractDetailsService().ExtractDeploymentPackageDetailsByDocumentId(documentId, tenant);
-
             this.BuildCustomFields();
+            deploymentPackageDetailsListArgs.DeploymentPackageDetailsList = deploymentPackageDetailsList;
+            deploymentPackageDetailsListArgs.IsValidZipFile = true;
+            ValidateImportedDeploymentPackage();
+        }
 
-            return deploymentPackageDetailsList;
+        private void ValidateImportedDeploymentPackage()
+        {
+            try
+            {
+                new DeploymentPackageImporterValidatingService(deploymentPackageDetails, tenant).ValidateImportedPackage();
+            }
+            catch(Exception ex)
+            {
+                deploymentPackageDetailsListArgs.ValidationMessage = ex.Message;
+            }
+        }
+
+        private DeploymentPackageDetailsListArgs GetInstanceOfDeploymentPackageDetailsListArgs()
+        {
+            return new DeploymentPackageDetailsListArgs()
+            {
+                DeploymentPackageDetailsList = new List<DeploymentPackageDetailsList>(),
+                ValidationMessage = "",
+                IsValidZipFile = true
+            };
         }
 
         private void BuildCustomFields()
@@ -62,5 +103,11 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         public string Type { get; set; }
         public string Entity { get; set; }
 
+    }
+    public class DeploymentPackageDetailsListArgs
+    {
+        public List<DeploymentPackageDetailsList> DeploymentPackageDetailsList;
+        public string ValidationMessage;
+        public bool IsValidZipFile;
     }
 }

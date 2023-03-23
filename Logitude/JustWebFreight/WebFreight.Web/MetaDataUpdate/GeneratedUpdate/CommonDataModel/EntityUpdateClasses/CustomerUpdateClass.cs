@@ -87,7 +87,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
    {  		
 
 
-		public const string HashString = "c94889ab3ef6f5aa31f3a1fc17283725";
+		public const string HashString = "4c7d681ceca9629c5a192767acca4897";
+
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -106,6 +107,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
 			      				    AvailableInDocumentTypes =  true,
+
 			      				    HasHelper =  true,
 			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  false,
@@ -133,7 +135,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    AllowCustomFields =  true,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
-			      				    MaxNumberOfCustomFields =  10,
+			      				    MaxNumberOfCustomFields =  50,
 			      				    NewWizardControlName =  "Simplog.FreightLib.NewCustomerCommand",
 			      				    LocalDefaultText =  "",
 			      				    DefaultText =  "Customer",
@@ -16406,6 +16408,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
                 LocalName =  "Product Items Updated",
                 IsManualEntry =  false,
                 ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = CustomerObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "CSCS",
+                EnglishName =  "GLAccount is connected",
+                LocalName =  "GLAccount is connected",
+                IsManualEntry =  false,
+                ShortView =  false,
                 IsAgentView =  false,
                 IsCustomerView =  false,
                 IsSharedLogisticsEnabled =  false,
