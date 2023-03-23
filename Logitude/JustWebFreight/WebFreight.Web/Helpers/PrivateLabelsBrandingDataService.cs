@@ -23,7 +23,7 @@ namespace WebFreight.Web.Helpers
         {
             TenantManagmentPrivateLabelsQuery tenantManagementQuery = new TenantManagmentPrivateLabelsQuery();
             string loggedDomainURL = SecurityUtility.getLoggedDomain();
-            TenantManagmentPrivateLabelsPM tenantManagementPM = tenantManagementQuery.GetSingleActivePMByUrl(loggedDomainURL);
+            TenantManagmentPrivateLabelsPM tenantManagementPM = tenantManagementQuery.GetSingleActivePMByUrl_Cache(loggedDomainURL);
             PrivateLabelsBrandingData BrandingData = MapBrandingData(tenantManagementPM, BrandingDataRequest);
 
             return BrandingData;

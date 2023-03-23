@@ -720,7 +720,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             if (!url.Contains("system.logitudeworld.com") && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
             {
                 TenantManagmentPrivateLabelsQuery query = new TenantManagmentPrivateLabelsQuery(0);
-                privatelabel = query.GetSingleActivePMByUrl(url);
+                privatelabel = query.GetSingleActivePMByUrl_Cache(url);
             }
             if (privatelabel != null)
             {
@@ -795,7 +795,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 if (!url.Contains("system.logitudeworld.com") && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
                 {
                     TenantManagmentPrivateLabelsQuery query = new TenantManagmentPrivateLabelsQuery(0);
-                    privatelabel = query.GetSingleActivePMByUrl(url);
+                    privatelabel = query.GetSingleActivePMByUrl_Cache(url);
                 }
                 if (privatelabel != null)
                 {

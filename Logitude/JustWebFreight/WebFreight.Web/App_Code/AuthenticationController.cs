@@ -637,7 +637,7 @@ namespace WebFreight.Web
                 if (!url.Contains("system.logitudeworld.com") && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
                 {
                     TenantManagmentPrivateLabelsQuery query = new TenantManagmentPrivateLabelsQuery(0);
-                    privatelabel = query.GetSingleActivePMByUrl(url);
+                    privatelabel = query.GetSingleActivePMByUrl_Cache(url);
                 }
                 DateTime DateBeforePostUserValidation = DateTime.Now;
                 string email = loginParameters.Email.Trim();
@@ -1196,7 +1196,7 @@ namespace WebFreight.Web
             if (url.Contains("system.logbox.co.il") || url.Contains("pre.logbox.co.il") || url.Contains("test.logitudeworld.com") || url.Contains("localhost"))
             {
                 TenantManagmentPrivateLabelsQuery query = new TenantManagmentPrivateLabelsQuery(0);
-                logboxAccessiblePrivateLabelTenantsIds = query.GetLogboxAccessibleTenantManagmentPrivateLabelsIds();
+                logboxAccessiblePrivateLabelTenantsIds = query.GetLogboxAccessibleTenantManagmentPrivateLabelsIds_Cache();
             }
             return logboxAccessiblePrivateLabelTenantsIds;
         }

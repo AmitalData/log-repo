@@ -29,6 +29,16 @@ namespace Logitude.BL.GlobalModel.EntityQueries
             this.repository = repository;
         }
 
+        public TenantManagmentPrivateLabelsPM GetSinglePM_Cache(string id)
+        {
+            string entityKeyString = $"GetSinglePM_Cache({id})";
+            var res = CacheManager
+                .GetOrInsertNewObject<TenantManagmentPrivateLabelsPM>(entityKeyString,
+                () => { return this.GetSinglePM(id); });
+            return res;
+
+        }
+
         public TenantManagmentPrivateLabelsPM GetSinglePM(string id)
         {
             TenantManagmentPrivateLabelsPM entity = (from a in repository.context.TenantManagmentPrivateLabels
@@ -57,6 +67,16 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                          }).FirstOrDefault();
 
             return entity;
+        }
+
+        public TenantManagmentPrivateLabelsPM GetSingleActivePMByUrl_Cache(string url)
+        {
+            string entityKeyString = $"GetSingleActivePMByUrl_Cache({url})";
+            var res = CacheManager
+                .GetOrInsertNewObject<TenantManagmentPrivateLabelsPM>(entityKeyString,
+                () => { return this.GetSingleActivePMByUrl(url); });
+            return res;
+
         }
         public TenantManagmentPrivateLabelsPM GetSingleActivePMByUrl(string url)
         {
@@ -88,6 +108,16 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
             return entity;
         }
+
+        public TenantManagmentPrivateLabelsList GetSingleList_Cache(string id)
+        {
+            string entityKeyString = $"GetSingleList_Cache({id})";
+            var res = CacheManager
+                .GetOrInsertNewObject<TenantManagmentPrivateLabelsList>(entityKeyString,
+                () => { return this.GetSingleList(id); });
+            return res;
+
+        }
         public TenantManagmentPrivateLabelsList GetSingleList(string id)
         {
             TenantManagmentPrivateLabelsList entity = (from a in repository.context.TenantManagmentPrivateLabels
@@ -117,6 +147,16 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
             return entity;
         }
+
+        public IQueryable<TenantManagmentPrivateLabelsPM> GetTenantManagmentPrivateLablesPMs_Cache()
+        {
+            string entityKeyString = $"GetTenantManagmentPrivateLablesPMs_Cache()";
+            var res = CacheManager
+                .GetOrInsertNewObject<IQueryable<TenantManagmentPrivateLabelsPM>>(entityKeyString,
+                () => { return this.GetTenantManagmentPrivateLablesPMs(); });
+            return res;
+
+        }
         public IQueryable<TenantManagmentPrivateLabelsPM> GetTenantManagmentPrivateLablesPMs()
         {
             return (from a in repository.context.TenantManagmentPrivateLabels
@@ -142,6 +182,16 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         SecondaryColor = a.SecondaryColor,
                         HasLogboxAccess = a.HasLogboxAccess,
                     });
+        }
+
+        public IQueryable<TenantManagmentPrivateLabelsList> GetTenantManagmentPrivateLablesLists_Cache()
+        {
+            string entityKeyString = $"GetTenantManagmentPrivateLablesLists_Cache()";
+            var res = CacheManager
+                .GetOrInsertNewObject<IQueryable<TenantManagmentPrivateLabelsList>>(entityKeyString,
+                () => { return this.GetTenantManagmentPrivateLablesLists(); });
+            return res;
+
         }
         public IQueryable<TenantManagmentPrivateLabelsList> GetTenantManagmentPrivateLablesLists()
         {
@@ -170,7 +220,15 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     });
         }
 
+        public IQueryable<TenantManagmentPrivateLabelsList> GetIQueryableEntityList_Cache(IQueryable<TenantManagmentPrivateLabels> iQueryable)
+        {
+            string entityKeyString = $"GetIQueryableEntityList_Cache({iQueryable})";
+            var res = CacheManager
+                .GetOrInsertNewObject<IQueryable<TenantManagmentPrivateLabelsList>>(entityKeyString,
+                () => { return this.GetIQueryableEntityList(iQueryable); });
+            return res;
 
+        }
         public IQueryable<TenantManagmentPrivateLabelsList> GetIQueryableEntityList(IQueryable<TenantManagmentPrivateLabels> iQueryable)
         {
             return from a in iQueryable
@@ -196,6 +254,16 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        SecondaryColor = a.SecondaryColor,
                        HasLogboxAccess = a.HasLogboxAccess,
                    };
+
+        }
+
+        public List<string> GetLogboxAccessibleTenantManagmentPrivateLabelsIds_Cache()
+        {
+            string entityKeyString = $"GetLogboxAccessibleTenantManagmentPrivateLabelsIds_Cache()";
+            var res = CacheManager
+                .GetOrInsertNewObject<List<string>>(entityKeyString,
+                () => { return this.GetLogboxAccessibleTenantManagmentPrivateLabelsIds(); });
+            return res;
 
         }
 

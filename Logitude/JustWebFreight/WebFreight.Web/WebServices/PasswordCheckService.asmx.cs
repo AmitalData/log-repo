@@ -272,7 +272,7 @@ namespace WebFreight.Web.WebServices
         {
             ResetPasswordHtmlArgs resetPasswordHtmlArgs = new ResetPasswordHtmlArgs();
             TenantManagmentPrivateLabelsQuery tenantManagmentPrivateLabelsQuery = new TenantManagmentPrivateLabelsQuery(0);
-            TenantManagmentPrivateLabelsPM privatelabel = tenantManagmentPrivateLabelsQuery.GetSingleActivePMByUrl(url);
+            TenantManagmentPrivateLabelsPM privatelabel = tenantManagmentPrivateLabelsQuery.GetSingleActivePMByUrl_Cache(url);
             if (privatelabel != null)
             {
                 resetPasswordHtmlArgs.NewPassword = newPassword;
