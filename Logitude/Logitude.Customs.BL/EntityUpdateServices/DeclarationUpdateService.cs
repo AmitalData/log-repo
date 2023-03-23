@@ -51,6 +51,7 @@ using Logitude.Customs.BL.BL;
 using System.Configuration;
 using System.Globalization;
 using Logitude.Customs.BL.Messaging.ILSWS;
+using System.Xml;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -454,14 +455,40 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 entityPM.UpdateDateTime = DateTime.Now;
 
-                if (entityPM.MarkAsChanged)
+                if (entityPM.MarkAsChanged && entityPM.ChangeSetOp == ChangeSetOperation.Update && !string.IsNullOrEmpty(this.EntityChangeFieldXml))
                 {
-                    if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
+                    DateTime stopLogAt = new DateTime(2025, 06, 01);
+                    LogitudeSettings.HandleLogMe(" DeclarationUpdateService.OnUpdating = EntityChangeFieldXml " + this.EntityChangeFieldXml, false, "CreateUD2LTService", stopLogAt);
+                    XmlDocument doc = new XmlDocument();
+                    doc.LoadXml(this.EntityChangeFieldXml);
+                    foreach (XmlNode xmlnode in doc?.DocumentElement)
                     {
-                        entityPM.IsChanged = true;
+                        var changes = xmlnode?.InnerXml?.Split(new string[] { "<c" }, StringSplitOptions.None)?.Skip(1)?.ToArray();
+                        foreach (var change in changes)
+                        {
+                            string OldValue = "", NewValue = "";
+                            var oFrom = change.IndexOf("o=\"");
+                            if (change.Length > oFrom + 3)
+                            {
+                                var oSubStrined = change.Substring(oFrom + 3);
+                                var oFromDoubleQuote = oSubStrined.IndexOf("\"");
+                                OldValue = oSubStrined.Substring(0, oFromDoubleQuote);
+                            }
+                            var nFrom = change.IndexOf("n=\"");
+                            if (change.Length > nFrom + 3)
+                            {
+                                var nSubStrined = change.Substring(nFrom + 3);
+                                var nFromDoubleQuote = nSubStrined.IndexOf("\"");
+                                NewValue = nSubStrined.Substring(0, nFromDoubleQuote);
+                            }
+                            if (OldValue != NewValue)
+                            {
+                                entityPM.IsChanged = true;
+                                break;
+                            }
+                        }
                     }
                 }
-
                 ClientQueryService clientQueryService = new ClientQueryService(entityPM.Tenant);
                 if (!string.IsNullOrEmpty(entityPM.ImporterId))
                 {
