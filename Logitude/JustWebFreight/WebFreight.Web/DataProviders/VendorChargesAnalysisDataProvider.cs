@@ -45,5 +45,6 @@ namespace WebFreight.Web.DataProviders
         public double? AccountedAmountInForeignCurrency { get; set; }
         public double? OpenAmountInForeignCurrency { get; set; }
         public string ForeignCurrency { get; set; }
+        public double? ExpectedAmount { get; set; }
     }    
 }

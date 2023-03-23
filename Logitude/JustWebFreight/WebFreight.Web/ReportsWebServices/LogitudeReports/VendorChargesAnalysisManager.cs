@@ -346,6 +346,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                                                     ForeignCurrency = myItem.Currency.Code,
                                                                     Payables_ACCTInForeignCurrency = myItem.AccountedAmount,
                                                                     Payables_OPENInForeignCurrency = myItem.OpenAmount,
+                                                                    Payables_EXPE = myItem.ExpectedAmount,
                                                                 }).ToList();
                     if (myResult.Count > 0)
                     {
@@ -382,6 +383,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
                             myRecord.AccountedAmount = item.Payables_ACCT;
                             myRecord.AccountedAmountInForeignCurrency = item.Payables_ACCTInForeignCurrency;
+                            myRecord.ExpectedAmount = item.Payables_EXPE;
                             
                             myRecord.Notes = item.Notes;
 
@@ -592,5 +594,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         public double? Payables_OPENInForeignCurrency { get; set; }
         public string ForeignCurrency { get; set; }
         public double? Rate { get; set; }
+
+        public double? Payables_EXPE { get; set; }
     }
 }
