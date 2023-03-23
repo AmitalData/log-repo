@@ -20,7 +20,7 @@ export class SharedLogisticsPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -73,6 +73,11 @@ export class SharedLogisticsPM {
     private brandingURLButton: string;
     public get BrandingURLButton() { return this.brandingURLButton; }
     public set BrandingURLButton(newValue: string) { if (this.brandingURLButton != newValue) { this.brandingURLButton = newValue; this.MarkAsDirty("BrandingURLButton"); } }
+       
+	 
+    private resetPasswordButton: string;
+    public get ResetPasswordButton() { return this.resetPasswordButton; }
+    public set ResetPasswordButton(newValue: string) { if (this.resetPasswordButton != newValue) { this.resetPasswordButton = newValue; this.MarkAsDirty("ResetPasswordButton"); } }
        
 	 
 

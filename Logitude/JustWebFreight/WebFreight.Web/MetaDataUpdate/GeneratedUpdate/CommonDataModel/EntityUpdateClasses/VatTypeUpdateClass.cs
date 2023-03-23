@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class VatTypeUpdateClass
    {  		
-		public const string HashString = "df844e2a02695147f7cda80c29bf8cf6";
+		public const string HashString = "c3ac951b6dc2f1553e53a1bb1c83a545";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

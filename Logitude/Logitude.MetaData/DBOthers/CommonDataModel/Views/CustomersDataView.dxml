@@ -10,8 +10,12 @@ dbo.Customers.Id, dbo.Customers.Tenant,dbo.cards.EnglishName,dbo.cards.ZipCode,d
 ,dbo.Cards.Notes,dbo.Cards.BillToId as BillToId,BillToCards.EnglishName as BillToName, dbo.Cards.Website,dbo.Customers.SalesmanUserId,dbo.Cards.PaymentTermId,dbo.Cards.CreateDate,dbo.Cards.UpdateDate,dbo.Cards.CreatedByUserId,dbo.Cards.UpdatedByUserId
 ,dbo.Cards.VatNumber,dbo.Cards.SearchFields,dbo.PaymentTerms.EnglishName as PaymentTermEnglishName,dbo.Cards.InvoiceCurrencyId,dbo.Customers.LastShipmentDate,dbo.Customers.StartWorkingDate,dbo.Customers.StartWorkingManuallySet
 ,AccountManagerUserContacts.EnglishName as AccountManagerUserEnglishName,SalesmanUserContacts.EnglishName as SalesmanUserEnglishName,CollectorContacts.EnglishName as CollectorName,ClassifierContacts.EnglishName as ClassifierName
-,dbo.Cards.CityName ,dbo.Cards.VatTypeId,dbo.Customers.Field1,dbo.Customers.Field2,dbo.Customers.Field3,dbo.Customers.Field4,dbo.Customers.Field5,dbo.Customers.Field6,dbo.Customers.Field7,dbo.Customers.Field8
-,dbo.Customers.Field9,dbo.Customers.Field10,dbo.Ranks.Code as RankCode,dbo.Ranks.Name as RankName,dbo.CustomerTeams.Id as TeamId,dbo.CustomerTeams.Name as TeamName
+,dbo.Cards.CityName ,dbo.Cards.VatTypeId,dbo.CustomFieldsMainObjects.Field1,dbo.CustomFieldsMainObjects.Field2,dbo.CustomFieldsMainObjects.Field3,dbo.CustomFieldsMainObjects.Field4,dbo.CustomFieldsMainObjects.Field5,dbo.CustomFieldsMainObjects.Field6,dbo.CustomFieldsMainObjects.Field7,dbo.CustomFieldsMainObjects.Field8
+,dbo.CustomFieldsMainObjects.Field9,dbo.CustomFieldsMainObjects.Field10,dbo.CustomFieldsMainObjects.Field11,dbo.CustomFieldsMainObjects.Field12,dbo.CustomFieldsMainObjects.Field13,dbo.CustomFieldsMainObjects.Field14,dbo.CustomFieldsMainObjects.Field15,dbo.CustomFieldsMainObjects.Field16,dbo.CustomFieldsMainObjects.Field17,dbo.CustomFieldsMainObjects.Field18
+,dbo.CustomFieldsMainObjects.Field19,dbo.CustomFieldsMainObjects.Field20,dbo.CustomFieldsMainObjects.Field21,dbo.CustomFieldsMainObjects.Field22,dbo.CustomFieldsMainObjects.Field23,dbo.CustomFieldsMainObjects.Field24,dbo.CustomFieldsMainObjects.Field25,dbo.CustomFieldsMainObjects.Field26,dbo.CustomFieldsMainObjects.Field27,dbo.CustomFieldsMainObjects.Field28
+,dbo.CustomFieldsMainObjects.Field29,dbo.CustomFieldsMainObjects.Field30,dbo.CustomFieldsMainObjects.Field31,dbo.CustomFieldsMainObjects.Field32,dbo.CustomFieldsMainObjects.Field33,dbo.CustomFieldsMainObjects.Field34,dbo.CustomFieldsMainObjects.Field35,dbo.CustomFieldsMainObjects.Field36,dbo.CustomFieldsMainObjects.Field37,dbo.CustomFieldsMainObjects.Field38
+,dbo.CustomFieldsMainObjects.Field39,dbo.CustomFieldsMainObjects.Field40,dbo.CustomFieldsMainObjects.Field41,dbo.CustomFieldsMainObjects.Field42,dbo.CustomFieldsMainObjects.Field43,dbo.CustomFieldsMainObjects.Field44,dbo.CustomFieldsMainObjects.Field45,dbo.CustomFieldsMainObjects.Field46,dbo.CustomFieldsMainObjects.Field47,dbo.CustomFieldsMainObjects.Field48
+,dbo.CustomFieldsMainObjects.Field49,dbo.CustomFieldsMainObjects.Field50,dbo.Ranks.Code as RankCode,dbo.Ranks.Name as RankName,dbo.CustomerTeams.Id as TeamId,dbo.CustomerTeams.Name as TeamName
 ,dbo.Cards.SharedLogisticsInvitationStatusCode, dbo.Customers.ActivityWatch 
 ,dbo.SharedLogisticsInvitationStatus.Name as SharedLogisticsInvitationStatusName
 ,dbo.cards.LastLoginDate,dbo.cards.InvitationDate,dbo.Industries.Name as IndustryName
@@ -67,7 +71,7 @@ FROM dbo.Customers  Inner join
 						 dbo.Contacts AS ActivationRequestedByUserContacts ON dbo.Customers.ActivationRequestedByUserId = ActivationRequestedByUserContacts.Id LEFT OUTER JOIN
 						 (select Max(LoginDateTime) as LastLoginDate,Tenant,CardId from SharedLogisticsContactLastLogins where Via='Mobile' group by Tenant,CardId) AS MobileSharedLogisticsContactLastLogins ON dbo.Cards.Id = MobileSharedLogisticsContactLastLogins.CardId LEFT OUTER JOIN
 						 (select Max(LoginDateTime) as LastLoginDate,Tenant,CardId from SharedLogisticsContactLastLogins where Via='PC' group by Tenant,CardId) AS PCSharedLogisticsContactLastLogins ON dbo.Cards.Id = PCSharedLogisticsContactLastLogins.CardId
-
+LEFT OUTER JOIN dbo.CustomFieldsMainObjects ON dbo.CustomFieldsMainObjects.EntityId = dbo.Customers.Id and dbo.CustomFieldsMainObjects.ObjectTableId = (select id from ObjectTables where name = 'card' and tenant = 0)
           
 where dbo.Cards.PartnerTypeId <> 'AC'
 

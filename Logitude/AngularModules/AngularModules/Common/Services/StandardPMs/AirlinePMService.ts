@@ -161,7 +161,7 @@ export class AirlinePMService {
         }
 
 		var customFields: Array<string> = [];
-        for (var i = 1; i < 11; i++) {
+        for (var i = 1; i < 51; i++) {
             customFields.push("Field" + i);
         }
             var jsonPMKeys = Object.keys(jsonPM);
@@ -242,7 +242,7 @@ export class AirlinePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newCardExternalCodeByCurrencyPM[pmProperty] = jItem[pmProperty];
             }
            

@@ -161,7 +161,7 @@ export class ShippingLinePMService {
         }
 
 		var customFields: Array<string> = [];
-        for (var i = 1; i < 11; i++) {
+        for (var i = 1; i < 51; i++) {
             customFields.push("Field" + i);
         }
             var jsonPMKeys = Object.keys(jsonPM);
