@@ -207,14 +207,15 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var isAllShipmentsQuery = newFilters.AdditionalFilters.Where(a => a.FieldName == "AllShipments").Any();
 
                 if (isAllShipmentsQuery)
-               {
+                {
                     DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
-                    shipments.Where(a => (helper.DoesPropertyExistInDynamic(a, "CreateDateTime") 
-                                          && a.CreateDateTime <= currentDateTime.AddMonths(-data.DPArchiveShipmentCreateFilter.Value))
+                    shipments.Where(a => (helper.DoesPropertyExistInDynamic(a, "CreateDateTime") && a.CreateDateTime <= currentDateTime.AddMonths(-data.DPArchiveShipmentCreateFilter.Value))
                                           && (helper.DoesPropertyExistInDynamic(a, "MainCarriageFinalDestinationATA") 
-                                              && (( a.MainCarriageFinalDestinationATA <= currentDateTime.AddMonths(-data.DPArchiveShipmentArrivalFilter.Value) && a.DirectionId == "I")))
-                                               || (helper.DoesPropertyExistInDynamic(a, "MainCarriageATD") 
-                                                    && (a.MainCarriageATD <= currentDateTime.AddMonths(-data.DPArchiveShipmentDepartFilter.Value) && a.DirectionId == "E")))
+                                              && ((a.MainCarriageFinalDestinationATA <= currentDateTime.AddMonths(-data.DPArchiveShipmentArrivalFilter.Value) 
+                                                    && (a.DirectionId == "I" || a.DirectionId == "R"))))
+                                                  || (helper.DoesPropertyExistInDynamic(a, "MainCarriageATD") 
+                                                       && (a.MainCarriageATD <= currentDateTime.AddMonths(-data.DPArchiveShipmentDepartFilter.Value) 
+                                                           && (a.DirectionId == "E" || a.DirectionId == "D"))))
                             .ToList()
                             .ForEach(i => i.IsCustomerArchived = true);
                 }
