@@ -961,7 +961,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
 
         private void UpdateReferantData(DeclarationPM entityPM)
-        {
+        {if (entityPM.Direction == "E") return;
             DateTime stopLogAt = new DateTime(2021, 06, 01);
             string logData = "";
             var loggedUser = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
