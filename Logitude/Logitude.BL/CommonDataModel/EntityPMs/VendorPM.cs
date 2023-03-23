@@ -5,11 +5,12 @@ using Simplog.Server.Infrastructure;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.BL.CommonDataModel.EntityPMs
 {
     [DataContract]
-    public class VendorPM
+    public class VendorPM : ObjectCustomFieldPM
     {
         [Key]
         [DataMember]

@@ -40,6 +40,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
 using Logitude.BL.Helpers;
+using Logitude.Server.Tools.CustomFields;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -67,11 +68,18 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				CardRepository  cardRepository = new CardRepository(MyContext);
-				CardQuery  cardQuery = new CardQuery(cardRepository);
-                IQueryable<Card> cards = cardRepository.GetCards(authToken.Tenant).Where(a=>a.Id == id);
-                CardList entityList = cardQuery.GetIQueryableEntityList(cards).FirstOrDefault();
+				CardList entityList = null;
+				Card entityPoco = cardRepository.GetSingleCard(id , authToken.Tenant);
+                
+                if (entityPoco != null)
+				{
+									CardQuery cardQuery = new CardQuery(cardRepository);
+                    entityList = cardQuery.GetSingleCardList(entityPoco);
+
+			    }
 				if (entityList != null)
 				{
+                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { EntityId = id, ObjectTableName = "Card", Tenant = authToken.Tenant, Type = "List", Entities = new List<CardList> { entityList }.Cast<object>().ToList() }).Set();
                 	CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 	customFieldResolver.SetCustomFieldsValues("Card",  authToken.Tenant, new List<CardList> { entityList }.Cast<object>().ToList());
  	

@@ -49,5 +49,6 @@ export class DocumentTypeTemplateList {
 		AutomationId: string;
 		AttachedExternalDocumentsIds: string;
 		IsSystem: boolean;
+		EntityId: string;
 	
 }

@@ -20,7 +20,7 @@ export class TenantPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -703,11 +703,13 @@ export class TenantPM {
     private sharedLogisMasterMessageLink: boolean;
     public get SharedLogisMasterMessageLink() { return this.sharedLogisMasterMessageLink; }
     public set SharedLogisMasterMessageLink(newValue: boolean) { if (this.sharedLogisMasterMessageLink != newValue) { this.sharedLogisMasterMessageLink = newValue; this.MarkAsDirty("SharedLogisMasterMessageLink"); } }
-
+       
+	 
     private showMultiUnitsOfMeasurements: boolean;
     public get ShowMultiUnitsOfMeasurements() { return this.showMultiUnitsOfMeasurements; }
     public set ShowMultiUnitsOfMeasurements(newValue: boolean) { if (this.showMultiUnitsOfMeasurements != newValue) { this.showMultiUnitsOfMeasurements = newValue; this.MarkAsDirty("ShowMultiUnitsOfMeasurements"); } }
-
+       
+	 
     private airRatio: number;
     public get AirRatio() { return this.airRatio; }
     public set AirRatio(newValue: number) { if (this.airRatio != newValue) { this.airRatio = newValue; this.MarkAsDirty("AirRatio"); } }
@@ -771,12 +773,23 @@ export class TenantPM {
     private shipmentATADateIndicator: string;
     public get ShipmentATADateIndicator() { return this.shipmentATADateIndicator; }
     public set ShipmentATADateIndicator(newValue: string) { if (this.shipmentATADateIndicator != newValue) { this.shipmentATADateIndicator = newValue; this.MarkAsDirty("ShipmentATADateIndicator"); } }
-
-    
+       
+	 
+    private totalDefaultNumberOfUsers: number;
+    public get TotalDefaultNumberOfUsers() { return this.totalDefaultNumberOfUsers; }
+    public set TotalDefaultNumberOfUsers(newValue: number) { if (this.totalDefaultNumberOfUsers != newValue) { this.totalDefaultNumberOfUsers = newValue; this.MarkAsDirty("TotalDefaultNumberOfUsers"); } }
+       
+	 
+    private isNewLogboxFromCloud: boolean;
+    public get IsNewLogboxFromCloud() { return this.isNewLogboxFromCloud; }
+    public set IsNewLogboxFromCloud(newValue: boolean) { if (this.isNewLogboxFromCloud != newValue) { this.isNewLogboxFromCloud = newValue; this.MarkAsDirty("IsNewLogboxFromCloud"); } }
+       
+	 
     private approveUploadedDocuments: boolean;
     public get ApproveUploadedDocuments() { return this.approveUploadedDocuments; }
     public set ApproveUploadedDocuments(newValue: boolean) { if (this.approveUploadedDocuments != newValue) { this.approveUploadedDocuments = newValue; this.MarkAsDirty("ApproveUploadedDocuments"); } }
-
+       
+	 
 
     public OldEntityPM: TenantPM;
 		
@@ -804,4 +817,4 @@ export class TenantPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

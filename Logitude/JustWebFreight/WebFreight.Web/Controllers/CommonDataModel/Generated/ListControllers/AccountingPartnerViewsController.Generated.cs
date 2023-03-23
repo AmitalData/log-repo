@@ -39,6 +39,8 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
+using Logitude.BL.Helpers;
+using Logitude.Server.Tools.CustomFields;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -77,6 +79,9 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 					IQueryable<AccountingPartner> iQueryable = singleEntityList.AsQueryable();
 					IQueryable<AccountingPartnerList> iQueryableEntityList = accountingPartnerQuery.GetIQueryableEntityList(iQueryable);
 				    entityList = iQueryableEntityList.FirstOrDefault();
+                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { EntityId = id, ObjectTableName = "AccountingPartner", Tenant = authToken.Tenant, Type = "List", Entities = new List<AccountingPartnerList> { entityList }.Cast<object>().ToList() }).Set();
+                    CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                	customFieldResolver.SetCustomFieldsValues("AccountingPartner",  authToken.Tenant, new List<AccountingPartnerList> { entityList }.Cast<object>().ToList());
 
 			    }
 
@@ -111,6 +116,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				entityLists = entityLists.OrderBy(d => d.Id);
 				List<AccountingPartnerList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                customFieldResolver.SetCustomFieldsValues("AccountingPartner", authToken.Tenant, listResult.Cast<object>().ToList());
 										
 				return Request.CreateResponse(HttpStatusCode.OK, listResult);
             }
@@ -336,6 +343,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 				}
 			   List<AccountingPartnerList> listResult = entityLists.ToList();
+               CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+               customFieldResolver.SetCustomFieldsValues("AccountingPartner", authToken.Tenant, listResult.Cast<object>().ToList());
 
                response.Result = listResult;
 			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);

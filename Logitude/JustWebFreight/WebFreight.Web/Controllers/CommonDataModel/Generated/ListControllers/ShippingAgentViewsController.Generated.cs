@@ -40,6 +40,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
 using Logitude.BL.Helpers;
+using Logitude.Server.Tools.CustomFields;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -84,6 +85,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 			    }
 				if (entityList != null)
 				{
+                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { EntityId = id, ObjectTableName = "ShippingAgent", Tenant = authToken.Tenant, Type = "List", Entities = new List<ShippingAgentList> { entityList }.Cast<object>().ToList() }).Set();
                 	CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 	customFieldResolver.SetCustomFieldsValues("ShippingAgent",  authToken.Tenant, new List<ShippingAgentList> { entityList }.Cast<object>().ToList());
  	

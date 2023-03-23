@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class AirlineUpdateClass
    {  		
-		public const string HashString = "74d1396682a1a247a5620f9ced4261a9";
+		public const string HashString = "c623d63391c4864c6ea5f05480a9bfe8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -99,10 +99,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTablePlural =  "Airlines",
 			      				    DescriptionDefaultText =  "The airline companies are supplied by Logitude. You can maintain information about the companies you work with: communication, address and billing details, airway bill stacks for inventory control, surcharge tariffs and contact lists.",
 			      				    HasCustomFilter =  true,
-			      				    HasCustomFields =  false,
+			      				    HasCustomFields =  true,
 			      				    AvailableInCustomization =  true,
 			      				    SupportSubEntity =  false,
-			      				    ApplyGenericCustomFields =  false,
+			      				    ApplyGenericCustomFields =  true,
 			      				    AvailableInDocumentTypes =  true,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
@@ -124,11 +124,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
 			      				    EnableSecurity =  true,
-			      				    AllowCustomFields =  false,
+			      				    AllowCustomFields =  true,
 			      				    HasDynamicHeader =  false,
 			      				    MainTipCode =  "AIRT",
 			      				    ObjectTableTypeCode =  "MD",
-			      				    MaxNumberOfCustomFields =  0,
+			      				    MaxNumberOfCustomFields =  50,
 			      				    NewWizardControlName =  "Simplog.FreightLib.NewAirlineCommand",
 			      				    DefaultText =  "Airline",
 			      				    Code =  "ARLN",
