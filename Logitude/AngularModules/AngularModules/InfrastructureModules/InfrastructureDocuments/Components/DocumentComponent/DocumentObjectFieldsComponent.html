@@ -84,7 +84,7 @@
 
 
 
-                                                            <tr style="text-align:left;vertical-align:top" *ngFor="let item of DataSource">
+                                                            <tr *ngIf="!IsReport()" style="text-align:left;vertical-align:top" *ngFor="let item of DataSource">
                                                                 <td style="min-height:30px;">
                                                                     <table>
 
@@ -103,7 +103,7 @@
 
 
                                                                             <td attr.data-cy="{{item.ObjectTableName + '_' + item.TranslatedText}}" (click)="ObjectDataSourceChangeSelected(item)" class="iwanttohover" colspan="2" [style.background]="item.DivSelectBackgroud" *ngIf="item" style="width:100px;height:24px">
-                                                                                <p *ngIf ="item.ObjectTableId != ObjectTableId" style="display:inline-block;">{{item.ObjectTableName}}&nbsp;</p>
+                                                                                <p *ngIf="item.ObjectTableId != ObjectTableId" style="display:inline-block;">{{item.ObjectTableName}}&nbsp;</p>
                                                                                 <p style="display:inline-block;">{{item.TranslatedText}}</p>
                                                                             </td>
 
@@ -235,8 +235,17 @@
 
 
                                                             </tr>
-
-
+                                                            <tr style="margin:5px;overflow-y:auto;overflow-x:no-display;max-height:400px">
+                                                                <td>
+                                                                    <table style="vertical-align:top;top:0px;">
+                                                                    <tr style="text-align:left;vertical-align:top"
+                                                                        *ngFor="let item of DataProviderFields">
+                                                                        <DataProviderFieldsNestedList (selectChangeEvent)="SelectChanges($event,'DataProviderFields')"
+                                                                                                      [margin]="20" [field]="item"></DataProviderFieldsNestedList>
+                                                                    </tr>
+                                                                </table>
+                                                                </td>
+                                                            </tr>
                                                             <tr>
                                                                 <td>
                                                                     <div></div>

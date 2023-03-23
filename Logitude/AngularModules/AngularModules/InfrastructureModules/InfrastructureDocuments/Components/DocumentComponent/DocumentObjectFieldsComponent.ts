@@ -10,6 +10,11 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {FormControl}   from '@angular/forms'; 
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { ReportsTemplatePM } from '../../../../Common/EntityPMs/ReportsTemplatePM';
+import { ExcelReportService } from '../../../../Common/Services/ExtendedLists/ExcelReportService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { ExcelReportResult } from '../../../../Common/DataContracts/ExcelReportResult';
+import { DataProviderField } from '../../../../Common/DataContracts/DataProviderField';
 
 @Component({
     
@@ -43,8 +48,13 @@ export class DocumentObjectFieldsComponent implements OnInit {
     SelectedTabCode: string;
     InSertDataFieldType: string;
     public HideSystemDataTab: boolean = false;
+    public ReportTemplatePM: ReportsTemplatePM;
+    public excelReportService : ExcelReportService;
     private CurrentSession = SessionLocator.SelectedSession;
     FromComponent: string;
+    DataProviderFields: DataProviderField[];
+    DataProviderFieldsAll: DataProviderField[];
+
     constructor() {
       
         
@@ -74,6 +84,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
         this.ObjectTypeField = args.ObjectTypeField;
         this.InSertDataFieldType = args.InSertDataFieldType;
         this.HideSystemDataTab = args.HideSystemDataTab;
+        this.ReportTemplatePM = args.ReportTemplatePM;
         this.FromComponent = args.FromComponent; 
      if (AppTool.IsNullOrEmpty(this.ObjectTypeField)) {
          if (this.InSertDataFieldType == "From" || this.InSertDataFieldType == "ReplyTo" || this.InSertDataFieldType == "CC" || this.InSertDataFieldType == "BCC" || this.InSertDataFieldType == "To") this.ObjectTypeField = "Emails"; 
@@ -95,6 +106,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
         this.AllSystemDataSourceViewsLists = new Array<DocumentObjectFieldsRowViewModel>();
         this.AllObjectDataSourceViewsLists = new Array<DocumentObjectFieldsRowViewModel>();
         this.EntityResourceService = new EntityResourceService();
+        this.excelReportService = new ExcelReportService();
         if (!this.ObjectTypeField) {
             this.ObjectTypeField = null;
         }
@@ -146,6 +158,12 @@ export class DocumentObjectFieldsComponent implements OnInit {
             }
 
             this.FillDataSource();
+        }
+        if ((this.ReportTemplatePM != null || this.ReportTemplatePM != undefined) && this.ReportTemplatePM.ReportId)
+        {
+            this.IsShowTabObjectField = true;
+            this.SelectedTabCode = "DAF";
+            this.LoadReportDataProvider();
         }
         else this.SelectedTabCode = "SAF";
 
@@ -210,9 +228,40 @@ export class DocumentObjectFieldsComponent implements OnInit {
 
     }
 
+    LoadReportDataProvider() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.excelReportService.getDataProviderFields(this.ReportTemplatePM.ReportId, this.ReportTemplatePM.Id)
+            .subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) this.FillDataProviderFields(myResponse.Result)
+                this.CurrentSession.StopBusyIndicator();
+            });
+    }
+    FillDataProviderFields(result: ExcelReportResult) {
+        this.DataProviderFields = new Array<DataProviderField>();
+        result.DataProviderFields.forEach((item) => {
+            this.DataProviderFields.push(this.Clone(item));
+        });
 
+        this.DataProviderFields.forEach((item) => {
+            let objectField = new ObjectFieldPM();
+            objectField.FieldName = item.Name;
+            objectField.DataTypeCode = item.Type;
 
+            var view = new DocumentObjectFieldsRowViewModel(objectField, objectField.FieldName, this.ObjectTypeField, this.ReportTemplatePM.ReportId);
+            this.ObsList.push(view);
+            this.ObsListAll.push(view);
+            this.DataSource = this.ObsList;
+        });
 
+    }
+    Clone(list: any): any {
+        return JSON.parse(JSON.stringify(list));
+    }
+    IsReport() {
+        if (this.ReportTemplatePM.ReportId)
+            return true;
+        return false;
+    }
     private FillDocumentTableObjectFieldsList(objectTable: ObjectTablePM) {
         this.objectFieldsList = window.ObjectFields.filter(f => f.ObjectTableId == objectTable.Id && (f.PMPropertyPath != null || f.ListPropertyPath != null) && f.DisplayInDocumentReferences);
         let documentsObjectTable = window.ObjectTables.filter(t => t.Name == "DocumentType" || t.Name == "DocumentsFiling");

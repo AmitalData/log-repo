@@ -153,4 +153,4 @@ export class ReportsTemplatePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

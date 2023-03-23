@@ -109,6 +109,15 @@ namespace WebFreight.Web.Helpers.ExcelReport
                     {
                         return typeof(SpotRateQuoteReportDataProvider);
                     }
+                case "CSSR":
+                    {
+                        return typeof(CustomerStatusDataProvider);
+                    }
+                case "SHID":
+                    {
+                        return typeof(ShipmentDetailsDataProvider);
+
+                    }
                 default:
                     return null;
             }
