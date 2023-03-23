@@ -259,12 +259,10 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
         public static IQueryable<DigitalShipmentsDataView> ApplyArchivingFilter(IQueryable<DigitalShipmentsDataView> shipmentDataViews, DateTime createdDateTime, DateTime arrivalDateTime, DateTime departureDateTime)
         {
             return shipmentDataViews.Where(a => System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) >= createdDateTime
-                                                && (((a.MainCarriageFinalDestinationATA == null
-                                                    || System.Data.Entity.DbFunctions.TruncateTime(a.MainCarriageFinalDestinationATA) >= arrivalDateTime)
-                                                    && (a.DirectionId == "I" || a.DirectionId == "R"))
-                                                    || ((a.MainCarriageATD == null
-                                                            || System.Data.Entity.DbFunctions.TruncateTime(a.MainCarriageATD) >= departureDateTime)
-                                                        && (a.DirectionId == "E" || a.DirectionId == "D"))));
+                                                || ((a.MainCarriageFinalDestinationATA == null || System.Data.Entity.DbFunctions.TruncateTime(a.MainCarriageFinalDestinationATA) >= arrivalDateTime)
+                                                      && (a.DirectionId == "I" || a.DirectionId == "R"))
+                                                || ((a.MainCarriageATD == null || System.Data.Entity.DbFunctions.TruncateTime(a.MainCarriageATD) >= departureDateTime)
+                                                       && (a.DirectionId == "E" || a.DirectionId == "D")));
         }
 
         public static IQueryable<DigitalShipmentsDataView> ApplyShipperConsigneeFilter(QueryFilterItem item, IQueryable<DigitalShipmentsDataView> queryableData)
