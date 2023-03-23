@@ -560,8 +560,30 @@ export class CardPM extends ObjectCustomFieldPM {
     public get ExportLocalCustomerGroupId() { return this.exportLocalCustomerGroupId; }
     public set ExportLocalCustomerGroupId(newValue: string) { if (this.exportLocalCustomerGroupId != newValue) { this.exportLocalCustomerGroupId = newValue; this.MarkAsDirty("ExportLocalCustomerGroupId"); } }
        
+	        
+	 
+    private singleInvoiceTemplateId: string;
+    public get SingleInvoiceTemplateId() { return this.singleInvoiceTemplateId; }
+    public set SingleInvoiceTemplateId(newValue: string) { if (this.singleInvoiceTemplateId != newValue) { this.singleInvoiceTemplateId = newValue; this.MarkAsDirty("SingleInvoiceTemplateId"); } }
+       
+	 
+    private customsInvoiceTemplateId: string;
+    public get CustomsInvoiceTemplateId() { return this.customsInvoiceTemplateId; }
+    public set CustomsInvoiceTemplateId(newValue: string) { if (this.customsInvoiceTemplateId != newValue) { this.customsInvoiceTemplateId = newValue; this.MarkAsDirty("CustomsInvoiceTemplateId"); } }
+       
+	 
+    private consolidationInvoiceTemplateId: string;
+    public get ConsolidationInvoiceTemplateId() { return this.consolidationInvoiceTemplateId; }
+    public set ConsolidationInvoiceTemplateId(newValue: string) { if (this.consolidationInvoiceTemplateId != newValue) { this.consolidationInvoiceTemplateId = newValue; this.MarkAsDirty("ConsolidationInvoiceTemplateId"); } }
+       
+	 
+    private manifestInvoiceTemplateId: string;
+    public get ManifestInvoiceTemplateId() { return this.manifestInvoiceTemplateId; }
+    public set ManifestInvoiceTemplateId(newValue: string) { if (this.manifestInvoiceTemplateId != newValue) { this.manifestInvoiceTemplateId = newValue; this.MarkAsDirty("ManifestInvoiceTemplateId"); } }
+       
 	 
 
+	 
     private isPotential: boolean;
     public get IsPotential() { return this.isPotential; }
     public set IsPotential(newValue: boolean) { if (this.isPotential != newValue) { this.isPotential = newValue; this.MarkAsDirty("IsPotential"); } }

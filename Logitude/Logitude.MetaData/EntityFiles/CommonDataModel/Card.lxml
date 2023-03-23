@@ -10572,7 +10572,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <field
     Id="&quot;acb8e9d4-71d9-4f18-9326-b9dd771b1d2d&quot;"
     FieldName="&quot;SingleInvoiceTemplateId&quot;"
