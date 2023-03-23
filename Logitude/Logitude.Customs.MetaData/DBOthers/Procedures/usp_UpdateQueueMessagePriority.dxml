@@ -1,11 +1,6 @@
 ﻿<Procedure DBType="Main" Name="usp_UpdateQueueMessagePriority" Schema="dbo" Module="Customs">
   <SqlScript>
 	  <![CDATA[
-	 IF  EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'usp_UpdateQueueMessagePriority')
-   begin
-     drop proc usp_UpdateQueueMessagePriority 
-   end
-
 
    create procedure usp_UpdateQueueMessagePriority
    @Tenant int,
