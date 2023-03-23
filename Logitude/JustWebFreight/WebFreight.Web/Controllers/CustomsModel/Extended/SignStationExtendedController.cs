@@ -47,12 +47,12 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 string loggedUserEmail = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
-                
+
                 List<MySignStationList> entityLists;
-                
+
 
                 var signQueueHSMService = new SignQueueHSMService();
-                if (  signQueueHSMService.IsHSMSign_IsOn(tenant))
+                if (true || signQueueHSMService.IsHSMSign_IsOn(tenant))
                 {
                     entityLists = GetSignStationDBHSM(searchfields, tenant);
 
@@ -121,7 +121,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 List<MySignStationList> entityLists = new List<MySignStationList>(); /*= GetAllStation(searchfields, tenant)*/;
 
                 var signQueueHSMService = new SignQueueHSMService();
-                if (  signQueueHSMService.IsHSMSign_IsOn(tenant))
+                if (true || signQueueHSMService.IsHSMSign_IsOn(tenant))
 
                 {
                     entityLists = GetSignStationDBHSM(searchfields, tenant);
@@ -226,7 +226,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 }
                 );
 
-            
+
             if (!String.IsNullOrWhiteSpace(searchfields))
             {
                 entityLists = entityLists
@@ -281,5 +281,5 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
     }
 
-    
+
 }
