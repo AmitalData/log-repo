@@ -67,6 +67,7 @@
     <Compile Include="Contracts\UnifreightGenericService.cs" />
     <Compile Include="EntityPMs\CargoIdentifireTypePM.cs" />
     <Compile Include="EntityPMs\ConfirmationTypePM.cs" />
+    <Compile Include="EntityPMs\Generated\AddressCurrencyPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AmedmentTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AmendCancellRequestInitiatorPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AmendmentFieldStatusTypePM.Generated.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="EntityPMs\Generated\TransportMeansTypePM.Generated.cs" />
     <Compile Include="EntityPMs\ContainerTypePM.cs" />
     <Compile Include="EntityPMs\CertificateExemptionTypePM.cs" />
+    <Compile Include="EntityPMs\Generated\VendorCurrencyPM.Generated.cs" />
     <Compile Include="EntityPMs\IncotemrsFileValidationPM.cs" />
     <Compile Include="EntityPMs\NDMessageActionCodePM.cs" />
     <Compile Include="EntityPMs\ModificationAndDiscountTypePM.cs" />

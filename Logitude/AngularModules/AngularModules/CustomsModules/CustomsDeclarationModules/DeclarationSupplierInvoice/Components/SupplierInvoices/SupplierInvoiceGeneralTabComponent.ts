@@ -73,6 +73,7 @@ import { CustomMessageProgressComponent } from 'CustomsModules/CustomsControls/C
 import { CustomsItemDetailsQueryRequestParams } from 'Customs/DataContract/RequestParams/CustomsItemDetailsQueryRequestParams';
 import { SendRequestVIA } from 'Customs/DataContract/RequestParams/RequestParamsBase';
 import { IIGGeneralMessagesService } from 'Customs/Services/WebServices/IIGGeneralMessagesService';
+import { VendorCurrencyService } from 'Customs/Services/WebServices/VendorCurrencyService';
 
 
 @Component({
@@ -123,7 +124,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     itemGovernmentProcedureTypeListService: ItemGovernmentProcedureTypeListService = new ItemGovernmentProcedureTypeListService();
     customsSettingListService: CustomsSettingListService = new CustomsSettingListService();
     private modificationAndDiscountTypeListService: ModificationAndDiscountTypeListService = new ModificationAndDiscountTypeListService();
-
+    vendorCurrencyService:VendorCurrencyService=new VendorCurrencyService();
     IsActionButtonsEnabled: boolean = true;
 
     ikeaFeature: any;
@@ -3122,14 +3123,28 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
         if (this.old_amount != this.EntityPM.InvoiceAmount ||
             this.old_currency != this.EntityPM.InvoiceCurrencyTypeCode ||
-            this.old_vendor != this.EntityPM.VendorId)
+            this.old_vendor != this.EntityPM.VendorId) {
             this.Parent.CalculateCommissionPercentage();
+            this.CalculateCurrencyTypeCode();
+        }
 
         this.old_amount = this.EntityPM.InvoiceAmount;
         this.old_currency = this.EntityPM.InvoiceCurrencyTypeCode;
         this.old_vendor = this.EntityPM.VendorId;
     }
-
+    CalculateCurrencyTypeCode(){
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.VendorId) && AppTool.IsNullOrEmpty(this.EntityPM.InvoiceCurrencyTypeCode)){
+            this.vendorCurrencyService.GenListVendorCurrencyByVendorId(this.EntityPM.VendorId).subscribe(res=>{
+                
+                if(!res.HasError) {
+                    if(res.Result?.length==1) {
+                        this.EntityPM.InvoiceCurrencyTypeCode= res.Result[0].Currency;
+                    }
+                 }
+            })
+           
+        }
+    }
     //#region Remark tooltip
     onCellSelected($event, Item: SupplierInvoiceItemLine) {
         if (this.SelectedRow != Item) {
@@ -3822,7 +3837,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             currRequestParams.ForcePersonalSign = false;
             var ResponseData: any
             CustomMessageProgressComponent
-                .ShowProgressBar(this.CurrentSession, currRequestParams.PBId, "שאילתא לנתוני פרט מכס", true)
+                .ShowProgressBar(this.CurrentSession, currRequestParams.PBId, "שםילתם לנתוני פרט מכס", true)
                 .then((res) => {
                     if(res){
                         ResponseData=res;

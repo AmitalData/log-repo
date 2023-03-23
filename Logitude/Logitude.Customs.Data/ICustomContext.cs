@@ -19,6 +19,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<AccumalationState> AccumalationStates { get; }
 		 IDbSet<ActionCode> ActionCodes { get; }
 		 IDbSet<AddressContactState> AddressContactStates { get; }
+		 IDbSet<AddressCurrency> AddressCurrencies { get; }
 		 IDbSet<AddressPurpose> AddressPurposes { get; }
 		 IDbSet<AgentTalkBackType> AgentTalkBackTypes { get; }
 		 IDbSet<AmedmentType> AmedmentTypes { get; }
@@ -401,6 +402,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<VehicleType> VehicleTypes { get; }
 		 IDbSet<VendorCommission> VendorCommissions { get; }
 		 IDbSet<VendorCommunication> VendorCommunications { get; }
+		 IDbSet<VendorCurrency> VendorCurrencies { get; }
 		 IDbSet<VendorStatus> VendorStatuses { get; }
 		 IDbSet<VendorTransactionType> VendorTransactionTypes { get; }
 		 IDbSet<VendorType> VendorTypes { get; }

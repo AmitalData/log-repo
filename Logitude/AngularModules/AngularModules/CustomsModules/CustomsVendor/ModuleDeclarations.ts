@@ -3,6 +3,7 @@ import { VendorGeneralTabComponent } from './Components/EditTabs/General/VendorG
 import { VendorEditComponent } from './Components/EditTabs/VendorEditComponent';
 import { AddVendorCommunicationComponent } from './Components/EditTabs/General/AddVendorCommunicationComponent';
 import { NewVendorComponent } from './Components/NewEntity/NewVendorComponent';
+import { VendorCurrencyTabComponent } from './Components/EditTabs/VendorCurrency/VendorCurrencyTabComponent';
 
 export const Components =
   [
@@ -13,6 +14,7 @@ export const Components =
 
 
     NewVendorComponent,
+    VendorCurrencyTabComponent
   ];
 
 export class ModuleDeclarations {
@@ -27,6 +29,7 @@ export class ModuleDeclarations {
 
       case "NewVendorComponent": { myResult = NewVendorComponent; break; }
 
+      case "VendorCurrencyTabComponent": { myResult = VendorCurrencyTabComponent; break; }
 
 
     }

@@ -72,6 +72,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new AddressContactStateMap());
 	
+            modelBuilder.Configurations.Add(new AddressCurrencyMap());
+	
             modelBuilder.Configurations.Add(new AddressPurposeMap());
 	
             modelBuilder.Configurations.Add(new AgentTalkBackTypeMap());
@@ -836,6 +838,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new VendorCommunicationMap());
 	
+            modelBuilder.Configurations.Add(new VendorCurrencyMap());
+	
             modelBuilder.Configurations.Add(new VendorStatusMap());
 	
             modelBuilder.Configurations.Add(new VendorTransactionTypeMap());
@@ -1360,6 +1364,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<AddressContactState> AddressContactStates 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<AddressCurrency> AddressCurrencies 
 	 {
 	      get; set;
 	 
@@ -3652,6 +3662,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<VendorCommunication> VendorCommunications 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<VendorCurrency> VendorCurrencies 
 	 {
 	      get; set;
 	 
