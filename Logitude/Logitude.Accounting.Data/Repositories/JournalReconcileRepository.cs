@@ -33,6 +33,15 @@ namespace Logitude.Accounting.Data.Repositories
                     where ledgerTransactionsIds.Contains(rl.TransactionId) && !r.IsCancelled
                     select rl).ToList();
         }
+
+        public List<JournalReconcile> GetJournalReconcilesForJournalsWithoutLedgers(List<string> ledgerTransactionsIds, int tenant)
+        {
+
+            return (from jr in context.JournalReconciles
+                    join j in context.Journals on jr.JournalId equals j.Id
+                    where j.Tenant == tenant && j.StatusCode == "2" && j.IsLedgerCreated == false &&  ledgerTransactionsIds.Contains(jr.LedgerTransactionId)
+                    select jr).ToList();
+        }
     }
 
 }
