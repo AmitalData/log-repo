@@ -681,11 +681,17 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                         this.DataContext.DocumentTypePM = myResult;
                         if (this.DataContext.DocumentTypePM.DocumentTypeCopies != null) {
                             
-                            this.ItemsSource = new Array<DocumentCopiesViewModel>();
-
                             this.DocumentTypeload.DocumentTypeCopies.forEach((item) => {
                                 this.ItemsSource.push(new DocumentCopiesViewModel(item, this.CurrentDocumentOut, this.EntityId, this.ChildEntityId, this.ObjectTableId, this.ChildObjectTableId, this.DocumentTypeload, this.ChildReference));
                             });
+
+                            if (ObjectsLocator.GlobalSetting.WorkEnvironment === 'cloud' && SessionLocator.TenantPM.AccountingActivated) {
+                                this.ItemsSource = this.ItemsSource.filter((value, index, self) =>
+                                index === self.findIndex((t) => (
+                                    t.Id === value.Id
+                                ))
+                                )
+                            }
 
                             var item = this.ItemsSource.filter(d => d.IsSelected)[0];
                             var anySelected = false;
@@ -1039,7 +1045,6 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
             if (mode == "New" && this.AddedDocumentTypeCopyViewModels) {
 
-                this.Items = new Array<DocumentCopiesViewModel>();
                 var copies = new Array<DocumentCopiesViewModel>();
                 this.Items.forEach((copy) => {
                     var item = this.AddedDocumentTypeCopyViewModels.filter(d => d.Id == copy.Id)[0];
