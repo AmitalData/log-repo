@@ -30,18 +30,42 @@ namespace Logitude.Server.Tools.CustomFields
         {
             objectTableId = new ObjectTableRepository(entityCustomFieldServiceArgs.Tenant).GetObjectTableIdByName(entityCustomFieldServiceArgs.ObjectTableName, entityCustomFieldServiceArgs.Tenant);
             tenant = entityCustomFieldServiceArgs.Tenant;
-            objectTableName = entityCustomFieldServiceArgs.ObjectTableName;
+            objectTableName = GetObjectTableName(entityCustomFieldServiceArgs.ObjectTableName);
             entities = entityCustomFieldServiceArgs.Entities;
             type = entityCustomFieldServiceArgs.Type;
             customFieldsMainObjectRepository = new CustomFieldsMainObjectRepository(tenant);
             customObjectFields = GetCustomObjectFields();
             customFieldsMainObjects = GetCustomFieldsMainObjects(entityCustomFieldServiceArgs.EntityId);
-            if(!string.IsNullOrEmpty(entityCustomFieldServiceArgs.KeyName))
+            if (!string.IsNullOrEmpty(entityCustomFieldServiceArgs.KeyName))
             {
                 keyName = entityCustomFieldServiceArgs.KeyName;
             }
         }
 
+        private static string GetObjectTableName(string objectTableName)
+        {
+            List<string> PartnersObjectTablesNames = GetPartnersObjectTablesNames();
+
+            return PartnersObjectTablesNames.Contains(objectTableName) ? "Card" : objectTableName;
+        }
+
+        private static List<string> GetPartnersObjectTablesNames()
+        {
+            return new List<string>()
+            {
+                "AccountingPartner",
+                "Agent",
+                "Airline",
+                "CustomAgent",
+                "CustomsShipper",
+                "Participant",
+                "ShippingAgent",
+                "ShippingLine",
+                "Trucker",
+                "Vendor",
+                "Warehouse",
+            };
+        }
 
         public void Update()
         {
