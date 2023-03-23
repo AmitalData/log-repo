@@ -304,10 +304,6 @@ export class CounterInvoiceComponent extends BaseComponent {
     public set IsCustomizedCounter(value: boolean) {
         if (this.isCustomizedCounter == value) return;
         this.isCustomizedCounter = value;
-
-        this.ItemsSource.forEach(item => {
-            item.EntityPM.IsCustomized = this.isCustomizedCounter;
-        });
     }
 
     SameForAllTypesChecked() {
