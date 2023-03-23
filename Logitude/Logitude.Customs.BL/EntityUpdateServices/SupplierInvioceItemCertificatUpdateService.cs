@@ -886,13 +886,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 							   from   customs.SupplierInvioceItemCertificats   
                                inner join  customs.SupplierInvoiceItems I
                                on customs.SupplierInvioceItemCertificats.DECLARATIONID =i.DECLARATIONID  and customs.SupplierInvioceItemCertificats.linenumber=i.linenumber and i.CounterKey  =customs.SupplierInvioceItemCertificats.InvoiceCounterKey 
-                               where AttachmentTypeCode is null and CertificateExemptionTypeCode is null and CertificateNumber  is null and i.tenant =:p2 and  i.DECLARATIONID=:p1
+                               where AttachmentTypeCode is null and CertificateExemptionTypeCode is null and CertificateNumber  is null and i.tenant =@p2 and  i.DECLARATIONID=@p1
                                   ";
 
 
                     string cmd1 = @"
                                 Update customs.supplierInvoiceItems  set CertificatesStatusCode = '1'
-                                where DeclarationId =:p1 and tenant=:p2";
+                                where DeclarationId =@p1 and tenant=@p2";
 
 
                     SqlCommand sqlCommand = new SqlCommand(cmd, con);
