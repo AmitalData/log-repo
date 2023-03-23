@@ -1,4 +1,4 @@
-@smoke @smoke3 @release
+@smoke @smoke3 @release @smoke2MasterDeploymnet
 Feature: Add and delete container from a quote
   After the user logging in the system and navigate to quotes workspace
   after that add and delete container from this quote.

@@ -1,4 +1,4 @@
-@release @stable @smoke @smoke3
+@release @stable @smoke @smoke3 @smoke2MasterDeploymnet
 Feature: Build shipment from quote
     The user creates a quote and build shipment from quote
 
