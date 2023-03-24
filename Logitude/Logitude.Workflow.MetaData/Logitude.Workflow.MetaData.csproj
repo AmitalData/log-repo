@@ -75,6 +75,7 @@
     <None Include="DBTables\ExpressionCategory.dxml" />
     <None Include="DBTables\Operator.dxml" />
     <None Include="DBTables\OperatorCategory.dxml" />
+    <None Include="DBTables\ServiceProviderSubscription.dxml" />
     <None Include="DBTables\Task.dxml" />
     <None Include="DBTables\TaskExtended.dxml" />
     <None Include="DBTables\TaskPriority.dxml" />
@@ -93,6 +94,7 @@
     <None Include="EntityFiles\ExpressionCategory.lxml" />
     <None Include="EntityFiles\Operator.lxml" />
     <None Include="EntityFiles\OperatorCategory.lxml" />
+    <None Include="EntityFiles\ServiceProviderSubscription.lxml" />
     <None Include="EntityFiles\Task.lxml" />
     <None Include="EntityFiles\TaskExtended.lxml" />
     <None Include="EntityFiles\TaskPriority.lxml" />

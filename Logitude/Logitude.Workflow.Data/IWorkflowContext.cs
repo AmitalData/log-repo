@@ -20,6 +20,7 @@ namespace Logitude.Workflow.Data
 		 IDbSet<ExpressionCategory> ExpressionCategories { get; }
 		 IDbSet<Operator> Operators { get; }
 		 IDbSet<OperatorCategory> OperatorCategories { get; }
+		 IDbSet<ServiceProviderSubscription> ServiceProviderSubscriptions { get; }
 		 IDbSet<Task> Tasks { get; }
 		 IDbSet<TaskExtended> TasksExtended { get; }
 		 IDbSet<TaskPriority> TaskPriorities { get; }

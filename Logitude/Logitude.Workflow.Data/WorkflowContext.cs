@@ -75,6 +75,8 @@ namespace Logitude.Workflow.Data
 	
             modelBuilder.Configurations.Add(new OperatorCategoryMap());
 	
+            modelBuilder.Configurations.Add(new ServiceProviderSubscriptionMap());
+	
             modelBuilder.Configurations.Add(new TaskMap());
 	
             modelBuilder.Configurations.Add(new TaskExtendedMap());
@@ -405,6 +407,12 @@ namespace Logitude.Workflow.Data
 	 }
 	
 	 public IDbSet<OperatorCategory> OperatorCategories 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ServiceProviderSubscription> ServiceProviderSubscriptions 
 	 {
 	      get; set;
 	 

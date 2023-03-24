@@ -12,12 +12,20 @@ namespace Logitude.Server.Tools.Helpers
 
         public static bool HasFeatureToggle(string toggleCode, int tenant)
         {
+            if(toggleCode?.ToLower() == "CTL".ToLower())
+            {
+                return false;
+            }
             FeatureToggleRepository featureToggleRepository = new FeatureToggleRepository(tenant);
             return featureToggleRepository.HasFeatureToggle(toggleCode,tenant);
         }
 
         public static bool HasFeatureToggle(string toggleCode, int tenant, int baseTenant)
         {
+            if (toggleCode?.ToLower() == "CTL".ToLower())
+            {
+                return false;
+            }
             FeatureToggleRepository featureToggleRepository = new FeatureToggleRepository(baseTenant);
             return featureToggleRepository.HasFeatureToggle(toggleCode, tenant);
         }

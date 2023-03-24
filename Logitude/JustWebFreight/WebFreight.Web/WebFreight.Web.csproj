@@ -1361,12 +1361,14 @@
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentPackageController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowVesselController.cs" />
+    <Compile Include="Controllers\WorkflowModel\Extended\ServiceProviderSubscriptionExtendedController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\WorkflowInstanceExtendedController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\WorkflowVersionExtendedController.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\ExpressionCategoryViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\ExpressionViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\OperatorCategoryViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\OperatorViewsController.Generated.cs" />
+    <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\ServiceProviderSubscriptionViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\TaskPriorityViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\TaskStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\TaskTypeViewsController.Generated.cs" />
@@ -1380,6 +1382,7 @@
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\WorkFlowVersionStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\WorkFlowVersionViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\WorkFlowViewsController.Generated.cs" />
+    <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\ServiceProviderSubscriptionController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\TaskController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\TaskPriorityController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\TaskStatusController.Generated.cs" />
@@ -3616,6 +3619,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SealUpdateReasonTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SeizureFactorTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SeizureMethodTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ServiceProviderSubscriptionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SharedLogisticsSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ShipmentOrderUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SLALineUpdateClass.cs" />
