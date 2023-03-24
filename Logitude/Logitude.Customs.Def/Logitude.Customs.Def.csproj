@@ -67,7 +67,6 @@
     <Compile Include="Contracts\UnifreightGenericService.cs" />
     <Compile Include="EntityPMs\CargoIdentifireTypePM.cs" />
     <Compile Include="EntityPMs\ConfirmationTypePM.cs" />
-    <Compile Include="EntityPMs\Generated\AddressCurrencyPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AmedmentTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AmendCancellRequestInitiatorPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AmendmentFieldStatusTypePM.Generated.cs" />
@@ -89,6 +88,7 @@
     <Compile Include="EntityPMs\Generated\ContainerizationStatusCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ContainerTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CoolingReportingMethodPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CountryCurrencyPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomerClassificationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomerIdentificationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomerIndicationTypePM.Generated.cs" />

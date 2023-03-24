@@ -542,7 +542,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         }
 
+       
 
+    
         private bool CheckIsSendByDocType(string logData)
         {
             DateTime stopLogAt = DateTime.MinValue; //new DateTime(2022, 01, 01);

@@ -1101,6 +1101,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isCloseOrOpenFromUser ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsCloseOrOpenFromUser  
+	   {
+	    
+	     get
+		{
+		   return isCloseOrOpenFromUser;
+		 }
+		 set
+		 {
+		   if(isCloseOrOpenFromUser != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCloseOrOpenFromUser",OldValue=isCloseOrOpenFromUser,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isCloseOrOpenFromUser=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

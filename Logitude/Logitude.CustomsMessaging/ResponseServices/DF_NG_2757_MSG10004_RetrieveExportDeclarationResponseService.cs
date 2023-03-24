@@ -49,9 +49,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (string.IsNullOrEmpty(requestParams.DeclarationId)|| (!string.IsNullOrEmpty(requestParams.DeclarationId) && requestParams.IsUpdateDB)) { //declaration not exits in db
 
+
                 var decId = declarationqueryService.GetIdByDeclarationNumber(requestParams.DeclarationNumber, requestParams.Tenant);
                 if (customResponse.Response != null && customResponse.Response.Declaration != null && (string.IsNullOrEmpty(decId)|| requestParams.IsUpdateDB)) 
                    CreateDeclarationFromResponse(customResponse.Response.Declaration, requestParams.Tenant,  customResponse, requestParams.IsUpdateDB, requestParams.DeclarationId);                                  
+
 
               
             }
@@ -109,6 +111,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                         this.MyRequestSheetParam.CustomFileNo = !string.IsNullOrEmpty(requestParams?.CustomsFile)? requestParams.CustomsFile:
                             Strings.Right(GetValueIDType(customResponse.Response.Declaration.DMExtensions?.ExternalDeclarationID), 10).TrimStart('0');
+
 
 
                         xml = XmlGenericUtil<Declaration>.SerializeObject(customResponse.Response.Declaration);

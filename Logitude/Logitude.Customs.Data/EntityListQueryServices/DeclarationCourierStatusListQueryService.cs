@@ -171,6 +171,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   LastMileStatusName = a.LastMileStatusName,
                                                                   LastMileStatusRemarks = a.LastMileStatusRemarks,
                                                                   StorageSiteStatusCode = a.StorageSiteStatusCode,
+                                                                  StorageSiteStatusCodeText = a.StorageSiteStatusCode,
                                                                   StorageSiteStatusName = a.MamanStatus != null ? a.MamanStatus.LocalName : null,
                                                                   StorageSiteErrorText = a.StorageSiteErrorText,
                                                                   CourierPendingReasonList = a.CourierPendingReasonList,
@@ -283,7 +284,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             return q;
         }
 
-        public IQueryable<DeclarationCourierStatusList> GetDeclarationCourierStatusforPendingBulkFeed(QueryOperations queryOperations)
+        public IQueryable<DeclarationCourierStatusList> GetDeclarationCourierStatusforPendingBulkFeed(QueryOperations queryOperations , int tenant)
         {
             string courierMasterId = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CourierMasterId").FirstOrDefault().FieldValue.ToString();
            // var qDeclarationPaymentPendingHold =
@@ -333,10 +334,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                         CourierPendingReasonList = dcs.CourierPendingReasonList,
                         CourierPendingReasonName = dpj.CourierPendingReason.LocalName != null ? dpj.CourierPendingReason.LocalName : null,
                         MissedDocumentStatusCode = dcs.MissedDocumentStatusCode,
+                        Tenant = cd.Tenant,
 
                     } into t2
                     select new DeclarationCourierStatusList
                     {
+                        Tenant = t2.Key.Tenant,
                         CourierMasterId = t2.Key.CourierMasterId,
                         DeclarationId = t2.Key.DeclarationId,
                         CourierHawb = t2.Key.CourierHawb,
@@ -357,7 +360,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                     });
 
 
-            q1 = q1.OrderBy(x => x.DeclarationId);
+            q1 = q1.OrderBy(x => x.DeclarationId).Where(x => x.Tenant == tenant);
 
             return q1;
         }
@@ -382,7 +385,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             int skippedPorts = queryOperations.PageIndex;
 
-            IQueryable<DeclarationCourierStatusList> query2 = GetDeclarationCourierStatusforPendingBulkFeed(queryOperations);
+            IQueryable<DeclarationCourierStatusList> query2 = GetDeclarationCourierStatusforPendingBulkFeed(queryOperations , tenant);
 
             query2 = filter.GetFilteredQuery<DeclarationCourierStatusList>(listQueryOperation, query2);
 
@@ -504,7 +507,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             iQueryable = filter.GetFilteredQuery<DeclarationCourierStatus>(nonListQueryOperation, iQueryable);
 
-            IQueryable<DeclarationCourierStatusList> query2 = GetDeclarationCourierStatusforPendingBulkFeed(queryOperations);
+            IQueryable<DeclarationCourierStatusList> query2 = GetDeclarationCourierStatusforPendingBulkFeed(queryOperations, tenant);
 
             var cargoDescriptionF = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CargoDescription").FirstOrDefault();
             if (cargoDescriptionF != null && !string.IsNullOrEmpty(cargoDescriptionF.FieldValue?.ToString()))

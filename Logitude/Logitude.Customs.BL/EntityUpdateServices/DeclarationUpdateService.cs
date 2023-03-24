@@ -50,6 +50,8 @@ using System.Text.RegularExpressions;
 using Logitude.Customs.BL.BL;
 using System.Configuration;
 using System.Globalization;
+using Logitude.Customs.BL.Messaging.ILSWS;
+using System.Xml;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -191,7 +193,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
 
             entityPM.CreatedByUserId =contact.Id;
-            if ((entityPM.IsConnectedToUnifreight && entityPM.Direction != "E" && entityPM.IsAmendment != true) ||
+            if ((!entityPM.IsConnectedToUnifreight && entityPM.Direction != "E" && entityPM.IsAmendment != true) ||
                 (entityPM.Direction == "E" && entityPM.IsAmendment != true && string.IsNullOrEmpty(entityPM.ReferentUserId)))
 
             {
@@ -201,9 +203,27 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 if (entityPM.Direction == "E") { entityPM.DeclarationTypeCode = "2"; } else { entityPM.DeclarationTypeCode = "1"; }
             }
+            if (entityPM.IsCourierDeclaration)
+            {
+              
 
+                    var ifSwiss = entityPM.Consignments.Find(c => c.StorageSiteCode == "ILSWS");
+                    if (ifSwiss != null)
+                    {
+                            var courierECSWSTHRMessageRequestService = new CourierECSWSTHRMessageRequestService();
+                            string drityMessage = courierECSWSTHRMessageRequestService.GetMessageUpdateHawbStatus(entityPM.Id, entityPM.Tenant, null, null, null);
 
+                            if (drityMessage != null)
+                            {
+                                var XMLdrityMessage = courierECSWSTHRMessageRequestService.DeserializeXmlNode(drityMessage);
+                                var res = courierECSWSTHRMessageRequestService.BuildUpdateHawbStatus(entityPM.Id, entityPM.Tenant, XMLdrityMessage);
+                            }
+                     
+                    }
 
+                
+            }
+             
             OnCreatingExportDeclaration(entityPM);
 
         }
@@ -435,14 +455,40 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 entityPM.UpdateDateTime = DateTime.Now;
 
-                if (entityPM.MarkAsChanged)
+                if (entityPM.MarkAsChanged && entityPM.ChangeSetOp == ChangeSetOperation.Update && !string.IsNullOrEmpty(this.EntityChangeFieldXml))
                 {
-                    if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
+                    DateTime stopLogAt = new DateTime(2025, 06, 01);
+                    LogitudeSettings.HandleLogMe(" DeclarationUpdateService.OnUpdating = EntityChangeFieldXml " + this.EntityChangeFieldXml, false, "CreateUD2LTService", stopLogAt);
+                    XmlDocument doc = new XmlDocument();
+                    doc.LoadXml(this.EntityChangeFieldXml);
+                    foreach (XmlNode xmlnode in doc?.DocumentElement)
                     {
-                        entityPM.IsChanged = true;
+                        var changes = xmlnode?.InnerXml?.Split(new string[] { "<c" }, StringSplitOptions.None)?.Skip(1)?.ToArray();
+                        foreach (var change in changes)
+                        {
+                            string OldValue = "", NewValue = "";
+                            var oFrom = change.IndexOf("o=\"");
+                            if (change.Length > oFrom + 3)
+                            {
+                                var oSubStrined = change.Substring(oFrom + 3);
+                                var oFromDoubleQuote = oSubStrined.IndexOf("\"");
+                                OldValue = oSubStrined.Substring(0, oFromDoubleQuote);
+                            }
+                            var nFrom = change.IndexOf("n=\"");
+                            if (change.Length > nFrom + 3)
+                            {
+                                var nSubStrined = change.Substring(nFrom + 3);
+                                var nFromDoubleQuote = nSubStrined.IndexOf("\"");
+                                NewValue = nSubStrined.Substring(0, nFromDoubleQuote);
+                            }
+                            if (OldValue != NewValue)
+                            {
+                                entityPM.IsChanged = true;
+                                break;
+                            }
+                        }
                     }
                 }
-
                 ClientQueryService clientQueryService = new ClientQueryService(entityPM.Tenant);
                 if (!string.IsNullOrEmpty(entityPM.ImporterId))
                 {
@@ -942,7 +988,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
 
         private void UpdateReferantData(DeclarationPM entityPM)
-        {
+        {if (entityPM.Direction == "E") return;
             DateTime stopLogAt = new DateTime(2021, 06, 01);
             string logData = "";
             var loggedUser = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
@@ -1158,13 +1204,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating start");
             bool fromcache = true; // why i need the Name ?? 
             _AfterCommitUpdate = true;
-            if (entityPM.CustomerCode != null)
+            if (entityPM.CustomerId != null)
             {
                 CardRepository rep = new CardRepository(entityPM.Tenant);
-                Card customerCard = rep.GetSingleCardByCode(entityPM.CustomerCode, entityPM.Tenant, fromcache);//i leave not from cache-due 4 update 
+                Card customerCard = rep.GetSingleCardByIdAndTenant(entityPM.CustomerId, entityPM.Tenant, fromcache);//i leave not from cache-due 4 update 
                 if (customerCard != null)
                 {
                     entityPM.CustomerName = customerCard.LocalName != null ? customerCard.LocalName : customerCard.EnglishName;
+                    entityPM.CustomerCode = customerCard.Code;
                 }
             }
             LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step1");

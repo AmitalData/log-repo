@@ -823,15 +823,15 @@
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
-    TabName="&quot;Address Currency&quot;"
+    TabName="&quot;Country Currency&quot;"
     TabLocalName="&quot;מטבעות ארץ&quot;"
     ObjectTableName="&quot;Customs.CustomsCountry&quot;"
-    Code="&quot;CCAC&quot;"
+    Code="&quot;CCCC&quot;"
     ControlPath="&quot; &quot;"
-    TextCode="&quot;Customs.CustomsCountry.TH.AddressCurrency&quot;"
+    TextCode="&quot;Customs.CustomsCountry.TH.CountryCurrency&quot;"
     IsPackagable="false"
     IndexOrder="1"
-    HtmlComponentURL="&quot;./CustomsModules/CustomsCountry/Components/EditTabs/AddressCurrency/AddressCurrencyTabComponent&quot;"
+    HtmlComponentURL="&quot;./CustomsModules/CustomsCountry/Components/EditTabs/CountryCurrency/CountryCurrencyTabComponent&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <EventTypes>

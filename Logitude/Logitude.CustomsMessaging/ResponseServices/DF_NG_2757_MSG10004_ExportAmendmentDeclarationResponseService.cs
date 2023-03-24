@@ -1297,6 +1297,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         SupplierInvoiceItemsPricePM supplierInvoiceItemsPrice = new SupplierInvoiceItemsPricePM();
 
+
                         if (isFromImporter)//פתיחת בקשה לתיקון
                         {
                             supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Insert;

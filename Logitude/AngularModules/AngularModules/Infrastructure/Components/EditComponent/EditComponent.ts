@@ -26,16 +26,16 @@ import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator'
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 import { HeaderScreenDataResult } from '../../Interface/IHeaderScreenService';
 import { AmitalGatewayUtil } from 'Infrastructure/Utilities/AmitalGatewayUtil';
-
 import { DeclarationEventManager } from 'Customs/Utilities/DeclarationEventManager';
 
 import { CustomsSettingListService } from 'Customs/Services/StandardLists/CustomsSettingListService';
 import { CustomsSettingPM } from 'Customs/EntityPMs/CustomsSettingPM';
 import { CustomsSettingList } from 'Customs/EntityLists/CustomsSettingList';
 
-
 import { CustomsClosedTablePM } from '../../../Customs/EntityPMs/CustomsClosedTablePM';
 import { CustomsSettingExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
+
+
 
 
 @Component({    

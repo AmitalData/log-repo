@@ -49,7 +49,7 @@ namespace WebFreight.Web.CustomWebServices
                 var anaO = ContainerAccessor.Container.Resolve<IMessagingServiceInterfaceType>(InterfaceTypeCode);
 
                 //anaO.CurrentCustomsCommandWR = myCustomsCommandEnum;
-                var (ReceiveBytesToSign ,reqParams) = anaO.PasiveSignGetBytesToSign(currTenant.GetValueOrDefault(), CustomsRequestsSheetId);
+                var (ReceiveBytesToSign, reqParams) = anaO.PasiveSignGetBytesToSign(currTenant.GetValueOrDefault(), CustomsRequestsSheetId);
                 return ReceiveBytesToSign;
             }
             catch (Exception)
@@ -122,7 +122,7 @@ namespace WebFreight.Web.CustomWebServices
                     }
                 }
                 if (!toContinue) return;
-                    
+
                 var mySendSheetSignModel = new SendSheetSignModel();
                 mySendSheetSignModel.CustomsRequestsSheetId = CustomsRequestsSheetId;
                 mySendSheetSignModel.Tenant = tenant;
@@ -176,7 +176,7 @@ namespace WebFreight.Web.CustomWebServices
 
                 String CustomsRequestsSheetId = "";
                 string InterfaceTypeCode = "";
-                
+
                 var bytes = this.ReceiveBytesToSign(myReceiveBytesToSignReq.CurrentSignCertificate, myReceiveBytesToSignReq.isCompanySignOn, myReceiveBytesToSignReq.isPersonalSignOn,
                     out CustomsRequestsSheetId, out InterfaceTypeCode, out currTenant);
                 var myReceiveBytesToSignResponse = new ReceiveBytesToSignResponse()
@@ -212,8 +212,8 @@ namespace WebFreight.Web.CustomWebServices
         {
             string customsAgentId = SignCertificateClass.Get(currentSignCertificate).CustomsAgentId;
             var customsSettingQueryService = new CustomsSettingQueryService(0);
-            var pm=customsSettingQueryService.GetTenantByCustomsAgentId(customsAgentId);
-            if (pm==null)
+            var pm = customsSettingQueryService.GetTenantByCustomsAgentId(customsAgentId);
+            if (pm == null)
             {
                 return 0;
             }

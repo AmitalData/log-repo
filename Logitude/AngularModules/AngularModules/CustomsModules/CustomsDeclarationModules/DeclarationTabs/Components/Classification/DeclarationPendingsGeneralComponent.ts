@@ -18,6 +18,7 @@ import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: "DeclarationPendingsGeneral",
@@ -48,6 +49,7 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
     decPM:DeclarationPM;
     private CurrentSession = SessionLocator.SelectedSession;
     public CurrentEditComponentId: string;
+    subscription: Subscription = null;
     constructor() {
        
         super(); 
@@ -69,14 +71,17 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
              })
          );
 
-         this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-            DeclarationEventManager.SavePendingAfterDeclarationSaved.subscribe(data => {
+            this.subscription = DeclarationEventManager.SavePendingAfterDeclarationSaved.subscribe(data => {
                 this.OkButtonClicked();
-            }));
+            });
 
 
             
     }
+    ngOnDestroy(){
+        this.subscription.unsubscribe();
+    }
+    
     InitTab(){
 
         this.DeclarationPendingItemsSource = new ObservableCollection([]);
@@ -242,13 +247,10 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
                                 //this.declarationPendingPMService.update(declarationPendingPM).subscribe((response: ServiceResponse) => {
                                     this.InitTab();
                                 SessionLocator.SelectedSession.StopBusyIndicator();
-                                SessionLocator.SelectedSession.CloseCurrentWindow();
                             });
 
                         }
-                        else {
-                            SessionLocator.SelectedSession.CloseCurrentWindow();
-                        }
+                       
                     }
 
                 }

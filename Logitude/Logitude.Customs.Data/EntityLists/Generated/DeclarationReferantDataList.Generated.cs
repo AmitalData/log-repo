@@ -424,6 +424,12 @@ namespace Logitude.Customs.Data.EntityLists
        public string FieldR20  { get; set; }
        [DataMember]
        public string DeclarationIdToDisplay  { get; set; }
+       [DataMember]
+       public string CustomerId  { get; set; }
+       [DataMember]
+       public bool IsCloseOrOpenFromUser  { get; set; }
+       [DataMember]
+       public int ListCounter  { get; set; }
    }
 
 }

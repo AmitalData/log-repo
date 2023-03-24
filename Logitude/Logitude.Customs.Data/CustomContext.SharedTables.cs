@@ -13,13 +13,16 @@ namespace Logitude.Customs.Data
         
 
         public IDbSet<Card> Cards { get; set; }
-        
-        
+
+        public IDbSet<DecCourierStatusesView> DecCourierStatusesViews { get; set; }
+
     }
     public partial interface ICustomContext : IContext
     {
         
         IDbSet<Card> Cards { get; set; }
-        
+        IDbSet<DecCourierStatusesView> DecCourierStatusesViews { get; set; }
+
+
     }
 }

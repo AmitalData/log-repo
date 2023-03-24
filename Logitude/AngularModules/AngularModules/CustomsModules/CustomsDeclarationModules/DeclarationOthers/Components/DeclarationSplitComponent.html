@@ -377,6 +377,7 @@
 
             <div [style.transform]="ImgScaleValue"
                  [style.transform-origin]="'top right'"
+                 [style.height]="ImgHeight"
                  class="div-grabbable">
 
                 <img #myImg [style.display]="!IsNoDocumentSelected &&  this.base64Image!=null ? 'block' : 'none' " style="width: 100%;" class="grabbable"

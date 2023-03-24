@@ -25,6 +25,7 @@ using Logitude.Server.Tools.Contracts;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Customs.BL.Messaging.ILSWS;
+using Logitude.Customs.BL.Messaging.Maman;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -44,9 +45,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
             if (setting != null & setting.IsConnectedToUniFreight)
-            { 
-            var declarationCourierStatusRepository = new DeclarationCourierStatusRepository(entityPM.Tenant);
-            declarationCourierStatusRepository.Lock_forUpdateNOWAIT(entityPM.DeclarationId);
+            {
+                var declarationCourierStatusRepository = new DeclarationCourierStatusRepository(entityPM.Tenant);
+                declarationCourierStatusRepository.Lock_forUpdateNOWAIT(entityPM.DeclarationId);
             }
             ICustomContext context = MainContext as CustomContext;
             if (entityPM != null)
@@ -73,7 +74,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                     entityPM.CourierPendingReasonList = string.Concat(entityPM.CourierPendingReasonList, ",", declarationPending.CourierPendingReasonCode);
                                 }
                             }
-                            if(declarationPending.Status == "A" && declarationPending.Approval != true && courierPendingReason.RequiresApproval == true)
+                            if (declarationPending.Status == "A" && declarationPending.Approval != true && courierPendingReason.RequiresApproval == true)
                             {
                                 if (entityPM.NotApprovedPendingList == null)
                                 {
@@ -87,65 +88,41 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
                     }
 
-                    
+
                 }
+
                 if (entityPM.CourierPendingReasonList != entityPOCO.CourierPendingReasonList && entityPM.CourierCustomStatusCode == null)
                 {
-                    CourierPendingReasonQueryService courierPendingReasonQueryService = new CourierPendingReasonQueryService(entityPM.Tenant);
-
                     DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
-                    bool SwissportSuspendedCodeIsUp = false;
-
-                    var ifSwiss = declarationQueryService.GetConsignmentListPMByDeclarationId(entityPM.DeclarationId, entityPM.Tenant).Find(c => c.StorageSiteCode == "ILSWS");
-                    if (ifSwiss != null)
+                    var consignmentList = declarationQueryService.GetConsignmentListPMByDeclarationId(entityPM.DeclarationId, entityPM.Tenant);
+                    if (consignmentList.Find(c => c.StorageSiteCode == "ILSWS") != null)
                     {
-                        List<string> listReasonCode;
-                        if ((entityPM.CourierPendingReasonList == null && entityPOCO.CourierPendingReasonList != null) || (entityPM.CourierPendingReasonList != null && entityPOCO.CourierPendingReasonList == null))
+                        this.SendToMassof(entityPM, entityPOCO, "ILSWS");
+                    }
+                    else
+                    {
+                        if (consignmentList.Find(c => c.StorageSiteCode == "ILMMN") != null)
                         {
-                            listReasonCode = entityPM.DeclarationPendings.Select(c => c.CourierPendingReasonCode).ToList();
-                        }
-                        else
-                        {
-                            listReasonCode = entityPM.DeclarationPendings.Where(c => (entityPM.CourierPendingReasonList.Contains(c.CourierPendingReasonCode) && !(entityPOCO.CourierPendingReasonList.Contains(c.CourierPendingReasonCode)))
-                            || (entityPOCO.CourierPendingReasonList.Contains(c.CourierPendingReasonCode) && !(entityPM.CourierPendingReasonList.Contains(c.CourierPendingReasonCode)))).Select(d => d.CourierPendingReasonCode).ToList();
-                        }
-                        foreach (var item in listReasonCode)
-                        {
-                            if (courierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(item, entityPM.Tenant).SwissportSuspendedCode != null)
-                            {
-                                SwissportSuspendedCodeIsUp = true;
-                                break;
-                            }
+                            DateTime stopLogAtTest = new DateTime(2025, 06, 01);
+                            LogitudeSettings.HandleLogMe(" sendtomassof - Update ", false, "CreateUD2LTService", stopLogAtTest);
 
-                        }
 
-                        if (SwissportSuspendedCodeIsUp)
-                        {
-                            var courierECSWSTHRMessageRequestService = new CourierECSWSTHRMessageRequestService();
-                            string drityMessage = courierECSWSTHRMessageRequestService.GetMessageUpdateHawbStatus(entityPM.DeclarationId, entityPM.Tenant, null, null, entityPM.MAWB);
-
-                            if (drityMessage != null)
-                            {
-                                var XMLdrityMessage = courierECSWSTHRMessageRequestService.DeserializeXmlNode(drityMessage);
-                                var res = courierECSWSTHRMessageRequestService.BuildUpdateHawbStatus(entityPM.DeclarationId, entityPM.Tenant, XMLdrityMessage);
-                            }
-
+                            this.SendToMassof(entityPM, entityPOCO, "ILMMN");
                         }
                     }
-
                 }
             }
             if (entityPM.IsClosedForFollowUp != entityPOCO.IsClosedForFollowUp)
             {
 
-             
 
-                    CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(entityPM.Tenant);
+
+                CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(entityPM.Tenant);
                 var courierMasterPM = courierMasterQueryService.GetByDeclarationId(entityPM.DeclarationId, entityPM.Tenant);
                 var repository = new CardRepository(entityPM.Tenant);
                 if (setting != null & setting.IsConnectedToUniFreight)
                 {
-                    if (courierMasterPM != null  )
+                    if (courierMasterPM != null)
                     {
                         var myCard = repository.GetSingleCard(courierMasterPM.IntegratorCode, entityPM.Tenant);
                         if (myCard != null && !String.IsNullOrWhiteSpace(myCard.Code))
@@ -258,7 +235,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 }
                             }
                         }
-                    } }
+                    }
+                }
                 DeclarationCourierStatusRepository rep = new DeclarationCourierStatusRepository(context);
                 CourierMasterUpdateService CourierMasterUpdateService = new CourierMasterUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
                 bool useCRS = true;
@@ -533,27 +511,27 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 var setting = CustomsSettingQueryService.GetSettingByTenant(myDeclarationCourierStatusPM.Tenant);
 
-                if(setting!= null & setting.IsConnectedToUniFreight)
+                if (setting != null & setting.IsConnectedToUniFreight)
                 {
 
-              
-                //Set HighLowValue
-                string defValue = GetDefault("ISRAEL", "CGO_HIGH_VALUE", "NON", "NON");
-                decimal defaultAmount = 0;
-                var boolvar = (decimal.TryParse(defValue, out defaultAmount));
 
-                if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > defaultAmount)
-                {
-                    myDeclarationCourierStatusPM.HighLowValue = "H";
-                }
-                else
-                {
-                    myDeclarationCourierStatusPM.HighLowValue = "L";
-                }
+                    //Set HighLowValue
+                    string defValue = GetDefault("ISRAEL", "CGO_HIGH_VALUE", "NON", "NON");
+                    decimal defaultAmount = 0;
+                    var boolvar = (decimal.TryParse(defValue, out defaultAmount));
+
+                    if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > defaultAmount)
+                    {
+                        myDeclarationCourierStatusPM.HighLowValue = "H";
+                    }
+                    else
+                    {
+                        myDeclarationCourierStatusPM.HighLowValue = "L";
+                    }
                 }
 
                 if (string.IsNullOrWhiteSpace(myDeclarationCourierStatusPM.DocumentStatusCode)) myDeclarationCourierStatusPM.DocumentStatusCode = "M";
-             
+
                 return myDeclarationCourierStatusPM;
 
             }
@@ -576,6 +554,46 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 return ("");
             }
             return (myGDFDATAPM.DEFDATA);
+        }
+        private void SendToMassof(DeclarationCourierStatusPM entityPM, DeclarationCourierStatus entityPOCO, string StorageSiteCode)
+        {
+            CourierPendingReasonQueryService courierPendingReasonQueryService = new CourierPendingReasonQueryService(entityPM.Tenant);
+            DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+            List<string> listReasonCode;
+            if ((entityPM.CourierPendingReasonList == null && entityPOCO.CourierPendingReasonList != null) || (entityPM.CourierPendingReasonList != null && entityPOCO.CourierPendingReasonList == null))
+            {
+                listReasonCode = entityPM.DeclarationPendings.Select(c => c.CourierPendingReasonCode).ToList();
+            }
+            else
+            {
+                listReasonCode = entityPM.DeclarationPendings.Where(c => (entityPM.CourierPendingReasonList.Contains(c.CourierPendingReasonCode) && !(entityPOCO.CourierPendingReasonList.Contains(c.CourierPendingReasonCode)))
+                || (entityPOCO.CourierPendingReasonList.Contains(c.CourierPendingReasonCode) && !(entityPM.CourierPendingReasonList.Contains(c.CourierPendingReasonCode)))).Select(d => d.CourierPendingReasonCode).ToList();
+            }
+            foreach (var item in listReasonCode)
+            {
+                if (StorageSiteCode == "ILSWS" && courierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(item, entityPM.Tenant).SwissportSuspendedCode != null)
+                {
+                    var courierECSWSTHRMessageRequestService = new CourierECSWSTHRMessageRequestService();
+                    string drityMessage = courierECSWSTHRMessageRequestService.GetMessageUpdateHawbStatus(entityPM.DeclarationId, entityPM.Tenant, null, null, entityPM);
+                    if (drityMessage != null)
+                    {
+                        var XMLdrityMessage = courierECSWSTHRMessageRequestService.DeserializeXmlNode(drityMessage);
+                        var res = courierECSWSTHRMessageRequestService.BuildUpdateHawbStatus(entityPM.DeclarationId, entityPM.Tenant, XMLdrityMessage);
+                    }
+                    break;
+                }
+                if (StorageSiteCode == "ILMMN" && courierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(item, entityPM.Tenant).MamanSuspendedCode != null)
+                {
+                    var courierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanRequestService();
+                    string drityMessage = courierGWMessageECTHRDataMamanService.GetMessage2Maman(entityPM.DeclarationId, entityPM.Tenant, null, null, entityPM);
+                    if (drityMessage != null)
+                    {
+                        var res = courierGWMessageECTHRDataMamanService.BuildComm2Maman(entityPM.DeclarationId, entityPM.Tenant, drityMessage);
+                    }
+                    break;
+                }
+
+            }
         }
     }
 }

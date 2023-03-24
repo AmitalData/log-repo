@@ -184,7 +184,7 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.button53 = new System.Windows.Forms.Button();
             this.MapUnifreightTables = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+           this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.button6 = new System.Windows.Forms.Button();
             this.linkLabel3 = new System.Windows.Forms.LinkLabel();
             this.label9 = new System.Windows.Forms.Label();
@@ -223,6 +223,7 @@
             this.button52 = new System.Windows.Forms.Button();
             this.fixJournalsButton = new System.Windows.Forms.Button();
             this.button51 = new System.Windows.Forms.Button();
+
             this.UpdateTable1344 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -1825,7 +1826,8 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Other";
             // 
-            // button53
+ 
+             // button53
             // 
             this.button53.Location = new System.Drawing.Point(497, 579);
             this.button53.Name = "button53";
@@ -1836,6 +1838,16 @@
             this.button53.Click += new System.EventHandler(this.UpdatePendingKeyword_Click);
             // 
             // MapUnifreightTables
+            // 
+            this.MapUnifreightTables.Location = new System.Drawing.Point(271, 579);
+            this.MapUnifreightTables.Name = "MapUnifreightTables";
+            this.MapUnifreightTables.Size = new System.Drawing.Size(184, 23);
+            this.MapUnifreightTables.TabIndex = 105;
+            this.MapUnifreightTables.Text = "Map Unifreight Tables";
+            this.MapUnifreightTables.UseVisualStyleBackColor = true;
+            this.MapUnifreightTables.Click += new System.EventHandler(this.MapUnifreightTables_Click);
+            // 
+             // MapUnifreightTables
             // 
             this.MapUnifreightTables.Location = new System.Drawing.Point(271, 579);
             this.MapUnifreightTables.Name = "MapUnifreightTables";

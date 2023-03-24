@@ -292,6 +292,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }*/
 
 
+
+
+
             //<--- Yuval Chalup 28.05.2015 TASK-13252
             if (!string.IsNullOrWhiteSpace(this._MyDeclarationPM.Id))
             {

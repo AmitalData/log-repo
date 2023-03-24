@@ -19,13 +19,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.MessageLib.Fault;
-using UnifreightIIG.Common.MessageLib.Collateral;
+ using UnifreightIIG.Common.MessageLib.Collateral;
 using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer;
 using System.Xml.Serialization;
 using Logitude.Customs.BL.TraceEvents;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.DBWCO;
-using UnifreightIIG.Common.MessageLib.Ransom;
+ using UnifreightIIG.Common.MessageLib.Ransom;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.BL.Messaging.Customs;
@@ -39,8 +39,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
         DeclarationPM _MyDeclarationPM;
         DeclarationPM _MyDeclarationPMOrg;
 
-        private bool isExportClose = false;
-        private bool isExportCloseFromMehes = false;
+        private bool isExportClose=false;
+        private bool isExportCloseFromMehes= false;
         private bool HasErors = false;
 
         private DeclarationPrintResponseData _SendDeclarationPrintResponse;
@@ -52,12 +52,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return this.MyResponseData;
         }
         public override void Update(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customResponse, AmendmentRequestParams requestParams)
-        {
+        {  
             var declarationNumber = customResponse?.Response?.Declaration?.ID.Value;
             if (declarationNumber == null)
             {
                 declarationNumber = customResponse?.Response?.FunctionalReferenceID?.Value;
             }
+
             string key = ProcessLockTableUtil.Instance.GetKey4Declaration(declarationNumber, requestParams.Tenant);
             using (var disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "2470ResponseService.Update"))
             {
@@ -92,6 +93,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     functionalReferenceID = customResponse.Response.FunctionalReferenceID.Value;
                 else
                     functionalReferenceID = "";
+
                 string agentFileReferenceID = "";
                 if (customResponse.Response?.Declaration?.DMExtensions?.AgentFileReferenceID != null)
                     agentFileReferenceID = customResponse.Response.Declaration.DMExtensions.AgentFileReferenceID.Value.ToString();
@@ -109,7 +111,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 if (!isExportClose)
                 {
-                    var declaration = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, agentFileReferenceID, requestParams.Tenant);
+
+                    var declaration = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID,agentFileReferenceID, requestParams.Tenant);
 
                     _MyDeclarationPM = declaration;
                     if (declaration != null)
@@ -767,13 +770,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (_MyDeclarationPM.DeclarationStatusTypeCode == "36")
                     {
                         RaiseEvent(this._MyDeclarationPM, null, status_id: "CLS");
+
                     }
-                }
 
                 this.MyResponseData.ApplicationID = requestParams.AppicationId;
 
+                }
+
             }
-            this.MyResponseData.ApplicationID = requestParams.AppicationId;
+                this.MyResponseData.ApplicationID = requestParams.AppicationId;
             this.MyResponseData.Succeeded = true;
             this.MyResponseData.HasException = false;
 
@@ -810,7 +815,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
 
 
-        public void SendManifest(DeclarationPM declarationPM, GenericRequestParams requestParams)
+        public void SendManifest(DeclarationPM declarationPM, GenericRequestParams requestParams)  
         {
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
@@ -885,7 +890,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
-        public UnifreightIIG.Common.ExportDeclarationServiceReference.Declaration CastDeclaration(Declaration declaration)
+        public UnifreightIIG.Common.ExportDeclarationServiceReference.Declaration CastDeclaration(Declaration declaration )
         {
 
 
@@ -970,7 +975,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             return this.MyResponseData;
         }
-
+        
         public bool SendDeclarationPrint(GenericRequestParams requestParams)
         {
             LogMessagingUtil.Instance.AppendLine("SendDeclarationPrint");
@@ -995,14 +1000,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 Tenant = this._MyDeclarationPM.Tenant,
                 RequestName = "Declaration Print(8237)",
                 ResponseName = "Declaration Print(8237)",
-                LoggingEntityId = this._MyDeclarationPMOrg != null ? this._MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
+                LoggingEntityId = this._MyDeclarationPMOrg != null? this._MyDeclarationPMOrg.Id: _MyDeclarationPM.Id,
                 RequestVIA = SendRequestVIA.WebServiceBatch,
 
 
                 LoggingUserId = LoggingUserId //requestParams.LoggingUserId ,//HD CALL#298426
-            };
+            }; 
 
-            var myRequestMessagingService = new DF_NG_8302_Web03_DeclarationPrintMessagingService();
+             var myRequestMessagingService = new DF_NG_8302_Web03_DeclarationPrintMessagingService();
             var resData = myRequestMessagingService.Send(searchParams);
             _SendDeclarationPrintResponse = resData;
             if (!resData.Succeeded)

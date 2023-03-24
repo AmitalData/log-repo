@@ -39,6 +39,8 @@ namespace Logitude.Customs.BL.CloseTables
         public const string InterfaceName_ECSWSSTB_Splited = "ECSWSSTB+P";//EC = E-Commerce
         public const string InterfaceName_ECOVSTB_Splited = "ECOVSSTB+P";//EC = E-Commerce
         public const string InterfaceName_Ftp2Maman2470 = "ECM2470";//EC = E-Commerce 2 maman 2470
+        public const string InterfaceName_ECILSWSHAWB = "ECILSWSHAWB";//EC = E-Commerce
+        public const string InterfaceName_ECILSWSHAWB_Splited = "ECILSWSHAWB+P";//EC = E-Commerce
         public const string PartnerCode_Mamam = "MAMAN";
         public const string PartnerCode_ILOVS = "ILOVS";
         public const string PartnerCode_ILSWS = "ILSWS";
@@ -107,6 +109,7 @@ namespace Logitude.Customs.BL.CloseTables
                 ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
                 WEBAPICredentialType = CourierWEBAPICredentialType.Bearer,
                 ResponseCode =InterfaceName_ECMMNSPCL_Response,
+                Priority =  PriorityEnum.High
             }
             ,
             new InterfaceDetails()
@@ -119,7 +122,8 @@ namespace Logitude.Customs.BL.CloseTables
 
                 AnalyzeQueueService= AnalyzeQueueServiceEnum.MamanQSPCLService,
                 Subject="פעולות מיוחדות מממן",
-                ServerInternalDef= true
+                ServerInternalDef= true,
+                 Priority = PriorityEnum.High
 
             }
             ,
@@ -265,10 +269,9 @@ namespace Logitude.Customs.BL.CloseTables
                 TypeCode = TypeCode_In,
                 Partner = PartnerCode_ILSWS,
                 ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-                Subject="ש.מ.ב  מסוויספורט",
                 AnalyzeQueueService= AnalyzeQueueServiceEnum.SwissPortQHAWBService,
+                Subject="ש.מ.ב  מסוויספורט",
                 ServerInternalDef= true,
-
 
             },
               new InterfaceDetails() // real
@@ -278,7 +281,7 @@ namespace Logitude.Customs.BL.CloseTables
                 TypeCode = TypeCode_In,
                 Partner = PartnerCode_ILSWS,
                 ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-                AnalyzeQueueService= AnalyzeQueueServiceEnum.SwissPortQHAWBSpliterService,
+                AnalyzeQueueService= AnalyzeQueueServiceEnum.SwissPortQHAWBService,
                 Subject="ש.מ.ב מסוויספורט",
 
             },
@@ -304,9 +307,28 @@ namespace Logitude.Customs.BL.CloseTables
                 Subject= "פעולות מיוחדות לסוויספורט",
                 ServerInternalDef= true
 
-            }
-             ,
-
+            },
+              new InterfaceDetails()
+            {
+                Code = InterfaceName_ECILSWSHAWB,
+                Name = "ש.מ.ב  מסוויספורט מרוכז",
+                TypeCode = TypeCode_In,
+                Partner = PartnerCode_ILSWS,
+                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
+                AnalyzeQueueService= AnalyzeQueueServiceEnum.ILSWSMultiQHAWBSpliterService,
+                Subject="CourierHawbFeedBack ILSWS Raw"
+            },
+            new InterfaceDetails()
+            {
+                Code = InterfaceName_ECILSWSHAWB_Splited,
+                Name = "ש.מ.ב  מסוויספורט מרוכז",
+                TypeCode = TypeCode_In,
+                Partner = PartnerCode_ILSWS,
+                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
+                AnalyzeQueueService= AnalyzeQueueServiceEnum.ILSWSMultiQHAWBService,
+                Subject="CourierHawbFeedBack ILSWS",
+                ServerInternalDef= true
+            },
 
             };
             ///
@@ -369,10 +391,8 @@ namespace Logitude.Customs.BL.CloseTables
                     break;
                 case AnalyzeQueueServiceEnum.OVSHAWBService:
                     return new CourierOVSHAWBQService(@interface);
-                case AnalyzeQueueServiceEnum.SwissPortQHAWBSpliterService:
-                    return new ILSWSQHAWBSplitterService(@interface);
                 case AnalyzeQueueServiceEnum.SwissPortQHAWBService:
-                    return new ILSWSQHAWBQService(@interface);
+                    return new ILSWSQHAWBService(@interface);
                 case AnalyzeQueueServiceEnum.OVSSpecialActionService:
                     return new CourierOVSSpecialActionQService(@interface);
                 case AnalyzeQueueServiceEnum.SWSSpecialActionService:
@@ -389,6 +409,11 @@ namespace Logitude.Customs.BL.CloseTables
                     return new MamanQHAWBService(@interface);
                 case AnalyzeQueueServiceEnum.MamanQSPCLService:
                     return new MamanQSPCLService(@interface);
+                case AnalyzeQueueServiceEnum.ILSWSMultiQHAWBService:
+                    return new ILSWSQHAWBQService(@interface);
+                case AnalyzeQueueServiceEnum.ILSWSMultiQHAWBSpliterService:
+                    return new ILSWSQHAWBSplitterService(@interface);
+
                 default:
                     throw new Exception("No analyze service define " + @interface.Code);
                     break;
@@ -439,9 +464,10 @@ namespace Logitude.Customs.BL.CloseTables
         SWSStatusAvailabilitySpliterService,
         MamanQHAWBService,
         MamanQSPCLService,
-        SwissPortQHAWBService,
         SWSSpecialActionService,
-        SwissPortQHAWBSpliterService,
+        SwissPortQHAWBService,
+        ILSWSMultiQHAWBService,
+        ILSWSMultiQHAWBSpliterService,
     }
     public enum CourierWEBAPICredentialType
     {
@@ -463,9 +489,15 @@ namespace Logitude.Customs.BL.CloseTables
         public string Subject { get; internal set; }
         public bool ServerInternalDef { get; set; }
         public string ResponseCode { get; set; }
+
+        public PriorityEnum Priority { get; set; }
     }
 
-
+    public enum PriorityEnum
+    {
+        Regular,
+        High
+    }
     public class WebApiDefinitionDTO
     {
         public string WEBAPIURL { get; set; }

@@ -142,9 +142,9 @@ namespace Logitude.Customs.BL.BL
                 CalcSpecialActionStatus(myDeclarationCourierStatusPM);
                 CalcFastIndividualProcess(myDeclarationCourierStatusPM);
                 CalcDeclarationPendings902(myDeclarationCourierStatusPM);
-                if(declarationPM.ChangeSetOp== ChangeSetOperation.Insert) {
-                   CalcDeclarationPendings905(myDeclarationCourierStatusPM);
-                }
+
+                    CalcDeclarationPendings906(myDeclarationCourierStatusPM);
+
 
 
                 var updateDeclarationPending903InvalidPhoneNumberService = new UpdateDeclarationPending903InvalidPhoneNumberService(declarationPM);
@@ -588,50 +588,55 @@ namespace Logitude.Customs.BL.BL
             }
         }
 
-
-
-
-        public void CalcDeclarationPendings905(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
+        public void CalcDeclarationPendings906(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
         {
             if (declarationPM == null || myDeclarationCourierStatusPM == null) return;
 
-            DeclarationPendingPM declarationPendingPM_905 = null;
-            if (myDeclarationCourierStatusPM.DeclarationPendings != null && myDeclarationCourierStatusPM.DeclarationPendings.Count() > 0)
+            string defValue = GetDefault("ISRAEL", "CGO_CUST_CAS", "NON", "NON");
+            if (!string.IsNullOrEmpty(defValue) && !string.IsNullOrEmpty(declarationPM.CustomerCode) && declarationPM.CustomerCode != defValue)
             {
-                declarationPendingPM_905 = myDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.CourierPendingReasonCode == "905").FirstOrDefault();
-            }
+                DeclarationPendingPM declarationPendingPM_906 = null;
+                if (myDeclarationCourierStatusPM.DeclarationPendings != null && myDeclarationCourierStatusPM.DeclarationPendings.Count() > 0)
+                {
+                    declarationPendingPM_906 = myDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.CourierPendingReasonCode == "906").FirstOrDefault();
+                }
 
 
 
-            if (declarationPM.CasualImporterCountry != "IL" && declarationPM.IsAramex)
-            {
-              
-               
-             
-                    if (declarationPendingPM_905 == null)
+
+                CourierPendingReasonRepository courierPendingReasonRepositoryRepository = new CourierPendingReasonRepository(declarationPM.Tenant);
+                Boolean isActive = courierPendingReasonRepositoryRepository.IsActive("906", myDeclarationCourierStatusPM.Tenant);
+                if (isActive)
+                {
+                    if (declarationPendingPM_906 == null)
                     {
 
-                    declarationPendingPM_905 = new DeclarationPendingPM();
-                    declarationPendingPM_905.CourierPendingReasonCode = "905";
-                    declarationPendingPM_905.Status = "A";
-                    declarationPendingPM_905.ChangeSetOp = ChangeSetOperation.Insert;
-                        myDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_905);
+                        declarationPendingPM_906 = new DeclarationPendingPM();
+                        declarationPendingPM_906.CourierPendingReasonCode = "906";
+                        declarationPendingPM_906.Status = "A";
+                        declarationPendingPM_906.ChangeSetOp = ChangeSetOperation.Insert;
+                        myDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_906);
+                        if (myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.None)
+                        {
+                            myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        }
                     }
 
-                    else if (declarationPendingPM_905.Status != "A")
+                    else if (declarationPendingPM_906.Status != "A")
                     {
-                    declarationPendingPM_905.ChangeSetOp = ChangeSetOperation.Update;
-                    declarationPendingPM_905.Status = "A";
+                        declarationPendingPM_906.ChangeSetOp = ChangeSetOperation.Update;
+                        declarationPendingPM_906.Status = "A";
+                        if (myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.None)
+                        {
+                            myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        }
                     }
-               
-            }
-            else if (declarationPendingPM_905 != null)
-            {
-                declarationPendingPM_905.ChangeSetOp = ChangeSetOperation.Update;
-                declarationPendingPM_905.Status = "S";
-                //LogMessagingUtil.Instance.AppendLine("Courier Pending Reason Code 900 Set as Solved");
+                }
+
+
             }
         }
+ 
     }
 
 
@@ -822,6 +827,102 @@ namespace Logitude.Customs.BL.BL
                 }
 
             }
+
+        }
+        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID)
+        {
+            AmitalContext amitalContext = AmitalContext.GetContext(declarationPM.Tenant);
+            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
+
+            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
+            {
+                return ("");
+            }
+
+            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
+            if (myGDFDATAPM == null)
+            {
+                return ("");
+            }
+            return (myGDFDATAPM.DEFDATA);
+        }
+    }
+    public class UpdateDeclarationPending907ExceedingTheQuantityOfGoodsService
+    {
+        private DeclarationPM declarationPM;
+
+        public UpdateDeclarationPending907ExceedingTheQuantityOfGoodsService(DeclarationPM declarationPM)
+        {
+            this.declarationPM = declarationPM;
+        }
+        public void Calc(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
+        {
+            if (declarationPM == null || myDeclarationCourierStatusPM == null) return;
+            string courierReasonCode = "907";
+            if (myDeclarationCourierStatusPM == null)
+            {
+                return;//not courier 
+            }
+            DeclarationPendingPM declarationPendingPM_907 = null;
+            if (myDeclarationCourierStatusPM.DeclarationPendings != null && myDeclarationCourierStatusPM.DeclarationPendings.Count() > 0)
+            {
+                declarationPendingPM_907 = myDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == declarationPM.Id && r.CourierPendingReasonCode == courierReasonCode).FirstOrDefault();
+            }
+
+
+
+            string defValue = GetDefault("ISRAEL", "CGO_PND_QTY_VAL", "NON", "NON");
+            decimal defaultAmount = 0;
+            var boolvar = (decimal.TryParse(defValue, out defaultAmount));
+
+            if (!boolvar)
+            {
+                return;
+            }
+
+           SupplierInvoiceItemRepository supplierInvoiceItemRepository = new SupplierInvoiceItemRepository(declarationPM.Tenant);
+            List<SupplierInvoiceItem> listConPackages = supplierInvoiceItemRepository.GetPreferenceDocumentNumberSupplierInvoiceItemByDeclarationId(declarationPM.Id,declarationPM.Tenant );
+
+            var sumInvoiceQuantity = listConPackages.Sum(c => c.InvoiceQuantity);
+
+            if (sumInvoiceQuantity >= defaultAmount)
+            {
+
+
+
+
+                CourierPendingReasonRepository courierPendingReasonRepositoryRepository = new CourierPendingReasonRepository(declarationPM.Tenant);
+                Boolean isActive = courierPendingReasonRepositoryRepository.IsActive("907", myDeclarationCourierStatusPM.Tenant);
+                if (isActive)
+                {
+                    if (declarationPendingPM_907 == null)
+                    {
+
+                        declarationPendingPM_907 = new DeclarationPendingPM();
+                        declarationPendingPM_907.CourierPendingReasonCode = "907";
+                        declarationPendingPM_907.Status = "A";
+                        declarationPendingPM_907.ChangeSetOp = ChangeSetOperation.Insert;
+                        myDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_907);
+                        if (myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.None)
+                        {
+                            myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        }
+                    }
+
+                    else if (declarationPendingPM_907.Status != "A")
+                    {
+                        declarationPendingPM_907.ChangeSetOp = ChangeSetOperation.Update;
+                        declarationPendingPM_907.Status = "A";
+                        if (myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.None)
+                        {
+                            myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        }
+                    }
+                }
+
+            }
+           
+           
 
         }
         private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID)

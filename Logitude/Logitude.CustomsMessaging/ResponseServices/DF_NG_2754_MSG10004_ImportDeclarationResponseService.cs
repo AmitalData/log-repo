@@ -1022,8 +1022,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                             }
 
-                            if (((_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP" && _MyDeclarationPM.TotalTax > 0) || pendingRequiresPayment) && _MyDeclarationPM.DeclarationStatusTypeCode == "13" && ( !string.IsNullOrEmpty(defValue) &&  _MyDeclarationPM.CustomerCode == defValue))
-                            {
+ 
+
+
+                            if ((_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP" && (_MyDeclarationPM.TotalTax > 0 || pendingRequiresPayment))
+                                && _MyDeclarationPM.DeclarationStatusTypeCode == "13")
+                             {
                                 if (declarationPendingPM_900 == null)
                                 {
                                     declarationPendingPM_900 = new DeclarationPendingPM();
@@ -2636,6 +2640,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             return (myGDFDATAPM.DEFDATA);
         }
+
+
+
 
     }
 }

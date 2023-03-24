@@ -3379,9 +3379,11 @@ export class PaymentMethodModel extends BaseComponent {
                             }
                             
                             if (!this._ComboBoxSelectedBankChanged //!this.parent.IsLoadedGoldPaymentMethodes
-                                && !usingCustomBank_ImporterMasav /*&& !this._UsingDsvPayKupa*/) {
+                                //&& !usingCustomBank_ImporterMasav /*&& !this._UsingDsvPayKupa*/
+                            )
+                            {
                                 //this.parent.IsLoadedGoldPaymentMethodes = true;
-                                this.maximumAgentPaymentMethod();
+                                this.maximumAgentPaymentMethod(usingCustomBank_ImporterMasav);
                             }
 
                         }
@@ -3395,7 +3397,8 @@ export class PaymentMethodModel extends BaseComponent {
 
 
     }
-    maximumAgentPaymentMethod() {
+    //maxTaxAgentPayDefault==סכום מיסים מקסימלי לתשלום במס"ב סוכן
+    maximumAgentPaymentMethod(usingCustomBank_ImporterMasav: boolean) {
         ///old:///Feature 170339: ניצול העברת זהב - מסך הגשת תשלום
         //new://Feature 175382: ניצול העברת זהב - מסך הגשת תשלום
 
@@ -3415,6 +3418,33 @@ export class PaymentMethodModel extends BaseComponent {
             ";CustomerDefaultGoldPay_CIM_GOLD_PAY=" + this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY +
             ";CompanyDefaultaboveamountagentCash_CGG_ABOVE_AGT_C=" + this.parent.MyGoldPaymentDefaults.CompanyDefaultaboveamountagentCash_CGG_ABOVE_AGT_C
         );
+        if (usingCustomBank_ImporterMasav) {//Task 179470: תשלום במסב לקוח מעל סכום חסימה
+            if ("ABOVE_MSVLK" == this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY) {
+                if (this.parent.DeclarationPM.TotalTax > maxTaxAgentPayDefault) {
+                    console.log('a.');
+                    console.log(`ודיפולט "תשלום בניצול העברת זהב לקוח/קופה" = "סכום מעל סכום החסימה מס"ב לקוח" וגם סכום המיסים גדול מסכום שהוזן בדיפולט "סכום מיסים מקסימלי לתשלום במס"ב סוכן") יבוצע תשלום באמצעות מס"ב לקוח`)
+
+                    this.updateDefaultPaymentMethod(
+                        "1",//מס"ב הכנסה
+                        "0" //יבואן / יצואן
+                    );
+                } else {
+                    console.log('b.');
+                    console.log(`דיפולט "תשלום בניצול העברת זהב לקוח/קופה" = "סכום מעל סכום החסימה מס"ב לקוח" וגם סכום המיסים קטן שווה לסכום שהוזן בדיפולט "סכום מיסים מקסימלי לתשלום במס"ב סוכן") יבוצע תשלום באמצעות מס"ב סוכן`)
+                    this.updateDefaultPaymentMethod(
+                        "1",//מס"ב הכנסה
+                        "3" //סוכן מכס
+                    );
+                }
+                
+
+            } else {
+                console.log('C.');
+                console.log(`דיפולט "תשלום ניצול העברת זהב לקוח/קופה" =! (שונה) "מסכום מעל סכום החסימה מס"ב לקוח" יבוצע Cתשלום באמצעות מס"ב לקוח`);
+                return;
+            }
+            return;
+        }
         //3.1
         if (this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY == "ALL") {
             ///console.log("אם ללקוח מוגדר הדיפולט החדש 'תשלום בניצול העברת זהב לקוח' כל סכום3.1");

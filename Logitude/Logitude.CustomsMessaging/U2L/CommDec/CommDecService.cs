@@ -310,6 +310,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 }
 
                 //Delete Supplier Invoice
+
                 if (_MyDeclarationPM != null)
                 {
                     if (mode == "1" || mode == "2" || (this._LogitudeCommDecFile.INVOICE != null && this._LogitudeCommDecFile.INVOICE.Count() > 1) || (this._MyDeclarationPM.SupplierInvoices != null && this._MyDeclarationPM.SupplierInvoices.Count() > 1))
@@ -671,6 +672,10 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                         CalcProcedureCurrentCode();
                         CalcInternalTransitionSite();
                         myDeclarationUpsertService.UpdateTrucker();
+                         var updateDeclarationPending904ExceededGrossMassMeasureService = new UpdateDeclarationPending904ExceededGrossMassMeasureService(_MyDeclarationPM);
+                        updateDeclarationPending904ExceededGrossMassMeasureService.Calc(currentDeclarationCourierStatusPM);
+                        var updateDeclarationPending907ExceedingTheQuantityOfGoodsService = new UpdateDeclarationPending907ExceedingTheQuantityOfGoodsService(_MyDeclarationPM);
+                        updateDeclarationPending907ExceedingTheQuantityOfGoodsService.Calc(currentDeclarationCourierStatusPM);
 
                     var updateDeclarationPending904ExceededGrossMassMeasureService = new UpdateDeclarationPending904ExceededGrossMassMeasureService(_MyDeclarationPM);
                     updateDeclarationPending904ExceededGrossMassMeasureService.Calc(currentDeclarationCourierStatusPM);
@@ -692,6 +697,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                             UpdateDeclarationPending("901");
                         }
 
+
                         if (_LogitudeCommDecFile.Pendings != null)
                         {
 
@@ -705,19 +711,6 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                             }
                         }
                     }
-
-                    if(_LogitudeCommDecFile.Pendings != null)
-                    {
-
-
-                            foreach (var pending in _LogitudeCommDecFile.Pendings.Pending)
-                            {
-
-                                UpdateDeclarationPending(pending.PendingCode);
-                                    
-                                
-                            }
-                        }
 
                         if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.CrateNumber != _LogitudeCommDecFile.CrateNumber)
                     {
@@ -1399,11 +1392,12 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                                     sbWhyDecNotConnected2Master.AppendLine($"myCourierDeclarationUpdateService.Update:_CourierDeclarationPMPMDiferentMaster-{_CourierDeclarationPMPMDiferentMaster.CourierMasterId}");
 
-                                myCourierDeclarationUpdateService.Update(_CourierDeclarationPMPMDiferentMaster, true);
+                                    myCourierDeclarationUpdateService.Update(_CourierDeclarationPMPMDiferentMaster, true);
 
-                                _MAWBHaveChanged = true;
+                                 _MAWBHaveChanged = true;
                                 
                                     sbWhyDecNotConnected2Master.AppendLine($"myCourierDeclarationUpdateService.Update(_CourierDeclarationPMPMDiferentMaster, true)-done");
+ 
 
                                     
                                 }
@@ -1440,10 +1434,11 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                                         currvVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode;
                                     }
 
-
+ 
                                 if (_MyDeclarationPM.PaymentDate.HasValue)
 
-                                        currvVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode = "R";
+                                         currvVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode = "R";
+ 
 
                                     if (prevVal != currvVal)
                                     {

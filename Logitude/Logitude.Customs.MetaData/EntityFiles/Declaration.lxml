@@ -20667,7 +20667,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-  <field
+   <field
     Id="&quot;823294dc-d2da-4355-b32f-4de15884d302&quot;"
     FieldName="&quot;ExportCloseAmendStatusName&quot;"
     OldNames="ExportCloseAmendStatusName"
@@ -20743,6 +20743,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+ 
   <field
     Id="&quot;e9da7280-f386-4f83-b916-92954fb0b087&quot;"
     FieldName="&quot;IsAramex&quot;"
@@ -24135,7 +24136,7 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
-    <EventType
+     <EventType
       Code="&quot;TAS&quot;"
       ObjectTableName="&quot;Customs.Declaration&quot;"
       EnglishName="&quot;Transshipment Approved&quot;"
@@ -24161,7 +24162,7 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
-    <EventType
+     <EventType
       Code="&quot;LEX&quot;"
       ObjectTableName="&quot;Customs.Declaration&quot;"
       EnglishName="&quot;Last Exit From Storage Site&quot;"
@@ -24174,7 +24175,7 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
-  </EventTypes>
+   </EventTypes>
 
   <Records />
   <MenuButtons

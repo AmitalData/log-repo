@@ -69,11 +69,12 @@ import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/componen
 import { IncotemrsFileValidationList } from 'Customs/EntityLists/IncotemrsFileValidationList';
 import { customsItemsService } from 'QuoteOPM/Utilities/customsItems.service';
 import { SupplierInvoiceSharedService } from './Services/SupplierInvoiceSharedService';
+
+import { VendorCurrencyService } from 'Customs/Services/WebServices/VendorCurrencyService';
 import { CustomMessageProgressComponent } from 'CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import { CustomsItemDetailsQueryRequestParams } from 'Customs/DataContract/RequestParams/CustomsItemDetailsQueryRequestParams';
 import { SendRequestVIA } from 'Customs/DataContract/RequestParams/RequestParamsBase';
 import { IIGGeneralMessagesService } from 'Customs/Services/WebServices/IIGGeneralMessagesService';
-import { VendorCurrencyService } from 'Customs/Services/WebServices/VendorCurrencyService';
 
 
 @Component({
@@ -139,8 +140,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     TooltipCar: string;
     TooltipEdit: string;
     SumDifference: number = 0;
-   
- 
+
     old_currency;
     old_amount;
     old_vendor;
@@ -3343,6 +3343,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
     }
    
+   
 
 
     //#endregion
@@ -3817,7 +3818,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         }
         else {
             this.NotForAccumaltion = false;
-        }
+         }
 
     }
     _IIGGeneralMessagesService: IIGGeneralMessagesService = new IIGGeneralMessagesService();
@@ -3846,6 +3847,8 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                            this.GetQuantityType(true,true)
                     }
                     
+                }
+ 
                 }
                 ).catch((err) => {
                     

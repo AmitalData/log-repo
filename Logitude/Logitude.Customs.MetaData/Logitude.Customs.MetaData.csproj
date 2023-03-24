@@ -106,7 +106,9 @@
     <None Include="DBOthers\Procedures\Usp_DeleteCommLogs.dxml" />
     <None Include="DBOthers\Procedures\usp_UpdateQueueMessagePriority.dxml" />
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
+    <None Include="DBOthers\Views\DecCourierStatusesViews.dxml" />
     <None Include="DBOthers\Views\DocumentsFilingsView.dxml" />
+    <None Include="DBScripts\Post\202303211232_AddCOURIERPENDINGREASONS907.sxml" />
     <None Include="DBScripts\Post\20230125_AddCourierPendingReasons905.sxml" />
     <None Include="DBScripts\Post\202208151232_AddCOURIERPENDINGREASONS906.sxml" />
     <None Include="DBScripts\Post\202208281500_UpdateLoadingOfDeclaration.sxml" />
@@ -122,6 +124,7 @@
     <None Include="DBScripts\Post\202211291005_CreateIndexQueueMessagesInterfaceTypeCode.sxml" />
     <None Include="DBScripts\Post\20220309_RenameAcceptenceCode.sxml" />
     <None Include="DBScripts\Post\202211101140_UpdateInterfaceTenantDefSendTime.sxml" />
+    <None Include="DBScripts\Post\20221207_UpdateCustomBookTypeId.sxml" />
     <None Include="DBScripts\Post\20221124_AddAmendmentRequestNumberToLastCounter.sxml" />
     <None Include="DBScripts\Post\202208151232_AddCOURIERPENDINGREASONS904 .sxml" />
     <None Include="DBScripts\Post\202108011330_AddPhysicalCheckSearchResultTypes.sxml" />
@@ -148,10 +151,12 @@
     <None Include="DBScripts\Post\20221002_DropColumnExportContainerizationID.sxml" />
     <None Include="DBScripts\Post\20220905_UpdateDeclarationPhysicalCheckAfter.sxml" />
     <None Include="DBScripts\Post\202212281351_UpdateBothINTERFACEMANAGEMENTS.sxml" />
-    <None Include="DBScripts\Pre\202211290910_DropExportStorageShipCode.sxml" />
     <None Include="DBScripts\Post\202301291730_SetDeclarationToDisplayDeclarationReferantData.sxml" />
+    <None Include="DBScripts\Pre\202211290910_DropExportStorageShipCode.sxml" />
+    <None Include="DBScripts\Post\202302031136_UpdateInternationalsites.sxml" />
     <None Include="DBScripts\Pre\202230102_UpdateIsCloseForFollowUp.sxml" />
     <None Include="DBScripts\Pre\20221219_AddonExitEntry.sxml" />
+    <None Include="DBScripts\Post\202211291005_CreateIndexQueueMessagesInterfaceTypeCode.sxml" />
 
     <None Include="DBScripts\Pre\202108111402_AddONSearchResult.sxml" />
     <None Include="DBScripts\Post\202201031031_SearchFieldCourierMaster.sxml" />
@@ -285,6 +290,7 @@
     <None Include="DBTables\ContinuousRequestType.dxml" />
     <None Include="DBTables\ConverterType.dxml" />
     <None Include="DBTables\CoolingReportingMethod.dxml" />
+    <None Include="DBTables\CountryCurrency.dxml" />
     <None Include="DBTables\CountryGroup.dxml" />
     <None Include="DBTables\CourierCustomStatus.dxml" />
     <None Include="DBTables\CourierDeclaration.dxml" />
@@ -577,6 +583,7 @@
     <None Include="DBTables\VendorTransactionType.dxml" />
     <None Include="DBTables\VendorType.dxml" />
     <None Include="EntityFiles\AddressCurrency.lxml" />
+    <None Include="EntityFiles\CountryCurrency.lxml" />
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
     <None Include="EntityFiles\ClientsTapag.lxml" />
     <None Include="EntityFiles\DeclarationFollowUp.lxml" />

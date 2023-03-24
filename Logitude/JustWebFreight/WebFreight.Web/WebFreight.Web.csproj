@@ -1038,10 +1038,10 @@
     <Compile Include="Controllers\CustomsModel\Extended\CustomsRequestsSheetViewsExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\DecCargoSplitConExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\PendingByKeywordsExtendedController.cs" />
-    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\AddressCurrencyViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CountryCurrencyViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DeclarationFollowUpViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\VendorCurrencyViewsController.Generated.cs" />
-    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\AddressCurrencyController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CountryCurrencyController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\VendorCurrencyController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ServersNamesController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ExportDeclarationClosingDatasController.cs" />
@@ -1116,7 +1116,7 @@
     <Compile Include="Controllers\CustomsModel\WebServices\NewQuoteOPWebService.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\PendingWebServiceController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\CustomsCollateralWebServiceController.cs" />
-    <Compile Include="Controllers\CustomsModel\WebServices\AddressCurrencyController.cs" />
+    <Compile Include="Controllers\CustomsModel\WebServices\CountryCurrencyController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\VendorCurrencyController.cs" />
     <Compile Include="Controllers\GlobalModel\Extended\AdvancedQueryFiltersExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\SharedLogisticsInvitationStatusViewsController.Generated.cs" />
@@ -3107,7 +3107,6 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AccountingNoteUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AccumalationStateUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ActionCodeUpdateClass.cs" />
-    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AddressCurrencyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AgentTalkBackTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AmedmentTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AmendCancellRequestInitiatorUpdateClass.cs" />
@@ -3183,6 +3182,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContainerTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContinuousRequestTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CoolingReportingMethodUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CountryCurrencyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CourierCustomStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CourierDeclarationStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CourierDeclarationUpdateClass.cs" />

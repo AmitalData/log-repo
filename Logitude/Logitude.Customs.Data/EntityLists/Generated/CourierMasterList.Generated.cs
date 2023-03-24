@@ -143,7 +143,15 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public int? HawbQuantityNoTransDeclaration  { get; set; }
        [DataMember]
-       public int? HawbQuantityNoTransPayment  { get; set; }
+       public string DocumentStatusCode  { get; set; }
+       [DataMember]
+       public string CourierPaymentStatusCode  { get; set; }
+       [DataMember]
+       public string CourierDeclarationStatusCode  { get; set; }
+       [DataMember]
+       public string CourierManifestStatusCode  { get; set; }
+       [DataMember]
+       public string IsCourierMissingClassification  { get; set; }
    }
 
 }

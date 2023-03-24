@@ -45,7 +45,12 @@ namespace Unifreight.BL.EntityUpdateServices
         private int GetCounter(string dirtyDeclarationPMId)
         {
             int i = Convert.ToInt32(dirtyDeclarationPMId.Replace("-", ""));
-            return 50000000 + i;
+            i = 50000000 + i;
+            if (i.ToString().Length > 8)
+            {
+                return i - 110_009_120;
+            }
+            return i;
         }
 
         protected override void UpdateComposition(CCUFILEMPM entityPM)
