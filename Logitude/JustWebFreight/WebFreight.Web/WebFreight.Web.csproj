@@ -1361,6 +1361,7 @@
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentPackageController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowVesselController.cs" />
+    <Compile Include="Controllers\WorkflowModel\Extended\MicrosoftOffice365Controller.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\ServiceProviderSubscriptionExtendedController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\WorkflowInstanceExtendedController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\WorkflowVersionExtendedController.cs" />
@@ -7981,6 +7982,10 @@
     <ProjectReference Include="..\..\Logitude.XSD\Logitude.XSD.csproj">
       <Project>{3e75c83f-67c7-4b62-9759-7ea92e16f272}</Project>
       <Name>Logitude.XSD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MicrosoftGraphClient\MicrosoftGraphClient.csproj">
+      <Project>{DF7D6BF3-C07E-471C-A8ED-526C431FD294}</Project>
+      <Name>MicrosoftGraphClient</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Simplog.Data\Simplog.Data.csproj">
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>

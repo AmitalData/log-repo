@@ -15,14 +15,6 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
             }
         }
 
-        protected override void OnUpdating(ServiceProviderSubscriptionPM entityPM)
-        {
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
-            {
-                SendRenewServiceProviderSubscriptionQueueMessage(entityPM);
-            }
-        }
-
         private void SendRenewServiceProviderSubscriptionQueueMessage(ServiceProviderSubscriptionPM entityPM)
         {
             new RenewServiceProviderSubscriptionQueueMessage() { ServiceProviderSubscription = entityPM }.Produce();

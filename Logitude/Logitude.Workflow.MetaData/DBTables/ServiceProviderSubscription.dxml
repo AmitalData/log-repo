@@ -122,4 +122,6 @@
     ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <UniqueConstraint
+    Columns="WorkflowNumber" />
 </Table>
