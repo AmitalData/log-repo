@@ -12453,9 +12453,10 @@ namespace WebFreight.Web.ReportsWebServices
                         if (!string.IsNullOrEmpty(Item.ShipmentMasterDataStatusId))
                         {
                             string statusName = null;
-                            EntityStatusHelper.GetHighestStatusId(Item.ShipmentStatusId, Item.ShipmentMasterDataStatusId, Item.Tenant, ref statusName);
-                            shipment.Status = statusName;
+                            string statusCode = null;
 
+                            EntityStatusHelper.GetHighestStatusId(Item.ShipmentStatusId, Item.ShipmentMasterDataStatusId, Item.Tenant, ref statusName, ref statusCode);
+                            shipment.Status = statusName;
                         }
                         else
                         {
