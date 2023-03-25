@@ -54,7 +54,10 @@ namespace Logitude.Workflow.Data.EntityListQueryServices
 											  RetriesDelay = a.RetriesDelay,
 											  RetriesNumber = a.RetriesNumber,
 											  Entity = a.Entity,
-											  Trigger = a.Trigger
+											  Trigger = a.Trigger,
+											  WorkFlowTriggerTypeCode = a.WorkFlowTriggerTypeCode,
+											  WorkFlowTriggerTypeName = a.WorkFlowTriggerType.Name,
+											  WorkFlowNumber = a.WorkFlowNumber
 
 											});
             return query;

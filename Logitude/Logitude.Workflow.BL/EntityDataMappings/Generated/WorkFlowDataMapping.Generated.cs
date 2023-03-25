@@ -36,7 +36,9 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         Entity, 
 	         Trigger, 
 	         RetriesNumber, 
-	         RetriesDelay,
+	         RetriesDelay, 
+	         WorkFlowTriggerTypeCode, 
+	         WorkFlowNumber,
 	      }
 
 
@@ -60,7 +62,10 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         Entity, 
 	         Trigger, 
 	         RetriesNumber, 
-	         RetriesDelay,
+	         RetriesDelay, 
+	         WorkFlowTriggerTypeCode, 
+	         WorkFlowTriggerTypeName, 
+	         WorkFlowNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -137,6 +142,16 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RetriesDelay))
             {
 				entityPOCO.RetriesDelay = entityPM.RetriesDelay;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WorkFlowTriggerTypeCode))
+            {
+				entityPOCO.WorkFlowTriggerTypeCode = entityPM.WorkFlowTriggerTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WorkFlowNumber))
+            {
+				entityPOCO.WorkFlowNumber = entityPM.WorkFlowNumber;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -220,6 +235,16 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 					entityPM.RetriesDelay = entityPOCO.RetriesDelay;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.WorkFlowTriggerTypeCode))
+            {
+					entityPM.WorkFlowTriggerTypeCode = entityPOCO.WorkFlowTriggerTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.WorkFlowNumber))
+            {
+					entityPM.WorkFlowNumber = entityPOCO.WorkFlowNumber;
+            }
+
 		}
 
 		public void PMToOldPM(WorkFlowPM entityPM, WorkFlowPM oldEntityPM)
@@ -296,6 +321,16 @@ namespace Logitude.Workflow.BL.EntityDataMappings
                 oldEntityPM.RetriesDelay = entityPM.RetriesDelay;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WorkFlowTriggerTypeCode))
+            {
+                oldEntityPM.WorkFlowTriggerTypeCode = entityPM.WorkFlowTriggerTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WorkFlowNumber))
+            {
+                oldEntityPM.WorkFlowNumber = entityPM.WorkFlowNumber;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(WorkFlowPM entityPM)
@@ -320,6 +355,10 @@ namespace Logitude.Workflow.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.FlowJson)) //T4 find type == nText 
             {
                 entityPM.FlowJson = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.FlowJson));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.WorkFlowNumber)) //T4 find type == nText 
+            {
+                entityPM.WorkFlowNumber = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.WorkFlowNumber));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

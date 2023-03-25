@@ -66,26 +66,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CloseTables\DetailsClassesGenerated\WorkFlowTriggerTypeDetails.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TaskDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TaskExtendedDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TaskPriorityDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TaskStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TaskTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\WorkFlowTriggerTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\TaskDataMapping.cs" />
     <Compile Include="EntityDataMappings\TaskExtendedDataMapping.cs" />
     <Compile Include="EntityDataMappings\TaskPriorityDataMapping.cs" />
     <Compile Include="EntityDataMappings\TaskStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\TaskTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\WorkFlowTriggerTypeDataMapping.cs" />
     <Compile Include="EntityPMs\Generated\TaskExtendedPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TaskPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TaskPriorityPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TaskStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TaskTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\WorkFlowTriggerTypePM.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TaskExtendedQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TaskPriorityQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TaskQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TaskStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TaskTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\WorkFlowTriggerTypeQueryService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\WorkFlowTriggerTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\TaskPriorityUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TaskStatusUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TaskTypeUpdateService.cs" />

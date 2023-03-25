@@ -26,6 +26,9 @@ export class WorkFlowList {
 	Trigger: string;
 	RetriesNumber: number;
 	RetriesDelay: string;
+	WorkFlowTriggerTypeCode: string;
+	WorkFlowTriggerTypeName: string;
+	WorkFlowNumber: string;
 	
 }
  
