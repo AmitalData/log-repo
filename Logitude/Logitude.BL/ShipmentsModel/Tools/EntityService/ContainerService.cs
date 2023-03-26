@@ -167,7 +167,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityRepository.Update(containerPoco);
             entityRepository.SubmitChanges();
 
-            this.UpdateShipment();
+            //this.UpdateShipment();
 
             if (this.containerPm != null && !this.containerPm.FromCTool)
             {
