@@ -50,6 +50,12 @@ namespace Logitude.Workflow.Data.EntityLists
        public int RetriesNumber  { get; set; }
        [DataMember]
        public string RetriesDelay  { get; set; }
+       [DataMember]
+       public string WorkFlowTriggerTypeCode  { get; set; }
+       [DataMember]
+       public string WorkFlowTriggerTypeName  { get; set; }
+       [DataMember]
+       public string WorkFlowNumber  { get; set; }
    }
 
 }

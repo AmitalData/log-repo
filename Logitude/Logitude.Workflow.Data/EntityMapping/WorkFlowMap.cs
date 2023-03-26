@@ -52,6 +52,10 @@ namespace Logitude.Workflow.Data.EntityMapping
             this.Property(t => t.RetriesNumber).HasColumnName("RetriesNumber").IsRequired();
 
             this.Property(t => t.RetriesDelay).HasColumnName("RetriesDelay").IsRequired().HasMaxLength(500).IsUnicode(false);
+
+            this.Property(t => t.WorkFlowTriggerTypeCode).HasColumnName("WorkFlowTriggerTypeCode").IsRequired().HasMaxLength(30).IsUnicode(false);
+
+            this.Property(t => t.WorkFlowNumber).HasColumnName("WorkFlowNumber").IsRequired().HasMaxLength(100).IsUnicode(true);
         }
     }
 }

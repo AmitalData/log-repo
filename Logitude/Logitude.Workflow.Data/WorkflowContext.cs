@@ -99,6 +99,8 @@ namespace Logitude.Workflow.Data
 	
             modelBuilder.Configurations.Add(new WorkFlowStatusMap());
 	
+            modelBuilder.Configurations.Add(new WorkFlowTriggerTypeMap());
+	
             modelBuilder.Configurations.Add(new WorkFlowVersionMap());
 	
             modelBuilder.Configurations.Add(new WorkFlowVersionStatusMap());
@@ -477,6 +479,12 @@ namespace Logitude.Workflow.Data
 	 }
 	
 	 public IDbSet<WorkFlowStatus> WorkFlowStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<WorkFlowTriggerType> WorkFlowTriggerTypes 
 	 {
 	      get; set;
 	 
