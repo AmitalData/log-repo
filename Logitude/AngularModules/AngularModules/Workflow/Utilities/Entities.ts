@@ -7,6 +7,7 @@ export class Entities {
     private static DefaultParents: string[] = [
         "Shipment",
         "Container",
+        "Task",
         "Customer",
         "User",
         "Opportunity",
