@@ -21,6 +21,7 @@ import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeName
 import { DashboardsUserSettingPM } from 'DashboardModule/EntityPMs/DashboardsUserSettingPM';
 import { AnalyticsFactsFieldsMetaDataPMExtendedService } from 'DashboardModule/Services/ExtendedPMs/AnalyticsFactsFieldsMetaDataExtendedService';
 import { AnalyticsFactsFieldsMetaDataPM } from 'DashboardModule/EntityPMs/AnalyticsFactsFieldsMetaDataPM';
+import { MessageWindow } from 'Controls/Windows/MessageWindow';
 
 @Component({
     templateUrl: 'CustomDashboardComponent.html',
@@ -43,6 +44,7 @@ export class CustomDashboardComponent extends BaseComponent {
     public DashboardsTabs: DashboardTab[] = [];
     private MaxTabsCount: number = 10;
     private MaxPinnedTabsCount: number = 8;
+    private MaxOpenedTabsCount: number = 10;
     private dashboardPMEstendedService: DashboardPMExtendedService;
     public SectionsItemsSource: CodeNameClass[];
     public SelectedFromDashboardDropDown: boolean = false;
@@ -117,6 +119,7 @@ export class CustomDashboardComponent extends BaseComponent {
     }
 
     private LoadDashboardsForDropDown() {
+        // Get Tenant Dashboards
         this.DashboardListExtendedService.GetDashboardsForDropDown().subscribe((myResponse: ServiceResponse) => {
             if (myResponse.HasError) return
             this.ItemsSource = myResponse.Result ?? [];
@@ -141,6 +144,8 @@ export class CustomDashboardComponent extends BaseComponent {
     private BuildPinnedDashboards(myResponse: ServiceResponse) {
         this.PinnedDashboards = [];
         var pinnedDashboards = (JSON.parse(myResponse.Result.PinnedDashboards) as any[]) ?? [];
+
+        // ??????? 
         pinnedDashboards.forEach(item => {
             var pinned = this.ItemsSource.find(x => x.Id == item.Id);
             if (pinned) this.PinnedDashboards.push(pinned);
@@ -150,15 +155,20 @@ export class CustomDashboardComponent extends BaseComponent {
     BuildTabs() {
         if (!this.ItemsSource || this.ItemsSource.length == 0) return;
         this.DashboardsTabs = [];
-
+        
+        // Initial Case, when the user have no Pinned dashboards (i.e: he stil didn't make any changes on pinned dashboards)
+        // We display the Tenent 0 & PinnedByDefault dashboards (system dashboards)
         if (!this.PinnedDashboards && SessionLocator.Tenant != 0) {
             this.ShowPredfinedDashboards();
             this.SelectFirstDashboard();
             this.IsPredfineds = true;
             return;
         }
+
+        // When the user make changes on the pinned dashboards and remove all the pinned
         if (this.PinnedDashboards.length == 0) return;
 
+        // Show the user pinned dashboards
         this.ShowPinnedDashboards();
         this.SelectFirstDashboard();
     }
@@ -216,8 +226,13 @@ export class CustomDashboardComponent extends BaseComponent {
             if (!myResponse || myResponse.HasError) return;
             var addedDasboard = myResponse.Result;
 
-            this.ItemsSource.unshift(addedDasboard);
+            this.ItemsSource.push(addedDasboard);
             this.dashbaordCount++;
+
+            if(!this.CanAddTab){
+                this.ShowOpenDashbordsLimitReachedMsg()
+                return;
+            }
             this.AppendClickedDashboard(addedDasboard);
             this.ChangeDashboard(addedDasboard, false, true);
         });
@@ -230,6 +245,7 @@ export class CustomDashboardComponent extends BaseComponent {
     }
 
     DropDwonSelectionChanged(dashboard: DashboardList) {
+        // MixPanelLocator ????
         MixPanelLocator.PostDashboardAction({ ActionName: "Dashboard drop down", DashboardId: dashboard.Id });
         this.SelectedFromDashboardDropDown = true;
         this.ChangeDashboard(dashboard, true);
@@ -258,24 +274,40 @@ export class CustomDashboardComponent extends BaseComponent {
             if (dashboard.Id != this.SelectedDashboard.Id) this.SelectedDashboard = dashboard;
             return;
         }
+
+        if (!this.CanAddTab) {
+            this.ShowOpenDashbordsLimitReachedMsg()
+            return;
+        }
+
         this.AppendClickedDashboard(dashboard);
         this.SelectedDashboard = dashboard;
     }
 
+    ShowOpenDashbordsLimitReachedMsg() {
+        const messageWindow = new MessageWindow();
+        messageWindow.IsMessageMultiLine = true;
+        messageWindow.Width = 380;
+        messageWindow.Title = 'Open dashboards limit reached';
+        let msg = 'Cannot open more than 10 dashboards.' + '\n' + 'To open a new dashboard, please close one first.'
+        messageWindow.Show(msg);
+    }
+
     AppendClickedDashboard(dashboard: DashboardList) {
         var tab = new DashboardTab(dashboard, this, false);
+        this.DashboardsTabs.push(tab);
 
-        if (this.DashboardsTabs.length == 0) {
-            this.DashboardsTabs.push(tab);
-            return;
-        }
-        var appendItemTo = this.DashboardsTabs.indexOf(this.DashboardsTabs.find(x => !x.IsPinned));
-        if (appendItemTo == -1) this.DashboardsTabs.push(tab)
-        else this.DashboardsTabs.splice(appendItemTo, 0, tab);
+        // if (this.DashboardsTabs.length == 0) {
+        //     this.DashboardsTabs.push(tab);
+        //     return;
+        // }
+        // var appendItemTo = this.DashboardsTabs.indexOf(this.DashboardsTabs.find(x => !x.IsPinned));
+        // if (appendItemTo == -1) this.DashboardsTabs.push(tab)
+        // else this.DashboardsTabs.splice(appendItemTo, 0, tab);
 
-        if (this.DashboardsTabs.length > this.MaxTabsCount) {
-            this.DashboardsTabs.pop();
-        }
+        // if (this.DashboardsTabs.length > this.MaxTabsCount) {
+        //     this.DashboardsTabs.pop();
+        // }
     }
 
     private ConfirmSave(clickedDashboard: DashboardList) {
@@ -444,6 +476,11 @@ export class CustomDashboardComponent extends BaseComponent {
     public get CanPinn(): boolean {
         return this.DashboardsTabs.filter(x => x.IsPinned).length < this.MaxPinnedTabsCount;
     }
+
+    public get CanAddTab(): boolean {
+        return this.DashboardsTabs.length < this.MaxOpenedTabsCount
+    }
+    
 }
 
 class DashboardTab {
