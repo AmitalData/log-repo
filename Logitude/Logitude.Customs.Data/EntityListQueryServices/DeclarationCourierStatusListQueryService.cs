@@ -334,7 +334,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                         CourierPendingReasonList = dcs.CourierPendingReasonList,
                         CourierPendingReasonName = dpj.CourierPendingReason.LocalName != null ? dpj.CourierPendingReason.LocalName : null,
                         MissedDocumentStatusCode = dcs.MissedDocumentStatusCode,
-                        Tenant = cd.Tenant,
+                        Tenant = dcs.Tenant,
 
                     } into t2
                     select new DeclarationCourierStatusList
