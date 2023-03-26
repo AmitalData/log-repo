@@ -13,7 +13,6 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
         {
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
-                entityPM.IsAssigned = !string.IsNullOrEmpty(entityPM.OwnerId);
                 CreateTaskExtended(entityPM);
             }
         }
@@ -22,7 +21,6 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
         {
             if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
-                entityPM.IsAssigned = !string.IsNullOrEmpty(entityPM.OwnerId);
                 UpdateTaskExtended(entityPM);
             }
         }
