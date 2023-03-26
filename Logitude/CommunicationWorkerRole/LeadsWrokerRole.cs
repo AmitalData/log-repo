@@ -482,6 +482,8 @@ namespace CommunicationWorkerRole
                         ConcurrencyGUID = Guid.NewGuid().ToString(),
                         ContactId = customercontact.Id,
                         Probability = stage.Probability,
+                        ClientId = lead.ClientId,
+                        LeadOrigin = lead.LeadOrigin,
                     };
 
                     if (lead.LeadSource == "Atlas")
@@ -556,6 +558,8 @@ namespace CommunicationWorkerRole
                     HtmlTemplate.Append("<tr><td> Zip Code : </td><td>" + lead.ZipCode + "</td></tr>");
                     HtmlTemplate.Append("<tr><td> IATA Code : </td><td>" + lead.IATACode + "</td></tr>");
                     HtmlTemplate.Append("<tr><td> CASS Code : </td><td>" + lead.CASSCode + "</td></tr>");
+                    HtmlTemplate.Append("<tr><td> Client Id : </td><td>" + lead.ClientId + "</td></tr>");
+                    HtmlTemplate.Append("<tr><td> Lead Origin : </td><td>" + lead.LeadOrigin + "</td></tr>");
 
                     HtmlTemplate.Append("<Table/>");
                     HtmlTemplate.Append("<div/>");

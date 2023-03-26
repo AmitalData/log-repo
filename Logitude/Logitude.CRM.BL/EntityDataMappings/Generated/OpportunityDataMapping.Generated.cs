@@ -103,7 +103,9 @@ namespace Logitude.CRM.BL.EntityDataMappings
 	         Field38, 
 	         Field39, 
 	         Field40, 
-	         NumberOfConnectedQuotes,
+	         NumberOfConnectedQuotes, 
+	         ClientId, 
+	         LeadOrigin,
 	      }
 
 
@@ -214,7 +216,9 @@ namespace Logitude.CRM.BL.EntityDataMappings
 	         Field39, 
 	         Field40, 
 	         NumberOfConnectedQuotes, 
-	         UserName,
+	         UserName, 
+	         ClientId, 
+	         LeadOrigin,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -626,6 +630,16 @@ namespace Logitude.CRM.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NumberOfConnectedQuotes))
             {
 				entityPOCO.NumberOfConnectedQuotes = entityPM.NumberOfConnectedQuotes;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClientId))
+            {
+				entityPOCO.ClientId = entityPM.ClientId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LeadOrigin))
+            {
+				entityPOCO.LeadOrigin = entityPM.LeadOrigin;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1044,6 +1058,16 @@ namespace Logitude.CRM.BL.EntityDataMappings
 					entityPM.NumberOfConnectedQuotes = entityPOCO.NumberOfConnectedQuotes;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ClientId))
+            {
+					entityPM.ClientId = entityPOCO.ClientId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LeadOrigin))
+            {
+					entityPM.LeadOrigin = entityPOCO.LeadOrigin;
+            }
+
 		}
 
 		public void PMToOldPM(OpportunityPM entityPM, OpportunityPM oldEntityPM)
@@ -1453,6 +1477,16 @@ namespace Logitude.CRM.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NumberOfConnectedQuotes))
             {
                 oldEntityPM.NumberOfConnectedQuotes = entityPM.NumberOfConnectedQuotes;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClientId))
+            {
+                oldEntityPM.ClientId = entityPM.ClientId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LeadOrigin))
+            {
+                oldEntityPM.LeadOrigin = entityPM.LeadOrigin;
             }
 			
 		}

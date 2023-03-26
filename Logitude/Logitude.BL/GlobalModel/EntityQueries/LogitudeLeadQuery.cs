@@ -64,6 +64,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                           ZipCode = a.ZipCode,
                           State = a.State,
                           Street = a.Street,
+                          ClientId = a.ClientId,
+                          LeadOrigin = a.LeadOrigin,
                       }).FirstOrDefault();
 
             return entity;
@@ -113,6 +115,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   ZipCode = a.ZipCode,
                                                   State = a.State,
                                                   Street = a.Street,
+                                                  ClientId = a.ClientId,
+                                                  LeadOrigin = a.LeadOrigin,
                                               });
                         foreach (var s in entitystatuses)
                         {
@@ -165,6 +169,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                   ZipCode = a.ZipCode,
                                   State = a.State,
                                   Street = a.Street,
+                                  ClientId = a.ClientId,
+                                  LeadOrigin = a.LeadOrigin,
                               }).FirstOrDefault();
                 }
 
@@ -209,7 +215,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                                           ZipCode = a.ZipCode,
                                                                           State = a.State,
                                                                           Street = a.Street,
-                                                                      };
+                                                                          ClientId = a.ClientId,
+                                                                          LeadOrigin = a.LeadOrigin,
+                                                             };
 
             return logitudeleadSetting;
         }
@@ -249,6 +257,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                               ZipCode = a.ZipCode,
                                                               State = a.State,
                                                               Street = a.Street,
+                                                              ClientId = a.ClientId,
+                                                              LeadOrigin = a.LeadOrigin,
                                                               
                                                               
                                                           };

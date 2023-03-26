@@ -140,6 +140,8 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                      LastStageIdBeforeClosure = a.LastStageIdBeforeClosure,
                                                      LastStageBeforeClosureName = a.LastStage == null ? "" : a.LastStage.Name,
                                                      UserName = a.LeadUser == null ? null : a.LeadUser.Contact.EnglishName,
+                                                     ClientId = a.ClientId,
+                                                     LeadOrigin = a.LeadOrigin,
                                                  });
             return query;
 		}
@@ -274,6 +276,8 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                         OpportunityTypeName = a.OpportunityType == null ? null : a.OpportunityType.Name,
                         NumberOfShipmentsForeground = a.NumberOfShipments > 0 ? "#FF282E30" : "#FFE53030",
                         IsCancelled = a.IsCancelled,
+                        ClientId = a.ClientId,
+                        LeadOrigin = a.LeadOrigin,
                     };
 
                     ContactRepository rep = new ContactRepository(tenant);
@@ -388,6 +392,8 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                      OpportunityTypeName = a.OpportunityType == null ? null : a.OpportunityType.Name,
                                                      NumberOfShipmentsForeground = a.NumberOfShipments > 0 ? "#FF282E30" : "#FFE53030",
                                                      IsCancelled = a.IsCancelled,
+                                                     ClientId = a.ClientId,
+                                                     LeadOrigin = a.LeadOrigin,
                                                  });
 
             OpportunityBusinessUnitFilter filter = new OpportunityBusinessUnitFilter(tenant);
@@ -488,6 +494,8 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                      OpportunityTypeName = a.OpportunityType == null ? null : a.OpportunityType.Name,
                                                      NumberOfShipmentsForeground = a.NumberOfShipments > 0 ? "#FF282E30" : "#FFE53030",
                                                      IsCancelled = a.IsCancelled,
+                                                     ClientId = a.ClientId,
+                                                     LeadOrigin = a.LeadOrigin,
                                                  });
 
             OpportunityBusinessUnitFilter filter = new OpportunityBusinessUnitFilter(tenant);
@@ -543,7 +551,9 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                 UpdatedByUserId = a.UpdatedByUserId,                                                
                                                 IsClosed = a.IsClosed,
                                                 IsCancelled = a.IsCancelled,                                                                                             
-                                                BusinessUnitId = a.BusinessUnitId,                                               
+                                                BusinessUnitId = a.BusinessUnitId,
+                                                ClientId = a.ClientId,
+                                                LeadOrigin = a.LeadOrigin,
                                             }).FirstOrDefault();
             return query;
         }

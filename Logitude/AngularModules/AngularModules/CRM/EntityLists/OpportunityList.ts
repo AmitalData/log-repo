@@ -120,6 +120,8 @@ export class OpportunityList {
 	NumberOfConnectedQuotes: number;
 	LastStageBeforeClosureName: string;
 	UserName: string;
+	ClientId: string;
+	LeadOrigin: string;
 	
 }
  

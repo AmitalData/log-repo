@@ -567,6 +567,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ClientId"
+    Type="varchar"
+    Size="65">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LeadOrigin"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="OwnerId"
     ReferencedTable="Users"
