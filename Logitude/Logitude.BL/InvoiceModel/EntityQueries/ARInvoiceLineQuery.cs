@@ -34,28 +34,24 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         }
         public List<ARInvoiceLinePM> GetGLAccountLocalNameAndDisplayNumber(List<ARInvoiceLinePM> lines, string invoiceId, int tenant)
         {
-            // get glaccounts by glaAccountIds => list of glaccounts 
-            IAccountingContext context = AccountingContext.GetContext(tenant);
+            IAccountingContext context = AccountingContext.GetContext(tenant);
             var glaAccountIds = from a in lines select a.GLAccountId;
-            glaAccountIds = glaAccountIds.ToList();
-            var GLAccountInfo = (from a in glaAccountIds
-                                 join gLAccount in context.GLAccounts on a equals gLAccount.Id
-                                 select new ARInvoiceLinePM()
-                                 {
-                                     //Id = a.Id,
-                                     GLAccountId = gLAccount != null ? gLAccount.Id : "",
-                                     GLAccountLocalName = gLAccount != null ? gLAccount.LocalName : "",
-                                     GLAccountDisplayNumber = gLAccount != null ? gLAccount.DisplayNumber : "",
-                                 }
-                                  );
-            GLAccountInfo = GLAccountInfo.ToList();
+            glaAccountIds = glaAccountIds.Distinct().ToList();
+
+            List<ARInvoiceLinePM> gLAccountsInfo = (
+            from gLAccount in context.GLAccounts
+            where glaAccountIds.Contains(gLAccount.Id)
+            select new ARInvoiceLinePM()
+            {
+                GLAccountId = gLAccount != null ? gLAccount.Id : "",
+                GLAccountLocalName = gLAccount != null ? gLAccount.LocalName : "",
+                GLAccountDisplayNumber = gLAccount != null ? gLAccount.DisplayNumber : "",
+            }).ToList();
 
             lines = lines.Select(x =>
             {
-                //x.GLAccountLocalName = GLAccountInfo.FirstOrDefault(y => y.Id == x.Id)?.GLAccountLocalName;
-                //x.GLAccountDisplayNumber = GLAccountInfo.FirstOrDefault(y => y.Id == x.Id)?.GLAccountDisplayNumber;
-                x.GLAccountLocalName = GLAccountInfo.FirstOrDefault(y => y.GLAccountId == x.GLAccountId)?.GLAccountLocalName;
-                x.GLAccountDisplayNumber = GLAccountInfo.FirstOrDefault(y => y.GLAccountId == x.GLAccountId)?.GLAccountDisplayNumber;
+                x.GLAccountLocalName = gLAccountsInfo.FirstOrDefault(y => y.GLAccountId == x.GLAccountId)?.GLAccountLocalName;
+                x.GLAccountDisplayNumber = gLAccountsInfo.FirstOrDefault(y => y.GLAccountId == x.GLAccountId)?.GLAccountDisplayNumber;
                 return x;
             }
             ).ToList();
