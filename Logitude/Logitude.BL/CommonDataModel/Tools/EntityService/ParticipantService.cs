@@ -12,6 +12,7 @@ using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -126,7 +127,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityRepository.SubmitChanges();
 
                 string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-                if (dbms != "oracle")
+                if (!LogitudeSettings.IsCostomsDeploy)
                 {
                     RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
                 }
@@ -203,7 +204,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                  entityRepository.SubmitChanges();
 
                 string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-                if (dbms != "oracle")
+                if (!LogitudeSettings.IsCostomsDeploy)
                 {
                     RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
                 }

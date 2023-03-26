@@ -146,7 +146,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 this.UpdateContactSearchField(itemPM);
             }
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms != "oracle")
+            if (!LogitudeSettings.IsCostomsDeploy)
             {
                 RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
             }
@@ -198,7 +198,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.SubmitChanges();
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms != "oracle")
+            if (!LogitudeSettings.IsCostomsDeploy)
             {
                 RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
             }

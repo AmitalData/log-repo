@@ -116,7 +116,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "ShippingLine");
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms != "oracle")
+            if (!LogitudeSettings.IsCostomsDeploy)
             {
                 RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
             }
@@ -172,7 +172,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "ShippingLine");
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms != "oracle")
+            if (!LogitudeSettings.IsCostomsDeploy)
             {
                 RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
             }
