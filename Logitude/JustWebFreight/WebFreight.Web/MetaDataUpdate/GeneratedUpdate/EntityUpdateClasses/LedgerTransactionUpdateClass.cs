@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LedgerTransactionUpdateClass
    {  		
-		public const string HashString = "bed0ce6f0433486451d8b7abce2e517a";
+		public const string HashString = "1bab0d3b43f9272c3b3d5004dac554e8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -452,10 +452,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
 					  						DefaultText =  "Create Date",
-					  						FullLocalDefaultText =  "תםריך יצירה",
+					  						FullLocalDefaultText =  "תאריך יצירה",
 					  						ListFieldLable =  "CreateDateListLable",
 					  						ListLableDefaultText =  "Create Date",
-					  						ListLocalDefaultText =  "תםריך יצירה",
+					  						ListLocalDefaultText =  "תאריך יצירה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -653,10 +653,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AccountingDate",
 					  						DefaultText =  "Accounting Date",
-					  						FullLocalDefaultText =  "תםריך חשבונםי",
+					  						FullLocalDefaultText =  "תאריך חשבונאי",
 					  						ListFieldLable =  "AccountingDateListLable",
 					  						ListLableDefaultText =  "Accounting Date",
-					  						ListLocalDefaultText =  "תםריך חשבונםי",
+					  						ListLocalDefaultText =  "תאריך חשבונאי",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -718,10 +718,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DocumentDate",
 					  						DefaultText =  "Document Date",
-					  						FullLocalDefaultText =  "תםריך םסמכתם",
+					  						FullLocalDefaultText =  "תאריך אסמכתא",
 					  						ListFieldLable =  "DocumentDateListLable",
 					  						ListLableDefaultText =  "Document Date",
-					  						ListLocalDefaultText =  "תםריך םסמכתם",
+					  						ListLocalDefaultText =  "תאריך אסמכתא",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -783,10 +783,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DueDate",
 					  						DefaultText =  "Due Date",
-					  						FullLocalDefaultText =  "תםריך פרעון",
+					  						FullLocalDefaultText =  "תאריך פרעון",
 					  						ListFieldLable =  "DueDateListLable",
 					  						ListLableDefaultText =  "Due Date",
-					  						ListLocalDefaultText =  "תםריך פרעון",
+					  						ListLocalDefaultText =  "תאריך פרעון",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1249,10 +1249,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Reference1",
 					  						DefaultText =  "Reference1",
-					  						FullLocalDefaultText =  "םסמכתם 1",
+					  						FullLocalDefaultText =  "אסמכתא 1",
 					  						ListFieldLable =  "Reference1ListLable",
 					  						ListLableDefaultText =  "Reference1",
-					  						ListLocalDefaultText =  "םסמכתם 1",
+					  						ListLocalDefaultText =  "אסמכתא 1",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1313,10 +1313,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Reference2",
 					  						DefaultText =  "Reference2",
-					  						FullLocalDefaultText =  "םסמכתם 2",
+					  						FullLocalDefaultText =  "אסמכתא 2",
 					  						ListFieldLable =  "Reference2ListLable",
 					  						ListLableDefaultText =  "Reference2",
-					  						ListLocalDefaultText =  "םסמכתם 2",
+					  						ListLocalDefaultText =  "אסמכתא 2",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1377,10 +1377,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Reference3",
 					  						DefaultText =  "Reference3",
-					  						FullLocalDefaultText =  "םסמכתם 3",
+					  						FullLocalDefaultText =  "אסמכתא 3",
 					  						ListFieldLable =  "Reference3ListLable",
 					  						ListLableDefaultText =  "Reference3",
-					  						ListLocalDefaultText =  "םסמכתם 3",
+					  						ListLocalDefaultText =  "אסמכתא 3",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1576,10 +1576,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Journal No. / Reference",
-					  						FullLocalDefaultText =  "מס פקודת יומן/ םסמכתם",
+					  						FullLocalDefaultText =  "מס פקודת יומן/ אסמכתא",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "Journal No. / Reference",
-					  						ListLocalDefaultText =  "מס פקודת יומן/ םסמכתם",
+					  						ListLocalDefaultText =  "מס פקודת יומן/ אסמכתא",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2167,10 +2167,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AmountToReconcile",
 					  						DefaultText =  "Amount to Reconcile",
-					  						FullLocalDefaultText =  "סכום להתםמה",
+					  						FullLocalDefaultText =  "סכום להתאמה",
 					  						ListFieldLable =  "AmountToReconcileListLable",
 					  						ListLableDefaultText =  "Amount to Reconcile",
-					  						ListLocalDefaultText =  "סכום להתםמה",
+					  						ListLocalDefaultText =  "סכום להתאמה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2362,10 +2362,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsReconciled",
 					  						DefaultText =  "Is Reconciled",
-					  						FullLocalDefaultText =  "בוצעה התםמה",
+					  						FullLocalDefaultText =  "בוצעה התאמה",
 					  						ListFieldLable =  "IsReconciledListLable",
 					  						ListLableDefaultText =  "Is Reconciled",
-					  						ListLocalDefaultText =  "בוצעה התםמה",
+					  						ListLocalDefaultText =  "בוצעה התאמה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2860,10 +2860,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsExternalReconcile",
 					  						DefaultText =  "Is External Reconcile",
-					  						FullLocalDefaultText =  "מותםם חיצונית",
+					  						FullLocalDefaultText =  "מותאם חיצונית",
 					  						ListFieldLable =  "IsExternalReconcileListLable",
 					  						ListLableDefaultText =  "Is External Reconcile",
-					  						ListLocalDefaultText =  "מותםם חיצונית",
+					  						ListLocalDefaultText =  "מותאם חיצונית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2924,10 +2924,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InReconcileProgress",
 					  						DefaultText =  "In Reconcile Progress",
-					  						FullLocalDefaultText =  "התםמה בתהליך",
+					  						FullLocalDefaultText =  "התאמה בתהליך",
 					  						ListFieldLable =  "InReconcileProgressListLable",
 					  						ListLableDefaultText =  "In Reconcile Progress",
-					  						ListLocalDefaultText =  "התםמה בתהליך",
+					  						ListLocalDefaultText =  "התאמה בתהליך",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3055,10 +3055,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ReconcileRemarks",
 					  						DefaultText =  "Reconcile Remarks",
-					  						FullLocalDefaultText =  "הערות להםתמה",
+					  						FullLocalDefaultText =  "הערות להאתמה",
 					  						ListFieldLable =  "ReconcileRemarksListLable",
 					  						ListLableDefaultText =  "Reconcile Remarks",
-					  						ListLocalDefaultText =  "הערות להםתמה",
+					  						ListLocalDefaultText =  "הערות להאתמה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3553,10 +3553,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InProgressExternalReconcile",
 					  						DefaultText =  "In External Reconcile Progress",
-					  						FullLocalDefaultText =  "התםמה חצונית בתהליך",
+					  						FullLocalDefaultText =  "התאמה חצונית בתהליך",
 					  						ListFieldLable =  "InProgressExternalReconcileListLable",
 					  						ListLableDefaultText =  "In External Reconcile Progress",
-					  						ListLocalDefaultText =  "התםמה חצונית בתהליך",
+					  						ListLocalDefaultText =  "התאמה חצונית בתהליך",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4880,9 +4880,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode LedgerTransactionTextCode_LedgerTransactionOAgingMonthNotSet = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.AgingMonthNotSet", DefaultText = "Number of aging months is not set in Full Accounting Settings",LocalDefaultText = @"יש להגדיר מספר חודשי גיול בהגדרות מערכת", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOREFFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.REFFrom", DefaultText = "From Ref. Date",LocalDefaultText = @"מתםריך םסמכתם", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOREFFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.REFFrom", DefaultText = "From Ref. Date",LocalDefaultText = @"מתאריך אסמכתא", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOREFTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.REFTo", DefaultText = "To Ref. date",LocalDefaultText = @"עד תםריך םסמכתם", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOREFTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.REFTo", DefaultText = "To Ref. date",LocalDefaultText = @"עד תאריך אסמכתא", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode LedgerTransactionTextCode_LedgerTransactionOBank = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.Bank", DefaultText = "Bank",LocalDefaultText = @"בנק", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -4896,9 +4896,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode LedgerTransactionTextCode_LedgerTransactionOGlaccountOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.GlaccountOnly", DefaultText = "Glaccount",LocalDefaultText = @"כרטיס עוש", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOReconciliationNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.ReconciliationNo", DefaultText = "Reconciliation Number",LocalDefaultText = @"מספר התםמה", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOReconciliationNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.ReconciliationNo", DefaultText = "Reconciliation Number",LocalDefaultText = @"מספר התאמה", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOReferenceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.ReferenceDate", DefaultText = "Reference Date",LocalDefaultText = @"תםריך םסמכתם", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOReferenceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.ReferenceDate", DefaultText = "Reference Date",LocalDefaultText = @"תאריך אסמכתא", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode LedgerTransactionTextCode_LedgerTransactionOAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.Amount", DefaultText = "Amount",LocalDefaultText = @"סכום", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -4910,7 +4910,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode LedgerTransactionTextCode_GLAccount_LedgerTransaction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount_LedgerTransaction", DefaultText = "Ledger Transaction",LocalDefaultText = @"Ledger Transaction", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOOneYearValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.OneYearValidation", DefaultText = "Can not be filtered for more than 365 days",LocalDefaultText = @"לם ניתן לבצע חיתוך של יותר מ 365 ימים", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOOneYearValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.OneYearValidation", DefaultText = "Can not be filtered for more than 365 days",LocalDefaultText = @"לא ניתן לבצע חיתוך של יותר מ 365 ימים", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode LedgerTransactionTextCode_LedgerTransactionOLocalAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.LocalAmount", DefaultText = "Local Amount",LocalDefaultText = "סכום בש''ח", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
