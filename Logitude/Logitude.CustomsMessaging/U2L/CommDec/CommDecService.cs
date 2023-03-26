@@ -677,8 +677,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                         var updateDeclarationPending907ExceedingTheQuantityOfGoodsService = new UpdateDeclarationPending907ExceedingTheQuantityOfGoodsService(_MyDeclarationPM);
                         updateDeclarationPending907ExceedingTheQuantityOfGoodsService.Calc(currentDeclarationCourierStatusPM);
 
-                    var updateDeclarationPending904ExceededGrossMassMeasureService = new UpdateDeclarationPending904ExceededGrossMassMeasureService(_MyDeclarationPM);
-                    updateDeclarationPending904ExceededGrossMassMeasureService.Calc(currentDeclarationCourierStatusPM);
+
  
 
                     
