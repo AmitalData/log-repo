@@ -134,7 +134,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         IsAmendment = true,
                         ExportDeclarationOfficeCode = GetValueIDType(declaration.ExportDeclarationOfficeID),
                         DeclarationTypeCode = GetValueCodeType(declaration.TypeCode),
-                        Consignments = GetConsignments(declaration, tenant, null, context, declarationOrg?.Consignments),
+                        Consignments = GetConsignments(declaration, tenant, context, declarationOrg?.Consignments),
                     };
                    // declarationPM.IsSubmitDeclaration = declarationOrg.IsSubmitDeclaration;
                     declarationPM.IsExportClosed = declarationOrg.IsExportClosed;
@@ -214,7 +214,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationPM.IsConnectedToUnifreight = false;
                     declarationPM.AmendmentDontDisplayInList = false;
                     declarationPM.IsAmendment = true;
-                    declarationPM.Consignments = GetConsignments(declaration, tenant, declarationPM, context,null);
+                    declarationPM.Consignments = GetConsignments(declaration, tenant, context, declarationPM.Consignments);
 
                     declarationPM.ChangeSetOp = ChangeSetOperation.Update;
 
@@ -648,8 +648,25 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             return recipientPMs;
         }
+        
+        private void ConnectContainerizationAndExportStorage(List<ConsignmentPM> prev_consignments, ConsignmentPM newConsignmentPM)
+        {
+            if (prev_consignments != null)
+            {
+                var consignmentOrg = prev_consignments.Where(x =>
+                                     x.CargoTypeCode == newConsignmentPM.CargoTypeCode &&
+                                     x.ManifestNumber == newConsignmentPM.ManifestNumber &&
+                                     x.SecondCargoID == newConsignmentPM.SecondCargoID &&
+                                     x.ThirdCargoID == newConsignmentPM.ThirdCargoID).FirstOrDefault();
 
-        private List<ConsignmentPM> GetConsignments(Declaration declaration, int tenant, DeclarationPM declarationPM, ICustomContext context, List<ConsignmentPM> consignments)
+                if (consignmentOrg != null)
+                {
+                    newConsignmentPM.ExportContainerizationID = consignmentOrg.ExportContainerizationID;
+                    newConsignmentPM.ExportStoragesId = consignmentOrg.ExportStoragesId;
+                }
+            }
+        }
+        private List<ConsignmentPM> GetConsignments(Declaration declaration, int tenant, ICustomContext context, List<ConsignmentPM> prev_consignments)
         {
             if (declaration.GoodsShipment == null || declaration.GoodsShipment.Count() == 0) return null;
             if ((declaration.GoodsShipment[0].ExportConsignment == null && declaration.GoodsShipment[0].ImportConsignment == null) ||
@@ -662,15 +679,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 consignmentPM.ChangeSetOp = ChangeSetOperation.Insert;
                 consignmentPM.Tenant = tenant;
                 consignmentPM.ConsignmentType = "E";
-                var consignmentQueryService = new ConsignmentQueryService(context);
-
-                //if (declarationPM != null)
-                //{
-                    /*var maxCounter = consignmentQueryService.GetMaxCounterKey(declarationPM.Id, tenant) ?? 0;
-                    consignmentPM.SequenceNumeric = maxCounter + 1;*/
-                    
-                    consignmentPM.SequenceNumeric = Convert.ToInt32(consignment.SequenceNumeric);
-                //}
+                consignmentPM.SequenceNumeric = Convert.ToInt32(consignment.SequenceNumeric);
+                
                 if (consignment.TransportContractDocument != null)
                 {
                     consignmentPM.CargoTypeCode = GetValueCodeType(consignment.TransportContractDocument.TypeCode);
@@ -681,13 +691,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         consignmentPM.SecondCargoID = GetValueIDType(consignment.TransportContractDocument.DMExtensions.SecondCargoID);
                         consignmentPM.ThirdCargoID = GetValueIDType(consignment.TransportContractDocument.DMExtensions.ThirdCargoID);
                     }
-                    if (consignments != null) { 
-                        consignmentPM.ExportContainerizationID = consignments.Where(x => x.CargoTypeCode == consignmentPM.CargoTypeCode && x.ManifestNumber == consignmentPM.ManifestNumber && x.SecondCargoID == consignmentPM.SecondCargoID && x.ThirdCargoID == consignmentPM.ThirdCargoID).Select(y => y.ExportContainerizationID).FirstOrDefault();
-                    }
-                    if (declarationPM != null)
-                    {                      
-                        consignmentPM.ExportContainerizationID = declarationPM.Consignments.Where(x => x.CargoTypeCode == consignmentPM.CargoTypeCode && x.ManifestNumber == consignmentPM.ManifestNumber && x.SecondCargoID == consignmentPM.SecondCargoID && x.ThirdCargoID == consignmentPM.ThirdCargoID).Select(y => y.ExportContainerizationID).FirstOrDefault();
-                    }
+                    ConnectContainerizationAndExportStorage(prev_consignments, consignmentPM);
                 }
                 if (consignment.UnloadingLocation != null)
                 {
@@ -767,13 +771,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     consignmentPM.ChangeSetOp = ChangeSetOperation.Insert;
                     consignmentPM.Tenant = tenant;
                     consignmentPM.ConsignmentType = "I";
-                    var consignmentQueryService = new ConsignmentQueryService(context);
-
-                    //if (declarationPM != null)
-                    //{
-                    //    var maxCounter = consignmentQueryService.GetMaxCounterKey(declarationPM.Id, tenant) ?? 0;
-                    //    consignmentPM.SequenceNumeric = maxCounter + 1;
-                    //}
                     consignmentPM.SequenceNumeric = Convert.ToInt32(consignment.SequenceNumeric);
 
                     if (consignment.TransportContractDocument != null)
@@ -786,14 +783,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             consignmentPM.SecondCargoID = GetValueIDType(consignment.TransportContractDocument.DMExtensions.SecondCargoID);
                             consignmentPM.ThirdCargoID = GetValueIDType(consignment.TransportContractDocument.DMExtensions.ThirdCargoID);
                         }
-                        if (consignments != null)
-                        {
-                            consignmentPM.ExportContainerizationID = consignments.Where(x => x.CargoTypeCode == consignmentPM.CargoTypeCode && x.ManifestNumber == consignmentPM.ManifestNumber && x.SecondCargoID == consignmentPM.SecondCargoID && x.ThirdCargoID == consignmentPM.ThirdCargoID).Select(y => y.ExportContainerizationID).FirstOrDefault();
-                        }
-                        if (declarationPM != null)
-                        {
-                            consignmentPM.ExportContainerizationID = declarationPM.Consignments.Where(x => x.CargoTypeCode == consignmentPM.CargoTypeCode && x.ManifestNumber == consignmentPM.ManifestNumber && x.SecondCargoID == consignmentPM.SecondCargoID && x.ThirdCargoID == consignmentPM.ThirdCargoID).Select(y => y.ExportContainerizationID).FirstOrDefault();
-                        }
+                        ConnectContainerizationAndExportStorage(prev_consignments, consignmentPM);
                     }
                     if (consignment.UnloadingLocation != null)
                     {
