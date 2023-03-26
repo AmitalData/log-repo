@@ -1,5 +1,5 @@
 ﻿<Script  DBType="Main" Module="Infrastructure">
-  <Sql Version="26">
+  <Sql Version="35">
     <![CDATA[
 	
 	 BEGIN
@@ -212,6 +212,96 @@
 				"TextCode": "Quote.G.SearchBy",
 				"DefaultText": "Search by quote#",
 				"FieldCode": "",
+				"DisplayText": ""
+			},	
+			{
+				"TextCode": "Quote.G.LastModified",
+				"DefaultText": "Last modified",
+				"FieldCode": "",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.G.Print",
+				"DefaultText": "Print",
+				"FieldCode": "",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.G.Subject",
+				"DefaultText": "Subject",
+				"FieldCode": "",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.G.GeneralInformation",
+				"DefaultText": "General information",
+				"FieldCode": "Quote.GeneralInformation",
+				"DisplayText": ""
+			},	
+			{
+				"TextCode": "Quote.G.IncotermName",
+				"DefaultText": "Incoterm",
+				"FieldCode": "Quote.IncotermName",
+				"DisplayText": ""
+			},	
+			{
+				"TextCode": "Quote.G.RefrenceNumner",
+				"DefaultText": "Refrence #",
+				"FieldCode": "Quote.RefrenceNumner",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.G.Shipper",
+				"DefaultText": "Shipper",
+				"FieldCode": "Quote.ShipperName",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.G.Consignee",
+				"DefaultText": "Consignee",
+				"FieldCode": "Quote.ConsigneeName",
+				"DisplayText": ""
+			},	
+			{
+				"TextCode": "Quote.G.SalesmanName",
+				"DefaultText": "Salesman",
+				"FieldCode": "Quote.SalesmanName",
+				"DisplayText": ""
+			},	
+			{
+				"TextCode": "Quote.G.ValidFrom",
+				"DefaultText": "Valid from date",
+				"FieldCode": "Quote.ValidFrom",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.G.ValidTo",
+				"DefaultText": "Valid to date",
+				"FieldCode": "Quote.ValidTo",
+				"DisplayText": ""
+			},	
+			{
+				"TextCode": "Quote.G.MoveTypeCode",
+				"DefaultText": "Movement type",
+				"FieldCode": "Quote.MoveTypeCode",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.G.Notes",
+				"DefaultText": "Notes",
+				"FieldCode": "Quote.Notes",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.G.ValueOfTheQuote",
+				"DefaultText": "Value of the quote",
+				"FieldCode": "Quote.ValueOfGoods",
+				"DisplayText": ""
+			},	
+			{
+				"TextCode": "Quote.G.Subject",
+				"DefaultText": "Subject",
+				"FieldCode": "Quote.Subject",
 				"DisplayText": ""
 			},
 		]';
