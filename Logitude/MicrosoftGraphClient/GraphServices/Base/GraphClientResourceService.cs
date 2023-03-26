@@ -1,6 +1,6 @@
-﻿namespace MicrosoftGraphClient.GraphServices.Abstract
+﻿namespace MicrosoftGraphClient.GraphServices.Base
 {
-    public abstract class GraphClientResourceService
+    public abstract class GraphClientResourceService<T>
     {
         protected string Url { get; set; }
         protected string Token { get; set; }
@@ -11,9 +11,12 @@
             Token = token;
         }
 
-        public void SetToken(string token)
+        protected abstract T GetInstance();
+
+        public T SetToken(string token)
         {
             Token = token;
+            return GetInstance();
         }
     }
 }

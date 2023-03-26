@@ -39,7 +39,7 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Extended
 {
     public class MicrosoftOffice365Controller : ApiController
     {
-        public HttpResponseMessage CreateSubscription(string microsoftEmailAccessToken, string workflowNumber)
+        public HttpResponseMessage PostSubscription(string microsoftEmailAccessToken, string workflowNumber)
         {
             if (string.IsNullOrEmpty(microsoftEmailAccessToken) || string.IsNullOrEmpty(workflowNumber))
             {
@@ -59,7 +59,7 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Extended
 
 
 
-                    var test = new GraphClientProfileService();
+                    //var test = new GraphClientProfileService();
 
 
 

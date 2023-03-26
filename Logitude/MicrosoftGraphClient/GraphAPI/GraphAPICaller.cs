@@ -9,33 +9,51 @@ namespace MicrosoftGraphClient.GraphAPI
     {
         public static T Call<T>(string token, string apiUrl, Method method, object requestBody = null)
         {
-            try
+            if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(apiUrl))
             {
-                if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(apiUrl))
-                {
-                    throw new Exception("Invalid token or url");
-                }
-
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-                RestRequest restRequest = GetRestRequest(token, apiUrl, method, requestBody);
-                RestClient restClient = new RestClient();
-                IRestResponse<T> restResponse = restClient.ExecuteAsync<T>(restRequest).Result;
-                if (restResponse.StatusCode == HttpStatusCode.OK || restResponse.StatusCode == HttpStatusCode.Accepted)
-                {
-                    return restResponse.Data;
-                }
-                else if (restResponse.StatusCode == HttpStatusCode.NotFound)
-                {
-                    throw new Exception(apiUrl + " not found");
-                }
-                else
-                {
-                    throw new Exception(GetResponseErrorMessage(restResponse));
-                }
+                throw new Exception("Invalid token or url");
             }
-            catch (Exception exception)
+
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+            RestRequest restRequest = GetRestRequest(token, apiUrl, method, requestBody);
+            RestClient restClient = new RestClient();
+            IRestResponse<T> restResponse = restClient.ExecuteAsync<T>(restRequest).Result;
+            if (restResponse.StatusCode == HttpStatusCode.OK || restResponse.StatusCode == HttpStatusCode.Accepted)
             {
-                throw new Exception(exception.ToString());
+                return restResponse.Data;
+            }
+            else if (restResponse.StatusCode == HttpStatusCode.NotFound)
+            {
+                throw new Exception(apiUrl + " not found");
+            }
+            else
+            {
+                throw new Exception(GetResponseErrorMessage(restResponse));
+            }
+        }
+
+        public static string Call(string token, string apiUrl, Method method, object requestBody = null)
+        {
+            if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(apiUrl))
+            {
+                throw new Exception("Invalid token or url");
+            }
+
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+            RestRequest restRequest = GetRestRequest(token, apiUrl, method, requestBody);
+            RestClient restClient = new RestClient();
+            IRestResponse restResponse = restClient.ExecuteAsync(restRequest).Result;
+            if (restResponse.StatusCode == HttpStatusCode.OK || restResponse.StatusCode == HttpStatusCode.Accepted)
+            {
+                return restResponse.Content;
+            }
+            else if (restResponse.StatusCode == HttpStatusCode.NotFound)
+            {
+                throw new Exception(apiUrl + " not found");
+            }
+            else
+            {
+                throw new Exception(GetResponseErrorMessage(restResponse));
             }
         }
 

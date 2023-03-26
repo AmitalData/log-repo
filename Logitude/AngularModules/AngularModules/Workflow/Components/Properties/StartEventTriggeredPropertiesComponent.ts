@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, Inject } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
@@ -10,6 +10,8 @@ import { StartEventApplicationsList } from "Workflow/Lists/StartEventApplication
 import { StartEventTypesList } from "Workflow/Lists/StartEventTypesList";
 import { Condition } from "Workflow/Models/Condition";
 import { ListItem } from "Workflow/Models/ListItem";
+import { MsalService, MSAL_GUARD_CONFIG, MsalGuardConfiguration } from "@azure/msal-angular";
+import { AuthenticationResult, PopupRequest } from "@azure/msal-browser";
 
 @Component({
     templateUrl: "./StartEventTriggeredPropertiesComponent.html"
@@ -30,6 +32,13 @@ export class StartEventTriggeredPropertiesComponent extends BaseComponent {
     public BusyIndicatorWidth: number = 200;
     public ShowBusyIndicator: boolean = false;
     public CurrentSession = SessionLocator.SelectedSession;
+
+    constructor(
+        @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration,
+        private authService: MsalService
+    ) {
+        super();
+    }
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
@@ -107,6 +116,18 @@ export class StartEventTriggeredPropertiesComponent extends BaseComponent {
             let validationErrors = notValidUIProperties.map(t => { return t.ValidationError; });
             this.ValidationErrorsList = validationErrors;
         }
+    }
+
+    msalLoginPopup() {
+        let loginScopes = ["openid", "offline_access", "profile", "User.Read", "Mail.Read"];
+
+        let popupRequest: PopupRequest = this.msalGuardConfig.authRequest ?
+            { ...this.msalGuardConfig.authRequest, scopes: loginScopes } :
+            { scopes: loginScopes };
+
+        this.authService.loginPopup(popupRequest).subscribe((authenticationResult: AuthenticationResult) => {
+            console.log(authenticationResult);
+        });
     }
 
     startBusyIndicator(message: string = "Loading ...") {
