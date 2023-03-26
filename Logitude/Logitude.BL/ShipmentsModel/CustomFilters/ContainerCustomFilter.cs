@@ -41,6 +41,9 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         var allowedStatusWeight = allStatuses.FirstOrDefault(a => a.Code == "ARPD")?.StatusWeight;
                         queryableData = queryableData.Where(d => (d.ActualPOLVesselDeparture != null || d.ShipmentMainCarriageATD != null)
                                                              && (d.TransshipmentCount == 0 || d.TransshipmentCount == null)
+                                                             && (d.ShipmentTransshipment1FromPort == null 
+                                                             &&  d.ShipmentTransshipment2FromPort == null
+                                                             &&  d.ShipmentTransshipment2FromPort == null)
                                                              && (d.ActualPODVesselArrival == null && d.ShipmentMainCarriageATA == null)
                                                              && (d.EstimatedPODVesselArrival != todayDate && d.ShipmentMainCarriageETA != todayDate)
                                                              && d.EntityStatus.StatusWeight < allowedStatusWeight);
@@ -52,7 +55,10 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         var allStatuses = GetAllStatusesByObjecTableName(containerObjectTableName, Tenant);
                         var allowedStatusWeight = allStatuses.FirstOrDefault(a => a.Code == "ARPD")?.StatusWeight;
                         queryableData = queryableData.Where(d => (d.ActualPOLVesselDeparture != null || d.ShipmentMainCarriageATD != null)
-                                                             && (d.TransshipmentCount != null && d.TransshipmentCount > 0)
+                                                             && ((d.TransshipmentCount != null && d.TransshipmentCount > 0)
+                                                             || d.ShipmentTransshipment3FromPort != null
+                                                             || d.ShipmentTransshipment2FromPort != null
+                                                             || d.ShipmentTransshipment1FromPort != null)
                                                              && (d.ActualPODVesselArrival == null && d.ShipmentMainCarriageATA == null)
                                                              && (d.EstimatedPODVesselArrival != todayDate && d.ShipmentMainCarriageETA != todayDate)
                                                              && d.EntityStatus.StatusWeight < allowedStatusWeight);                     
