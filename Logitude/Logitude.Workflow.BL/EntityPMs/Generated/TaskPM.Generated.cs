@@ -802,6 +802,52 @@ namespace Logitude.Workflow.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool isAssigned ;
+	  	  
+       
+	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsAssigned  
+	   {
+	    
+	     get
+		{
+		   return isAssigned;
+		 }
+		 set
+		 {
+		   if(isAssigned != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAssigned",OldValue=isAssigned,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isAssigned=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? startDate ;
+	  	  
+       
+	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? StartDate  
+	   {
+	    
+	     get
+		{
+		   return startDate;
+		 }
+		 set
+		 {
+		   if(startDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StartDate",OldValue=startDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   startDate=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

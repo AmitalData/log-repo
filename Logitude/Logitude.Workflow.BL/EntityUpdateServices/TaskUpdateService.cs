@@ -56,5 +56,14 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
 
             taskExtendedRepository.Update(taskExtended);
         }
+
+        private bool IsAssignedTask(TaskPM entityPM)
+        {
+            if (string.IsNullOrEmpty(entityPM.OwnerId))
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

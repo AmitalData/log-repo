@@ -40,17 +40,17 @@ namespace Logitude.Workflow.Data.EntityMapping
 
             this.Property(t => t.DueDate).HasColumnName("DueDate").IsRequired();
 
-            this.Property(t => t.OwnerId).HasColumnName("OwnerId").IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.OwnerId).HasColumnName("OwnerId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.PriorityId).HasColumnName("PriorityId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.StatusId).HasColumnName("StatusId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.EntityId).HasColumnName("EntityId").IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.EntityId).HasColumnName("EntityId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.TaskTypeId).HasColumnName("TaskTypeId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.EntityObjectTableId).HasColumnName("EntityObjectTableId").IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.EntityObjectTableId).HasColumnName("EntityObjectTableId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.ClosedByUserId).HasColumnName("ClosedByUserId").HasMaxLength(15).IsUnicode(false);
 
@@ -62,7 +62,11 @@ namespace Logitude.Workflow.Data.EntityMapping
 
             this.Property(t => t.CheckWithId).HasColumnName("CheckWithId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.EntityNumber).HasColumnName("EntityNumber").IsRequired().HasMaxLength(40).IsUnicode(true);
+            this.Property(t => t.EntityNumber).HasColumnName("EntityNumber").HasMaxLength(40).IsUnicode(true);
+
+            this.Property(t => t.IsAssigned).HasColumnName("IsAssigned").IsRequired();
+
+            this.Property(t => t.StartDate).HasColumnName("StartDate");
         }
     }
 }

@@ -243,7 +243,7 @@ export class CreateTaskPropertiesComponent extends BaseComponent implements OnIn
 
     setUIProperties() {
         this.UIProperties.SetRequired("Name", null, AppTool.IsNullOrEmpty(this.Name));
-        this.UIProperties.SetRequired("Record", null, AppTool.IsNullOrEmpty(this.Record));
+        // this.UIProperties.SetRequired("Record", null, AppTool.IsNullOrEmpty(this.Record));
     }
 
     cancelButtonClicked() {
@@ -254,8 +254,8 @@ export class CreateTaskPropertiesComponent extends BaseComponent implements OnIn
         this.ValidationErrorsList = [];
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
         let isValidName = !this.IsNew || !FlowReader.isNodeCodeExists(this.FlowObject, this.Name);
-        let isValidSave = notValidUIProperties.length === 0 && this.IsValidSetValues && this.IsValidTaskFields && isValidName;
-
+        let isValidSave = notValidUIProperties.length === 0 && this.IsValidTaskFields && isValidName; //this.IsValidSetValues &&
+       
         if (isValidSave) {
             this.completeSave();
         } else {
@@ -277,9 +277,9 @@ export class CreateTaskPropertiesComponent extends BaseComponent implements OnIn
         if (!isValidName) {
             this.ValidationErrorsList.push("The Name Should be Unique.");
         }
-        if (!this.IsValidSetValues) {
-            this.ValidationErrorsList.push("Invalid Set Values");
-        }
+        // if (!this.IsValidSetValues) {
+        //     this.ValidationErrorsList.push("Invalid Set Values");
+        // }
         if (!this.IsValidTaskFields) {
             this.ValidationErrorsList.push("Invalid Fields");
         }

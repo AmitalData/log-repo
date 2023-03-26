@@ -194,6 +194,16 @@ export class TaskPM {
     public set Description(newValue: string) { if (this.description != newValue) { this.description = newValue; this.MarkAsDirty("Description"); } }
        
 	 
+    private isAssigned: boolean;
+    public get IsAssigned() { return this.isAssigned; }
+    public set IsAssigned(newValue: boolean) { if (this.isAssigned != newValue) { this.isAssigned = newValue; this.MarkAsDirty("IsAssigned"); } }
+       
+	 
+    private startDate: Date;
+    public get StartDate() { return this.startDate; }
+    public set StartDate(newValue: Date) { if (this.startDate != newValue) { this.startDate = newValue; this.MarkAsDirty("StartDate"); } }
+       
+	 
 
     public OldEntityPM: TaskPM;
 		
