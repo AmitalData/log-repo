@@ -91,6 +91,10 @@ namespace Logitude.Workflow.Data.EntityPOCOs
         public virtual Card CheckWith { get; set; }
         [Column("EntityNumber")]
 	    public string EntityNumber { get; set; }
+        [Column("IsAssigned")]
+	    public bool IsAssigned { get; set; }
+        [Column("StartDate")]
+	    public DateTime? StartDate { get; set; }
     }
 }
 	 
