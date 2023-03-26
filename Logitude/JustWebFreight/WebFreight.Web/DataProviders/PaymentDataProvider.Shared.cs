@@ -118,6 +118,7 @@ namespace WebFreight.Web.DataProviders
             public decimal ImpPagado { get; set; }
             public decimal ImpSaldoInsoluto { get; set; }
             public double? InvoicePaymentExchangeRate { get; set; }
+            public string CustomerRef { get; set; }
 
 
             //            UUID
