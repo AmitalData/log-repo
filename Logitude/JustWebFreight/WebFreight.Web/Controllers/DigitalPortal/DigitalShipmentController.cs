@@ -215,8 +215,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     var departureDateTime = currentDateTime.AddMonths(-(data.DPArchiveShipmentDepartFilter.HasValue ? data.DPArchiveShipmentDepartFilter.Value : 3));
 
                     shipments.Where(a => (helper.DoesPropertyExistInDynamic(a, "CreateDateTime") && a.CreateDateTime <= createdDateTime)
-                                          || (helper.DoesPropertyExistInDynamic(a, "MainCarriageFinalDestinationATA") && (a.MainCarriageFinalDestinationATA <= arrivalDateTime && (a.DirectionId == "I" || a.DirectionId == "R")))
-                                          || (helper.DoesPropertyExistInDynamic(a, "MainCarriageATD") && (a.MainCarriageATD <= departureDateTime && (a.DirectionId == "E" || a.DirectionId == "D"))))
+                                          || (helper.DoesPropertyExistInDynamic(a, "MainCarriageFinalDestinationATA") 
+                                               && (a.MainCarriageFinalDestinationATA <= arrivalDateTime && (a.DirectionId == "I" || a.DirectionId == "D" || a.DirectionId == "R")))
+                                          || (helper.DoesPropertyExistInDynamic(a, "MainCarriageATD") && (a.MainCarriageATD <= departureDateTime && a.DirectionId == "E")))
                             .ToList()
                             .ForEach(i => i.IsCustomerArchived = true);
                 }
