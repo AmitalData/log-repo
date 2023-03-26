@@ -24,7 +24,7 @@ export class DocumentObjectFieldsRowViewModel   {
     IsCustom: boolean= false;
     DisplayListOnly: boolean;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
-    public constructor(objectField: ObjectFieldPM, resultFieldName: string, objectFieldType: string, reportId:string = null) {
+    public constructor(objectField: ObjectFieldPM, resultFieldName: string, objectFieldType: string) {
 
         if (objectField) {
             this.CurrentObjectField = objectField;
@@ -73,7 +73,7 @@ export class DocumentObjectFieldsRowViewModel   {
             }
             this.FullNameTextCodeCode = objectField.FullNameTextCodeCode;
 
-            if (objectField.DataTypeCode == "LookUp" || objectField.IsMulti || (objectField.DataTypeCode == "DateTime" && reportId == null)||(objectField.DataTypeCode == "List" && reportId != null)) {
+            if (objectField.DataTypeCode == "LookUp" || objectField.IsMulti || objectField.DataTypeCode == "DateTime") {
                 this.HasTree = true;
 
             }
