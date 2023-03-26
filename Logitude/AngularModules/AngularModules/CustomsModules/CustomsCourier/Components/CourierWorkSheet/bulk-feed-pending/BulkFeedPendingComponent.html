@@ -85,7 +85,7 @@
     <LogTextBox class="input-good-description" [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true"
         [ObjectFieldName]="'GoodsDescription'" [IsMultiline]="true" [DataContext]="DataContext" [InputType]="'nText'">
     </LogTextBox>
-    <LogLabel class="label-good-description"
+    <LogLabel class="label-casual-supplier-name"
         [Text]="'Customs.ReleaseGoods.O.CasualSupplierName' | TextCodeTranslationPipe" [NoObjectField]="true"
         [DataContext]="DataContext"></LogLabel>
 
@@ -132,7 +132,7 @@
     </MultiSelectLOV>
     <LogLabel [ObjectFieldName]="'CustomerName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
         
-    <LogTextBox [ObjectFieldName]="'CustomerName'" [InputType]="'nText'" [IsFreeText]="true" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+    <LogTextBox class="input-customer-name" [ObjectFieldName]="'CustomerName'" [InputType]="'nText'" [IsFreeText]="true" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
                                             [HideColumns]="true"></LogTextBox>
 
     <button class="Button" style="height:22px" (click)="search()">

@@ -395,7 +395,9 @@ export class BulkFeedPendingComponent extends BaseComponent {
                 console.log(ids);
 
                 var selectedEntityId = ids[0];
-
+                if (ids.length == 0) {
+                    return new MessageWindow().Show(TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.O.NotCheckDeclarations"));
+                }
                 SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = true;
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
