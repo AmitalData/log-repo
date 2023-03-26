@@ -769,7 +769,7 @@ if(hasTenant)
 	
     
 
-    if(applyGenericCustomFields)
+    if(tableName == "Card")
 	{
         blspacestring += Environment.NewLine + "using Logitude.Server.Tools.CustomFields;"; 
     }
@@ -971,17 +971,46 @@ else
 				
 		    	I<#= contextName #> MyContext = <#= contextName #>.GetContext(<#= databaseConnTenant #>);
 				<#= tableName #>Repository  <#= repositoryName #> = new <#= tableName #>Repository(MyContext);
+<#+
+if(!applyGenericCustomFields)
+{
+#>
 				<#= tableName #>List entityList = null;
 				<#= tableName #> entityPoco = <#= repositoryName #>.GetSingle<#= tableName #>(<#= primaryonlyparam #> <#= tenantonlyParam #>);
                 
                 if (entityPoco != null)
 				{
+<#+
+}
+#>
 				<#+
 if(tableName == "Card")
 {
 #>
+					<#= tableName #>List entityList = null;
+					<#= tableName #> entityPoco = <#= repositoryName #>.GetSingle<#= tableName #>(<#= primaryonlyparam #> <#= tenantonlyParam #>);
 					CardQuery cardQuery = new CardQuery(cardRepository);
                     entityList = cardQuery.GetSingleCardList(entityPoco);
+                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { EntityId = id, ObjectTableName = "<#= tableName #>", Tenant = authToken.Tenant, Type = "List", Entities = new List<<#= listName #>> { entityList }.Cast<object>().ToList() }).Set();
+<#+
+}else{
+#>
+<#+
+if(applyGenericCustomFields)
+{
+#>
+
+				<#= tableName #>Query  <#= queryName #> = new <#= tableName #>Query(<#= repositoryName #>);
+				IQueryable<<#= tableName #>> <#= tableNameFirstToLower #>s = <#= repositoryName #>.Get<#= dBTableName #>(authToken.Tenant).Where(a=><#= primarykeyCondition #>);
+				<#= tableName #>List entityList = <#= queryName #>.GetIQueryableEntityList(<#= tableNameFirstToLower #>s).FirstOrDefault();
+<#+
+if(!hasApiHelper && hasCustomFields){
+#>
+				CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+				customFieldResolver.SetCustomFieldsValues("<#= tableName #>",  authToken.Tenant, new List<<#= listName #>> { entityList }.Cast<object>().ToList());
+<#+
+}
+#>
 <#+
 }else{
 #>
@@ -993,20 +1022,20 @@ if(tableName == "Card")
 					IQueryable<<#= listName #>> iQueryableEntityList = <#= queryName #>.GetIQueryableEntityList(iQueryable);
 				    entityList = iQueryableEntityList.FirstOrDefault();
 <#+
-if(!hasApiHelper && applyGenericCustomFields)
+}
+#>
+<#+
+}
+#>
+<#+
+if(!applyGenericCustomFields)
 {
-#>
-                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { EntityId = id, ObjectTableName = "<#= tableName #>", Tenant = authToken.Tenant, Type = "List", Entities = new List<<#= listName #>> { entityList }.Cast<object>().ToList() }).Set();
-                    CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
-                	customFieldResolver.SetCustomFieldsValues("<#= tableName #>",  authToken.Tenant, new List<<#= listName #>> { entityList }.Cast<object>().ToList());
-<#+
-}
-#>
-<#+
-}
 #>
 
 			    }
+<#+
+}
+#>
 <#+
 if(hasApiHelper)
 {
@@ -1015,14 +1044,6 @@ if(hasApiHelper)
 				{
 <#+
 if(hasCustomFields){
-#>
-<#+
-if(applyGenericCustomFields)
-{
-#>
-                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { EntityId = id, ObjectTableName = "<#= tableName #>", Tenant = authToken.Tenant, Type = "List", Entities = new List<<#= listName #>> { entityList }.Cast<object>().ToList() }).Set();
-<#+
-}
 #>
                 	CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 	customFieldResolver.SetCustomFieldsValues("<#= tableName #>",  authToken.Tenant, new List<<#= listName #>> { entityList }.Cast<object>().ToList());

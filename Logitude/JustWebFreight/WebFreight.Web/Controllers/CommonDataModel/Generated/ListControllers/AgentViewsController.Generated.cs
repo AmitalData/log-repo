@@ -40,7 +40,6 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
 using Logitude.BL.Helpers;
-using Logitude.Server.Tools.CustomFields;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -69,23 +68,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				AgentRepository  agentRepository = new AgentRepository(MyContext);
-				AgentList entityList = null;
-				Agent entityPoco = agentRepository.GetSingleAgent(id , authToken.Tenant);
-                
-                if (entityPoco != null)
-				{
-									List<Agent> singleEntityList = new List<Agent>();
-					singleEntityList.Add(entityPoco);
-
-					AgentQuery agentQuery = new AgentQuery(agentRepository);
-					IQueryable<Agent> iQueryable = singleEntityList.AsQueryable();
-					IQueryable<AgentList> iQueryableEntityList = agentQuery.GetIQueryableEntityList(iQueryable);
-				    entityList = iQueryableEntityList.FirstOrDefault();
-
-			    }
+				
+				AgentQuery  agentQuery = new AgentQuery(agentRepository);
+				IQueryable<Agent> agents = agentRepository.GetAgents(authToken.Tenant).Where(a=>a.Id == id);
+				AgentList entityList = agentQuery.GetIQueryableEntityList(agents).FirstOrDefault();
 				if (entityList != null)
 				{
-                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { EntityId = id, ObjectTableName = "Agent", Tenant = authToken.Tenant, Type = "List", Entities = new List<AgentList> { entityList }.Cast<object>().ToList() }).Set();
                 	CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 	customFieldResolver.SetCustomFieldsValues("Agent",  authToken.Tenant, new List<AgentList> { entityList }.Cast<object>().ToList());
  	
