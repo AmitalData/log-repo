@@ -1,25 +1,25 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Server.Infrastructure.DataContracts;
-using Simplog.Server.Infrastructure.Helpers;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Xml.Serialization;
-
-using Logitude.Workflow.Data.EntityPOCOs;
-using Logitude.Workflow.Data.EntityLists;
 using Logitude.Workflow.Data.CustomFilters;
+using Logitude.Workflow.Data.EntityLists;
+using Logitude.Workflow.Data.EntityPOCOs;
+using Simplog.Server.Infrastructure.DataContracts;
+using System.Linq;
 
 namespace Logitude.Workflow.Data.EntityListQueryServices
-{ 
+{
 
     public partial class TaskListQueryService
     {
-	    private IQueryable<TaskList> GetIqueryableList(IQueryable<Task> iQueryable)
+		public IQueryable<TaskList> GetIqueryableList(int tenant)
+        {
+
+			IQueryable<Task> iQueryable = (from a in context.Tasks
+										   where a.Tenant == tenant
+										   select a);
+
+			return GetIqueryableList(iQueryable);
+		}
+
+		private IQueryable<TaskList> GetIqueryableList(IQueryable<Task> iQueryable)
         {
 		IQueryable<TaskList> query = (from a in iQueryable
                                             select new TaskList()
