@@ -144,8 +144,8 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
                 }
                 else
                 {
-                    using (TransactionScope scope = TransactionFactory.GetTransaction())
-                    {
+                    //using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    //{
 
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
@@ -157,9 +157,9 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
                         entityPm.Tenant = authToken.Tenant;
                         RecoCallback recoCallback = recoService.CreateReconciliation(entityPm);
 
-                        scope.Complete();
+                        //scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, recoCallback);
-                    }
+                    //}
                 }
             }
             catch (Exception ex)

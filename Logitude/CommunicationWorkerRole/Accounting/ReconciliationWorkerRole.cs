@@ -87,9 +87,9 @@ namespace CommunicationWorkerRole
             {
                 try
                 {
+                    var recoCallback = CreateReconciliation(response, tenant, commLog);
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
-                        var recoCallback = CreateReconciliation(response, tenant, commLog);
                         var recoCallbackJson = JsonConvert.SerializeObject(recoCallback);
                         commLog.CommunicationStatusTypeCode = "D";
                         commLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(commLog.Tenant);

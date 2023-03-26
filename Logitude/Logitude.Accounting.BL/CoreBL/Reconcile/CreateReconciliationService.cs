@@ -8,12 +8,14 @@ using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.Resolvers;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Transactions;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -124,10 +126,13 @@ namespace Logitude.Accounting.BL.CoreBL
             ReconciliationUpdateService service = new ReconciliationUpdateService(accountingContext, new Dictionary<string, IContext>(), tenant);
             foreach (ReconciliationPM recoPM in paymentReconciliations)
             {
-                service.Update(recoPM, true);
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    service.Update(recoPM, true);
+                    scope.Complete();
+                }
             }
         }
-
         private RecoCallback SplitAndSubmitReconciliationByGroupNumber(ReconciliationPM reconciliationPM)
         {
             var accountingContext = AccountingContext.GetContext(reconciliationPM.Tenant);
@@ -139,14 +144,20 @@ namespace Logitude.Accounting.BL.CoreBL
                 List<ReconciliationPM> recoPMs = SplitReconciliationByGroup(reconciliationPM);
                 foreach (ReconciliationPM recoPM in recoPMs)
                 {
-                    service.Update(recoPM, true);
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        service.Update(recoPM, true);
+                    }
                 }
 
                 recoCallBack = new RecoCallback() { isSplitted = true, splittedRecoCount = recoPMs.Count };
             }
             else
             {
-                service.Update(reconciliationPM, true);
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    service.Update(reconciliationPM, true);
+                }
                 recoCallBack = new RecoCallback(reconciliationPM);
 
             }
