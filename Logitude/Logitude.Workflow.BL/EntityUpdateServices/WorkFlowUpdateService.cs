@@ -20,10 +20,7 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
         {
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
-                if (string.IsNullOrEmpty(entityPM.WorkFlowNumber))
-                {
-                    entityPM.WorkFlowNumber = CodeCounter.GetNumber("WorkFlow", entityPM.Tenant).ToString();
-                }
+                entityPM.WorkFlowNumber = CodeCounter.GetNumber("WorkFlow", entityPM.Tenant).ToString();
 
                 ValidateWorkflowName(entityPM, true);
                 ValidateRetriesNumber(entityPM);
