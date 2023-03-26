@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Reflection;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.DataProviders;
+using WebFreight.Web.Helpers.DataProviderHelpers;
 
 namespace WebFreight.Web.Helpers.ExcelReport
 {
@@ -127,6 +128,10 @@ namespace WebFreight.Web.Helpers.ExcelReport
                 case "RSTA":
                     {
                         return typeof(StatementDataProvider);
+                    }
+                case "ATRE":
+                    {
+                        return typeof(AutomationTestReportDataProvider);
                     }
                 default:
                     return null;
