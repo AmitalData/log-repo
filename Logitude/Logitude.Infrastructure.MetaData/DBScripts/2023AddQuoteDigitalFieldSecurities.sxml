@@ -1,5 +1,5 @@
 ﻿<Script  DBType="Main" Module="Infrastructure">
-  <Sql Version="6">
+  <Sql Version="13">
     <![CDATA[
 	  declare @objectTableId as varchar(15)
 	  set @objectTableId = (select Id from ObjectTables where [Name] = 'Quote' and Tenant = 0)
@@ -175,6 +175,136 @@
 					"ModifiedOn": "",
 					"HasPermission": true,
 					"IsList": true,
+					"IsPm": true
+			},	
+			{
+					"FieldCode": "Quote.IncotermName",
+					"CreatedBy": "system",
+					"ModifiedBy": "system",
+					"CreatedOn": "", 
+					"ModifiedOn": "",
+					"HasPermission": true,
+					"IsList": false,
+					"IsPm": true
+			},	
+			{
+					"FieldCode": "Quote.RefrenceNumner",
+					"CreatedBy": "system",
+					"ModifiedBy": "system",
+					"CreatedOn": "", 
+					"ModifiedOn": "",
+					"HasPermission": true,
+					"IsList": false,
+					"IsPm": true
+			},	
+			{
+					"FieldCode": "Quote.SalesmanName",
+					"CreatedBy": "system",
+					"ModifiedBy": "system",
+					"CreatedOn": "", 
+					"ModifiedOn": "",
+					"HasPermission": true,
+					"IsList": false,
+					"IsPm": true
+			},	
+			{
+					"FieldCode": "Quote.MoveTypeCode",
+					"CreatedBy": "system",
+					"ModifiedBy": "system",
+					"CreatedOn": "", 
+					"ModifiedOn": "",
+					"HasPermission": true,
+					"IsList": false,
+					"IsPm": true
+			},	
+			{
+					"FieldCode": "Quote.Notes",
+					"CreatedBy": "system",
+					"ModifiedBy": "system",
+					"CreatedOn": "", 
+					"ModifiedOn": "",
+					"HasPermission": true,
+					"IsList": false,
+					"IsPm": true
+			},
+			{
+					"FieldCode": "Quote.ShipperName",
+					"CreatedBy": "system",
+					"ModifiedBy": "system",
+					"CreatedOn": "", 
+					"ModifiedOn": "",
+					"HasPermission": true,
+					"IsList": false,
+					"IsPm": true
+			},
+			{
+					"FieldCode": "Quote.ShipperCountryCode",
+					"CreatedBy": "system",
+					"ModifiedBy": "system",
+					"CreatedOn": "", 
+					"ModifiedOn": "",
+					"HasPermission": true,
+					"IsList": false,
+					"IsPm": true
+			},
+			{
+					"FieldCode": "Quote.ShipperCountryName",
+					"CreatedBy": "system",
+					"ModifiedBy": "system",
+					"CreatedOn": "", 
+					"ModifiedOn": "",
+					"HasPermission": true,
+					"IsList": false,
+					"IsPm": true
+			},
+			
+					"FieldCode": "Quote.ConsigneeName",
+					"CreatedBy": "system",
+					"ModifiedBy": "system",
+					"CreatedOn": "", 
+					"ModifiedOn": "",
+					"HasPermission": true,
+					"IsList": false,
+					"IsPm": true
+			},
+			{
+					"FieldCode": "Quote.ConsigneeCountryCode",
+					"CreatedBy": "system",
+					"ModifiedBy": "system",
+					"CreatedOn": "", 
+					"ModifiedOn": "",
+					"HasPermission": true,
+					"IsList": false,
+					"IsPm": true
+			},
+			{
+					"FieldCode": "Quote.ConsigneeCountryName",
+					"CreatedBy": "system",
+					"ModifiedBy": "system",
+					"CreatedOn": "", 
+					"ModifiedOn": "",
+					"HasPermission": true,
+					"IsList": false,
+					"IsPm": true
+			},		
+			{
+					"FieldCode": "Quote.ValueOfGoods",
+					"CreatedBy": "system",
+					"ModifiedBy": "system",
+					"CreatedOn": "", 
+					"ModifiedOn": "",
+					"HasPermission": true,
+					"IsList": false,
+					"IsPm": true
+			},	
+			{
+					"FieldCode": "Quote.SentDate",
+					"CreatedBy": "system",
+					"ModifiedBy": "system",
+					"CreatedOn": "", 
+					"ModifiedOn": "",
+					"HasPermission": true,
+					"IsList": false,
 					"IsPm": true
 			},
 		]';

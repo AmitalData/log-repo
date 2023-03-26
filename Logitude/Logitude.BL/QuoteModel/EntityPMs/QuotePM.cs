@@ -793,6 +793,15 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public string ValidByTypeCode { get; set; }
         public bool? ConnectedToOpportunity { get; set; }
         public string SummaryMarkup { get; set; }
+        public string ShipmentType { get; set; }
+        public string MoveTypeName { get; set; }
+        public string MoveTypeCode { get; set; }
+        public string ShipperCountryCode { get; set; }
+        public string ShipperCountryName { get; set; }
+        public string ConsigneeCountryName { get; set; }
+        public string ConsigneeCountryCode { get; set; }
+        public bool IsExpired { get; set; }
+        public string SalesmanEmail { get; set; }
 
         public double? TotalVATInSalesCurrency { get; set; }
         public List<CustomChildEntity> CustomChildEntities { get; set; }
