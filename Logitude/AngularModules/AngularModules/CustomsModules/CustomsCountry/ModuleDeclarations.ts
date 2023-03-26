@@ -1,6 +1,4 @@
 import { CountryCurrencyTabComponent } from "./Components/EditTabs/CountryCurrency/CountryCurrencyTabComponent";
-
-
 export const Components =
   [
     CountryCurrencyTabComponent,
@@ -15,7 +13,7 @@ export class ModuleDeclarations {
     switch (name) {
       case "CountryCurrencyTabComponent": { myResult = CountryCurrencyTabComponent; break; }
      
-
+ 
     }
 
     return myResult;

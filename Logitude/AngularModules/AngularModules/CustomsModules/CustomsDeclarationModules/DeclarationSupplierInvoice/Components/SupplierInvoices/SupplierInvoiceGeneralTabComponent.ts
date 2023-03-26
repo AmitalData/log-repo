@@ -3666,7 +3666,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     public get DutyRegimeProtocolCode() { return this.entityPM.DutyRegimeProtocolCode; }
     public set DutyRegimeProtocolCode(newValue: string) {
         this.entityPM.DutyRegimeProtocolCode = newValue;
-        this.tradeAgreementProtocolListService.getSingle(newValue).subscribe((res) =>
+        this.tradeAgreementProtocolListService.getSingle(newValue).subscribe((res) => 
             this.DutyRegimeProtocolLocalName = res?.Result?.LocalName);
     }
 
@@ -3849,7 +3849,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                     
                 }
  
-                }
+                
                 ).catch((err) => {
                     
                    
@@ -3860,9 +3860,9 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                    
                 });
        
-    
+            }
 
-    }
+    
     public pointers: CustomsDocumentPointerPM[];
     DeleteButtonClicked() {
         this.pointers = this.Parent.Pointers;
