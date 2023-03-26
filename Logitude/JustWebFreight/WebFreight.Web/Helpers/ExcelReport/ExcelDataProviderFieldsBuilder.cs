@@ -80,7 +80,6 @@ namespace WebFreight.Web.Helpers.ExcelReport
         {
             switch (reportCode)
             {
-
                 case "AGER":
                     {
                         return typeof(AccountingAgingDataProvider);
@@ -116,7 +115,18 @@ namespace WebFreight.Web.Helpers.ExcelReport
                 case "SHID":
                     {
                         return typeof(ShipmentDetailsDataProvider);
-
+                    }
+                case "RSID":
+                    {
+                        return typeof(StatementByInvoiceDateDataProvider);
+                    }
+                case "OSBC":
+                    {
+                        return typeof(OpenShipmentsByCustomerDataProvider);
+                    }
+                case "RSTA":
+                    {
+                        return typeof(StatementDataProvider);
                     }
                 default:
                     return null;

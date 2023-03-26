@@ -15,6 +15,7 @@ import { ExcelReportService } from '../../../../Common/Services/ExtendedLists/Ex
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { ExcelReportResult } from '../../../../Common/DataContracts/ExcelReportResult';
 import { DataProviderField } from '../../../../Common/DataContracts/DataProviderField';
+import { ReportListService } from '../../../../Common/Services/StandardLists/ReportListService';
 
 @Component({
     
@@ -41,6 +42,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
     public AllObjectDataSourceViewsLists: DocumentObjectFieldsRowViewModel[];
 
     public EntityResourceService: EntityResourceService;
+    public ReportService: ReportListService;
 
     IsShowTabObjectField = false;
     public SearchTextValue: FormControl;
@@ -53,8 +55,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
     private CurrentSession = SessionLocator.SelectedSession;
     FromComponent: string;
     DataProviderFields: DataProviderField[];
-    DataProviderFieldsAll: DataProviderField[];
-
+    SelectedDataProviderField: DataProviderField;
     constructor() {
       
         
@@ -107,6 +108,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
         this.AllObjectDataSourceViewsLists = new Array<DocumentObjectFieldsRowViewModel>();
         this.EntityResourceService = new EntityResourceService();
         this.excelReportService = new ExcelReportService();
+        this.ReportService = new ReportListService();
         if (!this.ObjectTypeField) {
             this.ObjectTypeField = null;
         }
@@ -159,11 +161,15 @@ export class DocumentObjectFieldsComponent implements OnInit {
 
             this.FillDataSource();
         }
-        if ((this.ReportTemplatePM != null || this.ReportTemplatePM != undefined) && this.ReportTemplatePM.ReportId)
-        {
-            this.IsShowTabObjectField = true;
-            this.SelectedTabCode = "DAF";
-            this.LoadReportDataProvider();
+        if ((this.ReportTemplatePM != null || this.ReportTemplatePM != undefined) && this.ReportTemplatePM.ReportId) {
+            this.CurrentSession.StartBusyIndicatorLoading();
+            this.ReportService.getSingle(this.ReportTemplatePM.ReportId).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse.HasError)
+                    return;
+                this.IsShowTabObjectField = myResponse.Result.AvailableForScheduling;
+                this.SelectedTabCode = "DAF";
+                this.LoadReportDataProvider();
+            });
         }
         else this.SelectedTabCode = "SAF";
 
@@ -229,34 +235,27 @@ export class DocumentObjectFieldsComponent implements OnInit {
     }
 
     LoadReportDataProvider() {
-        this.CurrentSession.StartBusyIndicatorLoading();
         this.excelReportService.getDataProviderFields(this.ReportTemplatePM.ReportId, this.ReportTemplatePM.Id)
             .subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) this.FillDataProviderFields(myResponse.Result)
+                if (myResponse.HasError)
+                    return;
+                this.FillDataProviderFields(myResponse.Result)
                 this.CurrentSession.StopBusyIndicator();
             });
     }
+
     FillDataProviderFields(result: ExcelReportResult) {
         this.DataProviderFields = new Array<DataProviderField>();
         result.DataProviderFields.forEach((item) => {
-            this.DataProviderFields.push(this.Clone(item));
+            if (item.Type != 'List' && !item.Text.toLowerCase().includes('id'))
+                this.DataProviderFields.push(this.Clone(item));
         });
-
-        this.DataProviderFields.forEach((item) => {
-            let objectField = new ObjectFieldPM();
-            objectField.FieldName = item.Name;
-            objectField.DataTypeCode = item.Type;
-
-            var view = new DocumentObjectFieldsRowViewModel(objectField, objectField.FieldName, this.ObjectTypeField, this.ReportTemplatePM.ReportId);
-            this.ObsList.push(view);
-            this.ObsListAll.push(view);
-            this.DataSource = this.ObsList;
-        });
-
     }
+
     Clone(list: any): any {
         return JSON.parse(JSON.stringify(list));
     }
+
     IsReport() {
         if (this.ReportTemplatePM.ReportId)
             return true;
@@ -319,7 +318,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
 
         this.SelectSystemDataObjectFieldsRowViewModel = selectedItem;
         this.SelectObjectDataFieldsRowViewModel = null;
-        
+        this.SelectedDataProviderField = null;
 
 
         var item = this.AllSystemDataSourceViewsLists.filter(d=> d.Id == selectedItem.Id)[0];
@@ -339,6 +338,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
 
     ObjectDataSourceChangeSelected(selectedItem: DocumentObjectFieldsRowViewModel) {
         this.SelectSystemDataObjectFieldsRowViewModel = null;
+        this.SelectedDataProviderField = null;
         this.SelectObjectDataFieldsRowViewModel = selectedItem;
         var item = this.AllSystemDataSourceViewsLists.filter(d=> d.Id == selectedItem.Id)[0];
 
@@ -354,7 +354,15 @@ export class DocumentObjectFieldsComponent implements OnInit {
 
     }
 
-
+    DataFieldChangeSelected(selectedItem: DataProviderField) {
+        this.SelectSystemDataObjectFieldsRowViewModel = null;
+        this.SelectObjectDataFieldsRowViewModel = null;
+        this.SelectedDataProviderField = selectedItem;
+        this.DataProviderFields.forEach((field) => {
+            field.DivSelectBackgroud = "#ffffff";
+        });
+        selectedItem.DivSelectBackgroud = "#B6E0F5";
+    }
 
 
 
@@ -478,7 +486,11 @@ export class DocumentObjectFieldsComponent implements OnInit {
             }
 
         }
-
+        else if (this.SelectedDataProviderField) {
+            let selectedField = this.SelectedDataProviderField;
+            if ((selectedField.Expression != null) && (selectedField.Expression != ""))
+                this.TextSelected = "[" + selectedField.Expression.substring(1, selectedField.Expression.length - 1) + "]";
+        }
         this.CurrentSession.CurrentWindow.Close(this.TextSelected);
     }
     GetObjectFieldResolverFieldValue(selectedField: DocumentObjectFieldsRowViewModel) {
