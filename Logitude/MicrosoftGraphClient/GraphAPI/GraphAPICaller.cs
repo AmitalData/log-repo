@@ -9,11 +9,7 @@ namespace MicrosoftGraphClient.GraphAPI
     {
         public static T Call<T>(string token, string apiUrl, Method method, object requestBody = null)
         {
-            if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(apiUrl))
-            {
-                throw new Exception("Invalid token or url");
-            }
-
+            ValidateCall(token, apiUrl);
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
             RestRequest restRequest = GetRestRequest(token, apiUrl, method, requestBody);
             RestClient restClient = new RestClient();
@@ -34,11 +30,7 @@ namespace MicrosoftGraphClient.GraphAPI
 
         public static string Call(string token, string apiUrl, Method method, object requestBody = null)
         {
-            if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(apiUrl))
-            {
-                throw new Exception("Invalid token or url");
-            }
-
+            ValidateCall(token, apiUrl);
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
             RestRequest restRequest = GetRestRequest(token, apiUrl, method, requestBody);
             RestClient restClient = new RestClient();
@@ -54,6 +46,14 @@ namespace MicrosoftGraphClient.GraphAPI
             else
             {
                 throw new Exception(GetResponseErrorMessage(restResponse));
+            }
+        }
+
+        private static void ValidateCall(string token, string apiUrl)
+        {
+            if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(apiUrl))
+            {
+                throw new Exception("Invalid token or url");
             }
         }
 

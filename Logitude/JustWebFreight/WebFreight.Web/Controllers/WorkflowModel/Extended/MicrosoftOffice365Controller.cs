@@ -39,6 +39,41 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Extended
 {
     public class MicrosoftOffice365Controller : ApiController
     {
+        public HttpResponseMessage GetTest()
+        {
+            try
+            {
+                var token = "";
+                var messageId = "AQMkADAwATYwMAItZWQxNS1mNjYANC0wMAItMDAKAEYAAAMMLARx5o_rQ7QV0cqqml2jBwDH7fJ8L9IKRYWZ_REZXzRjAAACAQwAAADH7fJ8L9IKRYWZ_REZXzRjAAY0UZXoAAAA";
+
+                var profileService = new GraphClientService().Profile(token);
+                var profile = profileService.Get();
+
+
+                var profileService2 = new GraphClientService().Profile().SetToken(token);
+                var profile2 = profileService2.Get();
+
+
+                var messagesService = new GraphClientMessagesService(token);
+                var message = messagesService.Get(messageId);
+                var messageEml = messagesService.GetEml(messageId);
+
+
+                var messagesService2 = new GraphClientMessagesService().SetToken(token);
+                var message2 = messagesService2.Get(messageId);
+                var messageEml2 = messagesService2.GetEml(messageId);
+
+
+                var message3 = new GraphClientMessagesService().SetToken(token).Get(messageId);
+
+                return Request.CreateResponse(HttpStatusCode.OK, "Ok");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        
         public HttpResponseMessage PostSubscription(string microsoftEmailAccessToken, string workflowNumber)
         {
             if (string.IsNullOrEmpty(microsoftEmailAccessToken) || string.IsNullOrEmpty(workflowNumber))
@@ -59,7 +94,7 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Extended
 
 
 
-                    //var test = new GraphClientProfileService();
+                    var test = new GraphClientProfileService();
 
 
 
