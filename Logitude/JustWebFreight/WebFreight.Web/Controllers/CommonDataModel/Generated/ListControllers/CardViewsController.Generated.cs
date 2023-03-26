@@ -68,18 +68,13 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				CardRepository  cardRepository = new CardRepository(MyContext);
-				CardList entityList = null;
-				Card entityPoco = cardRepository.GetSingleCard(id , authToken.Tenant);
-                
-                if (entityPoco != null)
-				{
-									CardQuery cardQuery = new CardQuery(cardRepository);
+									CardList entityList = null;
+					Card entityPoco = cardRepository.GetSingleCard(id , authToken.Tenant);
+					CardQuery cardQuery = new CardQuery(cardRepository);
                     entityList = cardQuery.GetSingleCardList(entityPoco);
-
-			    }
+                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { EntityId = id, ObjectTableName = "Card", Tenant = authToken.Tenant, Type = "List", Entities = new List<CardList> { entityList }.Cast<object>().ToList() }).Set();
 				if (entityList != null)
 				{
-                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { EntityId = id, ObjectTableName = "Card", Tenant = authToken.Tenant, Type = "List", Entities = new List<CardList> { entityList }.Cast<object>().ToList() }).Set();
                 	CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 	customFieldResolver.SetCustomFieldsValues("Card",  authToken.Tenant, new List<CardList> { entityList }.Cast<object>().ToList());
  	

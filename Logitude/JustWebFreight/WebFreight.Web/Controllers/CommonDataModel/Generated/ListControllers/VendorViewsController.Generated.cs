@@ -40,7 +40,6 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
 using Logitude.BL.Helpers;
-using Logitude.Server.Tools.CustomFields;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -69,23 +68,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				VendorRepository  vendorRepository = new VendorRepository(MyContext);
-				VendorList entityList = null;
-				Vendor entityPoco = vendorRepository.GetSingleVendor(id , authToken.Tenant);
-                
-                if (entityPoco != null)
-				{
-									List<Vendor> singleEntityList = new List<Vendor>();
-					singleEntityList.Add(entityPoco);
-
-					VendorQuery vendorQuery = new VendorQuery(vendorRepository);
-					IQueryable<Vendor> iQueryable = singleEntityList.AsQueryable();
-					IQueryable<VendorList> iQueryableEntityList = vendorQuery.GetIQueryableEntityList(iQueryable);
-				    entityList = iQueryableEntityList.FirstOrDefault();
-
-			    }
+				
+				VendorQuery  vendorQuery = new VendorQuery(vendorRepository);
+				IQueryable<Vendor> vendors = vendorRepository.GetVendors(authToken.Tenant).Where(a=>a.Id == id);
+				VendorList entityList = vendorQuery.GetIQueryableEntityList(vendors).FirstOrDefault();
 				if (entityList != null)
 				{
-                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { EntityId = id, ObjectTableName = "Vendor", Tenant = authToken.Tenant, Type = "List", Entities = new List<VendorList> { entityList }.Cast<object>().ToList() }).Set();
                 	CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 	customFieldResolver.SetCustomFieldsValues("Vendor",  authToken.Tenant, new List<VendorList> { entityList }.Cast<object>().ToList());
  	

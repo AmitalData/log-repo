@@ -40,7 +40,6 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
 using Logitude.BL.Helpers;
-using Logitude.Server.Tools.CustomFields;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -69,23 +68,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				TruckerRepository  truckerRepository = new TruckerRepository(MyContext);
-				TruckerList entityList = null;
-				Trucker entityPoco = truckerRepository.GetSingleTrucker(id , authToken.Tenant);
-                
-                if (entityPoco != null)
-				{
-									List<Trucker> singleEntityList = new List<Trucker>();
-					singleEntityList.Add(entityPoco);
-
-					TruckerQuery truckerQuery = new TruckerQuery(truckerRepository);
-					IQueryable<Trucker> iQueryable = singleEntityList.AsQueryable();
-					IQueryable<TruckerList> iQueryableEntityList = truckerQuery.GetIQueryableEntityList(iQueryable);
-				    entityList = iQueryableEntityList.FirstOrDefault();
-
-			    }
+				
+				TruckerQuery  truckerQuery = new TruckerQuery(truckerRepository);
+				IQueryable<Trucker> truckers = truckerRepository.GetTruckers(authToken.Tenant).Where(a=>a.Id == id);
+				TruckerList entityList = truckerQuery.GetIQueryableEntityList(truckers).FirstOrDefault();
 				if (entityList != null)
 				{
-                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { EntityId = id, ObjectTableName = "Trucker", Tenant = authToken.Tenant, Type = "List", Entities = new List<TruckerList> { entityList }.Cast<object>().ToList() }).Set();
                 	CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 	customFieldResolver.SetCustomFieldsValues("Trucker",  authToken.Tenant, new List<TruckerList> { entityList }.Cast<object>().ToList());
  	

@@ -40,7 +40,6 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
 using Logitude.BL.Helpers;
-using Logitude.Server.Tools.CustomFields;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -67,23 +66,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				CustomsShipperRepository  customsShipperRepository = new CustomsShipperRepository(MyContext);
-				CustomsShipperList entityList = null;
-				CustomsShipper entityPoco = customsShipperRepository.GetSingleCustomsShipper(id , authToken.Tenant);
-                
-                if (entityPoco != null)
-				{
-									List<CustomsShipper> singleEntityList = new List<CustomsShipper>();
-					singleEntityList.Add(entityPoco);
-
-					CustomsShipperQuery customsShipperQuery = new CustomsShipperQuery(customsShipperRepository);
-					IQueryable<CustomsShipper> iQueryable = singleEntityList.AsQueryable();
-					IQueryable<CustomsShipperList> iQueryableEntityList = customsShipperQuery.GetIQueryableEntityList(iQueryable);
-				    entityList = iQueryableEntityList.FirstOrDefault();
-                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { EntityId = id, ObjectTableName = "CustomsShipper", Tenant = authToken.Tenant, Type = "List", Entities = new List<CustomsShipperList> { entityList }.Cast<object>().ToList() }).Set();
-                    CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
-                	customFieldResolver.SetCustomFieldsValues("CustomsShipper",  authToken.Tenant, new List<CustomsShipperList> { entityList }.Cast<object>().ToList());
-
-			    }
+				
+				CustomsShipperQuery  customsShipperQuery = new CustomsShipperQuery(customsShipperRepository);
+				IQueryable<CustomsShipper> customsShippers = customsShipperRepository.GetCustomsShippers(authToken.Tenant).Where(a=>a.Id == id);
+				CustomsShipperList entityList = customsShipperQuery.GetIQueryableEntityList(customsShippers).FirstOrDefault();
+				CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+				customFieldResolver.SetCustomFieldsValues("CustomsShipper",  authToken.Tenant, new List<CustomsShipperList> { entityList }.Cast<object>().ToList());
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 				               

@@ -40,7 +40,6 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
 using Logitude.BL.Helpers;
-using Logitude.Server.Tools.CustomFields;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -69,23 +68,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				CustomAgentRepository  customAgentRepository = new CustomAgentRepository(MyContext);
-				CustomAgentList entityList = null;
-				CustomAgent entityPoco = customAgentRepository.GetSingleCustomAgent(id , authToken.Tenant);
-                
-                if (entityPoco != null)
-				{
-									List<CustomAgent> singleEntityList = new List<CustomAgent>();
-					singleEntityList.Add(entityPoco);
-
-					CustomAgentQuery customAgentQuery = new CustomAgentQuery(customAgentRepository);
-					IQueryable<CustomAgent> iQueryable = singleEntityList.AsQueryable();
-					IQueryable<CustomAgentList> iQueryableEntityList = customAgentQuery.GetIQueryableEntityList(iQueryable);
-				    entityList = iQueryableEntityList.FirstOrDefault();
-
-			    }
+				
+				CustomAgentQuery  customAgentQuery = new CustomAgentQuery(customAgentRepository);
+				IQueryable<CustomAgent> customAgents = customAgentRepository.GetCustomAgents(authToken.Tenant).Where(a=>a.Id == id);
+				CustomAgentList entityList = customAgentQuery.GetIQueryableEntityList(customAgents).FirstOrDefault();
 				if (entityList != null)
 				{
-                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { EntityId = id, ObjectTableName = "CustomAgent", Tenant = authToken.Tenant, Type = "List", Entities = new List<CustomAgentList> { entityList }.Cast<object>().ToList() }).Set();
                 	CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 	customFieldResolver.SetCustomFieldsValues("CustomAgent",  authToken.Tenant, new List<CustomAgentList> { entityList }.Cast<object>().ToList());
  	

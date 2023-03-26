@@ -40,7 +40,6 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
 using Logitude.BL.Helpers;
-using Logitude.Server.Tools.CustomFields;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -69,23 +68,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				ChargesTypeRepository  chargesTypeRepository = new ChargesTypeRepository(MyContext);
-				ChargesTypeList entityList = null;
-				ChargesType entityPoco = chargesTypeRepository.GetSingleChargesType(id , authToken.Tenant);
-                
-                if (entityPoco != null)
-				{
-									List<ChargesType> singleEntityList = new List<ChargesType>();
-					singleEntityList.Add(entityPoco);
-
-					ChargesTypeQuery chargesTypeQuery = new ChargesTypeQuery(chargesTypeRepository);
-					IQueryable<ChargesType> iQueryable = singleEntityList.AsQueryable();
-					IQueryable<ChargesTypeList> iQueryableEntityList = chargesTypeQuery.GetIQueryableEntityList(iQueryable);
-				    entityList = iQueryableEntityList.FirstOrDefault();
-
-			    }
+				
+				ChargesTypeQuery  chargesTypeQuery = new ChargesTypeQuery(chargesTypeRepository);
+				IQueryable<ChargesType> chargesTypes = chargesTypeRepository.GetChargesTypes(authToken.Tenant).Where(a=>a.Id == id);
+				ChargesTypeList entityList = chargesTypeQuery.GetIQueryableEntityList(chargesTypes).FirstOrDefault();
 				if (entityList != null)
 				{
-                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { EntityId = id, ObjectTableName = "ChargesType", Tenant = authToken.Tenant, Type = "List", Entities = new List<ChargesTypeList> { entityList }.Cast<object>().ToList() }).Set();
                 	CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 	customFieldResolver.SetCustomFieldsValues("ChargesType",  authToken.Tenant, new List<ChargesTypeList> { entityList }.Cast<object>().ToList());
  	

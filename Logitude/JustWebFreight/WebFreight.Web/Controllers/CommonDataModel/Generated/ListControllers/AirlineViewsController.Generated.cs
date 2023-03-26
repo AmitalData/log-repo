@@ -40,7 +40,6 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
 using Logitude.BL.Helpers;
-using Logitude.Server.Tools.CustomFields;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -67,23 +66,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				AirlineRepository  airlineRepository = new AirlineRepository(MyContext);
-				AirlineList entityList = null;
-				Airline entityPoco = airlineRepository.GetSingleAirline(id , authToken.Tenant);
-                
-                if (entityPoco != null)
-				{
-									List<Airline> singleEntityList = new List<Airline>();
-					singleEntityList.Add(entityPoco);
-
-					AirlineQuery airlineQuery = new AirlineQuery(airlineRepository);
-					IQueryable<Airline> iQueryable = singleEntityList.AsQueryable();
-					IQueryable<AirlineList> iQueryableEntityList = airlineQuery.GetIQueryableEntityList(iQueryable);
-				    entityList = iQueryableEntityList.FirstOrDefault();
-                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { EntityId = id, ObjectTableName = "Airline", Tenant = authToken.Tenant, Type = "List", Entities = new List<AirlineList> { entityList }.Cast<object>().ToList() }).Set();
-                    CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
-                	customFieldResolver.SetCustomFieldsValues("Airline",  authToken.Tenant, new List<AirlineList> { entityList }.Cast<object>().ToList());
-
-			    }
+				
+				AirlineQuery  airlineQuery = new AirlineQuery(airlineRepository);
+				IQueryable<Airline> airlines = airlineRepository.GetAirlines(authToken.Tenant).Where(a=>a.Id == id);
+				AirlineList entityList = airlineQuery.GetIQueryableEntityList(airlines).FirstOrDefault();
+				CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+				customFieldResolver.SetCustomFieldsValues("Airline",  authToken.Tenant, new List<AirlineList> { entityList }.Cast<object>().ToList());
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 				               

@@ -40,7 +40,6 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
 using Logitude.BL.Helpers;
-using Logitude.Server.Tools.CustomFields;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -67,23 +66,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				ShippingLineRepository  shippingLineRepository = new ShippingLineRepository(MyContext);
-				ShippingLineList entityList = null;
-				ShippingLine entityPoco = shippingLineRepository.GetSingleShippingLine(id , authToken.Tenant);
-                
-                if (entityPoco != null)
-				{
-									List<ShippingLine> singleEntityList = new List<ShippingLine>();
-					singleEntityList.Add(entityPoco);
-
-					ShippingLineQuery shippingLineQuery = new ShippingLineQuery(shippingLineRepository);
-					IQueryable<ShippingLine> iQueryable = singleEntityList.AsQueryable();
-					IQueryable<ShippingLineList> iQueryableEntityList = shippingLineQuery.GetIQueryableEntityList(iQueryable);
-				    entityList = iQueryableEntityList.FirstOrDefault();
-                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { EntityId = id, ObjectTableName = "ShippingLine", Tenant = authToken.Tenant, Type = "List", Entities = new List<ShippingLineList> { entityList }.Cast<object>().ToList() }).Set();
-                    CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
-                	customFieldResolver.SetCustomFieldsValues("ShippingLine",  authToken.Tenant, new List<ShippingLineList> { entityList }.Cast<object>().ToList());
-
-			    }
+				
+				ShippingLineQuery  shippingLineQuery = new ShippingLineQuery(shippingLineRepository);
+				IQueryable<ShippingLine> shippingLines = shippingLineRepository.GetShippingLines(authToken.Tenant).Where(a=>a.Id == id);
+				ShippingLineList entityList = shippingLineQuery.GetIQueryableEntityList(shippingLines).FirstOrDefault();
+				CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+				customFieldResolver.SetCustomFieldsValues("ShippingLine",  authToken.Tenant, new List<ShippingLineList> { entityList }.Cast<object>().ToList());
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 				               

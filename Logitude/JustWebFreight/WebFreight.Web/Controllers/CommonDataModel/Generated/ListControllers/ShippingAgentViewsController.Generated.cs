@@ -40,7 +40,6 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
 using Logitude.BL.Helpers;
-using Logitude.Server.Tools.CustomFields;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -69,23 +68,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				ShippingAgentRepository  shippingAgentRepository = new ShippingAgentRepository(MyContext);
-				ShippingAgentList entityList = null;
-				ShippingAgent entityPoco = shippingAgentRepository.GetSingleShippingAgent(id , authToken.Tenant);
-                
-                if (entityPoco != null)
-				{
-									List<ShippingAgent> singleEntityList = new List<ShippingAgent>();
-					singleEntityList.Add(entityPoco);
-
-					ShippingAgentQuery shippingAgentQuery = new ShippingAgentQuery(shippingAgentRepository);
-					IQueryable<ShippingAgent> iQueryable = singleEntityList.AsQueryable();
-					IQueryable<ShippingAgentList> iQueryableEntityList = shippingAgentQuery.GetIQueryableEntityList(iQueryable);
-				    entityList = iQueryableEntityList.FirstOrDefault();
-
-			    }
+				
+				ShippingAgentQuery  shippingAgentQuery = new ShippingAgentQuery(shippingAgentRepository);
+				IQueryable<ShippingAgent> shippingAgents = shippingAgentRepository.GetShippingAgents(authToken.Tenant).Where(a=>a.Id == id);
+				ShippingAgentList entityList = shippingAgentQuery.GetIQueryableEntityList(shippingAgents).FirstOrDefault();
 				if (entityList != null)
 				{
-                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { EntityId = id, ObjectTableName = "ShippingAgent", Tenant = authToken.Tenant, Type = "List", Entities = new List<ShippingAgentList> { entityList }.Cast<object>().ToList() }).Set();
                 	CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 	customFieldResolver.SetCustomFieldsValues("ShippingAgent",  authToken.Tenant, new List<ShippingAgentList> { entityList }.Cast<object>().ToList());
  	

@@ -40,7 +40,6 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
 using Logitude.BL.Helpers;
-using Logitude.Server.Tools.CustomFields;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -67,23 +66,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				ParticipantRepository  participantRepository = new ParticipantRepository(MyContext);
-				ParticipantList entityList = null;
-				Participant entityPoco = participantRepository.GetSingleParticipant(id , authToken.Tenant);
-                
-                if (entityPoco != null)
-				{
-									List<Participant> singleEntityList = new List<Participant>();
-					singleEntityList.Add(entityPoco);
-
-					ParticipantQuery participantQuery = new ParticipantQuery(participantRepository);
-					IQueryable<Participant> iQueryable = singleEntityList.AsQueryable();
-					IQueryable<ParticipantList> iQueryableEntityList = participantQuery.GetIQueryableEntityList(iQueryable);
-				    entityList = iQueryableEntityList.FirstOrDefault();
-                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { EntityId = id, ObjectTableName = "Participant", Tenant = authToken.Tenant, Type = "List", Entities = new List<ParticipantList> { entityList }.Cast<object>().ToList() }).Set();
-                    CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
-                	customFieldResolver.SetCustomFieldsValues("Participant",  authToken.Tenant, new List<ParticipantList> { entityList }.Cast<object>().ToList());
-
-			    }
+				
+				ParticipantQuery  participantQuery = new ParticipantQuery(participantRepository);
+				IQueryable<Participant> participants = participantRepository.GetParticipants(authToken.Tenant).Where(a=>a.Id == id);
+				ParticipantList entityList = participantQuery.GetIQueryableEntityList(participants).FirstOrDefault();
+				CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+				customFieldResolver.SetCustomFieldsValues("Participant",  authToken.Tenant, new List<ParticipantList> { entityList }.Cast<object>().ToList());
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 				               
