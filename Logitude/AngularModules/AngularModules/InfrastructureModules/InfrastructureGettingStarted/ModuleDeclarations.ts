@@ -18,6 +18,7 @@ import { PaymentGatewayComponent } from './Components/PaymentGateway/PaymentGate
 import { ChangeCurrencyComponent } from './Components/SystemCurrencies/ChangeCurrencyComponent';
 import { SystemDefaultsComponent } from './Components/SystemDefaults/SystemDefaultsComponent';
 import { DefaultRatiosComponent } from './Components/SystemDefaults/DefaultRatiosComponent';
+import { CustomizedARInvoiceCounterComponent } from './Components/Counters/EditComponents/CustomizedARInvoiceCounterComponent';
 
 export const Components =
     [
@@ -41,6 +42,7 @@ export const Components =
         PaymentGatewayComponent,
         ChangeCurrencyComponent,
         DefaultRatiosComponent,
+        CustomizedARInvoiceCounterComponent,
     ];
 
 export class ModuleDeclarations {
@@ -68,7 +70,8 @@ export class ModuleDeclarations {
             case "UploadLogoComponent": { myResult = UploadLogoComponent; break; }
             case "PaymentGatewayComponent": { myResult = PaymentGatewayComponent; break; }
             case "ChangeCurrencyComponent": { myResult = ChangeCurrencyComponent; break; }
-            case "DefaultRatiosComponent": { myResult = DefaultRatiosComponent; break; }  
+            case "DefaultRatiosComponent": { myResult = DefaultRatiosComponent; break; }
+            case "CustomizedARInvoiceCounterComponent": { myResult = CustomizedARInvoiceCounterComponent; break; }
 
         }
 
