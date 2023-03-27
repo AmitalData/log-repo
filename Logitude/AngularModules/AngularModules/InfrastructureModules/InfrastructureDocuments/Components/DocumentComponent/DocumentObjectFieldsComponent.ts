@@ -166,13 +166,12 @@ export class DocumentObjectFieldsComponent implements OnInit {
             this.ReportListService.getSingle(this.ReportTemplatePM.ReportId).subscribe((myResponse: ServiceResponse) => {
                 if (myResponse.HasError)
                     return;
+                this.SelectedTabCode = "SAF";
                 this.IsShowTabObjectField = myResponse.Result.AvailableForScheduling;
                 if (this.IsShowTabObjectField) {
-                    this.SelectedTabCode = "DAF";
-                    this.LoadReportDataProvider();
+                    this.BuildDataFieldTab();
                 }
                 else {
-                    this.SelectedTabCode = "SAF";
                     this.CurrentSession.StopBusyIndicator();
                 }
             });
@@ -240,11 +239,14 @@ export class DocumentObjectFieldsComponent implements OnInit {
 
     }
 
-    LoadReportDataProvider() {
+    BuildDataFieldTab() {
+        this.SelectedTabCode = "DAF";
         this.ExcelReportService.getDataProviderFields(this.ReportTemplatePM.ReportId, this.ReportTemplatePM.Id)
             .subscribe((myResponse: ServiceResponse) => {
-                if (myResponse.HasError)
+                if (myResponse.HasError) {
+                    this.CurrentSession.StopBusyIndicator();
                     return;
+                }
                 this.FillDataProviderFields(myResponse.Result)
                 this.CurrentSession.StopBusyIndicator();
             });
