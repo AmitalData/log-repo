@@ -83,6 +83,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
     QuoteTemplateSectionTypeName: string = "QuoteHeader";
     QuoteTemplateSectionTypeCode: string = "QH";
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    public IsUsingVirtuallization: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
@@ -103,6 +104,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
 
     SelectedTabCode: string;
     SetWindowArgs(args: any) {
+        this.SetIsUsingVirtuallization();
         this.SelectedTabCode = "TAC";
         this.QuoteTemplatePM = args.QuoteTemplatePM;
         this.QuoteTemplateSectionTypeName = args.QuoteTemplateSectionTypeName;
@@ -143,6 +145,12 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
     }
 
 
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
+    }
 
     BorderTypesSelectedChanged(border: BorderType) {
         if (this.QuoteTemplateSettingPM) {

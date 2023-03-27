@@ -48,6 +48,7 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
     private ChargesTypeCode: string;
     private PropertyChangedEvent: any = null;
     private QuoteValidator;
+    public IsUsingVirtuallization: boolean = false;
 
     constructor() {
         super();
@@ -88,6 +89,7 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
     }
 
     SetDataContext(dataContext: QuoteChargeItem) {
+        this.SetIsUsingVirtuallization();
         this.QuotePM = dataContext.QuotePM;
         this.EntityPM = dataContext.EntityPM;
         this.DataContext = dataContext;
@@ -105,6 +107,13 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
         this.BuildStepItemsSource();
         this.Clone();
         this.ListenPropertyChanged();
+    }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
     }
 
     public IsAddBreaksEnabled: boolean = false;

@@ -53,7 +53,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     public HideFCLAllIn: boolean = false;
     public IsAllowingMultipleFreightCharges: boolean = false;
     public IsMarkUpCurrencyHasFeatureToggle: boolean = false;
-
+    public IsUsingVirtuallization: boolean = false;
     constructor(private entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -62,6 +62,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         this.IsAdhoc = this.EntityPM.QuoteTypeCode == "A" ? true : false;
         this.LocalCurrencyId = SessionLocator.LocalCurrencyId;
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
+        this.SetIsUsingVirtuallization();
         this.ItemsSource = new ObservableCollection([]);
         this.AllInMatchText = TextCodeTranslator.Translate("Quote.M.UnableToDoAllIn") + "\n" + TextCodeTranslator.Translate("Quote.M.IfMatchesFrieghtCharge");
         this.HideFCLAllIn = SessionLocator.TenantPM.HideFCLAllIn;
@@ -90,6 +91,13 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         this.InitializeProfit();
         this.CheckMarkUpCurrencyFeatureToggle();
         this.Listen();
+    }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
     }
 
     private CheckMarkUpCurrencyFeatureToggle() {

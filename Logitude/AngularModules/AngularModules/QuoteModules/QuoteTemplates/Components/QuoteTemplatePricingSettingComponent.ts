@@ -69,7 +69,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
     ShowVATDetails :boolean = false;
     DisplayRegoinalTax: boolean = false;
     CanSplitByQuoteCharge: boolean = false;
-
+    public IsUsingVirtuallization: boolean = false;
     constructor() {
         super();
         this.quoteTemplateSettingPMService = new QuoteTemplateSettingPMService();
@@ -95,6 +95,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
     SelectedTabCode: string;
     IsRoutingRates: boolean = false;
     SetWindowArgs(args: any) {
+        this.SetIsUsingVirtuallization();
         this.SelectedTabCode = "PRT";
         this.QuoteTemplatePM = args.QuoteTemplatePM;
         this.QuoteTemplateSectionTypeName = args.QuoteTemplateSectionTypeName;
@@ -127,6 +128,13 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
         }
         
         this.LoadData();
+    }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
     }
 
     CountOfUsedQuoteTemplatePricesTableSettingsData: number = 0;
