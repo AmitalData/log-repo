@@ -145,7 +145,6 @@ export class CustomDashboardComponent extends BaseComponent {
         this.PinnedDashboards = [];
         var pinnedDashboards = (JSON.parse(myResponse.Result.PinnedDashboards) as any[]) ?? [];
 
-        // ??????? 
         pinnedDashboards.forEach(item => {
             var pinned = this.ItemsSource.find(x => x.Id == item.Id);
             if (pinned) this.PinnedDashboards.push(pinned);
@@ -245,7 +244,6 @@ export class CustomDashboardComponent extends BaseComponent {
     }
 
     DropDwonSelectionChanged(dashboard: DashboardList) {
-        // MixPanelLocator ????
         MixPanelLocator.PostDashboardAction({ ActionName: "Dashboard drop down", DashboardId: dashboard.Id });
         this.SelectedFromDashboardDropDown = true;
         this.ChangeDashboard(dashboard, true);
@@ -296,18 +294,6 @@ export class CustomDashboardComponent extends BaseComponent {
     AppendClickedDashboard(dashboard: DashboardList) {
         var tab = new DashboardTab(dashboard, this, false);
         this.DashboardsTabs.push(tab);
-
-        // if (this.DashboardsTabs.length == 0) {
-        //     this.DashboardsTabs.push(tab);
-        //     return;
-        // }
-        // var appendItemTo = this.DashboardsTabs.indexOf(this.DashboardsTabs.find(x => !x.IsPinned));
-        // if (appendItemTo == -1) this.DashboardsTabs.push(tab)
-        // else this.DashboardsTabs.splice(appendItemTo, 0, tab);
-
-        // if (this.DashboardsTabs.length > this.MaxTabsCount) {
-        //     this.DashboardsTabs.pop();
-        // }
     }
 
     private ConfirmSave(clickedDashboard: DashboardList) {
