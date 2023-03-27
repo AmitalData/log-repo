@@ -188,7 +188,7 @@
                             <div class="MediaFill">
                                 <div class="SimpleGridView">
                                     <div class="MediaFill" style="overflow-x: hidden;">
-                                        <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="HTSCodes" [Disabled]="!IsEditingEnabled" (RowEnded)="OnRowEnded($event)">
+                                        <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="HTSCodes" [Disabled]="!IsEditingEnabled" (RowEnded)="OnRowEnded($event)" [UseVirtuallization]="IsUsingVirtuallization">
                                             <!-- Line -->
                                             <log-column [header]="'Line'" [width]="'50'" [Alignment]="'left'">
                                                 <ng-template let-item>

@@ -36,6 +36,7 @@ export class AWBPackagesTabComponent extends BaseComponent implements OnDestroy{
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
     IsMultipleCommoditiesVisible: boolean = false;
+    public IsUsingVirtuallization: boolean = false;
     constructor() {
         super();
         this.DomainService = new ShipmentDomainService();
@@ -56,6 +57,7 @@ export class AWBPackagesTabComponent extends BaseComponent implements OnDestroy{
         this.ShipmentLevelCode = this.Wizard.ShipmentLevelCode;
         this.SetLabels();
         this.SetUIProperties();
+        this.SetIsUsingVirtuallization();
         this.BuildData();
         this.Listen();
         this.Validate();
@@ -69,6 +71,13 @@ export class AWBPackagesTabComponent extends BaseComponent implements OnDestroy{
 
         this.InitializePackageSetting();
 
+    }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
     }
 
     InitializePackageSetting() {

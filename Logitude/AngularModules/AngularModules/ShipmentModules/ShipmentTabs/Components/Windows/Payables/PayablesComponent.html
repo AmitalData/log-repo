@@ -3,7 +3,7 @@
     <tr>
         <td>
             <div class="MediaFill">
-                <logitude-edit-grid GridWidth="100%" [HeaderHeight]="35" GridHeight="100%" [ItemSource]="ItemsSource">
+                <logitude-edit-grid GridWidth="100%" [HeaderHeight]="35" GridHeight="100%" [ItemSource]="ItemsSource" [UseVirtuallization]="IsUsingVirtuallization">
 
                     <!-- Code -->
                     <log-column [width]="'50'" [header]="'Shipment.O.Receivables.Code' | TextCodeTranslationPipe">

@@ -30,6 +30,7 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
     public PricesChanged: boolean = false;
     public CurrencyChanged: boolean = false;
     public WeightLabel: string;
+    public IsUsingVirtuallization: boolean = false;
     constructor() {
         super();
     }
@@ -37,7 +38,7 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
     SetWindowArgs(args: any) {
         this.EntityPM = args['EntityPM'];
         this.ObjectTableName = args['ObjectTableName'];
-
+        this.SetIsUsingVirtuallization();
         this.SetUIProperties();
         this.BuildPricingItems();
         this.CopyPricings();
@@ -46,6 +47,12 @@ export class WarehouseStoragePricingComponent extends BaseComponent {
         this.Clone();
     }
 
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
+    }
     private SetUIProperties() {
         var isCurrencyEnabled: boolean = true;
 
