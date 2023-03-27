@@ -1,16 +1,20 @@
 import { AccountingEntityHelper } from './../../Utilities/AccountingEntityHelper';
 import { SessionLocator } from './../../../Infrastructure/Utilities/SessionLocator';
-import {Component,ChangeDetectorRef} from '@angular/core';
-import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
-import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
-import {OnInit, Output, EventEmitter, ComponentRef, QueryList} from '@angular/core';
-import {JournalExtendedListService} from '../../Services/ExtendedLists/JournalExtendedListService';
-import {ARPaymentExtendedListService} from '../../../Invoice/Services/ExtendedLists/ARPaymentExtendedListService';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {AppTool} from '../../../Infrastructure/Tools';
-import {ReconcileEventManager} from '../../Utilities/ReconcileEventManager';
+import { Component, ChangeDetectorRef, ViewChildren, ViewChild, ViewContainerRef } from '@angular/core';
+import { WebFreightDomainService } from '../../../Infrastructure/Services/WebFreightDomainService';
+import { ServiceArgs } from '../../../Infrastructure/DataContracts/ServiceArgs';
+import { OnInit, Output, EventEmitter, ComponentRef, QueryList } from '@angular/core';
+import { JournalExtendedListService } from '../../Services/ExtendedLists/JournalExtendedListService';
+import { ARPaymentExtendedListService } from '../../../Invoice/Services/ExtendedLists/ARPaymentExtendedListService';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { AppTool } from '../../../Infrastructure/Tools';
+import { ReconcileEventManager } from '../../Utilities/ReconcileEventManager';
 
-import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
+import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
+import { ListComponentArgs } from 'Infrastructure/Args';
+import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
+import { LocationDirective } from 'Infrastructure/Utilities/LocationDirective';
+import { ChildDirective } from 'Controls/Directives/ChildDirective';
 @Component({
 
     templateUrl: "./GlAccountLedgerTransactionsListTemplate.html"
@@ -30,16 +34,15 @@ export class GlAccountLedgerTransactionsListTemplate {
         'הופקד- טרם נפרע': 'orange',
         'בקופה': 'orange',
         'משמרת': 'orange',
-        'הוחזר ללקוח' : 'red',
-        'נפרע': 'green', };
+        'הוחזר ללקוח': 'red',
+        'נפרע': 'green',
+    };
 
 
     public _JournalExtendedListService = new JournalExtendedListService();
     public _ARPaymentExtendedListService = new ARPaymentExtendedListService();
-
     @Output() CheckBoxChecked = new EventEmitter();
     @Output() Changed: EventEmitter<boolean> = new EventEmitter<boolean>();
-
     public isRTL: boolean = false;
     public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -59,12 +62,13 @@ export class GlAccountLedgerTransactionsListTemplate {
     }
 
 
-    public get transferAccountId() : string {
+    public get transferAccountId(): string {
         return this.CurrentSession.TransferAccountId;
     }
 
 
     setVariables(rowData: any, fieldName: string, MyAdditionalData: any) {
+
         this.rowData = rowData;
         if (this.rowData.IsChecked == true) {
             console.log("Oh Yea True");
@@ -106,8 +110,39 @@ export class GlAccountLedgerTransactionsListTemplate {
                 EntityId: id,
                 ObjectTableName: tableName
             });
+
         });
     }
+
+
+
+
+    OpenManageReconciliations(rowData: any, title: string) {
+
+        if (title != "סכום פתוח ") {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({
+                        SelectedTabCode: "GAMR",
+                        EntityId: rowData['AccountId'],
+                        ObjectTableName: "GLAccount",
+                        FromDate: new Date('01/01/2010'),
+                        JournalNumber: rowData['JournalNumber']
+
+
+                    });
+                    cmpRef.instance.BackCompleted.subscribe(bk => {
+                        console.log(bk);
+                    });
+
+                });
+        }
+
+
+    }
+
 
     OpenJournal(id) {
         if (!AppTool.IsNullOrEmpty(id)) {
@@ -120,7 +155,7 @@ export class GlAccountLedgerTransactionsListTemplate {
                     EntityId: id,
                     ObjectTableName: "Journal"
                 });
-                cmpRef.instance.BackCompleted.subscribe(bk => {});
+                cmpRef.instance.BackCompleted.subscribe(bk => { });
             });
         }
     }
@@ -141,6 +176,7 @@ export class GlAccountLedgerTransactionsListTemplate {
     }
 
     CalculateOriginalAmount() {
+        
         if (
             !AppTool.IsNullOrEmpty(
                 ReconcileEventManager.GLAccountReconcileMethodCode
@@ -192,19 +228,21 @@ export class GlAccountLedgerTransactionsListTemplate {
     }
 
     GetIndicatorText() {
+        if (this.rowData['OpenAmount'] == 0) return this.showLocal ? "סגור" : "close";
         if ((this.rowData['LocalAmountDebit'] > 0 && this.rowData['OpenAmount'] != this.CalculateOriginalAmount()) || (this.rowData['LocalAmountCredit'] > 0 && this.rowData['OpenAmount'] != -1 * this.CalculateOriginalAmount()))
             return this.showLocal ? "סכום פתוח חלקית" : "Partial transaction";
         else return this.showLocal ? "סכום פתוח " : "Open transaction";
     }
 
     GetGLAccountIndicatorText() {
+        if (this.rowData['OpenAmount'] == 0) return this.showLocal ? "סגור" : "close";
         if ((this.rowData['LocalAmountDebit'] != 0 && this.rowData['OpenAmount'] != this.CalculateOriginalAmount()) || (this.rowData['LocalAmountCredit'] != 0 && this.rowData['OpenAmount'] != -1 * this.CalculateOriginalAmount()))
             return this.showLocal ? "סכום פתוח חלקית" : "Partial transaction";
-        else if (this.rowData['IsExternalReconcile'] == false && this.ChartOfAccountsTypeCode == "5")  return this.showLocal ? "תנועות חיצוניות פתוחות " : "Open External Transaction";
+        else if (this.rowData['IsExternalReconcile'] == false && this.ChartOfAccountsTypeCode == "5") return this.showLocal ? "תנועות חיצוניות פתוחות " : "Open External Transaction";
         else return this.showLocal ? "סכום פתוח " : "Open transaction";
     }
 
-    OpenGLAccount(fieldName :string) {
+    OpenGLAccount(fieldName: string) {
         var account2open = this.rowData[fieldName];
         var tableName = "GLAccount";
 
