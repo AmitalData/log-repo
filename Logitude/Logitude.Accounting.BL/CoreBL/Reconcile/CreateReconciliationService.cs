@@ -82,8 +82,6 @@ namespace Logitude.Accounting.BL.CoreBL
                 bool hasMultipleARPayments = CheckIfHasMultiplePayment(reconciliationPM, recoTransactions);
                 if (hasMultipleARPayments == true)
                 {
-                    CheckIfTotalNotEqualsZero(reconciliationPM);
-
                     MultipleARPaymentReconciliationSplitter splitter = new MultipleARPaymentReconciliationSplitter(reconciliationPM);
 
 
@@ -152,16 +150,6 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 
             return recoCallBack;
-        }
-
-        private void CheckIfTotalNotEqualsZero(ReconciliationPM reconciliationPM)
-        {
-            decimal reconciliaionTotal = reconciliationPM.ReconciliationLines.Sum(d => d.ReconciliationAmount);
-            if (reconciliaionTotal != 0)
-            {
-                var msg = TextCodesTranslator.TranslateText("ARPayment.O.MultiPaymentZeroDifference", reconciliationPM.Tenant, LoggedContactResolver.GetLoggedContactShowLocal(reconciliationPM.Tenant));
-                throw new ApplicationException(msg);
-            }
         }
 
         private static bool CheckIfHasMultiplePayment(ReconciliationPM reconciliationPM, List<LedgerTransactionPM> recoTransactions)
