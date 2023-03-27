@@ -113,7 +113,9 @@ namespace Logitude.Accounting.BL.CoreBL.Fix
                 var listTransactionId = journalPM.JournalReconciles.Select(r => r.LedgerTransactionId).ToList();
                 if (listTransactionId.Count > 0)
                 {
-                    myLedgerTransactionUpdateService.UpdateInReconcileProgress(listTransactionId, journalPM.Tenant, false);
+                    //myLedgerTransactionUpdateService.UpdateInReconcileProgress(listTransactionId, journalPM.Tenant, false);
+                    LedgerTransactionUpdateService.UpdateInReconcileProgress(journalPM.Id, journalPM.Tenant, false);
+
                     accountingContext.SaveChanges();
                 }
 

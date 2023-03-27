@@ -16,6 +16,9 @@ using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
+using System.Data.SqlClient;
+using Simplog.Data.Helpers;
+using System.Data;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -180,6 +183,41 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 service.Update(bankAccount, true);
             }
         }
+        public static int UpdateInReconcileProgress(string journalId, int tenant, bool Value_inReconcileProgress)
+        {
+
+            string strConnString = TenantServerConfigration.GetDbConnection(tenant);
+
+            using (SqlConnection connection = new SqlConnection(strConnString))
+            {
+                connection.Open();
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = 
+                        "UPDATE LedgerTransactions SET InReconcileProgress= @Value_inReconcileProgress " +
+                        "WHERE ID IN (" +
+                        "    SELECT  LedgerTransactionId  from JournalReconciles " +
+                        "     WHERE  JournalId=@journalId and tenant= @tenant " +
+                        "            and LedgerTransactionId is not null" +
+                        ")";
+                    command.CommandType = CommandType.Text;
+
+                    command.Parameters.Add("@Value_inReconcileProgress", SqlDbType.Int);
+                    command.Parameters["@Value_inReconcileProgress"].Value= Value_inReconcileProgress;
+
+                    command.Parameters.Add("@tenant", SqlDbType.Int);
+                    command.Parameters["@tenant"].Value = tenant;
+
+                    command.Parameters.Add("@journalId", SqlDbType.VarChar);
+                    command.Parameters["@journalId"].Value = journalId;
+
+
+                    int rows = command.ExecuteNonQuery();
+                    return rows ;
+                }
+            }
+        }
+
         public void UpdateInReconcileProgress(List<String> listTransactionId,int tenant,bool Value_inReconcileProgress)
         {
 
