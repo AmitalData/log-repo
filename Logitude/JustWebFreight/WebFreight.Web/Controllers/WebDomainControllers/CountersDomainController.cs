@@ -162,7 +162,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         }
                     }
 
-                    if (args.CounterPM.Code == "HAWB")
+                    if (args.CounterPM?.Code == "HAWB")
                     {
                         foreach (TenantSettingPM item in args.TenantSettings)
                         {
@@ -285,6 +285,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public CounterPM CounterPM { get; set; }
         public List<TenantSettingPM> TenantSettings { get; set; }
         public List<CounterDefinitionPM> CounterDefinitions { get; set; }
+        public bool IsCustomized { get; set; }
     }
 
     public class CounterProperties

@@ -146,6 +146,7 @@ export class CounterInvoiceComponent extends BaseComponent {
         }
 
         this.IsCustomizedCounter = this.APIHelper.CounterDefinitions.filter(c => c.IsCustomized == true)[0] != null;
+        this.APIHelper.CounterDefinitions = this.APIHelper.CounterDefinitions.filter(c => c.IsCustomized == false);
         this.BuildItemsSource();
     }
     private activateConsolidationCreditNoteCounter: boolean = false;
@@ -350,14 +351,17 @@ export class CounterInvoiceComponent extends BaseComponent {
     SameForAllTypesChecked() {
         this.SameForAllTypes = true;
         this.IsCustomizedCounter = false;
+        this.ValidationErrorsList = [];
     }
     DiffForEachTypesChecked() {
         this.SameForAllTypes = false;
         this.IsCustomizedCounter = false;
+        this.ValidationErrorsList = [];
     }
     IsCustomizedCounterChecked() {
         this.SameForAllTypes = false;
         this.IsCustomizedCounter = true;
+        this.ValidationErrorsList = [];
     }
     //private largestLastValueOfCounterStat: number = 0;
 
@@ -416,6 +420,10 @@ export class CounterInvoiceComponent extends BaseComponent {
 
     OkButtonClicked() {
         {
+            if (this.IsCustomizedCounter) {
+                this.customizedARInvoiceCounterComponent.OkButtonClicked();
+                return;
+            }
             var isValidGreaterStartNumber: boolean = true;
 
             this.APIHelper.CounterDefinitions.forEach(item => {
