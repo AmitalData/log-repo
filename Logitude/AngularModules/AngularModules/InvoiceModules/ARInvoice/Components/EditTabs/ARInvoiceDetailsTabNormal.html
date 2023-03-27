@@ -598,7 +598,7 @@
                                     </div>
                                 </div>
 
-                                <logitude-edit-grid *ngIf="IsManifest" GridWidth="100%" GridHeight="100%" [ItemSource]="ObservableItems" [groupby]="'Description'" [ShowCount]="true">
+                                <logitude-edit-grid *ngIf="IsManifest" GridWidth="100%" GridHeight="100%" [ItemSource]="ObservableItems" [groupby]="'Description'" [ShowCount]="true" [UseVirtuallization]="IsUsingVirtuallization"> 
 
                                     <!-- Exists -->
                                     <log-column [width]="'25'" [Editable]="false">

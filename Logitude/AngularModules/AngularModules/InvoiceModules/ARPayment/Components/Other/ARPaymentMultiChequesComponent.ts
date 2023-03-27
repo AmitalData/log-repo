@@ -43,7 +43,8 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
     arPaymentChequeOperationsService:ARPaymentChequeOperationsService = new ARPaymentChequeOperationsService();
     arPaymentPMService:ARPaymentPMService = new ARPaymentPMService();
     inCashbookChequeStatus = '1';
-    returnedFromBankChequeStatus = "4";  
+    returnedFromBankChequeStatus = "4";
+    public IsUsingVirtuallization: boolean = false;
     constructor() {
         super();
         this.ItemsSource = new ObservableCollection([]);
@@ -55,6 +56,7 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
     SetWindowArgs(args: any) {
 
         if (!AppTool.IsNullOrEmpty(args)) {
+            this.SetIsUsingVirtuallization();
             this.paymentPM = args.EntityPM;
             this.OriginalItemPM = args.EntityPM;
             this.ClonedItemPM = this.CloneEntity(args.EntityPM);
@@ -62,6 +64,14 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
             this.IsDisplayOnly = this.paymentPM.StatusCode == "AD" || this.paymentPM.StatusCode == "VD"  ? true : false;
         }
     }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
+    }
+
     private LoadScreen()
     {
         this.FillItemSource();

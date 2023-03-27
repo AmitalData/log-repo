@@ -38,6 +38,7 @@ export class ARPaymentMultiBankTransfersComponent extends BaseComponent {
     public TotalLocalAmount: number;
     public TenantCurrencySign: string;
     public isLTR: boolean;
+    public IsUsingVirtuallization: boolean = false;
     constructor() {
         super();
         this.ItemsSource = new ObservableCollection([]);
@@ -50,6 +51,7 @@ export class ARPaymentMultiBankTransfersComponent extends BaseComponent {
 
     SetWindowArgs(args: any) {
         if (!AppTool.IsNullOrEmpty(args)) {
+            this.SetIsUsingVirtuallization();
             this.paymentPM = args.EntityPM;
             this.OriginalItemPM = args.EntityPM;
             this.ClonedItemPM = this.CloneEntity(args.EntityPM);
@@ -66,6 +68,14 @@ export class ARPaymentMultiBankTransfersComponent extends BaseComponent {
         }
         this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
     }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
+    }
+
     UpdateBankTransferCounter() {
         this.BankTransfersCounter = this.paymentPM.ARPaymentBankTranfers.length;
     }
