@@ -24,6 +24,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {ReportsTemplatePMExtendedService} from '../../../../Common/Services/ExtendedPMs/ReportsTemplatePMExtendedService';
 import { ReportsTemplatePMService } from '../../../../Common/Services/StandardPMs/ReportsTemplatePMService';
+import { ReportsTemplatePM } from '../../../../Common/EntityPMs/ReportsTemplatePM';
 declare var insertAtSubject, StringToBase64, querySelection, resultToUnitArray, Base64ToString: any;
 
 @Component({
@@ -75,7 +76,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
     CCId: string;
     BCCId: string;
     TOId: string;
-
+    ReportTemplatePM: ReportsTemplatePM;
 
 
     CC: string;
@@ -145,7 +146,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
         this.RequsetPageName = args.RequsetPageName;
         this.AutomationId = args.AutomationId;
-
+        this.ReportTemplatePM = args.ReportTemplatePM;
         if (args.ObjectType) this.ObjectType = args.ObjectType;
        
         this.TemplatePMLists = args.DocumentTypeTemplatePMLists;
@@ -916,7 +917,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
         windowArgs.ObjectTypeField = objectTypeField;
         windowArgs.InSertDataFieldType = type;
         windowArgs.DocumentTypeCode = this.DocumentTypeCode;
-        
+        windowArgs.ReportTemplatePM = this.ReportTemplatePM;
         if (this.HideEntityDataFields) windowArgs.ObjectTableId = null;
         this.InSertDataFieldType = type;
         var logWindow = new LogitudeWindow();

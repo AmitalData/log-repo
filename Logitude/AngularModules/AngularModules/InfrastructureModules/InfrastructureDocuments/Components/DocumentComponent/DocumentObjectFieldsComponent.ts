@@ -10,6 +10,12 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {FormControl}   from '@angular/forms'; 
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { ReportsTemplatePM } from '../../../../Common/EntityPMs/ReportsTemplatePM';
+import { ExcelReportService } from '../../../../Common/Services/ExtendedLists/ExcelReportService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { ExcelReportResult } from '../../../../Common/DataContracts/ExcelReportResult';
+import { DataProviderField } from '../../../../Common/DataContracts/DataProviderField';
+import { ReportListService } from '../../../../Common/Services/StandardLists/ReportListService';
 
 @Component({
     
@@ -36,6 +42,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
     public AllObjectDataSourceViewsLists: DocumentObjectFieldsRowViewModel[];
 
     public EntityResourceService: EntityResourceService;
+    public ReportListService: ReportListService;
 
     IsShowTabObjectField = false;
     public SearchTextValue: FormControl;
@@ -43,8 +50,12 @@ export class DocumentObjectFieldsComponent implements OnInit {
     SelectedTabCode: string;
     InSertDataFieldType: string;
     public HideSystemDataTab: boolean = false;
+    public ReportTemplatePM: ReportsTemplatePM;
+    public ExcelReportService : ExcelReportService;
     private CurrentSession = SessionLocator.SelectedSession;
     FromComponent: string;
+    DataProviderFields: DataProviderField[];
+    SelectedDataProviderField: DataProviderField;
     constructor() {
       
         
@@ -74,6 +85,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
         this.ObjectTypeField = args.ObjectTypeField;
         this.InSertDataFieldType = args.InSertDataFieldType;
         this.HideSystemDataTab = args.HideSystemDataTab;
+        this.ReportTemplatePM = args.ReportTemplatePM;
         this.FromComponent = args.FromComponent; 
      if (AppTool.IsNullOrEmpty(this.ObjectTypeField)) {
          if (this.InSertDataFieldType == "From" || this.InSertDataFieldType == "ReplyTo" || this.InSertDataFieldType == "CC" || this.InSertDataFieldType == "BCC" || this.InSertDataFieldType == "To") this.ObjectTypeField = "Emails"; 
@@ -95,6 +107,8 @@ export class DocumentObjectFieldsComponent implements OnInit {
         this.AllSystemDataSourceViewsLists = new Array<DocumentObjectFieldsRowViewModel>();
         this.AllObjectDataSourceViewsLists = new Array<DocumentObjectFieldsRowViewModel>();
         this.EntityResourceService = new EntityResourceService();
+        this.ExcelReportService = new ExcelReportService();
+        this.ReportListService = new ReportListService();
         if (!this.ObjectTypeField) {
             this.ObjectTypeField = null;
         }
@@ -146,6 +160,21 @@ export class DocumentObjectFieldsComponent implements OnInit {
             }
 
             this.FillDataSource();
+        }
+        else if(this.IsReport()) {
+            this.CurrentSession.StartBusyIndicatorLoading();
+            this.ReportListService.getSingle(this.ReportTemplatePM.ReportId).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse.HasError)
+                    return;
+                this.SelectedTabCode = "SAF";
+                this.IsShowTabObjectField = myResponse.Result.AvailableForScheduling;
+                if (this.IsShowTabObjectField) {
+                    this.BuildDataFieldTab();
+                }
+                else {
+                    this.CurrentSession.StopBusyIndicator();
+                }
+            });
         }
         else this.SelectedTabCode = "SAF";
 
@@ -210,9 +239,38 @@ export class DocumentObjectFieldsComponent implements OnInit {
 
     }
 
+    BuildDataFieldTab() {
+        this.SelectedTabCode = "DAF";
+        this.ExcelReportService.getDataProviderFields(this.ReportTemplatePM.ReportId, this.ReportTemplatePM.Id)
+            .subscribe((myResponse: ServiceResponse) => {
+                if (myResponse.HasError) {
+                    this.CurrentSession.StopBusyIndicator();
+                    return;
+                }
+                this.FillDataProviderFields(myResponse.Result)
+                this.CurrentSession.StopBusyIndicator();
+            });
+    }
 
+    FillDataProviderFields(result: ExcelReportResult) {
+        this.DataProviderFields = new Array<DataProviderField>();
+        result.DataProviderFields.forEach((item) => {
+            if (item.Type != 'List' && !item.Text.toLowerCase().includes('id'))
+                this.DataProviderFields.push(this.Clone(item));
+        });
+    }
 
+    Clone(list: any): any {
+        return JSON.parse(JSON.stringify(list));
+    }
 
+    IsReport() {
+        if (!this.ReportTemplatePM)
+            return false;
+        if (!this.ReportTemplatePM.ReportId)
+            return false;
+        return true;
+    }
     private FillDocumentTableObjectFieldsList(objectTable: ObjectTablePM) {
         this.objectFieldsList = window.ObjectFields.filter(f => f.ObjectTableId == objectTable.Id && (f.PMPropertyPath != null || f.ListPropertyPath != null) && f.DisplayInDocumentReferences);
         let documentsObjectTable = window.ObjectTables.filter(t => t.Name == "DocumentType" || t.Name == "DocumentsFiling");
@@ -270,7 +328,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
 
         this.SelectSystemDataObjectFieldsRowViewModel = selectedItem;
         this.SelectObjectDataFieldsRowViewModel = null;
-        
+        this.SelectedDataProviderField = null;
 
 
         var item = this.AllSystemDataSourceViewsLists.filter(d=> d.Id == selectedItem.Id)[0];
@@ -290,6 +348,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
 
     ObjectDataSourceChangeSelected(selectedItem: DocumentObjectFieldsRowViewModel) {
         this.SelectSystemDataObjectFieldsRowViewModel = null;
+        this.SelectedDataProviderField = null;
         this.SelectObjectDataFieldsRowViewModel = selectedItem;
         var item = this.AllSystemDataSourceViewsLists.filter(d=> d.Id == selectedItem.Id)[0];
 
@@ -305,7 +364,15 @@ export class DocumentObjectFieldsComponent implements OnInit {
 
     }
 
-
+    DataFieldChangeSelected(selectedItem: DataProviderField) {
+        this.SelectSystemDataObjectFieldsRowViewModel = null;
+        this.SelectObjectDataFieldsRowViewModel = null;
+        this.SelectedDataProviderField = selectedItem;
+        this.DataProviderFields.forEach((field) => {
+            field.DivSelectBackgroud = "#ffffff";
+        });
+        selectedItem.DivSelectBackgroud = "#B6E0F5";
+    }
 
 
 
@@ -429,7 +496,11 @@ export class DocumentObjectFieldsComponent implements OnInit {
             }
 
         }
-
+        else if (this.SelectedDataProviderField) {
+            let selectedField = this.SelectedDataProviderField;
+            if ((selectedField.Expression != null) && (selectedField.Expression != ""))
+                this.TextSelected = "[" + selectedField.Expression.substring(1, selectedField.Expression.length - 1) + "]";
+        }
         this.CurrentSession.CurrentWindow.Close(this.TextSelected);
     }
     GetObjectFieldResolverFieldValue(selectedField: DocumentObjectFieldsRowViewModel) {
