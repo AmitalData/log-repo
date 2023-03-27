@@ -41,8 +41,8 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         var allowedStatusWeight = allStatuses.FirstOrDefault(a => a.Code == "ARPD")?.StatusWeight;
                         queryableData = queryableData.Where(d => (d.ActualPOLVesselDeparture != null || d.ShipmentMainCarriageATD != null)
                                                              && (d.TransshipmentCount == 0 || d.TransshipmentCount == null)
-                                                             && (d.ActualPODVesselArrival == null && d.ShipmentMainCarriageATA == null)
-                                                             && (d.EstimatedPODVesselArrival != todayDate && d.ShipmentMainCarriageETA != todayDate)
+                                                             && (d.ActualPODVesselArrival == null && d.ShipmentLastLegATA == null)
+                                                             && (d.EstimatedPODVesselArrival != todayDate && d.ShipmentLastLegETA != todayDate)
                                                              && d.EntityStatus.StatusWeight < allowedStatusWeight);
                     }
 
@@ -53,8 +53,8 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         var allowedStatusWeight = allStatuses.FirstOrDefault(a => a.Code == "ARPD")?.StatusWeight;
                         queryableData = queryableData.Where(d => (d.ActualPOLVesselDeparture != null || d.ShipmentMainCarriageATD != null)
                                                              && (d.TransshipmentCount != null && d.TransshipmentCount > 0)
-                                                             && (d.ActualPODVesselArrival == null && d.ShipmentMainCarriageATA == null)
-                                                             && (d.EstimatedPODVesselArrival != todayDate && d.ShipmentMainCarriageETA != todayDate)
+                                                             && (d.ActualPODVesselArrival == null && d.ShipmentLastLegATA == null)
+                                                             && (d.EstimatedPODVesselArrival != todayDate && d.ShipmentLastLegETA != todayDate)
                                                              && d.EntityStatus.StatusWeight < allowedStatusWeight);                     
                     }
 
@@ -63,7 +63,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         var containerObjectTableName = "Container";
                         var allStatuses = GetAllStatusesByObjecTableName(containerObjectTableName, Tenant);
                         var allowedStatusWeight = allStatuses.FirstOrDefault(a => a.Code == "GTOT")?.StatusWeight;
-                        queryableData = queryableData.Where(d => (d.ActualPODVesselArrival != null || d.ShipmentMainCarriageATA != null)
+                        queryableData = queryableData.Where(d => (d.ActualPODVesselArrival != null || d.ShipmentLastLegATA != null)
                                                               && d.GateOut == null
                                                               && d.ActualPODDischarge != null
                                                               && d.EntityStatus.StatusWeight < allowedStatusWeight);
@@ -91,8 +91,8 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         var allStatuses = GetAllStatusesByObjecTableName(containerObjectTableName, Tenant);
                         var allowedStatusWeight = allStatuses.FirstOrDefault(a => a.Code == "ARPD")?.StatusWeight;
                         queryableData = queryableData.Where(d => (d.ActualPOLVesselDeparture != null || d.ShipmentMainCarriageATD != null)
-                                                              && (d.ActualPODVesselArrival == null && d.ShipmentMainCarriageATA == null)
-                                                              && (d.EstimatedPODVesselArrival == todayDate || (d.EstimatedPODVesselArrival == null && d.ShipmentMainCarriageETA == todayDate))
+                                                              && (d.ActualPODVesselArrival == null && d.ShipmentLastLegATA == null)
+                                                              && (d.EstimatedPODVesselArrival == todayDate || (d.EstimatedPODVesselArrival == null && d.ShipmentLastLegETA == todayDate))
                                                               && d.EntityStatus.StatusWeight < allowedStatusWeight);                      
                     }
 
@@ -102,7 +102,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         var allStatuses = GetAllStatusesByObjecTableName(containerObjectTableName, Tenant);
                         var allowedStatusWeight = allStatuses.FirstOrDefault(a => a.Code == "DSCH")?.StatusWeight;
                         queryableData = queryableData.Where(d => d.ActualPODDischarge == null
-                                                              && (d.ActualPODVesselArrival != null || d.ShipmentMainCarriageATA != null)
+                                                              && (d.ActualPODVesselArrival != null || d.ShipmentLastLegATA != null)
                                                               && d.EntityStatus.StatusWeight < allowedStatusWeight);                      
                     }
 
