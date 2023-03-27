@@ -145,5 +145,5 @@
     ReferencedTableSchema="dbo"
     Ignore="true" />
   <UniqueConstraint
-    Columns="WorkFlowNumber" />
+    Columns="Tenant,WorkFlowNumber" />
 </Table>

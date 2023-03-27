@@ -38,10 +38,13 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
 
         protected override void AfterUpdating(TaskPM entityPM, EntityPM entityParentPM)
         {
-            CalculateFieldChanges(entityPM);
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
+            {
+                CalculateFieldChanges(entityPM);
 
-            AuditLog auditLog = AddAuditLog(entityPM);
-            AddWorkflowEntityQueueMessage(entityPM, QueueMessagesTypes.Update, auditLog?.Id);
+                AuditLog auditLog = AddAuditLog(entityPM);
+                AddWorkflowEntityQueueMessage(entityPM, QueueMessagesTypes.Update, auditLog?.Id);
+            }
         }
 
         private void CalculateFieldChanges(TaskPM entityPM)
