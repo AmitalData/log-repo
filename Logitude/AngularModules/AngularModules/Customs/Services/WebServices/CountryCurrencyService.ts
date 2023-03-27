@@ -27,9 +27,13 @@ export class CountryCurrencyService {
 
     }
 
-    UpadateListCurrencyByCountry(countryCurrencyPMs: CountryCurrencyPM[]) {
+    UpadateListCurrencyByCountry(countryCurrencyPMs: CountryCurrencyPM[],CountryId:string) {
 
        var mappedList: CountryCurrencyPM[] = [];
+       var countryCurrencyPM= new CountryCurrencyPM();    
+       countryCurrencyPM.CountryId=CountryId
+       countryCurrencyPM.CurrencyTypeName="-1"
+       mappedList.push(countryCurrencyPM);
        for (var k in countryCurrencyPMs) {
            var field = countryCurrencyPMs[k];
            var mappedEntity: any;

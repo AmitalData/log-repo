@@ -44,6 +44,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 if (countryCurrencyPMs != null && countryCurrencyPMs.Count > 0) {
                     countryCurrencyUpdateService.FastDelete(countryCurrencyPMs[0].CountryId, tenant);
                     (customContext as DbContextBase).SaveChanges();
+                    countryCurrencyPMs = countryCurrencyPMs.Where(v => v.CurrencyTypeName != "-1").ToList();
 
                     foreach (CountryCurrencyPM countryCurrencyPM in countryCurrencyPMs)
 				  {

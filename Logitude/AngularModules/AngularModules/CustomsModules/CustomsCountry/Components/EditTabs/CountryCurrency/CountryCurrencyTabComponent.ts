@@ -144,7 +144,7 @@ export class CountryCurrencyTabComponent extends EditTabComponent {
             this.ValdationErrorList = errors;
         } else {
          
-           this.countryCurrencyService.UpadateListCurrencyByCountry(this.CountryCurrencyListPM).subscribe(res=>{
+           this.countryCurrencyService.UpadateListCurrencyByCountry(this.CountryCurrencyListPM,this.EntityPM.Code).subscribe(res=>{
                if(!res.HasError){
                    var message=new ConfirmWindow();
                    message.YesButtonText = TextCodeTranslator.Translate('General.B.Ok');
