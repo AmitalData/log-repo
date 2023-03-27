@@ -744,7 +744,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                         ClearWrongValues(_MyDeclarationPM);
 
                     _MyDeclarationPM.IsCourierDeclaration = false;
-                    myDeclarationUpdateService.Update(_MyDeclarationPM, true);
                 }
                 else
                 {
@@ -823,8 +822,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     if (_MyDeclarationPM.Direction == "E")
                         ClearWrongValues(_MyDeclarationPM);
 
-                    myDeclarationUpdateService.Update(_MyDeclarationPM, true);
-                    AppendLogLine(LogMessagingUtil.Instance.ToString());
 
 #if NOT_OpenCourierMasterourierDeclarationFromUNF
                     //Upsert CourierMaster
@@ -885,41 +882,33 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
                 }
 
+                //UpdateTrucker();
 
-                UpdateTrucker();
+                try
+                {
+                    string truckerId = GetTruckerId(this._MyDeclarationPM.Tenant, _AmitalCustomsFile.TruckerId);
+                    myDeclarationUpdateService.IsFromU2L = true;
+                    myDeclarationUpdateService.TruckerId = truckerId;
+                    myDeclarationUpdateService.DistributionArea = _AmitalCustomsFile.DistributionArea;
+                    myDeclarationUpdateService.LastMileServiceType = _AmitalCustomsFile.LastMileServiceType;
+                    myDeclarationUpdateService.MAWB = _AmitalCustomsFile.MAWB;
+                    myDeclarationUpdateService.Update(_MyDeclarationPM, true);
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    var FormatedException = ExceptionFormatUtil.GetFormated(ex);
+                    AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                    return;
+                }
+                catch (Exception e)
+                {
+                    AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                    return;
+                }
 
-                if (currentDeclarationCourierStatusPM == null)
-                {
-                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
-                    currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
-                }
-                if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.LastMileServiceType != _AmitalCustomsFile.LastMileServiceType)
-                {
-                    currentDeclarationCourierStatusPM.LastMileServiceType = _AmitalCustomsFile.LastMileServiceType;
-                    if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                    AppendLogLine("try to update Last Mile Service Type " + currentDeclarationCourierStatusPM.LastMileServiceType + " to declarationCourierStatus for DeclarationPM.Id: " + _MyDeclarationPM.Id);
-                }
-                if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
-                {
-                    try
-                    {
-                        currentDeclarationCourierStatusPM.MAWB = _AmitalCustomsFile.MAWB;
-                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-                        declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                AppendLogLine(LogMessagingUtil.Instance.ToString());
 
-                    }
-                    catch (DbEntityValidationException ex)
-                    {
-                        var FormatedException = ExceptionFormatUtil.GetFormated(ex);
-                        AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
-                        return;
-                    }
-                    catch (Exception e)
-                    {
-                        AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
-                        return;
-                    }
-                }
+                
 
                 if (String.IsNullOrWhiteSpace(_MyDeclarationPM.Id))
                 {
