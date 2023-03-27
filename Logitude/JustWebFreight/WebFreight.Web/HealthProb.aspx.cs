@@ -49,26 +49,28 @@ namespace WebFreight.Web
                         LogitudeAppSettings.IsRecycled = false;
                         EventLog.WriteEntry(source, "the system app bool Recycled, the warming is starting", EventLogEntryType.Warning);
                         CallWarmingScenario();
+                        EventLog.WriteEntry(source, "First warming is completed", EventLogEntryType.Information);
+                        CallWarmingScenario();
+                        EventLog.WriteEntry(source, "Second warming is completed", EventLogEntryType.Information);
                         LogitudeAppSettings.WarmingIsFinished = true;
-
+                        EventLog.WriteEntry(source, "Warming is completed", EventLogEntryType.Information);
                     }
                     catch (Exception ex)
                     {
-                        ExceptionHandler.HandleException(ex, DateTime.Now, 0, "Web Startup Warming", "Web Startup Warming", "HealthProb : PageLoad Method", null);
+                       // ExceptionHandler.HandleException(ex, DateTime.Now, 0, "Web Startup Warming", "Web Startup Warming", "HealthProb : PageLoad Method", null);
                         EventLog.WriteEntry(source, $"Warming Scenarios exception {ex.Message}", EventLogEntryType.Information);
                         LogitudeAppSettings.WarmingIsFinished = true;
-
                     }
 
                 }
 
                 if (!LogitudeAppSettings.WarmingIsFinished)
                 {
-                    Response.Clear();
-                    Response.ContentType = "text/xml";
-                    Response.Write("<status>Fail</status>");
-                    Response.StatusCode = 404;
-                    Response.End();
+                    Response.ClearHeaders();
+                    Response.ClearContent();
+                    Response.Status = "503 ServiceUnavailable";
+                    Response.StatusCode = 503;
+                    Response.Flush();
                 }
 
             }
