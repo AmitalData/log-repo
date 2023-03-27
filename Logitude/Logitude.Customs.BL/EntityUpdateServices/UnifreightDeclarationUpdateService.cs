@@ -1194,6 +1194,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             var xml = XmlGenericUtil<T>.SerializeObject(mySerilazeObject, true);
 
+            xml = xml.Replace("&amp", " ");
+
             var myListdata = new List<data>() { new data() { entity = xml } };
 
             mytransmission.data = myListdata.ToArray();// GetDataList().ToArray();
