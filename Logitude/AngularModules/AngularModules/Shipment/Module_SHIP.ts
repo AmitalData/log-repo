@@ -1,4 +1,4 @@
-﻿import { NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { InfrastructureModule } from '../Infrastructure/Module_INFR';
 import { Components, ControlsComponents, ModuleDeclarations } from './ModuleDeclarations';
 import { ModuleProviders } from './ModuleProviders';

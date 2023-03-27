@@ -179,6 +179,12 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public PrepaidCollect FreightPrepaidCollect { get; set; }
     
     public PrepaidCollect OtherPrepaidCollect { get; set; }
+    
+    public List<AirPackage> AirPackages { get; set; }
+    
+    public List<OceanOrInlandPackage> OceanOrInlandPackages { get; set; }
+    
+    public List<Container> Containers { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 
