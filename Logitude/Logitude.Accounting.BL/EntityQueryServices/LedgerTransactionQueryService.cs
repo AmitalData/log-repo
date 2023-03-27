@@ -516,6 +516,21 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
 
 
+        public List<LedgerTransactionPM> GetLedgerTransactionPMsByIdListFast(List<string> idList, int tenant, string SourceTypeCode)
+        {
+            var q = GetTransactionsJoinedWithJounrals();
+            //List<LedgerTransaction> ledgerTransactionPOCOs = null;
+            q=(from a in q
+             where idList.Contains(a.Id) && a.Tenant == tenant
+               where a.SourceTypeCode == SourceTypeCode
+
+             select a);
+            //ledgerTransactionPOCOs = repository.GetLedgerTransactionsByIdList(idList, tenant);
+            //List<LedgerTransactionPM> pms = ledgerTransactionPOCOs.Select(poco => this.GetEntityPM(poco)).ToList();
+            var pms= q.ToList();
+            return pms;
+        }
+
 
         public List<LedgerTransactionPM> GetLedgerTransactionPMsByIdList(List<string> idList, int tenant)
         {
@@ -524,7 +539,25 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             List<LedgerTransactionPM> pms = ledgerTransactionPOCOs.Select(poco => this.GetEntityPM(poco)).ToList();
             return pms;
         }
-
+        public List<LedgerTransactionPM> GetLedgerTransactionDTOByIdList(List<string> idList, int tenant)
+        {
+            var pocos= repository.GetLedgerTransactionsByIdList(idList, tenant);
+            var pms = pocos.Select(x => new LedgerTransactionPM()
+            {
+                Id = x.Id,
+                AccountId = x.AccountId,
+                InReconcileProgress = x.InReconcileProgress,
+                IsReconciled = x.IsReconciled,
+                JournalId = x.JournalId,
+                OpenAmount = x.OpenAmount,
+                ForeignAmountCredit = x.ForeignAmountCredit,
+                LocalAmountCredit = x.LocalAmountCredit,
+                ForeignAmountDebit = x.ForeignAmountDebit,
+                LocalAmountDebit = x.LocalAmountDebit,
+                OpenAmountCurrencyId = x.OpenAmountCurrencyId,
+            }).ToList();
+            return pms;
+        }
         public List<LedgerTransactionPM> GetLedgerTransactionsByAccountIdListAndJournalId(List<string> accountIdList,string journalId, int tenant)
         {
             List<LedgerTransaction> ledgerTransactionPOCOs = null;
@@ -861,7 +894,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return invoicesTransactions;
         }
 
-        private IQueryable<LedgerTransactionPM> GetTransactionsJoinedWithJounrals()
+        public IQueryable<LedgerTransactionPM> GetTransactionsJoinedWithJounrals()
         {
 
             IQueryable<LedgerTransactionPM> query =
@@ -1090,5 +1123,19 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public decimal LocalAmountDebitGross { get; set; }
         public decimal ForeignAmountDebitGross { get; set; }
+    }
+    public class LedgerTransactionDTO
+    {
+        public string Id { get; internal set; }
+        public string AccountId { get; internal set; }
+        public bool InReconcileProgress { get; internal set; }
+        public bool IsReconciled { get; internal set; }
+        public string JournalId { get; internal set; }
+        public decimal OpenAmount { get; internal set; }
+        public decimal ForeignAmountCredit { get; internal set; }
+        public decimal LocalAmountCredit { get; internal set; }
+        public decimal ForeignAmountDebit { get; internal set; }
+        public decimal LocalAmountDebit { get; internal set; }
+        public string OpenAmountCurrencyId { get; internal set; }
     }
 }

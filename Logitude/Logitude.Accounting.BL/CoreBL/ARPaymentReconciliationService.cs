@@ -31,9 +31,10 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public void UpdatePaymentOpenAmountAndStatusForReconciliaiton(ReconciliationPM entityPM)
         {
-            LedgerTransactionPM paymentTransaction = GetPaymentTransactionFromReconciliation(entityPM);
-
-            if(paymentTransaction != null)
+            LedgerTransactionPM paymentTransaction = 
+                //GetPaymentTransactionFromReconciliation(entityPM);
+                GetPaymentTransactionFromReconciliationFast(entityPM);
+            if (paymentTransaction != null)
             {
 
                 ARPaymentPM paymentPM = GetARPaymentPMById(paymentTransaction.SourceId, paymentTransaction.Tenant);
@@ -101,6 +102,20 @@ namespace Logitude.Accounting.BL.CoreBL
             }
         }
 
+        private LedgerTransactionPM GetPaymentTransactionFromReconciliationFast(ReconciliationPM entityPM)
+        {
+            LedgerTransactionPM paymentTransaction = null;
+
+            
+
+            List<LedgerTransactionPM> ledgerTransactions = GetReconciliationTransactionsFast(entityPM, CloseTables.AccountingEntityValues.ARPayment);
+
+            paymentTransaction = ledgerTransactions
+                                        .Where(d => d.SourceTypeCode == CloseTables.AccountingEntityValues.ARPayment)
+                                        .FirstOrDefault();
+
+            return paymentTransaction;
+        }
 
         // private methods
         private LedgerTransactionPM GetPaymentTransactionFromReconciliation(ReconciliationPM entityPM)
@@ -115,6 +130,19 @@ namespace Logitude.Accounting.BL.CoreBL
 
             return paymentTransaction;
         }
+        private List<LedgerTransactionPM> GetReconciliationTransactionsFast(ReconciliationPM entityPM,string SourceTypeCode)
+        {
+            LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(entityPM.Tenant);
+
+            List<string> ledgerTransactionIds = entityPM.ReconciliationLines.Where(d => d.TransactionId != null).Select(d => d.TransactionId).ToList();
+
+            
+
+            List<LedgerTransactionPM> ledgerTransactions = transQuery.GetLedgerTransactionPMsByIdListFast(ledgerTransactionIds, entityPM.Tenant, SourceTypeCode);
+
+            return ledgerTransactions;
+        }
+
         private List<LedgerTransactionPM> GetReconciliationTransactions(ReconciliationPM entityPM)
         {
             LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(entityPM.Tenant);
