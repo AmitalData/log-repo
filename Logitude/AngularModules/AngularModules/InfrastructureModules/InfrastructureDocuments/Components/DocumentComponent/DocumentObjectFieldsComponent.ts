@@ -42,7 +42,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
     public AllObjectDataSourceViewsLists: DocumentObjectFieldsRowViewModel[];
 
     public EntityResourceService: EntityResourceService;
-    public ReportService: ReportListService;
+    public ReportListService: ReportListService;
 
     IsShowTabObjectField = false;
     public SearchTextValue: FormControl;
@@ -51,7 +51,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
     InSertDataFieldType: string;
     public HideSystemDataTab: boolean = false;
     public ReportTemplatePM: ReportsTemplatePM;
-    public excelReportService : ExcelReportService;
+    public ExcelReportService : ExcelReportService;
     private CurrentSession = SessionLocator.SelectedSession;
     FromComponent: string;
     DataProviderFields: DataProviderField[];
@@ -107,8 +107,8 @@ export class DocumentObjectFieldsComponent implements OnInit {
         this.AllSystemDataSourceViewsLists = new Array<DocumentObjectFieldsRowViewModel>();
         this.AllObjectDataSourceViewsLists = new Array<DocumentObjectFieldsRowViewModel>();
         this.EntityResourceService = new EntityResourceService();
-        this.excelReportService = new ExcelReportService();
-        this.ReportService = new ReportListService();
+        this.ExcelReportService = new ExcelReportService();
+        this.ReportListService = new ReportListService();
         if (!this.ObjectTypeField) {
             this.ObjectTypeField = null;
         }
@@ -161,14 +161,20 @@ export class DocumentObjectFieldsComponent implements OnInit {
 
             this.FillDataSource();
         }
-        if ((this.ReportTemplatePM != null || this.ReportTemplatePM != undefined) && this.ReportTemplatePM.ReportId) {
+        else if(this.IsReport()) {
             this.CurrentSession.StartBusyIndicatorLoading();
-            this.ReportService.getSingle(this.ReportTemplatePM.ReportId).subscribe((myResponse: ServiceResponse) => {
+            this.ReportListService.getSingle(this.ReportTemplatePM.ReportId).subscribe((myResponse: ServiceResponse) => {
                 if (myResponse.HasError)
                     return;
                 this.IsShowTabObjectField = myResponse.Result.AvailableForScheduling;
-                this.SelectedTabCode = "DAF";
-                this.LoadReportDataProvider();
+                if (this.IsShowTabObjectField) {
+                    this.SelectedTabCode = "DAF";
+                    this.LoadReportDataProvider();
+                }
+                else {
+                    this.SelectedTabCode = "SAF";
+                    this.CurrentSession.StopBusyIndicator();
+                }
             });
         }
         else this.SelectedTabCode = "SAF";
@@ -235,7 +241,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
     }
 
     LoadReportDataProvider() {
-        this.excelReportService.getDataProviderFields(this.ReportTemplatePM.ReportId, this.ReportTemplatePM.Id)
+        this.ExcelReportService.getDataProviderFields(this.ReportTemplatePM.ReportId, this.ReportTemplatePM.Id)
             .subscribe((myResponse: ServiceResponse) => {
                 if (myResponse.HasError)
                     return;
@@ -257,9 +263,11 @@ export class DocumentObjectFieldsComponent implements OnInit {
     }
 
     IsReport() {
-        if (this.ReportTemplatePM.ReportId)
-            return true;
-        return false;
+        if (!this.ReportTemplatePM)
+            return false;
+        if (!this.ReportTemplatePM.ReportId)
+            return false;
+        return true;
     }
     private FillDocumentTableObjectFieldsList(objectTable: ObjectTablePM) {
         this.objectFieldsList = window.ObjectFields.filter(f => f.ObjectTableId == objectTable.Id && (f.PMPropertyPath != null || f.ListPropertyPath != null) && f.DisplayInDocumentReferences);
