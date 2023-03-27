@@ -58,8 +58,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         private DataProvider currentDataProvider;
         private EventTracerArgs _LastTraceEventParams;
         private CourierMasterPM _CourierMasterPM;
-
-
+        public string TruckerId;
+        public bool IsFromU2L;
+        public string DistributionArea;
+        public string LastMileServiceType;
+        public string MAWB;
         public bool IsProcedureCurrentCodeChanged { get; set; }
 
         public bool IsFromCustomsFeedback { get; set; }
@@ -1423,6 +1426,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     var context = CustomContext.GetContext(entityPM.Tenant);
                     DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
                     DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(entityPM);
+                    if (IsFromU2L)
+                    {
+                        declarationCourierStatusUpdateService.TruckerId = TruckerId;
+                        declarationCourierStatusUpdateService.DistributionArea = DistributionArea;
+                        declarationCourierStatusUpdateService.LastMileServiceType = LastMileServiceType;
+                        declarationCourierStatusUpdateService.MAWB = MAWB;
+
+                        newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.UpdateTrucker(newDeclarationCourierStatusPM, entityPM);
+                        newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.UpdateLastMileServiceType(newDeclarationCourierStatusPM, entityPM);
+                    }
+                    
                     /*
                      * getSingle moved to CalculateDeclarationCourierStatus
                     DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
