@@ -441,7 +441,7 @@ namespace Logitude.Customs.BL.Validators
 
                 }
 
-                if (supplierInvoice.IncotermCode != null && declaration.Direction == "E")
+                /*if (supplierInvoice.IncotermCode != null && declaration.Direction == "E")
                 {
                     var incotemrsFileValidationFilters = incotemrsFileValidationPMs.Where(x => x.EnglishName == supplierInvoice.IncotermCode && x.LeadDocumentTypeName == "הצהרת יצוא");
 
@@ -454,7 +454,7 @@ namespace Logitude.Customs.BL.Validators
                     bool needFreight = incotemrsFileValidationFilters.Any(x => x.IsFreightCharge);
                     if (notHaveFreightDetails && needFreight)
                         requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { CustomMessageError = "Customs.General.O.NoDetailsForActualFreightAmount" });
-                }
+                }*/
 
 
 
