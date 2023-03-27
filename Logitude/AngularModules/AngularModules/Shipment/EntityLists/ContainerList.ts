@@ -311,5 +311,7 @@ export class ContainerList {
 		RecentResponseDate: Date;
 		ShipmentDepartmentId: string;
 		ShipmentDepartmentName: string;
+		ShipmentLastLegATA: Date;
+		ShipmentLastLegETA: Date;
 	
 }

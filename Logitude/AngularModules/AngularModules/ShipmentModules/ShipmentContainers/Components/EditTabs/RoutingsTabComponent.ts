@@ -668,14 +668,14 @@ export class RoutingItem {
         else if (this.Container.ActualPODVesselArrival != null)
             return this.GetDateString("Vessel ATA", this.Container.ActualPODVesselArrival);
 
-        else if (this.Container.ShipmentMainCarriageATA != null)
-            return this.GetDateString("Vessel ATA", this.Container.ShipmentMainCarriageATA);
+        else if (this.Container.ShipmentLastLegATA != null)
+            return this.GetDateString("Vessel ATA", this.Container.ShipmentLastLegATA);
 
         else if (this.Container.EstimatedPODVesselArrival != null)
             return this.GetDateString("Vessel ETA", this.Container.EstimatedPODVesselArrival);
 
-        else if (this.Container.ShipmentMainCarriageETA != null)
-            return this.GetDateString("Vessel ETA", this.Container.ShipmentMainCarriageETA);
+        else if (this.Container.ShipmentLastLegETA != null)
+            return this.GetDateString("Vessel ETA", this.Container.ShipmentLastLegETA);
 
         else
             return null;
@@ -894,12 +894,12 @@ export class RoutingItem {
         this.IsGreenCircle = false;
         this.IsOrangeCircle = true;
 
-        if (this.Container.GateOut != null && this.Container.ActualPODDischarge != null && (this.Container.ActualPODVesselArrival != null || this.Container.ShipmentMainCarriageATA != null)) {
+        if (this.Container.GateOut != null && this.Container.ActualPODDischarge != null && (this.Container.ActualPODVesselArrival != null || this.Container.ShipmentLastLegATA != null)) {
             this.IsGreenCircle = true;
             this.IsOrangeCircle = false;
         }
 
-        else if (this.Container.GateOut == null && this.Container.ActualPODDischarge == null && this.Container.ActualPODVesselArrival == null && this.Container.ShipmentMainCarriageATA == null)
+        else if (this.Container.GateOut == null && this.Container.ActualPODDischarge == null && this.Container.ActualPODVesselArrival == null && this.Container.ShipmentLastLegATA == null)
             this.IsOrangeCircle = false;
     }
     CheckActualDates_OnCarriage() {

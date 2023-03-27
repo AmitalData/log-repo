@@ -17,6 +17,7 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 import { CustomChildEntity } from '../../Infrastructure/EntityPMs/CustomChildEntity'
 
+
 export class ContainerPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
@@ -1715,6 +1716,26 @@ export class ContainerPM {
     private isUpdatedFromRequest: boolean;
     public get IsUpdatedFromRequest() { return this.isUpdatedFromRequest; }
     public set IsUpdatedFromRequest(newValue: boolean) { if (this.isUpdatedFromRequest != newValue) { this.isUpdatedFromRequest = newValue; this.MarkAsDirty("IsUpdatedFromRequest"); } }
+       
+	 
+    private shipmentDepartmentId: string;
+    public get ShipmentDepartmentId() { return this.shipmentDepartmentId; }
+    public set ShipmentDepartmentId(newValue: string) { if (this.shipmentDepartmentId != newValue) { this.shipmentDepartmentId = newValue; this.MarkAsDirty("ShipmentDepartmentId"); } }
+       
+	 
+    private shipmentDepartmentName: string;
+    public get ShipmentDepartmentName() { return this.shipmentDepartmentName; }
+    public set ShipmentDepartmentName(newValue: string) { if (this.shipmentDepartmentName != newValue) { this.shipmentDepartmentName = newValue; this.MarkAsDirty("ShipmentDepartmentName"); } }
+       
+	 
+    private shipmentLastLegATA: Date;
+    public get ShipmentLastLegATA() { return this.shipmentLastLegATA; }
+    public set ShipmentLastLegATA(newValue: Date) { if (this.shipmentLastLegATA != newValue) { this.shipmentLastLegATA = newValue; this.MarkAsDirty("ShipmentLastLegATA"); } }
+       
+	 
+    private shipmentLastLegETA: Date;
+    public get ShipmentLastLegETA() { return this.shipmentLastLegETA; }
+    public set ShipmentLastLegETA(newValue: Date) { if (this.shipmentLastLegETA != newValue) { this.shipmentLastLegETA = newValue; this.MarkAsDirty("ShipmentLastLegETA"); } }
        
 	 
 

@@ -135,6 +135,8 @@ export class ContainerPMInitService {
             entityPM.UIProperties.SetEnabled("ShipmentDepartmentId", "Container", false);
             entityPM.UIProperties.SetEnabled("ShipmentDepartmentName", "Container", false);
             entityPM.UIProperties.SetEnabled("TransshipmentCount", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentLastLegETA", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentLastLegATA", "Container", false);
         }
     }
 }
