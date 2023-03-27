@@ -107,7 +107,7 @@ export class ARPaymentMenuButtonsHandler {
                             if (this.EntityPM.Id == null && this.EntityPM.StatusCode == "VD") {
                                 button.IsDisabled = true;
                             }
-                            else if (this.EntityPM.StatusCode == "DR") {
+                            else if (SessionLocator.TenantPM.AccountingActivated && this.EntityPM.StatusCode == "DR") {
                                 button.IsDisabled = true;
                             }
                             else {
