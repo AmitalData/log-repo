@@ -364,7 +364,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 if (truckerId != currentDeclarationCourierStatusPM.TruckerId || DistributionArea != currentDeclarationCourierStatusPM.DistributionArea)
                 {
-                    currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    //currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                     currentDeclarationCourierStatusPM.TruckerId = truckerId;
                     currentDeclarationCourierStatusPM.MAWB = MAWB;
                     currentDeclarationCourierStatusPM.DistributionArea = DistributionArea;
@@ -384,7 +384,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.LastMileServiceType != LastMileServiceType)
             {
                 currentDeclarationCourierStatusPM.LastMileServiceType = LastMileServiceType;
-                if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                //if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                 LogMessagingUtil.Instance.AppendLine("try to update Last Mile Service Type " + currentDeclarationCourierStatusPM.LastMileServiceType + " to declarationCourierStatus for DeclarationPM.Id: " + declarationPM.Id);
             }
             if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
