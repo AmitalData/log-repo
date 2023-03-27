@@ -420,81 +420,81 @@ WHERE D.ID = DT.DECLARATIONID AND DT.TAXTYPECODE = PT.CODE AND D.ID=@ID
 <DAT name=""REFERENCE"">GPRFC.Lp_GetVars</DAT>
 <DAT name=""PARAMETERS"">DECLARATIONCOURIERSTATUSES.DECLARATIONID=True</DAT>
 <DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT TOTALINVOICEAMOUNTINUSD FROM DECLARATIONCOURIERSTATUSES WHERE DECLARATIONCOURIERSTATUSES.DECLARATIONID='1-100536'</DAT>
-<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT TOTALINVOICEAMOUNTINUSD FROM DECLARATIONCOURIERSTATUSES WHERE DECLARATIONCOURIERSTATUSES.DECLARATIONID='1-100536'</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT TOTALINVOICEAMOUNTINUSD FROM Customs.DECLARATIONCOURIERSTATUSES WHERE DECLARATIONCOURIERSTATUSES.DECLARATIONID=@DECLARATIONID AND TENANT=@Tenant</DAT>
 <DAT name=""EXAMPLE_RESULT""></DAT>
-<DAT name=""LINQ"">false</DAT></OCC>
+<DAT name=""LINQ"">true</DAT></OCC>
 <OCC>
 <DAT name=""CODE"">A42</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>SELECT COURIERCUSTOMSTATUSCODE</DAT>
 <DAT name=""REFERENCE"">GPRFC.Lp_GetVars</DAT>
 <DAT name=""PARAMETERS"">DECLARATIONS.ID=True</DAT>
 <DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT COURIERCUSTOMSTATUSCODE FROM DECLARATIONS WHERE DECLARATIONS.ID='1-6364'</DAT>
-<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT COURIERCUSTOMSTATUSCODE FROM DECLARATIONS WHERE DECLARATIONS.ID='1-6364'</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT COURIERCUSTOMSTATUSCODE FROM Customs.DECLARATIONS WHERE DECLARATIONS.ID=@ID AND TENANT=@Tenant</DAT>
 <DAT name=""EXAMPLE_RESULT"">1</DAT>
-<DAT name=""LINQ"">false</DAT></OCC>
+<DAT name=""LINQ"">true</DAT></OCC>
 <OCC>
 <DAT name=""CODE"">A43</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>SELECT LINE FROM DECLARATIONPAYMENTMETHODS</DAT>
 <DAT name=""REFERENCE"">GPRFC.Lp_GetVars</DAT>
 <DAT name=""PARAMETERS"">DECLARATIONPAYMENTMETHODS.DECLARATIONID=True</DAT>
 <DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT LINE FROM DECLARATIONPAYMENTMETHODS WHERE DECLARATIONPAYMENTMETHODS.DECLARATIONID='1-100977' AND DECLARATIONPAYMENTMETHODS.METHODTYPECODE = '79'  AND DECLARATIONPAYMENTMETHODS.PAYERACTIVITYTYPECODE = '3'</DAT>
-<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT LINE FROM DECLARATIONPAYMENTMETHODS WHERE DECLARATIONPAYMENTMETHODS.DECLARATIONID='1-100977' AND DECLARATIONPAYMENTMETHODS.METHODTYPECODE = '79'  AND DECLARATIONPAYMENTMETHODS.PAYERACTIVITYTYPECODE = '3'</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT LINE FROM Customs.DECLARATIONPAYMENTMETHODS WHERE DECLARATIONPAYMENTMETHODS.DECLARATIONID=@DECLARATIONID AND DECLARATIONPAYMENTMETHODS.METHODTYPECODE = '79'  AND DECLARATIONPAYMENTMETHODS.PAYERACTIVITYTYPECODE = '3' AND TENANT=@Tenant</DAT>
 <DAT name=""EXAMPLE_RESULT"">1</DAT>
-<DAT name=""LINQ"">false</DAT></OCC>
+<DAT name=""LINQ"">true</DAT></OCC>
 <OCC>
 <DAT name=""CODE"">A44</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>SELECT TOTALINVOICEAMOUNTINUSD</DAT>
 <DAT name=""REFERENCE"">YCUHLTASK.Lp_Do_CreatePayment</DAT>
 <DAT name=""PARAMETERS"">Declarations.CUSTOMFILENO=True</DAT>
 <DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT TOTALINVOICEAMOUNTINUSD FROM DECLARATIONCOURIERSTATUSES WHERE DECLARATIONCOURIERSTATUSES.DECLARATIONID='1-100536'</DAT>
-<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT TOTALINVOICEAMOUNTINUSD FROM DECLARATIONCOURIERSTATUSES WHERE DECLARATIONCOURIERSTATUSES.DECLARATIONID='1-100536'</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT TOTALINVOICEAMOUNTINUSD FROM Customs.DECLARATIONCOURIERSTATUSES WHERE DECLARATIONCOURIERSTATUSES.DECLARATIONID=@DECLARATIONID AND TENANT=@Tenant</DAT>
 <DAT name=""EXAMPLE_RESULT"">455993853</DAT>
-<DAT name=""LINQ"">false</DAT></OCC>
+<DAT name=""LINQ"">true</DAT></OCC>
 <OCC>
 <DAT name=""CODE"">A45</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>SELECT MethodTypeCode</DAT>
 <DAT name=""REFERENCE"">YCUHLTASK.Lp_Do_CreatePayment,GDSUPAYE.Lf_GOLD_CARD</DAT>
 <DAT name=""PARAMETERS"">DECLARATIONID=True</DAT>
 <DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT MethodTypeCode FROM DeclarationPaymentMethods WHERE DECLARATIONID='1-100977'</DAT>
-<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT MethodTypeCode FROM DeclarationPaymentMethods WHERE DECLARATIONID='1-100977'</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT MethodTypeCode FROM Customs.DeclarationPaymentMethods WHERE DECLARATIONID=@DECLARATIONID AND TENANT=@Tenant</DAT>
 <DAT name=""EXAMPLE_RESULT"">1</DAT>
-<DAT name=""LINQ"">false</DAT></OCC>
+<DAT name=""LINQ"">true</DAT></OCC>
 <OCC>
 <DAT name=""CODE"">A46</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>select DECLARATIONID</DAT>
 <DAT name=""REFERENCE"">YCUHLTASK.Lp_UpsertMasterCourier</DAT>
 <DAT name=""PARAMETERS"">CourierDeclarations.COURIERMASTERID=True</DAT>
 <DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select DECLARATIONID from CourierDeclarations where CourierDeclarations.COURIERMASTERID = '1'</DAT>
-<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select DECLARATIONID from CourierDeclarations where CourierDeclarations.COURIERMASTERID = '1'</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select DECLARATIONID from Customs.CourierDeclarations where CourierDeclarations.COURIERMASTERID = @COURIERMASTERID AND TENANT=@Tenant</DAT>
 <DAT name=""EXAMPLE_RESULT"">1-1</DAT>
-<DAT name=""LINQ"">false</DAT></OCC>
+<DAT name=""LINQ"">true</DAT></OCC>
 <OCC>
 <DAT name=""CODE"">A47</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>select CUSTOMFILENO</DAT>
 <DAT name=""REFERENCE"">YCUHLTASK.Lp_UpsertMasterCourier</DAT>
 <DAT name=""PARAMETERS"">Declarations.ID=True</DAT>
 <DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT CUSTOMFILENO FROM Declarations WHERE Declarations.ID = '1-6467'</DAT>
-<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT CUSTOMFILENO FROM Declarations WHERE Declarations.ID = '1-6467'</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT CUSTOMFILENO FROM Customs.Declarations WHERE Declarations.ID = @ID AND TENANT=@Tenant</DAT>
 <DAT name=""EXAMPLE_RESULT"">51340290</DAT>
-<DAT name=""LINQ"">false</DAT></OCC>
+<DAT name=""LINQ"">true</DAT></OCC>
 <OCC>
 <DAT name=""CODE"">A48</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>select AIRLINEID,HAWB,MAWB,TRUCKERID,ISCANCELLED,ISREADYFORINVOICE,GATEWAYPORTCODE</DAT>
 <DAT name=""REFERENCE"">YCUHLTASK.Lp_UpsertMasterCourier</DAT>
 <DAT name=""PARAMETERS"">CourierMasters.ID=True</DAT>
 <DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT AIRLINEID,HAWB,MAWB,TRUCKERID,ISCANCELLED,ISREADYFORINVOICE,GATEWAYPORTCODE FROM CourierMasters WHERE CourierMasters.ID = '1-1'</DAT>
-<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT AIRLINEID,HAWB,MAWB,TRUCKERID,ISCANCELLED,ISREADYFORINVOICE,GATEWAYPORTCODE FROM CourierMasters WHERE CourierMasters.ID = '1-1'</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT AIRLINEID,HAWB,MAWB,TRUCKERID,ISCANCELLED,ISREADYFORINVOICE,GATEWAYPORTCODE FROM Customs.CourierMasters WHERE CourierMasters.ID = @ID AND TENANT=@Tenant</DAT>
 <DAT name=""EXAMPLE_RESULT"" xml:space='preserve'>1-1	74455445	1532453		0	0	</DAT>
-<DAT name=""LINQ"">false</DAT></OCC>
+<DAT name=""LINQ"">true</DAT></OCC>
 <OCC>
 <DAT name=""CODE"">A49</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>SELECT AIRLINEPREFIX</DAT>
 <DAT name=""REFERENCE"">YCUHLTASK.Lp_UpsertMasterCourier</DAT>
 <DAT name=""PARAMETERS"">CUSTOMSAIRLINES.ID=True</DAT>
 <DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT AIRLINEPREFIX FROM CUSTOMSAIRLINES WHERE CUSTOMSAIRLINES.ID = '1-1'</DAT>
-<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT AIRLINEPREFIX FROM CUSTOMSAIRLINES WHERE CUSTOMSAIRLINES.ID = '1-1'</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT AIRLINEPREFIX FROM Customs.CUSTOMSAIRLINES WHERE CUSTOMSAIRLINES.ID = @ID AND TENANT=@Tenant</DAT>
 <DAT name=""EXAMPLE_RESULT"">235</DAT>
-<DAT name=""LINQ"">false</DAT></OCC>
+<DAT name=""LINQ"">true</DAT></OCC>
 <OCC>
 <DAT name=""CODE"">A5</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>get D.ID,  SI.InvoiceNumber,  SI.VendorId,  SI.InvoiceAmount,  SI.InvoiceCurrencyTypeCode,  CUSTOMSVENDORS.VendorName</DAT>
@@ -513,72 +513,72 @@ WHERE D.ID = DT.DECLARATIONID AND DT.TAXTYPECODE = PT.CODE AND D.ID=@ID
 <DAT name=""REFERENCE"">YCUHLTASK.Lp_UpsertMasterCourier</DAT>
 <DAT name=""PARAMETERS"">CourierMasters.ID=True</DAT>
 <DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT TO_CHAR(ESTIMATEDARRIVALDATE ,'dd/MM/yyyy') FROM CourierMasters WHERE CourierMasters.ID = '1-1'</DAT>
-<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT TO_CHAR(ESTIMATEDARRIVALDATE ,'dd/MM/yyyy') FROM CourierMasters WHERE CourierMasters.ID = '1-1'</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT format(ESTIMATEDARRIVALDATE,'dd/MM/yyyy') FROM Customs.CourierMasters WHERE CourierMasters.ID = @ID AND TENANT=@Tenant</DAT>
 <DAT name=""EXAMPLE_RESULT"">10.12.2023</DAT>
-<DAT name=""LINQ"">false</DAT></OCC>
+<DAT name=""LINQ"">true</DAT></OCC>
 <OCC>
 <DAT name=""CODE"">A51</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>select DOCUMENTTYPEID</DAT>
 <DAT name=""REFERENCE"">YCUHLTASK.Lp_CreateSIDocument</DAT>
 <DAT name=""PARAMETERS"">DOCUMENTTYPECUSTOMSDATA.CUSTOMSDOUCUMENTTYPECODE=False</DAT>
 <DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select DOCUMENTTYPEID from DOCUMENTTYPECUSTOMSDATA where DOCUMENTTYPECUSTOMSDATA.CUSTOMSDOUCUMENTTYPECODE= '380'</DAT>
-<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select DOCUMENTTYPEID from DOCUMENTTYPECUSTOMSDATA where DOCUMENTTYPECUSTOMSDATA.CUSTOMSDOUCUMENTTYPECODE= '380'</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select DOCUMENTTYPEID from Customs.DOCUMENTTYPECUSTOMSDATA where DOCUMENTTYPECUSTOMSDATA.CUSTOMSDOUCUMENTTYPECODE= @CUSTOMSDOUCUMENTTYPECODE AND TENANT=@Tenant</DAT>
 <DAT name=""EXAMPLE_RESULT"">FSI</DAT>
-<DAT name=""LINQ"">false</DAT></OCC>
+<DAT name=""LINQ"">true</DAT></OCC>
 <OCC>
 <DAT name=""CODE"">A52</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>SELECT CUSTOMSDOUCUMENTTYPECODE</DAT>
 <DAT name=""REFERENCE"">GCRQFILE.Lp_Get_Filing_Data,GDMFCFIFILEM.Lp_SendToCustoms</DAT>
 <DAT name=""PARAMETERS"">DOCUMENTTYPECUSTOMSDATA.DOCUMENTTYPEID=True</DAT>
 <DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT CUSTOMSDOUCUMENTTYPECODE FROM DOCUMENTTYPECUSTOMSDATA WHERE DOCUMENTTYPECUSTOMSDATA.DOCUMENTTYPEID = 'LETR'</DAT>
-<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT CUSTOMSDOUCUMENTTYPECODE FROM DOCUMENTTYPECUSTOMSDATA WHERE DOCUMENTTYPECUSTOMSDATA.DOCUMENTTYPEID = 'LETR'</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT CUSTOMSDOUCUMENTTYPECODE FROM Customs.DOCUMENTTYPECUSTOMSDATA WHERE DOCUMENTTYPECUSTOMSDATA.DOCUMENTTYPEID = @DOCUMENTTYPEID AND TENANT=@Tenant</DAT>
 <DAT name=""EXAMPLE_RESULT"">IL_463</DAT>
-<DAT name=""LINQ"">false</DAT></OCC>
+<DAT name=""LINQ"">true</DAT></OCC>
 <OCC>
 <DAT name=""CODE"">A53</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>SELECT DECLARATIONSTATUSTYPECODE,INSTR(ERROSXML,'&lt;ListVersionID&gt;1')</DAT>
 <DAT name=""REFERENCE"">GAQQMOVETO2.Lp_Mandatory</DAT>
 <DAT name=""PARAMETERS"">CUSTOMFILENO=True</DAT>
 <DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT DECLARATIONSTATUSTYPECODE,INSTR(ERROSXML,'&lt;ListVersionID&gt;1') FROM DECLARATIONS WHERE CUSTOMFILENO = '1023'</DAT>
-<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT DECLARATIONSTATUSTYPECODE,INSTR(ERROSXML,'&lt;ListVersionID&gt;1') FROM DECLARATIONS WHERE CUSTOMFILENO = '1023'</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT DECLARATIONSTATUSTYPECODE,CHARINDEX(ERROSXML,'&lt;ListVersionID&gt;1') FROM Customs.DECLARATIONS WHERE CUSTOMFILENO = @CUSTOMFILENO AND TENANT=@Tenant</DAT>
 <DAT name=""EXAMPLE_RESULT"" xml:space='preserve'>12	2066
 6	0</DAT>
-<DAT name=""LINQ"">false</DAT></OCC>
+<DAT name=""LINQ"">true</DAT></OCC>
 <OCC>
 <DAT name=""CODE"">A54</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>SELECT ID FROM CustomsDocumentsTickets</DAT>
 <DAT name=""REFERENCE"">GDMFCFIFILEM.Lp_PurgeDoc</DAT>
 <DAT name=""PARAMETERS"">DOCUMENTSFILINGID=True</DAT>
 <DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT ID FROM CustomsDocumentsTickets WHERE DOCUMENTSFILINGID='qy0uqizmte23n40ucq4m+g00000000'</DAT>
-<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT ID FROM CustomsDocumentsTickets WHERE DOCUMENTSFILINGID='qy0uqizmte23n40ucq4m+g00000000'</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT ID FROM Customs.CustomsDocumentsTickets WHERE DOCUMENTSFILINGID=@DOCUMENTSFILINGID AND TENANT=@Tenant</DAT>
 <DAT name=""EXAMPLE_RESULT"" xml:space='preserve'>1-4563
 1-4585</DAT>
-<DAT name=""LINQ"">false</DAT></OCC>
+<DAT name=""LINQ"">true</DAT></OCC>
 <OCC>
 <DAT name=""CODE"">A55</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>Select ID,PARENTENTITYCODE,PARENTENTITYID</DAT>
 <DAT name=""REFERENCE"">GDMFCFIFILEM.Lp_PurgeDoc</DAT>
 <DAT name=""PARAMETERS"">CUSTOMSDOCUMENTSTICKETID=True</DAT>
 <DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT ID,PARENTENTITYCODE,PARENTENTITYID FROM CustomsDocumentPointers WHERE CUSTOMSDOCUMENTSTICKETID IN ('1-4561')</DAT>
-<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT ID,PARENTENTITYCODE,PARENTENTITYID FROM CustomsDocumentPointers WHERE CUSTOMSDOCUMENTSTICKETID IN ('1-4561')</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT ID,PARENTENTITYCODE,PARENTENTITYID FROM Customs.CustomsDocumentPointers WHERE CUSTOMSDOCUMENTSTICKETID IN (@CUSTOMSDOCUMENTSTICKETID) AND TENANT=@Tenant</DAT>
 <DAT name=""EXAMPLE_RESULT"" xml:space='preserve'>1-4605	Declaration	1-6287</DAT>
-<DAT name=""LINQ"">false</DAT></OCC>
+<DAT name=""LINQ"">true</DAT></OCC>
 <OCC>
 <DAT name=""CODE"">A56</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>SELECT CLAIMSUBMITERNUMBER</DAT>
 <DAT name=""REFERENCE"">GDMFCFIFILEM.Lp_PurgeDoc</DAT>
 <DAT name=""PARAMETERS"">ID=True</DAT>
 <DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT CLAIMSUBMITERNUMBER FROM Claims WHERE ID='1-551'</DAT>
-<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT CLAIMSUBMITERNUMBER FROM Claims WHERE ID='1-551'</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT CLAIMSUBMITERNUMBER FROM Customs.Claims WHERE ID=@ID AND TENANT=@Tenant</DAT>
 <DAT name=""EXAMPLE_RESULT"">550221105</DAT>
-<DAT name=""LINQ"">false</DAT></OCC>
+<DAT name=""LINQ"">true</DAT></OCC>
 <OCC>
 <DAT name=""CODE"">A57</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>SELECT  CustomsVendors.VendorNumber</DAT>
 <DAT name=""REFERENCE"">GDMFFILE.Lp_SendSivugToOCR</DAT>
 <DAT name=""PARAMETERS"">UnfInvoiceCounterKey=True</DAT>
 <DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT  CustomsVendors.VendorNumber   FROM CustomsVendors   WHERE id  =(SELECT vendorid FROM SupplierInvoices WHERE UnfInvoiceCounterKey='8gb9+gempkg9bdnm2kxvkg00000000')</DAT>
-<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT  CustomsVendors.VendorNumber   FROM CustomsVendors   WHERE id  =(SELECT vendorid FROM SupplierInvoices WHERE UnfInvoiceCounterKey='8gb9+gempkg9bdnm2kxvkg00000000')</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT  CustomsVendors.VendorNumber   FROM Customs.CustomsVendors   WHERE id  =(SELECT vendorid FROM Customs.SupplierInvoices WHERE UnfInvoiceCounterKey=@UnfInvoiceCounterKey AND TENANT=@Tenant) AND TENANT=@Tenant</DAT>
 <DAT name=""EXAMPLE_RESULT"">2015002</DAT>
 <DAT name=""LINQ"">false</DAT></OCC>
 <OCC>
@@ -587,9 +587,9 @@ WHERE D.ID = DT.DECLARATIONID AND DT.TAXTYPECODE = PT.CODE AND D.ID=@ID
 <DAT name=""REFERENCE"">GDSFMAIN.Lp_DQFlight_CreditLetter_Inner</DAT>
 <DAT name=""PARAMETERS"">ID=True</DAT>
 <DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT IsReadyForInvoice,IsCancelled FROM CourierMasters WHERE Id='1-1'</DAT>
-<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT IsReadyForInvoice,IsCancelled FROM CourierMasters WHERE Id='1-1'</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT IsReadyForInvoice,IsCancelled FROM Customs.CourierMasters WHERE ID=@ID AND TENANT=@Tenant</DAT>
 <DAT name=""EXAMPLE_RESULT"" xml:space='preserve'>0	0</DAT>
-<DAT name=""LINQ"">false</DAT></OCC>
+<DAT name=""LINQ"">true</DAT></OCC>
 <OCC>
 <DAT name=""CODE"">A59</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>SELECT Declarations.CustomFileNo</DAT>
@@ -599,9 +599,9 @@ WHERE D.ID = DT.DECLARATIONID AND DT.TAXTYPECODE = PT.CODE AND D.ID=@ID
 WHERE CourierDeclarations.CourierMasterId='1-1' 
 AND CourierDeclarations.DeclarationId=Declarations.Id 
 ORDER BY Declarations.CustomFileNo</DAT>
-<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT Declarations.CustomFileNo FROM Declarations,CourierDeclarations 
-WHERE CourierDeclarations.CourierMasterId='1-1' 
-AND CourierDeclarations.DeclarationId=Declarations.Id 
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT Declarations.CustomFileNo FROM Customs.Declarations,Customs.CourierDeclarations 
+WHERE CourierDeclarations.CourierMasterId=@CourierMasterId 
+AND CourierDeclarations.DeclarationId=Declarations.Id  AND Declarations.TENANT=@Tenant AND CourierDeclarations.TENANT=@Tenant 
 ORDER BY Declarations.CustomFileNo</DAT>
 <DAT name=""EXAMPLE_RESULT"">2015002</DAT>
 <DAT name=""LINQ"">false</DAT></OCC>
@@ -650,20 +650,20 @@ IN6566	I10	USD	1
 <DAT name=""REFERENCE"">GMNLRUNI_VB.Lp_LogoIntialize</DAT>
 <DAT name=""PARAMETERS"">CUSTOMFILENO=True</DAT>
 <DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT IMPORTERCODE  FROM DECLARATIONS WHERE CUSTOMFILENO ='1007'</DAT>
-<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT IMPORTERCODE  FROM DECLARATIONS WHERE CUSTOMFILENO ='1007'</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT IMPORTERCODE  FROM Customs.DECLARATIONS WHERE CUSTOMFILENO =@CUSTOMFILENO AND TENANT=@Tenant</DAT>
 <DAT name=""EXAMPLE_RESULT"">511525743</DAT>
-<DAT name=""LINQ"">false</DAT></OCC>
+<DAT name=""LINQ"">true</DAT></OCC>
 <OCC>
 <DAT name=""CODE"">A61</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>SELECT email</DAT>
 <DAT name=""REFERENCE"">GSCQOPN.Lp_Ok</DAT>
 <DAT name=""PARAMETERS"">CODE=True</DAT>
 <DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT email FROM CONTACTS WHERE ID =(SELECT id FROM USERS WHERE code ='AMITAL' AND tenant=1 )</DAT>
-<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT email FROM CONTACTS WHERE ID =(SELECT id FROM USERS WHERE code ='AMITAL' AND tenant=1 )</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT email FROM Customs.CONTACTS WHERE ID =(SELECT id FROM Customs.USERS WHERE code ='AMITAL' AND TENANT=@Tenant) AND TENANT=@Tenant</DAT>
 <DAT name=""EXAMPLE_RESULT"">v5111@amital.co.il</DAT>
 <DAT name=""LINQ"">false</DAT></OCC>
 <OCC>
-<DAT name=""CODE"">A62</DAT>
+<DAT name=""CODE"" insert=""true"">A62</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>INSERT INTO AUTHENTICATIONTOKENS</DAT>
 <DAT name=""REFERENCE"">GUHHBUILD.Lp_OnPremiseLogIn</DAT>
 <DAT name=""PARAMETERS"" xml:space='preserve'>TOKEN=True&uSEP;EMAIL=True&uSEP;PASSWORD=True&uSEP;TENANT=True</DAT>
@@ -677,27 +677,27 @@ IN6566	I10	USD	1
 <DAT name=""REFERENCE"">GDMQOCRTRIFF.Lp_Read</DAT>
 <DAT name=""PARAMETERS"">UnfInvoiceCounterKey=True</DAT>
 <DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT vendorid FROM SupplierInvoices WHERE UnfInvoiceCounterKey='8gb9+gempkg9bdnm2kxvkg00000000'</DAT>
-<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT vendorid FROM SupplierInvoices WHERE UnfInvoiceCounterKey='8gb9+gempkg9bdnm2kxvkg00000000'</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT vendorid FROM Customs.SupplierInvoices WHERE UnfInvoiceCounterKey=@UnfInvoiceCounterKey AND TENANT=@Tenant</DAT>
 <DAT name=""EXAMPLE_RESULT"">1-579</DAT>
-<DAT name=""LINQ"">false</DAT></OCC>
+<DAT name=""LINQ"">true</DAT></OCC>
 <OCC>
 <DAT name=""CODE"">A64</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>SELECT  CustomsVendors.VendorNumber</DAT>
 <DAT name=""REFERENCE"">GDMQOCRTRIFF.Lp_Read</DAT>
 <DAT name=""PARAMETERS"">ID=True</DAT>
 <DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT  CustomsVendors.VendorNumber   FROM CustomsVendors   WHERE id  ='1-579'</DAT>
-<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT  CustomsVendors.VendorNumber   FROM CustomsVendors   WHERE id  ='1-579'</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT  CustomsVendors.VendorNumber   FROM Customs.CustomsVendors   WHERE id  =@ID AND TENANT=@Tenant</DAT>
 <DAT name=""EXAMPLE_RESULT"">2015002</DAT>
-<DAT name=""LINQ"">false</DAT></OCC>
+<DAT name=""LINQ"">true</DAT></OCC>
 <OCC>
 <DAT name=""CODE"">A65</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>SELECT DISTINCT (SUPPLIERINVOICEITEMS.CLASSIFICATIONCODE)</DAT>
 <DAT name=""REFERENCE"">GITUEXP.Lp_CheckDate</DAT>
 <DAT name=""PARAMETERS"">SUPPLIERINVOICEITEMS.DECLARATIONID=True</DAT>
 <DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT DISTINCT (SUPPLIERINVOICEITEMS.CLASSIFICATIONCODE) FROM SUPPLIERINVOICEITEMS WHERE  SUPPLIERINVOICEITEMS.DECLARATIONID='1-6546'</DAT>
-<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT DISTINCT (SUPPLIERINVOICEITEMS.CLASSIFICATIONCODE) FROM SUPPLIERINVOICEITEMS WHERE  SUPPLIERINVOICEITEMS.DECLARATIONID='1-6546'</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT DISTINCT (SUPPLIERINVOICEITEMS.CLASSIFICATIONCODE) FROM Customs.SUPPLIERINVOICEITEMS WHERE  SUPPLIERINVOICEITEMS.DECLARATIONID=@DECLARATIONID AND TENANT=@Tenant</DAT>
 <DAT name=""EXAMPLE_RESULT"">84158100002</DAT>
-<DAT name=""LINQ"">false</DAT></OCC>
+<DAT name=""LINQ"">true</DAT></OCC>
 <OCC>
 <DAT name=""CODE"">A7</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>get VERSIONID</DAT>
@@ -713,7 +713,7 @@ IN6566	I10	USD	1
 <DAT name=""REFERENCE"">CFIFFORMS.Lp_ISCHANGED</DAT>
 <DAT name=""PARAMETERS"">ID=True</DAT>
 <DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT ISCHANGED FROM Customs.DECLARATIONS WHERE ID=@ID AND TENANT=@Tenant</DAT>
-<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT ISCHANGED FROM Customs.DECLARATIONS WHERE ID=@ID AND TENANT=@Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT CONVERT(int, ISCHANGED) FROM Customs.DECLARATIONS WHERE ID=@ID AND TENANT=@Tenant</DAT>
 <DAT name=""EXAMPLE_RESULT"">1</DAT>
 <DAT name=""LINQ"">false</DAT></OCC>
 <OCC>

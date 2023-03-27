@@ -1,4 +1,8 @@
 ﻿///#define tzuri_req
+using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data;
+using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.SQL;
@@ -57,7 +61,7 @@ namespace WebFreight.Web.WcfApi
                     return (response);
                 }
 
-                List <CFILOGIAPI> logi_list = new List<CFILOGIAPI>();
+                List <CFILOGIAPI> logi_list = new List<CFILOGIAPI>();  // to do call once !!!!!!!!!!!!!!!!!!!!!!!!!
                 logi_list = CFILOGIAPITask.GetLogiOcc();
                 CFILOGIAPI sql_logi = logi_list.Where(x => x.CODE == queryId).FirstOrDefault();
 
@@ -90,9 +94,11 @@ namespace WebFreight.Web.WcfApi
                 }
 
 
-                    //tenant = 6;
-                    //string id = "1-110456";
-                    var shipmentsContext = new Simplog.Data.ShipmentsModel.ShipmentsContext();
+
+
+                //tenant = 6;
+                //string id = "1-110456";
+                var shipmentsContext = new Simplog.Data.ShipmentsModel.ShipmentsContext();
                 using (SqlConnection connection = new SqlConnection())
                 {
                     connection.ConnectionString = shipmentsContext.Database.Connection.ConnectionString;
@@ -109,6 +115,7 @@ namespace WebFreight.Web.WcfApi
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
                             List<List<string>> all_lines = new List<List<string>>();
+                            Dictionary<string, string> results = new Dictionary<string, string>();
                             if (reader.HasRows)
                             {
                                 while (reader.Read())
@@ -124,7 +131,9 @@ namespace WebFreight.Web.WcfApi
                                 }
                             }
                             response.HasError = false;
-                            response.Result = JsonConvert.SerializeObject(all_lines);
+                            results.Add("sql_result", JsonConvert.SerializeObject(all_lines));
+                            results.Add("sql_query", sqlQuery);
+                            response.Result = JsonConvert.SerializeObject(results);
                         }
                     }
                 }
