@@ -1,5 +1,9 @@
-﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.DataContracts;
+using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
+using Logitude.Server.Tools.Counters;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
@@ -66,7 +70,102 @@ namespace Logitude.BL.Helpers
 
         private Port GetPortByCode(string portCode, int tenant)
         {
-            return portRepository.GetOceanPortByCombinedCode(portCode, tenant);
+            Port port = portRepository.GetOceanPortByCombinedCode(portCode, tenant);
+            if (port == null && tenant != 0)
+            {
+                port = this.CopyPortCopyToCurrentTenant(portCode);
+            }
+
+            return port;
+        }
+        private Port CopyPortCopyToCurrentTenant(string portCode)
+        {
+            Port newPort = null;
+            Port portZero = portRepository.GetOceanPortByCombinedCode(portCode, 0);
+            if (portZero != null)
+            {
+                newPort = this.GetPortCopyToCurrentTenant(portZero, tenant);
+            }
+
+            return newPort;
+        }
+        private Port GetPortCopyToCurrentTenant(Port ZeroPort, int tenant)
+        {
+            ICommonDataContext objectContext = this.portRepository.context;
+
+            CountryRepository countryRepository = new CountryRepository(objectContext);
+            GlobalZoneRepository globalZoneRepository = new GlobalZoneRepository(objectContext);
+
+            Country country = countryRepository.GetSingleCountryByCode(ZeroPort.Country.Code, tenant, false);
+
+            if (country == null)
+            {
+                GlobalZone globalzone = globalZoneRepository.GetSingleGlobalZoneByCode(ZeroPort.Country.GlobalZone.Code, tenant);
+
+                if (globalzone == null)
+                {
+                    GlobalZone oldZone = globalZoneRepository.GetSingleGlobalZone(ZeroPort.Country.GlobalZoneId, 0);
+                    globalzone = new GlobalZone()
+                    {
+                        Id = IdCounter.GetNumber("GlobalZone", tenant).ToString(),
+                        Code = oldZone.Code,
+                        EnglishName = oldZone.EnglishName,
+                        LocalName = oldZone.LocalName,
+                        Notes = oldZone.Notes,
+                        SearchFields = oldZone.SearchFields,
+                        Tenant = tenant,
+                    };
+
+                    globalZoneRepository.Add(globalzone);
+                    globalZoneRepository.SubmitChanges();
+                }
+
+                Country oldCountry = CountryRepository.GetSingleCountry(ZeroPort.CountryId, 0, false);
+                country = new Country()
+                {
+                    Id = IdCounter.GetNumber("Country", tenant).ToString(),
+                    Tenant = tenant,
+                    GlobalZoneId = oldCountry.GlobalZoneId,
+                    EC = oldCountry.EC,
+                    EnglishName = oldCountry.EnglishName,
+                    Code = oldCountry.Code,
+                    InActive = oldCountry.InActive,
+                    Notes = oldCountry.Notes,
+                    LocalName = oldCountry.LocalName,
+                    SearchFields = oldCountry.SearchFields,
+                };
+
+                countryRepository.Add(country);
+                countryRepository.SubmitChanges();
+            }
+
+            Port newPort = new Port()
+            {
+                Id = IdCounter.GetNumber("Port", tenant).ToString(),
+                Code = ZeroPort.Code,
+                CombinedCode = ZeroPort.CombinedCode,
+                EnglishName = ZeroPort.EnglishName,
+                LocalName = ZeroPort.LocalName,
+                Tenant = tenant,
+                AddedManually = false,
+                InActive = false,
+                CountryId = country.Id,
+                IsAir = ZeroPort.IsAir,
+                IsInland = ZeroPort.IsInland,
+                IsOcean = ZeroPort.IsOcean,
+                Latitude = ZeroPort.Latitude,
+                Longtitude = ZeroPort.Longtitude,
+                SearchFields = ZeroPort.SearchFields,
+                Notes = ZeroPort.Notes,
+                PortTimeZoneCode = ZeroPort.PortTimeZoneCode,
+            };
+
+            portRepository.Add(newPort);
+            portRepository.SubmitChanges();
+            RunStoredProcedureClass.UpdatePortSearcsFields(newPort.Id, newPort.Tenant);
+            TableLastUpdateClass.UpdateTableHistory(tenant, "Port");
+
+            return newPort;
         }
         private Port GetPortById(string portId, int tenant)
         {
@@ -226,28 +325,28 @@ namespace Logitude.BL.Helpers
                 AddContainerDiscrepancyToService(containerPM, shipmentPM, discrepancyReason);
             }
         }
-        public void AddTranshipmentDiscrepancyContainer(int? transshipmentLegIndex, string direction, ContainerPM containerPM,
-                                                       ShipmentPM shipmentPM, string portId, MilestoneDataUpdatedFields updatedFields, string time)
-        {
-            var transshipmentPortId = GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + direction + "PortId");
-            if (transshipmentPortId != null && !IsSameLocationUsingId((string)transshipmentPortId, portId))
-            {
-                AddNotSametransshipmentLegDiscrepancy(containerPM, shipmentPM, direction, transshipmentLegIndex, portId, time);
-                var actualTime = string.Concat("A", time.Substring(1));
-                AddNotSametransshipmentLegDiscrepancy(containerPM, shipmentPM, direction, transshipmentLegIndex, portId, actualTime);
-            }
-            else
-            {
-                var transshipmentATAInShipment = GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + time);
+        //public void AddTranshipmentDiscrepancyContainer(int? transshipmentLegIndex, string direction, ContainerPM containerPM,
+        //                                               ShipmentPM shipmentPM, string portId, MilestoneDataUpdatedFields updatedFields, string time)
+        //{
+        //    var transshipmentPortId = GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + direction + "PortId");
+        //    if (transshipmentPortId != null && !IsSameLocationUsingId((string)transshipmentPortId, portId))
+        //    {
+        //        AddNotSametransshipmentLegDiscrepancy(containerPM, shipmentPM, direction, transshipmentLegIndex, portId, time);
+        //        var actualTime = string.Concat("A", time.Substring(1));
+        //        AddNotSametransshipmentLegDiscrepancy(containerPM, shipmentPM, direction, transshipmentLegIndex, portId, actualTime);
+        //    }
+        //    else
+        //    {
+        //        var transshipmentATAInShipment = GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + time);
 
-                if (updatedFields.ActualDate != null && transshipmentATAInShipment != null && (DateTime)transshipmentATAInShipment != updatedFields.ActualDate)
-                {
-                    var actualTime = string.Concat("A", time.Substring(1));
-                    var discrepancyReason = $@"Transshipment{transshipmentLegIndex} {actualTime} already has a value of {transshipmentATAInShipment} - did not update new container value {updatedFields.ActualDate}.";
-                    AddContainerDiscrepancyToService(containerPM, shipmentPM, discrepancyReason);
-                }
-            }
-        }
+        //        if (updatedFields.ActualDate != null && transshipmentATAInShipment != null && (DateTime)transshipmentATAInShipment != updatedFields.ActualDate)
+        //        {
+        //            var actualTime = string.Concat("A", time.Substring(1));
+        //            var discrepancyReason = $@"Transshipment{transshipmentLegIndex} {actualTime} already has a value of {transshipmentATAInShipment} - did not update new container value {updatedFields.ActualDate}.";
+        //            AddContainerDiscrepancyToService(containerPM, shipmentPM, discrepancyReason);
+        //        }
+        //    }
+        //}
         private void AddNotSameLocationDiscrepancy(dynamic discrepancyParams, string time)
         {
             var shipmentUnloCode = GetUnloCodeFromPortId(discrepancyParams.shipmentLocation);

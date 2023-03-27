@@ -489,6 +489,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsUpdatedFromRequest { get; set; }
         public string ShipmentDepartmentId { get; set; }
         public string ShipmentDepartmentName { get; set; }
-
+        public DateTime? OIEventDate { get; set; }
+        public string OIContainerStatus { get; set; }
     }
 }

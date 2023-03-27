@@ -309,6 +309,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             if (!initializer.EntityPM.IsDocsKPIsUpdatedFromWR && !initializer.IsUpdateFromUpdateTool && !IsContainerFeatureActivated())
                 return false;
 
+            if (initializer.EntityPM.ShipmentUpdatedFromContainer)
+                return false;
+
             if (initializer.EntityPM.TransportModeId != "O")
                 return false;
 

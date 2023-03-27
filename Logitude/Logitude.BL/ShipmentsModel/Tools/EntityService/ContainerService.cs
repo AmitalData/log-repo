@@ -4,6 +4,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.BL.Security;
 using Logitude.BL.ShipmentsModel.APIDataContract;
+using Logitude.BL.ShipmentsModel.EntityOtherServices;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours;
@@ -46,8 +47,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private IShipmentsContext shipmentsContext;
         private ContainerRepository entityRepository;
         private Container containerPoco;
-        private AuditLogRepository AuditLogRepository;
-        private PortRepository portRepository;
+        private AuditLogRepository AuditLogRepository;        
 
         public ContainerService(IShipmentsContext shipmentsContext, int tenant)
         {
@@ -56,7 +56,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.tenant = tenant;
             this.shipmentsContext = shipmentsContext;
             this.entityRepository = new ContainerRepository(shipmentsContext);
-            this.portRepository = new PortRepository(tenant);
         }
 
         public void Create(ContainerPM entityPM)
@@ -74,9 +73,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.ComputeTransshipmentCount();
             this.ComputeHasTransShipments();
             ContainerValidating.Validate(this.containerPm, this.containerPoco, isNewEntity);
+            
             ContainerTracing containerTracing = new ContainerTracing(entityPM, containerPoco, isNewEntity);
             containerTracing.Trace();
+            
             SaveChildEntities();
+
             ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity, FieldChanges);
             this.GetForeignFields_Status(entityPM, containerPoco);
             entityRepository.Add(containerPoco);
@@ -103,8 +105,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 Tenant = entityPM.Tenant,
                 Type = QueueMessagesTypes.Create
             }.Produce();
-            //AddShipmentUpdateKafkaQueueMessage("CToolContainerCreate");
-            MapShipmentConcurrencyFields();
+
             entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
             string activity = "(A) Container Create";
             AddTotangoActivity(entityPM, activity);
@@ -167,7 +168,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityRepository.Update(containerPoco);
             entityRepository.SubmitChanges();
 
-            //this.UpdateShipment();
+            this.UpdateShipment();
 
             if (this.containerPm != null && !this.containerPm.FromCTool)
             {
@@ -191,8 +192,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 Type = QueueMessagesTypes.Update
             }.Produce();
 
-            //AddShipmentUpdateKafkaQueueMessage("CToolContainerUpdate");
-            MapShipmentConcurrencyFields();
             string activity = "(A) Container Update";
             AddTotangoActivity(entityPM, activity);
             new GeneralContainerTrackingService(GetGeneralContainerTrackingArgs(entityPM)).AutomaticTrackContainer();          
@@ -286,24 +285,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
-        private void AddShipmentUpdateKafkaQueueMessage(string queueName)
-        {
-            if (!FeatureToggleHelper.HasFeatureToggle("CTL", containerPm.Tenant))
-            {
-                return;
-            }
-            AddKafkaQueueMessage(queueName);
-        }
-        private void AddKafkaQueueMessage(string queueName)
-        {
-            IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue(queueName, 0);
-            var queueMessage = new Dictionary<string, string>() {
-                { "ContainerId", containerPm.Id },
-                { "Tenant", tenant.ToString()}};
-
-            queueservice.Send(queueMessage, tenant);
-        }
         public void Delete(ContainerPM entityPM)
         {
             this.containerPm = entityPM;
@@ -313,17 +294,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityRepository.Remove(containerPoco);
             entityRepository.SubmitChanges();
         }
-
-        private void MapShipmentConcurrencyFields()
-        {
-            if (string.IsNullOrEmpty(this.containerPm.ShipmentId))
-            {
-                return;
-            }
-            //this.containerPm.ShipmentConcurrencyGUID = entityRepository.GetConcurrencyGUIDByShipmentId(this.containerPm.ShipmentId, this.containerPm.Tenant);
-            //this.containerPm.ShipmentNewConcurrencyGUID = Guid.NewGuid().ToString();
-        }
-
+        
         private void ComputeTransshipmentCount()
         {
             if (!string.IsNullOrEmpty(containerPm.Transshipment3LocationPortId))
@@ -364,289 +335,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
-        private void UpdateShipment()
-        {
-            if (!FeatureToggleHelper.HasFeatureToggle("OIU", tenant)) return;
-            ShipmentPM shipmentPM = this.GetShipment();
-            if (shipmentPM == null) return;
-
-            bool isUpdatingEmptyReturn = HandleEmptyReturnLeg(shipmentPM);
-            bool isUpdatingShipment = false;
-
-            if (IsUpdateShipmentAllowed(shipmentPM))
-                isUpdatingShipment = ProcessUpdatingShipment(shipmentPM);            
-
-            if (isUpdatingEmptyReturn || isUpdatingShipment)            
-                SaveShipment(shipmentPM);            
-        }
-
-        private bool ProcessUpdatingShipment(ShipmentPM shipmentPM)
-        {
-            bool isUpdatingShipment = false;
-
-            MapPreCarriageDates(shipmentPM);
-            MapOnCarriageDates(shipmentPM);
-
-
-            return isUpdatingShipment;
-        }
-
-        private void MapPreCarriageDates(ShipmentPM shipmentPM)
-        {
-            //containerTrackingHelper.AddContainerDiscrepancy("PreCarriage", containerPm, shipmentPM);
-            //if (!containerTrackingHelper.IsSameLocationUsingId(containerPm.PreCarriageLocationPortId, shipmentPM.PreCarriageFromPortId)) return;
-            shipmentPM.PreCarriageETD = containerPm.PreCarriageETD;
-            shipmentPM.PreCarriageATD = shipmentPM.PreCarriageATD ?? containerPm.PreCarriageATD;
-        }
-        private void MapOnCarriageDates(ShipmentPM shipmentPM)
-        {
-            //containerTrackingHelper.AddContainerDiscrepancy("OnCarriage", containerPm, shipmentPM);
-            //if (!containerTrackingHelper.IsSameLocationUsingId(containerPm.OnCarriageLocationPortId, shipmentPM.OnCarriageToPortId)) return;
-            shipmentPM.OnCarriageETA = containerPm.OnCarriageETA;
-            shipmentPM.OnCarriageATA = shipmentPM.OnCarriageATA ?? containerPm.OnCarriageATA;
-        }
-
-
-
-
-
-        private bool HandleEmptyReturnLeg(ShipmentPM shipmentPM)
-        {
-            if (shipmentPM.DirectionId != "I" && shipmentPM.DirectionId != "R") return false;
-            if (string.IsNullOrEmpty(containerPm.EmptyReturnLocationPortId)) return false;
-            if (containerPm.EstimatedEmptyReturn == containerPoco.EstimatedEmptyReturn && containerPm.ActualEmptyReturn == containerPoco.ActualEmptyReturn) return false;
-           
-            ShipmentDeliveryPM emptyReturn = this.GetEmptyReturnLeg(shipmentPM);
-            if (emptyReturn != null)
-            {
-                UpdateEmptyReturnLeg(emptyReturn);
-                return true;
-            }
-
-            else
-            {
-                ShipmentPackagePM shipmentPackage = shipmentPM.ShipmentPackages.Where(d => d.ContainerEntityId == containerPm.Id).FirstOrDefault();
-                if (shipmentPackage == null) return false;
-
-                emptyReturn = CreateEmptyReturnLeg(shipmentPackage, shipmentPM);
-                ShipmentPickUpDeliveryPackagePM deliveryPackage = this.CreateEmptyReturnPackage(shipmentPackage);
-                if (deliveryPackage != null)
-                {
-                    this.AddPackageHarmonizes(deliveryPackage, shipmentPackage);
-                    emptyReturn.ShipmentPickUpDeliveryPackages.Add(deliveryPackage);
-                }
-                shipmentPM.ShipmentDeliveries.Add(emptyReturn);
-                return true;
-            }
-        }
-
         private ShipmentPM GetShipment()
         {
             ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
             return shipmentQuery.GetSinglePM(containerPm.ShipmentId, tenant);
         }
-        private ShipmentDeliveryPM GetEmptyReturnLeg(ShipmentPM shipmentPM)
+        private void UpdateShipment()
         {
-            ShipmentDeliveryPM shipmentDelivery = null;
+            if (!FeatureToggleHelper.HasFeatureToggle("OIU", tenant)) return;
+            if (containerPm.IsUpdatedFromRequest) return;
 
-            ShipmentPickUpDeliveryPackageRepository pickUpDeliveryPackageRepository = new ShipmentPickUpDeliveryPackageRepository(shipmentsContext);
-            List<ShipmentPickUpDeliveryPackage> packages = pickUpDeliveryPackageRepository.GetShipmentPickUpDeliveryPackagesByContainerIdAndTenant(containerPm.Id, tenant);
-            if (packages != null && packages.Count > 0)
-            {
-                List<string> deliveryPackagesIds = packages.Select(s => s.ShipmentPickUpDeliveryId).ToList();
-                shipmentDelivery = shipmentPM.ShipmentDeliveries.Where(a => deliveryPackagesIds.Contains(a.Id) && a.PickUpDeliveryTypeCode == "EMPT").FirstOrDefault();
-            }
-
-            return shipmentDelivery;
-        }
-        private void UpdateEmptyReturnLeg(ShipmentDeliveryPM emptyReturn)
-        {
-            emptyReturn.ETA = containerPm.EstimatedEmptyReturn;
-            emptyReturn.ATA = emptyReturn.ATA ?? containerPm.ActualEmptyReturn;
-            emptyReturn.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-        }
-        private ShipmentDeliveryPM CreateEmptyReturnLeg(ShipmentPackagePM shipmentPackage, ShipmentPM shipmentPM)
-        {
-            ShipmentDeliveryPM emptyReturn = this.CreateEmptyReturnInstance(shipmentPackage.Id);
-            this.ComputeEmptyReturnFromProperties(emptyReturn, shipmentPM);
-
-            PortRepository portRepository = new PortRepository(tenant);
-            Port toPort = portRepository.GetSinglePort(containerPm.EmptyReturnLocationPortId, tenant);
-            emptyReturn.ToAddress = "Port Of: " + toPort?.EnglishName;
-
-            if (!string.IsNullOrEmpty(emptyReturn.FromPortId))
-            {
-                Port fromPort = portRepository.GetSinglePort(emptyReturn.FromPortId, tenant);
-                emptyReturn.FromAddress = "Port Of: " + fromPort?.EnglishName;
-            }
-
-            return emptyReturn;
-        }
-        private ShipmentDeliveryPM CreateEmptyReturnInstance(string connectedPackageId)
-        {
-            return new ShipmentDeliveryPM()
-            {
-                ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-                PickUpDeliveryTypeCode = "EMPT",
-                ETA = containerPm.EstimatedEmptyReturn,
-                ATA = containerPm.ActualEmptyReturn,
-                PickUpDeliveryToTypeCode = "PORT",
-                ToPortId = containerPm.EmptyReturnLocationPortId,
-                FullResponsibility = true,
-                ConnectedPackageId = connectedPackageId,
-            };
-        }
-        private ShipmentPickUpDeliveryPackagePM CreateEmptyReturnPackage(ShipmentPackagePM shipmentPackage)
-        {
-            return new ShipmentPickUpDeliveryPackagePM()
-            {
-                ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-                ContainerEntityId = containerPm.Id,
-                ContainerNumber = containerPm.ContainerNumber,
-                PackageTypeId = shipmentPackage.PackageTypeId,
-                Weight = shipmentPackage.Weight,
-                Description = shipmentPackage.Description,
-                PackageTypeName = shipmentPackage.PackageTypeName,
-                Quantity = shipmentPackage.Quantity,
-                Volume = shipmentPackage.Volume,
-                ShipperSeal = shipmentPackage.ShipperSeal,
-                Width = shipmentPackage.Width,
-                Height = shipmentPackage.Height,
-                Length = shipmentPackage.Length,
-                Harmonize = shipmentPackage.Harmonize,
-                OriginalShipmentPackageId = shipmentPackage.Id,
-                IsMultiHarmonize = shipmentPackage.IsMultiHarmonize,
-            };
-        }
-        private void AddPackageHarmonizes(ShipmentPickUpDeliveryPackagePM deliveryPackage, ShipmentPackagePM shipmentPackage)
-        {
-            foreach (ShipmentPackageHarmonizePM harmonizeItem in shipmentPackage.ShipmentPackageHarmonizes)
-            {
-                PickUpDeliveryPackageHarmonizePM harmonize = new PickUpDeliveryPackageHarmonizePM();
-                harmonize.Harmonize = harmonizeItem.Harmonize;
-                harmonize.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
-                deliveryPackage.PickUpDeliveryPackageHarmonizes.Add(harmonize);
-            };
-        }
-        private void ComputeEmptyReturnFromProperties(ShipmentDeliveryPM emptyReturn, ShipmentPM shipmentPM)
-        {
-            ShipmentDeliveryPM lastDelivery = shipmentPM.ShipmentDeliveries.Where(d => d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(o => o.PickUpDeliveryNumber).FirstOrDefault();
-            if (lastDelivery != null)
-            {
-                this.MapLocationFromLastDelivery(lastDelivery, emptyReturn);
-                emptyReturn.PickUpDeliveryFromTypeCode = lastDelivery.PickUpDeliveryToTypeCode;
-            }
-
-            else if (!string.IsNullOrEmpty(shipmentPM.WarehouseLegWarehouseId))
-            {
-                emptyReturn.PickUpDeliveryFromTypeCode = "PART";
-                emptyReturn.FromPartnerCardId = shipmentPM.WarehouseLegWarehouseId;
-                emptyReturn.FromAddressId = shipmentPM.WarehouseLegAddressId;
-            }
-
-            else if (!string.IsNullOrEmpty(shipmentPM.OnCarriageToPortId))
-            {
-                emptyReturn.PickUpDeliveryFromTypeCode = "PORT";
-                emptyReturn.FromPortId = shipmentPM.OnCarriageToPortId;
-            }
-
-            else if (!string.IsNullOrEmpty(shipmentPM.Transshipment3ToPortId))
-            {
-                emptyReturn.PickUpDeliveryFromTypeCode = "PORT";
-                emptyReturn.FromPortId = shipmentPM.Transshipment3ToPortId;
-            }
-
-            else if (!string.IsNullOrEmpty(shipmentPM.Transshipment2ToPortId))
-            {
-                emptyReturn.PickUpDeliveryFromTypeCode = "PORT";
-                emptyReturn.FromPortId = shipmentPM.Transshipment2ToPortId;
-            }
-
-            else if (!string.IsNullOrEmpty(shipmentPM.Transshipment1ToPortId))
-            {
-                emptyReturn.PickUpDeliveryFromTypeCode = "PORT";
-                emptyReturn.FromPortId = shipmentPM.Transshipment1ToPortId;
-            }
-
-            else
-            {
-                emptyReturn.PickUpDeliveryFromTypeCode = "PORT";
-                emptyReturn.FromPortId = shipmentPM.MainCarriageToPortId;
-            }
-        }
-        private void MapLocationFromLastDelivery(ShipmentDeliveryPM lastDelivery, ShipmentDeliveryPM emptyReturn)
-        {
-            switch (lastDelivery.PickUpDeliveryToTypeCode)
-            {
-                case "PART":
-                    {
-                        emptyReturn.FromPartnerCardId = lastDelivery.ToPartnerCardId;
-                        emptyReturn.FromAddressId = lastDelivery.ToAddressId;
-                        break;
-                    }
-
-                case "PORT":
-                    {
-                        emptyReturn.FromPortId = lastDelivery.ToPortId;
-                        emptyReturn.FromAddress = lastDelivery.ToAddress;
-                        break;
-                    }
-
-                case "CASL":
-                    {
-                        emptyReturn.FromAddressCity = lastDelivery.ToAddressCity;
-                        emptyReturn.FromAddressZipCode = lastDelivery.ToAddressZipCode;
-                        emptyReturn.FromAddressCountryId = lastDelivery.ToAddressCountryId;
-                        break;
-                    }
-            }
-        }
-        private void SaveShipment(ShipmentPM shipmentPM)
-        {
-            string systemEmail = "system@tenant" + tenant + ".com";
-            ShipmentService service = new ShipmentService(shipmentsContext, shipmentPM, systemEmail);
-            service.SetChangeSet(shipmentPM.ShipmentPackages, shipmentPM.ShipmentOrderPackages, shipmentPM.ShipmentPickUps, shipmentPM.ShipmentDeliveries, shipmentPM.ShipmentReceivables, shipmentPM.ShipmentPayables, shipmentPM.FollowUps, shipmentPM.ShipmentAWBPrintOnlies, shipmentPM.ShipmentConsoleShipments, shipmentPM.ShipmentCarrierStatuses, shipmentPM.AWBOCIPMs, shipmentPM.ShipmentCommodities, shipmentPM.ShipmentAssemblies, shipmentPM.ShipmentStoragePricings, shipmentPM.ShipmentProductItems, shipmentPM.ShipmentUnassignedFields);
-            service.Update();
-        }
-
-        private bool IsUpdateShipmentAllowed(ShipmentPM shipment)
-        {
-            if (shipment.IsOperationalClosed)
-                return false;
-
-            if (!IsSameLocation(shipment.MainCarriageFromPortId, containerPm.POLLocationPortId, containerPm.POLLocation))
-                return false;
-
-            if (!IsSameLocation(shipment.MainCarriageFinalDestinationPortId, containerPm.PODLocationPortId, containerPm.PODLocation))
-                return false;
-
-            return true;
-        }
-        public bool IsSameLocation(string shipmentPortId, string containerPortId, string containerPortCode)
-        {
-            if (string.IsNullOrEmpty(containerPortId)) 
-                return false;
-
-            else if (shipmentPortId == containerPortId)
-                return true;
-
-            Port containerPort_zero = GetTenantZeroPortByCode(containerPortCode);
-            Port shipmentPort = GetPortById(shipmentPortId);
-            Port shipmentPort_Zero = GetTenantZeroPortByCode(shipmentPort?.CombinedCode);
-
-            if (containerPort_zero?.PortGroupId != null && shipmentPort_Zero?.PortGroupId != null && containerPort_zero?.PortGroupId == shipmentPort_Zero?.PortGroupId)
-                return true;
-
-            return false;
-        }
-        private Port GetTenantZeroPortByCode(string portCode)
-        {
-            return portRepository.GetOceanPortByCombinedCode(portCode, 0);
-        }
-        private Port GetPortById(string portId)
-        {
-            return portRepository.GetSinglePort(portId, tenant);
-        }
+            ContainerShipmentUpdateService containerShipmentUpdateService = new ContainerShipmentUpdateService(containerPm, containerPoco, shipmentsContext);
+            containerShipmentUpdateService.HandleUpdate();       
+        } 
     }
 }
