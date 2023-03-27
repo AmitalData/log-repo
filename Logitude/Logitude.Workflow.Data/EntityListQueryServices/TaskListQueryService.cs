@@ -92,6 +92,8 @@ namespace Logitude.Workflow.Data.EntityListQueryServices
 											  DoneConditions = a.TaskExtended != null ? a.TaskExtended.DoneConditions : null,
 
 											  Description = a.TaskExtended != null ? a.TaskExtended.Description : null,
+											  IsAssigned = a.IsAssigned,
+											  StartDate = a.StartDate
 											  
 											});
             return query;
