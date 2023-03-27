@@ -104,7 +104,7 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
             AuditLog auditLog = null;
             if (entityPM != null && FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant))
             {
-                auditLog = AddTaskAuditLogChanges(entityPM);
+                auditLog = BuildTaskAuditLog(entityPM);
                 AuditLogRepository.Add(auditLog);
                 AuditLogRepository.SubmitChanges();
             }
@@ -112,7 +112,7 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
             return auditLog;
         }
 
-        private AuditLog AddTaskAuditLogChanges(TaskPM entityPM)
+        private AuditLog BuildTaskAuditLog(TaskPM entityPM)
         {
             ObjectTableRepository objecttableRepository = new ObjectTableRepository(entityPM.Tenant);
             ObjectTable objecttable = objecttableRepository.GetObjectTableByName("Task", 0, true);
