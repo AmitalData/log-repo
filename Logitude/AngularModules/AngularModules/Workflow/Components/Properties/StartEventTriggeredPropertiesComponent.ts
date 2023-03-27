@@ -12,6 +12,7 @@ import { Condition } from "Workflow/Models/Condition";
 import { ListItem } from "Workflow/Models/ListItem";
 import { MsalService, MSAL_GUARD_CONFIG, MsalGuardConfiguration } from "@azure/msal-angular";
 import { AuthenticationResult, PopupRequest } from "@azure/msal-browser";
+import { MsalConfigurations } from "Workflow/Utilities/MsalConfigurations";
 
 @Component({
     templateUrl: "./StartEventTriggeredPropertiesComponent.html"
@@ -119,14 +120,32 @@ export class StartEventTriggeredPropertiesComponent extends BaseComponent {
     }
 
     msalLoginPopup() {
-        let loginScopes = ["openid", "offline_access", "profile", "User.Read", "Mail.Read"];
-
         let popupRequest: PopupRequest = this.msalGuardConfig.authRequest ?
-            { ...this.msalGuardConfig.authRequest, scopes: loginScopes } :
-            { scopes: loginScopes };
+            { ...this.msalGuardConfig.authRequest, scopes: MsalConfigurations.LoginScopes } :
+            { scopes: MsalConfigurations.LoginScopes };
 
         this.authService.loginPopup(popupRequest).subscribe((authenticationResult: AuthenticationResult) => {
             console.log(authenticationResult);
+            console.log(this.getMsalRefreshToken(authenticationResult));
+        });
+    }
+
+    getMsalRefreshToken(authenticationResult: AuthenticationResult) {
+        if (authenticationResult) {
+            let refreshTokenStorageKey = Object.keys(localStorage)
+                .filter(key => key.indexOf(authenticationResult.uniqueId) !== -1 && key.indexOf("login.windows.net-refreshtoken") !== -1)[0];
+
+            if (refreshTokenStorageKey) {
+                let refreshTokenStorage = JSON.parse(localStorage.getItem(refreshTokenStorageKey));
+                return refreshTokenStorage ? refreshTokenStorage.secret : null;
+            }
+        }
+        return null;
+    }
+
+    logout() {
+        this.authService.logoutPopup({
+            mainWindowRedirectUri: "/"
         });
     }
 

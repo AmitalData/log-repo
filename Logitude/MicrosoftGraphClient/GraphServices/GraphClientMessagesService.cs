@@ -4,6 +4,7 @@ using MicrosoftGraphClient.IGraphServices;
 using MicrosoftGraphClient.Constants;
 using MicrosoftGraphClient.Models.MessagesService;
 using MicrosoftGraphClient.GraphAPI;
+using MicrosoftGraphClient.Models.GraphAPI;
 
 namespace MicrosoftGraphClient.GraphServices
 {
@@ -18,12 +19,12 @@ namespace MicrosoftGraphClient.GraphServices
 
         public Message Get(string messageId)
         {
-            return GraphAPICaller.Call<Message>(Token, Url + "/" + messageId, Method.GET);
+            return GraphAPICaller.Call<Message>(new GraphAPICallerParams { Token = Token, Url = Url + "/" + messageId, Method = Method.GET });
         }
 
         public string GetEml(string messageId)
         {
-            return GraphAPICaller.Call(Token, Url + "/" + messageId + "/$value", Method.GET);
+            return GraphAPICaller.Call(new GraphAPICallerParams { Token = Token, Url = Url + "/" + messageId + "/$value", Method = Method.GET });
         }
     }
 }

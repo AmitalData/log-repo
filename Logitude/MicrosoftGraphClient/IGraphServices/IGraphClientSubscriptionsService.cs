@@ -5,6 +5,6 @@ namespace MicrosoftGraphClient.IGraphServices
 {
     public interface IGraphClientSubscriptionsService : IGraphClientResourceService<IGraphClientSubscriptionsService>
     {
-        Subscription Create(CreateSubscription createSubscription);
+        Subscription Create(CreateSubscriptionRequest createSubscription);
     }
 }

@@ -46,23 +46,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\GraphClientApiUrls.cs" />
-    <Compile Include="Constants\GraphClientConfigurations.cs" />
     <Compile Include="GraphAPI\GraphAPICaller.cs" />
     <Compile Include="GraphServices\GraphClientMessagesService.cs" />
+    <Compile Include="GraphServices\GraphClientAuthenticationService.cs" />
     <Compile Include="GraphServices\GraphClientSubscriptionsService.cs" />
     <Compile Include="GraphServices\GraphClientProfileService.cs" />
     <Compile Include="GraphServices\Base\GraphClientResourceService.cs" />
     <Compile Include="GraphServices\GraphClientService.cs" />
     <Compile Include="IGraphServices\IGraphClientMessagesService.cs" />
+    <Compile Include="IGraphServices\IGraphClientAuthenticationService.cs" />
     <Compile Include="IGraphServices\IGraphClientSubscriptionsService.cs" />
     <Compile Include="IGraphServices\IGraphClientProfileService.cs" />
     <Compile Include="IGraphServices\Base\IGraphClientResourceService.cs" />
     <Compile Include="IGraphServices\IGraphClientService.cs" />
+    <Compile Include="Models\AuthenticationService\RefreshTokenRequest.cs" />
+    <Compile Include="Models\AuthenticationService\RefreshTokenResponse.cs" />
+    <Compile Include="Models\GraphAPI\GraphAPICallerParams.cs" />
     <Compile Include="Models\MessagesService\Body.cs" />
     <Compile Include="Models\MessagesService\EmailAddress.cs" />
     <Compile Include="Models\MessagesService\Message.cs" />
     <Compile Include="Models\MessagesService\Recipient.cs" />
-    <Compile Include="Models\SubscriptionsService\CreateSubscription.cs" />
+    <Compile Include="Models\SubscriptionsService\CreateSubscriptionRequest.cs" />
     <Compile Include="Models\ProfileService\Profile.cs" />
     <Compile Include="Models\SubscriptionsService\Subscription.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

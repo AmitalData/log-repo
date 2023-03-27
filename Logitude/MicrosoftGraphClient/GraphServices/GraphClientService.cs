@@ -4,6 +4,11 @@ namespace MicrosoftGraphClient.GraphServices
 {
     public class GraphClientService : IGraphClientService
     {
+        public IGraphClientAuthenticationService Authentication()
+        {
+            return new GraphClientAuthenticationService();
+        }
+
         public IGraphClientProfileService Profile(string token = null)
         {
             return new GraphClientProfileService(token);

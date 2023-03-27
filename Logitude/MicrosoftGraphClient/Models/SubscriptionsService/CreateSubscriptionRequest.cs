@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace MicrosoftGraphClient.Models.SubscriptionsService
 {
-    public class CreateSubscription
+    public class CreateSubscriptionRequest
     {
         [JsonProperty("changeType")]
         public string ChangeType { get; set; }

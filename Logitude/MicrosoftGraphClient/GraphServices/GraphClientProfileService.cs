@@ -4,6 +4,7 @@ using MicrosoftGraphClient.IGraphServices;
 using MicrosoftGraphClient.Constants;
 using MicrosoftGraphClient.Models.ProfileService;
 using MicrosoftGraphClient.GraphAPI;
+using MicrosoftGraphClient.Models.GraphAPI;
 
 namespace MicrosoftGraphClient.GraphServices
 {
@@ -18,7 +19,7 @@ namespace MicrosoftGraphClient.GraphServices
 
         public Profile Get()
         {
-            return GraphAPICaller.Call<Profile>(Token, Url, Method.GET);
+            return GraphAPICaller.Call<Profile>(new GraphAPICallerParams { Token = Token, Url = Url, Method = Method.GET });
         }
     }
 }

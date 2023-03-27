@@ -10,7 +10,7 @@ import { ServiceProviderSubscriptionPM } from '../../EntityPMs/ServiceProviderSu
 
 @Injectable()
 
-export class ServiceProviderSubscriptionPMService {
+export class ServiceProviderSubscriptionExtendedService {
     private _http: HttpClient;
     private _apiUrl: string;
     constructor() {

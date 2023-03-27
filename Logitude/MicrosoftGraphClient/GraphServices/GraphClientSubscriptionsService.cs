@@ -4,6 +4,7 @@ using MicrosoftGraphClient.IGraphServices;
 using MicrosoftGraphClient.Constants;
 using MicrosoftGraphClient.Models.SubscriptionsService;
 using MicrosoftGraphClient.GraphAPI;
+using MicrosoftGraphClient.Models.GraphAPI;
 
 namespace MicrosoftGraphClient.GraphServices
 {
@@ -16,9 +17,9 @@ namespace MicrosoftGraphClient.GraphServices
             return this;
         }
 
-        public Subscription Create(CreateSubscription createSubscription)
+        public Subscription Create(CreateSubscriptionRequest createSubscription)
         {
-            return GraphAPICaller.Call<Subscription>(Token, Url, Method.POST, createSubscription);
+            return GraphAPICaller.Call<Subscription>(new GraphAPICallerParams { Token = Token, Url = Url, Method = Method.POST, RequestBody = createSubscription });
         }
     }
 }
