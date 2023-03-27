@@ -36,27 +36,39 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
     private _entityListService: EntityListService = new EntityListService();
 
     public isRTL: boolean = false;
-
+    public JournalNumber:string=""
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
+        
         super();
         this.EntityPM = entityArgs.EntityPM;
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-
         //#region Default date filter value
-        var today = new Date();
-        this.ToDate = new Date();
-        var lastmonth = today.setMonth(today.getMonth() - 1); // month backward 
-        this.FromDate = new Date(lastmonth); 
+        if( AppTool.IsNullOrEmpty(entityArgs.EditComponent.JournalNumber) ){
+            var today = new Date();
+            this.ToDate = new Date();
+            var lastmonth = today.setMonth(today.getMonth() - 1); // month backward 
+            
+            this.FromDate = new Date(lastmonth); 
+        }
+        else{
+           
+            this.ToDate =new Date()
+            this.FromDate =new Date(new Date('01/01/2010').setHours(2));
+            this.JournalNumber=entityArgs.EditComponent?.JournalNumber;
+        }
+        
         //#endregion
 
     }
-
+   
     
 
     ngOnInit() {
+        
         this.BuildColumns();
         this.ReloadData();
+       
     }
     
 
@@ -265,7 +277,7 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
         filters.SortBy = "CreateDate";
         filters.SortDirection = "Descending";
 
-        filters.addAdditionalFilter("AccountId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
+      filters.addAdditionalFilter("AccountId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
         filters.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "boolean");
 
         //#endregion
