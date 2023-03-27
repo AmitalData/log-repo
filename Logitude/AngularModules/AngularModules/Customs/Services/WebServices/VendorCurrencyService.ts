@@ -27,15 +27,21 @@ export class VendorCurrencyService {
 
     }
 
-    UpadateListCurrencyByVendor(vendorCurrencyPMs: VendorCurrencyPM[]) {
+    UpadateListCurrencyByVendor(vendorCurrencyPMs: VendorCurrencyPM[],VendorId: string) {
 
        var mappedList: VendorCurrencyPM[] = [];
+       var vendorCurrencyPM= new VendorCurrencyPM();    
+       vendorCurrencyPM.VendorId=VendorId
+       vendorCurrencyPM.CurrencyTypeName="-1"
+       mappedList.push(vendorCurrencyPM);
+       
        for (var k in vendorCurrencyPMs) {
            var field = vendorCurrencyPMs[k];
            var mappedEntity: any;
            mappedEntity = this.MapJsonToEntityPM(field, false);
            mappedList.push(mappedEntity.VendorCurrencyPM);
        }
+       
         return this._http.post(this._apiUrl + '/UpadateListCurrencyByVendor/', JSON.stringify(mappedList), ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 var serviceResponse: ServiceResponse;

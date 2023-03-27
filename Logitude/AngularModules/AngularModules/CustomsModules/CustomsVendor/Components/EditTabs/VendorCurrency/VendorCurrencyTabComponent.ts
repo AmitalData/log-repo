@@ -121,9 +121,9 @@ export class VendorCurrencyTabComponent extends BaseComponent {
     //#endregion
     OkButtonClicked(){
 
-
        
-  
+
+
         var errors = [];
         this.FillValidationErrorList.emit(errors); // clear validation msgs
             this.vendorCurrencyListPM.forEach((item) => {
@@ -143,7 +143,7 @@ export class VendorCurrencyTabComponent extends BaseComponent {
             this.FillValidationErrorList.emit(errors);
         } else {
          
-           this.vendorCurrencyService.UpadateListCurrencyByVendor(this.vendorCurrencyListPM).subscribe(res=>{
+           this.vendorCurrencyService.UpadateListCurrencyByVendor(this.vendorCurrencyListPM,this.EntityPM.Id).subscribe(res=>{
                if(!res.HasError){
                    var message=new ConfirmWindow();
                    message.YesButtonText = TextCodeTranslator.Translate('General.B.Ok');
