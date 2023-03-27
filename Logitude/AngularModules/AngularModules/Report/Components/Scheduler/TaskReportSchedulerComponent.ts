@@ -426,7 +426,7 @@ export class TaskReportSchedulerItemClass extends BaseComponent {
     private GetUtcTenantDateValueFromDate(newValue: Date) {
         let utcDateValue = new Date(newValue);
         if (SessionLocator.TenantPM.TimeZoneOffset && SessionLocator.TenantPM.TimeZoneOffset != 0) {
-            utcDateValue.setHours(utcDateValue.getHours() + SessionLocator.TenantPM.TimeZoneOffset);
+            utcDateValue.setHours(utcDateValue.getHours() - SessionLocator.TenantPM.TimeZoneOffset);
         }
         //if (SessionLocator.TenantPM.DayLightOffset && SessionLocator.TenantPM.DayLightOffset != 0) {
         //    utcDateValue.setHours(utcDateValue.getHours() + SessionLocator.TenantPM.DayLightOffset);
