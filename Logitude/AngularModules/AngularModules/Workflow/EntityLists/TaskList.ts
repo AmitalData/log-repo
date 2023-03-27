@@ -42,6 +42,8 @@ export class TaskList {
 	ToDoConditions: string;
 	DoneConditions: string;
 	Description: string;
+	IsAssigned: boolean;
+	StartDate: Date;
 	
 }
  

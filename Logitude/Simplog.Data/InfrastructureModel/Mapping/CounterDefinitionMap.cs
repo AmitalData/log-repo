@@ -53,11 +53,13 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 			this.Property(t => t.Suffix).HasColumnName("Suffix");
             this.Property(t => t.InActive).HasColumnName("InActive");
             this.Property(t => t.UsePerBranch).HasColumnName("UsePerBranch");
+            this.Property(t => t.IsCustomized).HasColumnName("IsCustomized");
+
             // Relationships
             //this.HasRequired(t => t.Counter)
             //    .WithMany(t => t.CounterDefinitions)
             //    .HasForeignKey(d => d.CounterId);
 
         }
-	}
+    }
 }

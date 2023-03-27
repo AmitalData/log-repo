@@ -27,6 +27,7 @@ namespace LogitudeCardsCustomFields.Services
         private ObjectTable cardObjectTable;
         private List<string> cardsTablesNames;
         private WebFreightContext webFreightContext;
+        private int totalCountOfCardCustomFields = 0;
         public CardsCustomFieldsDataBuilder()
         {
             CacheManager.CacheWrapper = new NoCache4uWrapper();
@@ -69,6 +70,7 @@ namespace LogitudeCardsCustomFields.Services
 
         private void BuildCardDataScriptsForSpecificTenant(int tenant, List<ObjectField> allCardsCusotomObjectFields)
         {
+            totalCountOfCardCustomFields = 0;
             List<ObjectField> allCardsTenantCusotomObjectFields = allCardsCusotomObjectFields.Where(a => a.Tenant == tenant).ToList();
             for (int i = 0; i < cardsTablesNames.Count(); i++)
             {
@@ -85,27 +87,30 @@ namespace LogitudeCardsCustomFields.Services
             switch (cardObjectTableName)
             {
                 case "Customer":
-                    BuildCustomerDataScript(tenant);
+                    BuildCustomerDataScript(tenant, cardTenantCusotomObjectFieldsCount);
                     break;
                 case "Agent":
-                    BuildAgentDataScript(tenant);
+                    BuildAgentDataScript(tenant, cardTenantCusotomObjectFieldsCount);
                     break;
                 case "CustomAgent":
-                    BuildCustomAgentDataScript(tenant);
+                    BuildCustomAgentDataScript(tenant, cardTenantCusotomObjectFieldsCount);
                     break;
                 case "Trucker":
-                    BuildTruckerDataScript(tenant);
+                    BuildTruckerDataScript(tenant, cardTenantCusotomObjectFieldsCount);
                     break;
                 case "Vendor":
-                    BuildVendorDataScript(tenant);
+                    BuildVendorDataScript(tenant, cardTenantCusotomObjectFieldsCount);
                     break;
                 case "Warehouse":
-                    BuildWarehouseDataScript(tenant);
+                    BuildWarehouseDataScript(tenant, cardTenantCusotomObjectFieldsCount);
                     break;
                 case "ShippingAgent":
-                    BuildShippingAgentDataScript(tenant);
+                    BuildShippingAgentDataScript(tenant, cardTenantCusotomObjectFieldsCount);
                     break;
             }
+
+
+            totalCountOfCardCustomFields += cardTenantCusotomObjectFieldsCount;
 
         }
 
@@ -134,7 +139,7 @@ namespace LogitudeCardsCustomFields.Services
             }
         }
 
-        private void BuildCustomerDataScript(int tenant)
+        private void BuildCustomerDataScript(int tenant, int cardTenantCusotomObjectFieldsCount)
         {
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             (from card in commonContext.Customers
@@ -154,11 +159,11 @@ namespace LogitudeCardsCustomFields.Services
                      Field8 = card.Field8,
                      Field9 = card.Field9,
                      Field10 = card.Field10,
-                 });
+                 }, totalCountOfCardCustomFields + 1, totalCountOfCardCustomFields + cardTenantCusotomObjectFieldsCount);
              });
         }
 
-        private void BuildAgentDataScript(int tenant)
+        private void BuildAgentDataScript(int tenant, int cardTenantCusotomObjectFieldsCount)
         {
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             (from card in commonContext.Agents
@@ -178,11 +183,11 @@ namespace LogitudeCardsCustomFields.Services
                      Field8 = card.Field8,
                      Field9 = card.Field9,
                      Field10 = card.Field10,
-                 });
+                 }, totalCountOfCardCustomFields + 1, totalCountOfCardCustomFields + cardTenantCusotomObjectFieldsCount);
              });
         }
 
-        private void BuildCustomAgentDataScript(int tenant)
+        private void BuildCustomAgentDataScript(int tenant, int cardTenantCusotomObjectFieldsCount)
         {
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             (from card in commonContext.CustomAgents
@@ -202,11 +207,11 @@ namespace LogitudeCardsCustomFields.Services
                      Field8 = card.Field8,
                      Field9 = card.Field9,
                      Field10 = card.Field10,
-                 });
+                 }, totalCountOfCardCustomFields + 1, totalCountOfCardCustomFields + cardTenantCusotomObjectFieldsCount);
              });
         }
 
-        private void BuildTruckerDataScript(int tenant)
+        private void BuildTruckerDataScript(int tenant, int cardTenantCusotomObjectFieldsCount)
         {
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             (from card in commonContext.Truckers
@@ -226,11 +231,11 @@ namespace LogitudeCardsCustomFields.Services
                      Field8 = card.Field8,
                      Field9 = card.Field9,
                      Field10 = card.Field10,
-                 });
+                 }, totalCountOfCardCustomFields + 1, totalCountOfCardCustomFields + cardTenantCusotomObjectFieldsCount);
              });
         }
 
-        private void BuildVendorDataScript(int tenant)
+        private void BuildVendorDataScript(int tenant, int cardTenantCusotomObjectFieldsCount)
         {
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             (from card in commonContext.Vendors
@@ -250,11 +255,11 @@ namespace LogitudeCardsCustomFields.Services
                      Field8 = card.Field8,
                      Field9 = card.Field9,
                      Field10 = card.Field10,
-                 });
+                 }, totalCountOfCardCustomFields + 1, totalCountOfCardCustomFields + cardTenantCusotomObjectFieldsCount);
              });
         }
 
-        private void BuildWarehouseDataScript(int tenant)
+        private void BuildWarehouseDataScript(int tenant, int cardTenantCusotomObjectFieldsCount)
         {
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             (from card in commonContext.Warehouses
@@ -274,11 +279,11 @@ namespace LogitudeCardsCustomFields.Services
                      Field8 = card.Field8,
                      Field9 = card.Field9,
                      Field10 = card.Field10,
-                 });
+                 }, totalCountOfCardCustomFields + 1, totalCountOfCardCustomFields + cardTenantCusotomObjectFieldsCount);
              });
         }
 
-        private void BuildShippingAgentDataScript(int tenant)
+        private void BuildShippingAgentDataScript(int tenant, int cardTenantCusotomObjectFieldsCount)
         {
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             (from card in commonContext.ShippingAgents
@@ -298,23 +303,85 @@ namespace LogitudeCardsCustomFields.Services
                      Field8 = card.Field8,
                      Field9 = card.Field9,
                      Field10 = card.Field10,
-                 });
+                 }, totalCountOfCardCustomFields + 1, totalCountOfCardCustomFields + cardTenantCusotomObjectFieldsCount);
              });
         }
 
-        private void BuildCardDataScript(int tenant, CardCustomDetails cardCustomDetails)
+        private void BuildCardDataScript(int tenant, CardCustomDetails cardCustomDetails, int startNumber, int endNumber)
         {
             string existData = File.ReadAllText("../../GeneratedScripts/InsertedCardsDataScript.sql");
             string generatedIdName = "@CardCustomObjectId" + tenant + cardCustomDetails.Id.Replace("-", "");
+            string stringFieldNumbers = getStringFieldNumbers(startNumber, endNumber);
             using (StreamWriter writer = new StreamWriter("../../GeneratedScripts/InsertedCardsDataScript.sql"))
             {
                 writer.WriteLine(existData);
                 writer.WriteLine("---------------------------");
                 writer.WriteLine("declare " + generatedIdName + " as varchar(15)");
                 writer.WriteLine("EXECUTE usp_GetNextTableIdValue " + generatedIdName + " OUTPUT,'CustomFieldsMainObject'");
-                writer.WriteLine("Insert Into CustomFieldsMainObjects(Id,Tenant,EntityId,ObjectTableId,Field1,Field2,Field3,Field4,Field5,Field6,Field7,Field8,Field9,Field10)");
-                writer.WriteLine("Values(" + generatedIdName + ", " + tenant + ", '" + cardCustomDetails.Id + "', '" + cardObjectTable.Id + "', " + GetFieldValue(cardCustomDetails.Field1) + ", " + GetFieldValue(cardCustomDetails.Field2) + ", " + GetFieldValue(cardCustomDetails.Field3) + ", " + GetFieldValue(cardCustomDetails.Field4) + ", " + GetFieldValue(cardCustomDetails.Field5) + ", " + GetFieldValue(cardCustomDetails.Field6) + ", " + GetFieldValue(cardCustomDetails.Field7) + ", " + GetFieldValue(cardCustomDetails.Field8) + ", " + GetFieldValue(cardCustomDetails.Field9) + ", " + GetFieldValue(cardCustomDetails.Field10) + ")");
+                writer.WriteLine("Insert Into CustomFieldsMainObjects(Id,Tenant,EntityId,ObjectTableId," + stringFieldNumbers + ")");
+                writer.WriteLine("Values(" + generatedIdName + ", " + tenant + ", '" + cardCustomDetails.Id + "', '" + cardObjectTable.Id + "', " + GetStringScriptValues(cardCustomDetails, stringFieldNumbers) + ")");
             }
+        }
+
+        private string GetStringScriptValues(CardCustomDetails cardCustomDetails, string stringFieldNumbers)
+        {
+            int fieldsCount = stringFieldNumbers.Split(',').Length;
+            string res = "";
+            if(fieldsCount > 0)
+            {
+                res += GetFieldValue(cardCustomDetails.Field1);
+            }
+            if (fieldsCount > 1)
+            {
+                res += ", " + GetFieldValue(cardCustomDetails.Field2);
+            }
+            if (fieldsCount > 2)
+            {
+                res += ", " + GetFieldValue(cardCustomDetails.Field3);
+            }
+            if (fieldsCount > 3)
+            {
+                res += ", " + GetFieldValue(cardCustomDetails.Field4);
+            }
+            if (fieldsCount > 4)
+            {
+                res += ", " + GetFieldValue(cardCustomDetails.Field5);
+            }
+            if (fieldsCount > 5)
+            {
+                res += ", " + GetFieldValue(cardCustomDetails.Field6);
+            }
+            if (fieldsCount > 6)
+            {
+                res += ", " + GetFieldValue(cardCustomDetails.Field7);
+            }
+            if (fieldsCount > 7)
+            {
+                res += ", " + GetFieldValue(cardCustomDetails.Field8);
+            }
+            if (fieldsCount > 8)
+            {
+                res += ", " + GetFieldValue(cardCustomDetails.Field9);
+            }
+            if (fieldsCount > 9)
+            {
+                res += ", " + GetFieldValue(cardCustomDetails.Field10);
+            }
+            return res;
+        }
+
+        private string getStringFieldNumbers(int startNumber, int endNumber)
+        {
+            string res = "";
+            int incNumber = startNumber;
+            while (endNumber >= incNumber)
+            {
+                res += "Field" + incNumber;
+                if (endNumber != incNumber) res += ",";
+                incNumber += 1;
+            }
+
+            return res;
         }
 
         private string GetFieldValue(string fieldValue)
@@ -330,11 +397,16 @@ namespace LogitudeCardsCustomFields.Services
             {
                 "Customer",
                 "Agent",
+                "AccountingPartner",
+                "AirLine",
                 "CustomAgent",
+                "CustomsShipper",
+                "Participant",
+                "ShippingAgent",
+                "ShippingLine",
                 "Trucker",
                 "Vendor",
-                "Warehouse",
-                "ShippingAgent",
+                "Warehouse"
             };
         }
     }

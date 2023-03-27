@@ -82,6 +82,10 @@ namespace Logitude.Workflow.Data.EntityLists
        public string DoneConditions  { get; set; }
        [DataMember]
        public string Description  { get; set; }
+       [DataMember]
+       public bool IsAssigned  { get; set; }
+       [DataMember]
+       public DateTime? StartDate  { get; set; }
    }
 
 }

@@ -221,7 +221,8 @@ Cypress.Commands.add("SelectQuickSearchElement", (quickSearchDetails: QuickSearc
         .within(() => {
             cy.get(quickSearchDetails.Selector).focus().clear().type(quickSearchDetails.Value).then(() => {
                 BaseAssertion.AssertStatusCode(quickSearchDetails.RequestAliase, 200);
-                cy.contains(quickSearchDetails.Value).click({ force: true });
+                cy.contains((quickSearchDetails.Value).replace(/^0+/, '')).click({ force: true });
+               
             })
         })
 })

@@ -21,6 +21,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Helpers;
 using Logitude.Accounting.Def.EntityUpdateServicesExt;
 using Logitude.BL.DataContracts;
+using Logitude.Server.Tools.CustomFields;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -128,6 +129,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             cardRepository.Add(entityCard);
             entityRepository.Add(entityPOCO);
             entityRepository.SubmitChanges();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<TruckerPM> { entityPM }.Cast<object>().ToList() }).Update();
 
             //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Trucker");
             //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
@@ -184,6 +186,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             cardRepository.Update(entityCard);
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<TruckerPM> { entityPM }.Cast<object>().ToList() }).Update();
 
             //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Trucker");
             //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");

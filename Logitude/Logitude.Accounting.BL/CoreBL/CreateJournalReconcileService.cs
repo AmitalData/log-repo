@@ -45,7 +45,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             lock (thisLock)
             {
-                using (var scope = TransactionFactory.GetTransaction())
+                using (var scope = TransactionFactory.GetNewReadCommittedTransaction())
                 {
                     DateTime dueDate = new DateTime();
                     DateTime refDate = new DateTime();
@@ -298,6 +298,12 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     var JournalUP = new JournalUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
                     JournalUP.Update(journal, true);
+                    var journalReconciles = journalReconcileRepository
+                        .GetJournalReconcilesForJournalsWithoutLedgers(listJournalReconciles.Select(x => x.LedgerTransactionId).ToList(), journal.Tenant);
+                    if (journalReconciles.Where(x=>x.JournalId != journal.Id).Any())
+                    {
+                        throw new ApplicationException("There is already journal reconciliation has been created.");
+                    }
 
                     scope.Complete();
                     return journal;

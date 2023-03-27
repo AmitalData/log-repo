@@ -115,5 +115,7 @@ export class TenantList {
 		EmptyReturnClosingDays: number;
 		ShipmentATAClosingDays: number;
 		IsDigitalPortalAccessActivated: boolean;
-        UseNewTermsOfUse: boolean;
-}
+		UseNewTermsOfUse: boolean;
+		ApproveUploadedDocuments: boolean;
+	
+}

@@ -107,6 +107,22 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="WorkFlowTriggerTypeCode"
+    Type="varchar"
+    Size="30"
+    DefaultValue="'RecordTriggered'">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="WorkFlowNumber"
+    Type="nvarchar"
+    Size="100"
+    InitialValueScript="update [WorkFlows] set [WorkFlowNumber] = [Id]">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
@@ -122,4 +138,12 @@
     ReferencedTable="WorkFlowStatuses"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="WorkFlowTriggerTypeCode"
+    ReferencedTable="WorkFlowTriggerTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
+  <UniqueConstraint
+    Columns="WorkFlowNumber" />
 </Table>

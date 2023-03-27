@@ -48,7 +48,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
         public QuotePM GetSinglePM(string id, int tenant)
         {
-            Quote entityPOCO = (from a in repository.context.Quotes.Include("Incoterm").Include("Stage").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("FromPartnerCard").Include("ToPartnerCard").Include("ToPort.Country").Include("FromPort.Country").Include("FromPort").Include("Direction").Include("TransportMode").Include("QuoteType").Include("AgentCard").Include("SaleCurrency")
+            Quote entityPOCO = (from a in repository.context.Quotes.Include("Incoterm").Include("Stage").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("FromPartnerCard").Include("ToPartnerCard").Include("ToPort.Country").Include("FromPort.Country").Include("FromPort").Include("Direction").Include("TransportMode").Include("QuoteType").Include("AgentCard").Include("SaleCurrency").Include("ShipmentType")
+                                .Include("MoveType")
                                 where a.Id == id && a.Tenant == tenant
                                 select a).FirstOrDefault();
 
@@ -1393,6 +1394,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 IncotermName = entityPOCO.Incoterm == null ? null : entityPOCO.Incoterm.Name,
                 SalesmanUserId = entityPOCO.SalesmanUserId,
                 SalesmanName = entityPOCO.SalesmanUser == null ? null : (entityPOCO.SalesmanUser.Contact == null ? null : entityPOCO.SalesmanUser.Contact.EnglishName),
+                SalesmanEmail = entityPOCO.SalesmanUser == null ? null : (entityPOCO.SalesmanUser.Contact == null ? null : entityPOCO.SalesmanUser.Contact.Email),
                 StageId = entityPOCO.StageId,
                 StageDueDate = entityPOCO.StageDueDate,
                 StageName = entityPOCO.Stage == null ? null : entityPOCO.Stage.Name,
@@ -1469,6 +1471,10 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 InsuranceValue = entityPOCO.InsuranceValue,
                 ValidByTypeCode = entityPOCO.ValidByTypeCode,
                 ConnectedToOpportunity = entityPOCO.ConnectedToOpportunity,
+                ShipmentType = entityPOCO.ShipmentType == null ? "" : entityPOCO.ShipmentType.Name,
+                MoveTypeName = entityPOCO.MoveType == null ? null : entityPOCO.MoveType.MoveTypeEnglishName,
+                MoveTypeCode = entityPOCO.MoveType == null ? null : entityPOCO.MoveType.Code,
+                IsExpired = entityPOCO.ExpirationDate < DateTime.Now && !entityPOCO.IsCancelled && !entityPOCO.IsClosed
             };
 
             int tenant = entityPOCO.Tenant;
@@ -1751,7 +1757,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             {
                 Card loadedCard = CardRepository.GetSingleCard(entityPOCO.ShipperId, tenant, true);
                 entityPM.ShipperNote = loadedCard.Notes;
-
+                entityPM.ShipperCountryCode = loadedCard.CountryCode;
+                entityPM.ShipperCountryName = loadedCard.CountryName;
                 if (loadedCard.PartnerTypeId == "PO")
                 {
                     entityPM.IsPotentialShipper = true;
@@ -1779,6 +1786,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             {
                 Card loadedCard = CardRepository.GetSingleCard(entityPOCO.ConsigneeId, tenant, false);
                 entityPM.ConsigneeNote = loadedCard.Notes;
+                entityPM.ConsigneeCountryCode = loadedCard.CountryCode;
+                entityPM.ConsigneeCountryName = loadedCard.CountryName;
 
                 if (loadedCard.PartnerTypeId == "PO")
                 {

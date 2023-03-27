@@ -22,6 +22,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Helpers;
 using Logitude.BL.DataContracts;
 using Logitude.Server.Tools.QueueService;
+using Logitude.Server.Tools.CustomFields;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -141,7 +142,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             cardRepository.Add(entityCard);
             entityRepository.Add(entityPOCO);
             entityRepository.SubmitChanges();
-            
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<WarehousePM> { entityPM }.Cast<object>().ToList() }).Update();
+
             foreach (ContactPM itemPM in entityPM.Contacts)
             {
                 this.UpdateContactSearchField(itemPM);
@@ -198,6 +200,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             cardRepository.Update(entityCard);
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<WarehousePM> { entityPM }.Cast<object>().ToList() }).Update();
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms != "oracle")
