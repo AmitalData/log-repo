@@ -131,8 +131,7 @@ namespace CommunicationWorkerRole
 
                                 if (string.IsNullOrEmpty(entityChangeId) || string.IsNullOrEmpty(automationId))
                                 {
-                                    queueservice.Complete();
-                                    continue;
+                                    throw new Exception("EntityChangeId or AutomationId paramaters is empty");
                                 }
 
                                 EntityChangeRepository entityChangeRepository = new EntityChangeRepository(Tenant);
@@ -140,8 +139,7 @@ namespace CommunicationWorkerRole
 
                                 if (entityChange == null)
                                 {
-                                    queueservice.Complete();
-                                    continue;
+                                    throw new Exception("Can't found entityChange with id :" + entityChangeId + " and tenant = " + Tenant);
                                 }
 
                                 if (string.IsNullOrEmpty(entityId))
@@ -192,8 +190,7 @@ namespace CommunicationWorkerRole
 
                                 if (automation == null)
                                 {
-                                    queueservice.Complete();
-                                    continue;
+                                    throw new Exception("Can't found automation with id :" + automationId+ " and tenant = " + Tenant);
                                 }
 
                                 GeneralAutomationResultService generalAutomationResultService = new GeneralAutomationResultService();

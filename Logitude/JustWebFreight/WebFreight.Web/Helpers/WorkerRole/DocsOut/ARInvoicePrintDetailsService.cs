@@ -3,9 +3,11 @@ using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
 using System.Web;
 
 namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
@@ -28,15 +30,20 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
 
         public void Update()
         {
-             
             ARInvoicePM aRInvoicePM = GetARInvoicePM();
             if (aRInvoicePM == null) return;
             if (string.IsNullOrEmpty(aRInvoicePM.IssuedByUserId)) return;
-            aRInvoicePM.PrintByUserId = aRInvoicePM.IssuedByUserId;
-            aRInvoicePM.PrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-            aRInvoicePM.IsPrinted = GetIsPrintedValue(aRInvoicePM);
-            aRInvoicePM.IsUpdatedByPrint = true;
-            aRInvoiceService.Update(aRInvoicePM, true);
+
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            {
+        
+                aRInvoicePM.PrintByUserId = aRInvoicePM.IssuedByUserId;
+                aRInvoicePM.PrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                aRInvoicePM.IsPrinted = GetIsPrintedValue(aRInvoicePM);
+                aRInvoicePM.IsUpdatedByPrint = true;
+                aRInvoiceService.Update(aRInvoicePM, true);
+                scope.Complete();
+            }
         }
 
 
