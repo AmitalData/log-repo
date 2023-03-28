@@ -152,7 +152,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (entity != null)
             {
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<CustomsShipperPM> { entity }.Cast<object>().ToList() }).Set();
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "CustomsShipper", Tenant = tenant, Type = "PM", Entities = new List<CustomsShipperPM> { entity }.Cast<object>().ToList() }).Set();
             }
 
 
@@ -200,7 +200,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (entity != null)
             {
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<CustomsShipperPM> { entity }.Cast<object>().ToList() }).Set();
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "CustomsShipper", Tenant = tenant, Type = "PM", Entities = new List<CustomsShipperPM> { entity }.Cast<object>().ToList() }).Set();
             }
 
             return entity;

@@ -132,7 +132,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             AccountingPartnerPM securedPm = new AccountingPartnerPM();
             SecuredMapping.GetMappedPM(AccountingPartner, securedPm, "AccountingPartner", tenant);
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<AccountingPartnerPM> { securedPm }.Cast<object>().ToList() }).Set();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "AccountingPartner", Tenant = tenant, Type = "PM", Entities = new List<AccountingPartnerPM> { securedPm }.Cast<object>().ToList() }).Set();
 
             return securedPm;
         }
@@ -223,7 +223,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             AccountingPartnerPM securedPm = new AccountingPartnerPM();
             SecuredMapping.GetMappedPM(AccountingPartner, securedPm, "AccountingPartner", tenant);
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<AccountingPartnerPM> { securedPm }.Cast<object>().ToList() }).Set();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "AccountingPartner", Tenant = tenant, Type = "PM", Entities = new List<AccountingPartnerPM> { securedPm }.Cast<object>().ToList() }).Set();
 
             return securedPm;
         }
@@ -314,7 +314,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             AccountingPartnerPM securedPm = new AccountingPartnerPM();
             SecuredMapping.GetMappedPM(AccountingPartner, securedPm, "AccountingPartner", tenant);
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<AccountingPartnerPM> { securedPm }.Cast<object>().ToList() }).Set();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "AccountingPartner", Tenant = tenant, Type = "PM", Entities = new List<AccountingPartnerPM> { securedPm }.Cast<object>().ToList() }).Set();
 
             return securedPm;
         }
@@ -640,7 +640,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             AccountingPartnerPM securedPm = new AccountingPartnerPM();
             SecuredMapping.GetMappedPM(AccountingPartner, securedPm, "AccountingPartner", tenant);
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<AccountingPartnerPM> { securedPm }.Cast<object>().ToList() }).Set();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "AccountingPartner", Tenant = tenant, Type = "PM", Entities = new List<AccountingPartnerPM> { securedPm }.Cast<object>().ToList() }).Set();
 
             return securedPm;
         }
@@ -964,7 +964,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             AccountingPartnerPM securedPm = new AccountingPartnerPM();
             SecuredMapping.GetMappedPM(entity, securedPm, "AccountingPartner", tenant);
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<AccountingPartnerPM> { securedPm }.Cast<object>().ToList() }).Set();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "AccountingPartner", Tenant = tenant, Type = "PM", Entities = new List<AccountingPartnerPM> { securedPm }.Cast<object>().ToList() }).Set();
 
             return securedPm;
         } 

@@ -274,7 +274,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             cardRepository.Add(entityCard);
             entityRepository.Add(entityPOCO);
             entityRepository.SubmitChanges();
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<CustomerPM> { entityPM }.Cast<object>().ToList() }).Update();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Customer", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<CustomerPM> { entityPM }.Cast<object>().ToList() }).Update();
 
             foreach (ContactPM itemPM in entityPM.Contacts)
             {
@@ -480,7 +480,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();
             cardRepository.SubmitChanges();
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<CustomerPM> { entityPM }.Cast<object>().ToList() }).Update();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Customer", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<CustomerPM> { entityPM }.Cast<object>().ToList() }).Update();
             cardService.HandleGLAccountCardData(entityCard.Id, entityCard.GLAccountId, entityPM.Tenant);
             if (!entityPM.IsHybrid)
             {

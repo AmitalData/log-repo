@@ -142,7 +142,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             SecuredMapping.GetMappedPM(agent, securedPm, "Agent", tenant);
             if (securedPm != null && agent != null)
             {
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<AgentPM> { securedPm }.Cast<object>().ToList() }).Set();
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Agent", Tenant = tenant, Type = "PM", Entities = new List<AgentPM> { securedPm }.Cast<object>().ToList() }).Set();
             }
             return securedPm;
         }
@@ -251,7 +251,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (securedPm != null && agent != null)
             {
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<AgentPM> { securedPm }.Cast<object>().ToList() }).Set();
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Agent", Tenant = tenant, Type = "PM", Entities = new List<AgentPM> { securedPm }.Cast<object>().ToList() }).Set();
             }
 
             return securedPm;

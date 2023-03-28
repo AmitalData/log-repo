@@ -145,7 +145,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (securedPm != null && warehouse != null)
             {
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<WarehousePM> { securedPm }.Cast<object>().ToList() }).Set();
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Warehouse", Tenant = tenant, Type = "PM", Entities = new List<WarehousePM> { securedPm }.Cast<object>().ToList() }).Set();
             }
             return securedPm;
         } 
@@ -250,7 +250,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (securedPm != null && warehouse != null)
             {
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<WarehousePM> { securedPm }.Cast<object>().ToList() }).Set();
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Warehouse", Tenant = tenant, Type = "PM", Entities = new List<WarehousePM> { securedPm }.Cast<object>().ToList() }).Set();
             }
             return securedPm;
         }
@@ -506,7 +506,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             {
                 PartnerARinvoiceDocumentTypeService partnerARinvoiceDocumentTypeService = new PartnerARinvoiceDocumentTypeService(warehouse.Tenant);
                 warehouse.Card = partnerARinvoiceDocumentTypeService.Set(warehouse.Card);
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<WarehousePM> { warehouse }.Cast<object>().ToList() }).Set();
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Warehouse", Tenant = tenant, Type = "PM", Entities = new List<WarehousePM> { warehouse }.Cast<object>().ToList() }).Set();
             }
             return warehouse;
         }
