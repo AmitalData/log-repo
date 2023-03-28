@@ -3975,7 +3975,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     else
                     {
                         // [Debit]
-                        GLAccountPM glAccount = getDebitGLAccount(theEntityPm.BillToId, theEntityPm.Tenant);
+                      //GLAccountPM glAccount = getDebitGLAccount(theEntityPm.BillToId, theEntityPm.Tenant);
+                        GLAccountPM glAccount = getDebitGLAccount(theEntityPm.BillToId, theEntityPm.Tenant, theEntityPm.BillToGLAccountId);
                         journalLine = new JournalLinePM();
                         journalLine.Tenant = tenant;
                         journalLine.JournalId = journal.Id;
