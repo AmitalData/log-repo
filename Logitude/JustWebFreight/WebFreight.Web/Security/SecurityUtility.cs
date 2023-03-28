@@ -970,39 +970,39 @@ namespace WebFreight.Web.Security
 
         public static bool CheckDigitalUserAuthentication(int tenant, string partnerId)
         {
-            if (tenant != 0)
+            if (tenant == 0) return true;
+            if (string.IsNullOrWhiteSpace(HttpContext.Current.User.Identity.Name)) throw new AutenticationException("Sorry! you are not authorized to read data!");
+
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+            string email = HttpContext.Current.User.Identity.Name;
+
+            ContactRepository contactrep = new ContactRepository(commonDataContext);
+            Contact customerCareContact = contactrep.GetSingleContactByEmail(email, 0);
+            if (customerCareContact != null)
             {
-                if (!string.IsNullOrWhiteSpace(HttpContext.Current.User.Identity.Name))
-                {
-                    ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
-                    string email = HttpContext.Current.User.Identity.Name;
-                    ContactRepository contactrep = new ContactRepository(commonDataContext);
-
-                    Contact customerCareContact = contactrep.GetSingleContactByEmail(email, 0);
-                    
-                    if (customerCareContact != null)
-                    {
-                        return true;
-                    }
-
-                    Contact contact = contactrep.GetSingleContactByEmail(email, tenant);
-
-                    if (contact != null)
-                    {
-                        List<string> partners = partnerId?.Split(',').ToList<string>();
-                        CardContact cardContact = commonDataContext.CardContacts.Where(d => d.ContactId == contact.Id && partners.Contains(d.CardId)).FirstOrDefault();
-                        
-                        if (cardContact != null)
-                        {
-                            return true;
-                        }
-                    }
-                }
-
-                throw new AutenticationException("Sorry! you are not authorized to read data!");
+                return true;
             }
 
-            return true;
+            Contact contact = contactrep.GetSingleContactByEmail(email, tenant);
+            if (contact != null)
+            {
+                List<string> partners = partnerId?.Split(',').ToList<string>();
+                CardContact cardContact = commonDataContext.CardContacts.Where(d => d.ContactId == contact.Id && partners.Contains(d.CardId)).FirstOrDefault();
+
+                if (cardContact != null)
+                {
+                    return true;
+                }
+            }
+
+            UserRepository userRepository = new UserRepository(commonDataContext);
+            User logedUser = userRepository.GetSingleUserByEmail(email, tenant, true);
+            if (logedUser != null)
+            {
+                return true;
+            }
+
+            throw new AutenticationException("Sorry! you are not authorized to read data!");
         }
 
         public static string GetAuthenticatedUser()
