@@ -514,7 +514,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         //searchParams.TestCase = event.TestCase;
         let myShowProgressBarParams: ShowProgressBarParams = null;
 
-        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession, searchParams.PBId, "×©×œ×™×—×ª ×ž×¡×¨ ×¡×’×™×¨×”", false, myShowProgressBarParams)
+        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession, searchParams.PBId, "שליחת מסר סגירה", false, myShowProgressBarParams)
             .then((res) => {
 
 
