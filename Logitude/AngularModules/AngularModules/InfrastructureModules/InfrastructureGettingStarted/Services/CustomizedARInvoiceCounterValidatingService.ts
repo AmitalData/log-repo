@@ -49,7 +49,7 @@ export class CustomizedARInvoiceCounterValidatingService {
             this.ValidateIfUniquePerPrefix(counterDefinitions, errors);
         }
         else {
-            this.ValidateIfNotUniquePerPrefix(errors, counterDefinitions);
+            this.ValidateIfNotUniquePerPrefix(counterDefinitions, errors);
         }
 
         this.ValidationErrorsList = errors;
@@ -59,7 +59,7 @@ export class CustomizedARInvoiceCounterValidatingService {
 
 
 
-    private ValidateIfNotUniquePerPrefix(errors: string[], counterDefinitions: CounterDefinitionPM[]) {
+    private ValidateIfNotUniquePerPrefix(counterDefinitions: CounterDefinitionPM[], errors: string[]) {
         let startNumberLength = (this.counterDefinitions[0]?.StartNumber) ? this.counterDefinitions[0].StartNumber.toString().length : 0;
         if (startNumberLength + AppTool.GetCounterPrefixLength(this.counterDefinitions[0]?.Prefix) + AppTool.GetCounterPrefixLength(this.counterDefinitions[0]?.Suffix) > 20) {
             errors.push("Maximum length allowed for [Prefix + StartNumber + Suffix] is 20");
