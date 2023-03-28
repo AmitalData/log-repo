@@ -587,7 +587,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 if (securedPm != null && entity != null)
                 {
-                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<CustomerPM> { securedPm }.Cast<object>().ToList() }).Set();
+                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Customer", Tenant = tenant, Type = "PM", Entities = new List<CustomerPM> { securedPm }.Cast<object>().ToList() }).Set();
                 }
                 if (securedPm != null)
                 {
@@ -1079,7 +1079,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 if (securedPm != null && entity != null)
                 {
-                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<CustomerPM> { securedPm }.Cast<object>().ToList() }).Set();
+                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Customer", Tenant = tenant, Type = "PM", Entities = new List<CustomerPM> { securedPm }.Cast<object>().ToList() }).Set();
                 }
                 if (securedPm != null)
                 {
@@ -1560,7 +1560,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 if (securedPm != null && entity != null)
                 {
-                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<CustomerPM> { securedPm }.Cast<object>().ToList() }).Set();
+                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Customer", Tenant = tenant, Type = "PM", Entities = new List<CustomerPM> { securedPm }.Cast<object>().ToList() }).Set();
                 }
 
                 return securedPm;
@@ -2040,7 +2040,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 if (securedPm != null && entity != null)
                 {
-                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<CustomerPM> { securedPm }.Cast<object>().ToList() }).Set();
+                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Customer", Tenant = tenant, Type = "PM", Entities = new List<CustomerPM> { securedPm }.Cast<object>().ToList() }).Set();
                 }
 
                 return securedPm;
@@ -2722,7 +2722,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              BillToId = customer.Card.BillToId,
                                              SATCustomerName = customer.Card.SATCustomerName,
                                          }).FirstOrDefault();
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "List", Entities = new List<CustomerList> { customerList }.Cast<object>().ToList() }).Set();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Customer", Tenant = tenant, Type = "List", Entities = new List<CustomerList> { customerList }.Cast<object>().ToList() }).Set();
             return customerList;
         }
         public List<CustomerPM> GetCustomersByCardsIds(List<string> cardsIds, int tenant)
@@ -2917,7 +2917,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              SATCustomerName = customer.Card.SATCustomerName,
 
                                          }).FirstOrDefault();
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "List", Entities = new List<CustomerList> { customerList }.Cast<object>().ToList() }).Set();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Customer", Tenant = tenant, Type = "List", Entities = new List<CustomerList> { customerList }.Cast<object>().ToList() }).Set();
             return customerList;
         }
 
@@ -3045,7 +3045,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              SATCustomerName = customer.Card.SATCustomerName,
                                          }).FirstOrDefault();
 
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "List", Entities = new List<CustomerList> { customerList }.Cast<object>().ToList() }).Set();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Customer", Tenant = tenant, Type = "List", Entities = new List<CustomerList> { customerList }.Cast<object>().ToList() }).Set();
             return customerList;
         }
 
@@ -4271,7 +4271,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 if (securedPm != null && entity != null)
                 {
-                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<CustomerPM> { securedPm }.Cast<object>().ToList() }).Set();
+                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Customer", Tenant = tenant, Type = "PM", Entities = new List<CustomerPM> { securedPm }.Cast<object>().ToList() }).Set();
                 }
                 //if (securedPm != null)
                 //{
@@ -4473,7 +4473,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 if (securedPm != null && entity != null)
                 {
-                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<CustomerPM> { securedPm }.Cast<object>().ToList() }).Set();
+                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Customer", Tenant = tenant, Type = "PM", Entities = new List<CustomerPM> { securedPm }.Cast<object>().ToList() }).Set();
                 }
 
                 return securedPm;
@@ -4981,7 +4981,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 if (securedPm != null && entity != null)
                 {
-                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<CustomerPM> { securedPm }.Cast<object>().ToList() }).Set();
+                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Customer", Tenant = tenant, Type = "PM", Entities = new List<CustomerPM> { securedPm }.Cast<object>().ToList() }).Set();
                 }
 
                 return securedPm;

@@ -126,7 +126,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             SecuredMapping.GetMappedPM(agent, securedPm, "CustomAgent", agent.Tenant);
             if (securedPm != null && agent != null)
             {
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = agent.Tenant, Type = "PM", Entities = new List<CustomAgentPM> { securedPm }.Cast<object>().ToList() }).Set();
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "CustomAgent", Tenant = agent.Tenant, Type = "PM", Entities = new List<CustomAgentPM> { securedPm }.Cast<object>().ToList() }).Set();
             }
             return securedPm;
         }
@@ -218,7 +218,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             SecuredMapping.GetMappedPM(agent, securedPm, "CustomAgent", tenant);
             if (securedPm != null && agent != null)
             {
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<CustomAgentPM> { securedPm }.Cast<object>().ToList() }).Set();
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "CustomAgent", Tenant = tenant, Type = "PM", Entities = new List<CustomAgentPM> { securedPm }.Cast<object>().ToList() }).Set();
             }
             return securedPm;
         }
@@ -313,7 +313,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             SecuredMapping.GetMappedPM(agent, securedPm, "CustomAgent", tenant);
             if (securedPm != null && agent != null)
             {
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<CustomAgentPM> { securedPm }.Cast<object>().ToList() }).Set();
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "CustomAgent", Tenant = tenant, Type = "PM", Entities = new List<CustomAgentPM> { securedPm }.Cast<object>().ToList() }).Set();
             }
             return securedPm;
         }
