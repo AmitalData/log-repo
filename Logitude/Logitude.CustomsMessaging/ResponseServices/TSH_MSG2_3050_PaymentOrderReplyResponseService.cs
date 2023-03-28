@@ -456,7 +456,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
                 stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None);
 
-            msg += $" TSH_MSG2_3050_PaymentOrderReplyResponseService.Update = _PaymentOrderPM.Id: {_PaymentOrderPM.Id}, _PaymentOrderPM.PaymentNumber: {_PaymentOrderPM.PaymentNumber} IsClosed: {_PaymentOrderPM.IsClosed}, PaymentOrderLeftAmount: {_PaymentOrderPM.PaymentOrderLeftAmount}, TotalSumToPay: {_PaymentOrderPM.TotalSumToPay}";
+            msg += $" TSH_MSG2_3050_PaymentOrderReplyResponseService.Update = _PaymentOrderPM.Id: {_PaymentOrderPM?.Id}, _PaymentOrderPM.PaymentNumber: {_PaymentOrderPM?.PaymentNumber} IsClosed: {_PaymentOrderPM?.IsClosed}, PaymentOrderLeftAmount: {_PaymentOrderPM?.PaymentOrderLeftAmount}, TotalSumToPay: {_PaymentOrderPM?.TotalSumToPay}";
             LogitudeSettings.HandleLogMe(msg, false, "CreateUD2LTService", stopLogAt);
         }
 

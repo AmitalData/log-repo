@@ -741,13 +741,20 @@ namespace Logitude.Customs.Data.Repsitories
 
         public IQueryable<Declaration> GetCourierConnectedDeclaratins(string CourierMasterId, int tenant)
         {
-            var /*List<string>*/ courierDeclarations = (from a in context.CourierDeclarations
-                                                        where a.CourierMasterId == CourierMasterId && a.Tenant == tenant
-                                                        select a.DeclarationId)/*.ToList()*/;
+            var /*List<string>*/ declarations = (from a in context.CourierDeclarations
+                                                 join d in context.Declarations
+                                                 on a.DeclarationId equals d.Id
+                                                 where a.CourierMasterId == CourierMasterId && a.Tenant == tenant &&
+                                                 !d.AmendmentDontDisplayInList
+                                                 select d)/*.ToList()*/;
 
-            IQueryable<Declaration> declarations = (from a in context.Declarations
-                                                    where courierDeclarations.Contains(a.Id) && !a.AmendmentDontDisplayInList && a.Tenant == tenant
-                                                    select a);
+            //var /*List<string>*/ courierDeclarations = (from a in context.CourierDeclarations
+            ///              where a.CourierMasterId == CourierMasterId && a.Tenant == tenant
+            //                select a.DeclarationId)/*.ToList()*/;
+
+            //IQueryable<Declaration> declarations = (from a in context.Declarations
+            //                       where courierDeclarations.Contains(a.Id) && !a.AmendmentDontDisplayInList && a.Tenant == tenant
+            //                             select a);
 
             return declarations;
         }

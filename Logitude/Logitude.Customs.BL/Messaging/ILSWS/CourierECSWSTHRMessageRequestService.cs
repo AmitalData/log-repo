@@ -108,17 +108,11 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
             //myCourierMasterQueryService.GetNotConnectedDeclaratins
 
             var myCourierMasterPM = courierMasterPM ?? myCourierMasterQueryService.GetByDeclarationId(declarationId, tenant);
+            myCourierMasterPM = myCourierMasterPM ?? declarationPM?.MyEcomInsert?.MyCourierMasterPM;
             if (myCourierMasterPM == null)
             {
-                if(declarationCourierStatusPM?.MAWB == null)
-                {
-                    return null;
-                }
-                myCourierMasterPM = myCourierMasterQueryService.GetCourierMasterByMawb(tenant, declarationCourierStatusPM.MAWB);
-                if (myCourierMasterPM == null)
-                {
-                    return null;
-                }
+                //throw new Exception("Declaration is null:" + _CustomFileCreditModel.AppicationId);
+                throw new Exception($"CourierMaster Is null  .GetByDeclarationId({declarationId}, tenant)");
             }
 
             CourierSWSHAWBRequest myCourierSWSHAWBRequest = CreateCourierSWSHawbMessage(myDeclarationPM, myCourierMasterPM, declarationCourierStatusPM);

@@ -42,7 +42,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var ClientAddUpdateService = new ClientAddressUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
             var ClientAddCommunicationUpdateService = new ClientsAddressCommTypeUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
             String clientId = null;
-
+            LogMessagingUtil.Instance.AppendLine("requestParams.ExternalId"+ requestParams.ExternalId);
             string userMessage = "הוספת/עדכון/ביטול כתובת לקוח " + requestParams.ExternalId;
             if (string.IsNullOrWhiteSpace(requestParams.ExternalId) && !string.IsNullOrWhiteSpace(requestParams.PassportNumber))
             {
@@ -101,9 +101,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     externalID = requestParams.PassportNumber;
                 }
+                LogMessagingUtil.Instance.AppendLine("externalID " + externalID);
                 clientId = ClientSearchQueryService.GetIdByCode(externalID, requestParams.Tenant);
+                LogMessagingUtil.Instance.AppendLine("clientId" + clientId);
                 if (string.IsNullOrWhiteSpace(clientId))
                 {
+                    LogMessagingUtil.Instance.AppendLine("string.IsNullOrWhiteSpace(clientId)==true");
                     this._MyClientSearchPM = new ClientPM();
                     _MyClientSearchPM.ChangeSetOp = ChangeSetOperation.Insert;
                     _MyClientSearchPM.Tenant = requestParams.Tenant;
@@ -112,6 +115,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     _MyClientSearchPM.PassportTypeCode = requestParams.PassportTypeCode;
                     _MyClientSearchPM.PassportCountryCode = requestParams.PassportCountryCode;
                     _MyClientSearchPM.FullName = string.Concat(externalID, " יש לשלוף לקוח");
+
+
                     ClientSearchUpdateService.InsertNewClientOnlyByCode(_MyClientSearchPM, true);
 
                     if (setting != null)
@@ -145,6 +150,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 string customerStatusMessage = "";
                 bool isCanContinue = false;
+                LogMessagingUtil.Instance.AppendLine("GeneralCustomerData.CostomerStatusForCA" + customResponse.GeneralCustomerData.CostomerStatusForCA);
                 switch (customResponse.GeneralCustomerData.CostomerStatusForCA)
                 {
                     case 3:
@@ -175,9 +181,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 MyResponseData.ResponseStatusXML = GetDummyXml(customerStatusMessage, requestParams.IsAngularClient);
                 return;
             }
-
+            LogMessagingUtil.Instance.AppendLine("customResponse.GeneralCustomerData.externalIDSpecified"+ customResponse.GeneralCustomerData.externalIDSpecified);
             if (customResponse.GeneralCustomerData.externalIDSpecified == true)
             {
+                LogMessagingUtil.Instance.AppendLine("customResponse.GeneralCustomerData.externalID.HasValue" + customResponse.GeneralCustomerData.externalID.HasValue);
                 if (!customResponse.GeneralCustomerData.externalID.HasValue)
                 {
                     MyResponseData.HasException = true;
@@ -186,7 +193,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     return;
                 }
                 string externalID = GetExternalID(customResponse.GeneralCustomerData.externalID.ToString());
+                LogMessagingUtil.Instance.AppendLine("externalID=GetExternalID(customResponse.GeneralCustomerData.externalID.ToString()); " + externalID);
                 clientId = ClientSearchQueryService.GetIdByCode(externalID, requestParams.Tenant);
+                LogMessagingUtil.Instance.AppendLine("clientId = ClientSearchQueryService.GetIdByCode(externalID, requestParams.Tenant);" + clientId );
             }
             else
             {
@@ -200,13 +209,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 if (customResponse.GeneralCustomerData.ClientForeignResidentIdentification.passportNumber != null & customResponse.GeneralCustomerData.ClientForeignResidentIdentification.passportCountry != null)
                 {
+                    LogMessagingUtil.Instance.AppendLine("customResponse.GeneralCustomerData.ClientForeignResidentIdentification.passportNumber" + customResponse.GeneralCustomerData.ClientForeignResidentIdentification.passportNumber);
+                    LogMessagingUtil.Instance.AppendLine("customResponse.GeneralCustomerData.ClientForeignResidentIdentification.passportCountry" + customResponse.GeneralCustomerData.ClientForeignResidentIdentification.passportCountry);
+
                     clientId = ClientSearchQueryService.GetIdByPassportNumberOrCountry(customResponse.GeneralCustomerData.ClientForeignResidentIdentification.passportNumber, customResponse.GeneralCustomerData.ClientForeignResidentIdentification.passportCountry, requestParams.Tenant);
+                    LogMessagingUtil.Instance.AppendLine("clientId:" + clientId);
+
                 }
             }
             bool isClientNameChanged = false;
+            LogMessagingUtil.Instance.AppendLine("clientId:" + clientId);
+
             if (!String.IsNullOrWhiteSpace(clientId))
             {
                 this._MyClientSearchPM = ClientSearchQueryService.GetSingle(clientId, true, false); // Retrieval of existing payment data
+                LogMessagingUtil.Instance.AppendLine("_MyClientSearchPM" + _MyClientSearchPM.Code);
+
                 DeleteClientAddress(ClientAddUpdateService, ClientAddCommunicationUpdateService);   // Delete All Client Address Records
                 _MyClientSearchPM.ChangeSetOp = ChangeSetOperation.Update;
                 userMessage = "עדכון לקוח " + requestParams.ExternalId;
@@ -215,6 +233,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             else
             {
+                LogMessagingUtil.Instance.AppendLine("MyClientSearchPM = new ClientPM();");
+
                 this._MyClientSearchPM = new ClientPM();
                 _MyClientSearchPM.ChangeSetOp = ChangeSetOperation.Insert;
                 _MyClientSearchPM.Tenant = requestParams.Tenant;
