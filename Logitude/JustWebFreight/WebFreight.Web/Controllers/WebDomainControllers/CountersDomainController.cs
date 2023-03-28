@@ -4,6 +4,7 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Services.CustomizedCounter;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
@@ -150,14 +151,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     TenantSettingService myTenantSettingService = new TenantSettingService(Context, tenant);
                     CounterDefinitionService myCounterDefinitionService = new CounterDefinitionService(Context, loggedUserEmail, tenant);
                     CounterDefinitionQuery myCounterDefinitionQuery = new CounterDefinitionQuery(tenant);
-
-                    if (args.IsCustomized)
+                    CustomizedARInvoiceCounterService myCustomizedARInvoiceCounterService = new CustomizedARInvoiceCounterService(tenant, myCounterDefinitionService);
+                    bool hasCustomizedARInvoiceCounterFeature = FeatureToggleHelper.HasFeatureToggle("ICC", tenant);
+                    if (args.IsCustomized && hasCustomizedARInvoiceCounterFeature)
                     {
-                        new CustomizedARInvoiceCounterService(tenant, myCounterDefinitionService).HandleCustomizedCounterDefinitions(args.CounterDefinitions, args.CounterId);
+                        myCustomizedARInvoiceCounterService.UpsertCustomizedCounterDefinitions(args.CounterDefinitions, args.CounterId);
                         args.CounterDefinitions = myCounterDefinitionQuery.GetCustomizedCounterDefinitionsByCounterId(args.CounterId, tenant).ToList();
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, args);
                     }
+
+                    myCustomizedARInvoiceCounterService.RemoveCustomizedCounterDefinitionsByCounterId(args.CounterId);
 
                     foreach (CounterDefinitionPM item in args.CounterDefinitions)
                     {

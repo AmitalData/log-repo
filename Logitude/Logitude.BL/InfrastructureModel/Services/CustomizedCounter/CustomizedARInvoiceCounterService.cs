@@ -31,13 +31,13 @@ namespace Logitude.BL.InfrastructureModel.Services.CustomizedCounter
 
         }
 
-        public void HandleCustomizedCounterDefinitions(List<CounterDefinitionPM> counterDefinitions, string counterId)
+        public void UpsertCustomizedCounterDefinitions(List<CounterDefinitionPM> counterDefinitions, string counterId)
         {
             if (counterDefinitions == null || counterDefinitions.Count == 0) return;
-            HandleUpdatingCounterDefinitions(counterDefinitions, counterId);
-            HandleAddingCounterDefinitions(counterDefinitions);
+            UpdateCustomizedCounterDefinitions(counterDefinitions, counterId);
+            AddCustomizedCounterDefinitions(counterDefinitions);
         }
-        private void HandleUpdatingCounterDefinitions(List<CounterDefinitionPM> counterDefinitions, string counterId)
+        private void UpdateCustomizedCounterDefinitions(List<CounterDefinitionPM> counterDefinitions, string counterId)
         {
             List<CounterDefinitionPM> existingCounterDefinitions = counterDefinitionQuery.GetCustomizedCounterDefinitionsByCounterId(counterId, tenant).ToList();
             if (existingCounterDefinitions == null || existingCounterDefinitions.Count == 0) return;
@@ -50,7 +50,7 @@ namespace Logitude.BL.InfrastructureModel.Services.CustomizedCounter
                 }
             }
         }
-        private void HandleAddingCounterDefinitions(List<CounterDefinitionPM> counterDefinitions)
+        private void AddCustomizedCounterDefinitions(List<CounterDefinitionPM> counterDefinitions)
         {
             List<CounterDefinitionPM> newCounterDefinitions = counterDefinitions.Where(def => !def.IsAdded).ToList();
             foreach (CounterDefinitionPM counterDefinitionPM in newCounterDefinitions)
@@ -59,45 +59,19 @@ namespace Logitude.BL.InfrastructureModel.Services.CustomizedCounter
                 counterDefinitionPM.IsAdded = true;
             }
         }
-        //private void HandleActiveCounterDefinitions(List<CounterDefinitionPM> counterDefinitions)
-        //{
-        //    List<CounterDefinitionPM> activeCounterdefinitions = counterDefinitions.Where(def => !def.InActive).ToList();
-        //    if (activeCounterdefinitions == null || activeCounterdefinitions.Count == 0) return;
-        //    foreach(CounterDefinitionPM counterDefinitionPM in activeCounterdefinitions)
-        //    {
-        //        if (counterDefinitionPM.Id == null)
-        //        {
-        //            counterDefinitionService.Create(counterDefinitionPM);
-        //        }
 
-        //        else
-        //        {
-        //            counterDefinitionService.Update(counterDefinitionPM);
-        //        }
-        //    }
-        //}
+        public void RemoveCustomizedCounterDefinitionsByCounterId(string counterId)
+        {
+            List<CounterDefinition> customizedCounterDefinitions = counterDefinitionRepository.GetCounterDefinitionsByCounterId(counterId, tenant).Where(def => def.IsCustomized).ToList();
+            if (customizedCounterDefinitions == null || customizedCounterDefinitions.Count == 0) return;
 
-        //private void HandleInActiveCounterDefinitions(List<CounterDefinitionPM> counterDefinitions)
-        //{
-        //    List<CounterDefinitionPM> inActiveCounterdefinitions = counterDefinitions.Where(def => def.InActive).ToList();
-        //    if (inActiveCounterdefinitions == null || inActiveCounterdefinitions.Count == 0) return;
-        //    RemoveInActiveCounterDefinitions(inActiveCounterdefinitions);
-        //}
+            foreach (CounterDefinition counterDefinition in customizedCounterDefinitions)
+            {
+                counterDefinitionRepository.Remove(counterDefinition);
+            }
+            counterDefinitionRepository.SubmitChanges();
+        }
 
-        //private void RemoveInActiveCounterDefinitions(List<CounterDefinitionPM> inActiveCounterdefinitions)
-        //{
-        //    foreach(CounterDefinitionPM counterDefinitionPM in inActiveCounterdefinitions)
-        //    {
-        //        RemoveCounterDefinitionPM(counterDefinitionPM);
-        //    }
-        //}
 
-        //private void RemoveCounterDefinitionPM(CounterDefinitionPM counterDefinitionPM)
-        //{
-        //    if (string.IsNullOrEmpty(counterDefinitionPM.Id)) return;
-        //    CounterDefinition counterDefinition = counterDefinitionRepository.GetSingleCounterDefinition(counterDefinitionPM.Id, counterDefinitionPM.Tenant);
-        //    if (counterDefinition == null) return;
-        //    counterDefinitionRepository.Remove(counterDefinition);
-        //}
     }
 }

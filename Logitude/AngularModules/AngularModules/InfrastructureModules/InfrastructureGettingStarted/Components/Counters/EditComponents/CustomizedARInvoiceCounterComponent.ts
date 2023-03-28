@@ -3,6 +3,7 @@ import { forEach } from 'cypress/types/lodash';
 import { CounterDefinitionPM } from '../../../../../Common/EntityPMs/CounterDefinitionPM';
 import { CounterPM } from '../../../../../Common/EntityPMs/CounterPM';
 import { CounterAPIHelper, CountersDomainService } from '../../../../../Common/Services/CountersDomainService';
+import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { GroupByPipe } from '../../../../../Infrastructure/Pipes/GroupByPipe';
@@ -34,7 +35,6 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
     private customizedARInvoiceCounterValidatingService: CustomizedARInvoiceCounterValidatingService;
     public MainCounterDefinitionsPMs: CounterDefinitionPM[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
-
 
     constructor() {
         super();
@@ -146,7 +146,6 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
         this.CustomizedCounterItems.forEach(item => {
             item.UniquePerPrefix = this.UniquePerPrefix;
             if (this.UniquePerPrefix) return;
-            //item.Prefix = this.CustomizedCounterItems[0].CounterDefinitions[0]?.Prefix;
             item.StartNumber = this.CustomizedCounterItems[0].CounterDefinitions[0]?.StartNumber;
         });
         if (!this.UniquePerPrefix) {
@@ -169,7 +168,16 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
             item.StartNumber = this.StartNumber;
         });
     }
+
+    DisableAddCustomizedCounterItems(): boolean {
+        let numberOfCountrDefinitions = 0;
+        this.CustomizedCounterItems.forEach(item => {
+            numberOfCountrDefinitions += item.CounterDefinitions.length;
+        });
+        return numberOfCountrDefinitions == 7;
+    }
     AddCustomizedCounterItem() {
+        if (this.DisableAddCustomizedCounterItems()) return;
         let customizedCounterItem = new CustomizedCounterItem("Serie " + this.NumberOfSeries, this.counterId, this);
         customizedCounterItem.StartNumber = this.UniquePerPrefix ? null : this.StartNumber;
         customizedCounterItem.UniquePerPrefix = this.UniquePerPrefix;
@@ -206,9 +214,25 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
 
 
     OkButtonClicked() {
+        let serieWithNoInvoices = this.CustomizedCounterItems.filter(item => item.CounterDefinitions?.length == 0)[0];
+        if (serieWithNoInvoices != null) {
+            this.ShowConfirmationWindow(serieWithNoInvoices);
+            return;
+        }
         this.BuildAPIHelperCounterDefinitions();
         this.ValidateCounterDefinitions();
     }
+    ShowConfirmationWindow(customizedCounterItem: CustomizedCounterItem) {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show(customizedCounterItem.SeriesCode +" is not related to any invoice type, so it will not be taken in consideration");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.BuildAPIHelperCounterDefinitions();
+                this.ValidateCounterDefinitions();
+            }
+        });
+    }
+
     BuildAPIHelperCounterDefinitions() {
         this.APIHelper = new CounterAPIHelper();
         this.APIHelper.CounterDefinitions = [];
@@ -226,7 +250,7 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
         });
     }
 
-    private ValidateCounterDefinitions() {
+    private ValidateCounterDefinitions() {       
         this.CounterInvoiceComponent.ValidationErrorsList = this.customizedARInvoiceCounterValidatingService.Validate(this.APIHelper.CounterDefinitions);
         if (this.CounterInvoiceComponent.ValidationErrorsList && this.CounterInvoiceComponent.ValidationErrorsList.length == 0) {
 

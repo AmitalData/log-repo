@@ -33,7 +33,7 @@
                                     <td class="Value" style="padding-left: 10px; width: 90%">
                                         {{customizedCounterItem.SeriesCode}}
                                     </td>
-                                    <td style="width:10%">
+                                    <td style="width:10%" *ngIf="j != 0">
                                         <IconButton [IsSmall]="true" [Name]="'Delete'" [IsIconOnly]="true" (click)="DeleteCustomizedCounterItem(customizedCounterItem)"></IconButton>
                                     </td>
                                 </tr>
@@ -136,7 +136,7 @@
                 </table>
             </div>
             <div *ngIf="j == CustomizedCounterItems.length - 1 && j != 6" style="vertical-align: top; padding-top: 12px; width: 25px; display:inline-block">
-                <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddCustomizedCounterItem()"></IconButton>
+                <IconButton [IsEnabled]="!DisableAddCustomizedCounterItems()" [Name]="'Add'" [IsSmall]="true" (click)="AddCustomizedCounterItem()"></IconButton>
             </div>
 
         </div>
