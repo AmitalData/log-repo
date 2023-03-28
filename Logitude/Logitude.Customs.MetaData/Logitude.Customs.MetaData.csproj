@@ -283,6 +283,7 @@
     <None Include="DBTables\ContinuousRequestType.dxml" />
     <None Include="DBTables\ConverterType.dxml" />
     <None Include="DBTables\CoolingReportingMethod.dxml" />
+    <None Include="DBTables\CountryCurrency.dxml" />
     <None Include="DBTables\CountryGroup.dxml" />
     <None Include="DBTables\CourierCustomStatus.dxml" />
     <None Include="DBTables\CourierDeclaration.dxml" />
@@ -570,9 +571,11 @@
     <None Include="DBTables\VehicleType.dxml" />
     <None Include="DBTables\VendorCommission.dxml" />
     <None Include="DBTables\VendorCommunication.dxml" />
+    <None Include="DBTables\VendorCurrency.dxml" />
     <None Include="DBTables\VendorStatus.dxml" />
     <None Include="DBTables\VendorTransactionType.dxml" />
     <None Include="DBTables\VendorType.dxml" />
+    <None Include="EntityFiles\CountryCurrency.lxml" />
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
     <None Include="EntityFiles\ClientsTapag.lxml" />
     <None Include="EntityFiles\DeclarationFollowUp.lxml" />
@@ -1018,6 +1021,7 @@
     <None Include="EntityFiles\VehicleType.lxml" />
     <None Include="EntityFiles\VendorCommission.lxml" />
     <None Include="EntityFiles\VendorCommunication.lxml" />
+    <None Include="EntityFiles\VendorCurrency.lxml" />
     <None Include="EntityFiles\VendorStatus.lxml" />
     <None Include="EntityFiles\VendorTransactionType.lxml" />
     <None Include="EntityFiles\ContainerType.lxml" />

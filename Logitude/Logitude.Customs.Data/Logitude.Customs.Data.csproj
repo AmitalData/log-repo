@@ -139,6 +139,7 @@
     <Compile Include="EntityKeys\ContainerTypeKeys.cs" />
     <Compile Include="EntityKeys\ContinuousRequestTypeKeys.cs" />
     <Compile Include="EntityKeys\CoolingReportingMethodKeys.cs" />
+    <Compile Include="EntityKeys\CountryCurrencyKeys.cs" />
     <Compile Include="EntityKeys\CourierCustomStatusKeys.cs" />
     <Compile Include="EntityKeys\CourierDeclarationKeys.cs" />
     <Compile Include="EntityKeys\CourierDeclarationStatusKeys.cs" />
@@ -253,6 +254,7 @@
     <Compile Include="EntityKeys\UIMessageAdditionalKeys.cs" />
     <Compile Include="EntityKeys\UIMessageKeys.cs" />
     <Compile Include="EntityKeys\UpdateCodeKeys.cs" />
+    <Compile Include="EntityKeys\VendorCurrencyKeys.cs" />
     <Compile Include="EntityListQueryServices\AcceptanceStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ActionCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AgentTalkBackTypeListQueryService.cs" />
@@ -289,6 +291,7 @@
     <Compile Include="EntityListQueryServices\ContainerTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ContinuousRequestTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CoolingReportingMethodListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CountryCurrencyListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CourierCustomStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CourierDeclarationListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CourierDeclarationStatusListQueryService.cs" />
@@ -380,6 +383,7 @@
     <Compile Include="EntityListQueryServices\Generated\ContainerTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ContinuousRequestTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CoolingReportingMethodListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CountryCurrencyListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CourierCustomStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CourierDeclarationListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CourierDeclarationStatusListQueryService.Generated.cs" />
@@ -492,6 +496,7 @@
     <Compile Include="EntityListQueryServices\Generated\UIMessageAdditionalListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\UIMessageListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\UpdateCodeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\VendorCurrencyListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\GTBFUSTATUListQueryService.cs" />
     <Compile Include="EntityListQueryServices\HandingCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\HazardousSubstanceListQueryService.cs" />
@@ -550,6 +555,9 @@
     <Compile Include="EntityListQueryServices\UIMessageAdditionalListQueryService.cs" />
     <Compile Include="EntityListQueryServices\UIMessageListQueryService.cs" />
     <Compile Include="EntityListQueryServices\UpdateCodeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\VendorCurrencyListQueryService.cs" />
+    <Compile Include="EntityLists\Generated\CountryCurrencyList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\VendorCurrencyList.Generated.cs" />
     <Compile Include="EntityLists\JoinCustomsItemList.cs" />
     <Compile Include="EntityLists\CustomsPartnersItemList.cs" />
     <Compile Include="EntityLists\Generated\AcceptanceStatusList.Generated.cs" />
@@ -739,6 +747,7 @@
     <Compile Include="EntityMapping\ContainerTypeMap.cs" />
     <Compile Include="EntityMapping\ContinuousRequestTypeMap.cs" />
     <Compile Include="EntityMapping\CoolingReportingMethodMap.cs" />
+    <Compile Include="EntityMapping\CountryCurrencyMap.cs" />
     <Compile Include="EntityMapping\CourierCustomStatusMap.cs" />
     <Compile Include="EntityMapping\CourierDeclarationMap.cs" />
     <Compile Include="EntityMapping\CourierDeclarationStatusMap.cs" />
@@ -853,6 +862,7 @@
     <Compile Include="EntityMapping\UIMessageAdditionalMap.cs" />
     <Compile Include="EntityMapping\UIMessageMap.cs" />
     <Compile Include="EntityMapping\UpdateCodeMap.cs" />
+    <Compile Include="EntityMapping\VendorCurrencyMap.cs" />
     <Compile Include="EntityPOCOs\AcceptanceStatus.cs" />
     <Compile Include="EntityPOCOs\ActionCode.cs" />
     <Compile Include="EntityPOCOs\AgentTalkBackType.cs" />
@@ -889,6 +899,7 @@
     <Compile Include="EntityPOCOs\ContainerType.cs" />
     <Compile Include="EntityPOCOs\ContinuousRequestType.cs" />
     <Compile Include="EntityPOCOs\CoolingReportingMethod.cs" />
+    <Compile Include="EntityPOCOs\CountryCurrency.cs" />
     <Compile Include="EntityPOCOs\CourierCustomStatus.cs" />
     <Compile Include="EntityPOCOs\CourierDeclaration.cs" />
     <Compile Include="EntityPOCOs\CourierDeclarationStatus.cs" />
@@ -1004,6 +1015,7 @@
     <Compile Include="EntityPOCOs\UIMessage.cs" />
     <Compile Include="EntityPOCOs\UIMessageAdditional.cs" />
     <Compile Include="EntityPOCOs\UpdateCode.cs" />
+    <Compile Include="EntityPOCOs\VendorCurrency.cs" />
     <Compile Include="Repsitories\AcceptanceStatusRepository.cs" />
     <Compile Include="Repsitories\ActionCodeRepository.cs" />
     <Compile Include="Repsitories\AgentTalkBackTypeRepository.cs" />
@@ -1040,6 +1052,7 @@
     <Compile Include="Repsitories\ContainerTypeRepository.cs" />
     <Compile Include="Repsitories\ContinuousRequestTypeRepository.cs" />
     <Compile Include="Repsitories\CoolingReportingMethodRepository.cs" />
+    <Compile Include="Repsitories\CountryCurrencyRepository.cs" />
     <Compile Include="Repsitories\CourierCustomStatusRepository.cs" />
     <Compile Include="Repsitories\CourierDeclarationRepository.cs" />
     <Compile Include="Repsitories\CourierDeclarationStatusRepository.cs" />
@@ -1131,6 +1144,7 @@
     <Compile Include="Repsitories\Generated\ContainerTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ContinuousRequestTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CoolingReportingMethodRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CountryCurrencyRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CourierCustomStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CourierDeclarationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CourierDeclarationStatusRepository.Generated.cs" />
@@ -1244,6 +1258,7 @@
     <Compile Include="Repsitories\Generated\UIMessageAdditionalRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\UIMessageRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\UpdateCodeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\VendorCurrencyRepository.Generated.cs" />
     <Compile Include="Repsitories\HandingCodeRepository.cs" />
     <Compile Include="Repsitories\HazardousSubstanceRepository.cs" />
     <Compile Include="Repsitories\IncotemrsFileValidationRepository.cs" />
@@ -1302,6 +1317,7 @@
     <Compile Include="Repsitories\UIMessageAdditionalRepository.cs" />
     <Compile Include="Repsitories\UIMessageRepository.cs" />
     <Compile Include="Repsitories\UpdateCodeRepository.cs" />
+    <Compile Include="Repsitories\VendorCurrencyRepository.cs" />
     <Compile Include="Utils\CacheHelper.cs" />
     <Compile Include="Utils\FreelancerCustomersUtil.cs" />
     <None Include="CustomContext.Views.cs" />

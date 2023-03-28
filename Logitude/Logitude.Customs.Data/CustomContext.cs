@@ -246,6 +246,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CoolingReportingMethodMap());
 	
+            modelBuilder.Configurations.Add(new CountryCurrencyMap());
+	
             modelBuilder.Configurations.Add(new CountryGroupMap());
 	
             modelBuilder.Configurations.Add(new CourierCustomStatusMap());
@@ -835,6 +837,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new VendorCommissionMap());
 	
             modelBuilder.Configurations.Add(new VendorCommunicationMap());
+	
+            modelBuilder.Configurations.Add(new VendorCurrencyMap());
 	
             modelBuilder.Configurations.Add(new VendorStatusMap());
 	
@@ -1882,6 +1886,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CoolingReportingMethod> CoolingReportingMethods 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CountryCurrency> CountryCurrencies 
 	 {
 	      get; set;
 	 
@@ -3652,6 +3662,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<VendorCommunication> VendorCommunications 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<VendorCurrency> VendorCurrencies 
 	 {
 	      get; set;
 	 

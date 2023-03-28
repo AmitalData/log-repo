@@ -106,6 +106,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<ContinuousRequestType> ContinuousRequestTypes { get; }
 		 IDbSet<ConverterType> ConverterTypes { get; }
 		 IDbSet<CoolingReportingMethod> CoolingReportingMethods { get; }
+		 IDbSet<CountryCurrency> CountryCurrencies { get; }
 		 IDbSet<CountryGroup> CountryGroups { get; }
 		 IDbSet<CourierCustomStatus> CourierCustomStatuses { get; }
 		 IDbSet<CourierDeclaration> CourierDeclarations { get; }
@@ -401,6 +402,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<VehicleType> VehicleTypes { get; }
 		 IDbSet<VendorCommission> VendorCommissions { get; }
 		 IDbSet<VendorCommunication> VendorCommunications { get; }
+		 IDbSet<VendorCurrency> VendorCurrencies { get; }
 		 IDbSet<VendorStatus> VendorStatuses { get; }
 		 IDbSet<VendorTransactionType> VendorTransactionTypes { get; }
 		 IDbSet<VendorType> VendorTypes { get; }

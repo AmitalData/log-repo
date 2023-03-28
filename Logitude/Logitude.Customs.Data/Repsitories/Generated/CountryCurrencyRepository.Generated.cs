@@ -1,0 +1,91 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.EntityKeys;
+using Simplog.Server.Infrastructure;
+
+namespace Logitude.Customs.Data.Repsitories
+{
+   public partial class CountryCurrencyRepository:IRepository<CountryCurrency>
+   {
+   
+        private ICustomContext currentContext;
+        public CountryCurrencyRepository(int tenant)
+        {
+            currentContext = CustomContext.GetContext(tenant);
+        }
+
+        public CountryCurrencyRepository(ICustomContext context)
+        {
+            currentContext = context;
+        }
+
+		 
+		
+		public  CountryCurrency GetSingle(string countryid, string currency, int tenant)
+        {
+            return (from a in context.CountryCurrencies
+                    where a.CountryId == countryid && a.Currency == currency && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+
+        public IQueryable<CountryCurrency> GetAll(int tenant)
+        {
+            return from a in context.CountryCurrencies  
+                   where a.Tenant == tenant
+                   select a;
+        }
+				 
+        public CountryCurrency GetSingle(EntityKeyFields entityKeys)
+        {
+            CountryCurrencyKeys keys = entityKeys as CountryCurrencyKeys;
+            return (from a in context.CountryCurrencies
+                    where a.CountryId == keys.CountryId && a.Currency == keys.Currency
+                    select a).FirstOrDefault();
+        }
+		         
+        partial void onAdd();//Partial Methods Definition in Generated
+        public void Add(CountryCurrency entity)
+        {
+            onAdd();
+            context.CountryCurrencies.Add(entity);
+        }
+
+        public void Remove(CountryCurrency entity)
+        {
+            context.CountryCurrencies.Attach(entity);
+            context.CountryCurrencies.Remove(entity);
+        }
+
+        partial void onUpdate();//Partial Methods Definition in Generated
+        public void Update(CountryCurrency entity)
+        {
+            onUpdate();
+            context.CountryCurrencies.Attach(entity);
+            context.SetAsModified(entity);
+        }
+
+        public List<CountryCurrency> All()
+        {
+            return context.CountryCurrencies.ToList();
+        }
+
+        private ICustomContext context
+        {
+            get { return currentContext; }
+        }
+
+        public void SubmitChanges()
+        {
+            context.SaveChanges();
+        }
+	 
+   }
+   }
+	 

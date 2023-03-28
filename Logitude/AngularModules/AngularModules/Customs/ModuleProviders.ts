@@ -258,6 +258,7 @@ import { ClientsTapagListService } from './Services/StandardLists/ClientsTapagLi
 import { ServersNameListService } from './Services/StandardLists/ServersNameListService';
 import { PhysicalCheckCodeListService } from './Services/StandardLists/PhysicalCheckCodeListService';
 import { SchedulerParamListService } from './Services/StandardLists/SchedulerParamListService';
+import { VendorCurrencyListService } from './Services/StandardLists/VendorCurrencyListService';
 
 
 //#endregion
@@ -372,6 +373,7 @@ import { LoadTestService } from './Services/WebServices/LoadTestService';
 import { InvoiceQueueWebService } from './Services/WebServices/InvoiceQueueWebService';
 import { ContainerizationMessagesService } from './Services/WebServices/ContainerizationMessagesService';
 import { NewQuoteOPWebService } from './Services/WebServices/NewQuoteOPWebService';
+import { VendorCurrencyService } from './Services/WebServices/VendorCurrencyService';;
 
 
 //#endregion
@@ -884,6 +886,7 @@ export class ModuleProviders {
             case "NewQuoteOPWebService": { myResult = new NewQuoteOPWebService(); break; }
             case "CustomsRequestsSheetWebService": { myResult = new CustomsRequestsSheetWebService(); break; }
             case "GTBFUSTATUWebService": { myResult = new GTBFUSTATUWebService(); break; }
+            case "VendorCurrencyService": { myResult = new VendorCurrencyService(); break; }
 
 
             //#endregion

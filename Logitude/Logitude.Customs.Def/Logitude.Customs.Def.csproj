@@ -88,6 +88,7 @@
     <Compile Include="EntityPMs\Generated\ContainerizationStatusCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ContainerTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CoolingReportingMethodPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CountryCurrencyPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomerClassificationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomerIdentificationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomerIndicationTypePM.Generated.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="EntityPMs\Generated\TransportMeansTypePM.Generated.cs" />
     <Compile Include="EntityPMs\ContainerTypePM.cs" />
     <Compile Include="EntityPMs\CertificateExemptionTypePM.cs" />
+    <Compile Include="EntityPMs\Generated\VendorCurrencyPM.Generated.cs" />
     <Compile Include="EntityPMs\IncotemrsFileValidationPM.cs" />
     <Compile Include="EntityPMs\NDMessageActionCodePM.cs" />
     <Compile Include="EntityPMs\ModificationAndDiscountTypePM.cs" />
