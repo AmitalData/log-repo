@@ -64,6 +64,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     private myChargesTypeListService: ChargesTypeListService;
     private newAddedTariffPayableCount = 0;
+    public IsUsingVirtuallization: boolean = false;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.EntityPM = entityArgs.EntityPM;
         this.OriginShipment = entityArgs.OriginEntity;
@@ -73,6 +74,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         this.ProfitCurrencyCode = this.EntityPM.ProfitCurrencyCode;
         this.LocalCurrencyId = SessionLocator.LocalCurrencyId;
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
+        this.SetIsUsingVirtuallization();
         this.ItemsSource = new ObservableCollection([]);
         this.myDomainService = new ShipmentDomainService();
         this.myUserListService = new UserListService();
@@ -81,6 +83,13 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         this.SetEditEnabled();
         this.LoadRequiredData();
         this.CheckUpdateQuantities();
+    }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
     }
 
     private SessionEvent: any = null;

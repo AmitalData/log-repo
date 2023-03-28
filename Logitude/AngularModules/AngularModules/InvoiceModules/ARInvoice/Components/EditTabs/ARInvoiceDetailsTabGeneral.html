@@ -473,7 +473,7 @@
                                     </div>
                                 </div>
 
-                                <logitude-edit-grid *ngIf="IsManifest" GridWidth="100%" GridHeight="100%" [ItemSource]="ObservableItems" [groupby]="'Description'">
+                                <logitude-edit-grid *ngIf="IsManifest" GridWidth="100%" GridHeight="100%" [ItemSource]="ObservableItems" [groupby]="'Description'" [UseVirtuallization]="IsUsingVirtuallization">
 
                                     <!-- Exists -->
                                     <log-column [width]="'25'">

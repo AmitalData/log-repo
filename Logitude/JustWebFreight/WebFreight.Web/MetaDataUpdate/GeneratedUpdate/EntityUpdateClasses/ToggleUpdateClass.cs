@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ToggleUpdateClass
    {  		
-		public const string HashString = "e60bdf1a8c452d05c3333ad4fd858e7e";
+		public const string HashString = "931368e102c8356cd8b55ea860a227c9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -131,7 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Toggle",
-			      				    Code =  "e055",
+			      				    Code =  "71e1",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",

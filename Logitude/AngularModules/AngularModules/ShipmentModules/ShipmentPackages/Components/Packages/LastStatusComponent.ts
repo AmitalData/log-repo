@@ -18,14 +18,15 @@ export class LastStatusComponent {
     public ValidationErrorsList: string[] = [];
     public ItemsSource: ObservableCollection;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsUsingVirtuallization: boolean = false;
     constructor() {
         this.ItemsSource = new ObservableCollection([]);
     }
 
     SetWindowArgs(args: any) {
+        this.SetIsUsingVirtuallization();
         this.ShipmentId = args["ShipmentId"];
         this.ContainerId = args["ContainerId"];
-
         var myService = new INTRAWebService();
         myService.GetContainerStatuses(this.ShipmentId, this.ContainerId).subscribe((myResponse: ServiceResponse) => {
 
@@ -52,7 +53,12 @@ export class LastStatusComponent {
             }
         });
     }
-
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
+    }
     CloseClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }

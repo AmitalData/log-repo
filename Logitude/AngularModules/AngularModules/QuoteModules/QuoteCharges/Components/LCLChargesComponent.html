@@ -128,7 +128,7 @@
                     <tr>
                         <td>
                             <div class="MediaFill">
-                                <logitude-edit-grid GridWidth="100%" [HeaderHeight]="35" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
+                                <logitude-edit-grid GridWidth="100%" [HeaderHeight]="35" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow" [UseVirtuallization]="IsUsingVirtuallization">
 
                                     <!-- Charges Type -->
                                     <log-column [width]="'150'" [SortFieldName]="'ChargesTypeCodeName'" [header]="'QuoteCharge.CH.ChargesTypeIdListLable' | TextCodeTranslationPipe">

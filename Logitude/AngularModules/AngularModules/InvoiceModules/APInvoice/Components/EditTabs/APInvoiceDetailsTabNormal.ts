@@ -54,9 +54,11 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     private CurrentSession = SessionLocator.SelectedSession;
     QBOAccountingSystemCode = "QBO";
     QBOGlobalAccountingSystemCode = "QBOG";
+    public IsUsingVirtuallization: boolean = false;
+
     constructor(private entityArgs: EntityArgs) {
         super();
-
+        this.SetIsUsingVirtuallization();
         if (ObjectsLocator.GlobalSetting) {
             this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         }
@@ -79,6 +81,14 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         }
         this.IsTotalVatEnabled = this.CheckIsTotalVatEnabled();
     }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
+    }
+
     CheckIsTotalVatEnabled(): boolean {
         if (ObjectsLocator.AccountingSettingPM.AccountingSystemCode != this.QBOAccountingSystemCode
             && ObjectsLocator.AccountingSettingPM.AccountingSystemCode != this.QBOGlobalAccountingSystemCode) {
@@ -462,7 +472,7 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     }
 
     BuildInvoiceLines() {
-
+        this.SetIsUsingVirtuallization();
         this.ItemsSource.Clear();
         this.ComputeRelativeRateDate();
 

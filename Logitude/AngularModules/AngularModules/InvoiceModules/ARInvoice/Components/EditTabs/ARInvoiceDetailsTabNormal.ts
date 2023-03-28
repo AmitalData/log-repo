@@ -59,6 +59,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     private CurrentSession = SessionLocator.SelectedSession;
     public InvoiceNumberFilterList: CodeNameClass[] = [];
     public NumbersPipe: NumbersPipe;
+    public IsUsingVirtuallization: boolean = false;
     constructor(private entityArgs: EntityArgs) {
         super();
         this.NumbersPipe = new NumbersPipe();
@@ -1054,6 +1055,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     }
 
     BuildScreenData() {
+        this.SetIsUsingVirtuallization();
         if (this.IsEditingEnabled) {
             this.LoadData();
         }
@@ -1062,6 +1064,14 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
             this.BuildInvoiceLines();
         }
     }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
+    }
+
     BuildInvoiceLines() {
 
         this.ItemsSource = [];

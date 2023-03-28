@@ -332,7 +332,8 @@
                 <tr>
                     <td>
                         <div class="MediaFill" *ngIf="!DataContext.IsChargeBySteps">
-                            <logitude-edit-grid [HeaderHeight]="35" GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
+                            <logitude-edit-grid [HeaderHeight]="35" GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow"
+                                                [UseVirtuallization]="IsUsingVirtuallization">
 
                                 <!-- Cost Quantity -->
                                 <log-column [width]="'70'" *ngIf="DataContext.IsAdhoc">
@@ -725,7 +726,7 @@
                                 <tr>
                                     <td>
                                         <div class="MediaFill" style="overflow-x: hidden;">
-                                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="StepsItemsSource" (RowEnded)="OnRowEnded($event)" [Disabled]="!DataContext.IsEditingEnabled">
+                                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="StepsItemsSource" (RowEnded)="OnRowEnded($event)" [Disabled]="!DataContext.IsEditingEnabled" [UseVirtuallization]="IsUsingVirtuallization">
 
                                                 <!-- Step -->
                                                 <log-column [header]="'QuotePriceSteps.F.Step' | TextCodeTranslationPipe" [width]="'150'" [Alignment]="'left'">

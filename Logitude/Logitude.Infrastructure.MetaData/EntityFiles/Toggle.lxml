@@ -43,7 +43,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;e055&quot;"
+  Code="&quot;71e1&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -956,6 +956,11 @@
       Name="&quot;AR Invoice Customized Counter&quot;"
       SearchFields="&quot;ICC,AR Invoice Customized Counter&quot;"
       Description="&quot;AR Invoice Customized Counter&quot;" />
+    <Record
+      Code="&quot;EVG&quot;"
+      Name="&quot;Enable Virtual Grid&quot;"
+      SearchFields="&quot;EVG,Enable Virtual Grid&quot;"
+      Description="&quot;Enable Virtual Grid&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

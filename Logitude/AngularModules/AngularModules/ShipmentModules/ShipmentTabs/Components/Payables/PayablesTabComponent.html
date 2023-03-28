@@ -126,7 +126,7 @@
                                                     [ItemSource]="ItemsSource"
                                                     [SelectedRow]="SelectedRow"
                                                     (RowDataLoaded)="OnRowLoaded($event)"
-                                                    (SelectedItemChanged)="OnRowSelected($event)">
+                                                    (SelectedItemChanged)="OnRowSelected($event)" [UseVirtuallization]="IsUsingVirtuallization">
 
                                     <log-row-details>
                                         <row-template>

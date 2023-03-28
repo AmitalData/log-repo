@@ -18,7 +18,7 @@
         <tr>
             <td>
                 <div class="MediaFill" style="overflow-x: hidden;">
-                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ProductItems" [Disabled]="!IsEditingEnabled" (RowEnded)="OnRowEnded($event)">
+                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ProductItems" [Disabled]="!IsEditingEnabled" (RowEnded)="OnRowEnded($event)" [UseVirtuallization]="IsUsingVirtuallization">
 
                         <log-column [header]="'Product Item'" [width]="'150'" [Alignment]="'left'">
                             <ng-template let-item>

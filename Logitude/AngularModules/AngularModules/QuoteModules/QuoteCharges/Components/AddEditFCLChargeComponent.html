@@ -287,7 +287,8 @@
                 <tr>
                     <td>
                         <div class="MediaFill" *ngIf="DataContext.ChargesTypeId">
-                            <logitude-edit-grid [HeaderHeight]="50" GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
+                            <logitude-edit-grid [HeaderHeight]="50" GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow"
+                                                [UseVirtuallization]="IsUsingVirtuallization">
 
                                 <!-- Cost Quantity -->
                                 <log-column [width]="'90'" *ngIf="DataContext.IsCostQuantityColumnVisible">
