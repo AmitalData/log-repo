@@ -32,6 +32,7 @@ export class CreateEditWorkflowComponent extends BaseComponent implements OnInit
     public BusyIndicatorWidth: number = 200;
     public WorkFlowPMService: WorkFlowPMService = new WorkFlowPMService();
     public CurrentSession = SessionLocator.SelectedSession;
+    public RecordTriggered: string = "RecordTriggered";
 
     constructor() {
         super();
@@ -57,6 +58,7 @@ export class CreateEditWorkflowComponent extends BaseComponent implements OnInit
             this.EntityPM.StatusCode = "DRFT";
             this.EntityPM.RetriesNumber = this.MaxRetriesNumber;
             this.EntityPM.RetriesDelay = this.DefaultRetriesDelay.join(this.RetriesDelaySplitter);
+            this.EntityPM.WorkFlowTriggerTypeCode = this.RecordTriggered
         } else {
             this.EntityPM = this.Workflow;
         }
@@ -95,6 +97,13 @@ export class CreateEditWorkflowComponent extends BaseComponent implements OnInit
         if (this.EntityPM.RetriesDelay != retriesDelay) {
             this.EntityPM.RetriesDelay = retriesDelay;
             this.validateRetriesDelay();
+        }
+    }
+
+    get WorkFlowTriggerTypeCode() { return this.EntityPM.WorkFlowTriggerTypeCode }
+    set WorkFlowTriggerTypeCode(trigger: string) {
+        if (this.EntityPM.WorkFlowTriggerTypeCode != trigger) {
+            this.EntityPM.WorkFlowTriggerTypeCode = trigger;
         }
     }
 

@@ -63,7 +63,7 @@ Then("the house should connect successfully", () => {
 
 //#region Add Containers/ packages
 Given("the user navigate to the packages workspace", () => {
-    cy.get(ShipmentSelectors.HouseHyperLink).eq(0).click({ force: true })
+    cy.get(ShipmentSelectors.HouseHyperLink).contains((ShipmentContext.HouseNumber).replace(/^0+/, '')).click({ force: true })
 });
 
 Given("the following details", (dataTable) => {

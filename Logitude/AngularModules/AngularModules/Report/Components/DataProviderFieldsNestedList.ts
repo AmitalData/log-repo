@@ -9,6 +9,7 @@ export class DataProviderFieldsNestedList {
     @Input() field: DataProviderField;
     @Input() margin: any;
     @Input() isDestinationFields: boolean = false;
+    @Input() IsFromReport: boolean = false;
     @Output() selectChangeEvent: EventEmitter<DataProviderField> = new EventEmitter<DataProviderField>();
 
     NestedSelectChange(field: DataProviderField) {
@@ -26,7 +27,7 @@ export class DataProviderFieldsNestedList {
     SetSelected(field: DataProviderField) {
        // if (this.field.Fields != null && this.field.Fields.length > 0) return;
         this.selectChangeEvent.emit(this.field);
-        field.ClassName = "SelectedListBoxItem";
+        if (!this.IsFromReport) field.ClassName = "SelectedListBoxItem";
     }
 
     OnShowHideColumnsClick(){

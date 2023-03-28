@@ -34,5 +34,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 		//[Association("CounterCounterDefinition", "CounterId", "Id", IsForeignKey = true)]
 		[ForeignKey("CounterId")]
 		public virtual Counter Counter { get; set; }
+		public bool IsCustomized { get; set; }
 	}
 }

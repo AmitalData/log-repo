@@ -900,6 +900,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "DE2,Document Execution WR Version 2", 
                 Description = "Document Execution WR Version 2", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "ICC", 
+                Name = "AR Invoice Customized Counter", 
+                SearchFields = "ICC,AR Invoice Customized Counter", 
+                Description = "AR Invoice Customized Counter", 
+			});
 			
             return all;
        }

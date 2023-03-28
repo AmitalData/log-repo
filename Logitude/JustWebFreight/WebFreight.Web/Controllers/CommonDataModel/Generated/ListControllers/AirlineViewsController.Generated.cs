@@ -39,6 +39,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
+using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -65,20 +66,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				AirlineRepository  airlineRepository = new AirlineRepository(MyContext);
-				AirlineList entityList = null;
-				Airline entityPoco = airlineRepository.GetSingleAirline(id , authToken.Tenant);
-                
-                if (entityPoco != null)
-				{
-									List<Airline> singleEntityList = new List<Airline>();
-					singleEntityList.Add(entityPoco);
-
-					AirlineQuery airlineQuery = new AirlineQuery(airlineRepository);
-					IQueryable<Airline> iQueryable = singleEntityList.AsQueryable();
-					IQueryable<AirlineList> iQueryableEntityList = airlineQuery.GetIQueryableEntityList(iQueryable);
-				    entityList = iQueryableEntityList.FirstOrDefault();
-
-			    }
+				
+				AirlineQuery  airlineQuery = new AirlineQuery(airlineRepository);
+				IQueryable<Airline> airlines = airlineRepository.GetAirlines(authToken.Tenant).Where(a=>a.Id == id);
+				AirlineList entityList = airlineQuery.GetIQueryableEntityList(airlines).FirstOrDefault();
+				CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+				customFieldResolver.SetCustomFieldsValues("Airline",  authToken.Tenant, new List<AirlineList> { entityList }.Cast<object>().ToList());
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 				               
@@ -111,6 +104,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				entityLists = entityLists.OrderBy(d => d.Id);
 				List<AirlineList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                customFieldResolver.SetCustomFieldsValues("Airline", authToken.Tenant, listResult.Cast<object>().ToList());
 										
 				return Request.CreateResponse(HttpStatusCode.OK, listResult);
             }
@@ -336,6 +331,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 				}
 			   List<AirlineList> listResult = entityLists.ToList();
+               CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+               customFieldResolver.SetCustomFieldsValues("Airline", authToken.Tenant, listResult.Cast<object>().ToList());
 
                response.Result = listResult;
 			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);

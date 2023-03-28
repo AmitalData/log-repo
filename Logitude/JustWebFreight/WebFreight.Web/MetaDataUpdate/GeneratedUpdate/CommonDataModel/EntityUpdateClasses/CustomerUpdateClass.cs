@@ -86,7 +86,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
    public class CustomerUpdateClass
    {  		
 
-		public const string HashString = "c94889ab3ef6f5aa31f3a1fc17283725";
+		public const string HashString = "4c7d681ceca9629c5a192767acca4897";
 
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
@@ -104,7 +104,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasCustomFields =  true,
 			      				    AvailableInCustomization =  true,
 			      				    SupportSubEntity =  false,
-			      				    ApplyGenericCustomFields =  false,
+			      				    ApplyGenericCustomFields =  true,
 			      				    AvailableInDocumentTypes =  true,
 			      				    HasHelper =  true,
 			      				    HasShortTitle =  true,
@@ -133,7 +133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    AllowCustomFields =  true,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
-			      				    MaxNumberOfCustomFields =  10,
+			      				    MaxNumberOfCustomFields =  50,
 			      				    NewWizardControlName =  "Simplog.FreightLib.NewCustomerCommand",
 			      				    LocalDefaultText =  "",
 			      				    DefaultText =  "Customer",

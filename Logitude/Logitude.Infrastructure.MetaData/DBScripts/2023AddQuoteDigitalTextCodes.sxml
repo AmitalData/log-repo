@@ -1,21 +1,35 @@
 ﻿<Script  DBType="Main" Module="Infrastructure">
-  <Sql Version="20">
+  <Sql Version="35">
     <![CDATA[
+	
+	 BEGIN
+	   IF NOT EXISTS (select * from DigitalPortalLanguages where [Code] = 'EN')
+	    BEGIN
+	  	 INSERT INTO DigitalPortalLanguages (Code, Name, SearchFields, DisplayText) values ('EN', 'English', 'EN,English,English', 'English')
+	    END
+	  END
+	  BEGIN
+	  	IF NOT EXISTS (select * from DigitalPortalLanguages where [Code] = 'ES')
+	  	 BEGIN
+	  	  INSERT INTO DigitalPortalLanguages (Code, Name, SearchFields, DisplayText)	values ('ES', 'Spanish', 'ES,Spanish,Espanol', 'Espanol')
+	  	 END
+	  END
+
+	  declare @languageCode as varchar(3)
+	  set @languageCode = (select Code from DigitalPortalLanguages where [Code] = 'EN')
+	  Update DigitalTextCodes Set LanguageCode = @languageCode where Id != '' and LanguageCode = NULL;
+
 	  declare @objectTableId as varchar(15)
 	  set @objectTableId = (select Id from ObjectTables where [Name] = 'Quote' and Tenant = 0)
 	  
 	  declare @newEntityId as varchar(15)
-	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
-	  
+	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'	  
 	  declare @customerProfileId as varchar(15)
 	  set @customerProfileId = (select Id from DigitalProfiles where [Name] = 'Customer' and Tenant = 0 )
 	  
 	  declare @agentProfileId as varchar(15)
 	  set @agentProfileId = (select Id from DigitalProfiles where [Name] = 'Agent' and Tenant = 0 )
-	  
-	  declare @commonProfileId as varchar(15)
-	  set @commonProfileId = (select Id from DigitalProfiles where [Name] = 'Common' and Tenant = 0 )
-	  	  
+	  	  	  
 	  delete from DigitalTextCodes where Tenant = 0 and ObjectTableId = @objectTableId
 	  
 	  declare @labels nvarchar(MAX) = 
@@ -135,6 +149,12 @@
 				"DisplayText": ""
 			},
 			{
+				"TextCode": "Quote.G.Status",
+				"DefaultText": "Status",
+				"FieldCode": "",
+				"DisplayText": ""
+			},
+			{
 				"TextCode": "Quote.G.OriginCountry",
 				"DefaultText": "Origin country",
 				"FieldCode": "",
@@ -193,6 +213,96 @@
 				"DefaultText": "Search by quote#",
 				"FieldCode": "",
 				"DisplayText": ""
+			},	
+			{
+				"TextCode": "Quote.G.LastModified",
+				"DefaultText": "Last modified",
+				"FieldCode": "",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.G.Print",
+				"DefaultText": "Print",
+				"FieldCode": "",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.G.Subject",
+				"DefaultText": "Subject",
+				"FieldCode": "",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.G.GeneralInformation",
+				"DefaultText": "General information",
+				"FieldCode": "Quote.GeneralInformation",
+				"DisplayText": ""
+			},	
+			{
+				"TextCode": "Quote.G.IncotermName",
+				"DefaultText": "Incoterm",
+				"FieldCode": "Quote.IncotermName",
+				"DisplayText": ""
+			},	
+			{
+				"TextCode": "Quote.G.RefrenceNumner",
+				"DefaultText": "Refrence #",
+				"FieldCode": "Quote.RefrenceNumner",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.G.Shipper",
+				"DefaultText": "Shipper",
+				"FieldCode": "Quote.ShipperName",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.G.Consignee",
+				"DefaultText": "Consignee",
+				"FieldCode": "Quote.ConsigneeName",
+				"DisplayText": ""
+			},	
+			{
+				"TextCode": "Quote.G.SalesmanName",
+				"DefaultText": "Salesman",
+				"FieldCode": "Quote.SalesmanName",
+				"DisplayText": ""
+			},	
+			{
+				"TextCode": "Quote.G.ValidFrom",
+				"DefaultText": "Valid from date",
+				"FieldCode": "Quote.ValidFrom",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.G.ValidTo",
+				"DefaultText": "Valid to date",
+				"FieldCode": "Quote.ValidTo",
+				"DisplayText": ""
+			},	
+			{
+				"TextCode": "Quote.G.MoveTypeCode",
+				"DefaultText": "Movement type",
+				"FieldCode": "Quote.MoveTypeCode",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.G.Notes",
+				"DefaultText": "Notes",
+				"FieldCode": "Quote.Notes",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.G.ValueOfTheQuote",
+				"DefaultText": "Value of the quote",
+				"FieldCode": "Quote.ValueOfGoods",
+				"DisplayText": ""
+			},	
+			{
+				"TextCode": "Quote.G.Subject",
+				"DefaultText": "Subject",
+				"FieldCode": "Quote.Subject",
+				"DisplayText": ""
 			},
 		]';
 	  
@@ -200,15 +310,9 @@
 	  values (@NewEntityId, 0, @objectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @customerProfileId, @labels, 'EN');
 	  
 	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
-	  
 	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate,  ProfileId, Labels, LanguageCode)
 	  values (@NewEntityId, 0, @objectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @agentProfileId, @labels, 'EN');
-	  
-	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
-	  
-	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate,  ProfileId, Labels, LanguageCode) 
-	  values (@NewEntityId, 0, @objectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @commonProfileId, @labels, 'EN');
-	  
+	  	  
     ]]>       
   </Sql>
 </Script>

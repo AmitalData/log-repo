@@ -1,4 +1,4 @@
-@release @stable @smoke @smoke3
+@release @stable @smoke @smoke3 @smoke2MasterDeploymnet
 Feature: Create Quote, Delete all charges and add charge
     The user creates a quote, delete all charges and add charge
 

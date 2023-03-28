@@ -298,8 +298,8 @@
     </Reference>
     <Reference Include="System.Data.Services.Client" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.0\lib\netstandard2.0\System.Memory.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Numerics" />
@@ -399,12 +399,9 @@
     <Compile Include="ContainerRequestWorkeRole.cs" />
     <Compile Include="ContainerStatusesReceiverWR.cs" />
     <Compile Include="ContainerUpdateWR.cs" />
-    <Compile Include="DeploymentPackageWorkerRole.cs" />
     <Compile Include="DigitalPortalQueryExportExecutionLogWR.cs" />
-    <Compile Include="DocumentExecutionV2WorkerRole.cs" />
     <Compile Include="EntityMapping\ShipmentOrderPmToAmMapping.cs" />
     <Compile Include="CargoTrackingImporterApprovalReceivedWR.cs" />
-    <Compile Include="ImporterPortsWorkerRole.cs" />
     <Compile Include="ImporterShipmentOrderDocumentsWorkerRole.cs" />
     <Compile Include="OpportunityStageChangingWorkerRole.cs" />
     <Compile Include="Services\AutomationDocumentOutBuildService.cs" />
@@ -415,7 +412,6 @@
     <Compile Include="Services\Logbox\APICredentialsAuthenticationService.cs" />
     <Compile Include="Services\Logbox\CustomerTenantAccessUpdaterService.cs" />
     <Compile Include="Services\Logbox\CustomerTenantAccessCreatorService.cs" />
-    <Compile Include="Services\Logbox\ImporterPortService.cs" />
     <Compile Include="Services\SAT\SATBaseService.cs" />
     <Compile Include="Services\SAT\SATData.cs" />
     <Compile Include="Services\SAT\SATUpdateEntityHelper.cs" />
@@ -886,7 +882,7 @@
       <Project>{8408e4e5-b4b7-46bc-8300-1ae163b36e2d}</Project>
       <Name>WebFreight.Web</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Logitude.Accounting.BL\Logitude.Accounting.BL.csproj">
+	<ProjectReference Include="..\Logitude.Accounting.BL\Logitude.Accounting.BL.csproj">
       <Project>{00e5d96d-dd45-47e8-aaa3-fdbfd8add61a}</Project>
       <Name>Logitude.Accounting.BL</Name>
     </ProjectReference>
@@ -894,7 +890,7 @@
       <Project>{a3799525-14a2-42fc-a2de-69ed3fd1c5d1}</Project>
       <Name>Logitude.Accounting.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Logitude.Accounting.Def\Logitude.Accounting.Def.csproj">
+	<ProjectReference Include="..\Logitude.Accounting.Def\Logitude.Accounting.Def.csproj">
       <Project>{91564685-7ee1-466d-afcd-183a1bf62259}</Project>
       <Name>Logitude.Accounting.Def</Name>
     </ProjectReference>

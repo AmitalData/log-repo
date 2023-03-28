@@ -42,10 +42,8 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                     if (item.FieldName == "InProgress")
                     {
-                        queryableData = queryableData.Where(a => a.IsCustomerArchived == false
-                                                                 && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) >= createdDateTime
-                                                                 && (((a.MainCarriageFinalDestinationATA == null || System.Data.Entity.DbFunctions.TruncateTime(a.MainCarriageFinalDestinationATA) >= arrivalDateTime) && a.DirectionId == "I")
-                                                                      || ((a.MainCarriageATD == null || System.Data.Entity.DbFunctions.TruncateTime(a.MainCarriageATD) >= departureDateTime) && a.DirectionId == "E")));
+                        queryableData = queryableData.Where(a => a.IsCustomerArchived == false);
+                        queryableData = ApplyArchivingFilter(queryableData, createdDateTime, arrivalDateTime, departureDateTime);
                     }                                            
 
                     if (item.FieldName == "InOrigin")
@@ -55,10 +53,8 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         var departedCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SDEP")?.StatusWeight;
                         queryableData = queryableData.Where(a => allowedStatusCode.Contains(a.StatusCode)
                                                                  && a.StatusWeight < departedCodeWeight
-                                                                 && a.IsCustomerArchived == false
-                                                                 && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) >= createdDateTime
-                                                                 && (((a.MainCarriageFinalDestinationATA == null || System.Data.Entity.DbFunctions.TruncateTime(a.MainCarriageFinalDestinationATA) >= arrivalDateTime) && a.DirectionId == "I")
-                                                                      || ((a.MainCarriageATD == null || System.Data.Entity.DbFunctions.TruncateTime(a.MainCarriageATD) >= departureDateTime) && a.DirectionId == "E")));
+                                                                 && a.IsCustomerArchived == false);
+                        queryableData = ApplyArchivingFilter(queryableData, createdDateTime, arrivalDateTime, departureDateTime);
                     }
 
                     if (item.FieldName == "InTransit")
@@ -71,10 +67,8 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         queryableData = queryableData.Where(a => allowedStatusCode.Contains(a.StatusCode) 
                                                                  && a.StatusWeight >= departedCodeWeight
                                                                  && a.StatusWeight < arrivedAtDestinationCodeWeight
-                                                                 && a.IsCustomerArchived == false
-                                                                 && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) >= createdDateTime
-                                                                 && (((a.MainCarriageFinalDestinationATA == null || System.Data.Entity.DbFunctions.TruncateTime(a.MainCarriageFinalDestinationATA) >= arrivalDateTime) && a.DirectionId == "I")
-                                                                      || ((a.MainCarriageATD == null || System.Data.Entity.DbFunctions.TruncateTime(a.MainCarriageATD) >= departureDateTime) && a.DirectionId == "E")));
+                                                                 && a.IsCustomerArchived == false);
+                        queryableData = ApplyArchivingFilter(queryableData, createdDateTime, arrivalDateTime, departureDateTime);
                     }
 
                     if (item.FieldName == "AtDestination")
@@ -84,10 +78,8 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         var arrivedAtDestinationCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SARR")?.StatusWeight;
                         queryableData = queryableData.Where(a => allowedStatusCode.Contains(a.StatusCode) 
                                                                  && a.StatusWeight >= arrivedAtDestinationCodeWeight
-                                                                 && a.IsCustomerArchived == false
-                                                                 && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) >= createdDateTime
-                                                                 && (((a.MainCarriageFinalDestinationATA == null || System.Data.Entity.DbFunctions.TruncateTime(a.MainCarriageFinalDestinationATA) >= arrivalDateTime) && a.DirectionId == "I")
-                                                                      || ((a.MainCarriageATD == null || System.Data.Entity.DbFunctions.TruncateTime(a.MainCarriageATD) >= departureDateTime) && a.DirectionId == "E")));
+                                                                 && a.IsCustomerArchived == false);
+                        queryableData = ApplyArchivingFilter(queryableData, createdDateTime, arrivalDateTime, departureDateTime);
                     }
 
                     if (item.FieldName == "DigitalPortalSearchFields")
@@ -262,6 +254,13 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                 return queryableData;
             }
+        }
+
+        public static IQueryable<DigitalShipmentsDataView> ApplyArchivingFilter(IQueryable<DigitalShipmentsDataView> shipmentDataViews, DateTime createdDateTime, DateTime arrivalDateTime, DateTime departureDateTime)
+        {
+            return shipmentDataViews.Where(a => !(System.Data.Entity.DbFunctions.TruncateTime(a.CreateDateTime) <= createdDateTime
+                                                  || ((a.MainCarriageFinalDestinationATA.HasValue && System.Data.Entity.DbFunctions.TruncateTime(a.MainCarriageFinalDestinationATA) <= arrivalDateTime) && (a.DirectionId == "I" || a.DirectionId == "R" || a.DirectionId == "D"))
+                                                  || ((a.MainCarriageATD.HasValue && System.Data.Entity.DbFunctions.TruncateTime(a.MainCarriageATD) <= departureDateTime) && a.DirectionId == "E")));
         }
 
         public static IQueryable<DigitalShipmentsDataView> ApplyShipperConsigneeFilter(QueryFilterItem item, IQueryable<DigitalShipmentsDataView> queryableData)

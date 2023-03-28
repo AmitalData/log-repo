@@ -94,6 +94,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentOnCarriageFrom = container.ShipmentOnCarriageFromPort != null ? container.ShipmentOnCarriageFromPort.CombinedCode : "",
                     ShipmentOnCarriageTo = container.ShipmentOnCarriageToPort != null ? container.ShipmentOnCarriageToPort.CombinedCode : "",
                     ShipmentDeliveryFrom = container.ShipmentDeliveryFrom,
+                    ShipmentLastLegATA = container.ShipmentLastLegATA,
+                    ShipmentLastLegETA = container.ShipmentLastLegETA,
                     ShipmentDeliveryTo = container.ShipmentDeliveryTo,
                     PreCarriageLocation = container.PreCarriageLocation,
                     PreCarriageETD = container.PreCarriageETD,
@@ -443,6 +445,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         ShipmentOnCarriageToId = container.ShipmentOnCarriageToId,
                         ShipmentDeliveryFrom = container.ShipmentDeliveryFrom,
                         ShipmentDeliveryTo = container.ShipmentDeliveryTo,
+                        ShipmentLastLegATA = container.ShipmentLastLegATA,
+                        ShipmentLastLegETA = container.ShipmentLastLegETA,
                         ShipmentPreCarriageFrom = container.ShipmentPreCarriageFromPort != null ? container.ShipmentPreCarriageFromPort.CombinedCode : "",
                         ShipmentPreCarriageTo = container.ShipmentPreCarriageToPort != null ? container.ShipmentPreCarriageToPort.CombinedCode : "",
                         ShipmentMainCarriageFrom = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CombinedCode : "",
@@ -712,6 +716,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    ShipmentOnCarriageToId = container.ShipmentOnCarriageToId,
                                                    ShipmentDeliveryFrom = container.ShipmentDeliveryFrom,
                                                    ShipmentDeliveryTo = container.ShipmentDeliveryTo,
+                                                   ShipmentLastLegATA = container.ShipmentLastLegATA,
+                                                   ShipmentLastLegETA = container.ShipmentLastLegETA,
                                                    ShipmentPreCarriageFrom = container.ShipmentPreCarriageFromPort != null ? container.ShipmentPreCarriageFromPort.CombinedCode : "",
                                                    ShipmentPreCarriageTo = container.ShipmentPreCarriageToPort != null ? container.ShipmentPreCarriageToPort.CombinedCode : "",
                                                    ShipmentMainCarriageFrom = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CombinedCode : "",
@@ -1024,6 +1030,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentOnCarriageToId = container.ShipmentOnCarriageToId,
                     ShipmentDeliveryFrom = container.ShipmentDeliveryFrom,
                     ShipmentDeliveryTo = container.ShipmentDeliveryTo,
+                    ShipmentLastLegATA = container.ShipmentLastLegATA,
+                    ShipmentLastLegETA = container.ShipmentLastLegETA,
                     ShipmentPreCarriageFrom = container.ShipmentPreCarriageFromPort != null ? container.ShipmentPreCarriageFromPort.CombinedCode : "",
                     ShipmentPreCarriageTo = container.ShipmentPreCarriageToPort != null ? container.ShipmentPreCarriageToPort.CombinedCode : "",
                     ShipmentMainCarriageFrom = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CombinedCode : "",
@@ -1298,6 +1306,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentOnCarriageToId = container.ShipmentOnCarriageToId,
                     ShipmentDeliveryFrom = container.ShipmentDeliveryFrom,
                     ShipmentDeliveryTo = container.ShipmentDeliveryTo,
+                    ShipmentLastLegATA = container.ShipmentLastLegATA,
+                    ShipmentLastLegETA = container.ShipmentLastLegETA,
                     ShipmentPreCarriageFrom = container.ShipmentPreCarriageFromPort != null ? container.ShipmentPreCarriageFromPort.CombinedCode : "",
                     ShipmentPreCarriageTo = container.ShipmentPreCarriageToPort != null ? container.ShipmentPreCarriageToPort.CombinedCode : "",
                     ShipmentMainCarriageFrom = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CombinedCode : "",
@@ -1575,6 +1585,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentOnCarriageToId = container.ShipmentOnCarriageToId,
                     ShipmentDeliveryFrom = container.ShipmentDeliveryFrom,
                     ShipmentDeliveryTo = container.ShipmentDeliveryTo,
+                    ShipmentLastLegATA = container.ShipmentLastLegATA,
+                    ShipmentLastLegETA = container.ShipmentLastLegETA,
                     ShipmentPreCarriageFrom = container.ShipmentPreCarriageFromPort != null ? container.ShipmentPreCarriageFromPort.CombinedCode : "",
                     ShipmentPreCarriageTo = container.ShipmentPreCarriageToPort != null ? container.ShipmentPreCarriageToPort.CombinedCode : "",
                     ShipmentMainCarriageFrom = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CombinedCode : "",
@@ -1847,6 +1859,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentOnCarriageToId = container.ShipmentOnCarriageToId,
                     ShipmentDeliveryFrom = container.ShipmentDeliveryFrom,
                     ShipmentDeliveryTo = container.ShipmentDeliveryTo,
+                    ShipmentLastLegATA = container.ShipmentLastLegATA,
+                    ShipmentLastLegETA = container.ShipmentLastLegETA,
                     ShipmentPreCarriageFrom = container.ShipmentPreCarriageFromPort != null ? container.ShipmentPreCarriageFromPort.CombinedCode : "",
                     ShipmentPreCarriageTo = container.ShipmentPreCarriageToPort != null ? container.ShipmentPreCarriageToPort.CombinedCode : "",
                     ShipmentMainCarriageFrom = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CombinedCode : "",
@@ -2153,6 +2167,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             containerPM.ShipmentOnCarriageTo = container.ShipmentOnCarriageToPort != null ? container.ShipmentOnCarriageToPort.CombinedCode : "";
             containerPM.ShipmentDeliveryFrom = container.ShipmentDeliveryFrom;
             containerPM.ShipmentDeliveryTo = container.ShipmentDeliveryTo;
+            containerPM.ShipmentLastLegATA = container.ShipmentLastLegATA;
+            containerPM.ShipmentLastLegETA = container.ShipmentLastLegETA;
             containerPM.PreCarriageLocation = container.PreCarriageLocation;
             containerPM.PreCarriageETD = container.PreCarriageETD;
             containerPM.PreCarriageATD = container.PreCarriageATD;

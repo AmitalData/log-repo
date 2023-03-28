@@ -68,20 +68,10 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				WarehouseRepository  warehouseRepository = new WarehouseRepository(MyContext);
-				WarehouseList entityList = null;
-				Warehouse entityPoco = warehouseRepository.GetSingleWarehouse(id , authToken.Tenant);
-                
-                if (entityPoco != null)
-				{
-									List<Warehouse> singleEntityList = new List<Warehouse>();
-					singleEntityList.Add(entityPoco);
-
-					WarehouseQuery warehouseQuery = new WarehouseQuery(warehouseRepository);
-					IQueryable<Warehouse> iQueryable = singleEntityList.AsQueryable();
-					IQueryable<WarehouseList> iQueryableEntityList = warehouseQuery.GetIQueryableEntityList(iQueryable);
-				    entityList = iQueryableEntityList.FirstOrDefault();
-
-			    }
+				
+				WarehouseQuery  warehouseQuery = new WarehouseQuery(warehouseRepository);
+				IQueryable<Warehouse> warehouses = warehouseRepository.GetWarehouses(authToken.Tenant).Where(a=>a.Id == id);
+				WarehouseList entityList = warehouseQuery.GetIQueryableEntityList(warehouses).FirstOrDefault();
 				if (entityList != null)
 				{
                 	CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);

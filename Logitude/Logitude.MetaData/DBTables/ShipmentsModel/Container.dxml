@@ -1816,6 +1816,18 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ShipmentLastLegETA"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShipmentLastLegATA"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

@@ -44,7 +44,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 return;//nothing to do !!!
             }
             var theReconcileAgainstLTranIdList = _JournalPM.JournalReconciles.Select(r => r.LedgerTransactionId).ToList();
-            List<LedgerTransactionPM> myOldTransToReconcile = GetLedgerTransactionToReconcile(theReconcileAgainstLTranIdList);
+            var myOldTransToReconcile = GetLedgerTransactionToReconcile(theReconcileAgainstLTranIdList);
 
 
             if (myOldTransToReconcile.Any(r => r.IsReconciled))
@@ -379,7 +379,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             var qs = new LedgerTransactionQueryService(_AccountingContext);
 
-            var myOldTransToReconcile = qs.GetLedgerTransactionPMsByIdList(theReconcileAgainstLTranIdList, _JournalPM.Tenant);
+            var myOldTransToReconcile = qs.GetLedgerTransactionDTOByIdList(theReconcileAgainstLTranIdList, _JournalPM.Tenant);
             return myOldTransToReconcile;
         }
 

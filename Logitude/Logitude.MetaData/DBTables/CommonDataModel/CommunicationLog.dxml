@@ -323,6 +323,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Channel"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DocumentsFilingId"
     ReferencedTable="DocumentsFilings"
@@ -382,7 +389,6 @@
     Columns="CreateDate" />
   <Index
     Columns="UniqueNumber,Tenant" />
-
-    <Index
+  <Index
     Columns="Tenant,CommunicationLogTypeCode,CreateDate" />
 </Table>

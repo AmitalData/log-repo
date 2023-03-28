@@ -370,13 +370,14 @@
                                                             <!-- ReportedinTaxReport -->
                                                             <td *ngIf="IsAccountingActivated" class="GridViewCell" [ngStyle]="{background: item.CellBackground}" style="width: 140px; min-width: 140px; max-width: 140px; text-align: center;">
                                                                 {{item.ReportedinTaxReport}}
-
                                                             </td>
                                                             <!-- GLAccountLocalName -->
+
                                                             <td *ngIf="IsAccountingActivated" class="GridViewCell" [ngStyle]="{background: item.CellBackground}" style="width: 200px; min-width: 200px; max-width: 200px; text-align: center;">
-                                                                {{item.GLAccountLocalName}}
+                                                                 {{item.GLAccountLocalName}}
                                                             </td>
                                                             <!-- GLAccountDisplayNumber -->
+
                                                             <td *ngIf="IsAccountingActivated" class="GridViewCell" [ngStyle]="{background: item.CellBackground}" style="width: 140px; min-width: 140px; max-width: 140px; text-align: center;">
                                                                 {{item.GLAccountDisplayNumber}}
                                                             </td>
@@ -498,7 +499,7 @@
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
-                                 
+
                                     <!-- Reference -->
                                     <log-column [header]="'ARInvoiceLine.CH.Reference' | TextCodeTranslationPipe" [width]="'100'" [Editable]="false" [Alignment]="'center'">
                                         <ng-template let-item>

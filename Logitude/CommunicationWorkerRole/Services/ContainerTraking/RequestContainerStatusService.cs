@@ -183,13 +183,17 @@ namespace CommunicationWorkerRole.Services.ContainerTraking
         {
             var previousReqesutQuery = ShipmentContext.ContainerTrackingRequests
                 .Where(e=>e.Status == ContainerTrackingRequestStatus.Active && e.CarrierCode == containerTrackingArgs.CarrierCode).AsQueryable();
+
             if (containerTrackingArgs.IsFromContainer)
                 previousReqesutQuery = previousReqesutQuery.Where(e => e.ContainerNumber == containerTrackingArgs.ContainerNumber || (e.Master == ShipmentMasterData.Master && e.ContainerNumber == null));
             else
                 previousReqesutQuery = previousReqesutQuery.Where(e => e.Master == ShipmentMasterData.Master);
 
             if(tenant != null)
-                previousReqesutQuery = previousReqesutQuery.Where(e => e.Tenant == ShipmentMasterData.Tenant);
+                previousReqesutQuery = previousReqesutQuery.Where(e => e.Tenant == tenant);
+
+            if (!string.IsNullOrEmpty(containerTrackingArgs.ShipmentId))
+                previousReqesutQuery = previousReqesutQuery.Where(e => e.ShipmentId == containerTrackingArgs.ShipmentId);
 
             var previousReqesut = previousReqesutQuery.FirstOrDefault();
 
@@ -207,7 +211,7 @@ namespace CommunicationWorkerRole.Services.ContainerTraking
             else
                 previousReqesutQuery = previousReqesutQuery.Where(e => e.ShipmentId == containerTrackingArgs.ShipmentId);
 
-            previousReqesutQuery = previousReqesutQuery.Where(e => e.Tenant == ShipmentMasterData.Tenant);
+            previousReqesutQuery = previousReqesutQuery.Where(e => e.Tenant == containerTrackingArgs.Tenant);
 
             var previousReqesut = previousReqesutQuery.FirstOrDefault();
 
