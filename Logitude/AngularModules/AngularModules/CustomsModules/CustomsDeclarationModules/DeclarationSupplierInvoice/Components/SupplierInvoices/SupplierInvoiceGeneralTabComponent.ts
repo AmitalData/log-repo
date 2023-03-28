@@ -1185,7 +1185,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             filters.PageIndex = 0;
             filters.PageSize = 50;
             filters.addAdditionalFilter("ENGLISHNAME", incotermCode, null, null, "Contains", false, false, false, "Text", false, false);
-            filters.addAdditionalFilter("LeadDocumentTypeName", 'הצהרת יצום', null, null, "Contains", false, false, false, "Text", false, false);
+            filters.addAdditionalFilter("LeadDocumentTypeID", '2', null, null, "Contains", false, false, false, "Text", false, false);
             const incotemrsFileValidationList: IncotemrsFileValidationList[] = await this.logtuideTableDataService.getDataFromService(this.incotemrsFileValidationListService.getByFilters(filters))
 
             this.isInsurance = incotemrsFileValidationList.some(x => x.IsInsurance)
