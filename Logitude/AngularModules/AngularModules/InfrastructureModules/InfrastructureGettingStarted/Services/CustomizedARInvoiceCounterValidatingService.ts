@@ -46,29 +46,10 @@ export class CustomizedARInvoiceCounterValidatingService {
         }
 
         if (this.counterDefinitions[0]?.UniquePerPrefix) {
-            counterDefinitions.forEach(item => {
-                if (item.CounterSize > 20) {
-                    errors.push("Maximum size allowed for counter is 20");
-                }
-                Validator.TryValidateObject(item, this.objectTableName, errors);
-
-                if (item.UniquePerPrefix && !AppTool.IsNullOrEmpty(item.Prefix) && !AppTool.IsNullOrEmpty(item.StartNumber)) {
-                    this.ValidateFormatLength(item, errors);
-                }
-            });
+            this.ValidateIfUniquePerPrefix(counterDefinitions, errors);
         }
         else {
-            let startNumberLength = (this.counterDefinitions[0]?.StartNumber) ? this.counterDefinitions[0].StartNumber.toString().length : 0;
-            if (startNumberLength + AppTool.GetCounterPrefixLength(this.counterDefinitions[0]?.Prefix) + AppTool.GetCounterPrefixLength(this.counterDefinitions[0]?.Suffix) > 20) {
-                errors.push("Maximum length allowed for [Prefix + StartNumber + Suffix] is 20");
-            }
-
-            counterDefinitions.forEach(item => {
-                if (item.CounterSize > 20) {
-                    errors.push("Maximum size allowed for counter is 20");
-                }
-                Validator.TryValidateObject(item, this.objectTableName, errors);
-            });
+            this.ValidateIfNotUniquePerPrefix(errors, counterDefinitions);
         }
 
         this.ValidationErrorsList = errors;
@@ -77,6 +58,33 @@ export class CustomizedARInvoiceCounterValidatingService {
     }
 
 
+
+    private ValidateIfNotUniquePerPrefix(errors: string[], counterDefinitions: CounterDefinitionPM[]) {
+        let startNumberLength = (this.counterDefinitions[0]?.StartNumber) ? this.counterDefinitions[0].StartNumber.toString().length : 0;
+        if (startNumberLength + AppTool.GetCounterPrefixLength(this.counterDefinitions[0]?.Prefix) + AppTool.GetCounterPrefixLength(this.counterDefinitions[0]?.Suffix) > 20) {
+            errors.push("Maximum length allowed for [Prefix + StartNumber + Suffix] is 20");
+        }
+
+        counterDefinitions.forEach(item => {
+            if (item.CounterSize > 20) {
+                errors.push("Maximum size allowed for counter is 20");
+            }
+            Validator.TryValidateObject(item, this.objectTableName, errors);
+        });
+    }
+
+    private ValidateIfUniquePerPrefix(counterDefinitions: CounterDefinitionPM[], errors: string[]) {
+        counterDefinitions.forEach(item => {
+            if (item.CounterSize > 20) {
+                errors.push("Maximum size allowed for counter is 20");
+            }
+            Validator.TryValidateObject(item, this.objectTableName, errors);
+
+            if (item.UniquePerPrefix && !AppTool.IsNullOrEmpty(item.Prefix) && !AppTool.IsNullOrEmpty(item.StartNumber)) {
+                this.ValidateFormatLength(item, errors);
+            }
+        });
+    }
 
     private ValidateFormatLength(item: CounterDefinitionPM, errors: string[]) {
         if ((item.StartNumber).toString().length + AppTool.GetCounterPrefixLength(item.Prefix) + AppTool.GetCounterPrefixLength(item.Suffix) <= 20) return;

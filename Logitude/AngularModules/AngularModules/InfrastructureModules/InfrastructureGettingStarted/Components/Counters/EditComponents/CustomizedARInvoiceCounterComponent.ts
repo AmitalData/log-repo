@@ -260,13 +260,12 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
 
                 this.CurrentSession.StopBusyIndicator();
 
-                if (myResponse.HasError) {
-                    this.CounterInvoiceComponent.ValidationErrorsList = myResponse.ErrorsArray;
-                }
-
-                else {
+                if (!myResponse.HasError) {
                     this.CurrentSession.CloseCurrentWindowEmit("Ok");
+                    return;
                 }
+                this.CounterInvoiceComponent.ValidationErrorsList = myResponse.ErrorsArray;
+
             });
         }
 

@@ -43,21 +43,30 @@ namespace Logitude.BL.InfrastructureModel.Services.CustomizedCounter
             if (existingCounterDefinitions == null || existingCounterDefinitions.Count == 0) return;
             foreach (CounterDefinitionPM counterDefinitionPM in counterDefinitions)
             {
-                if (existingCounterDefinitions.Where(def => def.Parameter2 == counterDefinitionPM.Parameter2).Any())
-                {
-                    counterDefinitionService.Update(counterDefinitionPM);
-                    counterDefinitionPM.IsAdded = true;
-                }
+                UpdateCustomizedCounterDefnition(existingCounterDefinitions, counterDefinitionPM);
             }
         }
+
+        private void UpdateCustomizedCounterDefnition(List<CounterDefinitionPM> existingCounterDefinitions, CounterDefinitionPM counterDefinitionPM)
+        {
+            if (!existingCounterDefinitions.Where(def => def.Parameter2 == counterDefinitionPM.Parameter2).Any()) return;
+            counterDefinitionService.Update(counterDefinitionPM);
+            counterDefinitionPM.IsAdded = true;
+        }
+
         private void AddCustomizedCounterDefinitions(List<CounterDefinitionPM> counterDefinitions)
         {
             List<CounterDefinitionPM> newCounterDefinitions = counterDefinitions.Where(def => !def.IsAdded).ToList();
             foreach (CounterDefinitionPM counterDefinitionPM in newCounterDefinitions)
             {
-                counterDefinitionService.Create(counterDefinitionPM);
-                counterDefinitionPM.IsAdded = true;
+                CreateCustomizedCounterDefinition(counterDefinitionPM);
             }
+        }
+
+        private void CreateCustomizedCounterDefinition(CounterDefinitionPM counterDefinitionPM)
+        {
+            counterDefinitionService.Create(counterDefinitionPM);
+            counterDefinitionPM.IsAdded = true;
         }
 
         public void RemoveCustomizedCounterDefinitionsByCounterId(string counterId)
