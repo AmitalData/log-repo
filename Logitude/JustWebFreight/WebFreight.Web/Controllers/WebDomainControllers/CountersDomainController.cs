@@ -2,6 +2,7 @@
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.Services.CustomizedCounter;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -148,6 +149,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     IWebFreightContext Context = WebFreightContext.GetContext(tenant);
                     TenantSettingService myTenantSettingService = new TenantSettingService(Context, tenant);
                     CounterDefinitionService myCounterDefinitionService = new CounterDefinitionService(Context, loggedUserEmail, tenant);
+                    CounterDefinitionQuery myCounterDefinitionQuery = new CounterDefinitionQuery(tenant);
+
+                    if (args.IsCustomized)
+                    {
+                        new CustomizedARInvoiceCounterService(tenant, myCounterDefinitionService).HandleCustomizedCounterDefinitions(args.CounterDefinitions, args.CounterId);
+                        args.CounterDefinitions = myCounterDefinitionQuery.GetCustomizedCounterDefinitionsByCounterId(args.CounterId, tenant).ToList();
+                        scope.Complete();
+                        return Request.CreateResponse(HttpStatusCode.OK, args);
+                    }
 
                     foreach (CounterDefinitionPM item in args.CounterDefinitions)
                     {
@@ -178,7 +188,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         }
                     }
 
-                    CounterDefinitionQuery myCounterDefinitionQuery = new CounterDefinitionQuery(tenant);
                     args.CounterDefinitions = myCounterDefinitionQuery.GetCounterDefinitionsByCounterId(args.CounterId, tenant).ToList();
 
                     scope.Complete();

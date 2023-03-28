@@ -145,11 +145,11 @@ export class CounterInvoiceComponent extends BaseComponent {
             }
         }
 
-        this.IsCustomizedCounter = this.APIHelper.CounterDefinitions.filter(c => c.IsCustomized == true)[0] != null;
-        this.APIHelper.CounterDefinitions = this.APIHelper.CounterDefinitions.filter(c => c.IsCustomized == false);
+        this.CheckIsCustomizedCounter();
         this.BuildItemsSource();
     }
     private activateConsolidationCreditNoteCounter: boolean = false;
+
     public get ActivateConsolidationCreditNoteCounter() {
         this.activateConsolidationCreditNoteCounter = this.ItemsSource.filter(i => i.EntityPM.Parameter1 == "COD").length > 0 &&
             !this.ItemsSource.filter(i => i.EntityPM.Parameter1 == "COD")[0].EntityPM.InActive;
@@ -302,6 +302,16 @@ export class CounterInvoiceComponent extends BaseComponent {
 
             this.CalculateSampleValue();
         }
+    }
+
+    private CheckIsCustomizedCounter() {
+        if (!this.HasCustomizedCounterFeature) return;
+        let customizedCounters = this.APIHelper.CounterDefinitions.filter(c => c.IsCustomized == true);
+        this.IsCustomizedCounter = customizedCounters != null && customizedCounters.length > 0;
+        if (this.IsCustomizedCounter) {
+            this.UniquePerPrefix = customizedCounters[0]?.UniquePerPrefix;
+        }        
+        this.APIHelper.CounterDefinitions = this.APIHelper.CounterDefinitions.filter(c => c.IsCustomized == false);
     }
 
     private isCustomizedCounter: boolean = false;

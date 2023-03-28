@@ -25,9 +25,9 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
     private counterId: string;
     private currentSession = SessionLocator.SelectedSession;
     private counterDefinitionPMExtendedService: CounterDefinitionPMExtendedService;
-    public NumberOfSerieses: number;
+    public NumberOfSeries: number;
     public CustomizedCounterItems: Array<CustomizedCounterItem> = [];
-    public InvoicesCodes: Array<string> = [];
+    public InvoicesTypes: Array<any> = [];
     public UniquePerPrefix: boolean = false;
     public ObjectTableName = "CounterDefinition";
     public APIHelper: CounterAPIHelper;
@@ -40,16 +40,38 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
         super();
         this.counterDefinitionPMExtendedService = new CounterDefinitionPMExtendedService();
         this.customizedARInvoiceCounterValidatingService = new CustomizedARInvoiceCounterValidatingService();
-        this.BuildInvoicesCodes();
+        this.BuildInvoicesTypes();
     }
-    private BuildInvoicesCodes() {
-        this.InvoicesCodes.push("AR Invoice");
-        this.InvoicesCodes.push("Credit Note");
-        this.InvoicesCodes.push("Customs");
-        this.InvoicesCodes.push("Credit Customs");
-        this.InvoicesCodes.push("Consolidation");
-        this.InvoicesCodes.push("Credit Consolidation");
-        this.InvoicesCodes.push("Manifest");
+    private BuildInvoicesTypes() {
+        this.InvoicesTypes.push({
+            Code: "IN",
+            DisplayText: "AR Invoice"
+        });
+        this.InvoicesTypes.push({
+            Code: "CD",
+            DisplayText: "Credit Note"
+        });
+        this.InvoicesTypes.push({
+            Code: "CA",
+            DisplayText: "Customs"
+        });
+        this.InvoicesTypes.push({
+            Code: "CC",
+            DisplayText: "Credit Customs"
+        });
+        this.InvoicesTypes.push({
+            Code: "CON",
+            DisplayText: "Consolidation"
+        });
+        this.InvoicesTypes.push({
+            Code: "COD",
+            DisplayText: "Credit Consolidation"
+        });
+        this.InvoicesTypes.push({
+            Code: "MN",
+            DisplayText: "Manifest"
+        });
+
     }
     Run() {
         this.currentSession.StartBusyIndicatorLoading();
@@ -61,39 +83,45 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
                 this.currentSession.StopBusyIndicator();
                 return;
             }
-            this.BuildCounterDefinitionsList(response.Result);
+
+
+            this.MainCounterDefinitionsPMs = response.Result;
+            this.BuildCustomizedCounterItems(response.Result);
+            if (this.MainCounterDefinitionsPMs && this.MainCounterDefinitionsPMs.length > 0 && !this.MainCounterDefinitionsPMs[0].UniquePerPrefix) this.StartNumber = this.MainCounterDefinitionsPMs[0].StartNumber;
             this.UpdateSeriesUniquePerPrefix();
             this.currentSession.StopBusyIndicator();
         });
     }
-    BuildCounterDefinitionsList(counterDefinitions: Array<CounterDefinitionPM>) {
+
+    BuildCustomizedCounterItems(counterDefinitions: Array<CounterDefinitionPM>) {
         if (counterDefinitions.length == 0) {
-            this.NumberOfSerieses = 1;
-            this.SetDefaultCounterDefinitionSeries();
+            this.NumberOfSeries = 1;
+            this.SetDefaultCustomizedCounterItem();
             return;
         }
-        this.NumberOfSerieses = counterDefinitions.length + 1;
         let myPipe = new GroupByPipe();
         let myGroup = myPipe.transform(counterDefinitions, "Parameter1");
-        myGroup.forEach((value, key) => {
-            this.PushCustomizedCounterItem(value[key].value, value[key].Key);
+        this.NumberOfSeries = myGroup.length + 1;
+        myGroup.forEach((value) => {
+            this.PushCustomizedCounterItem(value.value, value.key);
         });
 
+        //this.CustomizedCounterItems.sort(a => a.SeriesCode);
     }
     private PushCustomizedCounterItem(counterdefinitions: any[], key: any) {
-        let customizedCounterItem = new CustomizedCounterItem(key, this.counterId);
+        let customizedCounterItem = new CustomizedCounterItem(key, this.counterId, this);
         counterdefinitions.forEach(def => {
             customizedCounterItem.CounterDefinitions.push(def);
-            this.MainCounterDefinitionsPMs.push(def);
-            customizedCounterItem.MainCounterDefinitionsPMs = this.MainCounterDefinitionsPMs;
         });
+
         customizedCounterItem.MapItemFields();
         this.CustomizedCounterItems.push(customizedCounterItem);
     }
 
-    SetDefaultCounterDefinitionSeries() {
-        this.CustomizedCounterItems.push(new CustomizedCounterItem("Serie " + this.NumberOfSerieses, this.counterId));
-        this.NumberOfSerieses = this.NumberOfSerieses + 1;
+    SetDefaultCustomizedCounterItem() {
+        this.CustomizedCounterItems.push(new CustomizedCounterItem("Serie " + this.NumberOfSeries, this.counterId, this));
+        this.NumberOfSeries = this.NumberOfSeries + 1;
+        this.UpdateSeriesesStartNumber();
     }
     public EnabledInvoiceType(invoiceCode: string, serieCode: string): boolean {
 
@@ -117,7 +145,13 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
     UpdateSeriesUniquePerPrefix() {
         this.CustomizedCounterItems.forEach(item => {
             item.UniquePerPrefix = this.UniquePerPrefix;
+            if (this.UniquePerPrefix) return;
+            //item.Prefix = this.CustomizedCounterItems[0].CounterDefinitions[0]?.Prefix;
+            item.StartNumber = this.CustomizedCounterItems[0].CounterDefinitions[0]?.StartNumber;
         });
+        if (!this.UniquePerPrefix) {
+            this.StartNumber = this.CustomizedCounterItems[0].CounterDefinitions[0]?.StartNumber;
+        }
     }
 
     private startNumber: number;
@@ -127,27 +161,53 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
     public set StartNumber(value: number) {
         if (this.startNumber == value) return;
         this.startNumber = value;
-        this.UpdateSeriesesStartNumber(value);
+        this.UpdateSeriesesStartNumber();
     }
-    UpdateSeriesesStartNumber(value: number) {
+    UpdateSeriesesStartNumber() {
+        if (this.UniquePerPrefix) return;
         this.CustomizedCounterItems.forEach(item => {
-            item.StartNumber = value;
+            item.StartNumber = this.StartNumber;
         });
     }
     AddCustomizedCounterItem() {
-        let customizedCounterItem = new CustomizedCounterItem("Serie " + this.NumberOfSerieses, this.counterId);
+        let customizedCounterItem = new CustomizedCounterItem("Serie " + this.NumberOfSeries, this.counterId, this);
         customizedCounterItem.StartNumber = this.UniquePerPrefix ? null : this.StartNumber;
         customizedCounterItem.UniquePerPrefix = this.UniquePerPrefix;
         this.CustomizedCounterItems.push(customizedCounterItem);
-        this.NumberOfSerieses = this.NumberOfSerieses + 1;
+        this.NumberOfSeries = this.NumberOfSeries + 1;
     }
 
-
+    DeleteCustomizedCounterItem(customizedCounterItem: CustomizedCounterItem) {
+        if (!customizedCounterItem) return;
+        this.CustomizedCounterItems = this.CustomizedCounterItems.filter(item => item.SeriesCode != customizedCounterItem.SeriesCode);
+        this.RefreshCustomizedCounterItems();
+        this.UpdateSeriesUniquePerPrefix();
+        this.UpdateSeriesesStartNumber();
+    }
+ 
+    RefreshCustomizedCounterItems() {
+        this.NumberOfSeries = 1;
+        if (!this.CustomizedCounterItems || this.CustomizedCounterItems.length == 0) {
+            this.SetDefaultCustomizedCounterItem();
+            return;
+        }
+        this.CustomizedCounterItems.forEach(item => {
+            item.SeriesCode = "Serie " + this.NumberOfSeries;
+            this.UpdateCounterDefinitionsPartameter1(item.SeriesCode, item.CounterDefinitions);
+            this.NumberOfSeries = this.NumberOfSeries + 1;
+        })
+    }
+    UpdateCounterDefinitionsPartameter1(seriesCode: string, counterDefinitions: CounterDefinitionPM[]) {
+        if (AppTool.IsNullOrEmpty(seriesCode) || !counterDefinitions || counterDefinitions.length == 0) return;
+        counterDefinitions.forEach(def => {
+            def.Parameter1 = seriesCode;
+        });
+    }
 
 
     OkButtonClicked() {
         this.BuildAPIHelperCounterDefinitions();
-        this.CounterInvoiceComponent.ValidationErrorsList = this.ValidateCounterDefinitions();
+        this.ValidateCounterDefinitions();
     }
     BuildAPIHelperCounterDefinitions() {
         this.APIHelper = new CounterAPIHelper();
@@ -167,8 +227,8 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
     }
 
     private ValidateCounterDefinitions() {
-        let validationErrorsList = this.customizedARInvoiceCounterValidatingService.Validate(this.APIHelper.CounterDefinitions);
-        if (validationErrorsList && validationErrorsList.length == 0) {
+        this.CounterInvoiceComponent.ValidationErrorsList = this.customizedARInvoiceCounterValidatingService.Validate(this.APIHelper.CounterDefinitions);
+        if (this.CounterInvoiceComponent.ValidationErrorsList && this.CounterInvoiceComponent.ValidationErrorsList.length == 0) {
 
             this.CurrentSession.StartBusyIndicatorSaving();
             var myService = new CountersDomainService();
@@ -177,7 +237,7 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
                 this.CurrentSession.StopBusyIndicator();
 
                 if (myResponse.HasError) {
-                    validationErrorsList = myResponse.ErrorsArray;
+                    this.CounterInvoiceComponent.ValidationErrorsList = myResponse.ErrorsArray;
                 }
 
                 else {
@@ -186,7 +246,6 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
             });
         }
 
-        return validationErrorsList;
     }
 }
 
@@ -197,10 +256,13 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
 
 export class CustomizedCounterItem extends BaseComponent {
 
-    constructor(seriesCode: string, counterId: string) {
+
+    public MainComponent: CustomizedARInvoiceCounterComponent;
+    constructor(seriesCode: string, counterId: string, mainComponent: CustomizedARInvoiceCounterComponent ) {
         super();
         this.SeriesCode = seriesCode;
         this.CounterId = counterId;
+        this.MainComponent = mainComponent;
         this.CounterDefinitions = [];
     }
 
@@ -216,12 +278,11 @@ export class CustomizedCounterItem extends BaseComponent {
         this.setFormat();
     }
 
-    public IsDirty: boolean = false;
+    public IsDeleted: boolean = false;
     public SeriesCode: string;
     public CounterId: string;
     public DataContext = this;
     public ObjectTableName = "CounterDefinition";
-    public MainCounterDefinitionsPMs: CounterDefinitionPM[] = [];
 
     private prefix: string;
     public get Prefix() {
@@ -229,7 +290,6 @@ export class CustomizedCounterItem extends BaseComponent {
     }
     public set Prefix(value: string) {
         if (this.prefix == value) return;
-        this.IsDirty = true;
         this.prefix = value;
         this.CounterDefinitions.forEach(counterDefinitionPM => {
             counterDefinitionPM.Prefix = this.prefix;
@@ -243,7 +303,6 @@ export class CustomizedCounterItem extends BaseComponent {
     }
     public set Suffix(value: string) {
         if (this.suffix == value) return;
-        this.IsDirty = true;
         this.suffix = value;
         this.CounterDefinitions.forEach(counterDefinitionPM => {
             counterDefinitionPM.Suffix = this.suffix;
@@ -257,7 +316,6 @@ export class CustomizedCounterItem extends BaseComponent {
     }
     public set CounterSize(value: number) {
         if (this.counterSize == value) return;
-        this.IsDirty = true;
         this.counterSize = value;
         this.CounterDefinitions.forEach(counterDefinitionPM => {
             counterDefinitionPM.CounterSize = this.counterSize;
@@ -271,7 +329,6 @@ export class CustomizedCounterItem extends BaseComponent {
     }
     public set StartNumber(value: number) {
         if (this.startNumber == value) return;
-        this.IsDirty = true;
         this.startNumber = value;
         this.CounterDefinitions.forEach(counterDefinitionPM => {
             counterDefinitionPM.StartNumber = this.startNumber;
@@ -288,7 +345,6 @@ export class CustomizedCounterItem extends BaseComponent {
     public get UniquePerPrefix() { return this.uniquePerPrefix; }
     public set UniquePerPrefix(value: boolean) {
         if (this.uniquePerPrefix == value) return;
-        this.IsDirty = true;
         this.uniquePerPrefix = value;
         this.CounterDefinitions.forEach(counterDefinitionPM => {
             counterDefinitionPM.UniquePerPrefix = this.uniquePerPrefix;
@@ -298,7 +354,6 @@ export class CustomizedCounterItem extends BaseComponent {
     public CounterDefinitions: Array<CounterDefinitionPM> = [];
 
     public AddRemoveCounterDefinition(invoiceCode: string, checked: boolean) {
-        this.IsDirty = true;
         if (checked) {
             this.AddCounterDefinition(invoiceCode);
             return;
@@ -308,24 +363,17 @@ export class CustomizedCounterItem extends BaseComponent {
     
     private AddCounterDefinition(invoiceCode: string) {
         if (AppTool.IsNullOrEmpty(invoiceCode)) return;
-        let counterDefinitionPM = this.CounterDefinitions.filter(c => c.Parameter2 == invoiceCode && !c.InActive)[0];
+        let counterDefinitionPM = this.CounterDefinitions.filter(c => c.Parameter2 == invoiceCode)[0];
         if (counterDefinitionPM != null) return;
         counterDefinitionPM = this.GetInstanceOfCounterDefinitionPM(invoiceCode);
-        this.UpdateData(counterDefinitionPM, false);
+        this.UpdateCounterDefinitionPM(counterDefinitionPM);
         this.CounterDefinitions.push(counterDefinitionPM);
     }
-    UpdateData(counterDefinitionPM: CounterDefinitionPM, isDelete: boolean) {
-        if (isDelete) {
-            counterDefinitionPM.InActive = true;
-        }
-        else   {
-            let item = this.MainCounterDefinitionsPMs.filter(d => d.Parameter2 == counterDefinitionPM.Parameter2)[0];
-            if (item) counterDefinitionPM.Id = item.Id;
-            this.MainCounterDefinitionsPMs = this.MainCounterDefinitionsPMs.filter(d => d.Parameter2 != item.Parameter2);
-            this.MainCounterDefinitionsPMs.push(counterDefinitionPM);
-        }
-       
+    UpdateCounterDefinitionPM(counterDefinitionPM: CounterDefinitionPM) {
+        let item = this.MainComponent.MainCounterDefinitionsPMs.filter(d => d.Parameter2 == counterDefinitionPM.Parameter2)[0];
+        if (item) counterDefinitionPM.Id = item.Id;
     }
+    
     GetInstanceOfCounterDefinitionPM(invoiceCode: string): CounterDefinitionPM {
         let counterDefinitionPM = new CounterDefinitionPM();
         counterDefinitionPM.Tenant = SessionLocator.Tenant;
@@ -347,8 +395,7 @@ export class CustomizedCounterItem extends BaseComponent {
 
     private RemoveCounterDefinition(invoiceCode: string) {
         if (AppTool.IsNullOrEmpty(invoiceCode)) return;
-        let counterDefinitionPM = this.CounterDefinitions.filter(c => c.Parameter2 == invoiceCode && !c.InActive)[0];
-        this.UpdateData(counterDefinitionPM, true);
+        this.CounterDefinitions = this.CounterDefinitions.filter(c => c.Parameter2 != invoiceCode && !c.InActive);
     }
 
     public IsInvoiceChecked(invoiceCode: string): boolean {

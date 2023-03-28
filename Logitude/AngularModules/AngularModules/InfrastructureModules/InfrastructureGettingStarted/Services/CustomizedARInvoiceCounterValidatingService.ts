@@ -14,11 +14,12 @@ export class CustomizedARInvoiceCounterValidatingService {
     Validate(counterDefinitions: CounterDefinitionPM[]) {
 
         this.ValidationErrorsList = [];
-        if (counterDefinitions == null || counterDefinitions.length == 0) {
-            this.ValidationErrorsList.push("All invoice types should have a definition");//check with razan
+        this.counterDefinitions = counterDefinitions.filter(def => !def.InActive);
+
+        if (this.counterDefinitions == null || this.counterDefinitions.length < 7) {
+            this.ValidationErrorsList.push("Please assign a definition for each invoice type");
             return this.ValidationErrorsList;
         }
-        this.counterDefinitions = counterDefinitions;
 
         let isValidGreaterStartNumber = this.ValidateGreaterStartNumber();
 
@@ -96,7 +97,8 @@ export class CustomizedARInvoiceCounterValidatingService {
     private ValidateUniquePerPrefix() {
         let myPipe = new GroupByPipe();
         let groupedByParameter1Count = myPipe.transform(this.counterDefinitions, "Parameter1").length;
-        let groupbyPrefixCount: number = myPipe.transform(this.counterDefinitions, "Prefix").length;
+        let counterdefinitionsWithoutNullPrefix = this.counterDefinitions.filter(def => !AppTool.IsNullOrEmpty(def.Prefix));
+        let groupbyPrefixCount: number = myPipe.transform(counterdefinitionsWithoutNullPrefix, "Prefix").length;
         if (groupedByParameter1Count != groupbyPrefixCount) {
             return false;
         }
