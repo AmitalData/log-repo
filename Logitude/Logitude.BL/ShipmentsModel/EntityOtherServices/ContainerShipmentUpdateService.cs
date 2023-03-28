@@ -30,7 +30,8 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
         private PortQuery portQuery;
         private ContainerTrackingHelper containerTrackingHelper;
         private Tenant myTenant;
-        public List<dynamic> allShipmentTrasshipmentLegs;  
+        public List<dynamic> allShipmentTrasshipmentLegs;
+        private List<TransshipmentData> transshipmentData;
         private bool isUpdatingShipmentDateFields = false;
         public ContainerShipmentUpdateService(ContainerPM container, Container containerPoco, IShipmentsContext context)
         {
@@ -456,8 +457,140 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
 
         private void MapTransshipmentLegDates()
         {
+            FillTransshipmentDataList();
             FillLegsMilestoneData();
             FillShipmentDates();
+        }
+        private void FillTransshipmentDataList()
+        {
+            this.transshipmentData = new List<TransshipmentData>();
+
+            TransshipmentData vesselDeparted = new TransshipmentData("VesselDeparted");
+            TransshipmentData vesselArrived = new TransshipmentData("VesselArrived");
+            TransshipmentData loadedTransshipment = new TransshipmentData("LoadedTransshipment");
+            TransshipmentData dischargedTransshipment = new TransshipmentData("DischargedTransshipment");
+
+            if (!string.IsNullOrEmpty(containerPM.Transshipment1LocationPortId))
+            {
+                vesselDeparted.TransshipmentUpdatedFields.Add(new TransshipmentUpdatedFields()
+                {
+                    Location = containerPM.Transshipment1Location,
+                    Vessel = containerPM.Leg1VesselId,
+                    Voyage = containerPM.Leg1Voyage,
+                    EstimatedDate = containerPM.EstimatedTrans1VesselDeparture,
+                    ActualDate = containerPM.ActualTrans1VesselDeparture
+                });
+
+                vesselArrived.TransshipmentUpdatedFields.Add(new TransshipmentUpdatedFields()
+                {
+                    Location = containerPM.Transshipment1Location,
+                    Vessel = containerPM.Leg1VesselId,
+                    Voyage = containerPM.Leg1Voyage,
+                    EstimatedDate = containerPM.EstimatedTrans1VesselArrival,
+                    ActualDate = containerPM.ActualTransshipment1VesselArrival
+                });
+
+                loadedTransshipment.TransshipmentUpdatedFields.Add(new TransshipmentUpdatedFields()
+                {
+                    Location = containerPM.Transshipment1Location,
+                    Vessel = containerPM.Leg1VesselId,
+                    Voyage = containerPM.Leg1Voyage,
+                    EstimatedDate = containerPM.EstimatedTransshipment1Loaded,
+                    ActualDate = containerPM.ActualTransshipment1Loaded
+                });
+
+                dischargedTransshipment.TransshipmentUpdatedFields.Add(new TransshipmentUpdatedFields()
+                {
+                    Location = containerPM.Transshipment1Location,
+                    Vessel = containerPM.Leg1VesselId,
+                    Voyage = containerPM.Leg1Voyage,
+                    EstimatedDate = containerPM.EstimatedTransshipment1Discharge,
+                    ActualDate = containerPM.ActualTransshipment1Discharge
+                });
+            }
+
+            if (!string.IsNullOrEmpty(containerPM.Transshipment2LocationPortId))
+            {
+                vesselDeparted.TransshipmentUpdatedFields.Add(new TransshipmentUpdatedFields()
+                {
+                    Location = containerPM.Transshipment2Location,
+                    Vessel = containerPM.Leg2VesselId,
+                    Voyage = containerPM.Leg2Voyage,
+                    EstimatedDate = containerPM.EstimatedTrans2VesselDeparture,
+                    ActualDate = containerPM.ActualTrans2VesselDeparture
+                });
+
+                vesselArrived.TransshipmentUpdatedFields.Add(new TransshipmentUpdatedFields()
+                {
+                    Location = containerPM.Transshipment2Location,
+                    Vessel = containerPM.Leg2VesselId,
+                    Voyage = containerPM.Leg2Voyage,
+                    EstimatedDate = containerPM.EstimatedTrans2VesselArrival,
+                    ActualDate = containerPM.ActualTransshipment2VesselArrival
+                });
+
+                loadedTransshipment.TransshipmentUpdatedFields.Add(new TransshipmentUpdatedFields()
+                {
+                    Location = containerPM.Transshipment2Location,
+                    Vessel = containerPM.Leg2VesselId,
+                    Voyage = containerPM.Leg2Voyage,
+                    EstimatedDate = containerPM.EstimatedTransshipment2Loaded,
+                    ActualDate = containerPM.ActualTransshipment2Loaded
+                });
+
+                dischargedTransshipment.TransshipmentUpdatedFields.Add(new TransshipmentUpdatedFields()
+                {
+                    Location = containerPM.Transshipment2Location,
+                    Vessel = containerPM.Leg2VesselId,
+                    Voyage = containerPM.Leg2Voyage,
+                    EstimatedDate = containerPM.EstimatedTransshipment2Discharge,
+                    ActualDate = containerPM.ActualTransshipment2Discharge
+                });
+            }
+
+            if (!string.IsNullOrEmpty(containerPM.Transshipment3LocationPortId))
+            {
+                vesselDeparted.TransshipmentUpdatedFields.Add(new TransshipmentUpdatedFields()
+                {
+                    Location = containerPM.Transshipment2Location,
+                    Vessel = containerPM.Leg2VesselId,
+                    Voyage = containerPM.Leg2Voyage,
+                    EstimatedDate = containerPM.EstimatedTrans2VesselDeparture,
+                    ActualDate = containerPM.ActualTrans2VesselDeparture
+                });
+
+                vesselArrived.TransshipmentUpdatedFields.Add(new TransshipmentUpdatedFields()
+                {
+                    Location = containerPM.Transshipment3Location,
+                    Vessel = containerPM.Leg3VesselId,
+                    Voyage = containerPM.Leg3Voyage,
+                    EstimatedDate = containerPM.EstimatedTrans3VesselArrival,
+                    ActualDate = containerPM.ActualTransshipment3VesselArrival
+                });
+
+                loadedTransshipment.TransshipmentUpdatedFields.Add(new TransshipmentUpdatedFields()
+                {
+                    Location = containerPM.Transshipment3Location,
+                    Vessel = containerPM.Leg3VesselId,
+                    Voyage = containerPM.Leg3Voyage,
+                    EstimatedDate = containerPM.EstimatedTransshipment3Loaded,
+                    ActualDate = containerPM.ActualTransshipment3Loaded
+                });
+
+                dischargedTransshipment.TransshipmentUpdatedFields.Add(new TransshipmentUpdatedFields()
+                {
+                    Location = containerPM.Transshipment3Location,
+                    Vessel = containerPM.Leg3VesselId,
+                    Voyage = containerPM.Leg3Voyage,
+                    EstimatedDate = containerPM.EstimatedTransshipment3Discharge,
+                    ActualDate = containerPM.ActualTransshipment3Discharge
+                });
+            }
+
+            transshipmentData.Add(vesselDeparted);
+            transshipmentData.Add(vesselArrived);
+            transshipmentData.Add(loadedTransshipment);
+            transshipmentData.Add(dischargedTransshipment);
         }
         private void FillLegsMilestoneData()
         {
@@ -468,47 +601,59 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
         }
         private void FillShipmentVesselDepartedMilestoneFields()
         {
-            //foreach (MilestoneDataUpdatedFields updatedFields in containerUpdatedFields.VesselDeparted.MilestoneFields)
-            //{
-            //    if (string.IsNullOrEmpty(updatedFields.Location)) continue;
-            //    string portId = this.GetPortId(updatedFields.Location);
+            TransshipmentData vesselDeparted = transshipmentData.Where(d => d.Key == "VesselDeparted").FirstOrDefault();
+            if (vesselDeparted == null) return;
 
-            //    var leg = new { PortId = portId, MilestoneData = updatedFields, Direction = GetPortLegDirection(containerUpdatedFields.VesselDeparted.Key), Key = containerUpdatedFields.VesselDeparted.Key };
-            //    allShipmentTrasshipmentLegs.Add(leg);
-            //}
+            foreach (TransshipmentUpdatedFields updatedFields in vesselDeparted.TransshipmentUpdatedFields)
+            {
+                if (string.IsNullOrEmpty(updatedFields.Location)) continue;
+                string portId = containerTrackingHelper.GetPortId(updatedFields.Location);
+
+                var leg = new { PortId = portId, MilestoneData = updatedFields, Direction = GetPortLegDirection(vesselDeparted.Key), Key = vesselDeparted.Key };
+                allShipmentTrasshipmentLegs.Add(leg);
+            }
         }
         private void FillShipmentVesselArrivedMilestoneFields()
         {
-            //foreach (MilestoneDataUpdatedFields updatedFields in containerUpdatedFields.VesselArrived.MilestoneFields)
-            //{
-            //    if (string.IsNullOrEmpty(updatedFields.Location)) continue;
-            //    string portId = this.GetPortId(updatedFields.Location);
+            TransshipmentData vesselArrived = transshipmentData.Where(d => d.Key == "VesselArrived").FirstOrDefault();
+            if (vesselArrived == null) return; 
 
-            //    var leg = new { PortId = portId, MilestoneData = updatedFields, Direction = GetPortLegDirection(containerUpdatedFields.VesselArrived.Key), Key = containerUpdatedFields.VesselArrived.Key };
-            //    allShipmentTrasshipmentLegs.Add(leg);
-            //}
+            foreach (TransshipmentUpdatedFields updatedFields in vesselArrived.TransshipmentUpdatedFields)
+            {
+                if (string.IsNullOrEmpty(updatedFields.Location)) continue;
+                string portId = containerTrackingHelper.GetPortId(updatedFields.Location);
+
+                var leg = new { PortId = portId, MilestoneData = updatedFields, Direction = GetPortLegDirection(vesselArrived.Key), Key = vesselArrived.Key };
+                allShipmentTrasshipmentLegs.Add(leg);
+            }
         }
         private void FillShipmentLoadedTransshipmentMilestoneFields()
         {
-            //foreach (MilestoneDataUpdatedFields updatedFields in containerUpdatedFields.LoadedTransshipment.MilestoneFields)
-            //{
-            //    if (string.IsNullOrEmpty(updatedFields.Location)) continue;
-            //    string portId = this.GetPortId(updatedFields.Location);
+            TransshipmentData loadedTransshipment = transshipmentData.Where(d => d.Key == "LoadedTransshipment").FirstOrDefault();
+            if (loadedTransshipment == null) return;
 
-            //    var leg = new { PortId = portId, MilestoneData = updatedFields, Direction = GetPortLegDirection(containerUpdatedFields.LoadedTransshipment.Key), Key = containerUpdatedFields.LoadedTransshipment.Key };
-            //    allShipmentTrasshipmentLegs.Add(leg);
-            //}
+            foreach (TransshipmentUpdatedFields updatedFields in loadedTransshipment.TransshipmentUpdatedFields)
+            {
+                if (string.IsNullOrEmpty(updatedFields.Location)) continue;
+                string portId = containerTrackingHelper.GetPortId(updatedFields.Location);
+
+                var leg = new { PortId = portId, MilestoneData = updatedFields, Direction = GetPortLegDirection(loadedTransshipment.Key), Key = loadedTransshipment.Key };
+                allShipmentTrasshipmentLegs.Add(leg);
+            }
         }
         private void FillShipmentDischargedTransshipmentMilestoneFields()
         {
-            //foreach (MilestoneDataUpdatedFields updatedFields in containerUpdatedFields.DischargedTransshipment.MilestoneFields)
-            //{
-            //    if (string.IsNullOrEmpty(updatedFields.Location)) continue;
-            //    string portId = this.GetPortId(updatedFields.Location);
+            TransshipmentData dischargedTransshipment = transshipmentData.Where(d => d.Key == "DischargedTransshipment").FirstOrDefault();
+            if (dischargedTransshipment == null) return;
 
-            //    var leg = new { PortId = portId, MilestoneData = updatedFields, Direction = GetPortLegDirection(containerUpdatedFields.DischargedTransshipment.Key), Key = containerUpdatedFields.DischargedTransshipment.Key };
-            //    allShipmentTrasshipmentLegs.Add(leg);
-            //}
+            foreach (TransshipmentUpdatedFields updatedFields in dischargedTransshipment.TransshipmentUpdatedFields)
+            {
+                if (string.IsNullOrEmpty(updatedFields.Location)) continue;
+                string portId = containerTrackingHelper.GetPortId(updatedFields.Location);
+
+                var leg = new { PortId = portId, MilestoneData = updatedFields, Direction = GetPortLegDirection(dischargedTransshipment.Key), Key = dischargedTransshipment.Key };
+                allShipmentTrasshipmentLegs.Add(leg);
+            }
         }
         private void FillShipmentDates()
         {
@@ -524,7 +669,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                   if (leg.Direction == "To") dateType = "ETA";
 
                   if (transshipmentLeg.Index != 0)
-                      //containerTrackingHelper.AddTranshipmentDiscrepancyContainer(transshipmentLeg.Index, leg.Direction, containerPM, shipmentPM, portId, updatedFields, dateType);
+                      containerTrackingHelper.AddTranshipmentDiscrepancyContainer(transshipmentLeg.Index, leg.Direction, containerPM, shipmentPM, portId, updatedFields, dateType);
 
                   if (!containerTrackingHelper.IsSameLocationUsingId((string)GetPropValue(shipmentPM, transshipmentLeg.PortField), portId)) return;
 

@@ -1,16 +1,9 @@
-﻿using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.DataContracts;
-using Logitude.BL.ShipmentsModel.EntityPMs;
+﻿using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
-using Logitude.Server.Tools.Counters;
-using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logitude.BL.Helpers
 {
@@ -82,6 +75,18 @@ namespace Logitude.BL.Helpers
         private Port GetPortById(string portId, int tenant)
         {
             return portRepository.GetSinglePort(portId, tenant);
+        }
+
+        public string GetPortId(string portCode)
+        {
+            Port port = portRepository.GetOceanPortByCombinedCode(portCode, tenant);
+            string portId = null;
+            if (port != null)
+            {
+                portId = port.Id;
+            }
+
+            return portId;
         }
 
         public void AddContainerDiscrepancy(string code, ContainerPM containerPM, ShipmentPM shipmentPM)
@@ -237,28 +242,28 @@ namespace Logitude.BL.Helpers
                 AddContainerDiscrepancyToService(containerPM, shipmentPM, discrepancyReason);
             }
         }
-        //public void AddTranshipmentDiscrepancyContainer(int? transshipmentLegIndex, string direction, ContainerPM containerPM,
-        //                                               ShipmentPM shipmentPM, string portId, MilestoneDataUpdatedFields updatedFields, string time)
-        //{
-        //    var transshipmentPortId = GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + direction + "PortId");
-        //    if (transshipmentPortId != null && !IsSameLocationUsingId((string)transshipmentPortId, portId))
-        //    {
-        //        AddNotSametransshipmentLegDiscrepancy(containerPM, shipmentPM, direction, transshipmentLegIndex, portId, time);
-        //        var actualTime = string.Concat("A", time.Substring(1));
-        //        AddNotSametransshipmentLegDiscrepancy(containerPM, shipmentPM, direction, transshipmentLegIndex, portId, actualTime);
-        //    }
-        //    else
-        //    {
-        //        var transshipmentATAInShipment = GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + time);
+        public void AddTranshipmentDiscrepancyContainer(int? transshipmentLegIndex, string direction, ContainerPM containerPM,
+                                                       ShipmentPM shipmentPM, string portId, TransshipmentUpdatedFields updatedFields, string time)
+        {
+            var transshipmentPortId = GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + direction + "PortId");
+            if (transshipmentPortId != null && !IsSameLocationUsingId((string)transshipmentPortId, portId))
+            {
+                AddNotSametransshipmentLegDiscrepancy(containerPM, shipmentPM, direction, transshipmentLegIndex, portId, time);
+                var actualTime = string.Concat("A", time.Substring(1));
+                AddNotSametransshipmentLegDiscrepancy(containerPM, shipmentPM, direction, transshipmentLegIndex, portId, actualTime);
+            }
+            else
+            {
+                var transshipmentATAInShipment = GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + time);
 
-        //        if (updatedFields.ActualDate != null && transshipmentATAInShipment != null && (DateTime)transshipmentATAInShipment != updatedFields.ActualDate)
-        //        {
-        //            var actualTime = string.Concat("A", time.Substring(1));
-        //            var discrepancyReason = $@"Transshipment{transshipmentLegIndex} {actualTime} already has a value of {transshipmentATAInShipment} - did not update new container value {updatedFields.ActualDate}.";
-        //            AddContainerDiscrepancyToService(containerPM, shipmentPM, discrepancyReason);
-        //        }
-        //    }
-        //}
+                if (updatedFields.ActualDate != null && transshipmentATAInShipment != null && (DateTime)transshipmentATAInShipment != updatedFields.ActualDate)
+                {
+                    var actualTime = string.Concat("A", time.Substring(1));
+                    var discrepancyReason = $@"Transshipment{transshipmentLegIndex} {actualTime} already has a value of {transshipmentATAInShipment} - did not update new container value {updatedFields.ActualDate}.";
+                    AddContainerDiscrepancyToService(containerPM, shipmentPM, discrepancyReason);
+                }
+            }
+        }
         private void AddNotSameLocationDiscrepancy(dynamic discrepancyParams, string time)
         {
             var shipmentUnloCode = GetUnloCodeFromPortId(discrepancyParams.shipmentLocation);
@@ -324,5 +329,23 @@ namespace Logitude.BL.Helpers
             if (discrepancy != null) return true;
             return false;
         }
+    }
+    public class TransshipmentData
+    {
+        public string Key;
+        public List<TransshipmentUpdatedFields> TransshipmentUpdatedFields;
+        public TransshipmentData(string key)
+        {
+            this.Key = key;
+            this.TransshipmentUpdatedFields = new List<TransshipmentUpdatedFields>();
+        }
+    }
+    public class TransshipmentUpdatedFields
+    {
+        public string Location;
+        public string Vessel;
+        public string Voyage;
+        public DateTime? EstimatedDate;
+        public DateTime? ActualDate;
     }
 }
