@@ -155,7 +155,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     bool hasCustomizedARInvoiceCounterFeature = FeatureToggleHelper.HasFeatureToggle("ICC", tenant);
                     if (args.IsCustomized && hasCustomizedARInvoiceCounterFeature)
                     {
-                        myCustomizedARInvoiceCounterService.UpsertCustomizedCounterDefinitions(args.CounterDefinitions, args.CounterId);
+                        myCustomizedARInvoiceCounterService.Run(args.CounterDefinitions, args.CounterId);
                         args.CounterDefinitions = myCounterDefinitionQuery.GetCustomizedCounterDefinitionsByCounterId(args.CounterId, tenant).ToList();
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, args);

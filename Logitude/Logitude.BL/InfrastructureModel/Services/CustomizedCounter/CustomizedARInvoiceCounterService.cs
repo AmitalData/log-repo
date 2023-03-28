@@ -31,7 +31,7 @@ namespace Logitude.BL.InfrastructureModel.Services.CustomizedCounter
 
         }
 
-        public void UpsertCustomizedCounterDefinitions(List<CounterDefinitionPM> counterDefinitions, string counterId)
+        public void Run(List<CounterDefinitionPM> counterDefinitions, string counterId)
         {
             if (counterDefinitions == null || counterDefinitions.Count == 0) return;
             UpdateCustomizedCounterDefinitions(counterDefinitions, counterId);
