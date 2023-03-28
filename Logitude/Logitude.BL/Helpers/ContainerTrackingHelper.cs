@@ -73,100 +73,12 @@ namespace Logitude.BL.Helpers
             Port port = portRepository.GetOceanPortByCombinedCode(portCode, tenant);
             if (port == null && tenant != 0)
             {
-                port = this.CopyPortCopyToCurrentTenant(portCode);
+                port = CopyPortHelper.CopyPortToCurrentTenant(portCode, tenant);
             }
 
             return port;
         }
-        private Port CopyPortCopyToCurrentTenant(string portCode)
-        {
-            Port newPort = null;
-            Port portZero = portRepository.GetOceanPortByCombinedCode(portCode, 0);
-            if (portZero != null)
-            {
-                newPort = this.GetPortCopyToCurrentTenant(portZero, tenant);
-            }
-
-            return newPort;
-        }
-        private Port GetPortCopyToCurrentTenant(Port ZeroPort, int tenant)
-        {
-            ICommonDataContext objectContext = this.portRepository.context;
-
-            CountryRepository countryRepository = new CountryRepository(objectContext);
-            GlobalZoneRepository globalZoneRepository = new GlobalZoneRepository(objectContext);
-
-            Country country = countryRepository.GetSingleCountryByCode(ZeroPort.Country.Code, tenant, false);
-
-            if (country == null)
-            {
-                GlobalZone globalzone = globalZoneRepository.GetSingleGlobalZoneByCode(ZeroPort.Country.GlobalZone.Code, tenant);
-
-                if (globalzone == null)
-                {
-                    GlobalZone oldZone = globalZoneRepository.GetSingleGlobalZone(ZeroPort.Country.GlobalZoneId, 0);
-                    globalzone = new GlobalZone()
-                    {
-                        Id = IdCounter.GetNumber("GlobalZone", tenant).ToString(),
-                        Code = oldZone.Code,
-                        EnglishName = oldZone.EnglishName,
-                        LocalName = oldZone.LocalName,
-                        Notes = oldZone.Notes,
-                        SearchFields = oldZone.SearchFields,
-                        Tenant = tenant,
-                    };
-
-                    globalZoneRepository.Add(globalzone);
-                    globalZoneRepository.SubmitChanges();
-                }
-
-                Country oldCountry = CountryRepository.GetSingleCountry(ZeroPort.CountryId, 0, false);
-                country = new Country()
-                {
-                    Id = IdCounter.GetNumber("Country", tenant).ToString(),
-                    Tenant = tenant,
-                    GlobalZoneId = oldCountry.GlobalZoneId,
-                    EC = oldCountry.EC,
-                    EnglishName = oldCountry.EnglishName,
-                    Code = oldCountry.Code,
-                    InActive = oldCountry.InActive,
-                    Notes = oldCountry.Notes,
-                    LocalName = oldCountry.LocalName,
-                    SearchFields = oldCountry.SearchFields,
-                };
-
-                countryRepository.Add(country);
-                countryRepository.SubmitChanges();
-            }
-
-            Port newPort = new Port()
-            {
-                Id = IdCounter.GetNumber("Port", tenant).ToString(),
-                Code = ZeroPort.Code,
-                CombinedCode = ZeroPort.CombinedCode,
-                EnglishName = ZeroPort.EnglishName,
-                LocalName = ZeroPort.LocalName,
-                Tenant = tenant,
-                AddedManually = false,
-                InActive = false,
-                CountryId = country.Id,
-                IsAir = ZeroPort.IsAir,
-                IsInland = ZeroPort.IsInland,
-                IsOcean = ZeroPort.IsOcean,
-                Latitude = ZeroPort.Latitude,
-                Longtitude = ZeroPort.Longtitude,
-                SearchFields = ZeroPort.SearchFields,
-                Notes = ZeroPort.Notes,
-                PortTimeZoneCode = ZeroPort.PortTimeZoneCode,
-            };
-
-            portRepository.Add(newPort);
-            portRepository.SubmitChanges();
-            RunStoredProcedureClass.UpdatePortSearcsFields(newPort.Id, newPort.Tenant);
-            TableLastUpdateClass.UpdateTableHistory(tenant, "Port");
-
-            return newPort;
-        }
+        
         private Port GetPortById(string portId, int tenant)
         {
             return portRepository.GetSinglePort(portId, tenant);
