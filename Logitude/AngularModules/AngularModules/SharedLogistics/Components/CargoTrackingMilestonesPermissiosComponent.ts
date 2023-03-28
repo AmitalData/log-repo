@@ -43,7 +43,7 @@ export class CargoTrackingMilestonesPermissiosComponent implements OnInit {
         this.cargoTrackingMilestoneExtendedService.getAll().subscribe((res: ServiceResponse) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
-                this.zeroTenantList = pmResponse.Result;
+                this.zeroTenantList = pmResponse?.Result?.filter(x=>x.Inactive==0);
                 this.cargoTrackingTenantMilestoneDefinitionExtendedService.getAll().subscribe((respo: ServiceResponse) => {
                     var cargoTenantMilestoneDefinitionPMResponse: ServiceResponse = respo;
                     if (!cargoTenantMilestoneDefinitionPMResponse.HasError) {
