@@ -298,7 +298,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     requestResult.OriginCountry = GetValueCodeType(governmentAgencyGoodsItem.Origin.CountryCode).ToString();
                                 }
 
-                                if (governmentAgencyGoodsItem != null && governmentAgencyGoodsItem.DMExtensions.GoodsItemAmount != null)
+                                if (governmentAgencyGoodsItem != null && governmentAgencyGoodsItem.DMExtensions != null &&  governmentAgencyGoodsItem.DMExtensions.GoodsItemAmount != null)
                                 {
                                    
                                
@@ -342,7 +342,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                                 //Vehicle
                                 requestResult.VehicleList = new List<Vehicle>();
-                                if (governmentAgencyGoodsItem.DMExtensions.Vehicle != null)
+                                if (governmentAgencyGoodsItem.DMExtensions!= null && governmentAgencyGoodsItem.DMExtensions.Vehicle != null)
 
                                 {
                                     foreach (var vehicleItem in governmentAgencyGoodsItem.DMExtensions.Vehicle)

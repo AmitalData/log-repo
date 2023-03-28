@@ -72,11 +72,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         public void InsertNewClientOnlyByCode(ClientPM entityPM, bool commit)
         {
-
+            LogMessagingUtil.Instance.AppendLine("InsertNewClientOnlyByCode");
             ClientPM newClientPM = new ClientPM();
             newClientPM.ChangeSetOp = ChangeSetOperation.Insert;
             newClientPM.Tenant = entityPM.Tenant;
-
+            LogMessagingUtil.Instance.AppendLine("InsertNewClientOnlyByCode ,entityPM.Code" + entityPM.Code);
             if (!string.IsNullOrWhiteSpace(entityPM.Code))
             {
                 newClientPM.Code = GetExternalID(entityPM.Code);
@@ -85,6 +85,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 newClientPM.Code = entityPM.PassportNumber;
             }
+            LogMessagingUtil.Instance.AppendLine("InsertNewClientOnlyByCode ,newClientPM.Code"+ newClientPM.Code);
             newClientPM.PassportNumber = entityPM.PassportNumber;
             newClientPM.PassportTypeCode = entityPM.PassportTypeCode;
             newClientPM.PassportCountryCode = entityPM.PassportCountryCode;
