@@ -176,6 +176,7 @@ namespace Unifreight.BL.EntityPMs
         public int? NOOFINVOICES { get; set; }
 
         public int? TOTALINVOICELINESNO { get; set; }
+        public int Tenant { get; set; }
 
     }
 }
