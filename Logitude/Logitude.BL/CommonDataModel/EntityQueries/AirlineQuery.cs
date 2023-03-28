@@ -153,7 +153,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             {
                 AirlinePM securedPm = new AirlinePM();
                 SecuredMapping.GetMappedPM(airline, securedPm, "Airline", tenant);
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<AirlinePM> { securedPm }.Cast<object>().ToList() }).Set();
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Airline", Tenant = tenant, Type = "PM", Entities = new List<AirlinePM> { securedPm }.Cast<object>().ToList() }).Set();
                 return securedPm;
             }
 
@@ -272,7 +272,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             {
                 AirlinePM securedPm = new AirlinePM();
                 SecuredMapping.GetMappedPM(airline, securedPm, "Airline", tenant);
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<AirlinePM> { securedPm }.Cast<object>().ToList() }).Set();
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Airline", Tenant = tenant, Type = "PM", Entities = new List<AirlinePM> { securedPm }.Cast<object>().ToList() }).Set();
                 return securedPm;
             }
             else
@@ -411,7 +411,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             AirlinePM securedPm = new AirlinePM();
             SecuredMapping.GetMappedPM(airline, securedPm, "Airline", tenant);
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<AirlinePM> { securedPm }.Cast<object>().ToList() }).Set();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Airline", Tenant = tenant, Type = "PM", Entities = new List<AirlinePM> { securedPm }.Cast<object>().ToList() }).Set();
 
             return securedPm;
         }

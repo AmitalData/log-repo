@@ -89,7 +89,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             SecuredMapping.GetMappedPM(Participant, securedPm, "Participant", tenant);
             if (securedPm != null && Participant != null)
             {
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<ParticipantPM> { securedPm }.Cast<object>().ToList() }).Set();
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Participant", Tenant = tenant, Type = "PM", Entities = new List<ParticipantPM> { securedPm }.Cast<object>().ToList() }).Set();
             }
             return securedPm;
         }

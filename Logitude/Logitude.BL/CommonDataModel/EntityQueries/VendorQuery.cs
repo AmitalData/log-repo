@@ -131,7 +131,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (securedPm != null && vendor != null)
             {
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<VendorPM> { securedPm }.Cast<object>().ToList() }).Set();
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Vendor", Tenant = tenant, Type = "PM", Entities = new List<VendorPM> { securedPm }.Cast<object>().ToList() }).Set();
             }
             return securedPm;
         }
@@ -225,7 +225,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (securedPm != null && vendor != null)
             {
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<VendorPM> { securedPm }.Cast<object>().ToList() }).Set();
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Vendor", Tenant = tenant, Type = "PM", Entities = new List<VendorPM> { securedPm }.Cast<object>().ToList() }).Set();
             }
 
             return securedPm;
@@ -320,7 +320,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (securedPm != null && vendor != null)
             {
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<VendorPM> { securedPm }.Cast<object>().ToList() }).Set();
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Vendor", Tenant = tenant, Type = "PM", Entities = new List<VendorPM> { securedPm }.Cast<object>().ToList() }).Set();
             }
             return securedPm;
         }
@@ -650,7 +650,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (securedPm != null && vendor != null)
             {
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<VendorPM> { securedPm }.Cast<object>().ToList() }).Set();
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Vendor", Tenant = tenant, Type = "PM", Entities = new List<VendorPM> { securedPm }.Cast<object>().ToList() }).Set();
             }
             return securedPm;
         }
