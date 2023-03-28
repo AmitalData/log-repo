@@ -372,9 +372,15 @@ export class DocumentObjectFieldsComponent implements OnInit {
             field.DivSelectBackgroud = "#ffffff";
         });
         selectedItem.DivSelectBackgroud = "#B6E0F5";
+        this.UnselectField(this.DataProviderFields);
     }
 
-
+    UnselectField(dataProviderFields: DataProviderField[]) {
+        dataProviderFields.forEach(field => {
+            field.ClassName = field == this.SelectedDataProviderField? "":"ListBoxItem";
+            if (field.Fields != null) this.UnselectField(field.Fields);
+        });
+    }
 
 
 
