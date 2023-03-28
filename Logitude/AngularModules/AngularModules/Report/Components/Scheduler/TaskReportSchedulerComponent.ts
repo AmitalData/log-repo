@@ -419,9 +419,19 @@ export class TaskReportSchedulerItemClass extends BaseComponent {
     set StartDateTime(newValue: Date) {
         if (this.EntityPM.StartDateTime != newValue) {
             this.EntityPM.StartDateTime = newValue;
-            this.newValueinDateFormat = new Date(newValue);
-            this.EntityPM.StartDateTimeUTC = new Date(this.newValueinDateFormat.getUTCFullYear(), this.newValueinDateFormat.getUTCMonth(), this.newValueinDateFormat.getUTCDate(), this.newValueinDateFormat.getUTCHours(), this.newValueinDateFormat.getUTCMinutes(), this.newValueinDateFormat.getUTCSeconds(), this.newValueinDateFormat.getUTCMilliseconds());
+            this.EntityPM.StartDateTimeUTC = this.GetUtcTenantDateValueFromDate(newValue);
         }
+    }
+
+    private GetUtcTenantDateValueFromDate(newValue: Date) {
+        let utcDateValue = new Date(newValue);
+        if (SessionLocator.TenantPM.TimeZoneOffset && SessionLocator.TenantPM.TimeZoneOffset != 0) {
+            utcDateValue.setHours(utcDateValue.getHours() - SessionLocator.TenantPM.TimeZoneOffset);
+        }
+        //if (SessionLocator.TenantPM.DayLightOffset && SessionLocator.TenantPM.DayLightOffset != 0) {
+        //    utcDateValue.setHours(utcDateValue.getHours() + SessionLocator.TenantPM.DayLightOffset);
+        //}
+        return utcDateValue;
     }
 
     get TriggerType() { return this.EntityPM.TriggerType; }

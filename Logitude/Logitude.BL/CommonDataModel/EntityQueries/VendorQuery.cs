@@ -14,6 +14,8 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.BL.CommonDataModel.ExternalService;
+using Logitude.Server.Tools.CustomFields;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -129,24 +131,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (securedPm != null && vendor != null)
             {
-                Vendor entityPoco = (from s in repository.context.Vendors where s.Id == securedPm.Id select s).FirstOrDefault();
-                MapCustomFields(securedPm, entityPoco);
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Vendor", Tenant = tenant, Type = "PM", Entities = new List<VendorPM> { securedPm }.Cast<object>().ToList() }).Set();
             }
             return securedPm;
-        }
-
-        private void MapCustomFields(VendorPM vendorPM, Vendor vendor)
-        {
-            vendorPM.Field1 = new CustomFieldClass("Field1", "Vendor", vendor.Field1);
-            vendorPM.Field2 = new CustomFieldClass("Field2", "Vendor", vendor.Field2);
-            vendorPM.Field3 = new CustomFieldClass("Field3", "Vendor", vendor.Field3);
-            vendorPM.Field4 = new CustomFieldClass("Field4", "Vendor", vendor.Field4);
-            vendorPM.Field5 = new CustomFieldClass("Field5", "Vendor", vendor.Field5);
-            vendorPM.Field6 = new CustomFieldClass("Field6", "Vendor", vendor.Field6);
-            vendorPM.Field7 = new CustomFieldClass("Field7", "Vendor", vendor.Field7);
-            vendorPM.Field8 = new CustomFieldClass("Field8", "Vendor", vendor.Field8);
-            vendorPM.Field9 = new CustomFieldClass("Field9", "Vendor", vendor.Field9);
-            vendorPM.Field10 = new CustomFieldClass("Field10", "Vendor", vendor.Field10);
         }
 
         public VendorPM GetSingleVendorPM(string id, int tenant)
@@ -238,8 +225,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (securedPm != null && vendor != null)
             {
-                Vendor entityPoco = (from s in repository.context.Vendors where s.Id == securedPm.Id select s).FirstOrDefault();
-                MapCustomFields(securedPm, entityPoco);
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Vendor", Tenant = tenant, Type = "PM", Entities = new List<VendorPM> { securedPm }.Cast<object>().ToList() }).Set();
             }
 
             return securedPm;
@@ -334,8 +320,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (securedPm != null && vendor != null)
             {
-                Vendor entityPoco = (from s in repository.context.Vendors where s.Id == securedPm.Id select s).FirstOrDefault();
-                MapCustomFields(securedPm, entityPoco);
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Vendor", Tenant = tenant, Type = "PM", Entities = new List<VendorPM> { securedPm }.Cast<object>().ToList() }).Set();
             }
             return securedPm;
         }
@@ -477,7 +462,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<VendorList> GetIQueryableEntityList(IQueryable<Vendor> iQueryable)
         {
+            string objcetTableId = new ObjectTableQuery(0).GetObjectTableIdByName("Card");
             IQueryable<VendorList> result = (from a in iQueryable.Include("Card")
+                                             join customFieldsMainObject in repository.context.CustomFieldsMainObjects.Where(d => d.ObjectTableId == objcetTableId) on a.Id equals customFieldsMainObject.EntityId into customFieldsMainObjectJoin
+                                             from customFieldsMainObject in customFieldsMainObjectJoin.DefaultIfEmpty()
                                              select new VendorList()
                                              {
                                                  Code = a.Card.Code,
@@ -515,16 +503,56 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  GLAccountNumber = a.Card.GLAccountDisplayNumber,
                                                  RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                                  SATReceptorName = a.Card.SATCustomerName,
-                                                 Field1 = a.Field1,
-                                                 Field2 = a.Field2,
-                                                 Field3 = a.Field3,
-                                                 Field4 = a.Field4,
-                                                 Field5 = a.Field5,
-                                                 Field6 = a.Field6,
-                                                 Field7 = a.Field7,
-                                                 Field8 = a.Field8,
-                                                 Field9 = a.Field9,
-                                                 Field10 = a.Field10,
+                                                 Field1 = customFieldsMainObject != null ? customFieldsMainObject.Field1 : null,
+                                                 Field2 = customFieldsMainObject != null ? customFieldsMainObject.Field2 : null,
+                                                 Field3 = customFieldsMainObject != null ? customFieldsMainObject.Field3 : null,
+                                                 Field4 = customFieldsMainObject != null ? customFieldsMainObject.Field4 : null,
+                                                 Field5 = customFieldsMainObject != null ? customFieldsMainObject.Field5 : null,
+                                                 Field6 = customFieldsMainObject != null ? customFieldsMainObject.Field6 : null,
+                                                 Field7 = customFieldsMainObject != null ? customFieldsMainObject.Field7 : null,
+                                                 Field8 = customFieldsMainObject != null ? customFieldsMainObject.Field8 : null,
+                                                 Field9 = customFieldsMainObject != null ? customFieldsMainObject.Field9 : null,
+                                                 Field10 = customFieldsMainObject != null ? customFieldsMainObject.Field10 : null,
+                                                 Field11 = customFieldsMainObject != null ? customFieldsMainObject.Field11 : null,
+                                                 Field12 = customFieldsMainObject != null ? customFieldsMainObject.Field12 : null,
+                                                 Field13 = customFieldsMainObject != null ? customFieldsMainObject.Field13 : null,
+                                                 Field14 = customFieldsMainObject != null ? customFieldsMainObject.Field14 : null,
+                                                 Field15 = customFieldsMainObject != null ? customFieldsMainObject.Field15 : null,
+                                                 Field16 = customFieldsMainObject != null ? customFieldsMainObject.Field16 : null,
+                                                 Field17 = customFieldsMainObject != null ? customFieldsMainObject.Field17 : null,
+                                                 Field18 = customFieldsMainObject != null ? customFieldsMainObject.Field18 : null,
+                                                 Field19 = customFieldsMainObject != null ? customFieldsMainObject.Field19 : null,
+                                                 Field20 = customFieldsMainObject != null ? customFieldsMainObject.Field20 : null,
+                                                 Field21 = customFieldsMainObject != null ? customFieldsMainObject.Field21 : null,
+                                                 Field22 = customFieldsMainObject != null ? customFieldsMainObject.Field22 : null,
+                                                 Field23 = customFieldsMainObject != null ? customFieldsMainObject.Field23 : null,
+                                                 Field24 = customFieldsMainObject != null ? customFieldsMainObject.Field24 : null,
+                                                 Field25 = customFieldsMainObject != null ? customFieldsMainObject.Field25 : null,
+                                                 Field26 = customFieldsMainObject != null ? customFieldsMainObject.Field26 : null,
+                                                 Field27 = customFieldsMainObject != null ? customFieldsMainObject.Field27 : null,
+                                                 Field28 = customFieldsMainObject != null ? customFieldsMainObject.Field28 : null,
+                                                 Field29 = customFieldsMainObject != null ? customFieldsMainObject.Field29 : null,
+                                                 Field30 = customFieldsMainObject != null ? customFieldsMainObject.Field30 : null,
+                                                 Field31 = customFieldsMainObject != null ? customFieldsMainObject.Field31 : null,
+                                                 Field32 = customFieldsMainObject != null ? customFieldsMainObject.Field32 : null,
+                                                 Field33 = customFieldsMainObject != null ? customFieldsMainObject.Field33 : null,
+                                                 Field34 = customFieldsMainObject != null ? customFieldsMainObject.Field34 : null,
+                                                 Field35 = customFieldsMainObject != null ? customFieldsMainObject.Field35 : null,
+                                                 Field36 = customFieldsMainObject != null ? customFieldsMainObject.Field36 : null,
+                                                 Field37 = customFieldsMainObject != null ? customFieldsMainObject.Field37 : null,
+                                                 Field38 = customFieldsMainObject != null ? customFieldsMainObject.Field38 : null,
+                                                 Field39 = customFieldsMainObject != null ? customFieldsMainObject.Field39 : null,
+                                                 Field40 = customFieldsMainObject != null ? customFieldsMainObject.Field40 : null,
+                                                 Field41 = customFieldsMainObject != null ? customFieldsMainObject.Field41 : null,
+                                                 Field42 = customFieldsMainObject != null ? customFieldsMainObject.Field42 : null,
+                                                 Field43 = customFieldsMainObject != null ? customFieldsMainObject.Field43 : null,
+                                                 Field44 = customFieldsMainObject != null ? customFieldsMainObject.Field44 : null,
+                                                 Field45 = customFieldsMainObject != null ? customFieldsMainObject.Field45 : null,
+                                                 Field46 = customFieldsMainObject != null ? customFieldsMainObject.Field46 : null,
+                                                 Field47 = customFieldsMainObject != null ? customFieldsMainObject.Field47 : null,
+                                                 Field48 = customFieldsMainObject != null ? customFieldsMainObject.Field48 : null,
+                                                 Field49 = customFieldsMainObject != null ? customFieldsMainObject.Field49 : null,
+                                                 Field50 = customFieldsMainObject != null ? customFieldsMainObject.Field50 : null,
                                              });
 
 
@@ -622,8 +650,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (securedPm != null && vendor != null)
             {
-                Vendor entityPoco = (from s in repository.context.Vendors where s.Id == securedPm.Id select s).FirstOrDefault();
-                MapCustomFields(securedPm, entityPoco);
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Vendor", Tenant = tenant, Type = "PM", Entities = new List<VendorPM> { securedPm }.Cast<object>().ToList() }).Set();
             }
             return securedPm;
         }

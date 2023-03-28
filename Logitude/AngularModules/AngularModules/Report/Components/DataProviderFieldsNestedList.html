@@ -58,9 +58,9 @@
 
 
     <table *ngIf="HasFields && field.FieldsOpened">
-        <tr *ngFor="let item of field.Fields">
+        <tr *ngFor="let item of field.Fields" [style.background]="item.DivSelectBackgroud">
             <DataProviderFieldsNestedList [isDestinationFields]="isDestinationFields" *ngIf="ShowField(item)"
-                (selectChangeEvent)="NestedSelectChange($event)" [margin]="margin+20" [style.marginLeft.px]="margin"
+                (selectChangeEvent)="NestedSelectChange($event)" [margin]="margin+20" [style.marginLeft.px]="margin" [IsFromReport]="IsFromReport"
                 [field]="item">
             </DataProviderFieldsNestedList>
         </tr>

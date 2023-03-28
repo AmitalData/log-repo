@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ShippingAgentUpdateClass
    {  		
-		public const string HashString = "b39d0f501df63705e28e479bc5dbf174";
+		public const string HashString = "113797ce62dd9e743f1d2c20c9ab866b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -102,7 +102,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasCustomFields =  true,
 			      				    AvailableInCustomization =  true,
 			      				    SupportSubEntity =  false,
-			      				    ApplyGenericCustomFields =  false,
+			      				    ApplyGenericCustomFields =  true,
 			      				    AvailableInDocumentTypes =  true,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
@@ -127,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    AllowCustomFields =  true,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
-			      				    MaxNumberOfCustomFields =  10,
+			      				    MaxNumberOfCustomFields =  50,
 			      				    NewWizardControlName =  "Simplog.FreightLib.NewShippingAgentCommand",
 			      				    DefaultText =  "Shipping Agent",
 			      				    Code =  "SAGT",

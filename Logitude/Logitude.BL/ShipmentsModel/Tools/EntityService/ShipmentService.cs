@@ -1378,8 +1378,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 if (iConsoleStatus != null)
                 {
                     string statusName = null;
-                    string iHighestStatusId = EntityStatusHelper.GetHighestStatusId(entityPoco.StatusId, iConsoleStatus.StatusId, entityPoco.Tenant, ref statusName);
+                    string statusCode = null;
+                    string iHighestStatusId = EntityStatusHelper.GetHighestStatusId(entityPoco.StatusId, iConsoleStatus.StatusId, entityPoco.Tenant, ref statusName, ref statusCode);
                     entityPM.StatusName = statusName;
+                    entityPM.StatusCode = statusCode;
 
                     if (iHighestStatusId == entityPoco.StatusId)
                     {

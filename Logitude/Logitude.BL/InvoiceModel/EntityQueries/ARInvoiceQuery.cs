@@ -1644,9 +1644,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              DocumentTemplateId = entity.DocumentTemplateId,
                              TotalAmountNotForTaxReport =
                                  (entity.SubTotalInLocalCurrency ?? 0)
-                                 - (double)(entity.TotalAmountForTaxReport ?? 0),
-                             IsAutoCredited = (entity.CancelledByARInvoice != null && entity.StatusCode == "AR") ? true : false,
-
+                                 - (double)(entity.TotalAmountForTaxReport ?? 0)
                          };
 
             return result;
@@ -2168,7 +2166,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     var myTotalVATQuery = new ARInvoiceTotalVATQuery(myTotalVATRepository);
 
                     entityPM.InvoiceLines = arInvoiceLineQuery.GetInvoiceLinePMsByInvoiceId(entityId, tenant);
-                    entityPM.InvoiceLines = arInvoiceLineQuery.GetGLAccountLocalNameAndDisplayNumber(entityPM.InvoiceLines, entityId, tenant);
+                    if (IsAccountingActivated(tenant))
+                        entityPM.InvoiceLines = arInvoiceLineQuery.GetGLAccountLocalNameAndDisplayNumber(entityPM.InvoiceLines, entityId, tenant);
                     entityPM.InvoiceEntities = arInvoiceEntityQuery.GetInvoiceEntityPMsForInvoice(entityId, tenant);
                     entityPM.InvoicePayments = arInvoicePaymentQuery.GetARInvoicePaymentPMsForInvoice(entityId, tenant);
                     entityPM.TotalVATs = myTotalVATQuery.GetTotalVATs(entityId, tenant).ToList();

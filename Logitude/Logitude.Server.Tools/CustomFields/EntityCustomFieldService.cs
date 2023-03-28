@@ -21,6 +21,7 @@ namespace Logitude.Server.Tools.CustomFields
         private List<ObjectField> customObjectFields = null;
         private CustomFieldsMainObjectRepository customFieldsMainObjectRepository;
         private string objectTableName = string.Empty;
+        private string originalObjectTableName = string.Empty;
         private string type = string.Empty;
         private List<object> entities = null;
         private string keyName = "Id";
@@ -28,20 +29,46 @@ namespace Logitude.Server.Tools.CustomFields
 
         public EntityCustomFieldService(EntityCustomFieldServiceArgs entityCustomFieldServiceArgs)
         {
-            objectTableId = new ObjectTableRepository(entityCustomFieldServiceArgs.Tenant).GetObjectTableIdByName(entityCustomFieldServiceArgs.ObjectTableName, entityCustomFieldServiceArgs.Tenant);
+            originalObjectTableName = entityCustomFieldServiceArgs.ObjectTableName;
+            objectTableName = GetObjectTableName(entityCustomFieldServiceArgs.ObjectTableName);
+            objectTableId = new ObjectTableRepository(entityCustomFieldServiceArgs.Tenant).GetObjectTableIdByName(objectTableName, entityCustomFieldServiceArgs.Tenant);
             tenant = entityCustomFieldServiceArgs.Tenant;
-            objectTableName = entityCustomFieldServiceArgs.ObjectTableName;
             entities = entityCustomFieldServiceArgs.Entities;
             type = entityCustomFieldServiceArgs.Type;
             customFieldsMainObjectRepository = new CustomFieldsMainObjectRepository(tenant);
             customObjectFields = GetCustomObjectFields();
             customFieldsMainObjects = GetCustomFieldsMainObjects(entityCustomFieldServiceArgs.EntityId);
-            if(!string.IsNullOrEmpty(entityCustomFieldServiceArgs.KeyName))
+            if (!string.IsNullOrEmpty(entityCustomFieldServiceArgs.KeyName))
             {
                 keyName = entityCustomFieldServiceArgs.KeyName;
             }
         }
 
+        private static string GetObjectTableName(string objectTableName)
+        {
+            List<string> PartnersObjectTablesNames = GetPartnersObjectTablesNames();
+
+            return PartnersObjectTablesNames.Contains(objectTableName) ? "Card" : objectTableName;
+        }
+
+        private static List<string> GetPartnersObjectTablesNames()
+        {
+            return new List<string>()
+            {
+                "AccountingPartner",
+                "Agent",
+                "Airline",
+                "CustomAgent",
+                "CustomsShipper",
+                "Participant",
+                "ShippingAgent",
+                "ShippingLine",
+                "Trucker",
+                "Vendor",
+                "Warehouse",
+                "Customer",
+            };
+        }
 
         public void Update()
         {
@@ -84,7 +111,7 @@ namespace Logitude.Server.Tools.CustomFields
         private object GetCustomFieldValue(object entity, ObjectField objectField)
         {
             var propertyValue = GetPropertyValue(entity, objectField.FieldName);
-            return new CustomFieldClass(objectField.FieldName, objectTableName, propertyValue != null ? propertyValue.ToString() : "");
+            return new CustomFieldClass(objectField.FieldName, originalObjectTableName, propertyValue != null ? propertyValue.ToString() : "");
 
         }
 

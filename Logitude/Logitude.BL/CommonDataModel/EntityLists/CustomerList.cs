@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Logitude.BL.InfrastructureModel.EntityLists;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
 namespace Logitude.BL.CommonDataModel.EntityLists
 {
     [DataContract]
-    public class CustomerList
+    public class CustomerList : CustomFieldList
     {
         [Key]
         [DataMember]
@@ -144,36 +145,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         [DataMember]
         public string VatTypeId { get; set; }
-
-        [DataMember]
-        public string Field1 { get; set; }
-
-        [DataMember]
-        public string Field2 { get; set; }
-
-        [DataMember]
-        public string Field3 { get; set; }
-
-        [DataMember]
-        public string Field4 { get; set; }
-
-        [DataMember]
-        public string Field5 { get; set; }
-
-        [DataMember]
-        public string Field6 { get; set; }
-
-        [DataMember]
-        public string Field7 { get; set; }
-
-        [DataMember]
-        public string Field8 { get; set; }
-
-        [DataMember]
-        public string Field9 { get; set; }
-
-        [DataMember]
-        public string Field10 { get; set; }
 
         [DataMember]
         public string IndustryName { get; set; }
@@ -361,8 +332,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         [DataMember]
         public double? CreditLimitAmount { get; set; }
 
-      
-
         [DataMember]
         public double? CreditLimitOpenBalance { get; set; }
 
@@ -429,8 +398,10 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         [DataMember]
         public bool IsAutonomy { get; set; }
+
         [DataMember]
         public string BillToId { get; set; }
+
         [DataMember]
         public string BillToName { get; set; }
         
@@ -440,13 +411,11 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string AccountManagerUserId { get; set; }
 
         public string ATTN { get; set; }
+
         [DataMember]
         public DateTime? LastLoginDateViaPC { get; set; }
+
         [DataMember]
         public DateTime? LastLoginDateViaMobile { get; set; }
-
     }
-
-
-
 }

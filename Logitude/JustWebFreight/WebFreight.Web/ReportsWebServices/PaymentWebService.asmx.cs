@@ -431,6 +431,7 @@ namespace WebFreight.Web.ReportsWebServices
                                         HouseNumber = gr.Key.ARInvoice.HouseNumber,
                                         InvoiceCurrencyId = gr.Key.ARInvoice.InvoiceCurrencyId,
                                         ExchangeRate = gr.Key.ARInvoice.InvoiceCurrencyExchangeRate,
+                                        CustomerRef = gr.Key.ARInvoice.CustomerRef,
                                     }).ToList();
 
                     foreach (var item in payments)
@@ -446,6 +447,7 @@ namespace WebFreight.Web.ReportsWebServices
                         reportPayments.Vat = ARInvoiceTotalVATs.Sum(s => (s.InvoiceCurrencyVatableAmount * s.VatPercent) / 100);
                         reportPayments.OriginalAmount = item.OriginalAmount;
                         reportPayments.InvoicePaymentExchangeRate = item.ExchangeRate;
+                        reportPayments.CustomerRef = item.CustomerRef;
                         reportPayments.ProjectNumber = this.GetProjectNumber(item.ReferenceId, tenant);
                         Currency myCurrency = CurrencyRepository.GetSingleCurrency(item.InvoiceCurrencyId, tenant, true);
                         if (myCurrency != null)

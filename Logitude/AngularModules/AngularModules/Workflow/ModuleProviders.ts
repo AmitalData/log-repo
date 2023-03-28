@@ -14,6 +14,7 @@ import { TaskPMService } from './Services/StandardPMs/TaskPMService';
 import { TaskPriorityPMService } from './Services/StandardPMs/TaskPriorityPMService';
 import { TaskStatusPMService } from './Services/StandardPMs/TaskStatusPMService';
 import { TaskTypePMService } from './Services/StandardPMs/TaskTypePMService';
+import { WorkFlowTriggerTypeListService } from './Services/StandardLists/WorkFlowTriggerTypeListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -28,6 +29,7 @@ export class ModuleProviders {
             case "WorkFlowMenuButtonsHandler": { service = new WorkFlowMenuButtonsHandler(); break; }
             case "WorkFlowVersionListService": { service = new WorkFlowVersionListService(); break; }
             case "WorkFlowInstanceListService": { service = new WorkFlowInstanceListService(); break; }
+            case "WorkFlowTriggerTypeListService": { service = new WorkFlowTriggerTypeListService(); break; }
 
             case "TaskListService": { service = new TaskListService(); break; }
             case "TaskPriorityListService": { service = new TaskPriorityListService(); break; }

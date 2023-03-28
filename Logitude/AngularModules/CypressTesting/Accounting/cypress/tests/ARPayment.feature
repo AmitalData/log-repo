@@ -1,4 +1,4 @@
-@smoke @smoke3
+@smoke @smoke3 @smoke2MasterDeploymnet
 Feature: AR Payment
     The user creates new AR Payment and ARprove the AR Payment
 

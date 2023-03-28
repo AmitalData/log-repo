@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class TruckerUpdateClass
    {  		
-		public const string HashString = "379e766600836a256e41137f04316591";
+		public const string HashString = "d8ffff54f3a4a45d555bcc1544749611";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -102,7 +102,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasCustomFields =  true,
 			      				    AvailableInCustomization =  true,
 			      				    SupportSubEntity =  false,
-			      				    ApplyGenericCustomFields =  false,
+			      				    ApplyGenericCustomFields =  true,
 			      				    AvailableInDocumentTypes =  true,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
@@ -127,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    AllowCustomFields =  true,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
-			      				    MaxNumberOfCustomFields =  10,
+			      				    MaxNumberOfCustomFields =  50,
 			      				    NewWizardControlName =  "Simplog.FreightLib.NewTruckerCommand",
 			      				    DefaultText =  "Trucker",
 			      				    Code =  "TRCK",

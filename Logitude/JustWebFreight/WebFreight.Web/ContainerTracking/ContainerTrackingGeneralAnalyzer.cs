@@ -121,8 +121,11 @@ namespace WebFreight.Web.ContainerTracking
                     containerUpdatedFields.TrackingSource = trackingSource;
                     this.StartUpdating();
                 }
-                
-                this.DoneAnalyzeQueue(containerUpdatedFields.Tenant);
+
+                var tenant = this.tenant_Zero;
+                if (containerUpdatedFields != null) tenant = containerUpdatedFields.Tenant;
+
+                this.DoneAnalyzeQueue(tenant);
             }
 
             catch (Exception ex)
@@ -172,6 +175,8 @@ namespace WebFreight.Web.ContainerTracking
 
             CommunicationLog comunicationLog = BuildCommunicationLogUpdateStatus(containerTrackingRequest, entityId, objectTableName);
             
+
+  
             if (myRequestContainer == null)
             {
                 SetComunicationLogDone(comunicationLog, false);
@@ -269,6 +274,7 @@ namespace WebFreight.Web.ContainerTracking
             communicationLogRepository.Update(comunicationLog);
             communicationLogRepository.SubmitChanges();
 
+   
             string activity = "";
             if (wasAnalyzed)
             {

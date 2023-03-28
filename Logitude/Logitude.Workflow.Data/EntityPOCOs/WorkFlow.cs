@@ -58,6 +58,13 @@ namespace Logitude.Workflow.Data.EntityPOCOs
 	    public int RetriesNumber { get; set; }
         [Column("RetriesDelay")]
 	    public string RetriesDelay { get; set; }
+        [ForeignKey("WorkFlowTriggerType")]
+        [Column("WorkFlowTriggerTypeCode")]
+	    public string WorkFlowTriggerTypeCode { get; set; }
+	      
+        public virtual WorkFlowTriggerType WorkFlowTriggerType { get; set; }
+        [Column("WorkFlowNumber")]
+	    public string WorkFlowNumber { get; set; }
     }
 }
 	 

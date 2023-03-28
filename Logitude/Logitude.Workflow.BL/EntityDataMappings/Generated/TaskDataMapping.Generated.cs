@@ -41,7 +41,9 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         IsClosed, 
 	         IsCancelled, 
 	         CheckWithId, 
-	         EntityNumber,
+	         EntityNumber, 
+	         IsAssigned, 
+	         StartDate,
 	      }
 
 
@@ -81,7 +83,9 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         Fields, 
 	         ToDoConditions, 
 	         DoneConditions, 
-	         Description,
+	         Description, 
+	         IsAssigned, 
+	         StartDate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -188,6 +192,16 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityNumber))
             {
 				entityPOCO.EntityNumber = entityPM.EntityNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsAssigned))
+            {
+				entityPOCO.IsAssigned = entityPM.IsAssigned;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StartDate))
+            {
+				entityPOCO.StartDate = entityPM.StartDate;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -301,6 +315,16 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 					entityPM.EntityNumber = entityPOCO.EntityNumber;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsAssigned))
+            {
+					entityPM.IsAssigned = entityPOCO.IsAssigned;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StartDate))
+            {
+					entityPM.StartDate = entityPOCO.StartDate;
+            }
+
 		}
 
 		public void PMToOldPM(TaskPM entityPM, TaskPM oldEntityPM)
@@ -405,6 +429,16 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityNumber))
             {
                 oldEntityPM.EntityNumber = entityPM.EntityNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsAssigned))
+            {
+                oldEntityPM.IsAssigned = entityPM.IsAssigned;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StartDate))
+            {
+                oldEntityPM.StartDate = entityPM.StartDate;
             }
 			
 		}

@@ -307,7 +307,7 @@ Dashboard-menu-oneRow {
 
 .dl-tab-text {
     font-weight: 500;
-    font-size: 11px;
+    font-size: 13px;
     font-family: 'Manrope';
     flex-grow: 1;
 }
@@ -326,8 +326,6 @@ Dashboard-menu-oneRow {
 .DashboardTabHeadLi:hover .dl-pin-image {
     display: block;
 }
-
-.dl-tab-btn-div{}
 
 .dl-tab-btn-div:hover .dl-tab-btn {
     fill: #292D30;
@@ -351,4 +349,8 @@ Dashboard-menu-oneRow {
     .dl-tab-exit-container {
         display: none;
     }
+}
+
+.dl-panel h1 {
+    font-size: 14px;
 }

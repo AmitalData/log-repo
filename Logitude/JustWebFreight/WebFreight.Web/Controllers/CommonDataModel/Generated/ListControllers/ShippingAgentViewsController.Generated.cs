@@ -68,20 +68,10 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				ShippingAgentRepository  shippingAgentRepository = new ShippingAgentRepository(MyContext);
-				ShippingAgentList entityList = null;
-				ShippingAgent entityPoco = shippingAgentRepository.GetSingleShippingAgent(id , authToken.Tenant);
-                
-                if (entityPoco != null)
-				{
-									List<ShippingAgent> singleEntityList = new List<ShippingAgent>();
-					singleEntityList.Add(entityPoco);
-
-					ShippingAgentQuery shippingAgentQuery = new ShippingAgentQuery(shippingAgentRepository);
-					IQueryable<ShippingAgent> iQueryable = singleEntityList.AsQueryable();
-					IQueryable<ShippingAgentList> iQueryableEntityList = shippingAgentQuery.GetIQueryableEntityList(iQueryable);
-				    entityList = iQueryableEntityList.FirstOrDefault();
-
-			    }
+				
+				ShippingAgentQuery  shippingAgentQuery = new ShippingAgentQuery(shippingAgentRepository);
+				IQueryable<ShippingAgent> shippingAgents = shippingAgentRepository.GetShippingAgents(authToken.Tenant).Where(a=>a.Id == id);
+				ShippingAgentList entityList = shippingAgentQuery.GetIQueryableEntityList(shippingAgents).FirstOrDefault();
 				if (entityList != null)
 				{
                 	CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);

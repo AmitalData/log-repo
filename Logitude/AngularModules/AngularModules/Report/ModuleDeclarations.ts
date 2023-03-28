@@ -94,7 +94,6 @@ import { VDKFilterComponent } from './Components/FilterReportComponent/VDKFilter
 import { UserDefinedReportFilterControl } from './Components/FilterReportComponent/UserDefinedReportFilterControl';
 import { LogitudeCRMReportFilterComponent } from './Components/FiltersComponent/CRM/LogitudeCRMReportFilterComponent';
 import { ExcelReportTemplateComponent } from './Components/ExcelReportTemplateComponent';
-import { DataProviderFieldsNestedList } from './Components/DataProviderFieldsNestedList';
 import { SpotRateQuoteReportFilterComponent } from './Components/FiltersComponent/Quote/SpotRate/SpotRateQuoteReportFilterComponent';
 
 export const Components =
@@ -176,7 +175,6 @@ export const Components =
         UserDefinedReportFilterControl,
         LogitudeCRMReportFilterComponent,
         ExcelReportTemplateComponent,
-        DataProviderFieldsNestedList,
         PerVendorReportFilterComponent,
         ARinvoiceSequencesReportFilterComponent,
         SpotRateQuoteReportFilterComponent

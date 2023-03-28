@@ -42,7 +42,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         {
             if (isNewEntity)
             {
-                //ValidateShipmentNumber(entityPM);
+                ValidateShipmentNumber(entityPM);
                 ValidateProductTypePermission(entityPM, myCommonContext);
             }
 
