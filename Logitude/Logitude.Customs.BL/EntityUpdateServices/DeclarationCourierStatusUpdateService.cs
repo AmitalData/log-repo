@@ -100,10 +100,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                     else
                     {
-                        if (consignmentList.Find(c => c.StorageSiteCode == "ILMMN") != null)
+                        /*if (consignmentList.Find(c => c.StorageSiteCode == "ILMMN") != null)
                         {
                             this.SendToMassof(entityPM, entityPOCO, "ILMMN");
-                        }
+                        }*/
                     }
                 }
             }
