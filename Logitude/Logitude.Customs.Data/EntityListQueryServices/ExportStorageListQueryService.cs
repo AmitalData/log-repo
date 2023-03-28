@@ -24,7 +24,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ExportStorageList> query = (from en in iQueryable.Include("Declaration").Include("DeclarationStatusType").Include("CargoType").Include("CargoStatuse")
                                                    .Include("ExportLogisticPermitAction").Include("Client").Include("CustomsShip").Include("CargoIdentifireType")
                                                    .Include("CargoIdentifireType").Include("UnloadingSiteType")
- 
+                                                   join c in context.Clients
+                                                   on en.ExporterID equals c.Id into cl
+                                                   from client in cl.DefaultIfEmpty()
 
 
                                                    select new ExportStorageList()
@@ -66,7 +68,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                        CustomStatusName = en.CustomsCargoStatus.LocalName,
 
-                                                        ExporterName = en.DeclarationEntity!= null && en.DeclarationEntity.Importer !=null ? en.DeclarationEntity.Importer.FullName:"",
 
                                                        ShipName = en.CustomsShipCode!=null? en.CustomsShipCode.LocalName:"",
 
@@ -85,8 +86,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        DeclarationCustomFileNo = en.DeclarationEntity != null ? en.DeclarationEntity.CustomFileNo:"",
 
                                                        DeclarationNumber = en.DeclarationEntity != null ? en.DeclarationEntity.DeclarationNumber:"",
+                                                       ExporterName = en. ExporterID!=null ? client.FullName: en.DeclarationEntity != null && en.DeclarationEntity.Importer != null ? en.DeclarationEntity.Importer.FullName : "",
 
-                                                        ExporterCode = en.DeclarationEntity != null && en.DeclarationEntity.Importer != null ? en.DeclarationEntity.Importer.Code : "",//client.Code,
+                                                       ExporterCode = en.ExporterID!=null?  client.Code : en.DeclarationEntity != null && en.DeclarationEntity.Importer != null ? en.DeclarationEntity.Importer.Code : "",//client.Code,
 
                                                        StorageStatusIsOpen = en.StorageStatus != null && en.StorageStatus.ToLower() == "open",
 
