@@ -561,7 +561,7 @@ namespace CommunicationWorkerRole
                     HtmlTemplate.Append("<tr><td> CASS Code : </td><td>" + lead.CASSCode + "</td></tr>");
                     HtmlTemplate.Append("<tr><td> Client Id : </td><td>" + lead.ClientId + "</td></tr>");
                     HtmlTemplate.Append("<tr><td> Lead Origin : </td><td>" + lead.LeadOrigin + "</td></tr>");
-                    HtmlTemplate.Append("<tr><td> Lead Origin : </td><td>" + lead.Campaign + "</td></tr>");
+                    HtmlTemplate.Append("<tr><td> Campaign : </td><td>" + lead.Campaign + "</td></tr>");
 
                     HtmlTemplate.Append("<Table/>");
                     HtmlTemplate.Append("<div/>");
