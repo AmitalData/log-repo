@@ -123,7 +123,6 @@
     <None Include="DBOthers\Procedures\usp_DeleteCRMRecords.dxml" />
     <None Include="DBOthers\Procedures\usp_DeleteTicketsRecords.dxml" />
     <None Include="DBScripts\202205101347_FillOpportunityNumberOfQuotes.sxml" />
-    <None Include="DBScripts\202303211107_FillClientIdAndLeadOriginFieldsInOpportunitiesTable.sxml" />
     <None Include="DBScripts\FixFeatureBusinessUnitProperty.sxml" />
     <None Include="DBTables\Activity.dxml" />
     <None Include="DBTables\ActivityEmailRecipient.dxml" />

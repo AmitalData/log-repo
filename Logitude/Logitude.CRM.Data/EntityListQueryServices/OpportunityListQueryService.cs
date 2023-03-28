@@ -142,6 +142,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                      UserName = a.LeadUser == null ? null : a.LeadUser.Contact.EnglishName,
                                                      ClientId = a.ClientId,
                                                      LeadOrigin = a.LeadOrigin,
+                                                     Campaign = a.Campaign,
                                                  });
             return query;
 		}
@@ -278,6 +279,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                         IsCancelled = a.IsCancelled,
                         ClientId = a.ClientId,
                         LeadOrigin = a.LeadOrigin,
+                        Campaign = a.Campaign,
                     };
 
                     ContactRepository rep = new ContactRepository(tenant);
@@ -394,6 +396,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                      IsCancelled = a.IsCancelled,
                                                      ClientId = a.ClientId,
                                                      LeadOrigin = a.LeadOrigin,
+                                                     Campaign = a.Campaign,
                                                  });
 
             OpportunityBusinessUnitFilter filter = new OpportunityBusinessUnitFilter(tenant);
@@ -496,6 +499,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                      IsCancelled = a.IsCancelled,
                                                      ClientId = a.ClientId,
                                                      LeadOrigin = a.LeadOrigin,
+                                                     Campaign = a.Campaign,
                                                  });
 
             OpportunityBusinessUnitFilter filter = new OpportunityBusinessUnitFilter(tenant);
@@ -554,6 +558,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                 BusinessUnitId = a.BusinessUnitId,
                                                 ClientId = a.ClientId,
                                                 LeadOrigin = a.LeadOrigin,
+                                                Campaign = a.Campaign,
                                             }).FirstOrDefault();
             return query;
         }

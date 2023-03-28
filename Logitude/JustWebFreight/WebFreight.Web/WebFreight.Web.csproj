@@ -782,6 +782,7 @@
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentReceivableController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentStoragePricingController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowUserController.cs" />
+    <Content Include="bin\WorkerRoleName.xml" />
     <Content Include="css\asp.css" />
     <Content Include="css\fonts\DejaVu\LICENSE.txt" />
     <Content Include="css\fonts\glyphs\KendoUIGlyphs.svg" />

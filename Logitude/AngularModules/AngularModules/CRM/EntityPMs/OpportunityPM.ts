@@ -664,6 +664,11 @@ export class OpportunityPM {
     public set LeadOrigin(newValue: string) { if (this.leadOrigin != newValue) { this.leadOrigin = newValue; this.MarkAsDirty("LeadOrigin"); } }
        
 	 
+    private campaign: string;
+    public get Campaign() { return this.campaign; }
+    public set Campaign(newValue: string) { if (this.campaign != newValue) { this.campaign = newValue; this.MarkAsDirty("Campaign"); } }
+       
+	 
 
     public OldEntityPM: OpportunityPM;
 		

@@ -125,6 +125,7 @@ namespace WebFreight.Web.Helpers
                         VatNumber = leadPM.VatNumber,
                         ClientId = leadPM.ClientId,
                         LeadOrigin = leadPM.LeadOrigin,
+                        Campaign = leadPM.Campaign,
                     };
 
                     logitudeLeadService.Create(LogitudeLeadpm);

@@ -2586,6 +2586,29 @@ namespace Logitude.CRM.BL.EntityPMs
 			
 		 }
 	   }
+	  private string campaign ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Campaign  
+	   {
+	    
+	     get
+		{
+		   return campaign;
+		 }
+		 set
+		 {
+		   if(campaign != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Campaign",OldValue=campaign,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   campaign=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

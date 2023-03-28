@@ -241,6 +241,8 @@ namespace Logitude.CRM.Data.EntityPOCOs
 	    public string ClientId { get; set; }
         [Column("LeadOrigin")]
 	    public string LeadOrigin { get; set; }
+        [Column("Campaign")]
+	    public string Campaign { get; set; }
     }
 }
 	 

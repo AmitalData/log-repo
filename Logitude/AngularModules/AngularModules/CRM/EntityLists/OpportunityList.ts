@@ -122,6 +122,7 @@ export class OpportunityList {
 	UserName: string;
 	ClientId: string;
 	LeadOrigin: string;
+	Campaign: string;
 	
 }
  

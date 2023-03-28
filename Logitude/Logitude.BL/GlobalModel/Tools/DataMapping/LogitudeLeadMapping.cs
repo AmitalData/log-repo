@@ -44,6 +44,9 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             itemPoco.City = itemPM.City;
             itemPoco.Street = itemPM.Street;
             itemPoco.ZipCode = itemPM.ZipCode;
+            itemPoco.ClientId = itemPM.ClientId;
+            itemPoco.LeadOrigin = itemPM.LeadOrigin;
+            itemPoco.Campaign = itemPM.Campaign;
             BuildSearchFields(itemPM, itemPoco);     
 
         }

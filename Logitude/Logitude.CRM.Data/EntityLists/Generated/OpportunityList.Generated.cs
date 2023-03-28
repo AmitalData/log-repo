@@ -242,6 +242,8 @@ namespace Logitude.CRM.Data.EntityLists
        public string ClientId  { get; set; }
        [DataMember]
        public string LeadOrigin  { get; set; }
+       [DataMember]
+       public string Campaign  { get; set; }
    }
 
 }

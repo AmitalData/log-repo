@@ -570,14 +570,21 @@
   <Column
     Name="ClientId"
     Type="varchar"
-    Size="65">
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="LeadOrigin"
     Type="varchar"
-    Size="25">
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Campaign"
+    Type="varchar"
+    Size="250">
     <Constraints
       Nullable="true" />
   </Column>

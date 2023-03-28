@@ -105,7 +105,8 @@ namespace Logitude.CRM.BL.EntityDataMappings
 	         Field40, 
 	         NumberOfConnectedQuotes, 
 	         ClientId, 
-	         LeadOrigin,
+	         LeadOrigin, 
+	         Campaign,
 	      }
 
 
@@ -218,7 +219,8 @@ namespace Logitude.CRM.BL.EntityDataMappings
 	         NumberOfConnectedQuotes, 
 	         UserName, 
 	         ClientId, 
-	         LeadOrigin,
+	         LeadOrigin, 
+	         Campaign,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -640,6 +642,11 @@ namespace Logitude.CRM.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LeadOrigin))
             {
 				entityPOCO.LeadOrigin = entityPM.LeadOrigin;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Campaign))
+            {
+				entityPOCO.Campaign = entityPM.Campaign;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1068,6 +1075,11 @@ namespace Logitude.CRM.BL.EntityDataMappings
 					entityPM.LeadOrigin = entityPOCO.LeadOrigin;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Campaign))
+            {
+					entityPM.Campaign = entityPOCO.Campaign;
+            }
+
 		}
 
 		public void PMToOldPM(OpportunityPM entityPM, OpportunityPM oldEntityPM)
@@ -1487,6 +1499,11 @@ namespace Logitude.CRM.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LeadOrigin))
             {
                 oldEntityPM.LeadOrigin = entityPM.LeadOrigin;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Campaign))
+            {
+                oldEntityPM.Campaign = entityPM.Campaign;
             }
 			
 		}
