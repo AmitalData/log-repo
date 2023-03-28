@@ -56,7 +56,7 @@
                                         </LogTextBox>
                                     </div>
 
-                                    <div *ngIf="objectField.DataTypeCode == 'DateTime' && objectField.IsCustom == true">
+                                    <div *ngIf="objectField.DataTypeCode == 'DateTime'">
                                         <table>
                                             <tr class="FormFieldRow">
                                                 <td>
@@ -82,7 +82,7 @@
 
                                     </div>
 
-                                    <div *ngIf="((objectField.DataTypeCode == 'DateTime' && objectField.IsCustom == false) || objectField.DataTypeCode == 'Date')">
+                                    <div *ngIf="(objectField.DataTypeCode == 'Date')">
                                         <LogDatePicker [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="EntityPM[objectField.FieldName]" [DataContext]="EntityPM" [HideColumns]="HideColumns" [FocusOnMe]="IsFocused(objectField)"></LogDatePicker>
                                     </div>
 
