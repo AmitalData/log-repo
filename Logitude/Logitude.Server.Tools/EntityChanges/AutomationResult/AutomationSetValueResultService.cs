@@ -116,7 +116,12 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 
             #region Set Field Value
 
-
+            PropertyInfo IsUpdatedByAutomationSetValueResultPropInfo = entityPM.GetType().GetProperty("IsUpdatedByAutomationSetValueResult");
+            if (IsUpdatedByAutomationSetValueResultPropInfo != null)
+            {
+                IsUpdatedByAutomationSetValueResultPropInfo.SetValue(entityPM, true, null);
+            }
+            
             foreach (AutomationSetValue item in AutomationSetValueLists)
             {
                 PropertyInfo propInfo = entityPM.GetType().GetProperty(item.FieldName);

@@ -808,7 +808,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             if (!FeatureToggleHelper.HasFeatureToggle("EHA", entityPM.Tenant))
             {
-                return !mainEntityChangeService.IsChild ? entityPM : ShipmentMapping.MapShipmentPMToShipmentPMForAutomation(entityPM, mainEntityChangeService.entityChangeArgs.EntityPM as ShipmentPM);
+                return !mainEntityChangeService.IsChild ? entityPM : ShipmentMapping.MapShipmentPMToShipmentPMForAutomation(entityPM, mainEntityChangeService.entityChangeArgs.EntityPM as ShipmentPM, new ShipmentPM());
             }
 
             if (!mainEntityChangeService.IsChild)
@@ -2677,7 +2677,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             if (entityPM != null)
             {
-                DateTime? dateBefore = DateTime.Now;
                 string tableName = entityPM.ShipmentLevelCode == "C" ? "Master" : entityPM.ShipmentLevelCode == "H" ? "Shipment" : "MasterAndHouse";
                 string objectTableName = tableName;
                 string otherObjectTableName = "";
@@ -2697,7 +2696,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     bool isHaveAutomation = generalEntityChangeService.CheckIfEntityHaveAutomation(tableName, "OnCreate", entityPM.Tenant);
                     if (isHaveAutomation)
                     {
-                        var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ExternalEntity = externalEntity, EntityPM = entityPM, ProcessType = "OnCreate", ObjectTableName = objectTableName, EntityId = entityPM.Id, Tenant = entityPM.Tenant, StartDate = dateBefore, OtherObjectTableName = otherObjectTableName, DontExecuteAutomationThatDependencyOnLastEntityUpdate = true, EntityReference = entityPM.ShipmentNumber, LoggedUserEmail = UpdateByEmail });
+                        var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ExternalEntity = externalEntity, EntityPM = entityPM, ProcessType = "OnCreate", ObjectTableName = objectTableName, EntityId = entityPM.Id, Tenant = entityPM.Tenant, StartDate = DateTime.Now, OtherObjectTableName = otherObjectTableName, DontExecuteAutomationThatDependencyOnLastEntityUpdate = true, EntityReference = entityPM.ShipmentNumber, LoggedUserEmail = UpdateByEmail });
                         mainEntityChangeService.AddEntityChange();
                         mainEntityChangeServices.Add(mainEntityChangeService);
                     }
@@ -2708,7 +2707,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     bool isHaveAutomation = generalEntityChangeService.CheckIfEntityHaveAutomation(tableName, "OnUpdate", entityPM.Tenant);
                     if (isHaveAutomation)
                     {
-                        var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ExternalEntity = externalEntity, EntityPM = entityPM, ProcessType = "OnUpdate", EntityChangeFieldXml = shipmentChangeTracking.EntityChangeFieldXml, OldEntityPM = shipmentChangeTracking.ChangeTrackingPM, ObjectTableName = objectTableName, EntityId = entityPM.Id, Tenant = entityPM.Tenant, StartDate = dateBefore, OtherObjectTableName = otherObjectTableName, DontExecuteAutomationThatDependencyOnLastEntityUpdate = true, EntityReference = entityPM.ShipmentNumber, LoggedUserEmail = UpdateByEmail });
+                        var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ExternalEntity = externalEntity, EntityPM = entityPM, ProcessType = "OnUpdate", EntityChangeFieldXml = shipmentChangeTracking.EntityChangeFieldXml, OldEntityPM = shipmentChangeTracking.ChangeTrackingPM, ObjectTableName = objectTableName, EntityId = entityPM.Id, Tenant = entityPM.Tenant, StartDate = DateTime.Now, OtherObjectTableName = otherObjectTableName, DontExecuteAutomationThatDependencyOnLastEntityUpdate = true, EntityReference = entityPM.ShipmentNumber, LoggedUserEmail = UpdateByEmail });
                         mainEntityChangeService.AddEntityChange();
                         mainEntityChangeServices.Add(mainEntityChangeService);
 
@@ -2721,27 +2720,64 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         isHaveAutomation = generalEntityChangeService.CheckIfEntityHaveAutomation("Shipment", "OnUpdate", entityPM.Tenant);
                         if (isHaveAutomation)
                         {
-                            string fields = "MainCarriageCarrierId,MainCarriageETD,MainCarriageATD,MainCarriageFinalDestinationETA,MainCarriageFinalDestinationATA,FinalDistenationPortId,StatusId,CutoffDate";
-                            List<NotifyPropertyChangeValues> changedProperties = shipmentChangeTracking.NotifyPropertyChangeValuesLists.Where(d => fields.Split(',').Contains(d.PropertyName)).ToList();
-                            //if (changedProperties.Count > 0)
-                            //{
-                            shipmentChangeTracking.EntityChangeFieldXml = EntityPMChangeTrackingHelper.GetChangesDetectedXml(changedProperties);
-                            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                            List<ShipmentPM> housesList = shipmentQuery.GetShipmentPMsByMasterIdAndTenantForAutomation(entityPM.Id, tenant);
-                            foreach (ShipmentPM oldHousePM in housesList)
-                            {
-                                oldHousePM.StatusId = shipmentChangeTracking.ChangeTrackingPM.StatusId;
-                                dateBefore = DateTime.Now;
-                                ShipmentPM shipmentPm = ShipmentMapping.MapShipmentPMToShipmentPMForAutomation(entityPM, oldHousePM);
-                                var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ExternalEntity = this.entityPM, EntityPM = shipmentPm, OldEntityPM = oldHousePM, ProcessType = "OnUpdate", EntityChangeFieldXml = shipmentChangeTracking.EntityChangeFieldXml, ObjectTableName = "Shipment", EntityId = shipmentPm.Id, Tenant = shipmentPm.Tenant, StartDate = dateBefore, DontExecuteAutomationThatDependencyOnLastEntityUpdate = true, LoggedUserEmail = UpdateByEmail });
-                                mainEntityChangeService.IsChild = true;
-                                mainEntityChangeService.AddEntityChange();
-                                mainEntityChangeServices.Add(mainEntityChangeService);
-                            }
+                            RunAutomationForHouses(shipmentChangeTracking);
                         }
                     }
                     #endregion
                 }
+            }
+        }
+
+        private void RunAutomationForHouses(ShipmentChangeTracking shipmentChangeTracking)
+        {
+            bool haveAutomatiomMasterHouseSetFieldValueFeatureToggle = FeatureToggleHelper.HasFeatureToggle("AHS", tenant);
+            string masterChangeFields = "MainCarriageCarrierId,MainCarriageETD,MainCarriageATD,MainCarriageFinalDestinationETA,MainCarriageFinalDestinationATA,FinalDistenationPortId,StatusId,CutoffDate";
+            List<NotifyPropertyChangeValues> changedProperties = shipmentChangeTracking.NotifyPropertyChangeValuesLists.Where(d => masterChangeFields.Split(',').Contains(d.PropertyName)).ToList();
+            shipmentChangeTracking.EntityChangeFieldXml = EntityPMChangeTrackingHelper.GetChangesDetectedXml(changedProperties);
+            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+            List<ShipmentPM> oldHousesPMs = shipmentQuery.GetShipmentPMsByMasterIdAndTenantForAutomation(entityPM.Id, tenant);
+            List<ShipmentPM> newHousesPMs = haveAutomatiomMasterHouseSetFieldValueFeatureToggle ? shipmentQuery.GetShipmentPMsByMasterId(entityPM.Id, tenant) : new List<ShipmentPM>();
+            bool IsHouseUpdated = false;
+            foreach (ShipmentPM oldHousePM in oldHousesPMs)
+            {
+                ShipmentPM shipmentPm = haveAutomatiomMasterHouseSetFieldValueFeatureToggle ? newHousesPMs.Where(newHouse => newHouse.Id == oldHousePM.Id).FirstOrDefault() : new ShipmentPM();
+                ShipmentPM newHousePM = RunAutomationForSingleHouse(shipmentChangeTracking, shipmentPm, oldHousePM);
+                IsHouseUpdated = IsHouseUpdated ? IsHouseUpdated : IsUpdateHouseShipmentPM(newHousePM, haveAutomatiomMasterHouseSetFieldValueFeatureToggle);
+            }
+
+            if (IsHouseUpdated)
+            {
+                allHouses = entityRepository.GetHouseShipmentsForMaster(entityPM.Id, tenant);
+            }
+        }
+
+        private ShipmentPM RunAutomationForSingleHouse(ShipmentChangeTracking shipmentChangeTracking, ShipmentPM shipmentPm, ShipmentPM oldHousePM)
+        {
+            if (shipmentPm == null) return shipmentPm;
+
+            oldHousePM.StatusId = shipmentChangeTracking.ChangeTrackingPM.StatusId;
+            shipmentPm = ShipmentMapping.MapShipmentPMToShipmentPMForAutomation(entityPM, oldHousePM, shipmentPm);
+            var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ExternalEntity = this.entityPM, EntityPM = shipmentPm, OldEntityPM = oldHousePM, ProcessType = "OnUpdate", EntityChangeFieldXml = shipmentChangeTracking.EntityChangeFieldXml, ObjectTableName = "Shipment", EntityId = shipmentPm.Id, Tenant = shipmentPm.Tenant, StartDate = DateTime.Now, DontExecuteAutomationThatDependencyOnLastEntityUpdate = true, LoggedUserEmail = UpdateByEmail });
+            mainEntityChangeService.IsChild = true;
+            mainEntityChangeService.AddEntityChange();
+            mainEntityChangeServices.Add(mainEntityChangeService);
+
+            return shipmentPm;
+        }
+
+        private bool IsUpdateHouseShipmentPM(ShipmentPM housePM, bool haveAutomatiomMasterHouseSetFieldValueFeatureToggle)
+        {
+            if (!haveAutomatiomMasterHouseSetFieldValueFeatureToggle) return false;
+            if (housePM == null) return false;
+            if (!housePM.IsUpdatedByAutomationSetValueResult) return false;
+
+            using (TransactionScope scopee = TransactionFactory.GetTransaction())
+            {
+                housePM.IsUpdateByAutomation = true;
+                ShipmentService shipmentService = new ShipmentService(objectContext, housePM, SecurityUtility.GetAuthenticatedUser());
+                shipmentService.Update(true);
+                scopee.Complete();
+                return true;
             }
         }
 

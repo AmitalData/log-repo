@@ -4287,10 +4287,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             }
         }
 
-        public static ShipmentPM MapShipmentPMToShipmentPMForAutomation(ShipmentPM masterShipment, ShipmentPM houseShipment)
+        public static ShipmentPM MapShipmentPMToShipmentPMForAutomation(ShipmentPM masterShipment, ShipmentPM houseShipment, ShipmentPM shipmentPM)
         {
-            ShipmentPM shipmentPM = new ShipmentPM();
-
             shipmentPM.Id = houseShipment.Id;
             shipmentPM.ShipmentNumber = houseShipment.ShipmentNumber;
             shipmentPM.Tenant = houseShipment.Tenant;

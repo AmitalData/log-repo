@@ -892,6 +892,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "UDD,Upload File using Drag and Drop", 
                 Description = "Upload File using Drag and Drop", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "AHS", 
+                Name = "Automation Master House Set Field Value", 
+                SearchFields = "AHS,Automation Master House Set Field Value", 
+                Description = "Automation Master House Set Field Value", 
+			});
 			
             return all;
        }

@@ -4673,7 +4673,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             List<Shipment> shipments = repository.GetShipmentsFromIds(shipmentIds, tenant);
             if (shipments.Count() == 0) return null;
+            List<ShipmentPM> shipmentPMs = MapShipmentsToShpmentPMsUsingParallel(shipments, tenant);
 
+            return shipmentPMs;
+        }
+
+        private List<ShipmentPM> MapShipmentsToShpmentPMsUsingParallel(List<Shipment> shipments, int tenant)
+        {
             List<string> shipmentMasterDataIds = shipments.Select(shipment => shipment.MasterShipmentDataId).ToList();
             List<ShipmentMasterData> shipmentMasterDatas = repository.GetShipmentMasterDatasFromIds(shipmentMasterDataIds, tenant);
             List<ShipmentPM> shipmentPMs = new List<ShipmentPM>();
@@ -4692,6 +4698,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);
                 shipmentPM = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), securedPM, tenant);
             });
+            return shipmentPMs;
+        }
+
+        public List<ShipmentPM> GetShipmentPMsByMasterId(string masterId, int tenant)
+        {
+            List<Shipment> shipments = (from s in repository.context.Shipments
+                                            where s.Tenant == tenant && s.MasterShipmentDataId == masterId && s.Id != masterId && ((s.ShipmentLevelCode == "H") || (s.ShipmentLevelCode == "D") || s.ShipmentLevelCode == "A")
+                                            select s).ToList();
+
+            if (shipments.Count() == 0) return new List<ShipmentPM>();
+
+            List<ShipmentPM> shipmentPMs = MapShipmentsToShpmentPMsUsingParallel(shipments, tenant);
 
             return shipmentPMs;
         }

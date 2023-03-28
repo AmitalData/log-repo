@@ -3020,6 +3020,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string SealNo { get; set; }
         public string HSCode { get; set; }
         public string OrderNumber { get; set; }
+        public bool IsUpdatedByAutomationSetValueResult { get; set; }
 
     }
 
