@@ -1224,7 +1224,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 _CCUFILEMPM = new CCUFILEMPM()
                 {
                     ChangeSetOp = ChangeSetOperation.Insert,
-
+                    Tenant  = _DirtyDeclarationPM.Tenant,
                     DeclarationId = _DirtyDeclarationPM.Id,
                     OPENDATE = (new DualQueryService(_AmitalContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now,
                     FILECLOSE = 0,

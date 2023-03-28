@@ -12,6 +12,15 @@ using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.Server.Tools.Models;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
+using System.Data.SqlClient;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityPOCOs;
+using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure.Helpers;
+using Devart.Data.Oracle;
+using System.Web;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Unifreight.BL.EntityUpdateServices
 {
@@ -37,16 +46,17 @@ namespace Unifreight.BL.EntityUpdateServices
             {
                 new BusinessErrorException("please init entityPM.DeclarationId");
             }
-            entityPM.FILENO = GetCounter(entityPM.DeclarationId);
+            entityPM.FILENO = GetCounter(entityPM.DeclarationId,entityPM.Tenant);
             entityPM.OPENDATE = DateTime.Now;
             entityPM.FILECLOSE = 0;
         }
 
-        private int GetCounter(string dirtyDeclarationPMId)
+        private int GetCounter(string dirtyDeclarationPMId, int tenant)
         {
             int i = Convert.ToInt32(dirtyDeclarationPMId.Replace("-", ""));
             i = 50000000 + i;
-            if (i.ToString().Length > 8)
+            int fileNoLen = Convert.ToInt32(GetFileNoLen_Cache(tenant));
+            if (i.ToString().Length > fileNoLen)
             {
                 return i - 110_009_120;
             }
@@ -151,6 +161,56 @@ namespace Unifreight.BL.EntityUpdateServices
             (Repository as CCUFILEMRepository).FastDeleteMulti(GetKeys(entityPM) as CCUFILEMKeys);
 
         }
-        
+
+
+        public object GetFileNoLen_Cache(int tenant)
+        {
+            string entityKeyString = $"GetFileNoLen_Cache({tenant})";
+            var res = CacheManager
+                .GetOrInsertNewObject<object>(entityKeyString,
+                () => { return this.GetFileNoLen(tenant); });
+            return res;
+
+        }
+
+        public object GetFileNoLen(int tenant)
+        {
+            object columnSize = 0;
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            string owner = null;
+            CustomsSettingRepository custSettingsRepo = new CustomsSettingRepository(tenant);
+            CustomsSetting custSettings = custSettingsRepo.GetSettingByTenant(tenant);
+            string strConnString = TenantServerConfigration.GetDbConnection(tenant);
+
+            if (custSettings != null && !string.IsNullOrWhiteSpace(custSettings.UnfConnectionString))
+            {
+                owner = custSettings.UnfConnectionString.Split(',').Last().ToUpper();
+            }
+            try
+            {
+
+                if (dbms == "oracle")
+                {
+                    using (OracleConnection con = new OracleConnection(strConnString))
+                    {
+                        string cmd = "select data_precision from ALL_TAB_COLUMNS where table_name = 'CCUFILEM' and column_name ='FILE_NO' and owner=:p1";
+
+                        OracleCommand oracleCommand = new OracleCommand(cmd, con);
+                        oracleCommand.Parameters.Add(new OracleParameter("p1", owner));
+                        con.Open(); 
+                        columnSize = oracleCommand.ExecuteScalar();
+                    }
+
+                }
+                return columnSize;
+            }
+            catch(Exception ex)
+            {
+                return columnSize;
+            }
+
+        }
+
+
     }
 }
