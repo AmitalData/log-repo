@@ -8380,6 +8380,7 @@
     <TypeScriptCompile Include="Workflow\Pipes\ShowFlowVariablesTreeItemPipe.ts" />
     <TypeScriptCompile Include="Workflow\Pipes\ShowFlowVariablesTypeTreeItemPipe.ts" />
     <TypeScriptCompile Include="Workflow\Pipes\ShowTreeItemPipe.ts" />
+    <TypeScriptCompile Include="Workflow\Services\Extended\MicrosoftOffice365Service.ts" />
     <TypeScriptCompile Include="Workflow\Services\Extended\ServiceProviderSubscriptionExtendedService.ts" />
     <TypeScriptCompile Include="Workflow\Services\Extended\WorkflowInstanceExtendedService.ts" />
     <TypeScriptCompile Include="Workflow\Services\Extended\WorkflowVersionExtendedService.ts" />

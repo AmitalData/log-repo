@@ -59,9 +59,9 @@
     <Compile Include="IGraphServices\IGraphClientProfileService.cs" />
     <Compile Include="IGraphServices\Base\IGraphClientResourceService.cs" />
     <Compile Include="IGraphServices\IGraphClientService.cs" />
-    <Compile Include="Models\AuthenticationService\RefreshTokenRequest.cs" />
-    <Compile Include="Models\AuthenticationService\RefreshTokenResponse.cs" />
-    <Compile Include="Models\GraphAPI\GraphAPICallerParams.cs" />
+    <Compile Include="Models\AuthenticationService\RefreshAccessTokenRequest.cs" />
+    <Compile Include="Models\AuthenticationService\RefreshAccessTokenResponse.cs" />
+    <Compile Include="Models\GraphAPI\GraphAPICallerParameters.cs" />
     <Compile Include="Models\MessagesService\Body.cs" />
     <Compile Include="Models\MessagesService\EmailAddress.cs" />
     <Compile Include="Models\MessagesService\Message.cs" />

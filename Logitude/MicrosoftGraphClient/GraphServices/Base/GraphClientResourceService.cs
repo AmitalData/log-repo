@@ -1,21 +1,28 @@
-﻿namespace MicrosoftGraphClient.GraphServices.Base
+﻿using MicrosoftGraphClient.Models.AuthenticationService;
+
+namespace MicrosoftGraphClient.GraphServices.Base
 {
     public abstract class GraphClientResourceService<T>
     {
         protected string Url { get; set; }
-        protected string Token { get; set; }
+        protected string AccessToken { get; set; }
 
-        public GraphClientResourceService(string url, string token)
+        public GraphClientResourceService(string url)
         {
             Url = url;
-            Token = token;
         }
 
         protected abstract T GetInstance();
 
-        public T SetToken(string token)
+        public T SetAccessToken(string accessToken)
         {
-            Token = token;
+            AccessToken = accessToken;
+            return GetInstance();
+        }
+
+        public T SetAccessToken(RefreshAccessTokenRequest refreshAccessTokenRequest)
+        {
+            AccessToken = new GraphClientAuthenticationService().RefreshAccessToken(refreshAccessTokenRequest)?.AccessToken;
             return GetInstance();
         }
     }

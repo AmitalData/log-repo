@@ -1,10 +1,9 @@
-﻿using MicrosoftGraphClient.IGraphServices.Base;
-using MicrosoftGraphClient.Models.AuthenticationService;
+﻿using MicrosoftGraphClient.Models.AuthenticationService;
 
 namespace MicrosoftGraphClient.IGraphServices
 {
-    public interface IGraphClientAuthenticationService : IGraphClientResourceService<IGraphClientAuthenticationService>
+    public interface IGraphClientAuthenticationService
     {
-        RefreshTokenResponse RefreshToken(RefreshTokenRequest refreshTokenRequest);
+        RefreshAccessTokenResponse RefreshAccessToken(RefreshAccessTokenRequest refreshAccessTokenRequest);
     }
 }

@@ -10,7 +10,7 @@ namespace MicrosoftGraphClient.GraphServices
 {
     public class GraphClientMessagesService : GraphClientResourceService<IGraphClientMessagesService>, IGraphClientMessagesService
     {
-        public GraphClientMessagesService(string token = null) : base(GraphClientApiUrls.Messages, token) { }
+        public GraphClientMessagesService() : base(GraphClientApiUrls.Messages) { }
 
         protected override IGraphClientMessagesService GetInstance()
         {
@@ -19,12 +19,12 @@ namespace MicrosoftGraphClient.GraphServices
 
         public Message Get(string messageId)
         {
-            return GraphAPICaller.Call<Message>(new GraphAPICallerParams { Token = Token, Url = Url + "/" + messageId, Method = Method.GET });
+            return GraphAPICaller.Call<Message>(new GraphAPICallerParameters { Url = Url + "/" + messageId, AccessToken = AccessToken, Method = Method.GET });
         }
 
         public string GetEml(string messageId)
         {
-            return GraphAPICaller.Call(new GraphAPICallerParams { Token = Token, Url = Url + "/" + messageId + "/$value", Method = Method.GET });
+            return GraphAPICaller.Call(new GraphAPICallerParameters { Url = Url + "/" + messageId + "/$value", AccessToken = AccessToken, Method = Method.GET });
         }
     }
 }

@@ -10,7 +10,7 @@ namespace MicrosoftGraphClient.GraphServices
 {
     public class GraphClientProfileService : GraphClientResourceService<IGraphClientProfileService>, IGraphClientProfileService
     {
-        public GraphClientProfileService(string token = null) : base(GraphClientApiUrls.Profile, token) { }
+        public GraphClientProfileService() : base(GraphClientApiUrls.Profile) { }
 
         protected override IGraphClientProfileService GetInstance()
         {
@@ -19,7 +19,7 @@ namespace MicrosoftGraphClient.GraphServices
 
         public Profile Get()
         {
-            return GraphAPICaller.Call<Profile>(new GraphAPICallerParams { Token = Token, Url = Url, Method = Method.GET });
+            return GraphAPICaller.Call<Profile>(new GraphAPICallerParameters { Url = Url, AccessToken = AccessToken, Method = Method.GET });
         }
     }
 }

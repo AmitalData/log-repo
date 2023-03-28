@@ -32,6 +32,13 @@
     .event-list-container {
         width: 320px;
     }
+
+    .msal-login-button {
+        margin-left: 20px;
+        width: 50px;
+        display: inline-block;
+        vertical-align: bottom;
+    }
 </style>
 
 
@@ -114,19 +121,20 @@
         </td>
     </tr>
 
-
     <tr class="table-row">
         <td class="table-row-cell">
             <div class="table-row-cell-block">
-                <div>
-                    <button (click)="msalLoginPopup()">Login</button>
-                    <button (click)="logout()">Logout</button>
+                <div *ngIf="!WorkflowProviderSubscription">
+                    <span>Connect Microsoft Office 365</span>
+                    <button class="Button msal-login-button" (click)="openMsalLoginPopup()">Sign In</button>
+                </div>
+                <div *ngIf="WorkflowProviderSubscription">
+                    <span>Successfully connected to Microsoft Office 365 account:
+                        {{WorkflowProviderSubscription.UserEmail}}</span>
                 </div>
             </div>
         </td>
     </tr>
-
-
 
     <tr>
         <td>

@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Net;
-using RestSharp;
 using System.Collections.Generic;
+using RestSharp;
+using Newtonsoft.Json;
 using MicrosoftGraphClient.Models.GraphAPI;
 
 namespace MicrosoftGraphClient.GraphAPI
 {
     public static class GraphAPICaller
     {
-        public static T Call<T>(GraphAPICallerParams graphAPICallerParams)
+        public static T Call<T>(GraphAPICallerParameters graphAPICallerParameters)
         {
-            RestRequest restRequest = GetRestRequest(graphAPICallerParams);
+            RestRequest restRequest = GetRestRequest(graphAPICallerParameters);
             IRestResponse<T> restResponse = new RestClient().ExecuteAsync<T>(restRequest).Result;
             if (IsSuccessResponse(restResponse))
             {
@@ -19,9 +20,9 @@ namespace MicrosoftGraphClient.GraphAPI
             throw new Exception(GetResponseErrorMessage(restResponse));
         }
 
-        public static string Call(GraphAPICallerParams graphAPICallerParams)
+        public static string Call(GraphAPICallerParameters graphAPICallerParameters)
         {
-            RestRequest restRequest = GetRestRequest(graphAPICallerParams);
+            RestRequest restRequest = GetRestRequest(graphAPICallerParameters);
             IRestResponse restResponse = new RestClient().ExecuteAsync(restRequest).Result;
             if (IsSuccessResponse(restResponse))
             {
@@ -30,22 +31,26 @@ namespace MicrosoftGraphClient.GraphAPI
             throw new Exception(GetResponseErrorMessage(restResponse));
         }
 
-        private static RestRequest GetRestRequest(GraphAPICallerParams graphAPICallerParams)
+        private static RestRequest GetRestRequest(GraphAPICallerParameters graphAPICallerParameters)
         {
+            if(graphAPICallerParameters == null)
+            {
+                throw new Exception("Empty graph API caller parameters");
+            }
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            RestRequest restRequest = new RestRequest(graphAPICallerParams?.Url, graphAPICallerParams?.Method ?? Method.GET) { RequestFormat = DataFormat.Json };
-            restRequest = AddAuthorizationHeader(restRequest, graphAPICallerParams?.Token);
-            restRequest = AddHeaders(restRequest, graphAPICallerParams?.RequestHeaders);
-            restRequest = AddParameters(restRequest, graphAPICallerParams?.RequestParameters);
-            restRequest = AddJsonBody(restRequest, graphAPICallerParams?.RequestBody);
+            RestRequest restRequest = new RestRequest(graphAPICallerParameters.Url, graphAPICallerParameters.Method) { RequestFormat = DataFormat.Json };
+            restRequest = AddAuthorizationHeader(restRequest, graphAPICallerParameters.AccessToken);
+            restRequest = AddHeaders(restRequest, graphAPICallerParameters.RequestHeaders);
+            restRequest = AddParameters(restRequest, graphAPICallerParameters.RequestParameters);
+            restRequest = AddJsonBody(restRequest, graphAPICallerParameters.RequestBody);
             return restRequest;
         }
 
-        private static RestRequest AddAuthorizationHeader(RestRequest restRequest, string token)
+        private static RestRequest AddAuthorizationHeader(RestRequest restRequest, string accessToken)
         {
-            if (!string.IsNullOrEmpty(token))
+            if (!string.IsNullOrEmpty(accessToken))
             {
-                restRequest.AddHeader("Authorization", "Bearer " + token);
+                restRequest.AddHeader("Authorization", "Bearer " + accessToken);
             }
             return restRequest;
         }
@@ -78,7 +83,8 @@ namespace MicrosoftGraphClient.GraphAPI
         {
             if (requestBody != null)
             {
-                restRequest.AddJsonBody(requestBody);
+                string requestBodyJson = JsonConvert.SerializeObject(requestBody);
+                restRequest.AddParameter("application/json", requestBodyJson, ParameterType.RequestBody);
             }
             return restRequest;
         }

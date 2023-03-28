@@ -9,19 +9,19 @@ namespace MicrosoftGraphClient.GraphServices
             return new GraphClientAuthenticationService();
         }
 
-        public IGraphClientProfileService Profile(string token = null)
+        public IGraphClientProfileService Profile()
         {
-            return new GraphClientProfileService(token);
+            return new GraphClientProfileService();
         }
 
-        public IGraphClientMessagesService Messages(string token = null)
+        public IGraphClientMessagesService Messages()
         {
-            return new GraphClientMessagesService(token);
+            return new GraphClientMessagesService();
         }
 
-        public IGraphClientSubscriptionsService Subscriptions(string token = null)
+        public IGraphClientSubscriptionsService Subscriptions()
         {
-            return new GraphClientSubscriptionsService(token);
+            return new GraphClientSubscriptionsService();
         }
     }
 }

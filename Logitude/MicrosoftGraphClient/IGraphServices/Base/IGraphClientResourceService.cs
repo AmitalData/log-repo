@@ -1,7 +1,10 @@
-﻿namespace MicrosoftGraphClient.IGraphServices.Base
+﻿using MicrosoftGraphClient.Models.AuthenticationService;
+
+namespace MicrosoftGraphClient.IGraphServices.Base
 {
     public interface IGraphClientResourceService<T>
     {
-        T SetToken(string token);
+        T SetAccessToken(string accessToken);
+        T SetAccessToken(RefreshAccessTokenRequest refreshAccessTokenRequest);
     }
 }

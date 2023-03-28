@@ -10,7 +10,7 @@ namespace MicrosoftGraphClient.GraphServices
 {
     public class GraphClientSubscriptionsService : GraphClientResourceService<IGraphClientSubscriptionsService>, IGraphClientSubscriptionsService
     {
-        public GraphClientSubscriptionsService(string token = null) : base(GraphClientApiUrls.Subscriptions, token) { }
+        public GraphClientSubscriptionsService() : base(GraphClientApiUrls.Subscriptions) { }
 
         protected override IGraphClientSubscriptionsService GetInstance()
         {
@@ -19,7 +19,7 @@ namespace MicrosoftGraphClient.GraphServices
 
         public Subscription Create(CreateSubscriptionRequest createSubscription)
         {
-            return GraphAPICaller.Call<Subscription>(new GraphAPICallerParams { Token = Token, Url = Url, Method = Method.POST, RequestBody = createSubscription });
+            return GraphAPICaller.Call<Subscription>(new GraphAPICallerParameters { Url = Url, AccessToken = AccessToken, Method = Method.POST, RequestBody = createSubscription });
         }
     }
 }

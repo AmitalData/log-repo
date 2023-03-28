@@ -2,7 +2,7 @@
 
 namespace MicrosoftGraphClient.Models.AuthenticationService
 {
-    public class RefreshTokenResponse
+    public class RefreshAccessTokenResponse
     {
         [JsonProperty("access_token")]
         public string AccessToken { get; set; }

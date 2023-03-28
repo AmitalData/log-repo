@@ -22,5 +22,8 @@ namespace MicrosoftGraphClient.Models.SubscriptionsService
 
         [JsonProperty("latestSupportedTlsVersion")]
         public string LatestSupportedTlsVersion { get; set; }
+
+        [JsonProperty("includeResourceData")]
+        public bool IncludeResourceData { get; set; }
     }
 }

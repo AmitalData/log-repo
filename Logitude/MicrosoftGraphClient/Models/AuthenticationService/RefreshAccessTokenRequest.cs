@@ -1,6 +1,6 @@
 ﻿namespace MicrosoftGraphClient.Models.AuthenticationService
 {
-    public class RefreshTokenRequest
+    public class RefreshAccessTokenRequest
     {
         public string RefreshToken { get; set; }
         public string ClientId { get; set; }

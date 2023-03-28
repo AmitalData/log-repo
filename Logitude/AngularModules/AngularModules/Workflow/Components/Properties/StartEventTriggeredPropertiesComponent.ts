@@ -13,6 +13,9 @@ import { ListItem } from "Workflow/Models/ListItem";
 import { MsalService, MSAL_GUARD_CONFIG, MsalGuardConfiguration } from "@azure/msal-angular";
 import { AuthenticationResult, PopupRequest } from "@azure/msal-browser";
 import { MsalConfigurations } from "Workflow/Utilities/MsalConfigurations";
+import { ServiceProviderSubscriptionExtendedService } from "Workflow/Services/Extended/ServiceProviderSubscriptionExtendedService";
+import { ServiceProviderSubscriptionPM } from "Workflow/EntityPMs/ServiceProviderSubscriptionPM";
+import { MicrosoftOffice365Service } from "Workflow/Services/Extended/MicrosoftOffice365Service";
 
 @Component({
     templateUrl: "./StartEventTriggeredPropertiesComponent.html"
@@ -29,6 +32,7 @@ export class StartEventTriggeredPropertiesComponent extends BaseComponent {
     public ValidationErrorsList: string[];
     public StartEventApplicationsListItems: ListItem[];
     public StartEventTypesListItems: ListItem[];
+    public WorkflowProviderSubscription: ServiceProviderSubscriptionPM;
     public BusyIndicatorText: string = null;
     public BusyIndicatorWidth: number = 200;
     public ShowBusyIndicator: boolean = false;
@@ -51,6 +55,7 @@ export class StartEventTriggeredPropertiesComponent extends BaseComponent {
         this.initialize();
         this.initializeStartEventApplicationsList();
         this.initializeStartEventTypesList();
+        this.loadWorkflowProviderSubscription();
     }
 
     initializeWindowEvents() {
@@ -83,6 +88,17 @@ export class StartEventTriggeredPropertiesComponent extends BaseComponent {
 
     initializeStartEventTypesList() {
         this.StartEventTypesListItems = new StartEventTypesList().Items;
+    }
+
+    loadWorkflowProviderSubscription() {
+        this.startBusyIndicator();
+        let serviceProviderSubscriptionExtendedService = new ServiceProviderSubscriptionExtendedService();
+        serviceProviderSubscriptionExtendedService.getByWorkflowNumber(this.WorkflowNumber).subscribe(serviceResponse => {
+            if (!serviceResponse.HasError) {
+                this.WorkflowProviderSubscription = serviceResponse.Data;
+            }
+            this.stopBusyIndicator();
+        });
     }
 
     setDefaultData() {
@@ -119,7 +135,7 @@ export class StartEventTriggeredPropertiesComponent extends BaseComponent {
         }
     }
 
-    msalLoginPopup() {
+    openMsalLoginPopup() {
         let popupRequest: PopupRequest = this.msalGuardConfig.authRequest ?
             { ...this.msalGuardConfig.authRequest, scopes: MsalConfigurations.LoginScopes } :
             { scopes: MsalConfigurations.LoginScopes };
@@ -127,6 +143,18 @@ export class StartEventTriggeredPropertiesComponent extends BaseComponent {
         this.authService.loginPopup(popupRequest).subscribe((authenticationResult: AuthenticationResult) => {
             console.log(authenticationResult);
             console.log(this.getMsalRefreshToken(authenticationResult));
+
+            let accessToken = authenticationResult.accessToken;
+            let refreshToken = this.getMsalRefreshToken(authenticationResult);
+
+            this.startBusyIndicator();
+            let microsoftOffice365Service = new MicrosoftOffice365Service();
+            microsoftOffice365Service.createSubscription(this.WorkflowNumber, accessToken, refreshToken).subscribe(serviceResponse => {
+                if (!serviceResponse.HasError) {
+                    this.WorkflowProviderSubscription = serviceResponse.Data;
+                }
+                this.stopBusyIndicator();
+            });
         });
     }
 
@@ -143,11 +171,11 @@ export class StartEventTriggeredPropertiesComponent extends BaseComponent {
         return null;
     }
 
-    logout() {
-        this.authService.logoutPopup({
-            mainWindowRedirectUri: "/"
-        });
-    }
+    // logout() {
+    //     this.authService.logoutPopup({
+    //         mainWindowRedirectUri: "/"
+    //     });
+    // }
 
     startBusyIndicator(message: string = "Loading ...") {
         this.BusyIndicatorText = message;

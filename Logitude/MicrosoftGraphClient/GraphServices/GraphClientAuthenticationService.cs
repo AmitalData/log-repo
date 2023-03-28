@@ -1,5 +1,4 @@
 ﻿using RestSharp;
-using MicrosoftGraphClient.GraphServices.Base;
 using MicrosoftGraphClient.IGraphServices;
 using MicrosoftGraphClient.Constants;
 using MicrosoftGraphClient.GraphAPI;
@@ -9,32 +8,51 @@ using System.Collections.Generic;
 
 namespace MicrosoftGraphClient.GraphServices
 {
-    public class GraphClientAuthenticationService : GraphClientResourceService<IGraphClientAuthenticationService>, IGraphClientAuthenticationService
+    public class GraphClientAuthenticationService : IGraphClientAuthenticationService
     {
-        public GraphClientAuthenticationService() : base(GraphClientApiUrls.Authentication, null) { }
+        protected string Url { get; set; }
 
-        protected override IGraphClientAuthenticationService GetInstance()
+        public GraphClientAuthenticationService()
         {
-            return this;
+            Url = GraphClientApiUrls.Authentication;
         }
 
-        public RefreshTokenResponse RefreshToken(RefreshTokenRequest refreshTokenRequest)
+        public RefreshAccessTokenResponse RefreshAccessToken(RefreshAccessTokenRequest refreshAccessTokenRequest)
+        {
+            if(refreshAccessTokenRequest != null)
+            {
+                Dictionary<string, string> requestHeaders = GetRequestHeaders();
+                Dictionary<string, string> requestParameters = GetRequestParameters(refreshAccessTokenRequest);
+                return GraphAPICaller.Call<RefreshAccessTokenResponse>(new GraphAPICallerParameters
+                {
+                    Url = Url + "/token",
+                    Method = Method.POST,
+                    RequestHeaders = requestHeaders,
+                    RequestParameters = requestParameters
+                });
+            }
+            return null;
+        }
+
+        private Dictionary<string, string> GetRequestHeaders()
         {
             Dictionary<string, string> requestHeaders = new Dictionary<string, string>();
-            Dictionary<string, string> requestParameters = new Dictionary<string, string>();
             requestHeaders.Add("Content-Type", "application/x-www-form-urlencoded");
             requestHeaders.Add("Origin", "");
-            requestParameters.Add("grant_type", "refresh_token");
-            requestParameters.Add("client_id", refreshTokenRequest.ClientId ?? "");
-            requestParameters.Add("refresh_token", refreshTokenRequest.RefreshToken ?? "");
-            requestParameters.Add("scope", refreshTokenRequest.Scopes != null && refreshTokenRequest.Scopes.Length > 0 ? string.Join(" ", refreshTokenRequest.Scopes) : "");
-            return GraphAPICaller.Call<RefreshTokenResponse>(new GraphAPICallerParams
+            return requestHeaders;
+        }
+
+        private Dictionary<string, string> GetRequestParameters(RefreshAccessTokenRequest refreshAccessTokenRequest)
+        {
+            Dictionary<string, string> requestParameters = new Dictionary<string, string>();
+            if(refreshAccessTokenRequest != null)
             {
-                Url = Url + "/token",
-                Method = Method.POST,
-                RequestHeaders = requestHeaders,
-                RequestParameters = requestParameters
-            });
+                requestParameters.Add("grant_type", "refresh_token");
+                requestParameters.Add("client_id", refreshAccessTokenRequest.ClientId ?? "");
+                requestParameters.Add("refresh_token", refreshAccessTokenRequest.RefreshToken ?? "");
+                requestParameters.Add("scope", refreshAccessTokenRequest.Scopes != null && refreshAccessTokenRequest.Scopes.Length > 0 ? string.Join(" ", refreshAccessTokenRequest.Scopes) : "");
+            }
+            return requestParameters;
         }
     }
 }
