@@ -68,6 +68,7 @@ export const Components =
         DeclarationCargoSealTabComponent,
         ExportDeclarationComponent,
         ExportDeclarationClosureComponent,
+
         DeclarationPendingsGeneralComponent,
         DeclarationExportStorageComponent,
         ComprehensiveUpdateConsignment
