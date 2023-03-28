@@ -5,8 +5,9 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+import { CustomFieldList } from '../../Infrastructure/EntityLists/CustomFieldList';
 
-export class TaskList {
+export class TaskList extends CustomFieldList {
    
 	Id: string;
 	Tenant: number;
