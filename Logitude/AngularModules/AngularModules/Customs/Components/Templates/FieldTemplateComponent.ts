@@ -42,6 +42,7 @@ export class FieldTemplateComponent {
     public SpotlightDataTemplate: string = null;
     public IsSpotLightTemplate: boolean = false;
     public IsHeaderScreenTemplate: boolean = false;
+    public closingOpening: string = null;
     courierMasterService: CourierMasterService = new CourierMasterService();
     customsAutonomyKeywordExtendedPMService: CustomsAutonomyKeywordExtendedPMService = new CustomsAutonomyKeywordExtendedPMService();
 
@@ -89,6 +90,12 @@ export class FieldTemplateComponent {
 
         if (this.IsSpotLightTemplate) {
             this.RunComponent();
+        } 
+        if(this.Entity['IsClosedForFollowUp']== "0"){
+            this.closingOpening = TextCodeTranslator.Translate("Customs.DeclarationReferantData.O.CloseCustomFile")
+        } 
+        if(this.Entity['IsClosedForFollowUp'] == "1"){
+            this.closingOpening = TextCodeTranslator.Translate("Customs.DeclarationReferantData.O.OpenCustomFile")
         }
     }
 
@@ -684,6 +691,42 @@ export class FieldTemplateComponent {
         }
 
 
+    }
+
+    ClosingOpeningFileNo(){
+        var confirm = new ConfirmWindow(); 
+        confirm.Width = 350;
+        if(this.Entity['IsClosedForFollowUp']== "0")
+            confirm.Show(TextCodeTranslator.Translate("Customs.DeclarationReferantData.O.ConfirmCloseFile"));
+        else
+            confirm.Show(TextCodeTranslator.Translate("Customs.DeclarationReferantData.O.ConfirmOpenFile"));
+        confirm.WindowClosed.subscribe(() => {
+            if (confirm.Yes) {
+                SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+
+              
+                this._declarationReferantDataPMService.get(this.Entity?.DeclarationId).subscribe((getResponse: any) => {
+                    if (getResponse?.Result) {
+
+                        const declarationReferantDataPM=getResponse.Result;
+                        declarationReferantDataPM.IsClosedForFollowUp = declarationReferantDataPM.IsClosedForFollowUp == "0" ? "1" : "0";
+                        declarationReferantDataPM.IsCloseOrOpenFromUser = true;
+                        this._declarationReferantDataPMService.update(declarationReferantDataPM).subscribe((UpdateResponse: any) => {
+                            
+                            SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                            SessionLocator.SelectedSession.StopBusyIndicator();
+                        });
+                        
+                    }
+                    else{
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+                    }
+                });
+            }
+            confirm.Close();
+       
+        });
+                      
     }
 
     ShowDeclaration(event) {
