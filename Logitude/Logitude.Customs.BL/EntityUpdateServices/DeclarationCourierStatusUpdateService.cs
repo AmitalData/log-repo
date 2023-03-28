@@ -107,14 +107,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                     else
                     {
-                        if (consignmentList.Find(c => c.StorageSiteCode == "ILMMN") != null)
+                        /*if (consignmentList.Find(c => c.StorageSiteCode == "ILMMN") != null)
                         {
                             DateTime stopLogAtTest = new DateTime(2025, 06, 01);
                             LogitudeSettings.HandleLogMe(" sendtomassof - Update ", false, "CreateUD2LTService", stopLogAtTest);
 
 
                             this.SendToMassof(entityPM, entityPOCO, "ILMMN");
-                        }
+                        }*/
                     }
                 }
             }
