@@ -13,6 +13,8 @@ using Newtonsoft.Json;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.DataContracts;
+using System.Reflection;
 
 namespace Logitude.Workflow.BL.EntityUpdateServices
 {
@@ -50,6 +52,7 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
         private void CalculateFieldChanges(TaskPM entityPM)
         {
             Mapping.PMToOldPM(entityPM, OldEntityPM);
+            AddCustomFieldsValueChanges(entityPM, OldEntityPM);
 
             OldEntityPM.ChangedProperties.ForEach(change =>
             {
@@ -60,6 +63,38 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
                     NewValue = change.NewValue
                 });
             });
+        }
+
+        private void AddCustomFieldsValueChanges(TaskPM entityPM, TaskPM oldEntityPM)
+        {
+            ObjectTable objcetTable = new ObjectTableRepository(0).GetObjectTableByName("Task", 0, true);
+
+            for (int i = 1; i <= objcetTable.MaxNumberOfCustomFields; i++)
+            {
+                AddCustomFieldValueChange(("Field" + i.ToString()), entityPM, oldEntityPM);
+            }
+        }
+
+        private void AddCustomFieldValueChange(string fieldName, TaskPM entityPM, TaskPM oldEntityPM)
+        {
+            var customFieldValue = GetFieldValue(entityPM, fieldName);
+            var oldCustomFieldValue = GetFieldValue(oldEntityPM, fieldName);
+
+            FieldChange.Add(oldCustomFieldValue, customFieldValue, fieldName, FieldChanges);
+        }
+
+        private static object GetFieldValue(object entityPM, string fieldName)
+        {
+            var fieldProperty = entityPM.GetType().GetProperty(fieldName, BindingFlags.Public | BindingFlags.Instance);
+            if (fieldProperty == null) return null;
+
+            var customFieldValue = fieldProperty.GetValue(entityPM, null);
+            if (customFieldValue != null && customFieldValue.GetType() == typeof(CustomFieldClass))
+            {
+                CustomFieldClass c = customFieldValue as CustomFieldClass;
+                customFieldValue = c.Value;
+            }
+            return customFieldValue;
         }
 
         private void CreateTaskExtended(TaskPM entityPM)

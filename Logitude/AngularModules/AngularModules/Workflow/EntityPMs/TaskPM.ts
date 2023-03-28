@@ -13,13 +13,16 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { CustomChildEntity } from '../../Infrastructure/EntityPMs/CustomChildEntity';
+import { ObjectCustomFieldPM } from '../../Infrastructure/EntityPMs/ObjectCustomFieldPM';
 
-export class TaskPM {
+export class TaskPM extends ObjectCustomFieldPM {
       
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-                    this.UIProperties = new UIProperties(this); 
+          super("Task");
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -204,6 +207,10 @@ export class TaskPM {
     public set StartDate(newValue: Date) { if (this.startDate != newValue) { this.startDate = newValue; this.MarkAsDirty("StartDate"); } }
        
 	 
+    private customChildEntities: CustomChildEntity[];
+    public get CustomChildEntities() { return this.customChildEntities; }
+    public set CustomChildEntities(newValue: CustomChildEntity[]) { if (this.customChildEntities != newValue) { this.customChildEntities = newValue; this.MarkAsDirty("CustomChildEntities"); } }
+
 
     public OldEntityPM: TaskPM;
 		
