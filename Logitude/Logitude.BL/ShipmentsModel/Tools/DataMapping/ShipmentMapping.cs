@@ -1224,6 +1224,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
         private static void MapTotalsOfPackages(ShipmentPM entityPM, Shipment entityPoco)
         {
+            if (IsLogboxEnvironment()) return;
             List<ShipmentPackagePM> shipmentPackages = entityPM.ShipmentPackages.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
             if (shipmentPackages == null || (shipmentPackages != null && shipmentPackages.Count == 0))
             {
@@ -4496,6 +4497,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             shipmentPM.MasterShipmentDataId = masterShipment.Id;
 
             return shipmentPM;
+        }
+        
+        private static bool IsLogboxEnvironment()
+        {
+            return !string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && (LogitudeSettings.DeploymentStage.ToLower() == "logboxpre" || LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1");
         }
     }
 }
