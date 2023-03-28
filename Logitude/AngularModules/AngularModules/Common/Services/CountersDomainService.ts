@@ -299,4 +299,5 @@ export class CounterAPIHelper {
     CounterPM: CounterPM;
     TenantSettings: TenantSettingPM[] = [];
     CounterDefinitions: CounterDefinitionPM[] = [];
+    IsCustomized: boolean;
 }

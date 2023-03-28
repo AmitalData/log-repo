@@ -2104,6 +2104,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentType\Tab\DocumentTypeCopyDetailsComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\AccountingSettings\AccountingAdvancedAPSettingsComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\Counters\EditComponents\CustomizedARInvoiceCounterComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Services\CustomizedARInvoiceCounterValidatingService.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\PaymentGateway\PaymentGatewayComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\SystemCurrencies\ChangeCurrencyComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\SystemDefaults\DefaultRatiosComponent.ts" />

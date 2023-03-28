@@ -27,7 +27,18 @@
             <div style="width: 360px; padding-left: 10px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; display:inline-block">
                 <table>
                     <tr style="height: 30px; border: 1px solid #D1D1D1; border-bottom: 0px;" class="CounterItemBackground">
-                        <td class="Value" style="padding-left: 10px;">{{customizedCounterItem.SeriesCode}}</td>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td class="Value" style="padding-left: 10px; width: 90%">
+                                        {{customizedCounterItem.SeriesCode}}
+                                    </td>
+                                    <td style="width:10%" *ngIf="j != 0">
+                                        <IconButton [IsSmall]="true" [Name]="'Delete'" [IsIconOnly]="true" (click)="DeleteCustomizedCounterItem(customizedCounterItem)"></IconButton>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
                     </tr>
 
                     <tr style="height: 270px;">
@@ -96,10 +107,10 @@
                                                         </td>
 
                                                         <td>
-                                                            <div *ngFor="let invoiceCode of InvoicesCodes; let i = index">
+                                                            <div *ngFor="let invoicesType of InvoicesTypes; let i = index">
                                                                 <div *ngIf="i % 2 == 0" style="display: flex; padding-bottom:5px">
-                                                                    <CheckBox style="width:100px" [IsEnabled]="EnabledInvoiceType(invoiceCode, customizedCounterItem.SeriesCode)" [IsChecked]="customizedCounterItem.IsInvoiceChecked(invoiceCode)" (Checked)="customizedCounterItem.AddRemoveCounterDefinition(invoiceCode ,$event)" [Text]="invoiceCode"></CheckBox>
-                                                                    <CheckBox style="width:120px" *ngIf="i + 1 < InvoicesCodes.length" [IsEnabled]="EnabledInvoiceType(InvoicesCodes[i+1], customizedCounterItem.SeriesCode)" [IsChecked]="customizedCounterItem.IsInvoiceChecked(InvoicesCodes[i+1])" (Checked)="customizedCounterItem.AddRemoveCounterDefinition(InvoicesCodes[i+1] ,$event)" [Text]="InvoicesCodes[i+1]"></CheckBox>
+                                                                    <CheckBox style="width:100px" [IsEnabled]="EnabledInvoiceType(invoicesType.Code, customizedCounterItem.SeriesCode)" [IsChecked]="customizedCounterItem.IsInvoiceChecked(invoicesType.Code)" (Checked)="customizedCounterItem.AddRemoveCounterDefinition(invoicesType.Code ,$event)" [Text]="invoicesType.DisplayText"></CheckBox>
+                                                                    <CheckBox style="width:120px" *ngIf="i + 1 < InvoicesTypes.length" [IsEnabled]="EnabledInvoiceType(InvoicesTypes[i+1].Code, customizedCounterItem.SeriesCode)" [IsChecked]="customizedCounterItem.IsInvoiceChecked(InvoicesTypes[i+1].Code)" (Checked)="customizedCounterItem.AddRemoveCounterDefinition(InvoicesTypes[i+1].Code ,$event)" [Text]="InvoicesTypes[i+1].DisplayText"></CheckBox>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -125,7 +136,7 @@
                 </table>
             </div>
             <div *ngIf="j == CustomizedCounterItems.length - 1 && j != 6" style="vertical-align: top; padding-top: 12px; width: 25px; display:inline-block">
-                <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddCustomizedCounterItem()"></IconButton>
+                <IconButton [IsEnabled]="!DisableAddCustomizedCounterItems()" [Name]="'Add'" [IsSmall]="true" (click)="AddCustomizedCounterItem()"></IconButton>
             </div>
 
         </div>
