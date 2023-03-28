@@ -343,6 +343,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         if (this.emptyPickupLocationPort != value) {
             this.emptyPickupLocationPort = value;
             this.EntityPM.EmptyPickupLocationName = value?.EnglishName;
+            this.EntityPM.EmptyPickupLocation = value?.CombinedCode;
         }
     }
 
@@ -352,6 +353,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         if (this.preCarriageLocationPort != value) {
             this.preCarriageLocationPort = value;
             this.EntityPM.PreCarriageLocationName = value?.EnglishName;
+            this.EntityPM.PreCarriageLocation = value?.CombinedCode;
         }
     }
 
@@ -361,6 +363,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         if (this.pOLLocationPort != value) {
             this.pOLLocationPort = value;
             this.EntityPM.POLLocationName = value?.EnglishName;
+            this.EntityPM.POLLocation = value?.CombinedCode;
         }
     }
 
@@ -370,6 +373,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         if (this.transshipment1LocationPort != value) {
             this.transshipment1LocationPort = value;
             this.EntityPM.Transshipment1LocationName = value?.EnglishName;
+            this.EntityPM.Transshipment1Location = value?.CombinedCode;
         }
     }
 
@@ -379,6 +383,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         if (this.transshipment2LocationPort != value) {
             this.transshipment2LocationPort = value;
             this.EntityPM.Transshipment2LocationName = value?.EnglishName;
+            this.EntityPM.Transshipment2Location = value?.CombinedCode;
         }
     }
 
@@ -388,6 +393,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         if (this.transshipment3LocationPort != value) {
             this.transshipment3LocationPort = value;
             this.EntityPM.Transshipment3LocationName = value?.EnglishName;
+            this.EntityPM.Transshipment3Location = value?.CombinedCode;
         }
     }
 
@@ -397,6 +403,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         if (this.pODLocationPort != value) {
             this.pODLocationPort = value;
             this.EntityPM.PODLocationName = value?.EnglishName;
+            this.EntityPM.PODLocation = value?.CombinedCode;
         }
     }
 
@@ -406,6 +413,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         if (this.onCarriageLocationPort != value) {
             this.onCarriageLocationPort = value;
             this.EntityPM.OnCarriageLocationName = value?.EnglishName;
+            this.EntityPM.OnCarriageLocation = value?.CombinedCode;
         }
     }
 
@@ -415,6 +423,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         if (this.emptyReturnLocationPort != value) {
             this.emptyReturnLocationPort = value;
             this.EntityPM.EmptyReturnLocationName = value?.EnglishName;
+            this.EntityPM.EmptyReturnLocation = value?.CombinedCode;
         }
     }
 }
