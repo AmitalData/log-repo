@@ -179,8 +179,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                          _MyDeclarationPM = myQueryService.GetSingle(requestParams.AppicationId, true, false);
                     if (_MyDeclarationPM != null)
                     {
-                        _MyDeclarationPM.IsSubmitDeclaration = false;
-                        myDeclarationUpdateService.Update(_MyDeclarationPM, true);
+                        //_MyDeclarationPM.IsSubmitDeclaration = false;
+                        //myDeclarationUpdateService.Update(_MyDeclarationPM, true);
                     }
                 }
 

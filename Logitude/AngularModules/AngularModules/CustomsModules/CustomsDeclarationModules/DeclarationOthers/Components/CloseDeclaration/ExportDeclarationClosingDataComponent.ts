@@ -74,11 +74,11 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     public SupplierInvoiceItemList: SupplierInvoiceItemList[] = [];
     public IsNew: boolean = false;
     private exportDeclarationClosingWebService: ExportDeclarationClosingWebService = new ExportDeclarationClosingWebService();
+ 
     public ActualSailingDate: string = "תאריך הפלגה בפועל";
     public ActualTakeOffDate: string = "תאריך המראה בפועל";
-
     public TypeCodeFilterItems: ApiQueryFilters;
-
+ 
     ManifestNumberPlaceholder: string = '';
     SecondCargoIdPlaceholder: string = '';
     ThirdCargoIdPlaceholder: string = '';
@@ -123,8 +123,10 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
 
                 this.SetUIProperty();
-            if (this.DecPM.IsExportClosed && (!this.DecPM.AmendmentDontDisplayInList || (this.DecPM.AmendmentDontDisplayInList && !AppTool.IsNullOrEmpty(this.DecPM.AmendmentStatus)))) {
-                   this.IsReadOnly = true
+ 
+                if (this.DecPM.IsExportClosed && (!this.DecPM.AmendmentDontDisplayInList || (this.DecPM.AmendmentDontDisplayInList && !AppTool.IsNullOrEmpty(this.DecPM.AmendmentStatus)))) {
+                     this.IsReadOnly = true
+ 
                     this.setInputsReadOnly();
                 }
                 else {
@@ -487,19 +489,20 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     async SendButtonClicked(event: CustomSendOptionsArgs) {
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.FinalCargoTypeCode)) {
-            var msg = " שדה סוג מזהה מטען שדה חובה";
+            var msg = " ×©×“×” ×¡×•×’ ×ž×–×”×” ×ž×˜×¢×Ÿ ×©×“×” ×—×•×‘×”";
             this.ValidationErrors.push(msg);
             this.FillValidationErrors("Errors");
         }
         else {
             if (AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber)) {
-                var msg = " שדה מזהה מטען ראשון שדה חובה";
+                var msg = " ×©×“×” ×ž×–×”×” ×ž×˜×¢×Ÿ ×¨×�×©×•×Ÿ ×©×“×” ×—×•×‘×”";
+
                 this.ValidationErrors.push(msg);
                 this.FillValidationErrors("Errors");
             }
             else {
                 if (AppTool.IsNullOrEmpty(this.FinalSecondCargoId) && !AppTool.IsNullOrEmpty(this.SecondCargoIdPlaceholder)) {
-                    var msg = " שדה מזהה מטען שני שדה חובה";
+                    var msg = " ×©×“×” ×ž×–×”×” ×ž×˜×¢×Ÿ ×©× ×™ ×©×“×” ×—×•×‘×”";
                     this.ValidationErrors.push(msg);
                     this.FillValidationErrors("Errors");
                 }
@@ -509,7 +512,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
 
                     if (AppTool.IsNullOrEmpty(this.EntityPM.LoadingDateTime)) {
-                        var msg = " שדה תאריך טעינה שדה חובה";
+                        var msg = " ×©×“×” ×ª×�×¨×™×š ×˜×¢×™× ×” ×©×“×” ×—×•×‘×”";
 
                         this.ValidationErrors.push(msg);
                         this.FillValidationErrors("Errors");
@@ -622,9 +625,13 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
     SendAmendmentCloseDeclaration(event: CustomSendOptionsArgs) {
 
+ 
+
+ 
+
         this.CurrentSession.StartBusyIndicator("שליחת מסר סגירת הצהרה");
         let objecttableId = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0].Id;
-        var searchParams: AmendmentRequestParams = new AmendmentRequestParams();
+          var searchParams: AmendmentRequestParams = new AmendmentRequestParams();
         searchParams.Tenant = SessionLocator.Tenant;
         searchParams.AppicationId = this.EntityPM.DeclarationId;
         searchParams.LoggingEnabled = true;
@@ -695,7 +702,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         windowArgs.Errors = this.ValidationErrors;
         windowArgs.ComponentHeight = '328px';
         windowArgs.CancelButtonVisibility = true
-        var windowTitle = "בדיקת צירוף תעודות מקור";
+        var windowTitle = "×‘×“×™×§×ª ×¦×™×¨×•×£ ×ª×¢×•×“×•×ª ×ž×§×•×¨";
         var logWindow = new LogitudeWindow();
         logWindow.Width = 600;
         logWindow.Height = 400;
@@ -729,7 +736,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         logWindow.WindowClosed.subscribe(($event: any) => this.OnAddEditWindowClosed($event));
         logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
     }
-    FillValidationWarnings(title: string) {
+     FillValidationWarnings(title: string) {
         this.CurrentSession.StopBusyIndicator();
         var windowArgs: any = {};
         windowArgs.Warning = this.ValidationErrors;
@@ -746,6 +753,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         logWindow.WindowClosed.subscribe(($event: any) => this.OnWarningsWindowClosed($event));
         logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
     }
+ 
     OnAddEditWindowClosed(event) {
 
         this.ValidationErrors = [];
@@ -823,7 +831,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         if (this.ValidationErrors.length > 0)
             this.FillValidationWarnings("Warnings");
         else*/
-        this.CurrentSession.CurrentEditComponent.StartBusyIndicator("שמירה");
+        this.CurrentSession.CurrentEditComponent.StartBusyIndicator("×©×ž×™×¨×”");
 
 
         if (this.IsNew) {
@@ -855,7 +863,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                             var exists = [];
                                 exists = this.ModificationsList.Collection.filter(d => d.TypeCode == typeCode && d.InvoiceCounterKey == mod.InvoiceCounterKey);
                             if (exists.length > 1) {
-                                var txt = TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType") + " - הפחתות/התאמות";
+                                var txt = TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType") + " - ×”×¤×—×ª×•×ª/×”×ª×�×ž×•×ª";
                                 if (!validationErrors.includes(txt)) {
                                     validationErrors.push(txt);
                                     if (!this.ValidationErrors.includes(txt)) {
@@ -1009,7 +1017,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
             "BFIHMAIN.LogitudeTask",
             "CustomExportCloseFile",
             unifreightMessageM,
-            "נתונים תפעולים בסגירת הצהרה");
+            "× ×ª×•× ×™×� ×ª×¤×¢×•×œ×™×� ×‘×¡×’×™×¨×ª ×”×¦×”×¨×”");
 
     }
    
@@ -1064,7 +1072,7 @@ export class ModificationItemModel extends BaseComponent {
             if (value == "I02") {
                 this.ModificationPM.TypeCode = value;
                 this.isValid = false;
-                this.parent.ValidationErrors.push(TextCodeTranslator.Translate("Customs.Declaration.O.CalculatedFee") + " - הפחתות/התאמות");
+                this.parent.ValidationErrors.push(TextCodeTranslator.Translate("Customs.Declaration.O.CalculatedFee") + " - ×”×¤×—×ª×•×ª/×”×ª×�×ž×•×ª");
             } else {
                 var exists_prev = [];
                 if (this.entityParentPM.SupplierInvoiceModifications.length != 0) {
@@ -1080,7 +1088,7 @@ export class ModificationItemModel extends BaseComponent {
                 if (exists) {
                     this.ModificationPM.TypeCode = value;
                     this.isValid = false;
-                    this.parent.ValidationErrors.push(TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType") + " - הפחתות/התאמות");
+                    this.parent.ValidationErrors.push(TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType") + " - ×”×¤×—×ª×•×ª/×”×ª×�×ž×•×ª");
                 } else {
                     this.ModificationPM.TypeCode = value;
                     this.isValid = true;
@@ -1159,7 +1167,7 @@ export class ModificationItemModel extends BaseComponent {
                     this.parent.DecPM.SupplierInvoices.find(x => x.InvoiceCounterKey == selectedItem.InvoiceCounterKey).SupplierInvoiceModifications.push(this.ModificationPM);
                 }
                 else {
-                   //לא ניתן לשנות חשבון לשורה שמורה
+                   //×œ×� × ×™×ª×Ÿ ×œ×©× ×•×ª ×—×©×‘×•×Ÿ ×œ×©×•×¨×” ×©×ž×•×¨×”
                     
                 }
             }

@@ -29,6 +29,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
             this.repository = repository;
         }
 
+
         public TenantManagmentPrivateLabelsPM GetSinglePM(string id)
         {
             TenantManagmentPrivateLabelsPM entity = (from a in repository.context.TenantManagmentPrivateLabels
@@ -57,6 +58,16 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                          }).FirstOrDefault();
 
             return entity;
+        }
+
+        public TenantManagmentPrivateLabelsPM GetSingleActivePMByUrl_Cache(string url)
+        {
+            string entityKeyString = $"GetSingleActivePMByUrl_Cache({url})";
+            var res = CacheManager
+                .GetOrInsertNewObject<TenantManagmentPrivateLabelsPM>(entityKeyString,
+                () => { return this.GetSingleActivePMByUrl(url); });
+            return res;
+
         }
         public TenantManagmentPrivateLabelsPM GetSingleActivePMByUrl(string url)
         {
@@ -88,6 +99,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
             return entity;
         }
+
         public TenantManagmentPrivateLabelsList GetSingleList(string id)
         {
             TenantManagmentPrivateLabelsList entity = (from a in repository.context.TenantManagmentPrivateLabels
@@ -117,6 +129,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
             return entity;
         }
+
+       
         public IQueryable<TenantManagmentPrivateLabelsPM> GetTenantManagmentPrivateLablesPMs()
         {
             return (from a in repository.context.TenantManagmentPrivateLabels
@@ -143,6 +157,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         HasLogboxAccess = a.HasLogboxAccess,
                     });
         }
+
         public IQueryable<TenantManagmentPrivateLabelsList> GetTenantManagmentPrivateLablesLists()
         {
             return (from a in repository.context.TenantManagmentPrivateLabels
@@ -169,7 +184,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         HasLogboxAccess = a.HasLogboxAccess,
                     });
         }
-
 
         public IQueryable<TenantManagmentPrivateLabelsList> GetIQueryableEntityList(IQueryable<TenantManagmentPrivateLabels> iQueryable)
         {

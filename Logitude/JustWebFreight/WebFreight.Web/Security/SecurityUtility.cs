@@ -132,7 +132,7 @@ namespace WebFreight.Web.Security
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
                         TenantManagmentPrivateLabelsQuery query = new TenantManagmentPrivateLabelsQuery(0);
-                        privatelabel = query.GetSingleActivePMByUrl(url);
+                        privatelabel = query.GetSingleActivePMByUrl_Cache(url);
                         if (privatelabel != null)
                         {
                             IGlobalContext globalContext = GlobalContext.GetContext();

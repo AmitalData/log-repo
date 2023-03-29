@@ -28,7 +28,7 @@ namespace WebFreight.Web.App_Code
                 if (!url.Contains("system.logitudeworld.com") && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
                 {
                     TenantManagmentPrivateLabelsQuery query = new TenantManagmentPrivateLabelsQuery(0);
-                    var privatelabel = query.GetSingleActivePMByUrl(url);
+                    var privatelabel = query.GetSingleActivePMByUrl_Cache(url);
                     if (privatelabel != null)
                     {
                         datainByte = privatelabel.MainLogo;
@@ -129,7 +129,7 @@ namespace WebFreight.Web.App_Code
             if (!url.Contains("system.logitudeworld.com") && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
             {
                 TenantManagmentPrivateLabelsQuery query = new TenantManagmentPrivateLabelsQuery(0);
-                var privatelabel = query.GetSingleActivePMByUrl(url);
+                var privatelabel = query.GetSingleActivePMByUrl_Cache(url);
                 if (privatelabel != null)
                 {
                     PrivateLableArgs.Id = privatelabel.Id;

@@ -71,7 +71,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
                     p1.Value = myLOGITUDE_FILE;
                     cmd.Parameters.Add(p1);
                     var p2 = cmd.CreateParameter();
-                    p2.ParameterName = "p2"; p2.DbType = System.Data.DbType.Double;
+                    p2.ParameterName = "p2"; p2.DbType = System.Data.DbType.VarNumeric;
                     p2.Value = fileNo;
                     cmd.Parameters.Add(p2);
 

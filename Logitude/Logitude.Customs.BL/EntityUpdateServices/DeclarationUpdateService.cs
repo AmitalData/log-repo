@@ -205,6 +205,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (string.IsNullOrWhiteSpace(entityPM.DeclarationTypeCode))
             {
                 if (entityPM.Direction == "E") { entityPM.DeclarationTypeCode = "2"; } else { entityPM.DeclarationTypeCode = "1"; }
+
             }
             if (entityPM.IsCourierDeclaration)
             {
@@ -221,6 +222,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 var XMLdrityMessage = courierECSWSTHRMessageRequestService.DeserializeXmlNode(drityMessage);
                                 var res = courierECSWSTHRMessageRequestService.BuildUpdateHawbStatus(entityPM.Id, entityPM.Tenant, XMLdrityMessage);
                             }
+
+                
+            }
                      
                     }
 
@@ -1404,8 +1408,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 bool dirty = false;
 
- 
-                if ((entityPM.IsAmendment != true) || entityPM.Direction != "E"/*|| entityPM.ChangeSetOp != ChangeSetOperation.Update*/)
+                if (entityPM.Direction != "E")
                  {
                     int index = 0;
                     foreach (Consignment item in consignments)
@@ -1456,15 +1459,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 item.SequenceNumeric = e_index;
                             }
                             consignmentRepository.Update(item);
-
                             ConsignmentPM itemPM = (from a in entityPM.Consignments
-
                                                     where a.DeclarationId == item.DeclarationId && a.ConsignmentNumber == item.ConsignmentNumber
-
                                                     select a).FirstOrDefault();
-
                             itemPM.SequenceNumeric = item.SequenceNumeric;
 
+                        }
                         }
 
                     }

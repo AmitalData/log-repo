@@ -20,9 +20,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
-        public bool GetExistByCargoKey(string id, string cargoIdentifierKey1, string cargoIdentifierKey2, string cargoIdentifierKey3, string cargoIdentifierType)
+        public bool GetExistByCargoKey(string id, string cargoIdentifierKey1, string cargoIdentifierKey2, string cargoIdentifierKey3, string cargoIdentifierType,int tenant)
         {
-            return new LogisticActionRequestRepository(Tenant).GetExistByCargoKey(id, cargoIdentifierKey1, cargoIdentifierKey2, cargoIdentifierKey3, cargoIdentifierType);
+            return new LogisticActionRequestRepository(Tenant).GetExistByCargoKey(id, cargoIdentifierKey1, cargoIdentifierKey2, cargoIdentifierKey3, cargoIdentifierType,tenant);
             
         }
 

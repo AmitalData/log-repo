@@ -69,7 +69,7 @@ namespace Logitude.Server.Tools.Helpers
                                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
                                 {
                                     TenantManagmentPrivateLabelsRepository query = new TenantManagmentPrivateLabelsRepository();
-                                    privatelabel = query.GetSingleTenantManagmentPrivateLabelByURL(url);
+                                    privatelabel = query.GetSingleTenantManagmentPrivateLabelByURL_Cache(url);
                                     scope.Complete();
 
                                 }
@@ -189,7 +189,7 @@ namespace Logitude.Server.Tools.Helpers
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
                         {
                             TenantManagmentPrivateLabelsRepository query = new TenantManagmentPrivateLabelsRepository();
-                            privatelabel = query.GetSingleTenantManagmentPrivateLabelByURL(url);
+                            privatelabel = query.GetSingleTenantManagmentPrivateLabelByURL_Cache(url);
                             scope.Complete();
                         }
                     }

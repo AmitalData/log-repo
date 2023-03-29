@@ -79,7 +79,7 @@ namespace WebFreight.Web.Helpers
             if (!url.Contains("system.logitudeworld.com") && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
             {
                 TenantManagmentPrivateLabelsQuery query = new TenantManagmentPrivateLabelsQuery(0);
-                privatelabel = query.GetSingleActivePMByUrl(url);
+                privatelabel = query.GetSingleActivePMByUrl_Cache(url);
             }
 
             return privatelabel;
