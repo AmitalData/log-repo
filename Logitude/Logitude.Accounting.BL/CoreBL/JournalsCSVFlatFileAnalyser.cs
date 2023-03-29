@@ -543,7 +543,7 @@ namespace Logitude.Accounting.BL.CoreBL
     class JournalSrcLineDTO
     {
         public static List<String> RowType = new List<String>(new string[]
-            { "d", "c", "D", "C", "ז", "ח", "1", "2", "3"});
+            { "d", "c", "D", "C", "ז", "ח", "1", "2", "3", "DC", "CD"});
 
         public const string _EmptyDate = "00000000";
         private const bool useLocal = true;
@@ -594,7 +594,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 if (rawLine.Length >= 2)
                 {
-                    cddc = rawLine.Substring(0, 1).ToUpperInvariant();
+                    cddc = rawLine.Substring(0, 2).ToUpperInvariant();
                     if (cddc == "CD")
                     {
                         actualRowType = "3";
