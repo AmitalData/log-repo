@@ -1129,6 +1129,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 //    declarationGoodsShipment.CustomsValuation = GetcustomsValuation(supplierInvoicePM).ToArray();
 
                 var declarationConsignmentList = new List<DeclarationGoodsShipmentExportConsignment>();
+                var declarationImportConsignmentList = new List<DeclarationGoodsShipmentImportConsignment>();
                 for (int consignmentSeq = 0; consignmentSeq < declarationPM.Consignments.Count(); consignmentSeq++)
                 {
                     string consignmentType = declarationPM.Consignments[consignmentSeq].ConsignmentType;
@@ -1136,7 +1137,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                     {
                         if (/*supplierInvoicePM.SequenceNumeric.Value == 1 &&*/ !declarationPM.ExcludeConsignment && consignmentType == "I") // I=Import
                         {
-                            declarationGoodsShipment.ImportConsignment = GetDeclarationImportConsignment(declarationPM.Consignments[consignmentSeq], declarationPM.ProcedureCurrentCode).ToArray();
+                            declarationImportConsignmentList.AddRange(GetDeclarationImportConsignment(declarationPM.Consignments[consignmentSeq], declarationPM.ProcedureCurrentCode));
                         }
                         else if (/*supplierInvoicePM.SequenceNumeric.Value == 1 &&*/ !declarationPM.ExcludeConsignment)
                         {
@@ -1149,6 +1150,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                     isFirstSupplierInvoice = false;
                 }
                 declarationGoodsShipment.ExportConsignment = declarationConsignmentList.ToArray();
+                declarationGoodsShipment.ImportConsignment = declarationImportConsignmentList.ToArray();
                 declarationGoodsShipment.AdditionalDocument = GetDeclarationGoodsShipmentAdditionalDocument(supplierInvoicePM);
 
                 declarationGoodsShipment.GovernmentAgencyGoodsItem = GetDeclarationGoodsItems(supplierInvoicePM).ToArray();
