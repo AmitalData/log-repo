@@ -106,7 +106,18 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
             this.PushCustomizedCounterItem(value.value, value.key);
         });
 
-        //this.CustomizedCounterItems.sort(a => a.SeriesCode);
+        this.SortCustomizedCounterItems();
+    }
+    private SortCustomizedCounterItems() {
+        this.CustomizedCounterItems = this.CustomizedCounterItems.sort((a, b) => {
+            if (a.SeriesCode < b.SeriesCode) {
+                return -1;
+            }
+            if (a.SeriesCode > b.SeriesCode) {
+                return 1;
+            }
+            return 0;
+        });
     }
     private PushCustomizedCounterItem(counterdefinitions: any[], key: any) {
         let customizedCounterItem = new CustomizedCounterItem(key, this.counterId, this);
