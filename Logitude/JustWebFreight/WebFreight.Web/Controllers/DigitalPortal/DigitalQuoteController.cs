@@ -40,7 +40,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 QuoteQuery quoteQuery = new QuoteQuery(tenant);
                 QuotePM quotePM = quoteQuery.GetSinglePM(id, tenant);
 
-                if (quotePM.CustomerId == cardId || quotePM.AgentId == cardId || string.IsNullOrWhiteSpace(cardId))
+                var cardIds = cardId?.Split(',');
+                if (string.IsNullOrWhiteSpace(cardId) || cardIds.Contains(quotePM.CustomerId) || cardIds.Contains(quotePM.AgentId))
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, quotePM);
                 }
