@@ -225,23 +225,32 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
 
 
     OkButtonClicked() {
-        let serieWithNoInvoices = this.CustomizedCounterItems.filter(item => item.CounterDefinitions?.length == 0)[0];
-        if (serieWithNoInvoices != null) {
-            this.ShowConfirmationWindow(serieWithNoInvoices);
+        let seriesWithNoInvoices = this.CustomizedCounterItems.filter(item => item.CounterDefinitions?.length == 0);
+        if (seriesWithNoInvoices != null && seriesWithNoInvoices.length > 0) {
+            this.ShowConfirmationWindow(seriesWithNoInvoices);
             return;
         }
         this.BuildAPIHelperCounterDefinitions();
         this.ValidateCounterDefinitions();
     }
-    ShowConfirmationWindow(customizedCounterItem: CustomizedCounterItem) {
+    ShowConfirmationWindow(customizedCounterItems: CustomizedCounterItem[]) {
+        let seriesCodes = this.GetSeriesCodes(customizedCounterItems);
+        let confirmationMessage = seriesCodes + (customizedCounterItems.length == 1 ? " is" : " are") + " not related to any invoice type, so "+(customizedCounterItems.length == 1 ? "it" : "they")+" will not be taken in consideration";
         var confirmWindow = new ConfirmWindow();
-        confirmWindow.Show(customizedCounterItem.SeriesCode +" is not related to any invoice type, so it will not be taken in consideration");
+        confirmWindow.Show(confirmationMessage);
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this.BuildAPIHelperCounterDefinitions();
                 this.ValidateCounterDefinitions();
             }
         });
+    }
+    GetSeriesCodes(customizedCounterItems: CustomizedCounterItem[]) {
+        let seriesCodes = "";
+        customizedCounterItems.forEach(item => {
+            seriesCodes = seriesCodes + (AppTool.IsNullOrEmpty(seriesCodes) ? "" : ", ") + item.SeriesCode;
+        });
+        return seriesCodes;
     }
 
     BuildAPIHelperCounterDefinitions() {
