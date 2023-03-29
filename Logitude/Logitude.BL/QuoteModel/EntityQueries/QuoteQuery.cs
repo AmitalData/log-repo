@@ -326,7 +326,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                ValidByTypeName = f.ValidByType == null ? null : f.ValidByType.Name,
                                                ConnectedToOpportunity = f.ConnectedToOpportunity,
                                                StageCode = f.Stage == null ? "" : f.Stage.Code,
-                                               IsExpired = f.ExpirationDate < DateTime.Now && !f.IsCancelled && !f.IsClosed
+                                               IsExpired = f.ExpirationDate != null && f.ExpirationDate < DateTime.Now && !f.IsCancelled && !f.IsClosed
                                            };
             return result;
         }
@@ -1474,7 +1474,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 ShipmentType = entityPOCO.ShipmentType == null ? "" : entityPOCO.ShipmentType.Name,
                 MoveTypeName = entityPOCO.MoveType == null ? null : entityPOCO.MoveType.MoveTypeEnglishName,
                 MoveTypeCode = entityPOCO.MoveType == null ? null : entityPOCO.MoveType.Code,
-                IsExpired = entityPOCO.ExpirationDate < DateTime.Now && !entityPOCO.IsCancelled && !entityPOCO.IsClosed
+                IsExpired = entityPOCO.ExpirationDate != null && entityPOCO.ExpirationDate < DateTime.Now && !entityPOCO.IsCancelled && !entityPOCO.IsClosed
             };
 
             int tenant = entityPOCO.Tenant;

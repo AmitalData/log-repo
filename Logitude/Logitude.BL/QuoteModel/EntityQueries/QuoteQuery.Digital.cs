@@ -79,9 +79,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 }
             }
 
-            BranchPermitionsFilter.AddUserBranchRestrictionFilters(queryOperations, tenant);
-            ProductPermitionsFilter.AddUserProductRestrictionFilters(queryOperations, tenant);
-
             TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
             {
                 AdditionalTreeFilter = filters.TreeFilters,
@@ -107,11 +104,9 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList()
             };
 
-            var genericFilter = new Simplog.Server.Infrastructure.Helpers.GenericFilter();
+            var genericFilter = new GenericFilter();
             var customfilters = new QuoteCustomFilter(tenant);
             entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
-            var quoteBusinessUnitFilter = new QuoteBusinessUnitFilter(tenant);
-            entityPocos = quoteBusinessUnitFilter.RunFilter(entityPocos);
             entityPocos = genericFilter.GetFilteredQuery<Quote>(nonListQueryOperation, entityPocos);
             var quoteStageRepository = new QuoteStageRepository(tenant);
             var quotes_Created = quoteStageRepository.GetQuoteStageIdByCode("QTCR", tenant);
