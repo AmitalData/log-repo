@@ -43,7 +43,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;71e1&quot;"
+  Code="&quot;cf19&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -961,6 +961,11 @@
       Name="&quot;Enable Virtual Grid&quot;"
       SearchFields="&quot;EVG,Enable Virtual Grid&quot;"
       Description="&quot;Enable Virtual Grid&quot;" />
+    <Record
+      Code="&quot;AHS&quot;"
+      Name="&quot;Automation Master House Set Field Value&quot;"
+      SearchFields="&quot;AHS,Automation Master House Set Field Value&quot;"
+      Description="&quot;Automation Master House Set Field Value&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

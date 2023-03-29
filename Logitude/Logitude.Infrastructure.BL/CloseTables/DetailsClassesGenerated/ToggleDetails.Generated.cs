@@ -916,6 +916,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "EVG,Enable Virtual Grid", 
                 Description = "Enable Virtual Grid", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "AHS", 
+                Name = "Automation Master House Set Field Value", 
+                SearchFields = "AHS,Automation Master House Set Field Value", 
+                Description = "Automation Master House Set Field Value", 
+			});
 			
             return all;
        }
