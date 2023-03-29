@@ -35,10 +35,10 @@ namespace Logitude.Customs.Data.Repsitories
         }
 
 
-        public bool GetExistByCargoKey(string id, string cargoIdentifierKey1, string cargoIdentifierKey2, string cargoIdentifierKey3, string cargoIdentifierType)
+        public bool GetExistByCargoKey(string id, string cargoIdentifierKey1, string cargoIdentifierKey2, string cargoIdentifierKey3, string cargoIdentifierType,int tenant)
         {
             return (from x in context.LogisticActionRequests
-                       where x.Id != id && x.CargoIdentifierKey1 == cargoIdentifierKey1 && x.CargoIdentifierKey2 == cargoIdentifierKey2 && x.CargoIdentifierKey3 == cargoIdentifierKey3 && x.CargoIdentifierType == cargoIdentifierType
+                       where x.Id != id && x.CargoIdentifierKey1 == cargoIdentifierKey1 && x.CargoIdentifierKey2 == cargoIdentifierKey2 && x.CargoIdentifierKey3 == cargoIdentifierKey3 && x.CargoIdentifierType == cargoIdentifierType && x.Tenant == tenant
                        select x
                      ).Any();
 

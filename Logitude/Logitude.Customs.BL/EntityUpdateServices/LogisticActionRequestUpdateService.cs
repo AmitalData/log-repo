@@ -46,7 +46,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             LogisticActionRequestQueryService logisticActionRequestQueryService = new LogisticActionRequestQueryService(context);
             if (!string.IsNullOrWhiteSpace(myLogisticActionRequestPM.Id))
             {
-                var exist = logisticActionRequestQueryService.GetExistByCargoKey(myLogisticActionRequestPM.Id, myLogisticActionRequestPM.CargoIdentifierKey1, myLogisticActionRequestPM.CargoIdentifierKey2, myLogisticActionRequestPM.CargoIdentifierKey3, myLogisticActionRequestPM.CargoIdentifierType);
+                var exist = logisticActionRequestQueryService.GetExistByCargoKey(myLogisticActionRequestPM.Id, myLogisticActionRequestPM.CargoIdentifierKey1, myLogisticActionRequestPM.CargoIdentifierKey2, myLogisticActionRequestPM.CargoIdentifierKey3, myLogisticActionRequestPM.CargoIdentifierType,myLogisticActionRequestPM.Tenant);
                 if (exist)
                 {
                     text = TranslateTextsClass.Translate("Customs.General.O.LogisticActionRequestAlreadyExist", myLogisticActionRequestPM.Tenant, true);
