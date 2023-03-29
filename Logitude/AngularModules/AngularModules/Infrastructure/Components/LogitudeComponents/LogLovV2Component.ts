@@ -49,7 +49,7 @@ import { ObjectFieldListService } from "Infrastructure/Services/StandardLists/Ob
         'PlaceHolder', 'DependencyFilter1Value', 'DependencyFilter2Value', 'DependencyFilter3Value', "HideColumns", "HideLastColumn", "DependencyFilter1IsList",
         "DependencyFilter2IsList", "DependencyFilter3IsList", "DependencyFilter1IsListExact", "DependencyFilter2IsListExact", "DependencyFilter3IsListExact",
         "AutoFocus", "IsTenantZeroSearch", "ShowInActive", "FocusOnMe", "IsFreeText", "AlwaysEnabled", "IgnoreCustomFieldCheck", "IsDecendingSort", "CustomizedWidth",
-        "ShowInActivePopUpWindow", "IgnoreFeatureCheck", "DataCy", "ForceDisabled", "ObjectFieldCode", "DefaultPageSize", "LocalFilterFields"],
+        "ShowInActivePopUpWindow", "IgnoreFeatureCheck", "DataCy", "ForceDisabled", "ObjectFieldCode", "DefaultPageSize", "LocalFilterFields", "SearchFieldName"],
 })
 
 export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
@@ -73,6 +73,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     public ShowHelp: boolean = false;
     public DefaultPageSize: number = null;
     public LocalFilterFields: string[] = null;
+    public SearchFieldName: string;
     public ObjectField: ObjectFieldPM;
     public ObjectFieldName: string = null;
     public ObjectFieldHelp: string = null;
@@ -400,7 +401,11 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             this.RunComponentTimer();
         }
     }
-
+    GetSearchFieldName() {
+        if (this.SearchFieldName)
+            return this.SearchFieldName;
+        return "SearchFields";
+    }
     private Retries: number = 0;
     private timerTokenComponent: any;
     private RunComponentTimer() {
@@ -1860,7 +1865,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
             tenantZeroFilters.Tenant = 0;
             if (searchText && !this.UseCompactSearch) {
-                tenantZeroFilters.addAdditionalFilter("SearchFields", searchText, null, null, "Contains", false, false, false, null, false, false);
+                tenantZeroFilters.addAdditionalFilter(this.GetSearchFieldName(), searchText, null, null, "Contains", false, false, false, null, false, false);
             }
 
             if (inactiveField && !this.ShowInActive) {
@@ -2264,6 +2269,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         args.ForceShowLocalAndEnglishColumns = this.ForceShowLocalAndEnglishColumns;
         args.EntityPM = this.DataContext;
         args.ObjectFieldCode = this.ObjectFieldCode;
+        args.SearchFieldName = this.LookUpTableName == "DocumentTypeTemplate"?"Description" : null;
         var tablename = TextCodeTranslator.TranslateTablePlural(this.GetObjectTableName(this.LookUpTableName));
 
         if (tablename == "Cards") {
@@ -3117,7 +3123,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 if (this.QueryFilterItems && this.QueryFilterItems.AdditionalFilters.length > 0) {
                     for (var i = 0; i < this.QueryFilterItems.AdditionalFilters.length; i++) {
                         var filter: FilterItem = this.QueryFilterItems.AdditionalFilters[i];
-                        if ("SearchFields" == filter.FieldName) {
+                        if (this.GetSearchFieldName() == filter.FieldName) {
                             forceEnableAdd = true;
                         }
                     }
@@ -3128,7 +3134,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 if (this.LookUpTable.DependencyFilter1 != this.LookUp2 && this.LookUpTable.DependencyFilter2 != this.LookUp2 && this.LookUpTable.DependencyFilter3 != this.LookUp2) {
                     filters.removeAdditionalFilter(this.LookUp2);
                 }
-                filterParams.FieldName="SearchFields";
+                filterParams.FieldName = this.GetSearchFieldName();
                 filterParams.ForceEnableAdd=forceEnableAdd;
                 filterParams.Operator="Contains";
 
@@ -3330,7 +3336,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 if (this.LookUpTable.DependencyFilter1 != this.LookUp2 && this.LookUpTable.DependencyFilter2 != this.LookUp2 && this.LookUpTable.DependencyFilter3 != this.LookUp2) {
                     filters.removeAdditionalFilter(this.LookUp2);
                 }
-                filterParams.FieldName="SearchFields";
+                filterParams.FieldName = this.GetSearchFieldName();;
                 filterParams.Operator="Contains";
                 //filters.addAdditionalFilter("SearchFields", searchText, null, null, "Contains", false, false, false, null);
                 this.currentFilter = null;

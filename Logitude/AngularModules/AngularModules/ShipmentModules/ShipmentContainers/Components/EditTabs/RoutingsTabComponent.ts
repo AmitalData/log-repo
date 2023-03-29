@@ -449,7 +449,7 @@ export class RoutingItem {
         switch (this.Code) {
             case "PICK": {
                 name = "Empty Pickup";
-                location = this.Container.EmptyPickupLocationName ?? !AppTool.IsNullOrEmpty(this.Container.ShipmentPickupFrom) ? this.Container.ShipmentPickupFrom + " , " + this.Container.ShipmentPickupTo : null;
+                location = !AppTool.IsNullOrEmpty(this.Container.EmptyPickupLocationName) ? this.Container.EmptyPickupLocationName : (!AppTool.IsNullOrEmpty(this.Container.ShipmentPickupFrom) ? this.Container.ShipmentPickupFrom + " , " + this.Container.ShipmentPickupTo : null);
                 date = this.GetDate_EmptyPickup();
                 break;
             }
@@ -498,7 +498,7 @@ export class RoutingItem {
 
             case "EMRT": {
                 name = "Empty Return";
-                location = this.Container.EmptyReturnLocationName ?? !AppTool.IsNullOrEmpty(this.Container.EmptyContainerReturnFrom) ? this.Container.EmptyContainerReturnFrom + " , " + this.Container.EmptyContainerReturnTo : null;
+                location = !AppTool.IsNullOrEmpty(this.Container.EmptyReturnLocationName) ? this.Container.EmptyReturnLocationName :  (!AppTool.IsNullOrEmpty(this.Container.EmptyContainerReturnFrom) ? this.Container.EmptyContainerReturnFrom + " , " + this.Container.EmptyContainerReturnTo : null);
                 date = this.GetDate_EmptyReturn();
                 break;
             }

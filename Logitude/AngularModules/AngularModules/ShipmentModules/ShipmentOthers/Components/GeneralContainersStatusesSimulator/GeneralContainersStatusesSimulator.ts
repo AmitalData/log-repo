@@ -40,7 +40,7 @@ export class GeneralContainersStatusesSimulatorComponent extends BaseComponent {
         this.CurrentSession.StartBusyIndicator("Simulating...");
         this.generalContainerStatusSimulatorArgs.ContainerStatusSourceCode = this.sourceCode
         var myService = new ShipmentContainersWebService();
-        myService.GeneralContainerSimulator(this.generalContainerStatusSimulatorArgs).subscribe((myResponse: ServiceResponse) => {
+        myService.TrackContainer(this.generalContainerStatusSimulatorArgs).subscribe((myResponse: ServiceResponse) => {
 
             this.CurrentSession.StopBusyIndicator();
             var messageWindow = new MessageWindow();

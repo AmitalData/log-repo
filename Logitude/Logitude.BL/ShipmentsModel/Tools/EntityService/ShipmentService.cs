@@ -502,7 +502,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     if (!entityPoco.IsCancelled || !entityPM.IsCancelled)
                     {
+
                         #region
+
                         string myOldCustomerId = "";
                         string oldEntityStatusId = entityPoco.StatusId;
                         if (entityPM.CustomerId != entityPoco.CustomerId)
@@ -1357,8 +1359,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 if (iConsoleStatus != null)
                 {
                     string statusName = null;
-                    string iHighestStatusId = EntityStatusHelper.GetHighestStatusId(entityPoco.StatusId, iConsoleStatus.StatusId, entityPoco.Tenant, ref statusName);
+                    string statusCode = null;
+                    string iHighestStatusId = EntityStatusHelper.GetHighestStatusId(entityPoco.StatusId, iConsoleStatus.StatusId, entityPoco.Tenant, ref statusName, ref statusCode);
                     entityPM.StatusName = statusName;
+                    entityPM.StatusCode = statusCode;
 
                     if (iHighestStatusId == entityPoco.StatusId)
                     {

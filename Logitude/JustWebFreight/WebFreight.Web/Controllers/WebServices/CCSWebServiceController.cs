@@ -18,7 +18,7 @@ namespace WebFreight.Web.Controllers.WebServices
 {
     public class CCSWebServiceController : ApiController
     {
-        public HttpResponseMessage GetMessageResult(string myShipmentId, string myRecipient, bool isSendingCargonaut, bool isSendingDEXX)
+        public HttpResponseMessage GetMessageResult(string myShipmentId, string myRecipient, bool isSendingCargonaut, bool isSendingDEXX, bool isMultiHS)
         {
             try
             {
@@ -31,7 +31,7 @@ namespace WebFreight.Web.Controllers.WebServices
 
                     SecurityUtility.AuthenticationOnTenant(tenant);
 
-                    CCSHelper myCCSHelper = new CCSHelper(myShipmentId, tenant, myRecipient, isSendingCargonaut, isSendingDEXX);
+                    CCSHelper myCCSHelper = new CCSHelper(myShipmentId, tenant, myRecipient, isSendingCargonaut, isSendingDEXX, isMultiHS);
 
                     myCCSHelper.Run();
 

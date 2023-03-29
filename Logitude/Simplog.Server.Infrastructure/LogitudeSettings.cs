@@ -174,7 +174,8 @@ namespace Simplog.Server.Infrastructure
     { 
         public static DateTime StartDateTime { get; set; }
         public static bool IsRecycled { get; set; }
-        public static DateTime EndDateTime { get; set; } 
+        public static DateTime EndDateTime { get; set; }
+        public  static bool  WarmingIsFinished { get; set; }
 
 
     }

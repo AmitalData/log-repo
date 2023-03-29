@@ -520,11 +520,11 @@ namespace WebFreight.Web.Helpers.APIHelpers
             }
             else
             {
-                using (TransactionScope scope = TransactionFactory.GetTransaction(new TimeSpan(3, 0, 0)))
-                {
+                //using (TransactionScope scope = TransactionFactory.GetTransaction(new TimeSpan(3, 0, 0)))
+                //{
                     RunPartnersGenerator_Validation();
-                    scope.Complete();
-                }
+                //    scope.Complete();
+                //}
             }
         }
         private string ValidateComputingPartner()

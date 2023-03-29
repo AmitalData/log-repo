@@ -29,9 +29,11 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -41,7 +43,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private int tenant;
         private ContainerPM containerPm;
         private IShipmentsContext shipmentsContext;
-        private ContainerRepository entityRepository;        
+        private ContainerRepository entityRepository;
+        private bool isUpdatingShipment = false;
+        private ShipmentPM shipmentPM;
         private Container containerPoco { get; set; }
 
         private AuditLogRepository AuditLogRepository;
@@ -90,7 +94,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 AuditLogRepository.Add(auditLog);
                 AuditLogRepository.SubmitChanges();
             }
-
+          
             new WorkflowEntityQueueMessage()
             {
                 Entity = WorkflowEntities.Container,
@@ -102,10 +106,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             //AddShipmentUpdateKafkaQueueMessage("CToolContainerCreate");
             MapShipmentConcurrencyFields();
             entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
-            new GeneralContainerTrackingService(GetGeneralContainerTrackingArgs(entityPM)).AutomaticTrackContainer();
+            string activity = "(A) Container Create";
+            AddTotangoActivity(entityPM, activity);
+            new GeneralContainerTrackingService(GetGeneralContainerTrackingArgs(entityPM)).AutomaticTrackContainer();         
+        }
+        public void AddTotangoActivity(ContainerPM containerPM, string activityDescription)
+        {
+            string email = AuthenticationUtil.IsAuthenticatedUserExists() ? AuthenticationUtil.GetAuthenticatedUser() : "system@tenant" + tenant + ".com";
+            string moduleName = "(A) Container";
+            ActivityLogger.SendTotangoContactActivity(email, moduleName, activityDescription, containerPM.Tenant,false,null);
         }
 
-        private GeneralContainerTrackingArgs GetGeneralContainerTrackingArgs(ContainerPM entityPM)
+            private GeneralContainerTrackingArgs GetGeneralContainerTrackingArgs(ContainerPM entityPM)
         {
             return new GeneralContainerTrackingArgs
             {
@@ -151,7 +163,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = containerPoco, EntityPM = entityPM, OldEntityPM = new ContainerPM(), AutomationType = "OnUpdate", ObjectTableName = "Container", Tenant = entityPM.Tenant, EntityId = entityPM.Id, EntityReference = entityPM.ContainerNumber });
                 entityAutomationService.RunAutomation();
             }
-
      
             this.HandleContainersExternalData(entityPM, containersExternal);
 
@@ -161,6 +172,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.GetForeignFields_Status(entityPM, containerPoco);
             entityRepository.Update(containerPoco);
             entityRepository.SubmitChanges();
+
+            this.UpdateShipment();
 
             if (this.containerPm != null && !this.containerPm.FromCTool)
             {
@@ -186,8 +199,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             //AddShipmentUpdateKafkaQueueMessage("CToolContainerUpdate");
             MapShipmentConcurrencyFields();
-            
-            new GeneralContainerTrackingService(GetGeneralContainerTrackingArgs(entityPM)).AutomaticTrackContainer();
+            string activity = "(A) Container Update";
+            AddTotangoActivity(entityPM, activity);
+            new GeneralContainerTrackingService(GetGeneralContainerTrackingArgs(entityPM)).AutomaticTrackContainer();          
         }
         private AuditLog AddContainerAuditLogChanges(Container entityPoco, List<FieldChange> FieldChanges)
         {
@@ -311,8 +325,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 return;
             }
-            this.containerPm.ShipmentConcurrencyGUID = entityRepository.GetConcurrencyGUIDByShipmentId(this.containerPm.ShipmentId, this.containerPm.Tenant);
-            this.containerPm.ShipmentNewConcurrencyGUID = Guid.NewGuid().ToString();
+            //this.containerPm.ShipmentConcurrencyGUID = entityRepository.GetConcurrencyGUIDByShipmentId(this.containerPm.ShipmentId, this.containerPm.Tenant);
+            //this.containerPm.ShipmentNewConcurrencyGUID = Guid.NewGuid().ToString();
         }
 
         private void HandleEmptyReturnLeg()
@@ -341,7 +355,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 shipmentPM.ShipmentDeliveries.Add(emptyReturn);
             }
 
-            UpdateShipment(shipmentPM);            
+            this.shipmentPM = shipmentPM;
+            this.isUpdatingShipment = true;
+            //UpdateShipment(shipmentPM);            
         }
 
         private ShipmentPM GetShipment()
@@ -506,8 +522,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
             }
         }
-        private void UpdateShipment(ShipmentPM shipmentPM)
+        private void UpdateShipment()
         {
+            if (!isUpdatingShipment) return;
+            if (shipmentPM == null) return;
+
+            isUpdatingShipment = false;
             string systemEmail = "system@tenant" + tenant + ".com";
             ShipmentService service = new ShipmentService(shipmentsContext, shipmentPM, systemEmail);
             service.SetChangeSet(shipmentPM.ShipmentPackages, shipmentPM.ShipmentOrderPackages, shipmentPM.ShipmentPickUps, shipmentPM.ShipmentDeliveries, shipmentPM.ShipmentReceivables, shipmentPM.ShipmentPayables, shipmentPM.FollowUps, shipmentPM.ShipmentAWBPrintOnlies, shipmentPM.ShipmentConsoleShipments, shipmentPM.ShipmentCarrierStatuses, shipmentPM.AWBOCIPMs, shipmentPM.ShipmentCommodities, shipmentPM.ShipmentAssemblies, shipmentPM.ShipmentStoragePricings, shipmentPM.ShipmentProductItems, shipmentPM.ShipmentUnassignedFields);

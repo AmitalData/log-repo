@@ -98,7 +98,7 @@ namespace Logitude.Server.Tools.Helpers
                 UserRepository userRepository = new UserRepository(commonDataContext);
                 ContactRepository contactrep = new ContactRepository(commonDataContext);
                 Contact loggedContact = contactrep.GetSingleContactByEmail(email, tenant);
-                User loggedUser = userRepository.GetSingleUser(loggedContact.Id, loggedContact.Tenant, true);
+                User loggedUser = userRepository.GetSingleUserByEmail(email, loggedContact.Tenant, true);
 
                 //TenantRepository rep = new TenantRepository(commonDataContext);
                 Tenant currentTenant = TenantRepository.GetSingleTenant(tenant, true);
@@ -108,7 +108,7 @@ namespace Logitude.Server.Tools.Helpers
                 string orgDisplayName = currentTenant.Company + (CountryName != null ? ("-" + CountryName.Trim()) : "");
                 string organizationId = tenant.ToString();
 
-                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
                     SettingRepository mySettingRepository = new SettingRepository();
                     var isDemoTenant = mySettingRepository.IsDemoTenant(tenant.ToString());
@@ -125,11 +125,11 @@ namespace Logitude.Server.Tools.Helpers
                 if (isSharedLogisticsContact)
                 {
                     Card card = commonDataContext.Cards.Where(d => d.Id == cardId & d.Tenant == tenant).FirstOrDefault();
-                    TotangoActivityLogger.SendUserActivity(organizationId, orgDisplayName, "External Contact", module, activity, loggedContact.Id, tenant, true, cardId, card.PartnerTypeId);
+                    TotangoActivityLogger.SendUserActivity(organizationId, orgDisplayName, "External Contact", module, activity, email, tenant, true, cardId, card.PartnerTypeId);
                 }
                 else
                 {
-                    TotangoActivityLogger.SendUserActivity(organizationId, orgDisplayName, loggedContact.EnglishName, module, activity, loggedContact.Id, tenant, false, null, null);
+                    TotangoActivityLogger.SendUserActivity(organizationId, orgDisplayName, loggedContact.EnglishName, module, activity, email, tenant, false, null, null);
                 }
             }
             catch { }

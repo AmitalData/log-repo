@@ -257,6 +257,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             myRecord.ShipmentNotes = myShipment.Notes;
                             myRecord.ShipmentOpenedBy = myShipment.CreatedByUserName;
 
+                            if(myShipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(myShipment.MasterShipmentDataId))
+                            {
+                                myRecord.MasterShipmentNumber = myShipment.MasterShipmentNumber;
+                            }
+                            
+
                             if (!string.IsNullOrEmpty(myShipment.BranchId))
                             {
                                 Branch myBranch = allBranchs.Where(d => d.Id == myShipment.BranchId).FirstOrDefault();
@@ -324,6 +330,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.AccountedPayablesInInvoiceCurrency = this.ComputeAccountedPayablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
                         myRecord.InvoiceStatusName = invoice.Status?.Name;
                         myRecord.PaidDate = invoice.PaidDate;
+
+                        if (myShipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(myShipment.MasterShipmentDataId))
+                        {
+                            myRecord.MasterShipmentNumber = myShipment.MasterShipmentNumber;
+                        }
 
                         Currency myCurrency = allCurrencies.Where(d => d.Id == invoice.InvoiceCurrencyId).FirstOrDefault();
                         if (myCurrency != null)
@@ -416,6 +427,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.AccountedPayablesInInvoiceCurrency = this.ComputeAccountedPayablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
                         myRecord.InvoiceStatusName = invoice.Status?.Name;
                         myRecord.PaidDate = invoice.PaidDate;
+
+                        if (myShipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(myShipment.MasterShipmentDataId))
+                        {
+                            myRecord.MasterShipmentNumber = myShipment.MasterShipmentNumber;
+                        }
 
                         Currency myCurrency = allCurrencies.Where(d => d.Id == invoice.InvoiceCurrencyId).FirstOrDefault();
                         if (myCurrency != null)
@@ -684,6 +700,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.ShipmentNotes = myShipment.Notes;
                                     myRecord.ShipmentOpenedBy = myShipment.CreatedByUserName;
 
+                                    if (myShipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(myShipment.MasterShipmentDataId))
+                                    {
+                                        myRecord.MasterShipmentNumber = myShipment.MasterShipmentNumber;
+                                    }
+
                                     if (myBranch != null)
                                     {
                                         myRecord.BranchCode = myBranch.Code;
@@ -771,6 +792,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.ShipmentCreateDate = myShipment.CreateDateTime;
                                     myRecord.ShipmentNotes = myShipment.Notes;
                                     myRecord.ShipmentOpenedBy = myShipment.CreatedByUserName;
+
+                                    if (myShipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(myShipment.MasterShipmentDataId))
+                                    {
+                                        myRecord.MasterShipmentNumber = myShipment.MasterShipmentNumber;
+                                    }
 
                                     if (myBranch != null)
                                     {
@@ -869,6 +895,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.AccountedPayablesInInvoiceCurrency = this.ComputeAccountedPayablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
                                 myRecord.InvoiceStatusName = invoice.Status?.Name;
                                 myRecord.PaidDate = invoice.PaidDate;
+
+                                if (myShipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(myShipment.MasterShipmentDataId))
+                                {
+                                    myRecord.MasterShipmentNumber = myShipment.MasterShipmentNumber;
+                                }
 
                                 if (myCurrency != null)
                                 {
@@ -1014,6 +1045,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.AccountedPayablesInInvoiceCurrency = this.ComputeAccountedPayablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
                                     myRecord.InvoiceStatusName = invoice.Status?.Name;
                                     myRecord.PaidDate = invoice.PaidDate;
+
+                                    if (myShipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(myShipment.MasterShipmentDataId))
+                                    {
+                                        myRecord.MasterShipmentNumber = myShipment.MasterShipmentNumber;
+                                    }
 
                                     if (myCurrency != null)
                                     {

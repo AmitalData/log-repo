@@ -1936,15 +1936,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         logWindow.IsFillScreen = true;
         var containerEntityId = item.EntityPM?.ContainerEntityId;
         if (!AppTool.IsNullOrEmpty(containerEntityId)) {
-
             this.RunContainerEntity(item);
-            //logWindow.ShowEditComponent(containerEntityId, "Container");
-            //logWindow.ComponentLoaded.subscribe(comp => {
-            //    logWindow.WindowClosed.subscribe(s => {
-
-
-            //    });
-            //});
         }
     }
 
@@ -1965,6 +1957,12 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                 cmpRef.instance.BackCompleted.subscribe(bk => {
                     if (isEditComponentSaved) {
                         this.entityArgs.EditComponent.ReloadEntityPM();
+                    }
+                });
+
+                cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        isEditComponentSaved = true;
                     }
                 });
             });
