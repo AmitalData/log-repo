@@ -4,6 +4,8 @@ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
+using Simplog.Global.Data.GlobalModel.Mapping;
+
 namespace Simplog.Global.Data.GlobalModel.Repositories
 {
     public class TenantManagmentPrivateLabelsRepository : IRepository<TenantManagmentPrivateLabels>
@@ -45,7 +47,17 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
         {
             return (from a in context.TenantManagmentPrivateLabels
                     where a.Id == id
-                    select a).FirstOrDefault();
+            select a).FirstOrDefault();
+        }
+
+        public TenantManagmentPrivateLabels GetSingleTenantManagmentPrivateLabelByURL_Cache(string url)
+        {
+            string entityKeyString = $"GetSingleTenantManagmentPrivateLabelByURL_Cache({url})";
+            var res = CacheManager
+                .GetOrInsertNewObject<TenantManagmentPrivateLabels>(entityKeyString,
+                () => { return this.GetSingleTenantManagmentPrivateLabelByURL(url); });
+            return res;
+
         }
 
         public TenantManagmentPrivateLabels GetSingleTenantManagmentPrivateLabelByURL(string url)
