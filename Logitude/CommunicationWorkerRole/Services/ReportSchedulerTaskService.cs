@@ -720,12 +720,30 @@ namespace CommunicationWorkerRole.Services
             string cc = null;
             UTF8Encoding utf8Encoding = new UTF8Encoding();
 
-            html = htmlEditorHelper.ResolveDataProviderHtml(html , args.stiReport.BusinessObjectsStore[0].BusinessObjectValue, args.stiReport.BusinessObjectsStore[0].Name);
-            subject = htmlEditorHelper.ResolveDataProviderHtml(subject, args.stiReport.BusinessObjectsStore[0].BusinessObjectValue, args.stiReport.BusinessObjectsStore[0].Name);
+            object dataProvider = GetDataProviderFromStiReport(args.stiReport);
+            string dataProviderName = GetDataProviderNameFromStiReport(args.stiReport);
+            html = htmlEditorHelper.ResolveDataProviderHtml(new DataProviderResolverArgs() { htmlValue = html, dataProvider = dataProvider, dataProviderName = dataProviderName });
+            subject = htmlEditorHelper.ResolveDataProviderHtml(new DataProviderResolverArgs() { htmlValue = subject, dataProvider = dataProvider, dataProviderName = dataProviderName });
             string htmlstring = htmlEditorHelper.ResolveSystemDataHtml(html, args.userId, ref subject, ref from, ref replyTo, ref cc, args.tenant);     
             emailDetails.Body = utf8Encoding.GetBytes(htmlstring);
             emailDetails.Subject = subject;
             return emailDetails;
+        }
+
+        private object GetDataProviderFromStiReport(StiReport stiReport)
+        {
+            if (stiReport == null) return null;
+            if (stiReport.BusinessObjectsStore == null) return null;
+            if (stiReport.BusinessObjectsStore[0] == null) return null;
+            return stiReport.BusinessObjectsStore[0].BusinessObjectValue;
+        }
+
+        private string GetDataProviderNameFromStiReport(StiReport stiReport)
+        {
+            if (stiReport == null) return null;
+            if (stiReport.BusinessObjectsStore == null) return null;
+            if (stiReport.BusinessObjectsStore[0] == null) return null;
+            return stiReport.BusinessObjectsStore[0].Name;
         }
 
         private static string GetHtmlBody(int tenant, string documentId)

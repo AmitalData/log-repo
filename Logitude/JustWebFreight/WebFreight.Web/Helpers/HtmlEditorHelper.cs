@@ -1908,28 +1908,28 @@ namespace WebFreight.Web.Helpers
         }
 
 
-        public string ResolveDataProviderHtml(string htmlString, object dataProvider, string dataProviderName)
+        public string ResolveDataProviderHtml(DataProviderResolverArgs args)
         {
-            if (string.IsNullOrEmpty(htmlString)) return htmlString;
-            if (dataProvider == null) return htmlString;
-            if (string.IsNullOrEmpty(dataProviderName)) return htmlString;
-            string splitter = "[" + dataProviderName + ".";
-            string replacedValue = "";
-            string[] partsContainDataProviderFields = htmlString.Split(new string[] { splitter }, StringSplitOptions.None);
+            if (string.IsNullOrEmpty(args.htmlValue)) return args.htmlValue;
+            if (args.dataProvider == null) return args.htmlValue;
+            if (string.IsNullOrEmpty(args.dataProviderName)) return args.htmlValue;
+
+            string splitter = "[" + args.dataProviderName + ".";
+            string[] partsContainDataProviderFields = args.htmlValue.Split(new string[] { splitter }, StringSplitOptions.None);
             for (int index = 1; index < partsContainDataProviderFields.Length; index++)
             {
-                if (!partsContainDataProviderFields[index].Contains("]"))
-                    continue;
-                ReplaceFieldsWithValues(partsContainDataProviderFields[index], dataProvider, splitter, ref htmlString);
+                args.htmlValue = ReplaceFieldsWithValues(partsContainDataProviderFields[index], splitter, args);
             }
-            return htmlString;
+            return args.htmlValue;
         }
-        public void ReplaceFieldsWithValues(string text,object dataProvider, string splitter,ref string htmlString)
+        public string ReplaceFieldsWithValues(string text, string splitter, DataProviderResolverArgs dataProviderResolverArgs)
         {
+            if (!text.Contains("]")) return dataProviderResolverArgs.htmlValue;
+
             string propertyName = text.Substring(0, text.IndexOf(']'));
-            string propertyValue = ResolveProperty(propertyName, dataProvider);
+            string propertyValue = ResolveProperty(propertyName, dataProviderResolverArgs.dataProvider);
             string replacedValue = splitter + propertyName + "]";
-            htmlString = htmlString.Replace(replacedValue, propertyValue);
+            return dataProviderResolverArgs.htmlValue.Replace(replacedValue, propertyValue);
         }
         public string ResolveProperty(string propertyName, object dataProvider)
         {
@@ -7517,5 +7517,11 @@ namespace WebFreight.Web.Helpers
         public int Tenant { get; set; }
     }
 
+    public class DataProviderResolverArgs
+    {
+        public string htmlValue;
+        public object dataProvider;
+        public string dataProviderName;
+    }
 
 }
