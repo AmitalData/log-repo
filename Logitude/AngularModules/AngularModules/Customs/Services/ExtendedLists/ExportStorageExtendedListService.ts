@@ -27,7 +27,7 @@ export class ExportStorageExtendedListService {
     public SelectedExportStorage: boolean;
     public AllExportStorage: string;
     public IsDirectCharging: string;
-
+    public CountAllExportStorage: number;
     getPromiseByFilters(filters: ApiQueryFilters) {
 
 
@@ -37,6 +37,7 @@ export class ExportStorageExtendedListService {
     }
 
     getByFilters(filters: ApiQueryFilters) {
+        
         var urlparameters = '/getbyfilters?';
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;
@@ -70,7 +71,7 @@ export class ExportStorageExtendedListService {
             return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map((response: any) => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = response;
-                var _mappedListsArray: Array<ExportStorageList> = [];
+            var _mappedListsArray: Array<ExportStorageList> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
 
@@ -82,6 +83,7 @@ export class ExportStorageExtendedListService {
                 }
 
                 serviceResponse.Result = _mappedListsArray;
+               
                 return serviceResponse;
             }), catchError(ServiceHelper.HandleServiceError));
         });

@@ -11,7 +11,7 @@ import { ExportStoragePM } from 'Customs/EntityPMs/ExportStoragePM';
 import { ExportStorageExtendedListService } from 'Customs/Services/ExtendedLists/ExportStorageExtendedListService';
 
 
-@Component({   
+@Component({
     templateUrl: 'CustomsExportStorageListTemplate.html',
 })
 
@@ -38,16 +38,17 @@ export class CustomsExportStorageListTemplate {
         } else {
             this.entityPM = new ExportStoragePM();
         }
-     }
+    }
 
     setVariables(rowData: any, fieldName: string, additionalData: any) {
         this.fieldName = fieldName;
         this.rowData = rowData;
-        this.BuildDeclarationsCheckBox();       
+        this.BuildDeclarationsCheckBox();
         this.CD.detectChanges();
     }
 
     BuildDeclarationsCheckBox() {
+        
         if (AppTool.IsNullOrEmpty(this._exportStorageExtendedListService.disconnectedExportStorage))
             this._exportStorageExtendedListService.disconnectedExportStorage = "";
 
@@ -73,58 +74,61 @@ export class CustomsExportStorageListTemplate {
             let res = ConnectedExportStorage.filter(r => r == this.rowData.Id)[0];
             this.IsConnectedExportStorageChecked = !AppTool.IsNullOrEmpty(res);
         }
-        if (this._exportStorageExtendedListService.connectedSelectAll == true && !this._exportStorageExtendedListService.disconnectedExportStorage.includes(this.rowData.Id) ) {
+        if (this._exportStorageExtendedListService.connectedSelectAll == true && !this._exportStorageExtendedListService?.disconnectedExportStorage.includes(this.rowData.Id)) {
             this.IsConnectedExportStorageChecked = true;
         }
+        
+      
     }
 
     OnConnectedCheckBoxChecked($event) {
-
- 
         this._exportStorageExtendedListService.disconnectedSelectAll = false;
-         if ($event) {
-             if (!this._exportStorageExtendedListService.ConnectedExportStorage.includes(this.rowData.Id)) {
-                 this._exportStorageExtendedListService.ConnectedExportStorage = this._exportStorageExtendedListService.ConnectedExportStorage + this.rowData.Id + ",";
-             }
-             if (this.rowData.ProcedureCurrentName != null && !this._exportStorageExtendedListService.IsDirectCharging.includes(this.rowData.Id) &&
-                 this.rowData.ProcedureCurrentName.includes("טעינה ישירה")) {
-                 this._exportStorageExtendedListService.IsDirectCharging = this._exportStorageExtendedListService.IsDirectCharging + this.rowData.Id + ",";
-             }
+        if ($event) {
+            if (!this._exportStorageExtendedListService.ConnectedExportStorage.includes(this.rowData.Id)) {
+                this._exportStorageExtendedListService.ConnectedExportStorage = this._exportStorageExtendedListService.ConnectedExportStorage + this.rowData.Id + ",";
+            }
+            if (this.rowData.ProcedureCurrentName != null && !this._exportStorageExtendedListService.IsDirectCharging.includes(this.rowData.Id) &&
+                this.rowData.ProcedureCurrentName.includes("טעינה ישירה")) {
+                this._exportStorageExtendedListService.IsDirectCharging = this._exportStorageExtendedListService.IsDirectCharging + this.rowData.Id + ",";
+            }
 
-             if (this._exportStorageExtendedListService.connectedSelectAll) {
-                 if (!this._exportStorageExtendedListService.ConnectedExportStorage.includes(this.rowData.Id)) {
-                     this._exportStorageExtendedListService.ConnectedExportStorage = this._exportStorageExtendedListService.ConnectedExportStorage + this.rowData.Id + ",";
-                 }
-             }
+            if (this._exportStorageExtendedListService.connectedSelectAll) {
+                if (!this._exportStorageExtendedListService.ConnectedExportStorage.includes(this.rowData.Id)) {
+                    this._exportStorageExtendedListService.ConnectedExportStorage = this._exportStorageExtendedListService.ConnectedExportStorage + this.rowData.Id + ",";
+                }
+            }
 
-             if (this._exportStorageExtendedListService.connectedSelectAll) {
-                 if (this._exportStorageExtendedListService.disconnectedExportStorage.includes(this.rowData.Id)) {
-                     this._exportStorageExtendedListService.disconnectedExportStorage = this._exportStorageExtendedListService.disconnectedExportStorage.replace(this.rowData.Id + ",", "");
-                 }
-             }
-         }
-         else {
+            if (this._exportStorageExtendedListService.connectedSelectAll) {
+                if (this._exportStorageExtendedListService.disconnectedExportStorage.includes(this.rowData.Id)) {
+                    this._exportStorageExtendedListService.disconnectedExportStorage = this._exportStorageExtendedListService.disconnectedExportStorage.replace(this.rowData.Id + ",", "");
+                }
+            }
+        }
+        else {
 
-             if (this._exportStorageExtendedListService.connectedSelectAll) {
-                 if (!this._exportStorageExtendedListService.disconnectedExportStorage.includes(this.rowData.Id)) {
-                     this._exportStorageExtendedListService.disconnectedExportStorage = this._exportStorageExtendedListService.disconnectedExportStorage + this.rowData.Id + ",";
-                 }
-             }
+            if (this._exportStorageExtendedListService.connectedSelectAll) {
+                if (!this._exportStorageExtendedListService.disconnectedExportStorage.includes(this.rowData.Id)) {
+                    this._exportStorageExtendedListService.disconnectedExportStorage = this._exportStorageExtendedListService.disconnectedExportStorage + this.rowData.Id + ",";
+                }
+            }
 
-             if (this._exportStorageExtendedListService.ConnectedExportStorage.includes(this.rowData.Id)) {
-                 this._exportStorageExtendedListService.ConnectedExportStorage = this._exportStorageExtendedListService.ConnectedExportStorage.replace(this.rowData.Id + ",", "");
- 
-             }
-             if (this._exportStorageExtendedListService.IsDirectCharging.includes(this.rowData.Id)) {
-                 this._exportStorageExtendedListService.IsDirectCharging = this._exportStorageExtendedListService.IsDirectCharging.replace(this.rowData.Id + ",", "");
-             }
+            if (this._exportStorageExtendedListService.ConnectedExportStorage.includes(this.rowData.Id)) {
+                this._exportStorageExtendedListService.ConnectedExportStorage = this._exportStorageExtendedListService.ConnectedExportStorage.replace(this.rowData.Id + ",", "");
 
-         }
-        if (AppTool.IsNullOrEmpty(this._exportStorageExtendedListService.ConnectedExportStorage)) {
+            }
+            if (this._exportStorageExtendedListService.IsDirectCharging.includes(this.rowData.Id)) {
+                this._exportStorageExtendedListService.IsDirectCharging = this._exportStorageExtendedListService.IsDirectCharging.replace(this.rowData.Id + ",", "");
+            }
+
+        }
+       
+        var lenDisConnect=this._exportStorageExtendedListService?.disconnectedExportStorage.split(",").length-1;
+         
+        if (AppTool.IsNullOrEmpty(this._exportStorageExtendedListService.ConnectedExportStorage) && (lenDisConnect==this._exportStorageExtendedListService.CountAllExportStorage || this._exportStorageExtendedListService.CountAllExportStorage==null) ){
             this._exportStorageExtendedListService.SelectedExportStorage = false;
-         } else {
+        } else {
             this._exportStorageExtendedListService.SelectedExportStorage = true;
-         }
+        }
     }
 }
 

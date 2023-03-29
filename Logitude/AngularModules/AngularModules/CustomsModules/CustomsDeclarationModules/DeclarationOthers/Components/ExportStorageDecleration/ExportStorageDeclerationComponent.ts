@@ -28,6 +28,7 @@ import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPM
 import { InternationalSiteListService } from 'Customs/Services/StandardLists/InternationalSiteListService';
 import { DeliverySiteTypeListService } from 'Customs/Services/StandardLists/DeliverySiteTypeListService';
 import { ExportStorageList } from '../../../../../Customs/EntityLists/ExportStorageList';
+import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 @Component({
 
     templateUrl: './ExportStorageDeclerationComponent.html',
@@ -60,7 +61,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
     consignmentPackagePM: ConsignmentPackagePM;
     DeliverySiteTypeList: ServiceResponse
     InternationalSiteList: ServiceResponse
-   
+
     listSite: ObservableCollection;
     declarationPMService: DeclarationPMService = new DeclarationPMService();
 
@@ -130,6 +131,9 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
                 });
             });
         });
+       
+        this.exportStorageExtendedListService.CountAllExportStorage=null
+       
 
     }
 
@@ -141,6 +145,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         sortingDir: "Decending",
         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
             var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
+
             return tempo;
         },
     };
@@ -178,7 +183,9 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         var myout = this.entityListService
             .getExtendedByFilters("Customs.ExportStorage", filters);
         myout.then(res => {
+            
         });
+
         return myout;
 
     }
@@ -292,10 +299,14 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
 
 
     OnAllBtnClicked() {
+
         this.IsSelected = true;
+        this.exportStorageExtendedListService.disconnectedExportStorage="";
+
         this.exportStorageExtendedListService.connectedSelectAll = true;
         this.exportStorageExtendedListService.SelectedExportStorage = true;
         this.exportStorageExtendedListService.ConnectedExportStorage = this.exportStorageExtendedListService.AllExportStorage;
+       this.exportStorageExtendedListService.CountAllExportStorage = this.DataSource.rowCount;
         this.LoadConnectedItems();
 
     }
@@ -303,7 +314,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
     filterAgrs: ApiQueryFilters;
     LoadConnectedItems() {
         this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
-
+     
     }
 
     OnNoneBtnClicked() {
@@ -312,22 +323,39 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.entityPM.DeclarationCustomFileNo = "";
         this.exportStorageExtendedListService.ConnectedExportStorage = "";
         this.exportStorageExtendedListService.SelectedExportStorage = false;
+        this.exportStorageExtendedListService.CountAllExportStorage=null
         this.LoadConnectedItems();
     }
 
 
     async SendButtonClicked() {
-        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.Saving"));
- 
- 
-        let  ArrayExportStorageId = [];
+        let ArrayExportStorageId = [];
+        
+
+
         if (this.exportStorageExtendedListService.connectedSelectAll) {
             var filters = this.getFilters(true, "OpenDate", "Decending");
 
             this.exportStorageExtendedListService.getByFilters(filters).subscribe(x => {
 
                 ArrayExportStorageId = (x.Result as ExportStorageList[]).map(x => x.Id);
-                this.saveConnections(ArrayExportStorageId);
+                if (!AppTool.IsNullOrEmpty(this.exportStorageExtendedListService.disconnectedExportStorage))
+                    ArrayExportStorageId = ArrayExportStorageId.filter(item => !this.exportStorageExtendedListService.disconnectedExportStorage.split(',').find(x => x == item));
+                var count = ArrayExportStorageId.length;
+                if (count > 0) {
+                    var msg = TextCodeTranslator.Translate("Customs.ExportStorage.O.ConnectedAllToDeclartion") + " " + count + " " + TextCodeTranslator.Translate("Customs.ExportStorage.O.ExportStoragesToDeclartion");
+                    var confirmWindow = new ConfirmWindow();
+                    confirmWindow.Width = 400;
+                    confirmWindow.Height = 150;
+                    confirmWindow.Show(msg);
+                    confirmWindow.WindowClosed.subscribe((event: any) => {
+
+                        if (confirmWindow.Yes) { // YES
+                            this.saveConnections(ArrayExportStorageId);
+                        }
+                    });
+                }
+
 
             })
 
@@ -335,21 +363,21 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
 
         }
         else {
-            ArrayExportStorageId=this.exportStorageExtendedListService.ConnectedExportStorage.split(',');
+            ArrayExportStorageId = this.exportStorageExtendedListService.ConnectedExportStorage.split(',');
             this.saveConnections(ArrayExportStorageId);
         }
 
-      
+
     }
 
-    
+
     async saveConnections(ArrayExportStorageId) {
- 
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.Saving"));
         if (!AppTool.IsNullOrEmpty(this.exportStorageExtendedListService.disconnectedExportStorage))
             ArrayExportStorageId = ArrayExportStorageId.filter(item => !this.exportStorageExtendedListService.disconnectedExportStorage.split(',').find(x => x == item));
 
 
- 
+
         let ConsignmentNumber = this.declarationPM.Consignments.length > 0 ? this.declarationPM.Consignments[this.declarationPM.Consignments.length - 1].ConsignmentNumber : 0;
         let SequenceNumeric = this.declarationPM.Consignments[this.declarationPM.Consignments.length - 1].SequenceNumeric;
         this.declarationPM = this.CurrentSession.CurrentEditComponent.EntityPM;
@@ -360,7 +388,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
                 return new Promise<void>((resolve, reject) => {
                     if (!AppTool.IsNullOrEmpty(ExportStorageId) && !AppTool.IsNullOrEmpty(this.declarationPM)) {
                         this.exportStoragePMService.get(ExportStorageId).toPromise().then(res => {
-                             this.exportStorage = res
+                            this.exportStorage = res
                             if (!AppTool.IsNullOrEmpty(this.exportStorage.Result)) {
 
                                 var isConsignment = this.declarationPM.Consignments.find(x => x?.CargoTypeCode == this.exportStorage.Result?.cargoTypeCode
@@ -501,8 +529,8 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.declarationPM = windowArgs.DeclarationPM;
         this.ExportFile = this.declarationPM.ExportFile;
     }
-    CheackIsSelected(){
+    CheackIsSelected() {
 
-      (this.IsSelected==undefined || !this.IsSelected)?this.OnAllBtnClicked():this.OnNoneBtnClicked()
+        (this.IsSelected == undefined || !this.IsSelected) ? this.OnAllBtnClicked() : this.OnNoneBtnClicked()
     }
 }
