@@ -240,31 +240,4 @@ export class AddEditDashboardComponent extends BaseComponent implements OnInit {
 
         this.CurrentSession.StopBusyIndicator();
     }
-
-    DeleteButtonClicked() {
-        var confirmWindow: ConfirmWindow = new ConfirmWindow();
-        confirmWindow.Title = "Confirm";
-        confirmWindow.Show("Are you sure you want to permanently delete this dashboard?");
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                this.CurrentSession.StartBusyIndicator("Deleting...");
-                var service: DashboardPMExtendedService = new DashboardPMExtendedService();
-                service.Delete(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
-                    this.OnDeleteCompleted(myResponse);
-                });
-            }
-        });
-    }
-    private OnDeleteCompleted(myResponse: ServiceResponse) {
-        if (!myResponse.HasError) {
-            this.CurrentSession.CloseCurrentWindowEmit("OK_delete");
-        }
-
-        else {
-            this.ValidationErrorsList = myResponse.ErrorsArray;
-        }
-
-        this.CurrentSession.StopBusyIndicator();
-    }
-
 }

@@ -21,6 +21,8 @@ import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 import { GlobalFilterItem } from 'DashboardModule/Components/Windows/Filter/GlobalFilter/GlobalFilterItem';
 import { AnalyticsFactsFieldsMetaDataPM } from 'DashboardModule/EntityPMs/AnalyticsFactsFieldsMetaDataPM';
 import { formatDate } from '@angular/common';
+import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
+import { DashboardPMExtendedService } from 'DashboardModule/Services/ExtendedPMs/DashboardPMExtendedService';
 
 @Component({
     templateUrl: 'DashboardTabComponent.html',
@@ -53,6 +55,7 @@ export class DashboardTabComponent implements OnInit {
     public FilterCount: number = 0;
     public DateRangeLabel: string;
     public DateRangeNumber: number;
+    public ValidationErrorsList: string[];
 
     constructor() {
         this.dashboardPMService = new DashboardPMService();
@@ -202,13 +205,8 @@ export class DashboardTabComponent implements OnInit {
         logitudeWindow.ComponentLoaded.subscribe(comp => {
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s) {
-                    if (s == "OK_delete") {
-                        this.DashboardDeleted.emit(this.SelectedDashboard?.Id);
-                    }
-                    else {
-                        this.SelectedDashboardName = this.SelectedDashboard.Name;
-                        this.DashboardChanged.emit(this.SelectedDashboard);
-                    }
+                    this.SelectedDashboardName = this.SelectedDashboard.Name;
+                    this.DashboardChanged.emit(this.SelectedDashboard);
                 }
             });
         });
@@ -652,6 +650,31 @@ export class DashboardTabComponent implements OnInit {
         item.FieldName = field.FieldCode;
         item.DataTypeCode = field.DataTypeCode;
         widgetFilters.push(item);
+    }
+
+    DeleteDashboardClicked() {
+        var confirmWindow: ConfirmWindow = new ConfirmWindow();
+        confirmWindow.Title = "Confirm";
+        confirmWindow.Show("Are you sure you want to permanently delete this dashboard?");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.CurrentSession.StartBusyIndicator("Deleting...");
+                var service: DashboardPMExtendedService = new DashboardPMExtendedService();
+                service.Delete(this.SelectedDashboard?.Id).subscribe((myResponse: ServiceResponse) => {
+                    this.OnDeleteCompleted(myResponse);
+                });
+            }
+        });
+    }
+
+    private OnDeleteCompleted(myResponse: ServiceResponse) {
+        this.CurrentSession.StopBusyIndicator();
+        if (!myResponse.HasError){
+            this.DashboardDeleted.emit(this.SelectedDashboard?.Id);
+        }
+        // else{
+        //     this.ValidationErrorsList = myResponse.ErrorsArray;
+        // }
     }
 
     CopyDashboardClicked() {
