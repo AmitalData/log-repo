@@ -1908,9 +1908,37 @@ namespace WebFreight.Web.Helpers
         }
 
 
+        public string ResolveDataProviderHtml(DataProviderResolverArgs args)
+        {
+            if (string.IsNullOrEmpty(args.htmlValue)) return args.htmlValue;
+            if (args.dataProvider == null) return args.htmlValue;
+            if (string.IsNullOrEmpty(args.dataProviderName)) return args.htmlValue;
 
+            string splitter = "[" + args.dataProviderName + ".";
+            string[] partsContainDataProviderFields = args.htmlValue.Split(new string[] { splitter }, StringSplitOptions.None);
+            for (int index = 1; index < partsContainDataProviderFields.Length; index++)
+            {
+                args.htmlValue = ReplaceFieldsWithValues(partsContainDataProviderFields[index], splitter, args);
+            }
+            return args.htmlValue;
+        }
+        public string ReplaceFieldsWithValues(string text, string splitter, DataProviderResolverArgs dataProviderResolverArgs)
+        {
+            if (!text.Contains("]")) return dataProviderResolverArgs.htmlValue;
 
-
+            string propertyName = text.Substring(0, text.IndexOf(']'));
+            string propertyValue = ResolveProperty(propertyName, dataProviderResolverArgs.dataProvider);
+            string replacedValue = splitter + propertyName + "]";
+            return dataProviderResolverArgs.htmlValue.Replace(replacedValue, propertyValue);
+        }
+        public string ResolveProperty(string propertyName, object dataProvider)
+        {
+            if (propertyName == "Logo") return "";
+            if (propertyName == "Signature") return "";
+            string propertyValue = dataProvider.GetType().GetProperty(propertyName)?.GetValue(dataProvider)?.ToString();
+            propertyValue = propertyValue == null ? "" : propertyValue;
+            return propertyValue;
+        }
         public string GetQuoteHtmlTemplate(string htmlString, string entityId, string objectTableId, string childEntityId, string childEntityObjectTableId, int tenant, string userId)
         {
             ICommonDataContext context = CommonDataContext.GetContext(tenant);
@@ -7489,5 +7517,11 @@ namespace WebFreight.Web.Helpers
         public int Tenant { get; set; }
     }
 
+    public class DataProviderResolverArgs
+    {
+        public string htmlValue;
+        public object dataProvider;
+        public string dataProviderName;
+    }
 
 }
