@@ -1,4 +1,5 @@
-﻿import { OnInit, Component, ChangeDetectorRef } from '@angular/core';
+﻿declare var window: any;
+import { OnInit, Component, ChangeDetectorRef } from '@angular/core';
 import { ExportDeclarationClosingDataPM } from '../../../../../Customs/EntityPMs/ExportDeclarationClosingDataPM';
 import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -611,14 +612,17 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
     SendAmendmentCloseDeclaration(event: CustomSendOptionsArgs) {
 
-        this.CurrentSession.StartBusyIndicator("×©×œ×™×—×ª ×ž×¡×¨ ×¡×’×™×¨×ª ×”×¦×”×¨×”");
-        var searchParams: AmendmentRequestParams = new AmendmentRequestParams();
+ 
+
+        this.CurrentSession.StartBusyIndicator("שליחת מסר סגירת הצהרה");
+        let objecttableId = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0].Id;
+         var searchParams: AmendmentRequestParams = new AmendmentRequestParams();
         searchParams.Tenant = SessionLocator.Tenant;
         searchParams.AppicationId = this.EntityPM.DeclarationId;
         searchParams.LoggingEnabled = true;
         searchParams.LoggingEntityId = this.EntityPM.DeclarationId;
         searchParams.LoggingEntityReference = this.DecPM.DeclarationNumber;
-        //searchParams.LoggingObjectTableId = this.ObjectTable.Id;
+        searchParams.LoggingObjectTableId = objecttableId;
         searchParams.LoggingUserId = SessionLocator.LoggedUserId;
         searchParams.RequestName = "Export Amendment Declaration Request";
         searchParams.ResponseName = "Amendment Declaration Response";
@@ -629,7 +633,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         //searchParams.TestCase = event.TestCase;
         let myShowProgressBarParams: ShowProgressBarParams = null;
 
-        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession, searchParams.PBId, "×©×œ×™×—×ª ×ž×¡×¨ ×¡×’×™×¨×”", false, myShowProgressBarParams)
+        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession, searchParams.PBId, "שליחת מסר סגירה", false, myShowProgressBarParams)
             .then((res) => {
 
 
@@ -689,7 +693,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         logWindow.Height = 400;
         logWindow.Title = windowTitle;
         logWindow.ShowCloseButton = true;
-        windowArgs.SaveButtonText = "×©×œ×—";
+        windowArgs.SaveButtonText = "שלח";
 
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) =>
