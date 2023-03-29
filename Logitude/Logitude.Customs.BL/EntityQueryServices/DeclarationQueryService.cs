@@ -2369,5 +2369,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             return res;
         }
+   
+        public string GetDeclaratNumberByCustomFileNo(int tenant, string customFileNo, string direction)
+        {
+            return this.repository.GetDeclaratNumberByCustomFileNo(tenant, customFileNo, direction);
+        }
     }
 }
