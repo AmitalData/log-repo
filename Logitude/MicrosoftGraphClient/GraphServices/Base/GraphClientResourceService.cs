@@ -6,6 +6,7 @@ namespace MicrosoftGraphClient.GraphServices.Base
     {
         protected string Url { get; set; }
         protected string AccessToken { get; set; }
+        protected RefreshAccessTokenResponse RefreshAccessTokenResponse { get; set; }
 
         public GraphClientResourceService(string url)
         {
@@ -22,8 +23,14 @@ namespace MicrosoftGraphClient.GraphServices.Base
 
         public T SetAccessToken(RefreshAccessTokenRequest refreshAccessTokenRequest)
         {
-            AccessToken = new GraphClientAuthenticationService().RefreshAccessToken(refreshAccessTokenRequest)?.AccessToken;
+            RefreshAccessTokenResponse = new GraphClientAuthenticationService().RefreshAccessToken(refreshAccessTokenRequest);
+            AccessToken = RefreshAccessTokenResponse?.AccessToken;
             return GetInstance();
+        }
+
+        public RefreshAccessTokenResponse GetRefreshAccessTokenResponse()
+        {
+            return RefreshAccessTokenResponse;
         }
     }
 }

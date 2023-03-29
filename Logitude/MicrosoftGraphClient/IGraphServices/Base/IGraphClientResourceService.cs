@@ -6,5 +6,6 @@ namespace MicrosoftGraphClient.IGraphServices.Base
     {
         T SetAccessToken(string accessToken);
         T SetAccessToken(RefreshAccessTokenRequest refreshAccessTokenRequest);
+        RefreshAccessTokenResponse GetRefreshAccessTokenResponse();
     }
 }

@@ -1394,6 +1394,7 @@
     <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\WorkFlowInstanceVariableController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\WorkFlowVersionController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Models\ApiQueryTreeFilters.cs" />
+    <Compile Include="Controllers\WorkflowModel\Models\MicrosoftOffice365\CreateSubscription.cs" />
     <Compile Include="DashboardModel\DomainServices\DashboardDomainService.cs" />
     <Compile Include="DataContracts\AccountingPartnerApiFilters.cs" />
     <Compile Include="DataContracts\BrandingData.cs" />
@@ -8046,8 +8047,6 @@
           <DevelopmentServerPort>9996</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:9996/</IISUrl>
-          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:9996/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -36,13 +36,17 @@ using Logitude.Workflow.BL.EntityQueryServices;
 using MicrosoftGraphClient.GraphServices;
 using MicrosoftGraphClient.Models.AuthenticationService;
 using MicrosoftGraphClient.Models.SubscriptionsService;
+using WebFreight.Web.Controllers.WorkflowModel.Models.MicrosoftOffice365;
+using Newtonsoft.Json;
+using System.Collections.Specialized;
 
 namespace WebFreight.Web.Controllers.WorkflowModel.Extended
 {
     public class MicrosoftOffice365Controller : ApiController
     {
+        [HttpGet]
         [ActionName("Test")]
-        public HttpResponseMessage GetTest()
+        public HttpResponseMessage Test()
         {
             try
             {
@@ -78,90 +82,115 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Extended
             }
         }
 
-        public HttpResponseMessage PostSubscription(string workflowNumber, string microsoftEmailAccessToken, string microsoftEmailRefreshToken)
+        [HttpPost]
+        [ActionName("CreateSubscription")]
+        public HttpResponseMessage CreateSubscription(CreateSubscription createSubscription)
         {
-            if (string.IsNullOrEmpty(microsoftEmailAccessToken) || string.IsNullOrEmpty(workflowNumber))
+            if (ModelState.IsValid)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "Empty access token or workflow number");
-            }
-
-            try
-            {
-                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                try
                 {
-                    string logKey = PerformanceLogger.LogCurrentTime();
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    SecurityUtility.CheckContactFeature("ServiceProviderSubscription", "NEW", authToken.Tenant);
-
-                    //string refreshToken = "0.ASUARhRrpPSaeUCHrTME7p7XWFnKtpUwjqtFucvkdl6ClxolABs.AgABAAEAAAD--DLA3VO7QrddgJg7WevrAgDs_wUA9P-_yOGQiFxkFEYmJRp4M0WosEF7JBVKt_bBrlClF5_Yxw97HceTyWzp8Bivs87zDC-DLvE2LfRvo2vB6dOXsTlc3eTEX5EqdJk98UnU4S7ZjJHXN_PUQjdQa4JcovG9DKhhpQZFiVCo5P4if0ASYuZOK0_SElKO4p5vFKmbMuLHu5Hj6osKdMR58kgiHX4rC1v4UG-HQWuzus1KPXlyz3EbBltqvjHZM680cIleeVRAzDfqyFgd5WxvRby9S5-E8QWEM9JeyG2RWKLoXb3AJdcpUf_wcRlq5o9aqnBEf6g5ZZtjN9pb8lalgz4ChLEkYGRas6Hj9vllS_VeMGFHhLD92ErxWAW2UumEGfDm6Lxa_tJyFy3jbgIy2CUZMKmXQYUX7a-jZZRU741xRlo1Jz-CJZ-XWwVKgzZ0g_tbR-rPfjA708KcXDYDFCXv6QaemZhZ-k1h-JE-4R-znqhAGYuMqT4j7vxtmfclaJTlcd9N575ng9z8fLYEP5phw3x_r59BufuBJwZbnXODq2e4tZjDsf-PqrZliz-8BhP6W2ZQD8ppR6eWOSRCE0B4sAcNa1HyOuSpwujWuzEra24dvgMVCmBy95Rb0sPzEkPYKRHsIEWfIuHJyIT9XjN6D2-YMFuLuNkPeGitcVR1Y24bfE6iEbrRmFjUuGTnizH2ZLVL7RbfEMPeXe6cNBY318sH6-l7YRDqNX9xwhQmrSefFndg-qL9JzgBIsg1UyQ9b7cJjINWjTsW5Wc8SdZmLC481m5sycP7bIkDCtdGFBZEjot0ZAcNCUM4ANemKKsqM3L21DCah7LfFe-iRhqSkCN7yP2W27fEmT5DgnhO1kw1goHgddVyVkTA-LLB0N0JBYuYFWRMi7ga0DL6kJypAbI-UfC4";
-
-
-                    var subscription = new GraphClientSubscriptionsService().SetAccessToken(microsoftEmailAccessToken).Create(new CreateSubscriptionRequest
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
-                        ChangeType = "created",
-                        NotificationUrl = "https://5bb1-82-213-2-230.eu.ngrok.io/api/MicrosoftOffice365/WebHook?workflowNumber=" + workflowNumber + "&tenant=" + authToken.Tenant,//$"{_notificationHost}/listen",
-                        Resource = "me/mailfolders/inbox/messages",
-                        ClientState = Guid.NewGuid().ToString(),
-                        ExpirationDateTime = DateTime.Now.AddDays(2),//DateTimeOffset.UtcNow.AddDays(2)
-                        LatestSupportedTlsVersion = "v1_2"
-                    });
+                        string logKey = PerformanceLogger.LogCurrentTime();
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.CheckContactFeature("ServiceProviderSubscription", "NEW", authToken.Tenant);
+                        int tenant = authToken.Tenant;
 
 
+                        Subscription subscription = new GraphClientSubscriptionsService()
+                            .SetAccessToken(createSubscription.AccessToken)
+                            .Create(new CreateSubscriptionRequest
+                            {
+                                ChangeType = "created",
+                                Resource = "me/mailfolders/inbox/messages",
+                                NotificationUrl = GetSubscriptionNotificationUrl(createSubscription.WorkflowNumber, tenant),
+                                ExpirationDateTime = DateTime.Now.AddDays(2),//DateTimeOffset.UtcNow.AddDays(2)
+                                ClientState = Guid.NewGuid().ToString(),
+                                LatestSupportedTlsVersion = "v1_2"
+                            });
 
-                    ServiceProviderSubscriptionPM entityPM = new ServiceProviderSubscriptionPM
-                    {
-                        Tenant = authToken.Tenant,
-                        UserEmail = null,
-                        AccessToken = null,
-                        RefreshToken = null,
-                        EmailProvider = null,
-                        WorkflowNumber = null,
-                        AdditionalSettings = null,
-                        AccessTokenExpirationDateTime = DateTime.Now,
-                        SubscriptionExpirationDateTime = DateTime.Now,
-                        WebhookParams = null,
-                        ChangeSetOp = ChangeSetOperation.Insert
-                    };
+                        
+                        ServiceProviderSubscriptionPM serviceProviderSubscriptionPM = new ServiceProviderSubscriptionPM
+                        {
+                            Tenant = tenant,
+                            UserEmail = createSubscription.UserEmail,
+                            AccessToken = createSubscription.AccessToken,
+                            RefreshToken = createSubscription.RefreshToken,
+                            WorkflowNumber = createSubscription.WorkflowNumber,
+                            AccessTokenExpirationDateTime = createSubscription.AccessTokenExpirationDateTime,
+                            SubscriptionExpirationDateTime = subscription.ExpirationDateTime,
+                            WebhookParams = GetUrlQueryStringAsJson(subscription.NotificationUrl),
+                            AdditionalSettings = null,
+                            EmailProvider = "MicrosoftOffice365",
+                            ChangeSetOp = ChangeSetOperation.Insert
+                        };
 
 
-                    IWorkflowContext workflowContext = WorkflowContext.GetContext(entityPM.Tenant);
-                    ServiceProviderSubscriptionUpdateService service = new ServiceProviderSubscriptionUpdateService(workflowContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-                    service.Update(entityPM, true);
+                        IWorkflowContext workflowContext = WorkflowContext.GetContext(serviceProviderSubscriptionPM.Tenant);
+                        ServiceProviderSubscriptionUpdateService service = new ServiceProviderSubscriptionUpdateService(workflowContext, new Dictionary<string, IContext>(), serviceProviderSubscriptionPM.Tenant);
+                        service.Update(serviceProviderSubscriptionPM, true);
 
 
-                    scope.Complete();
-                    PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+                        scope.Complete();
+                        PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
-                    return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                        return Request.CreateResponse(HttpStatusCode.OK, serviceProviderSubscriptionPM);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
                 }
             }
-            catch (Exception ex)
+            else
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
+        }
+
+        private string GetSubscriptionNotificationUrl(string workflowNumber, int tenant)
+        {
+            if (!string.IsNullOrEmpty(workflowNumber))
+            {
+                string baseUrl = "https://8f3d-82-213-2-230.eu.ngrok.io";
+                return baseUrl + "/api/MicrosoftOffice365/WebHook?workflowNumber=" + workflowNumber + "&tenant=" + tenant;
+            }
+            return null;
+        }
+
+        private string GetUrlQueryStringAsJson(string url)
+        {
+            if (!string.IsNullOrEmpty(url))
+            {
+                NameValueCollection collection = HttpUtility.ParseQueryString("");
+                return JsonConvert.SerializeObject(collection.AllKeys.ToDictionary(i => i, i => collection[i]));
+            }
+            return null;
         }
 
 
         [HttpPost]
         [ActionName("WebHook")]
-        public IHttpActionResult WebHook([FromUri] string workflowNumber, int tenant, string validationToken = null)
+        public HttpResponseMessage WebHook([FromUri] string workflowNumber, int tenant, string validationToken = null)
         {
             if (!string.IsNullOrEmpty(validationToken))
             {
-                return Ok(validationToken);
+                HttpResponseMessage httpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(validationToken, Encoding.UTF8, "text/plain")
+                };
+                return httpResponseMessage;
             }
 
-            var test = "";
+            var test = workflowNumber;
+            var test2 = tenant;
 
 
 
-            return StatusCode(HttpStatusCode.Accepted);
+            return new HttpResponseMessage(HttpStatusCode.Accepted);
         }
-
-
-
-
     }
 }

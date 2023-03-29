@@ -101,7 +101,7 @@
         <td class="table-row-cell">
             <div class="table-row-cell-block event-list-container">
                 <ComboBox [ItemsSource]="StartEventTypesListItems" [Binding]="'Name'"
-                    [SelectedItem]="EventType | ListItemPipe" [ListType]="''" [CyData]="'event-type'">
+                    [SelectedItem]="EventType | ListItemPipe : StartEventTypesListItems" [ListType]="''" [CyData]="'event-type'">
                 </ComboBox>
             </div>
         </td>
@@ -143,5 +143,3 @@
     </tr>
 
 </table>
-
-<BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator" [Width]="BusyIndicatorWidth"></BusyIndicator>

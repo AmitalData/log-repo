@@ -16,6 +16,7 @@ import { MsalConfigurations } from "Workflow/Utilities/MsalConfigurations";
 import { ServiceProviderSubscriptionExtendedService } from "Workflow/Services/Extended/ServiceProviderSubscriptionExtendedService";
 import { ServiceProviderSubscriptionPM } from "Workflow/EntityPMs/ServiceProviderSubscriptionPM";
 import { MicrosoftOffice365Service } from "Workflow/Services/Extended/MicrosoftOffice365Service";
+import { CreateSubscription } from "Workflow/Services/Models/CreateSubscription";
 
 @Component({
     templateUrl: "./StartEventTriggeredPropertiesComponent.html"
@@ -33,9 +34,6 @@ export class StartEventTriggeredPropertiesComponent extends BaseComponent {
     public StartEventApplicationsListItems: ListItem[];
     public StartEventTypesListItems: ListItem[];
     public WorkflowProviderSubscription: ServiceProviderSubscriptionPM;
-    public BusyIndicatorText: string = null;
-    public BusyIndicatorWidth: number = 200;
-    public ShowBusyIndicator: boolean = false;
     public CurrentSession = SessionLocator.SelectedSession;
 
     constructor(
@@ -55,7 +53,7 @@ export class StartEventTriggeredPropertiesComponent extends BaseComponent {
         this.initialize();
         this.initializeStartEventApplicationsList();
         this.initializeStartEventTypesList();
-        this.loadWorkflowProviderSubscription();
+        this.initializeWorkflowProviderSubscription();
     }
 
     initializeWindowEvents() {
@@ -88,6 +86,12 @@ export class StartEventTriggeredPropertiesComponent extends BaseComponent {
 
     initializeStartEventTypesList() {
         this.StartEventTypesListItems = new StartEventTypesList().Items;
+    }
+
+    initializeWorkflowProviderSubscription() {
+        setTimeout(() => {
+            this.loadWorkflowProviderSubscription();
+        }, 150);
     }
 
     loadWorkflowProviderSubscription() {
@@ -141,20 +145,36 @@ export class StartEventTriggeredPropertiesComponent extends BaseComponent {
             { scopes: MsalConfigurations.LoginScopes };
 
         this.authService.loginPopup(popupRequest).subscribe((authenticationResult: AuthenticationResult) => {
-            console.log(authenticationResult);
-            console.log(this.getMsalRefreshToken(authenticationResult));
 
-            let accessToken = authenticationResult.accessToken;
-            let refreshToken = this.getMsalRefreshToken(authenticationResult);
+            if (authenticationResult) {
 
-            this.startBusyIndicator();
-            let microsoftOffice365Service = new MicrosoftOffice365Service();
-            microsoftOffice365Service.createSubscription(this.WorkflowNumber, accessToken, refreshToken).subscribe(serviceResponse => {
-                if (!serviceResponse.HasError) {
-                    this.WorkflowProviderSubscription = serviceResponse.Data;
-                }
-                this.stopBusyIndicator();
-            });
+                this.startBusyIndicator();
+
+                console.log(authenticationResult);
+                console.log(this.getMsalRefreshToken(authenticationResult));
+
+                let accessToken = authenticationResult.accessToken;
+                let refreshToken = this.getMsalRefreshToken(authenticationResult);
+
+                let microsoftOffice365Service = new MicrosoftOffice365Service();
+
+                let createSubscription: CreateSubscription = {
+                    WorkflowNumber: this.WorkflowNumber,
+                    AccessToken: accessToken,
+                    RefreshToken: refreshToken,
+                    UserEmail: authenticationResult.account.username,
+                    AccessTokenExpirationDateTime: authenticationResult.expiresOn
+                };
+
+                microsoftOffice365Service.createSubscription(createSubscription).subscribe(serviceResponse => {
+                    if (!serviceResponse.HasError) {
+                        this.WorkflowProviderSubscription = serviceResponse.Data;
+                    }
+                    this.stopBusyIndicator();
+                });
+
+            }
+
         });
     }
 
@@ -178,12 +198,10 @@ export class StartEventTriggeredPropertiesComponent extends BaseComponent {
     // }
 
     startBusyIndicator(message: string = "Loading ...") {
-        this.BusyIndicatorText = message;
-        this.ShowBusyIndicator = true;
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(message);
     }
 
     stopBusyIndicator() {
-        this.BusyIndicatorText = null;
-        this.ShowBusyIndicator = false;
+        this.CurrentSession.CurrentWindow.StopBusyIndicator();
     }
 }

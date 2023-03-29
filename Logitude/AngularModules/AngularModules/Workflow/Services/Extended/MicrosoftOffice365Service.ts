@@ -7,6 +7,7 @@ import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFieldClass'
 import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
 import { ServiceProviderSubscriptionPM } from '../../EntityPMs/ServiceProviderSubscriptionPM';
+import { CreateSubscription } from '../Models/CreateSubscription';
 
 @Injectable()
 
@@ -18,11 +19,11 @@ export class MicrosoftOffice365Service {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/MicrosoftOffice365';
     }
 
-    createSubscription(workflowNumber: string, microsoftEmailAccessToken: string, microsoftEmailRefreshToken: string) {
+    createSubscription(createSubscription: CreateSubscription) {
         var callTime = new Date();
         return defer(() => {
             var serviceResponse: ServiceResponse = new ServiceResponse();
-            return this._http.post(this._apiUrl + "/PostSubscription?workflowNumber=" + workflowNumber + "&microsoftEmailAccessToken=" + microsoftEmailAccessToken + "&microsoftEmailRefreshToken=" + microsoftEmailRefreshToken, null, ServiceHelper.GetHttpFullHeaders())
+            return this._http.post(this._apiUrl + "/CreateSubscription", createSubscription, ServiceHelper.GetHttpFullHeaders())
                 .pipe(map((response: HttpResponse<any>) => {
                     var pm = response.body;
                     if (pm) {
@@ -31,7 +32,7 @@ export class MicrosoftOffice365Service {
                     }
 
                     var servertime = response.headers.get('ServerExecutionTime');
-                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "MicrosoftOffice365", "PostSubscription", "");
+                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "MicrosoftOffice365", "CreateSubscription", "");
 
                     return serviceResponse;
                 }), catchError(ServiceHelper.HandleServiceError));
