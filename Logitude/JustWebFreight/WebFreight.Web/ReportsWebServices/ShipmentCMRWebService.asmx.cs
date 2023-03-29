@@ -42,13 +42,15 @@ namespace WebFreight.Web.ReportsWebServices
             servicHelper = new WebServiceHelper(tenant);
             CMRDataProvider cmrDataProvider = GetDeliveryDataProvider(entityId, tenant, userId, documentTypeCopyId);
             XmlSerializer serializer = new XmlSerializer(typeof(CMRDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, cmrDataProvider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
+            using (MemoryStream memstream = new MemoryStream())
+            {
+                serializer.Serialize(memstream, cmrDataProvider);
+                memstream.Seek(0, SeekOrigin.Begin);
+                var reader = new StreamReader(memstream);
+                string content = reader.ReadToEnd();
+                byte[] bytearray = memstream.ToArray();
+                return bytearray;
+            }
         }
 
         public CMRDataProvider GetDeliveryDataProvider(string entityId, int tenant, string userId, string documentTypeCopyId)

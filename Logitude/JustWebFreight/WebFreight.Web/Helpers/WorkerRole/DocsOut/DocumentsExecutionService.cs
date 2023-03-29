@@ -114,7 +114,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
             try
             {
                 documentsExecutionLog = GetDocumentsExecutionLog();
-                if (documentsExecutionLog != null && documentsExecutionLog.RetryNumber < 2 && (documentsExecutionLog.CreateDate > DateTime.Now.AddMinutes(-2) || documentsExecutionLog.StartDate > DateTime.Now.AddMinutes(-2)) && (documentsExecutionLog.StatusCode == "W" || documentsExecutionLog.StatusCode == "P"))
+                if (documentsExecutionLog != null && documentsExecutionLog.RetryNumber < 2 && documentsExecutionLog.CreateDate > DateTime.Now.AddMinutes(-5) && (documentsExecutionLog.StatusCode == "W" || documentsExecutionLog.StatusCode == "P"))
                 {
                     UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { StartDate = startDate, StatusCode = "P" });
                     ExportStimulDocumentToPDF(true);
@@ -122,8 +122,8 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                 }
                 else
                 {
-                    UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = new Exception("Document build failed after 3 retries or it reaches the time out.Please try again.If the issue is persistent then please kindly contact our Customer Support"), DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
-                    throw new ApplicationException("Document build failed after 3 retries or it reaches the time out.Please try again.If the issue is persistent then please kindly contact our Customer Support");
+                    string exceptionMessage = GetDocumentExecutionErrorMessage();
+                    throw new ApplicationException(exceptionMessage);
                 }
             }
             catch (AggregateException aggregateException)
@@ -157,6 +157,24 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                 throw new ApplicationException(exception.Message + "inner message: " + exception.InnerException?.Message);
             }
         }
+
+        private string GetDocumentExecutionErrorMessage()
+        {
+            if (documentsExecutionLog == null) 
+                return "Document build failed since the Documents Execution Log is NULL. Please kindly contact our Customer Support";
+
+            if (documentsExecutionLog.RetryNumber >= 2)
+                return "Document build failed after 3 retries. Please try again.";
+
+            if (documentsExecutionLog.CreateDate <= DateTime.Now.AddMinutes(-5)) 
+                return "Document build failed since it reached the time out.";
+
+            if (documentsExecutionLog.StatusCode != "W" && documentsExecutionLog.StatusCode != "P") 
+                return "Document build failed since execution log status code is " + documentsExecutionLog.StatusCode + ".";
+
+            return "Document build failed: Unhandled Error";
+        }
+
         private void ExportStimulDocumentToPDF(bool isVersion2 = false)
         {
             ExportDocumentArgs exportDocumentArgs = !string.IsNullOrEmpty(documentsExecutionLog.RequestXML) ? LogitudeXmlSerializer.DeserializeObject<ExportDocumentArgs>(documentsExecutionLog.RequestXML) : null;

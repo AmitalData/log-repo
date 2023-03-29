@@ -34,13 +34,16 @@ namespace WebFreight.Web.ReportsWebServices
             CMRDataProvider cmrDataProvider = GetDeliveryDataProvider(entityId, childentityId, tenant, userId, documentTypeCopyId);
 
             XmlSerializer serializer = new XmlSerializer(typeof(CMRDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, cmrDataProvider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
+            using (MemoryStream memstream = new MemoryStream())
+            {
+                serializer.Serialize(memstream, cmrDataProvider);
+                memstream.Seek(0, SeekOrigin.Begin);
+                var reader = new StreamReader(memstream);
+                string content = reader.ReadToEnd();
+                byte[] bytearray = memstream.ToArray();
+                return bytearray;
+            }
+            
         }
 
         private CMRDataProvider GetDeliveryDataProvider(string entityId, string childentityId, int tenant, string userId, string documentTypeCopyId)

@@ -59,7 +59,7 @@ namespace CommunicationWorkerRole
 
         private void HandleExceptionRetries(QueueResponse response, Exception insideException)
         {
-            bool isBuildDocumentFailed = !string.IsNullOrEmpty(insideException.Message) && insideException.Message.Contains("Document build failed after 3 retries or it reaches the time out");
+            bool isBuildDocumentFailed = !string.IsNullOrEmpty(insideException.Message) && insideException.Message.Contains("Document build failed since it reached the time out.");
             if (response.RetryNumber <= 1 && !isBuildDocumentFailed)
             {
                 queueService.Delay(new TimeSpan(0, 0, 0, 5));
