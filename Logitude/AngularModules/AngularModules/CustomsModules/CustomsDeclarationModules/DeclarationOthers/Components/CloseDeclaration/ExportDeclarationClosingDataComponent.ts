@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import { OnInit, Component, ChangeDetectorRef } from '@angular/core';
 import { ExportDeclarationClosingDataPM } from '../../../../../Customs/EntityPMs/ExportDeclarationClosingDataPM';
 import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
@@ -76,7 +76,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     private exportDeclarationClosingWebService: ExportDeclarationClosingWebService = new ExportDeclarationClosingWebService();
     public ActualSailingDate: string = "תאריך הפלגה בפועל";
     public ActualTakeOffDate: string = "תאריך המראה בפועל";
-
+    public TypeCodeFilterItems: ApiQueryFilters;
 
     ManifestNumberPlaceholder: string = '';
     SecondCargoIdPlaceholder: string = '';
