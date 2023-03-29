@@ -10,7 +10,7 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 namespace Logitude.BL.CommonDataModel.EntityPMs
 {
     [DataContract]
-    public class VendorPM : ObjectCustomFieldPM
+    public class VendorPM : ObjectCustomFieldDataContractPM
     {
         [Key]
         [DataMember]
