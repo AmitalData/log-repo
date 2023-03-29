@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { UIProperty } from "Infrastructure/Components/LogitudeComponents/UIProperties";
+import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { ObjectTableList } from "Infrastructure/EntityLists/ObjectTableList";
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
@@ -22,6 +23,7 @@ export class FieldValueComponent extends BaseComponent implements OnInit, AfterV
     @Input() DataType: string | null = null;
     @Input() LookupType: string | null = null;
     @Input() IsDisabled: boolean = false;
+    @Input() QueryFilterItems: ApiQueryFilters | null = null;
 
     @Output() ValueChanged = new EventEmitter<string>();
 
