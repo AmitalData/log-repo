@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import { OnInit, Component, ChangeDetectorRef } from '@angular/core';
 import { ExportDeclarationClosingDataPM } from '../../../../../Customs/EntityPMs/ExportDeclarationClosingDataPM';
 import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
@@ -33,6 +33,20 @@ import { CustomsDocumentMetaDataValuePM } from 'Customs/EntityPMs/CustomsDocumen
 import { SupplierInvoiceItemLine } from '../DeclarationPayment/SupplierInvoiceSelectionComponent';
 import { SupplierInvoiceItemList } from 'Customs/EntityLists/Extended/SupplierInvoiceItemList';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import { SupplierInvoiceModificationPM } from '../../../../../Customs/EntityPMs/SupplierInvoiceModificationPM';
+import { CustomsExchangeRateExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/CustomsExchangeRateExtendedPMService';
+import { forEach } from 'cypress/types/lodash';
+import { DeclarationPMService } from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
+import { DeclarationExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/DeclarationExtendedPMService';
+import { SupplierInvoicePM } from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
+import { SupplierInvoicePMService } from '../../../../../Customs/Services/StandardPMs/SupplierInvoicePMService';
+import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
+import { SupplierInvoiceExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
+import { ApiQueryFilters } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { IncotemrsFileValidationList } from '../../../../../Customs/EntityLists/IncotemrsFileValidationList';
+import { LogtuideTableDataService } from '../../../../../QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
+import { IncotemrsFileValidationListService } from '../../../../../Customs/Services/StandardLists/IncotemrsFileValidationListService';
+import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
     selector: 'ExportDeclarationClosingDataComponent',
@@ -48,6 +62,11 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     ValidationErrors: string[] = [];
     DeclarationService: DeclarationWebService = new DeclarationWebService();;
     exportDeclarationClosingDataPMService: ExportDeclarationClosingDataPMService = new ExportDeclarationClosingDataPMService();
+    declarationPMService: DeclarationPMService = new DeclarationPMService();
+    declarationExtendedPMService: DeclarationExtendedPMService = new DeclarationExtendedPMService();
+    supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
+    incotemrsFileValidationListService: IncotemrsFileValidationListService = new IncotemrsFileValidationListService();
+
     exportDeclarationClosingDatasExtendPMService: ExportDeclarationClosingDatasExtendPMService = new ExportDeclarationClosingDatasExtendPMService();
     _CargoIdentifireTypeListService: CargoIdentifireTypeListService = new CargoIdentifireTypeListService();
     private CurrentSession = SessionLocator.SelectedSession;
@@ -57,6 +76,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     private exportDeclarationClosingWebService: ExportDeclarationClosingWebService = new ExportDeclarationClosingWebService();
     public ActualSailingDate: string = "תאריך הפלגה בפועל";
     public ActualTakeOffDate: string = "תאריך המראה בפועל";
+    public TypeCodeFilterItems: ApiQueryFilters;
 
     ManifestNumberPlaceholder: string = '';
     SecondCargoIdPlaceholder: string = '';
@@ -65,8 +85,10 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     constructor(
         private EntityResourceService: EntityResourceService,
         private readonly cdr: ChangeDetectorRef, public entityArgs: EntityArgs,
+        private logtuideTableDataService: LogtuideTableDataService,
     ) {
         super();
+        this.ModificationsList = new ObservableCollection([]);
     }
 
     SetUIProperty() {
@@ -86,33 +108,70 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
     SetWindowArgs(args: any) {
         this.EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response: any) => {
-            this.DecPM = args.EntityPM;
-            this.GetExportDeclarationClosingData(this.DecPM.Id);
+            this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceModification").subscribe((response: any) => {
+                this.DecPM = args.EntityPM;
+                this.declarationExtendedPMService.GetSingleFullData(this.DecPM.Id).subscribe((response1: ServiceResponse) => {
+                    this.DecPM = response1.Result;
+                    this.FillInvoiceNumbersList();
+                    this.fillModifications();
+                    this.GetExportDeclarationClosingData(this.DecPM.Id);
+
+                });
 
 
 
 
-            this.SetUIProperty();
-            if (this.DecPM.IsExportClosed && (!this.DecPM.AmendmentDontDisplayInList || (this.DecPM.AmendmentDontDisplayInList &&  !AppTool.IsNullOrEmpty(this.DecPM.AmendmentStatus)))) {
-                this.IsReadOnly = true
-                this.setInputsReadOnly();
-            }
-            else {
-                if (['6', '7', '8', '10', '11'].includes(this.DecPM.ExportCloseAmendmentStatus)) {
-                    this.IsReadOnly = true 
+                this.SetUIProperty();
+                if (this.DecPM.IsExportClosed && (!this.DecPM.AmendmentDontDisplayInList || (this.DecPM.AmendmentDontDisplayInList && !AppTool.IsNullOrEmpty(this.DecPM.AmendmentStatus)))) {
+                    this.IsReadOnly = true
                     this.setInputsReadOnly();
                 }
-            }
+                else {
+                    if (['6', '7', '8', '10', '11'].includes(this.DecPM.ExportCloseAmendmentStatus)) {
+                        this.IsReadOnly = true
+                        this.setInputsReadOnly();
+                    }
+                }
 
-            if (this.DecPM.Direction === 'E') {
-                this.setIdentifiersPlaceHolders();
-            }
+                if (this.DecPM.Direction === 'E') {
+                    this.setIdentifiersPlaceHolders();
+                }
 
 
+            });
         });
 
     }
 
+    fillModifications() {
+        for (let invoice of this.DecPM.SupplierInvoices) {
+            for (let item of invoice.SupplierInvoiceModifications) {
+                //if (item.TypeCode != "I02" && item.TypeCode != "67" && item.TypeCode != "104") {
+                    //if (this.DecPM.Direction == "E" && item.TypeCode != "160") {
+                        //var entityParentPM = this.DecPM.SupplierInvoices.find(x => x.InvoiceCounterKey == item.InvoiceCounterKey);
+                        var a = new ModificationItemModel(item, this, invoice);
+                        this.ModificationsList.Insert(a);
+                    //}
+                //}
+            }
+        }
+        this.TypeCodeFilterItems = new ApiQueryFilters();
+        this.TypeCodeFilterItems.addAdditionalFilter("IsRelevantInvoiceExport", true, null, null, "Equals", false, false, false, "boolean", false, true);
+        /*this.exportDeclarationClosingDatasExtendPMService.GetSupplierInvoiceModificationsForDeclaration(this.DecPM.Id).subscribe((response: any) => {
+
+            for (let item of response.Result) {
+                if (item.TypeCode != "I02" && item.TypeCode != "67" && item.TypeCode != "104") {
+                    if (this.DecPM.Direction == "E" && item.TypeCode != "160") {
+                        item.EntityParentPM = this.DecPM.SupplierInvoices.find(x => x.InvoiceCounterKey == item.InvoiceCounterKey);
+                        var a = new ModificationItemModel(item, this);
+                        this.ModificationsList.Insert(a);
+                    }
+
+                }
+            }
+
+        });*/
+    }
     setInputsReadOnly() {
 
         this.UIProperties.SetEnabled("FinalCargoTypeCode", this.ObjectTableName, false);
@@ -229,9 +288,52 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
         }
     }
+    ModificationsList: ObservableCollection;
+    AddModificationButton() {
 
+        if (this.ModificationsList.Length > 0) {
+            var exist = this.ModificationsList.Collection.find(d => !d.isValid);
+            if (exist) {
+                return;
+            }
+        }
 
+        var modificationCounter = 0;
+        if (this.ModificationsList.Length > 0) {
+            modificationCounter = this.getMax(this.ModificationsList.Collection, "ModificationCounterKey");
+        }
+        modificationCounter += 1;
 
+        var item = new SupplierInvoiceModificationPM(null);
+        item.DeclarationId = this.DecPM.Id;
+        item.InvoiceCounterKey = this.DecPM.SupplierInvoices[0].InvoiceCounterKey;
+        item.Tenant = SessionLocator.Tenant;
+        item.ChangeSetOp = "Insert";
+        item.ModificationCounterKey = modificationCounter;
+
+        this.DecPM.SupplierInvoices[0].SupplierInvoiceModifications.push(item);
+        this.DecPM.SupplierInvoices[0].IsDirty = true;
+        this.ModificationsList.Insert(new ModificationItemModel(item, this, this.DecPM.SupplierInvoices[0]));
+
+    }
+    RemoveModification(item: ModificationItemModel) {
+
+        console.log("... Removing ", item);
+        var invoice = this.DecPM.SupplierInvoices.find(x => x.InvoiceCounterKey == item.ModificationPM.InvoiceCounterKey);
+        item.ModificationPM.ChangeSetOp = "Delete";
+        item.ModificationPM.IsDirty = true;
+        this.ModificationsList.Remove(item);
+        invoice.IsDirty = true;
+
+    }
+    getMax(list: any[], propertyName: string) {
+        var max = -99999;
+        var maxObj = list && list.length > 0 ? list.reduce(function (prev, current) { return (prev[propertyName] > current[propertyName]) ? prev : current }) : null;
+        if (maxObj != null)
+            if (max <= maxObj[propertyName])
+                max = maxObj[propertyName];
+        return max;
+    }
     setWarningValues() {
         if (this.DecPM.Direction === 'E') {
             this.UIProperties.SetWarning("FinalManifestNumber", this.ObjectTableName, AppTool.IsNullOrEmpty(this.FinalManifestNumber));
@@ -379,22 +481,23 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     OnDocumentsWindowClosed(event) {
         this.entityArgs.SkipCtor = false;
     }
-    SendButtonClicked(event: CustomSendOptionsArgs) {
+    async SendButtonClicked(event: CustomSendOptionsArgs) {
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.FinalCargoTypeCode)) {
-            var msg = " שדה סוג מזהה מטען שדה חובה";
+            var msg = " ×©×“×” ×¡×•×’ ×ž×–×”×” ×ž×˜×¢×Ÿ ×©×“×” ×—×•×‘×”";
             this.ValidationErrors.push(msg);
             this.FillValidationErrors("Errors");
         }
         else {
             if (AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber)) {
                 var msg = " שדה מזהה מטען ראשון שדה חובה";
+
                 this.ValidationErrors.push(msg);
                 this.FillValidationErrors("Errors");
             }
             else {
                 if (AppTool.IsNullOrEmpty(this.FinalSecondCargoId) && !AppTool.IsNullOrEmpty(this.SecondCargoIdPlaceholder)) {
-                    var msg = " שדה מזהה מטען שני שדה חובה";
+                    var msg = " ×©×“×” ×ž×–×”×” ×ž×˜×¢×Ÿ ×©× ×™ ×©×“×” ×—×•×‘×”";
                     this.ValidationErrors.push(msg);
                     this.FillValidationErrors("Errors");
                 }
@@ -403,12 +506,24 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
                     if (AppTool.IsNullOrEmpty(this.EntityPM.LoadingDateTime)) {
                         var msg =  " שדה תאריך טעינה שדה חובה";
+
                         this.ValidationErrors.push(msg);
                         this.FillValidationErrors("Errors");
                     }
 
                     else {
-                        this.CheckDocuments();
+
+                        const errors = await this.ValidateModifications();
+                        if (errors.length > 0) {
+                            this.FillValidationErrors("Errors");
+                        }
+                        else {
+                            if (this.ValidationErrors.length > 0)
+                                this.FillValidationWarnings("Warnings");
+                            else
+                                this.CheckDocuments();
+                        }
+                        
                     }
                 }
             }
@@ -497,9 +612,11 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
     SendAmendmentCloseDeclaration(event: CustomSendOptionsArgs) {
 
+ 
+
         this.CurrentSession.StartBusyIndicator("שליחת מסר סגירת הצהרה");
         let objecttableId = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0].Id;
-        var searchParams: AmendmentRequestParams = new AmendmentRequestParams();
+         var searchParams: AmendmentRequestParams = new AmendmentRequestParams();
         searchParams.Tenant = SessionLocator.Tenant;
         searchParams.AppicationId = this.EntityPM.DeclarationId;
         searchParams.LoggingEnabled = true;
@@ -570,7 +687,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         windowArgs.Errors = this.ValidationErrors;
         windowArgs.ComponentHeight = '328px';
         windowArgs.CancelButtonVisibility = true
-        var windowTitle = "בדיקת צירוף תעודות מקור";
+        var windowTitle = "×‘×“×™×§×ª ×¦×™×¨×•×£ ×ª×¢×•×“×•×ª ×ž×§×•×¨";
         var logWindow = new LogitudeWindow();
         logWindow.Width = 600;
         logWindow.Height = 400;
@@ -604,34 +721,59 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         logWindow.WindowClosed.subscribe(($event: any) => this.OnAddEditWindowClosed($event));
         logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
     }
+    FillValidationWarnings(title: string) {
+        this.CurrentSession.StopBusyIndicator();
+        var windowArgs: any = {};
+        windowArgs.Warning = this.ValidationErrors;
+        windowArgs.ComponentHeight = '328px';
+        var windowTitle = title;
+        windowArgs.SaveButtonText = "×”×ž×©×š";
+        windowArgs.CancelButtonVisibility = true;
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 600;
+        logWindow.Height = 400;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => this.OnWarningsWindowClosed($event));
+        logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
+    }
     OnAddEditWindowClosed(event) {
         ;
         this.ValidationErrors = [];
 
     }
+    OnWarningsWindowClosed(event) {
+        this.ValidationErrors = [];
+        if (!AppTool.IsNullOrEmpty(event) && event == "ok") {
+            this.CheckDocuments();
+        }
+
+    }
     Send(event) {
         this.ValidationErrors = [];
         if (event == "ok") {
+
             if (this.EntityPM.IsDirty) {
                 if (this.IsNew) {
                     this.exportDeclarationClosingDataPMService.insert(this.EntityPM).subscribe((response: ServiceResponse) => {
 
-
                         if (!response.HasError) {
-                            this.SendAmendmentCloseDeclaration(event);
+                            this.saveInvoices(true, event);
                         }
                     });
                 } else {
                     this.exportDeclarationClosingDataPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
 
                         if (!response.HasError) {
-                            this.SendAmendmentCloseDeclaration(event);
+                            this.saveInvoices(true, event);
                         }
                     });
                 }
             }
             else {
-                this.SendAmendmentCloseDeclaration(event);
+                
+                this.saveInvoices(true, event);
             }
         }
 
@@ -642,25 +784,135 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     CancelButtonClicked() {
         SessionLocator.SelectedSession.CloseCurrentWindowEmit("Cancel");
     }
-    OkButtonClicked() {
+
+    private async setFreightChargeWarning(incotermCode: string) {
+        if (incotermCode) {
+            const filters: ApiQueryFilters = new ApiQueryFilters();
+            filters.PageIndex = 0;
+            filters.PageSize = 50;
+            filters.addAdditionalFilter("ENGLISHNAME", incotermCode, null, null, "Contains", false, false, false, "Text", false, false);
+            filters.addAdditionalFilter("LeadDocumentTypeID", '2', null, null, "Contains", false, false, false, "Text", false, false);
+            const incotemrsFileValidationList: IncotemrsFileValidationList[] = await this.logtuideTableDataService.getDataFromService(this.incotemrsFileValidationListService.getByFilters(filters))
+
+            var isFreightCharge = incotemrsFileValidationList.some(x => x.IsFreightCharge);
+            return isFreightCharge;
+        }
+        return false;
+    }
+
+    
+    async OkButtonClicked() {
+
         if (this.ValidationErrors.length > 0)
             this.FillValidationErrors("Errors");
-        this.CurrentSession.CurrentEditComponent.StartBusyIndicator("שמירה");
+
+        /*const errors = await this.ValidateModifications();
+        if (errors.length > 0) {
+            this.FillValidationErrors("Errors");
+            return;
+        }
+        if (this.ValidationErrors.length > 0)
+            this.FillValidationWarnings("Warnings");
+        else*/
+        this.CurrentSession.CurrentEditComponent.StartBusyIndicator("×©×ž×™×¨×”");
+
 
         if (this.IsNew) {
             this.exportDeclarationClosingDataPMService.insert(this.EntityPM).subscribe((response: ServiceResponse) => {
-                this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
-                SessionLocator.SelectedSession.CloseCurrentWindowEmit("Cancel");
+                this.saveInvoices();
             });
         } else {
             this.exportDeclarationClosingDataPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
-                this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
-                SessionLocator.SelectedSession.CloseCurrentWindowEmit("Cancel");
+                this.saveInvoices();
             });
         }
+        
+    }
+    async ValidateModifications() {
+        var validationErrors = [];
+
+        var invoice = this.DecPM.SupplierInvoices[0];
+            var existFreightCharge = false;
+        const isFreightCharge = await this.setFreightChargeWarning(invoice.IncotermCode);
+        if (this.ModificationsList.Length > 0) {
+
+
+                    this.ModificationsList.Collection.forEach((mod) => {
+
+                        var typeCode = mod.TypeCode;
+                        if (typeCode == "104") existFreightCharge = true;
+
+                        if (typeCode != "I02" && !(this.DecPM.Direction == "E" && typeCode == "160")) {
+                            var exists = [];
+                                exists = this.ModificationsList.Collection.filter(d => d.TypeCode == typeCode && d.InvoiceCounterKey == mod.InvoiceCounterKey);
+                            if (exists.length > 1) {
+                                var txt = TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType") + " - ×”×¤×—×ª×•×ª/×”×ª×�×ž×•×ª";
+                                if (!validationErrors.includes(txt)) {
+                                    validationErrors.push(txt);
+                                    if (!this.ValidationErrors.includes(txt)) {
+                                        this.ValidationErrors.push(txt);
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+                }
+            if (!existFreightCharge && isFreightCharge) {
+                this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.General.O.NoDetailsForActualFreightAmount"));
+                }
+            
+            
+        
+        return validationErrors;
     }
 
+    saveInvoices(fromSend = false, event: CustomSendOptionsArgs = null) {
+        
+        var pms: SupplierInvoicePM[] = [];
+        
+        for (let invoice of this.DecPM.SupplierInvoices) {
+            for (let i of invoice.SupplierInvoiceModifications) {
+                if (i.IsDirty) {
+                    if (i.ChangeSetOp == "None") i.ChangeSetOp = "Update";
+                    if (!pms.includes(invoice))
+                        pms.push(invoice);
+                }
+            }
+        }
+        if (pms.length == 0) {
+            if (fromSend)
+                this.SendAmendmentCloseDeclaration(event);
+            else {
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                SessionLocator.SelectedSession.CloseCurrentWindowEmit("Cancel");
+            }
+            return;
+        }
 
+        this.supplierInvoiceExtendedPMService.updateSupplierInvoiceModifications(pms).subscribe((myResult: any) => {
+
+            var res: ServiceResponse = myResult;
+            if (res.HasError) {
+                var msg = new MessageWindow();
+                msg.Show(res.ErrorsArray.join());
+                if (!fromSend)
+                    this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+            }
+            else {
+                if (fromSend) {
+                    this.SendAmendmentCloseDeclaration(event);
+                }
+                else {
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                    SessionLocator.SelectedSession.CloseCurrentWindowEmit("Cancel");
+                }
+            }
+        });
+        
+    }
     setIdentifiersPlaceHolders() {
 
         this._CargoIdentifireTypeListService.getSingleFromCache(this.FinalCargoTypeCode)
@@ -748,14 +1000,215 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
             "BFIHMAIN.LogitudeTask",
             "CustomExportCloseFile",
             unifreightMessageM,
-            "נתונים תפעולים בסגירת הצהרה");
+            "× ×ª×•× ×™×� ×ª×¤×¢×•×œ×™×� ×‘×¡×’×™×¨×ª ×”×¦×”×¨×”");
+
+    }
+   
+    InvoicesNumbersList: any[];
+    FillInvoiceNumbersList() {
+        var items = this.DecPM.SupplierInvoices.map(x => ({ InvoiceCounterKey: x.InvoiceCounterKey, InvoiceNumber: x.InvoiceNumber }));
+        this.InvoicesNumbersList = [];
+        items.forEach(x => this.InvoicesNumbersList.push(x));
+
+
+    }
+    
+
+}
+
+export class ModificationItemModel extends BaseComponent {
+    public ModificationPM: SupplierInvoiceModificationPM = null;
+    public ObjectTableName = "Customs.SupplierInvoiceModification";
+    public DataContext = this;
+    isValid: boolean;
+    public customsExchangeRateExtendedPMService: CustomsExchangeRateExtendedPMService = new CustomsExchangeRateExtendedPMService();
+
+    constructor(private modificationPM: SupplierInvoiceModificationPM, private parent: ExportDeclarationClosingDataComponent, private entityParentPM: SupplierInvoicePM) {
+        super();
+        this.ModificationPM = modificationPM;
+        this.isValid = true;
+        this.selectedInvoice = parent.InvoicesNumbersList.find(x => x.InvoiceCounterKey == this.entityParentPM.InvoiceCounterKey);
+        this.InvoiceNumber = this.entityParentPM.InvoiceNumber;
+        this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForCurrencyAndDate(this.entityParentPM.InvoiceCurrencyTypeCode, this.parent.DecPM.TaxationDateTime).subscribe((response: any) => {
+            if (response) {
+                if (response.Result) {
+                    var rate = response.Result[0];
+                    if (rate) {
+                        this.InvoiceCurrencyExchangeRtae = rate.ExchangeRate;
+                    }
+                }
+            }
+        });
+    }
+
+    //#region Properties
+    get TypeDesc() { return this.ModificationPM.TypeDesc; }
+    set TypeDesc(value: string) {
+        if (this.ModificationPM.TypeDesc != value) {
+            this.ModificationPM.TypeDesc = value;
+        }
+    }
+    get TypeCode() { return this.ModificationPM.TypeCode; }
+    set TypeCode(value: string) {
+        if (this.ModificationPM.TypeCode != value) {
+
+            if (value == "I02") {
+                this.ModificationPM.TypeCode = value;
+                this.isValid = false;
+                this.parent.ValidationErrors.push(TextCodeTranslator.Translate("Customs.Declaration.O.CalculatedFee") + " - ×”×¤×—×ª×•×ª/×”×ª×�×ž×•×ª");
+            } else {
+                var exists_prev = [];
+                if (this.entityParentPM.SupplierInvoiceModifications.length != 0) {
+                    exists_prev = this.parent.ModificationsList.Collection.filter(d => d.TypeCode == this.ModificationPM.TypeCode && d != this);
+                }
+                if (exists_prev.length == 1) {
+                    exists_prev[0].isValid = true;
+                }
+                var exists;
+                if (this.entityParentPM.SupplierInvoiceModifications.length != 0) {
+                    exists = this.entityParentPM.SupplierInvoiceModifications.find(d => d.TypeCode == value);
+                }
+                if (exists) {
+                    this.ModificationPM.TypeCode = value;
+                    this.isValid = false;
+                    this.parent.ValidationErrors.push(TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType") + " - ×”×¤×—×ª×•×ª/×”×ª×�×ž×•×ª");
+                } else {
+                    this.ModificationPM.TypeCode = value;
+                    this.isValid = true;
+                }
+
+            }
+
+        }
+    }
+
+    get TypeName() { return this.ModificationPM.TypeName; }
+    set TypeName(value: string) {
+        if (this.ModificationPM.TypeName != value) {
+            this.ModificationPM.TypeName = value;
+
+        }
+    }
+
+    get CurrencyTypeCode() { return this.ModificationPM.CurrencyTypeCode; }
+    set CurrencyTypeCode(value: string) {
+        if (this.ModificationPM.CurrencyTypeCode != value) {
+            this.ModificationPM.CurrencyTypeCode = value;
+
+        }
+    }
+
+    get CurrencyTypeName() { return this.ModificationPM.CurrencyTypeName; }
+    set CurrencyTypeName(value: string) {
+        if (this.ModificationPM.CurrencyTypeName != value) {
+            this.ModificationPM.CurrencyTypeName = value;
+
+        }
+    }
+
+    get Amount() { return this.ModificationPM.Amount; }
+    set Amount(value: number) {
+        if (this.ModificationPM.Amount != value) {
+            this.ModificationPM.Amount = value;
+        }
 
     }
 
+    get InvoiceCounterKey() { return this.ModificationPM.InvoiceCounterKey; }
+    set InvoiceCounterKey(value: number) {
+        if (this.ModificationPM.InvoiceCounterKey != value) {
+            this.ModificationPM.InvoiceCounterKey = value;
+
+        }
+    }
+
+    InvoiceNumber: string;
+    
+
+    doCalculate: boolean = false;
+
+    OriginalText: string;
+    AmountOriginalText(originalText: string) {
+        this.OriginalText = originalText;
+        if (this.OriginalText) {
+            if ((this.OriginalText + "").indexOf('%') > -1) {
+                this.doCalculate = true;
+            }
+        }
+
+        this.OriginalText = null;
+    }
+    selectedInvoice: any;
+    InvoicesSelectionChanged(selectedItem) {
+        if (selectedItem != null) {
+            if (!AppTool.IsNullOrEmpty(this.InvoiceCounterKey)) {
+                if (this.ModificationPM.ChangeSetOp == "Insert") {
+                    var index = this.parent.DecPM.SupplierInvoices.find(x => x.InvoiceCounterKey == this.InvoiceCounterKey).SupplierInvoiceModifications.indexOf(this.ModificationPM);
+                    if (index > -1) {
+                        this.parent.DecPM.SupplierInvoices.find(x => x.InvoiceCounterKey == this.InvoiceCounterKey).SupplierInvoiceModifications.splice(index, 1);
+                    }
+                    this.parent.DecPM.SupplierInvoices.find(x => x.InvoiceCounterKey == selectedItem.InvoiceCounterKey).SupplierInvoiceModifications.push(this.ModificationPM);
+                }
+                else {
+                   //×œ×� × ×™×ª×Ÿ ×œ×©× ×•×ª ×—×©×‘×•×Ÿ ×œ×©×•×¨×” ×©×ž×•×¨×”
+                    
+                }
+            }
+            this.ModificationPM.IsDirty = true;
+            this.InvoiceCounterKey = selectedItem.InvoiceCounterKey;
+            this.InvoiceNumber = selectedItem.InvoiceNumber;
+            var invoice = this.parent.DecPM.SupplierInvoices.find(x => x.InvoiceCounterKey == selectedItem.InvoiceCounterKey);
+            this.entityParentPM = invoice;
+        }
+    }
+    //#endregion
+
+    SetLocalName(entity, fieldName) {
+        if (!AppTool.IsNullOrEmpty(entity)) {
+            this[fieldName] = entity.LocalName;
+        } else {
+            this[fieldName] = null;
+        }
+
+    }
+    DiscountInNIS: number = 0;
+    InvoiceCurrencyExchangeRtae: number = 0;
+    DiscountInDsicCurrency: number = 0;
+
+    
+    OnAmountLostFocus() {
+
+        if (this.doCalculate) {
+            var value = this.Amount;
 
 
+            this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForCurrencyAndDate(this.CurrencyTypeCode, this.parent.DecPM.TaxationDateTime).subscribe((response: any) => {
+                if (this.entityParentPM.InvoiceAmount) {
+                    this.DiscountInNIS = this.entityParentPM.InvoiceAmount * this.InvoiceCurrencyExchangeRtae * value;
+                    if (response) {
+                        if (response.Result) {
+                            var result = response.Result[0];
+                            if (result) {
 
+                                var amount = this.DiscountInNIS / result.ExchangeRate;
+                                if (amount) {
+                                    this.Amount = amount;
+                                }
+
+
+                            }
+                        }
+                    }
+                }
+                this.doCalculate = false;
+
+
+            });
+        }
+
+    }
 }
+
 
 
 

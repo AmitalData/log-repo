@@ -1524,7 +1524,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         };
         var logWindow = new LogitudeWindow();
         logWindow.Width = 770;
-        logWindow.Height = 530;
+        logWindow.Height = 650;
         logWindow.Title = "סגירת הצהרה";
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
