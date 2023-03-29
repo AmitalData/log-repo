@@ -74,7 +74,7 @@ export class CustomsExportStorageListTemplate {
             let res = ConnectedExportStorage.filter(r => r == this.rowData.Id)[0];
             this.IsConnectedExportStorageChecked = !AppTool.IsNullOrEmpty(res);
         }
-        if (this._exportStorageExtendedListService.connectedSelectAll == true && !this._exportStorageExtendedListService.disconnectedExportStorage.includes(this.rowData.Id)) {
+        if (this._exportStorageExtendedListService.connectedSelectAll == true && !this._exportStorageExtendedListService?.disconnectedExportStorage.includes(this.rowData.Id)) {
             this.IsConnectedExportStorageChecked = true;
         }
         
@@ -122,7 +122,7 @@ export class CustomsExportStorageListTemplate {
 
         }
        
-        var lenDisConnect=this._exportStorageExtendedListService.disconnectedExportStorage.split(",").length-1;
+        var lenDisConnect=this._exportStorageExtendedListService?.disconnectedExportStorage.split(",").length-1;
          
         if (AppTool.IsNullOrEmpty(this._exportStorageExtendedListService.ConnectedExportStorage) && (lenDisConnect==this._exportStorageExtendedListService.CountAllExportStorage || this._exportStorageExtendedListService.CountAllExportStorage==null) ){
             this._exportStorageExtendedListService.SelectedExportStorage = false;
