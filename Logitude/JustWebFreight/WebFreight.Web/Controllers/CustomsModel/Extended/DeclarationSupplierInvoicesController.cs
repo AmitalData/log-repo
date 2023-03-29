@@ -1032,7 +1032,35 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         //        return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
         //    }
         //}
+        public HttpResponseMessage PutUpdateSupplierInvoiceModifications([FromBody] SupplierInvoicePM[] invoicePMs)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Customs.SupplierInvoice", "UPDATE", authToken.Tenant);
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+                SupplierInvoiceUpdateService service = new SupplierInvoiceUpdateService(customContext, new Dictionary<string, IContext>(), authToken.Tenant);
 
-      
+                foreach (var invoicePM in invoicePMs)
+                {
+                    SecurityUtility.AuthenticationOnEntityTenant("SupplierInvoice", invoicePM.Tenant, authToken.Tenant);
+                    //ICustomContext MyContext = CustomContext.GetContext(invoicePM.Tenant);
+                    //service.InitializeEntityPM(invoicePM);
+                    invoicePM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                    service.Update(invoicePM, true);
+                }
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
     }
 }

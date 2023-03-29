@@ -1177,7 +1177,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     }
 
     private async setAdjustmentsWarning(incotermCode: string) {
-        if (incotermCode) {
+        /*if (incotermCode) {
             const filters: ApiQueryFilters = new ApiQueryFilters();
             filters.PageIndex = 0;
             filters.PageSize = 50;
@@ -1188,7 +1188,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             this.isInsurance = incotemrsFileValidationList.some(x => x.IsInsurance)
             this.isFreightCharge = incotemrsFileValidationList.some(x => x.IsFreightCharge)
         } else
-            this.isInsurance = this.isFreightCharge = false;
+            this.isInsurance = this.isFreightCharge = false;*/
     }
 
     private GetInsurancePercentDefault() {

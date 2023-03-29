@@ -620,6 +620,32 @@ new XElement("FileStreamError",
 
 
 }
+        public HttpResponseMessage GetSingleFullData(string id)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Customs.Declaration", "READ", authToken.Tenant);
+
+                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+                DeclarationQueryService declarationQuery = new DeclarationQueryService(MyContext);
+                //declarationQuery.InitializeSettings();
+                DeclarationPM declarationPM = declarationQuery.GetSingle(id, true, false);
+
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                return Request.CreateResponse(HttpStatusCode.OK, declarationPM);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
 
     }
-    }
+}
