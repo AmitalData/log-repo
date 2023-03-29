@@ -216,7 +216,6 @@ export class DeclarationReferantDataList {
 	CustomerId: string;
 	IsCloseOrOpenFromUser: boolean;
 	ListCounter: number;
-	IsCloseOrOpenFromUser: boolean;
 	
 }
  
