@@ -840,6 +840,12 @@ h1{
 ::ng-deep .sort-by-div .mat-form-field-flex{
         width: 130px !important;
 }
+
+::ng-deep .shipment-type-filters .mat-form-field-flex ,::ng-deep .shipment-direction-filters .mat-form-field-flex{
+    width: 190px !important;
+}
+
+
 ::ng-deep .mat-select-arrow {
     opacity: 0;
 }
@@ -991,3 +997,4 @@ h1{
 {
     margin-left: 5px;
 }
+
