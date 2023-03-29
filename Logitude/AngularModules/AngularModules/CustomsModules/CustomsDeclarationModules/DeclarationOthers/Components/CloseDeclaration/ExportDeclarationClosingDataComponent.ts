@@ -487,7 +487,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     async SendButtonClicked(event: CustomSendOptionsArgs) {
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.FinalCargoTypeCode)) {
-            var msg = " ×©×“×” ×¡×•×’ ×ž×–×”×” ×ž×˜×¢×Ÿ ×©×“×” ×—×•×‘×”";
+            var msg = " שדה סוג מזהה מטען שדה חובה";
             this.ValidationErrors.push(msg);
             this.FillValidationErrors("Errors");
         }
@@ -499,7 +499,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
             }
             else {
                 if (AppTool.IsNullOrEmpty(this.FinalSecondCargoId) && !AppTool.IsNullOrEmpty(this.SecondCargoIdPlaceholder)) {
-                    var msg = " ×©×“×” ×ž×–×”×” ×ž×˜×¢×Ÿ ×©× ×™ ×©×“×” ×—×•×‘×”";
+                    var msg = " שדה מזהה מטען שני שדה חובה";
                     this.ValidationErrors.push(msg);
                     this.FillValidationErrors("Errors");
                 }
@@ -695,7 +695,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         windowArgs.Errors = this.ValidationErrors;
         windowArgs.ComponentHeight = '328px';
         windowArgs.CancelButtonVisibility = true
-        var windowTitle = "×‘×“×™×§×ª ×¦×™×¨×•×£ ×ª×¢×•×“×•×ª ×ž×§×•×¨";
+        var windowTitle = "בדיקת צירוף תעודות מקור";
         var logWindow = new LogitudeWindow();
         logWindow.Width = 600;
         logWindow.Height = 400;
@@ -823,7 +823,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         if (this.ValidationErrors.length > 0)
             this.FillValidationWarnings("Warnings");
         else*/
-        this.CurrentSession.CurrentEditComponent.StartBusyIndicator("×©×ž×™×¨×”");
+        this.CurrentSession.CurrentEditComponent.StartBusyIndicator("שמירה");
 
 
         if (this.IsNew) {
@@ -855,7 +855,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                             var exists = [];
                                 exists = this.ModificationsList.Collection.filter(d => d.TypeCode == typeCode && d.InvoiceCounterKey == mod.InvoiceCounterKey);
                             if (exists.length > 1) {
-                                var txt = TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType") + " - ×”×¤×—×ª×•×ª/×”×ª×�×ž×•×ª";
+                                var txt = TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType") + " - הפחתות/התאמות";
                                 if (!validationErrors.includes(txt)) {
                                     validationErrors.push(txt);
                                     if (!this.ValidationErrors.includes(txt)) {
@@ -1009,7 +1009,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
             "BFIHMAIN.LogitudeTask",
             "CustomExportCloseFile",
             unifreightMessageM,
-            "× ×ª×•× ×™×� ×ª×¤×¢×•×œ×™×� ×‘×¡×’×™×¨×ª ×”×¦×”×¨×”");
+            "נתונים תפעולים בסגירת הצהרה");
 
     }
    
@@ -1064,7 +1064,7 @@ export class ModificationItemModel extends BaseComponent {
             if (value == "I02") {
                 this.ModificationPM.TypeCode = value;
                 this.isValid = false;
-                this.parent.ValidationErrors.push(TextCodeTranslator.Translate("Customs.Declaration.O.CalculatedFee") + " - ×”×¤×—×ª×•×ª/×”×ª×�×ž×•×ª");
+                this.parent.ValidationErrors.push(TextCodeTranslator.Translate("Customs.Declaration.O.CalculatedFee") + " - הפחתות/התאמות");
             } else {
                 var exists_prev = [];
                 if (this.entityParentPM.SupplierInvoiceModifications.length != 0) {
@@ -1080,7 +1080,7 @@ export class ModificationItemModel extends BaseComponent {
                 if (exists) {
                     this.ModificationPM.TypeCode = value;
                     this.isValid = false;
-                    this.parent.ValidationErrors.push(TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType") + " - ×”×¤×—×ª×•×ª/×”×ª×�×ž×•×ª");
+                    this.parent.ValidationErrors.push(TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType") + " - הפחתות/התאמות");
                 } else {
                     this.ModificationPM.TypeCode = value;
                     this.isValid = true;
@@ -1159,7 +1159,7 @@ export class ModificationItemModel extends BaseComponent {
                     this.parent.DecPM.SupplierInvoices.find(x => x.InvoiceCounterKey == selectedItem.InvoiceCounterKey).SupplierInvoiceModifications.push(this.ModificationPM);
                 }
                 else {
-                   //×œ×� × ×™×ª×Ÿ ×œ×©× ×•×ª ×—×©×‘×•×Ÿ ×œ×©×•×¨×” ×©×ž×•×¨×”
+                   //לא ניתן לשנות חשבון לשורה שמורה
                     
                 }
             }
