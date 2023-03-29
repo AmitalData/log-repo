@@ -717,7 +717,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         windowArgs.Warning = this.ValidationErrors;
         windowArgs.ComponentHeight = '328px';
         var windowTitle = title;
-        windowArgs.SaveButtonText = "המשך";
+        windowArgs.SaveButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
         windowArgs.CancelButtonVisibility = true;
         var logWindow = new LogitudeWindow();
         logWindow.Width = 600;
