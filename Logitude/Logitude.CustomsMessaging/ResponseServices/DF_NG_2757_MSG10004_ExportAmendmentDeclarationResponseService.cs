@@ -1454,14 +1454,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     supplierInvoiceItemVehiclePM.ChangeSetOp = ChangeSetOperation.Insert;
                     supplierInvoiceItemVehiclePM.DeclarationId = declarationId;
                     supplierInvoiceItemVehiclePM.Tenant = tenant;
-                    if (GetValueCodeType(vehicle.IDTypeCode) == "ZZZ")
-                    {
-                        supplierInvoiceItemVehiclePM.RichbitFileNumber = GetValueIDType(vehicle.ID);
-                    }
-                    if (GetValueCodeType(vehicle.IDTypeCode) == "CN")
-                    {
-                        supplierInvoiceItemVehiclePM.VehicleChassisNumber = GetValueIDType(vehicle.ID);
-                    }
+                    supplierInvoiceItemVehiclePM.IdentifierID = GetValueIDType(vehicle.ID);
                     supplierInvoiceItemVehiclePM.VehicleTypeCode = GetValueCodeType(vehicle.IDTypeCode);
                     //vehicleDetails.ID.Value = supplierInvoiceItemVehicleItem.VehicleChassisNumber;
                     //vehicleDetails.IDTypeCode.Value = supplierInvoiceItemVehicleItem.VehicleTypeCode
