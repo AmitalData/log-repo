@@ -135,7 +135,6 @@ namespace WebFreight.Web.Helpers
             return null;
         }
 
-
         public void AddCommunicationLog(LogitudeLeadPM leadPM , string subject)
         {
             byte[] documentXML = LogitudeXmlSerializer.SerializeObject(leadPM);
