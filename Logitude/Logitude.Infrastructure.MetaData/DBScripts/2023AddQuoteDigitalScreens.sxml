@@ -1,5 +1,5 @@
 ﻿<Script  DBType="Main" Module="Infrastructure">
-  <Sql Version="10">
+  <Sql Version="13">
     <![CDATA[
 	  declare @objectTableId as varchar(15)
 	  set @objectTableId = (select Id from ObjectTables where [Name] = 'Quote' and Tenant = 0)
@@ -453,7 +453,7 @@
                         <LogRow class=''border-0 padding-0 margin-0''>
                             <LogColumn>
                                 <LogFieldContainer>
-                                    <LogLabel field-code=''Quote.ValueOfGoods''></LogLabel>
+                                    <LogLabel field-code=''Quote.ValueOfGoods'' class=''log-font-weight-500 log-color-black-5''></LogLabel>
                                 </LogFieldContainer>
                             </LogColumn>
                             <LogColumn max-width=''37%''>
