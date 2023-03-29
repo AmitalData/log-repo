@@ -1908,9 +1908,37 @@ namespace WebFreight.Web.Helpers
         }
 
 
-
-
-
+        public string ResolveDataProviderHtml(string htmlString, object dataProvider, string dataProviderName)
+        {
+            if (string.IsNullOrEmpty(htmlString)) return htmlString;
+            if (dataProvider == null) return htmlString;
+            if (string.IsNullOrEmpty(dataProviderName)) return htmlString;
+            string splitter = "[" + dataProviderName + ".";
+            string replacedValue = "";
+            string[] partsContainDataProviderFields = htmlString.Split(new string[] { splitter }, StringSplitOptions.None);
+            for (int index = 1; index < partsContainDataProviderFields.Length; index++)
+            {
+                if (!partsContainDataProviderFields[index].Contains("]"))
+                    continue;
+                ReplaceFieldsWithValues(partsContainDataProviderFields[index], dataProvider, splitter, ref htmlString);
+            }
+            return htmlString;
+        }
+        public void ReplaceFieldsWithValues(string text,object dataProvider, string splitter,ref string htmlString)
+        {
+            string propertyName = text.Substring(0, text.IndexOf(']'));
+            string propertyValue = ResolveProperty(propertyName, dataProvider);
+            string replacedValue = splitter + propertyName + "]";
+            htmlString = htmlString.Replace(replacedValue, propertyValue);
+        }
+        public string ResolveProperty(string propertyName, object dataProvider)
+        {
+            if (propertyName == "Logo") return "";
+            if (propertyName == "Signature") return "";
+            string propertyValue = dataProvider.GetType().GetProperty(propertyName)?.GetValue(dataProvider)?.ToString();
+            propertyValue = propertyValue == null ? "" : propertyValue;
+            return propertyValue;
+        }
         public string GetQuoteHtmlTemplate(string htmlString, string entityId, string objectTableId, string childEntityId, string childEntityObjectTableId, int tenant, string userId)
         {
             ICommonDataContext context = CommonDataContext.GetContext(tenant);

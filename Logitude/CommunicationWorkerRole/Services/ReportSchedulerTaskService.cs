@@ -201,7 +201,7 @@ namespace CommunicationWorkerRole.Services
             if (result.IsValid && gLAccountBalanceInLocalValidateResult.IsValid)
             {
                 this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents"));
-                SendHtmlDocument(documentId, reportRecepients, reportTask);
+                SendHtmlDocument(new SendHtmlDocumentArgs() { documentId = documentId, recepients = reportRecepients, reportTask = reportTask, stiReport = stiReport });
                 this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents finished successfully"));
             }
             else
@@ -682,36 +682,36 @@ namespace CommunicationWorkerRole.Services
 
             return inactivePartnerCounts;
         }
-        private void SendHtmlDocument(string documentId, ReportSchedulerRecepients recepients, TasksSchedulerPM reportTask)
+        private void SendHtmlDocument(SendHtmlDocumentArgs args)
         {
             HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
-            SchedulerDetails schedulerDetails = GetSchedulerDetails(reportTask);
-            EmailDetails emailDetails = GetEmailDetailsByMessageTemplateId(schedulerDetails.ReportDetails.MessageTemplateId, reportTask.Tenant, reportTask.CreatedBy);
-            string reportTableId = GetReportTableId(reportTask.Tenant);
-            string subject = !string.IsNullOrEmpty(emailDetails.Subject) ? emailDetails.Subject : reportTask.Name;
-            htmlEditorHelper.SendHtmlDocument(emailDetails.Body, null, null, reportTask.Tenant, recepients.To, subject, recepients.Cc, recepients.Bcc, reportTask.CreatedBy, reportTask.EntityId, reportTableId, documentId + ",", "", "", "");
+            SchedulerDetails schedulerDetails = GetSchedulerDetails(args.reportTask); 
+            EmailDetails emailDetails = GetEmailDetailsByMessageTemplateId(new GetEmailDetailsByMessageTemplateIdArgs() { messageTemplateId = schedulerDetails.ReportDetails.MessageTemplateId, tenant = args.reportTask.Tenant, userId = args.reportTask.CreatedBy, stiReport = args.stiReport });
+            string reportTableId = GetReportTableId(args.reportTask.Tenant);
+            string subject = !string.IsNullOrEmpty(emailDetails.Subject) ? emailDetails.Subject : args.reportTask.Name;
+            htmlEditorHelper.SendHtmlDocument(emailDetails.Body, null, null, args.reportTask.Tenant, args.recepients.To, subject, args.recepients.Cc, args.recepients.Bcc, args.reportTask.CreatedBy, args.reportTask.EntityId, reportTableId, args.documentId + ",", "", "", "");
             this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
             this.trackerCounter += 1;
         }
-        public EmailDetails GetEmailDetailsByMessageTemplateId(string messageTemplateId, int tenant, string userId)
+        public EmailDetails GetEmailDetailsByMessageTemplateId(GetEmailDetailsByMessageTemplateIdArgs args)
         {
-            if (string.IsNullOrEmpty(messageTemplateId) || string.IsNullOrWhiteSpace(messageTemplateId))
+            if (string.IsNullOrEmpty(args.messageTemplateId) || string.IsNullOrWhiteSpace(args.messageTemplateId))
             {
                 return GetInstanceOfEmailDetails();
             }
-            return GetEmailDetails(messageTemplateId, tenant, userId);
+            return GetEmailDetails(new GetEmailDetailsArgs() { messageTemplateId = args.messageTemplateId, tenant = args.tenant, userId = args.userId, stiReport = args.stiReport });
         }
 
-        private EmailDetails GetEmailDetails(string messageTemplateId, int tenant, string userId)
+        private EmailDetails GetEmailDetails(GetEmailDetailsArgs args)
         {
-            ReportsTemplatesVersionRepository reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(tenant);
-            string documentId = reportsTemplatesVersionRepository.GetReportDocumentIdByReportTemplateId(messageTemplateId, tenant);
-            ReportsTemplateQuery reportsTemplateQuery = new ReportsTemplateQuery(tenant);
-            ReportsTemplatePM reportsTemplatePM = reportsTemplateQuery.GetSinglePM(messageTemplateId, tenant);
+            ReportsTemplatesVersionRepository reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(args.tenant);
+            string documentId = reportsTemplatesVersionRepository.GetReportDocumentIdByReportTemplateId(args.messageTemplateId, args.tenant);
+            ReportsTemplateQuery reportsTemplateQuery = new ReportsTemplateQuery(args.tenant);
+            ReportsTemplatePM reportsTemplatePM = reportsTemplateQuery.GetSinglePM(args.messageTemplateId, args.tenant);
             EmailDetails emailDetails = GetInstanceOfEmailDetails();
 
             if (string.IsNullOrEmpty(documentId)) return emailDetails;
-            string html = GetHtmlBody(tenant, documentId);
+            string html = GetHtmlBody(args.tenant, documentId);
 
             HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
             string subject = reportsTemplatePM != null ? reportsTemplatePM.Subject : null;
@@ -720,7 +720,9 @@ namespace CommunicationWorkerRole.Services
             string cc = null;
             UTF8Encoding utf8Encoding = new UTF8Encoding();
 
-            string htmlstring = htmlEditorHelper.ResolveSystemDataHtml(html, userId, ref subject, ref from, ref replyTo, ref cc, tenant);
+            html = htmlEditorHelper.ResolveDataProviderHtml(html , args.stiReport.BusinessObjectsStore[0].BusinessObjectValue, args.stiReport.BusinessObjectsStore[0].Name);
+            subject = htmlEditorHelper.ResolveDataProviderHtml(subject, args.stiReport.BusinessObjectsStore[0].BusinessObjectValue, args.stiReport.BusinessObjectsStore[0].Name);
+            string htmlstring = htmlEditorHelper.ResolveSystemDataHtml(html, args.userId, ref subject, ref from, ref replyTo, ref cc, args.tenant);     
             emailDetails.Body = utf8Encoding.GetBytes(htmlstring);
             emailDetails.Subject = subject;
             return emailDetails;
@@ -803,7 +805,27 @@ namespace CommunicationWorkerRole.Services
         public int Tenant;
         public byte[] ByteData;
     }
-
+    public class SendHtmlDocumentArgs
+    {
+        public string documentId;
+        public ReportSchedulerRecepients recepients;
+        public TasksSchedulerPM reportTask;
+        public StiReport stiReport;
+    }
+    public class GetEmailDetailsByMessageTemplateIdArgs
+    {
+        public string messageTemplateId;
+        public int tenant;
+        public string userId;
+        public StiReport stiReport;
+    }
+    public class GetEmailDetailsArgs
+    {
+        public string messageTemplateId;
+        public int tenant;
+        public string userId;
+        public StiReport stiReport;
+    }
     public class EmailDetails
     {
         public byte[] Body;
