@@ -621,7 +621,9 @@
     <Compile Include="InfrastructureModel\CloseTables\EnumGenerated\EntityStatusTypeStruct.Generated.cs" />
     <Compile Include="InfrastructureModel\CustomFilters\ObjectTableCustomFilter.cs" />
     <Compile Include="InfrastructureModel\CustomFilters\ScreenCustomFilter.cs" />
+    <Compile Include="InfrastructureModel\DataContracts\CustomFieldDataContractList.cs" />
     <Compile Include="InfrastructureModel\DataContracts\MultiEntityUpdateData.cs" />
+    <Compile Include="InfrastructureModel\DataContracts\ObjectCustomFieldDataContractPM.cs" />
     <Compile Include="InfrastructureModel\EntityLists\CustomFieldList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\CustomFieldsMainObjectList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\DataCustomObjectList.cs" />

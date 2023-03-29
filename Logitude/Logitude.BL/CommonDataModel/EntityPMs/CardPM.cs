@@ -11,15 +11,12 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
     public class CardPM : ObjectCustomFieldPM
     {
-        [DataMember]
         [Key]
         public string Id { get; set; }
 
-        [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string EnglishName { get; set; }
 
-        [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string Code { get; set; }
 
@@ -30,9 +27,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string Swift { get; set; }
         public string AccountNumber { get; set; }
         public string IBANNumber { get; set; }
-        [DataMember]
         public int Tenant { get; set; }
-        [DataMember]
         public string GLAccountDisplayNumber { get; set; }
         public double? CreditLimitAmount { get; set; }
         public string Phone { get; set; }
@@ -49,15 +44,12 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string PaymentTermId { get; set; }
 
-        [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string PartnerTypeId { get; set; }
 
-        [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ReceivablesAccountingCard { get; set; }
 
-        [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string PayablesAccountingCard { get; set; }
 
@@ -82,7 +74,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string TeamId { get; set; }
         public string SalesmanBusinessUnitId { get; set; }
 
-        [DataMember]
         public string PartnerTypeName { get; set; }
         public string MainAddressId { get; set; }
         public string BillingAddressId { get; set; }
@@ -92,12 +83,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string VatTypeId { get; set; }
 
         public string Prefix { get; set; }
-        [DataMember]
         public string CityName { get; set; }
         public string ImageDetailId { get; set; }
         public bool DisconectFromContact { get; set; }
         public bool InternetAccess { get; set; }
-        [DataMember]
         public string PrimaryContactId { get; set; }
         public bool IsCustomer { get; set; }
         public bool EnableConsolidationInvoices { get; set; }
@@ -127,11 +116,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [Include]
         [Association("CardVendor", "Id", "Id", IsForeignKey = true)]
         public virtual VendorPM Vendor { get; set; }
-        [DataMember]
         public string CountryId { get; set; }
-        [DataMember]
         public string CountryName { get; set; }
-        [DataMember]
         public string CountryCode { get; set; }
         public string SearchFields { get; set; }
         public bool FieldsChanged { get; set; }
@@ -187,7 +173,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string SupportNotes { get; set; }
 
-        [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string GLAccountId { get; set; }
 
@@ -243,13 +228,9 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string EORInumber { get; set; }
-        [DataMember]
         public string SingleInvoiceTemplateId { get; set; }
-        [DataMember]
         public string CustomsInvoiceTemplateId { get; set; }
-        [DataMember]
         public string ConsolidationInvoiceTemplateId { get; set; }
-        [DataMember]
         public string ManifestInvoiceTemplateId { get; set; }
     }
 }

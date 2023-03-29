@@ -11,7 +11,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 {
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
     [DataContract]
-    public class CustomAgentPM : ObjectCustomFieldPM
+    public class CustomAgentPM : ObjectCustomFieldDataContractPM
     {
         [Key]
         [DataMember]

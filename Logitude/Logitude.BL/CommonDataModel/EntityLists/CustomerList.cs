@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 namespace Logitude.BL.CommonDataModel.EntityLists
 {
     [DataContract]
-    public class CustomerList : CustomFieldList
+    public class CustomerList : CustomFieldDataContractList
     {
         [Key]
         [DataMember]
