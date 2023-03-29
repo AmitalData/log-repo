@@ -104,7 +104,8 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (ObjectsLocator.GlobalSetting.WorkEnvironment === 'cloud' && SessionLocator.TenantPM.AccountingActivated) {
+
+        if (ObjectsLocator.GlobalSetting.WorkEnvironment === 'cloud' && SessionLocator.TenantPM.AccountingActivated && this.DataContext.invoiceType != "IT") {
             this.UpdateDocumentsAutomatically();
         }
     }
@@ -665,9 +666,9 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
         }
     }
 
-    LoadCopiesControl() { 
-        
-        
+    LoadCopiesControl() {
+
+
         this.ItemsSource = new Array<DocumentCopiesViewModel>();
 
         this._documentTypePMService.getSingleDocumentType(this.DataContext.DocumentTypePM.Id, this.CurrentDocumentOut.Id, this.CurrentDocumentOut.Tenant).subscribe((res: any) => {
@@ -680,8 +681,6 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                     if (this.DocumentTypeload != null) {
                         this.DataContext.DocumentTypePM = myResult;
                         if (this.DataContext.DocumentTypePM.DocumentTypeCopies != null) {
-                            
-                            this.ItemsSource = new Array<DocumentCopiesViewModel>();
 
                             this.DocumentTypeload.DocumentTypeCopies.forEach((item) => {
                                 this.ItemsSource.push(new DocumentCopiesViewModel(item, this.CurrentDocumentOut, this.EntityId, this.ChildEntityId, this.ObjectTableId, this.ChildObjectTableId, this.DocumentTypeload, this.ChildReference));
@@ -987,7 +986,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
         });
         if (anySelected) {
-            
+
             this.lastCount = this.AddedDocumentTypeCopyViewModels.length;
 
             var numberOfCopy = this.AddedDocumentTypeCopyViewModels.filter(d => d.IsSelected).length;
@@ -1039,7 +1038,6 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
             if (mode == "New" && this.AddedDocumentTypeCopyViewModels) {
 
-                this.Items = new Array<DocumentCopiesViewModel>();
                 var copies = new Array<DocumentCopiesViewModel>();
                 this.Items.forEach((copy) => {
                     var item = this.AddedDocumentTypeCopyViewModels.filter(d => d.Id == copy.Id)[0];
