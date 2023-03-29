@@ -109,7 +109,7 @@
                                                         </td>
 
                                                         <td style="width: 57px;">
-                                                            <button class="Button" [disabled]="IsABMDisabled" (click)="SendButtonClicked('ABM')">Send</button>
+                                                            <button class="Button" [disabled]="IsABMDisabled" (click)="SendButtonClicked('ABM')">{{'General.B.Send' | TextCodeTranslationPipe}}</button>
                                                         </td>
 
                                                         <td style="width: 30px;">
@@ -183,7 +183,7 @@
                                                         </td>
 
                                                         <td style="width: 57px;">
-                                                            <button class="Button" [disabled]="IsATMSDisabled" (click)="SendButtonClicked('ASV')">Send</button>
+                                                            <button class="Button" [disabled]="IsATMSDisabled" (click)="SendButtonClicked('ASV')">{{'General.B.Send' | TextCodeTranslationPipe}}</button>
                                                         </td>
 
                                                         <td style="width: 30px;">
@@ -257,7 +257,7 @@
                                                         </td>
 
                                                         <td style="width: 57px;">
-                                                            <button class="Button" [disabled]="IsATMSDisabled" (click)="SendButtonClicked('BOL')">Send</button>
+                                                            <button class="Button" [disabled]="IsATMSDisabled" (click)="SendButtonClicked('BOL')">{{'General.B.Send' | TextCodeTranslationPipe}}</button>
                                                         </td>
 
                                                         <td style="width: 30px;">
@@ -335,7 +335,7 @@
                                                         </td>
 
                                                         <td style="width: 57px;">
-                                                            <button class="Button" [disabled]="IsAESDisabled" (click)="SendButtonClicked('CBP')">Send</button>
+                                                            <button class="Button" [disabled]="IsAESDisabled" (click)="SendButtonClicked('CBP')">{{'General.B.Send' | TextCodeTranslationPipe}}</button>
                                                         </td>
 
                                                         <td style="width: 30px;">
@@ -409,7 +409,7 @@
                                                         </td>
 
                                                         <td style="width: 57px;">
-                                                            <button *ngIf="!IsRetransferAMANACVisible" class="Button" [disabled]="IsAMANACDisabled" (click)="SendButtonClicked('AMC')">Send</button>
+                                                            <button *ngIf="!IsRetransferAMANACVisible" class="Button" [disabled]="IsAMANACDisabled" (click)="SendButtonClicked('AMC')">{{'General.B.Send' | TextCodeTranslationPipe}}</button>
                                                             <button attr.data-cy="{{'CustomsTransmissionsRetransfer' | IdGeneratorAsyncPipe | async}}" *ngIf="IsRetransferAMANACVisible" class="Button" (click)="RetransferAMANACClicked()">Re-transfer</button>
                                                         </td>
 
@@ -456,7 +456,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button attr.data-cy="{{'CloseCustomsTransmissions' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CloseButtonClicked()">Close</button>
+                        <button attr.data-cy="{{'CloseCustomsTransmissions' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CloseButtonClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

@@ -1902,7 +1902,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" id="{{'ShipmentCancelbtn' | IdGeneratorAsyncPipe | async}}" (click)="CloseButtonClicked()">Cancel</button>
+                        <button class="Button" id="{{'ShipmentCancelbtn' | IdGeneratorAsyncPipe | async}}" (click)="CloseButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
                     <td *ngIf="DirectionId == 'E' && !IsDSVTenant" style="width: 5px;">
                         <div></div>
