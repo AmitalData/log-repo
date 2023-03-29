@@ -16,6 +16,7 @@ namespace CommunicationWorkerRole
             BatchServiceCode = "DocumentExecutionV2WorkerRole";
             DoneItemsInRange = new Dictionary<DateTime, int>();
             ConnectClient();
+            ExceptionHandler.HandleException(new Exception("Document Execution V2 Worker role started"), DateTime.Now, 0, null, "Doc WorkerRole Monitor" + "|" + ThreadedRoleEntryPoint.getWorkerRoleName(), null, System.Environment.MachineName);
             return base.OnStart();
         }
 
@@ -57,19 +58,27 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private void HandleExceptionRetries(QueueResponse response, Exception insideException)
+        private void HandleExceptionRetries(QueueResponse response, Exception exception)
         {
-            bool isBuildDocumentFailed = !string.IsNullOrEmpty(insideException.Message) && insideException.Message.Contains("Document build failed since it reached the time out.");
-            if (response.RetryNumber <= 1 && !isBuildDocumentFailed)
-            {
-                queueService.Delay(new TimeSpan(0, 0, 0, 5));
-            }
-            if (response.RetryNumber >= 2 || isBuildDocumentFailed)
+            if (IsExceededTimeOut(exception))
             {
                 queueService.CompleteAsFailed();
             }
-            ExceptionHandler.HandleException(insideException, DateTime.Now, 0, null, "Document Execution V2 WorkerRole Monitor|" + "Catch ExecuteDocumentsExecutionQueue", null, System.Environment.MachineName);
+            else if (response.RetryNumber <= 1)
+            {
+                queueService.Delay(new TimeSpan(0, 0, 0, 5));
+            }
+            else if (response.RetryNumber >= 2)
+            {
+                queueService.CompleteAsFailed();
+            }
+            ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Document Execution V2 WorkerRole Monitor|" + "Catch ExecuteDocumentsExecutionQueue", null, System.Environment.MachineName);
             Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));
+        }
+
+        private bool IsExceededTimeOut(Exception exception)
+        {
+            return !string.IsNullOrEmpty(exception.Message) && exception.Message.Contains("Document build failed since it reached the time out.");
         }
 
         private void ConnectClient()
