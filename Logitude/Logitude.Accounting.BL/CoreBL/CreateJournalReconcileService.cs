@@ -328,7 +328,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             lock (thisLock)
             {
-                using (var scope = TransactionFactory.GetTransaction())
+                using (var scope = TransactionFactory.GetNewReadCommittedTransaction())
                 {
                     _AccountingContext = accountingContext;
                     var usrid = AuthenticationUtil.ResolveUserId(tenant);
@@ -357,6 +357,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     ValidateRate(rate);
                     List<JournalPM> addedJournalPMs = new List<JournalPM>();
+                    var journalReconcileRepository = new JournalReconcileRepository(accountingContext);
                     ReconciliationLines.ForEach(reconciliationLine =>
                     {
                         JournalPM journal = CreateJournalForReconciliationLine(reconciliationLine, TheAccountId, AdjustAccountId, DueDate, RefDate, theCurrencyId, rate, Ref1, Ref2, Ref3, Remarks,
@@ -364,8 +365,13 @@ namespace Logitude.Accounting.BL.CoreBL
                         var JournalUP = new JournalUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
                         JournalUP.Update(journal, true);
                         addedJournalPMs.Add(journal);
+                        var journalReconciles = journalReconcileRepository
+                        .GetJournalReconcilesForJournalsWithoutLedgers(journal.JournalReconciles.Select(x => x.LedgerTransactionId).ToList(), tenant);
+                        if (journalReconciles.Where(x => x.JournalId != journal.Id).Any())
+                        {
+                            throw new ApplicationException("There is already journal reconciliation has been created.");
+                        }
                     });
-
                     scope.Complete();
                     return addedJournalPMs;
                 }
