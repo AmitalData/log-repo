@@ -354,3 +354,35 @@ Dashboard-menu-oneRow {
 .dl-panel h1 {
     font-size: 14px;
 }
+
+.dashboard-outline-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px 8px;
+    width: 50px;
+    height: 22px;
+    color: #A4A4A4;
+    background: #FFFFFF;
+    border: 1px solid #D9D9D9;
+    border-radius: 0px 2px 2px 0px;
+    font-weight: 500;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.dashboard-outline-active-btn {
+    color: #5FAFDA;
+    border: 1px solid #5FAFDA;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px 8px;
+    width: 50px;
+    height: 22px;
+    background: #FFFFFF;
+    border-radius: 2px 0px 0px 2px;
+    font-weight: 500;
+    font-size: 13px;
+    cursor: pointer;
+}

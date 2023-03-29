@@ -36,6 +36,7 @@ export class DashboardTabComponent implements OnInit {
     @Output() TabHasChanges = new EventEmitter<boolean>();
     @Output() DashboardEntity = new EventEmitter<DashboardPM>();
     @Output() RefreshAfterCopy = new EventEmitter<DashboardPM>();
+    @Output() ViewDashboardModeClicked = new EventEmitter<any>();
 
     public SelectedDashboardName: string = null;
     public SelectedDashboard: DashboardPM;
@@ -131,7 +132,7 @@ export class DashboardTabComponent implements OnInit {
         this.SelectedDashboardName = this.SelectedDashboard.Name;
         this.reactWidgetsLayout = this.BindReactWidgets(this.SelectedDashboard.Widgets);
         this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone(this.reactWidgetsLayout));
-        if (this.OpenEditLayout) this.EditLayoutClicked();
+        if (this.OpenEditLayout) this.EditDashboardLayoutClicked();
     }
 
     private BindReactWidgets(widgets: WidgetPM[]) {
@@ -364,7 +365,13 @@ export class DashboardTabComponent implements OnInit {
         this.DashboardDataBinding.onAddWidget.next(reactWidget);
     }
 
-    EditLayoutClicked() {
+    ViewDashboardLayoutClicked() {
+        if (this.HasChanges) {
+            this.ViewDashboardModeClicked.emit();
+        }
+    }
+    
+    EditDashboardLayoutClicked() {
         MixPanelLocator.PostDashboardAction({ ActionName: "Edit Layout Clicked", DashboardId: this.SelectedDashboard?.Id });
         this.HasChanges = false;
         this.IsEditLayoutButtonVisible = false;
@@ -388,7 +395,7 @@ export class DashboardTabComponent implements OnInit {
     }
 
     HereClicked() {
-        this.EditLayoutClicked();
+        this.EditDashboardLayoutClicked();
         this.AddWidgetClicked();
     }
 

@@ -296,6 +296,10 @@ export class CustomDashboardComponent extends BaseComponent {
         this.DashboardsTabs.push(tab);
     }
 
+    TabViewDashboardModeClicked () {
+        this.ConfirmSave(null);
+    }
+
     private ConfirmSave(clickedDashboard: DashboardList) {
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Width = 450;
