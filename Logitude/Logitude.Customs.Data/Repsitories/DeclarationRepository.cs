@@ -1365,6 +1365,15 @@ namespace Logitude.Customs.Data.Repsitories
 
             return q.Distinct().ToList();
         }
+
+        public string GetDeclaratNumberByCustomFileNo(int tenant, string customFileNo, string direction)
+        {
+            var decNum = (from a in context.Declarations
+                       where a.CustomFileNo == customFileNo && a.DeclarationNumber != null && a.Direction == direction && a.Tenant == tenant
+                       select a.DeclarationNumber).FirstOrDefault();
+            return decNum;
+
+        }
     }
 
 
