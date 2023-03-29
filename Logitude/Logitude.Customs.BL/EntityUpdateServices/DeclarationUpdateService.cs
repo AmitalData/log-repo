@@ -1361,11 +1361,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     throw new Exception("כל פרטי המשלוח במסך הכללי נעלמו  (CALL#291407)");
                 }
-                int index = 0;
                 bool dirty = false;
 
-                if ((entityPM.IsAmendment != true) || entityPM.Direction != "E"/*|| entityPM.ChangeSetOp != ChangeSetOperation.Update*/)
+                if (entityPM.Direction != "E")
                 {
+                    int index = 0;
                     foreach (Consignment item in consignments)
 
                     {
@@ -1391,6 +1391,36 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
 
                 }
+                else
+                {
+                    if (entityPM.IsAmendment != true)
+                    {
+                        int i_index = 0, e_index = 0;
+                        foreach (Consignment item in consignments)
+                        {
+                            if (item.ConsignmentType == "I")
+                            {
+                                i_index += 1;
+                                if (item.SequenceNumeric == i_index) continue;
+                                dirty = true;
+                                item.SequenceNumeric = i_index;
+                            }
+                            else
+                            {
+                                e_index += 1;
+                                if (item.SequenceNumeric == e_index) continue;
+                                dirty = true;
+                                item.SequenceNumeric = e_index;
+                            }
+                            consignmentRepository.Update(item);
+                            ConsignmentPM itemPM = (from a in entityPM.Consignments
+                                                    where a.DeclarationId == item.DeclarationId && a.ConsignmentNumber == item.ConsignmentNumber
+                                                    select a).FirstOrDefault();
+                            itemPM.SequenceNumeric = item.SequenceNumeric;
+                        }
+                    }
+                }
+                 
                 if (dirty)
                 {
                     consignmentRepository.SubmitChanges();

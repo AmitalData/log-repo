@@ -139,6 +139,23 @@ export class ConsigmentTabContentComponent
 
         this.SetTipsInsideCargoIdentifires(this.EntityPM.CargoTypeCode);
 
+        
+        var consignmentIndex = 0;
+
+        if (this.declarationPM.Consignments.length > 0) {
+            var consignmentsSameType = this.declarationPM.Consignments.filter(x => x.ConsignmentType == this.ConsignmentType && x.ConsignmentNumber != this.EntityPM.ConsignmentNumber);
+            if (consignmentsSameType.length > 0) {
+                var maxObj = consignmentsSameType.reduce(function (prev, current) { return (prev.SequenceNumeric > current.SequenceNumeric) ? prev : current });
+                if (maxObj != null) {
+                    if (consignmentIndex <= maxObj.SequenceNumeric)
+                        consignmentIndex = maxObj.SequenceNumeric;
+                }
+            }
+        }
+            this.EntityPM.SequenceNumeric = ++consignmentIndex;
+            this.Tab.Header = (this.EntityPM.ManifestNumber ? (this.EntityPM.ManifestNumber + '-') : '') + this.EntityPM.SequenceNumeric;
+        
+        
     }
     ngOnDestroy() {
         console.log("ConsigmentTabContentComponent:ngOnDestroy");
