@@ -79,7 +79,7 @@ namespace WebFreight.Web.WcfApi
                     response.ErrorMessage = $"Query id {queryId} has no sql.";
                     return (response);
                 }
-                if (sqlQuery.IndexOf("@Tenant") == -1)
+                if (sql_logi.HAS_TENANT && sqlQuery.IndexOf("@Tenant") == -1)
                 {
                     response.HasError = true;
                     response.ErrorMessage = $"Query id {queryId} has no @Tenant parameter.";
@@ -111,7 +111,7 @@ namespace WebFreight.Web.WcfApi
                         {
                             cmd.Parameters.Add(new SqlParameter($"@{field.Key}", field.Value));
                         }
-                        cmd.Parameters.Add(new SqlParameter("@Tenant", tenant));
+                        if (sql_logi.HAS_TENANT) cmd.Parameters.Add(new SqlParameter("@Tenant", tenant));
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
                             List<List<string>> all_lines = new List<List<string>>();
