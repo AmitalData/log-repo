@@ -129,11 +129,6 @@ namespace CommunicationWorkerRole
 
                                 Tenant = int.Parse(tenant);
 
-                                if (string.IsNullOrEmpty(entityChangeId) || string.IsNullOrEmpty(automationId))
-                                {
-                                    throw new Exception("EntityChangeId or AutomationId paramaters is empty");
-                                }
-
                                 EntityChangeRepository entityChangeRepository = new EntityChangeRepository(Tenant);
                                 EntityChange entityChange = entityChangeRepository.GetSingleEntityChange(entityChangeId, Tenant);
 
