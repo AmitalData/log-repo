@@ -112,6 +112,18 @@
                                         </ng-template>
                                     </log-column>
 
+                                    <!-- MarksNumbers -->
+                                    <log-column [header]="'Customs.ExportStorage.F.MarksNumbers' | TextCodeTranslationPipe"
+                                        [binding]="'MarksNumbers'" [width]="'120'" [Alignment]="'right'">
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align:right">
+                                                    <span>{{item.MarksNumbers}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
                                     <!-- DeclarationNumber -->
                                     <log-column
                                         [header]="'Customs.ExportStorage.F.DeclarationNumber' | TextCodeTranslationPipe"
