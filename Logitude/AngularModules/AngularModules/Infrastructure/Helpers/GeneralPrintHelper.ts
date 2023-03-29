@@ -32,6 +32,7 @@ export class GeneralPrintHelper {
 
     ChildReference: string;
     public EntityId: string;
+    public invoiceType: string;
     documentTypeList: DocumentTypeList;
     documentOutPM: DocumentOutPM;
     documentTypePM: DocumentTypePM;
@@ -40,7 +41,7 @@ export class GeneralPrintHelper {
     public IsLoadPrintControl: boolean = true;
     public IsStartPrint: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(objecttablename: string, documentTypeCode: string, entityId: string, childEntityId: string, childReference:string ,childObjectTableId:string ) {
+    constructor(objecttablename: string, documentTypeCode: string, entityId: string, childEntityId: string, childReference:string ,childObjectTableId:string , invoiceType:string = "") {
         this.ObjectTableName = objecttablename;
         if (!AppTool.IsNullOrEmpty(documentTypeCode)) {
             this.DocumentTypeCode = documentTypeCode.toUpperCase();
@@ -48,6 +49,7 @@ export class GeneralPrintHelper {
 
         this.CurrentObjectTableId = window.ObjectTables.filter(d => d.Name == objecttablename)[0].Id;
         this.EntityId = entityId == "null" || !entityId ? "" : entityId;
+        this.invoiceType = invoiceType == "null" || !invoiceType ? "" : invoiceType;
         this.ChildEntityId = childEntityId == "null" || !childEntityId ? "" : childEntityId;
         this.ChildObjectTableId = childObjectTableId == "null" || !childObjectTableId ? "" : childObjectTableId;
         this.ChildReference = childReference == "null" || !childReference ? "" : childReference;
@@ -58,12 +60,13 @@ export class GeneralPrintHelper {
 
         this.documentTypePMService = new DocumentTypePMExtendedService();
         this.documentOutPMService = new DocumentOutPMService();
-       
+
 
     }
 
 
     ShowPrintControl(documentTypeTemplate: string = null) {
+
         if (this.IsStartPrint) return;
             let apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
             apiQueryFilters.GetAll = true;
@@ -94,7 +97,7 @@ export class GeneralPrintHelper {
                     }
                 }
             });
-        
+
     }
 
     GetDocumentOut(documentTypeTemplate:string = null) {
@@ -135,7 +138,7 @@ export class GeneralPrintHelper {
                     this.CurrentSession.StopBusyIndicator();
                 }
             });
-        
+
     }
 
     LoadDocumentTypePm() {
@@ -153,17 +156,19 @@ export class GeneralPrintHelper {
                 this.CurrentSession.StopBusyIndicator();
                 this.IsStartPrint = false;
             }
-        });                            
+        });
     }
 
     LoadPrintControl() {
+
         this.IsStartPrint = false;
         this.CurrentSession.StopBusyIndicator();
         var documentOutPmLists = new Array<DocumentOutPM>();
         documentOutPmLists.push(this.documentOutPM);
+
         var SelectedInternalDocument = new DocsOutDataViewModel(this.documentTypePM, this.EntityId, this.documentOutPM.ChildEntityId, this.CurrentObjectTableId, this.ChildObjectTableId, this.documentOutPM.ChildEntityReference,
             documentOutPmLists, null, null, null);
-
+        SelectedInternalDocument.invoiceType = this.invoiceType;
         SelectedInternalDocument.IsNotFromDocsOutListOpenPrintControl = true;
         SelectedInternalDocument.IsAWBWizard = false;
         var logitudeWindow = new LogitudeWindow();
