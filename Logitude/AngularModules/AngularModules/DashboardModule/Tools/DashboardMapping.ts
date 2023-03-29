@@ -38,7 +38,7 @@ export class DashboardMapping {
             myWidget.UseNumberAbbreviation = widget.UseNumberAbbreviation;
             myWidget.UseAbbreviationAfter = widget.UseAbbreviationAfter;
             myWidget.DecimalPlaces = widget.DecimalPlaces;
-            //myWidget.LabelsPosition = widget.LabelsPosition;
+            myWidget.LabelsPosition = widget.LabelsPosition;
             myWidget.Layout = {
                 minH: 5,
                 minW: 3,
@@ -70,7 +70,7 @@ export class DashboardMapping {
             myWidgetMeasuer.MeasureCode = widgetMeasure.MeasureCode;
             myWidgetMeasuer.MeasureFieldId = widgetMeasure.MeasureFieldId;
             myWidgetMeasuer.RenderAs = widgetMeasure.RenderAs;
-            //myWidgetMeasuer.YAxisType = widgetMeasure.YAxisType;
+            myWidgetMeasuer.YAxisType = widgetMeasure.YAxisType;
         }
 
         return myWidgetMeasuer;
