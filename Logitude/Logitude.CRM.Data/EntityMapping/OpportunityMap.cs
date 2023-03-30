@@ -186,6 +186,12 @@ namespace Logitude.CRM.Data.EntityMapping
             this.Property(t => t.Field40).HasColumnName("Field40").HasMaxLength(250).IsUnicode(true);
 
             this.Property(t => t.NumberOfConnectedQuotes).HasColumnName("NumberOfConnectedQuotes");
+
+            this.Property(t => t.ClientId).HasColumnName("ClientId").HasMaxLength(100).IsUnicode(false);
+
+            this.Property(t => t.LeadOrigin).HasColumnName("LeadOrigin").HasMaxLength(100).IsUnicode(false);
+
+            this.Property(t => t.Campaign).HasColumnName("Campaign").HasMaxLength(250).IsUnicode(false);
         }
     }
 }

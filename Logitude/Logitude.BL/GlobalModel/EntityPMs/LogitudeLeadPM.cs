@@ -49,6 +49,9 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public string VatNumber { get; set; }
 
         public bool IsUserEmailSent { get; set; }
+        public string ClientId { get; set; }
+        public string LeadOrigin { get; set; }
+        public string Campaign { get; set; }
 
     }
 }

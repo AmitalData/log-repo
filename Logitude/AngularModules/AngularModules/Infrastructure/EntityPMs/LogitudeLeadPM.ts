@@ -180,6 +180,21 @@ export class LogitudeLeadPM {
     public set IsUserEmailSent(newValue: boolean) { if (this.isUserEmailSent != newValue) { this.isUserEmailSent = newValue; this.MarkAsDirty("IsUserEmailSent"); } }
        
 	 
+    private clientId: string;
+    public get ClientId() { return this.clientId; }
+    public set ClientId(newValue: string) { if (this.clientId != newValue) { this.clientId = newValue; this.MarkAsDirty("ClientId"); } }
+       
+	 
+    private leadOrigin: string;
+    public get LeadOrigin() { return this.leadOrigin; }
+    public set LeadOrigin(newValue: string) { if (this.leadOrigin != newValue) { this.leadOrigin = newValue; this.MarkAsDirty("LeadOrigin"); } }
+       
+	 
+    private campaign: string;
+    public get Campaign() { return this.campaign; }
+    public set Campaign(newValue: string) { if (this.campaign != newValue) { this.campaign = newValue; this.MarkAsDirty("Campaign"); } }
+       
+	 
 
     public OldEntityPM: LogitudeLeadPM;
 		
