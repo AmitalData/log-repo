@@ -465,7 +465,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (entityPM.MarkAsChanged && entityPM.ChangeSetOp == ChangeSetOperation.Update && !string.IsNullOrEmpty(this.EntityChangeFieldXml))
                 {
                     DateTime stopLogAt = new DateTime(2025, 06, 01);
-                    LogitudeSettings.HandleLogMe(" DeclarationUpdateService.OnUpdating = EntityChangeFieldXml " + this.EntityChangeFieldXml, false, "CreateUD2LTService", stopLogAt);
+                    LogitudeSettings.HandleLogMe(" DeclarationUpdateService.OnUpdating: " + " CustomFileno : " + this.EntityPM.CustomFileNo + " = EntityChangeFieldXml " + this.EntityChangeFieldXml, false, "CreateUD2LTService", stopLogAt);
                     XmlDocument doc = new XmlDocument();
                     doc.LoadXml(this.EntityChangeFieldXml);
                     foreach (XmlNode xmlnode in doc?.DocumentElement)
