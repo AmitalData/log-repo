@@ -196,9 +196,10 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
         this.NumberOfSeries = this.NumberOfSeries + 1;
     }
 
-    DeleteCustomizedCounterItem(customizedCounterItem: CustomizedCounterItem) {
+    DeleteCustomizedCounterItem(customizedCounterItem: CustomizedCounterItem, isFromConfirmWindow: boolean = false) {
         if (!customizedCounterItem) return;
         this.CustomizedCounterItems = this.CustomizedCounterItems.filter(item => item.SeriesCode != customizedCounterItem.SeriesCode);
+        if (isFromConfirmWindow) return;
         this.RefreshCustomizedCounterItems();
         this.UpdateSeriesUniquePerPrefix();
         this.UpdateSeriesesStartNumber();
@@ -240,6 +241,7 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
         confirmWindow.Show(confirmationMessage);
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
+                this.DeleteEmptyCustomizedCounterItems(customizedCounterItems);
                 this.BuildAPIHelperCounterDefinitions();
                 this.ValidateCounterDefinitions();
             }
@@ -252,7 +254,14 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
         });
         return seriesCodes;
     }
-
+    DeleteEmptyCustomizedCounterItems(customizedCounterItems: CustomizedCounterItem[]) {
+        customizedCounterItems.forEach(item => {
+            this.DeleteCustomizedCounterItem(item, true);
+        });
+        this.RefreshCustomizedCounterItems();
+        this.UpdateSeriesUniquePerPrefix();
+        this.UpdateSeriesesStartNumber();
+    }
     BuildAPIHelperCounterDefinitions() {
         this.APIHelper = new CounterAPIHelper();
         this.APIHelper.CounterDefinitions = [];
