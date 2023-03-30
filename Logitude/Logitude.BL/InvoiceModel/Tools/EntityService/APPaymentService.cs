@@ -244,8 +244,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private PaymentChequePM CreatePaymentCheque(APPaymentPM entityPM)
         {
             PaymentChequePM paymentCheque = MapPaymentChequePM(entityPM);
-            PaymentChequeLinePM paymentChequeLine = MapPaymentChequeLinePM(entityPM);
-            paymentCheque.PaymentChequeLines.Add(paymentChequeLine);
+            List<PaymentChequeLinePM> paymentChequeLine = MapPaymentChequeLinePM(entityPM);
+            paymentCheque.PaymentChequeLines = paymentChequeLine;
             return paymentCheque;
         } 
 
@@ -281,19 +281,37 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             return paymentCheque;
         }
 
-        private PaymentChequeLinePM MapPaymentChequeLinePM(APPaymentPM payment)
+        private List<PaymentChequeLinePM> MapPaymentChequeLinePM(APPaymentPM payment)
         {
+            List<PaymentChequeLinePM> paymentChequeLines = new List<PaymentChequeLinePM>();
             PaymentChequeLinePM paymentChequeLine = new PaymentChequeLinePM();
-            if (payment.PaymentChequeCreationNotes == null || payment.PaymentChequeCreationNotes == "undefined")
+            float hundredPercent = 100;
+            double? sum = 0; 
+            var calculate = ((hundredPercent - payment.TaxDeductionPercentage));
+            float? calculatePercent = (calculate) / hundredPercent;
+            foreach (var item in payment.PaymentInvoices)
             {
-                paymentChequeLine.Notes = payment.PaymentNo;
+                paymentChequeLine = new PaymentChequeLinePM();
+                paymentChequeLine.Notes = item.APInvoiceNumber;
+                paymentChequeLine.Amount = (decimal?)(item.ForeignAmount * calculatePercent);
+                paymentChequeLine.ChangeSetOp = ChangeSetOperation.Insert;
+                paymentChequeLine.Line = paymentChequeLines.Count() + 1;
+                paymentChequeLine.Tenant = payment.Tenant;
+                paymentChequeLines.Add(paymentChequeLine);
+                sum+= item.ForeignAmount;
             }
-            else { paymentChequeLine.Notes = payment.PaymentChequeCreationNotes; }
-            paymentChequeLine.Amount = (decimal?)payment.AmountInLocalCurrency - payment.TaxDeductionLocalAmount;
-            paymentChequeLine.ChangeSetOp = ChangeSetOperation.Insert;
-            paymentChequeLine.Line = 1;
-            paymentChequeLine.Tenant = payment.Tenant;
-            return paymentChequeLine;
+
+			if (payment?.OpenAmount > 0)
+			{
+                paymentChequeLine = new PaymentChequeLinePM();
+                paymentChequeLine.Notes = payment.PaymentNo;
+                paymentChequeLine.Amount = (decimal?)((payment?.OpenAmount ) * calculatePercent);
+                paymentChequeLine.ChangeSetOp = ChangeSetOperation.Insert;
+                paymentChequeLine.Line = paymentChequeLines.Count() + 1;
+                paymentChequeLine.Tenant = payment.Tenant;
+                paymentChequeLines.Add(paymentChequeLine);
+            }
+            return paymentChequeLines;
         }
 
         public GLAccountPM GetGLAccountByCard(APPaymentPM paymentPM)
