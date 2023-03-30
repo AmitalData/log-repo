@@ -108,8 +108,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                     else
                     {
-
-                        if (consignmentList.Find(c => c.StorageSiteCode == "ILMMN") != null)
+                        //string.IsNullOrEmpty(entityPM.MAWB) = not from u2l
+                        if (consignmentList.Find(c => c.StorageSiteCode == "ILMMN") != null && string.IsNullOrEmpty(entityPM.MAWB))
                         {
                             this.SendToMassof(entityPM, entityPOCO, "ILMMN");
                         }
