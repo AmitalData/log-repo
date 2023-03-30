@@ -426,6 +426,9 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
                 (res: ServiceResponse) => {
 
                     this.CurrentSession.StopBusyIndicator();
+                    if(!this.AccountingDate)
+                        this.checkSelectedLinesClosedMonth();
+
                     if (res.HasError) {
                         this.ValidationErrorsList = res.ErrorsArray;
 
@@ -451,7 +454,6 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
 
                     this.CurrentSession.StopBusyIndicator();
 
-                    this.checkSelectedLinesClosedMonth();
 
                     if (res.HasError) {
                         this.ValidationErrorsList = res.ErrorsArray;
