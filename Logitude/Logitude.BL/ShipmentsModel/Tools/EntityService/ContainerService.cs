@@ -343,11 +343,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private void UpdateShipment()
         {
-            if (!FeatureToggleHelper.HasFeatureToggle("OIU", tenant)) return;
-            if (containerPm.IsUpdatedFromRequest) return;
+            if (!IsUpdatingShipment()) return;             
 
             ContainerShipmentUpdateService containerShipmentUpdateService = new ContainerShipmentUpdateService(containerPm, containerPoco, shipmentsContext);
             containerShipmentUpdateService.HandleUpdate();       
         } 
+        private bool IsUpdatingShipment()
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("OIU", tenant)) return false;
+            if (containerPm.IsUpdatedFromRequest) return false;
+            if (containerPm.IsCancelled) return false;
+            if (containerPm.IsClosed) return false;
+            if (containerPm.IsShipmentBatchUpdate) return false;
+            return true;
+        }
     }
 }

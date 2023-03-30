@@ -496,5 +496,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public DateTime? OIEventDate { get; set; }
         public string OIContainerStatus { get; set; }
+        public bool IsShipmentBatchUpdate { get; set; }
     }
 }

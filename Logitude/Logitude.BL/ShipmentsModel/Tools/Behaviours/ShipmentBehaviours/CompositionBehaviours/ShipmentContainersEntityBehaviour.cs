@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.DataContracts;
 using Logitude.BL.Helpers;
 using Logitude.BL.Security;
 using Logitude.BL.ShipmentsModel.EntityPMs;
@@ -9,7 +10,12 @@ using Logitude.BL.ShipmentsModel.Tools.Initializers;
 using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
+using Logitude.Server.Tools.StorageService;
+using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Simplog.Data.ShipmentsModel;
@@ -19,7 +25,11 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 {
@@ -30,6 +40,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         private ContainerService containerService;
         private ContainerQuery containerQuery;
         private ContainerRepository containerRepository;
+        private List<ContainerPM> updatedContainers;
+        private bool isBatchUpdate = false;
         public void Handle(IServiceInitializer initializer)
         {
             this.initializer = (ShipmentServiceInitializer)initializer;
@@ -37,6 +49,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             this.containerService = new ContainerService(this.shipmentsContext, this.initializer.Tenant);
             this.containerRepository = new ContainerRepository(this.shipmentsContext);
             this.containerQuery = new ContainerQuery(containerRepository);
+            this.updatedContainers = new List<ContainerPM>();
             this.HandleBehaviour();
         }
 
@@ -58,36 +71,31 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 this.HandelDeletedShipmentDeliveriesChangeSets();
                 this.HandelCancelationShipment();
             }
-        }
-        private void HandelCancelationShipment()
-        {
-            if (this.initializer.EntityPM.IsCancelled != this.initializer.EntityPOCO.IsCancelled)
+
+            if (isBatchUpdate)
             {
-                this.UpdateShipmentContainers(this.initializer.EntityPM.IsCancelled);
+                this.CreateBatchTask();
             }
         }
-
-        private void UpdateShipmentContainers(bool isCancelled)
+        private bool ShouldUpdateContainers()
         {
-            List<ContainerPM> containers = GetShipmentContainers(this.initializer.EntityPM);
-            foreach (ContainerPM containerPM in containers)
-            {
-                this.MapContainerCancelledFields(containerPM, isCancelled);
-            }
+            if (!initializer.EntityPM.IsDocsKPIsUpdatedFromWR && !initializer.IsUpdateFromUpdateTool && !IsContainerFeatureActivated())
+                return false;
+
+            if (initializer.EntityPM.TransportModeId != "O")
+                return false;
+
+            //if (initializer.EntityPM.ShipmentUpdatedFromContainer)
+            //    return false;
+
+            if (initializer.EntityPM.ShipmentLevelCode == "C" && initializer.EntityPM.ShipmentTypeId.ToLower() != "mygo")
+                return false;
+
+            if (initializer.EntityPM.ShipmentLevelCode != "C" && initializer.EntityPM.ShipmentTypeId.ToLower() != "fcld")
+                return false;
+
+            return true;
         }
-
-        private void MapContainerCancelledFields(ContainerPM containerPM, bool isCancelled)
-        {
-            containerPM.IsCancelled = isCancelled;
-            containerPM.CancelledDate = null;
-            if (isCancelled == true)
-            {
-                containerPM.CancelledDate = TenantServerConfigration.GetCurrentDateTime(this.initializer.Tenant);
-            }
-
-            containerService.Update(containerPM);
-        }
-
         private void HandelShipmentMasterDataFieldsChanges()
         {
             if (CheckIfShipmentMasterDataFieldsUpdated())
@@ -95,7 +103,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 this.UpdateShipmentPackagesChangeSetOperation();
             }
         }
-
         private bool CheckIfShipmentMasterDataFieldsUpdated()
         {
             if (this.initializer.EntityMasterData == null)
@@ -218,34 +225,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 return true;
             return false;
         }
-
-        private void HandelShipmentPickUpsChangeSets()
-        {
-            ShipmentPickUpPM updatedShipmentPickUp = this.GetUpdatedShipmentPickUpPMByContainerEntityId();
-            List<ContainerPM> containersToBeUpdated = this.GetPickUpContainersToBeUpdatedByContainerEntityId(updatedShipmentPickUp);
-            List<ContainerPM> containersToBeUpdatedFromDeleteedPackages = this.GetPickUpContainersToBeDeletedByContainerEntityId(updatedShipmentPickUp);
-
-            if (updatedShipmentPickUp != null && containersToBeUpdated.Count > 0)
-                this.UpdateContainerFieldsFromPickUp(updatedShipmentPickUp, containersToBeUpdated, false);
-
-            if (updatedShipmentPickUp != null && containersToBeUpdatedFromDeleteedPackages.Count > 0)
-                this.UpdateContainerFieldsFromPickUp(updatedShipmentPickUp, containersToBeUpdatedFromDeleteedPackages, true);
-        }
-
-        private void HandelShipmentDeliveriesChangeSets()
-        {
-            ShipmentDeliveryPM updatedShipmentDeliveryPM = this.GetUpdatedShipmentDeliveryPMByContainerEntityId();
-            List<ContainerPM> containersToBeUpdated = this.GetDeliveryContainersToBeUpdatedByContainerEntityId(updatedShipmentDeliveryPM);
-            List<ContainerPM> containersToBeUpdatedFromDeleteedPackages = this.GetDeliveryContainersToBeDeletedByContainerEntityId(updatedShipmentDeliveryPM);
-
-            if (updatedShipmentDeliveryPM != null && containersToBeUpdated.Count > 0)
-                this.UpdateContainerFieldsFromDelivery(updatedShipmentDeliveryPM, containersToBeUpdated, false);
-
-            if (updatedShipmentDeliveryPM != null && containersToBeUpdatedFromDeleteedPackages.Count > 0)
-                this.UpdateContainerFieldsFromDelivery(updatedShipmentDeliveryPM, containersToBeUpdatedFromDeleteedPackages, true);
-        }
-
-
         private void UpdateShipmentPackagesChangeSetOperation()
         {
             if (this.initializer.ShipmentPackagesChangeSet != null)
@@ -259,7 +238,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 }
             }
         }
-
         private void HandelShipmentPackagesChangeSets()
         {
             if (this.initializer.ShipmentPackagesChangeSet != null)
@@ -297,36 +275,67 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                                 break;
                             }
 
-                        //case ChangeSetOperation.Delete:
-                        //    {
-                        //        this.DeleteContainer(itemPM);
-                        //        break;
-                        //    }
                         default: { break; }
                     }
                 }
             }
         }
 
-        private bool ShouldUpdateContainers()
+        private void HandelCancelationShipment()
         {
-            if (!initializer.EntityPM.IsDocsKPIsUpdatedFromWR && !initializer.IsUpdateFromUpdateTool && !IsContainerFeatureActivated())
-                return false;
-
-            if (initializer.EntityPM.ShipmentUpdatedFromContainer)
-                return false;
-
-            if (initializer.EntityPM.TransportModeId != "O")
-                return false;
-
-            if (initializer.EntityPM.ShipmentLevelCode == "C" && initializer.EntityPM.ShipmentTypeId.ToLower() != "mygo")
-                return false;
-
-            if (initializer.EntityPM.ShipmentLevelCode != "C" && initializer.EntityPM.ShipmentTypeId.ToLower() != "fcld")
-                return false;
-
-            return true;
+            if (this.initializer.EntityPM.IsCancelled != this.initializer.EntityPOCO.IsCancelled)
+            {
+                this.UpdateShipmentContainers(this.initializer.EntityPM.IsCancelled);
+            }
         }
+
+        private void UpdateShipmentContainers(bool isCancelled)
+        {
+            List<ContainerPM> containers = GetShipmentContainers(this.initializer.EntityPM);
+            foreach (ContainerPM containerPM in containers)
+            {
+                this.MapContainerCancelledFields(containerPM, isCancelled);
+            }
+        }
+
+        private void MapContainerCancelledFields(ContainerPM containerPM, bool isCancelled)
+        {
+            containerPM.IsCancelled = isCancelled;
+            containerPM.CancelledDate = null;
+            if (isCancelled == true)
+            {
+                containerPM.CancelledDate = TenantServerConfigration.GetCurrentDateTime(this.initializer.Tenant);
+            }
+
+            containerService.Update(containerPM);
+        }
+
+        private void HandelShipmentPickUpsChangeSets()
+        {
+            ShipmentPickUpPM updatedShipmentPickUp = this.GetUpdatedShipmentPickUpPMByContainerEntityId();
+            List<ContainerPM> containersToBeUpdated = this.GetPickUpContainersToBeUpdatedByContainerEntityId(updatedShipmentPickUp);
+            List<ContainerPM> containersToBeUpdatedFromDeleteedPackages = this.GetPickUpContainersToBeDeletedByContainerEntityId(updatedShipmentPickUp);
+
+            if (updatedShipmentPickUp != null && containersToBeUpdated.Count > 0)
+                this.UpdateContainerFieldsFromPickUp(updatedShipmentPickUp, containersToBeUpdated, false);
+
+            if (updatedShipmentPickUp != null && containersToBeUpdatedFromDeleteedPackages.Count > 0)
+                this.UpdateContainerFieldsFromPickUp(updatedShipmentPickUp, containersToBeUpdatedFromDeleteedPackages, true);
+        }
+
+        private void HandelShipmentDeliveriesChangeSets()
+        {
+            ShipmentDeliveryPM updatedShipmentDeliveryPM = this.GetUpdatedShipmentDeliveryPMByContainerEntityId();
+            List<ContainerPM> containersToBeUpdated = this.GetDeliveryContainersToBeUpdatedByContainerEntityId(updatedShipmentDeliveryPM);
+            List<ContainerPM> containersToBeUpdatedFromDeleteedPackages = this.GetDeliveryContainersToBeDeletedByContainerEntityId(updatedShipmentDeliveryPM);
+
+            if (updatedShipmentDeliveryPM != null && containersToBeUpdated.Count > 0)
+                this.UpdateContainerFieldsFromDelivery(updatedShipmentDeliveryPM, containersToBeUpdated, false);
+
+            if (updatedShipmentDeliveryPM != null && containersToBeUpdatedFromDeleteedPackages.Count > 0)
+                this.UpdateContainerFieldsFromDelivery(updatedShipmentDeliveryPM, containersToBeUpdatedFromDeleteedPackages, true);
+        }
+
         private bool IsOceanInsightFeatureToggleExistInTenant(int tenant)
         {
             string ocaenInsightFeatureToggleCode = "OIC";
@@ -408,11 +417,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 UpdateShipmentPackage(containerPM.Id, shipmentPackage.Id);
                 return;
             }
-            if (!CheckIfShipmentMasterDataFieldsUpdated())
-                return;
-
-            UpdateContainer(shipmentPackage);
-        }       
+        }
         private void UpdateContainer(ShipmentPackagePM shipmentPackage)
         {
             var container = CheckIfContainerExists(shipmentPackage);
@@ -420,8 +425,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             {
                 return;
             }
+
             MapContainerPMFields(container, shipmentPackage, false);
-            containerService.Update(container);  
+            isBatchUpdate = true;
+            container.IsShipmentBatchUpdate = true;
+            updatedContainers.Add(container); 
         }
 
         private void MapContainerPMFields(ContainerPM container, ShipmentPackagePM shipmentPackage, bool isNew)
@@ -492,7 +500,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             container.ShipmentTypeId = this.initializer.EntityPM?.ShipmentTypeId;
             container.PODReceivedOnDate = this.initializer.EntityPM?.PODReceivedDate;
             container.TerminalId = this.initializer.EntityPM?.DestinationWarehouseId;
-            container.ContainerTypeId  = shipmentPackage.PackageTypeId;
+            container.ContainerTypeId = shipmentPackage.PackageTypeId;
             container.Volume = shipmentPackage.Volume;
             container.VolumeUnitCode = this.initializer.EntityPM?.VolumeUnitCode;
             container.GrossWeight = shipmentPackage.Weight;
@@ -642,7 +650,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                     this.UpdateStandaloneShipmentPackage(containerId);
                     this.UpdatePickupDeliveryPackage(shipmentPackage, containerId);
                     shipmentPackage.ContainerEntityId = containerId;
-                    this.initializer.ShipmentPackagesChangeSet.Where(a=>a.Id == shipmentPackage.Id).FirstOrDefault().ContainerEntityId = containerId;
+                    this.initializer.ShipmentPackagesChangeSet.Where(a => a.Id == shipmentPackage.Id).FirstOrDefault().ContainerEntityId = containerId;
                     shipmentPackageRepository.Update(shipmentPackage);
                     shipmentPackageRepository.SubmitChanges();
                 }
@@ -865,7 +873,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private ShipmentDeliveryPM GetShipmentDeliveryPMByContainerEntityId(ContainerPM entityPM)
         {
-            foreach (ShipmentDeliveryPM shipmentDeliveryPM in initializer.EntityPM.ShipmentDeliveries.Where(d =>d.PickUpDeliveryTypeCode == "DELV"))
+            foreach (ShipmentDeliveryPM shipmentDeliveryPM in initializer.EntityPM.ShipmentDeliveries.Where(d => d.PickUpDeliveryTypeCode == "DELV"))
             {
                 if (IsDeliveryHaveContainerEntityId(shipmentDeliveryPM, entityPM.Id))
                 {
@@ -997,9 +1005,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         private ShipmentDeliveryPM GetUpdatedShipmentDeliveryPMByContainerEntityId()
         {
             ShipmentDeliveryPM shipmentDeliveryPM = initializer.EntityPM.ShipmentDeliveries.Find(d => d.ChangeSetOp == ChangeSetOperation.Update
-            && d.ShipmentPickUpDeliveryPackages != null 
+            && d.ShipmentPickUpDeliveryPackages != null
             && d.PickUpDeliveryTypeCode == "DELV"
-            && (d.ShipmentPickUpDeliveryPackages.Any(a => !string.IsNullOrEmpty(a.ContainerEntityId))            ));
+            && (d.ShipmentPickUpDeliveryPackages.Any(a => !string.IsNullOrEmpty(a.ContainerEntityId))));
             return shipmentDeliveryPM;
         }
 
@@ -1184,7 +1192,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             && d.ShipmentPickUpDeliveryPackages != null
             && d.PickUpDeliveryTypeCode == "DELV"
             && (d.ShipmentPickUpDeliveryPackages.Any(a => !string.IsNullOrEmpty(a.ContainerEntityId))));
-            
+
             if (shipmentDeliveriesPM != null && shipmentDeliveriesPM.Count > 0)
             {
                 this.UpdateContainerFieldsFromDeletedDeliveries(shipmentDeliveriesPM);
@@ -1261,6 +1269,95 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         private static ContainerService GetContainerService(IShipmentsContext shipmentContext, int tenant)
         {
             return new ContainerService(shipmentContext, tenant);
+        }
+
+        private void CreateBatchTask()
+        {
+            string fileName = this.BuildXMLFile();
+
+            UpdateContainersServiceArgs args = new UpdateContainersServiceArgs()
+            {
+                Tenant = this.initializer.EntityPM.Tenant,
+                FileName = fileName,
+            };
+
+            var stringwriter = new System.IO.StringWriter();
+            var serializer = new XmlSerializer(typeof(UpdateContainersServiceArgs));
+            serializer.Serialize(stringwriter, args);
+            string xmlParameters = stringwriter.ToString();
+
+            BatchTaskExecutionRepository iRepository = new BatchTaskExecutionRepository(this.initializer.EntityPM.Tenant);
+            BatchTaskExecution iBatchTaskExecution = new BatchTaskExecution()
+            {
+                Id = IdCounter.GetNumber("BatchTaskExecution", this.initializer.EntityPM.Tenant),
+                Subject = "Update Shipment Containers",
+                Tenant = this.initializer.EntityPM.Tenant,
+                ClassName = "WebFreight.Web.Helpers.APIHelpers.UpdateContainersBatchService,WebFreight.Web",
+                CreateDate = TenantServerConfigration.GetCurrentDateTime(this.initializer.EntityPM.Tenant),
+                CreatedByUserId = this.initializer.EntityPM.UpdatedByUserId,
+                PrametersXml = xmlParameters,
+                StatusCode = "C",
+            };
+
+            iRepository.Add(iBatchTaskExecution);
+            iRepository.SubmitChanges();
+
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
+            queueservice.Send(new Dictionary<string, string>()
+                    {
+                        { "BatchTaskExecutionId", iBatchTaskExecution.Id },
+                        { "Tenant", iBatchTaskExecution.Tenant.ToString() }
+                    }, iBatchTaskExecution.Tenant);
+        }
+        private string BuildXMLFile()
+        {
+            string fileName = null;
+
+            MemoryStream memstream = new MemoryStream();
+            XmlSerializer ser = new XmlSerializer(typeof(List<ContainerPM>));
+            XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+
+            XmlWriterSettings settings = new XmlWriterSettings()
+            {
+                Indent = true,
+                IndentChars = "",
+                OmitXmlDeclaration = true,
+                NewLineChars = "",
+                NewLineHandling = NewLineHandling.Replace
+            };
+
+            XmlWriter writer = XmlTextWriter.Create(memstream, settings);
+
+            writer.WriteRaw("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n");
+
+            ser.Serialize(writer, updatedContainers, ns);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+
+            content = content.Replace(" />", "/>");
+
+            byte[] bytearray = Encoding.UTF8.GetBytes(content);
+
+            if (bytearray != null)
+            {
+                fileName = "UpdateContainersBatchService_" + IdCounter.GetNumber("UpdateContainersBatchService", this.initializer.EntityPM.Tenant);
+
+                Logitude.Server.Tools.BlobFileInfo fileInfo = new Logitude.Server.Tools.BlobFileInfo()
+                {
+                    FileName = fileName,
+                    Extension = "xml",
+                    Tenant = this.initializer.EntityPM.Tenant,
+                    FileSize = bytearray.Length,
+                    FolderName = "others",
+                };
+
+                IBlobService iBlobService = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                iBlobService.Write(bytearray, fileInfo);
+            }
+
+            return fileName;
         }
     }
 }
