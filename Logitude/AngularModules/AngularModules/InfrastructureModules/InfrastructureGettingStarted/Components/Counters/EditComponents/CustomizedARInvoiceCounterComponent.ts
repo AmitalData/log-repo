@@ -35,7 +35,7 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
     private customizedARInvoiceCounterValidatingService: CustomizedARInvoiceCounterValidatingService;
     public MainCounterDefinitionsPMs: CounterDefinitionPM[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
-
+    public IsEnabled: boolean = true;
     constructor() {
         super();
         this.counterDefinitionPMExtendedService = new CounterDefinitionPMExtendedService();
@@ -77,7 +77,7 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
         this.currentSession.StartBusyIndicatorLoading();
         this.counterId = this.CounterInvoiceComponent.CounterId;
         this.MainCounterDefinitionsPMs = [];
-
+        this.IsEnabled = !this.CounterInvoiceComponent.IsCounterUsed;
         this.counterDefinitionPMExtendedService.GetCustomizedCounterDefinitionsByCounterId(this.counterId).subscribe((response: ServiceResponse) => {
             if (response.HasError || !response.Result) {
                 this.currentSession.StopBusyIndicator();
@@ -135,7 +135,7 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
         this.UpdateSeriesesStartNumber();
     }
     public EnabledInvoiceType(invoiceCode: string, serieCode: string): boolean {
-
+        if (!this.IsEnabled) return false;
         let otherCustomizedCounterItems = this.CustomizedCounterItems.filter(item => item.SeriesCode != serieCode);
         if (otherCustomizedCounterItems == null || otherCustomizedCounterItems.length == 0) return true;
 
@@ -197,7 +197,7 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
     }
 
     DeleteCustomizedCounterItem(customizedCounterItem: CustomizedCounterItem, isFromConfirmWindow: boolean = false) {
-        if (!customizedCounterItem) return;
+        if (!customizedCounterItem || !this.IsEnabled) return;
         this.CustomizedCounterItems = this.CustomizedCounterItems.filter(item => item.SeriesCode != customizedCounterItem.SeriesCode);
         if (isFromConfirmWindow) return;
         this.RefreshCustomizedCounterItems();
