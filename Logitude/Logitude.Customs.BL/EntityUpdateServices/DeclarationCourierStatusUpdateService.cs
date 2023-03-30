@@ -100,10 +100,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                     else
                     {
-                        /*if (consignmentList.Find(c => c.StorageSiteCode == "ILMMN") != null)
+                        if (consignmentList.Find(c => c.StorageSiteCode == "ILMMN") != null)
                         {
                             this.SendToMassof(entityPM, entityPOCO, "ILMMN");
-                        }*/
+                        }
                     }
                 }
             }
@@ -580,10 +580,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (StorageSiteCode == "ILMMN" && courierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(item, entityPM.Tenant).MamanSuspendedCode != null)
                 {
                     var courierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanRequestService();
-                    string drityMessage = courierGWMessageECTHRDataMamanService.GetMessage2Maman(entityPM.DeclarationId, entityPM.Tenant, null, null, entityPM);
+                    string drityMessage = courierGWMessageECTHRDataMamanService.GetMessage2Maman(entityPM.DeclarationId, entityPM.Tenant, null, null, entityPM,true);
                     if (drityMessage != null)
                     {
-                        var res = courierGWMessageECTHRDataMamanService.BuildComm2Maman(entityPM.DeclarationId, entityPM.Tenant, drityMessage);
+                         var res = courierGWMessageECTHRDataMamanService.BuildComm2Maman(entityPM.DeclarationId, entityPM.Tenant, drityMessage);
                     }
                     break;
                 }

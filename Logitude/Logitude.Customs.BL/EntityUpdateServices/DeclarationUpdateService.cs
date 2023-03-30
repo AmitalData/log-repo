@@ -1631,8 +1631,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     LogitudeSettings.HandleLogMe("Referant update " + logData, false, "referant.NewFile", stopLogAt);
                 }
             }*/
-            var mySend2MasofIfNeededService = new Send2MasofIfNeededService();
-            mySend2MasofIfNeededService.Send2Masof(entityPM, CourierStorageSiteChanged, GetDBEntity(entityPM.Id, entityPM.Tenant));
+            //var mySend2MasofIfNeededService = new Send2MasofIfNeededService();
+            //mySend2MasofIfNeededService.Send2Masof(entityPM, CourierStorageSiteChanged, GetDBEntity(entityPM.Id, entityPM.Tenant));
         }
 
 
