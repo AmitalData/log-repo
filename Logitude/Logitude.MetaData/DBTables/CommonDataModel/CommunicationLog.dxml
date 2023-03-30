@@ -368,6 +368,8 @@
 
     <Index
 		Columns="CorrelationID,CreateDate" />
+	<Index
+	   Columns="EntityId,ObjectTableId,Tenant,InOut,CommunicationStatusTypeCode" />
 
 	
 </Table>
