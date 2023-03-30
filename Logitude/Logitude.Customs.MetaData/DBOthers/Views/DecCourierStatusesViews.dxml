@@ -39,6 +39,8 @@ CASE WHEN COUNT ( case when DECLARATIONCOURIERSTATUSES.CourierManifestStatusCode
 WHEN COUNT ( case when DECLARATIONCOURIERSTATUSES.CourierManifestStatusCode ='R'   then 1 end   )  = count(*)  THEN 'R'
 WHEN COUNT (  case when DECLARATIONCOURIERSTATUSES.CourierManifestStatusCode ='I'     then 1 end   )  > 0  THEN 'I'
 WHEN COUNT ( case when DECLARATIONCOURIERSTATUSES.CourierManifestStatusCode ='V'   then 1 end   )  = count(*)  THEN 'V'
+WHEN COUNT (  case when DECLARATIONCOURIERSTATUSES.CourierManifestStatusCode ='R'     then 1 end   )  > 0  THEN 'R'
+WHEN COUNT (  case when DECLARATIONCOURIERSTATUSES.CourierManifestStatusCode ='V'     then 1 end   )  > 0  THEN 'R'
 ELSE 'N'
 END AS CourierManifestStatusCode,
 CASE WHEN COUNT ( case when DECLARATIONCOURIERSTATUSES.IsCourierMissingClassification ='1' then 1 end  )  > 0  THEN 'M'

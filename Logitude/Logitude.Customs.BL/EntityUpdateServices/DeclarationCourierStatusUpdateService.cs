@@ -28,6 +28,7 @@ using Logitude.Customs.BL.Messaging.ILSWS;
 using Logitude.Customs.BL.Messaging.Maman;
 using System.Data.Entity.Validation;
 
+
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
     public partial class DeclarationCourierStatusUpdateService //: EntityUpdateService<DeclarationCourierStatus, DeclarationCourierStatusPM, DeclarationPM>
@@ -107,14 +108,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                     else
                     {
-                        /*if (consignmentList.Find(c => c.StorageSiteCode == "ILMMN") != null)
+                        //string.IsNullOrEmpty(entityPM.MAWB) = not from u2l
+                        if (consignmentList.Find(c => c.StorageSiteCode == "ILMMN") != null && string.IsNullOrEmpty(entityPM.MAWB))
                         {
-                            DateTime stopLogAtTest = new DateTime(2025, 06, 01);
-                            LogitudeSettings.HandleLogMe(" sendtomassof - Update ", false, "CreateUD2LTService", stopLogAtTest);
-
-
                             this.SendToMassof(entityPM, entityPOCO, "ILMMN");
-                        }*/
+                        }
                     }
                 }
             }
@@ -605,6 +603,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             return (myGDFDATAPM.DEFDATA);
         }
+
         private void SendToMassof(DeclarationCourierStatusPM entityPM, DeclarationCourierStatus entityPOCO, string StorageSiteCode)
         {
             CourierPendingReasonQueryService courierPendingReasonQueryService = new CourierPendingReasonQueryService(entityPM.Tenant);
@@ -635,10 +634,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (StorageSiteCode == "ILMMN" && courierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(item, entityPM.Tenant).MamanSuspendedCode != null)
                 {
                     var courierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanRequestService();
-                    string drityMessage = courierGWMessageECTHRDataMamanService.GetMessage2Maman(entityPM.DeclarationId, entityPM.Tenant, null, null, entityPM);
+                    string drityMessage = courierGWMessageECTHRDataMamanService.GetMessage2Maman(entityPM.DeclarationId, entityPM.Tenant, null, null, entityPM,true);
                     if (drityMessage != null)
                     {
-                        var res = courierGWMessageECTHRDataMamanService.BuildComm2Maman(entityPM.DeclarationId, entityPM.Tenant, drityMessage);
+                         var res = courierGWMessageECTHRDataMamanService.BuildComm2Maman(entityPM.DeclarationId, entityPM.Tenant, drityMessage);
                     }
                     break;
                 }

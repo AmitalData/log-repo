@@ -87,7 +87,8 @@ namespace Logitude.Customs.BL.Messaging.Maman
             return "המסר לממן נבנה בהצלחה וישלח בתהליך רקע ";
         }
 
-        public string GetMessage2Maman(string declarationId, int tenant, DeclarationPM paramDeclarationPM, CourierMasterPM courierMasterPM, DeclarationCourierStatusPM declarationCourierStatusPM = null)
+
+        public string GetMessage2Maman(string declarationId, int tenant, DeclarationPM paramDeclarationPM, CourierMasterPM courierMasterPM, DeclarationCourierStatusPM declarationCourierStatusPM = null,bool ignoreIfCourierMasterNull=false)
         {
             var context = CustomContext.GetContext(tenant);
             var myDeclarationQueryService = new DeclarationQueryService(context);
@@ -110,7 +111,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             var myCourierMasterPM = courierMasterPM ?? myCourierMasterQueryService.GetByDeclarationId(declarationId, tenant);
             myCourierMasterPM = myCourierMasterPM ?? paramDeclarationPM?.MyEcomInsert?.MyCourierMasterPM;
             if (myCourierMasterPM == null)
-            {
+            {if (ignoreIfCourierMasterNull) return null;
                 //throw new Exception("Declaration is null:" + _CustomFileCreditModel.AppicationId);
                 throw new Exception($"CourierMaster Is null  .GetByDeclarationId({declarationId}, tenant)");
             }
