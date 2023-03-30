@@ -13,6 +13,8 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 {
     public class AutomationCreateTaskService : GeneralAutomationResultService, IAutomationResultService
     {
+
+        public List<AutomationQueueArgs> AutomationQueues { get; set; }
         private AutomationResultArgs automationResultArgs { get; set; }
         private int tenant;
         private EntityChange entityChange;
@@ -34,6 +36,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 
         public void Run(AutomationResultArgs automationResultArgs)
         {
+            AutomationQueues = new List<AutomationQueueArgs>();
             this.automationResultArgs = automationResultArgs;
             this.entityChange = automationResultArgs.EntityChange;
             this.entityPM = automationResultArgs.EntityPM;
