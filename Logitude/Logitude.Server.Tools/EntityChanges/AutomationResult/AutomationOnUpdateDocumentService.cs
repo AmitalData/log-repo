@@ -17,6 +17,8 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 {
     public class AutomationOnUpdateDocumentService : GeneralAutomationResultService, IAutomationResultService
     {
+        public List<AutomationQueueArgs> AutomationQueues { get; set; }
+
         private AutomationResultArgs automationResultArgs { get; set; }
         private List<Automation> onUpdateDocumentAutomations = new List<Automation>();
         private int tenant;
@@ -35,6 +37,8 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 
         public void Run(AutomationResultArgs automationResultArgs)
         {
+            AutomationQueues = new List<AutomationQueueArgs>();
+
             this.automationResultArgs = automationResultArgs;
             this.entityChange = automationResultArgs.EntityChange;
             this.tenant = this.entityChange.Tenant;
@@ -49,7 +53,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
         {
             foreach (Automation automation in onUpdateDocumentAutomations)
             {
-                AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = entityChange.Id, AutomationId = automation.Id, AutomationType = automationResultArgs.EntityChangeArgs.ProcessType, EntityId = entityChange.EntityId, Tenant = automation.Tenant, ExtraDetails = automationResultArgs.ExtraDetails, ExecutedImmediately = true, EntityReference = automationResultArgs.EntityReference });
+                AutomationQueues.Add(new AutomationQueueArgs() { EntityChangeId = entityChange.Id, AutomationId = automation.Id, AutomationType = automationResultArgs.EntityChangeArgs.ProcessType, EntityId = entityChange.EntityId, Tenant = automation.Tenant, ExtraDetails = automationResultArgs.ExtraDetails, ExecutedImmediately = true, EntityReference = automationResultArgs.EntityReference });
             }
         }
 
