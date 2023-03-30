@@ -161,7 +161,8 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 DeserilazeObject(xmlLOGICOMMDEC);
                 AppendLogLine("DeserilazeObject:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                 //bool SuppressECommDecInsertService = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["20220221.SuppressECommDecInsertService"]);
-                bool useECommDecInsertService = false;// !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["20220221.UseECommDecInsertService"]);
+                bool useECommDecInsertService = false; //!string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["20220221.UseECommDecInsertService"]);
+
                 //CheckIntegrity();
                 AppendLogLine("CheckIntegrity:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                 MyGenericResponseObj.Stage = "GetContext";

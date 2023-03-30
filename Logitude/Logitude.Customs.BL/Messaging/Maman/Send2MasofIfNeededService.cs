@@ -146,7 +146,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 {
                     sb.AppendLine("ILOVL!!!");
                     var courierGWMessageECTHRDataMamanService = new CourierOVSECTHMessageRequestService();
-                    drityMessage = courierGWMessageECTHRDataMamanService.GetMessageUpdateHawbStatus(drityEntityPM.Id, drityEntityPM.Tenant, drityEntityPM, null);
+                    drityMessage = courierGWMessageECTHRDataMamanService.GetMessageUpdateHawbStatus(drityEntityPM.Id, drityEntityPM.Tenant, drityEntityPM, courierMasterPM);
                     if (!dataHaveChangeSendIt && dbPM != null)
                     {
 
