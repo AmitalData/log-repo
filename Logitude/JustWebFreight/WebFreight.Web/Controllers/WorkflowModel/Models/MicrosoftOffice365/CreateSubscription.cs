@@ -19,5 +19,7 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Models.MicrosoftOffice365
 
         [Required]
         public DateTime AccessTokenExpirationDateTime { get; set; }
+
+        public int Tenant { get; set; }
     }
 }

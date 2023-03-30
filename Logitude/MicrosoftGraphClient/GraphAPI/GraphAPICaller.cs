@@ -91,7 +91,10 @@ namespace MicrosoftGraphClient.GraphAPI
 
         private static bool IsSuccessResponse(IRestResponse restResponse)
         {
-            return restResponse != null && (restResponse.StatusCode == HttpStatusCode.OK || restResponse.StatusCode == HttpStatusCode.Accepted);
+            return restResponse != null &&
+                (restResponse.StatusCode == HttpStatusCode.OK ||
+                restResponse.StatusCode == HttpStatusCode.Accepted ||
+                restResponse.StatusCode == HttpStatusCode.Created);
         }
 
         private static string GetResponseErrorMessage(IRestResponse restResponse)

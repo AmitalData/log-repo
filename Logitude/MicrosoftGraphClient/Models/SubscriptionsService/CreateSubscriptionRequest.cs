@@ -15,7 +15,7 @@ namespace MicrosoftGraphClient.Models.SubscriptionsService
         public string Resource { get; set; }
 
         [JsonProperty("expirationDateTime")]
-        public DateTime ExpirationDateTime { get; set; }
+        public DateTimeOffset? ExpirationDateTime { get; set; }
 
         [JsonProperty("clientState")]
         public string ClientState { get; set; }

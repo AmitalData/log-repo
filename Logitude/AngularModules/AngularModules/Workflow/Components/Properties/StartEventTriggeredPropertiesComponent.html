@@ -124,11 +124,11 @@
     <tr class="table-row">
         <td class="table-row-cell">
             <div class="table-row-cell-block">
-                <div *ngIf="!WorkflowProviderSubscription">
+                <div *ngIf="WorkflowProviderSubscription === null">
                     <span>Connect Microsoft Office 365</span>
                     <button class="Button msal-login-button" (click)="openMsalLoginPopup()">Sign In</button>
                 </div>
-                <div *ngIf="WorkflowProviderSubscription">
+                <div *ngIf="WorkflowProviderSubscription !== null">
                     <span>Successfully connected to Microsoft Office 365 account:
                         {{WorkflowProviderSubscription.UserEmail}}</span>
                 </div>

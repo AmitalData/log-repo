@@ -7,7 +7,7 @@ import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFieldClass'
 import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
 import { ServiceProviderSubscriptionPM } from '../../EntityPMs/ServiceProviderSubscriptionPM';
-import { CreateSubscription } from '../Models/CreateSubscription';
+import { CreateSubscription } from 'Workflow/Models/CreateSubscription';
 
 @Injectable()
 

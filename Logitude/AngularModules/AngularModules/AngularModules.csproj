@@ -8357,6 +8357,7 @@
     <TypeScriptCompile Include="Workflow\Models\SetValue.ts" />
     <TypeScriptCompile Include="Workflow\Models\TaskField.ts" />
     <TypeScriptCompile Include="Workflow\Models\TreeSelectItem.ts" />
+    <TypeScriptCompile Include="Workflow\Models\CreateSubscription.ts" />
     <TypeScriptCompile Include="Workflow\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="Workflow\ModuleProviders.ts" />
     <TypeScriptCompile Include="Workflow\ModuleWorkflow.ts" />

@@ -16,7 +16,7 @@ import { MsalConfigurations } from "Workflow/Utilities/MsalConfigurations";
 import { ServiceProviderSubscriptionExtendedService } from "Workflow/Services/Extended/ServiceProviderSubscriptionExtendedService";
 import { ServiceProviderSubscriptionPM } from "Workflow/EntityPMs/ServiceProviderSubscriptionPM";
 import { MicrosoftOffice365Service } from "Workflow/Services/Extended/MicrosoftOffice365Service";
-import { CreateSubscription } from "Workflow/Services/Models/CreateSubscription";
+import { CreateSubscription } from "Workflow/Models/CreateSubscription";
 
 @Component({
     templateUrl: "./StartEventTriggeredPropertiesComponent.html"
@@ -33,7 +33,7 @@ export class StartEventTriggeredPropertiesComponent extends BaseComponent {
     public ValidationErrorsList: string[];
     public StartEventApplicationsListItems: ListItem[];
     public StartEventTypesListItems: ListItem[];
-    public WorkflowProviderSubscription: ServiceProviderSubscriptionPM;
+    public WorkflowProviderSubscription: ServiceProviderSubscriptionPM | null = null;
     public CurrentSession = SessionLocator.SelectedSession;
 
     constructor(
@@ -46,14 +46,15 @@ export class StartEventTriggeredPropertiesComponent extends BaseComponent {
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
         this.WorkflowNumber = args.WorkflowNumber || null;
+
+        this.loadWorkflowProviderSubscription();
     }
 
     ngOnInit() {
         this.initializeWindowEvents();
-        this.initialize();
         this.initializeStartEventApplicationsList();
         this.initializeStartEventTypesList();
-        this.initializeWorkflowProviderSubscription();
+        this.initialize();
     }
 
     initializeWindowEvents() {
@@ -66,20 +67,6 @@ export class StartEventTriggeredPropertiesComponent extends BaseComponent {
         });
     }
 
-    initialize() {
-        this.Data["triggerType"] = StartTriggerTypes.EventTriggered;
-
-        this.IsNew = Object.keys(this.Data).length === 0;
-
-        this.Application = this.Data["application"] || StartEventApplications.MicrosoftOffice365;
-        this.EventType = this.Data["eventType"] || StartEventTypes.NewEmail;
-
-        this.Data["application"] = this.Application;
-        this.Data["eventType"] = this.EventType;
-
-        this.setDefaultData();
-    }
-
     initializeStartEventApplicationsList() {
         this.StartEventApplicationsListItems = new StartEventApplicationsList().Items;
     }
@@ -88,10 +75,24 @@ export class StartEventTriggeredPropertiesComponent extends BaseComponent {
         this.StartEventTypesListItems = new StartEventTypesList().Items;
     }
 
-    initializeWorkflowProviderSubscription() {
-        setTimeout(() => {
-            this.loadWorkflowProviderSubscription();
-        }, 150);
+    initialize() {
+        this.Data["triggerType"] = StartTriggerTypes.EventTriggered;
+
+        this.IsNew = Object.keys(this.Data).length === 0;
+
+        let defaultStartEventApplication = this.StartEventApplicationsListItems.find(i => i.Code === StartEventApplications.MicrosoftOffice365);
+        let defaultStartEventType = this.StartEventTypesListItems.find(i => i.Code === StartEventTypes.NewEmail);
+
+        this.Application = this.Data["application"] || defaultStartEventApplication.Code;
+        this.EventType = this.Data["eventType"] || defaultStartEventType.Code;
+
+        this.Data["application"] = this.Application;
+        this.Data["eventType"] = this.EventType;
+
+        this.Data["applicationLabel"] = defaultStartEventApplication.Name;
+        this.Data["eventTypeLabel"] = defaultStartEventType.Name;
+
+        this.setDefaultData();
     }
 
     loadWorkflowProviderSubscription() {
@@ -99,7 +100,7 @@ export class StartEventTriggeredPropertiesComponent extends BaseComponent {
         let serviceProviderSubscriptionExtendedService = new ServiceProviderSubscriptionExtendedService();
         serviceProviderSubscriptionExtendedService.getByWorkflowNumber(this.WorkflowNumber).subscribe(serviceResponse => {
             if (!serviceResponse.HasError) {
-                this.WorkflowProviderSubscription = serviceResponse.Data;
+                this.WorkflowProviderSubscription = serviceResponse.Result;
             }
             this.stopBusyIndicator();
         });
@@ -145,37 +146,28 @@ export class StartEventTriggeredPropertiesComponent extends BaseComponent {
             { scopes: MsalConfigurations.LoginScopes };
 
         this.authService.loginPopup(popupRequest).subscribe((authenticationResult: AuthenticationResult) => {
-
-            if (authenticationResult) {
-
-                this.startBusyIndicator();
-
-                console.log(authenticationResult);
-                console.log(this.getMsalRefreshToken(authenticationResult));
-
-                let accessToken = authenticationResult.accessToken;
-                let refreshToken = this.getMsalRefreshToken(authenticationResult);
-
-                let microsoftOffice365Service = new MicrosoftOffice365Service();
-
-                let createSubscription: CreateSubscription = {
-                    WorkflowNumber: this.WorkflowNumber,
-                    AccessToken: accessToken,
-                    RefreshToken: refreshToken,
-                    UserEmail: authenticationResult.account.username,
-                    AccessTokenExpirationDateTime: authenticationResult.expiresOn
-                };
-
-                microsoftOffice365Service.createSubscription(createSubscription).subscribe(serviceResponse => {
-                    if (!serviceResponse.HasError) {
-                        this.WorkflowProviderSubscription = serviceResponse.Data;
-                    }
-                    this.stopBusyIndicator();
-                });
-
-            }
-
+            this.createSubscription(authenticationResult);
         });
+    }
+
+    createSubscription(authenticationResult: AuthenticationResult) {
+        if (authenticationResult) {
+            this.startBusyIndicator();
+            let createSubscription: CreateSubscription = {
+                WorkflowNumber: this.WorkflowNumber,
+                AccessToken: authenticationResult.accessToken,
+                RefreshToken: this.getMsalRefreshToken(authenticationResult),
+                UserEmail: authenticationResult.account.username,
+                AccessTokenExpirationDateTime: authenticationResult.expiresOn
+            };
+            let microsoftOffice365Service = new MicrosoftOffice365Service();
+            microsoftOffice365Service.createSubscription(createSubscription).subscribe(serviceResponse => {
+                if (!serviceResponse.HasError) {
+                    this.WorkflowProviderSubscription = serviceResponse.Result;
+                }
+                this.stopBusyIndicator();
+            });
+        }
     }
 
     getMsalRefreshToken(authenticationResult: AuthenticationResult) {
@@ -190,12 +182,6 @@ export class StartEventTriggeredPropertiesComponent extends BaseComponent {
         }
         return null;
     }
-
-    // logout() {
-    //     this.authService.logoutPopup({
-    //         mainWindowRedirectUri: "/"
-    //     });
-    // }
 
     startBusyIndicator(message: string = "Loading ...") {
         this.CurrentSession.CurrentWindow.StartBusyIndicator(message);

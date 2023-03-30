@@ -22,7 +22,7 @@ namespace Logitude.Workflow.BL.QueueMessages
         {
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue(QueueName, 0);
-            var message = new Dictionary<string, string>() {
+            Dictionary<string, string> message = new Dictionary<string, string>() {
                 { "Tenant", ServiceProviderSubscription.Tenant.ToString()},
                 { "ServiceProviderSubscriptionId", ServiceProviderSubscription.Id }
             };
