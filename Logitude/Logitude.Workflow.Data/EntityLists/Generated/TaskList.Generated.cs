@@ -6,11 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.Workflow.Data.EntityLists
 {
    [DataContract]
-   public partial class TaskList
+   public partial class TaskList : CustomFieldList
    {
    
        [Key]
@@ -82,6 +83,10 @@ namespace Logitude.Workflow.Data.EntityLists
        public string DoneConditions  { get; set; }
        [DataMember]
        public string Description  { get; set; }
+       [DataMember]
+       public bool IsAssigned  { get; set; }
+       [DataMember]
+       public DateTime? StartDate  { get; set; }
    }
 
 }

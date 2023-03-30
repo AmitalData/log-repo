@@ -55,14 +55,17 @@ namespace WebFreight.Web.WebServices
             FBLDataProvider myDataProvider = GetFBLDataProvider(shipmentId, tenant, documentTypeCopyId);
 
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(FBLDataProvider));
-            MemoryStream memoryStream = new MemoryStream();
-            xmlSerializer.Serialize(memoryStream, myDataProvider);
-            memoryStream.Seek(0, SeekOrigin.Begin);
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                xmlSerializer.Serialize(memoryStream, myDataProvider);
+                memoryStream.Seek(0, SeekOrigin.Begin);
 
-            var reader = new StreamReader(memoryStream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memoryStream.ToArray();
-            return bytearray;
+                var reader = new StreamReader(memoryStream);
+                string content = reader.ReadToEnd();
+                byte[] bytearray = memoryStream.ToArray();
+                return bytearray;
+            }
+            
         }
 
         private FBLDataProvider GetFBLDataProvider(string shipmentId, int tenant, string documentTypeCopyId)
@@ -2464,14 +2467,17 @@ namespace WebFreight.Web.WebServices
             FBLDataProvider myDataProvider = GetFBLDataProviderForPickUp(shipmentId, pickUpId, tenant);
 
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(FBLDataProvider));
-            MemoryStream memoryStream = new MemoryStream();
-            xmlSerializer.Serialize(memoryStream, myDataProvider);
-            memoryStream.Seek(0, SeekOrigin.Begin);
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                xmlSerializer.Serialize(memoryStream, myDataProvider);
+                memoryStream.Seek(0, SeekOrigin.Begin);
 
-            var reader = new StreamReader(memoryStream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memoryStream.ToArray();
-            return bytearray;
+                var reader = new StreamReader(memoryStream);
+                string content = reader.ReadToEnd();
+                byte[] bytearray = memoryStream.ToArray();
+                return bytearray;
+            }
+            
         }
         private FBLDataProvider GetFBLDataProviderForPickUp(string shipmentId, string pickUpId, int tenant)
         {

@@ -1,0 +1,17 @@
+﻿<Script DBType="Main" Module="Shipment" TargetTableName="Containers">
+  <Sql Version="1">
+    <![CDATA[
+    
+  UPDATE
+      containers
+  SET
+      containers.ShipmentLastLegATA = s.MainCarriageFinalDestinationATA,  
+	  containers.ShipmentLastLegETA = s.MainCarriageFinalDestinationETA
+  FROM 
+      containers c
+      INNER  JOIN ShipmentMasterDatas s
+        ON c.ShipmentId = s.Id;
+        
+    ]]>
+  </Sql>
+</Script>

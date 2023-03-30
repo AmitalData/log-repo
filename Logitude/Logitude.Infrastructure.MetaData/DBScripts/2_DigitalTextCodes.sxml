@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="35">
+  <Sql Version="37">
     <![CDATA[
 	  BEGIN
 	   IF NOT EXISTS (select * from DigitalPortalLanguages where [Code] = 'EN')
@@ -16,9 +16,9 @@
 
 	  declare @languageCode as varchar(3)
 	  set @languageCode = (select Code from DigitalPortalLanguages where [Code] = 'EN')
-	  Update DigitalTextCodes Set LanguageCode = @languageCode where Id != '';
+	  Update DigitalTextCodes Set LanguageCode = @languageCode where Id != '' and LanguageCode = NULL;
 
-	  delete from DigitalTextCodes where Tenant = 0	  
+	  delete from DigitalTextCodes where Tenant = 0	and ObjectTableId != (select Id from ObjectTables where [Name] = 'Quote' and Tenant = 0) 
       declare @NewEntityId as varchar(15)
 	  declare @generalObjectTableId as varchar(15)
 	  set @generalObjectTableId = (select Id from ObjectTables where [Name] = 'General' and Tenant = 0 )

@@ -36,5 +36,8 @@ export class LogitudeLeadList {
 		ZipCode: string;
 		Street: string;
 		IsUserEmailSent: boolean;
+		ClientId: string;
+		LeadOrigin: string;
+		Campaign: string;
 	
 }

@@ -5,6 +5,7 @@
         <div *ngIf="ObjectField.DataTypeCode === FieldTypes.LookUp && LookupTable">
 
             <LogLov [NoObjectField]="true" [ObjectFieldName]="Name" [IsFreeText]="true" [DataContext]="DataContext"
+                [QueryFilterItems]="QueryFilterItems"
                 [LookUpTableName]="LookupTable.Name"
                 [DependencyFilter1Value]="ObjectField.DependencyFilter1Type === 'Constant' ? ObjectField.DependencyFilter1Value : null"
                 [DependencyFilter2Value]="ObjectField.DependencyFilter2Type === 'Constant' ? ObjectField.DependencyFilter2Value : null"

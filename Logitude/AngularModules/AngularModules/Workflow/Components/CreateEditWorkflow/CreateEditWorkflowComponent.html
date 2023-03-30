@@ -8,7 +8,7 @@
     }
 
     .split-row {
-        height: 20px;
+        height: 10px;
     }
 
     .name-row {
@@ -73,6 +73,24 @@
     .padding-left-10 {
         padding-left: 10px;
     }
+
+    .table-row-cell {
+        padding-bottom: 10px;
+        padding-top: 10px;
+    }
+
+    .trigger-radios-container {
+        width: 320px;
+    }
+
+    .table-row-cell-block {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .trigger-radio-cell {
+        width: 80px;
+    }
 </style>
 
 <table *ngIf="EntityPM">
@@ -102,6 +120,37 @@
         </td>
     </tr>
 
+    <tr class="table-row" *ngIf="IsNew">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [ObjectFieldName]="'WorkFlowTriggerTypeCode'" [ObjectTableName]="ObjectTableName"
+                    [Text]="'Workflow Type:'" [DataContext]="DataContext"></LogLabel>
+            </div>
+            <div class="table-row-cell-block trigger-radios-container">
+                <table>
+                    <tr>
+                        <td class="trigger-radio-cell">
+                            <RadioButton [Name]="'TriggerRadio'"
+                                [IsChecked]="WorkFlowTriggerTypeCode === 'RecordTriggered'"
+                                (Checked)="WorkFlowTriggerTypeCode = 'RecordTriggered'" [Text]="'Record Triggered'"
+                                [Top]="5" [DataCy]="'RecordTriggered'">
+                            </RadioButton>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="trigger-radio-cell">
+                            <RadioButton [Name]="'TriggerRadio'"
+                                [IsChecked]="WorkFlowTriggerTypeCode === 'EventTriggered'"
+                                (Checked)="WorkFlowTriggerTypeCode = 'EventTriggered'"
+                                [Text]="'External Event Triggered'" [Top]="5" [DataCy]="'EventTriggered'">
+                            </RadioButton>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+
     <tr class="split-row">
         <td>
             <div></div>
@@ -127,7 +176,7 @@
         </td>
     </tr>
 
-    <tr class="table-row"  *ngIf="!IsNew">
+    <tr class="table-row" *ngIf="!IsNew">
         <td>
             <div class="AdvancedSettings" (click)="showAdvancedSettings()">
                 {{AdvancedSettingsTitle}}

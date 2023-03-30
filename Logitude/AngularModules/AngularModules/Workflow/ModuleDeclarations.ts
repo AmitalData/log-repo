@@ -54,6 +54,7 @@ import { IsObjectTypePipe } from "./Pipes/IsObjectTypePipe";
 import { ObjectVariableComponent } from "./Components/Base/ObjectVariableComponent";
 import { WorkFlowHelperComponent } from "./Components/Helpers/WorkFlowHelperComponent";
 import { EditWorkflowVersionComponent } from "./Components/WorkflowVersion/EditWorkflowVersionComponent";
+import { GetFieldApiQueryFiltersPipe } from "./Pipes/GetFieldApiQueryFiltersPipe ";
 
 export const Components = [
     WorkflowBuilderComponent,
@@ -114,7 +115,8 @@ export const Pipes = [
     SetValuesOperatorsItemsPipe,
     ShowTreeItemPipe,
     ExpressionPipe,
-    ConditionOperatorsItemsPipe
+    ConditionOperatorsItemsPipe,
+    GetFieldApiQueryFiltersPipe
 ];
 
 export class ModuleDeclarations {

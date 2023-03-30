@@ -2182,9 +2182,12 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
 
                 InvoiceWebService invoiceWebService = new InvoiceWebService();
                 byte[] byteArray = invoiceWebService.GetInvoiceData(invoiceId, null, tenant);
-                MemoryStream memorystream = new MemoryStream(byteArray);
-                XmlSerializer serializer = new XmlSerializer(typeof(InvoiceDataProvider));
-                InvoiceDataProvider invoicedataprovider = (InvoiceDataProvider)serializer.Deserialize(memorystream);
+                InvoiceDataProvider invoicedataprovider;
+                using (MemoryStream memstream = new MemoryStream(byteArray))
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(InvoiceDataProvider));
+                    invoicedataprovider = (InvoiceDataProvider)serializer.Deserialize(memstream);
+                }
                 theT2 = System.DateTime.Now.Ticks;
                 //AzureLog.SaveLogsInStorage("Data provider :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P", tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "");
                 invoicedataprovider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);

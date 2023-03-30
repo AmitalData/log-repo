@@ -666,7 +666,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             
             FieldChange.Add(container.MainCarriageVesselId, containerPM.MainCarriageVesselId, nameof(containerPM.MainCarriageVesselId), fieldChanges);
             container.MainCarriageVesselId = containerPM.MainCarriageVesselId;
-            
+
+            FieldChange.Add(container.ShipmentLastLegETA, containerPM.ShipmentLastLegETA, nameof(containerPM.ShipmentLastLegETA), fieldChanges);
+            container.ShipmentLastLegETA = containerPM.ShipmentLastLegETA;
+
+            FieldChange.Add(container.ShipmentLastLegATA, containerPM.ShipmentLastLegATA, nameof(containerPM.ShipmentLastLegATA), fieldChanges);
+            container.ShipmentLastLegATA = containerPM.ShipmentLastLegATA;
+
             FieldChange.Add(container.ShipmentPackagesId, containerPM.ShipmentPackagesId, nameof(containerPM.ShipmentPackagesId), fieldChanges);
             container.ShipmentPackagesId = containerPM.ShipmentPackagesId;
             

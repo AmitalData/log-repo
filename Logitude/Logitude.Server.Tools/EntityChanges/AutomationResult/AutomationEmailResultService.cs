@@ -15,6 +15,8 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 
         public bool DependencyOnLastEntityUpdate { get { return (processType == "OnCreate") ? true : false; } }
 
+        public List<AutomationQueueArgs> AutomationQueues { get; set; }
+
         private string processType = string.Empty;
         public AutomationEmailResultService(string processType)
         {
@@ -23,12 +25,13 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 
         public void Run(AutomationResultArgs automationResultArgs)
         {
+            AutomationQueues = new List<AutomationQueueArgs>();
             var automationsEmail = automationResultArgs.AutomationLists.Where(d => d.ResultCode == ResultCode).ToList();
             if (automationsEmail.Count > 0)
             {
                 foreach (Automation automation in automationsEmail)
                 {
-                    AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = automationResultArgs.EntityChange.Id, AutomationId = automation.Id, AutomationType = automationResultArgs.EntityChangeArgs.ProcessType, EntityId = automationResultArgs.EntityChange.Id, Tenant = automation.Tenant, ExecutedImmediately = true , EntityReference  = automationResultArgs.EntityReference});
+                    AutomationQueues.Add(new AutomationQueueArgs() { EntityChangeId = automationResultArgs.EntityChange.Id, AutomationId = automation.Id, AutomationType = automationResultArgs.EntityChangeArgs.ProcessType, EntityId = automationResultArgs.EntityChange.Id, Tenant = automation.Tenant, ExecutedImmediately = true , EntityReference  = automationResultArgs.EntityReference});
                 }
             }
         }

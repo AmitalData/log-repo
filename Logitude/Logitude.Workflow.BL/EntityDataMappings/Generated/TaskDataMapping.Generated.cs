@@ -9,6 +9,8 @@ using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Logitude.Server.Tools.CustomFields;
 using Logitude.Workflow.Data.EntityPOCOs;
 using Logitude.Workflow.BL.EntityPMs; 
 using Logitude.Workflow.Data;
@@ -41,7 +43,9 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         IsClosed, 
 	         IsCancelled, 
 	         CheckWithId, 
-	         EntityNumber,
+	         EntityNumber, 
+	         IsAssigned, 
+	         StartDate,
 	      }
 
 
@@ -81,7 +85,9 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         Fields, 
 	         ToDoConditions, 
 	         DoneConditions, 
-	         Description,
+	         Description, 
+	         IsAssigned, 
+	         StartDate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -190,6 +196,20 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 				entityPOCO.EntityNumber = entityPM.EntityNumber;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsAssigned))
+            {
+				entityPOCO.IsAssigned = entityPM.IsAssigned;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StartDate))
+            {
+				entityPOCO.StartDate = entityPM.StartDate;
+			}
+			
+			new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Task", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<TaskPM> { entityPM }.Cast<object>().ToList() }).Update();
+		 
+			new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = entityPM, ParentEntityId = entityPM.Id, ParentObjectTableName = "Task", Tenant = entityPM.Tenant }).Update();
+		 
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
@@ -301,6 +321,21 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 					entityPM.EntityNumber = entityPOCO.EntityNumber;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsAssigned))
+            {
+					entityPM.IsAssigned = entityPOCO.IsAssigned;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StartDate))
+            {
+					entityPM.StartDate = entityPOCO.StartDate;
+            }
+
+			new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Task", Tenant = entityPM.Tenant, Type = "PM", Entities = new List<TaskPM> { entityPM }.Cast<object>().ToList() }).Set();
+
+		 
+			new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = entityPM, ParentEntityId = entityPM.Id, ParentObjectTableName = "Task", Tenant = entityPM.Tenant }).Set();
+		 
 		}
 
 		public void PMToOldPM(TaskPM entityPM, TaskPM oldEntityPM)
@@ -405,6 +440,16 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityNumber))
             {
                 oldEntityPM.EntityNumber = entityPM.EntityNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsAssigned))
+            {
+                oldEntityPM.IsAssigned = entityPM.IsAssigned;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StartDate))
+            {
+                oldEntityPM.StartDate = entityPM.StartDate;
             }
 			
 		}

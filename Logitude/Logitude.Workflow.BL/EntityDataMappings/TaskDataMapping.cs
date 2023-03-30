@@ -24,6 +24,7 @@ namespace Logitude.Workflow.BL.EntityDataMappings
                 entityPM.CreatedByUserId = entityPOCO.CreatedByUserId;
             }
 
+            entityPM.IsAssigned = !string.IsNullOrEmpty(entityPM.OwnerId);
             SetFieldsThatRelatedToStatus(entityPM, entityPOCO);
             ResetPMDummyFields(entityPM);
             BuildSearchFields(entityPM);

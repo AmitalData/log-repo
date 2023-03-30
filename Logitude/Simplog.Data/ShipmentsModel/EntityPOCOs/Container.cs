@@ -403,5 +403,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ShipmentDepartmentId { get; set; }
         [ForeignKey("ShipmentDepartmentId")]
         public virtual Department ShipmentDepartment { get; set; }
+        public DateTime? ShipmentLastLegATA { get; set; }
+        public DateTime? ShipmentLastLegETA { get; set; }
+
     }
 }

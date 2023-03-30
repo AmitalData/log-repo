@@ -25,18 +25,19 @@ namespace Logitude.Server.Tools.Helpers
 {
     public class TotangoActivityLogger
     {
-        public static void SendUserActivity(string organizationId, string orgDisplayName, string userName, string module, string activity, string contactId, int tenant, bool isSharedLogisticsContact, string cardId, string partnerTypeId)
+        public static void SendUserActivity(string organizationId, string orgDisplayName, string userName, string module, string activity, string email, int tenant, bool isSharedLogisticsContact, string cardId, string partnerTypeId)
         {
             if (LogitudeSettings.DeploymentStage != "Dev" && !LogitudeSettings.IsCostomsDeploy)
             {
                 ContactRepository contactRepository = new ContactRepository(tenant);
-                Contact contact = contactRepository.GetSingleContact(contactId, tenant);
+                Contact contact = contactRepository.GetSingleContactByEmail(email, tenant);
+
 
                 try
                 {
                     UserRepository userRepository = new UserRepository(tenant);
+                    User user = userRepository.GetSingleUserByEmail(email, tenant, false);
 
-                    User user = userRepository.GetSingleUser(contactId, tenant, false);
                     bool iscustomerCare = (user.Tenant == 0 && !user.IsDistributor);
                     if (user != null && !iscustomerCare)
                     {
@@ -87,7 +88,7 @@ namespace Logitude.Server.Tools.Helpers
                         }
                     }
 
-                    AddContactActivityLog(cardId, partnerTypeId, contactId, module, activity, tenant, isSharedLogisticsContact);
+                    AddContactActivityLog(cardId, partnerTypeId, contact?.Id, module, activity, tenant, isSharedLogisticsContact);
 
                 }
                 catch (Exception ex)

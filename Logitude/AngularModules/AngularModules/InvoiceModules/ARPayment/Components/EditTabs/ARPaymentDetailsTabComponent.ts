@@ -55,9 +55,10 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
     public ARPaymentChequeStatusColor = "black";
     private CurrentSession = SessionLocator.SelectedSession;
     public EntityWarningsList: string[] = [];
+    public IsUsingVirtuallization: boolean = false;
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService) {
         super();
-
+        this.SetIsUsingVirtuallization();
         if (ObjectsLocator.GlobalSetting) {
             this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         }
@@ -101,6 +102,13 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.LoadData();
         }
 
+    }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
     }
 
     private BuildEntityWarnings() {

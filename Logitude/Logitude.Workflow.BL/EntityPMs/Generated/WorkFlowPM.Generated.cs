@@ -464,6 +464,75 @@ namespace Logitude.Workflow.BL.EntityPMs
 			
 		 }
 	   }
+	  private string workFlowTriggerTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string WorkFlowTriggerTypeCode  
+	   {
+	    
+	     get
+		{
+		   return workFlowTriggerTypeCode;
+		 }
+		 set
+		 {
+		   if(workFlowTriggerTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="WorkFlowTriggerTypeCode",OldValue=workFlowTriggerTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   workFlowTriggerTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string workFlowTriggerTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string WorkFlowTriggerTypeName  
+	   {
+	    
+	     get
+		{
+		   return workFlowTriggerTypeName;
+		 }
+		 set
+		 {
+		   if(workFlowTriggerTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="WorkFlowTriggerTypeName",OldValue=workFlowTriggerTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   workFlowTriggerTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string workFlowNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string WorkFlowNumber  
+	   {
+	    
+	     get
+		{
+		   return workFlowNumber;
+		 }
+		 set
+		 {
+		   if(workFlowNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="WorkFlowNumber",OldValue=workFlowNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   workFlowNumber=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

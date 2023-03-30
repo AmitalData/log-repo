@@ -9,6 +9,7 @@ using Simplog.Server.Infrastructure;
 using Logitude.Workflow.Data.EntityPOCOs;
 using Logitude.Workflow.Data; 
 using Logitude.Workflow.Data.EntityMapping;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.Workflow.Data
 {
@@ -33,10 +34,12 @@ namespace Logitude.Workflow.Data
 		 IDbSet<WorkFlowInstanceStatus> WorkFlowInstanceStatuses { get; }
 		 IDbSet<WorkFlowInstanceVariable> WorkFlowInstanceVariables { get; }
 		 IDbSet<WorkFlowStatus> WorkFlowStatuses { get; }
+		 IDbSet<WorkFlowTriggerType> WorkFlowTriggerTypes { get; }
 		 IDbSet<WorkFlowVersion> WorkFlowVersions { get; }
 		 IDbSet<WorkFlowVersionStatus> WorkFlowVersionStatuses { get; }
-	 
-         void SetAsModified(object entity);
+         IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects { get; }
+
+		void SetAsModified(object entity);
          void DetectChanges();
          int SaveChanges();
 

@@ -48,6 +48,8 @@ export class EditMultipleShipmentComponent extends BaseComponent {
     public APInvoiceId: string = null;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsUsingVirtuallization: boolean = false;
+
     constructor() {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
@@ -75,6 +77,7 @@ export class EditMultipleShipmentComponent extends BaseComponent {
     }
 
     SetWindowArgs(args: any) {
+        this.SetIsUsingVirtuallization();
         this.APInvoicePM = args['APInvoicePM'];
         this.EntityShipmentPM = args['EntityShipmentPM'];
         this.IsEditingEnabled = args['IsEditingEnabled'];
@@ -83,6 +86,13 @@ export class EditMultipleShipmentComponent extends BaseComponent {
         this.InvoiceCurrencyCode = this.APInvoicePM.InvoiceCurrencyCode;
         this.SetUIProperties();
         this.LoadEntity();
+    }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
     }
 
     public VatTypeFilterIsEnabled: boolean = false;

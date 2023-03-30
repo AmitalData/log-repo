@@ -22,7 +22,7 @@ import { BatchTaskExecutionList } from '../../../Infrastructure/EntityLists/Batc
 import { BatchTaskExecutionListService } from '../../../Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
 import { DocumentsFilingExtendedPMService } from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
-import { ConsilidationInvoiceDomainService } from '../../Services/ConsilidationInvoiceDomainService'; 
+import { ConsilidationInvoiceDomainService } from '../../Services/ConsilidationInvoiceDomainService';
 import { ShipmentDomainService } from '../../../Shipment/Services/ShipmentDomainService';
 
 export class ARInvoiceMenuButtonsHandler {
@@ -32,14 +32,14 @@ export class ARInvoiceMenuButtonsHandler {
     private isRunningBatchTaskExecution: boolean = false;
     private IsConfirmationMessageForCriedtNoteVisible:boolean=false;
     DocumentsFilingExtendedPMService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
-     
-    //private RelativeRateDate: String; 
+
+    //private RelativeRateDate: String;
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
-        this.EntityPM = entityArgs.EntityPM; 
-        this.Listen(); 
-    } 
+        this.EntityPM = entityArgs.EntityPM;
+        this.Listen();
+    }
 
     private CheckIsConfirmationMessageForCriedtNoteVisible(){
         this.IsConfirmationMessageForCriedtNoteVisible = FeatureLocator.HasFeaturePermession("ARInvoice", "ConfirmationForAutoCreditForCreditNotes") ? true : false;
@@ -196,7 +196,7 @@ export class ARInvoiceMenuButtonsHandler {
                                     }
 
                                      myButtonIsDisabled = !isEnabled;
-                                   
+
                                 }
 
                                 else if (this.EntityPM.ARInvoiceTypeCode == "CC") {
@@ -209,7 +209,7 @@ export class ARInvoiceMenuButtonsHandler {
                                     }
                                 }
                             }
-                           // myButtonIsDisabled = false;  
+                           // myButtonIsDisabled = false;
                             break;
                         }
 
@@ -290,7 +290,7 @@ export class ARInvoiceMenuButtonsHandler {
                         case "SolvedManual": {
                             const sATTransferWithErrorStatusCode: string = "TE";
                             const sATSolvedManualStatusCode: string = "SM";
-                            button.IsHidden = this.EntityPM.SATTransferStatusCode != sATTransferWithErrorStatusCode && this.EntityPM.SATTransferStatusCode != sATSolvedManualStatusCode;                       
+                            button.IsHidden = this.EntityPM.SATTransferStatusCode != sATTransferWithErrorStatusCode && this.EntityPM.SATTransferStatusCode != sATSolvedManualStatusCode;
                             if(!button.IsHidden) myButtonIsDisabled = this.EntityPM.SATTransferStatusCode == sATSolvedManualStatusCode;
 
                             break;
@@ -462,7 +462,7 @@ export class ARInvoiceMenuButtonsHandler {
                     }
                     this.StopFlags();
                 }
-            }                                           
+            }
         });
     }
 
@@ -728,11 +728,11 @@ export class ARInvoiceMenuButtonsHandler {
             }
         }
     }
-      
+
     ComputeRelativeRateDate() {
         return  DateTool.GetRelativeRateDate(this.EntityPM.InvoiceDate, this.EntityPM.ExchangeRateDate, "old");
     }
-     
+
     ApplyApproveClicked() {
 
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode !== "NONE") {
@@ -807,7 +807,7 @@ export class ARInvoiceMenuButtonsHandler {
     }
 
     private CheckExchageRateLastUpdate() {
-         
+
         if (this.ComputeRelativeRateDate()) {
             const confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 290;
@@ -1064,7 +1064,7 @@ export class ARInvoiceMenuButtonsHandler {
             this.StopFlags();
             return;
         }
-        
+
         this.EntityPM.SATCancelReasonCode = cancelReason;
         this.EntityPM.SATTransferStatusCode = this.GetSATTransferStatusCode(true);
         this.VoidClicked();
@@ -1154,7 +1154,7 @@ export class ARInvoiceMenuButtonsHandler {
     AutoCreditDate: Date = null;
     AutoCreditManualNumber: string = null;
     AutoCreditClicked() {
-        
+
         if (this.EntityPM.InvoicePayments.length > 0) {
             var messageWindow = new MessageWindow();
             messageWindow.Show(TextCodeTranslator.Translate("ARInvoice.S.AutoCreditingMsg1"));
@@ -1211,7 +1211,7 @@ export class ARInvoiceMenuButtonsHandler {
     }
     AutoCreditClickedProccess() {
         var newAutoCreditInvoice: ARInvoicePM = this.CreateAutoCreditInvoice();
-        
+
         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
@@ -1315,7 +1315,7 @@ export class ARInvoiceMenuButtonsHandler {
         AutoCreditInvoice.HasInterestFeature = this.EntityPM.ARInvoiceTypeCode == 'IT' ? true : false;
         AutoCreditInvoice.RegionalTaxId = this.EntityPM.RegionalTaxId;
         AutoCreditInvoice.RegionalTaxPercentage = this.EntityPM.RegionalTaxPercentage;
-        this.CreateAutoCreditInvoiceLines(AutoCreditInvoice);        
+        this.CreateAutoCreditInvoiceLines(AutoCreditInvoice);
         return AutoCreditInvoice;
     }
     CreateAutoCreditInvoiceLines(AutoCreditInvoice: ARInvoicePM) {
@@ -1403,7 +1403,7 @@ export class ARInvoiceMenuButtonsHandler {
                 this.PrintFullAccountingInvoice();
             }
             else {
-               
+
                 this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference);
 
             }
@@ -1447,7 +1447,7 @@ export class ARInvoiceMenuButtonsHandler {
         }
     }
     StartPrinting(myEntityId: string, myChildEntityId: string, myObjectTableName: string, mychildObjectTableId: string, myDocumentTypeCode: string, myReference: string) {
-        var myPrintHelper = new GeneralPrintHelper(myObjectTableName, myDocumentTypeCode, myEntityId, myChildEntityId, myReference, mychildObjectTableId);
+        var myPrintHelper = new GeneralPrintHelper(myObjectTableName, myDocumentTypeCode, myEntityId, myChildEntityId, myReference, mychildObjectTableId, this.EntityPM.ARInvoiceTypeCode);
         if (myPrintHelper.IsLoadPrintControl) {
             ServiceLocator.SendTotangoUserActivity("ARInvoice", "PrintInvoice");
             myPrintHelper.ShowPrintControl(this.EntityPM.DocumentTemplateId);
@@ -1458,7 +1458,7 @@ export class ARInvoiceMenuButtonsHandler {
 
 
         this.DocumentsFilingExtendedPMService.getDocumentsFilingsById(this.EntityPM.DocumentFilingId).subscribe((myResult:any) => {
-           
+
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 var documentFiling = mm.Result;
@@ -1475,7 +1475,7 @@ export class ARInvoiceMenuButtonsHandler {
     private PrintFullAccountingInvoice() {
         if (this.EntityPM.IsExternalEntity) {
             if (AppTool.IsNullOrEmpty(this.EntityPM.DocumentFilingId)) {
-                this.ShowWarnigMessageForMissingDocument();                
+                this.ShowWarnigMessageForMissingDocument();
             }
 
             else {

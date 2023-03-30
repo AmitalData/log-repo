@@ -88,6 +88,7 @@
     <None Include="DBTables\WorkFlowInstanceStatus.dxml" />
     <None Include="DBTables\WorkFlowInstanceVariable.dxml" />
     <None Include="DBTables\WorkFlowStatus.dxml" />
+    <None Include="DBTables\WorkFlowTriggerType.dxml" />
     <None Include="DBTables\WorkFlowVersion.dxml" />
     <None Include="DBTables\WorkFlowVersionStatus.dxml" />
     <None Include="EntityFiles\Expression.lxml" />
@@ -107,6 +108,7 @@
     <None Include="EntityFiles\WorkFlowInstanceStatus.lxml" />
     <None Include="EntityFiles\WorkFlowInstanceVariable.lxml" />
     <None Include="EntityFiles\WorkFlowStatus.lxml" />
+    <None Include="EntityFiles\WorkFlowTriggerType.lxml" />
     <None Include="EntityFiles\WorkFlowVersion.lxml" />
     <None Include="EntityFiles\WorkFlowVersionStatus.lxml" />
   </ItemGroup>

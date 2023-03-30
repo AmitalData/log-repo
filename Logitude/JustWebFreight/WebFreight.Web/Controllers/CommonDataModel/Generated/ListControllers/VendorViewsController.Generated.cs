@@ -68,20 +68,10 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				VendorRepository  vendorRepository = new VendorRepository(MyContext);
-				VendorList entityList = null;
-				Vendor entityPoco = vendorRepository.GetSingleVendor(id , authToken.Tenant);
-                
-                if (entityPoco != null)
-				{
-									List<Vendor> singleEntityList = new List<Vendor>();
-					singleEntityList.Add(entityPoco);
-
-					VendorQuery vendorQuery = new VendorQuery(vendorRepository);
-					IQueryable<Vendor> iQueryable = singleEntityList.AsQueryable();
-					IQueryable<VendorList> iQueryableEntityList = vendorQuery.GetIQueryableEntityList(iQueryable);
-				    entityList = iQueryableEntityList.FirstOrDefault();
-
-			    }
+				
+				VendorQuery  vendorQuery = new VendorQuery(vendorRepository);
+				IQueryable<Vendor> vendors = vendorRepository.GetVendors(authToken.Tenant).Where(a=>a.Id == id);
+				VendorList entityList = vendorQuery.GetIQueryableEntityList(vendors).FirstOrDefault();
 				if (entityList != null)
 				{
                 	CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);

@@ -62,7 +62,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     public IsDownloadUploadPackagesVisible: boolean = false;
     public IsContainerFeatureToggleVisible: boolean = false;
     public HorseFieldIsVisible: boolean = false;
-
+    public IsUsingVirtuallization: boolean = false;
     private warehouseReleasePMExtendedService: WarehouseReleasePMExtendedService;
     @Output() ReloadDetails = new EventEmitter();
     warehouseReleasePackageListExtendedService: WarehouseReleasePackageListExtendedService;
@@ -70,6 +70,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
+        this.SetIsUsingVirtuallization();
         this.EntityPM = entityArgs.EntityPM;
         this.IsFromStandAloneScreen = entityArgs.IsFromStandAloneScreen;
         this.ObjectTableName = entityArgs.ObjectTableName;
@@ -78,6 +79,13 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.ItemsSource = new ObservableCollection([]);
         this.Listen();
         this.setDigits();
+    }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
     }
 
     private SessionEvent: any = null;
@@ -3241,6 +3249,7 @@ export class ShipmentPackageItem extends BaseComponent {
 
     // Package Items
     BuildPackageItems() {
+      
         if (this.PackageItemsList == null) {
             this.PackageItemsList = new ObservableCollection([]);
         }
@@ -3258,7 +3267,7 @@ export class ShipmentPackageItem extends BaseComponent {
 
         this.PackageItemsList.InsertCollection(itemsCollection);
     }
-
+  
     private maxPackageItemsLineNumber = 0;
     public savedItems: ShipmentPackageItemPM[] = [];
     public CopyPackageItems() {

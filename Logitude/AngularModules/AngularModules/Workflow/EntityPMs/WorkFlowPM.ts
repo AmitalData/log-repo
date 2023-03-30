@@ -129,6 +129,21 @@ export class WorkFlowPM {
     public set RetriesDelay(newValue: string) { if (this.retriesDelay != newValue) { this.retriesDelay = newValue; this.MarkAsDirty("RetriesDelay"); } }
        
 	 
+    private workFlowTriggerTypeCode: string;
+    public get WorkFlowTriggerTypeCode() { return this.workFlowTriggerTypeCode; }
+    public set WorkFlowTriggerTypeCode(newValue: string) { if (this.workFlowTriggerTypeCode != newValue) { this.workFlowTriggerTypeCode = newValue; this.MarkAsDirty("WorkFlowTriggerTypeCode"); } }
+       
+	 
+    private workFlowTriggerTypeName: string;
+    public get WorkFlowTriggerTypeName() { return this.workFlowTriggerTypeName; }
+    public set WorkFlowTriggerTypeName(newValue: string) { if (this.workFlowTriggerTypeName != newValue) { this.workFlowTriggerTypeName = newValue; this.MarkAsDirty("WorkFlowTriggerTypeName"); } }
+       
+	 
+    private workFlowNumber: string;
+    public get WorkFlowNumber() { return this.workFlowNumber; }
+    public set WorkFlowNumber(newValue: string) { if (this.workFlowNumber != newValue) { this.workFlowNumber = newValue; this.MarkAsDirty("WorkFlowNumber"); } }
+       
+	 
 
     public OldEntityPM: WorkFlowPM;
 		

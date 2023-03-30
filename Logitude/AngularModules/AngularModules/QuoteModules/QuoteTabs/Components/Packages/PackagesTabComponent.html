@@ -123,7 +123,7 @@
                             <div class="MediaFill">
 
                                 <!-- LCL -->
-                                <logitude-edit-grid *ngIf="!QuoteIsFCL" GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
+                                <logitude-edit-grid *ngIf="!QuoteIsFCL" GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow" [UseVirtuallization]="IsUsingVirtuallization">
 
                                     <!-- Icon -->
                                     <log-column [width]="'25'">

@@ -27,6 +27,7 @@ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.Helpers;
 using Logitude.BL.DataContracts;
 using Logitude.Server.Tools.QueueService;
+using Logitude.Server.Tools.CustomFields;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -136,6 +137,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 cardRepository.Add(entityCard);
                 entityRepository.Add(entityPOCO);
                 entityRepository.SubmitChanges();
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Airline", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<AirlinePM> { entityPM }.Cast<object>().ToList() }).Update();
 
                 TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Airline");
                 TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
@@ -211,6 +213,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 cardRepository.Update(entityCard);
                 entityRepository.Update(entityPOCO);
                 entityRepository.SubmitChanges();
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Airline", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<AirlinePM> { entityPM }.Cast<object>().ToList() }).Update();
 
                 TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Airline");
                 TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");

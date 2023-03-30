@@ -211,6 +211,7 @@ import { MonthpickerComponent } from './Components/LogitudeComponents/MonthPicke
 import { GridScreenSectionComponent } from './Components/LogitudeComponents/Customization/Screen/Section/GridScreenSectionComponent';
 import { AddEditChildEntityComponent } from './Components/LogitudeComponents/Customization/Screen/Section/AddEditChildEntityComponent';
 import { NewCustomObjectComponent } from './Components/NewEntity/NewCustomObjectComponent';
+import { DataProviderFieldsNestedList } from '../Report/Components/DataProviderFieldsNestedList';
 
 //import { ScrollingModule } from '@angular/cdk/scrolling';
 export const Directives =
@@ -336,6 +337,8 @@ export const ControlsComponents =
         EventCreationResultComponent,
         OnUpdateDocumentResultComponent,
         MonthpickerComponent,
+        DataProviderFieldsNestedList,
+
     ];
 export const Components =
     [

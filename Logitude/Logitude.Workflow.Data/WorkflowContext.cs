@@ -1,28 +1,21 @@
+using Logitude.Workflow.Data.EntityMapping;
+using Logitude.Workflow.Data.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Mapping;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Mapping;
+using Simplog.Data.InvoiceModel.Mapping;
+using Simplog.Data.QuoteModel.Mapping;
+using Simplog.Data.ShipmentsModel.Mapping;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Helpers;
 using Simplog.Server.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Common;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Transactions;
-using System.Data.Entity.Validation;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using Simplog.Data.CommonDataModel.Mapping;
-using Simplog.Data.InvoiceModel.Mapping;
-using Simplog.Data.InfrastructureModel.Mapping;
-using Simplog.Data.ShipmentsModel.Mapping;
-using Simplog.Data.QuoteModel.Mapping;
-using Logitude.Workflow.Data.EntityPOCOs;
-using Logitude.Workflow.Data; 
-using Logitude.Workflow.Data.EntityMapping;
 
 namespace Logitude.Workflow.Data
 {
-   public class WorkflowContext: DbContextBase, IWorkflowContext
+    public class WorkflowContext: DbContextBase, IWorkflowContext
     {
         public WorkflowContext()
         {
@@ -100,6 +93,8 @@ namespace Logitude.Workflow.Data
             modelBuilder.Configurations.Add(new WorkFlowInstanceVariableMap());
 	
             modelBuilder.Configurations.Add(new WorkFlowStatusMap());
+	
+            modelBuilder.Configurations.Add(new WorkFlowTriggerTypeMap());
 	
             modelBuilder.Configurations.Add(new WorkFlowVersionMap());
 	
@@ -490,6 +485,12 @@ namespace Logitude.Workflow.Data
 	 
 	 }
 	
+	 public IDbSet<WorkFlowTriggerType> WorkFlowTriggerTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<WorkFlowVersion> WorkFlowVersions 
 	 {
 	      get; set;
@@ -501,8 +502,14 @@ namespace Logitude.Workflow.Data
 	      get; set;
 	 
 	 }
-	  
- }
+
+        public IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects
+        {
+            get; set;
+
+        }
+
+    }
 
 
 }

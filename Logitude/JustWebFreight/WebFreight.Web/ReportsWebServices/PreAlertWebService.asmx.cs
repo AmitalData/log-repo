@@ -85,14 +85,17 @@ namespace WebFreight.Web.ReportsWebServices
             catch { }
 
             XmlSerializer serializer = new XmlSerializer(typeof(PreAlertDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, prealertDataProvider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
+            using (MemoryStream memstream = new MemoryStream())
+            {
+                serializer.Serialize(memstream, prealertDataProvider);
+                memstream.Seek(0, SeekOrigin.Begin);
+                var reader = new StreamReader(memstream);
+                string content = reader.ReadToEnd();
+                byte[] bytearray = memstream.ToArray();
 
-            return bytearray;
+                return bytearray;
+            }
+            
 
             #endregion
         }

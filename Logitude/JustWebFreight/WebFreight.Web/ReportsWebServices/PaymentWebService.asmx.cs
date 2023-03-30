@@ -59,13 +59,16 @@ namespace WebFreight.Web.ReportsWebServices
         {
             PaymentDataProvider paymentDataProvider = GetPaymentDataProvider(paymentId, tenant, documentTypeId);
             XmlSerializer serializer = new XmlSerializer(typeof(PaymentDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, paymentDataProvider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
+            using (MemoryStream memstream = new MemoryStream())
+            {
+                serializer.Serialize(memstream, paymentDataProvider);
+                memstream.Seek(0, SeekOrigin.Begin);
+                var reader = new StreamReader(memstream);
+                string content = reader.ReadToEnd();
+                byte[] bytearray = memstream.ToArray();
+                return bytearray;
+            }
+            
         }
 
         public PaymentDataProvider GetPaymentDataForAPi(string paymentId, int tenant, string documentTypeId)
@@ -431,6 +434,7 @@ namespace WebFreight.Web.ReportsWebServices
                                         HouseNumber = gr.Key.ARInvoice.HouseNumber,
                                         InvoiceCurrencyId = gr.Key.ARInvoice.InvoiceCurrencyId,
                                         ExchangeRate = gr.Key.ARInvoice.InvoiceCurrencyExchangeRate,
+                                        CustomerRef = gr.Key.ARInvoice.CustomerRef,
                                     }).ToList();
 
                     foreach (var item in payments)
@@ -446,6 +450,7 @@ namespace WebFreight.Web.ReportsWebServices
                         reportPayments.Vat = ARInvoiceTotalVATs.Sum(s => (s.InvoiceCurrencyVatableAmount * s.VatPercent) / 100);
                         reportPayments.OriginalAmount = item.OriginalAmount;
                         reportPayments.InvoicePaymentExchangeRate = item.ExchangeRate;
+                        reportPayments.CustomerRef = item.CustomerRef;
                         reportPayments.ProjectNumber = this.GetProjectNumber(item.ReferenceId, tenant);
                         Currency myCurrency = CurrencyRepository.GetSingleCurrency(item.InvoiceCurrencyId, tenant, true);
                         if (myCurrency != null)
@@ -721,7 +726,10 @@ namespace WebFreight.Web.ReportsWebServices
                             paymentDataProvider.SAT.CadenaOriginal = additionalFields.CadenaOriginal;
                             if (!string.IsNullOrEmpty(additionalFields.QRImage))
                             {
-                                paymentDataProvider.SAT.QRImage = Image.FromStream(new MemoryStream(Convert.FromBase64String(additionalFields.QRImage)));
+                                using (MemoryStream memstream = new MemoryStream(Convert.FromBase64String(additionalFields.QRImage)))
+                                {
+                                    paymentDataProvider.SAT.QRImage = Image.FromStream(memstream);
+                                }
                             }
                         }
 

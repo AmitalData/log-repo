@@ -34,7 +34,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     public QuoteIsFCL: boolean = true;    
     private CurrentSession = SessionLocator.SelectedSession;
     public IsHybrid: boolean;
-
+    public IsUsingVirtuallization: boolean = false;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -51,11 +51,18 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             this.entityResourceService.getEntityResourceByTableName("QuotePackage").subscribe((res: any) => {
                 this.IsResourcesReady = true;
             });
-
+            this.SetIsUsingVirtuallization();
             this.GetDescriptionFlowDirection();
             this.SetLabels();
             this.SetUIProperties();
             this.BuildItemsSource();
+        }
+    }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
         }
     }
 
@@ -896,6 +903,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
         this.ComputeGrossWeigh_Kg_Ton();
         this.ChargeableWeight_Kg();
+        this.ComputeVolume_CBM();
         QuoteTool.OnQuoteQuantitiesChanged(this.EntityPM);
 
         this.SetUIProperties_Totals();
@@ -959,6 +967,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     }
 
     private ComputeVolume_CBM() {
+
         var volume_CBM: number = null;
 
         if (this.Volume != null) {

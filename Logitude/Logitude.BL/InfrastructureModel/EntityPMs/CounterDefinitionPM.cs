@@ -30,6 +30,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
 		public string Suffix { get; set; }
         public bool InActive { get; set; }
         public bool UsePerBranch { get; set; }
-
+        public bool IsCustomized { get; set; }
+        public bool IsAdded { get; set; }
     }
 }

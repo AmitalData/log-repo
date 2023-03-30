@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Reflection;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.DataProviders;
+using WebFreight.Web.Helpers.DataProviderHelpers;
 
 namespace WebFreight.Web.Helpers.ExcelReport
 {
@@ -80,7 +81,6 @@ namespace WebFreight.Web.Helpers.ExcelReport
         {
             switch (reportCode)
             {
-
                 case "AGER":
                     {
                         return typeof(AccountingAgingDataProvider);
@@ -108,6 +108,30 @@ namespace WebFreight.Web.Helpers.ExcelReport
                 case "SRQR":
                     {
                         return typeof(SpotRateQuoteReportDataProvider);
+                    }
+                case "CSSR":
+                    {
+                        return typeof(CustomerStatusDataProvider);
+                    }
+                case "SHID":
+                    {
+                        return typeof(ShipmentDetailsDataProvider);
+                    }
+                case "RSID":
+                    {
+                        return typeof(StatementByInvoiceDateDataProvider);
+                    }
+                case "OSBC":
+                    {
+                        return typeof(OpenShipmentsByCustomerDataProvider);
+                    }
+                case "RSTA":
+                    {
+                        return typeof(StatementDataProvider);
+                    }
+                case "ATRE":
+                    {
+                        return typeof(AutomationTestReportDataProvider);
                     }
                 default:
                     return null;

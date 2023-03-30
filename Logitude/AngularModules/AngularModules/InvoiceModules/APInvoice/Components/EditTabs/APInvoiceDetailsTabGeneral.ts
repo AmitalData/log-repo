@@ -58,11 +58,11 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     VendorLovSizeForFullAccounting: number;
     forceShowLocalAndEnglishColumns = false;
     ColumnsWidths: any[] = [];
-
+    public IsUsingVirtuallization: boolean = false;
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-
+        this.SetIsUsingVirtuallization();
         this.EntityPM = entityArgs.EntityPM;
         this.ItemsSource = new ObservableCollection([]);
         this.todayDate = DateTool.GetCurrentDateAsUtc();
@@ -84,6 +84,12 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         this.InitializeVendorLov();
     }
 
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
+    }
 
     private InitializeVendorLov() {
         if (this.accountingActivated) {

@@ -2540,7 +2540,76 @@ namespace Logitude.CRM.BL.EntityPMs
 			
 		 }
 	   }
-   }
+	  private string clientId ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClientId  
+	   {
+	    
+	     get
+		{
+		   return clientId;
+		 }
+		 set
+		 {
+		   if(clientId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClientId",OldValue=clientId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   clientId=value;
+		   }
+			
+		 }
+	   }
+	  private string leadOrigin ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LeadOrigin  
+	   {
+	    
+	     get
+		{
+		   return leadOrigin;
+		 }
+		 set
+		 {
+		   if(leadOrigin != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LeadOrigin",OldValue=leadOrigin,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   leadOrigin=value;
+		   }
+			
+		 }
+	   }
+	  private string campaign ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Campaign  
+	   {
+	    
+	     get
+		{
+		   return campaign;
+		 }
+		 set
+		 {
+		   if(campaign != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Campaign",OldValue=campaign,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   campaign=value;
+		   }
+			
+		 }
+	   }
+	    }
    
 }
 	 

@@ -17,16 +17,25 @@ export class StatusesTabComponent extends BaseComponent implements OnInit {
     public ObjectTableName = "Container";
     public DataContext = this;
     public ItemsSource: ObservableCollection;
-
+    public IsUsingVirtuallization: boolean = false;
     constructor(private entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
+        this.SetIsUsingVirtuallization();
         this.ItemsSource = new ObservableCollection([]);
     }
 
     ngOnInit() {
         this.GetContainerStatuses();
     }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
+    }
+
     GetContainerStatuses() {
         var shipmentId = this.EntityPM.ShipmentId;
         var containerId = this.EntityPM.ShipmentPackagesId;

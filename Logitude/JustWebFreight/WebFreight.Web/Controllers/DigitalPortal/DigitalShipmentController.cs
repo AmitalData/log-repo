@@ -207,14 +207,17 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var isAllShipmentsQuery = newFilters.AdditionalFilters.Where(a => a.FieldName == "AllShipments").Any();
 
                 if (isAllShipmentsQuery)
-               {
+                {
                     DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
-                    shipments.Where(a => (helper.DoesPropertyExistInDynamic(a, "CreateDateTime") 
-                                          && a.CreateDateTime <= currentDateTime.AddMonths(-data.DPArchiveShipmentCreateFilter.Value))
-                                          && (helper.DoesPropertyExistInDynamic(a, "MainCarriageFinalDestinationATA") 
-                                              && (( a.MainCarriageFinalDestinationATA <= currentDateTime.AddMonths(-data.DPArchiveShipmentArrivalFilter.Value) && a.DirectionId == "I")))
-                                               || (helper.DoesPropertyExistInDynamic(a, "MainCarriageATD") 
-                                                    && (a.MainCarriageATD <= currentDateTime.AddMonths(-data.DPArchiveShipmentDepartFilter.Value) && a.DirectionId == "E")))
+
+                    var createdDateTime = currentDateTime.AddMonths(-(data.DPArchiveShipmentCreateFilter.HasValue ? data.DPArchiveShipmentCreateFilter.Value : 12));
+                    var arrivalDateTime = currentDateTime.AddMonths(-(data.DPArchiveShipmentArrivalFilter.HasValue ? data.DPArchiveShipmentArrivalFilter.Value : 3));
+                    var departureDateTime = currentDateTime.AddMonths(-(data.DPArchiveShipmentDepartFilter.HasValue ? data.DPArchiveShipmentDepartFilter.Value : 3));
+
+                    shipments.Where(a => (helper.DoesPropertyExistInDynamic(a, "CreateDateTime") && a.CreateDateTime <= createdDateTime)
+                                          || (helper.DoesPropertyExistInDynamic(a, "MainCarriageFinalDestinationATA") 
+                                               && (a.MainCarriageFinalDestinationATA <= arrivalDateTime && (a.DirectionId == "I" || a.DirectionId == "D" || a.DirectionId == "R")))
+                                          || (helper.DoesPropertyExistInDynamic(a, "MainCarriageATD") && (a.MainCarriageATD <= departureDateTime && a.DirectionId == "E")))
                             .ToList()
                             .ForEach(i => i.IsCustomerArchived = true);
                 }
