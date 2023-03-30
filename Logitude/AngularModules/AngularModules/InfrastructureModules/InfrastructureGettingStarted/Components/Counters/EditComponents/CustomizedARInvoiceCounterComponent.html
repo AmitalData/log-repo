@@ -16,7 +16,7 @@
                 </td>
 
                 <td style="width: 200px;">
-                    <input tabindex="-1" type="number" [(ngModel)]="StartNumber" />
+                    <input tabindex="-1" type="number" [(ngModel)]="StartNumber" [disabled]="!IsEnabled" />
                 </td>
             </tr>
         </table>
@@ -34,7 +34,7 @@
                                         {{customizedCounterItem.SeriesCode}}
                                     </td>
                                     <td style="width:10%" *ngIf="j != 0">
-                                        <IconButton [IsSmall]="true" [Name]="'Delete'" [IsIconOnly]="true" (click)="DeleteCustomizedCounterItem(customizedCounterItem, false)"></IconButton>
+                                        <IconButton [IsEnabled]="IsEnabled" [IsSmall]="true" [Name]="'Delete'" [IsIconOnly]="true" (click)="DeleteCustomizedCounterItem(customizedCounterItem, false)"></IconButton>
                                     </td>
                                 </tr>
                             </table>
@@ -56,7 +56,7 @@
                                                             <LogLabel [ObjectFieldName]="'Prefix'" [ObjectTableName]="customizedCounterItem.ObjectTableName" [DataContext]="customizedCounterItem.DataContext"></LogLabel>
                                                         </td>
 
-                                                        <td>
+                                                        <td [style.opacity]="!IsEnabled ? '0.5':'1'" [style.pointer-events]="!IsEnabled ? 'none':'auto'">
                                                             <LogTextBox [ObjectFieldName]="'Prefix'" [Text]="customizedCounterItem.Prefix" [ObjectTableName]="customizedCounterItem.ObjectTableName" [DataContext]="customizedCounterItem.DataContext"></LogTextBox>
                                                         </td>
                                                     </tr>
@@ -66,7 +66,7 @@
                                                             <LogLabel [ObjectFieldName]="'CounterSize'" [ObjectTableName]="customizedCounterItem.ObjectTableName" [DataContext]="customizedCounterItem.DataContext"></LogLabel>
                                                         </td>
 
-                                                        <td>
+                                                        <td [style.opacity]="!IsEnabled ? '0.5':'1'" [style.pointer-events]="!IsEnabled ? 'none':'auto'">
                                                             <LogTextBox [ObjectFieldName]="'CounterSize'" [Text]="customizedCounterItem.CounterSize" [ObjectTableName]="customizedCounterItem.ObjectTableName" [DataContext]="customizedCounterItem.DataContext"></LogTextBox>
                                                         </td>
                                                     </tr>
@@ -76,7 +76,7 @@
                                                             <LogLabel [ObjectFieldName]="'StartNumber'" [ObjectTableName]="customizedCounterItem.ObjectTableName" [DataContext]="customizedCounterItem.DataContext"></LogLabel>
                                                         </td>
 
-                                                        <td [style.opacity]="!UniquePerPrefix ? '0.5':'1'" [style.pointer-events]="!UniquePerPrefix ? 'none':'auto'">
+                                                        <td [style.opacity]="(!UniquePerPrefix || !IsEnabled) ? '0.5':'1'" [style.pointer-events]="(!UniquePerPrefix || !IsEnabled) ? 'none':'auto'">
                                                             <LogTextBox [ObjectFieldName]="'StartNumber'" [Text]="customizedCounterItem.StartNumber" [ObjectTableName]="customizedCounterItem.ObjectTableName" [DataContext]="customizedCounterItem.DataContext"></LogTextBox>
                                                         </td>
                                                     </tr>
@@ -86,7 +86,7 @@
                                                             <LogLabel [ObjectFieldName]="'Suffix'" [ObjectTableName]="customizedCounterItem.ObjectTableName" [DataContext]="customizedCounterItem.DataContext"></LogLabel>
                                                         </td>
 
-                                                        <td>
+                                                        <td [style.opacity]="!IsEnabled ? '0.5':'1'" [style.pointer-events]="!IsEnabled ? 'none':'auto'">
                                                             <LogTextBox [ObjectFieldName]="'Suffix'" [Text]="customizedCounterItem.Prefix" [ObjectTableName]="customizedCounterItem.ObjectTableName" [DataContext]="customizedCounterItem.DataContext"></LogTextBox>
                                                         </td>
                                                     </tr>
@@ -136,7 +136,7 @@
                 </table>
             </div>
             <div *ngIf="j == CustomizedCounterItems.length - 1 && j != 6" style="vertical-align: top; padding-top: 12px; width: 25px; display:inline-block">
-                <IconButton [IsEnabled]="!DisableAddCustomizedCounterItems()" [Name]="'Add'" [IsSmall]="true" (click)="AddCustomizedCounterItem()"></IconButton>
+                <IconButton [IsEnabled]="!DisableAddCustomizedCounterItems() && IsEnabled" [Name]="'Add'" [IsSmall]="true" (click)="AddCustomizedCounterItem()"></IconButton>
             </div>
 
         </div>
