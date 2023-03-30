@@ -295,7 +295,7 @@ namespace WebFreight.Web.Security
 
                 //AzureLog.SaveLogsInStorage(errorMessage, "E", DateTime.Now, errorMessage, null, 0, HttpContext.Current.User.Identity.Name, HttpContext.Current.User.Identity.Name, ip);
 
-                //throw new SecurityException("Sorry! you have no permission to do this operation on " + objectTableName + ". Please contact your administrator.");
+                throw new SecurityException("Sorry! you have no permission to do this operation on " + objectTableName + ". Please contact your administrator.");
             }
 
 
