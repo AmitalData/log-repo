@@ -123,5 +123,5 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <UniqueConstraint
-    Columns="WorkflowNumber" />
+    Columns="Tenant,WorkflowNumber" />
 </Table>

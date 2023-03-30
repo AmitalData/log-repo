@@ -101,7 +101,7 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Extended
                     ChangeType = "created",
                     Resource = "me/mailfolders/inbox/messages",
                     NotificationUrl = GetSubscriptionNotificationUrl(createSubscription.WorkflowNumber, createSubscription.Tenant),
-                    ExpirationDateTime = DateTimeOffset.UtcNow.AddHours(23),
+                    ExpirationDateTime = DateTimeOffset.UtcNow.AddHours(20),
                     ClientState = Guid.NewGuid().ToString()
                 });
             return subscription;

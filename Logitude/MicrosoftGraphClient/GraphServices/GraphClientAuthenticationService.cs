@@ -21,8 +21,8 @@ namespace MicrosoftGraphClient.GraphServices
         {
             if(refreshAccessTokenRequest != null)
             {
-                Dictionary<string, string> requestHeaders = GetRequestHeaders();
-                Dictionary<string, string> requestParameters = GetRequestParameters(refreshAccessTokenRequest);
+                Dictionary<string, string> requestHeaders = GetRefreshAccessTokenRequestHeaders();
+                Dictionary<string, string> requestParameters = GetRefreshAccessTokenRequestParameters(refreshAccessTokenRequest);
                 return GraphAPICaller.Call<RefreshAccessTokenResponse>(new GraphAPICallerParameters
                 {
                     Url = Url + "/token",
@@ -34,7 +34,7 @@ namespace MicrosoftGraphClient.GraphServices
             return null;
         }
 
-        private Dictionary<string, string> GetRequestHeaders()
+        private Dictionary<string, string> GetRefreshAccessTokenRequestHeaders()
         {
             Dictionary<string, string> requestHeaders = new Dictionary<string, string>();
             requestHeaders.Add("Content-Type", "application/x-www-form-urlencoded");
@@ -42,7 +42,7 @@ namespace MicrosoftGraphClient.GraphServices
             return requestHeaders;
         }
 
-        private Dictionary<string, string> GetRequestParameters(RefreshAccessTokenRequest refreshAccessTokenRequest)
+        private Dictionary<string, string> GetRefreshAccessTokenRequestParameters(RefreshAccessTokenRequest refreshAccessTokenRequest)
         {
             Dictionary<string, string> requestParameters = new Dictionary<string, string>();
             if(refreshAccessTokenRequest != null)
