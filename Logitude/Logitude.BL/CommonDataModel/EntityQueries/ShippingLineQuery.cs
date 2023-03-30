@@ -139,7 +139,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             SecuredMapping.GetMappedPM(shippingLine, securedPm, "ShippingLine", tenant);
             if (securedPm != null && shippingLine != null)
             {
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<ShippingLinePM> { securedPm }.Cast<object>().ToList() }).Set();
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ShippingLine", Tenant = tenant, Type = "PM", Entities = new List<ShippingLinePM> { securedPm }.Cast<object>().ToList() }).Set();
             }
 
             return securedPm;
@@ -229,7 +229,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             SecuredMapping.GetMappedPM(shippingLine, securedPm, "ShippingLine", tenant);
             if (securedPm != null && shippingLine != null)
             {
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<ShippingLinePM> { securedPm }.Cast<object>().ToList() }).Set();
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ShippingLine", Tenant = tenant, Type = "PM", Entities = new List<ShippingLinePM> { securedPm }.Cast<object>().ToList() }).Set();
             }
 
             return securedPm;
@@ -329,7 +329,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             SecuredMapping.GetMappedPM(shippingLine, securedPm, "ShippingLine", tenant);
             if (securedPm != null && shippingLine != null)
             {
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<ShippingLinePM> { securedPm }.Cast<object>().ToList() }).Set();
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ShippingLine", Tenant = tenant, Type = "PM", Entities = new List<ShippingLinePM> { securedPm }.Cast<object>().ToList() }).Set();
             }
 
             return securedPm;

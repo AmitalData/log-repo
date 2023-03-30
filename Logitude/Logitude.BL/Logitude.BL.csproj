@@ -622,7 +622,9 @@
     <Compile Include="InfrastructureModel\CloseTables\EnumGenerated\EntityStatusTypeStruct.Generated.cs" />
     <Compile Include="InfrastructureModel\CustomFilters\ObjectTableCustomFilter.cs" />
     <Compile Include="InfrastructureModel\CustomFilters\ScreenCustomFilter.cs" />
+    <Compile Include="InfrastructureModel\DataContracts\CustomFieldDataContractList.cs" />
     <Compile Include="InfrastructureModel\DataContracts\MultiEntityUpdateData.cs" />
+    <Compile Include="InfrastructureModel\DataContracts\ObjectCustomFieldDataContractPM.cs" />
     <Compile Include="InfrastructureModel\EntityLists\CustomFieldList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\CustomFieldsMainObjectList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\DataCustomObjectList.cs" />
@@ -691,6 +693,7 @@
     <Compile Include="InfrastructureModel\EntityPMs\RuleUpdateHistoryPM.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\WorkerRoleNameQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\RuleUpdateHistoryQuery.cs" />
+    <Compile Include="InfrastructureModel\Services\CustomizedCounter\CustomizedARInvoiceCounterService.cs" />
     <Compile Include="InfrastructureModel\Services\DeploymentPackageVersionInitializerService.cs" />
     <Compile Include="InfrastructureModel\Services\CustomObjectDefaultMetaDataService.cs" />
     <Compile Include="InfrastructureModel\Services\DeploymentPackage\Dependiencies\ObjectFields\DeploymentPackageObjectFieldDependienciesService.AdditionalFilters.cs" />

@@ -38,6 +38,7 @@ using Logitude.Workflow.Data.EntityPOCOs;
 using Logitude.Workflow.BL.EntityPMs;
 using Logitude.Workflow.Data;
 using Logitude.Workflow.BL;
+using Logitude.BL.Helpers;
 using Logitude.Workflow.Data.EntityLists;
 using Logitude.Workflow.BL.EntityUpdateServices;
 using Logitude.Workflow.Data.EntityListQueryServices;
@@ -63,6 +64,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 	                IWorkflowContext MyContext = WorkflowContext.GetContext(authToken.Tenant);
                 TaskListQueryService taskQuery = new TaskListQueryService(MyContext);
                 TaskList taskList = taskQuery.GetSingle(id);
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                customFieldResolver.SetCustomFieldsValues("Task",  authToken.Tenant, new List<TaskList> { taskList }.Cast<object>().ToList());
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
                 return Request.CreateResponse(HttpStatusCode.OK,  taskList);
@@ -86,6 +89,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 	                IWorkflowContext MyContext = WorkflowContext.GetContext(authToken.Tenant);
                 TaskListQueryService taskQuery = new TaskListQueryService(MyContext);
                 List<TaskList> result = taskQuery.GetList(authToken.Tenant);
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                customFieldResolver.SetCustomFieldsValues("Task",  authToken.Tenant, result.Cast<object>().ToList());
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -218,6 +223,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 }
 
                 response.Result = entityLists;
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                customFieldResolver.SetCustomFieldsValues("Task",  authToken.Tenant, entityLists.Cast<object>().ToList());
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 

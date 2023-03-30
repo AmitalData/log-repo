@@ -145,10 +145,11 @@ export class CounterInvoiceComponent extends BaseComponent {
             }
         }
 
-        this.IsCustomizedCounter = this.APIHelper.CounterDefinitions.filter(c => c.IsCustomized == true)[0] != null;
+        this.CheckIsCustomizedCounter();
         this.BuildItemsSource();
     }
     private activateConsolidationCreditNoteCounter: boolean = false;
+
     public get ActivateConsolidationCreditNoteCounter() {
         this.activateConsolidationCreditNoteCounter = this.ItemsSource.filter(i => i.EntityPM.Parameter1 == "COD").length > 0 &&
             !this.ItemsSource.filter(i => i.EntityPM.Parameter1 == "COD")[0].EntityPM.InActive;
@@ -303,6 +304,16 @@ export class CounterInvoiceComponent extends BaseComponent {
         }
     }
 
+    private CheckIsCustomizedCounter() {
+        if (!this.HasCustomizedCounterFeature) return;
+        let customizedCounters = this.APIHelper.CounterDefinitions.filter(c => c.IsCustomized == true);
+        this.IsCustomizedCounter = customizedCounters != null && customizedCounters.length > 0;
+        if (this.IsCustomizedCounter) {
+            this.UniquePerPrefix = customizedCounters[0]?.UniquePerPrefix;
+        }        
+        this.APIHelper.CounterDefinitions = this.APIHelper.CounterDefinitions.filter(c => c.IsCustomized == false);
+    }
+
     private isCustomizedCounter: boolean = false;
     public get IsCustomizedCounter() { return this.isCustomizedCounter; }
     public set IsCustomizedCounter(value: boolean) {
@@ -350,14 +361,17 @@ export class CounterInvoiceComponent extends BaseComponent {
     SameForAllTypesChecked() {
         this.SameForAllTypes = true;
         this.IsCustomizedCounter = false;
+        this.ValidationErrorsList = [];
     }
     DiffForEachTypesChecked() {
         this.SameForAllTypes = false;
         this.IsCustomizedCounter = false;
+        this.ValidationErrorsList = [];
     }
     IsCustomizedCounterChecked() {
         this.SameForAllTypes = false;
         this.IsCustomizedCounter = true;
+        this.ValidationErrorsList = [];
     }
     //private largestLastValueOfCounterStat: number = 0;
 
@@ -416,6 +430,10 @@ export class CounterInvoiceComponent extends BaseComponent {
 
     OkButtonClicked() {
         {
+            if (this.IsCustomizedCounter) {
+                this.customizedARInvoiceCounterComponent.OkButtonClicked();
+                return;
+            }
             var isValidGreaterStartNumber: boolean = true;
 
             this.APIHelper.CounterDefinitions.forEach(item => {

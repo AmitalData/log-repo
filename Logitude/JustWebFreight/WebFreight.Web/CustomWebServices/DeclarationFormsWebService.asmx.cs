@@ -34,13 +34,15 @@ namespace WebFreight.Web.CustomWebServices
         {
             DeclarationFormsDataProvider frombDp = LoadTzrufaDataProvider(declarationId, tenant, documentTypeCopyId, isPrint);
             XmlSerializer serializer = new XmlSerializer(typeof(DeclarationFormsDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, frombDp);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
+            using (MemoryStream memstream = new MemoryStream())
+            {
+                serializer.Serialize(memstream, frombDp);
+                memstream.Seek(0, SeekOrigin.Begin);
+                var reader = new StreamReader(memstream);
+                string content = reader.ReadToEnd();
+                byte[] bytearray = memstream.ToArray();
+                return bytearray;
+            }
         }
 
         private DeclarationFormsDataProvider LoadTzrufaDataProvider(string declarationId, int tenant, string documentTypeCopyId, bool isPrint)

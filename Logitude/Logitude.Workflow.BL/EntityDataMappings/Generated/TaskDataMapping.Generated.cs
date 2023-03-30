@@ -9,6 +9,8 @@ using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Logitude.Server.Tools.CustomFields;
 using Logitude.Workflow.Data.EntityPOCOs;
 using Logitude.Workflow.BL.EntityPMs; 
 using Logitude.Workflow.Data;
@@ -204,6 +206,10 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 				entityPOCO.StartDate = entityPM.StartDate;
 			}
 			
+			new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Task", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<TaskPM> { entityPM }.Cast<object>().ToList() }).Update();
+		 
+			new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = entityPM, ParentEntityId = entityPM.Id, ParentObjectTableName = "Task", Tenant = entityPM.Tenant }).Update();
+		 
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
@@ -325,6 +331,11 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 					entityPM.StartDate = entityPOCO.StartDate;
             }
 
+			new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Task", Tenant = entityPM.Tenant, Type = "PM", Entities = new List<TaskPM> { entityPM }.Cast<object>().ToList() }).Set();
+
+		 
+			new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = entityPM, ParentEntityId = entityPM.Id, ParentObjectTableName = "Task", Tenant = entityPM.Tenant }).Set();
+		 
 		}
 
 		public void PMToOldPM(TaskPM entityPM, TaskPM oldEntityPM)

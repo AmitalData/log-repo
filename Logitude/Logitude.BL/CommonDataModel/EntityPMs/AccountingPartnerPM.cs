@@ -9,7 +9,7 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 namespace Logitude.BL.CommonDataModel.EntityPMs
 {
     [DataContract]
-    public class AccountingPartnerPM : ObjectCustomFieldPM
+    public class AccountingPartnerPM : ObjectCustomFieldDataContractPM
     {
         [Key]
         [DataMember]

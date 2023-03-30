@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaskUpdateClass
    {  		
-		public const string HashString = "90c261b72a715b3cb375431000e27775";
+		public const string HashString = "fd8a283246c921ce3f61c59120f000f0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -98,10 +98,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableSingular =  "Task",
 			      				    ObjectTablePlural =  "Tasks",
 			      				    HasCustomFilter =  false,
-			      				    HasCustomFields =  false,
-			      				    AvailableInCustomization =  false,
-			      				    SupportSubEntity =  false,
-			      				    ApplyGenericCustomFields =  false,
+			      				    HasCustomFields =  true,
+			      				    AvailableInCustomization =  true,
+			      				    SupportSubEntity =  true,
+			      				    ApplyGenericCustomFields =  true,
 			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
@@ -124,10 +124,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
 			      				    EnableSecurity =  true,
-			      				    AllowCustomFields =  false,
+			      				    AllowCustomFields =  true,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
-			      				    MaxNumberOfCustomFields =  0,
+			      				    MaxNumberOfCustomFields =  50,
 			      				    DefaultText =  "Task",
 			      				    Code =  "a540",
 			      				    Name =  " Query Group",
@@ -2370,6 +2370,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsAssigned",
 					  						ListPropertyPath =  "IsAssigned",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2432,6 +2433,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "StartDate",
 					  						ListPropertyPath =  "StartDate",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

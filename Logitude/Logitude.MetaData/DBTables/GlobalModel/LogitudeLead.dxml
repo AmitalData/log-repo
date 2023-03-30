@@ -13,22 +13,22 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="PhoneNumber"
-    Type="varchar"
-    Size="40">
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="CreateDate"
-    Type="datetime">
+    Name="VatNumber"
+    Type="varchar"
+    Size="20">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
-    Name="CompanyName"
-    Type="nvarchar"
-    Size="100">
+    Name="IsUserEmailSent"
+    Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
@@ -40,10 +40,18 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="NumberOfBranches"
-    Type="int">
+    Name="CompanyName"
+    Type="nvarchar"
+    Size="100">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="PhoneNumber"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Column
     Name="Country"
@@ -56,12 +64,6 @@
     Name="Email"
     Type="varchar"
     Size="70">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="NumberOfUsers"
-    Type="int">
     <Constraints
       Nullable="false" />
   </Column>
@@ -80,13 +82,70 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="IsEmailVerified"
-    Type="bit">
+    Name="ZipCode"
+    Type="varchar"
+    Size="15">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
-    Name="TenantNumber"
+    Name="City"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="State"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OpportunityId"
+    Type="nvarchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CustomerId"
+    Type="nvarchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PackageCode"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LeadSource"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CASSCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IATACode"
+    Type="varchar"
+    Size="7">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NumberOfBranches"
     Type="int">
     <Constraints
       Nullable="false" />
@@ -94,6 +153,18 @@
   <Column
     Name="LastUpdateDate"
     Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsEmailVerified"
+    Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
@@ -111,82 +182,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="IsUserOpened"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="CustomerId"
-    Type="nvarchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="OpportunityId"
-    Type="nvarchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="1000">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="LeadSource"
-    Type="varchar"
-    Size="60">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="IATACode"
-    Type="varchar"
-    Size="7">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="CASSCode"
-    Type="varchar"
-    Size="4">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PackageCode"
-    Type="varchar"
-    Size="5">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="State"
-    Type="varchar"
-    Size="40">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="City"
-    Type="varchar"
-    Size="25">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ZipCode"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="Street"
     Type="varchar"
     Size="65">
@@ -194,16 +189,42 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="VatNumber"
+    Name="IsUserOpened"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TenantNumber"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="NumberOfUsers"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ClientId"
     Type="varchar"
-    Size="20">
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="IsUserEmailSent"
-    Type="bit">
+    Name="LeadOrigin"
+    Type="varchar"
+    Size="100">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Campaign"
+    Type="varchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
 </Table>

@@ -97,6 +97,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             
             FieldChange.Add(entityPoco.ShipmentMainCarriageATD, entityPM.ShipmentMainCarriageATD, nameof(entityPM.ShipmentMainCarriageATD), fieldChanges);
             entityPoco.ShipmentMainCarriageATD = entityPM.ShipmentMainCarriageATD;
+
+            FieldChange.Add(entityPoco.ShipmentLastLegATA, entityPM.ShipmentLastLegATA, nameof(entityPM.ShipmentLastLegATA), fieldChanges);
+            entityPoco.ShipmentLastLegATA = entityPM.ShipmentLastLegATA;
+
+            FieldChange.Add(entityPoco.ShipmentLastLegETA, entityPM.ShipmentLastLegETA, nameof(entityPM.ShipmentLastLegETA), fieldChanges);
+            entityPoco.ShipmentLastLegETA = entityPM.ShipmentLastLegETA;
         }
     }
 }

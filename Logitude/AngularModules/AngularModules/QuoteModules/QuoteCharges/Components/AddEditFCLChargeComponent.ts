@@ -40,12 +40,21 @@ export class AddEditFCLChargeComponent implements OnDestroy {
     private ChargesTypeCode: string;
     private PropertyChangedEvent: any = null;
     private QuoteValidator;
+    public IsUsingVirtuallization: boolean = false;
     constructor() {
         this.QuoteValidator = new QuoteValidator();
         this.ItemsSource = new ObservableCollection([]);
         this.HideFCLAllIn = SessionLocator.TenantPM.HideFCLAllIn;
         this.IsHyprid = SessionLocator.TenantPM.IsHybrid;
     }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
+    }
+
     private propertiesChanges = [];
     private ListenPropertyChanged() {
 
@@ -65,6 +74,7 @@ export class AddEditFCLChargeComponent implements OnDestroy {
     }
 
     SetDataContext(dataContext: FCLQuoteChargeItem) {
+        this.SetIsUsingVirtuallization();
         this.QuotePM = dataContext.QuotePM;
         this.EntityPM = dataContext.EntityPM;
         this.DataContext = dataContext;

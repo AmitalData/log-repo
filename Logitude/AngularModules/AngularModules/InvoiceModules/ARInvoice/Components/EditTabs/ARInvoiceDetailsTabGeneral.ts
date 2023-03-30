@@ -62,6 +62,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     DisplayLocalFieldsFromList:string;
     BillToLovSizeForFullAccounting:number;
     IsAccountingActivated: boolean = false;
+    public IsUsingVirtuallization: boolean = false;
     constructor(private entityArgs: EntityArgs) {
         super();
        // this.CurrentSession.StartBusyIndicatorLoading();
@@ -85,9 +86,13 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
+    }
 
-
-
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
     }
 
     private InitializeBillToLov() {
@@ -909,6 +914,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
 
     BuildScreenData() {
+        this.SetIsUsingVirtuallization();
         if (this.IsEditingEnabled) {
             this.LoadData();
         }

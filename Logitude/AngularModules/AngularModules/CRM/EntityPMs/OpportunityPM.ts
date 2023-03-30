@@ -18,11 +18,11 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class OpportunityPM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+                    this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -652,6 +652,21 @@ export class OpportunityPM {
     private userName: string;
     public get UserName() { return this.userName; }
     public set UserName(newValue: string) { if (this.userName != newValue) { this.userName = newValue; this.MarkAsDirty("UserName"); } }
+       
+	 
+    private clientId: string;
+    public get ClientId() { return this.clientId; }
+    public set ClientId(newValue: string) { if (this.clientId != newValue) { this.clientId = newValue; this.MarkAsDirty("ClientId"); } }
+       
+	 
+    private leadOrigin: string;
+    public get LeadOrigin() { return this.leadOrigin; }
+    public set LeadOrigin(newValue: string) { if (this.leadOrigin != newValue) { this.leadOrigin = newValue; this.MarkAsDirty("LeadOrigin"); } }
+       
+	 
+    private campaign: string;
+    public get Campaign() { return this.campaign; }
+    public set Campaign(newValue: string) { if (this.campaign != newValue) { this.campaign = newValue; this.MarkAsDirty("Campaign"); } }
        
 	 
 

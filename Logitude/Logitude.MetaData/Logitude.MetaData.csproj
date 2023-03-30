@@ -285,6 +285,7 @@
     <None Include="DBScripts\ShipmentModel\202202241400_FillFirstPickUpFullAddress.sxml" />
     <None Include="DBScripts\ShipmentModel\202302151452_AddHouseMasterNumberToShipmentsSearchFields.sxml.ignore" />
     <None Include="DBScripts\ShipmentModel\202303120234_AddTrailerNumberFieldToShipmentSearchFields.sxml" />
+    <None Include="DBScripts\ShipmentModel\202303230231_FillContainerShipmentFinalLegDates.sxml" />
     <None Include="DBScripts\ShipmentModel\FillContainersDataFromPackages.sxml" />
     <None Include="DBTables\CommonDataModel\DigitalContactLastSetting.dxml" />
     <None Include="DBTables\CommonDataModel\HorseGender.dxml" />

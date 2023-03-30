@@ -489,6 +489,10 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsUpdatedFromRequest { get; set; }
         public string ShipmentDepartmentId { get; set; }
         public string ShipmentDepartmentName { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? ShipmentLastLegATA { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? ShipmentLastLegETA { get; set; }
 
     }
 }

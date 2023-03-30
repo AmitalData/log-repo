@@ -101,8 +101,11 @@
                     <div tabindex="0" class="ToggleButton">
                         <img style="width:2px; height: 12px; top: 10px; left: 3px; position: absolute;" src="./Images/Buttons/threedots.png" />
 
-                        <div class="ToggleButtonMenu" style="top: 22px;">
+                        <div class="ToggleButtonMenu" style="top: 22px;box-shadow: none; min-width: 115px;">
                             <button (click)="CopyDashboardClicked()" [disabled]="!CanCopy">Copy Dashboard</button>
+                        </div>
+                        <div class="ToggleButtonMenu" style="top: 50px;box-shadow: none; min-width: 115px;">
+                            <button (click)="DeleteDashboardClicked()" [disabled]="!IsEditLayoutButtonVisible">Delete Dashboard</button>
                         </div>
                     </div>
                 </td>

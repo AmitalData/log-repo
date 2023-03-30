@@ -98,6 +98,14 @@
     .related-to-container {
         padding-right: 0px;
     }
+
+    .radios-container {
+        width: 320px;
+    }
+
+    .radio-cell {
+        width: 80px;
+    }
 </style>
 
 <div class="create-task-properties-container">
@@ -132,12 +140,45 @@
         </tr>
 
         <tr class="table-row">
+            <td >
+                <div class="table-row-cell-block">
+                    <div class="label">Select Type</div>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="table-row">
+            <td class="table-row-cell">
+                <div class="table-row-cell-block radios-container">
+                    <table>
+                        <tr>
+                            <td class="radio-cell">
+                                <RadioButton [Name]="'TaskBaseTypeRadio'" [IsChecked]="TaskBaseType === 'RelatedToEntity'"
+                                    (Checked)="updateTaskBaseType('RelatedToEntity')" [Text]="'Related to Entity'" [Top]="5"
+                                    [DataCy]="'RelatedToEntity'">
+                                </RadioButton>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="radio-cell">
+                                <RadioButton [Name]="'TaskBaseTypeRadio'" [IsChecked]="TaskBaseType === 'Standalone'"
+                                    (Checked)="updateTaskBaseType('Standalone')" [Text]="'Standalone'" [Top]="5"
+                                    [DataCy]="'Standalone'">
+                                </RadioButton>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="table-row" *ngIf="TaskBaseType == RelatedToEntity">
             <td class="table-row-cell">
                 <div class="split-block"></div>
             </td>
         </tr>
 
-        <tr class="table-row">
+        <tr class="table-row" *ngIf="TaskBaseType == RelatedToEntity">
             <td class="table-row-cell-label">
                 <div class="table-row-cell-block">
                     <div class="label">Select the Record the Task is Related to</div>
@@ -145,7 +186,7 @@
             </td>
         </tr>
 
-        <tr class="table-row">
+        <tr class="table-row" *ngIf="TaskBaseType == RelatedToEntity">
             <td class="table-row-cell">
                 <table>
                     <tr>
@@ -216,7 +257,7 @@
                     <SetValues *ngIf="SetValues && SetValues.length > 0" [(SetValues)]="SetValues"
                         [IsEntityField]="true" [EntityId]="TaskObjectTableId"
                         (IsValidSetValuesChange)="updateIsValidSetValues($event)" [FlowObject]="FlowObject"
-                        [CurrentNodeId]="CurrentNodeId">
+                        [CurrentNodeId]="CurrentNodeId" [FieldApiQueryFilters]="FieldApiQueryFilters">
                     </SetValues>
                 </div>
             </td>

@@ -8,4 +8,5 @@ export class DataProviderField {
     public ClassName: string = "ListBoxItem";
     public FieldsOpened: boolean;
     public Fields: DataProviderField[];
+    public DivSelectBackgroud: string;
 }

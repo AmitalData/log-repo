@@ -21,6 +21,10 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 {
     public class AutomationQueuedTaskResultService : GeneralAutomationResultService, IAutomationResultService
     {
+
+
+        public List<AutomationQueueArgs> AutomationQueues { get; set; }
+
         public string ResultCode { get { return "QUEUE"; } }
 
         AutomationResultArgs automationResultArgs { get; set; }
@@ -39,6 +43,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
         public void Run(AutomationResultArgs automationResultArgs)
         {
             this.automationResultArgs = automationResultArgs;
+            AutomationQueues = new List<AutomationQueueArgs>();
             List<Automation> queueautomationsList = automationResultArgs.AutomationLists.Where(d => d.ResultCode == ResultCode).ToList();
             if (queueautomationsList.Count > 0)
             {
@@ -77,7 +82,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                         if (validateResult.Type == "Delayed")
                         {
                             DelaytimeDetails delaytimeDetails = new DelaytimeDetails() { Type = validateResult.Type, Delaytime = validateResult.Delaytime, DelaytimeIndicator = validateResult.DelaytimeIndicator, DelaytimeOp = validateResult.DelaytimeOp, SelectedDelaytimeFieldCode = validateResult.SelectedDelaytimeFieldCode };
-                            AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = entityChange.Id, AutomationId = automation.Id, AutomationType = processtype, EntityId = entityId, Tenant = automation.Tenant, AutomationDelayTime = GetAutomationDelayTime(delaytimeDetails, automationFieldLists, entityChange.Tenant), EntityReference = automationResultArgs.EntityReference });
+                            AutomationQueues.Add(new AutomationQueueArgs() { EntityChangeId = entityChange.Id, AutomationId = automation.Id, AutomationType = processtype, EntityId = entityId, Tenant = automation.Tenant, AutomationDelayTime = GetAutomationDelayTime(delaytimeDetails, automationFieldLists, entityChange.Tenant), EntityReference = automationResultArgs.EntityReference });
                         }
 
                         else

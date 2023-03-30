@@ -61,14 +61,17 @@ namespace WebFreight.Web.WebServices
             ShippingDeclarationDataProvider myDataProvider = GetShippingDeclarationDataProvider(shipmentId, tenant, documentTypeCode, documentTypeCopyId);
 
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(ShippingDeclarationDataProvider));
-            MemoryStream memoryStream = new MemoryStream();
-            xmlSerializer.Serialize(memoryStream, myDataProvider);
-            memoryStream.Seek(0, SeekOrigin.Begin);
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                xmlSerializer.Serialize(memoryStream, myDataProvider);
+                memoryStream.Seek(0, SeekOrigin.Begin);
 
-            var reader = new StreamReader(memoryStream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memoryStream.ToArray();
-            return bytearray;
+                var reader = new StreamReader(memoryStream);
+                string content = reader.ReadToEnd();
+                byte[] bytearray = memoryStream.ToArray();
+                return bytearray;
+            }
+            
         }
         private ShippingDeclarationDataProvider GetShippingDeclarationDataProvider(string shipmentId, int tenant, string documentTypeCode, string documentTypeCopyId)
         {

@@ -28,13 +28,15 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
         {
             CrossDockEntryDataProvider dataprovider = LoadCrossDockEntryDataProvider(entityId, tenant, userId);
             XmlSerializer serializer = new XmlSerializer(typeof(CrossDockEntryDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, dataprovider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
+            using (MemoryStream memstream = new MemoryStream())
+            {
+                serializer.Serialize(memstream, dataprovider);
+                memstream.Seek(0, SeekOrigin.Begin);
+                var reader = new StreamReader(memstream);
+                string content = reader.ReadToEnd();
+                byte[] bytearray = memstream.ToArray();
+                return bytearray;
+            }
 
         }
 

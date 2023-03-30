@@ -268,7 +268,8 @@
                                 <tr style="height:223px;">
                                     <td>
                                         <div class="MediaFill" style="overflow-x: hidden;">
-                                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="DataContext.PackageItemsList" [Disabled]="!DataContext.IsEditingEnabled" (RowEnded)="DataContext.OnRowEnded($event)">
+                                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="DataContext.PackageItemsList" [Disabled]="!DataContext.IsEditingEnabled" (RowEnded)="DataContext.OnRowEnded($event)"
+                                                                [UseVirtuallization]="DataContext.fatherComponent.IsUsingVirtuallization">
 
                                                 <!-- Description -->
                                                 <log-column [header]="'Description'" [width]="'95'" [Alignment]="'left'">

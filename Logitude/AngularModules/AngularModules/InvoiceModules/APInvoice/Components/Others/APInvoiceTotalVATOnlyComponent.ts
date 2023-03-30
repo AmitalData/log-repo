@@ -28,13 +28,22 @@ export class APInvoiceTotalVATOnlyComponent extends BaseComponent {
     public IsEditingEnabled: boolean = false;
     DetailsTabComponent: APInvoiceDetailsTabNormal;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsUsingVirtuallization: boolean = false;
     constructor() {
         super();
         this.TotalVATsList = new ObservableCollection([]);
     }
 
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
+    }
+
     private TotalVATOnlyOrigin: boolean = false;
     SetWindowArgs(tabComponent: APInvoiceDetailsTabNormal) {
+        this.SetIsUsingVirtuallization();
         this.DetailsTabComponent = tabComponent;
         this.EntityPM = this.DetailsTabComponent.EntityPM;
 

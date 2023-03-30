@@ -183,6 +183,7 @@
                         [DataType]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? setValue.type : null"
                         [LookupType]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? setValue.lookupType : null"
                         [CurrentValue]="setValue.value" [IsDisabled]="setValue.disabled | SetValueDisabledPipe : 'v'"
+                        [QueryFilterItems]="setValue.field | GetFieldApiQueryFiltersPipe : FieldApiQueryFilters"
                         (ValueChanged)="updateSetValue($event, setValueIndex)" [Name]="'SetValueValue_' + setValue.id">
                     </FieldValue>
 
@@ -191,6 +192,7 @@
                         [DataType]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? setValue.type : null"
                         [LookupType]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? setValue.lookupType : null"
                         [CurrentValue]="setValue.value" [IsDisabled]="setValue.disabled | SetValueDisabledPipe : 'v'"
+                        [QueryFilterItems]="setValue.field | GetFieldApiQueryFiltersPipe : FieldApiQueryFilters"
                         (ValueChanged)="updateSetValue($event, setValueIndex)" [Name]="'SetValueValue_' + setValue.id">
                     </FieldValue>
 

@@ -317,5 +317,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? RecentResponseDate { get; set; }
         public string ShipmentDepartmentId { get; set; }
         public string ShipmentDepartmentName { get; set; }
+        public DateTime? ShipmentLastLegATA { get; set; }
+        public DateTime? ShipmentLastLegETA { get; set; }
     }
 }

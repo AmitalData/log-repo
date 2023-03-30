@@ -54,7 +54,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public changeScrollPosition: EventEmitter<any> = new EventEmitter();
     private deletedLinesExpirationDates: TariffLineExpirationDatePM[];
     public LinesCount: number;
-
+    public IsUsingVirtuallization: boolean = false;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -85,6 +85,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public AllCurrencies: CurrencyList[];
     public LineIdFromPriceCheck: string;
     Intialize(args: any) {
+        this.SetIsUsingVirtuallization();
         this.TariffsLinesSource = new ObservableCollection([]);
         this.TariffDomainService = new TariffDomainService();
         this.deletedLinesExpirationDates = [];
@@ -133,6 +134,13 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         });
        
         this.SetOriginDependencyFilterValue();
+    }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
     }
 
     private SaveCompletedEvent: any = null;

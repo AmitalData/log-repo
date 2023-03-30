@@ -32,7 +32,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         {
             
             IQueryable<CounterDefinitionPM> result = (from a in repository.context.CounterDefinitions
-                                                      where a.Tenant == tenant
+                                                      where a.Tenant == tenant && !a.InActive
                                                       select new CounterDefinitionPM()
 													  {
 														  Id = a.Id,
@@ -70,7 +70,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         {
             IQueryable<CounterDefinitionPM> result
                 = (from a in repository.context.CounterDefinitions
-                   where a.Tenant == tenant && a.CounterId == counterId
+                   where a.Tenant == tenant && a.CounterId == counterId && !a.InActive
                    select new CounterDefinitionPM()
                    {
                        Id = a.Id,
@@ -97,7 +97,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         {
             IQueryable<CounterDefinitionPM> result
                 = (from a in repository.context.CounterDefinitions
-                   where a.Tenant == tenant && a.CounterId == counterId && a.IsCustomized
+                   where a.Tenant == tenant && a.CounterId == counterId && a.IsCustomized && !a.InActive
                    select new CounterDefinitionPM()
                    {
                        Id = a.Id,

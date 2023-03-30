@@ -36,11 +36,13 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
     public ToCountryId: string;
     public IsResourcesReady: boolean = false;
     public ProductItemQueryFilters: ApiQueryFilters;
+    public IsUsingVirtuallization: boolean = false;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
         this.ObjectTableName = this.entityArgs.ObjectTableName;
         this.PartnersDomainService = new PartnersDomainService();
+        this.SetIsUsingVirtuallization();
         this.ProductItems = new ObservableCollection([]);
         this.ProductItemQueryFilters = new ApiQueryFilters();
         this.Listen();
@@ -66,7 +68,14 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
             });
         }
     }
-    
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
+    }
+
     Listen() {
         if (this.entityArgs.EditComponent) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {

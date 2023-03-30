@@ -73,7 +73,7 @@ export class SchedulerReportMessageTemplateService {
         windowArgs.Tenant = selectedMessageTemplateList.Tenant;
         windowArgs.ObjectType = "ReportsTemplatePM";
         windowArgs.IsNewEntity = false;
-        windowArgs.ReportTemplatePM = null;
+        windowArgs.ReportTemplatePM = this.MapMessageTemplateListToPM(selectedMessageTemplateList);
         windowArgs.ReportComponentArea = "Scheduler";
         windowArgs.RequsetPageName = "Scheduler";
         windowArgs.DontShowToField = true;
@@ -121,5 +121,14 @@ export class SchedulerReportMessageTemplateService {
         reportTemplateList.ReplyTo = reportTemplatePM.ReplyTo;
 
         return reportTemplateList;
+    }
+
+    MapMessageTemplateListToPM(reportTemplateList: any) {
+        let reportTemplatePM = new ReportsTemplatePM();
+        reportTemplatePM.Id = reportTemplateList.Id;
+        reportTemplatePM.Tenant = reportTemplateList.Tenant;
+        reportTemplatePM.Description = reportTemplateList.Description;
+        reportTemplatePM.ReportId = reportTemplateList.ReportId;
+        return reportTemplatePM;
     }
 }

@@ -130,7 +130,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             cardRepository.Add(entityCard);
             entityRepository.Add(entityPOCO);
             entityRepository.SubmitChanges();
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<ShippingAgentPM> { entityPM }.Cast<object>().ToList() }).Update();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ShippingAgent", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<ShippingAgentPM> { entityPM }.Cast<object>().ToList() }).Update();
 
             foreach (ContactPM itemPM in entityPM.Contacts)
             {
@@ -184,7 +184,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             cardRepository.Update(entityCard);
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<ShippingAgentPM> { entityPM }.Cast<object>().ToList() }).Update();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ShippingAgent", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<ShippingAgentPM> { entityPM }.Cast<object>().ToList() }).Update();
 
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "ShippingAgent");
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");

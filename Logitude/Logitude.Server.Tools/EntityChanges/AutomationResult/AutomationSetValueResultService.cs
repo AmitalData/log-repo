@@ -16,6 +16,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
     public class AutomationSetValueResultService : GeneralAutomationResultService, IAutomationResultService
     {
 
+        public List<AutomationQueueArgs> AutomationQueues { get; set; }
 
         public bool DependencyOnLastEntityUpdate { get { return false; } }
 
@@ -27,6 +28,8 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
         public void Run(AutomationResultArgs automationResultArgs)
         {
             this.automationResultArgs = automationResultArgs;
+            AutomationQueues = new List<AutomationQueueArgs>();
+
             List<Automation> fieldSetAutomationsList = automationResultArgs.AutomationLists.Where(d => d.ResultCode == ResultCode).ToList();
             if (fieldSetAutomationsList.Count > 0)
             {
@@ -68,7 +71,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                     if (validateResult.Type == "Delayed" && !isShipmentSetFieldDelayed)
                     {
                         DelaytimeDetails delaytimeDetails = new DelaytimeDetails() { Type = validateResult.Type, Delaytime = validateResult.Delaytime, DelaytimeIndicator = validateResult.DelaytimeIndicator, DelaytimeOp = validateResult.DelaytimeOp, SelectedDelaytimeFieldCode = validateResult.SelectedDelaytimeFieldCode };
-                        AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = entityChange.Id, AutomationId = automation.Id, AutomationType = processtype, EntityId = entityId, Tenant = automation.Tenant, AutomationDelayTime = GetAutomationDelayTime(delaytimeDetails, automationFieldLists, entityChange.Tenant), EntityReference = automationResultArgs.EntityReference });
+                        AutomationQueues.Add(new AutomationQueueArgs() { EntityChangeId = entityChange.Id, AutomationId = automation.Id, AutomationType = processtype, EntityId = entityId, Tenant = automation.Tenant, AutomationDelayTime = GetAutomationDelayTime(delaytimeDetails, automationFieldLists, entityChange.Tenant), EntityReference = automationResultArgs.EntityReference });
                     }
                     else SetValue(entityPM, entityChange, automationFieldLists, lastUpdate, this.automationResultArgs.MainEntityChangeService.EntityChangesAutomationsSsucceedList, this.automationResultArgs.MainEntityChangeService.Changefields, automation, entityChangesAutomation, dateBefore);
                 }
@@ -116,7 +119,12 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 
             #region Set Field Value
 
-
+            PropertyInfo IsUpdatedByAutomationSetValueResultPropInfo = entityPM.GetType().GetProperty("IsUpdatedByAutomationSetValueResult");
+            if (IsUpdatedByAutomationSetValueResultPropInfo != null)
+            {
+                IsUpdatedByAutomationSetValueResultPropInfo.SetValue(entityPM, true, null);
+            }
+            
             foreach (AutomationSetValue item in AutomationSetValueLists)
             {
                 PropertyInfo propInfo = entityPM.GetType().GetProperty(item.FieldName);

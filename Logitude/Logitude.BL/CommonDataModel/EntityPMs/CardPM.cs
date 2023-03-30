@@ -83,7 +83,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string VatTypeId { get; set; }
 
         public string Prefix { get; set; }
-
         public string CityName { get; set; }
         public string ImageDetailId { get; set; }
         public bool DisconectFromContact { get; set; }
@@ -117,7 +116,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [Include]
         [Association("CardVendor", "Id", "Id", IsForeignKey = true)]
         public virtual VendorPM Vendor { get; set; }
-       
         public string CountryId { get; set; }
         public string CountryName { get; set; }
         public string CountryCode { get; set; }
@@ -230,7 +228,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string EORInumber { get; set; }
-
         public string SingleInvoiceTemplateId { get; set; }
         public string CustomsInvoiceTemplateId { get; set; }
         public string ConsolidationInvoiceTemplateId { get; set; }

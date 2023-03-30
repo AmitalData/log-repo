@@ -146,12 +146,15 @@ namespace WebFreight.Web.ReportsWebServices
         private void SerializeDataProvider()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(DeliveryNoteDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, dataProvider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            output = memstream.ToArray();
+            using (MemoryStream memstream = new MemoryStream())
+            {
+                serializer.Serialize(memstream, dataProvider);
+                memstream.Seek(0, SeekOrigin.Begin);
+                var reader = new StreamReader(memstream);
+                string content = reader.ReadToEnd();
+                output = memstream.ToArray();
+            }
+            
         }
 
         private void MapHeaderFields()

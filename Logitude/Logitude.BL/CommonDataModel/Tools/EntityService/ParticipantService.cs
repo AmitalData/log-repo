@@ -125,7 +125,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 cardRepository.Add(entityCard);
                 entityRepository.Add(entityPOCO);
                 entityRepository.SubmitChanges();
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<ParticipantPM> { entityPM }.Cast<object>().ToList() }).Update();
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Participant", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<ParticipantPM> { entityPM }.Cast<object>().ToList() }).Update();
 
                 string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
                 if (dbms != "oracle")
@@ -203,7 +203,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 cardRepository.Update(entityCard);
                  entityRepository.Update(entityPOCO);
                  entityRepository.SubmitChanges();
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<ParticipantPM> { entityPM }.Cast<object>().ToList() }).Update();
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Participant", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<ParticipantPM> { entityPM }.Cast<object>().ToList() }).Update();
 
                 string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
                 if (dbms != "oracle")

@@ -908,6 +908,22 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "ICC,AR Invoice Customized Counter", 
                 Description = "AR Invoice Customized Counter", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "EVG", 
+                Name = "Enable Virtual Grid", 
+                SearchFields = "EVG,Enable Virtual Grid", 
+                Description = "Enable Virtual Grid", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "AHS", 
+                Name = "Automation Master House Set Field Value", 
+                SearchFields = "AHS,Automation Master House Set Field Value", 
+                Description = "Automation Master House Set Field Value", 
+			});
 			
             return all;
        }

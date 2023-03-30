@@ -212,6 +212,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 return true;
             if (this.initializer.EntityPM.DepartmentId != this.initializer.EntityPOCO.DepartmentId)
                 return true;
+            if (this.initializer.EntityPM.MainCarriageFinalDestinationATA != this.initializer.EntityMasterData.MainCarriageFinalDestinationATA)
+                return true;
+            if (this.initializer.EntityPM.MainCarriageFinalDestinationETA != this.initializer.EntityMasterData.MainCarriageFinalDestinationETA)
+                return true;
             return false;
         }
 
@@ -495,10 +499,43 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             container.AdditionalReference3 = shipmentPackage.Reference3;
             container.AdditionalReference4 = shipmentPackage.Reference4;
             container.ShipmentDepartmentId = this.initializer.EntityPM?.DepartmentId;
-
+            ComputeMainCarriageFinalDestinationDates(container);
             this.MapContainerFieldsFromShipmentPickup(container);
             this.MapContainerFieldsFromShipmentDelivery(container);
             this.HandleContainerFieldsFromEmptyContainerReturn(container);
+        }
+
+        public void ComputeMainCarriageFinalDestinationDates(ContainerPM container)
+        {
+            DateTime? to_ETA = null;
+            DateTime? to_ATA = null;
+
+            if (this.initializer.EntityPM.Transshipment3ToPortId != null)
+            {
+                to_ETA = this.initializer.EntityPM.Transshipment3ETA;
+                to_ATA = this.initializer.EntityPM.Transshipment3ATA;
+            }
+
+            else if (this.initializer.EntityPM.Transshipment2ToPortId != null)
+            {
+                to_ETA = this.initializer.EntityPM.Transshipment2ETA;
+                to_ATA = this.initializer.EntityPM.Transshipment2ATA;
+            }
+
+            else if (this.initializer.EntityPM.Transshipment1ToPortId != null)
+            {
+                to_ETA = this.initializer.EntityPM.Transshipment1ETA;
+                to_ATA = this.initializer.EntityPM.Transshipment1ATA;
+            }
+
+            else
+            {
+                to_ETA = this.initializer.EntityPM.MainCarriageETA;
+                to_ATA = this.initializer.EntityPM.MainCarriageATA;
+            }
+
+            container.ShipmentLastLegETA = to_ETA;
+            container.ShipmentLastLegATA = to_ATA;
         }
 
         private void SendAutomaticallyOceanOnsightsRequest()

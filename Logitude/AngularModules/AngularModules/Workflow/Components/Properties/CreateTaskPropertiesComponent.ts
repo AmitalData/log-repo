@@ -10,6 +10,7 @@ import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
 import { SetValueOperators } from "Workflow/Constants/SetValueOperators";
 import { Condition } from "Workflow/Models/Condition";
+import { FieldApiQueryFilter } from "Workflow/Models/FieldApiQueryFilter";
 import { SetValue } from "Workflow/Models/SetValue";
 import { TaskField } from "Workflow/Models/TaskField";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
@@ -45,10 +46,19 @@ export class CreateTaskPropertiesComponent extends BaseComponent implements OnIn
     public ObjectFieldsTreeItems: TreeSelectItem[];
     public TaskTypeQueryFilters: ApiQueryFilters;
     public CurrentSession = SessionLocator.SelectedSession;
+    public TaskBaseType: string = null;
+    public RelatedToEntity: string = "RelatedToEntity";
+    public FieldApiQueryFilters: FieldApiQueryFilter[] = [];
 
-    public InitialSetValueFields: string[] = [
+    public InitialSetValueFields: string[] = [];
+    public RelatedEntitySetValueFields: string[] = [
         "Subject",
         "OwnerId",
+        "DueDate",
+        "PriorityId"
+    ];
+    public StandaloneSetValueFields: string[] = [
+        "Subject",
         "DueDate",
         "PriorityId"
     ];
@@ -91,6 +101,9 @@ export class CreateTaskPropertiesComponent extends BaseComponent implements OnIn
         this.SetValues = this.Data["setValues"] || [];
         this.TaskFields = this.Data["fields"] || [];
 
+        this.TaskBaseType = this.Data["taskBaseType"] || this.RelatedToEntity;
+        this.InitialSetValueFields = this.RelatedEntitySetValueFields;
+
         this.handleRecordEntityChanged();
         this.setTaskTypeQueryFilters();
         this.initializeSetValues();
@@ -116,6 +129,16 @@ export class CreateTaskPropertiesComponent extends BaseComponent implements OnIn
         let entityObjectTableId = ObjectTables.getIdByName(this.Entity);
         apiQueryFilters.addAdditionalFilter("EntityObjectTableId", (entityObjectTableId || "null"), null, null, "Equals", false, false, false, "Text");
         this.TaskTypeQueryFilters = apiQueryFilters;
+
+        let taskTypeApiQueryFilter = this.FieldApiQueryFilters.find(e => e.fieldCode = "TaskTypeId");
+        if (taskTypeApiQueryFilter) {
+            taskTypeApiQueryFilter.apiQueryFilters = apiQueryFilters
+        } else {
+            let fieldApiQueryFilter = new FieldApiQueryFilter();
+            fieldApiQueryFilter.fieldCode = "TaskTypeId";
+            fieldApiQueryFilter.apiQueryFilters = apiQueryFilters;
+            this.FieldApiQueryFilters.push(fieldApiQueryFilter);
+        }
     }
 
     initializeSetValues() {
@@ -192,6 +215,22 @@ export class CreateTaskPropertiesComponent extends BaseComponent implements OnIn
         this.setUIProperties();
     }
 
+
+    updateTaskBaseType(type: string) {
+        this.Data["taskBaseType"] = type
+        this.TaskBaseType = type;
+
+        this.resetRecordFields();
+
+        if (type === this.RelatedToEntity) {
+            this.InitialSetValueFields = this.RelatedEntitySetValueFields;
+        } else {
+            this.InitialSetValueFields = this.StandaloneSetValueFields;
+        }
+        this.initializeSetValues();
+        this.setUIProperties();
+    }
+
     updateRecord(recordItem: TreeSelectItem) {
         let entity = recordItem && recordItem.data ? (recordItem.data["entity"] || null) : null;
         let record = recordItem ? recordItem.key : null;
@@ -209,6 +248,7 @@ export class CreateTaskPropertiesComponent extends BaseComponent implements OnIn
         if (isEntityChanged) {
             this.updateTaskTypeId(null);
             this.setTaskTypeQueryFilters();
+            this.resetTaskTypeValue();
             this.resetTaskFields();
             this.initializeObjectFieldsTreeItems();
             this.IsRecordEntityChanged = !this.IsRecordEntityChanged;
@@ -241,9 +281,33 @@ export class CreateTaskPropertiesComponent extends BaseComponent implements OnIn
         this.TaskFields[taskFieldIndex].isRequired = isRequired;
     }
 
+    resetRecordFields() {
+        this.SetValues = [];
+        this.Record = null;
+        this.Entity = null;
+        this.Data["record"] = null;
+        this.Data["entity"] = null;
+        this.Data["isCustomEntity"] = false;
+        this.Data["recordUsedFrom"] = null;
+    }
+    
+    resetTaskTypeValue() {
+        this.FieldApiQueryFilters.forEach(fieldApiQueryFilter => {
+            let setvalue = this.SetValues.find(s => s.field == fieldApiQueryFilter.fieldCode)
+            if (setvalue) {
+                setvalue.value = null;
+                setvalue.fieldChangedToggle = !setvalue.fieldChangedToggle;
+            }
+        });
+    }
+
     setUIProperties() {
         this.UIProperties.SetRequired("Name", null, AppTool.IsNullOrEmpty(this.Name));
-        // this.UIProperties.SetRequired("Record", null, AppTool.IsNullOrEmpty(this.Record));
+        if (this.TaskBaseType === this.RelatedToEntity) {
+            this.UIProperties.SetRequired("Record", null, AppTool.IsNullOrEmpty(this.Record));
+        } else {
+            this.UIProperties.SetRequired("Record", null, false);
+        }
     }
 
     cancelButtonClicked() {
@@ -254,8 +318,8 @@ export class CreateTaskPropertiesComponent extends BaseComponent implements OnIn
         this.ValidationErrorsList = [];
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
         let isValidName = !this.IsNew || !FlowReader.isNodeCodeExists(this.FlowObject, this.Name);
-        let isValidSave = notValidUIProperties.length === 0 && this.IsValidTaskFields && isValidName; //this.IsValidSetValues &&
-       
+        let isValidSave = notValidUIProperties.length === 0 && this.IsValidSetValues && this.IsValidTaskFields && isValidName;
+
         if (isValidSave) {
             this.completeSave();
         } else {
@@ -277,9 +341,9 @@ export class CreateTaskPropertiesComponent extends BaseComponent implements OnIn
         if (!isValidName) {
             this.ValidationErrorsList.push("The Name Should be Unique.");
         }
-        // if (!this.IsValidSetValues) {
-        //     this.ValidationErrorsList.push("Invalid Set Values");
-        // }
+        if (!this.IsValidSetValues) {
+            this.ValidationErrorsList.push("Invalid Set Values");
+        }
         if (!this.IsValidTaskFields) {
             this.ValidationErrorsList.push("Invalid Fields");
         }

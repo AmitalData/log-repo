@@ -49,7 +49,9 @@ export class VersionHistoryTabComponent implements OnDestroy {
     public changeScrollPosition: EventEmitter<any> = new EventEmitter();
     public darkerColler: string = "#f8ca12";
     public IsViaFieldVisible: boolean = true;
+    public IsUsingVirtuallization: boolean = false;
     constructor(public entityArgs: EntityArgs) {
+        this.SetIsUsingVirtuallization();
         this.EntityPM = entityArgs.EntityPM;
         this.VersionLinesSource = new ObservableCollection([]);
         this.TariffDomainService = new TariffDomainService();
@@ -69,6 +71,14 @@ export class VersionHistoryTabComponent implements OnDestroy {
         this.LoadVersions();
         this.Listen();
     }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
+    }
+
     Intialize(args: any) {
         this.LineIdFromPriceCheck = args['LineIdFromPriceCheck'];
         this.chargeableWeightInKG = args['ChargeableWeightInKG'];

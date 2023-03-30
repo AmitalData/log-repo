@@ -140,6 +140,19 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
          .HasMaxLength(20)
          .IsUnicode(false);
 
+        this.Property(t => t.ClientId)
+         .HasMaxLength(100)
+         .IsUnicode(false);
+
+
+        this.Property(t => t.LeadOrigin)
+         .HasMaxLength(100)
+         .IsUnicode(false);
+
+        this.Property(t => t.Campaign)
+         .HasMaxLength(250)
+         .IsUnicode(false);
+
 
 
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
@@ -185,8 +198,9 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.ZipCode).HasColumnName("ZipCode");
             this.Property(t => t.City).HasColumnName("City");
             this.Property(t => t.VatNumber).HasColumnName("VatNumber");
-
-
+            this.Property(t => t.ClientId).HasColumnName("ClientId");
+            this.Property(t => t.LeadOrigin).HasColumnName("LeadOrigin");
+            this.Property(t => t.Campaign).HasColumnName("Campaign");
         }
     }
 }

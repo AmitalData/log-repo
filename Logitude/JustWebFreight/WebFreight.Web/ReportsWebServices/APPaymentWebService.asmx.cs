@@ -40,13 +40,15 @@ namespace WebFreight.Web.ReportsWebServices
         {
             APPaymentDataProvider apPaymentDataProvider = GetAPPaymentDataProvider(paymentId, tenant, documentTypeId);
             XmlSerializer serializer = new XmlSerializer(typeof(APPaymentDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, apPaymentDataProvider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
+            using (MemoryStream memstream = new MemoryStream())
+            {
+                serializer.Serialize(memstream, apPaymentDataProvider);
+                memstream.Seek(0, SeekOrigin.Begin);
+                var reader = new StreamReader(memstream);
+                string content = reader.ReadToEnd();
+                byte[] bytearray = memstream.ToArray();
+                return bytearray;
+            }
         }
 
         public APPaymentDataProvider GetAPPaymentDataProvider(string paymentId, int tenant, string documentTypeId)

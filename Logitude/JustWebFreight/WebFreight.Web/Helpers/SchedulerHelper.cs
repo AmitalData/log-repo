@@ -90,7 +90,6 @@ namespace WebFreight.Web.Helpers
                     task.NextRunTime = NextRunTime;
                     task.NextRunTimeUTC = NextRunTimeUTC;
                 }
-                return;
             }
 
             if (task.Monday)
@@ -102,7 +101,6 @@ namespace WebFreight.Web.Helpers
                     task.NextRunTime = NextRunTime;
                     task.NextRunTimeUTC = NextRunTimeUTC;
                 }
-                return;
             }
 
             if (task.Tuesday)
@@ -125,7 +123,6 @@ namespace WebFreight.Web.Helpers
                     task.NextRunTime = NextRunTime;
                     task.NextRunTimeUTC = NextRunTimeUTC;
                 }
-                return;
             }
 
             if (task.Thursday)
@@ -137,7 +134,6 @@ namespace WebFreight.Web.Helpers
                     task.NextRunTime = NextRunTime;
                     task.NextRunTimeUTC = NextRunTimeUTC;
                 }
-                return;
             }
 
             if (task.Friday)
@@ -149,7 +145,6 @@ namespace WebFreight.Web.Helpers
                     task.NextRunTime = NextRunTime;
                     task.NextRunTimeUTC = NextRunTimeUTC;
                 }
-                return;
             }
 
             if (task.Satarday)
@@ -161,7 +156,6 @@ namespace WebFreight.Web.Helpers
                     task.NextRunTime = NextRunTime;
                     task.NextRunTimeUTC = NextRunTimeUTC;
                 }
-                return;
             }
         }
 

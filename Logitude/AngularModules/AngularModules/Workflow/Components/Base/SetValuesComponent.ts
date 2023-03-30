@@ -12,6 +12,7 @@ import { ObjectFieldPipe } from "Workflow/Pipes/ObjectFieldPipe";
 import { IsNoObjectFieldVariablePipe } from "Workflow/Pipes/IsNoObjectFieldVariablePipe";
 import { ObjectFieldsTreeList } from "Workflow/TreeLists/ObjectFieldsTreeList";
 import { SetValueDisabledPipe } from "Workflow/Pipes/SetValueDisabledPipe";
+import { FieldApiQueryFilter } from "Workflow/Models/FieldApiQueryFilter";
 
 @Component({
     selector: "SetValues",
@@ -25,6 +26,7 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
     @Input() CurrentNodeId: string;
     @Input() EntityId: string;
     @Input() IsEntityField: boolean = false;
+    @Input() FieldApiQueryFilters: FieldApiQueryFilter[] = null;
 
     @Output() IsValidSetValuesChange = new EventEmitter<boolean>();
 

@@ -190,19 +190,15 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             TheNewJournal.JournalExternalReconciles.AddRange(GetJournalExternalReconcileFromLedger(ledgerTransactionList));
             IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
             var journalExternalReconcileRepository = new JournalExternalReconcileRepository(accountingContext);
-            var existingExternalJournalsReconcilies = journalExternalReconcileRepository.GetJournalExternalReconcilesByLedgerTransactionsIds(TheNewJournal.JournalExternalReconciles.Select(x => x.LedgerTransactionId).ToList());
-            foreach (var item in existingExternalJournalsReconcilies)
+
+            var existingExternalJournalsReconcilies = journalExternalReconcileRepository.GetJournalExternalReconcilesByLedgerTransactionsIds(
+                TheNewJournal.JournalExternalReconciles.Where(a => a.LedgerTransactionId != null).Select(x => x.LedgerTransactionId).ToList());
+
+            if (existingExternalJournalsReconcilies.Any())
             {
-                if (TheNewJournal.JournalExternalReconciles.Any(x => item.LedgerTransactionId != null && x.LedgerTransactionId == item.LedgerTransactionId))
-                {
-                    throw new ApplicationException("There is already journal reconciliation has been created");
-                }
+                throw new ApplicationException("There is already journal reconciliation has been created");
             }
-            //if (!accumalateV2)
-            //{
-            //    CreateJournalLineToadjustGLAccountId(adjustGLAccountId, bankGLAccountList);
-            //    Accumalation2jounrnalLine();
-            //}
+            
 
         }
         private JournalLinePM GetFirstJournalLineSum(int tenant, string adjustGLAccountId, List<ReconcileExternalPageLineList> listOfpageLineList, GLAccountList bankGLAccountList, string screenNotes, decimal ForeignAmount, decimal LocalAmount, bool creditTheBank)
