@@ -226,7 +226,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 
             }
                      
-                    }
+                   
 
                 
             }
@@ -1465,7 +1465,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             itemPM.SequenceNumeric = item.SequenceNumeric;
 
                         }
-                        }
+                       
 
                     }
                 }
