@@ -34,7 +34,7 @@
                                         {{customizedCounterItem.SeriesCode}}
                                     </td>
                                     <td style="width:10%" *ngIf="j != 0">
-                                        <IconButton [IsSmall]="true" [Name]="'Delete'" [IsIconOnly]="true" (click)="DeleteCustomizedCounterItem(customizedCounterItem)"></IconButton>
+                                        <IconButton [IsSmall]="true" [Name]="'Delete'" [IsIconOnly]="true" (click)="DeleteCustomizedCounterItem(customizedCounterItem, false)"></IconButton>
                                     </td>
                                 </tr>
                             </table>
