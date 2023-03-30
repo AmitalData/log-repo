@@ -424,7 +424,8 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                 IsDigitallySigned = document.IsDigitallySigned,
                 SecurityId = document.SecurityId,
                 CustomReference = document.CustomReference,
-                FileExtension = document.FileExtension
+                FileExtension = document.FileExtension,
+                Descreption = document.Description
             });
         }
         public void SetMilestonesStatus()

@@ -14,4 +14,5 @@ export class CargoDocumentsFiling
     ShowDetailsMenu: boolean;
     CalculatedFileName: string;
     FileExtension: string;
+    Descreption:string;
 }

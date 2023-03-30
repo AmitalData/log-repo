@@ -129,19 +129,12 @@ namespace CommunicationWorkerRole
 
                                 Tenant = int.Parse(tenant);
 
-                                if (string.IsNullOrEmpty(entityChangeId) || string.IsNullOrEmpty(automationId))
-                                {
-                                    queueservice.Complete();
-                                    continue;
-                                }
-
                                 EntityChangeRepository entityChangeRepository = new EntityChangeRepository(Tenant);
                                 EntityChange entityChange = entityChangeRepository.GetSingleEntityChange(entityChangeId, Tenant);
 
                                 if (entityChange == null)
                                 {
-                                    queueservice.Complete();
-                                    continue;
+                                    throw new Exception("Can't found entityChange with id :" + entityChangeId + " and tenant = " + Tenant);
                                 }
 
                                 if (string.IsNullOrEmpty(entityId))
@@ -192,8 +185,7 @@ namespace CommunicationWorkerRole
 
                                 if (automation == null)
                                 {
-                                    queueservice.Complete();
-                                    continue;
+                                    throw new Exception("Can't found automation with id :" + automationId+ " and tenant = " + Tenant);
                                 }
 
                                 GeneralAutomationResultService generalAutomationResultService = new GeneralAutomationResultService();

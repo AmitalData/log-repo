@@ -1,40 +1,40 @@
 declare var window: any;
-import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
-import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
-import { DocumentCopiesViewModel } from './DocsOut/ViewModel/DocumentCopiesViewModel';
-import { DocsOutDataViewModel } from './DocsOut/ViewModel/DocsOutDataViewModel';
-import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
-import { DocumentOutPMService } from '../../../../Common/Services/ExtendedPMs/DocumentOutPMService';
-import { DocumentTypePMExtendedService } from '../../../../Common/Services/ExtendedPMs/DocumentTypePMExtendedService';
-import { ExportDocumentService } from '../../../../Common/Services/DocumentServices/ExportDocumentService';
-import { DocumentTypeTemplateListExtendedService } from '../../../../Common/Services/ExtendedLists/DocumentTypeTemplateListExtendedService';
-import { DocumentTypeCustomFieldService } from '../../../../Common/Services/ExtendedPMs/DocumentTypeCustomFieldService';
-import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
-import { HtmlEditorService } from '../../../../Common/Services/DocumentServices/HtmlEditorService';
-import { DocumentOutPM } from '../../../../Common/EntityPMs/DocumentOutPM';
-import { DocumentTypePM } from '../../../../Common/EntityPMs/DocumentTypePM';
-import { DocumentTypeCustomFieldPM } from '../../../../Common/EntityPMs/DocumentTypeCustomFieldPM';
-import { AppTool } from '../../../../Infrastructure/Tools';
-import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { DocumentTypeTemplateViewModel } from './DocsOut/ViewModel/DocumentTypeTemplateViewModel';
-import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
-import { DocumentCustomFieldsArgs } from './DocsOut/Filters/DocumentCustomFieldsArgs';
-import { FroalaEditorFilters } from './DocsOut/Filters/FroalaEditorFilters';
-import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocator';
-import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
-import { ExportDocumentArgs } from '../../../../Infrastructure/DataContracts/ExportDocumentArgs';
-import { DocumentsExecutionLogList } from '../../../../Common/EntityLists/DocumentsExecutionLogList';
-import { DocumentsExecutionLogListExtendedService } from '../../../../Common/Services/ExtendedLists/DocumentsExecutionLogListExtendedService';
+import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {Component, OnInit, Output, EventEmitter}  from '@angular/core';
+import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
+import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
+import {DocumentCopiesViewModel} from './DocsOut/ViewModel/DocumentCopiesViewModel';
+import {DocsOutDataViewModel} from './DocsOut/ViewModel/DocsOutDataViewModel';
+import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
+import {DocumentOutPMService} from '../../../../Common/Services/ExtendedPMs/DocumentOutPMService';
+import {DocumentTypePMExtendedService} from '../../../../Common/Services/ExtendedPMs/DocumentTypePMExtendedService';
+import {ExportDocumentService} from '../../../../Common/Services/DocumentServices/ExportDocumentService';
+import {DocumentTypeTemplateListExtendedService} from '../../../../Common/Services/ExtendedLists/DocumentTypeTemplateListExtendedService';
+import {DocumentTypeCustomFieldService} from '../../../../Common/Services/ExtendedPMs/DocumentTypeCustomFieldService';
+import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper';
+import {HtmlEditorService} from '../../../../Common/Services/DocumentServices/HtmlEditorService';
+import {DocumentOutPM} from '../../../../Common/EntityPMs/DocumentOutPM';
+import {DocumentTypePM} from '../../../../Common/EntityPMs/DocumentTypePM';
+import {DocumentTypeCustomFieldPM} from '../../../../Common/EntityPMs/DocumentTypeCustomFieldPM';
+import {AppTool} from '../../../../Infrastructure/Tools';
+import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import {DocumentTypeTemplateViewModel} from './DocsOut/ViewModel/DocumentTypeTemplateViewModel';
+import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
+import {DocumentCustomFieldsArgs} from './DocsOut/Filters/DocumentCustomFieldsArgs';
+import {FroalaEditorFilters} from './DocsOut/Filters/FroalaEditorFilters';
+import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
+import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
+import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
+import {ExportDocumentArgs} from '../../../../Infrastructure/DataContracts/ExportDocumentArgs';
+import {DocumentsExecutionLogList} from '../../../../Common/EntityLists/DocumentsExecutionLogList';
+import {DocumentsExecutionLogListExtendedService} from '../../../../Common/Services/ExtendedLists/DocumentsExecutionLogListExtendedService';
 import { interval } from 'rxjs';
 import { timeInterval } from 'rxjs/operators';
 declare var Base64ToString: any;
-import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
-import { ObjectsLocator } from "../../../../Infrastructure/Locators/ObjectsLocator";
+import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
+import {ObjectsLocator} from "../../../../Infrastructure/Locators/ObjectsLocator";
 
 
 @Component({
@@ -104,28 +104,30 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (ObjectsLocator.GlobalSetting.WorkEnvironment === 'cloud' && SessionLocator.TenantPM.AccountingActivated) {
+
+        if (ObjectsLocator.GlobalSetting.WorkEnvironment === 'cloud' && SessionLocator.TenantPM.AccountingActivated && this.DataContext.invoiceType != "IT") {
             this.UpdateDocumentsAutomatically();
         }
     }
 
-    UpdateDocumentsAutomatically() {
+    UpdateDocumentsAutomatically()
+    {
         this.CurrentDocumentOut = this.DataContext.CurrentDocument;
         this.LoadCopiesControl();
 
         this._documentOutPMService.getSingleDocumentOutPM(this.DataContext.CurrentDocument.Id,
             this.DataContext.CurrentDocument.Tenant).subscribe((res: any) => {
-                const pmResponse: ServiceResponse = res;
-                if (!pmResponse.HasError) {
-                    const myResult = pmResponse.Result;
-                    if (myResult) {
-                        this.CurrentDocumentOut = myResult;
-                        this.DataContext.CurrentDocument = myResult;
-                        this.UpdateDocument();
-                    }
+            const pmResponse: ServiceResponse = res;
+            if (!pmResponse.HasError) {
+                const myResult = pmResponse.Result;
+                if (myResult) {
+                    this.CurrentDocumentOut = myResult;
+                    this.DataContext.CurrentDocument = myResult;
+                    this.UpdateDocument();
                 }
+            }
 
-            });
+        });
 
 
     }
@@ -679,10 +681,18 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                     if (this.DocumentTypeload != null) {
                         this.DataContext.DocumentTypePM = myResult;
                         if (this.DataContext.DocumentTypePM.DocumentTypeCopies != null) {
+                            
                             this.DocumentTypeload.DocumentTypeCopies.forEach((item) => {
-
                                 this.ItemsSource.push(new DocumentCopiesViewModel(item, this.CurrentDocumentOut, this.EntityId, this.ChildEntityId, this.ObjectTableId, this.ChildObjectTableId, this.DocumentTypeload, this.ChildReference));
                             });
+
+                            if (ObjectsLocator.GlobalSetting.WorkEnvironment === 'cloud' && SessionLocator.TenantPM.AccountingActivated) {
+                                this.ItemsSource = this.ItemsSource.filter((value, index, self) =>
+                                index === self.findIndex((t) => (
+                                    t.Id === value.Id
+                                ))
+                                )
+                            }
 
                             var item = this.ItemsSource.filter(d => d.IsSelected)[0];
                             var anySelected = false;
