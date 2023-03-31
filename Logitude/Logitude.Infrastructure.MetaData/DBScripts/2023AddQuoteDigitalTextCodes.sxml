@@ -1,5 +1,5 @@
 ﻿<Script  DBType="Main" Module="Infrastructure">
-  <Sql Version="35">
+  <Sql Version="39">
     <![CDATA[
 	
 	 BEGIN
@@ -303,7 +303,62 @@
 				"DefaultText": "Subject",
 				"FieldCode": "Quote.Subject",
 				"DisplayText": ""
+			},	
+			{
+				"TextCode": "Quote.G.EquipmentInformation",
+				"DefaultText": "Equipment Information",
+				"FieldCode": "",
+				"DisplayText": ""
 			},
+			{
+				"TextCode": "Quote.TH.PackagesInformation",
+				"DefaultText": "Packages information",
+				"FieldCode": "",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.P.PackageTypeName",
+				"DefaultText": "Type",
+				"FieldCode": "",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.P.Quantity",
+				"DefaultText": "Quantity",
+				"FieldCode": "",
+				"DisplayText": ""
+			},	
+			{
+				"TextCode": "Quote.P.Dimensions",
+				"DefaultText": "Dimensions (L-W-H)",
+				"FieldCode": "",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Quote.P.Volume",
+				"DefaultText": "Volume",
+				"FieldCode": "",
+				"DisplayText": ""
+			},	
+			{
+				"TextCode": "Quote.P.GrossWeight",
+				"DefaultText": "Gross weight",
+				"FieldCode": "",
+				"DisplayText": ""
+			},		
+			{
+				"TextCode": "Quote.G.TotalInformation",
+				"DefaultText": "Total information",
+				"FieldCode": "",
+				"DisplayText": ""
+			},	
+			{
+				"TextCode": "Quote.G.DescriptionOfGoods",
+				"DefaultText": "Description of goods",
+				"FieldCode": "Quote.DescriptionOfGoods",
+				"DisplayText": ""
+			},
+			
 		]';
 	  
 	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate,  ProfileId, Labels, LanguageCode) 
