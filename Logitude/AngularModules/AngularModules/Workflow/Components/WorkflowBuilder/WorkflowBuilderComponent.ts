@@ -142,8 +142,8 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     }
 
     handleRenderReactWorkflow() {
-        this.WorkflowTriggerTypeCode = StartTriggerTypes.EventTriggered;//this.EntityPM.WorkFlowTriggerTypeCode;
-        this.WorkflowNumber = "1000";//this.EntityPM.WorkflowNumber;
+        this.WorkflowTriggerTypeCode = this.EntityPM.WorkFlowTriggerTypeCode;
+        this.WorkflowNumber = this.EntityPM.WorkFlowNumber;
         this.WorkflowName = this.EntityPM.Name;
         this.WorkflowEntity = this.ValidVersion.Entity;
         this.renderReactFlowModeler();
@@ -175,13 +175,14 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
                     nodeLabel: "label",
                     startNodeEntity: "entity",
                     startNodeEntityLabel: "entityLabel",
+                    startNodeApplicationLabel: "applicationLabel",
+                    startNodeEventTypeLabel: "eventTypeLabel",
                     startNodeTrigger: "trigger",
                     conditionNodeMetLabel: "metLabel",
                     conditionNodeOtherwiseLabel: "otherwiseLabel"
                 },
-                flowSettings: {
-                    isViewMode: this.IsViewMode
-                }
+                isViewMode: this.IsViewMode,
+                flowTriggerType: this.EntityPM.WorkFlowTriggerTypeCode
             };
 
             ReactDOM.render(React.createElement(ReactFlowModeler, props), this.containerRef.nativeElement);

@@ -1,4 +1,3 @@
-
 using Logitude.Server.Tools; 
 using Logitude.Workflow.Data.EntityPOCOs;
 using Logitude.Workflow.BL.EntityPMs;
@@ -25,6 +24,9 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 
             entityPOCO.Trigger = entityPOCO.Trigger;
             CustomMappedPOCOProperties.Add(POCOPropertyNames.Trigger);
+
+            entityPOCO.WorkFlowTriggerTypeCode = entityPOCO.WorkFlowTriggerTypeCode;
+            CustomMappedPOCOProperties.Add(POCOPropertyNames.WorkFlowTriggerTypeCode);
         }
 
         public void CustomPOCOToPM(WorkFlowPM entityPM, WorkFlow entityPOCO)
