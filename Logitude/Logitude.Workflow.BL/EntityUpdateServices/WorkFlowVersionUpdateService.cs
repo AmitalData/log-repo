@@ -88,9 +88,12 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
                         WorkFlowVersion workflow = workFlowVersions.FirstOrDefault();
                         if(workflow.Id == entityPM.Id)
                         {
-                            workflow.StatusCode = entityPM.StatusCode;
+                            UpdateWorkflow(entityPM);
                         }
-                        UpdateWorkflow(workflow);
+                        else
+                        {
+                            UpdateWorkflow(workflow);
+                        }
                     }
                 }
             }
