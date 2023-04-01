@@ -46,8 +46,6 @@ export class StartEventTriggeredPropertiesComponent extends BaseComponent {
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
         this.WorkflowNumber = args.WorkflowNumber || null;
-
-        this.loadWorkflowProviderSubscription();
     }
 
     ngOnInit() {
@@ -55,6 +53,7 @@ export class StartEventTriggeredPropertiesComponent extends BaseComponent {
         this.initializeStartEventApplicationsList();
         this.initializeStartEventTypesList();
         this.initialize();
+        this.initializeWorkflowProviderSubscription();
     }
 
     initializeWindowEvents() {
@@ -93,6 +92,12 @@ export class StartEventTriggeredPropertiesComponent extends BaseComponent {
         this.Data["eventTypeLabel"] = defaultStartEventType.Name;
 
         this.setDefaultData();
+    }
+
+    initializeWorkflowProviderSubscription() {
+        setTimeout(() => {
+            this.loadWorkflowProviderSubscription();
+        }, 150);
     }
 
     loadWorkflowProviderSubscription() {

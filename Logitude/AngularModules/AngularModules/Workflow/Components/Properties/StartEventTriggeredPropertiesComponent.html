@@ -101,7 +101,8 @@
         <td class="table-row-cell">
             <div class="table-row-cell-block event-list-container">
                 <ComboBox [ItemsSource]="StartEventTypesListItems" [Binding]="'Name'"
-                    [SelectedItem]="EventType | ListItemPipe : StartEventTypesListItems" [ListType]="''" [CyData]="'event-type'">
+                    [SelectedItem]="EventType | ListItemPipe : StartEventTypesListItems" [ListType]="''"
+                    [CyData]="'event-type'">
                 </ComboBox>
             </div>
         </td>
@@ -124,11 +125,11 @@
     <tr class="table-row">
         <td class="table-row-cell">
             <div class="table-row-cell-block">
-                <div *ngIf="WorkflowProviderSubscription === null">
+                <div *ngIf="!WorkflowProviderSubscription">
                     <span>Connect Microsoft Office 365</span>
                     <button class="Button msal-login-button" (click)="openMsalLoginPopup()">Sign In</button>
                 </div>
-                <div *ngIf="WorkflowProviderSubscription !== null">
+                <div *ngIf="WorkflowProviderSubscription">
                     <span>Successfully connected to Microsoft Office 365 account:
                         {{WorkflowProviderSubscription.UserEmail}}</span>
                 </div>
