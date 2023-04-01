@@ -54,7 +54,7 @@ export class CustomDashboardComponent extends BaseComponent {
     private AnalyticsFactsFieldsMetaDataPMExtendedService: AnalyticsFactsFieldsMetaDataPMExtendedService;
     public PresetFilters: AnalyticsFactsFieldsMetaDataPM[];
     public IsPredfineds: boolean;
-
+    
     constructor() {
         super();
         this.DashboardListService = new DashboardListService();
@@ -294,10 +294,6 @@ export class CustomDashboardComponent extends BaseComponent {
     AppendClickedDashboard(dashboard: DashboardList) {
         var tab = new DashboardTab(dashboard, this, false);
         this.DashboardsTabs.push(tab);
-    }
-
-    TabViewDashboardModeClicked () {
-        this.ConfirmSave(null);
     }
 
     private ConfirmSave(clickedDashboard: DashboardList) {

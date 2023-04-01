@@ -21,6 +21,8 @@ import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 import { GlobalFilterItem } from 'DashboardModule/Components/Windows/Filter/GlobalFilter/GlobalFilterItem';
 import { AnalyticsFactsFieldsMetaDataPM } from 'DashboardModule/EntityPMs/AnalyticsFactsFieldsMetaDataPM';
 import { formatDate } from '@angular/common';
+import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     templateUrl: 'DashboardTabComponent.html',
@@ -36,7 +38,6 @@ export class DashboardTabComponent implements OnInit {
     @Output() TabHasChanges = new EventEmitter<boolean>();
     @Output() DashboardEntity = new EventEmitter<DashboardPM>();
     @Output() RefreshAfterCopy = new EventEmitter<DashboardPM>();
-    @Output() ViewDashboardModeClicked = new EventEmitter<any>();
 
     public SelectedDashboardName: string = null;
     public SelectedDashboard: DashboardPM;
@@ -367,8 +368,33 @@ export class DashboardTabComponent implements OnInit {
 
     ViewDashboardLayoutClicked() {
         if (this.HasChanges) {
-            this.ViewDashboardModeClicked.emit();
+            this.ConfirmSave();
+        }else {
+            this.ResetFlags();
         }
+    }
+    
+    private ConfirmSave() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 450;
+        confirmWindow.Height = 190;
+        confirmWindow.ShowCancelButton = true;
+        confirmWindow.NoButtonText = "Don't Save";
+        confirmWindow.YesButtonText = "Save ";
+        confirmWindow.CancelButtonText = "Cancel";
+        confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
+        confirmWindow.Show("This Dashboard has unsaved changes do you want to save it?");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                MixPanelLocator.PostDashboardAction({ ActionName: "Confirm Window Yes Click", DashboardId: this.SelectedDashboard?.Id });
+                this.SaveDashboard();
+            }
+            else if (confirmWindow.No) {
+                MixPanelLocator.PostDashboardAction({ ActionName: "Confirm Window No Click", DashboardId: this.SelectedDashboard?.Id });                
+                this.ResetFlags();
+                this.RefreshLayoutClicked();
+            }
+        });
     }
     
     EditDashboardLayoutClicked() {
