@@ -13,12 +13,6 @@ namespace Logitude.Workflow.BL.EntityDataMappings
             {
                 entityPOCO.Id = entityPM.Id;
             }
-
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
-            {
-                entityPM.CreateDate = entityPOCO.CreateDate;
-                entityPM.CreatedByUserId = entityPOCO.CreatedByUserId;
-            }
         }
 
         public void CustomPOCOToPM(ServiceProviderSubscriptionPM entityPM, ServiceProviderSubscription entityPOCO)

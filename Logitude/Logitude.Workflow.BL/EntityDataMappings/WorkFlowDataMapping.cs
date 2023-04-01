@@ -2,6 +2,7 @@ using Logitude.Server.Tools;
 using Logitude.Workflow.Data.EntityPOCOs;
 using Logitude.Workflow.BL.EntityPMs;
 using Logitude.Workflow.BL.EntityQueryServices;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.Workflow.BL.EntityDataMappings
 {
@@ -15,18 +16,23 @@ namespace Logitude.Workflow.BL.EntityDataMappings
             entityPOCO.SearchFields = entityPM.Name;
             CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
 
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
+            {
+                entityPOCO.FlowJson = entityPOCO.FlowJson;
+                CustomMappedPOCOProperties.Add(POCOPropertyNames.FlowJson);
 
-            entityPOCO.FlowJson = entityPOCO.FlowJson;
-            CustomMappedPOCOProperties.Add(POCOPropertyNames.FlowJson);
+                entityPOCO.Entity = entityPOCO.Entity;
+                CustomMappedPOCOProperties.Add(POCOPropertyNames.Entity);
 
-            entityPOCO.Entity = entityPOCO.Entity;
-            CustomMappedPOCOProperties.Add(POCOPropertyNames.Entity);
+                entityPOCO.Trigger = entityPOCO.Trigger;
+                CustomMappedPOCOProperties.Add(POCOPropertyNames.Trigger);
 
-            entityPOCO.Trigger = entityPOCO.Trigger;
-            CustomMappedPOCOProperties.Add(POCOPropertyNames.Trigger);
+                entityPOCO.WorkFlowTriggerTypeCode = entityPOCO.WorkFlowTriggerTypeCode;
+                CustomMappedPOCOProperties.Add(POCOPropertyNames.WorkFlowTriggerTypeCode);
 
-            entityPOCO.WorkFlowTriggerTypeCode = entityPOCO.WorkFlowTriggerTypeCode;
-            CustomMappedPOCOProperties.Add(POCOPropertyNames.WorkFlowTriggerTypeCode);
+                entityPOCO.WorkFlowNumber = entityPOCO.WorkFlowNumber;
+                CustomMappedPOCOProperties.Add(POCOPropertyNames.WorkFlowNumber);
+            }
         }
 
         public void CustomPOCOToPM(WorkFlowPM entityPM, WorkFlow entityPOCO)
