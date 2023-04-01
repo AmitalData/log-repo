@@ -58,13 +58,16 @@ namespace WebFreight.Web.ReportsWebServices
             servicHelper = new WebServiceHelper(tenant);
             ShipmentProfitDataProvider provider = GetProfitDataProvider(shipmentId, tenant, accountingCurrencyId, currentUser);
             XmlSerializer serializer = new XmlSerializer(typeof(ShipmentProfitDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, provider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
+            using (MemoryStream memstream = new MemoryStream())
+            {
+                serializer.Serialize(memstream, provider);
+                memstream.Seek(0, SeekOrigin.Begin);
+                var reader = new StreamReader(memstream);
+                string content = reader.ReadToEnd();
+                byte[] bytearray = memstream.ToArray();
+                return bytearray;
+            }
+            
         }
 
         [WebMethod]
@@ -73,13 +76,16 @@ namespace WebFreight.Web.ReportsWebServices
             servicHelper = new WebServiceHelper(tenant);
             ShipmentProfitInvoicesDataProvider provider = this.BuildProfitInvoicesProvider(shipmentId, tenant, accountingCurrencyId, currentUser);
             XmlSerializer serializer = new XmlSerializer(typeof(ShipmentProfitInvoicesDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, provider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
+            using (MemoryStream memstream = new MemoryStream())
+            {
+                serializer.Serialize(memstream, provider);
+                memstream.Seek(0, SeekOrigin.Begin);
+                var reader = new StreamReader(memstream);
+                string content = reader.ReadToEnd();
+                byte[] bytearray = memstream.ToArray();
+                return bytearray;
+            }
+            
         }
 
         public ShipmentProfitDataProvider GetProfitDataProvider(string shipmentId, int tenant, string accountingCurrencyId, string currentUser)

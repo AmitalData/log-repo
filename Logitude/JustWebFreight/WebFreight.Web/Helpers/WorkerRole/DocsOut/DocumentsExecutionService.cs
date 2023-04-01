@@ -114,17 +114,13 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
             try
             {
                 documentsExecutionLog = GetDocumentsExecutionLog();
-                if (documentsExecutionLog != null && documentsExecutionLog.RetryNumber < 2 && (documentsExecutionLog.CreateDate > DateTime.Now.AddMinutes(-2) || documentsExecutionLog.StartDate > DateTime.Now.AddMinutes(-2)) && (documentsExecutionLog.StatusCode == "W" || documentsExecutionLog.StatusCode == "P"))
+                if (HaveDocumentExecutionErrorMessage())
                 {
-                    UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { StartDate = startDate, StatusCode = "P" });
-                    ExportStimulDocumentToPDF(true);
-                    if (!string.IsNullOrEmpty(callBackDetailsXml)) CallBackService.Notifiy(callBackDetailsXml, null);
+                    throw new ApplicationException(GetDocumentExecutionErrorMessage());
                 }
-                else
-                {
-                    UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = new Exception("Document build failed after 3 retries or it reaches the time out.Please try again.If the issue is persistent then please kindly contact our Customer Support"), DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
-                    throw new ApplicationException("Document build failed after 3 retries or it reaches the time out.Please try again.If the issue is persistent then please kindly contact our Customer Support");
-                }
+                UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { StartDate = startDate, StatusCode = "P" });
+                ExportStimulDocumentToPDF(true);
+                if (!string.IsNullOrEmpty(callBackDetailsXml)) CallBackService.Notifiy(callBackDetailsXml, null);
             }
             catch (AggregateException aggregateException)
             {
@@ -134,29 +130,53 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                     lastAggregateException = exception;
                     ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Document Execution V2 WorkerRole Monitor|" + "Aggr Catch ExecuteDocumentsExecutionQueue", null, System.Environment.MachineName);
                 }
-                try
-                {
-                    UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = lastAggregateException, DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
-                }
-                catch (Exception ex)
-                {
-                    ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Document Execution V2 WorkerRole Monitor|" + "Catch ExecuteDocumentsExecutionQueue", " inside Aggr catch exception while running ", System.Environment.MachineName);
-                }
-                throw new ApplicationException(lastAggregateException.Message + "inner message: " + lastAggregateException.InnerException?.Message);
+                HandleDocumentExecutionException(lastAggregateException);
             }
             catch (Exception exception)
             {
-                try
-                {
-                    UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = exception, DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
-                }
-                catch (Exception ex)
-                {
-                    ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Document Execution V2 WorkerRole Monitor|" + "Catch ExecuteDocumentsExecutionQueue", " inside catch exception while running UpdateDocumentsExecutionLog", System.Environment.MachineName);
-                }
-                throw new ApplicationException(exception.Message + "inner message: " + exception.InnerException?.Message);
+                HandleDocumentExecutionException(exception);
             }
         }
+
+        private bool HaveDocumentExecutionErrorMessage()
+        {
+            if (documentsExecutionLog == null) return true;
+            if(documentsExecutionLog.RetryNumber >= 2) return true;
+            if(documentsExecutionLog.CreateDate <= DateTime.Now.AddMinutes(-5)) return true;
+            if(documentsExecutionLog.StatusCode != "W" && documentsExecutionLog.StatusCode != "P") return true;
+            return false;
+        }
+
+        private void HandleDocumentExecutionException(Exception exception)
+        {           
+            try
+            {
+                UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = exception, DoneDate = DateTime.Now, StartDate = startDate });
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Document Execution V2 WorkerRole Monitor|" + "Catch ExecuteDocumentsExecutionQueue", " inside Aggr catch exception while running ", System.Environment.MachineName);
+            }
+            throw new ApplicationException(exception.Message, exception.InnerException);
+        }
+
+        private string GetDocumentExecutionErrorMessage()
+        {
+            if (documentsExecutionLog == null)
+                return "Cannot Find Documents Execution Log with Id = " + documentsExecutionLogId + " and Tenant = " + tenant;
+
+            if (documentsExecutionLog.RetryNumber >= 2)
+                return "Document build failed after 3 retries. Please try again.";
+
+            if (documentsExecutionLog.CreateDate <= DateTime.Now.AddMinutes(-5)) 
+                return "Document build failed since it reached the time out.";
+
+            if (documentsExecutionLog.StatusCode != "W" && documentsExecutionLog.StatusCode != "P")
+                return "Document build failed since execution log status code is " + documentsExecutionLog.StatusCode + ".";
+
+            return "Document build failed: Unhandled Error";
+        }
+
         private void ExportStimulDocumentToPDF(bool isVersion2 = false)
         {
             ExportDocumentArgs exportDocumentArgs = !string.IsNullOrEmpty(documentsExecutionLog.RequestXML) ? LogitudeXmlSerializer.DeserializeObject<ExportDocumentArgs>(documentsExecutionLog.RequestXML) : null;
@@ -240,10 +260,11 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                 documentsExecutionLog.ExceptionMessage = documentsExecutionLogArgs.Exception != null ? GetFullExceptionMessageFromException(documentsExecutionLogArgs.Exception) : documentsExecutionLog.ExceptionMessage;
                 documentsExecutionLog.DoneDate = documentsExecutionLogArgs.DoneDate != null ? documentsExecutionLogArgs.DoneDate : documentsExecutionLog.DoneDate;
                 documentsExecutionLog.ExecutedByServerName =!string.IsNullOrEmpty(System.Environment.MachineName) ? System.Environment.MachineName : documentsExecutionLog.ExecutedByServerName;
-                if (documentsExecutionLog.RetryNumber >= 2 && documentsExecutionLog.StatusCode != "D" && documentsExecutionLogArgs.StatusCode !="P")
+                if (documentsExecutionLog.RetryNumber >= 2 && documentsExecutionLog.StatusCode != "D" && documentsExecutionLogArgs.Exception != null)
                 {
                     documentsExecutionLog.StatusCode = "F";
                     documentsExecutionLog.DoneDate = DateTime.Now;
+                    queueService.CompleteAsFailed();
                 }
                 documentsExecutionLogRepository.Update(documentsExecutionLog);
                 documentsExecutionLogRepository.SubmitChanges();

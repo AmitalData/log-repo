@@ -161,7 +161,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
 
             this.FillDataSource();
         }
-        else if(this.IsReport()) {
+        else if(this.IsReport() && this.IsAllowedDataFieldTab()) {
             this.CurrentSession.StartBusyIndicatorLoading();
             this.ReportListService.getSingle(this.ReportTemplatePM.ReportId).subscribe((myResponse: ServiceResponse) => {
                 if (myResponse.HasError)
@@ -255,7 +255,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
     FillDataProviderFields(result: ExcelReportResult) {
         this.DataProviderFields = new Array<DataProviderField>();
         result.DataProviderFields.forEach((item) => {
-            if (item.Type != 'List' && !item.Text.toLowerCase().includes('id'))
+            if (this.IsAllowedField(item))
                 this.DataProviderFields.push(this.Clone(item));
         });
     }
@@ -268,6 +268,30 @@ export class DocumentObjectFieldsComponent implements OnInit {
         if (!this.ReportTemplatePM)
             return false;
         if (!this.ReportTemplatePM.ReportId)
+            return false;
+        return true;
+    }
+    IsAllowedField(item:DataProviderField):boolean {
+        if(item.Type == 'List')
+            return false;
+        if(item.Text.toLowerCase().includes('id'))
+            return false;
+        if(item.Text.toLowerCase().includes('logo'))
+            return false;
+        if(item.Text.toLowerCase().includes('signature'))
+            return false;
+        return true;
+    }
+    IsAllowedDataFieldTab():boolean {
+        if(this.InSertDataFieldType == 'From')
+            return false;
+        if(this.InSertDataFieldType == 'To')
+            return false;
+        if(this.InSertDataFieldType == 'BCC')
+            return false;
+        if(this.InSertDataFieldType == 'CC')
+            return false;
+        if(this.InSertDataFieldType == 'ReplyTo')
             return false;
         return true;
     }

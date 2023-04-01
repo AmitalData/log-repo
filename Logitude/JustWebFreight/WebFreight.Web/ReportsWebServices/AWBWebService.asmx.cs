@@ -58,11 +58,13 @@ namespace WebFreight.Web.ReportsWebServices
             this.tenant = tenant;
             AWBDataProvider awbDp = LoadAWBDataProvider(shipmentId, documentTypeCopyId, isPrint);
             XmlSerializer serializer = new XmlSerializer(typeof(AWBDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, awbDp);
-            memstream.Seek(0, SeekOrigin.Begin);
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
+            using (MemoryStream memstream = new MemoryStream())
+            {
+                serializer.Serialize(memstream, awbDp);
+                memstream.Seek(0, SeekOrigin.Begin);
+                byte[] bytearray = memstream.ToArray();
+                return bytearray;
+            }
         }
         private AWBDataProvider LoadAWBDataProvider(string shipmentId, string documentTypeCopyId, bool isPrint)
         {

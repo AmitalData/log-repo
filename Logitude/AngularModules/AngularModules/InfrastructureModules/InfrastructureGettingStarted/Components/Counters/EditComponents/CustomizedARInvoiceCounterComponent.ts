@@ -35,7 +35,7 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
     private customizedARInvoiceCounterValidatingService: CustomizedARInvoiceCounterValidatingService;
     public MainCounterDefinitionsPMs: CounterDefinitionPM[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
-
+    public IsEnabled: boolean = true;
     constructor() {
         super();
         this.counterDefinitionPMExtendedService = new CounterDefinitionPMExtendedService();
@@ -77,7 +77,7 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
         this.currentSession.StartBusyIndicatorLoading();
         this.counterId = this.CounterInvoiceComponent.CounterId;
         this.MainCounterDefinitionsPMs = [];
-
+        this.IsEnabled = !this.CounterInvoiceComponent.IsCounterUsed;
         this.counterDefinitionPMExtendedService.GetCustomizedCounterDefinitionsByCounterId(this.counterId).subscribe((response: ServiceResponse) => {
             if (response.HasError || !response.Result) {
                 this.currentSession.StopBusyIndicator();
@@ -106,7 +106,18 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
             this.PushCustomizedCounterItem(value.value, value.key);
         });
 
-        //this.CustomizedCounterItems.sort(a => a.SeriesCode);
+        this.SortCustomizedCounterItems();
+    }
+    private SortCustomizedCounterItems() {
+        this.CustomizedCounterItems = this.CustomizedCounterItems.sort((a, b) => {
+            if (a.SeriesCode < b.SeriesCode) {
+                return -1;
+            }
+            if (a.SeriesCode > b.SeriesCode) {
+                return 1;
+            }
+            return 0;
+        });
     }
     private PushCustomizedCounterItem(counterdefinitions: any[], key: any) {
         let customizedCounterItem = new CustomizedCounterItem(key, this.counterId, this);
@@ -124,7 +135,7 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
         this.UpdateSeriesesStartNumber();
     }
     public EnabledInvoiceType(invoiceCode: string, serieCode: string): boolean {
-
+        if (!this.IsEnabled) return false;
         let otherCustomizedCounterItems = this.CustomizedCounterItems.filter(item => item.SeriesCode != serieCode);
         if (otherCustomizedCounterItems == null || otherCustomizedCounterItems.length == 0) return true;
 
@@ -185,9 +196,10 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
         this.NumberOfSeries = this.NumberOfSeries + 1;
     }
 
-    DeleteCustomizedCounterItem(customizedCounterItem: CustomizedCounterItem) {
-        if (!customizedCounterItem) return;
+    DeleteCustomizedCounterItem(customizedCounterItem: CustomizedCounterItem, isFromConfirmWindow: boolean = false) {
+        if (!customizedCounterItem || !this.IsEnabled) return;
         this.CustomizedCounterItems = this.CustomizedCounterItems.filter(item => item.SeriesCode != customizedCounterItem.SeriesCode);
+        if (isFromConfirmWindow) return;
         this.RefreshCustomizedCounterItems();
         this.UpdateSeriesUniquePerPrefix();
         this.UpdateSeriesesStartNumber();
@@ -214,25 +226,42 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
 
 
     OkButtonClicked() {
-        let serieWithNoInvoices = this.CustomizedCounterItems.filter(item => item.CounterDefinitions?.length == 0)[0];
-        if (serieWithNoInvoices != null) {
-            this.ShowConfirmationWindow(serieWithNoInvoices);
+        let seriesWithNoInvoices = this.CustomizedCounterItems.filter(item => item.CounterDefinitions?.length == 0);
+        if (seriesWithNoInvoices != null && seriesWithNoInvoices.length > 0) {
+            this.ShowConfirmationWindow(seriesWithNoInvoices);
             return;
         }
         this.BuildAPIHelperCounterDefinitions();
         this.ValidateCounterDefinitions();
     }
-    ShowConfirmationWindow(customizedCounterItem: CustomizedCounterItem) {
+    ShowConfirmationWindow(customizedCounterItems: CustomizedCounterItem[]) {
+        let seriesCodes = this.GetSeriesCodes(customizedCounterItems);
+        let confirmationMessage = seriesCodes + (customizedCounterItems.length == 1 ? " is" : " are") + " not related to any invoice type, so "+(customizedCounterItems.length == 1 ? "it" : "they")+" will not be taken in consideration";
         var confirmWindow = new ConfirmWindow();
-        confirmWindow.Show(customizedCounterItem.SeriesCode +" is not related to any invoice type, so it will not be taken in consideration");
+        confirmWindow.Show(confirmationMessage);
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
+                this.DeleteEmptyCustomizedCounterItems(customizedCounterItems);
                 this.BuildAPIHelperCounterDefinitions();
                 this.ValidateCounterDefinitions();
             }
         });
     }
-
+    GetSeriesCodes(customizedCounterItems: CustomizedCounterItem[]) {
+        let seriesCodes = "";
+        customizedCounterItems.forEach(item => {
+            seriesCodes = seriesCodes + (AppTool.IsNullOrEmpty(seriesCodes) ? "" : ", ") + item.SeriesCode;
+        });
+        return seriesCodes;
+    }
+    DeleteEmptyCustomizedCounterItems(customizedCounterItems: CustomizedCounterItem[]) {
+        customizedCounterItems.forEach(item => {
+            this.DeleteCustomizedCounterItem(item, true);
+        });
+        this.RefreshCustomizedCounterItems();
+        this.UpdateSeriesUniquePerPrefix();
+        this.UpdateSeriesesStartNumber();
+    }
     BuildAPIHelperCounterDefinitions() {
         this.APIHelper = new CounterAPIHelper();
         this.APIHelper.CounterDefinitions = [];

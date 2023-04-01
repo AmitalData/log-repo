@@ -4,17 +4,14 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
-namespace WebFreight.Web.ContainerTracking
+namespace Logitude.BL.Helpers
 {
     public class ContainerTrackingHelper
     {
         private readonly PortRepository portRepository;
         private readonly int tenant;
         private ContainerDiscrepancyService containerDiscrepancyService;
-        ContainerUpdatedFields updatedFields;
         public ContainerTrackingHelper(int tenant)
         {
             this.tenant = tenant;
@@ -66,18 +63,38 @@ namespace WebFreight.Web.ContainerTracking
 
         private Port GetPortByCode(string portCode, int tenant)
         {
-            return portRepository.GetOceanPortByCombinedCode(portCode, tenant);
+            Port port = portRepository.GetOceanPortByCombinedCode(portCode, tenant);
+            if (port == null && tenant != 0)
+            {
+                port = CopyPortHelper.CopyPortToCurrentTenant(portCode, tenant);
+            }
+
+            return port;
         }
+        
         private Port GetPortById(string portId, int tenant)
         {
             return portRepository.GetSinglePort(portId, tenant);
         }
-       
-            public void AddContainerDiscrepancy(string code, ContainerPM containerPM, ShipmentPM shipmentPM)
+
+        public string GetPortId(string portCode)
         {
-            if(code == "PreCarriage")
+            Port port = portRepository.GetOceanPortByCombinedCode(portCode, tenant);
+            string portId = null;
+            if (port != null)
             {
-                var preCarriageParams = new  { 
+                portId = port.Id;
+            }
+
+            return portId;
+        }
+
+        public void AddContainerDiscrepancy(string code, ContainerPM containerPM, ShipmentPM shipmentPM)
+        {
+            if (code == "PreCarriage")
+            {
+                var preCarriageParams = new
+                {
                     containerPM = containerPM,
                     shipmentPM = shipmentPM,
                     containerCode = code,
@@ -91,7 +108,7 @@ namespace WebFreight.Web.ContainerTracking
                     containerActualDateName = "ATD",
                     shipmentDirection = "from",
                 };
-                CheckIsSameLocationUsingId(preCarriageParams);               
+                CheckIsSameLocationUsingId(preCarriageParams);
             }
 
             if (code == "OnCarriage")
@@ -114,7 +131,7 @@ namespace WebFreight.Web.ContainerTracking
                 CheckIsSameLocationUsingId(preCarriageParams);
             }
 
-            if(code == "POL PreCarriage")
+            if (code == "POL PreCarriage")
             {
                 var discreapancyParams = new
                 {
@@ -147,10 +164,10 @@ namespace WebFreight.Web.ContainerTracking
                     containerActualDateName = "ATD",
                     shipmentDirection = "from",
                 };
-                CheckIsSameLocation(preCarriageParams);            
+                CheckIsSameLocation(preCarriageParams);
             }
-            
-            if(code == "POD MainCarriage")
+
+            if (code == "POD MainCarriage")
             {
                 var preCarriageParams = new
                 {
@@ -166,10 +183,10 @@ namespace WebFreight.Web.ContainerTracking
                     containerActualDateName = "ATA",
                     shipmentDirection = "to",
                 };
-                CheckIsSameLocation(preCarriageParams);              
+                CheckIsSameLocation(preCarriageParams);
             }
 
-            if (code == "POD OnCarriage") 
+            if (code == "POD OnCarriage")
             {
                 var discreapancyParams = new
                 {
@@ -203,7 +220,7 @@ namespace WebFreight.Web.ContainerTracking
             if (string.IsNullOrEmpty(discrepancyParams.shipmentLocation) || !IsSameLocation(discrepancyParams.shipmentLocation, discrepancyParams.containerLocation))
             {
                 AddNotSameLocationDiscrepancy(discrepancyParams, discrepancyParams.containerEstimatedDateName);
-                AddNotSameLocationDiscrepancy(discrepancyParams, discrepancyParams.containerActualDateName); 
+                AddNotSameLocationDiscrepancy(discrepancyParams, discrepancyParams.containerActualDateName);
             }
             else
             {
@@ -226,7 +243,7 @@ namespace WebFreight.Web.ContainerTracking
             }
         }
         public void AddTranshipmentDiscrepancyContainer(int? transshipmentLegIndex, string direction, ContainerPM containerPM,
-                                                       ShipmentPM shipmentPM, string portId, MilestoneDataUpdatedFields updatedFields, string time)
+                                                       ShipmentPM shipmentPM, string portId, TransshipmentUpdatedFields updatedFields, string time)
         {
             var transshipmentPortId = GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + direction + "PortId");
             if (transshipmentPortId != null && !IsSameLocationUsingId((string)transshipmentPortId, portId))
@@ -247,7 +264,7 @@ namespace WebFreight.Web.ContainerTracking
                 }
             }
         }
-        private void AddNotSameLocationDiscrepancy (dynamic discrepancyParams, string time)
+        private void AddNotSameLocationDiscrepancy(dynamic discrepancyParams, string time)
         {
             var shipmentUnloCode = GetUnloCodeFromPortId(discrepancyParams.shipmentLocation);
             var discrepancyReason = "Shipment " + discrepancyParams.shipmentCode + discrepancyParams.shipmentDirection + " port is empty - shipment " + time + " not updated.";
@@ -291,7 +308,7 @@ namespace WebFreight.Web.ContainerTracking
         private void AddActualDateDiscrepancy(dynamic discrepancyParams)
         {
             var actualdateName = discrepancyParams.containerCode + " " + discrepancyParams.containerActualDateName;
-            
+
             var discrepancyReason = $@"Shipment {actualdateName} already has a value of {discrepancyParams.shipmentActualDate} - did not update new container value {discrepancyParams.containerActualDate}.";
 
             AddContainerDiscrepancyToService(discrepancyParams.containerPM, discrepancyParams.shipmentPM, discrepancyReason);
@@ -312,5 +329,23 @@ namespace WebFreight.Web.ContainerTracking
             if (discrepancy != null) return true;
             return false;
         }
+    }
+    public class TransshipmentData
+    {
+        public string Key;
+        public List<TransshipmentUpdatedFields> TransshipmentUpdatedFields;
+        public TransshipmentData(string key)
+        {
+            this.Key = key;
+            this.TransshipmentUpdatedFields = new List<TransshipmentUpdatedFields>();
+        }
+    }
+    public class TransshipmentUpdatedFields
+    {
+        public string Location;
+        public string Vessel;
+        public string Voyage;
+        public DateTime? EstimatedDate;
+        public DateTime? ActualDate;
     }
 }

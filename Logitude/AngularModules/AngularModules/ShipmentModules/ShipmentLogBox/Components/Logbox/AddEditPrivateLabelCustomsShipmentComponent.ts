@@ -965,6 +965,9 @@ export class AddEditPrivateLabelCustomsShipmentComponent extends BaseComponent i
                 if (SessionLocator.PrivateLableSettings) {
                     this.EntityPM.ForwarderPartnerId = SessionLocator.PrivateLableSettings.HybridPartnerId;
                 }
+                if (!this.EntityPM.ShipmentAdditionalData) {
+                    this.EntityPM.ShipmentAdditionalData = new ShipmentAdditionalData();
+                }
                 if (this.PLForwarding == true) {
                     this.EntityPM.ShipmentAdditionalData.PLForwarding = true;
                 }
@@ -999,6 +1002,9 @@ export class AddEditPrivateLabelCustomsShipmentComponent extends BaseComponent i
 
                 this.EntityPM.ForwarderPartnerId = SessionLocator.PrivateLableSettings.HybridPartnerId;
 
+                if (!this.EntityPM.ShipmentAdditionalData) {
+                    this.EntityPM.ShipmentAdditionalData = new ShipmentAdditionalData();
+                }
                 if (this.PLForwarding == true) {
                     this.EntityPM.ShipmentAdditionalData.PLForwarding = true;
                 }
