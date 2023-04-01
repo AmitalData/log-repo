@@ -8325,6 +8325,7 @@
     <TypeScriptCompile Include="Workflow\EntityLists\WorkFlowInstanceVariableList.ts" />
     <TypeScriptCompile Include="Workflow\EntityLists\WorkFlowList.ts" />
     <TypeScriptCompile Include="Workflow\EntityLists\WorkFlowStatusList.ts" />
+    <TypeScriptCompile Include="Workflow\EntityLists\WorkFlowTriggerTypeList.ts" />
     <TypeScriptCompile Include="Workflow\EntityLists\WorkFlowVersionList.ts" />
     <TypeScriptCompile Include="Workflow\EntityLists\WorkFlowVersionStatusList.ts" />
     <TypeScriptCompile Include="Workflow\EntityPMs\ExpressionCategoryPM.ts" />
@@ -8344,6 +8345,7 @@
     <TypeScriptCompile Include="Workflow\EntityPMs\WorkFlowInstanceVariablePM.ts" />
     <TypeScriptCompile Include="Workflow\EntityPMs\WorkFlowPM.ts" />
     <TypeScriptCompile Include="Workflow\EntityPMs\WorkFlowStatusPM.ts" />
+    <TypeScriptCompile Include="Workflow\EntityPMs\WorkFlowTriggerTypePM.ts" />
     <TypeScriptCompile Include="Workflow\EntityPMs\WorkFlowVersionPM.ts" />
     <TypeScriptCompile Include="Workflow\EntityPMs\WorkFlowVersionStatusPM.ts" />
     <TypeScriptCompile Include="Workflow\Lists\BooleanValuesList.ts" />
@@ -8356,6 +8358,7 @@
     <TypeScriptCompile Include="Workflow\Lists\StartEventApplicationsList.ts" />
     <TypeScriptCompile Include="Workflow\Lists\StartEventTypesList.ts" />
     <TypeScriptCompile Include="Workflow\Models\Condition.ts" />
+    <TypeScriptCompile Include="Workflow\Models\FieldApiQueryFilter.ts" />
     <TypeScriptCompile Include="Workflow\Models\ListItem.ts" />
     <TypeScriptCompile Include="Workflow\Models\ReturnedField.ts" />
     <TypeScriptCompile Include="Workflow\Models\SetValue.ts" />
@@ -8369,6 +8372,7 @@
     <TypeScriptCompile Include="Workflow\Pipes\ConditionOperatorsItemsPipe.ts" />
     <TypeScriptCompile Include="Workflow\Pipes\EntityLabelPipe.ts" />
     <TypeScriptCompile Include="Workflow\Pipes\ExpressionPipe.ts" />
+    <TypeScriptCompile Include="Workflow\Pipes\GetFieldApiQueryFiltersPipe .ts" />
     <TypeScriptCompile Include="Workflow\Pipes\IsCollectionTypePipe.ts" />
     <TypeScriptCompile Include="Workflow\Pipes\IsDateTimeTypePipe.ts" />
     <TypeScriptCompile Include="Workflow\Pipes\IsFieldOperatorPipe.ts" />
@@ -8405,6 +8409,7 @@
     <TypeScriptCompile Include="Workflow\Services\StandardLists\WorkFlowInstanceVariableListService.ts" />
     <TypeScriptCompile Include="Workflow\Services\StandardLists\WorkFlowListService.ts" />
     <TypeScriptCompile Include="Workflow\Services\StandardLists\WorkFlowStatusListService.ts" />
+    <TypeScriptCompile Include="Workflow\Services\StandardLists\WorkFlowTriggerTypeListService.ts" />
     <TypeScriptCompile Include="Workflow\Services\StandardLists\WorkFlowVersionListService.ts" />
     <TypeScriptCompile Include="Workflow\Services\StandardLists\WorkFlowVersionStatusListService.ts" />
     <TypeScriptCompile Include="Workflow\Services\StandardPMs\ServiceProviderSubscriptionPMService.ts" />
