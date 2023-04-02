@@ -31,7 +31,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.Distr).HasColumnName("Distr").HasMaxLength(10).IsUnicode(false);
 
-            this.Property(t => t.BranchId).HasColumnName("BranchId").HasMaxLength(3).IsUnicode(false);
+            this.Property(t => t.BranchId).HasColumnName("BranchId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.CardId).HasColumnName("CardId").HasMaxLength(15).IsUnicode(false);
 
