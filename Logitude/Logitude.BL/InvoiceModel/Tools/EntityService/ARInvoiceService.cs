@@ -1468,7 +1468,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                         if (string.IsNullOrEmpty(entityPM.InvoiceNumber) || entityPM.InvoiceNumber == entityPM.Id)
                         {
-                            Dictionary<string, string> counterAdditionalParameters = GetCounterAdditionalParameter(entityPM.ARInvoiceTypeCode);
+                            string invoiceType = GetInvoiceType();
+                            Dictionary<string, string> counterAdditionalParameters = GetCounterAdditionalParameter(invoiceType);
                      
                             if (entityPM.IsConstituentInvoice)
                             {
@@ -1494,7 +1495,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
         }
-
+        private string GetInvoiceType()
+        {
+            if (!entityPM.IsConsolidationInvoice) return entityPM.ARInvoiceTypeCode;
+            if (entityPM.ARInvoiceTypeCode == "CD") return "COD";
+            return "CON";
+        }
         private Dictionary<string, string> GetCounterAdditionalParameter(string invoiceType)
         {
             Dictionary<string, string> counterAdditionalParameters = new Dictionary<string, string>() { { "[B]", "" }, { "[BranchName]", "" } };
