@@ -46,8 +46,8 @@ namespace WebFreight.Web.Helpers.WorkerRole.PODImage
             var pdfHeight = pdfPage.PageSize.Height;
             float imageWidth = GetImageWidth(image.Width, pdfWidth);
             float imageHeight = image.Height > pdfHeight ? pdfHeight : image.Height;
-            float horizentalMargin = GetImageHorizentalLeftMargin(imageWidth, pdfWidth);
-            ImageElement unscaledImageElement = new ImageElement(horizentalMargin, 0, imageWidth, imageHeight, image);
+            float imageXPosition = GetImageXPosition(imageWidth, pdfWidth);
+            ImageElement unscaledImageElement = new ImageElement(imageXPosition, 0, imageWidth, imageHeight, image);
             return unscaledImageElement;
         }
 
@@ -72,7 +72,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.PODImage
             return imageWidth;
         }
 
-        private float GetImageHorizentalLeftMargin(float imageWidth, float pdfWidth)
+        private float GetImageXPosition(float imageWidth, float pdfWidth)
         {
             if (!FeatureToggleHelper.HasFeatureToggle("CPI", tenant)) return 0;
             return (pdfWidth - imageWidth) / 2;
