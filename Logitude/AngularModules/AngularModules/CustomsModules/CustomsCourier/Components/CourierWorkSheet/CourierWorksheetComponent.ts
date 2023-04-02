@@ -1617,11 +1617,11 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 break;
             }
             case "500": {
-                filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 76, 500, null, "Between", false, false, false, "number", false);
+                  filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 75.01, 500, null, "Between", false, false, false, "number", false);
                 break;
             }
             case "1000": {
-                filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 501, 1000, null, "Between", false, false, false, "number", false);
+                filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 500.01, 1000, null, "Between", false, false, false, "number", false);
                 break;
             }
         }
