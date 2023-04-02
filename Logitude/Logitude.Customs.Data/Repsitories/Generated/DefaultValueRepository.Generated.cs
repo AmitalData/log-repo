@@ -28,10 +28,10 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  DefaultValue GetSingle(string id, string defaulttypeid, string distr, string branchid, string cardid, int tenant)
+		public  DefaultValue GetSingle(string id, int tenant)
         {
             return (from a in context.DefaultValues
-                    where a.Id == id && a.DefaultTypeId == defaulttypeid && a.Distr == distr && a.BranchId == branchid && a.CardId == cardid && a.Tenant == tenant
+                    where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
@@ -46,7 +46,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             DefaultValueKeys keys = entityKeys as DefaultValueKeys;
             return (from a in context.DefaultValues
-                    where a.Id == keys.Id && a.DefaultTypeId == keys.DefaultTypeId && a.Distr == keys.Distr && a.BranchId == keys.BranchId && a.CardId == keys.CardId
+                    where a.Id == keys.Id
                     select a).FirstOrDefault();
         }
 		         

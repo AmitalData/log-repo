@@ -57,6 +57,26 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.Tenant = entityPM.Tenant;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DefaultTypeId))
+            {
+				entityPOCO.DefaultTypeId = entityPM.DefaultTypeId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Distr))
+            {
+				entityPOCO.Distr = entityPM.Distr;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BranchId))
+            {
+				entityPOCO.BranchId = entityPM.BranchId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CardId))
+            {
+				entityPOCO.CardId = entityPM.CardId;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShortValue))
             {
 				entityPOCO.ShortValue = entityPM.ShortValue;
@@ -120,6 +140,26 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
                 oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DefaultTypeId))
+            {
+                oldEntityPM.DefaultTypeId = entityPM.DefaultTypeId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Distr))
+            {
+                oldEntityPM.Distr = entityPM.Distr;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BranchId))
+            {
+                oldEntityPM.BranchId = entityPM.BranchId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CardId))
+            {
+                oldEntityPM.CardId = entityPM.CardId;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShortValue))

@@ -48,9 +48,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new DefaultValueDataMapping();
         }
 		 
-		public  DefaultValuePM GetSingle(string id, string defaulttypeid, string distr, string branchid, string cardid,bool getComposition, bool getFromCache)
+		public  DefaultValuePM GetSingle(string id,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new DefaultValueKeys(){ Id = id, DefaultTypeId = defaulttypeid, Distr = distr, BranchId = branchid, CardId = cardid };
+             EntityKeys = new DefaultValueKeys(){ Id = id };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(DefaultValue entityPOCO)
         {
-            DefaultValueKeys entityKeys = new DefaultValueKeys() { Id = entityPOCO.Id, DefaultTypeId = entityPOCO.DefaultTypeId, Distr = entityPOCO.Distr, BranchId = entityPOCO.BranchId, CardId = entityPOCO.CardId,  };
+            DefaultValueKeys entityKeys = new DefaultValueKeys() { Id = entityPOCO.Id,  };
             return entityKeys;
         }
      

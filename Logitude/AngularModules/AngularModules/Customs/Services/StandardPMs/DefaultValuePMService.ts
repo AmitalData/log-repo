@@ -32,12 +32,12 @@ export class DefaultValuePMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/defaultvalues';      
     }
 
-	get(id: string, defaulttypeid: string, distr: string, branchid: string, cardid: string) {       
+	get(id: string) {       
 
 		var callTime = new Date();		
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id+'&'+'defaulttypeid=' + defaulttypeid+'&'+'distr=' + distr+'&'+'branchid=' + branchid+'&'+'cardid=' + cardid, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
 				.pipe(
 					map((response: HttpResponse<any>) => {
 						var pm = response.body;
@@ -51,7 +51,7 @@ export class DefaultValuePMService {
 						serviceResponse.Result = entity;
               
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DefaultValue", "GetSinglePM", 'id=' + id+'&'+'defaulttypeid=' + defaulttypeid+'&'+'distr=' + distr+'&'+'branchid=' + branchid+'&'+'cardid=' + cardid);
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DefaultValue", "GetSinglePM", 'id=' + id);
 				 
 						return serviceResponse;
 
