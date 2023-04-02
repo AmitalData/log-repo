@@ -1361,12 +1361,15 @@
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentPackageController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowVesselController.cs" />
+    <Compile Include="Controllers\WorkflowModel\Extended\MicrosoftOffice365Controller.cs" />
+    <Compile Include="Controllers\WorkflowModel\Extended\ServiceProviderSubscriptionExtendedController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\WorkflowInstanceExtendedController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\WorkflowVersionExtendedController.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\ExpressionCategoryViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\ExpressionViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\OperatorCategoryViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\OperatorViewsController.Generated.cs" />
+    <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\ServiceProviderSubscriptionViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\TaskPriorityViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\TaskStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\TaskTypeViewsController.Generated.cs" />
@@ -1381,6 +1384,7 @@
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\WorkFlowVersionStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\WorkFlowVersionViewsController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\ListControllers\WorkFlowViewsController.Generated.cs" />
+    <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\ServiceProviderSubscriptionController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\TaskController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\TaskPriorityController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\TaskStatusController.Generated.cs" />
@@ -1391,6 +1395,10 @@
     <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\WorkFlowInstanceVariableController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\WorkFlowVersionController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Models\ApiQueryTreeFilters.cs" />
+    <Compile Include="Controllers\WorkflowModel\Models\MicrosoftOffice365\SubscriptionNotification.cs" />
+    <Compile Include="Controllers\WorkflowModel\Models\MicrosoftOffice365\CreateSubscription.cs" />
+    <Compile Include="Controllers\WorkflowModel\Models\MicrosoftOffice365\SubscriptionNotificationResourceData.cs" />
+    <Compile Include="Controllers\WorkflowModel\QueueMessages\NewOffice365MessageQueueMessage.cs" />
     <Compile Include="DashboardModel\DomainServices\DashboardDomainService.cs" />
     <Compile Include="DataContracts\AccountingPartnerApiFilters.cs" />
     <Compile Include="DataContracts\BrandingData.cs" />
@@ -3618,6 +3626,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SealUpdateReasonTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SeizureFactorTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SeizureMethodTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ServiceProviderSubscriptionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SharedLogisticsSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ShipmentOrderUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SLALineUpdateClass.cs" />
@@ -7980,6 +7989,10 @@
     <ProjectReference Include="..\..\Logitude.XSD\Logitude.XSD.csproj">
       <Project>{3e75c83f-67c7-4b62-9759-7ea92e16f272}</Project>
       <Name>Logitude.XSD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MicrosoftGraphClient\MicrosoftGraphClient.csproj">
+      <Project>{DF7D6BF3-C07E-471C-A8ED-526C431FD294}</Project>
+      <Name>MicrosoftGraphClient</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Simplog.Data\Simplog.Data.csproj">
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>

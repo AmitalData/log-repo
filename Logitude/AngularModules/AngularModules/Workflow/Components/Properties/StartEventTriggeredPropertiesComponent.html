@@ -1,0 +1,146 @@
+<style>
+    .table-container {
+        table-layout: fixed;
+    }
+
+    .table-row {
+        height: 1px;
+    }
+
+    .first-split-table-row {
+        height: 20px;
+    }
+
+    .table-row-cell {
+        padding-bottom: 10px;
+    }
+
+    .split-block {
+        border-bottom: 1px solid #6E6E6E;
+    }
+
+    .table-row-cell-block {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .label {
+        font-weight: bold;
+    }
+
+    .application-list-container,
+    .event-list-container {
+        width: 320px;
+    }
+
+    .msal-login-button {
+        margin-left: 20px;
+        width: 50px;
+        display: inline-block;
+        vertical-align: bottom;
+    }
+</style>
+
+
+<table class="table-container">
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr class="first-split-table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <div class="label">Application</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block application-list-container">
+                <ComboBox [ItemsSource]="StartEventApplicationsListItems" [Binding]="'Name'"
+                    [SelectedItem]="Application | ListItemPipe : StartEventApplicationsListItems" [ListType]="''"
+                    [CyData]="'application'">
+                </ComboBox>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <div class="label">Configure Event</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <p>Trigger when a new email is recevied in your inbox</p>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block event-list-container">
+                <ComboBox [ItemsSource]="StartEventTypesListItems" [Binding]="'Name'"
+                    [SelectedItem]="EventType | ListItemPipe : StartEventTypesListItems" [ListType]="''"
+                    [CyData]="'event-type'">
+                </ComboBox>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <div class="label">Account</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <div *ngIf="!WorkflowProviderSubscription">
+                    <span>Connect Microsoft Office 365</span>
+                    <button class="Button msal-login-button" (click)="openMsalLoginPopup()">Sign In</button>
+                </div>
+                <div *ngIf="WorkflowProviderSubscription">
+                    <span>Successfully connected to Microsoft Office 365 account:
+                        {{WorkflowProviderSubscription.UserEmail}}</span>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+</table>

@@ -54,7 +54,7 @@ export class CustomDashboardComponent extends BaseComponent {
     private AnalyticsFactsFieldsMetaDataPMExtendedService: AnalyticsFactsFieldsMetaDataPMExtendedService;
     public PresetFilters: AnalyticsFactsFieldsMetaDataPM[];
     public IsPredfineds: boolean;
-
+    
     constructor() {
         super();
         this.DashboardListService = new DashboardListService();

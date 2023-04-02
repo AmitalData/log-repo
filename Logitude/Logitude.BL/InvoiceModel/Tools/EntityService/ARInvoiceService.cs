@@ -1468,11 +1468,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                         if (string.IsNullOrEmpty(entityPM.InvoiceNumber) || entityPM.InvoiceNumber == entityPM.Id)
                         {
-                            Dictionary<string, string> counterAdditionalParameters = null;
-                            if (FeatureToggleHelper.HasFeatureToggle("BCC", tenant))
-                            {
-                                counterAdditionalParameters = GetCounterAdditionalParameter();
-                            }
+                            Dictionary<string, string> counterAdditionalParameters = GetCounterAdditionalParameter(entityPM.ARInvoiceTypeCode);
+                     
                             if (entityPM.IsConstituentInvoice)
                             {
                                 entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "CNST", "CNS", null, counterAdditionalParameters);
@@ -1498,10 +1495,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
         }
 
-        private Dictionary<string, string> GetCounterAdditionalParameter()
+        private Dictionary<string, string> GetCounterAdditionalParameter(string invoiceType)
         {
             Dictionary<string, string> counterAdditionalParameters = new Dictionary<string, string>() { { "[B]", "" }, { "[BranchName]", "" } };
-            if (!string.IsNullOrEmpty(entityPM.BranchId))
+            if (!string.IsNullOrEmpty(entityPM.BranchId) && FeatureToggleHelper.HasFeatureToggle("BCC", tenant))
             {
                 BranchRepository branchRepository = new BranchRepository(myCommonContext);
                 Branch myBranch = branchRepository.GetSingleBranch(entityPM.BranchId, entityPM.Tenant);
@@ -1514,6 +1511,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     counterAdditionalParameters["[B]"] = myBranch.CounterCode;
                 }
             }
+
+
+            if (FeatureToggleHelper.HasFeatureToggle("ICC", tenant))
+            {
+                counterAdditionalParameters.Add("[CustomizeCounterParameter2]", invoiceType);
+            }
+
 
             return counterAdditionalParameters;
         }
