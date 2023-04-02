@@ -130,10 +130,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public DefaultTypeList GetSingle(string id, string code, string distr)
+        public DefaultTypeList GetSingle(string id)
         {
             IQueryable<DefaultType> DefaultTypeQuery = (from a in context.DefaultTypes
-                                                       where a.Id == id && a.Code == code && a.Distr == distr
+                                                       where a.Id == id
                                                        select a);
 
              

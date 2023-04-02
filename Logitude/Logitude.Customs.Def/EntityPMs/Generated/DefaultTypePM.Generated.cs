@@ -90,9 +90,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 }
 	   }
 	  private string code ;
-	  
-       [Key]
-	  
+	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -115,9 +113,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 }
 	   }
 	  private string distr ;
-	  
-       [Key]
-	  
+	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]

@@ -50,7 +50,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 		
 		protected override EntityKeyFields GetKeys(DefaultTypePM entityPM)
         {
-            DefaultTypeKeys entityKeys = new DefaultTypeKeys() { Id = entityPM.Id, Code = entityPM.Code, Distr = entityPM.Distr };
+            DefaultTypeKeys entityKeys = new DefaultTypeKeys() { Id = entityPM.Id };
             return entityKeys;
         }
 

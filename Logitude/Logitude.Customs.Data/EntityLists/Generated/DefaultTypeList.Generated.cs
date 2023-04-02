@@ -20,12 +20,8 @@ namespace Logitude.Customs.Data.EntityLists
        public int Tenant  { get; set; }
        [DataMember]
        public string SearchFields  { get; set; }
-
-       [Key]
        [DataMember]
        public string Code  { get; set; }
-
-       [Key]
        [DataMember]
        public string Distr  { get; set; }
        [DataMember]
