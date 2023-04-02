@@ -19,6 +19,8 @@ namespace Logitude.BL.InfrastructureModel.Services
         ObjectFieldQuery objectFieldQuery;
         int tenant;
         string[] partnerObjectTableTypes;
+        private List<string> relatedPartnerObjectTables;
+        private List<string> partnersObjectTableIds;
 
         public PartnersObjectFieldService(IWebFreightContext objectContext, int tenant)
         {
@@ -27,21 +29,22 @@ namespace Logitude.BL.InfrastructureModel.Services
             this.tenant = tenant;
             objectFieldQuery = new ObjectFieldQuery(tenant);
             partnerObjectTableTypes = new string[] {"AccountingPartner", "Agent", "AirLine", "CustomClearance", "CustomAgent", "CustomsShipper", "Coloader", "Customer", "Freelancer", "PotentialCustomer", "Participant",
-    "ShippingAgent", "ShippingLine", "Trucker", "Vendor", "Warehouse" };
+            "ShippingAgent", "ShippingLine", "Trucker", "Vendor", "Warehouse" };
+            relatedPartnerObjectTables = new List<string>();
+            partnersObjectTableIds = new List<string>();
         }
         public void Create(ObjectFieldPM objectField)
         {
-            string[] partners = objectField.RelatedEntities.Split(',');
-            foreach(string partner in partners)
+            if (string.IsNullOrEmpty(objectField.RelatedEntities))
+                return;
+            relatedPartnerObjectTables = objectField.RelatedEntities.Split(',').Where(d=> !string.IsNullOrEmpty(d)).ToList();
+            foreach(string partnerObjectTable in relatedPartnerObjectTables)
             {
-                if(!String.IsNullOrEmpty(partner))
-                {
-                    MapAndCreateNewPartnerField(objectField, partner);
-                }
+                CreateObjectField(objectField, partnerObjectTable);
             }
         }
 
-        private void MapAndCreateNewPartnerField(ObjectFieldPM objectField, string partner)
+        private void CreateObjectField(ObjectFieldPM objectField, string partner)
         {
             objectField.ObjectTableId = ObjectTableQuery.GetObjectTableByCode(partner, 0)?.Id;
             if (String.IsNullOrEmpty(objectField.ObjectTableId))
@@ -55,65 +58,57 @@ namespace Logitude.BL.InfrastructureModel.Services
 
         public void Update(ObjectFieldPM objectField)
         {
-            string[] partners = objectField.RelatedEntities.Split(',');
-            List<string> selectedPartnersIds = new List<string>();
-            foreach (string partner in partners)
+            if (string.IsNullOrEmpty(objectField.RelatedEntities))
+            return;
+            relatedPartnerObjectTables = objectField.RelatedEntities.Split(',').Where(d => !string.IsNullOrEmpty(d)).ToList();
+            foreach (string partnerObjectTable in relatedPartnerObjectTables)
             {
-                if (!String.IsNullOrEmpty(partner))
-                {
-                    selectedPartnersIds.Add(ObjectTableQuery.GetObjectTableByCode(partner, tenant)?.Id);
-                }
+                partnersObjectTableIds.Add(ObjectTableQuery.GetObjectTableByCode(partnerObjectTable, tenant)?.Id);
             }
-            List<ObjectFieldPM> AvailableFieldsCopiesToUpdate = objectFieldQuery.GetObjectFieldByTenant(tenant).Where(field => partnerObjectTableTypes.Contains(field.ObjectTableName) && field.FieldName == objectField.FieldName).ToList();
-            List<string> updatedObjectFieldsTablesIDs = new List<string>();
-            UpdateAvailableCopies(objectField, AvailableFieldsCopiesToUpdate, updatedObjectFieldsTablesIDs);
 
-            CreateFieldForNewSelectedPartners(objectField, selectedPartnersIds, updatedObjectFieldsTablesIDs);
+
+            List<ObjectFieldPM> partnersObjectFields = objectFieldQuery.GetObjectFieldByTenant(tenant).Where(field => partnerObjectTableTypes.Contains(field.ObjectTableName) && field.FieldName == objectField.FieldName).ToList();
+            UpdatePartnersObjectField(objectField, partnersObjectFields);
+
+           AddNewPartnersObjectField(objectField, partnersObjectFields);
         }
 
-        private void CreateFieldForNewSelectedPartners(ObjectFieldPM objectField, List<string> selectedPartnersIds, List<string> updatedObjectFieldsTablesIDs)
+        private void AddNewPartnersObjectField(ObjectFieldPM objectField, List<ObjectFieldPM> partnersObjectFields)
         {
-            var newPartnersIds = selectedPartnersIds.Where(partnerId => !updatedObjectFieldsTablesIDs.Contains(partnerId)).ToList();
-            foreach (string partnerId in newPartnersIds)
+            var partnerObjectTableIds = partnersObjectTableIds.Where(d => !partnersObjectFields.Select(field => field.ObjectTableId).ToList().Contains(d)).ToList();
+            foreach (string partnerObjectTableId in partnerObjectTableIds)
             {
-                if (!String.IsNullOrEmpty(partnerId))
-                {
-                    objectField.ObjectTableId = partnerId;
-                    objectField.ObjectTableName = ObjectTableQuery.GetSingleObjectTableById(partnerId, 0).Name;
-                    objectField.IsRelatedEntity = true;
-                    objectField.FullNameTextCodeCode = objectField.FullNameTextCodeDefaultText;
-                    objectField.HelpTextCodeCode = objectField.HelpTextCodeDefaultText;
-                    objectField.ListTextCodeCode = objectField.ListTextCodeDefaultText;
-                    objectFieldService.Create(objectField);
-                }
+                objectField.ObjectTableId = partnerObjectTableId;
+                objectField.ObjectTableName = ObjectTableQuery.GetSingleObjectTableById(partnerObjectTableId, 0).Name;
+                objectField.IsRelatedEntity = true;
+                objectField.FullNameTextCodeCode = objectField.FullNameTextCodeDefaultText;
+                objectField.HelpTextCodeCode = objectField.HelpTextCodeDefaultText;
+                objectField.ListTextCodeCode = objectField.ListTextCodeDefaultText;
+                objectFieldService.Create(objectField);
             }
         }
 
-        private void UpdateAvailableCopies(ObjectFieldPM objectField, List<ObjectFieldPM> AvailableFieldsCopiesToUpdate, List<string> updatedObjectFieldsTablesIDs)
+        private void UpdatePartnersObjectField(ObjectFieldPM objectField, List<ObjectFieldPM> partnersObjectFields)
         {
-            foreach (var field in AvailableFieldsCopiesToUpdate)
+            foreach (var partnerObjectField in partnersObjectFields)
             {
-                ObjectFieldPM mappedField = GetNewUpdatedPM(objectField, field, updatedObjectFieldsTablesIDs);
+                ObjectFieldPM mappedField = MapPartnerObjectField(objectField, partnerObjectField);
                 objectFieldService.Update(mappedField, false);
             }
         }
 
-        private ObjectFieldPM GetNewUpdatedPM(ObjectFieldPM objectField, ObjectFieldPM field, List<string> updatedObjectFieldsTablesIDs)
+        private ObjectFieldPM MapPartnerObjectField(ObjectFieldPM objectField, ObjectFieldPM partnerObjectField)
         {
-            field.FullNameTextCodeDefaultText = objectField.FullNameTextCodeDefaultText;
-            field.ListTextCodeDefaultText = objectField.ListTextCodeDefaultText;
-            field.HelpTextCodeDefaultText = objectField.HelpTextCodeDefaultText;
-            field.FullNameTextCodeCode = objectField.FullNameTextCodeCode;
-            field.ListTextCodeCode = objectField.ListTextCodeCode;
-            field.HelpTextCodeCode = objectField.HelpTextCodeDefaultText;
-            field.IsRequiered = objectField.IsRequiered;
-            field.MaxLength = objectField.MaxLength;
-            field.MinLength = objectField.MinLength;
-            field.MultiLine = objectField.MultiLine;
-            field.DisplayOnly = objectField.DisplayOnly;
-            field.DefaultAdditionalTreeFilters = objectField.DefaultAdditionalTreeFilters;
-            updatedObjectFieldsTablesIDs.Add(field.ObjectTableId);
-            return field;
+            partnerObjectField.FullNameTextCodeDefaultText = objectField.FullNameTextCodeDefaultText;
+            partnerObjectField.ListTextCodeDefaultText = objectField.ListTextCodeDefaultText;
+            partnerObjectField.HelpTextCodeDefaultText = objectField.HelpTextCodeDefaultText;
+            partnerObjectField.IsRequiered = objectField.IsRequiered;
+            partnerObjectField.MaxLength = objectField.MaxLength;
+            partnerObjectField.MinLength = objectField.MinLength;
+            partnerObjectField.MultiLine = objectField.MultiLine;
+            partnerObjectField.DisplayOnly = objectField.DisplayOnly;
+            partnerObjectField.DefaultAdditionalTreeFilters = objectField.DefaultAdditionalTreeFilters;
+            return partnerObjectField;
         }
     }
 }
