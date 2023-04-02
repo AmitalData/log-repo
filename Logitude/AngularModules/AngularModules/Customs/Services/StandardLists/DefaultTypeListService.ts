@@ -32,12 +32,12 @@ export class DefaultTypeListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/defaulttypeviews';  
     }
 
-	getSingle(id: string, code: string, distr: string) {
+	getSingle(id: string) {
 	   
 		var callTime = new Date();
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id+'&'+'code=' + code+'&'+'distr=' + distr, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
 				.pipe(			
 					map((response: HttpResponse<any>) => {
 
@@ -52,7 +52,7 @@ export class DefaultTypeListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DefaultType", "GetSingleList", 'id=' + id+'&'+'code=' + code+'&'+'distr=' + distr); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DefaultType", "GetSingleList", 'id=' + id); 
 
 						return serviceResponse;
 					}),

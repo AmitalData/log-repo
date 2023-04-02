@@ -32,12 +32,12 @@ export class DefaultTypePMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/defaulttypes';      
     }
 
-	get(id: string, code: string, distr: string) {       
+	get(id: string) {       
 
 		var callTime = new Date();		
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id+'&'+'code=' + code+'&'+'distr=' + distr, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
 				.pipe(
 					map((response: HttpResponse<any>) => {
 						var pm = response.body;
@@ -51,7 +51,7 @@ export class DefaultTypePMService {
 						serviceResponse.Result = entity;
               
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DefaultType", "GetSinglePM", 'id=' + id+'&'+'code=' + code+'&'+'distr=' + distr);
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DefaultType", "GetSinglePM", 'id=' + id);
 				 
 						return serviceResponse;
 

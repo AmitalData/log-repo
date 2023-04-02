@@ -30,16 +30,14 @@
     Type="nvarchar"
     Size="15">
     <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="Distr"
     Type="varchar"
     Size="10">
     <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="LocalName"

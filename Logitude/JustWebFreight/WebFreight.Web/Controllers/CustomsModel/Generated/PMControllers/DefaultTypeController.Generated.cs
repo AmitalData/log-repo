@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id, string code, string distr)
+        public HttpResponseMessage GetSingle(string id)
         {
 		  try
             {
@@ -63,7 +63,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 DefaultTypeQueryService defaultTypeQuery = new DefaultTypeQueryService(MyContext);
 				defaultTypeQuery.InitializeSettings();
-                DefaultTypePM defaultTypePM = defaultTypeQuery.GetSingle(id, code, distr,true,false);
+                DefaultTypePM defaultTypePM = defaultTypeQuery.GetSingle(id,true,false);
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
             
