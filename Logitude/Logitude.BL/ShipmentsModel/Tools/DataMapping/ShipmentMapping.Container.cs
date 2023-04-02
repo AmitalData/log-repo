@@ -631,7 +631,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
         public static void MapContainerShipmentFields(ContainerPM containerPM, Container container, List<FieldChange> fieldChanges)
         {
-            if (!containerPM.IsShipmentBatchUpdate) return;
+            if (!containerPM.IsShipmentBatchUpdate && !isNew && containerPM.ShipmentStatusId == container.ShipmentStatusId) return;            
 
             FieldChange.Add(container.ShipmentId, containerPM.ShipmentId, nameof(containerPM.ShipmentId), fieldChanges);
             container.ShipmentId = containerPM.ShipmentId;

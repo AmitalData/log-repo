@@ -2,6 +2,7 @@
 using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -853,6 +854,8 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
         }
         private void SaveShipment()
         {
+            string oldStatusId = shipmentPM.StatusId;
+
             string updatedByEmail = null;
             if (shipmentPM.IsUpdatedVizionAnalyzer || shipmentPM.IsUpdatedOceanInsightsAnalyzer)
                 updatedByEmail = "system@tenant" + tenant + ".com";
@@ -865,6 +868,9 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
             string activity = "(A) Update Shipment from Container";
             AddTotangoActivity(tenant, activity, updatedByEmail);
             service.Update();
+            shipmentPM.ShipmentUpdatedFromContainer = false;
+
+            ShipmentContainersEntityBehaviour.UpdateConatinarStatus(shipmentPM, oldStatusId != shipmentPM.StatusId, shipmentsContext);
         }
     }
 }
