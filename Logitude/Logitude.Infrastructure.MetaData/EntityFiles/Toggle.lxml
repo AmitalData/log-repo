@@ -43,7 +43,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;cf19&quot;"
+  Code="&quot;d7fd&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -966,6 +966,11 @@
       Name="&quot;Automation Master House Set Field Value&quot;"
       SearchFields="&quot;AHS,Automation Master House Set Field Value&quot;"
       Description="&quot;Automation Master House Set Field Value&quot;" />
+    <Record
+      Code="&quot;CPI&quot;"
+      Name="&quot;Centralized POD images when convert to PDF files&quot;"
+      SearchFields="&quot;CPI,Centralized POD images when convert to PDF files&quot;"
+      Description="&quot;Centralized POD images when convert to PDF files&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

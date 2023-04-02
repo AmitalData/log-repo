@@ -924,6 +924,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "AHS,Automation Master House Set Field Value", 
                 Description = "Automation Master House Set Field Value", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CPI", 
+                Name = "Centralized POD images when convert to PDF files", 
+                SearchFields = "CPI,Centralized POD images when convert to PDF files", 
+                Description = "Centralized POD images when convert to PDF files", 
+			});
 			
             return all;
        }
