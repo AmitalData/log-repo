@@ -52,7 +52,7 @@ export class CustomizedARInvoiceCounterComponent extends BaseComponent {
             DisplayText: "Credit Note"
         });
         this.InvoicesTypes.push({
-            Code: "CA",
+            Code: "CI",
             DisplayText: "Customs"
         });
         this.InvoicesTypes.push({
