@@ -1,0 +1,76 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools;
+using Simplog.Data.Helpers;
+using Logitude.Server.Tools.Counters;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System.Web;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityUpdateServices
+{ 
+   public partial class DefaultValueUpdateService:EntityUpdateService<DefaultValue,DefaultValuePM,EntityPM>
+   {
+   
+        DefaultValueRepository entityRepository;
+        public DefaultValueUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
+        {
+            ICustomContext  context = mainContext as CustomContext;
+            context = context ??mainContext as ICustomContext ; //Up line is A BUG -and i need it 4 Fakes
+            Mapping = new DefaultValueDataMapping();
+            Repository = new DefaultValueRepository(context);
+        }
+
+       
+        private ICustomContext currentContext;
+        public DefaultValueUpdateService(int tenant)
+        {
+            currentContext = CustomContext.GetContext(tenant);
+        }
+
+        public DefaultValueUpdateService(ICustomContext context)
+        {
+            currentContext = context;
+        }
+
+		
+		protected override EntityKeyFields GetKeys(DefaultValuePM entityPM)
+        {
+            DefaultValueKeys entityKeys = new DefaultValueKeys() { Id = entityPM.Id, DefaultTypeId = entityPM.DefaultTypeId, Distr = entityPM.Distr, BranchId = entityPM.BranchId, CardId = entityPM.CardId };
+            return entityKeys;
+        }
+
+		
+		protected override void FillDefaultValuesOnCreate(DefaultValuePM entityPM)
+        {     
+  
+		
+		    entityPM.Id = IdCounter.GetNumber("DefaultValue", entityPM.Tenant); 
+					
+	    }
+        
+		protected override void FillDefaultValuesOnUpdate(DefaultValuePM entityPM)
+        {       
+           
+        }
+		  
+		 
+	 
+   }
+   
+}
+	 

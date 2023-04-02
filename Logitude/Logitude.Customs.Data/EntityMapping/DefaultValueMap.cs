@@ -1,0 +1,44 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class DefaultValueMap : EntityTypeConfiguration<DefaultValue>
+    {
+	    string dbms;
+        public DefaultValueMap()
+        { 
+			  this.ToTable("DefaultValues", "Customs");
+		
+		    this.HasKey(t => new { t.Id, t.DefaultTypeId, t.Distr, t.BranchId, t.CardId });
+	 
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
+
+            this.Property(t => t.DefaultTypeId).HasColumnName("DefaultTypeId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Distr).HasColumnName("Distr").HasMaxLength(10).IsUnicode(false);
+
+            this.Property(t => t.BranchId).HasColumnName("BranchId").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.CardId).HasColumnName("CardId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.ShortValue).HasColumnName("ShortValue").HasMaxLength(20).IsUnicode(true);
+
+            this.Property(t => t.Value).HasColumnName("Value");
+        }
+    }
+}
+	 

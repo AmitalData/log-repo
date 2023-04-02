@@ -510,6 +510,8 @@
     <Compile Include="EntityDataMappings\DeclarationStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationStatusTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationTaxDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DefaultTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DefaultValueDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeficitConnFileParagraphTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeficitDecisionDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeficitsDataMapping.cs" />
@@ -725,6 +727,8 @@
     <Compile Include="EntityDataMappings\Generated\DeclarationStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationStatusTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationTaxDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DefaultTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DefaultValueDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeficitConnFileParagraphTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeficitDecisionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeficitsDataMapping.Generated.cs" />
@@ -1127,6 +1131,8 @@
     <Compile Include="EntityQueryServices\CurrencyTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\CountryCurrencyQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationFollowUpQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DefaultTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DefaultValueQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\VendorCurrencyQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\SchedulerParamQueryService.cs" />
     <Compile Include="EntityQueryServices\ExternalFieldMappingQueryService.cs" />
@@ -1656,6 +1662,8 @@
     <Compile Include="EntityUpdateServices\ClientsTapagUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConfirmationTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\CountryCurrencyUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\DefaultTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\DefaultValueUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\VendorCurrencyUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeclarationFollowUpUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\VendorCurrencyUpdateService.Generated.cs" />

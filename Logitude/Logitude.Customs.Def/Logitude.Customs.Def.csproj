@@ -99,6 +99,8 @@
     <Compile Include="EntityPMs\Generated\DeclarationExportRecipientPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationFollowUpPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DefaultTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DefaultValuePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeliveryTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DocumentRejectTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExceptionReasonPM.Generated.cs" />
