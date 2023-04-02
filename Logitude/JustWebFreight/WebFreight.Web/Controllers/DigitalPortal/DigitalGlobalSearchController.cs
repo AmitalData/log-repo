@@ -44,8 +44,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 {
                     dictionary =  new Dictionary<string, List<GlobalSearchResult>>
                     {
-                        { "Shipments", new List<GlobalSearchResult>()},
-                        { "Invoicing", new List<GlobalSearchResult>()},
+                        { "Shipment.Q.AllShipments", new List<GlobalSearchResult>()},
+                        { "ARInvoice.G.Invoicing", new List<GlobalSearchResult>()},
                         { "Quotes", new List<GlobalSearchResult>()},
                     };
                     
