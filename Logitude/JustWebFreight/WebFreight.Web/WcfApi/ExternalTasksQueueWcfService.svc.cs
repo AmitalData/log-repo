@@ -30,6 +30,7 @@ using System.Xml;
 using System.Xml.Linq;
 using WebFreight.Web.Security;
 using WebFreight.Web.WebServices;
+using System.Data.Entity.Infrastructure;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -43,6 +44,127 @@ namespace WebFreight.Web.WcfApi
 
 
 #if !tzuri_req
+        public Response GetDataCFIRDEC( Dictionary<string, string> queryParams, int tenant)
+        {
+            var response = new Response();
+            try
+            {
+
+                if (tenant == 0)
+                {
+                    response.HasError = true;
+                    response.ErrorMessage = "Tenant parameter is missing.";
+                    return (response);
+                }
+                string inv_field_list = queryParams["INV_FIELD_LIST"];
+                string dec_field_list = queryParams["DEC_FIELD_LIST"];
+                string mod_field_list = queryParams["MOD_FIELD_LIST"];
+                string sup_field_list = queryParams["SUP_FIELD_LIST"];
+                string dec_list = queryParams["DEC_LIST"];
+
+                string sqlQuery = $"select {inv_field_list} from customs.SUPPLIERINVOICES where DECLARATIONID in ({dec_list})  and tenant={tenant}";
+
+
+                var shipmentsContext = new Simplog.Data.ShipmentsModel.ShipmentsContext();
+                using (SqlConnection connection = new SqlConnection())
+                {
+                    connection.ConnectionString = shipmentsContext.Database.Connection.ConnectionString;
+                    connection.Open();
+
+
+                    Dictionary<string, string> all_results = new Dictionary<string, string>();
+                    using (var cmd = new SqlCommand(sqlQuery, connection))
+                    {
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    List<List<string>> all_lines = new List<List<string>>();
+                                    Dictionary<string, string> results = new Dictionary<string, string>();
+                                    List<string> one_line = new List<string>();
+                                    Console.WriteLine(reader.ToString());
+                                    string dec_id = "";
+                                    for (int pos = 0; reader.FieldCount > pos; pos++)
+                                    {
+                                        if(reader.GetName(pos)== "DECLARATIONID")
+                                        { dec_id = reader[pos].ToString(); }
+                                        one_line.Add(reader[pos].ToString());
+                                    }
+                                    all_lines.Add(one_line);
+
+                                    results.Add("SUPPLIERINVOICES", JsonConvert.SerializeObject(all_lines));
+
+                                    sqlQuery = $"select {dec_field_list} from customs.DECLARATIONS where id='{dec_id}' and tenant={tenant}";
+                                    all_lines = get_table_lines(sqlQuery, connection);
+                                    results.Add("DECLARATIONS", JsonConvert.SerializeObject(all_lines));
+
+                                    sqlQuery = $"select {mod_field_list} from customs.SUPPLIERINVOICEMODIFICATIONS where DECLARATIONID='{dec_id}' and tenant={tenant}";
+                                    all_lines = get_table_lines(sqlQuery, connection);
+                                    results.Add("SUPPLIERINVOICEMODIFICATIONS", JsonConvert.SerializeObject(all_lines));
+
+                                    sqlQuery = $"select {sup_field_list} from customs.SUPPLIERINVOICEITEMS where DECLARATIONID='{dec_id}' and tenant={tenant}";
+                                    all_lines = get_table_lines(sqlQuery, connection);
+                                    results.Add("SUPPLIERINVOICEITEMS", JsonConvert.SerializeObject(all_lines));
+
+
+                                    all_results.Add(dec_id, JsonConvert.SerializeObject(results));
+                                }
+                            }
+
+                        }
+                    }
+                    response.HasError = false;
+                    //results.Add("sql_result", JsonConvert.SerializeObject(all_lines));
+                    //results.Add("sql_query", sqlQuery);
+                    response.Result = JsonConvert.SerializeObject(all_results);
+                }
+                return (response);
+            }
+            catch (Exception ex)
+            {
+                response.IsAuthenticationError = ex.GetType() == typeof(AutenticationException);
+                response.HasError = true;
+                response.ErrorMessage = ex.Message;
+                response.InnerErrorMessage = (ex.InnerException != null ? (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) : null);
+
+                if (!string.IsNullOrEmpty(ex.StackTrace))
+                {
+                    response.ErrorMessage += Environment.NewLine + ex.StackTrace;
+                }
+                return (response);
+            }
+        }
+
+
+        List<List<string>> get_table_lines(string sqlQuery, SqlConnection connection)
+        {
+            List<List<string>> all_lines = new List<List<string>>();
+            using (var cmd = new SqlCommand(sqlQuery, connection))
+            {
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            Console.WriteLine(reader.ToString());
+                            List<string> one_line = new List<string>();
+
+                            for (int pos = 0; reader.FieldCount > pos; pos++)
+                            {
+                                one_line.Add(reader[pos].ToString());
+                            }
+                            all_lines.Add(one_line);
+                        }
+                        
+                    }
+
+                }
+            }
+            return(all_lines);
+        }
 
         public Response LGTQuery(string queryId, Dictionary<string, string> queryParams, int tenant)
         {
@@ -53,6 +175,12 @@ namespace WebFreight.Web.WcfApi
                 //SecurityUtility.AuthenticationOnTenant(tenant);
                 //SecurityUtility.CheckContactFeature("Quote", "UPDATE", tenant);//UPDATE//READ
                 //var context = Simplog.Data.ShipmentsModel.ShipmentsContext.GetContext(tenant);
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    int tenant1 = authToken.Tenant;
+                }
 
                 if (tenant == 0)
                 {
@@ -61,11 +189,17 @@ namespace WebFreight.Web.WcfApi
                     return (response);
                 }
 
-                List <CFILOGIAPI> logi_list = new List<CFILOGIAPI>();  // to do call once !!!!!!!!!!!!!!!!!!!!!!!!!
+                if (queryId == "CFIRDEC")
+                {
+                    response = GetDataCFIRDEC(queryParams,  tenant);
+                    return (response);
+                }
+
+                List<CFILOGIAPI> logi_list = new List<CFILOGIAPI>();  // to do call once !!!!!!!!!!!!!!!!!!!!!!!!!
                 logi_list = CFILOGIAPITask.GetLogiOcc();
                 CFILOGIAPI sql_logi = logi_list.Where(x => x.CODE == queryId).FirstOrDefault();
 
-                if(sql_logi==null)
+                if (sql_logi == null)
                 {
                     response.HasError = true;
                     response.ErrorMessage = $"Query id {queryId} not found.";
@@ -86,12 +220,6 @@ namespace WebFreight.Web.WcfApi
                     return (response);
                 }
 
-                using (TransactionScope scope = TransactionFactory.GetTransaction())
-                {
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    int tenant1 = authToken.Tenant;
-                }
 
 
 
@@ -123,7 +251,7 @@ namespace WebFreight.Web.WcfApi
                                     Console.WriteLine(reader.ToString());
                                     List<string> one_line = new List<string>();
 
-                                    for(int pos=0; reader.FieldCount> pos;pos++)
+                                    for (int pos = 0; reader.FieldCount > pos; pos++)
                                     {
                                         one_line.Add(reader[pos].ToString());
                                     }
