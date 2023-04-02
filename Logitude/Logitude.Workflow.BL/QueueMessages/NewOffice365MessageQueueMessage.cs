@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Logitude.Server.Tools.QueueService;
 
-namespace WebFreight.Web.Controllers.WorkflowModel.QueueMessages
+namespace Logitude.Workflow.BL.QueueMessages
 {
     public class NewOffice365MessageQueueMessage
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace WebFreight.Web.Controllers.WorkflowModel.Models.MicrosoftOffice365
+namespace Logitude.Workflow.BL.Models.MicrosoftOffice365
 {
     public class SubscriptionNotification
     {

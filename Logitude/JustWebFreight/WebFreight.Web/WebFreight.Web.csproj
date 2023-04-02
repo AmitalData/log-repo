@@ -1395,10 +1395,6 @@
     <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\WorkFlowInstanceVariableController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Generated\PMControllers\WorkFlowVersionController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Models\ApiQueryTreeFilters.cs" />
-    <Compile Include="Controllers\WorkflowModel\Models\MicrosoftOffice365\SubscriptionNotification.cs" />
-    <Compile Include="Controllers\WorkflowModel\Models\MicrosoftOffice365\CreateSubscription.cs" />
-    <Compile Include="Controllers\WorkflowModel\Models\MicrosoftOffice365\SubscriptionNotificationResourceData.cs" />
-    <Compile Include="Controllers\WorkflowModel\QueueMessages\NewOffice365MessageQueueMessage.cs" />
     <Compile Include="DashboardModel\DomainServices\DashboardDomainService.cs" />
     <Compile Include="DataContracts\AccountingPartnerApiFilters.cs" />
     <Compile Include="DataContracts\BrandingData.cs" />

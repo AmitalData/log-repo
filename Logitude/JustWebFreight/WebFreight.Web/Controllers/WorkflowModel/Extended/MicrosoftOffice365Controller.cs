@@ -22,8 +22,8 @@ using MicrosoftGraphClient.Models.SubscriptionsService;
 using Newtonsoft.Json;
 using System.Collections.Specialized;
 using Newtonsoft.Json.Linq;
-using WebFreight.Web.Controllers.WorkflowModel.Models.MicrosoftOffice365;
-using WebFreight.Web.Controllers.WorkflowModel.QueueMessages;
+using Logitude.Workflow.BL.Models.MicrosoftOffice365;
+using Logitude.Workflow.BL.QueueMessages;
 
 namespace WebFreight.Web.Controllers.WorkflowModel.Extended
 {
