@@ -32,12 +32,12 @@ export class DefaultValueListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/defaultvalueviews';  
     }
 
-	getSingle(id: string, defaulttypeid: string, distr: string, branchid: string, cardid: string) {
+	getSingle(id: string) {
 	   
 		var callTime = new Date();
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id+'&'+'defaulttypeid=' + defaulttypeid+'&'+'distr=' + distr+'&'+'branchid=' + branchid+'&'+'cardid=' + cardid, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
 				.pipe(			
 					map((response: HttpResponse<any>) => {
 
@@ -52,7 +52,7 @@ export class DefaultValueListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DefaultValue", "GetSingleList", 'id=' + id+'&'+'defaulttypeid=' + defaulttypeid+'&'+'distr=' + distr+'&'+'branchid=' + branchid+'&'+'cardid=' + cardid); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DefaultValue", "GetSingleList", 'id=' + id); 
 
 						return serviceResponse;
 					}),

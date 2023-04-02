@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id, string defaulttypeid, string distr, string branchid, string cardid)
+        public HttpResponseMessage GetSingle(string id)
         {
 		  try
             {
@@ -61,7 +61,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 DefaultValueListQueryService defaultValueQuery = new DefaultValueListQueryService(MyContext);
-                DefaultValueList defaultValueList = defaultValueQuery.GetSingle(id, defaulttypeid, distr, branchid, cardid);
+                DefaultValueList defaultValueList = defaultValueQuery.GetSingle(id);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
                 return Request.CreateResponse(HttpStatusCode.OK,  defaultValueList);

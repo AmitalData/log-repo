@@ -18,20 +18,12 @@ namespace Logitude.Customs.Data.EntityLists
        public string Id  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
-
-       [Key]
        [DataMember]
        public string DefaultTypeId  { get; set; }
-
-       [Key]
        [DataMember]
        public string Distr  { get; set; }
-
-       [Key]
        [DataMember]
        public string BranchId  { get; set; }
-
-       [Key]
        [DataMember]
        public string CardId  { get; set; }
        [DataMember]

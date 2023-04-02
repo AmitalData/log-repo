@@ -23,22 +23,18 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string Id { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
-     [Key]
         [ForeignKey("DefaultType")]
         [Column("DefaultTypeId")]
 	    public string DefaultTypeId { get; set; }
 	      
         public virtual DefaultType DefaultType { get; set; }
-     [Key]
         [Column("Distr")]
 	    public string Distr { get; set; }
-     [Key]
         [ForeignKey("Branch")]
         [Column("BranchId")]
 	    public string BranchId { get; set; }
 	      
         public virtual Branch Branch { get; set; }
-     [Key]
         [ForeignKey("Card")]
         [Column("CardId")]
 	    public string CardId { get; set; }

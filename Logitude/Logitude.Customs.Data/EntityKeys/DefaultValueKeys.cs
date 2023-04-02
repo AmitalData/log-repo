@@ -16,27 +16,11 @@ namespace Logitude.Customs.Data.EntityKeys
 	  
 				 
 	    			   
-	  public string DefaultTypeId  { get; set; }
-	  
-				 
-	    			   
-	  public string Distr  { get; set; }
-	  
-				 
-	    			   
-	  public string BranchId  { get; set; }
-	  
-				 
-	    			   
-	  public string CardId  { get; set; }
-	  
-				 
-	    			   
 	
 	 
 	  public override string GetFullKey()
       {
-                 return Id+'_'+DefaultTypeId+'_'+Distr+'_'+BranchId+'_'+CardId ;
+                 return Id ;
                  
       }
 
