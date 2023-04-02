@@ -92,8 +92,9 @@ Test:hover {
                                                 <div *ngIf="IsDisplayAreaDocument"  class="QueriesSection" >
                                                     <div>Document Type</div>
                                                     <div>
-                                                        <p  class="QueryLink" (click)="ShowDocumentTypeEditButtonclick('SLCIN')">Customize Shared Logistics Invitations</p>
-                                                        <p  class="QueryLink" (click)="ShowDocumentTypeEditButtonclick('SLCRP')">Customize Customer Reset Password E-mail</p>
+                                                        <p *ngIf="!IsCargoTracking && HasCustomizedInvitationDocumentFeature" class="QueryLink" (click)="ShowDocumentTypeEditButtonclick('SLCIN')">Customize Shared Logistics Invitations</p>
+                                                        <p *ngIf="IsCargoTracking && HasCustomizedInvitationDocumentFeature" class="QueryLink" (click)="ShowDocumentTypeEditButtonclick('CTIM')">Customize Cargo Tracking Invitations</p>
+                                                        <p *ngIf="HasCustomizedResetPasswordEmailFeature" class="QueryLink" (click)="ShowDocumentTypeEditButtonclick('SLCRP')">Customize Customer Reset Password E-mail</p>
                                                     </div>
                                                 </div> 
                                         </div>
