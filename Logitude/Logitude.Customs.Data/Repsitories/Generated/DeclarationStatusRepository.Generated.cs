@@ -28,10 +28,10 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  DeclarationStatus GetSingle(string declarationid, int tenant)
+		public  DeclarationStatus GetSingle(string declarationid, int linenumber, int tenant)
         {
             return (from a in context.DeclarationStatuses
-                    where a.DeclarationId == declarationid && a.Tenant == tenant
+                    where a.DeclarationId == declarationid && a.LineNumber == linenumber && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
@@ -46,7 +46,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             DeclarationStatusKeys keys = entityKeys as DeclarationStatusKeys;
             return (from a in context.DeclarationStatuses
-                    where a.DeclarationId == keys.DeclarationId
+                    where a.DeclarationId == keys.DeclarationId && a.LineNumber == keys.LineNumber
                     select a).FirstOrDefault();
         }
 		         

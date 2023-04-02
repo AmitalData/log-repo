@@ -83,20 +83,20 @@ using Amital.QuoteOPM.BL;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
-   public class DeclarationStatusUpdateClass
+   public class StatusCodeUpdateClass
    {  		
-		public const string HashString = "b32b14fb400178708e224ead3e5e49bc";
+		public const string HashString = "a26ffcfef19fc9190c8500d02bdcb344";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "Customs.DeclarationStatus",
+	             				    ObjectTableName =  "Customs.StatusCode",
 			      				    IsNew =  true,
-			      				    DBTableName =  "Customs.DeclarationStatuses",
-			      				    ObjectTableSingular =  "DeclarationStatus",
-			      				    ObjectTablePlural =  "DeclarationStatuses",
+			      				    DBTableName =  "Customs.StatusCodes",
+			      				    ObjectTableSingular =  "StatusCode",
+			      				    ObjectTablePlural =  "StatusCodes",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -104,7 +104,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  false,
-			      				    KeyPropertyPath =  "Tenant",
+			      				    LookUp1 =  "Id",
+			      				    LookUp2 =  "Id",
+			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
@@ -115,7 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
-			      				    SortingByObjectField =  "Tenant",
+			      				    SortingByObjectField =  "Id",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
@@ -124,8 +126,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "DeclarationStatus",
-			      				    Code =  "392f",
+			      				    DefaultText =  "StatusCode",
+			      				    Code =  "6fb6",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -138,7 +140,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
-			      				    HashString =  DeclarationStatusUpdateClass.HashString,
+			      				    HashString =  StatusCodeUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -150,7 +152,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						ObjectTableName =  "Customs.DeclarationStatus",
+					  						ObjectTableName =  "Customs.StatusCode",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
@@ -177,7 +179,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DeclarationStatus",
+					  						ValidForQuerySection1 =  "StatusCode",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -209,133 +211,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "DeclarationId",
-					  						ObjectTableName =  "Customs.DeclarationStatus",
+					 						FieldName =  "Status_Code",
+					  						ObjectTableName =  "Customs.StatusCode",
 					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  15,
-					  						IsRequired =  true,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  15,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "DeclarationId",
-					  						ListPropertyPath =  "DeclarationId",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.DeclarationStatus",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "DeclarationId",
-					  						DefaultText =  "DeclarationId",
-					  						ListFieldLable =  "DeclarationIdListLable",
-					  						ListLableDefaultText =  "DeclarationId",
-					  						ListLocalDefaultText =  "DeclarationId",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "LineNumber",
-					  						ObjectTableName =  "Customs.DeclarationStatus",
-					  						FieldsDataType =  "Integer",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  true,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "LineNumber",
-					  						ListPropertyPath =  "LineNumber",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.DeclarationStatus",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "LineNumber",
-					  						DefaultText =  "LineNumber",
-					  						FullLocalDefaultText =  "מס' רץ",
-					  						ListFieldLable =  "LineNumberListLable",
-					  						ListLableDefaultText =  "LineNumber",
-					  						ListLocalDefaultText =  "מס' רץ",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "StatusID",
-					  						ObjectTableName =  "Customs.DeclarationStatus",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Customs.StatusCode",
 					  						MinLength =  0,
 					  						MaxLength =  3,
 					  						IsRequired =  false,
@@ -351,8 +229,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "StatusID",
-					  						ListPropertyPath =  "StatusID",
+					  						PMPropertyPath =  "Status_Code",
+					  						ListPropertyPath =  "Status_Code",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -361,7 +239,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.DeclarationStatus",
+					  						ValidForQuerySection1 =  "Customs.StatusCode",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -370,10 +248,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "StatusID",
+					  						FullFieldLable =  "Status_Code",
 					  						DefaultText =  "Status Code",
 					  						FullLocalDefaultText =  "קוד סטטוס",
-					  						ListFieldLable =  "StatusIDListLable",
+					  						ListFieldLable =  "Status_CodeListLable",
 					  						ListLableDefaultText =  "Status Code",
 					  						ListLocalDefaultText =  "קוד סטטוס",
 					  						IsMaxLength =  false,
@@ -395,134 +273,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "StatusDate",
-					  						ObjectTableName =  "Customs.DeclarationStatus",
-					  						FieldsDataType =  "DateTime",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "StatusDate",
-					  						ListPropertyPath =  "StatusDate",
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.DeclarationStatus",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "StatusDate",
-					  						DefaultText =  "StatusDate",
-					  						FullLocalDefaultText =  "תאריך ושעת סטטוס",
-					  						ListFieldLable =  "StatusDateListLable",
-					  						ListLableDefaultText =  "StatusDate",
-					  						ListLocalDefaultText =  "תאריך ושעת סטטוס",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "StatusUser",
-					  						ObjectTableName =  "Customs.DeclarationStatus",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "User",
-					  						MinLength =  0,
-					  						MaxLength =  15,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  15,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "StatusUser",
-					  						ListPropertyPath =  "StatusUser",
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.DeclarationStatus",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "StatusUser",
-					  						DefaultText =  "Status User",
-					  						FullLocalDefaultText =  "משתמש",
-					  						ListFieldLable =  "StatusUserListLable",
-					  						ListLableDefaultText =  "StatusUser",
-					  						ListLocalDefaultText =  "משתמש",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "StatusRemarks",
-					  						ObjectTableName =  "Customs.DeclarationStatus",
+					 						FieldName =  "StatusNameHeb",
+					  						ObjectTableName =  "Customs.StatusCode",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
-					  						MaxLength =  1000,
+					  						MaxLength =  30,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -530,14 +285,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  1000,
+					  						SystemMaxLength =  30,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "StatusRemarks",
-					  						ListPropertyPath =  "StatusRemarks",
+					  						PMPropertyPath =  "StatusNameHeb",
+					  						ListPropertyPath =  "StatusNameHeb",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -545,7 +301,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.DeclarationStatus",
+					  						ValidForQuerySection1 =  "Customs.StatusCode",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -554,13 +310,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "StatusRemarks",
-					  						DefaultText =  "StatusRemarks",
-					  						FullLocalDefaultText =  "הערות סטטוס",
-					  						ListFieldLable =  "StatusRemarksListLable",
-					  						ListLableDefaultText =  "StatusRemarks",
-					  						ListLocalDefaultText =  "הערות סטטוס",
-					  						IsMaxLength =  true,
+					  						FullFieldLable =  "StatusNameHeb",
+					  						DefaultText =  "StatusNameHeb",
+					  						FullLocalDefaultText =  "שם סטטוס בעברית",
+					  						ListFieldLable =  "StatusNameHebListLable",
+					  						ListLableDefaultText =  "StatusNameHeb",
+					  						ListLocalDefaultText =  "שם סטטוס בעברית",
+					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -579,11 +335,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "UnfSequenceNumeric",
-					  						ObjectTableName =  "Customs.DeclarationStatus",
-					  						FieldsDataType =  "Integer",
+					 						FieldName =  "StatusNameEng",
+					  						ObjectTableName =  "Customs.StatusCode",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  0,
+					  						MaxLength =  30,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -591,14 +347,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
+					  						SystemMaxLength =  30,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "UnfSequenceNumeric",
-					  						ListPropertyPath =  "UnfSequenceNumeric",
+					  						PMPropertyPath =  "StatusNameEng",
+					  						ListPropertyPath =  "StatusNameEng",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -606,7 +363,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.DeclarationStatus",
+					  						ValidForQuerySection1 =  "Customs.StatusCode",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -615,12 +372,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "UnfSequenceNumeric",
-					  						DefaultText =  "UnfSequenceNumeric",
-					  						FullLocalDefaultText =  "מס' רץ ביוניפרייט",
-					  						ListFieldLable =  "UnfSequenceNumericListLable",
-					  						ListLableDefaultText =  "UnfSequenceNumeric",
-					  						ListLocalDefaultText =  "מס' רץ ביוניפרייט",
+					  						FullFieldLable =  "StatusNameEng",
+					  						DefaultText =  "StatusNameEng",
+					  						FullLocalDefaultText =  "שם סטטוס באנגלית",
+					  						ListFieldLable =  "StatusNameEngListLable",
+					  						ListLableDefaultText =  "StatusNameEng",
+					  						ListLocalDefaultText =  "שם סטטוס באנגלית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -645,15 +402,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
-		   ObjectTable DeclarationStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationStatus" && d.Tenant == 0).FirstOrDefault();
-		   //List<ObjectField> DeclarationStatusObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.DeclarationStatus").ToList();
+		   ObjectTable StatusCodeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.StatusCode" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> StatusCodeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.StatusCode").ToList();
 		       
 	      
 
-	         Screen DeclarationStatusCustomsDeclarationStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "DeclarationStatus.HeaderScreen", Name = "Customs.DeclarationStatusHeaderScreen", ObjectTableId = DeclarationStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen StatusCodeCustomsStatusCodeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "StatusCode.HeaderScreen", Name = "Customs.StatusCodeHeaderScreen", ObjectTableId = StatusCodeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
-		    DeclarationStatusObjectTable.HeaderScreenId = DeclarationStatusCustomsDeclarationStatusHeaderScreenScreen0.Id;
-		    DeclarationStatusObjectTable.HeaderScreenCode = DeclarationStatusCustomsDeclarationStatusHeaderScreenScreen0.Code;
+		    StatusCodeObjectTable.HeaderScreenId = StatusCodeCustomsStatusCodeHeaderScreenScreen0.Id;
+		    StatusCodeObjectTable.HeaderScreenCode = StatusCodeCustomsStatusCodeHeaderScreenScreen0.Code;
 
 	   		  
 
@@ -665,18 +422,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
-		   ObjectTable DeclarationStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationStatus" && d.Tenant == 0).FirstOrDefault(); 
+		   ObjectTable StatusCodeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.StatusCode" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature DeclarationStatusFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = DeclarationStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationStatus.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationStatusObjectTable);
-		   Feature DeclarationStatusFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = DeclarationStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationStatus.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationStatusObjectTable);
-		   Feature DeclarationStatusFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = DeclarationStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationStatus.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationStatusObjectTable);
-		   Feature DeclarationStatusFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = DeclarationStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationStatus.Features.PackageFeature", NameTextCodeDefaultText = "DeclarationStatus Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationStatusObjectTable);    
+		   Feature StatusCodeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = StatusCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "StatusCode.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,StatusCodeObjectTable);
+		   Feature StatusCodeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = StatusCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "StatusCode.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,StatusCodeObjectTable);
+		   Feature StatusCodeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = StatusCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "StatusCode.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,StatusCodeObjectTable);
+		   Feature StatusCodeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = StatusCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "StatusCode.Features.PackageFeature", NameTextCodeDefaultText = "StatusCode Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,StatusCodeObjectTable);    
 	    
 		}
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable DeclarationStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationStatus" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable StatusCodeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.StatusCode" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -690,7 +447,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = DeclarationStatusObjectTable.Id,
+                ObjectTableId = StatusCodeObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -708,7 +465,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = DeclarationStatusObjectTable.Id,
+                ObjectTableId = StatusCodeObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 

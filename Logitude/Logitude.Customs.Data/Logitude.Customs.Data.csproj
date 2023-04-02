@@ -239,6 +239,7 @@
     <Compile Include="EntityKeys\SignStationKeys.cs" />
     <Compile Include="EntityKeys\ServersNameKeys.cs" />
     <Compile Include="EntityKeys\SplitOrMergeReasonKeys.cs" />
+    <Compile Include="EntityKeys\StatusCodeKeys.cs" />
     <Compile Include="EntityKeys\StatusFieldTypeKeys.cs" />
     <Compile Include="EntityKeys\StorageStatusTableKeys.cs" />
     <Compile Include="EntityKeys\StuffingSiteTypeKeys.cs" />
@@ -485,6 +486,7 @@
     <Compile Include="EntityListQueryServices\Generated\SeizureMethodTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ServersNameListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SplitOrMergeReasonListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\StatusCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\StatusFieldTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\StorageStatusTableListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\StuffingSiteTypeListQueryService.Generated.cs" />
@@ -544,6 +546,7 @@
     <Compile Include="EntityListQueryServices\SeizureMethodTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ServersNameListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SplitOrMergeReasonListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\StatusCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\StatusFieldTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\StorageStatusTableListQueryService.cs" />
     <Compile Include="EntityListQueryServices\StuffingSiteTypeListQueryService.cs" />
@@ -566,6 +569,7 @@
     <Compile Include="EntityLists\Generated\DefaultTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DefaultValueList.Generated.cs" />
     <Compile Include="EntityLists\Generated\VendorCurrencyList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\StatusCodeList.Generated.cs" />
     <Compile Include="EntityLists\JoinCustomsItemList.cs" />
     <Compile Include="EntityLists\CustomsPartnersItemList.cs" />
     <Compile Include="EntityLists\Generated\AcceptanceStatusList.Generated.cs" />
@@ -855,6 +859,7 @@
     <Compile Include="EntityMapping\SignStationMap.cs" />
     <Compile Include="EntityMapping\ServersNameMap.cs" />
     <Compile Include="EntityMapping\SplitOrMergeReasonMap.cs" />
+    <Compile Include="EntityMapping\StatusCodeMap.cs" />
     <Compile Include="EntityMapping\StatusFieldTypeMap.cs" />
     <Compile Include="EntityMapping\StorageStatusTableMap.cs" />
     <Compile Include="EntityMapping\StuffingSiteTypeMap.cs" />
@@ -1010,6 +1015,7 @@
     <Compile Include="EntityPOCOs\SignStation.cs" />
     <Compile Include="EntityPOCOs\ServersName.cs" />
     <Compile Include="EntityPOCOs\SplitOrMergeReason.cs" />
+    <Compile Include="EntityPOCOs\StatusCode.cs" />
     <Compile Include="EntityPOCOs\StatusFieldType.cs" />
     <Compile Include="EntityPOCOs\StorageStatusTable.cs" />
     <Compile Include="EntityPOCOs\StuffingSiteType.cs" />
@@ -1257,6 +1263,7 @@
     <Compile Include="Repsitories\Generated\SignStationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ServersNameRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SplitOrMergeReasonRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\StatusCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\StatusFieldTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\StorageStatusTableRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\StuffingSiteTypeRepository.Generated.cs" />
@@ -1316,6 +1323,7 @@
     <Compile Include="Repsitories\SignStationRepository.cs" />
     <Compile Include="Repsitories\ServersNameRepository.cs" />
     <Compile Include="Repsitories\SplitOrMergeReasonRepository.cs" />
+    <Compile Include="Repsitories\StatusCodeRepository.cs" />
     <Compile Include="Repsitories\StatusFieldTypeRepository.cs" />
     <Compile Include="Repsitories\StorageStatusTableRepository.cs" />
     <Compile Include="Repsitories\StuffingSiteTypeRepository.cs" />

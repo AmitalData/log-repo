@@ -19,30 +19,30 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
-import {DeclarationStatusList} from '../../EntityLists/DeclarationStatusList';
+import {StatusCodeList} from '../../EntityLists/StatusCodeList';
 
 @Injectable()
 
-export class DeclarationStatusListService {
+export class StatusCodeListService {
 	private _http: HttpClient;
     private _apiUrl: string;   
-	public static CachedData: Array<DeclarationStatusList> = [];
+	public static CachedData: Array<StatusCodeList> = [];
     constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/declarationstatusviews';  
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/statuscodeviews';  
     }
 
-	getSingle(declarationid: string, linenumber: number) {
+	getSingle(id: string) {
 	   
 		var callTime = new Date();
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle/?' + 'declarationid=' + declarationid+'&'+'linenumber=' + linenumber, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
 				.pipe(			
 					map((response: HttpResponse<any>) => {
 
 						var list = response.body;                   
-						var entity: DeclarationStatusList;
+						var entity: StatusCodeList;
 						if (list) {
 							entity = this.MapJsonToEntityList(list);
 						}   
@@ -52,7 +52,7 @@ export class DeclarationStatusListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DeclarationStatus", "GetSingleList", 'declarationid=' + declarationid+'&'+'linenumber=' + linenumber); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "StatusCode", "GetSingleList", 'id=' + id); 
 
 						return serviceResponse;
 					}),
@@ -71,10 +71,10 @@ export class DeclarationStatusListService {
 					map((response: HttpResponse<any>) => {
 
 						var allLists = response.body;
-						var _mappedListsArray: Array<DeclarationStatusList> = [];
+						var _mappedListsArray: Array<StatusCodeList> = [];
 						if (allLists) {
 							for (var key in allLists) {				
-								var entity: DeclarationStatusList = this.MapJsonToEntityList(allLists[key]);
+								var entity: StatusCodeList = this.MapJsonToEntityList(allLists[key]);
 								_mappedListsArray.push(entity);
 							}
 						}
@@ -84,7 +84,7 @@ export class DeclarationStatusListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DeclarationStatus", "GetAllLists", ""); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "StatusCode", "GetAllLists", ""); 
 
 						return serviceResponse;
 					}),
@@ -131,11 +131,11 @@ export class DeclarationStatusListService {
 					map((response: HttpResponse<any>) => {
 
 						var serviceResponse: ServiceResponse = response.body;
-						var _mappedListsArray: Array<DeclarationStatusList> = [];
+						var _mappedListsArray: Array<StatusCodeList> = [];
 
 						if (serviceResponse.Result) {
 							for (var key in serviceResponse.Result) {				
-								var entity: DeclarationStatusList = this.MapJsonToEntityList(serviceResponse.Result[key]);
+								var entity: StatusCodeList = this.MapJsonToEntityList(serviceResponse.Result[key]);
 								_mappedListsArray.push(entity);
 							}
 						}   
@@ -144,7 +144,7 @@ export class DeclarationStatusListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DeclarationStatus", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "StatusCode", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
 				           
 						return serviceResponse;
 					}),
@@ -156,8 +156,8 @@ export class DeclarationStatusListService {
 	
 	    MapJsonToEntityList(jsonList: any) {
        
-            var entityList: DeclarationStatusList;
-            entityList = new DeclarationStatusList();
+            var entityList: StatusCodeList;
+            entityList = new StatusCodeList();
             var jsonListKeys = Object.keys(jsonList);
 
             for (var key in jsonListKeys) {

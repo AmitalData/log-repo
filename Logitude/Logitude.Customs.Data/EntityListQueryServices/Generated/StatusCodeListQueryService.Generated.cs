@@ -17,20 +17,20 @@ using Logitude.Customs.Data.EntityLists;
 namespace Logitude.Customs.Data.EntityListQueryServices
 { 
 
-    public partial class DeclarationStatusListQueryService
+    public partial class StatusCodeListQueryService
     {
          private ICustomContext context;
-        public DeclarationStatusListQueryService(ICustomContext context)
+        public StatusCodeListQueryService(ICustomContext context)
         {
             this.context = context;
         }
 
-        public List<DeclarationStatusList> GetList(QueryOperations queryOperations, int tenant)
+        public List<StatusCodeList> GetList(QueryOperations queryOperations, int tenant)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<DeclarationStatus> iQueryable = (from a in context.DeclarationStatuses
+            IQueryable<StatusCode> iQueryable = (from a in context.StatusCodes
                                               
                    where a.Tenant == tenant select a);
             			iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
@@ -40,20 +40,20 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 
-            iQueryable = filter.GetFilteredQuery<DeclarationStatus>(nonListQueryOperation, iQueryable);
+            iQueryable = filter.GetFilteredQuery<StatusCode>(nonListQueryOperation, iQueryable);
 
             int skippedPorts = queryOperations.PageIndex;
 
-            IQueryable<DeclarationStatusList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<StatusCodeList> query2 = GetIqueryableList(iQueryable);
            
-            query2 = filter.GetFilteredQuery<DeclarationStatusList>(listQueryOperation, query2);
+            query2 = filter.GetFilteredQuery<StatusCodeList>(listQueryOperation, query2);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
-                PropertyInfo propInfo = typeof(DeclarationStatusList).GetProperty(queryOperations.SortByColumnName);
-                List<ObjectField> DeclarationStatusObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.DeclarationStatus",tenant).ToList();
+                PropertyInfo propInfo = typeof(StatusCodeList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> StatusCodeObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.StatusCode",tenant).ToList();
 
-                ObjectField objectField = (from a in DeclarationStatusObjectFields
+                ObjectField objectField = (from a in StatusCodeObjectFields
                                            where a.FieldName == queryOperations.SortByColumnName
                                            select a).FirstOrDefault();
 
@@ -61,7 +61,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 {
 				 if (objectField.IsCustom)
                     {
-                        query2 = sortClass.GetSorterQuery<DeclarationStatusList, string>(queryOperations, query2);
+                        query2 = sortClass.GetSorterQuery<StatusCodeList, string>(queryOperations, query2);
                     }
                     else
                     {
@@ -70,41 +70,41 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                          case "ntext":
                         case "text":
                             {
-                                query2 = sortClass.GetSorterQuery<DeclarationStatusList, string>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<StatusCodeList, string>(queryOperations, query2);
                                 break;
                             }
 						case "sigdouble":
 						case "double":
                             {
-                                query2 = sortClass.GetSorterQuery<DeclarationStatusList, double>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<StatusCodeList, double>(queryOperations, query2);
                                 break;
                             }
 						case "date":
                         case "datetime":
                             {
-                                query2 = sortClass.GetSorterQuery<DeclarationStatusList, DateTime>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<StatusCodeList, DateTime>(queryOperations, query2);
                                 break;
                             }
 						case "unsinteger":
                         case "integer":
                             {
-                                query2 = sortClass.GetSorterQuery<DeclarationStatusList, int>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<StatusCodeList, int>(queryOperations, query2);
                                 break;
                             }
                         case "boolean":
                             {
-                                query2 = sortClass.GetSorterQuery<DeclarationStatusList, bool>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<StatusCodeList, bool>(queryOperations, query2);
                                 break;
                             }
 						case "unsdecimal":
 						case "decimal":
                             {
-                                query2 = sortClass.GetSorterQuery<DeclarationStatusList, decimal>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<StatusCodeList, decimal>(queryOperations, query2);
                                 break;
                             }
                         default:
                             {
-                                query2 = query2.OrderBy(d => d.Tenant);
+                                query2 = query2.OrderByDescending(d => d.Id);
                                 break;
                             }
                     }
@@ -113,7 +113,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             }
 		    else
             {
-                query2 = query2.OrderBy(d => d.Tenant);
+                query2 = query2.OrderByDescending(d => d.Id);
             }
 			if(!queryOperations.GetAll)
 			{
@@ -125,21 +125,21 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     
         }
 
-         public List<DeclarationStatusList> GetList(int tenant)
+         public List<StatusCodeList> GetList(int tenant)
          {
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public DeclarationStatusList GetSingle(string declarationid, int linenumber)
+        public StatusCodeList GetSingle(string id)
         {
-            IQueryable<DeclarationStatus> DeclarationStatusQuery = (from a in context.DeclarationStatuses
-                                                       where a.DeclarationId == declarationid && a.LineNumber == linenumber
+            IQueryable<StatusCode> StatusCodeQuery = (from a in context.StatusCodes
+                                                       where a.Id == id
                                                        select a);
 
              
-            IQueryable<DeclarationStatusList> DeclarationStatusListQuery = GetIqueryableList( DeclarationStatusQuery);
-            DeclarationStatusList DeclarationStatusList = DeclarationStatusListQuery.FirstOrDefault();
-            return DeclarationStatusList;
+            IQueryable<StatusCodeList> StatusCodeListQuery = GetIqueryableList( StatusCodeQuery);
+            StatusCodeList StatusCodeList = StatusCodeListQuery.FirstOrDefault();
+            return StatusCodeList;
            
         }
 
@@ -148,7 +148,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<DeclarationStatus> iQueryable = (from a in context.DeclarationStatuses 
+            IQueryable<StatusCode> iQueryable = (from a in context.StatusCodes 
                    where a.Tenant == tenant select a);
 
 			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
@@ -158,11 +158,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
             
-			iQueryable = filter.GetFilteredQuery<DeclarationStatus>(nonListQueryOperation, iQueryable);
+			iQueryable = filter.GetFilteredQuery<StatusCode>(nonListQueryOperation, iQueryable);
 
-            IQueryable<DeclarationStatusList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<StatusCodeList> query2 = GetIqueryableList(iQueryable);
 
-            query2 = filter.GetFilteredQuery<DeclarationStatusList>(listQueryOperation, query2);
+            query2 = filter.GetFilteredQuery<StatusCodeList>(listQueryOperation, query2);
             int count = query2.Count();
             return count;
         }

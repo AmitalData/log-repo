@@ -345,6 +345,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<SpecialActionDescriptionType> SpecialActionDescriptionTypes { get; }
 		 IDbSet<SpecializationType> SpecializationTypes { get; }
 		 IDbSet<SplitOrMergeReason> SplitOrMergeReasons { get; }
+		 IDbSet<StatusCode> StatusCodes { get; }
 		 IDbSet<StatusFieldType> StatusFieldTypes { get; }
 		 IDbSet<StorageMessageType> StorageMessageTypes { get; }
 		 IDbSet<StorageStatus> StorageStatuses { get; }

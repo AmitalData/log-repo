@@ -724,6 +724,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new SplitOrMergeReasonMap());
 	
+            modelBuilder.Configurations.Add(new StatusCodeMap());
+	
             modelBuilder.Configurations.Add(new StatusFieldTypeMap());
 	
             modelBuilder.Configurations.Add(new StorageMessageTypeMap());
@@ -3324,6 +3326,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<SplitOrMergeReason> SplitOrMergeReasons 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<StatusCode> StatusCodes 
 	 {
 	      get; set;
 	 
