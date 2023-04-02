@@ -35,11 +35,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual StatusCode StatusCode { get; set; }
         [Column("StatusDate")]
 	    public DateTime StatusDate { get; set; }
-        [ForeignKey("StatusUser")]
+        [ForeignKey("User")]
         [Column("StatusUser")]
 	    public string StatusUser { get; set; }
 	      
-        public virtual User StatusUser { get; set; }
+        public virtual User User { get; set; }
         [Column("StatusRemarks")]
 	    public string StatusRemarks { get; set; }
         [Column("UnfSequenceNumeric")]
