@@ -170,13 +170,14 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
                     nodeLabel: "label",
                     startNodeEntity: "entity",
                     startNodeEntityLabel: "entityLabel",
+                    startNodeApplicationLabel: "applicationLabel",
+                    startNodeEventTypeLabel: "eventTypeLabel",
                     startNodeTrigger: "trigger",
                     conditionNodeMetLabel: "metLabel",
                     conditionNodeOtherwiseLabel: "otherwiseLabel"
                 },
-                flowSettings: {
-                    isViewMode: this.IsViewMode
-                }
+                isViewMode: this.IsViewMode,
+                flowTriggerType: this.EntityPM.WorkFlowTriggerTypeCode
             };
 
             ReactDOM.render(React.createElement(ReactFlowModeler, props), this.containerRef.nativeElement);
