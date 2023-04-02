@@ -591,7 +591,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             isEntityStatusUpdated = oldEntityStatusId != entityPM.StatusId ? true : false;
                         }
 
-                        ShipmentContainersEntityBehaviour.UpdateConatinarStatus(this.entityPM, isEntityStatusUpdated, objectContext);
+                        if(!entityPM.ShipmentUpdatedFromContainer)
+                            ShipmentContainersEntityBehaviour.UpdateConatinarStatus(this.entityPM, isEntityStatusUpdated, objectContext);
 
                         if (string.IsNullOrEmpty(entityPM.CustomFileId) && !string.IsNullOrEmpty(entityPoco.CustomFileId))
                         {
