@@ -884,6 +884,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "WRR,Run reconciliation using WorkerRole", 
                 Description = "Run reconciliation using WorkerRole", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CPI", 
+                Name = "Centralized POD images when convert to PDF files", 
+                SearchFields = "CPI,Centralized POD images when convert to PDF files", 
+                Description = "Centralized POD images when convert to PDF files", 
+			});
 			
             return all;
        }

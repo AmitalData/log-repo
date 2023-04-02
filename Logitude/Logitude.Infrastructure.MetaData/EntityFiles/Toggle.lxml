@@ -9,6 +9,9 @@
   ObjectTablePlural="&quot;Toggles&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
+  AvailableInCustomization="false"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -39,7 +42,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;0392&quot;"
+  Code="&quot;d7fd&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -57,6 +60,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;3c31&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -88,6 +92,7 @@
     SystemMaxLength="3"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="true"
@@ -160,6 +165,7 @@
     SystemMaxLength="100"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="true"
@@ -232,6 +238,7 @@
     SystemMaxLength="1000"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -304,6 +311,7 @@
     SystemMaxLength="400"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="true"
@@ -932,6 +940,11 @@
       Name="&quot;Run reconciliation using WorkerRole&quot;"
       SearchFields="&quot;WRR,Run reconciliation using WorkerRole&quot;"
       Description="&quot;Run reconciliation using WorkerRole&quot;" />
+    <Record
+      Code="&quot;CPI&quot;"
+      Name="&quot;Centralized POD images when convert to PDF files&quot;"
+      SearchFields="&quot;CPI,Centralized POD images when convert to PDF files&quot;"
+      Description="&quot;Centralized POD images when convert to PDF files&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
