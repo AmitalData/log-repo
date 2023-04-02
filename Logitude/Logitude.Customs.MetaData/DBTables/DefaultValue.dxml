@@ -23,32 +23,28 @@
     Type="varchar"
     Size="15">
     <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="Distr"
     Type="varchar"
     Size="10">
     <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="BranchId"
     Type="varchar"
     Size="3">
     <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="CardId"
     Type="varchar"
     Size="15">
     <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="ShortValue"
@@ -67,7 +63,7 @@
   <Relation
     ForeignKeyColumn="DefaultTypeId"
     ReferencedTable="DefaultTypes"
-    ReferencedColumn="Id,Code,Distr"
+    ReferencedColumn="Id"
     ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="BranchId"
