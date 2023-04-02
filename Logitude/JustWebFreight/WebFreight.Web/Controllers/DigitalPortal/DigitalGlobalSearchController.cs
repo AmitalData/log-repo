@@ -75,8 +75,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 dictionary = new Dictionary<string, List<GlobalSearchResult>> 
                 {
-                    { "Shipments", GetShipmentsGlobalSearch(shipments.ToList())},
-                    { "Invoicing", GetInovicesGlobalSearch(aRInvoices.ToList())},
+                    { "Shipment.Q.AllShipments", GetShipmentsGlobalSearch(shipments.ToList())},
+                    { "ARInvoice.G.Invoicing", GetInovicesGlobalSearch(aRInvoices.ToList())},
                 };
 
                 if (includeQoutes)
