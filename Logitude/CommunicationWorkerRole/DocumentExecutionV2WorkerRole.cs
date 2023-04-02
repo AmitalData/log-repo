@@ -49,6 +49,7 @@ namespace CommunicationWorkerRole
             {
                 new DocumentsExecutionService(queueService, queueResponse).ExecuteDocumentsV2ExecutionQueue();
                 LogDoneItemInMemory();
+                GC.Collect();
                 queueService.Complete();
             }
             catch (Exception exception)

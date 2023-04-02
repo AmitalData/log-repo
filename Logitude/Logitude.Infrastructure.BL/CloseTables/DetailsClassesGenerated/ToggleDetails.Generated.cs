@@ -916,6 +916,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "EVG,Enable Virtual Grid", 
                 Description = "Enable Virtual Grid", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "RE2", 
+                Name = "Reports Execution WR Version 2", 
+                SearchFields = "RE2, Reports Execution WR Version 2", 
+                Description = "Reports Execution WR Version 2", 
+			});
 			
             return all;
        }
