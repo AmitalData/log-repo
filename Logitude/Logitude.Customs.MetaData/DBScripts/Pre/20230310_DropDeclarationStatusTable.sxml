@@ -7,7 +7,7 @@
 	<Oracle Version="1">
     <![CDATA[
 BEGIN
-   EXECUTE IMMEDIATE 'DROP TABLE ' || DeclarationStatuses;
+   EXECUTE IMMEDIATE 'DROP TABLE DeclarationStatuses';
 EXCEPTION
    WHEN OTHERS THEN
       IF SQLCODE != -942 THEN
