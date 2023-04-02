@@ -1,5 +1,5 @@
 ﻿<Script  DBType="Main" Module="Infrastructure">
-  <Sql Version="39">
+  <Sql Version="40">
     <![CDATA[
 	
 	 BEGIN
@@ -223,12 +223,6 @@
 			{
 				"TextCode": "Quote.G.Print",
 				"DefaultText": "Print",
-				"FieldCode": "",
-				"DisplayText": ""
-			},
-			{
-				"TextCode": "Quote.G.Subject",
-				"DefaultText": "Subject",
 				"FieldCode": "",
 				"DisplayText": ""
 			},
