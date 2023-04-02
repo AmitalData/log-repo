@@ -185,9 +185,13 @@
     <Compile Include="EntityUpdateServices\Generated\WorkFlowVersionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\WorkFlowUpdateService.cs" />
     <Compile Include="EntityUpdateServices\WorkFlowVersionUpdateService.cs" />
+    <Compile Include="Models\MicrosoftOffice365\CreateSubscription.cs" />
+    <Compile Include="Models\MicrosoftOffice365\SubscriptionNotification.cs" />
+    <Compile Include="Models\MicrosoftOffice365\SubscriptionNotificationResourceData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FieldsMapping\TaskFieldsMapping.cs" />
     <Compile Include="FieldsMapping\EntityFieldsMapping.cs" />
+    <Compile Include="QueueMessages\NewOffice365MessageQueueMessage.cs" />
     <Compile Include="QueueMessages\RenewServiceProviderSubscriptionQueueMessage.cs" />
     <Compile Include="Validators\WorkflowValidationClass.cs" />
     <Compile Include="Validators\WorkflowClassLevelValidator.cs" />
