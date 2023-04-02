@@ -525,6 +525,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return pms;
         }
 
+        public bool CheckAnyLedgerTransactionReconciledByIdList(List<string> idList, int tenant)
+        {
+            return repository.CheckAnyLedgerTransactionReconciledByIdList(idList, tenant);
+        }
+
         public List<LedgerTransactionPM> GetLedgerTransactionsByAccountIdListAndJournalId(List<string> accountIdList,string journalId, int tenant)
         {
             List<LedgerTransaction> ledgerTransactionPOCOs = null;

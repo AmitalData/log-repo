@@ -155,6 +155,15 @@ namespace Simplog.Server.Infrastructure.Helpers
             }
             return new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions() { IsolationLevel = IsolationLevel.ReadCommitted });
         }
+
+        public static TransactionScope GetNewReadUncommittedTransaction(TimeSpan? timeOut = null)
+        {
+            if (timeOut != null)
+            {
+                return new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions() { IsolationLevel = IsolationLevel.ReadUncommitted, Timeout = timeOut.Value });
+            }
+            return new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions() { IsolationLevel = IsolationLevel.ReadUncommitted });
+        }
         // I USING THAT WHILE DEBUG AT IMMEDIATE WINDOW>
         //Simplog.Server.Infrastructure.Helpers.TransactionFactory.RegisterTransactionCompleted()
         public static void RegisterTransactionCompleted()
