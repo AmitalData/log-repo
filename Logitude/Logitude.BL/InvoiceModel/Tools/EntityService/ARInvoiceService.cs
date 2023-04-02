@@ -1468,7 +1468,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                         if (string.IsNullOrEmpty(entityPM.InvoiceNumber) || entityPM.InvoiceNumber == entityPM.Id)
                         {
-                            Dictionary<string, string> counterAdditionalParameters = GetCounterAdditionalParameter();
+                            Dictionary<string, string> counterAdditionalParameters = GetCounterAdditionalParameter(entityPM.ARInvoiceTypeCode);
                      
                             if (entityPM.IsConstituentInvoice)
                             {
@@ -1495,7 +1495,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
         }
 
-        private Dictionary<string, string> GetCounterAdditionalParameter()
+        private Dictionary<string, string> GetCounterAdditionalParameter(string invoiceType)
         {
             Dictionary<string, string> counterAdditionalParameters = new Dictionary<string, string>() { { "[B]", "" }, { "[BranchName]", "" } };
             if (!string.IsNullOrEmpty(entityPM.BranchId) && FeatureToggleHelper.HasFeatureToggle("BCC", tenant))
