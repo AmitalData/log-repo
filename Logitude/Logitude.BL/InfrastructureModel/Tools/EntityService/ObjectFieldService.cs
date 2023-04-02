@@ -22,6 +22,7 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools;
 using System.Text.Json;
 using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.BL.InfrastructureModel.Services;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
@@ -43,6 +44,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         private TextCodeRepository textCodeRepository;
         private ObjectTableRepository objectTableRepository;
         private ObjectFieldValidationRepository objectFieldValidationRepository;
+        
         public ObjectFieldService(IWebFreightContext objectContext, int tenant)
         {
             this.tenant = tenant;
@@ -110,11 +112,11 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 }
                 else if (objectTable.Name == "Master") allowedCount = 70;
 
-                if (count < allowedCount)
+                if (count < allowedCount || theEntityPm.IsRelatedEntity)
                 {
                     TextCode newCustomFieldTextCode = new TextCode();
 
-                    newCustomFieldTextCode.Code = objectTable.Name + ".Field" + (count + 1).ToString();
+                    newCustomFieldTextCode.Code = objectTable.Name + (theEntityPm.IsRelatedEntity ? "."+ theEntityPm.FieldName : (".Field" + (count + 1).ToString()));
                     newCustomFieldTextCode.Tenant = theEntityPm.Tenant;
                     newCustomFieldTextCode.TextCodeTypeCode = "F";
                     newCustomFieldTextCode.ObjectTableId = theEntityPm.ObjectTableId;
@@ -123,7 +125,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                     textCodeRepository.Add(newCustomFieldTextCode);
                     theEntityPm.FullNameTextCodeId = newCustomFieldTextCode.Id;
                     theEntityPm.FullNameTextCodeCode = newCustomFieldTextCode.Code;
-
+                    theEntityPm.FullNameTextCodeDefaultText = newCustomFieldTextCode.DefaultText;
                     if (!string.IsNullOrEmpty(theEntityPm.HelpTextCodeCode))
                     {
                         TextCode newHelpTextCode = new TextCode();
@@ -132,7 +134,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                         newHelpTextCode.DefaultText = theEntityPm.HelpTextCodeCode;
                         newHelpTextCode.Id = IdCounter.GetNumber("TextCode", theEntityPm.Tenant).ToString();
                         newHelpTextCode.Tenant = theEntityPm.Tenant;
-                        newHelpTextCode.Code = objectTable.Name + ".Field" + (count + 1).ToString() + ".HelpText";
+                        newHelpTextCode.Code = objectTable.Name + (theEntityPm.IsRelatedEntity ? "." + theEntityPm.FieldName : ".Field" + (count + 1).ToString()) + ".HelpText";
                         textCodeRepository.Add(newHelpTextCode);
                         theEntityPm.HelpTextCodeId = newHelpTextCode.Id;
                         theEntityPm.HelpTextCodeCode = newHelpTextCode.Code;
@@ -142,7 +144,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                     if (!string.IsNullOrEmpty(theEntityPm.ListTextCodeCode) && theEntityPm.DisplayInList)
                     {
                         TextCode listFieldLableTextCode = new TextCode();
-                        listFieldLableTextCode.Code = objectTable.Name + ".Field" + (count + 1).ToString() + "ListLable";
+                        listFieldLableTextCode.Code = objectTable.Name + (theEntityPm.IsRelatedEntity ? "." + theEntityPm.FieldName : ".Field" + (count + 1).ToString()) + "ListLable";
                         listFieldLableTextCode.DefaultText = theEntityPm.ListTextCodeCode;
                         listFieldLableTextCode.Id = IdCounter.GetNumber("TextCode", theEntityPm.Tenant).ToString();
                         listFieldLableTextCode.ObjectTableId = theEntityPm.ObjectTableId;
@@ -157,7 +159,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                     theEntityPm.FullNameTextCodeCode = newCustomFieldTextCode.Code;
                     theEntityPm.FullNameTextCodeDefaultText = newCustomFieldTextCode.DefaultText;
 
-                    string fieldname = "Field" + (count + 1).ToString();
+                    string fieldname = (theEntityPm.IsRelatedEntity ? theEntityPm.FieldName : "Field" + (count + 1).ToString());
                     theEntityPm.FieldName = fieldname;
                     theEntityPm.FieldCode = objectTable.Name +"." + tenant.ToString() +  "." + theEntityPm.FieldName;
                     theEntityPm.PMPropertyPath = fieldname;
@@ -248,6 +250,10 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             {
                 AddKafkaQueueMessage();
             }
+            if(objectTableName == "Card" && theEntityPm.IsCustom && !String.IsNullOrEmpty(theEntityPm.RelatedEntities))
+            {
+                new PartnersObjectFieldService(objectContext, tenant).Create(theEntityPm);
+            }
         }
 
         public void Update(ObjectFieldPM theEntityPm , List<ObjectFieldValidationPM> objectfieldValidationList = null)
@@ -320,6 +326,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                     textCodeRepository.Add(newHelpTextCode);
                     theEntityPm.HelpTextCodeId = newHelpTextCode.Id;
                     theEntityPm.HelpTextCodeCode = newHelpTextCode.Code;
+                    theEntityPm.HelpTextCodeDefaultText = newHelpTextCode.DefaultText;
                 }
 
                 else
@@ -407,6 +414,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             {
                 AddKafkaQueueMessage();
             }
+            
         }
 
         public void Update(ObjectFieldPM theEntityPm, bool mapComposition = false)
@@ -578,6 +586,10 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             if (IsMetConditionsToSendCToolMessage(theEntityPm))
             {
                 AddKafkaQueueMessage();
+            }
+            if (objectTableName == "Card" && theEntityPm.IsCustom && !String.IsNullOrEmpty(theEntityPm.RelatedEntities))
+            {
+                new PartnersObjectFieldService(objectContext, tenant).Update(theEntityPm);
             }
         }
 

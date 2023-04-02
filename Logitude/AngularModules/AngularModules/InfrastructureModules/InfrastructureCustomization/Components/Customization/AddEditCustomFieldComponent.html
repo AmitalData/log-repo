@@ -367,52 +367,52 @@
                             <table>
                                 <tr class="FormFieldRow">
                                     <td style="padding-right:10px">
-                                        <CheckBox [Text]="'Customer'" [IsEnabled]="!IsPartner"></CheckBox>
+                                        <CheckBox [Text]="'Customer'" [IsEnabled]="IsEnable('Customer')" [IsChecked]="PartnersDictionary['Customer']" (Checked)="ChangeCheckBoxValue('Customer',$event)"></CheckBox>
                                     </td>
                                     <td style="padding-right:10px">
-                                        <CheckBox [Text]="'Agent'" [IsEnabled]="!IsPartner"></CheckBox>
+                                        <CheckBox [Text]="'Agent'" [IsEnabled]="IsEnable('Agent')" [IsChecked]="PartnersDictionary['Agent']" (Checked)="ChangeCheckBoxValue('Agent',$event)"></CheckBox>
                                     </td>
                                     <td style="padding-right:10px">
-                                        <CheckBox [Text]="'Customs Agent'" [IsEnabled]="!IsPartner"></CheckBox>
+                                        <CheckBox [Text]="'Customs Agent'" [IsEnabled]="IsEnable('CustomAgent')" [IsChecked]="PartnersDictionary['CustomAgent']" (Checked)="ChangeCheckBoxValue('CustomAgent',$event)"></CheckBox>
                                     </td>
                                     <td style="padding-right:10px">
-                                        <CheckBox [Text]="'Coloader'" [IsEnabled]="!IsPartner"></CheckBox>
-                                    </td>
-                                </tr>
-                                <tr class="FormFieldRow">
-                                    <td style="padding-right:10px">
-                                        <CheckBox [Text]="'Vendor'" [IsEnabled]="!IsPartner"></CheckBox>
-                                    </td>
-                                    <td style="padding-right:10px">
-                                        <CheckBox [Text]="'Shipping Line'" [IsEnabled]="!IsPartner"></CheckBox>
-                                    </td>
-                                    <td style="padding-right:10px">
-                                        <CheckBox [Text]="'Shipping Agent'" [IsEnabled]="!IsPartner"></CheckBox>
-                                    </td>
-                                    <td style="padding-right:10px">
-                                        <CheckBox [Text]="'Freelancer'" [IsEnabled]="!IsPartner"></CheckBox>
+                                        <CheckBox [Text]="'Coloader'" [IsEnabled]="IsEnable('Coloader')" [IsChecked]="PartnersDictionary['Coloader']" (Checked)="ChangeCheckBoxValue('Coloader',$event)"></CheckBox>
                                     </td>
                                 </tr>
                                 <tr class="FormFieldRow">
                                     <td style="padding-right:10px">
-                                        <CheckBox [Text]="'Customs Shipper'" [IsEnabled]="!IsPartner"></CheckBox>
+                                        <CheckBox [Text]="'Vendor'" [IsEnabled]="IsEnable('Vendor')" [IsChecked]="PartnersDictionary['Vendor']" (Checked)="ChangeCheckBoxValue('Vendor',$event)"></CheckBox>
                                     </td>
                                     <td style="padding-right:10px">
-                                        <CheckBox [Text]="'AirLine'" [IsEnabled]="!IsPartner"></CheckBox>
+                                        <CheckBox [Text]="'Shipping Line'" [IsEnabled]="IsEnable('ShippingLine')" [IsChecked]="PartnersDictionary['ShippingLine']" (Checked)="ChangeCheckBoxValue('ShippingLine',$event)"></CheckBox>
                                     </td>
                                     <td style="padding-right:10px">
-                                        <CheckBox [Text]="'Warehouse'" [IsEnabled]="!IsPartner"></CheckBox>
+                                        <CheckBox [Text]="'Shipping Agent'" [IsEnabled]="IsEnable('ShippingAgent')" [IsChecked]="PartnersDictionary['ShippingAgent']" (Checked)="ChangeCheckBoxValue('ShippingAgent',$event)"></CheckBox>
                                     </td>
                                     <td style="padding-right:10px">
-                                        <CheckBox [Text]="'Potential Customer'" [IsEnabled]="!IsPartner"></CheckBox>
+                                        <CheckBox [Text]="'Freelancer'" [IsEnabled]="IsEnable('Freelancer')" [IsChecked]="PartnersDictionary['Freelancer']" (Checked)="ChangeCheckBoxValue('Freelancer',$event)"></CheckBox>
                                     </td>
                                 </tr>
                                 <tr class="FormFieldRow">
                                     <td style="padding-right:10px">
-                                        <CheckBox [Text]="'Trucker'" [IsEnabled]="!IsPartner"></CheckBox>
+                                        <CheckBox [Text]="'Customs Shipper'" [IsEnabled]="IsEnable('CustomsShipper')" [IsChecked]="PartnersDictionary['CustomsShipper']" (Checked)="ChangeCheckBoxValue('CustomsShipper',$event)"></CheckBox>
                                     </td>
                                     <td style="padding-right:10px">
-                                        <CheckBox [Text]="'Custom Clearance'" [IsEnabled]="!IsPartner"></CheckBox>
+                                        <CheckBox [Text]="'AirLine'" [IsEnabled]="IsEnable('AirLine')" [IsChecked]="PartnersDictionary['AirLine']" (Checked)="ChangeCheckBoxValue('AirLine',$event)"></CheckBox>
+                                    </td>
+                                    <td style="padding-right:10px">
+                                        <CheckBox [Text]="'Warehouse'" [IsEnabled]="IsEnable('Warehouse')" [IsChecked]="PartnersDictionary['Warehouse']" (Checked)="ChangeCheckBoxValue('Warehouse',$event)"></CheckBox>
+                                    </td>
+                                    <td style="padding-right:10px">
+                                        <CheckBox [Text]="'Potential Customer'" [IsEnabled]="IsEnable('PotentialCustomer')" [IsChecked]="PartnersDictionary['PotentialCustomer']" (Checked)="ChangeCheckBoxValue('PotentialCustomer',$event)"></CheckBox>
+                                    </td>
+                                </tr>
+                                <tr class="FormFieldRow">
+                                    <td style="padding-right:10px">
+                                        <CheckBox [Text]="'Trucker'" [IsEnabled]="IsEnable('Trucker')" [IsChecked]="PartnersDictionary['Trucker']" (Checked)="ChangeCheckBoxValue('Trucker',$event)"></CheckBox>
+                                    </td>
+                                    <td style="padding-right:10px">
+                                        <CheckBox [Text]="'Custom Clearance'" [IsEnabled]="IsEnable('CustomClearance')" [IsChecked]="PartnersDictionary['CustomClearance']" (Checked)="ChangeCheckBoxValue('CustomClearance',$event)"></CheckBox>
                                     </td>
                                     <td style="padding-right:10px">
                                         <CheckBox [Text]="'Accounting Partner'" [IsEnabled]="false"></CheckBox>

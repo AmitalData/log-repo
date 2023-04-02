@@ -167,6 +167,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool IsListFilter { get; set; }
         public bool IndexOrder { get; set; }
 
-
+        public string RelatedEntities { get; set; }
+        public bool IsRelatedEntity { get; set; }
     }
 }
