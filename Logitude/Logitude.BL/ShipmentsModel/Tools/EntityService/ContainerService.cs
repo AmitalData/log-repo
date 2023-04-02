@@ -161,6 +161,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
      
             this.HandleContainersExternalData(entityPM, containersExternal);
 
+            if (containerPm.EstimatedEmptyReturn != containerPoco.EstimatedEmptyReturn || containerPm.ActualEmptyReturn != containerPoco.ActualEmptyReturn)
+                entityPM.IsEmptyReturnDatesChanged = true;
+
             Container containerPocoCopy = CloneObjectService.Clone(containerPoco);
             ContainerPM containerPMCopy = CloneObjectService.Clone(containerPm);            
             ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity, FieldChanges);
@@ -345,7 +348,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             if (!IsUpdatingShipment()) return;             
 
-            ContainerShipmentUpdateService containerShipmentUpdateService = new ContainerShipmentUpdateService(containerPm, containerPoco, shipmentsContext);
+            ContainerShipmentUpdateService containerShipmentUpdateService = new ContainerShipmentUpdateService(containerPm, shipmentsContext);
             containerShipmentUpdateService.HandleUpdate();       
         } 
         private bool IsUpdatingShipment()

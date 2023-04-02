@@ -23,6 +23,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 return;
             if (entityPM.IsUpdatedVizionAnalyzer == true)
                 return;
+            if (entityPM.IsShipmentBatchUpdate == true)
+                return;
 
             if (string.IsNullOrEmpty( entityPM.ConcurrencyGUID) || string.IsNullOrEmpty(entityPM.NewConcurrencyGUID))
             {
