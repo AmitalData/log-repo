@@ -26,12 +26,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
         }
         private static void MapContainerConcurrencyFields_Client(ContainerPM entityPM, Container entityPoco, List<FieldChange> fieldChanges)
         {
-            FieldChange.Add(entityPoco.ConcurrencyGUID, entityPM.NewConcurrencyGUID, nameof(entityPM.ConcurrencyGUID), fieldChanges);
-            entityPM.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
-            
-            FieldChange.Add(entityPoco.ConcurrencyGUID, entityPM.NewConcurrencyGUID, nameof(entityPM.ConcurrencyGUID), fieldChanges);
-            entityPoco.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
-            
+            if (!entityPM.IsShipmentBatchUpdate)
+            {
+                FieldChange.Add(entityPoco.ConcurrencyGUID, entityPM.NewConcurrencyGUID, nameof(entityPM.ConcurrencyGUID), fieldChanges);
+                entityPM.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
+
+                FieldChange.Add(entityPoco.ConcurrencyGUID, entityPM.NewConcurrencyGUID, nameof(entityPM.ConcurrencyGUID), fieldChanges);
+                entityPoco.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
+            }
+
             ShipmentMapping.MapContainerFields(entityPM, entityPoco, isNew, fieldChanges);
             ShipmentMapping.MapContainerShipmentFields(entityPM, entityPoco, fieldChanges);
         }
