@@ -64,10 +64,6 @@ namespace Logitude.BL.InfrastructureModel.Services
                     selectedPartnersIds.Add(ObjectTableQuery.GetObjectTableByCode(partner, tenant)?.Id);
                 }
             }
-            //List<ObjectField> AvailableFieldsCopiesToUpdate = objectContext.ObjectFields
-            //                                                               .Where(Field => Field.FieldName == objectField.FieldName && selectedPartnersIds.Contains(Field.ObjectTableId))
-            //                                                               .Select(Field => Field)
-            //                                                               .ToList();
             List<ObjectFieldPM> AvailableFieldsCopiesToUpdate = objectFieldQuery.GetObjectFieldByTenant(tenant).Where(field => partnerObjectTableTypes.Contains(field.ObjectTableName) && field.FieldName == objectField.FieldName).ToList();
             List<string> updatedObjectFieldsTablesIDs = new List<string>();
             UpdateAvailableCopies(objectField, AvailableFieldsCopiesToUpdate, updatedObjectFieldsTablesIDs);
@@ -95,7 +91,6 @@ namespace Logitude.BL.InfrastructureModel.Services
 
         private void UpdateAvailableCopies(ObjectFieldPM objectField, List<ObjectFieldPM> AvailableFieldsCopiesToUpdate, List<string> updatedObjectFieldsTablesIDs)
         {
-
             foreach (var field in AvailableFieldsCopiesToUpdate)
             {
                 ObjectFieldPM mappedField = GetNewUpdatedPM(objectField, field, updatedObjectFieldsTablesIDs);
@@ -117,42 +112,6 @@ namespace Logitude.BL.InfrastructureModel.Services
             field.MultiLine = objectField.MultiLine;
             field.DisplayOnly = objectField.DisplayOnly;
             field.DefaultAdditionalTreeFilters = objectField.DefaultAdditionalTreeFilters;
-            field.IsCustom = true;
-            //ObjectFieldPM mappedField = new ObjectFieldPM()
-            //{
-            //    //Id = field.Id,
-            //    //ObjectTableId = field.ObjectTableId,
-            //    //ObjectTableName = ObjectTableQuery.GetSingleObjectTableById(field.ObjectTableId, 0).Name,
-            //    //Tenant = field.Tenant,
-            //    //FieldName = field.FieldName,
-            //    //FieldCode = field.FieldCode,
-            //    //Code = field.Code,
-            //    //CustomPickListCode = field.CustomPickListCode,
-            //    //LookUpTableId = field.LookUpTableId,
-            //    //DataTypeCode = field.DataTypeCode,
-            //    //DigitsAfterPoint = field.DigitsAfterPoint,
-            //    //NumberOfDigits = field.NumberOfDigits,
-            //    //CanFilter = objectField.CanFilter,
-            //    //FullNameTextCodeId = objectField.FullNameTextCodeId,
-            //    //ListTextCodeId = objectField.ListTextCodeId,
-            //    //HelpTextCodeId = objectField.HelpTextCodeId,
-            //    //FullNameTextCodeCode = objectField.FullNameTextCodeDefaultText,
-            //    //HelpTextCodeCode = objectField.HelpTextCodeDefaultText,
-            //    //ListTextCodeCode = objectField.ListTextCodeDefaultText,
-            //    FullNameTextCodeDefaultText = objectField.FullNameTextCodeDefaultText,
-            //    ListTextCodeDefaultText = objectField.ListTextCodeDefaultText,
-            //    HelpTextCodeDefaultText = objectField.HelpTextCodeDefaultText,
-            //    FullNameTextCodeCode = objectField.FullNameTextCodeCode,
-            //    ListTextCodeCode = objectField.ListTextCodeCode,
-            //    HelpTextCodeCode = objectField.HelpTextCodeDefaultText,
-            //    IsRequiered = objectField.IsRequiered,
-            //    MaxLength = objectField.MaxLength,
-            //    MinLength = objectField.MinLength,
-            //    MultiLine = objectField.MultiLine,
-            //    DisplayOnly = objectField.DisplayOnly,
-            //    DefaultAdditionalTreeFilters = objectField.DefaultAdditionalTreeFilters,
-            //    IsCustom = true,
-            //};
             updatedObjectFieldsTablesIDs.Add(field.ObjectTableId);
             return field;
         }
