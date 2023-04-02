@@ -1,0 +1,218 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class DefaultValuePM : EntityPM
+   {
+   	  private string id ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Id  
+	   {
+	    
+	     get
+		{
+		   return id;
+		 }
+		 set
+		 {
+		   if(id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   id=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private string defaultTypeId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DefaultTypeId  
+	   {
+	    
+	     get
+		{
+		   return defaultTypeId;
+		 }
+		 set
+		 {
+		   if(defaultTypeId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DefaultTypeId",OldValue=defaultTypeId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   defaultTypeId=value;
+		   }
+			
+		 }
+	   }
+	  private string distr ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Distr  
+	   {
+	    
+	     get
+		{
+		   return distr;
+		 }
+		 set
+		 {
+		   if(distr != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Distr",OldValue=distr,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   distr=value;
+		   }
+			
+		 }
+	   }
+	  private string branchId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BranchId  
+	   {
+	    
+	     get
+		{
+		   return branchId;
+		 }
+		 set
+		 {
+		   if(branchId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BranchId",OldValue=branchId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   branchId=value;
+		   }
+			
+		 }
+	   }
+	  private string cardId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CardId  
+	   {
+	    
+	     get
+		{
+		   return cardId;
+		 }
+		 set
+		 {
+		   if(cardId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CardId",OldValue=cardId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cardId=value;
+		   }
+			
+		 }
+	   }
+	  private string shortValue ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShortValue  
+	   {
+	    
+	     get
+		{
+		   return shortValue;
+		 }
+		 set
+		 {
+		   if(shortValue != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShortValue",OldValue=shortValue,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   shortValue=value;
+		   }
+			
+		 }
+	   }
+	  private string value ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Value  
+	   {
+	    
+	     get
+		{
+		   return value;
+		 }
+		 set
+		 {
+		   if(value != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Value",OldValue=value,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   value=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 
