@@ -82,7 +82,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     var ledgerTransactionReconciled = CheckAnyLedgerTransactionReconciledByIdList(reconciliationPM);
                     if (ledgerTransactionReconciled) 
                     {
-                        throw new ApplicationException("Some ledger transactions already reconciled.");
+                        throw new ApplicationException("Some ledger transactions already being reconciled.");
                     }
                 }
             
