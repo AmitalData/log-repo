@@ -235,14 +235,14 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         }
 
         else if (this.IsDisplayOnly) {
-            this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
+            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DisplayOnly") + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
             return;
         }
         else if (this.EntityPM.StorageStatusCode) {
             this.ShowStorageStatusMessage = true;
-            this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
+            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.StorageRequestStatus") + " " + this.EntityPM.StorageStatusName;
         }
         
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
@@ -259,11 +259,11 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
             }
 
             else if (this.IsDisplayOnly) {
-                this.DisplayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
+                this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DisplayOnly") + displayOnlyCheckResult.DisplayOnlyMessage;
             }
             else if (this.EntityPM.StorageStatusCode) {
                 this.ShowStorageStatusMessage = true;
-                this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
+                this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.StorageRequestStatus") + " " + this.EntityPM.StorageStatusName;
             }
        
             this.SetScreenFieldsEditability();
@@ -706,7 +706,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         requestParams.RequestVIA = this.RequestVIA;
 
 
-        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession,requestParams.PBId, "שליחת בקשה לאישור אילוץ", true).then((res) => {
+        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession,requestParams.PBId, TextCodeTranslator.Translate("Customs.Declaration.O.SendRrquestConsstraintApproval"), true).then((res) => {
 
             this.ResponseData = res;
             console.log("Response/ShowProgressBar : ", this.ResponseData);
@@ -1202,11 +1202,11 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                                         this.IsDepositionStatusCodeSendDigital = true;
                                     }
                                     if (this.IsDepositionStatusCodeSendDigital) {
-                                        this.DepositionStatusCodeText = "נשלחה משימה ליבואן בדיגיטל";
+                                        this.DepositionStatusCodeText = TextCodeTranslator.Translate("Customs.Declaration.O.SentTaskImporterDigital");
                                         this.DepositionStatusCodeIcon = "DEFAULT";
                                     }
                                     else {
-                                        this.DepositionStatusCodeText = "נשלחה משימה ליבואן בלוגבוקס";
+                                        this.DepositionStatusCodeText = TextCodeTranslator.Translate("Customs.Declaration.O.SentTaskImporterLogBox");
                                     }
 
                                     //myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_PRV_LBL_LOG", "NON", "NON", SessionLocator.Tenant)

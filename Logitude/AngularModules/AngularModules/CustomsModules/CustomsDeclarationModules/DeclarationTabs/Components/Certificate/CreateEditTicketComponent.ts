@@ -388,7 +388,7 @@ export class CreateEditTicketComponent extends BaseComponent {
                 let msg = new MessageWindow();
 
                 msg.Width = 350;
-                msg.Show(`לאישור קושר מסמך שעדיין לא הוזרם להיבריד`);
+                msg.Show(TextCodeTranslator.Translate("Customs.Declaration.O.DocumentForApproval"));
                 return;
             }
              else {

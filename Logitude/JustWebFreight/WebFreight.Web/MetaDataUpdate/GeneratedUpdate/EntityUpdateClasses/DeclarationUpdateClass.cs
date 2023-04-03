@@ -85,8 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-
-		public const string HashString = "e8134abb27f6e3fbc3c721623ecc2664";
+		public const string HashString = "43069e038851eed0fd539912d5dda28a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -20999,6 +20998,50 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationOImporterIsTooShort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ImporterIsTooShort", DefaultText = "ImporterId is too short",LocalDefaultText = @"מספר יבואן קצר מידי", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOExporterIsTooShort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ExporterIsTooShort", DefaultText = "ExporterId is too short",LocalDefaultText = @"מספר יצואן קצר מידי", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOExportDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ExportDeclarations", DefaultText = "Export Declarations",LocalDefaultText = @"הצהרות יצוא", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOImportDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ImportDeclarations", DefaultText = "Import Declarations",LocalDefaultText = @"הצהרות יבוא", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODisplayOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DisplayOnly", DefaultText = "Display Only",LocalDefaultText = @"לתצוגה בלבד - ", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOStorageRequestStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.StorageRequestStatus", DefaultText = "Storage Request Status",LocalDefaultText = @"בקשת אחסנה הועברה למחסן - סטטוס הבקשה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODesCountryFieldIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DesCountryFieldIsMandatory", DefaultText = "Destination Country Field Is Mandatory",LocalDefaultText = @"ארץ יעד הינו שדה חובה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOReceivesNameFieldIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ReceivesNameFieldIsMandatory", DefaultText = "Receives Name Field Is Mandatory",LocalDefaultText = @"שם המקבל הינו שדה חובה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOReceivesAddressFieldIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ReceivesAddressFieldIsMandatory", DefaultText = "Receives Address Field Is Mandatory",LocalDefaultText = @"כתובת המקבל הינו שדה חובה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOReceivesCountryFieldIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ReceivesCountryFieldIsMandatory", DefaultText = "Receives Country Field Is Mandatory",LocalDefaultText = @"מדינת המקבל הינו שדה חובה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCargoSplitRequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CargoSplitRequest", DefaultText = "Cargo Split Request",LocalDefaultText = @"בקשת פיצול מטען", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSubmitForApproval = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SubmitForApproval", DefaultText = "Submit For Approval",LocalDefaultText = @"העבר לאישור", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Selected", DefaultText = "Selected",LocalDefaultText = @"נבחרו", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOItemsFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ItemsFrom", DefaultText = "Items From",LocalDefaultText = @"פריטים מתוך", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODocumentForApproval = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DocumentForApproval", DefaultText = "Document For Approval",LocalDefaultText = @"לאישור קושר מסמך שעדיין לא הוזרם להיבריד", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOApprovalTypeDoesNotExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ApprovalTypeDoesNotExist", DefaultText = "Approval Type Does Not Exist",LocalDefaultText = @"סוג אישור לא קיים במערכת", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOAdditionalDataSupplier = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AdditionalDataSupplier", DefaultText = "Additional Data Supplier",LocalDefaultText = @"נתונים נוספים לספק", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODeleteLineContinue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeleteLineContinue", DefaultText = "This line will be deleted, should I continue?",LocalDefaultText = @"שורה זו תמחק, האם להמשיך?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationORecordDelayCodeExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RecordDelayCodeExists", DefaultText = "A record with a delay code already exists",LocalDefaultText = @"כבר קיימת רשומה עם קוד עיכוב", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSendRrquestConsstraintApproval = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendRrquestConsstraintApproval", DefaultText = "Sending a request for constraint approval",LocalDefaultText = @"שליחת בקשה לאישור אילוץ", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSentTaskImporterDigital = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SentTaskImporterDigital", DefaultText = "A task was sent to the importer in digital",LocalDefaultText = @"נשלחה משימה ליבואן בדיגיטל", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSentTaskImporterLogBox = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SentTaskImporterLogBox", DefaultText = "A task has been sent to the blogbox importer",LocalDefaultText = @"נשלחה משימה ליבואן בלוגבוקס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationONoNotificationsReceived = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NoNotificationsReceived", DefaultText = "No notifications have been received from customs for this declaration",LocalDefaultText = @"לא התקבלו הודעות מהמכס עבור הצהרה זו", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSendReplyMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendReplyMessage", DefaultText = "Sending a reply to a message",LocalDefaultText = @"שליחת תשובה להודעה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

@@ -78,7 +78,7 @@ export class ConsigmentTabContentComponent
     public ImportCargoTypeFilterItems: ApiQueryFilters;
     private CurrentSession = SessionLocator.SelectedSession;
 
-    public ConsignmentTypes: ConsignmentType[] = [{ Id: "E", Value: "יצוא" }, { Id: "I", Value: "יבוא" }];
+    public ConsignmentTypes: ConsignmentType[] = [{ Id: "E", Value: TextCodeTranslator.Translate("Customs.Consignment.O.Export") }, { Id: "I", Value: TextCodeTranslator.Translate("Customs.Consignment.O.Import") }];
     CargoIdKeyOrigin: { a: string, b: string, c: string } = { a: '', b: '', c: '' };
 
 
@@ -114,7 +114,7 @@ export class ConsigmentTabContentComponent
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
-                            cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'Customs.Declaration', BackButtonLabel: "הצהרת שחמ" });
+                            cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'Customs.Declaration', BackButtonLabel: TextCodeTranslator.Translate("Customs.Consignment.O.ShahamDeclaration") });
                             cmpRef.instance.BackCompleted.subscribe(($event: any) => {
                                 DeclarationEventManager.DisplayModeChanged.emit(null);
                             });
@@ -125,7 +125,7 @@ export class ConsigmentTabContentComponent
                     messageWindow.Width = 250;
                     messageWindow.Height = 150;
                     messageWindow.RTL = true;
-                    messageWindow.Show("לא נמצאה הצהרה");
+                    messageWindow.Show(TextCodeTranslator.Translate("Customs.Consignment.O.NoDeclarationFound"));
                 }
             }
         });
@@ -173,7 +173,7 @@ export class ConsigmentTabContentComponent
         windowArgs.declarationPM = this.declarationPM;
         windowArgs.IsDisplayOnly = this.IsDisplayOnly;
         //var windowTitle = TextCodeTranslator.Translate("Customs.ExportDeclarationDataQuery.F.ExportDeclarationData");
-        var windowTitle = "נתונים נוספים ליצוא - חטיבת משגור";
+        var windowTitle = TextCodeTranslator.Translate("Customs.Consignment.O.AdditionalDataForExport");
 
         var logWindow = new LogitudeWindow();
         //windowArgs.Type = "Importer";
@@ -728,42 +728,42 @@ export class ConsigmentTabContentComponent
             switch (value) {
                 case '1':
                     {
-                        this.ManifestNumberPlaceholder = "הזן שנת טיסה";
-                        this.SecondCargoIDPlaceholder = "הזן שט”מ ראשי";
-                        this.ThirdCargoIdPlaceholder = "הזן שט”מ פנימי";
+                        this.ManifestNumberPlaceholder = TextCodeTranslator.Translate("Customs.Consignment.O.EnterFlightYear");
+                        this.SecondCargoIDPlaceholder = TextCodeTranslator.Translate("Customs.Consignment.O.EnterMainManifest");
+                        this.ThirdCargoIdPlaceholder = TextCodeTranslator.Translate("Customs.Consignment.O.EnterInternalManifest");
                         break;
                     }
                 case '2':
                     {
-                        this.ManifestNumberPlaceholder = "הזן מספר חבילה";
-                        this.SecondCargoIDPlaceholder = "הזן שנת יצירת מטען";
+                        this.ManifestNumberPlaceholder = TextCodeTranslator.Translate("Customs.Consignment.O.EnterPackageNum");
+                        this.SecondCargoIDPlaceholder = TextCodeTranslator.Translate("Customs.Consignment.O.EnterYearCargoCreation");
                         this.ThirdCargoIdPlaceholder = " ";
                         break;
                     }
                 case '8':
                     {
-                        this.ManifestNumberPlaceholder = "הזן הצהרת אחסנה";
+                        this.ManifestNumberPlaceholder = TextCodeTranslator.Translate("Customs.Consignment.O.EnterStorageDeclaration");
                         this.SecondCargoIDPlaceholder = " ";
                         this.ThirdCargoIdPlaceholder = " ";
                         break;
                     }
                 case '11':
                     {
-                        this.ManifestNumberPlaceholder = "הזן מצהר";
-                        this.SecondCargoIDPlaceholder = " הזן מזהה עסקה";
+                        this.ManifestNumberPlaceholder = TextCodeTranslator.Translate("Customs.Consignment.O.EnterManifest");
+                        this.SecondCargoIDPlaceholder = TextCodeTranslator.Translate("Customs.Consignment.O.EnterTransactionID");
                         this.ThirdCargoIdPlaceholder = " ";
                         break;
                     }
                 case '17':
                     {
-                        this.ManifestNumberPlaceholder = "הזן ש.מ בלדר";
-                        this.SecondCargoIDPlaceholder = "הזן ח.פ בלדר";
-                        this.ThirdCargoIdPlaceholder = "הזן תאריך הקמה";
+                        this.ManifestNumberPlaceholder = TextCodeTranslator.Translate("Customs.Consignment.O.EnterBOLBaldar");
+                        this.SecondCargoIDPlaceholder = TextCodeTranslator.Translate("Customs.Consignment.O.EnterVatBaldar");
+                        this.ThirdCargoIdPlaceholder = TextCodeTranslator.Translate("Customs.Consignment.O.EnterEstablishmentDate");
                         break;
                     }
                 case '20':
                     {
-                        this.ManifestNumberPlaceholder = "הזן מזהה עסקה מלם";
+                        this.ManifestNumberPlaceholder = TextCodeTranslator.Translate("Customs.Consignment.O.EnterTransactionIDMlm");
                         this.SecondCargoIDPlaceholder = " ";
                         this.ThirdCargoIdPlaceholder = " ";
                         break;
@@ -771,9 +771,9 @@ export class ConsigmentTabContentComponent
                 case '16':
                     {
                         if (this.declarationPM.TransportModeId == 'A' && this.ConsignmentType == 'E') {
-                            this.ManifestNumberPlaceholder = "הזן שנה";
-                            this.SecondCargoIDPlaceholder = "הזן שמ”ר / שמ”פ";
-                            this.ThirdCargoIdPlaceholder = "הזן ח.תעופה/משלח";
+                            this.ManifestNumberPlaceholder = TextCodeTranslator.Translate("Customs.Consignment.O.EnterYear");
+                            this.SecondCargoIDPlaceholder = TextCodeTranslator.Translate("Customs.Consignment.O.EnterMAIBOL");
+                            this.ThirdCargoIdPlaceholder = TextCodeTranslator.Translate("Customs.Consignment.O.EnterAirLineAShipper");
                             break;
                         }
 
@@ -877,7 +877,7 @@ export class ConsigmentTabContentComponent
             messageWindow.Width = 250;
             messageWindow.Height = 150;
             messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-            messageWindow.Show("ההצהרה נעולה. לא ניתן למחוק נתוני סידורי במטען");
+            messageWindow.Show(TextCodeTranslator.Translate("Customs.Consignment.O.LockedDecCantDelete"));
             return;
         }
 
@@ -960,7 +960,7 @@ export class ConsigmentTabContentComponent
                 messageWindow.Width = 250;
                 messageWindow.Height = 150;
                 messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-                messageWindow.Show("יש להזין מספר בעל 9 ספרות בלבד בשדה מזהה מטען שני");
+                messageWindow.Show(TextCodeTranslator.Translate("Customs.Consignment.O.EnterNineDigitOnly"));
                 return;
             }
         }
