@@ -58,7 +58,29 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
             }
         }
 
-        private void BuildStimulReport()
+        public void ExecuteReportExecutionV2Queue()
+        {
+            try
+            {
+                if (queueService != null && queueResponse != null)
+                {
+                    reportExecutionLog = GetReportExecutionLog();
+                    if (reportExecutionLog != null && reportExecutionLog.RetryNumber < 2 && (reportExecutionLog.StatusCode == "W" || reportExecutionLog.StatusCode == "P"))
+                    {
+                        UpdateReportExecutionLog(new ReportExecutionLogArgs() { StartDate = startDate, StatusCode = "P", ExecutedByServerName = System.Environment.MachineName });
+                        BuildStimulReport(true);
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                DatabaseInitializer.RunOnSeconderyDB = false;
+                UpdateReportExecutionLog(new ReportExecutionLogArgs() { Exception = exception });
+                throw new ApplicationException(exception.Message, exception.InnerException);
+            }
+        }
+
+        private void BuildStimulReport(bool isVersion2 = false)
         {
             ReportFliter reportFliter = !string.IsNullOrEmpty(reportExecutionLog.ReportFilterXML) ? LogitudeXmlSerializer.DeserializeObject<ReportFliter>(reportExecutionLog.ReportFilterXML) : null;
             if (reportFliter != null)
@@ -68,12 +90,12 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                 DatabaseInitializer.RunOnSeconderyDB = true;
                 reportHelper.BuildStimulReport(reportFliter);
                 UpdateReportExecutionLog(new ReportExecutionLogArgs() { StatusCode = "D", DoneDate = DateTime.Now });
-                queueService.Complete();
+                if (!isVersion2) queueService.Complete();
             }
             else
             {
                 UpdateReportExecutionLog(new ReportExecutionLogArgs() { Exception = new Exception("Report Fliter is null"), DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
-                queueService.Complete();
+                if (!isVersion2) queueService.Complete();
             }
         }
 
@@ -87,7 +109,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                 reportExecutionLog.ExecutedByServerName = reportExecutionLogArgs.ExecutedByServerName != null ? reportExecutionLogArgs.ExecutedByServerName : reportExecutionLog.ExecutedByServerName;
                 reportExecutionLog.ExceptionMessage = reportExecutionLogArgs.Exception != null ? GetFullExceptionMessageFromException(reportExecutionLogArgs.Exception) : reportExecutionLog.ExceptionMessage;
                 reportExecutionLog.DoneDate = reportExecutionLogArgs.DoneDate != null ? reportExecutionLogArgs.DoneDate : reportExecutionLog.DoneDate;
-                if (reportExecutionLog.RetryNumber >= 2 && reportExecutionLog.StatusCode != "D" && reportExecutionLogArgs.StatusCode != "P")
+                if (reportExecutionLog.RetryNumber >= 2 && reportExecutionLog.StatusCode != "D" && reportExecutionLogArgs.Exception != null)
                 {
                     reportExecutionLog.StatusCode = "F";
                     reportExecutionLog.DoneDate = DateTime.Now;

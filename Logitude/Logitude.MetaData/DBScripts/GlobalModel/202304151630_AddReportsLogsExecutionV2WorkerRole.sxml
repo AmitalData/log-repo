@@ -1,0 +1,30 @@
+﻿<Script DBType="Global" Module="Global">
+  <Sql Version="1">
+    <![CDATA[
+     
+INSERT INTO [dbo].[BatchServicesDefinitions]
+           ([Code]
+           ,[ClassName]
+           ,[Parameter1]
+           ,[Parameter2]
+           ,[QueueDefinitionCode])
+     VALUES
+           ('ReportExecutionLogV2WorkerRole'
+           ,'ReportExecutionLogV2WorkerRole'
+           ,NULL
+           ,NULL
+           ,'ReportExecutionLogV2Queue')
+
+INSERT INTO [dbo].[BatchServicesDefinitionMods]
+           ([Code]
+           ,[InActive]
+           ,[NumberOfThreads])
+     VALUES
+           ('ReportExecutionLogV2WorkerRole'
+           ,0
+           ,10)
+
+
+    ]]>
+  </Sql>
+</Script>

@@ -406,6 +406,7 @@
     <Compile Include="CargoTrackingImporterApprovalReceivedWR.cs" />
     <Compile Include="ImporterShipmentOrderDocumentsWorkerRole.cs" />
     <Compile Include="OpportunityStageChangingWorkerRole.cs" />
+    <Compile Include="ReportExecutionLogV2WorkerRole.cs" />
     <Compile Include="Services\AutomationDocumentOutBuildService.cs" />
     <Compile Include="Services\ContainerTraking\ContainerTrackingWRService.cs" />
     <Compile Include="Services\ContainerTraking\RequestContainerStatusService.cs" />

@@ -932,6 +932,13 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "CPI,Centralized POD images when convert to PDF files", 
                 Description = "Centralized POD images when convert to PDF files", 
 			});
+            all.Add(new ToggleDetails()
+            {    
+                Code = "RE2", 
+                Name = "Reports Execution WR Version 2", 
+                SearchFields = "RE2, Reports Execution WR Version 2", 
+                Description = "Reports Execution WR Version 2", 
+			});
 			
             return all;
        }
