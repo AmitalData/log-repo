@@ -123,8 +123,8 @@ export class CustomFieldsComponent {
 
     }
     IsPartnerType(): boolean {
-        let partnerTypes: string[] = ["Accounting Partner", "Agent", "AirLine", "Custom Clearance", "Custom Agent", "Customs Shipper", "Coloader", "Customer", "Freelancer", "Potential Customer", "Participant",
-            "Shipping Agent", "Shipping Line", "Trucker", "Vendor", "Warehouse"];
+        let partnerTypes: string[] = ["AccountingPartner", "Agent", "Airline", "CustomClearance", "CustomAgent", "CustomsShipper", "Coloader", "Customer", "Freelancer", "PotentialCustomer", "Participant",
+            "ShippingAgent", "ShippingLine", "Trucker", "Vendor", "Warehouse"];
         if (partnerTypes.indexOf(this.ObjectTableName) > -1)
             return true;
         return false;

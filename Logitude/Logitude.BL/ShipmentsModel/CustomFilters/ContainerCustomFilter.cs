@@ -55,6 +55,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         var allStatuses = GetAllStatusesByObjecTableName(containerObjectTableName, Tenant);
                         var allowedStatusWeight = allStatuses.FirstOrDefault(a => a.Code == "ARPD")?.StatusWeight;
                         queryableData = queryableData.Where(d => (d.ActualPOLVesselDeparture != null || d.ShipmentMainCarriageATD != null)
+
                                                              && ((d.TransshipmentCount != null && d.TransshipmentCount > 0)
                                                              || d.ShipmentTransshipment3FromPort != null
                                                              || d.ShipmentTransshipment2FromPort != null

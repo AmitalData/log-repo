@@ -1,5 +1,5 @@
 ﻿<Script  DBType="Main" Module="Infrastructure">
-  <Sql Version="13">
+  <Sql Version="15">
     <![CDATA[
 	  declare @objectTableId as varchar(15)
 	  set @objectTableId = (select Id from ObjectTables where [Name] = 'Quote' and Tenant = 0)
@@ -325,7 +325,7 @@
                             </LogColumn>
                             <LogColumn max-width=''37%''>
                                 <LogFieldContainer>
-                                    <LogField disable-copy=''true'' field-code=''Quote.RefrenceNumner''></LogField>
+                                    <LogField disable-copy=''true'' field-code=''Shipment.CustomerReference1'' concat-separator='':''></LogField>
                                 </LogFieldContainer>
                             </LogColumn>
                         </LogRow>

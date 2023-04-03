@@ -8,6 +8,7 @@ import { Condition } from "Workflow/Models/Condition";
 import { EntitiesTreeList } from "Workflow/TreeLists/EntitiesTreeList";
 import { ObjectTables } from "Workflow/Utilities/ObjectTables";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
+import { StartTriggerTypes } from "Workflow/Constants/StartTriggerTypes";
 
 @Component({
     templateUrl: "./StartPropertiesComponent.html"
@@ -17,6 +18,7 @@ export class StartPropertiesComponent extends BaseComponent {
 
     public DataContext: any = this;
     public Data: any;
+    public IsNew: boolean;
     public Entity: string = null;
     public EntityId: string = null;
     public Trigger: string = null;
@@ -53,6 +55,10 @@ export class StartPropertiesComponent extends BaseComponent {
     }
 
     initialize() {
+        this.Data["triggerType"] = StartTriggerTypes.RecordTriggered;
+        
+        this.IsNew = Object.keys(this.Data).length === 0;
+
         this.Entity = this.Data["entity"] || null;
         this.Trigger = this.Data["trigger"] || this.CreateTrigger;
 

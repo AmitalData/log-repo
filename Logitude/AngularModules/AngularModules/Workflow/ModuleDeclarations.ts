@@ -1,17 +1,18 @@
 import { WorkflowBuilderComponent } from "./Components/WorkflowBuilder/WorkflowBuilderComponent";
-import { StartPropertiesComponent } from './Components/Properties/StartPropertiesComponent';
-import { ConditionPropertiesComponent } from './Components/Properties/ConditionPropertiesComponent';
-import { LoopPropertiesComponent } from './Components/Properties/LoopPropertiesComponent';
-import { SetValuePropertiesComponent } from './Components/Properties/SetValuePropertiesComponent';
-import { DeclareVariablePropertiesComponent } from './Components/Properties/DeclareVariablePropertiesComponent';
-import { CreateRecordPropertiesComponent } from './Components/Properties/CreateRecordPropertiesComponent';
-import { UpdateRecordPropertiesComponent } from './Components/Properties/UpdateRecordPropertiesComponent';
-import { GetRecordPropertiesComponent } from './Components/Properties/GetRecordPropertiesComponent';
-import { SendEmailPropertiesComponent } from './Components/Properties/SendEmailPropertiesComponent';
-import { CollectionFilterPropertiesComponent } from './Components/Properties/CollectionFilterPropertiesComponent';
-import { AppendItemPropertiesComponent } from './Components/Properties/AppendItemPropertiesComponent';
-import { DeleteItemPropertiesComponent } from './Components/Properties/DeleteItemPropertiesComponent';
-import { CreateTaskPropertiesComponent } from './Components/Properties/CreateTaskPropertiesComponent';
+import { StartPropertiesComponent } from "./Components/Properties/StartPropertiesComponent";
+import { StartEventTriggeredPropertiesComponent } from "./Components/Properties/StartEventTriggeredPropertiesComponent";
+import { ConditionPropertiesComponent } from "./Components/Properties/ConditionPropertiesComponent";
+import { LoopPropertiesComponent } from "./Components/Properties/LoopPropertiesComponent";
+import { SetValuePropertiesComponent } from "./Components/Properties/SetValuePropertiesComponent";
+import { DeclareVariablePropertiesComponent } from "./Components/Properties/DeclareVariablePropertiesComponent";
+import { CreateRecordPropertiesComponent } from "./Components/Properties/CreateRecordPropertiesComponent";
+import { UpdateRecordPropertiesComponent } from "./Components/Properties/UpdateRecordPropertiesComponent";
+import { GetRecordPropertiesComponent } from "./Components/Properties/GetRecordPropertiesComponent";
+import { SendEmailPropertiesComponent } from "./Components/Properties/SendEmailPropertiesComponent";
+import { CollectionFilterPropertiesComponent } from "./Components/Properties/CollectionFilterPropertiesComponent";
+import { AppendItemPropertiesComponent } from "./Components/Properties/AppendItemPropertiesComponent";
+import { DeleteItemPropertiesComponent } from "./Components/Properties/DeleteItemPropertiesComponent";
+import { CreateTaskPropertiesComponent } from "./Components/Properties/CreateTaskPropertiesComponent";
 import { FieldTemplateComponent } from "./Components/Templates/FieldTemplateComponent";
 import { CreateWorkflowComponent } from "./Components/CreateEditWorkflow/CreateWorkflowComponent";
 import { EditWorkflowComponent } from "./Components/CreateEditWorkflow/EditWorkflowComponent";
@@ -46,9 +47,9 @@ import { SetValuesOperatorsItemsPipe } from "./Pipes/SetValuesOperatorsItemsPipe
 import { ShowTreeItemPipe } from "./Pipes/ShowTreeItemPipe";
 import { ExpressionPipe } from "./Pipes/ExpressionPipe";
 import { ConditionOperatorsItemsPipe } from "./Pipes/ConditionOperatorsItemsPipe";
-import { WorkflowVersionComponent } from './Components/WorkflowVersion/WorkflowVersionComponent';
-import { CreateWorkflowVersionComponent } from './Components/WorkflowVersion/CreateWorkflowVersionComponent';
-import { WorkFlowShortTitleComponent } from './Components/ShortTitles/WorkFlowShortTitleComponent';
+import { WorkflowVersionComponent } from "./Components/WorkflowVersion/WorkflowVersionComponent";
+import { CreateWorkflowVersionComponent } from "./Components/WorkflowVersion/CreateWorkflowVersionComponent";
+import { WorkFlowShortTitleComponent } from "./Components/ShortTitles/WorkFlowShortTitleComponent";
 import { IsObjectTypePipe } from "./Pipes/IsObjectTypePipe";
 import { ObjectVariableComponent } from "./Components/Base/ObjectVariableComponent";
 import { WorkFlowHelperComponent } from "./Components/Helpers/WorkFlowHelperComponent";
@@ -58,6 +59,7 @@ import { GetFieldApiQueryFiltersPipe } from "./Pipes/GetFieldApiQueryFiltersPipe
 export const Components = [
     WorkflowBuilderComponent,
     StartPropertiesComponent,
+    StartEventTriggeredPropertiesComponent,
     ConditionPropertiesComponent,
     LoopPropertiesComponent,
     SetValuePropertiesComponent,
@@ -123,6 +125,7 @@ export class ModuleDeclarations {
         switch (name) {
             case "WorkflowBuilderComponent": { result = WorkflowBuilderComponent; break; }
             case "StartPropertiesComponent": { result = StartPropertiesComponent; break; }
+            case "StartEventTriggeredPropertiesComponent": { result = StartEventTriggeredPropertiesComponent; break; }
             case "ConditionPropertiesComponent": { result = ConditionPropertiesComponent; break; }
             case "LoopPropertiesComponent": { result = LoopPropertiesComponent; break; }
             case "SetValuePropertiesComponent": { result = SetValuePropertiesComponent; break; }

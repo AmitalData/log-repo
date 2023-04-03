@@ -2,6 +2,7 @@
 using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -23,7 +24,6 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
     {
         private int tenant;
         private ContainerPM containerPM;
-        private Container containerPOCO;
         private ShipmentPM shipmentPM;
         private IShipmentsContext shipmentsContext;
         private PortRepository portRepository;
@@ -33,10 +33,9 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
         public List<dynamic> allShipmentTrasshipmentLegs;
         private List<TransshipmentData> transshipmentData;
         private bool isUpdatingShipmentDateFields = false;
-        public ContainerShipmentUpdateService(ContainerPM container, Container containerPoco, IShipmentsContext context)
+        public ContainerShipmentUpdateService(ContainerPM container, IShipmentsContext context)
         {
             this.containerPM = container;
-            this.containerPOCO = containerPoco;
             this.tenant = container.Tenant;
             this.shipmentsContext = context;
             this.portRepository = new PortRepository(tenant);
@@ -100,7 +99,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
         {
             if (shipmentPM.DirectionId != "I" && shipmentPM.DirectionId != "R") return false;
             if (string.IsNullOrEmpty(containerPM.EmptyReturnLocationPortId)) return false;
-            if (containerPM.EstimatedEmptyReturn == containerPOCO.EstimatedEmptyReturn && containerPM.ActualEmptyReturn == containerPOCO.ActualEmptyReturn) return false;
+            if (!containerPM.IsEmptyReturnDatesChanged) return false;
 
             ShipmentDeliveryPM emptyReturn = this.GetEmptyReturnLeg(shipmentPM);
             if (emptyReturn != null)
@@ -324,11 +323,6 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
             {
                 this.UpdatePOLDates(POLShipmentUpdateIndicator);
                 this.UpdatePODDates(PODShipmentUpdateIndicator);
-
-                //if (this.isUpdatingShipmentDateFields)
-                //{
-                //    shipmentPM.OINewConcurrencyGUID = Guid.NewGuid().ToString();
-                //}
             }
 
             bool isUpdatingPreCarriage = MapPreCarriageDates();
@@ -378,10 +372,10 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
             if (POLShipmentUpdateIndicator == "Pre Carriage")
             {
                 containerTrackingHelper.AddContainerDiscrepancy("POL PreCarriage", containerPM, shipmentPM);
-                this.FillFieldsNewValues("PreCarriageETD", containerPM.EstimatedPOLVesselDeparture, shipmentPM);
+                this.FillFieldsNewValues_Shipment("PreCarriageETD", containerPM.EstimatedPOLVesselDeparture, shipmentPM);
 
                 if (shipmentPM.PreCarriageATD == null)                
-                    this.FillFieldsNewValues("PreCarriageATD", containerPM.ActualPOLVesselDeparture, shipmentPM);                
+                    this.FillFieldsNewValues_Shipment("PreCarriageATD", containerPM.ActualPOLVesselDeparture, shipmentPM);                
             }
 
             else if (POLShipmentUpdateIndicator == "Main Carriage")
@@ -390,10 +384,10 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                 shipmentPM.IsUpdatedVizionMainCarriageDates = containerPM.IsUpdatedVizionAnalyzer;
                 shipmentPM.IsUpdatedOceanInsightsMainCarriageDates = containerPM.IsUpdatedOceanInsightsAnalyzer;
 
-                this.FillFieldsNewValues("MainCarriageETD", containerPM.EstimatedPOLVesselDeparture, shipmentPM);
+                this.FillFieldsNewValues_Shipment("MainCarriageETD", containerPM.EstimatedPOLVesselDeparture, shipmentPM);
 
                 if (shipmentPM.MainCarriageATD == null)                
-                    this.FillFieldsNewValues("MainCarriageATD", containerPM.ActualPOLVesselDeparture, shipmentPM);                
+                    this.FillFieldsNewValues_Shipment("MainCarriageATD", containerPM.ActualPOLVesselDeparture, shipmentPM);                
             }
         }
         private void UpdatePODDates(string PODShipmentUpdateIndicator)
@@ -401,7 +395,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
             if (PODShipmentUpdateIndicator == "On Carriage")
             {
                 containerTrackingHelper.AddContainerDiscrepancy("POD OnCarriage", containerPM, shipmentPM);
-                this.FillFieldsNewValues("OnCarriageETA", containerPM.EstimatedPODVesselArrival, shipmentPM);
+                this.FillFieldsNewValues_Shipment("OnCarriageETA", containerPM.EstimatedPODVesselArrival, shipmentPM);
 
                 if (shipmentPM.OnCarriageATA == null)                
                     this.FillOnCarriageATA();                
@@ -414,8 +408,10 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                 shipmentPM.IsUpdatedOceanInsightsMainCarriageDates = containerPM.IsUpdatedOceanInsightsAnalyzer;
 
                 containerTrackingHelper.AddContainerDiscrepancy("POD MainCarriage", containerPM, shipmentPM);
-                this.FillFieldsNewValues(ETAfielName, containerPM.EstimatedPODVesselArrival, shipmentPM);
-                this.FillMainCarriageATA(PODShipmentUpdateIndicator);
+                this.FillFieldsNewValues_Shipment(ETAfielName, containerPM.EstimatedPODVesselArrival, shipmentPM);
+
+                if (shipmentPM.MainCarriageATA == null)
+                    this.FillMainCarriageATA();
             }
         }
         private void FillOnCarriageATA()
@@ -425,23 +421,22 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
             if (myTenant != null && myTenant.ShipmentATADateIndicator == "Container")
                 myDate = containerPM.ActualPODDischarge;
 
-            this.FillFieldsNewValues("OnCarriageATA", myDate, shipmentPM);
+            this.FillFieldsNewValues_Shipment("OnCarriageATA", myDate, shipmentPM);
         }
-        private void FillMainCarriageATA(string PODShipmentUpdateIndicator)
+        private void FillMainCarriageATA()
         {
-            var aTAfielName = PODShipmentUpdateIndicator == "Main Carriage" ? "MainCarriageATA" : PODShipmentUpdateIndicator + "ATA";
             DateTime? myDate = containerPM.ActualPODVesselArrival;
 
             if (myTenant != null && myTenant.ShipmentATADateIndicator == "Container")
                 myDate = containerPM.ActualPODDischarge;
 
-            this.FillFieldsNewValues(aTAfielName, myDate, shipmentPM);
+            this.FillFieldsNewValues_Shipment("MainCarriageATA", myDate, shipmentPM);
         }
 
         private bool MapPreCarriageDates()
         {
             containerTrackingHelper.AddContainerDiscrepancy("PreCarriage", containerPM, shipmentPM);
-            if (!containerTrackingHelper.IsSameLocationUsingId(containerPM.PreCarriageLocationPortId, shipmentPM.PreCarriageFromPortId)) return false;
+            if (!containerTrackingHelper.IsSameLocationUsingId(shipmentPM.PreCarriageFromPortId, containerPM.PreCarriageLocationPortId)) return false;
             shipmentPM.PreCarriageETD = containerPM.PreCarriageETD;
             shipmentPM.PreCarriageATD = shipmentPM.PreCarriageATD ?? containerPM.PreCarriageATD;
             return true;
@@ -449,7 +444,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
         private bool MapOnCarriageDates()
         {
             containerTrackingHelper.AddContainerDiscrepancy("OnCarriage", containerPM, shipmentPM);
-            if (!containerTrackingHelper.IsSameLocationUsingId(containerPM.OnCarriageLocationPortId, shipmentPM.OnCarriageToPortId)) return false;
+            if (!containerTrackingHelper.IsSameLocationUsingId(shipmentPM.OnCarriageToPortId, containerPM.OnCarriageLocationPortId)) return false;
             shipmentPM.OnCarriageETA = containerPM.OnCarriageETA;
             shipmentPM.OnCarriageATA = shipmentPM.OnCarriageATA ?? containerPM.OnCarriageATA;
             return true;
@@ -458,7 +453,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
         private void MapTransshipmentLegDates()
         {
             FillTransshipmentDataList();
-            FillLegsMilestoneData();
+            FillTransshipmentLegsData();
             FillShipmentDates();
         }
         private void FillTransshipmentDataList()
@@ -552,11 +547,11 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
             {
                 vesselDeparted.TransshipmentUpdatedFields.Add(new TransshipmentUpdatedFields()
                 {
-                    Location = containerPM.Transshipment2Location,
-                    Vessel = containerPM.Leg2VesselId,
-                    Voyage = containerPM.Leg2Voyage,
-                    EstimatedDate = containerPM.EstimatedTrans2VesselDeparture,
-                    ActualDate = containerPM.ActualTrans2VesselDeparture
+                    Location = containerPM.Transshipment3Location,
+                    Vessel = containerPM.Leg3VesselId,
+                    Voyage = containerPM.Leg3Voyage,
+                    EstimatedDate = containerPM.EstimatedTrans3VesselDeparture,
+                    ActualDate = containerPM.ActualTrans3VesselDeparture
                 });
 
                 vesselArrived.TransshipmentUpdatedFields.Add(new TransshipmentUpdatedFields()
@@ -592,14 +587,14 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
             transshipmentData.Add(loadedTransshipment);
             transshipmentData.Add(dischargedTransshipment);
         }
-        private void FillLegsMilestoneData()
+        private void FillTransshipmentLegsData()
         {
-            FillShipmentVesselDepartedMilestoneFields();
-            FillShipmentVesselArrivedMilestoneFields();
-            FillShipmentLoadedTransshipmentMilestoneFields();
-            FillShipmentDischargedTransshipmentMilestoneFields();
+            FillShipmentVesselDepartedFields();
+            FillShipmentVesselArrivedFields();
+            FillShipmentLoadedTransshipmentFields();
+            FillShipmentDischargedTransshipmentFields();
         }
-        private void FillShipmentVesselDepartedMilestoneFields()
+        private void FillShipmentVesselDepartedFields()
         {
             TransshipmentData vesselDeparted = transshipmentData.Where(d => d.Key == "VesselDeparted").FirstOrDefault();
             if (vesselDeparted == null) return;
@@ -613,7 +608,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                 allShipmentTrasshipmentLegs.Add(leg);
             }
         }
-        private void FillShipmentVesselArrivedMilestoneFields()
+        private void FillShipmentVesselArrivedFields()
         {
             TransshipmentData vesselArrived = transshipmentData.Where(d => d.Key == "VesselArrived").FirstOrDefault();
             if (vesselArrived == null) return; 
@@ -627,7 +622,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                 allShipmentTrasshipmentLegs.Add(leg);
             }
         }
-        private void FillShipmentLoadedTransshipmentMilestoneFields()
+        private void FillShipmentLoadedTransshipmentFields()
         {
             TransshipmentData loadedTransshipment = transshipmentData.Where(d => d.Key == "LoadedTransshipment").FirstOrDefault();
             if (loadedTransshipment == null) return;
@@ -641,7 +636,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                 allShipmentTrasshipmentLegs.Add(leg);
             }
         }
-        private void FillShipmentDischargedTransshipmentMilestoneFields()
+        private void FillShipmentDischargedTransshipmentFields()
         {
             TransshipmentData dischargedTransshipment = transshipmentData.Where(d => d.Key == "DischargedTransshipment").FirstOrDefault();
             if (dischargedTransshipment == null) return;
@@ -673,9 +668,9 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
 
                   if (!containerTrackingHelper.IsSameLocationUsingId((string)GetPropValue(shipmentPM, transshipmentLeg.PortField), portId)) return;
 
-                  this.FillFieldsNewValues(transshipmentLeg.EstimatedDateField, updatedFields.EstimatedDate, shipmentPM);
+                  this.FillFieldsNewValues_Shipment(transshipmentLeg.EstimatedDateField, updatedFields.EstimatedDate, shipmentPM);
                   var transshipmentATDInShipment = GetPropValue(shipmentPM, transshipmentLeg.ActualDateField);
-                  if (transshipmentATDInShipment == null) this.FillFieldsNewValues(transshipmentLeg.ActualDateField, updatedFields.ActualDate, shipmentPM);
+                  if (transshipmentATDInShipment == null) this.FillFieldsNewValues_Shipment(transshipmentLeg.ActualDateField, updatedFields.ActualDate, shipmentPM);
               });
         }
 
@@ -811,10 +806,6 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
             }
         }
 
-        
-        
-        
-
         #endregion
 
         public void AddTotangoActivity(int tenant, string activity, string systemEmail)
@@ -831,10 +822,22 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
             if (propertyInfo != null && newValue != null)
             {
                 propertyInfo.SetValue(entity, newValue);
-                this.isUpdatingShipmentDateFields = true;
             }
         }
-        
+        private void FillFieldsNewValues_Shipment(string propertyName, object newValue, object entity)
+        {
+            PropertyInfo propertyInfo = entity.GetType().GetProperty(propertyName);
+            var entityValue = propertyInfo.GetValue(entity);
+            if (propertyInfo == null || newValue == null)            
+                return;            
+
+            if (entityValue != null && entityValue.Equals(newValue))            
+                return;            
+
+            this.isUpdatingShipmentDateFields = true;
+            propertyInfo.SetValue(entity, newValue);
+        }
+
         public static object GetPropValue(object src, string propName)
         {
             return src.GetType().GetProperty(propName).GetValue(src, null);
@@ -851,6 +854,8 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
         }
         private void SaveShipment()
         {
+            string oldStatusId = shipmentPM.StatusId;
+
             string updatedByEmail = null;
             if (shipmentPM.IsUpdatedVizionAnalyzer || shipmentPM.IsUpdatedOceanInsightsAnalyzer)
                 updatedByEmail = "system@tenant" + tenant + ".com";
@@ -863,6 +868,9 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
             string activity = "(A) Update Shipment from Container";
             AddTotangoActivity(tenant, activity, updatedByEmail);
             service.Update();
+            shipmentPM.ShipmentUpdatedFromContainer = false;
+
+            ShipmentContainersEntityBehaviour.UpdateConatinarStatus(shipmentPM, oldStatusId != shipmentPM.StatusId, shipmentsContext);
         }
     }
 }

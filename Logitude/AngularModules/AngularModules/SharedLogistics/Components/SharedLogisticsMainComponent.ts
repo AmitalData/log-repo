@@ -89,6 +89,8 @@ export class SharedLogisticsMainComponent implements OnInit {
     private InviteQueryCode: string = "Shared Logistics Customers";
     public IsShowDisplaySetting: boolean = false;
     public IsShowAgentStatisticsArea: boolean = false;
+    public HasCustomizedInvitationDocumentFeature: boolean = false;
+    public HasCustomizedResetPasswordEmailFeature: boolean = false;
 
     constructor(public _sharedLogisticsService: SharedLogisticsService, public _documentTypeListService: DocumentTypeListService) {
         if (this.tenantPMService == null) {
@@ -97,6 +99,7 @@ export class SharedLogisticsMainComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.SetFeatures();
         this.SetVisibility();
         this.SetSettings();
         this.SetTitles();
@@ -104,6 +107,11 @@ export class SharedLogisticsMainComponent implements OnInit {
 
     }
 
+    SetFeatures() {
+        this.HasCustomizedInvitationDocumentFeature = FeatureLocator.HasFeaturePermession("General", "DocumentType.CustomizedInvitationDocument");
+        this.HasCustomizedResetPasswordEmailFeature = FeatureLocator.HasFeaturePermession("General", "DocumentType.CustomizedResetPasswordEmail");
+        this.IsDisplayAreaDocument = this.HasCustomizedInvitationDocumentFeature || this.HasCustomizedResetPasswordEmailFeature;
+    }
 
     SetSettings() {
 

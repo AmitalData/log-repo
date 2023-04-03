@@ -1,4 +1,5 @@
 ﻿using EvoPdf;
+using Logitude.Server.Tools.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -13,6 +14,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.PODImage
         private Document pdfDocument;
         private PdfPage pdfPage;
         private string evoLicenseKey = "fvDj8eTh8eDg4vHk/+Hx4uD/4OP/6Ojo6A==";
+        private int tenant;
         public string Extention { get { return "pdf"; } }
 
         public PODImagePdfConverter()
@@ -28,9 +30,10 @@ namespace WebFreight.Web.Helpers.WorkerRole.PODImage
         }
         
 
-        public byte[] Convert(byte[] imageData)
+        public byte[] Convert(byte[] imageData, int tenant)
         {
             if (imageData == null) return null;
+            this.tenant = tenant;
             ImageElement imageElement = CreateImageElement(imageData);
             AddElementResult addElementResult = pdfPage.AddElement(imageElement);
             return pdfDocument.Save();
@@ -41,9 +44,10 @@ namespace WebFreight.Web.Helpers.WorkerRole.PODImage
             var image = ConvertByteArrayToImage(fileData);
             var pdfWidth = pdfPage.PageSize.Width;
             var pdfHeight = pdfPage.PageSize.Height;
-            float imageWidth = image.Width > pdfWidth ? pdfWidth : image.Width;
+            float imageWidth = GetImageWidth(image.Width, pdfWidth);
             float imageHeight = image.Height > pdfHeight ? pdfHeight : image.Height;
-            ImageElement unscaledImageElement = new ImageElement(0, 0, imageWidth, imageHeight, image);
+            float imageXPosition = GetImageXPosition(imageWidth, pdfWidth);
+            ImageElement unscaledImageElement = new ImageElement(imageXPosition, 0, imageWidth, imageHeight, image);
             return unscaledImageElement;
         }
 
@@ -53,6 +57,25 @@ namespace WebFreight.Web.Helpers.WorkerRole.PODImage
             ms.Write(byteData, 0, byteData.Length);
             return System.Drawing.Image.FromStream(ms, true);
 
+        }
+
+        private float GetImageWidth(float imageWidth, float pdfWidth)
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("CPI", tenant))
+            {
+                return imageWidth > pdfWidth ? pdfWidth : imageWidth;
+            }
+            if ((imageWidth < pdfWidth && (pdfWidth - imageWidth) < 40) || imageWidth >= pdfWidth)
+            {
+                return pdfWidth - 36;
+            }
+            return imageWidth;
+        }
+
+        private float GetImageXPosition(float imageWidth, float pdfWidth)
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("CPI", tenant)) return 0;
+            return (pdfWidth - imageWidth) / 2;
         }
     }
 }

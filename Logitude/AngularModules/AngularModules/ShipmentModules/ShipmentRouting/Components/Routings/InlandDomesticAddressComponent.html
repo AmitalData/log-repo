@@ -101,7 +101,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -110,7 +110,7 @@
 
                     <td style="width: 57px;">
                         <button id="{{'OKButtonID' | IdGeneratorAsyncPipe | async}}" class="RedButton"
-                            (click)="OkButtonClicked()">Ok</button>
+                            (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

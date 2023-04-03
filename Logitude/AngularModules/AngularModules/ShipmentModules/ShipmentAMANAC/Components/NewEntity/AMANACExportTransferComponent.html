@@ -55,7 +55,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button attr.data-cy="{{'CloseExportingScreen' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CloseButtonClicked()" [disabled]="IsExportingInProgress">Close</button>
+                        <button attr.data-cy="{{'CloseExportingScreen' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CloseButtonClicked()" [disabled]="IsExportingInProgress">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

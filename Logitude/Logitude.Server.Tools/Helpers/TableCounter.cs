@@ -35,7 +35,12 @@ namespace Logitude.Server.Tools.Helpers
                 counter = counterRepository.GetCounterByCode(counterCode, tenant);
                 string counterId = counter.Id;
                 tableCounters = counterDefRep.GetCounterDefinitionsByCounterId(counterId, tenant).ToList();
-                counterDef = tableCounters.Where(c => c.Parameter1 == parameter1 && c.Parameter2 == parameter2).FirstOrDefault();
+                bool isCustomizedCounter = tableCounters.Where(c => c.IsCustomized).Any();
+                if (isCustomizedCounter && FeatureToggleHelper.HasFeatureToggle("ICC", tenant) && additionalParameters != null && additionalParameters.ContainsKey("[CustomizeCounterParameter2]") && !string.IsNullOrEmpty(additionalParameters["[CustomizeCounterParameter2]"]))
+                {
+                    counterDef = tableCounters.Where(c => c.IsCustomized && c.Parameter2 == additionalParameters["[CustomizeCounterParameter2]"]).FirstOrDefault();
+                }
+                else counterDef = tableCounters.Where(c => c.Parameter1 == parameter1 && c.Parameter2 == parameter2).FirstOrDefault();
                 scope1.Complete();
             }
 

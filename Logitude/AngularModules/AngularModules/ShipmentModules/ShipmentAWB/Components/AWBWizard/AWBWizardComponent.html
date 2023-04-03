@@ -494,7 +494,7 @@
 
                     <!-- Close -->
                     <td style="width: 57px;">
-                        <button id="{{'CloseWizard' | IdGeneratorAsyncPipe | async}}"  class="Button" (click)="CloseClicked()">Close</button>
+                        <button id="{{'CloseWizard' | IdGeneratorAsyncPipe | async}}"  class="Button" (click)="CloseClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -505,12 +505,12 @@
                     <td style="width: 57px;">
                         <button id="{{'SaveWizard' | IdGeneratorAsyncPipe | async}}"  *ngIf="!EntityPM.IsDirty" class="Button">
                             <img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.png" />
-                            <span style="line-height: 19px; margin-left: 17px;">Save</span>
+                            <span style="line-height: 19px; margin-left: 17px;">{{'General.B.Save' | TextCodeTranslationPipe}}</span>
                         </button>
 
                         <button id="{{'SaveWizard' | IdGeneratorAsyncPipe | async}}"  *ngIf="EntityPM.IsDirty" class="EntityChangesButton" (click)="SaveClicked()">
                             <img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.Red.png" />
-                            <span style="line-height: 19px; margin-left: 17px;">Save</span>
+                            <span style="line-height: 19px; margin-left: 17px;">{{'General.B.Save' | TextCodeTranslationPipe}}</span>
                         </button>
                     </td>
                 </tr>

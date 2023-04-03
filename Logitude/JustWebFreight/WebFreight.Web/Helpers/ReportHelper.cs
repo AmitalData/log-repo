@@ -796,10 +796,12 @@ namespace WebFreight.Web.Helpers
             reportFliter.QueryFilterItemLists = reportFilterItems;
 
             string result = string.Empty;
-            StiReport stiReport = GetStimulReportByReportFilter(reportFliter);
-            if (stiReport != null)
+            using (StiReport stiReport = GetStimulReportByReportFilter(reportFliter))
             {
-                result = WriteReportToStorage(reportFliter, stiReport);
+                if (stiReport != null)
+                {
+                    result = WriteReportToStorage(reportFliter, stiReport);
+                }
             }
             return result;
         }
@@ -2046,49 +2048,49 @@ namespace WebFreight.Web.Helpers
         private StiReport GetStimulReportByTemplateAndProviderDetails(ReportStimulDataProviderDetails reportStimulDataProviderDetails, byte[] reportTemplate)
         {
             StiReport report = new StiReport();
-            ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
+                ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
 
-            string dllName = exportDocumentHelper.GetDllName(reportTemplate, report);
-            byte[] dllData = exportDocumentHelper.GetDllFromStorage(dllName, reportStimulDataProviderDetails.Tenant);
-            if (false)
-            {
-                if (dllData != null && dllData.Count() != 0)
+                string dllName = exportDocumentHelper.GetDllName(reportTemplate, report);
+                byte[] dllData = exportDocumentHelper.GetDllFromStorage(dllName, reportStimulDataProviderDetails.Tenant);
+                if (false)
                 {
-                    report = StiReport.GetReportFromAssembly(dllData);
-                    if (reportStimulDataProviderDetails.CurrentBusinessObject != null) exportDocumentHelper.RegBusinessObject(report, reportStimulDataProviderDetails.CurrentBusinessObject);
-                    report.NeedsCompiling = false;
-                    exportDocumentHelper.AddLogo(report, reportStimulDataProviderDetails.Logo);
+                    if (dllData != null && dllData.Count() != 0)
+                    {
+                        report = StiReport.GetReportFromAssembly(dllData);
+                        if (reportStimulDataProviderDetails.CurrentBusinessObject != null) exportDocumentHelper.RegBusinessObject(report, reportStimulDataProviderDetails.CurrentBusinessObject);
+                        report.NeedsCompiling = false;
+                        exportDocumentHelper.AddLogo(report, reportStimulDataProviderDetails.Logo);
+                    }
+                    else
+                    {
+                        if (reportStimulDataProviderDetails.CurrentBusinessObject != null) exportDocumentHelper.RegBusinessObject(report, reportStimulDataProviderDetails.CurrentBusinessObject);
+                        report.Load(reportTemplate);
+
+                        exportDocumentHelper.AddLogo(report, reportStimulDataProviderDetails.Logo);
+
+                        exportDocumentHelper.SaveDllFileInStorage(reportTemplate, report, reportStimulDataProviderDetails.Tenant);
+                    }
                 }
                 else
                 {
                     if (reportStimulDataProviderDetails.CurrentBusinessObject != null) exportDocumentHelper.RegBusinessObject(report, reportStimulDataProviderDetails.CurrentBusinessObject);
                     report.Load(reportTemplate);
-
                     exportDocumentHelper.AddLogo(report, reportStimulDataProviderDetails.Logo);
-
-                    exportDocumentHelper.SaveDllFileInStorage(reportTemplate, report, reportStimulDataProviderDetails.Tenant);
                 }
-            }
-            else
-            {
-                if (reportStimulDataProviderDetails.CurrentBusinessObject != null) exportDocumentHelper.RegBusinessObject(report, reportStimulDataProviderDetails.CurrentBusinessObject);
-                report.Load(reportTemplate);
-                exportDocumentHelper.AddLogo(report, reportStimulDataProviderDetails.Logo);
-            }
 
-            report.AutoLocalizeReportOnRun = true;
+                report.AutoLocalizeReportOnRun = true;
 
-            if (LogitudeSettings.LogitudeURL != "http://localhost:9996"
-                && LogitudeSettings.LogitudeURL != "http://127.0.0.1:81")
-            {
-                report.ReportCacheMode = StiReportCacheMode.On;
-                report.RenderedPages.CacheMode = true;
-                report.RenderedPages.CanUseCacheMode = true;
+                if (LogitudeSettings.LogitudeURL != "http://localhost:9996"
+                    && LogitudeSettings.LogitudeURL != "http://127.0.0.1:81")
+                {
+                    report.ReportCacheMode = StiReportCacheMode.On;
+                    report.RenderedPages.CacheMode = true;
+                    report.RenderedPages.CanUseCacheMode = true;
+                }
+                //report.Culture = "he-IL"; // we can use report globalization to translate lables, google "Glabalization manager stimulsoft" for more
+                report.Render(false);
+                return report;
             }
-            //report.Culture = "he-IL"; // we can use report globalization to translate lables, google "Glabalization manager stimulsoft" for more
-            report.Render(false);
-            return report;
-        }
 
         private string WriteReportToStorage(ReportFliter reportFliter, StiReport report)
         {
@@ -2602,7 +2604,8 @@ namespace WebFreight.Web.Helpers
             reportExecutionLogRepository.SubmitChanges();
 
             IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("ReportExecutionLogQueue", reportExecutionLog.Tenant);
+            string reportExecutionLogQueueCode = FeatureToggleHelper.HasFeatureToggle("RE2", reportExecutionLog.Tenant) ? "ReportExecutionLogV2Queue" : "ReportExecutionLogQueue";
+            queueservice.InitializeQueue(reportExecutionLogQueueCode, reportExecutionLog.Tenant);
             queueservice.Send(new Dictionary<string, string>() { { "ReportExecutionLogId", reportExecutionLog.Id }, { "Tenant", reportExecutionLog.Tenant.ToString() } }, reportExecutionLog.Tenant, null, null, null, null);
             return reportFliter;
 

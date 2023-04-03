@@ -44,9 +44,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 {
                     dictionary =  new Dictionary<string, List<GlobalSearchResult>>
                     {
-                        { "Shipments", new List<GlobalSearchResult>()},
-                        { "Invoicing", new List<GlobalSearchResult>()},
-                        { "Quotes", new List<GlobalSearchResult>()},
+                        { "Menu.G.Shipment", new List<GlobalSearchResult>()},
+                        { "Menu.G.Invoice", new List<GlobalSearchResult>()},
+                        { "Menu.G.Quotes", new List<GlobalSearchResult>()},
                     };
                     
                     return Request.CreateResponse(HttpStatusCode.OK, dictionary);
@@ -75,8 +75,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 dictionary = new Dictionary<string, List<GlobalSearchResult>> 
                 {
-                    { "Shipments", GetShipmentsGlobalSearch(shipments.ToList())},
-                    { "Invoicing", GetInovicesGlobalSearch(aRInvoices.ToList())},
+                    { "Menu.G.Shipment", GetShipmentsGlobalSearch(shipments.ToList())},
+                    { "Menu.G.Invoice", GetInovicesGlobalSearch(aRInvoices.ToList())},
                 };
 
                 if (includeQoutes)
@@ -92,7 +92,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                                  .Take(3);
                     }
 
-                    dictionary.Add("Quotes", GetQoutesGlobalSearch(quotesQuery.ToList()));
+                    dictionary.Add("Menu.G.Quotes", GetQoutesGlobalSearch(quotesQuery.ToList()));
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, dictionary);

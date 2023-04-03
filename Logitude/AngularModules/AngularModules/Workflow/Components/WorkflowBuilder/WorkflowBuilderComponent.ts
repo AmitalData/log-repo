@@ -21,6 +21,7 @@ import { FieldTypes } from "Workflow/Constants/FieldTypes";
 import { ObjectTables } from "Workflow/Utilities/ObjectTables";
 import { ObjectTableListService } from "Infrastructure/Services/StandardLists/ObjectTableListService";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
+import { StartTriggerTypes } from "Workflow/Constants/StartTriggerTypes";
 
 @Component({
     templateUrl: "./WorkflowBuilderComponent.html"
@@ -37,6 +38,8 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     public EntityId: string;
     public ValidVersion: WorkFlowVersionPM = null;
     public CurrentVersionId: string = null;
+    public WorkflowNumber: string;
+    public WorkflowTriggerTypeCode: string;
     public WorkflowName: string;
     public WorkflowEntity: string = null;
     public BusyIndicatorText: string = null;
@@ -139,6 +142,8 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     }
 
     handleRenderReactWorkflow() {
+        this.WorkflowTriggerTypeCode = this.EntityPM.WorkFlowTriggerTypeCode;
+        this.WorkflowNumber = this.EntityPM.WorkFlowNumber;
         this.WorkflowName = this.EntityPM.Name;
         this.WorkflowEntity = this.ValidVersion.Entity;
         this.renderReactFlowModeler();
@@ -481,6 +486,9 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
     getPropertiesComponentPath(nodeType: string) {
         let propertiesComponentPath = "./Workflow/Components/Properties/";
+        if (nodeType === "startNode" && this.WorkflowTriggerTypeCode === StartTriggerTypes.EventTriggered) {
+            return (propertiesComponentPath + "StartEventTriggeredPropertiesComponent");
+        }
         let propertiesComponentName = nodeType ? ((nodeType.charAt(0).toUpperCase() + nodeType.slice(1)).replace("Node", "") + "PropertiesComponent") : "";
         return (propertiesComponentPath + propertiesComponentName);
     }
@@ -491,7 +499,8 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
             Data: JSON.parse(JSON.stringify(openPropertiesEventObject.nodeData)),
             WorkflowEntity: this.WorkflowEntity,
             FlowObject: this.getCurrentFlowObject(),
-            CurrentNodeId: openPropertiesEventObject.nodeId
+            CurrentNodeId: openPropertiesEventObject.nodeId,
+            WorkflowNumber: this.WorkflowNumber
         };
         propertiesWindow.Height = openPropertiesEventObject.nodeType == "declareVariableNode" ? 320 : 850;
         propertiesWindow.Width = 1000;

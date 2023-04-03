@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;1f80&quot;"
+  Code="&quot;f037&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -8196,6 +8196,24 @@
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.TASKSTATUSES&quot;"
       FeatureDefaultText="&quot;Task Statuses&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;DocumentType.CustomizedInvitationDocument&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.DocumentType.CustomizedInvitationDocument&quot;"
+      FeatureDefaultText="&quot;Customized Invitation Document&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;DocumentType.CustomizedResetPasswordEmail &quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.DocumentType.CustomizedResetPasswordEmail &quot;"
+      FeatureDefaultText="&quot;Customized Reset Password Email &quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

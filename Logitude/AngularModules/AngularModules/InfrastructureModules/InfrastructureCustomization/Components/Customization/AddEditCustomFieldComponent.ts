@@ -52,6 +52,8 @@ export class AddEditCustomFieldComponent extends BaseComponent {
     ObjectTableName: string;
     private objectFieldPMExtendedService = new ObjectFieldPMExtendedService();
     public IsPartner: boolean = false;
+    public PartnersDictionary: { [key: string]: any } = {};
+    public partnerTypes: string[];
     constructor() {
         super();
         this.loginService = new LoginService();
@@ -91,6 +93,32 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         });
         this.UIProperties.SetRequired("Code", "ObjectField", true);
     }
+    SetCheckedPartners() {
+        if (this.IsNew)
+            return;
+        let partnersHaveThisField = this.GetPartnersHaveThisField();
+        this.CheckPartners(partnersHaveThisField);
+    }
+    CheckPartners(partners: any) {
+        partners.forEach((partner) => {
+            this.PartnersDictionary[partner] = 1;
+        });
+    }
+    GetPartnersHaveThisField() : any {
+        let fieldCopies: any[] = window.ObjectFields.filter(field => this.IsFieldCopy(field));
+        let PartnersName = Array<string>();
+        fieldCopies.forEach((element) => { PartnersName.push(element.ObjectTableName) });
+        return PartnersName;
+    }
+    IsFieldCopy(field: any) {
+        return (field.FieldName == this.objectField.FieldName) && (this.partnerTypes.indexOf(field.ObjectTableName) > -1);
+    }
+
+    InitializeDictionary() {
+        this.partnerTypes.forEach((partnerName) => {
+            this.PartnersDictionary[partnerName] = 0;
+        });
+    }
     IsCardObjectTable() {
         if (this.ObjectTableName == "Card")
             return true;
@@ -109,6 +137,9 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         this.DataTypeCollection = args.DataTypeCollection.filter(dataType => dataType.Code != "Time");
         this.ObjectTableName = args.ObjectTableName;
         this.IsPartner = args.IsPartner;
+        this.partnerTypes = ["AccountingPartner", "Agent", "Airline", "CustomClearance", "CustomAgent", "CustomsShipper", "Coloader", "Customer", "Freelancer", "PotentialCustomer", "Participant",
+            "ShippingAgent", "ShippingLine", "Trucker", "Vendor", "Warehouse"];
+        this.InitializeDictionary();
         if (this.IsNew) {
             
         }
@@ -117,6 +148,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             //this.LookUpTablesSelectionMethod("");
             this.PickListSelectionMethod(this.objectField.CustomPickListCode);
             this.UIProperties.SetEnabled("Code", "ObjectField", false);
+            this.SetCheckedPartners();
         }
     }
 
@@ -583,6 +615,9 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             this.loginService.CurrentTenant = SessionLocator.Tenant;
             this.objectField.DefaultAdditionalTreeFilters = this.AdditionalFiltersData[0];
             if (this.IsNew == true) {
+                if (this.IsCardTable(this.objectField.ObjectTableId)) {
+                    this.objectField.RelatedEntities = this.GetRelatedEntities();
+                }
                 this._ObjectFieldPMService.insert(this.objectField).subscribe(Fieldresponse => {
                     if (Fieldresponse.HasError) {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
@@ -608,6 +643,9 @@ export class AddEditCustomFieldComponent extends BaseComponent {
                 });
             }
             else {
+                if (this.IsCardTable(this.objectField.ObjectTableId)) {
+                    this.objectField.RelatedEntities = this.GetRelatedEntities();
+                }
                 this._ObjectFieldPMService.update(this.objectField).subscribe(Fieldresponse => {
                     if (Fieldresponse.HasError) {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
@@ -644,6 +682,33 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         }
     }
 
+    public GetRelatedEntities() : string{
+        let selectedPartners = "";
+        for (let key in this.PartnersDictionary) {
+            if (this.PartnersDictionary[key])
+                selectedPartners += key + ',';
+        }
+        return selectedPartners.substring(0, selectedPartners.length - 1);
+    }
+    public IsCardTable(ObjectTableId): boolean {
+        let objectTableName = window.ObjectTables.filter(table => table.Id == ObjectTableId)[0].Name;
+        return objectTableName == "Card";
+    }
+    public ChangeCheckBoxValue(objectTableName: string, event) {
+        if (this.PartnersDictionary[objectTableName] && !this.IsNew) return;
+        this.PartnersDictionary[objectTableName] = event;
+    }
+    public IsEnable(text: string): boolean {
+        if (this.IsPartner)
+            return false;
+        if (this.IsNew)
+            return true;
+        //if (!this.PartnersDictionary[text])
+        //    return true;
+        if (!(window.ObjectFields.filter(field => field.FieldName == this.objectField.FieldName && field.ObjectTableName == text)[0]))
+            return true;
+        false;
+    }
     private ValidateObjectFields() {
         this.ValidateTextObjectField();
         this.ValidateNumberObjectField();
