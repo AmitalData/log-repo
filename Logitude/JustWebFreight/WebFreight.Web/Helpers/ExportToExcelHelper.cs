@@ -472,7 +472,7 @@ namespace WebFreight.Web.Helpers
                         int start = 65;
                         foreach (XmlNode node in entitiesList.Item(0).ChildNodes)
                         {
-                            string nodename = TranslateTextsClass.Translate(node.Name, tenant);
+                            string nodename = TranslateTextsClass.Translate(node.Name, tenant,true,true);
                             QueryColumnPM column = queryColumns.Where(q => q.ObjectFieldListLabelTextCodeCode == node.Name || q.ObjectFieldFullNameTextCodeCode == node.Name).FirstOrDefault();
                             if (column != null)
                             {
