@@ -227,6 +227,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (!string.IsNullOrEmpty(authorizerId) && !string.IsNullOrEmpty(authorizedId))
             {
+                authorizerId = authorizerId.PadLeft(9, '0');
                 string clientId = clientQueryService.GetIdByCode(authorizerId.ToString(), requestParams.Tenant);
 
                 if (!string.IsNullOrEmpty(clientId))

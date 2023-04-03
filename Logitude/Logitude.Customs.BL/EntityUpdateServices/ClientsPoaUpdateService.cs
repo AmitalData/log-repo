@@ -25,7 +25,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             entityPM.Tenant = entityParentPM.Tenant;
             entityPM.Id = IdCounter.GetNumber("Customs.ClientsPoa", entityPM.Tenant);
 
-
+            if(!string.IsNullOrEmpty(entityPM.AuthorizerExternalId) && entityPM.AuthorizerExternalId.Length < 9)
+                entityPM.AuthorizerExternalId = entityPM.AuthorizerExternalId.PadLeft(9, '0');
         }
        
     }
