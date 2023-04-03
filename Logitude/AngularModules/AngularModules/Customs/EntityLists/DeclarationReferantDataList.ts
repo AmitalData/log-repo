@@ -94,6 +94,8 @@ export class DeclarationReferantDataList {
 	ImporterApproval: boolean;
 	DeclarationIdToDisplay: string;
 	CustomerId: string;
+	OccuredStatuses: string;
+	OccuredStatusesName: string;
 	
 }
  
