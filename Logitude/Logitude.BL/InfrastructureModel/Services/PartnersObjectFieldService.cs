@@ -1,14 +1,10 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
-using Logitude.Server.Tools.Counters;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logitude.BL.InfrastructureModel.Services
 {
@@ -28,7 +24,7 @@ namespace Logitude.BL.InfrastructureModel.Services
             objectFieldService = new ObjectFieldService(objectContext, tenant);
             this.tenant = tenant;
             objectFieldQuery = new ObjectFieldQuery(tenant);
-            partnerObjectTableTypes = new string[] {"AccountingPartner", "Agent", "AirLine", "CustomClearance", "CustomAgent", "CustomsShipper", "Coloader", "Customer", "Freelancer", "PotentialCustomer", "Participant",
+            partnerObjectTableTypes = new string[] {"AccountingPartner", "Agent", "Airline", "CustomClearance", "CustomAgent", "CustomsShipper", "Coloader", "Customer", "Freelancer", "PotentialCustomer", "Participant",
             "ShippingAgent", "ShippingLine", "Trucker", "Vendor", "Warehouse" };
             relatedPartnerObjectTables = new List<string>();
             partnersObjectTableIds = new List<string>();

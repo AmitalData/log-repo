@@ -137,7 +137,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         this.DataTypeCollection = args.DataTypeCollection.filter(dataType => dataType.Code != "Time");
         this.ObjectTableName = args.ObjectTableName;
         this.IsPartner = args.IsPartner;
-        this.partnerTypes = ["AccountingPartner", "Agent", "AirLine", "CustomClearance", "CustomAgent", "CustomsShipper", "Coloader", "Customer", "Freelancer", "PotentialCustomer", "Participant",
+        this.partnerTypes = ["AccountingPartner", "Agent", "Airline", "CustomClearance", "CustomAgent", "CustomsShipper", "Coloader", "Customer", "Freelancer", "PotentialCustomer", "Participant",
             "ShippingAgent", "ShippingLine", "Trucker", "Vendor", "Warehouse"];
         this.InitializeDictionary();
         if (this.IsNew) {
