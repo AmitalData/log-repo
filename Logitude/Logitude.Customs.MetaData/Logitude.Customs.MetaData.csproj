@@ -374,6 +374,8 @@
     <None Include="DBTables\DeclarationStatus.dxml" />
     <None Include="DBTables\DeclarationStatusType.dxml" />
     <None Include="DBTables\DeclarationTax.dxml" />
+    <None Include="DBTables\DefaultType.dxml" />
+    <None Include="DBTables\DefaultValue.dxml" />
     <None Include="DBTables\Deficit.dxml" />
     <None Include="DBTables\DeficitConnFileParagraphType.dxml" />
     <None Include="DBTables\DeficitDecision.dxml" />
@@ -580,6 +582,8 @@
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
     <None Include="EntityFiles\ClientsTapag.lxml" />
     <None Include="EntityFiles\DeclarationFollowUp.lxml" />
+    <None Include="EntityFiles\DefaultType.lxml" />
+    <None Include="EntityFiles\DefaultValue.lxml" />
     <None Include="EntityFiles\PhysicalCheckCode.lxml" />
     <None Include="EntityFiles\SignStation.lxml" />
     <None Include="EntityFiles\PhysicalCheckCode.lxml" />

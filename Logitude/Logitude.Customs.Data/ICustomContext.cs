@@ -199,6 +199,8 @@ namespace Logitude.Customs.Data
 		 IDbSet<DeclarationStatus> DeclarationStatuses { get; }
 		 IDbSet<DeclarationStatusType> DeclarationStatusTypes { get; }
 		 IDbSet<DeclarationTax> DeclarationTaxes { get; }
+		 IDbSet<DefaultType> DefaultTypes { get; }
+		 IDbSet<DefaultValue> DefaultValues { get; }
 		 IDbSet<Deficit> Deficits { get; }
 		 IDbSet<DeficitConnFileParagraphType> DeficitConnFileParagraphTypes { get; }
 		 IDbSet<DeficitDecision> DeficitDecisions { get; }

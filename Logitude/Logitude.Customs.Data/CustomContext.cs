@@ -432,6 +432,10 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new DeclarationTaxMap());
 	
+            modelBuilder.Configurations.Add(new DefaultTypeMap());
+	
+            modelBuilder.Configurations.Add(new DefaultValueMap());
+	
             modelBuilder.Configurations.Add(new DeficitMap());
 	
             modelBuilder.Configurations.Add(new DeficitConnFileParagraphTypeMap());
@@ -2444,6 +2448,18 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<DeclarationTax> DeclarationTaxes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DefaultType> DefaultTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DefaultValue> DefaultValues 
 	 {
 	      get; set;
 	 

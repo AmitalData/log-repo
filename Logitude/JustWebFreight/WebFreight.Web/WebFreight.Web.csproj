@@ -625,15 +625,12 @@
     </Reference>
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\UnifreightIIG.3.1803.64\lib\Net40\UnifreightIIG.Common.dll</HintPath>
-
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\UnifreightIIG.3.1803.64\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
-
     </Reference>
     <Reference Include="UnifreightIIG.UServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\UnifreightIIG.3.1803.64\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
-
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
@@ -1040,8 +1037,12 @@
     <Compile Include="Controllers\CustomsModel\Extended\PendingByKeywordsExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CountryCurrencyViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DeclarationFollowUpViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DefaultTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DefaultValueViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\VendorCurrencyViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CountryCurrencyController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DefaultTypeController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DefaultValueController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\VendorCurrencyController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ServersNamesController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ExportDeclarationClosingDatasController.cs" />
@@ -3224,6 +3225,8 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DeclarationPendingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DeclarationReferantDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DeclarationStatusUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DefaultTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DefaultValueUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DeficitDecisionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DeficitUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DeliveryTypeUpdateClass.cs" />
@@ -5128,6 +5131,8 @@
     <Content Include="WcfApi\AutoSignUpWcfService.svc" />
     <Content Include="WcfApi\CardContactWcfService.svc" />
     <Content Include="WcfApi\ChargeTypeWcfService.svc" />
+    <Content Include="WcfApi\DefaultValueWcfService.svc" />
+    <Content Include="WcfApi\DefaultTypeWcfService.svc" />
     <Content Include="WcfApi\CityWcfService.svc" />
     <Content Include="WcfApi\ContactPasswordService.svc" />
     <Content Include="WcfApi\ContactWcfService.svc" />
@@ -6685,6 +6690,12 @@
     <Compile Include="WcfApi\ChargeTypeWcfService.svc.cs">
       <DependentUpon>ChargeTypeWcfService.svc</DependentUpon>
     </Compile>
+    <Compile Include="WcfApi\DefaultValueWcfService.svc.cs">
+      <DependentUpon>DefaultValueWcfService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="WcfApi\DefaultTypeWcfService.svc.cs">
+      <DependentUpon>DefaultTypeWcfService.svc</DependentUpon>
+    </Compile>
     <Compile Include="WcfApi\CityWcfService.svc.cs">
       <DependentUpon>CityWcfService.svc</DependentUpon>
     </Compile>
@@ -6713,6 +6724,8 @@
       <DependentUpon>CustomerDWWcfService.svc</DependentUpon>
     </Compile>
     <Compile Include="WcfApi\ExternalTasksQueueWcfService.ExportSignQ.cs" />
+    <Compile Include="WcfApi\IDefaultValueWcfService.cs" />
+    <Compile Include="WcfApi\IDefaultTypeWcfService.cs" />
     <Compile Include="WcfApi\IExternalTasksQueueExportSignWcfService.cs" />
     <Compile Include="WcfApi\IPaymentTermWcfService.cs" />
     <Compile Include="WcfApi\IWarehouseWcfService.cs" />
