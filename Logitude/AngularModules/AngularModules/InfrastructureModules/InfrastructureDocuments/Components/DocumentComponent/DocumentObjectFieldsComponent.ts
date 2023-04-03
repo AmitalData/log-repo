@@ -56,6 +56,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
     FromComponent: string;
     DataProviderFields: DataProviderField[];
     SelectedDataProviderField: DataProviderField;
+    public BaseDataProviderFields: string[];
     constructor() {
       
         
@@ -117,7 +118,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
 
 
         this.SelectedObjectTable = window.ObjectTables.filter(d=> d.Id == this.ObjectTableId)[0];
-
+        this.BaseDataProviderFields = ["Today_DateTime","Logo","Address","GeneralAddress","CompanyName"];
         this.ObjectTableSelectionChangedMethod(this.SelectedObjectTable);
     }
     objectFieldsList: ObjectFieldPM[];  
@@ -279,6 +280,8 @@ export class DocumentObjectFieldsComponent implements OnInit {
         if(item.Text.toLowerCase().includes('logo'))
             return false;
         if(item.Text.toLowerCase().includes('signature'))
+            return false;
+        if (this.BaseDataProviderFields.indexOf(item.Text) > -1)
             return false;
         return true;
     }
