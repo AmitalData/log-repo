@@ -553,7 +553,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      DestinationCountryCode = a.DestinationCountryCode,
                                                      DestinationCountryName = a.CustomsCountry != null ? a.CustomsCountry.EnglishName : "",
                                                      LoadingDateTime = a.LoadingDateTime,
-                                                   ShipCodeName = a.CustomsShip != null ? a.CustomsShip.EnglishName : "",
+                                                     ShipCodeName = a.CustomsShip != null ? a.CustomsShip.EnglishName : "",
                                                      IsExporterConfirmation = a.IsExporterConfirmation,
                                                      CreateDateForExport = a.CreateDateTime,
                                                      TransportModeForExport = a.TransportModeId,
