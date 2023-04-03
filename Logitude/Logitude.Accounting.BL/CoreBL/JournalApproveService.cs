@@ -611,7 +611,7 @@ namespace Logitude.Accounting.BL.CoreBL
             var listTransactionId = _JournalPM.JournalExternalReconciles.Select(r => r.LedgerTransactionId).ToList();
             if (listTransactionId.Count > 0)
             {
-                myLedgerTransactionUpdateService.Update_InProgressExternalReconcile(listTransactionId, _JournalPM.Tenant, false);
+                LedgerTransactionUpdateService.Update_InProgressExternalReconcile(_JournalPM.Id, _JournalPM.Tenant, false);
             }
 
             var listReconcileExternalPageLineId = _JournalPM.JournalExternalReconciles.Select(r => r.ReconcileExternalPageLineId).ToList();
