@@ -285,27 +285,27 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             List<PaymentChequeLinePM> paymentChequeLines = new List<PaymentChequeLinePM>();
             PaymentChequeLinePM paymentChequeLine = new PaymentChequeLinePM();
-            float hundredPercent = 100;
-            double? sum = 0; 
+            decimal hundredPercent = 100;
+            decimal? sum = 0; 
             var calculate = ((hundredPercent - payment.TaxDeductionPercentage));
-            float? calculatePercent = (calculate) / hundredPercent;
+            decimal? calculatePercent = (calculate) / hundredPercent;
             foreach (var item in payment.PaymentInvoices)
             {
                 paymentChequeLine = new PaymentChequeLinePM();
                 paymentChequeLine.Notes = item.APInvoiceNumber;
-                paymentChequeLine.Amount = (decimal?)(item.ForeignAmount * calculatePercent);
+                paymentChequeLine.Amount = (decimal?)(item.ForeignAmount) * calculatePercent;
                 paymentChequeLine.ChangeSetOp = ChangeSetOperation.Insert;
                 paymentChequeLine.Line = paymentChequeLines.Count() + 1;
                 paymentChequeLine.Tenant = payment.Tenant;
                 paymentChequeLines.Add(paymentChequeLine);
-                sum+= item.ForeignAmount;
+                sum+= (decimal?)item.ForeignAmount;
             }
 
-			if (payment?.OpenAmount > 0)
+			if (((decimal?)payment?.AmountInLocalCurrency - sum)>0)
 			{
                 paymentChequeLine = new PaymentChequeLinePM();
                 paymentChequeLine.Notes = payment.PaymentNo;
-                paymentChequeLine.Amount = (decimal?)((payment?.OpenAmount ) * calculatePercent);
+                paymentChequeLine.Amount = ((decimal?)(payment?.AmountInLocalCurrency)-sum) * calculatePercent;
                 paymentChequeLine.ChangeSetOp = ChangeSetOperation.Insert;
                 paymentChequeLine.Line = paymentChequeLines.Count() + 1;
                 paymentChequeLine.Tenant = payment.Tenant;
