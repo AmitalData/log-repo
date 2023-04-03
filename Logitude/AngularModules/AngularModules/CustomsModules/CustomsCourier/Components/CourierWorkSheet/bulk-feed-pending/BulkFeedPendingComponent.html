@@ -28,6 +28,7 @@
         <button style="text-align:right" (click)="OpenMultiUpdateWindow()">עדכון נתוני הצהרה</button>
         <button style="text-align:right" (click)="CreateInvoiceDocumentWindow()">צור מסמך חשבון ספק</button>
         <button style="text-align:right" (click)="Export2Excel()">הורדה לםקסל</button>
+        <button style="text-align:right" (click)="SendALLSVG(true)">בקרת סיווגים</button>
 
     </div>
 
@@ -84,7 +85,7 @@
     <LogTextBox class="input-good-description" [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true"
         [ObjectFieldName]="'GoodsDescription'" [IsMultiline]="true" [DataContext]="DataContext" [InputType]="'nText'">
     </LogTextBox>
-    <LogLabel class="label-good-description"
+    <LogLabel class="label-casual-supplier-name"
         [Text]="'Customs.ReleaseGoods.O.CasualSupplierName' | TextCodeTranslationPipe" [NoObjectField]="true"
         [DataContext]="DataContext"></LogLabel>
 
@@ -129,7 +130,10 @@
         </span>
         <!--[QueryFilterItems]="LoadingContactFilterItems"-->
     </MultiSelectLOV>
-
+    <LogLabel [ObjectFieldName]="'CustomerName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        
+    <LogTextBox class="input-customer-name" [ObjectFieldName]="'CustomerName'" [InputType]="'nText'" [IsFreeText]="true" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                            [HideColumns]="true"></LogTextBox>
 
     <button class="Button" style="height:22px" (click)="search()">
         {{'Customs.General.O.Search' | TextCodeTranslationPipe}}

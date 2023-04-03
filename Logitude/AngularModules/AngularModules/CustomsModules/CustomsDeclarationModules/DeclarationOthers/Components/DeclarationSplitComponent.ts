@@ -1,5 +1,5 @@
 declare var window: any;
-import { Component, AfterViewInit, OnDestroy, ChangeDetectorRef, ViewChildren, QueryList, Output, Input, OnInit, ViewEncapsulation, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, ChangeDetectorRef, ViewChildren, QueryList, Output, Input, OnInit, ViewEncapsulation, ViewChild, HostListener,ElementRef } from '@angular/core';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { LocationDirective } from '../../../../Infrastructure/Utilities/LocationDirective';
 import { ApiQueryFilters, FilterItem } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -17,7 +17,8 @@ import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { ObjectTablePM } from '../../../../Infrastructure/EntityPMs/ObjectTablePM';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../../../Infrastructure/Utilities/AmitalGatewayUtil';
-
+//import * as cv from 'opencv4nodejs';
+//import * as Tesseract from 'tesseract.js';
 import { DeclarationPM } from '../../../../Customs/EntityPMs/DeclarationPM';
 import { DocumentsFilingPM } from '../../../../Common/EntityPMs/DocumentsFilingPM';
 import { RelatedDocumentViewModel } from '../../../CustomsDocuments/Components/RelatedDocumentViewModel';
@@ -53,7 +54,11 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
     timerToken: any;
     IsNoDocumentSelected: boolean = true;
     DocumentViewerImageId: string;
-
+    selectedText = '';
+    startX = 0;
+    startY = 0;
+    endX = 0;
+    endY = 0;
     //Services
     private custDocRelatedDocsWebService: CustDocRelatedDocsWebService = new CustDocRelatedDocsWebService();
     private _ImageLibraryService: ImageLibraryService = new ImageLibraryService();
@@ -69,17 +74,25 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
         this.DocumentViewerImageId = "DocumentViewerImage-" + counter;
 
     }
+    @ViewChild('myImg', { static: true }) myImgVariable: ElementRef;
 
     ngAfterViewInit() {
+        /*this.myImgVariable.nativeElement.onload = () => {
+            this.recognizeText();
+        }*/
         this.startRenderingImage();
+       
     }
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.DeclarationSplitDocumentSelectionEVENT);
         AppTool.KillEventEmitter(this.DeclarationSplitDocumentItemSelectionEVENT);
 
     }
+
+   
     _DocumentFilingIdToSetWhileLoadDocument: string;
     SetComponentArgs(args: any) {
+        debugger;
         if (!AppTool.IsNullOrEmpty(args)) {
             this.DeclarationPM = args.EntityPM;
 
@@ -187,7 +200,24 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
         //     this.LoadDocumentPage();
         // //this.renderImage();
     }
+    OpenInWindowButtonClicked() {
+        
 
+          
+                //var documentFiling = resp.Result;
+        this._ImageLibraryService.DownloadFile(this.SelectedTicket.documentsFilingPM.DocumentId, this.SelectedTicket.documentsFilingPM.FileExtension, this.SelectedTicket.documentsFilingPM.Folder, SessionLocator.Tenant).subscribe((res: any) => {
+
+
+            var documentName = SessionLocator.Tenant + "_" + this.SelectedTicket.documentsFilingPM.DocumentId;
+
+
+            DownloadManager.DownloadPage(documentName);
+
+                });
+          
+
+        
+    }
 
     composedPath(el) {
         let path = [];
@@ -206,6 +236,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
  
 
     LoadDocumentPage(pageIndex: number = null, selectItem: boolean = false) {
+        debugger;
          if (this.SelectedTicket) {
 
             this.StartBusyIndicator("Loading page...");
@@ -798,13 +829,74 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
 
 
     }
+    /*@HostListener('contextmenu', ['$event'])
+    onContextMenu(event: MouseEvent) {
+        if (this.selectedText) {
+            event.preventDefault();
+            window.open(`https://www.google.com/search?q=${this.selectedText}`);
+        }
+    }*/
+
+    
+
+    
+    /*recognizeText() {
+        // Calculate the coordinates of the selected area
+        const x = Math.min(this.startX, this.endX);
+        const y = Math.min(this.startY, this.endY);
+        const width = Math.abs(this.startX - this.endX);
+        const height = Math.abs(this.startY - this.endY);
+
+        // Use the createElement function to create a new canvas element
+        var canvas = document.createElement("canvas");
+        var ctx = canvas.getContext("2d");
+
+        // Use the drawImage function to draw the selected area of the image on the canvas
+        ctx.drawImage(this.myImgVariable.nativeElement, x, y, width, height, 0, 0, width, height);
+
+        // Use the toDataURL function to get the data of the selected area
+        var imgData = canvas.toDataURL();
+        //const image = cv.imread(this.myImgVariable.nativeElement.src);
+
+        // Use the Tesseract.recognize function to recognize the text in the selected area
+        Tesseract.recognize(imgData)
+            .then(result => {
+                this.selectedText = result.data.text;
+                //this.drawRectangle(image, imgData, new cv.Vec(0, 0, 255));
+            })
+            .catch(err => console.error(err));
+
+    }*/
+
+    /*drawRectangle(img, rect, color, thickness = 2) {
+        img.drawRectangle(
+            rect,
+            color,
+            thickness,
+            cv.LINE_8
+        );
+    }*/
+    @HostListener('mouseup', ['$event'])
     OnMouseUp(event) {
+      /*  if (event) {
+            this.endX = event.clientX;
+            this.endY = event.clientY;
+            this.recognizeText();
+        }*/
     }
+
+    @HostListener('mousedown', ['$event'])
     OnMouseDown(event) {
         if (event) {
             this.lastOffsetX = event.offsetX;
             this.lastOffsetY = event.offsetY;
+
+            this.startX = event.clientX;
+            this.startY = event.clientY;
         }
+
+
+
     }
     //#endregion
 
