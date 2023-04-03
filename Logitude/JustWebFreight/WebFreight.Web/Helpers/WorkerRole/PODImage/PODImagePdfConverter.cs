@@ -44,10 +44,14 @@ namespace WebFreight.Web.Helpers.WorkerRole.PODImage
             var image = ConvertByteArrayToImage(fileData);
             var pdfWidth = pdfPage.PageSize.Width;
             var pdfHeight = pdfPage.PageSize.Height;
-            float imageWidth = GetImageWidth(image.Width, pdfWidth);
+            float imageWidth = image.Width > pdfWidth ? pdfWidth : image.Width;
             float imageHeight = image.Height > pdfHeight ? pdfHeight : image.Height;
             float imageXPosition = GetImageXPosition(imageWidth, pdfWidth);
             ImageElement unscaledImageElement = new ImageElement(imageXPosition, 0, imageWidth, imageHeight, image);
+            if(FeatureToggleHelper.HasFeatureToggle("CPI", tenant))
+            {
+                unscaledImageElement.KeepAspectRatio = false;
+            }
             return unscaledImageElement;
         }
 
@@ -59,23 +63,11 @@ namespace WebFreight.Web.Helpers.WorkerRole.PODImage
 
         }
 
-        private float GetImageWidth(float imageWidth, float pdfWidth)
-        {
-            if (!FeatureToggleHelper.HasFeatureToggle("CPI", tenant))
-            {
-                return imageWidth > pdfWidth ? pdfWidth : imageWidth;
-            }
-            if ((imageWidth < pdfWidth && (pdfWidth - imageWidth) < 40) || imageWidth >= pdfWidth)
-            {
-                return pdfWidth - 36;
-            }
-            return imageWidth;
-        }
-
         private float GetImageXPosition(float imageWidth, float pdfWidth)
         {
             if (!FeatureToggleHelper.HasFeatureToggle("CPI", tenant)) return 0;
             return (pdfWidth - imageWidth) / 2;
         }
+
     }
 }
