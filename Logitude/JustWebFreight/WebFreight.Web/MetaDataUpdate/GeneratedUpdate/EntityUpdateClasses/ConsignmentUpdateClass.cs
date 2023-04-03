@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ConsignmentUpdateClass
    {  		
-		public const string HashString = "848c1d210fbb9cde6ccee426564fa4a8";
+		public const string HashString = "c51e4839eca2f84fca2cabf3e8a7277f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2689,6 +2689,56 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode ConsignmentTextCode_CustomsConsignmentOComprehensiveUpdateCon = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.ComprehensiveUpdateCon", DefaultText = "Comprehensive Update Consignment",LocalDefaultText = @"עדכון גורף של שדות זהים במשגורי יצוא", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ConsignmentTextCode_CustomsConsignmentOComprehensiveUpdate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.ComprehensiveUpdate", DefaultText = "Comprehensive Update",LocalDefaultText = @"עדכון גורף", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOLoadingPortFieldIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.LoadingPortFieldIsMandatory", DefaultText = "Loading Port Field Is Mandatory",LocalDefaultText = @"נמל טעינה שדה חובה", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOPortOfDischargeFieldIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.PortOfDischargeFieldIsMandatory", DefaultText = "Port Of Discharge Field Is Mandatory",LocalDefaultText = @"נמל פריקה שדה חובה", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentODeliverySiteFieldIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.DeliverySiteFieldIsMandatory", DefaultText = "Delivery Site Field Is Mandatory",LocalDefaultText = @"אתר מסירה שדה חובה", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOImport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.Import", DefaultText = "Import",LocalDefaultText = @"יבוא", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.Export", DefaultText = "Export",LocalDefaultText = @"יצוא", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOShahamDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.ShahamDeclaration", DefaultText = "Shaham Declaration",LocalDefaultText = "הצהרת שח''מ", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentONoDeclarationFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.NoDeclarationFound", DefaultText = "No Declaration Found",LocalDefaultText = @"לא נמצאה הצהרה", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOAdditionalDataForExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.AdditionalDataForExport", DefaultText = "Additional Data For Export",LocalDefaultText = @"נתונים נוספים ליצוא - חטיבת משגור", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterFlightYear = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterFlightYear", DefaultText = "Enter Flight Year",LocalDefaultText = @"הזן שנת טיסה", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterMainManifest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterMainManifest", DefaultText = "Enter Main Manifest",LocalDefaultText = @"הזן שט”מ ראשי", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterInternalManifest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterInternalManifest", DefaultText = "Enter Internal Manifest",LocalDefaultText = @"הזן שט”מ פנימי", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterPackageNum = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterPackageNum", DefaultText = "Enter Package Num",LocalDefaultText = @"הזן מספר חבילה", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterYearCargoCreation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterYearCargoCreation", DefaultText = "Enter Year Cargo Creation",LocalDefaultText = @"הזן שנת יצירת מטען", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterStorageDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterStorageDeclaration", DefaultText = "Enter Storage Declaration",LocalDefaultText = @"הזן הצהרת אחסנה", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterManifest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterManifest", DefaultText = "Enter Manifest",LocalDefaultText = @"הזן מצהר", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterTransactionID = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterTransactionID", DefaultText = "Enter Transaction ID",LocalDefaultText = @"הזן מזהה עסקה", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterBOLBaldar = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterBOLBaldar", DefaultText = "Enter BOL Baldar",LocalDefaultText = @"הזן ש.מ בלדר", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterVatBaldar = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterVatBaldar", DefaultText = "Enter Vat Baldar",LocalDefaultText = @"הזן ח.פ בלדר", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterEstablishmentDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterEstablishmentDate", DefaultText = "Ente rEstablishment Date",LocalDefaultText = @"הזן תאריך הקמה", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterTransactionIDMlm = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterTransactionIDMlm", DefaultText = "Enter Transaction ID Mlm",LocalDefaultText = @"הזן מזהה עסקה מלם", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterYear = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterYear", DefaultText = "Enter Year",LocalDefaultText = @"הזן שנה", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterMAIBOL = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterMAIBOL", DefaultText = "Enter Main And Internal BOL",LocalDefaultText = @"הזן שמ”ר / שמ”פ", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterAirLineAShipper = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterAirLineAShipper", DefaultText = "Enter Air Line And Shipper",LocalDefaultText = @"הזן ח.תעופה/משלח", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOLockedDecCantDelete = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.LockedDecCantDelete", DefaultText = "Locked Decliration Cant Delete",LocalDefaultText = @"ההצהרה נעולה. לא ניתן למחוק נתוני סידורי במטען", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterNineDigitOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterNineDigitOnly", DefaultText = "Enter Nine Digit Only",LocalDefaultText = @"יש להזין מספר בעל 9 ספרות בלבד בשדה מזהה מטען שני", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
