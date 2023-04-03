@@ -38,7 +38,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.PODImage
         {
 
             if (!IsAllowConvert(podImageConverter)) return;
-            byte[] convertedFileData = podImageConverter.Convert(ReadFileFromStorage());
+            byte[] convertedFileData = podImageConverter.Convert(ReadFileFromStorage(), tenant);
             if (convertedFileData != null)
             {
                 UpdateDocument(convertedFileData, podImageConverter.Extention);
