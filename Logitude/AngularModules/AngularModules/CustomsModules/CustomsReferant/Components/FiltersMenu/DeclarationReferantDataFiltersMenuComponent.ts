@@ -97,6 +97,7 @@ export class DeclarationReferantDataFiltersMenuComponent
             this.CurrentScreenIsWorkSpace = true;
             this.LOVListUsers = [];
             this.LOVListDepartment = [];
+            this.LOVListOccuredStatuses = [];
             this.TransportFilters.AdditionalFilters = args.Filters.filter(a => a.FieldName == "TransportModeId");
             this.UserFilters.AdditionalFilters = args.Filters.filter(a => a.FieldName == "ReferentUserId");
             this.DepartmentFilters.AdditionalFilters = args.Filters.filter(a => a.FieldName == "DepartmentId");
@@ -359,6 +360,14 @@ export class DeclarationReferantDataFiltersMenuComponent
         }
     }
 
+    _LOVListOccuredStatuses: any[] = [];
+    get LOVListOccuredStatuses() { return this._LOVListOccuredStatuses; }
+    set LOVListOccuredStatuses(value) {
+        if (this._LOVListOccuredStatuses != value) {
+            this._LOVListOccuredStatuses = value;
+        }
+    }
+
     private selectedValue: string = "All";
     public get SelectedValue() { return this.selectedValue; }
     public set SelectedValue(value: string) {
@@ -532,6 +541,10 @@ export class DeclarationReferantDataFiltersMenuComponent
         //this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
         this.FilterChangeSubject.next();
         this.apiQueryFiltersChanged = true;
+
+    }
+    SelectedValueChangedEmitOccuredStatuses(){
+        debugger;
 
     }
 
