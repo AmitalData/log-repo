@@ -61,9 +61,10 @@ namespace WebFreight.Web.WcfApi
                 string mod_field_list = queryParams["MOD_FIELD_LIST"];
                 string sup_field_list = queryParams["SUP_FIELD_LIST"];
                 string dec_list = queryParams["DEC_LIST"];
+                Dictionary<string, string> all_results = new Dictionary<string, string>();
 
                 string sqlQuery = $"select {inv_field_list} from customs.SUPPLIERINVOICES where DECLARATIONID in ({dec_list})  and tenant={tenant}";
-
+                all_results.Add("SI_SQL", sqlQuery);
 
                 var shipmentsContext = new Simplog.Data.ShipmentsModel.ShipmentsContext();
                 using (SqlConnection connection = new SqlConnection())
@@ -72,7 +73,7 @@ namespace WebFreight.Web.WcfApi
                     connection.Open();
 
 
-                    Dictionary<string, string> all_results = new Dictionary<string, string>();
+                    
                     using (var cmd = new SqlCommand(sqlQuery, connection))
                     {
                         using (SqlDataReader reader = cmd.ExecuteReader())
@@ -94,19 +95,22 @@ namespace WebFreight.Web.WcfApi
                                     }
                                     all_lines.Add(one_line);
 
-                                    results.Add("SUPPLIERINVOICES", JsonConvert.SerializeObject(all_lines));
-
+                                    results.Add("SI", JsonConvert.SerializeObject(all_lines));//SUPPLIERINVOICES
+                                    
                                     sqlQuery = $"select {dec_field_list} from customs.DECLARATIONS where id='{dec_id}' and tenant={tenant}";
+                                    results.Add("DEC_SQL", sqlQuery);
                                     all_lines = get_table_lines(sqlQuery, connection);
-                                    results.Add("DECLARATIONS", JsonConvert.SerializeObject(all_lines));
+                                    results.Add("DEC", JsonConvert.SerializeObject(all_lines));//DECLARATIONS
 
                                     sqlQuery = $"select {mod_field_list} from customs.SUPPLIERINVOICEMODIFICATIONS where DECLARATIONID='{dec_id}' and tenant={tenant}";
+                                    results.Add("SIM_SQL", sqlQuery);
                                     all_lines = get_table_lines(sqlQuery, connection);
-                                    results.Add("SUPPLIERINVOICEMODIFICATIONS", JsonConvert.SerializeObject(all_lines));
+                                    results.Add("SIM", JsonConvert.SerializeObject(all_lines));//SUPPLIERINVOICEMODIFICATIONS
 
                                     sqlQuery = $"select {sup_field_list} from customs.SUPPLIERINVOICEITEMS where DECLARATIONID='{dec_id}' and tenant={tenant}";
+                                    results.Add("SII_SQL", sqlQuery);
                                     all_lines = get_table_lines(sqlQuery, connection);
-                                    results.Add("SUPPLIERINVOICEITEMS", JsonConvert.SerializeObject(all_lines));
+                                    results.Add("SII", JsonConvert.SerializeObject(all_lines));//SUPPLIERINVOICEITEMS
 
 
                                     all_results.Add(dec_id, JsonConvert.SerializeObject(results));
@@ -179,7 +183,8 @@ namespace WebFreight.Web.WcfApi
                 {
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    int tenant1 = authToken.Tenant;
+                    int tenant1 = 0;
+                    if(authToken != null) tenant1 = authToken.Tenant; 
                 }
 
                 if (tenant == 0)
