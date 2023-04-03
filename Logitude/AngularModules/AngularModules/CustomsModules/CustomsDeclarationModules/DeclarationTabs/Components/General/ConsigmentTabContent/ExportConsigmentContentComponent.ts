@@ -238,14 +238,14 @@ export class ExportConsigmentContentComponent extends BaseComponent {
 
         if (AppTool.IsNullOrEmpty(this.ExportLoadingPortCode)) {
            
-            this.ValidationErrorsList.push("נמל טעינה שדה חובה");
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Consignment.O.LoadingPortFieldIsMandatory"));
         }
 
         if (AppTool.IsNullOrEmpty(this.ExportUnloadingPortCode)) {
-            this.ValidationErrorsList.push("נמל פריקה שדה חובה");
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Consignment.O.PortOfDischargeFieldIsMandatory"));
         }
         if (AppTool.IsNullOrEmpty(this.StorageSiteCode)) {
-            this.ValidationErrorsList.push("אתר  מסירה שדה חובה");
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Consignment.O.DeliverySiteFieldIsMandatory"));
         }
         //if (AppTool.IsNullOrEmpty(this.ExportRecieverWareHouseCode)) {
         //    this.ValidationErrorsList.push("אתר  המכלה שדה חובה");

@@ -152,7 +152,7 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
 
     DeleteButtonClicked(item) {
         if (!AppTool.IsNullOrEmpty(item)) {
-            var msg = "שורה זו תמחק, האם להמשיך?" // TextCodeTranslator.Translate("Customs.Declaration.O.DeleteCondition");
+            var msg = TextCodeTranslator.Translate("Customs.Declaration.O.DeleteLineContinue") // TextCodeTranslator.Translate("Customs.Declaration.O.DeleteCondition");
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 400;
             confirmWindow.Height = 150;
@@ -206,7 +206,7 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
                 var existCodeList: string[] = [];
                 this.DeclarationPendingItemsSource.Collection.forEach((item: DeclarationPendingLine) => {
                     if (existCodeList != null && item != null && existCodeList.indexOf(item.CourierPendingReasonCode) > -1) {
-                        errors.push("כבר קיימת רשומה עם קוד עיכוב " + item.CourierPendingReasonName);
+                        errors.push(TextCodeTranslator.Translate("Customs.Declaration.O.RecordDelayCodeExists") + item.CourierPendingReasonName);
                         this.inValid = true;
                         this.isValid = false;
                     }
@@ -470,7 +470,7 @@ export class DeclarationPendingLine extends BaseComponent {
             this.UIProperties.SetValidity("CourierPendingReasonCode", "Customs.DeclarationPending", true, "");
             if (this.parent.DeclarationPendingItemsSource != null && this.parent.DeclarationPendingItemsSource.Collection.find(d => d.CourierPendingReasonCode == newValue) != null) {
                 this.valid = false;
-                this.UIProperties.SetValidity("CourierPendingReasonCode", "Customs.DeclarationPending", false, "כבר קיימת רשומה עם קוד עיכוב " + newValue);
+                this.UIProperties.SetValidity("CourierPendingReasonCode", "Customs.DeclarationPending", false, TextCodeTranslator.Translate("Customs.Declaration.O.RecordDelayCodeExists") + newValue);
             }
         }
         if (this.valid != true && logCellTemplate != null && CourierPendingReasonLovBox != null) {

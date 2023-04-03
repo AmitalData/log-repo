@@ -114,9 +114,9 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
 
                                                     }
                                                     if (this.EntityPM.Direction == "E") {
-                                                        this.CurrentSession.ChangeSessionHeader({ Text: "הצהרות יצוא" });
+                                                        this.CurrentSession.ChangeSessionHeader({ Text: TextCodeTranslator.Translate("Customs.Declaration.O.ExportDeclarations") });
                                                     } else {
-                                                        this.CurrentSession.ChangeSessionHeader({ Text: "הצהרות יבוא" });
+                                                        this.CurrentSession.ChangeSessionHeader({ Text: TextCodeTranslator.Translate("Customs.Declaration.O.ImportDeclarations") });
                                                     }
                                                 }
                                             });
@@ -1575,14 +1575,14 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
             }
         }
         else if (this.IsDisplayOnly) {
-            this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
+            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DisplayOnly") + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
             return;
         }
         else if (this.EntityPM.StorageStatusCode) {
             this.ShowStorageStatusMessage = true;
-            this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
+            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.StorageRequestStatus") + " " + this.EntityPM.StorageStatusName;
         }
 
 
@@ -1602,11 +1602,11 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
                 }
             }
             else if (this.IsDisplayOnly) {
-                this.DisplayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
+                this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DisplayOnly") + displayOnlyCheckResult.DisplayOnlyMessage;
             }
             else if (this.EntityPM.StorageStatusCode) {
                 this.ShowStorageStatusMessage = true;
-                this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
+                this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.StorageRequestStatus") + " " + this.EntityPM.StorageStatusName;
             }
 
             else if (this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest && !displayOnlyCheckResult.IsDisplayOnly) {

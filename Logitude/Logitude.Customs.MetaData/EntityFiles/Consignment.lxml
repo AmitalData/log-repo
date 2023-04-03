@@ -3188,6 +3188,156 @@
       LocalDefaultText="&quot;עדכון גורף&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Consignment.O.LoadingPortFieldIsMandatory&quot;"
+      DefaultText="&quot;Loading Port Field Is Mandatory&quot;"
+      LocalDefaultText="&quot;נמל טעינה שדה חובה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Consignment.O.PortOfDischargeFieldIsMandatory&quot;"
+      DefaultText="&quot;Port Of Discharge Field Is Mandatory&quot;"
+      LocalDefaultText="&quot;נמל פריקה שדה חובה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Consignment.O.DeliverySiteFieldIsMandatory&quot;"
+      DefaultText="&quot;Delivery Site Field Is Mandatory&quot;"
+      LocalDefaultText="&quot;אתר מסירה שדה חובה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Consignment.O.Import&quot;"
+      DefaultText="&quot;Import&quot;"
+      LocalDefaultText="&quot;יבוא&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Consignment.O.Export&quot;"
+      DefaultText="&quot;Export&quot;"
+      LocalDefaultText="&quot;יצוא&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Consignment.O.ShahamDeclaration&quot;"
+      DefaultText="&quot;Shaham Declaration&quot;"
+      LocalDefaultText="&quot;הצהרת שח&quot;מ&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Consignment.O.NoDeclarationFound&quot;"
+      DefaultText="&quot;No Declaration Found&quot;"
+      LocalDefaultText="&quot;לא נמצאה הצהרה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Consignment.O.AdditionalDataForExport&quot;"
+      DefaultText="&quot;Additional Data For Export&quot;"
+      LocalDefaultText="&quot;נתונים נוספים ליצוא - חטיבת משגור&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Consignment.O.EnterFlightYear&quot;"
+      DefaultText="&quot;Enter Flight Year&quot;"
+      LocalDefaultText="&quot;הזן שנת טיסה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Consignment.O.EnterMainManifest&quot;"
+      DefaultText="&quot;Enter Main Manifest&quot;"
+      LocalDefaultText="&quot;הזן שט”מ ראשי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Consignment.O.EnterInternalManifest&quot;"
+      DefaultText="&quot;Enter Internal Manifest&quot;"
+      LocalDefaultText="&quot;הזן שט”מ פנימי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Consignment.O.EnterPackageNum&quot;"
+      DefaultText="&quot;Enter Package Num&quot;"
+      LocalDefaultText="&quot;הזן מספר חבילה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Consignment.O.EnterYearCargoCreation&quot;"
+      DefaultText="&quot;Enter Year Cargo Creation&quot;"
+      LocalDefaultText="&quot;הזן שנת יצירת מטען&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Consignment.O.EnterStorageDeclaration&quot;"
+      DefaultText="&quot;Enter Storage Declaration&quot;"
+      LocalDefaultText="&quot;הזן הצהרת אחסנה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Consignment.O.EnterManifest&quot;"
+      DefaultText="&quot;Enter Manifest&quot;"
+      LocalDefaultText="&quot;הזן מצהר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Consignment.O.EnterTransactionID&quot;"
+      DefaultText="&quot;Enter Transaction ID&quot;"
+      LocalDefaultText="&quot;הזן מזהה עסקה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Consignment.O.EnterBOLBaldar&quot;"
+      DefaultText="&quot;Enter BOL Baldar&quot;"
+      LocalDefaultText="&quot;הזן ש.מ בלדר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Consignment.O.EnterVatBaldar&quot;"
+      DefaultText="&quot;Enter Vat Baldar&quot;"
+      LocalDefaultText="&quot;הזן ח.פ בלדר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Consignment.O.EnterEstablishmentDate&quot;"
+      DefaultText="&quot;Ente rEstablishment Date&quot;"
+      LocalDefaultText="&quot;הזן תאריך הקמה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Consignment.O.EnterTransactionIDMlm&quot;"
+      DefaultText="&quot;Enter Transaction ID Mlm&quot;"
+      LocalDefaultText="&quot;הזן מזהה עסקה מלם&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Consignment.O.EnterYear&quot;"
+      DefaultText="&quot;Enter Year&quot;"
+      LocalDefaultText="&quot;הזן שנה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Consignment.O.EnterMAIBOL&quot;"
+      DefaultText="&quot;Enter Main And Internal BOL&quot;"
+      LocalDefaultText="&quot;הזן שמ”ר / שמ”פ&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Consignment.O.EnterAirLineAShipper&quot;"
+      DefaultText="&quot;Enter Air Line And Shipper&quot;"
+      LocalDefaultText="&quot;הזן ח.תעופה/משלח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Consignment.O.LockedDecCantDelete&quot;"
+      DefaultText="&quot;Locked Decliration Cant Delete&quot;"
+      LocalDefaultText="&quot;ההצהרה נעולה. לא ניתן למחוק נתוני סידורי במטען&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Consignment.O.EnterNineDigitOnly&quot;"
+      DefaultText="&quot;Enter Nine Digit Only&quot;"
+      LocalDefaultText="&quot;יש להזין מספר בעל 9 ספרות בלבד בשדה מזהה מטען שני&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

@@ -249,20 +249,20 @@ export class ExportDeclarationComponent extends BaseComponent {
 
         if (AppTool.IsNullOrEmpty(this.DestinationCountryCode)) {
 
-            this.ValidationErrorsList.push("ארץ יעד הינו שדה  חובה");
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Declaration.O.DesCountryFieldIsMandatory"));
         }
 
         //if (AppTool.IsNullOrEmpty(this.IsExporterConfirmation)) {
         //    this.ValidationErrorsList.push("נמל פריקה הינו שדה  חובה");
         //}
         if (AppTool.IsNullOrEmpty(this.RecipientName)) {
-            this.ValidationErrorsList.push("שם המקבל הינו שדה  חובה");
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Declaration.O.ReceivesNameFieldIsMandatory"));
         }
         if (AppTool.IsNullOrEmpty(this.RecipientAddress)) {
-            this.ValidationErrorsList.push("כתובת המקבל הינו שדה  חובה");
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Declaration.O.ReceivesAddressFieldIsMandatory"));
         }
         if (AppTool.IsNullOrEmpty(this.RecipientIssueCountryCode)) {
-            this.ValidationErrorsList.push("מדינת המקבל הינו שדה  חובה");
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Declaration.O.ReceivesCountryFieldIsMandatory"));
         }
 
     }

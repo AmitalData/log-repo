@@ -199,7 +199,7 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
                             logWindow.Width = 770;
                             logWindow.Height = 750;
                             //logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditDeclarationCargoSplit");
-                            logWindow.Title = "בקשת פיצול מטען ";// + myResponse.Result != null ? ((!AppTool.IsNullOrEmpty(myResponse.Result.RequestNumber) ? myResponse.Result.RequestNumber : null) + ((!AppTool.IsNullOrEmpty(myResponse.Result.ResponseStatusName) ? " - " + myResponse.Result.ResponseStatusName : null))) : null;
+                            logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.CargoSplitRequest");// + myResponse.Result != null ? ((!AppTool.IsNullOrEmpty(myResponse.Result.RequestNumber) ? myResponse.Result.RequestNumber : null) + ((!AppTool.IsNullOrEmpty(myResponse.Result.ResponseStatusName) ? " - " + myResponse.Result.ResponseStatusName : null))) : null;
                             if (myResponse.Result != null) {
                                 if (!AppTool.IsNullOrEmpty(myResponse.Result.RequestNumber)) {
                                     logWindow.Title = logWindow.Title + myResponse.Result.RequestNumber;

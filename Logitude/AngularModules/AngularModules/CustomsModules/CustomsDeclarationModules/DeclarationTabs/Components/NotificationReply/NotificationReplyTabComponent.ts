@@ -38,7 +38,7 @@ export class NotificationReplyTabComponent extends BaseComponent {
     public DataContext: this;
     public ObjectTableId: string;
     public CurrentEditComponentId: string;
-    public messageBorderText: string = "לא התקבלו הודעות מהמכס עבור הצהרה זו";
+    public messageBorderText: string = TextCodeTranslator.Translate("Customs.Declaration.O.NoNotificationsReceived");
 
     public entityList: NotificationList;
     public declarationPM: DeclarationPM = null;
@@ -267,7 +267,7 @@ export class DeclarationNotificationItemViewModel extends BaseComponent {
 
         CustomMessageProgressComponent
             .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
-            "שליחת תשובה להודעה", true)
+                TextCodeTranslator.Translate("Customs.Declaration.O.SendReplyMessage"), true)
             .then((res) => {
                 //this.responseData = res;
                 //this.OnMassageDisplayMethod();

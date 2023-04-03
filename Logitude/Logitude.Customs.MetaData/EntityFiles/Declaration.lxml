@@ -19845,7 +19845,7 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <field
-     Id="&quot;9e77ea75-43a4-4c80-b877-43021c65342e&quot;"
+    Id="&quot;9e77ea75-43a4-4c80-b877-43021c65342e&quot;"
     FieldName="&quot;DeclarationFollowUp&quot;"
     OldNames="DeclarationFollowUp"
     IsNew="true"
@@ -20517,7 +20517,7 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <field
-     Id="&quot;f48e52f3-846c-4e36-9064-11f4815f2f2a&quot;"
+    Id="&quot;f48e52f3-846c-4e36-9064-11f4815f2f2a&quot;"
     FieldName="&quot;CasualImporterCountry&quot;"
     OldNames="CasualImporterCountry"
     IsNew="true"
@@ -20667,7 +20667,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-   <field
+  <field
     Id="&quot;823294dc-d2da-4355-b32f-4de15884d302&quot;"
     FieldName="&quot;ExportCloseAmendStatusName&quot;"
     OldNames="ExportCloseAmendStatusName"
@@ -20743,7 +20743,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
- 
   <field
     Id="&quot;e9da7280-f386-4f83-b916-92954fb0b087&quot;"
     FieldName="&quot;IsAramex&quot;"
@@ -24136,7 +24135,7 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
-     <EventType
+    <EventType
       Code="&quot;TAS&quot;"
       ObjectTableName="&quot;Customs.Declaration&quot;"
       EnglishName="&quot;Transshipment Approved&quot;"
@@ -24162,7 +24161,7 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
-     <EventType
+    <EventType
       Code="&quot;LEX&quot;"
       ObjectTableName="&quot;Customs.Declaration&quot;"
       EnglishName="&quot;Last Exit From Storage Site&quot;"
@@ -24175,7 +24174,7 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
-   </EventTypes>
+  </EventTypes>
 
   <Records />
   <MenuButtons
@@ -26658,7 +26657,138 @@
       LocalDefaultText="&quot;יש לבחור סוג מסמך&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-
+    <TextCode
+      Code="&quot;Customs.Declaration.O.ExportDeclarations&quot;"
+      DefaultText="&quot;Export Declarations&quot;"
+      LocalDefaultText="&quot;הצהרות יצוא&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.ImportDeclarations&quot;"
+      DefaultText="&quot;Import Declarations&quot;"
+      LocalDefaultText="&quot;הצהרות יבוא&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.DisplayOnly&quot;"
+      DefaultText="&quot;Display Only&quot;"
+      LocalDefaultText="&quot;לתצוגה בלבד - &quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.StorageRequestStatus&quot;"
+      DefaultText="&quot;Storage Request Status&quot;"
+      LocalDefaultText="&quot;בקשת אחסנה הועברה למחסן - סטטוס הבקשה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.DesCountryFieldIsMandatory&quot;"
+      DefaultText="&quot;Destination Country Field Is Mandatory&quot;"
+      LocalDefaultText="&quot;ארץ יעד הינו שדה חובה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.ReceivesNameFieldIsMandatory&quot;"
+      DefaultText="&quot;Receives Name Field Is Mandatory&quot;"
+      LocalDefaultText="&quot;שם המקבל הינו שדה חובה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.ReceivesAddressFieldIsMandatory&quot;"
+      DefaultText="&quot;Receives Address Field Is Mandatory&quot;"
+      LocalDefaultText="&quot;כתובת המקבל הינו שדה חובה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.ReceivesCountryFieldIsMandatory&quot;"
+      DefaultText="&quot;Receives Country Field Is Mandatory&quot;"
+      LocalDefaultText="&quot;מדינת המקבל הינו שדה חובה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.CargoSplitRequest&quot;"
+      DefaultText="&quot;Cargo Split Request&quot;"
+      LocalDefaultText="&quot;בקשת פיצול מטען&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.SubmitForApproval&quot;"
+      DefaultText="&quot;Submit For Approval&quot;"
+      LocalDefaultText="&quot;העבר לאישור&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.Selected&quot;"
+      DefaultText="&quot;Selected&quot;"
+      LocalDefaultText="&quot;נבחרו&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.ItemsFrom&quot;"
+      DefaultText="&quot;Items From&quot;"
+      LocalDefaultText="&quot;פריטים מתוך&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.DocumentForApproval&quot;"
+      DefaultText="&quot;Document For Approval&quot;"
+      LocalDefaultText="&quot;לאישור קושר מסמך שעדיין לא הוזרם להיבריד&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.ApprovalTypeDoesNotExist&quot;"
+      DefaultText="&quot;Approval Type Does Not Exist&quot;"
+      LocalDefaultText="&quot;סוג אישור לא קיים במערכת&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.AdditionalDataSupplier&quot;"
+      DefaultText="&quot;Additional Data Supplier&quot;"
+      LocalDefaultText="&quot;נתונים נוספים לספק&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.DeleteLineContinue&quot;"
+      DefaultText="&quot;This line will be deleted, should I continue?&quot;"
+      LocalDefaultText="&quot;שורה זו תמחק, האם להמשיך?&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.RecordDelayCodeExists&quot;"
+      DefaultText="&quot;A record with a delay code already exists&quot;"
+      LocalDefaultText="&quot;כבר קיימת רשומה עם קוד עיכוב&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.SendRrquestConsstraintApproval&quot;"
+      DefaultText="&quot;Sending a request for constraint approval&quot;"
+      LocalDefaultText="&quot;שליחת בקשה לאישור אילוץ&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.SentTaskImporterDigital&quot;"
+      DefaultText="&quot;A task was sent to the importer in digital&quot;"
+      LocalDefaultText="&quot;נשלחה משימה ליבואן בדיגיטל&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.SentTaskImporterLogBox&quot;"
+      DefaultText="&quot;A task has been sent to the blogbox importer&quot;"
+      LocalDefaultText="&quot;נשלחה משימה ליבואן בלוגבוקס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.NoNotificationsReceived&quot;"
+      DefaultText="&quot;No notifications have been received from customs for this declaration&quot;"
+      LocalDefaultText="&quot;לא התקבלו הודעות מהמכס עבור הצהרה זו&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.SendReplyMessage&quot;"
+      DefaultText="&quot;Sending a reply to a message&quot;"
+      LocalDefaultText="&quot;שליחת תשובה להודעה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

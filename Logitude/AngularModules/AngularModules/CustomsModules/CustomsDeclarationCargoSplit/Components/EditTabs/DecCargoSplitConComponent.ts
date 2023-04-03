@@ -21,6 +21,7 @@ import { TreatmentWayListService } from '../../../../Customs/Services/StandardLi
 import { DeclarationPMService } from '../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import { DeclarationExtendedListService } from '../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { DecCargoSplitConExtendedPMService } from '../../../../Customs/Services/ExtendedPMs/DecCargoSplitConExtendedPMService';
+import { Logs } from 'selenium-webdriver';
 
 @Component({
 
@@ -190,7 +191,6 @@ export class DecCargoSplitConComponent extends BaseComponent {
            
         }
         */
-
     }
     setParentCargoConsinmentItemList(isInsert:boolean=true) {
 
@@ -345,7 +345,7 @@ export class DecCargoSplitConComponent extends BaseComponent {
     DisplayOnlyCheck() {
         this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
         if (this.IsDisplayOnly) {
-            this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
+            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.DecCargoSplitCon.O.DisplayOnly") + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             return;
         }
         this.IsImporerCodeEnabled = !this.IsDisplayOnly;

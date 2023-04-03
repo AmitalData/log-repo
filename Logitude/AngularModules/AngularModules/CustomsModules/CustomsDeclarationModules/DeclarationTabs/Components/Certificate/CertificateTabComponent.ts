@@ -539,7 +539,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
         }
 
         else if (this.IsDisplayOnly) {
-            this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
+            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DisplayOnly") + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             //this.SetScreenFieldsEditability();
             this.timerToken = setTimeout(() => {
                 DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
@@ -548,7 +548,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
         }
         else if (this.DeclarationPM.StorageStatusCode) {
             this.ShowStorageStatusMessage = true;
-            this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
+            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.StorageRequestStatus") + " " + this.DeclarationPM.StorageStatusName;
         }
 
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
@@ -563,11 +563,11 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
             }
 
             else if (this.IsDisplayOnly) {
-                this.DisplayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
+                this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DisplayOnly") + displayOnlyCheckResult.DisplayOnlyMessage;
             }
             else if (this.DeclarationPM.StorageStatusCode) {
                 this.ShowStorageStatusMessage = true;
-                this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
+                this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.StorageRequestStatus") + " " + this.DeclarationPM.StorageStatusName;
             }
 
             this.timerToken = setTimeout(() => {
@@ -687,7 +687,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
             this.dataCount = this.DataSource.rowCount;
             this.SelectedItemsCount = this.dataCount;
             if (this.dataCount) {
-                this.SelectedItemsCountText = "נבחרו " + this.dataCount.toString() + " פריטים מתוך " + this.dataCount.toString();
+                this.SelectedItemsCountText = TextCodeTranslator.Translate("Customs.Declaration.O.Selected") + this.dataCount.toString() + TextCodeTranslator.Translate("Customs.Declaration.O.ItemsFrom") + this.dataCount.toString();
             }
             this.IsVisible = true;
             this.ignoreCount = true;
@@ -737,7 +737,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
             //}
             this.dataCount = this.DataSource.rowCount;
             if (this.dataCount != null) {
-                this.SelectedItemsCountText = "נבחרו " + (this.SelectedItemsCount).toString() + " פריטים מתוך " + this.dataCount.toString();
+                this.SelectedItemsCountText = TextCodeTranslator.Translate("Customs.Declaration.O.Selected") + (this.SelectedItemsCount).toString() + TextCodeTranslator.Translate("Customs.Declaration.O.ItemsFrom") + this.dataCount.toString();
 
             }
             if (this.SelectedItemsCount == this.dataCount) {
@@ -756,7 +756,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
             //}
             //if (this.IsSelected) this.IsSelected = false;
             if (this.dataCount != null) {
-                this.SelectedItemsCountText = "נבחרו " + (this.SelectedItemsCount).toString() + " פריטים מתוך " + this.dataCount.toString();
+                this.SelectedItemsCountText = TextCodeTranslator.Translate("Customs.Declaration.O.Selected") + (this.SelectedItemsCount).toString() + TextCodeTranslator.Translate("Customs.Declaration.O.ItemsFrom") + this.dataCount.toString();
 
             }
         }
@@ -953,7 +953,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
         windowArgs.ConnectedItems = this.connectedItems.Collection;
         windowArgs.ExcludedItems = this.ExcludedItems.Collection;
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "העבר לאישור";
+        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.SubmitForApproval");
 
 
         logWindow.Width = 900;

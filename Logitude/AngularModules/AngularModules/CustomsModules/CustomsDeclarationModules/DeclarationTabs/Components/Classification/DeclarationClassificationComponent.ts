@@ -434,7 +434,7 @@ export class DeclarationClassificationComponent extends BaseComponent implements
         SessionLocator.SelectedSession.StopBusyIndicator();
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
-        var windowTitle = "נתונים נוספים לספק";
+        var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.AdditionalDataSupplier");
 
         var logWindow = new LogitudeWindow();
         
@@ -652,14 +652,14 @@ export class DeclarationClassificationComponent extends BaseComponent implements
         }
 
         else if (this.IsDisplayOnly) {
-            this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
+            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DisplayOnly") + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
             return;
         }
         else if (this.EntityPM.StorageStatusCode) {
             this.ShowStorageStatusMessage = true;
-            this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
+            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.StorageRequestStatus") + " " + this.EntityPM.StorageStatusName;
         }
     
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
@@ -676,11 +676,11 @@ export class DeclarationClassificationComponent extends BaseComponent implements
             }
 
             else if (this.IsDisplayOnly) {
-                this.DisplayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
+                this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DisplayOnly") + displayOnlyCheckResult.DisplayOnlyMessage;
             }
             else if (this.EntityPM.StorageStatusCode) {
                 this.ShowStorageStatusMessage = true;
-                this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
+                this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.StorageRequestStatus") + " " + this.EntityPM.StorageStatusName;
             }
         
             this.SetScreenFieldsEditability();
