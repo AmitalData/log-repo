@@ -25,12 +25,18 @@ using Logitude.Server.Tools.Contracts;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Customs.BL.Messaging.ILSWS;
+using System.Data.Entity.Validation;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
     public partial class DeclarationCourierStatusUpdateService //: EntityUpdateService<DeclarationCourierStatus, DeclarationCourierStatusPM, DeclarationPM>
     {
         //public bool IsAfterUpdatingUpdate { get; set; }
+        public string TruckerId;
+        public string DistributionArea;
+        public string LastMileServiceType;
+        public string MAWB;
+
         protected override void OnCreating(DeclarationCourierStatusPM entityPM, EntityPM entityParentPM)
         {
             //if (entityParentPM != null)
@@ -365,6 +371,50 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //(Repository as Logitude.Customs.Data.Repsitories.DeclarationCourierStatusRepository).FastDeleteMulti(entityKeyFields);
         }
 
+        public DeclarationCourierStatusPM UpdateTrucker(DeclarationCourierStatusPM currentDeclarationCourierStatusPM, DeclarationPM declarationPM)
+        {
+            var context = CustomContext.GetContext(declarationPM.Tenant);
+            if (currentDeclarationCourierStatusPM == null)
+            {
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+                currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationPM.Id, true, false);
+            }
+
+            if (currentDeclarationCourierStatusPM != null)
+            {
+                string truckerId = TruckerId;
+
+                if (truckerId != currentDeclarationCourierStatusPM.TruckerId || DistributionArea != currentDeclarationCourierStatusPM.DistributionArea)
+                {
+                    //currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    currentDeclarationCourierStatusPM.TruckerId = truckerId;
+                    currentDeclarationCourierStatusPM.MAWB = MAWB;
+                    currentDeclarationCourierStatusPM.DistributionArea = DistributionArea;
+                    LogMessagingUtil.Instance.AppendLine("try to update trucker " + truckerId + " to declarationCourierStatus for DeclarationPM.Id: " + declarationPM.Id);
+                }
+            }
+            return currentDeclarationCourierStatusPM;
+        }
+        public DeclarationCourierStatusPM UpdateLastMileServiceType(DeclarationCourierStatusPM currentDeclarationCourierStatusPM, DeclarationPM declarationPM)
+        {
+            if (currentDeclarationCourierStatusPM == null)
+            {
+                var context = CustomContext.GetContext(declarationPM.Tenant);
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+                currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationPM.Id, true, false);
+            }
+            if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.LastMileServiceType != LastMileServiceType)
+            {
+                currentDeclarationCourierStatusPM.LastMileServiceType = LastMileServiceType;
+                //if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                LogMessagingUtil.Instance.AppendLine("try to update Last Mile Service Type " + currentDeclarationCourierStatusPM.LastMileServiceType + " to declarationCourierStatus for DeclarationPM.Id: " + declarationPM.Id);
+            }
+            if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+            {
+                currentDeclarationCourierStatusPM.MAWB = MAWB;
+            }
+            return currentDeclarationCourierStatusPM;
+        }
         public DeclarationCourierStatusPM CalculateDeclarationCourierStatus(DeclarationPM declarationPM, bool isRequiredFieldHasChanged = false)
         {
             LogMessagingUtil.Instance.AppendLine("CalculateDeclarationCourierStatus()");
