@@ -218,7 +218,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 
             if (item.OperatorCode.Contains("F") && item.DataTypeCode.Trim() != "Boolean")
             {
-                Field field = automationFieldLists.Where(d => d.FieldCode == item.Value).FirstOrDefault();
+                Field field = automationFieldLists.Where(d => d.FieldCode == item.Value && d.PartnerObjectFieldCode == item.PartnerObjectFieldCode).FirstOrDefault();
                 if (field != null) result = field.Value;
                 if ((hasDateTypeField(item)) && item.OperatorCode == "SF" && !string.IsNullOrEmpty(field.Value) && !item.IsCustomField)
                 {
