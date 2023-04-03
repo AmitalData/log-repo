@@ -179,6 +179,40 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
             }
         }
+        public static int Update_InProgressExternalReconcile(string journalId, int tenant, bool Value_ExternalReconcileInProgress)
+        {
+
+            string strConnString = TenantServerConfigration.GetDbConnection(tenant);
+
+            using (SqlConnection connection = new SqlConnection(strConnString))
+            {
+                connection.Open();
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText =
+                        "UPDATE LedgerTransactions SET InReconcileProgress= @Value_ExternalReconcileInProgress " +
+                        "WHERE ID IN (" +
+                        "    SELECT  LedgerTransactionId  from JournalReconciles " +
+                        "     WHERE  JournalId=@journalId and tenant= @tenant " +
+                        "            and LedgerTransactionId is not null" +
+                        ")";
+                    command.CommandType = CommandType.Text;
+
+                    command.Parameters.Add("@Value_ExternalReconcileInProgress", SqlDbType.Int);
+                    command.Parameters["@Value_ExternalReconcileInProgress"].Value = Value_ExternalReconcileInProgress;
+
+                    command.Parameters.Add("@tenant", SqlDbType.Int);
+                    command.Parameters["@tenant"].Value = tenant;
+
+                    command.Parameters.Add("@journalId", SqlDbType.VarChar);
+                    command.Parameters["@journalId"].Value = journalId;
+
+
+                    int rows = command.ExecuteNonQuery();
+                    return rows;
+                }
+            }
+        }
 
         public void UpdateInReconcileProgress(List<String> listTransactionId,int tenant,bool Value_inReconcileProgress)
         {
