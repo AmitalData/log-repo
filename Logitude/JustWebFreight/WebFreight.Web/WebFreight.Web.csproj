@@ -5134,6 +5134,8 @@
     <Content Include="WcfApi\AutoSignUpWcfService.svc" />
     <Content Include="WcfApi\CardContactWcfService.svc" />
     <Content Include="WcfApi\ChargeTypeWcfService.svc" />
+    <Content Include="WcfApi\DefaultValueWcfService.svc" />
+    <Content Include="WcfApi\DefaultTypeWcfService.svc" />
     <Content Include="WcfApi\CityWcfService.svc" />
     <Content Include="WcfApi\ContactPasswordService.svc" />
     <Content Include="WcfApi\ContactWcfService.svc" />
@@ -6691,6 +6693,12 @@
     <Compile Include="WcfApi\ChargeTypeWcfService.svc.cs">
       <DependentUpon>ChargeTypeWcfService.svc</DependentUpon>
     </Compile>
+    <Compile Include="WcfApi\DefaultValueWcfService.svc.cs">
+      <DependentUpon>DefaultValueWcfService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="WcfApi\DefaultTypeWcfService.svc.cs">
+      <DependentUpon>DefaultTypeWcfService.svc</DependentUpon>
+    </Compile>
     <Compile Include="WcfApi\CityWcfService.svc.cs">
       <DependentUpon>CityWcfService.svc</DependentUpon>
     </Compile>
@@ -6719,6 +6727,8 @@
       <DependentUpon>CustomerDWWcfService.svc</DependentUpon>
     </Compile>
     <Compile Include="WcfApi\ExternalTasksQueueWcfService.ExportSignQ.cs" />
+    <Compile Include="WcfApi\IDefaultValueWcfService.cs" />
+    <Compile Include="WcfApi\IDefaultTypeWcfService.cs" />
     <Compile Include="WcfApi\IExternalTasksQueueExportSignWcfService.cs" />
     <Compile Include="WcfApi\IPaymentTermWcfService.cs" />
     <Compile Include="WcfApi\IWarehouseWcfService.cs" />
