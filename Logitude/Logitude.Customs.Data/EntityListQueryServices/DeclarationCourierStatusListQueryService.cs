@@ -283,7 +283,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             return q;
         }
 
-        public IQueryable<DeclarationCourierStatusList> GetDeclarationCourierStatusforPendingBulkFeed(QueryOperations queryOperations)
+        private IQueryable<DeclarationCourierStatusList> GetDeclarationCourierStatusforPendingBulkFeed(QueryOperations queryOperations)
         {
             string courierMasterId = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CourierMasterId").FirstOrDefault().FieldValue.ToString();
            // var qDeclarationPaymentPendingHold =
@@ -304,7 +304,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                     join dp in context.DeclarationPendings.Include("CourierPendingReason").Where(x => x.Status == "A")
                      on dcs.DeclarationId equals dp.DeclarationID into dpjoin
-
 
                     //join errorPlace in qDeclarationPaymentPendingHold on dcs.DeclarationId equals errorPlace.DeclarationId into errorPlaceOuterJoin
                     from dpj in dpjoin.Take(1).DefaultIfEmpty()
@@ -364,41 +363,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
         public List<DeclarationCourierStatusList> GetDeclarationCourierStatusListPendingBulk(QueryOperations queryOperations, int tenant)
         {
-            GenericFilter filter = new GenericFilter();
+            int skippedPorts = queryOperations.PageIndex;
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<DeclarationCourierStatus> iQueryable = (from a in context.DeclarationCourierStatuses
-
-                                                               where a.Tenant == tenant
-                                                               select a);
-            iQueryable = ApplyCustomFilters(queryOperations, iQueryable, tenant);
-
-            QueryOperations nonListQueryOperation = new QueryOperations();
-            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
-            QueryOperations listQueryOperation = new QueryOperations();
-            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-
-            iQueryable = filter.GetFilteredQuery<DeclarationCourierStatus>(nonListQueryOperation, iQueryable);
-
-            int skippedPorts = queryOperations.PageIndex;
-
-            IQueryable<DeclarationCourierStatusList> query2 = GetDeclarationCourierStatusforPendingBulkFeed(queryOperations);
-
-            query2 = filter.GetFilteredQuery<DeclarationCourierStatusList>(listQueryOperation, query2);
-
-            var cargoDescriptionF = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CargoDescription").FirstOrDefault();
-            if (cargoDescriptionF != null && !string.IsNullOrEmpty(cargoDescriptionF.FieldValue?.ToString()))
-            {
-                string description = cargoDescriptionF.FieldValue.ToString().ToLower();
-                query2 = query2.Where(x => x.CargoDescription.ToLower().Contains(description));
-            }
-
-            var casualSupplierNameF = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CasualSupplierName").FirstOrDefault();
-            if (casualSupplierNameF != null && !string.IsNullOrEmpty(casualSupplierNameF.FieldValue?.ToString()))
-            {
-                string casualSupplierName = casualSupplierNameF.FieldValue.ToString().ToLower();
-                query2 = query2.Where(x => x.CasualSupplierName.ToLower().Contains(casualSupplierName));
-            }
+            IQueryable<DeclarationCourierStatusList> query2 = GetDeclarationCourierStatusforPendingBulkQuery(queryOperations, tenant);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
@@ -475,14 +443,18 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 query2 = query2.Take(queryOperations.PageSize);
             }
             return query2.ToList();
-
-
         }
 
         public int GetDeclarationCourierStatusforPendingBulkFeedListCount(QueryOperations queryOperations, int tenant)
         {
+            IQueryable<DeclarationCourierStatusList> query2 = GetDeclarationCourierStatusforPendingBulkQuery(queryOperations, tenant);
+            int count = query2.ToList().Count();
+            return count;
+        }
+
+        private IQueryable<DeclarationCourierStatusList> GetDeclarationCourierStatusforPendingBulkQuery(QueryOperations queryOperations, int tenant)
+        {
             GenericFilter filter = new GenericFilter();
-            GenericSort sortClass = new GenericSort();
 
             IQueryable<DeclarationCourierStatus> iQueryable = (from a in context.DeclarationCourierStatuses
                                                                where a.Tenant == tenant
@@ -512,12 +484,15 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 string casualSupplierName = casualSupplierNameF.FieldValue.ToString().ToLower();
                 query2 = query2.Where(x => x.CasualSupplierName.ToLower().Contains(casualSupplierName));
             }
-
+            var importerNameF = queryOperations.QueryFilterItems.Where(r => r.FieldName == "ImporterName").FirstOrDefault();
+            if (importerNameF != null && !string.IsNullOrEmpty(importerNameF.FieldValue?.ToString()))
+            {
+                string importerName = importerNameF.FieldValue.ToString().ToLower();
+                query2 = query2.Where(x => x.ImporterName.ToLower().Contains(importerName));
+            }
             query2 = filter.GetFilteredQuery<DeclarationCourierStatusList>(listQueryOperation, query2);
-            int count = query2.ToList().Count();
-            return count;
+            return query2;
         }
-
     }
 
     public class MyJoin
