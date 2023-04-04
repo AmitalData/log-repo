@@ -24,6 +24,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Server.Tools.Helpers;
 using System.Data.Entity.Core.Objects;
 using System.Text.RegularExpressions;
+using System.Numerics;
 
 namespace Logitude.Accounting.BL.DataContract
 {
@@ -73,7 +74,7 @@ namespace Logitude.Accounting.BL.DataContract
             {
                 FormatedinvoicesNumbers.Add(FormatInvocieNumber(a));
             }
-            FormatedinvoicesNumbers = FormatedinvoicesNumbers.Distinct().ToList();
+            FormatedinvoicesNumbers = FormatedinvoicesNumbers.Select(BigInteger.Parse).OrderBy(e => e).Select(e => e.ToString()).Distinct().ToList();
             List<string> sequances = new List<string>();
             string seqFrom = null;
             for (var i = 0; i < FormatedinvoicesNumbers.Count - 1; i++)
