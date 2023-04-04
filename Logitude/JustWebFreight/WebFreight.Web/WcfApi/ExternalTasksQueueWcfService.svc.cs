@@ -56,15 +56,21 @@ namespace WebFreight.Web.WcfApi
                     response.ErrorMessage = "Tenant parameter is missing.";
                     return (response);
                 }
+                string log_level = "";
+                if(queryParams.ContainsKey("LOG_LEVEL")) log_level= queryParams["LOG_LEVEL"];
                 string inv_field_list = queryParams["INV_FIELD_LIST"];
                 string dec_field_list = queryParams["DEC_FIELD_LIST"];
                 string mod_field_list = queryParams["MOD_FIELD_LIST"];
                 string sup_field_list = queryParams["SUP_FIELD_LIST"];
+
+                string det_field_list = queryParams["DET_FIELD_LIST"];
+                string con_field_list = queryParams["CON_FIELD_LIST"];
+
                 string dec_list = queryParams["DEC_LIST"];
                 Dictionary<string, string> all_results = new Dictionary<string, string>();
 
                 string sqlQuery = $"select {inv_field_list} from customs.SUPPLIERINVOICES where DECLARATIONID in ({dec_list})  and tenant={tenant}";
-                all_results.Add("SI_SQL", sqlQuery);
+                if (log_level == "DEBUG") all_results.Add("SI_SQL", sqlQuery);
 
                 var shipmentsContext = new Simplog.Data.ShipmentsModel.ShipmentsContext();
                 using (SqlConnection connection = new SqlConnection())
@@ -87,10 +93,17 @@ namespace WebFreight.Web.WcfApi
                                     List<string> one_line = new List<string>();
                                     Console.WriteLine(reader.ToString());
                                     string dec_id = "";
+                                    string inv_counter = "";
+                                    string key = "";
+                                    string vendor_id = "";
                                     for (int pos = 0; reader.FieldCount > pos; pos++)
                                     {
                                         if(reader.GetName(pos)== "DECLARATIONID")
-                                        { dec_id = reader[pos].ToString(); }
+                                        { dec_id = reader[pos].ToString();key = dec_id; }
+                                        if (reader.GetName(pos) == "INVOICECOUNTERKEY")
+                                        { key = $"{key}_{reader[pos].ToString()}"; inv_counter = reader[pos].ToString(); }
+                                        if (reader.GetName(pos) == "VENDORID")
+                                        { vendor_id = reader[pos].ToString(); }
                                         one_line.Add(reader[pos].ToString());
                                     }
                                     all_lines.Add(one_line);
@@ -98,22 +111,44 @@ namespace WebFreight.Web.WcfApi
                                     results.Add("SI", JsonConvert.SerializeObject(all_lines));//SUPPLIERINVOICES
                                     
                                     sqlQuery = $"select {dec_field_list} from customs.DECLARATIONS where id='{dec_id}' and tenant={tenant}";
-                                    results.Add("DEC_SQL", sqlQuery);
+                                    if (log_level == "DEBUG") results.Add("DEC_SQL", sqlQuery);
                                     all_lines = get_table_lines(sqlQuery, connection);
                                     results.Add("DEC", JsonConvert.SerializeObject(all_lines));//DECLARATIONS
 
+                                    sqlQuery = $"select {con_field_list} from customs.CONSIGNMENTS where DECLARATIONID='{dec_id}' and tenant={tenant}";
+                                    if (log_level == "DEBUG") results.Add("CON_SQL", sqlQuery);
+                                    all_lines = get_table_lines(sqlQuery, connection);
+                                    results.Add("CON", JsonConvert.SerializeObject(all_lines));//CONSIGNMENTS
+
+                                    sqlQuery = $"select {det_field_list} from customs.DECLARATIONTAXES where DECLARATIONID='{dec_id}' and tenant={tenant}";
+                                    if (log_level == "DEBUG") results.Add("DET_SQL", sqlQuery);
+                                    all_lines = get_table_lines(sqlQuery, connection);
+                                    results.Add("DET", JsonConvert.SerializeObject(all_lines));//DECLARATIONTAXES
+
                                     sqlQuery = $"select {mod_field_list} from customs.SUPPLIERINVOICEMODIFICATIONS where DECLARATIONID='{dec_id}' and tenant={tenant}";
-                                    results.Add("SIM_SQL", sqlQuery);
+                                    if (log_level == "DEBUG") results.Add("SIM_SQL", sqlQuery);
                                     all_lines = get_table_lines(sqlQuery, connection);
                                     results.Add("SIM", JsonConvert.SerializeObject(all_lines));//SUPPLIERINVOICEMODIFICATIONS
 
                                     sqlQuery = $"select {sup_field_list} from customs.SUPPLIERINVOICEITEMS where DECLARATIONID='{dec_id}' and tenant={tenant}";
-                                    results.Add("SII_SQL", sqlQuery);
+                                    if (log_level == "DEBUG") results.Add("SII_SQL", sqlQuery);
                                     all_lines = get_table_lines(sqlQuery, connection);
                                     results.Add("SII", JsonConvert.SerializeObject(all_lines));//SUPPLIERINVOICEITEMS
 
+                                    sqlQuery = $"select CURRENCYTYPECODE from customs.SUPPLIERINVOICEFREIGHTAMOUNTS where DECLARATIONID='{dec_id}' and INVOICECOUNTERKEY='{inv_counter}' and tenant={tenant}";
+                                    if (log_level == "DEBUG") results.Add("A29_SQL", sqlQuery);
+                                    all_lines = get_table_lines(sqlQuery, connection);
+                                    results.Add("A29", JsonConvert.SerializeObject(all_lines));//SUPPLIERINVOICEFREIGHTAMOUNTS
 
-                                    all_results.Add(dec_id, JsonConvert.SerializeObject(results));
+                                    if (!string.IsNullOrEmpty(vendor_id))
+                                    {
+                                        sqlQuery = $"select VENDORNUMBER,VENDORNAME from customs.CUSTOMSVENDORS where ID='{vendor_id}' and tenant={tenant}";
+                                        if (log_level == "DEBUG") results.Add("A28_SQL", sqlQuery);
+                                        all_lines = get_table_lines(sqlQuery, connection);
+                                        results.Add("A28", JsonConvert.SerializeObject(all_lines));//CUSTOMSVENDORS
+                                    }
+
+                                    all_results.Add(key, JsonConvert.SerializeObject(results));
                                 }
                             }
 
@@ -175,6 +210,7 @@ namespace WebFreight.Web.WcfApi
             var response = new Response();
             try
             {
+                tenant = 6;//temppppp
 
                 //SecurityUtility.AuthenticationOnTenant(tenant);
                 //SecurityUtility.CheckContactFeature("Quote", "UPDATE", tenant);//UPDATE//READ
