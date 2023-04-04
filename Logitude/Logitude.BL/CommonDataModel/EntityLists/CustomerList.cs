@@ -444,6 +444,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public DateTime? LastLoginDateViaPC { get; set; }
         [DataMember]
         public DateTime? LastLoginDateViaMobile { get; set; }
+        [DataMember]
+        public string EmailForSendingSingArinvoice { get; set; }
 
     }
 
