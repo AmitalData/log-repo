@@ -56,18 +56,6 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Logitude.Server.Tools">
-      <HintPath>..\Logitude.Server.Tools\bin\Debug\Logitude.Server.Tools.dll</HintPath>
-    </Reference>
-    <Reference Include="Simplog.Data">
-      <HintPath>..\Simplog.Data\bin\Debug\Simplog.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="Simplog.Data.Global">
-      <HintPath>..\Simplog.Global.Data\bin\Debug\Simplog.Data.Global.dll</HintPath>
-    </Reference>
-    <Reference Include="Simplog.Server.Infrastructure">
-      <HintPath>..\Simplog.Server.Infrastructure\bin\Debug\Simplog.Server.Infrastructure.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -183,6 +171,22 @@
     <ProjectReference Include="..\Logitude.Infrastructure.Data\Logitude.Infrastructure.Data.csproj">
       <Project>{B02E4D92-9226-4F3F-990F-66C7F66E9316}</Project>
       <Name>Logitude.Infrastructure.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
+      <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
+      <Name>Logitude.Server.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
+      <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
+      <Name>Simplog.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
+      <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
+      <Name>Simplog.Global.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
