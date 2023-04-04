@@ -190,7 +190,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 using (SqlCommand command = connection.CreateCommand())
                 {
                     command.CommandText =
-                        "UPDATE LedgerTransactions SET InReconcileProgress= @Value_ExternalReconcileInProgress " +
+                        "UPDATE LedgerTransactions SET InProgressExternalReconcile= @Value_ExternalReconcileInProgress " +
                         "WHERE ID IN (" +
                         "    SELECT  LedgerTransactionId  from JournalReconciles " +
                         "     WHERE  JournalId=@journalId and tenant= @tenant " +
