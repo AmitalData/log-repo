@@ -140,7 +140,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 if (listTransactionId.Count > 0)
                 {
                     var ledgerTransactionUpdateService = new LedgerTransactionUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
-                    ledgerTransactionUpdateService.Update_InProgressExternalReconcile(listTransactionId, Tenant, true);
+                    LedgerTransactionUpdateService.Update_InProgressExternalReconcile(entityPM.Id, Tenant, true);
                 }
                 var listReconcileExternalPageLineId = entityPM.JournalExternalReconciles.Select(r => r.ReconcileExternalPageLineId).ToList();
                 if (listReconcileExternalPageLineId.Count > 0)
