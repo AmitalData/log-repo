@@ -111,41 +111,30 @@ namespace WebFreight.Web.WcfApi
                                     results.Add("SI", JsonConvert.SerializeObject(all_lines));//SUPPLIERINVOICES
                                     
                                     sqlQuery = $"select {dec_field_list} from customs.DECLARATIONS where id='{dec_id}' and tenant={tenant}";
-                                    if (log_level == "DEBUG") results.Add("DEC_SQL", sqlQuery);
-                                    all_lines = get_table_lines(sqlQuery, connection);
-                                    results.Add("DEC", JsonConvert.SerializeObject(all_lines));//DECLARATIONS
+                                    get_table_lines("DEC",sqlQuery, ref results, connection, log_level);//DECLARATIONS
 
                                     sqlQuery = $"select {con_field_list} from customs.CONSIGNMENTS where DECLARATIONID='{dec_id}' and tenant={tenant}";
-                                    if (log_level == "DEBUG") results.Add("CON_SQL", sqlQuery);
-                                    all_lines = get_table_lines(sqlQuery, connection);
-                                    results.Add("CON", JsonConvert.SerializeObject(all_lines));//CONSIGNMENTS
+                                    get_table_lines("CON",sqlQuery, ref results, connection, log_level);//CONSIGNMENTS
 
                                     sqlQuery = $"select {det_field_list} from customs.DECLARATIONTAXES where DECLARATIONID='{dec_id}' and tenant={tenant}";
-                                    if (log_level == "DEBUG") results.Add("DET_SQL", sqlQuery);
-                                    all_lines = get_table_lines(sqlQuery, connection);
-                                    results.Add("DET", JsonConvert.SerializeObject(all_lines));//DECLARATIONTAXES
+                                    get_table_lines("DET",sqlQuery, ref results, connection, log_level);//DECLARATIONTAXES
 
                                     sqlQuery = $"select {mod_field_list} from customs.SUPPLIERINVOICEMODIFICATIONS where DECLARATIONID='{dec_id}' and tenant={tenant}";
-                                    if (log_level == "DEBUG") results.Add("SIM_SQL", sqlQuery);
-                                    all_lines = get_table_lines(sqlQuery, connection);
-                                    results.Add("SIM", JsonConvert.SerializeObject(all_lines));//SUPPLIERINVOICEMODIFICATIONS
+                                    get_table_lines("SIM",sqlQuery, ref results, connection, log_level);//SUPPLIERINVOICEMODIFICATIONS
 
                                     sqlQuery = $"select {sup_field_list} from customs.SUPPLIERINVOICEITEMS where DECLARATIONID='{dec_id}' and tenant={tenant}";
-                                    if (log_level == "DEBUG") results.Add("SII_SQL", sqlQuery);
-                                    all_lines = get_table_lines(sqlQuery, connection);
-                                    results.Add("SII", JsonConvert.SerializeObject(all_lines));//SUPPLIERINVOICEITEMS
+                                    get_table_lines("SII",sqlQuery,  ref results, connection, log_level);//SUPPLIERINVOICEITEMS
 
                                     sqlQuery = $"select CURRENCYTYPECODE from customs.SUPPLIERINVOICEFREIGHTAMOUNTS where DECLARATIONID='{dec_id}' and INVOICECOUNTERKEY='{inv_counter}' and tenant={tenant}";
-                                    if (log_level == "DEBUG") results.Add("A29_SQL", sqlQuery);
-                                    all_lines = get_table_lines(sqlQuery, connection);
-                                    results.Add("A29", JsonConvert.SerializeObject(all_lines));//SUPPLIERINVOICEFREIGHTAMOUNTS
+                                    get_table_lines("A29",sqlQuery , ref results, connection, log_level);//SUPPLIERINVOICEFREIGHTAMOUNTS
+
+                                    sqlQuery = $"select LINENUMBER,TAXTYPECODE,TAXAMOUNT,TAXRATE from customs.SUPPLIERINVOICEITEMSTAXES where DECLARATIONID='{dec_id}' and INVOICECOUNTERKEY='{inv_counter}' and tenant={tenant}";
+                                    get_table_lines("A19_A30", sqlQuery, ref results, connection, log_level);//SUPPLIERINVOICEITEMSTAXES
 
                                     if (!string.IsNullOrEmpty(vendor_id))
                                     {
                                         sqlQuery = $"select VENDORNUMBER,VENDORNAME from customs.CUSTOMSVENDORS where ID='{vendor_id}' and tenant={tenant}";
-                                        if (log_level == "DEBUG") results.Add("A28_SQL", sqlQuery);
-                                        all_lines = get_table_lines(sqlQuery, connection);
-                                        results.Add("A28", JsonConvert.SerializeObject(all_lines));//CUSTOMSVENDORS
+                                        get_table_lines("A28",sqlQuery,ref results, connection, log_level);//CUSTOMSVENDORS
                                     }
 
                                     all_results.Add(key, JsonConvert.SerializeObject(results));
@@ -177,7 +166,7 @@ namespace WebFreight.Web.WcfApi
         }
 
 
-        List<List<string>> get_table_lines(string sqlQuery, SqlConnection connection)
+        void get_table_lines(string id,string sqlQuery,ref Dictionary<string, string> results, SqlConnection connection,string log_level)
         {
             List<List<string>> all_lines = new List<List<string>>();
             using (var cmd = new SqlCommand(sqlQuery, connection))
@@ -202,7 +191,38 @@ namespace WebFreight.Web.WcfApi
 
                 }
             }
-            return(all_lines);
+            if (log_level == "DEBUG") results.Add($"{id}_SQL", sqlQuery);
+            results.Add(id, JsonConvert.SerializeObject(all_lines));
+            
+            return;
+        }
+
+        List<List<string>> get_table_lines_bak(string sqlQuery, SqlConnection connection)
+        {
+            List<List<string>> all_lines = new List<List<string>>();
+            using (var cmd = new SqlCommand(sqlQuery, connection))
+            {
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            Console.WriteLine(reader.ToString());
+                            List<string> one_line = new List<string>();
+
+                            for (int pos = 0; reader.FieldCount > pos; pos++)
+                            {
+                                one_line.Add(reader[pos].ToString());
+                            }
+                            all_lines.Add(one_line);
+                        }
+
+                    }
+
+                }
+            }
+            return (all_lines);
         }
 
         public Response LGTQuery(string queryId, Dictionary<string, string> queryParams, int tenant)
