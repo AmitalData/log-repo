@@ -4573,6 +4573,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   BeforeDeactiveStatusCode = a.BeforeDeactiveStatusCode,
                                   CodeMyCustomer = a.IsCustomer ? a.Card.Code + " (Customer)" : a.Card.Code,
                                   PrimaryContactName = a.PrimaryContactName,
+                                  PrimaryContactEmail = a.PrimaryContactEmail,
                                   EmailForSendingSingArinvoice = a.EmailForSendingSingArinvoice,
                                   PrimaryContactPhone = a.PrimaryContactPhone,
                                   CustomerStatusName = a.CustomerStatus != null ? a.CustomerStatus.Name : null,
