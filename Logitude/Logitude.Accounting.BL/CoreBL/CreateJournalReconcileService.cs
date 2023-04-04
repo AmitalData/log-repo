@@ -169,7 +169,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         ExternalNo = null,
                         ExternalSystem = null,
                         OriginalJournalId = null,
-
+                        SearchFields= "OneLineReconciliation",//If the journal is one or split, use SearchFields as an indecter.
 
 
                     };
