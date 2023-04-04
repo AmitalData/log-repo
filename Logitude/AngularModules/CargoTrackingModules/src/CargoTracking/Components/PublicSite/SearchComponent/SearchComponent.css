@@ -420,7 +420,7 @@ li a {
     }
     .col-md-3 {
         display: inline-block;
-        width: 25%;
+        width: 24%;
     }
     .col-md-4 {
         display: inline-block;
@@ -457,6 +457,34 @@ li a {
     .col-md-12 {
         display: inline-block;
         width: 100%;
+    }
+}
+
+.status {
+    width: 20%;
+}
+.width-shipment-id{
+    width: 12%;
+}
+
+@media screen and (min-width: 830px) and (max-width: 1000px) {
+    .width-shipment-id{
+        width: 14%;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1150px) {
+    .col-md-3 {
+        display: inline-block;
+        width: 21%;
+    }
+    .status {
+        width: 19%;
+    }
+}
+@media screen and (min-width: 1300px) {
+    .status {
+        width: 22%;
     }
 }
 

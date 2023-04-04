@@ -201,6 +201,90 @@ h1{
     position: relative;
     text-align: center;
 }
+.width-icon{
+    width: 10%;
+}
+@media screen and (min-width: 1024px) and (max-width: 1150px) {
+    .width-icon{
+        width: 8%;
+    }
+
+    .circle-image {
+        width: 65px !important;
+        height: 65px;
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .circle-image div {
+        top: 0px !important;
+    }
+    .circle-image svg {
+        top: 0% !important;
+        width: 30px !important;
+        padding-right: 0px !important;
+    }
+
+    .circle-image .direction-icon,.circle-image .circulararrow {
+        width: 19px !important;
+        top: 2% !important;
+    }
+    .circle-image .circulararrow {
+        top: 48% !important;
+        gap: 2px;
+    }
+}
+
+/* @media screen and (min-width: 1025px) and (max-width: 1060px) {
+    .width-icon{
+        width: 8% !important;
+    }
+
+} */
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    
+
+    .circle-image {
+        width: 65px !important;
+        height: 65px;
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .circle-image div {
+        top: 0px !important;
+    }
+    .circle-image svg {
+        top: 0% !important;
+        width: 30px !important;
+        padding-right: 0px !important;
+    }
+
+    .circle-image .direction-icon,.circle-image .circulararrow {
+        width: 19px !important;
+        top: 2% !important;
+    }
+
+    .width-icon{
+        width: 8%;
+        
+    }
+
+    .reference {
+        width: 14% !important;
+        
+    }
+
+    .circle-image .circulararrow {
+        top: 48% !important;
+        gap: 2px;
+    }
+}
 
 .circle-image img {
     width: 48px;

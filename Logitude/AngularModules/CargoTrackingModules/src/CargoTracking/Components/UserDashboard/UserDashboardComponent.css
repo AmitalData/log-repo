@@ -119,6 +119,11 @@ h1{
     width: calc(100% - 30px);
   }
 
+  @media screen and (min-width: 1024px) {
+  .tablet{
+    display: none;
+  }
+}
   @media screen and (max-width: 479px) and (orientation: portrait),
   (max-height: 479px) and (orientation: landscape)
  {
@@ -139,6 +144,85 @@ h1{
         padding-top: 93px;
         box-sizing: border-box;
     }
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 1024px) {
+    div.content {
+        margin-left: 0px;
+      }
+
+     .sidebar {
+      height: 50px;
+      overflow: hidden;
+    }
+    .sidebar a {
+      text-align: center;
+      float: none;
+    }
+    .sidebar .logo{
+      position: relative;
+      top: 0;
+      width: fit-content;
+      margin: 0 auto;
+      /* padding-top: 12px; */
+      display: inline-block;
+    }
+
+    .sidebar .logo img{
+        width: auto;
+        max-height: 50px;
+    }
+
+    .sidebar .action-buttons{
+        width: 50px;
+        height: 35px;
+        padding-top: 15px;
+    }
+    .sidebar .right-button{
+        float: right;
+
+    }
+    .sidebar .left-button{
+        float: left;
+
+    }
+    .nav-opened{
+        display: block !important;
+        position: fixed;
+        background: var(--secondaryColor);
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+
+    .tablet{
+        display: block;
+        margin-right: 20px;
+       
+        
+    }
+    .tablet-button-close {
+        padding-top: 35px !important;
+        margin-right: 10px !important;
+    }
+    .tablet-nav{
+        width: 100%;
+        height: 100%;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: end !important;
+    }
+
+    .tablet-nav-opened{
+        z-index: 1 !important;
+    }
+    
+    
+
+
   }
 
   @media screen and (max-width: 479px) and (orientation: portrait),

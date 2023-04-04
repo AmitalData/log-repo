@@ -162,9 +162,9 @@
         width: 18% !important;
     }
 
-        .mode-icon .circle-image {
-            margin: 0;
-        }
+    .mode-icon .circle-image {
+        margin: 0;
+    }
 
     .column + .sender,
     .column + .status {
@@ -364,6 +364,7 @@
 
     /*end*/
 }
+
 
 @media screen and (max-height: 823px) {
     .filters-sidebar ul {
