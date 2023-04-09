@@ -1100,7 +1100,7 @@ accountingValidationContextServiceProvider
                 //    + " ( " + TranslateMyTextCode("Accounting.General.O.GLAccountIs",0) + " " + GetAccountName(myGLAccountDataProvider, pmAcc.Id, myJournalPM.Tenant) + " )");
 
                 // WI:48580
-                if(myJournalPM.AccountingEntityCode != "2")
+                //if(myJournalPM.AccountingEntityCode != "2")//REM by A. Khitrik--04.Apr.2023--180465-- 
                 errorsList.Add(TranslateMyTextCode("Accounting.General.O.PaymentBankAccountCurrencyDifferent", myJournalPM.Tenant));
             }
             if (pmAcc.IsMultiCurrency.GetValueOrDefault())
