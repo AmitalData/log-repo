@@ -653,10 +653,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             if (declaration.GoodsShipment == null || declaration.GoodsShipment.Count() == 0) return null;
             if ((declaration.GoodsShipment[0].ExportConsignment == null && declaration.GoodsShipment[0].ImportConsignment == null) ||
-                (declaration.GoodsShipment[0].ExportConsignment.Count() == 0 && declaration.GoodsShipment[0].ImportConsignment.Count() == 0)) return null;
+                (declaration.GoodsShipment[0].ExportConsignment?.Count() == 0 && declaration.GoodsShipment[0].ImportConsignment?.Count() == 0)) return null;
 
             List<ConsignmentPM> consignmentPMs = new List<ConsignmentPM>();
-            foreach (var consignment in declaration.GoodsShipment[0].ExportConsignment)
+            if (declaration.GoodsShipment[0].ExportConsignment != null) { 
+                foreach (var consignment in declaration.GoodsShipment[0].ExportConsignment)
             {
                 ConsignmentPM consignmentPM = new ConsignmentPM();
                 consignmentPM.ChangeSetOp = ChangeSetOperation.Insert;
@@ -758,6 +759,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
 
                 consignmentPMs.Add(consignmentPM);
+            }
             }
             if (declaration.GoodsShipment[0].ImportConsignment != null)
             {
