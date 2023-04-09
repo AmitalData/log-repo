@@ -138,14 +138,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 List<string> ledgerTransactionIds = entityPM.ReconciliationLines.Where(d => d.TransactionId != null).Select(d => d.TransactionId).ToList();
                 List<LedgerTransactionPM> ledgerTransactions = transQuery.GetLedgerTransactionPMsByIdList(ledgerTransactionIds, entityPM.Tenant);
 
-                
-                if (ledgerTransactions.Any(d=>d.SourceTypeCode == CloseTables.AccountingEntityValues.ARPayment))
+
+                if (ledgerTransactions.Any(d => d.SourceTypeCode == CloseTables.AccountingEntityValues.ARPayment))
                 {
                     LedgerTransactionPM paymentTransaction = ledgerTransactions.Find(d => d.SourceTypeCode == CloseTables.AccountingEntityValues.ARPayment);
                     if (paymentTransaction == null) throw new ApplicationException("Cannot find payment transaction on reco lines");
                     foreach (ReconciliationLinePM recoLine in entityPM.ReconciliationLines)
                     {
-                        if(recoLine.TransactionId != paymentTransaction.Id)
+                        if (recoLine.TransactionId != paymentTransaction.Id)
                         {
                             recoLine.ReconciledWithTransactionId = paymentTransaction.Id;
                         }
@@ -310,13 +310,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private void GLAccountRecocileDataUpSert(bool cancelledAction, ReconciliationPM entityPM)
         {
-            int tenant= entityPM.Tenant;
-            string accountId= entityPM.AccountId; 
-            DateTime? createDate =entityPM.CreateDate; 
-            string createdByUserId= entityPM.CreatedByUserId;
-        
-            var gLAccountRecocileDataQueryService = new GLAccountRecocileDataQueryService(this.MainContext as IAccountingContext) ;
-            var pm=gLAccountRecocileDataQueryService.GetSingle(accountId, false, false);
+            int tenant = entityPM.Tenant;
+            string accountId = entityPM.AccountId;
+            DateTime? createDate = entityPM.CreateDate;
+            string createdByUserId = entityPM.CreatedByUserId;
+
+            var gLAccountRecocileDataQueryService = new GLAccountRecocileDataQueryService(this.MainContext as IAccountingContext);
+            var pm = gLAccountRecocileDataQueryService.GetSingle(accountId, false, false);
             ChangeSetOperation changeSetOperation = ChangeSetOperation.Insert;
             if (pm != null)
             {
@@ -326,8 +326,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 string cancelledReconciliationId = entityPM.Id;
                 var reconciliationRepository = new ReconciliationRepository(this.MainContext as IAccountingContext);
-                var last=reconciliationRepository.GetLastOpenReconciliation(tenant, accountId, cancelledReconciliationId);
-                if (last==null)
+                var last = reconciliationRepository.GetLastOpenReconciliation(tenant, accountId, cancelledReconciliationId);
+                if (last == null)
                 {
                     createDate = null;
                     createdByUserId = null;
@@ -355,7 +355,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         private bool IsMonthOpenForAccountingDate(DateTime accountingDate, int tenant)
         {
 
-            var typeregular = "1"; //1	Regular	רגיל	1,Regular,רגיל	0
+            var typeregular = "1"; //1 Regular רגיל        1,Regular,רגיל   0
             var accountingPeriodQueryService = new AccountingPeriodQueryService(tenant);
             var accountingPeriodsByTypeRegular = accountingPeriodQueryService.GetAccountingPeriodByType(typeregular, tenant); ;
 
@@ -365,7 +365,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 accountingPeriodsByTypeRegular.AsQueryable(),
                  new DateTime(accountingDate.Year, accountingDate.Month, 1)
                  );
-           
+
         }
 
         protected override void UpdateComposition(ReconciliationPM entityPM)
@@ -409,7 +409,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
                     UpdateLedgerTransaction(entityPM);
-                    
+
                     ReconciliationLineUpdateService reconciliationLineUpdateService = new ReconciliationLineUpdateService(MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                     reconciliationLineUpdateService.UpdateMulti(entityPM.ReconciliationLines, entityPM.DeletedReconciliationLines, entityPM, false);
                 }
@@ -444,7 +444,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
                 else
                 {
-                    
+
                     if (entityPM.CreatedByReconciliationAfterConversion)
                     {
                         //var transactionIdList = entityPM.ReconciliationLines.Select(rec => rec.TransactionId).ToList();
@@ -485,9 +485,19 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 var deltaGLAccountAgingDataPM = reconciliationUpdateAgingService.GetDelta(this._CancelledAction, entityPM);
                 if (!string.IsNullOrWhiteSpace(deltaGLAccountAgingDataPM.AccountId))
                 {
-                    reconciliationUpdateAgingService.UpdateDelta(deltaGLAccountAgingDataPM, false);
-                    newContextWhileStreamingLedger.SaveChanges();// MUST SAVE DUE NEW CONTEXT !!!
+                    if (
+                        deltaGLAccountAgingDataPM.Tenant == 127 &&
+                        Math.Abs(deltaGLAccountAgingDataPM.TotalOpenTransactions.GetValueOrDefault()) > 10_000
+                        )
+                    {
+                        Debug.WriteLine("Ohad: Given Reconciliation Update And tenant == Ship2u and the Delta of TotalOpenTransactions > 10,000 ,Do not Update (Cause lock cause Fail Journal Streaming  ) .... ");
+                    }
+                    else
+                    {
+                        reconciliationUpdateAgingService.UpdateDelta(deltaGLAccountAgingDataPM, false);
+                        newContextWhileStreamingLedger.SaveChanges();// MUST SAVE DUE NEW CONTEXT !!!
 
+                    }
                 }
 
 
@@ -508,7 +518,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             //}
 
             // incase insert changeset: the accountCurrencyId is null, so I will fill it 
-            if(entityPM.ChangeSetOp == ChangeSetOperation.Insert && entityPM.AccountId != null)
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert && entityPM.AccountId != null)
             {
                 FillGLAccountsFields(entityPM);
             }
@@ -600,6 +610,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
             return loggedcontact;
         }
-        
+
     }
 }
