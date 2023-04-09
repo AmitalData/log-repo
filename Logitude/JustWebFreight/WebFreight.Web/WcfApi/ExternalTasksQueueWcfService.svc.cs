@@ -31,6 +31,7 @@ using System.Xml.Linq;
 using WebFreight.Web.Security;
 using WebFreight.Web.WebServices;
 using System.Data.Entity.Infrastructure;
+using Logitude.Customs.Data.EntityPOCOs;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -108,6 +109,12 @@ namespace WebFreight.Web.WcfApi
                                     }
                                     all_lines.Add(one_line);
 
+                                    if (!string.IsNullOrEmpty(vendor_id))
+                                    {
+                                        sqlQuery = $"select VENDORNUMBER,VENDORNAME from customs.CUSTOMSVENDORS where ID='{vendor_id}' and tenant={tenant}";
+                                        get_table_lines("A28", sqlQuery, ref results, connection, log_level);//CUSTOMSVENDORS
+                                    }
+
                                     results.Add("SI", JsonConvert.SerializeObject(all_lines));//SUPPLIERINVOICES
                                     
                                     sqlQuery = $"select {dec_field_list} from customs.DECLARATIONS where id='{dec_id}' and tenant={tenant}";
@@ -119,23 +126,88 @@ namespace WebFreight.Web.WcfApi
                                     sqlQuery = $"select {det_field_list} from customs.DECLARATIONTAXES where DECLARATIONID='{dec_id}' and tenant={tenant}";
                                     get_table_lines("DET",sqlQuery, ref results, connection, log_level);//DECLARATIONTAXES
 
-                                    sqlQuery = $"select {mod_field_list} from customs.SUPPLIERINVOICEMODIFICATIONS where DECLARATIONID='{dec_id}' and tenant={tenant}";
+                                    sqlQuery = $"select {mod_field_list} from customs.SUPPLIERINVOICEMODIFICATIONS where DECLARATIONID='{dec_id}' and INVOICECOUNTERKEY={inv_counter} and tenant={tenant}";
                                     get_table_lines("SIM",sqlQuery, ref results, connection, log_level);//SUPPLIERINVOICEMODIFICATIONS
 
-                                    sqlQuery = $"select {sup_field_list} from customs.SUPPLIERINVOICEITEMS where DECLARATIONID='{dec_id}' and tenant={tenant}";
+                                    sqlQuery = $"select {sup_field_list} from customs.SUPPLIERINVOICEITEMS where DECLARATIONID='{dec_id}' and COUNTERKEY={inv_counter} and tenant={tenant}";
                                     get_table_lines("SII",sqlQuery,  ref results, connection, log_level);//SUPPLIERINVOICEITEMS
 
-                                    sqlQuery = $"select CURRENCYTYPECODE from customs.SUPPLIERINVOICEFREIGHTAMOUNTS where DECLARATIONID='{dec_id}' and INVOICECOUNTERKEY='{inv_counter}' and tenant={tenant}";
+                                    sqlQuery = $"select CURRENCYTYPECODE from customs.SUPPLIERINVOICEFREIGHTAMOUNTS where DECLARATIONID='{dec_id}' and INVOICECOUNTERKEY={inv_counter} and tenant={tenant}";
                                     get_table_lines("A29",sqlQuery , ref results, connection, log_level);//SUPPLIERINVOICEFREIGHTAMOUNTS
 
-                                    sqlQuery = $"select LINENUMBER,TAXTYPECODE,TAXAMOUNT,TAXRATE from customs.SUPPLIERINVOICEITEMSTAXES where DECLARATIONID='{dec_id}' and INVOICECOUNTERKEY='{inv_counter}' and tenant={tenant}";
-                                    get_table_lines("A19_A30", sqlQuery, ref results, connection, log_level);//SUPPLIERINVOICEITEMSTAXES
 
-                                    if (!string.IsNullOrEmpty(vendor_id))
+
+                                    sqlQuery = $"select LINENUMBER from customs.SUPPLIERINVOICEITEMS where DECLARATIONID='{dec_id}' and COUNTERKEY='{inv_counter}' and tenant={tenant}";
+                                    List<List<string>> line_list = get_table_lines_list(sqlQuery, connection);
+                                    foreach (List<string> line_num in line_list)
                                     {
-                                        sqlQuery = $"select VENDORNUMBER,VENDORNAME from customs.CUSTOMSVENDORS where ID='{vendor_id}' and tenant={tenant}";
-                                        get_table_lines("A28",sqlQuery,ref results, connection, log_level);//CUSTOMSVENDORS
+                                        sqlQuery = $"select sum(TAXAMOUNT) from customs.SUPPLIERINVOICEITEMSTAXES where DECLARATIONID='{dec_id}' and INVOICECOUNTERKEY={inv_counter} and LINENUMBER={line_num[0]} and TAXTYPECODE='1' and tenant={tenant}";
+                                        get_table_lines($"A19_1_{line_num[0]}", sqlQuery, ref results, connection, log_level);//SUPPLIERINVOICEITEMSTAXES
+
+                                        sqlQuery = $"select sum(TAXAMOUNT) from customs.SUPPLIERINVOICEITEMSTAXES where DECLARATIONID='{dec_id}' and INVOICECOUNTERKEY={inv_counter} and LINENUMBER={line_num[0]} and TAXTYPECODE='15' and tenant={tenant}";
+                                        get_table_lines($"A19_15_{line_num[0]}", sqlQuery, ref results, connection, log_level);//SUPPLIERINVOICEITEMSTAXES
+
+                                        sqlQuery = $"select sum(TAXAMOUNT) from customs.SUPPLIERINVOICEITEMSTAXES where DECLARATIONID='{dec_id}' and INVOICECOUNTERKEY={inv_counter} and LINENUMBER={line_num[0]} and TAXTYPECODE='16' and tenant={tenant}";
+                                        get_table_lines($"A19_16_{line_num[0]}", sqlQuery, ref results, connection, log_level);//SUPPLIERINVOICEITEMSTAXES
+
+                                        sqlQuery = $"select TAXRATE from customs.SUPPLIERINVOICEITEMSTAXES where DECLARATIONID='{dec_id}' and INVOICECOUNTERKEY={inv_counter} and LINENUMBER={line_num[0]} and TAXTYPECODE='1' and tenant={tenant}";
+                                        get_table_lines($"A30_{line_num[0]}", sqlQuery, ref results, connection, log_level);//SUPPLIERINVOICEITEMSTAXES
+
+                                        sqlQuery = $"select CERTIFICATENUMBER from customs.SUPPLIERINVIOCEITEMCERTIFICATS where DECLARATIONID='{dec_id}' and INVOICECOUNTERKEY={inv_counter} and LINENUMBER={line_num[0]} and tenant={tenant}";
+                                        get_table_lines($"A31_{line_num[0]}", sqlQuery, ref results, connection, log_level);//SUPPLIERINVIOCEITEMCERTIFICATS
                                     }
+
+                                    sqlQuery = $"select distinct TYPECODE from customs.SUPPLIERINVOICEMODIFICATIONS where DECLARATIONID='{dec_id}' and tenant={tenant}";
+                                    line_list = get_table_lines_list(sqlQuery, connection);
+                                    foreach (List<string> line_num in line_list)
+                                    {
+                                        sqlQuery = $"select EXTRANUMERICDATA from customs.MODIFICATIONANDDISCOUNTTYPES where CODE='{line_num[0]}'";
+                                        get_table_lines($"A32_{line_num[0]}", sqlQuery, ref results, connection, log_level);//MODIFICATIONANDDISCOUNTTYPES
+                                    }
+
+
+                                    sqlQuery = $"Select ID from customs.CUSTOMSCOLLATERALS where DECLARATIONID ='{dec_id}' AND TENANT={tenant}";
+                                    line_list = get_table_lines_list(sqlQuery, connection);//CUSTOMSCOLLATERALS
+                                    List<string> id_list = new List<string>();
+                                    foreach (List<string> line_num in line_list)
+                                    {
+                                        id_list.Append(line_num[0]);
+                                    }
+
+                                    if (id_list.Count > 0)
+                                    {
+                                        string id_str = string.Join("','",id_list);
+
+                                        sqlQuery = $"Select CUSTOMSTAPGFILE,CUSTOMSNUMERAL from customs.CUSTOMSCOLLATERALSANSWERS where CUSTOMSCOLLATERALID in ('{id_str}') AND TENANT={tenant}";
+                                        get_table_lines("A34", sqlQuery, ref results, connection, log_level);//CUSTOMSCOLLATERALSANSWERS
+                                    }
+
+
+
+
+                                    sqlQuery = $"Select ID from customs.CUSTOMSCOLLATERALS where DECLARATIONID ='{dec_id}' AND COLLATERALREQUESTSTATUSCODE='2' AND TENANT={tenant}";
+                                    line_list = get_table_lines_list(sqlQuery, connection);//CUSTOMSCOLLATERALS
+                                    id_list = new List<string>();
+                                    foreach (List<string> line_num in line_list)
+                                    {
+                                        id_list.Append(line_num[0]);
+                                    }
+
+                                    if (id_list.Count > 0)
+                                    {
+                                        string id_str = string.Join("','", id_list);
+
+                                        sqlQuery = $"Select sum(ALLOCATEDAMOUNT) from customs.CUSTOMSCOLLATERALSANSWERS where CUSTOMSCOLLATERALID in ('{id_str}') AND TENANT={tenant}";
+                                        get_table_lines("A35", sqlQuery, ref results, connection, log_level);//CUSTOMSCOLLATERALSANSWERS
+                                    }
+
+
+
+
+                                    sqlQuery = $"Select Sum(GROSSMASSMEASURE) from customs.CONSIGNMENTPACKAGES where DECLARATIONID = '{dec_id}' and PACKAGEMEASUREQUALIFIERCODE = '2' AND TENANT = {tenant}";
+                                    get_table_lines("A36", sqlQuery, ref results, connection, log_level);//CONSIGNMENTPACKAGES
+
+
 
                                     all_results.Add(key, JsonConvert.SerializeObject(results));
                                 }
@@ -197,7 +269,7 @@ namespace WebFreight.Web.WcfApi
             return;
         }
 
-        List<List<string>> get_table_lines_bak(string sqlQuery, SqlConnection connection)
+        List<List<string>> get_table_lines_list(string sqlQuery, SqlConnection connection)
         {
             List<List<string>> all_lines = new List<List<string>>();
             using (var cmd = new SqlCommand(sqlQuery, connection))
