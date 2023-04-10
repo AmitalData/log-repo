@@ -1,6 +1,6 @@
 
 <!-- Web Header -->
-<div class="web-header-wrapper">
+<div class="web-header-wrapper" [class.tablet-nav-opened]="isNavOpened">
     <div class="web-header hide-mobile">
         <div class="logo-wrapper">
             <div class="logo">
@@ -8,24 +8,30 @@
             </div>
         </div>
         <div style="width:auto;">
-
+          
+        
         </div>
 
         <div class="nav">
             <!-- <ul class="left-nav" [class.show]="displayMenu" style="margin-top: 11px;"> -->
             <!-- <li  (click)="GoToPrivateSite()" style="float: right;">cargo-tracking</li> -->
             <!-- </ul> -->
+            <div class="tablet-nav">
+                <div class="action-buttons right-button tablet" (click)="openNav()">
+                    <img src="./assets/images/icons/Menu.svg" alt="" />
+                </div>
+            </div>
         </div>
 
     </div>
 </div>
 
 
-<div *ngIf="IsBrandingDataLoaded" class="sidebar">
+<div *ngIf="IsBrandingDataLoaded" class="sidebar" [class.tablet-nav-opened]="isNavOpened">
 
-    <div class="hide-mobile nav" [class.nav-opened]="isNavOpened">
+    <div class="hide-mobile  nav" [class.nav-opened]="isNavOpened">
 
-        <div class="action-buttons right-button mobile-only" (click)="openNav()">
+        <div class="action-buttons right-button mobile-only tablet tablet-button-close" (click)="openNav()">
             <img src="./assets/images/icons/close.svg" alt="" />
         </div>
 

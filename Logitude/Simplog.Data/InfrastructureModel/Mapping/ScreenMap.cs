@@ -66,6 +66,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.SortedType).HasColumnName("SortedType");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.RelatedScreenCode).HasColumnName("RelatedScreenCode");
+            this.Property(t => t.IsHeaderScreen).HasColumnName("IsHeaderScreen");
             // Relationships
             //this.HasRequired(t => t.ObjectTable)
             //    .WithMany(t => t.Screens)

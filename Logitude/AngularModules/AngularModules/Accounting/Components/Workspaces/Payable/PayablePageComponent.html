@@ -143,11 +143,11 @@
                                                         <tr>
                                                             <td>
                                                                 <table>
-                                                                    <!--<tr>
+                                                                    <tr *ngIf="APPaymentsDraftPermission">
                                                                         <td style="width:190px;">
                                                                             <p class="QueryLink" (click)="ViewInvoiceQuery('APPayment:Draft Payments')"> {{'APPayment.Q.DraftAPPayments' | TextCodeTranslationPipe}}  ({{APPaymentsDraftsCount}})</p>
                                                                         </td>
-                                                                    </tr>-->
+                                                                    </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
                                                                             <p class="QueryLink" (click)="ViewInvoiceQuery('APPayment:Open Payments')"> {{'APPayment.Q.OpenAPPayments' | TextCodeTranslationPipe}}  </p>

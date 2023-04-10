@@ -36,13 +36,16 @@ namespace WebFreight.Web.ReportsWebServices
         {
             ShipmentPackingDataProvider provider = this.BuildProvider(shipmentId, tenant);
             XmlSerializer serializer = new XmlSerializer(typeof(ShipmentPackingDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, provider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
+
+            using (MemoryStream memstream = new MemoryStream())
+            {
+                serializer.Serialize(memstream, provider);
+                memstream.Seek(0, SeekOrigin.Begin);
+                var reader = new StreamReader(memstream);
+                string content = reader.ReadToEnd();
+                byte[] bytearray = memstream.ToArray();
+                return bytearray;
+            }
         }
 
         private ShipmentPackingDataProvider BuildProvider(string shipmentId, int tenant)

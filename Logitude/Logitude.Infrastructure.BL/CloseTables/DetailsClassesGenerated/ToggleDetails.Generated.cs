@@ -855,18 +855,18 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
-                Code = "DBA", 
-                Name = "Dashboard Analytics", 
-                SearchFields = "DBA,Dashboard Analytics", 
-                Description = "Dashboard Analytics", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
                 Name = "Remove Exception Logic", 
                 Code = "REL", 
                 SearchFields = "REL,Remove Exception Logic", 
                 Description = "Remove Exception Logic", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "DBA", 
+                Name = "Dashboard Analytics", 
+                SearchFields = "DBA,Dashboard Analytics", 
+                Description = "Dashboard Analytics", 
 			});
 			 
             all.Add(new ToggleDetails()
@@ -892,12 +892,52 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "UDD,Upload File using Drag and Drop", 
                 Description = "Upload File using Drag and Drop", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "DE2", 
+                Name = "Document Execution WR Version 2", 
+                SearchFields = "DE2,Document Execution WR Version 2", 
+                Description = "Document Execution WR Version 2", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "ICC", 
+                Name = "AR Invoice Customized Counter", 
+                SearchFields = "ICC,AR Invoice Customized Counter", 
+                Description = "AR Invoice Customized Counter", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "EVG", 
+                Name = "Enable Virtual Grid", 
+                SearchFields = "EVG,Enable Virtual Grid", 
+                Description = "Enable Virtual Grid", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "AHS", 
+                Name = "Automation Master House Set Field Value", 
+                SearchFields = "AHS,Automation Master House Set Field Value", 
+                Description = "Automation Master House Set Field Value", 
+			});
+			 
             all.Add(new ToggleDetails()
             {    
                 Code = "CPI", 
                 Name = "Centralized POD images when convert to PDF files", 
                 SearchFields = "CPI,Centralized POD images when convert to PDF files", 
                 Description = "Centralized POD images when convert to PDF files", 
+			});
+            all.Add(new ToggleDetails()
+            {    
+                Code = "RE2", 
+                Name = "Reports Execution WR Version 2", 
+                SearchFields = "RE2, Reports Execution WR Version 2", 
+                Description = "Reports Execution WR Version 2", 
 			});
 			
             return all;

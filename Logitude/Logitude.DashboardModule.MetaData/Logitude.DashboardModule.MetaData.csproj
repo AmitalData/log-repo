@@ -62,11 +62,17 @@
     </Compile>
     <None Include="AnalyticsEntityFiles\APInvoiceAnalytic.ljson" />
     <None Include="AnalyticsEntityFiles\ARInvoiceAnalytic.ljson" />
+    <None Include="AnalyticsEntityFiles\ContainerAnalytic.ljson" />
     <None Include="AnalyticsEntityFiles\OpportunityAnalytic.ljson" />
     <None Include="AnalyticsEntityFiles\QuoteAnalytic.ljson" />
     <None Include="DBScripts\202209010934_AddARInvoiceAnalyticColumnStoreIndex.sxml" />
     <None Include="DBScripts\202209010934_AddAPInvoiceAnalyticsColumnStoreIndex.sxml" />
     <None Include="DBScripts\202209010934_AddQuoteAnalyticsColumnStoreIndex.sxml" />
+    <None Include="DBScripts\202209010934_AddContainerAnalyticsColumnStoreIndex.sxml" />
+    <None Include="DBScripts\202209010934_UpdateContainerAnalytics.sxml" />
+    <None Include="DBScripts\202209010934_FillContainerAnalytics.sxml" />
+    <None Include="DBScripts\202302151150_DropUserPinnedDashboards.sxml" />
+    <None Include="DBScripts\202302230230_FillProductCodeField.sxml" />
     <None Include="DBScripts\202311010301_FillDashboardGlobalPresetFilters.sxml" />
     <None Include="DBScripts\202210270330_FillOpportunityAnalytics.sxml" />
     <None Include="DBScripts\202210270330_AddOpportunityAnalyticsColumnStoreIndex.sxml" />
@@ -78,12 +84,13 @@
     <None Include="DBScripts\20220913_SetDefaultPermissionLevelOnDashboard.sxml" />
     <None Include="DBTables\APInvoiceAnalytic.dxml" />
     <None Include="DBTables\ARInvoiceAnalytic.dxml" />
+    <None Include="DBTables\ContainerAnalytic.dxml" />
     <None Include="DBTables\DashboardGlobalFilter.dxml" />
     <None Include="DBTables\DashboardGlobalPresetFilter.dxml" />
     <None Include="DBTables\DashboardSharedUser.dxml" />
     <None Include="DBTables\PermissionLevel.dxml" />
     <None Include="DBTables\QuoteAnalytic.dxml" />
-    <None Include="DBTables\UserPinnedDashboard.dxml" />
+    <None Include="DBTables\DashboardsUserSetting.dxml" />
     <None Include="EntityFiles\DashboardGlobalPresetFilter.lxml" />
     <None Include="EntityFiles\DashboardSharedUser.lxml" />
     <None Include="EntityFiles\PermissionLevel.lxml" />
@@ -125,7 +132,7 @@
     <None Include="EntityFiles\AnalyticsFactsMetaData.lxml" />
     <None Include="EntityFiles\Dashboard.lxml" />
     <None Include="EntityFiles\MeasureType.lxml" />
-    <None Include="EntityFiles\UserPinnedDashboard.lxml" />
+    <None Include="EntityFiles\DashboardsUserSetting.lxml" />
     <None Include="EntityFiles\Widget.lxml" />
     <None Include="EntityFiles\WidgetMeasure.lxml" />
     <None Include="EntityFiles\WidgetType.lxml" />

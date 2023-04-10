@@ -3,6 +3,7 @@ import { AppTool } from 'Infrastructure/Tools';
 import { AnalyticsFactsFieldsMetaDataList } from 'DashboardModule/EntityLists/AnalyticsFactsFieldsMetaDataList';
 import { FieldValueResolver } from 'Infrastructure/Utilities/FieldValueResolver';
 import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
+import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 
 
 export class WidgetFilterItem {
@@ -127,6 +128,7 @@ export class WidgetFilterItem {
         this.FieldId = field.Id;
         this.FieldDataType = field.DataTypeCode;
         if (this.DontRefreshFieldData) {
+            this.AddLookupEqualOperators(true);
             this.DontRefreshFieldData = false;
             return;
         }
@@ -170,10 +172,9 @@ export class WidgetFilterItem {
                 break;
 
             case "LookUp":
-                this.Operators.push(new Operator("Equal", "Equal"));
-                this.Operators.push(new Operator("Does Not Equal", "NotEqual"));
                 this.Operators.push(new Operator("Is Empty", "IsEmpty"));
                 this.Operators.push(new Operator("Is not Empty", "IsNotEmpty"));
+                this.AddLookupEqualOperators();
                 break;
             default:
                 this.Operators.push(new Operator("Equal", "Equal"));
@@ -184,6 +185,14 @@ export class WidgetFilterItem {
                 this.Operators.push(new Operator("Is not Empty", "IsNotEmpty"));
                 break;
         }
+    }
+
+    private AddLookupEqualOperators(setMissingOperator: boolean = false) {
+        if (this.FieldDataType != 'LookUp') return;
+        if (SessionInfo.LoggedUserTenant == 0 && !this.SelectedField?.AllowTenantZeroFilter) return;
+        this.Operators.push(new Operator("Equal", "Equal"));
+        this.Operators.push(new Operator("Does Not Equal", "NotEqual"));
+        if (setMissingOperator) this.SelectedOperator = this.Operators.filter(x => x.Code == this.Operator)[0];
     }
 
     public OperationValueChanged(operator) {

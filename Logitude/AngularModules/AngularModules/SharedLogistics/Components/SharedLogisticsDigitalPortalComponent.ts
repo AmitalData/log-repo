@@ -82,8 +82,13 @@ export class SharedLogisticsDigitalPortalComponent implements OnInit {
     public ValidationWarningsMessage: string = null;
     public IsValidationWarningsVisible: boolean = false;
     public IsCustomerCareUser = false;
+    IsTenantZero: boolean = false;
 
     constructor(public _sharedLogisticsService: SharedLogisticsService) {
+        if (SessionLocator.TenantPM.Id == 0) {
+            this.IsTenantZero = true;
+        }
+
         this.InitalizeServices();
     }
 
@@ -359,6 +364,18 @@ export class SharedLogisticsDigitalPortalComponent implements OnInit {
         logWindow.IsShowCloseButton = false;
         logWindow.Title = "Customization ";
         logWindow.Show('./SharedLogistics/Components/DigitalPortal/DigitalPortalCustomizationMainComponent');
+    }
+
+    LanguageLinkClick() {
+        var windowArgs: any = {};
+        windowArgs.IsDigitalPortal = true;
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Width = 820;
+        logWindow.Height = 520;
+        logWindow.Title = "Language Display Settings";
+
+        logWindow.Show("./SharedLogistics/Components/DigitalPortal/DigitalPortalLanguageSettingsComponent");
     }
 
     PartnersPermissionsLinkClick() {

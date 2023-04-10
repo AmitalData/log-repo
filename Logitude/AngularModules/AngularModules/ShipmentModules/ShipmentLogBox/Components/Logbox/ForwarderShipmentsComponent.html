@@ -112,9 +112,9 @@
                                 </td>
                                 <td style="width:15px;"></td>
                                 <td style="height: 22px;width:315px;">
-                                    <button class="RedButton" *ngIf="this.HasSharedDocs == true || AllowCreateAirExportShipmentsWithoutDocuments || AllowCreateOceanExportShipmentsWithoutDocuments" (click)="CreateButtonClicked()" style="width:57px;float:left;">Create</button>
+                                    <button class="RedButton" *ngIf="this.HasSharedDocs == true || AllowCreateAirExportShipmentsWithoutDocuments || AllowCreateOceanExportShipmentsWithoutDocuments" (click)="CreateButtonClicked()" style="width:57px;float:left;">{{'General.B.Create' | TextCodeTranslationPipe}}</button>
                                     <div *ngIf="this.HasSharedDocs == false">
-                                        <button *ngIf="!AllowCreateAirExportShipmentsWithoutDocuments && !AllowCreateOceanExportShipmentsWithoutDocuments" class="RedButton" title="No documents were shared with agent yet." style="width:57px;float: left;margin:4px; opacity:0.5;">Create</button>
+                                        <button *ngIf="!AllowCreateAirExportShipmentsWithoutDocuments && !AllowCreateOceanExportShipmentsWithoutDocuments" class="RedButton" title="No documents were shared with agent yet." style="width:57px;float: left;margin:4px; opacity:0.5;">{{'General.B.Create' | TextCodeTranslationPipe}}</button>
                                         <div style="float:left;color:red;margin-top:5px;">No documents were shared with agent yet.</div>
                                     </div>
                                 </td>
@@ -411,7 +411,7 @@
     <tr style="height:1px;">
         <td>
             <div style="height:30px;float:right;">
-                <button class="Button" (click)="CloseButtonClicked()" style="width:80px;float: right;margin:4px;">Close</button>
+                <button class="Button" (click)="CloseButtonClicked()" style="width:80px;float: right;margin:4px;">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
             </div>
         </td>
     </tr>

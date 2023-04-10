@@ -112,7 +112,7 @@
     }
 
         .scrollable-table > .table {
-            min-width: 800px;
+            /* min-width: 800px; */
         }
 
     .col-md-1 {

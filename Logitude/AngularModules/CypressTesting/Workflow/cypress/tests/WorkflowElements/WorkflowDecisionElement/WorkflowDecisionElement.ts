@@ -58,13 +58,13 @@ Then("the flow should save successfully", () => {
 Given("add second level condition group met with {string} with the following details", (GroupOperation, dataTable) => {
     let groupConditionDetailsList = Assists.CreateSet<ConditionDetails>(dataTable);
     Actions.FillDecisionGroupConditionDetails(false, GroupOperation, groupConditionDetailsList);
-    Actions.CloseEditDecisionNodeWindow();
+    Actions.CloseEditNodeWindow();
 });
 
 Given("add third level condition group met with {string} with the following details", (GroupOperation, dataTable) => {
     let groupConditionDetailsList = Assists.CreateSet<ConditionDetails>(dataTable);
     Actions.FillDecisionGroupConditionDetails(false, GroupOperation, groupConditionDetailsList);
-    Actions.CloseEditDecisionNodeWindow();
+    Actions.CloseEditNodeWindow();
 
 });
 

@@ -21,6 +21,7 @@ import { FieldTypes } from "Workflow/Constants/FieldTypes";
 import { ObjectTables } from "Workflow/Utilities/ObjectTables";
 import { ObjectTableListService } from "Infrastructure/Services/StandardLists/ObjectTableListService";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
+import { StartTriggerTypes } from "Workflow/Constants/StartTriggerTypes";
 
 @Component({
     templateUrl: "./WorkflowBuilderComponent.html"
@@ -37,6 +38,8 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     public EntityId: string;
     public ValidVersion: WorkFlowVersionPM = null;
     public CurrentVersionId: string = null;
+    public WorkflowNumber: string;
+    public WorkflowTriggerTypeCode: string;
     public WorkflowName: string;
     public WorkflowEntity: string = null;
     public BusyIndicatorText: string = null;
@@ -63,7 +66,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
     ngOnInit() {
         this.loadWorkflow(true);
-        this.listen()
+        this.listen();
     }
 
     ngOnDestroy() {
@@ -74,7 +77,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     private listen() {
         if (this.entityArgs.EditComponent) {
             this.TabSelectedEvent = this.entityArgs.EditComponent.TabSelected.subscribe((tabCode: string) => {
-                if (tabCode == "WFFB") {
+                if (tabCode === "WFFB") {
                     var clickedRowId = this.entityArgs.EditComponentArgument?.ClickedVersionRow!
                     var updatedVersionId = this.entityArgs.EditComponentArgument?.UpdatedVersion!
                     if (updatedVersionId) {
@@ -87,17 +90,13 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
                     }
                 }
             });
-        }
 
-        if (this.entityArgs.EditComponent) {
-            this.entityArgs.EntityArgEventEmitter.subscribe(
-                theMessage => {
-                    if (theMessage == "WorkflowVersionsUpdated") {
-                        this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, HasChanges: false }
-                        this.loadWorkflow(false);
-                    }
+            this.entityArgs.EntityArgEventEmitter.subscribe((event: any) => {
+                if (event === "WorkflowVersionsUpdated") {
+                    this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, HasChanges: false };
+                    this.loadWorkflow(false);
                 }
-            );
+            });
         }
     }
 
@@ -143,16 +142,12 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     }
 
     handleRenderReactWorkflow() {
+        this.WorkflowTriggerTypeCode = this.EntityPM.WorkFlowTriggerTypeCode;
+        this.WorkflowNumber = this.EntityPM.WorkFlowNumber;
         this.WorkflowName = this.EntityPM.Name;
         this.WorkflowEntity = this.ValidVersion.Entity;
         this.renderReactFlowModeler();
-
         this.loadObjectTablesAndFields();
-
-
-        // this.entityArgs.SendMessage("RefreshWorkflowShortTitle");
-        // this.entityArgs.SendMessage("RefreshWorkflowButtons");
-
     }
 
     setCurrentDisplayedVersion(workflowVersion: WorkFlowVersionPM) {
@@ -179,13 +174,15 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
                     nodeName: "name",
                     nodeLabel: "label",
                     startNodeEntity: "entity",
+                    startNodeEntityLabel: "entityLabel",
+                    startNodeApplicationLabel: "applicationLabel",
+                    startNodeEventTypeLabel: "eventTypeLabel",
                     startNodeTrigger: "trigger",
                     conditionNodeMetLabel: "metLabel",
                     conditionNodeOtherwiseLabel: "otherwiseLabel"
                 },
-                flowSettings: {
-                    isViewMode: this.IsViewMode
-                }
+                isViewMode: this.IsViewMode,
+                flowTriggerType: this.EntityPM.WorkFlowTriggerTypeCode
             };
 
             ReactDOM.render(React.createElement(ReactFlowModeler, props), this.containerRef.nativeElement);
@@ -200,7 +197,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
             if (!serviceResponse.HasError) {
                 let objectTables = serviceResponse.Result.filter((o: any) => o.Tenant === 0 || o.Tenant === (SessionLocator.Tenant || 0));
                 if (isLoadedBefore) {
-                    ObjectTables.resetCustom(objectTables);
+                    ObjectTables.replace(objectTables);
                 } else {
                     ObjectTables.set(objectTables);
                 }
@@ -218,13 +215,15 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
             if (!serviceResponse.HasError) {
                 let objectFields = serviceResponse.Result.filter((o: any) => o.Tenant === 0 || o.Tenant === (SessionLocator.Tenant || 0));
                 if (isLoadedBefore) {
-                    ObjectFields.resetCustom(objectFields);
+                    ObjectFields.replace(objectFields);
                 } else {
                     ObjectFields.set(objectFields);
                 }
                 ObjectFields.setLoaded();
             }
             this.stopLoading();
+            this.handleWorkflowValidation();
+            this.openStartConfiguration();
         });
     }
 
@@ -244,11 +243,35 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     }
 
     flowObjectChangedEvent(flowObject: any) {
-        if (flowObject) {
-            if (this.HasChanges) {
-                this.setWorkflowVersion(flowObject)
-            }
+        this.handleCopiedDeclareVariableNodes(flowObject);
+
+        if (flowObject && this.HasChanges) {
+            this.setWorkflowVersion(flowObject);
         }
+    }
+
+    handleCopiedDeclareVariableNodes(flowObject: any) {
+        if (flowObject && flowObject.nodes) {
+            flowObject.nodes.filter((n: any) => this.isNotHandledCopiedDeclareVariableNode(n)).forEach((node: any) => {
+                let nodeName = node.data["name"];
+                node.data["variableName"] = nodeName;
+                node.data["variableCode"] = Formatter.getCodeFromName(nodeName);
+            });
+        }
+    }
+
+    isNotHandledCopiedDeclareVariableNode(node: any) {
+        if (node) {
+            return node.type === "declareVariableNode" &&
+                node.data &&
+                node.data["copiedFrom"] &&
+                node.data["copyNumber"] &&
+                node.data["name"] &&
+                node.data["variableName"] &&
+                node.data["name"].toString().startsWith("Copy " + node.data["copyNumber"].toString() + " of ") &&
+                !node.data["variableName"].toString().startsWith("Copy " + node.data["copyNumber"].toString() + " of ");
+        }
+        return false;
     }
 
     setWorkflowVersion(flowObject: any) {
@@ -260,7 +283,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
                 version.Trigger = startNode ? (startNode.data["trigger"] || null) : null;
                 version.FlowJson = JSON.stringify(flowObject);
 
-                this.checkIfFlowActionsAreValid(flowObject, version.Entity,version.Trigger);
+                this.handleWorkflowActionsValidation(flowObject, version.Entity, version.Trigger);
             }
         }
     }
@@ -291,12 +314,12 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         confirmWindow.ShowCancelButton = true;
         confirmWindow.YesButtonText = "Ok";
         confirmWindow.Title = "Delete Element";
-        confirmWindow.Show("Are you sure to delete element " + deletedNodeName + " ?");
         confirmWindow.WindowClosed.subscribe(() => {
             if (confirmWindow.Yes) {
                 document.dispatchEvent(new CustomEvent(this.returnDeleteNodeConfirmationEventKey, { detail: true }));
             }
         });
+        confirmWindow.Show("Are you sure to delete element " + deletedNodeName + " ?");
     }
 
     showDeleteNodeWarning(deletedNodeName: string, usedInNodes: string[] | null) {
@@ -366,24 +389,44 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
     setReactFlowInstance(reactFlowInstance: any) {
         this.ReactFlowInstance = reactFlowInstance;
-        this.checkIfFlowActionsAreValid(this.getCurrentFlowObject(), this.ValidVersion.Entity,this.ValidVersion.Trigger);
     }
 
-    checkIfFlowActionsAreValid(flowObject: any, entity: any, trigger: any) {
-        var addedNode = flowObject.nodes.filter(e => e.type != "startNode" && e.type != "connectorNode" && e.type != "endNode")
+    handleWorkflowActionsValidation(flowObject: any, entity: any, trigger: any) {
+        let addedNode = flowObject.nodes.filter((node: any) => node.type !== "startNode" && node.type !== "connectorNode" && node.type !== "endNode");
+
         if (entity && trigger && addedNode.length > 0) {
-            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, IsActiveDisabled: false }
-            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, IsNewVersionDisabled: false }
+            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, IsActiveDisabled: false };
+            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, IsNewVersionDisabled: false };
         } else if (entity && trigger && addedNode.length == 0) {
-            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, IsActiveDisabled: true }
-            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, IsNewVersionDisabled: false }
+            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, IsActiveDisabled: true };
+            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, IsNewVersionDisabled: false };
         } else {
-            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, IsActiveDisabled: true }
-            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, IsNewVersionDisabled: true }
+            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, IsActiveDisabled: true };
+            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, IsNewVersionDisabled: true };
         }
 
         this.entityArgs.SendMessage("RefreshWorkflowButtons");
         this.entityArgs.SendMessage("RefreshWorkflowShortTitle");
+
+        this.handleWorkflowWarnings();
+    }
+
+    handleWorkflowWarnings() {
+        let warningMessages: string[] = [];
+        let isActiveDisabled: boolean = this.entityArgs.EditComponentArgument?.IsActiveDisabled ? true : false;
+        let isNewVersionDisabled: boolean = this.entityArgs.EditComponentArgument?.IsNewVersionDisabled ? true : false;
+
+        if (this.ValidVersion.StatusCode !== "DRFT") {
+            warningMessages.push("This version is currently active or was activated at least once. To make changes create a new version.");
+        }
+        else if (this.ValidVersion.StatusCode === "DRFT" && isActiveDisabled && isNewVersionDisabled) {
+            warningMessages.push("The start element is not configured, you need to select the object whose records trigger the flow.");
+        }
+        else if (this.ValidVersion.StatusCode === "DRFT" && isActiveDisabled && !isNewVersionDisabled) {
+            warningMessages.push("To activate the version, connect at least one element to the start element.");
+        }
+
+        this.setWarningMessages(warningMessages);
     }
 
     openStartConfiguration() {
@@ -408,6 +451,17 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         }
     }
 
+    handleWorkflowValidation() {
+        let flowObject = this.getCurrentFlowObject();
+        if (flowObject) {
+            this.handleWorkflowActionsValidation(flowObject, this.ValidVersion.Entity, this.ValidVersion.Trigger);
+        } else {
+            setTimeout(() => {
+                this.handleWorkflowValidation();
+            }, 100);
+        }
+    }
+
     buildOpenPropertiesEventObject(node: any, isNewNode: boolean) {
         if (node) {
             let nodeObject = {
@@ -427,12 +481,14 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         if (propertiesComponentPath) {
             let propertiesWindow = this.buildPropertiesWindow(openPropertiesEventObject);
             propertiesWindow.Show(propertiesComponentPath);
-            propertiesWindow.WindowClosed.subscribe((data: any) => { this.handlePropertiesWindowClosed(data, openPropertiesEventObject.nodeType); });
         }
     }
 
     getPropertiesComponentPath(nodeType: string) {
         let propertiesComponentPath = "./Workflow/Components/Properties/";
+        if (nodeType === "startNode" && this.WorkflowTriggerTypeCode === StartTriggerTypes.EventTriggered) {
+            return (propertiesComponentPath + "StartEventTriggeredPropertiesComponent");
+        }
         let propertiesComponentName = nodeType ? ((nodeType.charAt(0).toUpperCase() + nodeType.slice(1)).replace("Node", "") + "PropertiesComponent") : "";
         return (propertiesComponentPath + propertiesComponentName);
     }
@@ -443,43 +499,50 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
             Data: JSON.parse(JSON.stringify(openPropertiesEventObject.nodeData)),
             WorkflowEntity: this.WorkflowEntity,
             FlowObject: this.getCurrentFlowObject(),
-            CurrentNodeId: openPropertiesEventObject.nodeId
+            CurrentNodeId: openPropertiesEventObject.nodeId,
+            WorkflowNumber: this.WorkflowNumber
         };
         propertiesWindow.Height = openPropertiesEventObject.nodeType == "declareVariableNode" ? 320 : 850;
-        propertiesWindow.Width = 985;
+        propertiesWindow.Width = 1000;
         propertiesWindow.RTL = false;
         propertiesWindow.Title = this.getPropertiesWindowTitle(openPropertiesEventObject.nodeLabel);
         propertiesWindow.WindowArgs = propertiesWindowArgs;
         propertiesWindow.ShowFooterButtons = true;
         propertiesWindow.IsViewMode = this.IsViewMode;
+        propertiesWindow.WindowClosed.subscribe((data: any) => { this.handlePropertiesWindowClosed(data, openPropertiesEventObject.nodeType); });
         return propertiesWindow;
     }
 
     getPropertiesWindowTitle(nodeLabel: string) {
-        let subTitle = "Configure";
+        let subTitle = "Configure ";
         switch (nodeLabel) {
             case "Append Item":
-                return subTitle + " Append to Collection";
+                return subTitle + "Append to Collection";
             case "Delete Item":
-                return subTitle + " Delete from Collection";
+                return subTitle + "Delete from Collection";
             default:
-                return nodeLabel ? (subTitle + " " + nodeLabel) : (subTitle + " Element");
+                return subTitle + (nodeLabel || "Element");
         }
     }
 
     handlePropertiesWindowClosed(data: any, nodeType: string) {
+
+        if ((window as any)?.PrintData) {
+            console.log(data);
+        }
+
         if (data) {
             document.dispatchEvent(new CustomEvent(this.ReturnPropertiesDataEventKey, { detail: data }));
 
             if (nodeType === "startNode") {
                 let dataEntity = data["entity"];
-                if (this.WorkflowEntity !== dataEntity) {
-                    let flowObject = this.getCurrentFlowObject();
-                    FlowReader.getNodes(flowObject, "conditionNode").forEach((conditionNode: any) => {
-                        conditionNode.data["conditions"] = [];
-                        conditionNode.data["conditionsOperation"] = null;
-                    });
-                }
+                // if (this.WorkflowEntity !== dataEntity) {
+                //     let flowObject = this.getCurrentFlowObject();
+                //     FlowReader.getNodes(flowObject, "conditionNode").forEach((conditionNode: any) => {
+                //         conditionNode.data["conditions"] = [];
+                //         conditionNode.data["conditionsOperation"] = null;
+                //     });
+                // }
                 this.WorkflowEntity = dataEntity;
             }
 
@@ -508,10 +571,18 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         var activeVersion = versions.find(e => e.StatusCode == "ACVE");
         var newestVersion = versions[0];
         if (activeVersion) {
-            return activeVersion
+            return activeVersion;
         } else {
-            return newestVersion
+            return newestVersion;
         }
+    }
+
+    setWarningMessages(messages: string[] | null = null) {
+        this.entityArgs.SendMessage({ Code: "SetWorkflowWarningMessages", Messages: messages });
+    }
+
+    setErrorMessages(messages: string[] | null = null) {
+        this.entityArgs.SendMessage({ Code: "SetWorkflowErrorMessages", Messages: messages });
     }
 
     startLoading(message: string = "Loading ...") {
@@ -522,7 +593,5 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     stopLoading() {
         this.BusyIndicatorText = null;
         this.ShowBusyIndicator = false;
-
-        this.openStartConfiguration();
     }
 }

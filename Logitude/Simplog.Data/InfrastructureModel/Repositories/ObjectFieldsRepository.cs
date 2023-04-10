@@ -678,5 +678,12 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     where a.Code == code && a.ObjectTableId == objectTableId && a.Tenant == tenant && a.IsCustom == true
                     select a).Any();
         }
+
+        public int GetCustomObjectFieldCountByCodeAndCopies(string code, string objectTableId, int tenant)
+        {
+            return (from a in context.ObjectFields
+                    where (a.Code == code || (a.Code.Contains(code) && a.Code.Contains("Copy"))) && a.ObjectTableId == objectTableId && a.Tenant == tenant && a.IsCustom == true
+                    select a).Count();
+        }
     }
 }

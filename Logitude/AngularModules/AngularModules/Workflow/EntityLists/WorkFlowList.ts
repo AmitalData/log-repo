@@ -17,17 +17,18 @@ export class WorkFlowList {
 	SearchFields: string;
 	Name: string;
 	Description: string;
-	OwnerId: string;
 	StatusCode: string;
 	StatusName: string;
-	OwnerName: string;
 	CreatedByUserName: string;
 	UpdatedByUserName: string;
 	FlowJson: string;
 	Entity: string;
 	Trigger: string;
 	RetriesNumber: number;
-	RetriesDelay: number;
+	RetriesDelay: string;
+	WorkFlowTriggerTypeCode: string;
+	WorkFlowTriggerTypeName: string;
+	WorkFlowNumber: string;
 	
 }
  

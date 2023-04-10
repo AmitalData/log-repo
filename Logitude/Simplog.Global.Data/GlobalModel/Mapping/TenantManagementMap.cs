@@ -175,6 +175,9 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.DigitalPortalMobileLastDate).HasColumnName("DigitalPortalMobileLastDate");
             this.Property(t => t.DigitalPortalMobTotalLastWeek).HasColumnName("DigitalPortalMobTotalLastWeek");
             this.Property(t => t.DigitalPortalMobTotalLastMonth).HasColumnName("DigitalPortalMobTotalLastMonth");
+            this.Property(t => t.DPArchiveShipmentCreateFilter).HasColumnName("DPArchiveShipmentCreateFilter");
+            this.Property(t => t.DPArchiveShipmentArrivalFilter).HasColumnName("DPArchiveShipmentArrivalFilter");
+            this.Property(t => t.DPArchiveShipmentDepartFilter).HasColumnName("DPArchiveShipmentDepartFilter");
 
 
         string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

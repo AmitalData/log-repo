@@ -22,7 +22,7 @@ export class DocumentsFilingPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -596,6 +596,36 @@ export class DocumentsFilingPM {
     private isAgentSharedInMaster: boolean;
     public get IsAgentSharedInMaster() { return this.isAgentSharedInMaster; }
     public set IsAgentSharedInMaster(newValue: boolean) { if (this.isAgentSharedInMaster != newValue) { this.isAgentSharedInMaster = newValue; this.MarkAsDirty("IsAgentSharedInMaster"); } }
+       
+	 
+    private fromCTool: boolean;
+    public get FromCTool() { return this.fromCTool; }
+    public set FromCTool(newValue: boolean) { if (this.fromCTool != newValue) { this.fromCTool = newValue; this.MarkAsDirty("FromCTool"); } }
+       
+	 
+    private receivedByByContactId: string;
+    public get ReceivedByByContactId() { return this.receivedByByContactId; }
+    public set ReceivedByByContactId(newValue: string) { if (this.receivedByByContactId != newValue) { this.receivedByByContactId = newValue; this.MarkAsDirty("ReceivedByByContactId"); } }
+       
+	 
+    private isCustomerUploadPermission: boolean;
+    public get IsCustomerUploadPermission() { return this.isCustomerUploadPermission; }
+    public set IsCustomerUploadPermission(newValue: boolean) { if (this.isCustomerUploadPermission != newValue) { this.isCustomerUploadPermission = newValue; this.MarkAsDirty("IsCustomerUploadPermission"); } }
+       
+	 
+    private isApprovalRequired: boolean;
+    public get IsApprovalRequired() { return this.isApprovalRequired; }
+    public set IsApprovalRequired(newValue: boolean) { if (this.isApprovalRequired != newValue) { this.isApprovalRequired = newValue; this.MarkAsDirty("IsApprovalRequired"); } }
+       
+	 
+    private isFromDigital: boolean;
+    public get IsFromDigital() { return this.isFromDigital; }
+    public set IsFromDigital(newValue: boolean) { if (this.isFromDigital != newValue) { this.isFromDigital = newValue; this.MarkAsDirty("IsFromDigital"); } }
+       
+	 
+    private receivedByPartner: string;
+    public get ReceivedByPartner() { return this.receivedByPartner; }
+    public set ReceivedByPartner(newValue: string) { if (this.receivedByPartner != newValue) { this.receivedByPartner = newValue; this.MarkAsDirty("ReceivedByPartner"); } }
        
 	 
 

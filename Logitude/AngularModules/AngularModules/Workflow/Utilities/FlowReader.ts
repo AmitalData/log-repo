@@ -1,4 +1,5 @@
 import { NodeType } from "Workflow/Types";
+import { Formatter } from "./Formatter";
 
 export class FlowReader {
 
@@ -72,4 +73,18 @@ export class FlowReader {
         return [];
     }
 
+    static isNodeCodeExists(flowObject: any, name: string) {
+        if (flowObject && name) {
+            return flowObject.nodes.filter((node: any) => this.isSameNodeCode(node, name)).length > 0;
+        }
+        return false;
+    }
+
+    static isSameNodeCode(node: any, name: string) {
+        if (node && name) {
+            let nodeName = node.data ? (node.data["name"] || null) : null;
+            return Formatter.getCodeFromName(nodeName) === Formatter.getCodeFromName(name);
+        }
+        return false;
+    }
 }

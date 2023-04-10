@@ -4,11 +4,12 @@ using System.Runtime.Serialization;
 using Simplog.Server.Infrastructure;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.BL.CommonDataModel.EntityPMs
 {
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
-    public class CardPM
+    public class CardPM : ObjectCustomFieldPM
     {
         [Key]
         public string Id { get; set; }
@@ -82,7 +83,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string VatTypeId { get; set; }
 
         public string Prefix { get; set; }
-
         public string CityName { get; set; }
         public string ImageDetailId { get; set; }
         public bool DisconectFromContact { get; set; }
@@ -99,17 +99,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public DateTime? StartWorkingDate { get; set; }
         public string LeadSourceId { get; set; }
         public string CustomerSizeId { get; set; }
-        public string Field1 { get; set; }
-        public string Field2{ get; set; }
-        public string Field3 { get; set; }
-        public string Field4 { get; set; }
-        public string Field5 { get; set; }
-        public string Field6 { get; set; }
-        public string Field7 { get; set; }
-        public string Field8 { get; set; }
-        public string Field9{ get; set; }
-        public string Field10 { get; set; }
-
         [Include]
         [Association("CardCustomAgent", "Id", "Id", IsForeignKey = true)]
         public virtual CustomAgentPM CustomAgent { get; set; }
@@ -127,7 +116,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [Include]
         [Association("CardVendor", "Id", "Id", IsForeignKey = true)]
         public virtual VendorPM Vendor { get; set; }
-       
         public string CountryId { get; set; }
         public string CountryName { get; set; }
         public string CountryCode { get; set; }
@@ -240,7 +228,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string EORInumber { get; set; }
-
         public string SingleInvoiceTemplateId { get; set; }
         public string CustomsInvoiceTemplateId { get; set; }
         public string ConsolidationInvoiceTemplateId { get; set; }

@@ -1,7 +1,6 @@
 ﻿using Logitude.Infrastructure.Data.EntityLists;
 using Logitude.Infrastructure.Data.Repsitories;
 using Newtonsoft.Json;
-using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts.Models;
 using System;
 using System.Collections.Generic;
@@ -12,6 +11,84 @@ namespace Logitude.BL.Helpers
 {
     public class DigitalFieldSecuritesHelper
     {
+        public List<DigitalTextCodeObject> GetDigitalTextCodeObjects(int tenant, string objectTableId, string profileCode, bool isTranslation, string LanguageCode)
+        {
+            DigitalTextCodeRepository digitalTextCodeRepository = new DigitalTextCodeRepository(tenant);
+
+            if (profileCode == "null")
+            {
+                profileCode = "CS";
+            }
+
+            var defaultTextCode = digitalTextCodeRepository.GetDigitalTextCodes(0, objectTableId, profileCode, LanguageCode).FirstOrDefault();
+
+            if (defaultTextCode == null)
+            {
+                return new List<DigitalTextCodeObject>();
+            }
+
+            var defaultCodesObject = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(defaultTextCode.Labels);
+
+            var customCodesObject = new List<DigitalTextCodeObject>();
+
+            if (tenant != 0)
+            {
+                var customTextCodes = digitalTextCodeRepository.GetDigitalTextCodes(tenant, objectTableId, profileCode, LanguageCode).FirstOrDefault();
+
+                if (customTextCodes != null)
+                {
+                    customCodesObject = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(customTextCodes.Labels);
+                }
+                else
+                {
+                    return  defaultCodesObject;
+                }
+            }
+
+            if (isTranslation)
+            {
+                foreach (var item in customCodesObject)
+                {
+                    var data = defaultCodesObject.FirstOrDefault(a => a.TextCode.Equals(item.TextCode));
+                    if (data != null)
+                    {
+                        if (!string.IsNullOrWhiteSpace(item.DisplayText))
+                        {
+                            data.DefaultText = item.DisplayText;
+                        }
+                        continue;
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrWhiteSpace(item.DisplayText))
+                        {
+                            item.DefaultText = item.DisplayText;
+                        }
+
+                        defaultCodesObject.Add(item);
+                    }
+                }
+            }
+            else
+            {
+                foreach (var item in customCodesObject)
+                {
+                    var temp = defaultCodesObject.FirstOrDefault(a => a.TextCode.Equals(item.TextCode));
+
+                    if (temp != null)
+                    {
+                        temp.DisplayText = item.DisplayText;
+                    }
+                    else
+                    {
+                        defaultCodesObject.Add(item);
+                    }
+                }
+            }
+
+            return defaultCodesObject;
+        }
+
         public List<DigitalFeildSecurityObject> GitDigitalSecuritesFeilds(string objectTableId, string profileCode, int tenant, bool singleApi = true, bool isAll = false)
         {
             var digitalFieldSecurity = GetDigitalFieldSecurityQuery(0, objectTableId, profileCode);

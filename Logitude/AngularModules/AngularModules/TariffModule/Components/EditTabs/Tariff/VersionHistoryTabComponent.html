@@ -47,7 +47,7 @@
                         <td>
                             <!-- Air Freight Cost-->
                             <div *ngIf="EntityPM.TypeCode == 'AFC' || EntityPM.TypeCode == 'OLC'" class="MediaFill">
-                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="VersionLinesSource" [SelectedRow]="selectedRow" [ChangeScrollPosition]="changeScrollPosition">
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="VersionLinesSource" [SelectedRow]="selectedRow" [ChangeScrollPosition]="changeScrollPosition" [UseVirtuallization]="IsUsingVirtuallization">
                                     <!-- OriginPortId -->
                                     <log-column [header]="'TariffLine.F.OriginPortId' | TextCodeTranslationPipe" [width]="'70'">
                                         <ng-template let-item>
@@ -230,7 +230,7 @@
 
                             <!-- Air Surcharges Cost-->
                             <div *ngIf="EntityPM.TypeCode == 'ASC' || EntityPM.TypeCode == 'OSC'" class="MediaFill">
-                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="VersionLinesSource" [SelectedRow]="selectedRow" [ChangeScrollPosition]="changeScrollPosition">
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="VersionLinesSource" [SelectedRow]="selectedRow" [ChangeScrollPosition]="changeScrollPosition" [UseVirtuallization]="IsUsingVirtuallization">
                                     <!-- OriginPortId -->
                                     <log-column [header]="'TariffLine.F.OriginPortId' | TextCodeTranslationPipe" [width]="'70'">
                                         <ng-template let-item>
@@ -467,7 +467,7 @@
 
                             <!-- Ocean FCL Freight Cost-->
                             <div *ngIf="EntityPM.TypeCode == 'OFC'" class="MediaFill">
-                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="VersionLinesSource" [SelectedRow]="selectedRow" [ChangeScrollPosition]="changeScrollPosition">
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="VersionLinesSource" [SelectedRow]="selectedRow" [ChangeScrollPosition]="changeScrollPosition" [UseVirtuallization]="IsUsingVirtuallization">
                                     <!-- OriginPortId -->
                                     <log-column [header]="'TariffLine.F.OriginPortId' | TextCodeTranslationPipe" [width]="'70'">
                                         <ng-template let-item>
@@ -600,7 +600,7 @@
 
                             <!-- Ocean FCL Surcharges Cost -->
                             <div *ngIf="EntityPM.TypeCode == 'OFS' || EntityPM.TypeCode == 'IFT'" class="MediaFill">
-                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="VersionLinesSource" [SelectedRow]="selectedRow" [ChangeScrollPosition]="changeScrollPosition">
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="VersionLinesSource" [SelectedRow]="selectedRow" [ChangeScrollPosition]="changeScrollPosition" [UseVirtuallization]="IsUsingVirtuallization">
 
                                     <!-- OriginPortId -->
                                     <log-column [header]="'TariffLine.F.OriginPortId' | TextCodeTranslationPipe" [width]="'70'">
@@ -825,7 +825,7 @@
 
                             <!-- Customs/Local Charges -->
                             <div *ngIf="EntityPM.TypeCode == 'ECC' || EntityPM.TypeCode == 'ICC' || EntityPM.TypeCode == 'ICS' || EntityPM.TypeCode == 'ECS'" class="MediaFill">
-                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="VersionLinesSource" [SelectedRow]="selectedRow" [ChangeScrollPosition]="changeScrollPosition">
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="VersionLinesSource" [SelectedRow]="selectedRow" [ChangeScrollPosition]="changeScrollPosition" [UseVirtuallization]="IsUsingVirtuallization">
                                     <log-column [header]="'TariffLine.F.OriginPortId' | TextCodeTranslationPipe" [width]="'70'">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">

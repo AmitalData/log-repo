@@ -227,29 +227,6 @@ namespace Logitude.Workflow.BL.EntityPMs
 			
 		 }
 	   }
-	  private string ownerId ;
-	  	  
-       
-	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string OwnerId  
-	   {
-	    
-	     get
-		{
-		   return ownerId;
-		 }
-		 set
-		 {
-		   if(ownerId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OwnerId",OldValue=ownerId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   ownerId=value;
-		   }
-			
-		 }
-	   }
 	  private string statusCode ;
 	  	  
        
@@ -292,29 +269,6 @@ namespace Logitude.Workflow.BL.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusName",OldValue=statusName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   statusName=value;
-		   }
-			
-		 }
-	   }
-	  private string ownerName ;
-	  	  
-       
-	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string OwnerName  
-	   {
-	    
-	     get
-		{
-		   return ownerName;
-		 }
-		 set
-		 {
-		   if(ownerName != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OwnerName",OldValue=ownerName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   ownerName=value;
 		   }
 			
 		 }
@@ -487,12 +441,12 @@ namespace Logitude.Workflow.BL.EntityPMs
 			
 		 }
 	   }
-	  private int retriesDelay ;
+	  private string retriesDelay ;
 	  	  
        
 	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int RetriesDelay  
+       public string RetriesDelay  
 	   {
 	    
 	     get
@@ -503,9 +457,78 @@ namespace Logitude.Workflow.BL.EntityPMs
 		 {
 		   if(retriesDelay != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RetriesDelay",OldValue=retriesDelay,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RetriesDelay",OldValue=retriesDelay,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   retriesDelay=value;
+		   }
+			
+		 }
+	   }
+	  private string workFlowTriggerTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string WorkFlowTriggerTypeCode  
+	   {
+	    
+	     get
+		{
+		   return workFlowTriggerTypeCode;
+		 }
+		 set
+		 {
+		   if(workFlowTriggerTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="WorkFlowTriggerTypeCode",OldValue=workFlowTriggerTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   workFlowTriggerTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string workFlowTriggerTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string WorkFlowTriggerTypeName  
+	   {
+	    
+	     get
+		{
+		   return workFlowTriggerTypeName;
+		 }
+		 set
+		 {
+		   if(workFlowTriggerTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="WorkFlowTriggerTypeName",OldValue=workFlowTriggerTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   workFlowTriggerTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string workFlowNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string WorkFlowNumber  
+	   {
+	    
+	     get
+		{
+		   return workFlowNumber;
+		 }
+		 set
+		 {
+		   if(workFlowNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="WorkFlowNumber",OldValue=workFlowNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   workFlowNumber=value;
 		   }
 			
 		 }

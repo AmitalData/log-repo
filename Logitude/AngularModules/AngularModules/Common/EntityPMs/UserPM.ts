@@ -28,7 +28,7 @@ export class UserPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -499,6 +499,11 @@ export class UserPM {
     private isHRUser: boolean;
     public get IsHRUser() { return this.isHRUser; }
     public set IsHRUser(newValue: boolean) { if (this.isHRUser != newValue) { this.isHRUser = newValue; this.MarkAsDirty("IsHRUser"); } }
+       
+	 
+    private disableCachedData: boolean;
+    public get DisableCachedData() { return this.disableCachedData; }
+    public set DisableCachedData(newValue: boolean) { if (this.disableCachedData != newValue) { this.disableCachedData = newValue; this.MarkAsDirty("DisableCachedData"); } }
        
 	 
 

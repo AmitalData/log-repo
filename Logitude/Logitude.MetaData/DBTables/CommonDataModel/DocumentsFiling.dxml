@@ -389,6 +389,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ReceivedByPartner"
+    Type="nvarchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DocumentId"
     ReferencedTable="Documents"

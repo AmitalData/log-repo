@@ -10,6 +10,8 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="false"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -40,7 +42,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Expression Category&quot;"
-  Code="&quot;1d01&quot;"
+  Code="&quot;dff5&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -333,6 +335,10 @@
       Name="&quot;Date &amp; Time&quot;"
       Code="&quot;DTE&quot;"
       SearchFields="&quot;Date &amp; Time,DTE&quot;" />
+    <Record
+      Name="&quot;Text&quot;"
+      Code="&quot;TXT&quot;"
+      SearchFields="&quot;TXT,Text&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

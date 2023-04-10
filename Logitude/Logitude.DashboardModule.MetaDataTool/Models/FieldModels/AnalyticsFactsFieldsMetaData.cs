@@ -160,5 +160,15 @@ namespace Logitude.DashboardModule.MetaDataTool.Models.FieldModels
             }
         }
 
+        private bool allowTenantZeroFilter;
+        public bool AllowTenantZeroFilter
+        {
+            get { return allowTenantZeroFilter; }
+            set
+            {
+                allowTenantZeroFilter = value; FirePropertyChanged("AllowTenantZeroFilter");
+            }
+        }
+
     }
 }

@@ -22,6 +22,7 @@ import { ShipmentStoragePricingPM } from './ShipmentStoragePricingPM';
 import { ShipmentProductItemPM } from './ShipmentProductItemPM';
 import { ShipmentUnassignedFieldPM } from './ShipmentUnassignedFieldPM';
 import { CustomChildEntity } from '../../Infrastructure/EntityPMs/CustomChildEntity';
+import { ShipmentAdditionalData } from '../DataContract/ShipmentAdditionalData';
 
 export class ShipmentPM {
     public UIProperties: UIProperties;
@@ -4061,7 +4062,12 @@ export class ShipmentPM {
     private shipmentAddtionalDataXML: string;
     public get ShipmentAddtionalDataXML() { return this.shipmentAddtionalDataXML; }
     public set ShipmentAddtionalDataXML(newValue: string) { if (this.shipmentAddtionalDataXML != newValue) { this.shipmentAddtionalDataXML = newValue; this.MarkAsDirty("ShipmentAddtionalDataXML"); } }
-       
+
+
+    private shipmentAdditionalData: ShipmentAdditionalData;
+    public get ShipmentAdditionalData() { return this.shipmentAdditionalData; }
+    public set ShipmentAdditionalData(newValue: ShipmentAdditionalData) { if (this.shipmentAdditionalData != newValue) { this.shipmentAdditionalData = newValue; this.MarkAsDirty("ShipmentAdditionalData"); } }
+
 	 
     private originShipmentId: string;
     public get OriginShipmentId() { return this.originShipmentId; }

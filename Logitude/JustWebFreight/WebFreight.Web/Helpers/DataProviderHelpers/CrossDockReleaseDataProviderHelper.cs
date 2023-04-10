@@ -30,26 +30,31 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
         {
             CrossDockReleaseDataProvider dataprovider = LoadCrossDockReleaseDataProvider(entityId, tenant);
             XmlSerializer serializer = new XmlSerializer(typeof(CrossDockReleaseDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, dataprovider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
+
+            using (MemoryStream memstream = new MemoryStream())
+            {
+                serializer.Serialize(memstream, dataprovider);
+                memstream.Seek(0, SeekOrigin.Begin);
+                var reader = new StreamReader(memstream);
+                string content = reader.ReadToEnd();
+                byte[] bytearray = memstream.ToArray();
+                return bytearray;
+            }
         }
 
         public byte[] LoadCrossDockReleaseDataProvider_GroupByEntry(string entityId, int tenant)
         {
             CrossDockReleaseDataProvider dataprovider = this.BuildCrossDockReleaseDataProvider_GroupByEntry(entityId, tenant);
             XmlSerializer serializer = new XmlSerializer(typeof(CrossDockReleaseDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, dataprovider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
+            using (MemoryStream memstream = new MemoryStream())
+            {
+                serializer.Serialize(memstream, dataprovider);
+                memstream.Seek(0, SeekOrigin.Begin);
+                var reader = new StreamReader(memstream);
+                string content = reader.ReadToEnd();
+                byte[] bytearray = memstream.ToArray();
+                return bytearray;
+            }
         }
 
         private CrossDockReleaseDataProvider LoadCrossDockReleaseDataProvider(string entityId, int tenant)

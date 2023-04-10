@@ -1,6 +1,5 @@
 import { Component } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
-import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
@@ -15,6 +14,8 @@ import { EntitiesTreeList } from "Workflow/TreeLists/EntitiesTreeList";
 import { ObjectTables } from "Workflow/Utilities/ObjectTables";
 import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
 import { ObjectFields } from "Workflow/Utilities/ObjectFields";
+import { ObjectFieldsTreeList } from "Workflow/TreeLists/ObjectFieldsTreeList";
+import { FlowReader } from "Workflow/Utilities/FlowReader";
 
 @Component({
     templateUrl: "./GetRecordPropertiesComponent.html"
@@ -46,10 +47,9 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     public CurrentSession = SessionLocator.SelectedSession;
     public SortDirectionListItems = new SortDirectionList().Items;
 
-    public EntitiesTreeList: EntitiesTreeList;
     public EntitiesTreeItems: TreeSelectItem[];
+    public ObjectFieldsTreeItems: TreeSelectItem[];
 
-    public ExcludedEntities: string[];
     public EnableAddConditions: boolean;
     public ShowConditionsOperation: boolean;
     public RecordsTypeChanged: boolean = false;
@@ -66,12 +66,9 @@ export class GetRecordPropertiesComponent extends BaseComponent {
 
     ngOnInit() {
         this.initializeWindowEvents();
-        this.initializeEntitiesTreeItems();
         this.initialize();
-    }
-
-    ngOnChanges() {
-        this.SortDirectionListItems = new SortDirectionList().Items;
+        this.initializeEntitiesTreeItems();
+        this.initializeObjectFieldsTreeItems();
     }
 
     initializeWindowEvents() {
@@ -82,11 +79,6 @@ export class GetRecordPropertiesComponent extends BaseComponent {
                 this.cancelButtonClicked();
             }
         });
-    }
-
-    initializeEntitiesTreeItems() {
-        this.EntitiesTreeList = new EntitiesTreeList("parent");
-        this.EntitiesTreeItems = this.EntitiesTreeList.Items;
     }
 
     initialize() {
@@ -167,6 +159,14 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         }
     }
 
+    initializeEntitiesTreeItems() {
+        this.EntitiesTreeItems = new EntitiesTreeList("parent").Items;
+    }
+
+    initializeObjectFieldsTreeItems() {
+        this.ObjectFieldsTreeItems = new ObjectFieldsTreeList(this.EntityId).Items;
+    }
+
     updateName(name: string) {
         if (this.IsNew) {
             this.Data["name"] = name;
@@ -181,6 +181,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     updateEntity(entity: string) {
         let isEntityChanged = this.Data["entity"] !== entity;
         this.Data["entity"] = entity;
+        this.Data["isCustomEntity"] = ObjectTables.getIsCustomByName(entity);
         this.Entity = entity;
         this.EntityId = ObjectTables.getIdByName(entity);
 
@@ -188,6 +189,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
             this.updateRecordsLimit(GetRecordLimits.FirstRecord);
             this.initializeConditions(this.RecordsType, true);
             this.initializeReturnedFields(this.RecordsType, true);
+            this.initializeObjectFieldsTreeItems();
         }
 
         this.setUIProperties();
@@ -216,12 +218,10 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         if (recordsType === GetRecordTypes.ReadOnly) {
             this.EnableAddConditions = true;
             this.ShowConditionsOperation = true;
-            this.ExcludedEntities = ["Opportunity"];
         }
         else if (recordsType === GetRecordTypes.Editable) {
             this.EnableAddConditions = false;
             this.ShowConditionsOperation = false;
-            this.ExcludedEntities = ["Customer", "User", "Opportunity", "ShipmentStoragePricing"];
         }
     }
 
@@ -234,9 +234,9 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         this.setUIProperties();
     }
 
-    updateSortBy(sortValue: ObjectFieldPM) {
-        this.Data["sortBy"] = sortValue ? sortValue.FieldCode : null;
-        this.SortBy = sortValue ? sortValue.FieldCode : null;
+    updateSortBy(fieldCode: string) {
+        this.Data["sortBy"] = fieldCode || null;
+        this.SortBy = fieldCode || null;
         this.setUIProperties();
     }
 
@@ -265,7 +265,8 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     saveButtonClicked() {
         this.ValidationErrorsList = [];
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
-        if (notValidUIProperties.length === 0 && this.IsValidConditions && this.IsValidReturnedFields) {
+        let isValidName = !this.IsNew || !FlowReader.isNodeCodeExists(this.FlowObject, this.Name);
+        if (notValidUIProperties.length === 0 && this.IsValidConditions && this.IsValidReturnedFields && isValidName) {
             this.setData();
             //console.log(this.Data);
             this.CurrentSession.CurrentWindow.Close(this.Data);
@@ -280,6 +281,10 @@ export class GetRecordPropertiesComponent extends BaseComponent {
             if (!this.IsValidReturnedFields) {
                 this.ValidationErrorsList.push("Invalid Selected Fields");
             }
+
+            if (!isValidName) {
+                this.ValidationErrorsList.push("The Name Should be Unique.");
+            }
         }
     }
 
@@ -289,9 +294,10 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         this.Data["returnedFields"] = this.ReturnedFields;
     }
 
-    updateSelectedField(selectedField: ObjectFieldPM, index: number) {
-        this.ReturnedFields[index].fieldCode = selectedField ? selectedField.FieldCode : null;
-        this.ReturnedFields[index].type = selectedField ? selectedField.DataTypeCode : null;
+    updateSelectedField(objectFieldItem: TreeSelectItem, index: number) {
+        let objectField = objectFieldItem ? (objectFieldItem.data["objectField"] || null) : null;
+        this.ReturnedFields[index].fieldCode = objectField ? objectField.FieldCode : null;
+        this.ReturnedFields[index].type = objectField ? objectField.DataTypeCode : null;
         this.IsValidReturnedFields = this.ReturnedFields.filter(r => r.fieldCode === null).length === 0;
     }
 

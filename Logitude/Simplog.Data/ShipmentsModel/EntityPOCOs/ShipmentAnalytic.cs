@@ -54,5 +54,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string FromCountryId { get; set; }
         public string ToCountryId { get; set; }
         public DateTime? OperationalDate { get; set; }
+        public string ProductCode { get; set; }
     }
 }

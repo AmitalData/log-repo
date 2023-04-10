@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import { Component, ViewChild, ViewContainerRef} from '@angular/core';
 import {AppTool} from '../../../../../Infrastructure/Tools';
 import {CounterPM} from '../../../../../Common/EntityPMs/CounterPM';
 import {CounterDefinitionPM} from '../../../../../Common/EntityPMs/CounterDefinitionPM';
@@ -11,6 +11,7 @@ import {Validator} from '../../../../../Infrastructure/Validators/Validator';
 import {MessageWindow} from '../../../../../Controls/Windows/MessageWindow';
 import {GroupByPipe} from '../../../../../Infrastructure/Pipes/GroupByPipe';
 import { Observable } from 'rxjs';
+import { CustomizedARInvoiceCounterComponent } from './CustomizedARInvoiceCounterComponent';
 
 @Component({
     
@@ -35,14 +36,27 @@ export class CounterInvoiceComponent extends BaseComponent {
     public HasSeparatePerBranchCounterCodeFeature: boolean = false;
     public ItemsSource: CounterInvoiceDefinitionItem[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
+
+    public CustomizedRadioButtonLabel: string;
+    public HasCustomizedCounterFeature: boolean = false;
+    @ViewChild('CustomizedCounterComponent', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+
     constructor() {
         super();
 
+        this.SetFeatures();
+        this.SetRadioButtonsLabels();
+    }
+
+    private SetFeatures() {
         this.HasConsolidationFeature = FeatureLocator.HasFeaturePermession("ARInvoice", "Consolidation.Constituent");
         this.HasInterestFeature = FeatureLocator.HasFeaturePermession("InterestReport", "Module");
         this.HasBranchCounterCodeFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "BCC")[0] ? true : false;
         this.HasSeparatePerBranchCounterCodeFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SPB")[0] ? true : false;
+        this.HasCustomizedCounterFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "ICC")[0] ? true : false;
+    }
 
+    private SetRadioButtonsLabels() {
         if (this.HasConsolidationFeature) {
             this.SameRadioButtonLabel = "Same for Invoice, Credit, Manifest, Customs, Customs Credit, Consolidation and Credit Consolidation.";
             this.DiffRadioButtonLabel = "Different for Invoice, Credit, Manifest, Customs, Customs Credit, Consolidation and Credit Consolidation.";
@@ -52,6 +66,7 @@ export class CounterInvoiceComponent extends BaseComponent {
             this.SameRadioButtonLabel = "Same for Invoice, Credit and Manifest.";
             this.DiffRadioButtonLabel = "Different for Invoice, Credit and Manifest.";
         }
+        this.CustomizedRadioButtonLabel = "Customized Counter";
     }
 
     SetWindowArgs(args: any) {
@@ -130,9 +145,11 @@ export class CounterInvoiceComponent extends BaseComponent {
             }
         }
 
+        this.CheckIsCustomizedCounter();
         this.BuildItemsSource();
     }
     private activateConsolidationCreditNoteCounter: boolean = false;
+
     public get ActivateConsolidationCreditNoteCounter() {
         this.activateConsolidationCreditNoteCounter = this.ItemsSource.filter(i => i.EntityPM.Parameter1 == "COD").length > 0 &&
             !this.ItemsSource.filter(i => i.EntityPM.Parameter1 == "COD")[0].EntityPM.InActive;
@@ -206,7 +223,6 @@ export class CounterInvoiceComponent extends BaseComponent {
             this.EntityPM.UniquePerPrefix = false;
             this.EntityPM.Prefix = this.APIHelper.CounterDefinitions.filter(f => f.Parameter1 == "IN")[0].Prefix;
             this.EntityPM.StartNumber = this.APIHelper.CounterDefinitions.filter(f => f.Parameter1 == "IN")[0].StartNumber;
-
             this.ItemsSource.forEach(item => {
                 item.UniquePerPrefix = this.EntityPM.UniquePerPrefix;
                 item.Prefix = this.EntityPM.Prefix;
@@ -231,6 +247,8 @@ export class CounterInvoiceComponent extends BaseComponent {
 
                 item.SetUIProperties();
             });
+
+            if (this.customizedARInvoiceCounterComponent) this.customizedARInvoiceCounterComponent.SetUniquePerPrefix(value);
         }
     }
     public get Prefix() {
@@ -286,6 +304,75 @@ export class CounterInvoiceComponent extends BaseComponent {
         }
     }
 
+    private CheckIsCustomizedCounter() {
+        if (!this.HasCustomizedCounterFeature) return;
+        let customizedCounters = this.APIHelper.CounterDefinitions.filter(c => c.IsCustomized == true);
+        this.IsCustomizedCounter = customizedCounters != null && customizedCounters.length > 0;
+        if (this.IsCustomizedCounter) {
+            this.UniquePerPrefix = customizedCounters[0]?.UniquePerPrefix;
+        }        
+        this.APIHelper.CounterDefinitions = this.APIHelper.CounterDefinitions.filter(c => c.IsCustomized == false);
+    }
+
+    private isCustomizedCounter: boolean = false;
+    public get IsCustomizedCounter() { return this.isCustomizedCounter; }
+    public set IsCustomizedCounter(value: boolean) {
+        if (this.isCustomizedCounter == value) return;
+        this.isCustomizedCounter = value;
+        this.RunComponent();
+    }
+    RunComponent() {
+        if (!this.IsCustomizedCounter) return;
+
+        if (this.viewContainerRef) {
+            this.LoadCustomizedCounterComponent();
+        }
+
+        else {
+            this.RunComponentTimer();
+        }
+    }
+
+    private Retries: number = 0;
+    private timerToken: any;
+    private RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 20) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
+    }
+
+    private customizedARInvoiceCounterComponent: CustomizedARInvoiceCounterComponent;
+    private LoadCustomizedCounterComponent() {
+        SessionLocator.DynamicLoader.Load('./InfrastructureModules/InfrastructureGettingStarted/Components/Counters/EditComponents/CustomizedARInvoiceCounterComponent', this.viewContainerRef)
+            .then(cmpRef => {
+                this.customizedARInvoiceCounterComponent = cmpRef.instance;
+                this.customizedARInvoiceCounterComponent.CounterInvoiceComponent = this;
+                this.customizedARInvoiceCounterComponent.SetUniquePerPrefix(this.UniquePerPrefix);
+                this.customizedARInvoiceCounterComponent.Run();
+            });
+    }
+
+    SameForAllTypesChecked() {
+        this.SameForAllTypes = true;
+        this.IsCustomizedCounter = false;
+        this.ValidationErrorsList = [];
+    }
+    DiffForEachTypesChecked() {
+        this.SameForAllTypes = false;
+        this.IsCustomizedCounter = false;
+        this.ValidationErrorsList = [];
+    }
+    IsCustomizedCounterChecked() {
+        this.SameForAllTypes = false;
+        this.IsCustomizedCounter = true;
+        this.ValidationErrorsList = [];
+    }
     //private largestLastValueOfCounterStat: number = 0;
 
    
@@ -343,6 +430,10 @@ export class CounterInvoiceComponent extends BaseComponent {
 
     OkButtonClicked() {
         {
+            if (this.IsCustomizedCounter) {
+                this.customizedARInvoiceCounterComponent.OkButtonClicked();
+                return;
+            }
             var isValidGreaterStartNumber: boolean = true;
 
             this.APIHelper.CounterDefinitions.forEach(item => {

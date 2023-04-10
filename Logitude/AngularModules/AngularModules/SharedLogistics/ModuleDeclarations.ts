@@ -23,6 +23,7 @@ import { SharedShipmentsWorkspaceComponent } from './Components/Workspaces/Share
 import { TemplateTypeComponent } from './Components/TemplateTypeComponent';
 import { SharedLogisticsDigitalPortalComponent } from './Components/SharedLogisticsDigitalPortalComponent';
 import { DigitalPortalCustomizationMainComponent } from './Components/DigitalPortal/DigitalPortalCustomizationMainComponent';
+import { DigitalPortalLanguageSettingsComponent } from './Components/DigitalPortal/DigitalPortalLanguageSettingsComponent';
 import { DigitalPortalCustomizationChageLabelsComponent } from './Components/DigitalPortal/DigitalPortalCustomizationChageLabelsComponent';
 import { DigitalPortalCustomizationTranslateLabelsComponent } from './Components/DigitalPortal/DigitalPortalCustomizationTranslateLabelsComponent';
 import { DigitalPortalCustomizationShowHideFieldsComponent } from './Components/DigitalPortal/DigitalPortalCustomizationShowHideFieldsComponent';
@@ -74,6 +75,7 @@ export const Components =
         TemplateTypeComponent,
         SharedLogisticsDigitalPortalComponent,
         DigitalPortalCustomizationMainComponent,
+        DigitalPortalLanguageSettingsComponent,
         DigitalPortalCustomizationChageLabelsComponent,
         DigitalPortalCustomizationTranslateLabelsComponent,
         DigitalPortalCustomizationShowHideFieldsComponent,
@@ -118,6 +120,7 @@ export class ModuleDeclarations {
             case "TemplateTypeComponent": { myResult = TemplateTypeComponent; break; }
             case "SharedLogisticsDigitalPortalComponent": { myResult = SharedLogisticsDigitalPortalComponent; break; }
             case "DigitalPortalCustomizationMainComponent": { myResult = DigitalPortalCustomizationMainComponent; break; }
+            case "DigitalPortalLanguageSettingsComponent": { myResult = DigitalPortalLanguageSettingsComponent; break; }
             case "DigitalPortalCustomizationChageLabelsComponent": { myResult = DigitalPortalCustomizationChageLabelsComponent; break; }
             case "DigitalPortalCustomizationTranslateLabelsComponent": { myResult = DigitalPortalCustomizationTranslateLabelsComponent; break; }
             case "DigitalPortalCustomizationShowHideFieldsComponent": { myResult = DigitalPortalCustomizationShowHideFieldsComponent; break; }

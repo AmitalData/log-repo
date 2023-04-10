@@ -4,6 +4,8 @@ import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { EditableRecordsTreeList } from "Workflow/TreeLists/EditableRecordsTreeList";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
+import { FlowReader } from "Workflow/Utilities/FlowReader";
+import { ObjectTables } from "Workflow/Utilities/ObjectTables";
 
 @Component({
     templateUrl: "./UpdateRecordPropertiesComponent.html"
@@ -69,11 +71,15 @@ export class UpdateRecordPropertiesComponent extends BaseComponent {
     }
 
     updateRecord(recordItem: TreeSelectItem) {
+        let entity = recordItem && recordItem.data ? (recordItem.data["entity"] || null) : null;
         let record = recordItem ? recordItem.key : null;
+        let recordUsedFrom = recordItem && recordItem.data ? (recordItem.data["nodeId"] || null) : null;
+
         this.Record = record;
         this.Data["record"] = record;
-
-        this.Data["recordUsedFrom"] = recordItem && recordItem.data && recordItem.data["nodeId"] ? recordItem.data["nodeId"] : null;
+        this.Data["entity"] = entity;
+        this.Data["isCustomEntity"] = ObjectTables.getIsCustomByName(entity);
+        this.Data["recordUsedFrom"] = recordUsedFrom;
 
         this.setUIProperties();
     }
@@ -90,12 +96,17 @@ export class UpdateRecordPropertiesComponent extends BaseComponent {
     saveButtonClicked() {
         this.ValidationErrorsList = [];
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
-        if (notValidUIProperties.length === 0) {
+        let isValidName = !this.IsNew || !FlowReader.isNodeCodeExists(this.FlowObject, this.Name);
+        if (notValidUIProperties.length === 0 && isValidName) {
             //console.log(this.Data);
             this.CurrentSession.CurrentWindow.Close(this.Data);
         } else {
             let validationErrors = notValidUIProperties.map(t => { return t.ValidationError; });
             this.ValidationErrorsList = validationErrors;
+
+            if (!isValidName) {
+                this.ValidationErrorsList.push("The Name Should be Unique.");
+            }
         }
     }
 }

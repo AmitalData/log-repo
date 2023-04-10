@@ -28,8 +28,9 @@ namespace Logitude.BL.QuoteModel.BusinessUnitFilters
 
         public IQueryable<Quote> RunFilter(IQueryable<Quote> iQueryableData)
         {
+            if (loggedUser == null) return iQueryableData;
             List<RoleFeature> myFeatureRoles = this.GetFeaturesRoles();
-
+    
             if (myFeatureRoles.Count > 0)
             {
                 if (!myFeatureRoles.Where(d => d.FeatureAccessLevelCode == "OR").Any())

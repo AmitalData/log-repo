@@ -1,4 +1,4 @@
-@standalone @devrelease
+@Devstandalone 
 Feature: Can not create standalone
     Can't create standalon from pickup which has many containers 
     The user creates a Direct Import Ocean FCL shipment, add packages,

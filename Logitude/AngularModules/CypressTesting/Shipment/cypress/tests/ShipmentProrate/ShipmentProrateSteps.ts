@@ -128,7 +128,7 @@ Then("the prorate should be divided the values in the correct way", () => {
 //#region Assert prorate divided the values in the correct way
 Given("the user in the first house payable tab", () => {
     cy.Navigate(ShipmentSelectors.ShipmentsTab);
-    cy.get(ShipmentSelectors.HouseHyperLink).eq(0).click({ force: true })
+    cy.get(ShipmentSelectors.HouseHyperLink).contains((ShipmentContext.HouseNumber).replace(/^0+/, '')).click({ force: true })
     cy.Click(ShipmentSelectors.PayablesTab + "_3", null)
 });
 

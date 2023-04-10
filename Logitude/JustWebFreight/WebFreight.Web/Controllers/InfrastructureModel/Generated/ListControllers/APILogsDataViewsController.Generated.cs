@@ -65,8 +65,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				APILogsDataRepository  aPILogsDataRepository = new APILogsDataRepository(MyContext);
 				APILogsDataList entityList = null;
 				APILogsData entityPoco = aPILogsDataRepository.GetSingleAPILogsData(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<APILogsData> singleEntityList = new List<APILogsData>();
 					singleEntityList.Add(entityPoco);

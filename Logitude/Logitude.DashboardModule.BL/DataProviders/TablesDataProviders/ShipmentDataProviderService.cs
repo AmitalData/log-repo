@@ -12,7 +12,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.TablesDataProviders
 {
     public class ShipmentDataProviderService : BaseTablesDataProvider
     {
-        private int tenant;
+        private readonly int tenant;
         public ShipmentDataProviderService(WidgetPM widget, AnalyticsFactsMetaData entity, int tenant) : base(widget, entity, tenant)
         {
             this.tenant = tenant;
@@ -20,18 +20,14 @@ namespace Logitude.DashboardModule.BL.DataProviders.TablesDataProviders
 
         public override List<SeriesMeasure> GetChartData()
         {
-            IShipmentsContext myContext = ShipmentsContext.GetContext(tenant);
-            var data = myContext.ShipmentAnalytics.AsQueryable();
-            data = data.Where(e => e.Tenant == tenant);
+            IQueryable<ShipmentAnalytic> data = GetDefaultQuery();
             var result = new ChartDataProviderService(_Widget, _Entity).GetData(data);
             return result;
         }
 
         public override AnalyticData GeChartDataPart(WidgetArguments widgetPartArguments)
         {
-            IShipmentsContext myContext = ShipmentsContext.GetContext(tenant);
-            var data = myContext.ShipmentAnalytics.AsQueryable();
-            data = data.Where(e => e.Tenant == tenant);
+            IQueryable<ShipmentAnalytic> data = GetDefaultQuery();
             List<string> analyticTableFields = GetSelectFields();
             var result = new ChartDataProviderService(_Widget, _Entity).GetDataPart<ShipmentAnalytic>(data, analyticTableFields, widgetPartArguments);
             return result;
@@ -47,10 +43,17 @@ namespace Logitude.DashboardModule.BL.DataProviders.TablesDataProviders
 
         public override KpiChart GetKpiData()
         {
-            IShipmentsContext myContext = ShipmentsContext.GetContext(tenant);
-            var data = myContext.ShipmentAnalytics.AsQueryable();
-            data = data.Where(e => e.Tenant == tenant);
+            IQueryable<ShipmentAnalytic> data = GetDefaultQuery();
             return new KpiDataProviderService(_Widget, _Entity, tenant).GetData(data);
+        }
+
+        private IQueryable<ShipmentAnalytic> GetDefaultQuery()
+        {
+            IShipmentsContext myContext = ShipmentsContext.GetContext(tenant);
+            var query = myContext.ShipmentAnalytics.AsQueryable();
+            query = query.Where(e => e.Tenant == tenant);
+            query = AddUserBranchRestrictionFilters(query);
+            return query;
         }
     }
 }

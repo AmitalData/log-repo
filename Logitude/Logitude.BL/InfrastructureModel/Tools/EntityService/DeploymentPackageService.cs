@@ -18,6 +18,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.InfrastructureModel.Services;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.Server.Tools.QueueService;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
@@ -36,6 +37,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         private DeploymentPackagePM entityPM;
         private DeploymentPackageRepository entityRepository;
         private Contact loggedContact;
+        private string deploymentPackageExecutionLogId;
 
         public DeploymentPackageService(IWebFreightContext context, int tenant)
         {
@@ -46,14 +48,15 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.GetLoggedContact();
         }
 
-        public void Create(DeploymentPackagePM deploymentPackagePM)
+        public void Create(DeploymentPackagePM deploymentPackagePM, bool fromWeb = true)
         {
 
-            if (!string.IsNullOrEmpty(deploymentPackagePM.Code) && entityRepository.CheckIfDeploymentPackageCodeExist(deploymentPackagePM.Code , deploymentPackagePM.Tenant))
+            DeploymentPackageValidating.ValidateCode(deploymentPackagePM.Code, deploymentPackagePM.Tenant, entityRepository);
+            if (deploymentPackagePM.DirectionId == "I" && fromWeb)
             {
-                throw new Exception("Another Deployment Package already exist with this Code ");
+                BuildImportQueueMessage(deploymentPackagePM);
+                return;
             }
-
             this.isNewEntity = true;
             this.entityPM = deploymentPackagePM;
             this.entityPM.Id = IdCounter.GetNumber("DeploymentPackage", tenant).ToString();
@@ -99,6 +102,18 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 return;
             }
             this.loggedContact = new ContactRepository(tenant).GetSingleContactByEmail(("system@tenant" + tenant.ToString() + ".com"), tenant,true);
+        }
+
+        private void BuildImportQueueMessage(DeploymentPackagePM deploymentPackagePM)
+        {
+            DeploymentPackageExecutionLogService executionLogService = new DeploymentPackageExecutionLogService(Context, deploymentPackagePM.Tenant);
+            DeploymentPackageExecutionLog deploymentPackageExecutionLog = executionLogService.GetNewInStanceFromDeploymentPackageExecutionLog(deploymentPackagePM);
+
+            deploymentPackagePM.PackageExecutionLogId = deploymentPackageExecutionLog?.Id;
+
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("DeploymentPackageQueue", deploymentPackageExecutionLog.Tenant);
+            queueservice.Send(new Dictionary<string, string>() { { "DeploymentPackageExecutionLogId", deploymentPackageExecutionLog.Id }, { "Tenant", deploymentPackageExecutionLog.Tenant.ToString() } }, deploymentPackageExecutionLog.Tenant);
         }
     }
 }

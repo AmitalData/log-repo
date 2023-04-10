@@ -1,8 +1,8 @@
-
 using Logitude.Server.Tools; 
 using Logitude.Workflow.Data.EntityPOCOs;
 using Logitude.Workflow.BL.EntityPMs;
 using Logitude.Workflow.BL.EntityQueryServices;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.Workflow.BL.EntityDataMappings
 {
@@ -16,15 +16,23 @@ namespace Logitude.Workflow.BL.EntityDataMappings
             entityPOCO.SearchFields = entityPM.Name;
             CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
 
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
+            {
+                entityPOCO.FlowJson = entityPOCO.FlowJson;
+                CustomMappedPOCOProperties.Add(POCOPropertyNames.FlowJson);
 
-            entityPOCO.FlowJson = entityPOCO.FlowJson;
-            CustomMappedPOCOProperties.Add(POCOPropertyNames.FlowJson);
+                entityPOCO.Entity = entityPOCO.Entity;
+                CustomMappedPOCOProperties.Add(POCOPropertyNames.Entity);
 
-            entityPOCO.Entity = entityPOCO.Entity;
-            CustomMappedPOCOProperties.Add(POCOPropertyNames.Entity);
+                entityPOCO.Trigger = entityPOCO.Trigger;
+                CustomMappedPOCOProperties.Add(POCOPropertyNames.Trigger);
 
-            entityPOCO.Trigger = entityPOCO.Trigger;
-            CustomMappedPOCOProperties.Add(POCOPropertyNames.Trigger);
+                entityPOCO.WorkFlowTriggerTypeCode = entityPOCO.WorkFlowTriggerTypeCode;
+                CustomMappedPOCOProperties.Add(POCOPropertyNames.WorkFlowTriggerTypeCode);
+
+                entityPOCO.WorkFlowNumber = entityPOCO.WorkFlowNumber;
+                CustomMappedPOCOProperties.Add(POCOPropertyNames.WorkFlowNumber);
+            }
         }
 
         public void CustomPOCOToPM(WorkFlowPM entityPM, WorkFlow entityPOCO)
@@ -34,20 +42,5 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 
             entityPM.WorkFlowVersions = WorkflowVersions;
         }
-
-        //private void BuildSearchFields(WorkFlowPM entityPM, WorkFlow entityPOCO)
-        //{
-        //    string searchFields = "";
-        //    MethodHelper.AddToSearchFields(ref searchFields, entityPM.x);
-        //    MethodHelper.AddToSearchFields(ref searchFields, entityPM.y);
-        //    UserRepository userRepository = new UserRepository(entityPOCO.Tenant);
-        //    User user = userRepository.GetSingleUser(entityPM.OwnerId, entityPM.Tenant);
-        //    if (user != null)
-        //    {
-        //        MethodHelper.AddToSearchFields(ref searchFields, user.Contact.EnglishName);
-        //    }
-        //    entityPM.SearchFields = searchFields;
-        //    entityPOCO.SearchFields = searchFields;
-        //}
     }
 }

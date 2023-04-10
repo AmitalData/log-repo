@@ -206,5 +206,8 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string DocumentTemplateId { get; set; }
         public string ConcurrencyGUID { get; set; }
         public double? TotalAmountNotForTaxReport { get; set; }
+
+        public string ReportUrl { get; set; }
+        public bool IsAutoCredited { get; set; }
     }
 }

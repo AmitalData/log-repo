@@ -777,6 +777,17 @@ export class TenantPM {
     public get ApproveUploadedDocuments() { return this.approveUploadedDocuments; }
     public set ApproveUploadedDocuments(newValue: boolean) { if (this.approveUploadedDocuments != newValue) { this.approveUploadedDocuments = newValue; this.MarkAsDirty("ApproveUploadedDocuments"); } }
 
+    private dPArchiveShipmentCreateFilter: number;
+    public get DPArchiveShipmentCreateFilter() { return this.dPArchiveShipmentCreateFilter; }
+    public set DPArchiveShipmentCreateFilter(newValue: any) { if (this.dPArchiveShipmentCreateFilter != newValue) { this.dPArchiveShipmentCreateFilter = newValue; this.MarkAsDirty("DPArchiveShipmentCreateFilter"); } }
+
+    private dPArchiveShipmentArrivalFilter: number;
+    public get DPArchiveShipmentArrivalFilter() { return this.dPArchiveShipmentArrivalFilter; }
+    public set DPArchiveShipmentArrivalFilter(newValue: number) { if (this.dPArchiveShipmentArrivalFilter != newValue) { this.dPArchiveShipmentArrivalFilter = newValue; this.MarkAsDirty("DPArchiveShipmentArrivalFilter"); } }
+
+    private dPArchiveShipmentDepartFilter: number;
+    public get DPArchiveShipmentDepartFilter() { return this.dPArchiveShipmentDepartFilter; }
+    public set DPArchiveShipmentDepartFilter(newValue: number) { if (this.dPArchiveShipmentDepartFilter != newValue) { this.dPArchiveShipmentDepartFilter = newValue; this.MarkAsDirty("DPArchiveShipmentDepartFilter"); } }
 
     public OldEntityPM: TenantPM;
 		

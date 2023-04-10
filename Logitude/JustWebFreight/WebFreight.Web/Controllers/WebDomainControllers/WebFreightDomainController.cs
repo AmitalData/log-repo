@@ -500,7 +500,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             position = Convert.ToInt32(sentBytes);
             value = (Convert.ToDouble(!isFirstTry ? sentBytes : 0) / Convert.ToDouble(fileData.Length)) * 100;
             Uploader uploaderService = new Uploader();
-            string result = uploaderService.UploadFile(ObjectTableName + DateTime.Now.ToShortDateString() + ".xls", currentData, fileData.Length, sentBytes, blockIdsArray.ToArray(), counter, null, tenant, "others", null,false);
+            string result = uploaderService.UploadFile(ObjectTableName + DateTime.Now.ToShortDateString() + ".xls", currentData, fileData.Length, sentBytes, blockIdsArray.ToArray(), counter, null, tenant, "others", null, false, null);
             if (fileData != null)
             {
                 if (sentBytes < fileData.Length)

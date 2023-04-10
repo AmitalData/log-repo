@@ -5,18 +5,21 @@ using Simplog.Server.Infrastructure;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.BL.CommonDataModel.EntityPMs
 {
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
     [DataContract]
-    public class ShippingAgentPM
+    public class ShippingAgentPM : ObjectCustomFieldDataContractPM
     {
         [Key]
         [DataMember]
         public string Id { get; set; }
+
         [DataMember]
         public int Tenant { get; set; }
+
         [DataMember]
         public bool IsSecured { get; set; }
 
@@ -277,61 +280,24 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         public bool AccountingVATSplit { get; set; }
 
-
         [DataMember]
         public string UploadingUniqueKey { get; set; }
 
         [DataMember]
         public string GLAccountNumber { get; set; }
+
         [DataMember]
         public string BillToId { get; set; }
+
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ImageDetailId { get; set; }
+
         [DataMember]
         public string RegimenFiscalCode { get; set; }
+
         [DataMember]
         public string SATReceptorName { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field1 { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field2 { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field3 { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field4 { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field5 { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field6 { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field7 { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field8 { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field9 { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field10 { get; set; }
 
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]

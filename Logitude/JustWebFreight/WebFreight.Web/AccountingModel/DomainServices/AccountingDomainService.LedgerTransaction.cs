@@ -394,6 +394,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
                                                             AmountToReconcile = a.AmountToReconcile,
                                                             Mark = a.Mark,
                                                             Notes = a.Notes,
+                                                            InternalNote=a.InternalNote,
                                                             OpenAmountCurrencyId = a.OpenAmountCurrencyId,
                                                             OppositeAccountId = a.OppositeAccountId,
                                                             SearchFields = a.SearchFields,

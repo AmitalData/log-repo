@@ -1,5 +1,5 @@
 {
-  "HashString": "8613ff397839428e8621b056f6e29c81",
+  "HashString": "53087fa61efb4385bf33ef0754411903",
   "Name": "Quotes Statistics",
   "TableName": "QuoteAnalytics",
   "ObjectTableName": "Quote",
@@ -78,7 +78,8 @@
       "JoinedTableDBName": "Directions",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "Name",
-      "CommonFilterCode": "Direction"
+      "CommonFilterCode": "Direction",
+      "AllowTenantZeroFilter": true
     },
     {
       "HashString": "e53be5c3cbfd4af5ae24b0ef25479774",
@@ -92,7 +93,8 @@
       "JoinedTableDBName": "TransportModes",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "Name",
-      "CommonFilterCode": "TransportMode"
+      "CommonFilterCode": "TransportMode",
+      "AllowTenantZeroFilter": true
     },
     {
       "HashString": "0a3754bb33aa4f4c8f113d9f27e76e03",
@@ -130,7 +132,8 @@
       "JoinedTableName": "ShipmentType",
       "JoinedTableDBName": "ShipmentTypes",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "Name"
+      "JoinedTableDisplayField": "Name",
+      "AllowTenantZeroFilter": true
     },
     {
       "HashString": "98ab603c2d874459878c3382127e8905",
@@ -296,7 +299,8 @@
       "JoinedTableName": "QuoteType",
       "JoinedTableDBName": "QuoteTypes",
       "JoinedTableKey": "Code",
-      "JoinedTableDisplayField": "Name"
+      "JoinedTableDisplayField": "Name",
+      "AllowTenantZeroFilter": true
     },
     {
       "HashString": "68460bca4cc240a19a5eb4e019d3b009",
@@ -408,7 +412,8 @@
       "JoinedTableName": "QuoteRating",
       "JoinedTableDBName": "QuoteRatings",
       "JoinedTableKey": "Code",
-      "JoinedTableDisplayField": "Name"
+      "JoinedTableDisplayField": "Name",
+      "AllowTenantZeroFilter": true
     },
     {
       "HashString": "7805c37e85a04975a15ab59966c0761f",
@@ -720,6 +725,19 @@
       "JoinedTableDBName": "Cards",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "d3fb9f55cd5a4df98b3b12db4f100858",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "ProductCode",
+      "DisplayName": "Product",
+      "DisplayNamePlural": "Product",
+      "JoinedTableName": "ProductType",
+      "JoinedTableDBName": "ProductTypes",
+      "JoinedTableKey": "Code",
+      "JoinedTableDisplayField": "Name",
+      "AllowTenantZeroFilter": true
     }
   ]
 }

@@ -6,6 +6,7 @@ import { EntitiesTreeList } from "Workflow/TreeLists/EntitiesTreeList";
 import { ObjectTables } from "Workflow/Utilities/ObjectTables";
 import { SetValue } from "Workflow/Models/SetValue";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
+import { FlowReader } from "Workflow/Utilities/FlowReader";
 
 @Component({
     templateUrl: "./CreateRecordPropertiesComponent.html"
@@ -25,7 +26,6 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
     public FlowObject: any;
     public CurrentNodeId: string;
 
-    public EntitiesTreeList: EntitiesTreeList;
     public EntitiesTreeItems: TreeSelectItem[];
 
     public ValidationErrorsList: string[];
@@ -33,8 +33,6 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
     public IsValidSetValues: boolean = true;
 
     public CurrentSession = SessionLocator.SelectedSession;
-
-    public ExcludedEntities: string[] = ["Customer", "User", "ShipmentStoragePricing", "ARInvoice", "APInvoice"];
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
@@ -59,8 +57,7 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
     }
 
     initializeEntitiesTreeItems() {
-        this.EntitiesTreeList = new EntitiesTreeList();
-        this.EntitiesTreeItems = this.EntitiesTreeList.Items;
+        this.EntitiesTreeItems = new EntitiesTreeList().Items;
     }
 
     initialize() {
@@ -87,27 +84,6 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
         }
         if (this.SetValues.length === 0) {
             let setValue = new SetValue();
-
-            // let isChildEntity = this.Entity ? (this.Entity.indexOf(".") !== -1) : false;
-            // if (isChildEntity) {
-            //     let entities = this.Entity.split(".");
-            //     let parentEntity = entities[0];
-            //     let childEntity = entities[1];
-            //     let childField = Entities.getChildField(parentEntity, childEntity);
-            //     let fieldCode = childEntity + "." + childField;
-            //     let objectField = ObjectFields.getByCode(fieldCode);
-            //     let parentEntityObjectTable = ObjectTables.getByName(parentEntity);
-
-            //     setValue.field = childField;
-            //     setValue.fieldCode = fieldCode;
-            //     setValue.type = objectField ? objectField.DataTypeCode : null;
-            //     setValue.lookupType = objectField && objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null;
-            //     setValue.picklistType = objectField && objectField.DataTypeCode === FieldTypes.PickList ? objectField.CustomPickListCode : null;
-            //     setValue.value = "triggeringrecord_" + parentEntity + "." + (parentEntityObjectTable ? parentEntityObjectTable.KeyPropertyPath : "Id");
-            //     setValue.operator = SetValueOperators.EqualsField;
-            //     setValue.isDisabled = true;
-            // }
-
             this.SetValues.push(setValue);
             this.IsValidSetValues = false;
         }
@@ -123,7 +99,7 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
     }
 
     updateName(name: string) {
-        if(this.IsNew){
+        if (this.IsNew) {
             this.Data["name"] = name;
         }
 
@@ -158,7 +134,8 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
     saveButtonClicked() {
         this.ValidationErrorsList = [];
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
-        if (notValidUIProperties.length === 0 && this.IsValidSetValues) {
+        let isValidName = !this.IsNew || !FlowReader.isNodeCodeExists(this.FlowObject, this.Name);
+        if (notValidUIProperties.length === 0 && this.IsValidSetValues && isValidName) {
             this.setValuesData();
             //console.log(this.Data);
             this.CurrentSession.CurrentWindow.Close(this.Data);
@@ -166,8 +143,12 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
             let validationErrors = notValidUIProperties.map(t => { return t.ValidationError; });
             this.ValidationErrorsList = validationErrors;
 
-            if (!this.IsValidSetValues){
+            if (!this.IsValidSetValues) {
                 this.ValidationErrorsList.push("Invalid Set Values");
+            }
+
+            if (!isValidName) {
+                this.ValidationErrorsList.push("The Name Should be Unique.");
             }
         }
     }

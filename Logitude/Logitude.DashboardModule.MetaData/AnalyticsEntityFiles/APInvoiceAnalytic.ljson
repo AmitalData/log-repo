@@ -1,5 +1,5 @@
 {
-  "HashString": "e11b61d29ee0431f8d2f1fde7a9d1665",
+  "HashString": "04f6a2044839469da0d414e708573c82",
   "Name": "AP Invoices Statistics",
   "TableName": "APInvoiceAnalytics",
   "ObjectTableName": "APInvoice",
@@ -79,7 +79,8 @@
       "JoinedTableName": "APInvoiceStatus",
       "JoinedTableDBName": "APInvoiceStatus",
       "JoinedTableKey": "Code",
-      "JoinedTableDisplayField": "Name"
+      "JoinedTableDisplayField": "Name",
+      "AllowTenantZeroFilter": true
     },
     {
       "HashString": "f3de0a0e39dc4e30be9ead5565948750",
@@ -211,7 +212,8 @@
       "JoinedTableName": "APInvoiceTransferStatus",
       "JoinedTableDBName": "APInvoiceTransferStatus",
       "JoinedTableKey": "Code",
-      "JoinedTableDisplayField": "Name"
+      "JoinedTableDisplayField": "Name",
+      "AllowTenantZeroFilter": true
     },
     {
       "HashString": "127dfd8923ab470685e7a847fcf2cdca",
@@ -313,13 +315,6 @@
       "FieldCode": "TotalVATOnly",
       "DisplayName": "Total VAT Only",
       "DisplayNamePlural": "TotalVATOnly"
-    },
-    {
-      "HashString": "b41d1dd7ea3d4c909c4143b3a7f9e076",
-      "DataTypeCode": "Boolean",
-      "FieldCode": "IsInvoiceNumberManuallySet",
-      "DisplayName": "Is Invoice Number Manually Set",
-      "DisplayNamePlural": "IsInvoiceNumberManuallySet"
     }
   ]
 }

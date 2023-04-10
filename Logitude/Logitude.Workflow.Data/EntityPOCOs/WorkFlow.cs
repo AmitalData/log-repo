@@ -43,11 +43,6 @@ namespace Logitude.Workflow.Data.EntityPOCOs
 	    public string Name { get; set; }
         [Column("Description")]
 	    public string Description { get; set; }
-        [ForeignKey("Owner")]
-        [Column("OwnerId")]
-	    public string OwnerId { get; set; }
-	      
-        public virtual User Owner { get; set; }
         [ForeignKey("Status")]
         [Column("StatusCode")]
 	    public string StatusCode { get; set; }
@@ -62,7 +57,14 @@ namespace Logitude.Workflow.Data.EntityPOCOs
         [Column("RetriesNumber")]
 	    public int RetriesNumber { get; set; }
         [Column("RetriesDelay")]
-	    public int RetriesDelay { get; set; }
+	    public string RetriesDelay { get; set; }
+        [ForeignKey("WorkFlowTriggerType")]
+        [Column("WorkFlowTriggerTypeCode")]
+	    public string WorkFlowTriggerTypeCode { get; set; }
+	      
+        public virtual WorkFlowTriggerType WorkFlowTriggerType { get; set; }
+        [Column("WorkFlowNumber")]
+	    public string WorkFlowNumber { get; set; }
     }
 }
 	 

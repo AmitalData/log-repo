@@ -494,5 +494,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? ShipmentLastLegETA { get; set; }
 
+        public DateTime? OIEventDate { get; set; }
+        public string OIContainerStatus { get; set; }
+        public bool IsShipmentBatchUpdate { get; set; }
+        public bool IsEmptyReturnDatesChanged { get; set; }
     }
 }

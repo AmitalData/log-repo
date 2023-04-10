@@ -1,5 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
+import { UIProperty } from "Infrastructure/Components/LogitudeComponents/UIProperties";
+import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { ObjectTableList } from "Infrastructure/EntityLists/ObjectTableList";
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
@@ -12,21 +14,26 @@ import { ObjectTables } from "Workflow/Utilities/ObjectTables";
     templateUrl: "./FieldValueComponent.html"
 })
 
-export class FieldValueComponent extends BaseComponent implements OnInit {
+export class FieldValueComponent extends BaseComponent implements OnInit, AfterViewInit {
 
-    @Input() ObjectField: ObjectFieldList;
     @Input() Name: string;
     @Input() CurrentValue: string;
+    @Input() ObjectField: ObjectFieldList | null = null;
     @Input() IsIntegerNumberInput: boolean = false;
-    @Input() DataType: string;
+    @Input() DataType: string | null = null;
+    @Input() LookupType: string | null = null;
     @Input() IsDisabled: boolean = false;
+    @Input() QueryFilterItems: ApiQueryFilters | null = null;
 
     @Output() ValueChanged = new EventEmitter<string>();
+
+    public Value: any = null;
 
     public DataContext: any = this;
     public LookupTable: ObjectTableList;
     public PickListTable: ObjectTableList;
     public DateTimeCurrentValue: Date;
+    public LookupDataTypeTable: ObjectTableList;
 
     public BooleanValuesItems: ListItem[] = new BooleanValuesList().Items;
 
@@ -38,6 +45,10 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
 
     ngOnInit() {
         this.initialize();
+    }
+
+    ngAfterViewInit() {
+        this.initializeFieldUIPropertyChangedEvent();
     }
 
     initialize() {
@@ -52,6 +63,7 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
     initializeDataType() {
         if (this.DataType) {
             this.DataType = this.DataType.replace("[]", "");
+            this.LookupDataTypeTable = this.isLookupDataType() ? ObjectTables.getByName(this.LookupType) : null;
         }
     }
 
@@ -73,6 +85,29 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
         }
     }
 
+    initializeFieldUIPropertyChangedEvent() {
+        if (this.isDateTimeObjectField() || this.isDataTypeDateTime()) {
+            let fieldUIProperty = this.getFieldUIProperty();
+            if (fieldUIProperty) {
+                fieldUIProperty.UIPropertyChanged.subscribe((event: any) => {
+                    if (event && (event instanceof UIProperty) && !event.ValidValue) {
+                        this.handleUpdateValue(null);
+                    } else {
+                        this.handleUpdateValue(this.Value);
+                    }
+                });
+            }
+        }
+    }
+
+    getFieldUIProperty() {
+        if (this.Name) {
+            let uiProperties = this.UIProperties.UIPropertyList.filter(p => p.FieldName === this.Name);
+            return uiProperties && uiProperties.length > 0 ? (uiProperties[0] || null) : null;
+        }
+        return null;
+    }
+
     setLookupTable() {
         this.LookupTable = ObjectTables.getById(this.ObjectField.LookUpTableId);
     }
@@ -86,10 +121,25 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
     }
 
     updateValue(value: any) {
+        this.Value = value;
+
+        let notValidUIProperties = this.UIProperties.UIPropertyList.filter(p => !p.ValidValue);
+        if (notValidUIProperties.length === 0) {
+            this.handleUpdateValue(value);
+        } else {
+            this.handleUpdateValue(null);
+        }
+    }
+
+    handleUpdateValue(value: any) {
         if ((this.isDateTimeObjectField() || this.isDataTypeDateTime()) && !this.IsIntegerNumberInput) {
             value = this.getDateValue(value);
-        } else if (this.isLookupObjectField() && this.LookupTable) {
+        }
+        else if (this.isLookupObjectField() && this.LookupTable) {
             value = this.getLookupValue(value, this.LookupTable.KeyPropertyPath);
+        }
+        else if (this.isLookupDataType() && this.LookupDataTypeTable) {
+            value = this.getLookupValue(value, this.LookupDataTypeTable.KeyPropertyPath);
         }
         this.ValueChanged.emit(value);
     }
@@ -133,5 +183,9 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
 
     isDataTypeDateTime() {
         return (this.DataType && (this.DataType === FieldTypes.DateTime || this.DataType === FieldTypes.Date));
+    }
+
+    isLookupDataType() {
+        return this.DataType && this.DataType === FieldTypes.LookUp;
     }
 }

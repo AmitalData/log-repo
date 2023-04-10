@@ -280,6 +280,7 @@
     <Compile Include="AnalyticTableServices\APInvoiceAnalyticTableService.cs" />
     <Compile Include="AnalyticTableServices\ARInvoiceAnalyticTableService.cs" />
     <Compile Include="AnalyticTableServices\QuoteAnalyticTableService.cs" />
+    <Compile Include="AnalyticTableServices\ContainerAnalyticTableService.cs" />
     <Compile Include="AnalyticTableServices\ShipmentAnalyticTableService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Address.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\AddressType.Generated.cs" />
@@ -422,6 +423,7 @@
     <Compile Include="CommonDataModel\CustomFilters\CommunicationLogCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\ReportExecutionLogCustomFilter.cs" />
     <Compile Include="CommonDataModel\EntityAMs\CustomerTenantAccessUpdaterAM.cs" />
+    <Compile Include="CommonDataModel\EntityAMs\PortAM.cs" />
     <Compile Include="CommonDataModel\EntityLists\CargoTenantMilestoneDefinitionList.cs" />
     <Compile Include="CommonDataModel\EntityLists\CarrierServiceLineList.cs" />
     <Compile Include="CommonDataModel\EntityLists\CustomerGroupList.cs" />
@@ -592,6 +594,7 @@
     <Compile Include="DataContracts\ContainerTrackingRequestStatus.cs" />
     <Compile Include="DataContracts\ExportDocumentArgs.cs" />
     <Compile Include="DataContracts\QuoteDashboardArguments.cs" />
+    <Compile Include="DataContracts\UpdateContainersServiceArgs.cs" />
     <Compile Include="DataContracts\VisionContainerStatus.cs" />
     <Compile Include="ExternalService\IEntityAutomationMappingPMFields.cs" />
     <Compile Include="Helpers\AddManualTraceEventsHelper.cs" />
@@ -599,6 +602,8 @@
     <Compile Include="Helpers\ConcurrencyFieldHelper.cs" />
     <Compile Include="Helpers\ContainersExternal.cs" />
     <Compile Include="Helpers\ContainerStatusesHelper.cs" />
+    <Compile Include="Helpers\ContainerTrackingHelper.cs" />
+    <Compile Include="Helpers\CopyPortHelper.cs" />
     <Compile Include="Helpers\DigitalFieldSecuritesHelper.cs" />
     <Compile Include="Helpers\DWObjectFieldsGroupedService.cs" />
     <Compile Include="Helpers\ObjectFieldPropertyGetter.cs" />
@@ -620,12 +625,15 @@
     <Compile Include="InfrastructureModel\CloseTables\EnumGenerated\EntityStatusTypeStruct.Generated.cs" />
     <Compile Include="InfrastructureModel\CustomFilters\ObjectTableCustomFilter.cs" />
     <Compile Include="InfrastructureModel\CustomFilters\ScreenCustomFilter.cs" />
+    <Compile Include="InfrastructureModel\DataContracts\CustomFieldDataContractList.cs" />
     <Compile Include="InfrastructureModel\DataContracts\MultiEntityUpdateData.cs" />
+    <Compile Include="InfrastructureModel\DataContracts\ObjectCustomFieldDataContractPM.cs" />
     <Compile Include="InfrastructureModel\EntityLists\CustomFieldList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\CustomFieldsMainObjectList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\DataCustomObjectList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\DeploymentPackagesVersionList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\DeploymentPackageList.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\DeploymentPackageExecutionLogList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\EntityStatusTypeList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\ImageLibraryList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\QuoteChargesGroupList.cs" />
@@ -637,6 +645,7 @@
     <Compile Include="InfrastructureModel\EntityPMs\CustomFieldsMainObjectPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\DataCustomObjectPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\DeploymentPackagesVersionPM.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\DeploymentPackageExecutionLogPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\EntityStatusTypePM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\ImageLibraryPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\MultiEntityUpdateLogPM.cs" />
@@ -651,6 +660,7 @@
     <Compile Include="InfrastructureModel\EntityQueries\DeploymentPackagesVersionQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\DeploymentPackageQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\DataCustomObjectQuery.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\DeploymentPackageExecutionLogQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\EntityStatusTypeQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ImageLibraryQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\MultiEntityUpdateLogQuery.cs" />
@@ -686,6 +696,7 @@
     <Compile Include="InfrastructureModel\EntityPMs\RuleUpdateHistoryPM.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\WorkerRoleNameQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\RuleUpdateHistoryQuery.cs" />
+    <Compile Include="InfrastructureModel\Services\CustomizedCounter\CustomizedARInvoiceCounterService.cs" />
     <Compile Include="InfrastructureModel\Services\DeploymentPackageVersionInitializerService.cs" />
     <Compile Include="InfrastructureModel\Services\CustomObjectDefaultMetaDataService.cs" />
     <Compile Include="InfrastructureModel\Services\DeploymentPackage\Dependiencies\ObjectFields\DeploymentPackageObjectFieldDependienciesService.AdditionalFilters.cs" />
@@ -697,11 +708,16 @@
     <Compile Include="InfrastructureModel\Services\DeploymentPackage\Dependiencies\DeploymentPackageDependienciesService.cs" />
     <Compile Include="InfrastructureModel\Services\DeploymentPackage\Dependiencies\ObjectFields\DeploymentPackageObjectFieldDependienciesService.cs" />
     <Compile Include="InfrastructureModel\Services\DeploymentPackage\Dependiencies\IDeploymentPackageDependiency.cs" />
+    <Compile Include="InfrastructureModel\Services\DeploymentPackage\ImportingValidator\DeploymentPackageCustomFieldsValidatingService.cs" />
+    <Compile Include="InfrastructureModel\Services\DeploymentPackage\ImportingValidator\DeploymentPackageImporterValidatingService.cs" />
+    <Compile Include="InfrastructureModel\Services\DeploymentPackage\ImportingValidator\IDeploymentPackageImporterValidatingService.cs" />
+    <Compile Include="InfrastructureModel\Services\PartnersObjectFieldService.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\CustomChildObjectMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\CustomFieldsMainObjectMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DeploymentPackagesVersionMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DeploymentPackageMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DataCustomObjectMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\DeploymentPackageExecutionLogMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\ReferenceCustomObjectMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\CustomChildObjectService.cs" />
     <Compile Include="InfrastructureModel\Services\QuoteUpdateService.cs" />
@@ -716,6 +732,7 @@
     <Compile Include="InfrastructureModel\Tools\EntityService\DeploymentPackagesVersionService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\DeploymentPackageService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\DataCustomObjectService.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\DeploymentPackageExecutionLogService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\ImageLibraryService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\MultiEntityUpdateLogService.cs" />
     <Compile Include="InfrastructureModel\Services\ObjectTableDefaultFieldsService.cs" />
@@ -729,6 +746,7 @@
     <Compile Include="InfrastructureModel\Tools\EntityService\ObjectTableTabTextCodeService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\WorkerRoleNameService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\RuleUpdateHistoryService.cs" />
+    <Compile Include="InfrastructureModel\Tools\Validating\DeploymentPackageValidating.cs" />
     <Compile Include="InfrastructureModel\Tools\Validating\TasksSchedulerValidator.cs" />
     <Compile Include="IntegrationTestModel\EntityPMs\LocationsVariables.cs" />
     <Compile Include="IntegrationTestModel\EntityPMs\PartnersVariables.cs" />
@@ -747,6 +765,7 @@
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentBankTranfer.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentCheque.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentChequeStatusReplica.Generated.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\ARPaymentChqSts.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentInvoice.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentStatus.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\QueryService\APInvoiceLineQueryService.Generated.cs" />
@@ -804,6 +823,8 @@
     <Compile Include="ShipmentsModel\APIDataContract\Shipments.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\VizionModels.cs" />
     <Compile Include="ShipmentsModel\CustomFilters\DigitalPortalCustomFilter.cs" />
+    <Compile Include="ShipmentsModel\EntityOtherServices\ContainerShipmentUpdateService.cs" />
+    <Compile Include="ShipmentsModel\Tools\ExternalService\ShipmentAdditionalDataService.cs" />
     <Compile Include="ShipmentsModel\EntityLists\DigitalShipmentList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\ShipmentDigitalFieldList.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\AccountingInformationIdentifierPM.cs" />
@@ -3242,6 +3263,7 @@
     <Compile Include="Validators\ValidationClass.Shared.cs" />
     <Compile Include="Workflow\Constants\QueueMessagesTypes.cs" />
     <Compile Include="Workflow\Constants\WorkflowEntities.cs" />
+    <Compile Include="Workflow\TaskDoneQueueMessage.cs" />
     <Compile Include="Workflow\WorkflowEntityQueueMessage.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -332,6 +332,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                   - (double)(MoreDatas.TotFutureOpenChequesInLocalCur ??0) 
                                                   - (double)(CardsDatas.TotalOpenShipments ?? 0),
 
+                                                   CreditLimitDifference = (CardsDatas.CreditLimit ?? 0) - (CardsDatas.InsuredcreditLimit ?? 0),
+
                                                }); ;
 
             /*
@@ -495,6 +497,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                            TotFutureOpenChequesInLocalCur = glaccount.Access ? glaccount.TotFutureOpenChequesInLocalCur : 0,
                            Obligo = glaccount.Obligo,
                            CreditUsed = glaccount.CreditUsed,
+                           CreditLimitDifference= glaccount.CreditLimitDifference,
                        };
 
 

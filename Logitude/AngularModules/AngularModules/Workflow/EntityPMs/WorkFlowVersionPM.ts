@@ -104,6 +104,16 @@ export class WorkFlowVersionPM {
     public set ActivatedDate(newValue: Date) { if (this.activatedDate != newValue) { this.activatedDate = newValue; this.MarkAsDirty("ActivatedDate"); } }
        
 	 
+    private createdByUserName: string;
+    public get CreatedByUserName() { return this.createdByUserName; }
+    public set CreatedByUserName(newValue: string) { if (this.createdByUserName != newValue) { this.createdByUserName = newValue; this.MarkAsDirty("CreatedByUserName"); } }
+       
+	 
+    private updatedByUserName: string;
+    public get UpdatedByUserName() { return this.updatedByUserName; }
+    public set UpdatedByUserName(newValue: string) { if (this.updatedByUserName != newValue) { this.updatedByUserName = newValue; this.MarkAsDirty("UpdatedByUserName"); } }
+       
+	 
 
     public OldEntityPM: WorkFlowVersionPM;
 		

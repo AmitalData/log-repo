@@ -320,6 +320,7 @@
                                                 <RowDefinition Height="28" />
                                                 <RowDefinition Height="28" />
                                                 <RowDefinition Height="28" />
+                                                <RowDefinition Height="28" />
                                             </Grid.RowDefinitions>
 
                                             <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Has Api Helper:" />
@@ -339,6 +340,7 @@
                                             <TextBlock Grid.Row="14" Grid.Column="0" VerticalAlignment="Center" Text="Available In Customization:" />
                                             <TextBlock Grid.Row="15" Grid.Column="0" VerticalAlignment="Center" Text="Support Sub Entity:" />
                                             <TextBlock Grid.Row="16" Grid.Column="0" VerticalAlignment="Center" Text="Apply Generic Custom Fields:" />
+                                            <TextBlock Grid.Row="17" Grid.Column="0" VerticalAlignment="Center" Text="Available In Document Types:" />
 
                                             <CheckBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding HasApiHelper, Mode=TwoWay}" />
                                             <CheckBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding HasCustomFields, Mode=TwoWay}" />
@@ -357,6 +359,7 @@
                                             <CheckBox Grid.Row="14" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding AvailableInCustomization , Mode=TwoWay}" />
                                             <CheckBox Grid.Row="15" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding SupportSubEntity , Mode=TwoWay}" />
                                             <CheckBox Grid.Row="16" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding ApplyGenericCustomFields , Mode=TwoWay}" />
+                                            <CheckBox Grid.Row="17" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding AvailableInDocumentTypes , Mode=TwoWay}" />
 
                                         </Grid>
 

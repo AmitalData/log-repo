@@ -461,9 +461,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         theT1 = System.DateTime.Now.Ticks;
                         AWBWebService awbWebService = new AWBWebService();
                         byte[] byteArray = awbWebService.StartLoadingDataToAWB(entityId, tenant, documentTypeCopyId, true);
-                        MemoryStream memorystream = new MemoryStream(byteArray);
-                        XmlSerializer serializer = new XmlSerializer(typeof(AWBDataProvider));
-                        AWBDataProvider awbDataProvider = (AWBDataProvider)serializer.Deserialize(memorystream);
+                        AWBDataProvider awbDataProvider = DeserializeArrayOfBytes<AWBDataProvider>(byteArray);
                         BaseDataProviderService.FillBaseVariableFields(awbDataProvider, tenant);
                         DocumentDataProvider documentDataProvider  = new DocumentDataProviderGreator(new DocumentDataProviderArgs() {EntityPM = awbWebService.shipmentPM, DocumentTypeTemplatePM = defaulttemplate,  EntityId = entityId , DataProvider = awbDataProvider}).Create(true);
                         theT2 = System.DateTime.Now.Ticks;
@@ -485,9 +483,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         theT1 = System.DateTime.Now.Ticks;
                         AWBWebService awbWebService = new AWBWebService();
                         byte[] byteArray = awbWebService.StartLoadingDataToAWB(entityId, tenant, documentTypeCopyId, true);
-                        MemoryStream memorystream = new MemoryStream(byteArray);
-                        XmlSerializer serializer = new XmlSerializer(typeof(AWBDataProvider));
-                        AWBDataProvider awbDataProvider = (AWBDataProvider)serializer.Deserialize(memorystream);
+                        AWBDataProvider awbDataProvider = DeserializeArrayOfBytes<AWBDataProvider>(byteArray);
                         BaseDataProviderService.FillBaseVariableFields(awbDataProvider, tenant);
                         DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() { EntityPM = awbWebService.shipmentPM, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = awbDataProvider }).Create(true);
 
@@ -504,9 +500,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         theT1 = System.DateTime.Now.Ticks;
                         DeclarationFormsWebService declarationWebService = new DeclarationFormsWebService();
                         byte[] byteArray = declarationWebService.StartLoadingDataToTzrufa(entityId, tenant, documentTypeCopyId, true);
-                        MemoryStream memorystream = new MemoryStream(byteArray);
-                        XmlSerializer serializer = new XmlSerializer(typeof(DeclarationFormsDataProvider));
-                        DeclarationFormsDataProvider formsDataProvider = (DeclarationFormsDataProvider)serializer.Deserialize(memorystream);
+                        DeclarationFormsDataProvider formsDataProvider = DeserializeArrayOfBytes<DeclarationFormsDataProvider>(byteArray);
                         BaseDataProviderService.FillBaseVariableFields(formsDataProvider, tenant);
                         DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() { EntityPM = declarationWebService.declarationPM, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = formsDataProvider }).Create(true);
 
@@ -608,9 +602,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         theT1 = System.DateTime.Now.Ticks;
                         OceanExportWebService oceanWebService = new OceanExportWebService();
                         byte[] byteArray = oceanWebService.GetFBLData(entityId, tenant, documentTypeCopyId);
-                        MemoryStream memorystream = new MemoryStream(byteArray);
-                        XmlSerializer serializer = new XmlSerializer(typeof(FBLDataProvider));
-                        FBLDataProvider fbLdataprovider = (FBLDataProvider)serializer.Deserialize(memorystream);
+                        FBLDataProvider fbLdataprovider = DeserializeArrayOfBytes<FBLDataProvider>(byteArray);
                         fbLdataprovider.InServerSide = true;
 
                         theT2 = System.DateTime.Now.Ticks;
@@ -695,9 +687,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         theT1 = System.DateTime.Now.Ticks;
                         ShippingDeclarationWebService shippingDeclarationWebService = new ShippingDeclarationWebService();
                         byte[] byteArray = shippingDeclarationWebService.GetShippingDeclarationData(entityId, tenant, documentTypeCode, documentTypeCopyId);
-                        MemoryStream memorystream = new MemoryStream(byteArray);
-                        XmlSerializer serializer = new XmlSerializer(typeof(ShippingDeclarationDataProvider));
-                        ShippingDeclarationDataProvider shippingDeclarationdataprovider = (ShippingDeclarationDataProvider)serializer.Deserialize(memorystream);
+                        ShippingDeclarationDataProvider shippingDeclarationdataprovider = DeserializeArrayOfBytes<ShippingDeclarationDataProvider>(byteArray);
 
                         theT2 = System.DateTime.Now.Ticks;
                         //AzureLog.SaveLogsInStorage("Data provider :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P", tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "");
@@ -734,9 +724,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                     {
                         AWBLabelsWebSerivce awblabelsWebService = new AWBLabelsWebSerivce();
                         byte[] byteArray = awblabelsWebService.GetAWBLabelsData(entityId, tenant, documentTypeId);
-                        MemoryStream memorystream = new MemoryStream(byteArray);
-                        XmlSerializer serializer = new XmlSerializer(typeof(List<AWBLabelsDataProvider>));
-                        List<AWBLabelsDataProvider> awblabelsdataprovider = (List<AWBLabelsDataProvider>)serializer.Deserialize(memorystream);
+                        List<AWBLabelsDataProvider> awblabelsdataprovider = DeserializeArrayOfBytes<List<AWBLabelsDataProvider>>(byteArray);
 
                         if(awblabelsdataprovider.Count == 0) awblabelsdataprovider.Add(new AWBLabelsDataProvider());
               
@@ -761,9 +749,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         theT1 = System.DateTime.Now.Ticks;
                         DeliveryNoteWebService deliverynoteWebService = new DeliveryNoteWebService();
                         byte[] byteArray = deliverynoteWebService.GetDeliveryData(entityId, entityObjectTableId, childEntityId, childObjectTableId, tenant);
-                        MemoryStream memorystream = new MemoryStream(byteArray);
-                        XmlSerializer serializer = new XmlSerializer(typeof(DeliveryNoteDataProvider));
-                        DeliveryNoteDataProvider deliverynotedataprovider = (DeliveryNoteDataProvider)serializer.Deserialize(memorystream);
+                        DeliveryNoteDataProvider deliverynotedataprovider = DeserializeArrayOfBytes<DeliveryNoteDataProvider>(byteArray);
                         BaseDataProviderService.FillBaseVariableFields(deliverynotedataprovider, tenant);
                         DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() {EntityPM = deliverynoteWebService.shipment, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = deliverynotedataprovider }).Create(true);
 
@@ -808,9 +794,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         theT1 = System.DateTime.Now.Ticks;
                         DeliveryNoteWebService deliverynoteWebService = new DeliveryNoteWebService();
                         byte[] byteArray = deliverynoteWebService.GetPickupData(entityId, entityObjectTableId, childEntityId, childObjectTableId, tenant);
-                        MemoryStream memorystream = new MemoryStream(byteArray);
-                        XmlSerializer serializer = new XmlSerializer(typeof(DeliveryNoteDataProvider));
-                        DeliveryNoteDataProvider deliverynotedataprovider = (DeliveryNoteDataProvider)serializer.Deserialize(memorystream);
+                        DeliveryNoteDataProvider deliverynotedataprovider = DeserializeArrayOfBytes<DeliveryNoteDataProvider>(byteArray);
                         BaseDataProviderService.FillBaseVariableFields(deliverynotedataprovider, tenant);
 
                         deliverynotedataprovider.InServerSide = true;
@@ -884,9 +868,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         InvoiceWebService invoiceWebService = new InvoiceWebService();
                         byte[] byteArray = invoiceWebService.GetInvoiceData(entityId, documentTypeCopyId, tenant);
 
-                        MemoryStream memorystream = new MemoryStream(byteArray);
-                        XmlSerializer serializer = new XmlSerializer(typeof(InvoiceDataProvider));
-                        InvoiceDataProvider invoicedataprovider = (InvoiceDataProvider)serializer.Deserialize(memorystream);
+                        InvoiceDataProvider invoicedataprovider = DeserializeArrayOfBytes<InvoiceDataProvider>(byteArray);
 
                         theT2 = System.DateTime.Now.Ticks;
                         BaseDataProviderService.FillBaseVariableFields(invoicedataprovider, tenant);
@@ -949,9 +931,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         theT1 = System.DateTime.Now.Ticks;
                         CMRWebService cmrwebService = new CMRWebService();
                         byte[] byteArray = cmrwebService.GetDeliveryData(entityId, childEntityId, tenant, userId, documentTypeCopyId);
-                        MemoryStream memorystream = new MemoryStream(byteArray);
-                        XmlSerializer serializer = new XmlSerializer(typeof(CMRDataProvider));
-                        CMRDataProvider cmrDataProvider = (CMRDataProvider)serializer.Deserialize(memorystream);
+                        CMRDataProvider cmrDataProvider = DeserializeArrayOfBytes<CMRDataProvider>(byteArray);
 
                         theT2 = System.DateTime.Now.Ticks;
                         BaseDataProviderService.FillBaseVariableFields(cmrDataProvider, tenant);
@@ -974,9 +954,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         theT1 = System.DateTime.Now.Ticks;
                         ShipmentCMRWebService cmrwebService = new ShipmentCMRWebService();
                         byte[] byteArray = cmrwebService.GetDeliveryData(entityId, tenant, null, documentTypeCopyId);
-                        MemoryStream memorystream = new MemoryStream(byteArray);
-                        XmlSerializer serializer = new XmlSerializer(typeof(CMRDataProvider));
-                        CMRDataProvider cmrDataProvider = (CMRDataProvider)serializer.Deserialize(memorystream);
+                        CMRDataProvider cmrDataProvider = DeserializeArrayOfBytes<CMRDataProvider>(byteArray);
                         BaseDataProviderService.FillBaseVariableFields(cmrDataProvider, tenant);
                         DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() {EntityPM = cmrwebService.shipment, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = cmrDataProvider }).Create(true);
 
@@ -999,9 +977,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         theT1 = System.DateTime.Now.Ticks;
                         ManifestWebService cmrwebService = new ManifestWebService();
                         byte[] byteArray = cmrwebService.GetManifestData(entityId, tenant);
-                        MemoryStream memorystream = new MemoryStream(byteArray);
-                        XmlSerializer serializer = new XmlSerializer(typeof(ManifestDataProvider));
-                        ManifestDataProvider manifestDataProvider = (ManifestDataProvider)serializer.Deserialize(memorystream);
+                        ManifestDataProvider manifestDataProvider = DeserializeArrayOfBytes<ManifestDataProvider>(byteArray);
                         BaseDataProviderService.FillBaseVariableFields(manifestDataProvider, tenant);
                         DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() {EntityPM = cmrwebService.master, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = manifestDataProvider }).Create(true);
 
@@ -1025,9 +1001,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         theT1 = System.DateTime.Now.Ticks;
                         ManifestWebService cmrwebService = new ManifestWebService();
                         byte[] byteArray = cmrwebService.GetManifestData(entityId, tenant);
-                        MemoryStream memorystream = new MemoryStream(byteArray);
-                        XmlSerializer serializer = new XmlSerializer(typeof(ManifestDataProvider));
-                        ManifestDataProvider manifestDataProvider = (ManifestDataProvider)serializer.Deserialize(memorystream);
+                        ManifestDataProvider manifestDataProvider = DeserializeArrayOfBytes<ManifestDataProvider>(byteArray);
                         BaseDataProviderService.FillBaseVariableFields(manifestDataProvider, tenant);
                         DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() {EntityPM = cmrwebService.master, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = manifestDataProvider }).Create(true);
 
@@ -1049,9 +1023,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         theT1 = System.DateTime.Now.Ticks;
                         ShipmentProfitWebService shipmentprofitservice = new ShipmentProfitWebService();
                         byte[] byteArray = shipmentprofitservice.GetProfitData(entityId, tenant, null, null);
-                        MemoryStream memorystream = new MemoryStream(byteArray);
-                        XmlSerializer serializer = new XmlSerializer(typeof(ShipmentProfitDataProvider));
-                        ShipmentProfitDataProvider shipmentProfitProvider = (ShipmentProfitDataProvider)serializer.Deserialize(memorystream);
+                        ShipmentProfitDataProvider shipmentProfitProvider = DeserializeArrayOfBytes<ShipmentProfitDataProvider>(byteArray);
                         BaseDataProviderService.FillBaseVariableFields(shipmentProfitProvider, tenant);
                         DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() {EntityPM = shipmentprofitservice.shipmentPM, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = shipmentProfitProvider }).Create(true);
 
@@ -1072,9 +1044,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         theT1 = System.DateTime.Now.Ticks;
                         PreAlertWebService prealertservice = new PreAlertWebService();
                         byte[] byteArray = prealertservice.GetPreAlertData(entityId, tenant, documentTypeId);
-                        MemoryStream memorystream = new MemoryStream(byteArray);
-                        XmlSerializer serializer = new XmlSerializer(typeof(PreAlertDataProvider));
-                        PreAlertDataProvider preAlertProvider = (PreAlertDataProvider)serializer.Deserialize(memorystream);
+                        PreAlertDataProvider preAlertProvider = DeserializeArrayOfBytes<PreAlertDataProvider>(byteArray);
                         BaseDataProviderService.FillBaseVariableFields(preAlertProvider, tenant);
                         DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() {EntityPM = prealertservice.shipmentpm, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = preAlertProvider }).Create(true);
 
@@ -1108,9 +1078,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         theT1 = System.DateTime.Now.Ticks;
                         APPaymentWebService apPaymentService = new APPaymentWebService();
                         byte[] byteArray = apPaymentService.GetAPPaymentData(entityId, tenant, documentTypeId);
-                        MemoryStream memorystream = new MemoryStream(byteArray);
-                        XmlSerializer serializer = new XmlSerializer(typeof(APPaymentDataProvider));
-                        APPaymentDataProvider apPaymentProvider = (APPaymentDataProvider)serializer.Deserialize(memorystream);
+                        APPaymentDataProvider apPaymentProvider = DeserializeArrayOfBytes<APPaymentDataProvider>(byteArray);
                         BaseDataProviderService.FillBaseVariableFields(apPaymentProvider, tenant);
                         DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() { DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = apPaymentProvider }).Create(true);
 
@@ -1127,9 +1095,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         theT1 = System.DateTime.Now.Ticks;
                         ShipmentPackingWebService shipmentPackingService = new ShipmentPackingWebService();
                         byte[] byteArray = shipmentPackingService.GetShipmentPackingData(entityId, tenant);
-                        MemoryStream memorystream = new MemoryStream(byteArray);
-                        XmlSerializer serializer = new XmlSerializer(typeof(ShipmentPackingDataProvider));
-                        ShipmentPackingDataProvider shipmentPackingProvider = (ShipmentPackingDataProvider)serializer.Deserialize(memorystream);
+                        ShipmentPackingDataProvider shipmentPackingProvider = DeserializeArrayOfBytes<ShipmentPackingDataProvider>(byteArray);
                         BaseDataProviderService.FillBaseVariableFields(shipmentPackingProvider, tenant);
                         DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() {EntityPM = shipmentPackingService.shipment, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = shipmentPackingProvider }).Create(true);
 
@@ -1144,9 +1110,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         theT1 = System.DateTime.Now.Ticks;
                         ShipmentProfitWebService shipmentprofitservice = new ShipmentProfitWebService();
                         byte[] byteArray = shipmentprofitservice.GetProfitInvoicesData(entityId, tenant, null, null);
-                        MemoryStream memorystream = new MemoryStream(byteArray);
-                        XmlSerializer serializer = new XmlSerializer(typeof(ShipmentProfitInvoicesDataProvider));
-                        ShipmentProfitInvoicesDataProvider shipmentProfitProvider = (ShipmentProfitInvoicesDataProvider)serializer.Deserialize(memorystream);
+                        ShipmentProfitInvoicesDataProvider shipmentProfitProvider = DeserializeArrayOfBytes<ShipmentProfitInvoicesDataProvider>(byteArray);
                         BaseDataProviderService.FillBaseVariableFields(shipmentProfitProvider, tenant);
                         DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() {EntityPM = shipmentprofitservice.shipmentPM, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = shipmentProfitProvider }).Create(true);
 
@@ -1275,9 +1239,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         CrossDockEntryDataProviderHelper crossDockEntryDataProviderHelper = new CrossDockEntryDataProviderHelper();
                         byte[] byteArray = crossDockEntryDataProviderHelper.LoadDataToCrossDockEntryDataProvider(entityId, tenant, userId);
 
-                        MemoryStream memorystream = new MemoryStream(byteArray);
-                        XmlSerializer serializer = new XmlSerializer(typeof(CrossDockEntryDataProvider));
-                        CrossDockEntryDataProvider crossDockEntryDataProvider = (CrossDockEntryDataProvider)serializer.Deserialize(memorystream);
+                        CrossDockEntryDataProvider crossDockEntryDataProvider = DeserializeArrayOfBytes<CrossDockEntryDataProvider>(byteArray);
                         BaseDataProviderService.FillBaseVariableFields(crossDockEntryDataProvider, tenant);
                         DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() {EntityPM = crossDockEntryDataProviderHelper.warehouseEntryPM, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = crossDockEntryDataProvider }).Create(true);
 
@@ -1294,9 +1256,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         CrossDockReleaseDataProviderHelper crossDockReleaseDataProviderHelper = new CrossDockReleaseDataProviderHelper();
                         byte[] byteArray = crossDockReleaseDataProviderHelper.LoadDataToCrossDockReleaseDataProvider(entityId, tenant);
 
-                        MemoryStream memorystream = new MemoryStream(byteArray);
-                        XmlSerializer serializer = new XmlSerializer(typeof(CrossDockReleaseDataProvider));
-                        CrossDockReleaseDataProvider crossDockReleaseDataProvider = (CrossDockReleaseDataProvider)serializer.Deserialize(memorystream);
+                        CrossDockReleaseDataProvider crossDockReleaseDataProvider = DeserializeArrayOfBytes<CrossDockReleaseDataProvider>(byteArray);
                         BaseDataProviderService.FillBaseVariableFields(crossDockReleaseDataProvider, tenant);
                         DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() {EntityPM = crossDockReleaseDataProviderHelper.warehouseReleasePM, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = crossDockReleaseDataProvider }).Create(true);
 
@@ -1313,9 +1273,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         CrossDockReleaseDataProviderHelper crossDockReleaseDataProviderHelper = new CrossDockReleaseDataProviderHelper();
                         byte[] byteArray = crossDockReleaseDataProviderHelper.LoadCrossDockReleaseDataProvider_GroupByEntry(entityId, tenant);
 
-                        MemoryStream memorystream = new MemoryStream(byteArray);
-                        XmlSerializer serializer = new XmlSerializer(typeof(CrossDockReleaseDataProvider));
-                        CrossDockReleaseDataProvider crossDockReleaseDataProvider = (CrossDockReleaseDataProvider)serializer.Deserialize(memorystream);
+                        CrossDockReleaseDataProvider crossDockReleaseDataProvider = DeserializeArrayOfBytes<CrossDockReleaseDataProvider>(byteArray);
                         BaseDataProviderService.FillBaseVariableFields(crossDockReleaseDataProvider, tenant);
                         DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() {EntityPM = crossDockReleaseDataProviderHelper.warehouseReleasePM, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = crossDockReleaseDataProvider }).Create(true);
 
@@ -1332,9 +1290,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         ShipmentInventoryDataProviderHelper shipmentInventoryDataProviderHelper = new ShipmentInventoryDataProviderHelper();
                         byte[] byteArray = shipmentInventoryDataProviderHelper.LoadDataToShipmentInventoryDataProvider(entityId, tenant);
 
-                        MemoryStream memorystream = new MemoryStream(byteArray);
-                        XmlSerializer serializer = new XmlSerializer(typeof(ShipmentInventoryDataProvider));
-                        ShipmentInventoryDataProvider shipmentInventoryDataProvider = (ShipmentInventoryDataProvider)serializer.Deserialize(memorystream);
+                        ShipmentInventoryDataProvider shipmentInventoryDataProvider = DeserializeArrayOfBytes<ShipmentInventoryDataProvider>(byteArray);
                         BaseDataProviderService.FillBaseVariableFields(shipmentInventoryDataProvider, tenant);
                         DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() { DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = shipmentInventoryDataProvider }).Create(true);
 
@@ -1348,9 +1304,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                     {
                         OceanExportWebService oceanWebService = new OceanExportWebService();
                         byte[] byteArray = oceanWebService.GetFBLDataForPickUp(entityId, childEntityId, tenant);
-                        MemoryStream memorystream = new MemoryStream(byteArray);
-                        XmlSerializer serializer = new XmlSerializer(typeof(FBLDataProvider));
-                        FBLDataProvider fbLdataprovider = (FBLDataProvider)serializer.Deserialize(memorystream);
+                        FBLDataProvider fbLdataprovider = DeserializeArrayOfBytes<FBLDataProvider>(byteArray);
                         fbLdataprovider.InServerSide = true;
 
                         theT2 = System.DateTime.Now.Ticks;
@@ -1381,9 +1335,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                     {
                         CrossDockEntryLabelDataProviderHelper crossDockEntryLabelDataProviderHelper = new CrossDockEntryLabelDataProviderHelper();
                         byte[] byteArray = crossDockEntryLabelDataProviderHelper.LoadCrossDockEntryLabelDataProvider(entityId, tenant);
-                        MemoryStream memorystream = new MemoryStream(byteArray);
-                        XmlSerializer serializer = new XmlSerializer(typeof(List<CrossDockEntryDataProvider>));
-                        List<CrossDockEntryDataProvider> crossDockEntryDataProviderLists = (List<CrossDockEntryDataProvider>)serializer.Deserialize(memorystream);
+                        List<CrossDockEntryDataProvider> crossDockEntryDataProviderLists = DeserializeArrayOfBytes<List<CrossDockEntryDataProvider>>(byteArray);
                         if (crossDockEntryDataProviderLists.Count == 0) crossDockEntryDataProviderLists.Add(new CrossDockEntryDataProvider());
                         List<object> documentDataProviders = new List<object>();
                         foreach (CrossDockEntryDataProvider crossDockEntryDataProvider in crossDockEntryDataProviderLists)
@@ -1401,9 +1353,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         //FBLDataProvider
                         OceanExportWebService oceanWebService = new OceanExportWebService();
                         byte[] byteArray = oceanWebService.GetFBLData(entityId, tenant, documentTypeCopyId);
-                        MemoryStream memorystream = new MemoryStream(byteArray);
-                        XmlSerializer serializer = new XmlSerializer(typeof(FBLDataProvider));
-                        FBLDataProvider fbLdataprovider = (FBLDataProvider)serializer.Deserialize(memorystream);
+                        FBLDataProvider fbLdataprovider = DeserializeArrayOfBytes<FBLDataProvider>(byteArray);
                         fbLdataprovider.InServerSide = true;
 
                         theT2 = System.DateTime.Now.Ticks;
@@ -1433,9 +1383,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         //ShippingDeclarationDataProvider
                         ShippingDeclarationWebService shippingDeclarationWebService = new ShippingDeclarationWebService();
                         byte[] byteArray2 = shippingDeclarationWebService.GetShippingDeclarationData(entityId, tenant, documentTypeCode, documentTypeCopyId);
-                        MemoryStream memorystream2 = new MemoryStream(byteArray2);
-                        XmlSerializer serializer2 = new XmlSerializer(typeof(ShippingDeclarationDataProvider));
-                        ShippingDeclarationDataProvider shippingDeclarationdataprovider = (ShippingDeclarationDataProvider)serializer2.Deserialize(memorystream2);
+                        ShippingDeclarationDataProvider shippingDeclarationdataprovider = DeserializeArrayOfBytes<ShippingDeclarationDataProvider>(byteArray);
                         theT2 = System.DateTime.Now.Ticks;
                         BaseDataProviderService.FillBaseVariableFields(shippingDeclarationdataprovider, tenant);
                         DocumentDataProvider shippingDeclarationdatDocumentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() { EntityPM = oceanWebService.shipment, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = shippingDeclarationdataprovider }).Create(true);
@@ -1470,7 +1418,15 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
             return report;
         }
 
- 
+        private static T DeserializeArrayOfBytes<T>(byte[] byteArray)
+        {
+            using (MemoryStream memorystream = new MemoryStream(byteArray))
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(T));
+                return (T)serializer.Deserialize(memorystream);
+            }
+        }
+
         public string getBetween(string strSource, string strStart, string strEnd)
         {
             int Start, End;
@@ -1635,9 +1591,11 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
 
         public void AddLogo(StiReport report, byte[] logodata)
         {
-            if (logodata != null)
+            if (logodata == null) return;
+
+            using (MemoryStream logoDataMemoryStream = new MemoryStream(logodata))
             {
-                Image image = Image.FromStream(new MemoryStream(logodata));
+                Image image = Image.FromStream(logoDataMemoryStream);
                 report["Logo"] = image;
                 StiVariable logo = new StiVariable("My variables", "Logo", "Logo", "", typeof(System.Drawing.Bitmap), "", false, false, false);//new StiVariable("My Variables", "Logo", "Logo", image);// // ***********
                 logo.ValueObject = image;
@@ -2224,9 +2182,12 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
 
                 InvoiceWebService invoiceWebService = new InvoiceWebService();
                 byte[] byteArray = invoiceWebService.GetInvoiceData(invoiceId, null, tenant);
-                MemoryStream memorystream = new MemoryStream(byteArray);
-                XmlSerializer serializer = new XmlSerializer(typeof(InvoiceDataProvider));
-                InvoiceDataProvider invoicedataprovider = (InvoiceDataProvider)serializer.Deserialize(memorystream);
+                InvoiceDataProvider invoicedataprovider;
+                using (MemoryStream memstream = new MemoryStream(byteArray))
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(InvoiceDataProvider));
+                    invoicedataprovider = (InvoiceDataProvider)serializer.Deserialize(memstream);
+                }
                 theT2 = System.DateTime.Now.Ticks;
                 //AzureLog.SaveLogsInStorage("Data provider :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P", tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "");
                 invoicedataprovider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);

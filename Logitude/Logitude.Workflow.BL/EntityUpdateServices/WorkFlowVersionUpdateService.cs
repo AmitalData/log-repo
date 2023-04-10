@@ -1,12 +1,19 @@
 ﻿using Logitude.Server.Tools;
 using Logitude.Workflow.BL.EntityPMs;
+using Logitude.Workflow.BL.ExternalAPI;
 using Logitude.Workflow.Data.EntityPOCOs;
 using Logitude.Workflow.Data.Repositories;
+using Logitude.Workflow.Data.WorkflowValidation.Constants;
+using Logitude.Workflow.Data.WorkflowValidation.Exceptions;
+using Logitude.Workflow.Data.WorkflowValidation.Models;
+using RestSharp;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
 using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 
@@ -43,13 +50,13 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
         private static void HandleWorkFlowVersionCreateOrUpdate(WorkFlowVersionPM entityPM)
         {
             WorkFlowVersionRepository workFlowVersionRepository = new WorkFlowVersionRepository(entityPM.Tenant);
-
             var workFlowVersions = workFlowVersionRepository.GetAllByWorkflowId(entityPM.Tenant, entityPM.WorkflowId).OrderByDescending(w => w.VersionNumber).ToList();
-
             var activeWorkFlowVersions = workFlowVersions.Where(w => w.Id != entityPM.Id && w.StatusCode == "ACVE");
 
             if (entityPM.StatusCode == "ACVE")
             {
+                ActivationValidation(entityPM);
+
                 foreach (var activeWorkFlowVersion in activeWorkFlowVersions)
                 {
                     activeWorkFlowVersion.StatusCode = "INVE";
@@ -81,11 +88,31 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
                         WorkFlowVersion workflow = workFlowVersions.FirstOrDefault();
                         if(workflow.Id == entityPM.Id)
                         {
-                            workflow.StatusCode = entityPM.StatusCode;
+                            UpdateWorkflow(entityPM);
                         }
-                        UpdateWorkflow(workflow);
+                        else
+                        {
+                            UpdateWorkflow(workflow);
+                        }
                     }
                 }
+            }
+        }
+
+        private static void ActivationValidation(WorkFlowVersionPM entityPM)
+        {
+            List<string> workfloeVersionAvtivationErrors = new List<string>();
+            string workfloeVersionAvtivationUrl = ConfigurationManager.AppSettings["WorkflowEngineURL"] + ExternalApiURLs.GetWorkFlowVersionActivationValidation(entityPM.Id);
+
+            List<WorkflowActivationError> workflowActivationErrors = APICaller.CallApi<List<WorkflowActivationError>>(workfloeVersionAvtivationUrl, null, Method.GET);
+            if (workflowActivationErrors.Count > 0)
+            {
+                foreach (WorkflowActivationError workflowActivationError in workflowActivationErrors)
+                {
+                    workfloeVersionAvtivationErrors.AddRange(workflowActivationError.ErrorMessages);
+                }
+
+                throw new WorkflowValidationException(workfloeVersionAvtivationErrors);
             }
         }
 
@@ -132,11 +159,9 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
             string email = HttpContext.Current.User.Identity.Name;
             ContactRepository contactRepository = new ContactRepository(workflow.Tenant);
             Contact loggedContact = contactRepository.GetSingleContactByEmail(email, workflow.Tenant);
-            DateTime myDate = TenantServerConfigration.GetCurrentDateTime(workflow.Tenant);
+            DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(workflow.Tenant);
 
-
-            workflow.UpdateDate = myDate;
-
+            workflow.UpdateDate = currentDateTime;
 
             if (loggedContact != null)
             {

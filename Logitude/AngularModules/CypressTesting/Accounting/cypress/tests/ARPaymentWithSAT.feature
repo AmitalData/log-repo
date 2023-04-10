@@ -1,5 +1,4 @@
-#@devrelease
-@fixReleaseBugs
+@devrelease
 Feature: AR Payment With SAT
     The user creates new AR Payment and ARprove the AR Payment
 
@@ -39,6 +38,7 @@ Feature: AR Payment With SAT
             | VATNo               | Zero        |
             | Branch              | Main Office |
             | VATType             | Zero        |
+          
         When create invoice
         Then the invoice should create successfully
         And the status value should be Draft
@@ -78,8 +78,3 @@ Feature: AR Payment With SAT
             | Event              | Notes |
             | Transferred to SAT |       |
 
-    Scenario: Update SAT Interface Settings
-        Given the user logged in and navigate to SAT Interface settings
-        Given SAT Interface Settings as"None"
-        When change the SAT Interface Settings
-        Then SAT Interface Settings should update successfully

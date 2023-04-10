@@ -8,6 +8,7 @@ import { EntitiesTreeList } from "Workflow/TreeLists/EntitiesTreeList";
 import { Formatter } from "Workflow/Utilities/Formatter";
 import { ListItem } from "Workflow/Models/ListItem";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
+import { FlowReader } from "Workflow/Utilities/FlowReader";
 
 @Component({
     templateUrl: "./DeclareVariablePropertiesComponent.html"
@@ -27,12 +28,13 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
     public VariableTypeChangedToggle: boolean = false;
     public DataTypesItems: ListItem[] = new DataTypesList().Items;
     public EntitiesTreeItems: TreeSelectItem[];
-    public ExcludedEntities: string[] = ["Container", "ARInvoice", "APInvoice"];
     public FieldTypes = FieldTypes;
     public CurrentSession = SessionLocator.SelectedSession;
+    public FlowObject: any;
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
+        this.FlowObject = args.FlowObject ? args.FlowObject : null;
     }
 
     ngOnInit() {
@@ -157,12 +159,17 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
     saveButtonClicked() {
         this.ValidationErrorsList = [];
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
-        if (notValidUIProperties.length === 0) {
+        let isValidName = !this.IsNew || !FlowReader.isNodeCodeExists(this.FlowObject, this.VariableName);
+        if (notValidUIProperties.length === 0 && isValidName) {
             //console.log(this.Data);
             this.CurrentSession.CurrentWindow.Close(this.Data);
         } else {
             let validationErrors = notValidUIProperties.map(t => { return t.ValidationError; });
             this.ValidationErrorsList = validationErrors
+
+            if (!isValidName) {
+                this.ValidationErrorsList.push("The Name Should be Unique.");
+            }
         }
     }
 }

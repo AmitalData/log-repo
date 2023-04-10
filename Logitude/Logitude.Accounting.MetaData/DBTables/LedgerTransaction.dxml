@@ -218,6 +218,26 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="UpdateDateTime"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="UpdatedByUserName"
+    Type="nvarchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InternalNote"
+    Type="nvarchar"
+    Size="4000">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="JournalId,JournalLineNumber"
     ReferencedTable="JournalLines"

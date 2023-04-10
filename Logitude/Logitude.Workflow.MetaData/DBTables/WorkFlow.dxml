@@ -66,13 +66,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="OwnerId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="StatusCode"
     Type="varchar"
     Size="4">
@@ -103,14 +96,30 @@
   <Column
     Name="RetriesNumber"
     Type="int"
-	DefaultValue="5">
+    DefaultValue="5">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
     Name="RetriesDelay"
-    Type="int"
-	DefaultValue="300">
+    Type="varchar"
+    Size="500">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="WorkFlowTriggerTypeCode"
+    Type="varchar"
+    Size="30"
+    DefaultValue="'RecordTriggered'">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="WorkFlowNumber"
+    Type="nvarchar"
+    Size="100"
+    InitialValueScript="update [WorkFlows] set [WorkFlowNumber] = [Id]">
     <Constraints
       Nullable="false" />
   </Column>
@@ -125,13 +134,16 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="OwnerId"
-    ReferencedTable="Users"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
     ForeignKeyColumn="StatusCode"
     ReferencedTable="WorkFlowStatuses"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="WorkFlowTriggerTypeCode"
+    ReferencedTable="WorkFlowTriggerTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
+  <UniqueConstraint
+    Columns="Tenant,WorkFlowNumber" />
 </Table>

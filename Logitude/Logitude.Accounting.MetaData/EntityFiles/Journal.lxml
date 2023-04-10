@@ -11,6 +11,8 @@
   HasCustomFields="false"
   AvailableInCustomization="false"
   SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="true"
   HasHelper="false"
   HasShortTitle="true"
   HasFiltersMenu="false"
@@ -5138,7 +5140,7 @@
     <TextCode
       Code="&quot;Journal.RE.AccountingDateConfrimation&quot;"
       DefaultText="&quot;Leaving the accounting date / due date/ reference date/references/note  empty will create adjustment journals with dates/references/note taken from the original ones. If you want to continue click ok. If not click cancel and fill the date/references/note fields&quot;"
-      LocalDefaultText="&quot;במידה ולא קיים ערך בשדות: תאריך חשבונאי/אסמכתא/פירעון אסמכתאות הערות הערכים ילקחו מהשורות שסומנו להתאמה. להמשיך הקש &quot;אישור&quot; לחזרה להשלמת הערכים הקש &quot;חזור&quot;&quot;"
+      LocalDefaultText="&quot;במידה ולא קיים ערך בשדות: תאריך חשבונאי/אסמכתא/פירעון אסמכתאות הערות הערכים ילקחו מהשורות שסומנו להתאמה. להמשיך הקש &quot;אישור&quot; לחזרה להשלמת הערכים הקש &quot;חזור&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -5147,12 +5149,12 @@
       LocalDefaultText="&quot;חזור&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
-	<TextCode
+    <TextCode
       Code="&quot;Journal.RE.ReconcilePeriodClosed&quot;"
       DefaultText="&quot;Accounting date is closed for line (X)&quot;"
       LocalDefaultText="&quot;התקופה החשבונאית לשורה (X) סגורה, יש לפתוח תחילה את התקופה החשבונאית.&quot;"
       TextCodeTypeCode="&quot;M&quot;"
-      IsSpellChecked="false" />  
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

@@ -1,4 +1,4 @@
-@smoke @smoke2 @stable
+@smoke @smoke2 @stable @smoke1MasterDeploymnet
 Feature: Shipment Update
   The user creates a Direct Export Air shipment and updates it.
 

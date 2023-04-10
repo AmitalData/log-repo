@@ -1,4 +1,4 @@
-@smoke @smoke3
+@smoke @smoke3 @smoke2MasterDeploymnet
 Feature: AP Payment
     The user creates new AP Payment and approve the AP Payment
 

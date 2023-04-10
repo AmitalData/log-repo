@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Logitude.BL.InfrastructureModel.EntityLists;
 using System.ComponentModel.DataAnnotations;
 
 namespace Logitude.BL.CommonDataModel.EntityLists
 {
-    public class ShippingLineList
+    public class ShippingLineList : CustomFieldList
     {
         [Key]
         public string Id { get; set; }
@@ -44,7 +44,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string PrimaryContactName { get; set; }
         public string PrimaryContactEmail { get; set; }
         public string PrimaryContactPhone { get; set; }
-
         public string CBSA { get; set; }
         public string CAAT { get; set; }
         public string StateName { get; set; }

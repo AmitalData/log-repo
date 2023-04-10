@@ -268,7 +268,8 @@
                                 <tr style="height:223px;">
                                     <td>
                                         <div class="MediaFill" style="overflow-x: hidden;">
-                                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="DataContext.PackageItemsList" [Disabled]="!DataContext.IsEditingEnabled" (RowEnded)="DataContext.OnRowEnded($event)">
+                                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="DataContext.PackageItemsList" [Disabled]="!DataContext.IsEditingEnabled" (RowEnded)="DataContext.OnRowEnded($event)"
+                                                                [UseVirtuallization]="DataContext.fatherComponent.IsUsingVirtuallization">
 
                                                 <!-- Description -->
                                                 <log-column [header]="'Description'" [width]="'95'" [Alignment]="'left'">
@@ -390,7 +391,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" id="{{'CancelAirPackage' | IdGeneratorAsyncPipe | async}}" (click)="CancelButtonClicked()">Cancel</button>
+                        <button class="Button" id="{{'CancelAirPackage' | IdGeneratorAsyncPipe | async}}" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -398,7 +399,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" id="{{'OkAirPackage' | IdGeneratorAsyncPipe | async}}" [disabled]="!DataContext.IsEditingEnabled" tabindex="0">Ok</button>
+                        <button class="RedButton" (click)="OkButtonClicked()" id="{{'OkAirPackage' | IdGeneratorAsyncPipe | async}}" [disabled]="!DataContext.IsEditingEnabled" tabindex="0">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

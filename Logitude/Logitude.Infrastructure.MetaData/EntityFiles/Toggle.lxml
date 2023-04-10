@@ -12,6 +12,7 @@
   AvailableInCustomization="false"
   SupportSubEntity="false"
   ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -42,7 +43,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;d7fd&quot;"
+  Code="&quot;a0d4&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -921,15 +922,15 @@
       Description="&quot;Toggle Feature for Digital Portal Required Documents&quot;"
       SearchFields="&quot;RDT,Digital Portal Required Documents&quot;" />
     <Record
-      Code="&quot;DBA&quot;"
-      Name="&quot;Dashboard Analytics&quot;"
-      SearchFields="&quot;DBA,Dashboard Analytics&quot;"
-      Description="&quot;Dashboard Analytics&quot;" />
-    <Record
       Name="&quot;Remove Exception Logic&quot;"
       Code="&quot;REL&quot;"
       SearchFields="&quot;REL,Remove Exception Logic&quot;"
       Description="&quot;Remove Exception Logic&quot;" />
+    <Record
+      Code="&quot;DBA&quot;"
+      Name="&quot;Dashboard Analytics&quot;"
+      SearchFields="&quot;DBA,Dashboard Analytics&quot;"
+      Description="&quot;Dashboard Analytics&quot;" />
     <Record
       Name="&quot;Remove Shared Logistics&quot;"
       Code="&quot;RSL&quot;"
@@ -946,10 +947,35 @@
       SearchFields="&quot;UDD,Upload File using Drag and Drop&quot;"
       Description="&quot;Upload File using Drag and Drop&quot;" />
     <Record
+      Code="&quot;DE2&quot;"
+      Name="&quot;Document Execution WR Version 2&quot;"
+      SearchFields="&quot;DE2,Document Execution WR Version 2&quot;"
+      Description="&quot;Document Execution WR Version 2&quot;" />
+    <Record
+      Code="&quot;ICC&quot;"
+      Name="&quot;AR Invoice Customized Counter&quot;"
+      SearchFields="&quot;ICC,AR Invoice Customized Counter&quot;"
+      Description="&quot;AR Invoice Customized Counter&quot;" />
+    <Record
+      Code="&quot;EVG&quot;"
+      Name="&quot;Enable Virtual Grid&quot;"
+      SearchFields="&quot;EVG,Enable Virtual Grid&quot;"
+      Description="&quot;Enable Virtual Grid&quot;" />
+    <Record
+      Code="&quot;AHS&quot;"
+      Name="&quot;Automation Master House Set Field Value&quot;"
+      SearchFields="&quot;AHS,Automation Master House Set Field Value&quot;"
+      Description="&quot;Automation Master House Set Field Value&quot;" />
+    <Record
       Code="&quot;CPI&quot;"
       Name="&quot;Centralized POD images when convert to PDF files&quot;"
       SearchFields="&quot;CPI,Centralized POD images when convert to PDF files&quot;"
       Description="&quot;Centralized POD images when convert to PDF files&quot;" />
+    <Record
+      Code="&quot;RE2&quot;"
+      Name="&quot;Reports Execution WR Version 2&quot;"
+      SearchFields="&quot;RE2, Reports Execution WR Version 2&quot;"
+      Description="&quot;Reports Execution WR Version 2&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

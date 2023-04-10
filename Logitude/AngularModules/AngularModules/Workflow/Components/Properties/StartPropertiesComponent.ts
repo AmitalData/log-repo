@@ -8,6 +8,7 @@ import { Condition } from "Workflow/Models/Condition";
 import { EntitiesTreeList } from "Workflow/TreeLists/EntitiesTreeList";
 import { ObjectTables } from "Workflow/Utilities/ObjectTables";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
+import { StartTriggerTypes } from "Workflow/Constants/StartTriggerTypes";
 
 @Component({
     templateUrl: "./StartPropertiesComponent.html"
@@ -17,6 +18,7 @@ export class StartPropertiesComponent extends BaseComponent {
 
     public DataContext: any = this;
     public Data: any;
+    public IsNew: boolean;
     public Entity: string = null;
     public EntityId: string = null;
     public Trigger: string = null;
@@ -26,7 +28,6 @@ export class StartPropertiesComponent extends BaseComponent {
     public ValidationErrorsList: string[];
     public IsValidConditions: boolean = true;
     public EntitiesTreeItems: TreeSelectItem[];
-    public ExcludedEntities: string[] = ["Customer", "User", "Opportunity", "ShipmentStoragePricing"];
     public CurrentSession = SessionLocator.SelectedSession;
 
     SetWindowArgs(args: any) {
@@ -54,6 +55,10 @@ export class StartPropertiesComponent extends BaseComponent {
     }
 
     initialize() {
+        this.Data["triggerType"] = StartTriggerTypes.RecordTriggered;
+        
+        this.IsNew = Object.keys(this.Data).length === 0;
+
         this.Entity = this.Data["entity"] || null;
         this.Trigger = this.Data["trigger"] || this.CreateTrigger;
 
@@ -67,14 +72,14 @@ export class StartPropertiesComponent extends BaseComponent {
         this.setUIProperties();
     }
 
-    initializeConditions(reset: boolean = false, forceAdd: boolean = false) {
+    initializeConditions(reset: boolean = false, forceAdd: boolean = false, isGroup: boolean = true) {
         if (reset) {
             this.Conditions = [];
             this.ConditionsOperation = ConditionOperations.And;
         }
 
         if (this.Conditions.length === 0 && (forceAdd || this.Trigger !== this.CreateTrigger)) {
-            let condition = new Condition();
+            let condition = new Condition(isGroup);
             if (this.Trigger !== this.CreateTrigger) {
                 condition.operator = ConditionOperators.Changed;
                 condition.value = "True";
@@ -118,6 +123,8 @@ export class StartPropertiesComponent extends BaseComponent {
     updateEntity(entity: string) {
         let isEntityChanged = this.Data["entity"] !== entity;
         this.Data["entity"] = entity;
+        this.Data["entityLabel"] = ObjectTables.getDisplayNameByName(entity);
+        this.Data["isCustomEntity"] = ObjectTables.getIsCustomByName(entity);
         this.Entity = entity;
         this.EntityId = ObjectTables.getIdByName(entity);
 
@@ -139,6 +146,12 @@ export class StartPropertiesComponent extends BaseComponent {
         }
 
         this.setUIProperties();
+    }
+
+    addCondition(isGroup: boolean = false) {
+        if (this.EntityId) {
+            this.initializeConditions(true, true, isGroup);
+        }
     }
 
     setUIProperties() {

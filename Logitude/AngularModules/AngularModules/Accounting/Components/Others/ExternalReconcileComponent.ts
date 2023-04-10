@@ -147,6 +147,19 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             this.ResetFilters();
         }
     }
+    OpenLedgerTransactionInternalNote(line: any) {
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 450;
+        logWindow.Height = 350;
+        logWindow.Title = TextCodeTranslator.Translate("LedgerTransaction.F.InternalNote");
+        logWindow.WindowArgs = { ledgerTransaction: line };
+        logWindow.Show('./Accounting/Components/Others/LedgerTransactionInternalNotesComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            this.CD.detectChanges();
+            this.CurrentSession.StopBusyIndicator();
+        });
+    }
 
     SetTitles()
     {
@@ -733,6 +746,18 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             ServerSideSortable: true,
             SortByName: 'Notes'
         });
+        this.TransactionsColumns.push({
+            FieldName: 'InternalNote',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("LedgerTransaction.F.InternalNote"), 
+            Styles: { width: '120px' },
+            HtmlListComponentName: 'GlAccountLedgerTransactionsInternalNotesTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsInternalNotesTemplate',
+            IsCustomTemplate: true
+            ,
+            ServerSideSortable: true,
+            SortByName: 'InternalNote'
+        });
 
         ReconcileEventManager.CheckBoxChecked.subscribe(($event) => {
             if (!AppTool.IsNullOrEmpty($event)) {
@@ -1069,7 +1094,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             ServerSideSortable: true,
             SortByName: 'Notes'
         });
-
+       
         ReconcileEventManager.ExtPageCheckBoxChecked.subscribe(($event) => {
             if (!AppTool.IsNullOrEmpty($event)) {
                 var row = $event.line;

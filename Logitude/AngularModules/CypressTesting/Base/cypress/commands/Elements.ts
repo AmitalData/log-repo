@@ -20,19 +20,21 @@ declare global {
             ClickRadio(selector: string): Chainable<Element>
             ValidateElementColor(selector: string, expectedcolor: string): Chainable<Element>
             SelectQuickSearchFirstElement(quickSearchDetails: QuickSearchDetails): Chainable<Element>
+            SelectQuickSearchElement(quickSearchDetails: QuickSearchDetails): Chainable<Element>
             BackButton(contains: string): Chainable<Element>
             getAttached(selector: any): Chainable<Element>
 
             ClickingAfterHovering(LogLovSelector: string, HiddenElementSelector: string): Chainable<Element>
             SelectCheckBox(Selector: string): Chainable<Element>
             SelectDropDownListItem(Selector: string, contain: string): Chainable<Element>
-            SelectDropDownListItem2(Selector: string, contain: string): Chainable<Element>
+            SelectDropDownListItemUsingSearch(Selector: string, contain: string): Chainable<Element>
             SelectDropDownListItemNumber(Selector: string, number: number): Chainable<Element>
             SelectComboDropDownListItem(Selector: string, contain: string, index: number): Chainable<Element>
             SelectDefinedComboDropDownListItem(Selector: string, contain: string, index: number): Chainable<Element>
         }
     }
 }
+
 Cypress.Commands.add("SelectDropDownListItem", (Selector: string, contain: string) => {
     cy.get(Selector).find(BaseSelectors.DownArrow).click()
     cy.get(BaseSelectors.DropDownList).find(BaseSelectors.DropDownListItem).contains(contain).click()
@@ -47,7 +49,7 @@ Cypress.Commands.add("SelectDefinedComboDropDownListItem", (Selector: string, co
     cy.get(Selector).find(BaseSelectors.ComboBoxItem).contains(contain).click()
 })
 
-Cypress.Commands.add("SelectDropDownListItem2", (Selector: string, contain: string) => {
+Cypress.Commands.add("SelectDropDownListItemUsingSearch", (Selector: string, contain: string) => {
     cy.get(Selector).clear({ force: true }).type(contain)
     cy.get(BaseSelectors.DropDownList).find(BaseSelectors.DropDownListItem).contains(contain).click()
 })
@@ -209,6 +211,18 @@ Cypress.Commands.add("SelectQuickSearchFirstElement", (quickSearchDetails: Quick
             cy.get(quickSearchDetails.Selector).focus().clear().type(quickSearchDetails.Value).then(() => {
                 BaseAssertion.AssertStatusCode(quickSearchDetails.RequestAliase, 200);
                 cy.get(BaseSelectors.FirstElementInList).eq(0).click({ force: true });
+            })
+        })
+})
+
+Cypress.Commands.add("SelectQuickSearchElement", (quickSearchDetails: QuickSearchDetails,value: string) => {
+    cy.DefineRequestWait(RestAPI.GET, quickSearchDetails.WaitURL, quickSearchDetails.RequestAliase);
+    cy.get(quickSearchDetails.Selector).parents(quickSearchDetails.Parent).eq(0).find(quickSearchDetails.ParentClass)
+        .within(() => {
+            cy.get(quickSearchDetails.Selector).focus().clear().type(quickSearchDetails.Value).then(() => {
+                BaseAssertion.AssertStatusCode(quickSearchDetails.RequestAliase, 200);
+                cy.contains((quickSearchDetails.Value).replace(/^0+/, '')).click({ force: true });
+               
             })
         })
 })

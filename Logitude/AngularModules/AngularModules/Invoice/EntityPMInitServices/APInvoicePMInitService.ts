@@ -22,7 +22,6 @@ export class APInvoicePMInitService {
             entityPM.BranchId = SessionLocator.LoggedUserPM.BranchId;
             entityPM.LocalCurrencyId = SessionLocator.LocalCurrencyId;
             entityPM.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
-            entityPM.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
             entityPM.SubTotalInLocalCurrency = 0;
             entityPM.SubTotalInInvoiceCurrency = 0;
             entityPM.NewConcurrencyGUID = AppTool.GetNewGuid();

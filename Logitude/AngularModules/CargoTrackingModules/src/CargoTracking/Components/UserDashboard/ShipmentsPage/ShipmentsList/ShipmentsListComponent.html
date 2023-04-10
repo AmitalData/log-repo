@@ -41,13 +41,13 @@
         <div class="hide-mobile shipments-filters" style="margin-left: 20px;">
             <div class="flex-row-space-between">
                 <div>
-                    <multiple-selection #shipmentTypeMultipleSelection class="multipe-select"
+                    <multiple-selection #shipmentTypeMultipleSelection class="multipe-select shipment-type-filters"
                         [MultipleSelectionList]="ShipmentTypeFilters"
                         [Title]="'Transportation Type'" (SelectionChanged)="ShipmentTypeChangedHandler($event)"
                         [UseFixedTitle]="true">
                     </multiple-selection>
-                    <multiple-selection #shipmentDirectionMultipleSelection class="multipe-select"
-                        [MultipleSelectionList]="ShipmentDirectionFilters" [Title]="'Shipment Direction'"
+                    <multiple-selection #shipmentDirectionMultipleSelection class="multipe-select shipment-direction-filters"
+                        [MultipleSelectionList]="ShipmentDirectionFilters" [Title]="'Shipment Method'"
                         (SelectionChanged)="ShipmentDirectionChangedHandler($event)" [UseFixedTitle]="true">
                     </multiple-selection>
                     <multiple-selection #shipmentMoreFiltersMultipleSelection class="multipe-select"
@@ -254,7 +254,7 @@
                     <!-- Shipment Data -->
                     <div *ngIf="shipment" style="width: 100%; height: 100%;"
                         [attr.src]="SetShipmentTypeAndDirectionTooltip(shipment)">
-                        <div class="column mode-icon" [attr.title]="ShipmentTypeAndDirectionTooltip" style="width: 8%;">
+                        <div class="column mode-icon width-icon" [attr.title]="ShipmentTypeAndDirectionTooltip">
                             <div class="circle-image">
                                 <!-- <img class="path " [attr.src]="GetModeIcon(shipment.TransportModeId)" alt=" " /> -->
 
@@ -580,7 +580,7 @@
 
             <li class="mobile-only" [class.expanded]="isShipmentDirectionFilterExpanded">
                 <div class="filter-title"
-                    (click)="isShipmentDirectionFilterExpanded = !isShipmentDirectionFilterExpanded">Shipment Direction
+                    (click)="isShipmentDirectionFilterExpanded = !isShipmentDirectionFilterExpanded">Shipment Method
                 </div>
                 <div class="expand-icon"
                     (click)="isShipmentDirectionFilterExpanded = !isShipmentDirectionFilterExpanded">

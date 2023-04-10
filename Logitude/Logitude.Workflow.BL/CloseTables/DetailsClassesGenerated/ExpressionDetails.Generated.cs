@@ -23,22 +23,13 @@ namespace Logitude.Workflow.BL.CLoseTable
 		    var all = new List<ExpressionDetails>();  
             all.Add(new ExpressionDetails()
             {    
-                Code = "DATEDIF", 
-                Name = "DateDif", 
-                SearchFields = "DATEDIF,DateDif", 
-                Body = "(date1,date2,unit)", 
-                Description = "Calculates the number of days, months, or years between two dates. Can be: Y, M, D", 
-                CategoryCode = "DTE", 
-			});
-			 
-            all.Add(new ExpressionDetails()
-            {    
                 Code = "MIN", 
                 Name = "Min", 
                 SearchFields = "MIN", 
                 Body = "(number1,number2)", 
                 Description = "Return the smallest value from the numbers supplied", 
                 CategoryCode = "MTH", 
+                Title = "Min(number1,number2)", 
 			});
 			 
             all.Add(new ExpressionDetails()
@@ -49,6 +40,7 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Body = "(number1,number2)", 
                 Description = "Return the biggest value from the numbers supplied", 
                 CategoryCode = "MTH", 
+                Title = "Max(number1,number2)", 
 			});
 			 
             all.Add(new ExpressionDetails()
@@ -59,6 +51,7 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Body = "(list)", 
                 Description = "Return the count of list elements", 
                 CategoryCode = "MTH", 
+                Title = "Count(list)", 
 			});
 			 
             all.Add(new ExpressionDetails()
@@ -69,6 +62,7 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Body = "(time1,time2,unit)", 
                 Description = "Calculates the number of hours, minutes, or seconds between two dates. Can be: H, M, S", 
                 CategoryCode = "DTE", 
+                Title = "TimeDif(time1,time2,unit)", 
 			});
 			 
             all.Add(new ExpressionDetails()
@@ -79,6 +73,7 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Body = "()", 
                 Description = "Returns Datetime.Now", 
                 CategoryCode = "DTE", 
+                Title = "Now()", 
 			});
 			 
             all.Add(new ExpressionDetails()
@@ -89,6 +84,7 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Body = "()", 
                 Description = "Returns the current date", 
                 CategoryCode = "DTE", 
+                Title = "Today()", 
 			});
 			 
             all.Add(new ExpressionDetails()
@@ -97,8 +93,9 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Name = "Day", 
                 SearchFields = "DAY,Day", 
                 Body = "(date)", 
-                Description = "Returns a day from dateTime", 
+                Description = "Returns a day of the month in the form of a number between 1 and 31.", 
                 CategoryCode = "DTE", 
+                Title = "Day(date)", 
 			});
 			 
             all.Add(new ExpressionDetails()
@@ -107,8 +104,9 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Name = "Month", 
                 SearchFields = "MONTH,Month", 
                 Body = "(date)", 
-                Description = "Returns a month from dateTime", 
+                Description = "Returns the month, a number between 1 (January) and 12 (December) in number format of a given date.", 
                 CategoryCode = "DTE", 
+                Title = "Month(date)", 
 			});
 			 
             all.Add(new ExpressionDetails()
@@ -119,6 +117,7 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Body = "(date)", 
                 Description = "Returns a year from dateTime", 
                 CategoryCode = "DTE", 
+                Title = "Year(date)", 
 			});
 			 
             all.Add(new ExpressionDetails()
@@ -129,6 +128,7 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Body = "(string)", 
                 Description = "Returns DateTime value from string", 
                 CategoryCode = "DTE", 
+                Title = "ToDateTime(string)", 
 			});
 			 
             all.Add(new ExpressionDetails()
@@ -139,6 +139,73 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Body = "(date)", 
                 Description = "Takes a date and returns a number between 1-7 representing the day of week", 
                 CategoryCode = "DTE", 
+                Title = "WeekDay(date)", 
+			});
+			 
+            all.Add(new ExpressionDetails()
+            {    
+                Name = "DateDif", 
+                SearchFields = "DAYS,Days", 
+                Code = "DAYS", 
+                Body = "(Start_date,End_date, 'D')", 
+                Description = "Calculate the number of days between two dates.", 
+                CategoryCode = "DTE", 
+                Title = "Days(Start_date,End_date)", 
+			});
+			 
+            all.Add(new ExpressionDetails()
+            {    
+                Name = "DateDif", 
+                SearchFields = "MONTHS,Months", 
+                Code = "MONTHS", 
+                Body = "(Start_date,End_date, 'M')", 
+                Description = "Calculate the number of months between two dates.", 
+                CategoryCode = "DTE", 
+                Title = "Months(Start_date,End_date)", 
+			});
+			 
+            all.Add(new ExpressionDetails()
+            {    
+                Name = "DateDif", 
+                SearchFields = "YEARS,Years", 
+                Code = "YEARS", 
+                Body = "(Start_date,End_date, 'Y')", 
+                Description = "Calculate the number of years between two dates.", 
+                CategoryCode = "DTE", 
+                Title = "Years(Start_date,End_date)", 
+			});
+			 
+            all.Add(new ExpressionDetails()
+            {    
+                Code = "LOWER", 
+                Name = "Lower", 
+                SearchFields = "LOWER,Lower", 
+                Body = "(text)", 
+                Description = "Convert all letters in the value to lower case.", 
+                CategoryCode = "TXT", 
+                Title = "Lower(text)", 
+			});
+			 
+            all.Add(new ExpressionDetails()
+            {    
+                Code = "UPPER", 
+                Name = "Upper", 
+                SearchFields = "UPPER,Upper", 
+                Body = "(text)", 
+                Description = "Convert all letters in the value to upper case.", 
+                CategoryCode = "TXT", 
+                Title = "Upper(text)", 
+			});
+			 
+            all.Add(new ExpressionDetails()
+            {    
+                Name = "Concat", 
+                SearchFields = "CONCAT,Concat", 
+                Code = "CONCAT", 
+                Body = "(value1,value2,...)", 
+                Description = "Concates values.", 
+                CategoryCode = "TXT", 
+                Title = "Concat(value1,value2,...)", 
 			});
 			
             return all;
@@ -151,12 +218,13 @@ namespace Logitude.Workflow.BL.CLoseTable
 			newPoco.SearchFields = GetSearchFields(this);   
 		    newPoco.Body = this.Body;  
 		    newPoco.Description = this.Description;  
-		    newPoco.CategoryCode = this.CategoryCode;   
+		    newPoco.CategoryCode = this.CategoryCode;  
+		    newPoco.Title = this.Title;   
         }
 
 		public string GetSearchFields(Expression rec)
         {   
-           return String.Concat(rec.Code,",",rec.Name,",",rec.Body,",",rec.Description,",",rec.CategoryCode,",");
+           return String.Concat(rec.Code,",",rec.Name,",",rec.Body,",",rec.Description,",",rec.CategoryCode,",",rec.Title,",");
         }
    }
 }

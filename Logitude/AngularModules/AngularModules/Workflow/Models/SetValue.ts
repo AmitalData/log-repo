@@ -1,6 +1,7 @@
-import { ExpressionValue } from "Workflow/Types";
+import { ExpressionValue, SetValueDisabled } from "Workflow/Types";
 
 export class SetValue {
+    public id: number;
     public field: string;
     public fieldCode: string;
     public type: string;
@@ -9,12 +10,13 @@ export class SetValue {
     public operator: string;
     public value: string;
     public expressionValue: ExpressionValue;
-    public isDisabled: boolean;
+    public disabled: SetValueDisabled;
     public fieldChangedToggle: boolean;
     public fieldUsedFrom: string | null;
     public valueUsedFrom: string | null;
 
     constructor() {
+        this.id = null;
         this.field = null;
         this.fieldCode = null;
         this.type = null;
@@ -23,7 +25,7 @@ export class SetValue {
         this.operator = null;
         this.value = null;
         this.expressionValue = null;
-        this.isDisabled = false;
+        this.disabled = null;
         this.fieldChangedToggle = false;
         this.fieldUsedFrom = null;
         this.valueUsedFrom = null;

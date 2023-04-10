@@ -1,7 +1,6 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
-import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
 import { SetValueOperators } from "Workflow/Constants/SetValueOperators";
 import { FlowVariablesTreeList } from "Workflow/TreeLists/FlowVariablesTreeList";
@@ -11,6 +10,9 @@ import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 import { ExpressionValue } from "Workflow/Types";
 import { ObjectFieldPipe } from "Workflow/Pipes/ObjectFieldPipe";
 import { IsNoObjectFieldVariablePipe } from "Workflow/Pipes/IsNoObjectFieldVariablePipe";
+import { ObjectFieldsTreeList } from "Workflow/TreeLists/ObjectFieldsTreeList";
+import { SetValueDisabledPipe } from "Workflow/Pipes/SetValueDisabledPipe";
+import { FieldApiQueryFilter } from "Workflow/Models/FieldApiQueryFilter";
 
 @Component({
     selector: "SetValues",
@@ -24,26 +26,34 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
     @Input() CurrentNodeId: string;
     @Input() EntityId: string;
     @Input() IsEntityField: boolean = false;
+    @Input() FieldApiQueryFilters: FieldApiQueryFilter[] = null;
 
     @Output() IsValidSetValuesChange = new EventEmitter<boolean>();
 
     public DataContext: any = this;
     public IsValidSetValues: boolean = true;
+    public SetValuesCounter: number = 1;
 
-    public FlowVariablesTreeList: FlowVariablesTreeList;
+    public ComboBoxMaxHeight: number = 120;
+
     public FlowVariablesTreeItems: TreeSelectItem[];
+    public ObjectFieldsTreeItems: TreeSelectItem[];
 
     constructor() {
         super();
     }
 
     ngOnInit() {
+        this.initializeSetValuesIds();
         this.initializeFlowVariablesTree();
         this.IsValidSetValues = this.isValidSetValues();
         this.IsValidSetValuesChange.emit(this.IsValidSetValues);
     }
 
-    ngOnChanges() {
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes && changes.EntityId && changes.EntityId.currentValue !== changes.EntityId.previousValue && this.IsEntityField) {
+            this.ObjectFieldsTreeItems = new ObjectFieldsTreeList(changes.EntityId.currentValue).Items;
+        }
         this.setValuesChanged();
     }
 
@@ -51,24 +61,24 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         let props = {
             ShowRecordsVariables: true,
             ShowDeclaredVariables: true,
-            ShowRecordsCollectionVariables: false,
-            ShowDeclaredCollectionVariables: true,
-            OnlyCurrentLoopItemVariables: false,
-            IsObjectVariableSelectable: true,
-            IsNoChildrenObjectVariables: false
+            //ShowDeclaredCollectionVariables: true,
+            ShowGlobalVariables: true,
+            IsObjectVariableSelectable: true
         };
-        this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props);
-        this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;
+        this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props).Items;
     }
 
-    setValuesChanged() {
+    setValuesChanged(event: any = null) {
         this.IsValidSetValues = this.isValidSetValues();
         this.IsValidSetValuesChange.emit(this.IsValidSetValues);
+        if (event === "add") {
+            this.increaseSetValuesCounter();
+        }
     }
 
     isValidSetValues() {
         let result = true;
-        for (let setValues of (this.SetValues)) {
+        for (let setValues of this.SetValues) {
             if (setValues.operator === SetValueOperators.Expression) {
                 if (!setValues.field || !setValues.expressionValue || !setValues.expressionValue.expression || setValues.expressionValue.expression === "") {
                     result = false;
@@ -84,7 +94,8 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         return result;
     }
 
-    updateSetValueEntityField(objectField: ObjectFieldPM, setValueIndex: number) {
+    updateSetValueEntityField(objectFieldItem: TreeSelectItem, setValueIndex: number) {
+        let objectField = objectFieldItem ? (objectFieldItem.data["objectField"] || null) : null;
         if (objectField?.FieldCode !== this.SetValues[setValueIndex]?.fieldCode) {
             if (objectField) {
                 this.updateSetValueFieldByObjectField(objectField, setValueIndex);
@@ -101,7 +112,9 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
             if (field) {
                 if (this.isNoObjectFieldVariable(field)) {
                     let fieldType = fieldItem.data["type"] || null;
-                    this.updateSetValueFieldByDeclaredVariableField(field, fieldType, setValueIndex);
+                    let lookupType = fieldItem.data["lookupType"] || null;
+                    let picklistType = fieldItem.data["picklistType"] || null;
+                    this.updateSetValueFieldByDeclaredVariableField(field, fieldType, lookupType, picklistType, setValueIndex);
                 } else {
                     let objectField = this.getObjectField(field);
                     this.updateSetValueFieldByObjectField(objectField, setValueIndex, field);
@@ -119,7 +132,7 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         }
     }
 
-    updateSetValueFieldByObjectField(objectField: ObjectFieldPM | ObjectFieldList, setValueIndex: number, field: string | null = null) {
+    updateSetValueFieldByObjectField(objectField: ObjectFieldList, setValueIndex: number, field: string | null = null) {
         this.SetValues[setValueIndex].fieldCode = field ? field : (objectField ? objectField.FieldCode : null);
         this.SetValues[setValueIndex].field = field ? field : (objectField ? objectField.FieldName : null);
         this.SetValues[setValueIndex].type = objectField ? objectField.DataTypeCode : null;
@@ -130,12 +143,12 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         this.SetValues[setValueIndex].fieldChangedToggle = !this.SetValues[setValueIndex].fieldChangedToggle;
     }
 
-    updateSetValueFieldByDeclaredVariableField(field: string, fieldType: string, setValueIndex: number) {
+    updateSetValueFieldByDeclaredVariableField(field: string, fieldType: string, lookupType: string, picklistType: string, setValueIndex: number) {
         this.SetValues[setValueIndex].fieldCode = field ? field : null;
         this.SetValues[setValueIndex].field = field ? field : null;
         this.SetValues[setValueIndex].type = fieldType;
-        this.SetValues[setValueIndex].lookupType = null;
-        this.SetValues[setValueIndex].picklistType = null;
+        this.SetValues[setValueIndex].lookupType = lookupType;
+        this.SetValues[setValueIndex].picklistType = picklistType;
         this.SetValues[setValueIndex].operator = this.getSetValueDefaultOperator(fieldType);
         this.SetValues[setValueIndex].value = null;
         this.SetValues[setValueIndex].fieldChangedToggle = !this.SetValues[setValueIndex].fieldChangedToggle;
@@ -182,14 +195,16 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
     addSetValue() {
         if (this.IsValidSetValues) {
             let setvalue = new SetValue();
+            setvalue.id = this.SetValuesCounter;
             this.SetValues.push(setvalue);
-            this.setValuesChanged();
+            this.setValuesChanged("add");
         }
     }
 
     deleteSetValue(setValueIndex: number) {
         let setValue = this.SetValues[setValueIndex];
-        if (setValue && !setValue.isDisabled) {
+        let isDeleteDisabled = setValue ? (new SetValueDisabledPipe().transform(setValue.disabled, "d")) : false;
+        if (setValue && !isDeleteDisabled) {
             this.SetValues.splice(setValueIndex, 1);
             this.setValuesChanged();
         }
@@ -197,9 +212,9 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
 
     getSetValueDefaultOperator(setValueType: string) {
         if (setValueType) {
-            if (setValueType.toString().endsWith("[]")) {
-                return SetValueOperators.EqualsCollection;
-            }
+            // if (setValueType.toString().endsWith("[]")) {
+            //     return SetValueOperators.EqualsCollection;
+            // }
             let types = Object.values(FieldTypes).map((type) => (type as string));
             if (!types.includes(setValueType)) {
                 return SetValueOperators.EqualsRecord;
@@ -214,5 +229,16 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
 
     getObjectField(field: string) {
         return new ObjectFieldPipe().transform(field);
+    }
+
+    initializeSetValuesIds() {
+        for (let setValue of this.SetValues) {
+            setValue.id = this.SetValuesCounter;
+            this.increaseSetValuesCounter();
+        }
+    }
+
+    increaseSetValuesCounter() {
+        this.SetValuesCounter++;
     }
 }

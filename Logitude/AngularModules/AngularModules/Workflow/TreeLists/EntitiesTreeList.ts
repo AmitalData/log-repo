@@ -22,7 +22,8 @@ export class EntitiesTreeList {
 
     private setChildEntitiesTreeItems() {
         Entities.getChildren().forEach(childEntity => {
-            let entityItem = new TreeSelectItem(childEntity.Code, childEntity.Name, true, true, false, false, []);
+            let data = { entity: childEntity.Code, isCustom: childEntity.IsCustom };
+            let entityItem = new TreeSelectItem(childEntity.Code, childEntity.Name, true, true, false, false, [], data);
             this.Items.push(entityItem);
         });
     }
@@ -31,16 +32,17 @@ export class EntitiesTreeList {
         Entities.getParents().forEach(entity => {
             let onlyParentEntities = this.EntitiesType === "parent";
             let childrenItems = onlyParentEntities ? [] : this.getChildrenItems(entity.Code);
-            let entityItem = new TreeSelectItem(entity.Code, entity.Name, onlyParentEntities, true, !onlyParentEntities, false, childrenItems);
+            let data = { entity: entity.Code, isCustom: entity.IsCustom };
+            let entityItem = new TreeSelectItem(entity.Code, entity.Name, onlyParentEntities, true, !onlyParentEntities, false, childrenItems, data);
             this.Items.push(entityItem);
         });
     }
 
-    private getChildrenItems(parentEntityCode: string) {
+    private getChildrenItems(parentEntity: string) {
         let childrenItems = [];
-        let childEntities = Entities.getChildren().filter(e => e.ParentEntityCode === parentEntityCode);
-        childEntities.forEach(childEntity => {
-            let childrenItem = new TreeSelectItem(childEntity.Code, childEntity.Name, true, true, false, false, []);
+        Entities.getChildren(parentEntity).forEach(childEntity => {
+            let data = { entity: childEntity.Code, isCustom: childEntity.IsCustom };
+            let childrenItem = new TreeSelectItem(childEntity.Code, childEntity.Name, true, true, false, false, [], data);
             childrenItems.push(childrenItem);
         });
         return childrenItems;

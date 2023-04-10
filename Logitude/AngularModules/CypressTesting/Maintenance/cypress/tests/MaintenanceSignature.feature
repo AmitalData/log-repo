@@ -1,4 +1,4 @@
-@devrelease
+@release3
 Feature: Edit Signature from Maintenance
     The user could edit signature  and add new data fields to the signature
 

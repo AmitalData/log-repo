@@ -557,6 +557,8 @@ namespace WebFreight.Web
             LogitudeSettings.AzurePrincipalSecretKey = setting.AzurePrincipalSecretKey;
             LogitudeSettings.DNSZone = setting.DNSZone;
             LogitudeSettings.DNSIPAddress = setting.DNSIPAddress;
+            LogitudeSettings.WorkflowStorageAccountName = setting.WorkflowStorageAccountName;
+            LogitudeSettings.WorkflowStorageAccountKey = setting.WorkflowStorageAccountKey;
             LogitudeSettings.System2RedirectFraction = setting.System2RedirectFraction;
         }
 

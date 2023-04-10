@@ -63,6 +63,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
     public CardListService: CardListService;
     public IsNewInvoiceVisible: boolean = false;
     public IsNewCreditNoteVisible: boolean = false;
+    public IsUsingVirtuallization: boolean = false;
     constructor(private entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -73,6 +74,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
         this.ProfitCurrencyCode = this.EntityPM.ProfitCurrencyCode;
         this.LocalCurrencyId = SessionLocator.LocalCurrencyId;
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
+        this.SetIsUsingVirtuallization();
         this.ItemsSource = new ObservableCollection([]);
         this.myDomainService = new ShipmentDomainService();
         this.CommonDomainService = new CommonDomainService();
@@ -83,6 +85,13 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
         this.SetEditEnabled();
         this.LoadRequiredData();
         this.CheckUpdateQuantities();
+    }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
     }
 
     private Initialize() {

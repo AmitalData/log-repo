@@ -22,6 +22,7 @@ using System.Web.Script.Serialization;
 using WebFreight.Web.Controllers.WorkflowModel.Models;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Helpers.Workflow;
 using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Controllers.WorkflowModel.Extended.FlowEntities
@@ -30,32 +31,36 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Extended.FlowEntities
     {
         public HttpResponseMessage GetSingle(string id)
         {
+            int tenant = 0;
+
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                int tenant = authToken.Tenant;
+                tenant = authToken.Tenant;
 
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
                 ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(id, tenant);
 
-                return Request.CreateResponse(HttpStatusCode.OK, shipmentPM); ;
+                return Request.CreateResponse(HttpStatusCode.OK, shipmentPM);
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                return Request.CreateResponse(HttpStatusCode.BadRequest, WorkflowApiExceptionBuilder.BuildException(ex, tenant));
             }
         }
 
         public HttpResponseMessage PostByFilterTree(ApiQueryTreeFilters apiQueryTreeFilters)
         {
+            int tenant = 0;
+
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                int tenant = authToken.Tenant;
+                tenant = authToken.Tenant;
 
                 ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
                 ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
@@ -85,12 +90,14 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Extended.FlowEntities
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                return Request.CreateResponse(HttpStatusCode.BadRequest, WorkflowApiExceptionBuilder.BuildException(ex, tenant));
             }
         }
 
         public HttpResponseMessage Post(ShipmentPM entityPM)
         {
+            int tenant = 0;
+
             if (ModelState.IsValid)
             {
                 try
@@ -100,7 +107,7 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Extended.FlowEntities
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        int tenant = authToken.Tenant;
+                        tenant = authToken.Tenant;
 
                         IShipmentsContext objectContext = ShipmentsContext.GetContext(entityPM.Tenant);
                         ShipmentService service = new ShipmentService(objectContext, entityPM, SecurityUtility.GetAuthenticatedUser());
@@ -118,7 +125,7 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Extended.FlowEntities
 
                 catch (Exception ex)
                 {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, WorkflowApiExceptionBuilder.BuildException(ex, tenant));
                 }
             }
             else
@@ -129,6 +136,8 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Extended.FlowEntities
 
         public HttpResponseMessage Patch(string id, JsonPatchDocument<ShipmentPM> shipmentJsonPatch)
         {
+            int tenant = 0;
+
             try
             {
                 using (TransactionScope transactionScope = TransactionFactory.GetTransaction())
@@ -136,7 +145,7 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Extended.FlowEntities
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    int tenant = authToken.Tenant;
+                    tenant = authToken.Tenant;
 
                     IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
                     ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
@@ -161,7 +170,7 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Extended.FlowEntities
             }
             catch (Exception exception)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(exception));
+                return Request.CreateResponse(HttpStatusCode.BadRequest, WorkflowApiExceptionBuilder.BuildException(exception, tenant));
             }
         }
     }

@@ -68,9 +68,10 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				ChargesTypeRepository  chargesTypeRepository = new ChargesTypeRepository(MyContext);
+				
 				ChargesTypeQuery  chargesTypeQuery = new ChargesTypeQuery(chargesTypeRepository);
-                IQueryable<ChargesType> chargesTypes = chargesTypeRepository.GetChargesTypes(authToken.Tenant).Where(a=>a.Id == id);
-                ChargesTypeList entityList = chargesTypeQuery.GetIQueryableEntityList(chargesTypes).FirstOrDefault();
+				IQueryable<ChargesType> chargesTypes = chargesTypeRepository.GetChargesTypes(authToken.Tenant).Where(a=>a.Id == id);
+				ChargesTypeList entityList = chargesTypeQuery.GetIQueryableEntityList(chargesTypes).FirstOrDefault();
 				if (entityList != null)
 				{
                 	CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);

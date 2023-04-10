@@ -52,7 +52,8 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
     private deletedLinesExpirationDates: TariffLineExpirationDatePM[];
     public selectedRow: any;
     public changeScrollPosition: EventEmitter<any> = new EventEmitter();
-  @Output() ReloadDetails = new EventEmitter();
+    @Output() ReloadDetails = new EventEmitter();
+    public IsUsingVirtuallization: boolean = false;
   public LinesCount: number;
 
     constructor(public entityArgs: EntityArgs) {
@@ -68,6 +69,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
 
     public LineIdFromPriceCheck: string;
     Intialize(args: any) {
+        this.SetIsUsingVirtuallization();
         this.TariffsLinesSource = new ObservableCollection([]);
         this.TariffDomainService = new TariffDomainService();
         this.deletedLinesExpirationDates = [];
@@ -113,6 +115,13 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
 
         if (this.IsDraftVersion) {
             this.IsComparToChecked = true;
+        }
+    }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
         }
     }
 

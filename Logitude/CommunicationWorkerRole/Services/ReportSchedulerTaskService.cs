@@ -38,6 +38,7 @@ using System.Transactions;
 using WebFreight.Web.DataProviders;
 using WebFreight.Web.Helpers;
 using Logitude.Accounting.Data.Repositories;
+using System.Web;
 
 namespace CommunicationWorkerRole.Services
 {
@@ -200,7 +201,7 @@ namespace CommunicationWorkerRole.Services
             if (result.IsValid && gLAccountBalanceInLocalValidateResult.IsValid)
             {
                 this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents"));
-                SendHtmlDocument(documentId, reportRecepients, reportTask);
+                SendHtmlDocument(new SendHtmlDocumentArgs() { documentId = documentId, recepients = reportRecepients, reportTask = reportTask, stiReport = stiReport });
                 this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents finished successfully"));
             }
             else
@@ -681,17 +682,101 @@ namespace CommunicationWorkerRole.Services
 
             return inactivePartnerCounts;
         }
-        private void SendHtmlDocument(string documentId, ReportSchedulerRecepients recepients, TasksSchedulerPM reportTask)
+        private void SendHtmlDocument(SendHtmlDocumentArgs args)
         {
             HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
-            System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
-            Byte[] htmlData = enc.GetBytes("");
-            string reportTableId = GetReportTableId(reportTask.Tenant);
-            htmlEditorHelper.SendHtmlDocument(htmlData, null, null, reportTask.Tenant, recepients.To, reportTask.Name, recepients.Cc, recepients.Bcc, reportTask.CreatedBy, reportTask.EntityId, reportTableId, documentId + ",", "", "", "");
+            SchedulerDetails schedulerDetails = GetSchedulerDetails(args.reportTask); 
+            EmailDetails emailDetails = GetEmailDetailsByMessageTemplateId(new GetEmailDetailsByMessageTemplateIdArgs() { messageTemplateId = schedulerDetails.ReportDetails.MessageTemplateId, tenant = args.reportTask.Tenant, userId = args.reportTask.CreatedBy, stiReport = args.stiReport });
+            string reportTableId = GetReportTableId(args.reportTask.Tenant);
+            string subject = !string.IsNullOrEmpty(emailDetails.Subject) ? emailDetails.Subject : args.reportTask.Name;
+            htmlEditorHelper.SendHtmlDocument(emailDetails.Body, null, null, args.reportTask.Tenant, args.recepients.To, subject, args.recepients.Cc, args.recepients.Bcc, args.reportTask.CreatedBy, args.reportTask.EntityId, reportTableId, args.documentId + ",", "", "", "");
             this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
             this.trackerCounter += 1;
         }
+        public EmailDetails GetEmailDetailsByMessageTemplateId(GetEmailDetailsByMessageTemplateIdArgs args)
+        {
+            if (string.IsNullOrEmpty(args.messageTemplateId) || string.IsNullOrWhiteSpace(args.messageTemplateId))
+            {
+                return GetInstanceOfEmailDetails();
+            }
+            return GetEmailDetails(new GetEmailDetailsArgs() { messageTemplateId = args.messageTemplateId, tenant = args.tenant, userId = args.userId, stiReport = args.stiReport });
+        }
 
+        private EmailDetails GetEmailDetails(GetEmailDetailsArgs args)
+        {
+            ReportsTemplatesVersionRepository reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(args.tenant);
+            string documentId = reportsTemplatesVersionRepository.GetReportDocumentIdByReportTemplateId(args.messageTemplateId, args.tenant);
+            ReportsTemplateQuery reportsTemplateQuery = new ReportsTemplateQuery(args.tenant);
+            ReportsTemplatePM reportsTemplatePM = reportsTemplateQuery.GetSinglePM(args.messageTemplateId, args.tenant);
+            EmailDetails emailDetails = GetInstanceOfEmailDetails();
+
+            if (string.IsNullOrEmpty(documentId)) return emailDetails;
+            string html = GetHtmlBody(args.tenant, documentId);
+
+            HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
+            string subject = reportsTemplatePM != null ? reportsTemplatePM.Subject : null;
+            string from = null;
+            string replyTo = null;
+            string cc = null;
+            UTF8Encoding utf8Encoding = new UTF8Encoding();
+
+            object dataProvider = GetDataProviderFromStiReport(args.stiReport);
+            string dataProviderName = GetDataProviderNameFromStiReport(args.stiReport);
+            html = htmlEditorHelper.ResolveDataProviderHtml(new DataProviderResolverArgs() { htmlValue = html, dataProvider = dataProvider, dataProviderName = dataProviderName });
+            subject = htmlEditorHelper.ResolveDataProviderHtml(new DataProviderResolverArgs() { htmlValue = subject, dataProvider = dataProvider, dataProviderName = dataProviderName });
+            string htmlstring = htmlEditorHelper.ResolveSystemDataHtml(html, args.userId, ref subject, ref from, ref replyTo, ref cc, args.tenant);     
+            emailDetails.Body = utf8Encoding.GetBytes(htmlstring);
+            emailDetails.Subject = subject;
+            return emailDetails;
+        }
+
+        private object GetDataProviderFromStiReport(StiReport stiReport)
+        {
+            if (stiReport == null) return null;
+            if (stiReport.BusinessObjectsStore == null) return null;
+            if (stiReport.BusinessObjectsStore[0] == null) return null;
+            return stiReport.BusinessObjectsStore[0].BusinessObjectValue;
+        }
+
+        private string GetDataProviderNameFromStiReport(StiReport stiReport)
+        {
+            if (stiReport == null) return null;
+            if (stiReport.BusinessObjectsStore == null) return null;
+            if (stiReport.BusinessObjectsStore[0] == null) return null;
+            return stiReport.BusinessObjectsStore[0].Name;
+        }
+
+        private static string GetHtmlBody(int tenant, string documentId)
+        {
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            BlobFileInfo fileInfo = new BlobFileInfo()
+            {
+                FileName = documentId,
+                FolderName = "reports",
+                Extension = "html",
+                Tenant = tenant,
+
+            };
+
+            var fileData = storageservice.Read(fileInfo);
+            string html = string.Empty;
+            if (fileData != null)
+            {
+                html = System.Text.Encoding.UTF8.GetString(fileData);
+            }
+
+            return html;
+        }
+
+        private static EmailDetails GetInstanceOfEmailDetails()
+        {
+            UTF8Encoding utf8Encoding = new UTF8Encoding();
+            return new EmailDetails()
+            {
+                Body = utf8Encoding.GetBytes(""),
+                Subject = null
+            };
+        }
         private string GetReportTableId(int tenant)
         {
             ObjectTableQuery objectTableQuery = new ObjectTableQuery(tenant);
@@ -737,6 +822,32 @@ namespace CommunicationWorkerRole.Services
         public string Format;
         public int Tenant;
         public byte[] ByteData;
+    }
+    public class SendHtmlDocumentArgs
+    {
+        public string documentId;
+        public ReportSchedulerRecepients recepients;
+        public TasksSchedulerPM reportTask;
+        public StiReport stiReport;
+    }
+    public class GetEmailDetailsByMessageTemplateIdArgs
+    {
+        public string messageTemplateId;
+        public int tenant;
+        public string userId;
+        public StiReport stiReport;
+    }
+    public class GetEmailDetailsArgs
+    {
+        public string messageTemplateId;
+        public int tenant;
+        public string userId;
+        public StiReport stiReport;
+    }
+    public class EmailDetails
+    {
+        public byte[] Body;
+        public string Subject;
     }
 }
 

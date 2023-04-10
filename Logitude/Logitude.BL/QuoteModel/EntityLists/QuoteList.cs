@@ -57,11 +57,13 @@ namespace Logitude.BL.QuoteModel.EntityLists
         
         public string FromPort { get; set; }
         public string FromPortName { get; set; }
+        public string FromPortNameCode { get; set; }
         public string FromPortCountry { get; set; }
         public string FromCountryCode { get; set; }
         
         public string ToPort { get; set; }
         public string ToPortName { get; set; }
+        public string ToPortNameCode { get; set; }
         public string ToPortCountry { get; set; }
         public string ToCountryCode { get; set; }
 
@@ -249,6 +251,9 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public string ValidByTypeName { get; set; }
         public bool? ConnectedToOpportunity { get; set; }
         public string QuoteClosingReasonNotes { get; set; }
+        public string DigitalPortalSearchFields { get; set; }
+        public string StageCode { get; set; }
+        public bool IsExpired { get; set; }
 
     }
 }

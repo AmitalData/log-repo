@@ -3,6 +3,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -73,7 +74,8 @@ namespace Logitude.BL.Helpers
             string callBackDetailsXml = !string.IsNullOrEmpty(buildDocsOutArgs.CallBackDetailsXml )? buildDocsOutArgs.CallBackDetailsXml: "";
             DocumentsExecutionLog documentsExecutionLog = GetNewInStanceFromDocumentsExecutionLog(args);
             IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("DocumentsExecutionQueue", documentsExecutionLog.Tenant);
+            string documentsExecutionQueueCode = FeatureToggleHelper.HasFeatureToggle("DE2", documentsExecutionLog.Tenant) ? "DocumentsExecutionV2Queue" : "DocumentsExecutionQueue";
+            queueservice.InitializeQueue(documentsExecutionQueueCode, documentsExecutionLog.Tenant);
             Dictionary<string, string> queueMessage = new Dictionary<string, string>() {
                 { "DocumentsExecutionLogId", documentsExecutionLog.Id },
                 { "Tenant", documentsExecutionLog.Tenant.ToString() }

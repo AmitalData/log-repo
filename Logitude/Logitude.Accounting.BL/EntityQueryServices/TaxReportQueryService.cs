@@ -51,17 +51,17 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public IQueryable<TaxReportLine> GetReportLines(string taxReportId, int tenant)
         {
-            var sameReferenceAndOppositeVatLines = context.TaxReportLines.Where(x => x.TaxReportId == taxReportId && x.Tenant == tenant && x.VatAmount != 0)
-                   .GroupBy(x => new { reference = x.Reference, vatAmount = Math.Abs(x.VatAmount.Value) }).Where(g => g.Count() > 1).ToList();
+            //var sameReferenceAndOppositeVatLines = context.TaxReportLines.Where(x => x.TaxReportId == taxReportId && x.Tenant == tenant && x.VatAmount != 0)
+                   //.GroupBy(x => new { reference = x.Reference, vatAmount = Math.Abs(x.VatAmount.Value) }).Where(g => g.Count() > 1).ToList();
 
             IQueryable<TaxReportLine> query = (from a in context.TaxReportLines
                                                where a.TaxReportId == taxReportId && a.Tenant == tenant
                                                select a);
-            if (sameReferenceAndOppositeVatLines.Count > 0)
+            /*if (sameReferenceAndOppositeVatLines.Count > 0)
             {
                 var taxReportLinesReferences = sameReferenceAndOppositeVatLines.Select(x => x.Key.reference);
                 query = query.Where(x => !taxReportLinesReferences.Contains(x.Reference));
-            }
+            }*/
             return query;
         }
         public List<TaxReportLinePM> GetReportLinesPMs(string taxReportId, int tenant)

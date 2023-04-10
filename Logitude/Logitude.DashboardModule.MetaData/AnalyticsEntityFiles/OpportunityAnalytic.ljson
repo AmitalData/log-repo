@@ -1,5 +1,5 @@
 {
-  "HashString": "ca59fa6564bb491696a0a98c7070a707",
+  "HashString": "b51e26c6eee941f7b6a9ac00c5da17b3",
   "Name": "Opportunity Statistics",
   "TableName": "OpportunityAnalytics",
   "ObjectTableName": "Opportunity",
@@ -144,7 +144,8 @@
       "JoinedTableName": "Rating",
       "JoinedTableDBName": "Ratings",
       "JoinedTableKey": "Code",
-      "JoinedTableDisplayField": "Name"
+      "JoinedTableDisplayField": "Name",
+      "AllowTenantZeroFilter": true
     },
     {
       "HashString": "959515575e4e481e969f8730bc92c4ca",
@@ -232,7 +233,8 @@
       "JoinedTableName": "ActivityType",
       "JoinedTableDBName": "ActivityTypes",
       "JoinedTableKey": "Code",
-      "JoinedTableDisplayField": "Name"
+      "JoinedTableDisplayField": "Name",
+      "AllowTenantZeroFilter": true
     },
     {
       "HashString": "6a30fb574a0d44488f279ad721ae28c9",
@@ -260,7 +262,8 @@
       "JoinedTableName": "ActivityType",
       "JoinedTableDBName": "ActivityTypes",
       "JoinedTableKey": "Code",
-      "JoinedTableDisplayField": "Name"
+      "JoinedTableDisplayField": "Name",
+      "AllowTenantZeroFilter": true
     },
     {
       "HashString": "6a30fb574a0d44488f279ad721ae28c9",

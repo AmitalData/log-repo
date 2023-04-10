@@ -3609,6 +3609,30 @@ namespace Logitude.Accounting.Def.EntityPMs
 
 			}
 		}
+
+		private double? creditLimitDifference;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public double? CreditLimitDifference
+		{
+
+			get
+			{
+				return creditLimitDifference;
+			}
+			set
+			{
+				if (creditLimitDifference != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "CreditLimitDifference", OldValue = creditLimitDifference, NewValue = value, PropertyType = "double?" };
+					NotifyPropertyChanged(values);
+					creditLimitDifference = value;
+				}
+
+			}
+		}
 	}
    
 }

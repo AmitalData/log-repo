@@ -34,7 +34,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         }
         public List<ARInvoiceLinePM> GetGLAccountLocalNameAndDisplayNumber(List<ARInvoiceLinePM> lines, string invoiceId, int tenant)
         {
-            IAccountingContext context = AccountingContext.GetContext(tenant);
+            IAccountingContext context = AccountingContext.GetContext(tenant);
             var glaAccountIds = from a in lines select a.GLAccountId;
             glaAccountIds = glaAccountIds.Distinct().ToList();
 

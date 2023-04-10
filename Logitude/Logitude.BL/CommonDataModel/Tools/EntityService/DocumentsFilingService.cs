@@ -1717,6 +1717,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 HasFile = true,
                 Received = true,
                 IsFromDigital = true,
+                ReceivedByPartner = "Digital",
             };
 
             UserRepository userRepository = new UserRepository(tenant);

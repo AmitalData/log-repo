@@ -41,8 +41,6 @@ namespace Logitude.Workflow.Data.EntityMapping
 
             this.Property(t => t.Description).HasColumnName("Description").HasMaxLength(1000).IsUnicode(true);
 
-            this.Property(t => t.OwnerId).HasColumnName("OwnerId").HasMaxLength(15).IsUnicode(false);
-
             this.Property(t => t.StatusCode).HasColumnName("StatusCode").IsRequired().HasMaxLength(4).IsUnicode(false);
 
             this.Property(t => t.FlowJson).HasColumnName("FlowJson").IsMaxLength().IsUnicode(true);
@@ -53,7 +51,11 @@ namespace Logitude.Workflow.Data.EntityMapping
 
             this.Property(t => t.RetriesNumber).HasColumnName("RetriesNumber").IsRequired();
 
-            this.Property(t => t.RetriesDelay).HasColumnName("RetriesDelay").IsRequired();
+            this.Property(t => t.RetriesDelay).HasColumnName("RetriesDelay").IsRequired().HasMaxLength(500).IsUnicode(false);
+
+            this.Property(t => t.WorkFlowTriggerTypeCode).HasColumnName("WorkFlowTriggerTypeCode").IsRequired().HasMaxLength(30).IsUnicode(false);
+
+            this.Property(t => t.WorkFlowNumber).HasColumnName("WorkFlowNumber").IsRequired().HasMaxLength(100).IsUnicode(true);
         }
     }
 }

@@ -17,6 +17,7 @@ import {GeneralPrintHelper} from '../../../Infrastructure/Helpers/GeneralPrintHe
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
+import {ObjectsLocator} from "../../../Infrastructure/Locators/ObjectsLocator";
 
 export class ARPaymentMenuButtonsHandler {
     public EntityPM: ARPaymentPM;
@@ -105,6 +106,9 @@ export class ARPaymentMenuButtonsHandler {
                         case "PrintARPayment": {
                             this.PrintPaymentButtonLoaded();
                             if (this.EntityPM.Id == null && this.EntityPM.StatusCode == "VD") {
+                                button.IsDisabled = true;
+                            }
+                            else if (SessionLocator.TenantPM.AccountingActivated && this.EntityPM.StatusCode == "DR") {
                                 button.IsDisabled = true;
                             }
                             else {

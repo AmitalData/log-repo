@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				VolumeUnitRepository  volumeUnitRepository = new VolumeUnitRepository(MyContext);
 				VolumeUnitList entityList = null;
 				VolumeUnit entityPoco = volumeUnitRepository.GetSingleVolumeUnit(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<VolumeUnit> singleEntityList = new List<VolumeUnit>();
 					singleEntityList.Add(entityPoco);

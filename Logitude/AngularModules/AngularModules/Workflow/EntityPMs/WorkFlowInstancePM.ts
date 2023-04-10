@@ -104,6 +104,26 @@ export class WorkFlowInstancePM {
     public set RetryAttemptsNumber(newValue: number) { if (this.retryAttemptsNumber != newValue) { this.retryAttemptsNumber = newValue; this.MarkAsDirty("RetryAttemptsNumber"); } }
        
 	 
+    private workflowId: string;
+    public get WorkflowId() { return this.workflowId; }
+    public set WorkflowId(newValue: string) { if (this.workflowId != newValue) { this.workflowId = newValue; this.MarkAsDirty("WorkflowId"); } }
+       
+	 
+    private createdByUserName: string;
+    public get CreatedByUserName() { return this.createdByUserName; }
+    public set CreatedByUserName(newValue: string) { if (this.createdByUserName != newValue) { this.createdByUserName = newValue; this.MarkAsDirty("CreatedByUserName"); } }
+       
+	 
+    private updatedByUserName: string;
+    public get UpdatedByUserName() { return this.updatedByUserName; }
+    public set UpdatedByUserName(newValue: string) { if (this.updatedByUserName != newValue) { this.updatedByUserName = newValue; this.MarkAsDirty("UpdatedByUserName"); } }
+       
+	 
+    private numberOfActivities: number;
+    public get NumberOfActivities() { return this.numberOfActivities; }
+    public set NumberOfActivities(newValue: number) { if (this.numberOfActivities != newValue) { this.numberOfActivities = newValue; this.MarkAsDirty("NumberOfActivities"); } }
+       
+	 
 
     public OldEntityPM: WorkFlowInstancePM;
 		

@@ -3,6 +3,7 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Services.DeploymentPackage;
 using Logitude.BL.InfrastructureModel.Services.DeploymentPackage.Dependiencies;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Logitude.BL.InfrastructureModel.Tools.Validating;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
@@ -12,6 +13,7 @@ using Logitude.Infrastructure.Data.EntityLists;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -29,6 +31,7 @@ using System.Web.Http;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Helpers.WorkerRole.Importer;
 using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
@@ -62,9 +65,9 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                List<DeploymentPackageDetailsList> deploymentPackageDetails = new DeploymentPackageDetailsListService(authToken.Tenant).GetDeploymentPackageDetailsListByDocumentId(documentId);
+                DeploymentPackageDetailsListArgs deploymentPackageDetailsListArgs = new DeploymentPackageDetailsListService(authToken.Tenant).GetDeploymentPackageDetailsListByDocumentId(documentId);
                 
-                return Request.CreateResponse(HttpStatusCode.OK, deploymentPackageDetails);
+                return Request.CreateResponse(HttpStatusCode.OK, deploymentPackageDetailsListArgs);
             }
             catch (Exception ex)
             {
@@ -88,5 +91,28 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        [HttpGet]
+        public HttpResponseMessage ValidateDeploymentPackageCode(string code)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
+                DeploymentPackageRepository entityRepository = new DeploymentPackageRepository(MyContext);
+                DeploymentPackageValidating.ValidateCode(code, authToken.Tenant, entityRepository);
+
+                return Request.CreateResponse(HttpStatusCode.OK, "Done");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
+
     }
 }

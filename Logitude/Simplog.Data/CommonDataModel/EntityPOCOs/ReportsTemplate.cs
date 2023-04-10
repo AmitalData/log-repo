@@ -40,5 +40,10 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         [ForeignKey("CreatedByUserId")]
         public virtual User CreatedByUser { get; set; }
+
+        public string ObjectTableId { get; set; }
+        public string EntityId { get; set; }
+
+
     }
 }

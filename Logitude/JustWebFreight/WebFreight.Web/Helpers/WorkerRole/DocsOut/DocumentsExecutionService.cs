@@ -109,7 +109,75 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
             }
         }
 
-        private void ExportStimulDocumentToPDF()
+        public void ExecuteDocumentsV2ExecutionQueue()
+        {
+            try
+            {
+                documentsExecutionLog = GetDocumentsExecutionLog();
+                if (HaveDocumentExecutionErrorMessage())
+                {
+                    throw new ApplicationException(GetDocumentExecutionErrorMessage());
+                }
+                UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { StartDate = startDate, StatusCode = "P" });
+                ExportStimulDocumentToPDF(true);
+                if (!string.IsNullOrEmpty(callBackDetailsXml)) CallBackService.Notifiy(callBackDetailsXml, null);
+            }
+            catch (AggregateException aggregateException)
+            {
+                Exception lastAggregateException = new Exception("aggregateException exception");
+                foreach (var exception in aggregateException.Flatten().InnerExceptions)
+                {
+                    lastAggregateException = exception;
+                    ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Document Execution V2 WorkerRole Monitor|" + "Aggr Catch ExecuteDocumentsExecutionQueue", null, System.Environment.MachineName);
+                }
+                HandleDocumentExecutionException(lastAggregateException);
+            }
+            catch (Exception exception)
+            {
+                HandleDocumentExecutionException(exception);
+            }
+        }
+
+        private bool HaveDocumentExecutionErrorMessage()
+        {
+            if (documentsExecutionLog == null) return true;
+            if(documentsExecutionLog.RetryNumber >= 2) return true;
+            if(documentsExecutionLog.CreateDate <= DateTime.Now.AddMinutes(-5)) return true;
+            if(documentsExecutionLog.StatusCode != "W" && documentsExecutionLog.StatusCode != "P") return true;
+            return false;
+        }
+
+        private void HandleDocumentExecutionException(Exception exception)
+        {           
+            try
+            {
+                UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = exception, DoneDate = DateTime.Now, StartDate = startDate });
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Document Execution V2 WorkerRole Monitor|" + "Catch ExecuteDocumentsExecutionQueue", " inside Aggr catch exception while running ", System.Environment.MachineName);
+            }
+            throw new ApplicationException(exception.Message, exception.InnerException);
+        }
+
+        private string GetDocumentExecutionErrorMessage()
+        {
+            if (documentsExecutionLog == null)
+                return "Cannot Find Documents Execution Log with Id = " + documentsExecutionLogId + " and Tenant = " + tenant;
+
+            if (documentsExecutionLog.RetryNumber >= 2)
+                return "Document build failed after 3 retries. Please try again.";
+
+            if (documentsExecutionLog.CreateDate <= DateTime.Now.AddMinutes(-5)) 
+                return "Document build failed since it reached the time out.";
+
+            if (documentsExecutionLog.StatusCode != "W" && documentsExecutionLog.StatusCode != "P")
+                return "Document build failed since execution log status code is " + documentsExecutionLog.StatusCode + ".";
+
+            return "Document build failed: Unhandled Error";
+        }
+
+        private void ExportStimulDocumentToPDF(bool isVersion2 = false)
         {
             ExportDocumentArgs exportDocumentArgs = !string.IsNullOrEmpty(documentsExecutionLog.RequestXML) ? LogitudeXmlSerializer.DeserializeObject<ExportDocumentArgs>(documentsExecutionLog.RequestXML) : null;
             if (exportDocumentArgs != null)
@@ -135,12 +203,12 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                     RunAutomation(exportDocumentArgs, "OnDocumentUpdate", documentTypeCopiesDetails);
                 }
                 UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() {StatusCode = "D", DoneDate = DateTime.Now });
-                queueService.Complete();
+                if(!isVersion2) queueService.Complete();
             }
             else
             {
                 UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = new Exception("RequestXML is null"), DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
-                queueService.Complete();
+                if (!isVersion2) queueService.Complete();
             }
         }
 
@@ -192,10 +260,11 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                 documentsExecutionLog.ExceptionMessage = documentsExecutionLogArgs.Exception != null ? GetFullExceptionMessageFromException(documentsExecutionLogArgs.Exception) : documentsExecutionLog.ExceptionMessage;
                 documentsExecutionLog.DoneDate = documentsExecutionLogArgs.DoneDate != null ? documentsExecutionLogArgs.DoneDate : documentsExecutionLog.DoneDate;
                 documentsExecutionLog.ExecutedByServerName =!string.IsNullOrEmpty(System.Environment.MachineName) ? System.Environment.MachineName : documentsExecutionLog.ExecutedByServerName;
-                if (documentsExecutionLog.RetryNumber >= 2 && documentsExecutionLog.StatusCode != "D" && documentsExecutionLogArgs.StatusCode !="P")
+                if (documentsExecutionLog.RetryNumber >= 2 && documentsExecutionLog.StatusCode != "D" && documentsExecutionLogArgs.Exception != null)
                 {
                     documentsExecutionLog.StatusCode = "F";
                     documentsExecutionLog.DoneDate = DateTime.Now;
+                    queueService.CompleteAsFailed();
                 }
                 documentsExecutionLogRepository.Update(documentsExecutionLog);
                 documentsExecutionLogRepository.SubmitChanges();

@@ -2194,15 +2194,13 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsUpdatedVizionAnalyzer { get; set; }
         public bool IsUpdatedOceanInsightsMainCarriageDates { get; set; }
         public bool IsUpdatedVizionMainCarriageDates { get; set; }
-
+        public bool ShipmentUpdatedFromContainer { get; set; }
         public bool IsCreatedFromCustomerOverview { get; set; }
-
         public string DeclarationXMLData { get; set; }
         public DateTime? DocumentInspection { get; set; }
         public DateTime? GatepassDocumentsReady { get; set; }
         public DateTime? GoodsClassification { get; set; }
         public DateTime? InvoiceIssuedDate { get; set; }
-
         public bool IsImporterApprovalRequired { get; set; }
         public bool SendUpdatesToAgentEnabled { get; set; }
         public bool UpdateSendUpdatesToAgentEnabledField { get; set; }
@@ -2213,6 +2211,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? ApproveDateTime { get; set; }
         public bool IsNewARInvoiceBlocked { get; set; }
         public string ShipmentAddtionalDataXML { get; set; }
+        public ShipmentAdditionalData ShipmentAdditionalData { get; set; }
         //public bool IsMappingXSDFields { get; set; }
         //public bool StopConcurrencyValidating { get; set; }
         public string OriginShipmentId { get; set; }
@@ -3020,6 +3019,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string SealNo { get; set; }
         public string HSCode { get; set; }
         public string OrderNumber { get; set; }
+        public bool IsUpdatedByAutomationSetValueResult { get; set; }
 
     }
 

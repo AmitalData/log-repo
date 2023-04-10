@@ -301,6 +301,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.isAfterViewInited = true;
         this.FocusWindow();
         this.LoadChildComponent();
+        this.AddViewModeContainerEvents();
     }
 
     private logWindow: LogitudeWindow;
@@ -561,6 +562,28 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
                         });
                 }
             }
+        }
+    }
+
+    private AddViewModeContainerEvents() {
+        if(this.IsViewMode){
+            let windowElement = document.getElementById(this.WindowId);
+            let viewModeContainerElements = windowElement ? windowElement.getElementsByClassName("ViewModeContainer") : null;
+            let viewModeContainerElement = viewModeContainerElements && viewModeContainerElements.length > 0 ? viewModeContainerElements[0] : null;
+            if (viewModeContainerElement) {
+                let eventsNames: string[] = ["click", "keyup", "keydown", "keypress", "mouseover", "mouseleave"];
+                eventsNames.forEach(eventName => {
+                    viewModeContainerElement.addEventListener(eventName, (event) => { this.HandleViewModeElementsEvents(event); }, true);
+                });
+            }
+        }
+    }
+
+    private HandleViewModeElementsEvents(event: any) {
+        if (event) {
+            event.stopImmediatePropagation();
+            event.stopPropagation();
+            event.preventDefault();
         }
     }
 

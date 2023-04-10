@@ -22,7 +22,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
         internal AnalyticsFactsMetaData _Entity;
         internal Dictionary<string, AnalyticsFactsFieldsMetaData> _EntityFields;
         private AnalyticsFactsFieldsMetaDataRepository analyticsFactsFieldsMetaDataRepository;
-        private string[] Months = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+        private readonly string[] Months = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
         internal GlobalFilterService.GlobalQueryFilterItem compareWithPreviousFilterItem;
 
         protected BaseDataProviderService(WidgetPM widget, AnalyticsFactsMetaData entity)
@@ -94,7 +94,6 @@ namespace Logitude.DashboardModule.BL.DataProviders
         {
             if (measureCode == "Count") return $"CAST({measureCode}(data.Id) AS DECIMAL(32, 2))";
             if (measureField.DataTypeCode == "Date" || measureField.DataTypeCode == "DateTime") return $"CAST({measureCode}(IIF(data.{measureField.FieldCode} is null , 0 , data.{measureField.FieldCode})) AS DECIMAL(32,2))";
-            //if (measureField.DataTypeCode == "Date" || measureField.DataTypeCode == "DateTime") return $"{measureCode}(data.{measureField.FieldCode})";
             return $"CAST({measureCode}(IIF(data.{measureField.FieldCode} is null , '0' , data.{measureField.FieldCode})) AS DECIMAL(32,2))";
         }
 
@@ -224,6 +223,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
 
 
         }
+       
         private string CheckComparisonOperator()
         {
             if (compareWithPreviousFilterItem.Operator == "Between")

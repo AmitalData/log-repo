@@ -72,11 +72,13 @@ namespace WebFreight.Web.Helpers
             if (string.IsNullOrEmpty(editableFieldsString))  return childFieldNodes;
             try
             {
-                XmlReader xmlReader = XmlReader.Create(new StringReader(editableFieldsString));
-                XmlDataDocument messageFieldDoc = new XmlDataDocument();
-                messageFieldDoc.Load(xmlReader);
-                XmlNodeList ItemsFieldList = messageFieldDoc.GetElementsByTagName("Items");
-                if (ItemsFieldList != null && ItemsFieldList.Count > 0) childFieldNodes = ItemsFieldList[0].ChildNodes;
+                using (XmlReader xmlReader = XmlReader.Create(new StringReader(editableFieldsString)))
+                {
+                    XmlDataDocument messageFieldDoc = new XmlDataDocument();
+                    messageFieldDoc.Load(xmlReader);
+                    XmlNodeList ItemsFieldList = messageFieldDoc.GetElementsByTagName("Items");
+                    if (ItemsFieldList != null && ItemsFieldList.Count > 0) childFieldNodes = ItemsFieldList[0].ChildNodes;
+                }
             }
             catch (Exception exception)
             {

@@ -55,6 +55,7 @@ import { ObjectsLocator } from "../../Locators/ObjectsLocator";
         "DisableRules",
         "DataCy",
         "ForceDisabled",
+        "ForceSetValidity",
     ]
     //changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -90,6 +91,8 @@ export class LogDatePickerComponent
     public DataCy: string;
 
     public ForceDisabled: boolean = false;
+
+    public ForceSetValidity: boolean = false;
 
     private dataContext: BaseComponent;
     public uiProperty: UIProperty;
@@ -1150,7 +1153,7 @@ export class LogDatePickerComponent
                 timeUiProp.UIPropertyChanged.emit("datevaluechanges");
                 dateUiProp.UIPropertyChanged.emit("datevaluechanges");
 
-                if (!this.IsFreeValue) {
+                if (!this.IsFreeValue || this.ForceSetValidity) {
                     this.SetValidity(true, null);
                     this.ValidateField();
                 }
@@ -2530,7 +2533,7 @@ export class LogDatePickerComponent
     }
 
     SetValidity(validValue: boolean, errorMessage) {
-        if (!this.IsFreeValue) {
+        if (!this.IsFreeValue || this.ForceSetValidity) {
             var siblingUIProperty: UIProperty = null;
             if (this.uiProperty) {
                 this.uiProperty.ValidValue = validValue;

@@ -236,15 +236,12 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 email = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
-
                 var entityQuery = new ARInvoiceQuery(authToken.Tenant);
-
                 var entityPM = entityQuery.GetSinglePM(id, authToken.Tenant);
-
                 string documentTypeCode = GetDocumentTypeCodeByInvoiceType(entityPM.ARInvoiceTypeCode, entityPM.IsConsolidationInvoice);
                 var documentOutQuery = new DocumentOutQuery(authToken.Tenant);
                 var query = new DocumentTypeQuery(authToken.Tenant);
-                var docType = query.GetSinglePMByCodeAndTenant(documentTypeCode, authToken.Tenant);
+                var docType = query.GetDigitalSinglePMByCodeAndTenant(documentTypeCode, authToken.Tenant);
                 var mainEntityId = entityPM.MainEntityId;
                 var childEntityId = entityPM.Id;
                 if (entityPM.IsConsolidationInvoice)
@@ -300,6 +297,22 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var aRInvoiceQuery = new ARInvoiceQuery(authToken.Tenant);
                 var entityLists = aRInvoiceQuery.GetByFilters(newFilters);
                 var res = entityLists.GetPaged(newFilters.PageIndex, newFilters.PageSize);
+
+                foreach (var entityPM in res.Data.Where(a => a.IsPrinted))
+                {
+                    var documentOutQuery = new DocumentOutQuery(authToken.Tenant);
+                    var documentTypeQuery = new DocumentTypeQuery(authToken.Tenant);
+                    var arInvoice = new ARInvoice
+                    {
+                        MainEntityId = entityPM.MainEntityId,
+                        IsConsolidationInvoice = entityPM.IsConsolidationInvoice,
+                        ARInvoiceTypeCode = entityPM.ARInvoiceTypeCode,
+                        Id = entityPM.Id,
+                        Tenant = entityPM.Tenant
+                    };
+
+                    entityPM.ReportUrl = GetDocumntURL(arInvoice, documentOutQuery, documentTypeQuery, newFilters.CardId);
+                }
 
                 return Request.CreateResponse(HttpStatusCode.OK, res);
             }
@@ -405,7 +418,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             string reportUrl = null;
             var tenant = item.Tenant;
             var documentTypeCode = this.GetDocumentTypeCodeByInvoiceType(item.ARInvoiceTypeCode, item.IsConsolidationInvoice);
-            var docType = documentTypeQuery.GetSinglePMByCodeAndTenant(documentTypeCode, tenant);
+            var docType = documentTypeQuery.GetDigitalSinglePMByCodeAndTenant(documentTypeCode, tenant);
             var docId = "";
             var docsOutData = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(item.MainEntityId, item.Id, docType.Id, tenant);
             if (docsOutData == null)

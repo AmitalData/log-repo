@@ -67,6 +67,10 @@ export class CounterDefinitionPM {
     public get UsePerBranch() { return this.usePerBranch; }
     public set UsePerBranch(newValue: boolean) { if (this.usePerBranch != newValue) { this.usePerBranch = newValue; this.MarkAsDirty("UsePerBranch"); } }
 
+    private isCustomized: boolean;
+    public get IsCustomized() { return this.isCustomized; }
+    public set IsCustomized(newValue: boolean) { if (this.isCustomized != newValue) { this.isCustomized = newValue; this.MarkAsDirty("IsCustomized"); } }
+
     public OldEntityPM: CounterDefinitionPM;
 
     public IsDirty: boolean;

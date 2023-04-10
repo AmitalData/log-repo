@@ -44,7 +44,7 @@ export class AddEditDashboardComponent extends BaseComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.UIProperties.SetEnabled("PredefinedOrder", this.ObjectTableName, this.LoadedAutomatically);
+        this.UIProperties.SetEnabled("PredefinedOrder", this.ObjectTableName, this.PinnedByDefault);
     }
 
     SetWindowArgs(windowArgs: any) {
@@ -103,11 +103,11 @@ export class AddEditDashboardComponent extends BaseComponent implements OnInit {
         }
     }
 
-    get LoadedAutomatically() { return this.EntityPM.LoadedAutomatically; }
-    set LoadedAutomatically(value: boolean) {
-        if (this.EntityPM.LoadedAutomatically != value) {
-            this.EntityPM.LoadedAutomatically = value;
-            this.UIProperties.SetEnabled("PredefinedOrder", this.ObjectTableName, this.LoadedAutomatically);
+    get PinnedByDefault() { return this.EntityPM.PinnedByDefault; }
+    set PinnedByDefault(value: boolean) {
+        if (this.EntityPM.PinnedByDefault != value) {
+            this.EntityPM.PinnedByDefault = value;
+            this.UIProperties.SetEnabled("PredefinedOrder", this.ObjectTableName, this.PinnedByDefault);
         }
     }
 
@@ -240,31 +240,4 @@ export class AddEditDashboardComponent extends BaseComponent implements OnInit {
 
         this.CurrentSession.StopBusyIndicator();
     }
-
-    DeleteButtonClicked() {
-        var confirmWindow: ConfirmWindow = new ConfirmWindow();
-        confirmWindow.Title = "Confirm";
-        confirmWindow.Show("Are you sure you want to permanently delete this dashboard?");
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                this.CurrentSession.StartBusyIndicator("Deleting...");
-                var service: DashboardPMExtendedService = new DashboardPMExtendedService();
-                service.Delete(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
-                    this.OnDeleteCompleted(myResponse);
-                });
-            }
-        });
-    }
-    private OnDeleteCompleted(myResponse: ServiceResponse) {
-        if (!myResponse.HasError) {
-            this.CurrentSession.CloseCurrentWindowEmit("OK_delete");
-        }
-
-        else {
-            this.ValidationErrorsList = myResponse.ErrorsArray;
-        }
-
-        this.CurrentSession.StopBusyIndicator();
-    }
-
 }

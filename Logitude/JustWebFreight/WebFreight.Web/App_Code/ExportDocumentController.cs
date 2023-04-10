@@ -5,6 +5,7 @@ using Logitude.BL.DataContracts;
 using Logitude.BL.Helpers;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
@@ -882,7 +883,8 @@ namespace WebFreight.Web.App_Code
                 ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
                 DocumentsExecutionLog documentsExecutionLog = exportDocumentHelper.GetNewInStanceFromDocumentsExecutionLog(exportDocumentArgs);
                 IQueueService queueservice = new DbQueueService();
-                queueservice.InitializeQueue("DocumentsExecutionQueue", documentsExecutionLog.Tenant);
+                string documentsExecutionQueueCode = FeatureToggleHelper.HasFeatureToggle("DE2", exportDocumentArgs.Tenant) ? "DocumentsExecutionV2Queue" : "DocumentsExecutionQueue";
+                queueservice.InitializeQueue(documentsExecutionQueueCode, documentsExecutionLog.Tenant);
                 queueservice.Send(new Dictionary<string, string>() { { "DocumentsExecutionLogId", documentsExecutionLog.Id }, { "Tenant", documentsExecutionLog.Tenant.ToString() } }, documentsExecutionLog.Tenant, null, null, null, null);
                 return Request.CreateResponse(HttpStatusCode.OK, documentsExecutionLog.Id);
             }

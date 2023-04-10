@@ -1,5 +1,4 @@
-#@devrelease
-@fixReleaseBugs
+@devrelease
 Feature: AR Invoice Approve With SAT
     The user creates a Direct Export Air shipment, creates receivable,
     creates AR Invoice, approve AR Invoice, Transfer AR Invoice to SAT and set at Transfered.
@@ -40,6 +39,7 @@ Feature: AR Invoice Approve With SAT
             | VATNo               | Zero        |
             | Branch              | Main Office |
             | VATType             | Zero        |
+        
         When create invoice
         Then the invoice should create successfully
         And the status value should be Draft

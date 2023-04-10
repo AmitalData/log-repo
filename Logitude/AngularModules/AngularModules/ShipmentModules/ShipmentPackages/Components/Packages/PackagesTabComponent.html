@@ -207,7 +207,8 @@
                             <div class="MediaFill">
 
                                 <!-- Airline -->
-                                <logitude-edit-grid *ngIf="TransportModeId == 'A'" GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
+                                <logitude-edit-grid *ngIf="TransportModeId == 'A'" GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow"
+                                                    [UseVirtuallization]="IsUsingVirtuallization">
 
                                     <!-- Icon -->
                                     <log-column [width]="'25'">
@@ -383,7 +384,7 @@
                                                     [SelectedRow]="SelectedRow"
                                                     (MouseOverChanged)="SetMouseHoverRow($event, true)"
                                                     (MouseleaveChanged)="SetMouseHoverRow($event, false)"
-                                                    [EnableExpandCollapseAll]="IsFCLEntity">
+                                                    [EnableExpandCollapseAll]="IsFCLEntity" [UseVirtuallization]="IsUsingVirtuallization">
 
                                     <log-row-details>
                                         <row-template>

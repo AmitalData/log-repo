@@ -118,10 +118,13 @@
     .FooterSplit {
         width: 5px;
     }
+    
+    :host ::ng-deep .ViewModeContainer > * {
+        opacity: 0.65 !important;
+    }
 
-    .OverflowY {
-        overflow-x: hidden;
-        overflow-y: auto;
+    :host ::ng-deep .ViewModeContainer * {
+        cursor: default !important;
     }
 </style>
 
@@ -233,7 +236,7 @@
                                     </td>
 
                                     <td>
-                                        <div class="MediaFill OverflowY" [class.ViewModeContainer]="IsViewMode">
+                                        <div class="MediaFill" [class.ViewModeContainer]="IsViewMode">
                                             <div ChildDirective></div>
                                         </div>
                                     </td>

@@ -30,6 +30,8 @@ using System.Reflection;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Microsoft.Practices.Unity;
 using Logitude.BL.CommonDataModel.ExternalService;
+using Logitude.Server.Tools.CustomFields;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -587,18 +589,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 if (securedPm != null && entity != null)
                 {
-                    Customer entityPOC = (from s in repository.context.Customers where s.Id == securedPm.Id select s).FirstOrDefault();
-
-                    securedPm.Field1 = new CustomFieldClass("Field1", "Customer", entityPOC.Field1);
-                    securedPm.Field2 = new CustomFieldClass("Field2", "Customer", entityPOC.Field2);
-                    securedPm.Field3 = new CustomFieldClass("Field3", "Customer", entityPOC.Field3);
-                    securedPm.Field4 = new CustomFieldClass("Field4", "Customer", entityPOC.Field4);
-                    securedPm.Field5 = new CustomFieldClass("Field5", "Customer", entityPOC.Field5);
-                    securedPm.Field6 = new CustomFieldClass("Field6", "Customer", entityPOC.Field6);
-                    securedPm.Field7 = new CustomFieldClass("Field7", "Customer", entityPOC.Field7);
-                    securedPm.Field8 = new CustomFieldClass("Field8", "Customer", entityPOC.Field8);
-                    securedPm.Field9 = new CustomFieldClass("Field9", "Customer", entityPOC.Field9);
-                    securedPm.Field10 = new CustomFieldClass("Field10", "Customer", entityPOC.Field10);
+                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Customer", Tenant = tenant, Type = "PM", Entities = new List<CustomerPM> { securedPm }.Cast<object>().ToList() }).Set();
                 }
                 if (securedPm != null)
                 {
@@ -1090,18 +1081,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 if (securedPm != null && entity != null)
                 {
-                    Customer entityPOC = (from s in repository.context.Customers where s.Id == securedPm.Id select s).FirstOrDefault();
-
-                    securedPm.Field1 = new CustomFieldClass("Field1", "Customer", entityPOC.Field1);
-                    securedPm.Field2 = new CustomFieldClass("Field2", "Customer", entityPOC.Field2);
-                    securedPm.Field3 = new CustomFieldClass("Field3", "Customer", entityPOC.Field3);
-                    securedPm.Field4 = new CustomFieldClass("Field4", "Customer", entityPOC.Field4);
-                    securedPm.Field5 = new CustomFieldClass("Field5", "Customer", entityPOC.Field5);
-                    securedPm.Field6 = new CustomFieldClass("Field6", "Customer", entityPOC.Field6);
-                    securedPm.Field7 = new CustomFieldClass("Field7", "Customer", entityPOC.Field7);
-                    securedPm.Field8 = new CustomFieldClass("Field8", "Customer", entityPOC.Field8);
-                    securedPm.Field9 = new CustomFieldClass("Field9", "Customer", entityPOC.Field9);
-                    securedPm.Field10 = new CustomFieldClass("Field10", "Customer", entityPOC.Field10);
+                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Customer", Tenant = tenant, Type = "PM", Entities = new List<CustomerPM> { securedPm }.Cast<object>().ToList() }).Set();
                 }
                 if (securedPm != null)
                 {
@@ -1582,20 +1562,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 if (securedPm != null && entity != null)
                 {
-                    Customer entityPOC = (from s in repository.context.Customers
-                                          where s.Id == securedPm.Id
-                                          select s).FirstOrDefault();
-
-                    securedPm.Field1 = new CustomFieldClass("Field1", "Customer", entityPOC.Field1);
-                    securedPm.Field2 = new CustomFieldClass("Field2", "Customer", entityPOC.Field2);
-                    securedPm.Field3 = new CustomFieldClass("Field3", "Customer", entityPOC.Field3);
-                    securedPm.Field4 = new CustomFieldClass("Field4", "Customer", entityPOC.Field4);
-                    securedPm.Field5 = new CustomFieldClass("Field5", "Customer", entityPOC.Field5);
-                    securedPm.Field6 = new CustomFieldClass("Field6", "Customer", entityPOC.Field6);
-                    securedPm.Field7 = new CustomFieldClass("Field7", "Customer", entityPOC.Field7);
-                    securedPm.Field8 = new CustomFieldClass("Field8", "Customer", entityPOC.Field8);
-                    securedPm.Field9 = new CustomFieldClass("Field9", "Customer", entityPOC.Field9);
-                    securedPm.Field10 = new CustomFieldClass("Field10", "Customer", entityPOC.Field10);
+                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Customer", Tenant = tenant, Type = "PM", Entities = new List<CustomerPM> { securedPm }.Cast<object>().ToList() }).Set();
                 }
 
                 return securedPm;
@@ -2075,20 +2042,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 if (securedPm != null && entity != null)
                 {
-                    Customer entityPOC = (from s in repository.context.Customers
-                                          where s.Id == securedPm.Id
-                                          select s).FirstOrDefault();
-
-                    securedPm.Field1 = new CustomFieldClass("Field1", "Customer", entityPOC.Field1);
-                    securedPm.Field2 = new CustomFieldClass("Field2", "Customer", entityPOC.Field2);
-                    securedPm.Field3 = new CustomFieldClass("Field3", "Customer", entityPOC.Field3);
-                    securedPm.Field4 = new CustomFieldClass("Field4", "Customer", entityPOC.Field4);
-                    securedPm.Field5 = new CustomFieldClass("Field5", "Customer", entityPOC.Field5);
-                    securedPm.Field6 = new CustomFieldClass("Field6", "Customer", entityPOC.Field6);
-                    securedPm.Field7 = new CustomFieldClass("Field7", "Customer", entityPOC.Field7);
-                    securedPm.Field8 = new CustomFieldClass("Field8", "Customer", entityPOC.Field8);
-                    securedPm.Field9 = new CustomFieldClass("Field9", "Customer", entityPOC.Field9);
-                    securedPm.Field10 = new CustomFieldClass("Field10", "Customer", entityPOC.Field10);
+                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Customer", Tenant = tenant, Type = "PM", Entities = new List<CustomerPM> { securedPm }.Cast<object>().ToList() }).Set();
                 }
 
                 return securedPm;
@@ -2466,16 +2420,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    CollectorName = customer.CollectorName,
                                                    ClassifierName = customer.ClassifierName,
                                                    VatTypeId = customer.VatTypeId,
-                                                   Field1 = customer.Field1,
-                                                   Field2 = customer.Field2,
-                                                   Field3 = customer.Field3,
-                                                   Field4 = customer.Field4,
-                                                   Field5 = customer.Field5,
-                                                   Field6 = customer.Field6,
-                                                   Field7 = customer.Field7,
-                                                   Field8 = customer.Field8,
-                                                   Field9 = customer.Field9,
-                                                   Field10 = customer.Field10,
                                                    RankCode = customer.RankCode,
                                                    RankName = customer.RankName,
                                                    TeamName = customer.TeamName,
@@ -2572,7 +2516,56 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    BillToName = customer.BillToName,
                                                    SATCustomerName = customer.SATCustomerName,
                                                    AccountManagerUserId = customer.AccountManagerUserId,
-                                                  
+                                                   Field1 = customer.Field1,
+                                                   Field2 = customer.Field2,
+                                                   Field3 = customer.Field3,
+                                                   Field4 = customer.Field4,
+                                                   Field5 = customer.Field5,
+                                                   Field6 = customer.Field6,
+                                                   Field7 = customer.Field7,
+                                                   Field8 = customer.Field8,
+                                                   Field9 = customer.Field9,
+                                                   Field10 = customer.Field10,
+                                                   Field11 = customer.Field11,
+                                                   Field12 = customer.Field12,
+                                                   Field13 = customer.Field13,
+                                                   Field14 = customer.Field14,
+                                                   Field15 = customer.Field15,
+                                                   Field16 = customer.Field16,
+                                                   Field17 = customer.Field17,
+                                                   Field18 = customer.Field18,
+                                                   Field19 = customer.Field19,
+                                                   Field20 = customer.Field20,
+                                                   Field21 = customer.Field21,
+                                                   Field22 = customer.Field22,
+                                                   Field23 = customer.Field23,
+                                                   Field24 = customer.Field24,
+                                                   Field25 = customer.Field25,
+                                                   Field26 = customer.Field26,
+                                                   Field27 = customer.Field27,
+                                                   Field28 = customer.Field28,
+                                                   Field29 = customer.Field29,
+                                                   Field30 = customer.Field30,
+                                                   Field31 = customer.Field31,
+                                                   Field32 = customer.Field32,
+                                                   Field33 = customer.Field33,
+                                                   Field34 = customer.Field34,
+                                                   Field35 = customer.Field35,
+                                                   Field36 = customer.Field36,
+                                                   Field37 = customer.Field37,
+                                                   Field38 = customer.Field38,
+                                                   Field39 = customer.Field39,
+                                                   Field40 = customer.Field40,
+                                                   Field41 = customer.Field41,
+                                                   Field42 = customer.Field42,
+                                                   Field43 = customer.Field43,
+                                                   Field44 = customer.Field44,
+                                                   Field45 = customer.Field45,
+                                                   Field46 = customer.Field46,
+                                                   Field47 = customer.Field47,
+                                                   Field48 = customer.Field48,
+                                                   Field49 = customer.Field49,
+                                                   Field50 = customer.Field50,
                                                });
 
 
@@ -2732,7 +2725,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              BillToId = customer.Card.BillToId,
                                              SATCustomerName = customer.Card.SATCustomerName,
                                          }).FirstOrDefault();
-
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Customer", Tenant = tenant, Type = "List", Entities = new List<CustomerList> { customerList }.Cast<object>().ToList() }).Set();
             return customerList;
         }
         public List<CustomerPM> GetCustomersByCardsIds(List<string> cardsIds, int tenant)
@@ -2928,7 +2921,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              SATCustomerName = customer.Card.SATCustomerName,
 
                                          }).FirstOrDefault();
-
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Customer", Tenant = tenant, Type = "List", Entities = new List<CustomerList> { customerList }.Cast<object>().ToList() }).Set();
             return customerList;
         }
 
@@ -3057,6 +3050,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              SATCustomerName = customer.Card.SATCustomerName,
                                          }).FirstOrDefault();
 
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Customer", Tenant = tenant, Type = "List", Entities = new List<CustomerList> { customerList }.Cast<object>().ToList() }).Set();
             return customerList;
         }
 
@@ -4283,18 +4277,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 if (securedPm != null && entity != null)
                 {
-                    Customer entityPOC = (from s in repository.context.Customers where s.Id == securedPm.Id select s).FirstOrDefault();
-
-                    securedPm.Field1 = new CustomFieldClass("Field1", "Customer", entityPOC.Field1);
-                    securedPm.Field2 = new CustomFieldClass("Field2", "Customer", entityPOC.Field2);
-                    securedPm.Field3 = new CustomFieldClass("Field3", "Customer", entityPOC.Field3);
-                    securedPm.Field4 = new CustomFieldClass("Field4", "Customer", entityPOC.Field4);
-                    securedPm.Field5 = new CustomFieldClass("Field5", "Customer", entityPOC.Field5);
-                    securedPm.Field6 = new CustomFieldClass("Field6", "Customer", entityPOC.Field6);
-                    securedPm.Field7 = new CustomFieldClass("Field7", "Customer", entityPOC.Field7);
-                    securedPm.Field8 = new CustomFieldClass("Field8", "Customer", entityPOC.Field8);
-                    securedPm.Field9 = new CustomFieldClass("Field9", "Customer", entityPOC.Field9);
-                    securedPm.Field10 = new CustomFieldClass("Field10", "Customer", entityPOC.Field10);
+                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Customer", Tenant = tenant, Type = "PM", Entities = new List<CustomerPM> { securedPm }.Cast<object>().ToList() }).Set();
                 }
                 //if (securedPm != null)
                 //{
@@ -4496,20 +4479,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 if (securedPm != null && entity != null)
                 {
-                    Customer entityPOC = (from s in repository.context.Customers
-                                          where s.Id == securedPm.Id
-                                          select s).FirstOrDefault();
-
-                    securedPm.Field1 = new CustomFieldClass("Field1", "Customer", entityPOC.Field1);
-                    securedPm.Field2 = new CustomFieldClass("Field2", "Customer", entityPOC.Field2);
-                    securedPm.Field3 = new CustomFieldClass("Field3", "Customer", entityPOC.Field3);
-                    securedPm.Field4 = new CustomFieldClass("Field4", "Customer", entityPOC.Field4);
-                    securedPm.Field5 = new CustomFieldClass("Field5", "Customer", entityPOC.Field5);
-                    securedPm.Field6 = new CustomFieldClass("Field6", "Customer", entityPOC.Field6);
-                    securedPm.Field7 = new CustomFieldClass("Field7", "Customer", entityPOC.Field7);
-                    securedPm.Field8 = new CustomFieldClass("Field8", "Customer", entityPOC.Field8);
-                    securedPm.Field9 = new CustomFieldClass("Field9", "Customer", entityPOC.Field9);
-                    securedPm.Field10 = new CustomFieldClass("Field10", "Customer", entityPOC.Field10);
+                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Customer", Tenant = tenant, Type = "PM", Entities = new List<CustomerPM> { securedPm }.Cast<object>().ToList() }).Set();
                 }
 
                 return securedPm;
@@ -5019,20 +4989,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 if (securedPm != null && entity != null)
                 {
-                    Customer entityPOC = (from s in repository.context.Customers
-                                          where s.Id == securedPm.Id
-                                          select s).FirstOrDefault();
-
-                    securedPm.Field1 = new CustomFieldClass("Field1", "Customer", entityPOC.Field1);
-                    securedPm.Field2 = new CustomFieldClass("Field2", "Customer", entityPOC.Field2);
-                    securedPm.Field3 = new CustomFieldClass("Field3", "Customer", entityPOC.Field3);
-                    securedPm.Field4 = new CustomFieldClass("Field4", "Customer", entityPOC.Field4);
-                    securedPm.Field5 = new CustomFieldClass("Field5", "Customer", entityPOC.Field5);
-                    securedPm.Field6 = new CustomFieldClass("Field6", "Customer", entityPOC.Field6);
-                    securedPm.Field7 = new CustomFieldClass("Field7", "Customer", entityPOC.Field7);
-                    securedPm.Field8 = new CustomFieldClass("Field8", "Customer", entityPOC.Field8);
-                    securedPm.Field9 = new CustomFieldClass("Field9", "Customer", entityPOC.Field9);
-                    securedPm.Field10 = new CustomFieldClass("Field10", "Customer", entityPOC.Field10);
+                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Customer", Tenant = tenant, Type = "PM", Entities = new List<CustomerPM> { securedPm }.Cast<object>().ToList() }).Set();
                 }
 
                 return securedPm;

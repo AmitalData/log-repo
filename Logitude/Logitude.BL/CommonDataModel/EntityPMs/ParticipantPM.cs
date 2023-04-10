@@ -5,18 +5,18 @@ using System.Linq;
 using System.ServiceModel.DomainServices.Server;
 using System.Text;
 using System.Threading.Tasks;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.BL.CommonDataModel.EntityPMs
 {
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
-    public class ParticipantPM
+    public class ParticipantPM : ObjectCustomFieldPM
     {
         [Key]
         public string Id { get; set; }        
         public int Tenant { get; set; }
         public bool IsSecured { get; set; }
         public bool IsHybrid { get; set; }
-
         public int ForwarderTenant { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -118,11 +118,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CountryName { get; set; }
-
         public string RegistrationUpdatedBy { get; set; }
-
         public DateTime? RegistrationDate { get; set; }
-
         public bool IsDirect { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -133,11 +130,9 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string FFRNotifyContacts { get; set; }
-        
         public string PrimaryContactName { get; set; }
         public string PrimaryContactEmail { get; set; }
         public string PrimaryContactPhone { get; set; }
-
         [Include]
         [Association("ParticipantCardPM", "Id", "Id")]
         public virtual CardPM Card { get; set; }
@@ -157,7 +152,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
             }
             set { addresses = value; }
         }
-
         private List<ContactPM> contacts;
         [Include]
         [Association("ParticipantPMContactPM", "Id", "CardId")]

@@ -38,13 +38,16 @@ namespace WebFreight.Web.ReportsWebServices
         {
             List<AWBLabelsDataProvider> awbLabelsList = GetAWBLabelsDataProvider(shipmentId, tenant, documentTypeId);
             XmlSerializer serializer = new XmlSerializer(typeof(List<AWBLabelsDataProvider>));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, awbLabelsList);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
+            using (MemoryStream memstream = new MemoryStream())
+            {
+                serializer.Serialize(memstream, awbLabelsList);
+                memstream.Seek(0, SeekOrigin.Begin);
+                var reader = new StreamReader(memstream);
+                string content = reader.ReadToEnd();
+                byte[] bytearray = memstream.ToArray();
+                return bytearray;
+            }
+            
         }
 
         public List<AWBLabelsDataProvider> GetAWBLabelsDataProvider(string shipmentId, int tenant,string documentTypeId)

@@ -29,9 +29,18 @@ export class EditCustomerProductItemComponent extends BaseComponent {
     public IsEditingEnabled: boolean = false;
     public CustomerMainAddressCountryName: string;
     private maxHTSCodesLineNumber: number = 0;
+    public IsUsingVirtuallization: boolean = false;
     constructor() {
         super();
+        this.SetIsUsingVirtuallization();
         this.HTSCodes = new ObservableCollection([]);
+    }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
     }
 
     SetWindowArgs(windowArgs: any) {

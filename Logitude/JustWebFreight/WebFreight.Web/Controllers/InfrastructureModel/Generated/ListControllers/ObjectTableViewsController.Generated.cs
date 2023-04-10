@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				ObjectTableRepository  objectTableRepository = new ObjectTableRepository(MyContext);
 				ObjectTableList entityList = null;
 				ObjectTable entityPoco = objectTableRepository.GetSingleObjectTable(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<ObjectTable> singleEntityList = new List<ObjectTable>();
 					singleEntityList.Add(entityPoco);

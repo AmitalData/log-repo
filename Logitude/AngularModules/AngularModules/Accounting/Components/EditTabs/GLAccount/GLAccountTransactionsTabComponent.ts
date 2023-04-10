@@ -567,6 +567,18 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         });
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Notes",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.Notes")));
 
+        this.columns.push({
+            FieldName: 'InternalNote',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("LedgerTransaction.F.InternalNote"), 
+            Styles: { width: '200px' },
+            HtmlListComponentName: 'GlAccountLedgerTransactionsInternalNotesTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsInternalNotesTemplate',
+            IsCustomTemplate: true
+        });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("InternalNotes",'Text',TextCodeTranslator.Translate("ARInvoice.F.InternalNotes")));
+
+
         //this.CustomColumnsReady.emit(this.columns);
     }
 

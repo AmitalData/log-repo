@@ -259,7 +259,8 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
     FireColumnReorderComplete() {
         //this.CurrentSession.StartBusyIndicator("Saving ...");
         var ColIndexes = [];
-        var ColumnsElements = document.getElementsByClassName("ag-header-cell");
+        //var ColumnsElements = document.getElementsByClassName("ag-header-cell");
+        var ColumnsElements = document.querySelectorAll("#" + this.LogGridId + " " + ".ag-header-cell");
         for (var i = 0; i < ColumnsElements.length; i++) {
             if (ColumnsElements[i].attributes['colid']) {
                 ColIndexes.push({ FieldName: ColumnsElements[i].attributes['colid'].value, Index: +(ColumnsElements[i].id.split(',')[1]), Width: ColumnsElements[i].clientWidth });

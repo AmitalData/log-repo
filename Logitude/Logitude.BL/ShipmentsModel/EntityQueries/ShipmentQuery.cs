@@ -37,6 +37,7 @@ using Logitude.BL.ShipmentsModel.Tools.Initializers;
 using System.Web;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.Tools.DataMapping;
+using Logitude.BL.ShipmentsModel.Tools.ExternalService;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -111,6 +112,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         returnShipment.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
                         returnShipment.VersionApproved = CLoudData.VersionApproved;
                         returnShipment.ShipmentAddtionalDataXML = CLoudData.ShipmentAddtionalDataXML;
+                        returnShipment.ShipmentAdditionalData = ShipmentAdditionalDataService.DeserializeShipmentAdditionalXmlData(CLoudData.ShipmentAddtionalDataXML);
                         returnShipment.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                         returnShipment.DocsSentToAgent = CLoudData.DocsSentToAgent;
                         returnShipment.ApprovedBy = CLoudData.ApprovedByUserName;
@@ -4568,6 +4570,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         returnShipment.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
                         returnShipment.VersionApproved = CLoudData.VersionApproved;
                         returnShipment.ShipmentAddtionalDataXML = CLoudData.ShipmentAddtionalDataXML;
+                        returnShipment.ShipmentAdditionalData = ShipmentAdditionalDataService.DeserializeShipmentAdditionalXmlData(CLoudData.ShipmentAddtionalDataXML);
                         returnShipment.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                         returnShipment.DocsSentToAgent = CLoudData.DocsSentToAgent;
                         returnShipment.ApprovedBy = CLoudData.ApprovedByUserName;
@@ -4673,7 +4676,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             List<Shipment> shipments = repository.GetShipmentsFromIds(shipmentIds, tenant);
             if (shipments.Count() == 0) return null;
+            List<ShipmentPM> shipmentPMs = MapShipmentsToShpmentPMsUsingParallel(shipments, tenant);
 
+            return shipmentPMs;
+        }
+
+        private List<ShipmentPM> MapShipmentsToShpmentPMsUsingParallel(List<Shipment> shipments, int tenant)
+        {
             List<string> shipmentMasterDataIds = shipments.Select(shipment => shipment.MasterShipmentDataId).ToList();
             List<ShipmentMasterData> shipmentMasterDatas = repository.GetShipmentMasterDatasFromIds(shipmentMasterDataIds, tenant);
             List<ShipmentPM> shipmentPMs = new List<ShipmentPM>();
@@ -4692,6 +4701,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);
                 shipmentPM = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), securedPM, tenant);
             });
+            return shipmentPMs;
+        }
+
+        public List<ShipmentPM> GetShipmentPMsByMasterId(string masterId, int tenant)
+        {
+            List<Shipment> shipments = (from s in repository.context.Shipments
+                                            where s.Tenant == tenant && s.MasterShipmentDataId == masterId && s.Id != masterId && ((s.ShipmentLevelCode == "H") || (s.ShipmentLevelCode == "D") || s.ShipmentLevelCode == "A")
+                                            select s).ToList();
+
+            if (shipments.Count() == 0) return new List<ShipmentPM>();
+
+            List<ShipmentPM> shipmentPMs = MapShipmentsToShpmentPMsUsingParallel(shipments, tenant);
 
             return shipmentPMs;
         }
@@ -4724,6 +4745,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
                         shipmentPM.VersionApproved = CLoudData.VersionApproved;
                         shipmentPM.ShipmentAddtionalDataXML = CLoudData.ShipmentAddtionalDataXML;
+                        shipmentPM.ShipmentAdditionalData = ShipmentAdditionalDataService.DeserializeShipmentAdditionalXmlData(CLoudData.ShipmentAddtionalDataXML);
                         shipmentPM.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                         shipmentPM.DocsSentToAgent = CLoudData.DocsSentToAgent;
                         shipmentPM.ApprovedBy = CLoudData.ApprovedByUserName;
@@ -4784,6 +4806,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
                         shipmentPM.VersionApproved = CLoudData.VersionApproved;
                         shipmentPM.ShipmentAddtionalDataXML = CLoudData.ShipmentAddtionalDataXML;
+                        shipmentPM.ShipmentAdditionalData = ShipmentAdditionalDataService.DeserializeShipmentAdditionalXmlData(CLoudData.ShipmentAddtionalDataXML);
                         shipmentPM.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                         shipmentPM.DocsSentToAgent = CLoudData.DocsSentToAgent;
                         shipmentPM.ApprovedBy = CLoudData.ApprovedByUserName;
@@ -4843,6 +4866,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 returnShipment.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
                 returnShipment.VersionApproved = CLoudData.VersionApproved;
                 returnShipment.ShipmentAddtionalDataXML = CLoudData.ShipmentAddtionalDataXML;
+                returnShipment.ShipmentAdditionalData = ShipmentAdditionalDataService.DeserializeShipmentAdditionalXmlData(CLoudData.ShipmentAddtionalDataXML);
                 returnShipment.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                 returnShipment.DocsSentToAgent = CLoudData.DocsSentToAgent;
                 returnShipment.ApprovedBy = CLoudData.ApprovedByUserName;
@@ -5969,6 +5993,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         returnShipment.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
                         returnShipment.VersionApproved = CLoudData.VersionApproved;
                         returnShipment.ShipmentAddtionalDataXML = CLoudData.ShipmentAddtionalDataXML;
+                        returnShipment.ShipmentAdditionalData = ShipmentAdditionalDataService.DeserializeShipmentAdditionalXmlData(CLoudData.ShipmentAddtionalDataXML);
                         returnShipment.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                         returnShipment.DocsSentToAgent = CLoudData.DocsSentToAgent;
                         returnShipment.ApprovedBy = CLoudData.ApprovedByUserName;
@@ -15108,6 +15133,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
                         shipmentPM.VersionApproved = CLoudData.VersionApproved;
                         shipmentPM.ShipmentAddtionalDataXML = CLoudData.ShipmentAddtionalDataXML;
+                        shipmentPM.ShipmentAdditionalData = ShipmentAdditionalDataService.DeserializeShipmentAdditionalXmlData(CLoudData.ShipmentAddtionalDataXML);
                         shipmentPM.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                         shipmentPM.DocsSentToAgent = CLoudData.DocsSentToAgent;
                         shipmentPM.ApprovedBy = CLoudData.ApprovedByUserName;
@@ -15161,6 +15187,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
                         shipmentPM.VersionApproved = CLoudData.VersionApproved;
                         shipmentPM.ShipmentAddtionalDataXML = CLoudData.ShipmentAddtionalDataXML;
+                        shipmentPM.ShipmentAdditionalData = ShipmentAdditionalDataService.DeserializeShipmentAdditionalXmlData(CLoudData.ShipmentAddtionalDataXML);
                         shipmentPM.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                         shipmentPM.DocsSentToAgent = CLoudData.DocsSentToAgent;
                         shipmentPM.ApprovedBy = CLoudData.ApprovedByUserName;

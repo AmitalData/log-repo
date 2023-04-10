@@ -8,7 +8,6 @@ Feature: Workflow node
         And a flow with following details
             | Name        | random        |
             | Description | test workflow |
-            | Owner       | SpecflowTest  |
         When create workflow
         Then the flow should create successfully
 
@@ -19,11 +18,10 @@ Feature: Workflow node
         And add condition group met with 'Or' with the following details
             | Field                   | Operation | Value               |
             | Main Carriage Final ATA | Less Than | TODAY               |
-            | Profit Differences      | Not Equal | Profit Differences1 |
+            | Incoterm                | Changed   | False               |
             | Containers Numbers      | Equal     | 5                   |
             | Agent                   | Equal     | TestAgentExport     |
             | Description of Goods    | Ends With | xyz                 |
-            | Incoterm                | Changed   | False               |
         When save flow
         Then the flow should save successfully
 

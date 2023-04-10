@@ -1,0 +1,145 @@
+
+<style type="text/css">
+    .CounterItemBackground {
+        background: -moz-linear-gradient(50% 106.14% 90deg,rgba(133, 203, 237, 1) 0%,rgba(150, 211, 240, 1) 22.59%,rgba(196, 231, 248, 1) 67.37%,rgba(232, 247, 255, 1) 100%);
+        background: -webkit-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 100%);
+        background: linear-gradient(0deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 100%);
+    }
+</style>
+
+<ScrollViewer>
+    <div *ngIf="!UniquePerPrefix" style="height: 50px; width:315px; padding-left: 10px">
+        <table>
+            <tr>
+                <td style="width: 110px;">
+                    <label class="Label" style="width: 100px; color:#6E7172;">Start Number: </label>
+                </td>
+
+                <td style="width: 200px;">
+                    <input tabindex="-1" type="number" [(ngModel)]="StartNumber" [disabled]="!IsEnabled" />
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div style="white-space: pre-line">
+        <div *ngFor="let customizedCounterItem of CustomizedCounterItems; let j = index" style="width: 390px; height: 300px; display: inline-block">
+
+            <div style="width: 360px; padding-left: 10px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; display:inline-block">
+                <table>
+                    <tr style="height: 30px; border: 1px solid #D1D1D1; border-bottom: 0px;" class="CounterItemBackground">
+                        <td>
+                            <table>
+                                <tr>
+                                    <td class="Value" style="padding-left: 10px; width: 90%">
+                                        {{customizedCounterItem.SeriesCode}}
+                                    </td>
+                                    <td style="width:10%" *ngIf="j != 0">
+                                        <IconButton [IsEnabled]="IsEnabled" [IsSmall]="true" [Name]="'Delete'" [IsIconOnly]="true" (click)="DeleteCustomizedCounterItem(customizedCounterItem, false)"></IconButton>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 270px;">
+                        <td>
+                            <table>
+                                <tr style="border: 1px solid #D1D1D1;">
+                                    <td>
+                                        <div class="MediaFill">
+                                            <div class="MarginAbsolute5" style="top: 0px; bottom: 0px;">
+                                                <table>
+
+                                                    <!-- Prefix -->
+                                                    <tr class="FormFieldRow">
+                                                        <td style="width: 100px;">
+                                                            <LogLabel [ObjectFieldName]="'Prefix'" [ObjectTableName]="customizedCounterItem.ObjectTableName" [DataContext]="customizedCounterItem.DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td [style.opacity]="!IsEnabled ? '0.5':'1'" [style.pointer-events]="!IsEnabled ? 'none':'auto'">
+                                                            <LogTextBox [ObjectFieldName]="'Prefix'" [Text]="customizedCounterItem.Prefix" [ObjectTableName]="customizedCounterItem.ObjectTableName" [DataContext]="customizedCounterItem.DataContext"></LogTextBox>
+                                                        </td>
+                                                    </tr>
+                                                    <!-- CounterSize -->
+                                                    <tr class="FormFieldRow">
+                                                        <td style="width: 100px;">
+                                                            <LogLabel [ObjectFieldName]="'CounterSize'" [ObjectTableName]="customizedCounterItem.ObjectTableName" [DataContext]="customizedCounterItem.DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td [style.opacity]="!IsEnabled ? '0.5':'1'" [style.pointer-events]="!IsEnabled ? 'none':'auto'">
+                                                            <LogTextBox [ObjectFieldName]="'CounterSize'" [Text]="customizedCounterItem.CounterSize" [ObjectTableName]="customizedCounterItem.ObjectTableName" [DataContext]="customizedCounterItem.DataContext"></LogTextBox>
+                                                        </td>
+                                                    </tr>
+                                                    <!-- StartNumber -->
+                                                    <tr class="FormFieldRow">
+                                                        <td style="width: 100px;">
+                                                            <LogLabel [ObjectFieldName]="'StartNumber'" [ObjectTableName]="customizedCounterItem.ObjectTableName" [DataContext]="customizedCounterItem.DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td [style.opacity]="(!UniquePerPrefix || !IsEnabled) ? '0.5':'1'" [style.pointer-events]="(!UniquePerPrefix || !IsEnabled) ? 'none':'auto'">
+                                                            <LogTextBox [ObjectFieldName]="'StartNumber'" [Text]="customizedCounterItem.StartNumber" [ObjectTableName]="customizedCounterItem.ObjectTableName" [DataContext]="customizedCounterItem.DataContext"></LogTextBox>
+                                                        </td>
+                                                    </tr>
+                                                    <!-- Suffix -->
+                                                    <tr class="FormFieldRow">
+                                                        <td style="width: 100px;">
+                                                            <LogLabel [ObjectFieldName]="'Suffix'" [ObjectTableName]="customizedCounterItem.ObjectTableName" [DataContext]="customizedCounterItem.DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td [style.opacity]="!IsEnabled ? '0.5':'1'" [style.pointer-events]="!IsEnabled ? 'none':'auto'">
+                                                            <LogTextBox [ObjectFieldName]="'Suffix'" [Text]="customizedCounterItem.Prefix" [ObjectTableName]="customizedCounterItem.ObjectTableName" [DataContext]="customizedCounterItem.DataContext"></LogTextBox>
+                                                        </td>
+                                                    </tr>
+                                                    <!-- SampleValue -->
+                                                    <tr class="FormFieldRow">
+                                                        <td style="width: 100px;">
+                                                            <LogLabel [Text]="'Format'" [DataContext]="customizedCounterItem.DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <div class="Value" style="text-align: left; width: 230px; overflow: hidden">{{customizedCounterItem.Format}}</div>
+                                                        </td>
+                                                    </tr>
+                                                    <!-- Valid for -->
+                                                    <tr>
+                                                        <td class="Label" style="padding-left: 10px; padding-top:5px; vertical-align: top">
+                                                            Valid for:
+                                                        </td>
+
+                                                        <td>
+                                                            <div *ngFor="let invoicesType of InvoicesTypes; let i = index">
+                                                                <div *ngIf="i % 2 == 0" style="display: flex; padding-bottom:5px">
+                                                                    <CheckBox style="width:100px" [IsEnabled]="EnabledInvoiceType(invoicesType.Code, customizedCounterItem.SeriesCode)" [IsChecked]="customizedCounterItem.IsInvoiceChecked(invoicesType.Code)" (Checked)="customizedCounterItem.AddRemoveCounterDefinition(invoicesType.Code ,$event)" [Text]="invoicesType.DisplayText"></CheckBox>
+                                                                    <CheckBox style="width:120px" *ngIf="i + 1 < InvoicesTypes.length" [IsEnabled]="EnabledInvoiceType(InvoicesTypes[i+1].Code, customizedCounterItem.SeriesCode)" [IsChecked]="customizedCounterItem.IsInvoiceChecked(InvoicesTypes[i+1].Code)" (Checked)="customizedCounterItem.AddRemoveCounterDefinition(InvoicesTypes[i+1].Code ,$event)" [Text]="InvoicesTypes[i+1].DisplayText"></CheckBox>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr style="height: 10px;">
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div *ngIf="j == CustomizedCounterItems.length - 1 && j != 6" style="vertical-align: top; padding-top: 12px; width: 25px; display:inline-block">
+                <IconButton [IsEnabled]="!DisableAddCustomizedCounterItems() && IsEnabled" [Name]="'Add'" [IsSmall]="true" (click)="AddCustomizedCounterItem()"></IconButton>
+            </div>
+
+        </div>
+    </div>
+
+</ScrollViewer>

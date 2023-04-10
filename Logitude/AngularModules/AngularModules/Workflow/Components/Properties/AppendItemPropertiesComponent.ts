@@ -10,6 +10,7 @@ import { SetRecordFieldsTypes } from "Workflow/Constants/SetRecordFieldsTypes";
 import { FlowVariablesTreeList } from "Workflow/TreeLists/FlowVariablesTreeList";
 import { IsObjectTypePipe } from "Workflow/Pipes/IsObjectTypePipe";
 import { EntityLabelPipe } from "Workflow/Pipes/EntityLabelPipe";
+import { FlowReader } from "Workflow/Utilities/FlowReader";
 
 @Component({
     templateUrl: "./AppendItemPropertiesComponent.html"
@@ -22,7 +23,6 @@ export class AppendItemPropertiesComponent extends BaseComponent {
     public CurrentNodeId: string;
     public SingleEditableEntitiesTreeItems: TreeSelectItem[];
     public VariablesTreeItems: TreeSelectItem[];
-    public FlowVariablesTreeList: FlowVariablesTreeList;
     public FlowVariablesTreeItems: TreeSelectItem[];
     public Data: any;
     public IsNew: boolean;
@@ -38,7 +38,6 @@ export class AppendItemPropertiesComponent extends BaseComponent {
     public IsValidSetValues: boolean = true;
     public ValidationErrorsList: string[];
     public CollectionChanged: boolean = false;
-    public ExcludedEntities: string[] = ["Container"];
     public SetRecordFieldsTypes = SetRecordFieldsTypes;
     public CurrentSession = SessionLocator.SelectedSession;
     public SetValuesTitleText: string = null;
@@ -112,10 +111,6 @@ export class AppendItemPropertiesComponent extends BaseComponent {
         let props = {
             ShowRecordsVariables: true,
             ShowDeclaredVariables: true,
-            ShowRecordsCollectionVariables: false,
-            ShowDeclaredCollectionVariables: false,
-            OnlyCurrentLoopItemVariables: false,
-            IsObjectVariableSelectable: false,
             IsNoChildrenObjectVariables: true
         };
         this.VariablesTreeItems = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props).Items;
@@ -123,13 +118,7 @@ export class AppendItemPropertiesComponent extends BaseComponent {
 
     initializeDeclaredCollectionVariables() {
         let props = {
-            ShowRecordsVariables: false,
-            ShowDeclaredVariables: false,
-            ShowRecordsCollectionVariables: false,
-            ShowDeclaredCollectionVariables: true,
-            OnlyCurrentLoopItemVariables: false,
-            IsObjectVariableSelectable: false,
-            IsNoChildrenObjectVariables: false
+            ShowDeclaredCollectionVariables: true
         };
         let flowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props).Items;
         this.SingleEditableEntitiesTreeItems = this.SingleEditableEntitiesTreeItems.concat(flowVariablesTreeItems);
@@ -139,14 +128,11 @@ export class AppendItemPropertiesComponent extends BaseComponent {
         let props = {
             ShowRecordsVariables: true,
             ShowDeclaredVariables: true,
-            ShowRecordsCollectionVariables: false,
             ShowDeclaredCollectionVariables: true,
-            OnlyCurrentLoopItemVariables: false,
-            IsObjectVariableSelectable: true,
-            IsNoChildrenObjectVariables: false
+            ShowGlobalVariables: true,
+            IsObjectVariableSelectable: true
         };
-        this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props);
-        this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;
+        this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props).Items;
     }
 
     updateName(name: string) {
@@ -177,6 +163,7 @@ export class AppendItemPropertiesComponent extends BaseComponent {
 
         this.Data["collection"] = collectionName;
         this.Data["entity"] = collectionEntity;
+        this.Data["isCustomEntity"] = ObjectTables.getIsCustomByName(collectionEntity);
 
         this.Data["collectionUsedFrom"] = collectionItem && collectionItem.data && collectionItem.data["nodeId"] ? collectionItem.data["nodeId"] : null;
 
@@ -262,7 +249,8 @@ export class AppendItemPropertiesComponent extends BaseComponent {
     saveButtonClicked() {
         this.ValidationErrorsList = [];
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
-        if (notValidUIProperties.length === 0 && this.IsValidSetValues) {
+        let isValidName = !this.IsNew || !FlowReader.isNodeCodeExists(this.FlowObject, this.Name);
+        if (notValidUIProperties.length === 0 && this.IsValidSetValues && isValidName) {
             this.setSetValuesData();
             //console.log(this.Data);
             this.CurrentSession.CurrentWindow.Close(this.Data);
@@ -272,6 +260,10 @@ export class AppendItemPropertiesComponent extends BaseComponent {
 
             if (!this.IsValidSetValues) {
                 this.ValidationErrorsList.push("Invalid Set Values");
+            }
+
+            if (!isValidName) {
+                this.ValidationErrorsList.push("The Name Should be Unique.");
             }
         }
     }
