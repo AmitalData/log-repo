@@ -134,6 +134,8 @@
     <None Include="DBScripts\CommonModel\202212070128_AddSaleTextCodesQuotationTemplate.sxml" />
     <None Include="DBScripts\CommonModel\202217101053_UpdateLastLoginUserIP.sxml" />
     <None Include="DBScripts\CommonModel\202302220800UpdateBillingRoleDescription.sxml" />
+    <None Include="DBScripts\CommonModel\202304051240_MarkDuplicatedDocumentsAsDeleted-cloud.sxml" />
+    <None Include="DBScripts\CommonModel\202304051240_MarkDuplicatedDocumentsAsDeleted-logbox.sxml" />
     <None Include="DBScripts\CommonModel\202308031135_FillEORInumberCardFromCustomer.sxml" />
     <None Include="DBScripts\CommonModel\FillCodeForCustomerSizes.sxml" />
     <None Include="DBScripts\GlobalModel\2023010151536_AddWorkflowsEnginWR.sxml" />
@@ -278,6 +280,7 @@
     <None Include="DBScripts\ShipmentModel\202302151452_AddHouseMasterNumberToShipmentsSearchFields.sxml.ignore" />
     <None Include="DBScripts\ShipmentModel\202303120234_AddTrailerNumberFieldToShipmentSearchFields.sxml" />
     <None Include="DBScripts\ShipmentModel\202303230231_FillContainerShipmentFinalLegDates.sxml" />
+    <None Include="DBScripts\ShipmentModel\202304051240_MarkDuplicatedShipmentsAsCancelled - logbox.sxml" />
     <None Include="DBScripts\ShipmentModel\FillContainersDataFromPackages.sxml" />
     <None Include="DBTables\CommonDataModel\DigitalContactLastSetting.dxml" />
     <None Include="DBTables\CommonDataModel\HorseGender.dxml" />

@@ -432,7 +432,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public DocumentsFilingPM GetSinglePMByForwarderId(string id, int tenant)
         {
             DocumentsFilingPM extDocPm = (from a in repository.context.DocumentsFilings.Include("CreatedByUser.Contact").Include("ReceivedByUser.Contact").Include("Document").Include("DocumentType").Include("Owner.Contact")
-                                          where a.ForwarderDocumentId == id && a.Tenant == tenant
+                                          where a.ForwarderDocumentId == id && a.IsDeleted == false && a.Tenant == tenant
                                           select new DocumentsFilingPM()
                                           {
                                               Id = a.Id,
@@ -522,7 +522,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public DocumentsFilingPM GetSinglePMByCustomerId(string id, int tenant)
         {
             DocumentsFilingPM extDocPm = (from a in repository.context.DocumentsFilings.Include("CreatedByUser.Contact").Include("ReceivedByUser.Contact").Include("Document").Include("DocumentType").Include("Owner.Contact")
-                                          where a.CustomerDocumentId == id && a.Tenant == tenant
+                                          where a.CustomerDocumentId == id && a.IsDeleted == false && a.Tenant == tenant
                                           select new DocumentsFilingPM()
                                           {
                                               Id = a.Id,
