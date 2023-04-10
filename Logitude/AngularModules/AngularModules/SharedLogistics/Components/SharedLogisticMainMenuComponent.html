@@ -4,7 +4,7 @@
         <tr style="height:21px;">
             <td>
                 <ul class="PagesMenu">
-                    <li *ngIf="IsSharedLogisticsDisabled==false" [class.SelectedPageMenu]="SelectedItem == 'SHLO'" (click)="SelectedItem = 'SHLO'">Shared Logistics and Mobile</li>
+                    <li *ngIf="SharedLogisticAndMobileVisibility" [class.SelectedPageMenu]="SelectedItem == 'SHLO'" (click)="SelectedItem = 'SHLO'">Shared Logistics and Mobile</li>
 
                     <li *ngIf="IsDigitalPortalVisibile" [class.SelectedPageMenu]="SelectedItem == 'DIGP'" (click)="SelectedItem = 'DIGP'">Digital Portal</li>
 
@@ -20,7 +20,7 @@
         <tr>
             <td class="CellStretch">
                 <!--SharedLogistics-->
-                <div *ngIf="IsSharedLogisticsDisabled==false" class="CellContent" [hidden]="SelectedItem != 'SHLO'">
+                <div class="CellContent" [hidden]="SelectedItem != 'SHLO'">
                     <div LocationDirective Code="SHLO"></div>
                 </div>
 
