@@ -163,6 +163,6 @@ export class GLAccountList {
     Access: boolean;
 	Obligo: number;
 	CreditUsed: number;
-	CreditLimitDifference: number;
+	InsuredCreditPercentage: number;
 
 }

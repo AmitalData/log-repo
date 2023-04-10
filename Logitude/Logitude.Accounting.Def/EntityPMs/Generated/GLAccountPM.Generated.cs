@@ -3610,25 +3610,25 @@ namespace Logitude.Accounting.Def.EntityPMs
 			}
 		}
 
-		private double? creditLimitDifference;
+		private double? insuredCreditPercentage;
 
 
 		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 		[DataMember]
-		public double? CreditLimitDifference
+		public double? InsuredCreditPercentage
 		{
 
 			get
 			{
-				return creditLimitDifference;
+				return insuredCreditPercentage;
 			}
 			set
 			{
-				if (creditLimitDifference != value)
+				if (insuredCreditPercentage != value)
 				{
-					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "CreditLimitDifference", OldValue = creditLimitDifference, NewValue = value, PropertyType = "double?" };
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "InsuredCreditPercentage", OldValue = insuredCreditPercentage, NewValue = value, PropertyType = "double?" };
 					NotifyPropertyChanged(values);
-					creditLimitDifference = value;
+					insuredCreditPercentage = value;
 				}
 
 			}
