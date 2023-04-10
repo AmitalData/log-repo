@@ -392,7 +392,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         const reconciliationLines: ReconciliationLinePM[] = [];
         this.BuildReconciliationLines(reconciliationLines);
 
-        if (isSplitJournal && AppTool.IsNullOrEmpty(this.AccountingDate)) {
+        if (isSplitJournal) {
             const confirmMsg = TextCodeTranslator.Translate('Journal.RE.AccountingDateConfrimation');
             const confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 400;
@@ -426,6 +426,9 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
                 (res: ServiceResponse) => {
 
                     this.CurrentSession.StopBusyIndicator();
+                    if(!this.AccountingDate)
+                        this.checkSelectedLinesClosedMonth();
+
                     if (res.HasError) {
                         this.ValidationErrorsList = res.ErrorsArray;
 
@@ -451,7 +454,6 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
 
                     this.CurrentSession.StopBusyIndicator();
 
-                    this.checkSelectedLinesClosedMonth();
 
                     if (res.HasError) {
                         this.ValidationErrorsList = res.ErrorsArray;
