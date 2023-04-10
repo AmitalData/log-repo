@@ -1270,6 +1270,11 @@ export class CustomerPM extends ObjectCustomFieldPM {
     public set IsPrivateLabelCustomer(newValue: boolean) { if (this.isPrivateLabelCustomer != newValue) { this.isPrivateLabelCustomer = newValue; this.MarkAsDirty("IsPrivateLabelCustomer"); } }
        
 	 
+    private emailForSendingSingArinvoice: boolean;
+    public get EmailForSendingSingArinvoice() { return this.emailForSendingSingArinvoice; }
+    public set EmailForSendingSingArinvoice(newValue: boolean) { if (this.emailForSendingSingArinvoice != newValue) { this.emailForSendingSingArinvoice = newValue; this.MarkAsDirty("EmailForSendingSingArinvoice"); } }
+       
+
     private isCreditLimitEnabled: boolean;
     public get IsCreditLimitEnabled() { return this.isCreditLimitEnabled; }
     public set IsCreditLimitEnabled(newValue: boolean) { if (this.isCreditLimitEnabled != newValue) { this.isCreditLimitEnabled = newValue; this.MarkAsDirty("IsCreditLimitEnabled"); } }
@@ -1458,4 +1463,4 @@ export class CustomerPM extends ObjectCustomFieldPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

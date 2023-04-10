@@ -401,12 +401,16 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string PrimaryContactName { get; set; }
 
         [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")] 
         public string PrimaryContactEmail { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         [DataMember]
         public string PrimaryContactPhone { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        [DataMember]
+        public string EmailForSendingSingArinvoice { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         [DataMember]

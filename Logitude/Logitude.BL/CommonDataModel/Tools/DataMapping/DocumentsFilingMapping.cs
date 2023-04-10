@@ -75,6 +75,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                 poco.CustomerDocumentId = entityPM.CustomerDocumentId;
                 poco.CustomerTenantNumber = entityPM.CustomerTenantNumber;
             }
+            poco.ComputedCustomerDocumentId = string.IsNullOrEmpty(poco.CustomerDocumentId) ? entityPM.Id : poco.CustomerDocumentId;
 
             poco.SearchFields = entityPM.Code + entityPM.Description + entityPM.Notes + entityPM.EntityReference + "," + entityPM.ChildEntityReference + "," + entityPM.ExternalEntityReference + "," + (docType != null ? docType.Code + "," + docType.Name + "," : ",");
             //if (!string.IsNullOrEmpty(entityPM.FileName))

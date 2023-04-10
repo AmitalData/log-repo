@@ -112,6 +112,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool IsSharedWithCustomer { get; set; }
         public string ForwarderDocumentId { get; set; }
         public string CustomerDocumentId { get; set; }
+        public string ComputedCustomerDocumentId { get; set; }
 
         public string SecurityId  { get; set; }
 
