@@ -634,7 +634,7 @@ new JournalLinePM()
             {
                 if (!ledgerTransactionList.TrueForAll(r => r.InProgressExternalReconcile))
                 {
-                    _ErrorList.Add(M_WhileStreaming_All_InProgressExternalReconcile);
+                    //_ErrorList.Add(M_WhileStreaming_All_InProgressExternalReconcile);
                 }
             }
             //if (ledgerTransactionList.Any(r => r.IsReconciled))
