@@ -1,6 +1,8 @@
-﻿<Script DBType="Main"  Module="Common" Env="local,test,logbox" AOT="true">
-  <Sql Version="1">
+﻿<Script DBType="Main"  Module="Common" Env="local,test,logbox" AOT="true" TargetTableName="DocumentsFilings">
+  <Sql Version="2">
     <![CDATA[
+
+update DocumentsFilings set DocumentsFilings.ComputedForwarderDocumentId = DocumentsFilings.Id where DocumentsFilings.ComputedForwarderDocumentId is null And $LastCounterWhere$
 
 declare @Tenant as int
 declare @ComputedForwarderDocumentId as varchar(15)
@@ -12,6 +14,7 @@ BEGIN
 		SELECT Tenant,ComputedForwarderDocumentId
 		FROM DocumentsFilings
       WHERE ComputedForwarderDocumentId IS NOT NULL
+      And $LastCounterWhere$
 		GROUP BY Tenant,ComputedForwarderDocumentId
 		HAVING COUNT(*) > 1
 		OPEN ComputedForwarderDocumentsTenantsCursor FETCH NEXT FROM ComputedForwarderDocumentsTenantsCursor INTO @Tenant,@ComputedForwarderDocumentId

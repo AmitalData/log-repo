@@ -477,6 +477,4 @@
     Columns="ChildEntityId" />
   <Index
     Columns="Tenant,IsDeleted,IsTransferdToQBO" />
-  <UniqueConstraint Env="local,test,logbox"
-    Columns="Tenant,ComputedForwarderDocumentId" />
 </Table>
