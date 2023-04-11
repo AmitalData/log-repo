@@ -897,9 +897,9 @@ export class GLAccountPM {
     public get CreditUsed() { return this.creditUsed; }
     public set CreditUsed(newValue: number) { if (this.creditUsed != newValue) { this.creditUsed = newValue; this.MarkAsDirty("CreditUsed"); } }
 
-    private creditLimitDifference: number;
-    public get CreditLimitDifference() { return this.creditLimitDifference; }
-    public set CreditLimitDifference(newValue: number) { if (this.creditLimitDifference != newValue) { this.creditLimitDifference = newValue; this.MarkAsDirty("CreditLimitDifference"); } }
+    private insuredCreditPercentage: number;
+    public get InsuredCreditPercentage() { return this.insuredCreditPercentage; }
+    public set InsuredCreditPercentage(newValue: number) { if (this.insuredCreditPercentage != newValue) { this.insuredCreditPercentage = newValue; this.MarkAsDirty("InsuredCreditPercentage"); } }
     
     public OldEntityPM: GLAccountPM;
 		

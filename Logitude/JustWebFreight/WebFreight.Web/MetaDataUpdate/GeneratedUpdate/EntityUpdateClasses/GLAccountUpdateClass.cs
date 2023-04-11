@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "e72dd93d3f7949a1b4f9b26edb82a70e";
+		public const string HashString = "c7b9a1d5fcdbc3be259a1806eb170aaf";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -11522,7 +11522,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "CreditLimitDifference",
+					 						FieldName =  "InsuredCreditPercentage",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -11538,12 +11538,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
-					  						Operator =  "GreaterThanOrEqual",
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "CreditLimitDifference",
-					  						ListPropertyPath =  "CreditLimitDifference",
+					  						PMPropertyPath =  "InsuredCreditPercentage",
+					  						ListPropertyPath =  "InsuredCreditPercentage",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -11563,12 +11563,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DigitsAfterPoint =  2,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "CreditLimitDifference",
-					  						DefaultText =  "Credit Limit Difference",
-					  						FullLocalDefaultText =  "אחוז אשראי מבוטח",
-					  						ListFieldLable =  "CreditLimitDifferenceListLable",
-					  						ListLableDefaultText =  "Credit Limit Difference",
-					  						ListLocalDefaultText =  "אחוז אשראי מבוטח",
+					  						FullFieldLable =  "InsuredCreditPercentage",
+					  						DefaultText =  "Insured Credit Percentage",
+					  						ListFieldLable =  "InsuredCreditPercentageListLable",
+					  						ListLableDefaultText =  "Insured Credit Percentage",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11707,7 +11705,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn AllCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "GLAccount.DisplayNumber" , ColumnWidth = 73 }, addedQueryColumns);
 
-			 QueryColumn AllCustomersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "GLAccount.CreditLimitDifference" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn AllCustomersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "GLAccount.InsuredCreditPercentage" , ColumnWidth = 150 }, addedQueryColumns);
 
 			 QueryColumn AllCustomersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "GLAccount.EnglishName" , ColumnWidth = 160 }, addedQueryColumns);
 

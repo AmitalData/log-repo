@@ -332,7 +332,7 @@ namespace Logitude.Accounting.Data.EntityLists
         [DataMember]
         public double? CreditUsed { get; set; }
         [DataMember]
-        public double? CreditLimitDifference { get; set; }
+        public double? InsuredCreditPercentage { get; set; }
     }
 
 }
