@@ -63,7 +63,7 @@ export class GeneralPrintHelper {
     }
 
 
-    ShowPrintControl(documentTypeTemplate: string = null) {
+    ShowPrintControl(documentTypeTemplate: string = null,StatusCode:String = null) {
         if (this.IsStartPrint) return;
             let apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
             apiQueryFilters.GetAll = true;
@@ -76,7 +76,7 @@ export class GeneralPrintHelper {
                     this.documentTypeList = myResult.filter(d => d.Code.toUpperCase() == this.DocumentTypeCode)[0];
                     if (this.documentTypeList) {
                         if (this.documentTypeList.DocumentTypeDefaultReportTemplateId) {
-                            this.GetDocumentOut(documentTypeTemplate);
+                            this.GetDocumentOut(documentTypeTemplate,StatusCode);
 
                         }
                         else this.ShowMessage("Document type of code " + this.DocumentTypeCode + " has no default template");
@@ -97,7 +97,7 @@ export class GeneralPrintHelper {
         
     }
 
-    GetDocumentOut(documentTypeTemplate:string = null) {
+    GetDocumentOut(documentTypeTemplate:string = null,StatusCode:String = null) {
         if (this.IsStartPrint) return;
             this.IsStartPrint = true;
             this.CurrentSession.StartBusyIndicatorLoading();
@@ -114,7 +114,7 @@ export class GeneralPrintHelper {
                                 var myResult = pmResponse.Result;
                                 if (myResult) {
                                     this.documentOutPM = myResult;
-                                    this.LoadDocumentTypePm();
+                                    this.LoadDocumentTypePm(StatusCode);
                                 }
                             }
 
@@ -126,7 +126,7 @@ export class GeneralPrintHelper {
                         });
                     }
                     else {
-                        this.LoadDocumentTypePm();
+                        this.LoadDocumentTypePm(StatusCode);
                     }
                 }
 
@@ -138,14 +138,14 @@ export class GeneralPrintHelper {
         
     }
 
-    LoadDocumentTypePm() {
+    LoadDocumentTypePm(StatusCode:String = null) {
         this.documentTypePMService.getSingleDocumentType(this.documentTypeList.Id, this.documentOutPM.Id, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
                 if (myResult) {
                     this.documentTypePM = myResult;
-                    this.LoadPrintControl();
+                    this.LoadPrintControl(StatusCode);
                 }
             }
 
@@ -156,7 +156,8 @@ export class GeneralPrintHelper {
         });                            
     }
 
-    LoadPrintControl() {
+    LoadPrintControl(StatusCode:String = null) {
+       
         this.IsStartPrint = false;
         this.CurrentSession.StopBusyIndicator();
         var documentOutPmLists = new Array<DocumentOutPM>();
@@ -173,6 +174,7 @@ export class GeneralPrintHelper {
         logitudeWindow.Height = heightwindwo;
         logitudeWindow.DataContext = SelectedInternalDocument;
         logitudeWindow.Title = "Print " + this.documentTypePM.Name;
+        logitudeWindow.WindowArgs = {"statusCode":StatusCode};
         logitudeWindow.Show('./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/PrintDocumentComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
             if (this.CurrentSession.CurrentEditComponent) {

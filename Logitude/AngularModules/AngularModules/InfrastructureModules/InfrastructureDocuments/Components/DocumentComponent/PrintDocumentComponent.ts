@@ -73,7 +73,6 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     public EntityId: string;
     public isAWBWizard: boolean;
     public HtmlEditorData: string;
-
     IsShowDocumentCustomFields: boolean;
     public BusyIndicatorText: string;
     public DocumentCustomFieldsArgs: DocumentCustomFieldsArgs;
@@ -87,7 +86,8 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     IsEnableEditDocument: boolean = false;
     IsEnableManageDocument: boolean = false;
     IsAWBPackage: boolean = false;
-
+    public IsAccountingActivated = false;
+    private statusCode:String;
     public DisableSendOriginalCopy: boolean = false;
     public SelectedAsDefaultBtnVisible: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -95,25 +95,29 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     constructor(public _documentTypeCustomFieldService: DocumentTypeCustomFieldService, public _documentOutPMService: DocumentOutPMService, public _documentTypePMService: DocumentTypePMExtendedService, public _exportDocumentService: ExportDocumentService, public _documentTypeTemplateListExtendedService: DocumentTypeTemplateListExtendedService, public _htmlEditorService: HtmlEditorService) {
         super();
 
-
+        this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         if (FeatureLocator.HasFeaturePermession("DocumentType", "EDITPRINTEDDOCUMENTS")) {
             this.IsEnableEditDocument = true;
         }
         this.CheckManageDocumentFeature();
         this.CheckAWBPackage();
+       
     }
 
     ngOnInit() {
         if (ObjectsLocator.GlobalSetting.WorkEnvironment === 'cloud' && SessionLocator.TenantPM.AccountingActivated) {
             this.UpdateDocumentsAutomatically();
         }
+
+        
+        
     }
 
     UpdateDocumentsAutomatically()
     {
         this.CurrentDocumentOut = this.DataContext.CurrentDocument;
         this.LoadCopiesControl();
-
+      
         this._documentOutPMService.getSingleDocumentOutPM(this.DataContext.CurrentDocument.Id,
             this.DataContext.CurrentDocument.Tenant).subscribe((res: any) => {
         const pmResponse: ServiceResponse = res;
@@ -128,8 +132,19 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
         });
 
-
+       
+        
     }
+
+    SetWindowArgs(args: any) {
+        if (!AppTool.IsNullOrEmpty(args)) {       
+            this.statusCode = args.statusCode;
+           
+        }
+      
+    }
+ 
+
     CheckManageDocumentFeature() {
         if (FeatureLocator.HasFeaturePermession("DocumentType", "MANAGEDOCUMENTTEMPLATES")) {
             this.IsEnableManageDocument = true;
@@ -486,7 +501,6 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
         this.DataContext = dataContext;
         this.setArguments(this.DataContext);
-
     }
 
 
@@ -751,7 +765,18 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
 
             if (this.DocumentTypeload.IsDocumentOneTimePrintLimited) {
-                copies.forEach((item) => { item.CurrentDocumentTypeCopy.IsSelectedByDefault = true; });
+                copies.forEach((item) => { 
+                    
+                    item.CurrentDocumentTypeCopy.IsSelectedByDefault = true; 
+                    if(this.statusCode != null && this.IsAccountingActivated) {
+                        if(this.statusCode == "DR"){
+                            item.IsPrintButtonEnabled = true;
+                            item.PrintedByMessage = '';
+                        }
+                    }
+                    
+                   
+                });
             }
 
             this.lastCount = copies.filter(d => d.CurrentDocumentTypeCopy.IsSelectedByDefault).length;
@@ -1303,9 +1328,17 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
             this.ViewPage(item.CurrentDocumentOutCopy.DocoumentTypeCopyName, copyId);
 
             if (item.CurrentDocumentOutCopy.DocumentTypeCopyId == item.CurrentDocumentType.LimitedPrintCopyId && item.CurrentDocumentType.IsDocumentOneTimePrintLimited) {
-                item.IsPrintButtonEnabled = false;
-                var loggedContactName = SessionLocator.LoggedUserPM.EnglishName;
-                item.PrintedByMessage = "This document is already printed by " + loggedContactName;
+               
+                if(this.IsAccountingActivated && this.statusCode != "DR") {
+                    item.IsPrintButtonEnabled = false;
+                    var loggedContactName = SessionLocator.LoggedUserPM.EnglishName;
+                    item.PrintedByMessage = "This document is already printed by " + loggedContactName;
+                } else if(!this.IsAccountingActivated){
+                    item.IsPrintButtonEnabled = false;
+                    var loggedContactName = SessionLocator.LoggedUserPM.EnglishName;
+                    item.PrintedByMessage = "This document is already printed by " + loggedContactName;
+                }
+                
             }
 
         }
@@ -1466,15 +1499,33 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
         var currentCount = this.Items.filter(d => d.IsSelected).length;
         if (this.DataContext.DocumentTypePM.IsDocumentOneTimePrintLimited) {
-            this.Items.forEach((item) => {
+            if(this.IsAccountingActivated && this.statusCode != "DR") {
+                this.Items.forEach((item) => {
 
-                if (item.CurrentDocumentOutCopy && item.CurrentDocumentType) {
-                    if (item.CurrentDocumentOutCopy.DocumentTypeCopyId == item.CurrentDocumentType.LimitedPrintCopyId && AppTool.IsNullOrEmpty(item.PrintedByMessage)) {
-                        var loggedContactName = SessionLocator.LoggedUserPM.EnglishName;
-                        item.PrintedByMessage = "This document is already printed by " + loggedContactName;
+                    if (item.CurrentDocumentOutCopy && item.CurrentDocumentType) {
+                        if (item.CurrentDocumentOutCopy.DocumentTypeCopyId == item.CurrentDocumentType.LimitedPrintCopyId && AppTool.IsNullOrEmpty(item.PrintedByMessage)) {
+                            
+                            var loggedContactName = SessionLocator.LoggedUserPM.EnglishName;
+                            item.PrintedByMessage = "This document is already printed by " + loggedContactName;
+                           
+                        }
                     }
-                }
-            });
+                });
+            } else if(!this.IsAccountingActivated) {
+                this.Items.forEach((item) => {
+
+                    if (item.CurrentDocumentOutCopy && item.CurrentDocumentType) {
+                        if (item.CurrentDocumentOutCopy.DocumentTypeCopyId == item.CurrentDocumentType.LimitedPrintCopyId && AppTool.IsNullOrEmpty(item.PrintedByMessage)) {
+                            
+                            var loggedContactName = SessionLocator.LoggedUserPM.EnglishName;
+                            item.PrintedByMessage = "This document is already printed by " + loggedContactName;
+                           
+                        }
+                    }
+                });
+            }
+
+            
 
         }
 
