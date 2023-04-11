@@ -1115,6 +1115,16 @@ namespace Logitude.Accounting.BL.CoreBL
 
             LogMessagingUtil.Instance.AppendLine(message?.MessageId?.ToString() + " " + ex.ToString());
             ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "AccountingJournalApproveWR", "AccountingJournalApproveWR: ProcessMessage() Method", null);
+            if (message == null || message.RetryNumber >= 9)
+            {
+                var journalFailedService = new JournalFailedService(tenant, seedJournalId);
+                journalFailedService.MarkAsFailed(ex);
+                if (myDbQueueService != null)
+                {
+                    myDbQueueService.Complete();
+                }
+            }
+
             if (message.RetryNumber >= 2 && message.RetryNumber <= 7) {
                     myDbQueueService.Delay(new TimeSpan(0, 0, 0, 50));
             }
