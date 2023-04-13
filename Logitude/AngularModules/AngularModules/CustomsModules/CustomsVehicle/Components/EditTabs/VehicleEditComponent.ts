@@ -75,7 +75,6 @@ export class VehicleEditComponent extends BaseComponent {
         this.TabsItemsSource.push(new TabItem("VehicleMoreDetailsTabComponent", "Customs.Vehicle.TH.MoreDetails"));
         this.TabsItemsSource.push(new TabItem("VehiclesOwnersAndSafetyTabComponent", "Customs.Vehicle.TH.OwnersAndSafety"));
         this.TabsItemsSource.push(new TabItem("CustomsDocumentsComponent", "Customs.Vehicle.TH.CustomDocuments"));
-        this.TabsItemsSource.push(new TabItem("CopyRichbitComponent", "Customs.Vehicle.TH.CopyRichbit"));
 
         this.timerToken = setTimeout(() => {
             this.SelectedTabCode = "General"; // to ensure the component was painted
@@ -96,7 +95,6 @@ export class VehicleEditComponent extends BaseComponent {
     private MORE: VehicleMoreDetailsTabComponent = null;
     private SAFETY: VehiclesOwnersAndSafetyTabComponent = null;
     private CUSTOMDOCUMENTS: CustomsDocumentsComponent = null;
-    private COPYRICHBIT: CopyRichbitComponent = null;
 
 
     private CustomsRequestsSheets: any = null;
@@ -125,6 +123,10 @@ export class VehicleEditComponent extends BaseComponent {
                                     this.GENERAL.FillValidationErrorList.subscribe((response: any) => {
                                         this.ValidationErrorsList = response;
                                     });
+                                    // this.GENERAL.SaveEvent.subscribe((res:boolean)=>{
+                                    //     if(res)
+                                    //     this.SaveEntityChanges();
+                                    // })
                                 });
                         }
                         else{
@@ -190,22 +192,7 @@ export class VehicleEditComponent extends BaseComponent {
                         break;
                     }
 
-                    case "CopyRichbitComponent": {
-                        if (this.COPYRICHBIT == null) {
-                            SessionLocator.DynamicLoader.Load(
-                                './CustomsModules/CustomsVehicle/Components/EditTabs/CopyRichbitComponent',
-                                myLocation.viewContainerRef)
-                                .then(cmpRef => {
-                                    this.COPYRICHBIT = cmpRef.instance;
-                                    this.COPYRICHBIT.SetTabArgs({ EntityPM: this.EntityPM });
-                                    
-                                });
-                        }
-                        else{
-                            this.COPYRICHBIT.SetTabArgs({ EntityPM: this.EntityPM });
-                        }
-                        break;
-                    }
+                   
 
                 }
 

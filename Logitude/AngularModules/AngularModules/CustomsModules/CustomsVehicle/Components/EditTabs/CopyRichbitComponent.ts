@@ -38,17 +38,13 @@ export class CopyRichbitComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     public VehicleChassisNumberText = TextCodeTranslator.Translate('Customs.Vehicle.F.VehicleChassisNumber') + ":";
     constructor() {
-
         super();
-        this.EntityPM = this;
-        //this.CurrentSession.StartBusyIndicatorLoading();
+        
         this.BuildColumns();
-
-        //this.SetWindowArgs(this.CurrentSession.CurrentEditComponent);
         this.onQueryChangeEvent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
 
     }
-    public SetTabArgs(args: any, valdationErrorList: any[] = null) {
+    public SetWindowArgs(args: any) {
 
         this.EntityPM = args.EntityPM;
         this.ImporterIdentityId = this.EntityPM.ImporterIdentityId;
@@ -56,7 +52,7 @@ export class CopyRichbitComponent extends BaseComponent {
         this.VehicleChassisNumber = this.EntityPM.VehicleChassisNumber;
         this.VehicleChassisNumber2 = this.EntityPM.VehicleChassisNumber;
 
-        // this.cdr.detectChanges();
+      
 
     }
 
@@ -279,7 +275,9 @@ export class CopyRichbitComponent extends BaseComponent {
         confirm.Show(TextCodeTranslator.Translate("Customs.Vehicle.O.OkCopyRichbit") + " " + message);
     }
 
-
+    CancelButtonClicked() {
+        this.CurrentSession.CloseCurrentWindowEmit("cancel");
+    }
     CopyRichbitDetails(selectedRow: any) {
 
         this.CurrentSession.StartBusyIndicatorSaving();
@@ -352,7 +350,7 @@ export class CopyRichbitComponent extends BaseComponent {
             }
 
             this.CurrentSession.StopBusyIndicator();
-
+            this.CurrentSession.CloseCurrentWindowEmit(null);
         });
 
 

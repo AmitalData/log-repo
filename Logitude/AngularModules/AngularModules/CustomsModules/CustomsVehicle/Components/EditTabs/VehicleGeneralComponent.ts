@@ -30,6 +30,8 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 
 export class VehicleGeneralComponent extends BaseComponent {
     @Output() FillValidationErrorList: EventEmitter<any> = new EventEmitter();
+    @Output() SaveEvent: EventEmitter<any> = new EventEmitter();
+
     public EntityPM: VehiclePM;
     public ObjectTableName: string = "Customs.Vehicle";
     public DataContext: any = this;
@@ -175,7 +177,22 @@ export class VehicleGeneralComponent extends BaseComponent {
 
     }
 
+    OpenCopyRichbit(){
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 820;
+        logWindow.Height = 800;
+        
+        logWindow.Title = TextCodeTranslator.Translate("Customs.Vehicle.O.CopyRichbit");
+        logWindow.WindowArgs = windowArgs;
+        logWindow.IsShowCloseButton = true;
+        logWindow.Show('./CustomsModules/CustomsVehicle/Components/EditTabs/CopyRichbitComponent');
 
+        logWindow.WindowClosed.subscribe(($event: any) => {
+           //this.SaveEvent.emit(true);
+        });
+    }
 
     //#endregion
 
