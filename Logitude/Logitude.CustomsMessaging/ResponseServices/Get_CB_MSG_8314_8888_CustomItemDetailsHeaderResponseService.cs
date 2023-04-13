@@ -43,7 +43,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 responseData.CustomsItemList.Add(new CustomsItem()
                 {
                     fullClassification = item.fullClassification,
-                    statisticMeasurementUnitCode = item.statisticMeasurementUnitCode,
+                    statisticMeasurementUnitExternalID = item.statisticMeasurementUnitExternalID,
                     isDiscountCode = item.isDiscountCode,
                     goodsDescription = item.GoodsDescription,
                     customsBookTypeName = item.CustomsBookTypeName
