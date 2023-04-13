@@ -172,6 +172,7 @@
     <Compile Include="EntityPMs\GLAccountTypePM.cs" />
     <Compile Include="EntityPMs\JournalActionTypePM.cs" />
     <Compile Include="EntityPMs\JournalLinePM.cs" />
+    <Compile Include="EntityPMs\JournalLite.cs" />
     <Compile Include="EntityPMs\JournalPM.cs" />
     <Compile Include="EntityPMs\JournalStatusTypePM.cs" />
     <Compile Include="EntityPMs\LedgerTransactionPM.cs" />

@@ -195,6 +195,38 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             }
         }
 
+        public ARPaymentLite GetARPaymentLiteByNumber(string number, int Tenant)
+        {
+            try
+            {
+                string aRPaymentId = query.GetSinglePaymentIdByPaymentNumber(number, Tenant);
+
+                return new ARPaymentLite() { Id = aRPaymentId };
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
+        public ARPaymentLite GetARPaymentLiteById(string paymentId, int tenant, string ComputingPartnerName = "")
+        {
+            try
+            {
+                string aRPaymentId = query.GetCheckPaymentId(paymentId, tenant);
+
+                return new ARPaymentLite() { Id = aRPaymentId };
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         private JournalPM GetSingleJournalByExternalNoAndExternalSystem(string externalNo, string externalSystem, int tenant)
         {

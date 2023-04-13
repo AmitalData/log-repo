@@ -316,6 +316,25 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return GetEntityPM(poco);
         }
+
+        public JournalLite GetJournalLiteByAccountingEntityId(string accountingEntityId, string accountingEntityCode, int tenant)
+        {
+            Journal poco = repository.GetByAccountingEntityId(accountingEntityId, accountingEntityCode, tenant);
+            if (poco == null)
+            {
+                return null;
+            }
+            else
+            {
+                return new JournalLite()
+                { 
+                    JournalId = poco.Id,
+                    IsLedgerCreated = poco.IsLedgerCreated
+                };
+            }
+        }
+
+
         public JournalPM GetByAccountingEntityIdAndAccountingEntityCodeWithComposition(string entityId, string accountingEntityCode, int tenant)
         {
             Journal poco = repository.GetByAccountingEntityId(entityId, accountingEntityCode, tenant);
@@ -528,6 +547,21 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             }
             return journal;
         }
+
+        public string GetSingleJournalIdByExternalNoAndExternalSystem(string externalNo, string externalSystem, int tenant)
+        {
+            Journal poco = null;
+            poco = repository.GetSingleJournalByExternalNoAndExternalSystem(externalNo, externalSystem, tenant);
+            if (poco == null)
+            {
+                return null;
+            }
+            else
+            {
+                return poco.Id;
+            }
+        }
+
 
         public List<JournalPM> GetJournalsByIds(List<string> ids, int tenant)
         {
