@@ -142,10 +142,10 @@ export class CustomsItemDetailsQueryComponent
         }
     }
 
-    get StatisticMeasurementUnitCode() { return this.RequestParams.statisticMeasurementUnitCode; }
-    set StatisticMeasurementUnitCode(value: string) {
-        if (this.RequestParams.statisticMeasurementUnitCode != value) {
-            this.RequestParams.statisticMeasurementUnitCode = value;
+    get StatisticMeasurementUnitExternalID() { return this.RequestParams.statisticMeasurementUnitExternalID; }
+    set StatisticMeasurementUnitExternalID(value: string) {
+        if (this.RequestParams.statisticMeasurementUnitExternalID != value) {
+            this.RequestParams.statisticMeasurementUnitExternalID = value;
         }
     }
 
@@ -218,7 +218,7 @@ export class CustomsItemDetailsQueryComponent
                 this.FullClassification = this.ResponseData?.CustomsItemList[0]?.fullClassification
                 this.CustomsBookTypeName = this.ResponseData?.CustomsItemList[0]?.customsBookTypeName;
                 this.GoodsDescription = this.ResponseData?.CustomsItemList[0]?.goodsDescription
-                this.StatisticMeasurementUnitCode = this.ResponseData?.CustomsItemList[0]?.statisticMeasurementUnitCode?.toString();
+                this.StatisticMeasurementUnitExternalID = this.ResponseData?.CustomsItemList[0]?.statisticMeasurementUnitExternalID?.toString();
                 this.IsDiscountCode = this.ResponseData?.CustomsItemList[0]?.isDiscountCode;
 
                 this.MyLastCustomsRequestSheetId = currRequestParams.PBId;

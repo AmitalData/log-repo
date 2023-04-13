@@ -18,7 +18,7 @@ namespace Logitude.CustomsMessaging.Common.ResponseData
     public class CustomsItem
     {
         public string fullClassification { get; set;}
-        public int? statisticMeasurementUnitCode { get; set;}
+        public string statisticMeasurementUnitExternalID { get; set;}
         public bool?  isDiscountCode { get; set;}
         public string  goodsDescription { get; set;}
         public string customsBookTypeName { get; set;}
