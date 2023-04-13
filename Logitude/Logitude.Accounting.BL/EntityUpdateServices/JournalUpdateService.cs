@@ -116,9 +116,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 if (listTransactionId.Count > 0)
                 {
                     var ledgerTransactionUpdateService = new LedgerTransactionUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
-                    //ledgerTransactionUpdateService.UpdateInReconcileProgress(listTransactionId, Tenant, inReconcileProgress /*true*/);
+                    ledgerTransactionUpdateService.UpdateInReconcileProgress(listTransactionId, Tenant, inReconcileProgress /*true*/);
 
-                    LedgerTransactionUpdateService.UpdateInReconcileProgress(entityPM.Id, entityPM.Tenant, inReconcileProgress);
+                    //LedgerTransactionUpdateService.UpdateInReconcileProgress(entityPM.Id, entityPM.Tenant, inReconcileProgress);
                 }
             }
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert
@@ -140,7 +140,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 if (listTransactionId.Count > 0)
                 {
                     var ledgerTransactionUpdateService = new LedgerTransactionUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
-                    LedgerTransactionUpdateService.Update_InProgressExternalReconcile(entityPM.Id, Tenant, true);
+                    // LedgerTransactionUpdateService.Update_InProgressExternalReconcile(entityPM.Id, Tenant, true);
+                    ledgerTransactionUpdateService.Update_InProgressExternalReconcile(listTransactionId, Tenant, true);
                 }
                 var listReconcileExternalPageLineId = entityPM.JournalExternalReconciles.Select(r => r.ReconcileExternalPageLineId).ToList();
                 if (listReconcileExternalPageLineId.Count > 0)
