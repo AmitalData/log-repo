@@ -366,13 +366,21 @@ namespace WebFreight.Web.Helpers
                 if (count > 0)
                 {
                     // Get dataList
-                    int pagesize = count;
-                    if (pagesize > 65534)
+                    if (exportToExcelArgs.IsXslxFormat)
                     {
-                        queryOperations.GetAll = false;
-                        pagesize = 65000;
+                        queryOperations.PageSize = count;
                     }
-                    queryOperations.PageSize = pagesize;
+                    else
+                    {
+                        int pagesize = count;
+                        if (pagesize > 65534)
+                        {
+                            queryOperations.GetAll = false;
+                            pagesize = 65000;
+                        }
+                        queryOperations.PageSize = pagesize;
+                    }
+                    
                     xmlFilters = filterSerializer.SerializeFilterItems(queryOperations);
 
                     parameters = new object[] { xmlFilters, tenant };
@@ -648,8 +656,16 @@ namespace WebFreight.Web.Helpers
                                 i++;
                             }
                         }
-
-                        workbook.SaveAs(memory, ExcelSaveType.SaveAsXLS);
+                        if (exportToExcelArgs.IsXslxFormat)
+                        {
+                            workbook.Version = ExcelVersion.Excel2010;
+                            workbook.SaveAs(memory);
+                        }
+                        else
+                        {
+                            workbook.SaveAs(memory, ExcelSaveType.SaveAsXLS);
+                        }
+                        
 
                         //No exception will be thrown if there are unsaved workbooks.
                         excelEngine.ThrowNotSavedOnDestroy = false;
@@ -1180,4 +1196,5 @@ public class ExportToExcelArgs
     public QueryPM QueryPM { get; set; }
     public  List<QueryColumnPM> QueryColumns { get; set; }
     public IEnumerator Data { get; set; }
+    public bool IsXslxFormat { get; set; }
 }

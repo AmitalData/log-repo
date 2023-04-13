@@ -34,7 +34,7 @@ namespace Logitude.BL.CommonDataModel.LogitudeGridExportToExcel
             {
                 FileName = logitudeGridExportToExcelArguments.ObjectTableName + DateTime.Now.ToShortDateString(),
                 FolderName = "others",
-                Extension = "xls",//fileparams[1],
+                Extension = logitudeGridExportToExcelArguments.IsXslxFormat ? "xlsx" : "xls",//fileparams[1],
                 Tenant = logitudeGridExportToExcelArguments.Tenant,
                 FileSize = ExcelDataByte.Length,
 
@@ -85,6 +85,7 @@ namespace Logitude.BL.CommonDataModel.LogitudeGridExportToExcel
                 QueryColumns =
                 logitudeGridExportToExcelArguments.QueryColumns,
                 QueryPM = queryPM,
+                IsXslxFormat = logitudeGridExportToExcelArguments.IsXslxFormat,
             };
             var data = new ExportToExcelHelper().ExportQueryToExcel(exportToExcelArgs);
 

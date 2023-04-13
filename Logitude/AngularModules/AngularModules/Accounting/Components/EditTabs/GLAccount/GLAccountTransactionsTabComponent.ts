@@ -643,10 +643,10 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
     public ExportToExcelClick(){
        // this._entityResourceService.getEntityResourceByTableName("LedgerTransaction", 0).subscribe((response: any) => {
-        this.LogitudeGridExportToExcelComponent.ExportToExcelExcute("GLAccountLedgerTransaction",this.filterAgrs,this.QueryColumns);
+        this.LogitudeGridExportToExcelComponent.ExportToExcelExcute("GLAccountLedgerTransaction",this.filterAgrs,this.QueryColumns,"SaveToMicrosoftExcel2007",true);
       //  });
     }
-
+ 
     GetTransactions() {
         var filters = new ApiQueryFilters;
         if (this.dateFilter) {
