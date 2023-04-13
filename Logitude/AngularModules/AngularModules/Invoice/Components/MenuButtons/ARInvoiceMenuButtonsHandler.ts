@@ -1381,9 +1381,11 @@ export class ARInvoiceMenuButtonsHandler {
         var myDocumentTypeCode: string = null;
         var myReference: string = null;
         var StatusCode: string = null;
+        var ApprovedDate: Date = null;
 
         if(this.EntityPM != null) {
             StatusCode = this.EntityPM.StatusCode;
+            ApprovedDate = this.EntityPM.ApprovedDate;
         }
 
         
@@ -1394,7 +1396,7 @@ export class ARInvoiceMenuButtonsHandler {
             myObjectTableName = "ARInvoice";
             myDocumentTypeCode = "999C";
             myReference = !AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber) ? this.EntityPM.InvoiceNumber : "Draft: " + this.EntityPM.DraftNumber;
-            this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference,StatusCode);
+            this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference,StatusCode,ApprovedDate);
         }
         else if (this.EntityPM.IsGeneralInvoice) {
 
@@ -1410,7 +1412,7 @@ export class ARInvoiceMenuButtonsHandler {
             }
             else {
                
-                this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference,StatusCode);
+                this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference,StatusCode,ApprovedDate);
 
             }
         }
@@ -1424,13 +1426,13 @@ export class ARInvoiceMenuButtonsHandler {
             if (this.EntityPM.ARInvoiceTypeCode == "MN") {
                 myObjectTableName = "Master";
                 myDocumentTypeCode = "999M";
-                this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference,StatusCode);
+                this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference,StatusCode,ApprovedDate);
             }
 
             else if (this.EntityPM.ARInvoiceTypeCode == "CI" || this.EntityPM.ARInvoiceTypeCode == "CC") {
                 myObjectTableName = "Shipment";
                 myDocumentTypeCode = "999CI";
-                this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference,StatusCode);
+                this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference,StatusCode,ApprovedDate);
             }
 
             else {
@@ -1446,17 +1448,17 @@ export class ARInvoiceMenuButtonsHandler {
                         myObjectTableName = myShipmentLevelCode == "C" ? "Master" : "Shipment";
                         myDocumentTypeCode = "999S";
 
-                        this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference,StatusCode);
+                        this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference,StatusCode,ApprovedDate);
                     }
                 });
             }
         }
     }
-    StartPrinting(myEntityId: string, myChildEntityId: string, myObjectTableName: string, mychildObjectTableId: string, myDocumentTypeCode: string, myReference: string,StatusCode:String) {
+    StartPrinting(myEntityId: string, myChildEntityId: string, myObjectTableName: string, mychildObjectTableId: string, myDocumentTypeCode: string, myReference: string,StatusCode:String,ApprovedDate:Date = null) {
         var myPrintHelper = new GeneralPrintHelper(myObjectTableName, myDocumentTypeCode, myEntityId, myChildEntityId, myReference, mychildObjectTableId);
         if (myPrintHelper.IsLoadPrintControl) {
             ServiceLocator.SendTotangoUserActivity("ARInvoice", "PrintInvoice");
-            myPrintHelper.ShowPrintControl(this.EntityPM.DocumentTemplateId,StatusCode);
+            myPrintHelper.ShowPrintControl(this.EntityPM.DocumentTemplateId,StatusCode,ApprovedDate);
         }
     }
     GetDocument() {
@@ -1480,9 +1482,10 @@ export class ARInvoiceMenuButtonsHandler {
     }
     private PrintFullAccountingInvoice() {
         var StatusCode: string = null;
-
+        var ApprovedDate: Date = null;
         if(this.EntityPM != null) {
             StatusCode = this.EntityPM.StatusCode;
+            ApprovedDate = this.EntityPM.ApprovedDate;
         }
 
         if (this.EntityPM.IsExternalEntity) {
@@ -1495,7 +1498,7 @@ export class ARInvoiceMenuButtonsHandler {
             }
         }
         else {
-            this.StartPrinting(this.EntityPM.Id, null, "ARInvoice", null, "999G", !AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber) ? this.EntityPM.InvoiceNumber : "Draft: " + this.EntityPM.DraftNumber,StatusCode);
+            this.StartPrinting(this.EntityPM.Id, null, "ARInvoice", null, "999G", !AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber) ? this.EntityPM.InvoiceNumber : "Draft: " + this.EntityPM.DraftNumber,StatusCode,ApprovedDate);
         }
     }
 

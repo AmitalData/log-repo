@@ -88,6 +88,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     IsAWBPackage: boolean = false;
     public IsAccountingActivated = false;
     private statusCode:String;
+    private ApprovedDate:Date;
     public DisableSendOriginalCopy: boolean = false;
     public SelectedAsDefaultBtnVisible: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -139,6 +140,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     SetWindowArgs(args: any) {
         if (!AppTool.IsNullOrEmpty(args)) {       
             this.statusCode = args.statusCode;
+            this.ApprovedDate = args.ApprovedDate;
            
         }
       
@@ -742,6 +744,57 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     }
 
 
+    compareDate(firstDate:Date,secondDate:Date){
+         const lastPrintDate = new Date(firstDate);
+         const approvedDate = new Date(secondDate);
+        if(lastPrintDate.getFullYear() < approvedDate.getFullYear()){
+            return true;
+        } else if(lastPrintDate.getFullYear() == approvedDate.getFullYear()) {
+          
+        
+            if(lastPrintDate.getMonth() < approvedDate.getMonth()){
+                return true;
+            } else if(lastPrintDate.getMonth() == approvedDate.getMonth()) {
+
+                if(lastPrintDate.getDay() < approvedDate.getDay()){
+                    return true;
+                } else if(lastPrintDate.getDay() == approvedDate.getDay()) {
+
+                    if(lastPrintDate.getHours() < approvedDate.getHours()){
+                        return true;
+                    }  else if(lastPrintDate.getHours() == approvedDate.getHours()){
+                       
+                        if(lastPrintDate.getMinutes() < approvedDate.getMinutes()){
+                            return true;
+                        }  else if(lastPrintDate.getMinutes() == approvedDate.getMinutes()){
+                           
+                            if(lastPrintDate.getSeconds() < approvedDate.getSeconds()){
+                                return true;
+                            } else {
+                                return false;
+                            }
+                            
+                        } else {
+                            return false;
+                        }
+
+                    } else {
+                        return false;
+                    }
+    
+                } else {
+                    return false;
+                }
+
+            } else {
+                return false;
+            }
+
+
+        } else {
+            return false;
+        }
+    }
     CopiesControlLoaded(copies: Array<DocumentCopiesViewModel>) {
 
 
@@ -766,10 +819,19 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
             if (this.DocumentTypeload.IsDocumentOneTimePrintLimited) {
                 copies.forEach((item) => { 
+                   
+                   
+                 
                     
                     item.CurrentDocumentTypeCopy.IsSelectedByDefault = true; 
+                    var LastPrintDateLessThenApprovedDate = null;
+                    if(item.CurrentDocumentOutCopy != null){
+                        LastPrintDateLessThenApprovedDate = this.compareDate(item.CurrentDocumentOutCopy.LastPrintDate,this.ApprovedDate);
+                    }
+                   
                     if(this.statusCode != null && this.IsAccountingActivated) {
-                        if(this.statusCode == "DR"){
+
+                        if(this.statusCode == "DR" || (this.statusCode != "DR" && (LastPrintDateLessThenApprovedDate))){
                             item.IsPrintButtonEnabled = true;
                             item.PrintedByMessage = '';
                         }
@@ -778,6 +840,8 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                    
                 });
             }
+
+            
 
             this.lastCount = copies.filter(d => d.CurrentDocumentTypeCopy.IsSelectedByDefault).length;
 
