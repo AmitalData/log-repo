@@ -1435,13 +1435,17 @@
     <Compile Include="ExternalAPIs\GetShipmentsByReferencesController.cs" />
     <Compile Include="ExternalAPIs\RatesUpdateController.cs" />
     <Compile Include="ExternalAPIs\ShipmentNumbersController.cs" />
+    <Compile Include="ExternalAPIs\V1\APInvoiceLiteController.cs" />
     <Compile Include="ExternalAPIs\V1\ARInvoiceJournalLTController.cs" />
+    <Compile Include="ExternalAPIs\V1\ARInvoiceLiteController.cs" />
     <Compile Include="ExternalAPIs\V1\ARPaymentChqStsController.cs" />
+    <Compile Include="ExternalAPIs\V1\ARPaymentLiteController.cs" />
     <Compile Include="ExternalAPIs\V1\ClosedMonthCheckController.cs" />
     <Compile Include="ExternalAPIs\V1\ContainerController.cs" />
     <Compile Include="ExternalAPIs\V1\EventTypeModule\EventTypeController.cs" />
     <Compile Include="ExternalAPIs\V1\GLAccountChequeDetailsController.cs" />
     <Compile Include="ExternalAPIs\V1\CargoTrackingShipmentDetailsController.cs" />
+    <Compile Include="ExternalAPIs\V1\JournalLiteController.cs" />
     <Compile Include="ExternalAPIs\V1\ShipmentOrderModule\ShipmentOrderController.cs" />
     <Compile Include="ExternalAPIs\V1\ShipmentStatusesController.cs" />
     <Compile Include="FileNotFound.aspx.cs">

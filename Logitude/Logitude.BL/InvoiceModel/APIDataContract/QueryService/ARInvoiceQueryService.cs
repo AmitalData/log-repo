@@ -465,6 +465,40 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             }
         }
 
+        public ARInvoiceLite GetARInvoiceLiteByInvoiceNumber(string number, int tenant)
+        {
+            try
+            {
+
+
+                string aRInvoiceId = query.GetSingleInvoiceIdByInvoiceNumber(number, tenant);
+
+                return new ARInvoiceLite() { Id = aRInvoiceId };
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
+        public ARInvoiceLite GetARInvoiceLiteById(string invoiceId, int tenant, string ComputingPartnerName = "")
+        {
+            try
+            {
+                string aRInvoiceId = query.GetCheckInvoiceId(invoiceId, tenant);
+
+                return new ARInvoiceLite() { Id = aRInvoiceId };
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
         public string GetGLAccountNumberById(string id, int tenant )
         {
             IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;

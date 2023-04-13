@@ -149,6 +149,40 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return entityPM;
         }
 
+        public string GetSingleInvoiceIdByInvoiceNumber(string invoiceNumber, int tenant)
+        {
+            ARInvoice entityPOCO =
+                (from a in repository.context.ARInvoices
+                 where a.InvoiceNumber == invoiceNumber && a.Tenant == tenant
+                 select a).FirstOrDefault();
+            if (entityPOCO == null)
+            {
+                return null;
+            }
+            else
+            {
+                return entityPOCO.Id;
+            }
+        }
+
+
+        public string GetCheckInvoiceId(string invoiceId, int tenant)
+        {
+            ARInvoice entityPOCO =
+                (from a in repository.context.ARInvoices
+                 where a.Id == invoiceId && a.Tenant == tenant
+                 select a).FirstOrDefault();
+            if (entityPOCO == null)
+            {
+                return null;
+            }
+            else
+            {
+                return entityPOCO.Id;
+            }
+        }
+
+
         public ARInvoicePM GetReadyForTransferOrErrorInTransferInvoicePM(int tenant)
         {
             ARInvoicePM entityPM = null;

@@ -925,6 +925,63 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             }
         }
 
+        public APInvoiceLite GetAPInvoiceLiteByInvoiceNumberAndExternalId(string number, string externalId, int tenant)
+        {
+            try
+            {
+
+
+                string aPInvoiceId = query.GetSingleIdByNumberAndExternalId(number, externalId, tenant);
+
+
+                return new APInvoiceLite() { Id = aPInvoiceId };
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
+        public APInvoiceLite GetAPInvoiceLiteByInvoiceNumber(string number, int tenant)
+        {
+            try
+            {
+
+
+                string aPInvoiceId = query.GetSingleIdByNumber(number, tenant);
+
+
+                return new APInvoiceLite() { Id = aPInvoiceId };
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
+        public APInvoiceLite GetAPInvoiceLiteByExternalId(string externalId, int tenant)
+        {
+            try
+            {
+
+
+                string aPInvoiceId = query.GetSingleIdByExternalId(externalId, tenant);
+
+
+                return new APInvoiceLite() { Id = aPInvoiceId };
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
         public APInvoice GetAPInvoiceByInternalNumber(string number, int tenant)
         {
             try

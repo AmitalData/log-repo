@@ -134,6 +134,7 @@
     <Compile Include="APIDataContract\Journal.Generated.cs" />
     <Compile Include="APIDataContract\JournalActionType.Generated.cs" />
     <Compile Include="APIDataContract\JournalLine.Generated.cs" />
+    <Compile Include="APIDataContract\JournalLite.cs" />
     <Compile Include="APIDataContract\JournalStatusType.Generated.cs" />
     <Compile Include="APIDataContract\JournalType.Generated.cs" />
     <Compile Include="APIDataContract\LedgerTransaction.Generated.cs" />
